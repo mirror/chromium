@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d04658fc_46c9076c",
+        "filename": "ui/ozone/platform/wayland/wayland_cursor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-11-10T20:56:21Z",
+      "side": 1,
+      "message": "Maybe move one line down and \n\n\u003d info.minRowBytes() ?",
+      "range": {
+        "startLine": 98,
+        "startChar": 13,
+        "endLine": 98,
+        "endChar": 14
+      },
+      "revId": "d56683f0f0dd14513c8a7ccfaade222546dc65f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fe78d92_300c8fa0",
+        "filename": "ui/ozone/platform/wayland/wayland_cursor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-11-10T20:56:21Z",
+      "side": 1,
+      "message": "Can you write some docs here. Should say that |location| is the hotspot. Also what is |serial| ?",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 19
+      },
+      "revId": "d56683f0f0dd14513c8a7ccfaade222546dc65f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
