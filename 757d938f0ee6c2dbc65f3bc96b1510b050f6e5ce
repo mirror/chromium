@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "29af4688_92fee74e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T16:33:29Z",
+      "side": 1,
+      "message": "I think we need to find a way to cancel the logging handler when the tab is hidden, since the tab could get hidden during the  5 seconds between when the handler is started and when it finishes.",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 11
+      },
+      "revId": "757d938f0ee6c2dbc65f3bc96b1510b050f6e5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8818520_db083a25",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
         "patchSetId": 13
@@ -70,6 +93,29 @@
       "revId": "757d938f0ee6c2dbc65f3bc96b1510b050f6e5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bc0201f_ebf0baa8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T16:33:29Z",
+      "side": 1,
+      "message": "I wonder if we need to guard against the tab finishing loading while it\u0027s in the background. For example, I think right now it\u0027s possible for something like this to happen:\n\n1. Get into this block, tab is still loading so we register an observer.\n2. User switches tabs\n3. Tab finishes loading, infobar is shown on tab\n4. User switches back to tab and sees survey",
+      "range": {
+        "startLine": 147,
+        "startChar": 28,
+        "endLine": 147,
+        "endChar": 41
+      },
+      "revId": "757d938f0ee6c2dbc65f3bc96b1510b050f6e5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
