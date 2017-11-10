@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19747dcd_8fcc8013",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1639,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-10T02:58:14Z",
+      "side": 1,
+      "message": "protip: We can take advantage of covariant return types here and return RendererScheduler in GetScheduler: blink::scheduler::RendererScheduler* GetScheduler() override;\n\nWith this we would be able to replace GetRendererScheduler method with the new GetScheduler method.",
+      "range": {
+        "startLine": 1639,
+        "startChar": 9,
+        "endLine": 1639,
+        "endChar": 29
+      },
+      "revId": "11570771db4feb1db7bd4a51a444f9e45b3e7eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43492680_8e1c2e69",
+        "filename": "third_party/WebKit/public/platform/scheduler/child/child_scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-10T02:58:14Z",
+      "side": 1,
+      "message": "Let\u0027s just call it IPCTaskRunner.",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 23
+      },
+      "revId": "11570771db4feb1db7bd4a51a444f9e45b3e7eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
