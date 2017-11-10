@@ -54,6 +54,10 @@ class GpuHost {
   virtual void CreateFrameSinkManager(
       viz::mojom::FrameSinkManagerRequest request,
       viz::mojom::FrameSinkManagerClientPtr client) = 0;
+
+  // Binds a test interface to the FrameSinkManager from mus-gpu.
+  virtual void BindFrameSinkManagerTestConnectorRequest(
+      viz::mojom::FrameSinkManagerTestConnectorRequest request) {}
 };
 
 class DefaultGpuHost : public GpuHost, public viz::mojom::GpuHost {
@@ -78,6 +82,8 @@ class DefaultGpuHost : public GpuHost, public viz::mojom::GpuHost {
   void CreateFrameSinkManager(
       viz::mojom::FrameSinkManagerRequest request,
       viz::mojom::FrameSinkManagerClientPtr client) override;
+  void BindFrameSinkManagerTestConnectorRequest(
+      viz::mojom::FrameSinkManagerTestConnectorRequest request) override;
 
   // viz::mojom::GpuHost:
   void DidInitialize(const gpu::GPUInfo& gpu_info,

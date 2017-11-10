@@ -67,6 +67,8 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
 
   void Bind(mojom::VizMainRequest request);
   void BindAssociated(mojom::VizMainAssociatedRequest request);
+  void BindFrameSinkManagerTestConnectorRequest(
+      mojom::FrameSinkManagerTestConnectorRequest request);
 
   // Calling this from the gpu or compositor thread can lead to crash/deadlock.
   // So this must be called from a different thread.
@@ -91,6 +93,8 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
   void CreateFrameSinkManagerOnCompositorThread(
       mojom::FrameSinkManagerRequest request,
       mojom::FrameSinkManagerClientPtrInfo client_info);
+  void BindFrameSinkManagerTestConnectorOnCompositorThread(
+      mojom::FrameSinkManagerTestConnectorRequest request);
 
   void CloseVizMainBindingOnGpuThread(base::WaitableEvent* wait);
   void TearDownOnCompositorThread(base::WaitableEvent* wait);

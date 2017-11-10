@@ -13,6 +13,7 @@
 #include "components/viz/service/frame_sinks/compositor_frame_sink_impl.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_client.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager_test_connector_impl.h"
 #include "components/viz/service/frame_sinks/primary_begin_frame_source.h"
 #include "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.h"
 #include "components/viz/service/frame_sinks/video_capture/capturable_frame_sink.h"
@@ -363,6 +364,8 @@ void FrameSinkManagerImpl::OnFirstSurfaceActivation(
   // if it should find an owner.
   if (client_)
     client_->OnFirstSurfaceActivation(surface_info);
+  if (test_connector_impl_)
+    test_connector_impl_->OnFirstSurfaceActivation(surface_info);
 }
 
 void FrameSinkManagerImpl::OnSurfaceActivated(const SurfaceId& surface_id) {}

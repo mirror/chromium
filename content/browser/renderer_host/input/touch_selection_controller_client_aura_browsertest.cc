@@ -16,9 +16,9 @@
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/public/browser/overscroll_configuration.h"
-#include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/test_frame_sink_manager_observer.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
@@ -335,6 +335,7 @@ INSTANTIATE_TEST_CASE_P(TouchSelectionForCrossProcessFramesTests,
 
 IN_PROC_BROWSER_TEST_P(TouchSelectionControllerClientAuraSiteIsolationTest,
                        BasicSelectionIsolatedIframe) {
+  TestFrameSinkManagerObserver frame_sink_observer;
   GURL test_url(embedded_test_server()->GetURL(
       "a.com", "/cross_site_iframe_factory.html?a(a)"));
   EXPECT_TRUE(NavigateToURL(shell(), test_url));
@@ -378,7 +379,8 @@ IN_PROC_BROWSER_TEST_P(TouchSelectionControllerClientAuraSiteIsolationTest,
   // The child will change with the cross-site navigation. It shouldn't change
   // after this.
   child = root->child_at(0);
-  WaitForChildFrameSurfaceReady(child->current_frame_host());
+  frame_sink_observer.WaitForChildFrameSurfaceReady(
+      child->current_frame_host());
 
   RenderWidgetHostViewChildFrame* child_view =
       static_cast<RenderWidgetHostViewChildFrame*>(
@@ -436,6 +438,7 @@ IN_PROC_BROWSER_TEST_P(TouchSelectionControllerClientAuraSiteIsolationTest,
 
 IN_PROC_BROWSER_TEST_P(TouchSelectionControllerClientAuraSiteIsolationTest,
                        BasicSelectionIsolatedScrollMainframe) {
+  TestFrameSinkManagerObserver frame_sink_observer;
   GURL test_url(embedded_test_server()->GetURL(
       "a.com", "/cross_site_iframe_factory.html?a(a)"));
   EXPECT_TRUE(NavigateToURL(shell(), test_url));
@@ -485,7 +488,8 @@ IN_PROC_BROWSER_TEST_P(TouchSelectionControllerClientAuraSiteIsolationTest,
   // The child will change with the cross-site navigation. It shouldn't change
   // after this.
   child = root->child_at(0);
-  WaitForChildFrameSurfaceReady(child->current_frame_host());
+  frame_sink_observer.WaitForChildFrameSurfaceReady(
+      child->current_frame_host());
 
   RenderWidgetHostViewChildFrame* child_view =
       static_cast<RenderWidgetHostViewChildFrame*>(
