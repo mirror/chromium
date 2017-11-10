@@ -22,6 +22,52 @@
       "revId": "29523826f283087385520bd2bf6d0acbbde71d89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49044ad9_9f41581b",
+        "filename": "media/gpu/android/android_video_decode_accelerator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-11-10T00:25:59Z",
+      "side": 1,
+      "message": "Note that the container color space is usually not accurate for h264 streams.\nThe actual color space information lives inside the stream itself.",
+      "range": {
+        "startLine": 334,
+        "startChar": 60,
+        "endLine": 334,
+        "endChar": 0
+      },
+      "revId": "29523826f283087385520bd2bf6d0acbbde71d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec24e15_1faae6ec",
+        "filename": "media/gpu/android/avda_codec_allocator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-11-10T00:25:59Z",
+      "side": 1,
+      "message": "How about calling this \"container_color_space\"?\nMaybe also add a comment stating that it\u0027s usually not useful for h264, but crucial for vp9.",
+      "range": {
+        "startLine": 76,
+        "startChar": 18,
+        "endLine": 76,
+        "endChar": 29
+      },
+      "revId": "29523826f283087385520bd2bf6d0acbbde71d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
