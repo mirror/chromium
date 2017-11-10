@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cbc81c0_58416752",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-10T16:27:09Z",
+      "side": 1,
+      "message": "When you say \"since navigating\" here, you mean \"since navigation finished\", right? At first I read it as \"since navigation started\".\n\nMight also be helpful to change \"is_currently_navigating_\" to \"did_navigation_finish_\".\n\nOr maybe an enum and a state machine…",
+      "range": {
+        "startLine": 173,
+        "startChar": 32,
+        "endLine": 173,
+        "endChar": 42
+      },
+      "revId": "8d30a66713db26a6833bc4f9df1e792788180927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddac69e6_f750eddb",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-10T16:27:09Z",
+      "side": 1,
+      "message": "This is really \"since document received\" (well, navigation finished _and_ document received, but I would focus on the latter).",
+      "range": {
+        "startLine": 188,
+        "startChar": 22,
+        "endLine": 188,
+        "endChar": 32
+      },
+      "revId": "8d30a66713db26a6833bc4f9df1e792788180927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
