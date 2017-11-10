@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e06b0af8_e71e7473",
+        "filename": "components/sync/driver/about_sync_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-11-10T18:33:03Z",
+      "side": 1,
+      "message": "How long are you expecting that process to take? I wonder if we should rename ConstructAboutInformation to ConstructAboutInformation_DEPRECATED or something if the process might take some time.",
+      "range": {
+        "startLine": 79,
+        "startChar": 42,
+        "endLine": 79,
+        "endChar": 67
+      },
+      "revId": "408474de438baa91c039e48db49249e435d69093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
