@@ -4,10 +4,11 @@
 
 #include "platform/testing/PaintPrinters.h"
 
-#include "platform/graphics/paint/PaintChunk.h"
-#include "platform/graphics/paint/PaintChunkProperties.h"
 #include <iomanip>  // NOLINT
 #include <ostream>  // NOLINT
+#include "platform/graphics/paint/FloatClipRect.h"
+#include "platform/graphics/paint/PaintChunk.h"
+#include "platform/graphics/paint/PaintChunkProperties.h"
 
 namespace blink {
 
