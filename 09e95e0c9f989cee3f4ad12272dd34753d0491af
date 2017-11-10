@@ -16,6 +16,24 @@
       "revId": "09e95e0c9f989cee3f4ad12272dd34753d0491af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb34118a_d7772a27",
+        "filename": "components/subresource_filter/core/browser/ruleset_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T10:16:40Z",
+      "side": 1,
+      "message": "That\u0027s a fair point, but looks like the code above still relies on this magical dtor behavior (see `return FAILED_*;` statements above).\n\nWe should make this consistent either way, but I actually have a slight preference towards leaving it as it is. The file comment for ScopedTempDir very clearly states this behavior, and it\u0027s also unclear to me why else it would be called \"scoped\". :-)\n\nUnless, of course, you intend to change this behavior.",
+      "parentUuid": "0359007d_5d81c192",
+      "revId": "09e95e0c9f989cee3f4ad12272dd34753d0491af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
