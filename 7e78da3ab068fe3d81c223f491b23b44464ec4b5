@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d51250a_8ad98303",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-10T10:32:21Z",
+      "side": 1,
+      "message": "Could we start considering putting new mojom files that are used also by browser code under WebKit/common?  We could create a bulk move patch later too, but we seem to keep adding here.",
+      "revId": "7e78da3ab068fe3d81c223f491b23b44464ec4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
