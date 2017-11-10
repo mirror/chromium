@@ -152,6 +152,7 @@ message VideoDecoderConfig {
     kCodecVP9 = 7;
     kCodecHEVC = 8;
     kCodecDolbyVision = 9;
+    kCodecAV1 = 10;
   }
 
   // Proto version of media::VideoCodecProfile.
@@ -182,6 +183,11 @@ message VideoDecoderConfig {
     DOLBYVISION_PROFILE5 = 21;
     DOLBYVISION_PROFILE7 = 22;
     THEORAPROFILE_ANY = 23;
+    AV1PROFILE_PROFILE0 = 24;
+    AV1PROFILE_PROFILE1 = 25;
+    AV1PROFILE_PROFILE2 = 26;
+    AV1PROFILE_PROFILE3 = 27;
+    AV1PROFILE_PROFILE4 = 28;
   };
 
   // Proto version of media::VideoPixelFormat.

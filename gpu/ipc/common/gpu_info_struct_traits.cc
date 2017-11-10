@@ -115,6 +115,16 @@ EnumTraits<gpu::mojom::VideoCodecProfile, gpu::VideoCodecProfile>::ToMojom(
       return gpu::mojom::VideoCodecProfile::DOLBYVISION_PROFILE7;
     case gpu::VideoCodecProfile::THEORAPROFILE_ANY:
       return gpu::mojom::VideoCodecProfile::THEORAPROFILE_ANY;
+    case gpu::VideoCodecProfile::AV1PROFILE_PROFILE0:
+      return gpu::mojom::VideoCodecProfile::AV1PROFILE_PROFILE0;
+    case gpu::VideoCodecProfile::AV1PROFILE_PROFILE1:
+      return gpu::mojom::VideoCodecProfile::AV1PROFILE_PROFILE1;
+    case gpu::VideoCodecProfile::AV1PROFILE_PROFILE2:
+      return gpu::mojom::VideoCodecProfile::AV1PROFILE_PROFILE2;
+    case gpu::VideoCodecProfile::AV1PROFILE_PROFILE3:
+      return gpu::mojom::VideoCodecProfile::AV1PROFILE_PROFILE3;
+    case gpu::VideoCodecProfile::AV1PROFILE_PROFILE4:
+      return gpu::mojom::VideoCodecProfile::AV1PROFILE_PROFILE4;
   }
   NOTREACHED() << "Invalid VideoCodecProfile:" << video_codec_profile;
   return gpu::mojom::VideoCodecProfile::VIDEO_CODEC_PROFILE_UNKNOWN;
@@ -199,6 +209,21 @@ bool EnumTraits<gpu::mojom::VideoCodecProfile, gpu::VideoCodecProfile>::
       return true;
     case gpu::mojom::VideoCodecProfile::THEORAPROFILE_ANY:
       *out = gpu::VideoCodecProfile::THEORAPROFILE_ANY;
+      return true;
+    case gpu::mojom::VideoCodecProfile::AV1PROFILE_PROFILE0:
+      *out = gpu::VideoCodecProfile::AV1PROFILE_PROFILE0;
+      return true;
+    case gpu::mojom::VideoCodecProfile::AV1PROFILE_PROFILE1:
+      *out = gpu::VideoCodecProfile::AV1PROFILE_PROFILE1;
+      return true;
+    case gpu::mojom::VideoCodecProfile::AV1PROFILE_PROFILE2:
+      *out = gpu::VideoCodecProfile::AV1PROFILE_PROFILE2;
+      return true;
+    case gpu::mojom::VideoCodecProfile::AV1PROFILE_PROFILE3:
+      *out = gpu::VideoCodecProfile::AV1PROFILE_PROFILE3;
+      return true;
+    case gpu::mojom::VideoCodecProfile::AV1PROFILE_PROFILE4:
+      *out = gpu::VideoCodecProfile::AV1PROFILE_PROFILE4;
       return true;
   }
   NOTREACHED() << "Invalid VideoCodecProfile: " << input;

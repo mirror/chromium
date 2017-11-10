@@ -35,6 +35,8 @@ std::string GetCodecName(VideoCodec codec) {
       return "vp8";
     case kCodecVP9:
       return "vp9";
+    case kCodecAV1:
+      return "av1";
   }
   NOTREACHED();
   return "";
@@ -92,6 +94,16 @@ std::string GetProfileName(VideoCodecProfile profile) {
       return "dolby vision profile 7";
     case THEORAPROFILE_ANY:
       return "theora";
+    case AV1PROFILE_PROFILE0:
+      return "av1 profile0";
+    case AV1PROFILE_PROFILE1:
+      return "av1 profile1";
+    case AV1PROFILE_PROFILE2:
+      return "av1 profile2";
+    case AV1PROFILE_PROFILE3:
+      return "av1 profile3";
+    case AV1PROFILE_PROFILE4:
+      return "av1 profile4";
   }
   NOTREACHED();
   return "";
@@ -133,6 +145,8 @@ bool ParseNewStyleVp9CodecID(const std::string& codec_id,
     }
     values.push_back(value);
   }
+
+  // TODO(dalecurtis): This should be extended to handle AV1 profiles.
 
   const int profile_idc = values[0];
   switch (profile_idc) {

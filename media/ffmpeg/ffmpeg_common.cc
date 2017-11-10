@@ -189,6 +189,8 @@ static VideoCodec CodecIDToVideoCodec(AVCodecID codec_id) {
       return kCodecVP8;
     case AV_CODEC_ID_VP9:
       return kCodecVP9;
+    case AV_CODEC_ID_AV1:
+      return kCodecAV1;
     default:
       DVLOG(1) << "Unknown video CodecID: " << codec_id;
   }
@@ -211,6 +213,8 @@ AVCodecID VideoCodecToCodecID(VideoCodec video_codec) {
       return AV_CODEC_ID_VP8;
     case kCodecVP9:
       return AV_CODEC_ID_VP9;
+    case kCodecAV1:
+      return AV_CODEC_ID_AV1;
     default:
       DVLOG(1) << "Unknown VideoCodec: " << video_codec;
   }
@@ -465,42 +469,52 @@ bool AVStreamToVideoDecoderConfig(const AVStream* stream,
   VideoCodec codec = CodecIDToVideoCodec(codec_context->codec_id);
 
   VideoCodecProfile profile = VIDEO_CODEC_PROFILE_UNKNOWN;
-  if (codec == kCodecVP8)
-    profile = VP8PROFILE_ANY;
-  else if (codec == kCodecVP9)
-    // TODO(servolk): Find a way to obtain actual VP9 profile from FFmpeg.
-    // crbug.com/592074
-    profile = VP9PROFILE_PROFILE0;
-  else if (codec == kCodecTheora)
-    profile = THEORAPROFILE_ANY;
-  else
-    profile = ProfileIDToVideoCodecProfile(codec_context->profile);
-
-  // Without the FFmpeg h264 decoder, AVFormat is unable to get the profile, so
-  // default to baseline and let the VDA fail later if it doesn't support the
-  // real profile. This is alright because if the FFmpeg h264 decoder isn't
-  // enabled, there is no fallback if the VDA fails.
+  switch (codec) {
 #if defined(DISABLE_FFMPEG_VIDEO_DECODERS)
-  if (codec == kCodecH264)
-    profile = H264PROFILE_BASELINE;
+    // Without the FFmpeg h264 decoder, AVFormat is unable to get the profile,
+    // so default to baseline and let the VDA fail later if it doesn't support
+    // the real profile. This is alright because if the FFmpeg h264 decoder
+    // isn't enabled, there is no fallback if the VDA fails.
+    case kCodecH264:
+      profile = H264PROFILE_BASELINE;
+      break;
 #endif
+    case kCodecVP8:
+      profile = VP8PROFILE_ANY;
+      break;
+    case kCodecVP9:
+      // TODO(servolk): Find a way to obtain actual VP9 profile from FFmpeg.
+      // crbug.com/592074
+      profile = VP9PROFILE_PROFILE0;
+      break;
+    case kCodecAV1:
+      // TODO(dalecurtis): Get the actual profile id from ffmpeg.
+      profile = AV1PROFILE_PROFILE0;
+      break;
+    case kCodecTheora:
+      profile = THEORAPROFILE_ANY;
+      break;
+    default:
+      profile = ProfileIDToVideoCodecProfile(codec_context->profile);
+  }
 
-  gfx::Size natural_size = GetNaturalSize(
-      visible_rect.size(), aspect_ratio.num, aspect_ratio.den);
+  gfx::Size natural_size =
+      GetNaturalSize(visible_rect.size(), aspect_ratio.num, aspect_ratio.den);
 
   VideoPixelFormat format =
       AVPixelFormatToVideoPixelFormat(codec_context->pix_fmt);
+
+#if defined(DISABLE_FFMPEG_VIDEO_DECODERS)
   // The format and coded size may be unknown if FFmpeg is compiled without
   // video decoders.
-#if defined(DISABLE_FFMPEG_VIDEO_DECODERS)
   if (format == PIXEL_FORMAT_UNKNOWN)
     format = PIXEL_FORMAT_YV12;
-  if (coded_size == gfx::Size(0, 0))
+  if (coded_size.IsEmpty())
     coded_size = visible_rect.size();
 #endif
 
-  if (codec == kCodecVP9) {
-    // TODO(tomfinegan): libavcodec doesn't know about VP9.
+  if (codec == kCodecVP9 || codec == kCodecAV1) {
+    // TODO(tomfinegan): libavcodec doesn't know about VP9 or AV1.
     format = PIXEL_FORMAT_YV12;
     coded_size = visible_rect.size();
   }

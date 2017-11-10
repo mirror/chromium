@@ -163,6 +163,8 @@ bool IsSupportedAudioConfig(const AudioConfig& config) {
 // specific logic for Android (move from MimeUtilIntenral).
 bool IsSupportedVideoConfig(const VideoConfig& config) {
   switch (config.codec) {
+    case media::kCodecAV1:
+    // TODO(dalecurtis): Should this be included along with vp9?
     case media::kCodecVP9:
       // Color management required for HDR to not look terrible.
       return IsColorSpaceSupported(config.color_space) &&
