@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29b332f3_59bf05c3",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-10T17:21:55Z",
+      "side": 1,
+      "message": "Can you move this to WindowServer::EmbedAtWindow?",
+      "range": {
+        "startLine": 704,
+        "startChar": 2,
+        "endLine": 704,
+        "endChar": 68
+      },
+      "revId": "7309dcedeb53c6501d53493862b3c804acb4c70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b035c6_644a8afd",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2641,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-10T17:21:55Z",
+      "side": 1,
+      "message": "Move this to WindowManagerCreatedTopLevelWindow.",
+      "range": {
+        "startLine": 2641,
+        "startChar": 12,
+        "endLine": 2641,
+        "endChar": 29
+      },
+      "revId": "7309dcedeb53c6501d53493862b3c804acb4c70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
