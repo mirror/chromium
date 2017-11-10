@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a30e550b_f479e46c",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T18:56:33Z",
+      "side": 1,
+      "message": "Where is this being used?",
+      "revId": "6679e7a71fc00a0ced0a33bd3de123c61d2dcb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5280ac4d_a0a0c9bd",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T18:56:33Z",
+      "side": 1,
+      "message": "No need for this.browserProxy member variable anymore.\n\nsettings.ChangePasswordBrowserProxyImpl.getInstance().changePassword();",
+      "revId": "6679e7a71fc00a0ced0a33bd3de123c61d2dcb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957842ec_d76a64c8",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T18:56:33Z",
+      "side": 1,
+      "message": "So the latest version of this CL is much better than having to update loadTimeData members. But the question by dbeam@ still stands (please refer back to dbeam\u0027s comment).\n\nWhy are we manually listening to pref changes, to fire our own WebUI events, when there is already a mechanism to notify the UI automatically when any pref is changed (Settings UI already uses about a 100 prefs that way).",
+      "revId": "6679e7a71fc00a0ced0a33bd3de123c61d2dcb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3db015e_4686eae0",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T18:56:33Z",
+      "side": 1,
+      "message": "Can we always fire the same event with a boolean payload instead? Something like the following:\n\nFireWebUIListener(\n    \"change-password-visibility\",\n    base::Value(safe_browsing::ChromePasswordProtectionService::\n        ShouldShowChangePasswordSettingUI(profile_)));",
+      "revId": "6679e7a71fc00a0ced0a33bd3de123c61d2dcb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
