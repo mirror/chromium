@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce2b4702_da08ae40",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 4014,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-10T19:32:38Z",
+      "side": 1,
+      "message": "Balazs - FYI: Nasko and Charlie were suggesting that WillCommitProvisionalLoad should be called right before swapping the interface providers (which is being worked on in your https://crrev.com/c/735686).",
+      "range": {
+        "startLine": 4012,
+        "startChar": 0,
+        "endLine": 4014,
+        "endChar": 56
+      },
+      "revId": "1c7965ed8618750192d15b110c91e43f4d905bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
