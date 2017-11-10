@@ -19,19 +19,25 @@
 class GURL;
 @class CRWWebController;
 
+// A block type for OpenURLWithCompletionHandler() callback method.
+// The BOOL value indciates whether the URL was launched or not.
+typedef void (^OpenURLCompletionBlock)(BOOL);
+
 // Methods implemented by the delegate of the CRWWebController.
 // DEPRECATED, do not conform to this protocol and do not add any methods to it.
 // Use web::WebStateDelegate instead.
 // TODO(crbug.com/674991): Remove this protocol.
 @protocol CRWWebDelegate<NSObject>
 
-// Called when an external app needs to be opened, it also passes |linkClicked|
-// to track if this call was a result of user action or not. Returns YES iff
-// |URL| is launched in an external app.
-// |sourceURL| is the original URL that triggered the navigation to |URL|.
-- (BOOL)openExternalURL:(const GURL&)URL
+// Called when an external app needs to be opened. |sourceURL| is the original
+// URL that triggered the navigation to |URL|. |linkClicked| indicates if this
+// call was a result of user action or not. |completionHandler| is called on
+// the main thread with a status of whether an external app has been launched
+// for |URL|.
+- (void)openExternalURL:(const GURL&)URL
               sourceURL:(const GURL&)sourceURL
-            linkClicked:(BOOL)linkClicked;
+            linkClicked:(BOOL)linkClicked
+             completion:(OpenURLCompletionBlock)completionHandler;
 
 // Called when a placeholder image should be displayed instead of the WebView.
 - (void)webController:(CRWWebController*)webController
