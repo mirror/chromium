@@ -607,8 +607,7 @@ void NavigatorImpl::DidNavigate(
   // until a navigation to a real page.
   SiteInstanceImpl* site_instance = render_frame_host->GetSiteInstance();
   if (!site_instance->HasSite() &&
-      SiteInstanceImpl::ShouldAssignSiteForURL(params.url) &&
-      !params.url_is_unreachable) {
+      SiteInstanceImpl::ShouldAssignSiteForURL(params.url)) {
     site_instance->SetSite(params.url);
   }
 

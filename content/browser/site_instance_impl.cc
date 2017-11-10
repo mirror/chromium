@@ -416,6 +416,9 @@ bool SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
   if (SiteIsolationPolicy::UseDedicatedProcessesForAllSites())
     return true;
 
+  if (url == GURL(kUnreachableWebDataURL))
+    return true;
+
   // Always require a dedicated process for isolated origins.
   GURL site_url = GetSiteForURL(browser_context, url);
   auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();

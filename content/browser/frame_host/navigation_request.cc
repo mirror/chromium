@@ -901,13 +901,9 @@ void NavigationRequest::OnRequestFailedInternal(
   //   URLs should be allowed to transfer away from the current process, which
   //   didn't request the navigation and may have a higher privilege level than
   //   the blocked destination.
-  RenderFrameHostImpl* render_frame_host = nullptr;
-  if (net_error == net::ERR_BLOCKED_BY_CLIENT && !browser_initiated()) {
-    render_frame_host = frame_tree_node_->current_frame_host();
-  } else {
-    render_frame_host =
-        frame_tree_node_->render_manager()->GetFrameHostForNavigation(*this);
-  }
+  RenderFrameHostImpl* render_frame_host =
+      frame_tree_node_->render_manager()->GetFrameHostForNavigation(*this);
+
   DCHECK(render_frame_host);
 
   // Don't ask the renderer to commit an URL if the browser will kill it when
