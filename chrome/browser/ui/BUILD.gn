@@ -2325,6 +2325,8 @@ split_static_library("ui") {
         "cocoa/tabs/tab_controller.h",
         "cocoa/tabs/tab_controller.mm",
         "cocoa/tabs/tab_controller_target.h",
+        "cocoa/tabs/tab_spinner_icon_view.h",
+        "cocoa/tabs/tab_spinner_icon_view.mm",
         "cocoa/tabs/tab_strip_background_view.h",
         "cocoa/tabs/tab_strip_background_view.mm",
         "cocoa/tabs/tab_strip_controller.h",

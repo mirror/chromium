@@ -51,8 +51,6 @@
 #include "chrome/browser/ui/tabs/tab_strip_model_delegate.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/grit/generated_resources.h"
-#include "chrome/grit/theme_resources.h"
-#include "components/grit/components_scaled_resources.h"
 #include "components/metrics/proto/omnibox_event.pb.h"
 #include "components/omnibox/browser/autocomplete_classifier.h"
 #include "components/omnibox/browser/autocomplete_match.h"
@@ -1563,79 +1561,31 @@ NSRect FlipRectInView(NSView* view, NSRect rect) {
   if (!contents)
     return;
 
-  static NSImage* throbberWaitingImage =
-      ui::ResourceBundle::GetSharedInstance()
-          .GetNativeImageNamed(IDR_THROBBER_WAITING)
-          .CopyNSImage();
-  static NSImage* throbberWaitingIncognitoImage =
-      ui::ResourceBundle::GetSharedInstance()
-          .GetNativeImageNamed(IDR_THROBBER_WAITING_INCOGNITO)
-          .CopyNSImage();
-  static NSImage* throbberLoadingImage = ui::ResourceBundle::GetSharedInstance()
-                                             .GetNativeImageNamed(IDR_THROBBER)
-                                             .CopyNSImage();
-  static NSImage* throbberLoadingIncognitoImage =
-      ui::ResourceBundle::GetSharedInstance()
-          .GetNativeImageNamed(IDR_THROBBER_INCOGNITO)
-          .CopyNSImage();
-  static NSImage* sadFaviconImage =
-      ui::ResourceBundle::GetSharedInstance()
-          .GetNativeImageNamed(IDR_CRASH_SAD_FAVICON)
-          .CopyNSImage();
-
   // Take closing tabs into account.
   NSInteger index = [self indexFromModelIndex:modelIndex];
   TabController* tabController = [tabArray_ objectAtIndex:index];
 
-  bool oldHasIcon = [tabController iconView] != nil;
-  bool newHasIcon =
+  bool showIcon =
       favicon::ShouldDisplayFavicon(contents) ||
       tabStripModel_->IsTabPinned(modelIndex);  // Always show icon if pinned.
 
-  TabLoadingState oldState = [tabController loadingState];
   TabLoadingState newState = kTabDone;
-  NSImage* throbberImage = nil;
   if (contents->IsCrashed()) {
     newState = kTabCrashed;
-    newHasIcon = true;
+    showIcon = true;
   } else if (contents->IsWaitingForResponse()) {
     newState = kTabWaiting;
-    if ([[[tabController view] window] hasDarkTheme]) {
-      throbberImage = throbberWaitingIncognitoImage;
-    } else {
-      throbberImage = throbberWaitingImage;
-    }
   } else if (contents->IsLoadingToDifferentDocument()) {
     newState = kTabLoading;
-    if ([[[tabController view] window] hasDarkTheme]) {
-      throbberImage = throbberLoadingIncognitoImage;
-    } else {
-      throbberImage = throbberLoadingImage;
-    }
   }
 
-  if (oldState != newState)
-    [tabController setLoadingState:newState];
-
-  // While loading, this function is called repeatedly with the same state.
-  // To avoid expensive unnecessary view manipulation, only make changes when
-  // the state is actually changing.  When loading is complete (kTabDone),
-  // every call to this function is significant.
-  if (newState == kTabDone || oldState != newState ||
-      oldHasIcon != newHasIcon) {
-    if (newHasIcon) {
-      if (newState == kTabDone) {
-        [tabController setIconImage:[self iconImageForContents:contents
-                                                       atIndex:modelIndex]];
-      } else if (newState == kTabCrashed) {
-        [tabController setIconImage:sadFaviconImage withToastAnimation:YES];
-      } else {
-        [tabController setIconImage:throbberImage];
-      }
-    } else {
-      [tabController setIconImage:nil];
-    }
+  NSImage* newImage = nil;
+  if (newState == kTabDone && showIcon) {
+    newImage = [self iconImageForContents:contents atIndex:modelIndex];
   }
+  [tabController setIconImage:newImage
+              forLoadingState:newState
+                     showIcon:showIcon];
 
   TabAlertState alertState = [self alertStateForContents:contents];
   [self updateWindowAlertState:alertState forWebContents:contents];

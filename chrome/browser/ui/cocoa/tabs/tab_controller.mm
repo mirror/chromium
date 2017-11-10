@@ -17,11 +17,23 @@
 #import "chrome/browser/ui/cocoa/sprite_view.h"
 #import "chrome/browser/ui/cocoa/tabs/alert_indicator_button_cocoa.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_controller_target.h"
+#include "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_view.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
+#include "chrome/grit/generated_resources.h"
+#include "chrome/grit/theme_resources.h"
+#include "components/grit/components_scaled_resources.h"
 #import "extensions/common/extension.h"
 #import "ui/base/cocoa/menu_controller.h"
 #include "ui/base/material_design/material_design_controller.h"
+#include "ui/base/resource/resource_bundle.h"
+#include "ui/resources/grit/ui_resources.h"
+
+@interface TabController (Private)
+// Setting |animate| to YES will animate away the old image before animating
+// the new image back to position.
+- (void)setIconImage:(NSImage*)image withToastAnimation:(BOOL)animate;
+@end
 
 @implementation TabController
 
@@ -71,10 +83,12 @@ static const CGFloat kInitialTabWidth = 160;
 static const CGFloat kTitleLeadingPadding = 4;
 static const CGFloat kInitialTitleWidth = 92;
 static const CGFloat kTabElementYOrigin = 6;
+static const CGFloat kDefaultTabHeight = 29;
+static const CGFloat kPinnedTabWidth = kDefaultTabHeight * 2;
 }  // namespace
 
 + (CGFloat)defaultTabHeight {
-  return 29;
+  return kDefaultTabHeight;
 }
 
 // The min widths is the smallest number at which the right edge of the right
@@ -85,7 +99,9 @@ static const CGFloat kTabElementYOrigin = 6;
 + (CGFloat)minActiveTabWidth { return 52; }
 + (CGFloat)maxTabWidth { return 246; }
 
-+ (CGFloat)pinnedTabWidth { return 58; }
++ (CGFloat)pinnedTabWidth {
+  return kPinnedTabWidth;
+}
 
 - (TabView*)tabView {
   DCHECK([[self view] isKindOfClass:[TabView class]]);
@@ -94,26 +110,29 @@ static const CGFloat kTabElementYOrigin = 6;
 
 - (id)init {
   if ((self = [super init])) {
+    // Create the TabView.
+    base::scoped_nsobject<TabView> view([[TabView alloc]
+        initWithFrame:NSMakeRect(0, 0, kInitialTabWidth,
+                                 [TabController defaultTabHeight])
+           controller:self
+          closeButton:closeButton_]);
+    [view setAutoresizingMask:NSViewMaxXMargin | NSViewMinYMargin];
+    [view setPostsFrameChangedNotifications:NO];
+    [view setPostsBoundsChangedNotifications:NO];
+    [super setView:view];
+
     BOOL isRTL = cocoa_l10n_util::ShouldDoExperimentalRTLLayout();
-    // Icon.
-    const CGFloat iconOrigin =
-        isRTL ? kInitialTabWidth - kTabLeadingPadding - kIconSize
-              : kTabLeadingPadding;
-    NSRect iconFrame =
-        NSMakeRect(iconOrigin, kTabElementYOrigin, kIconSize, kIconSize);
-    iconView_.reset([[SpriteView alloc] initWithFrame:iconFrame]);
+
+    // Add the favicon view.
+    NSRect iconViewFrame =
+        NSMakeRect(0, kTabElementYOrigin, kIconSize, kIconSize);
+    iconView_.reset([[TabSpinnerIconView alloc] initWithFrame:iconViewFrame]);
     [iconView_ setAutoresizingMask:isRTL ? NSViewMinXMargin | NSViewMinYMargin
                                          : NSViewMaxXMargin | NSViewMinYMargin];
+    [self updateIconViewFrame];
+    [view addSubview:iconView_];
 
-    const CGFloat titleOrigin =
-        isRTL
-            ? NSMinX([iconView_ frame]) - kTitleLeadingPadding -
-                  kInitialTitleWidth
-            : NSMaxX([iconView_ frame]) + kTitleLeadingPadding;
-    NSRect titleFrame =
-        NSMakeRect(titleOrigin, kTabElementYOrigin, kInitialTitleWidth, 17);
-
-    // Close button.
+    // Add the close button.
     const CGFloat closeButtonOrigin =
         isRTL ? kTabTrailingPadding
               : kInitialTabWidth - kCloseButtonSize - kTabTrailingPadding;
@@ -126,20 +145,18 @@ static const CGFloat kTabElementYOrigin = 6;
     [closeButton_ setTarget:self];
     [closeButton_ setAction:@selector(closeTab:)];
 
-    base::scoped_nsobject<TabView> view([[TabView alloc]
-        initWithFrame:NSMakeRect(0, 0, kInitialTabWidth,
-                                 [TabController defaultTabHeight])
-           controller:self
-          closeButton:closeButton_]);
-    [view setAutoresizingMask:NSViewMaxXMargin | NSViewMinYMargin];
-    [view setPostsFrameChangedNotifications:NO];
-    [view setPostsBoundsChangedNotifications:NO];
-    [view addSubview:iconView_];
     [view addSubview:closeButton_];
-    [view setTitleFrame:titleFrame];
-    [super setView:view];
 
-    isIconShowing_ = YES;
+    // Set up the title.
+    const CGFloat titleOrigin =
+        isRTL ? NSMinX([iconView_ frame]) - kTitleLeadingPadding -
+                    kInitialTitleWidth
+              : NSMaxX([iconView_ frame]) + kTitleLeadingPadding;
+    NSRect titleFrame =
+        NSMakeRect(titleOrigin, kTabElementYOrigin, kInitialTitleWidth, 17);
+
+    [view setTitleFrame:titleFrame];
+
     NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self
                       selector:@selector(themeChangedNotification:)
@@ -240,6 +257,10 @@ static const CGFloat kTabElementYOrigin = 6;
   [super setTitle:title];
 }
 
+- (AlertIndicatorButton*)alertIndicatorButton {
+  return alertIndicatorButton_;
+}
+
 - (void)setActive:(BOOL)active {
   if (active != active_) {
     active_ = active;
@@ -262,20 +283,38 @@ static const CGFloat kTabElementYOrigin = 6;
   return selected_ || active_;
 }
 
-- (SpriteView*)iconView {
-  return iconView_;
+- (BOOL)hasFavicon {
+  return hasFavicon_;
 }
 
-- (void)setIconView:(SpriteView*)iconView {
-  [iconView_ removeFromSuperview];
-  iconView_.reset([iconView retain]);
-
-  if (iconView_)
-    [[self view] addSubview:iconView_];
+- (void)setPinned:(BOOL)pinned {
+  if (pinned_ != pinned) {
+    pinned_ = pinned;
+    [self updateIconViewFrame];
+  }
 }
 
-- (AlertIndicatorButton*)alertIndicatorButton {
-  return alertIndicatorButton_;
+- (BOOL)hasIconView {
+  return (iconView_.get() != nil);
+}
+
+- (void)updateIconViewFrame {
+  NSRect iconViewFrame = [iconView_ frame];
+
+  if ([self pinned]) {
+    // Center the icon.
+    iconViewFrame.origin.x =
+        std::floor(([TabController pinnedTabWidth] - kIconSize) / 2.0);
+  } else {
+    BOOL isRTL = cocoa_l10n_util::ShouldDoExperimentalRTLLayout();
+    iconViewFrame.origin.x =
+        isRTL ? kInitialTabWidth - kTabLeadingPadding - kIconSize
+              : kTabLeadingPadding;
+  }
+
+  // If the pinned status has changed, animating the view to its new
+  // location looks much better than jumping there.
+  [[iconView_ animator] setFrame:iconViewFrame];
 }
 
 - (void)setAlertState:(TabAlertState)alertState {
@@ -325,16 +364,16 @@ static const CGFloat kTabElementYOrigin = 6;
 
 - (BOOL)shouldShowIcon {
   return chrome::ShouldTabShowFavicon(
-      [self iconCapacity], [self pinned], [self active], iconView_ != nil,
-      !alertIndicatorButton_ ? TabAlertState::NONE :
-          [alertIndicatorButton_ showingAlertState]);
+      [self iconCapacity], [self pinned], [self active], [self hasFavicon],
+      !alertIndicatorButton_ ? TabAlertState::NONE
+                             : [alertIndicatorButton_ showingAlertState]);
 }
 
 - (BOOL)shouldShowAlertIndicator {
   return chrome::ShouldTabShowAlertIndicator(
-      [self iconCapacity], [self pinned], [self active], iconView_ != nil,
-      !alertIndicatorButton_ ? TabAlertState::NONE :
-          [alertIndicatorButton_ showingAlertState]);
+      [self iconCapacity], [self pinned], [self active], [self hasFavicon],
+      !alertIndicatorButton_ ? TabAlertState::NONE
+                             : [alertIndicatorButton_ showingAlertState]);
 }
 
 - (BOOL)shouldShowCloseButton {
@@ -342,44 +381,21 @@ static const CGFloat kTabElementYOrigin = 6;
       [self iconCapacity], [self pinned], [self active]);
 }
 
-- (void)setIconImage:(NSImage*)image {
-  [self setIconImage:image withToastAnimation:NO];
+- (void)setIconImage:(NSImage*)image
+     forLoadingState:(TabLoadingState)newLoadingState
+            showIcon:(BOOL)showIcon {
+  loadingState_ = newLoadingState;
+  hasFavicon_ = showIcon;
+
+  if (newLoadingState == kTabDone) {
+    [iconView_ setTabDoneIcon:image];
+  } else {
+    [iconView_ setTabLoadingState:newLoadingState];
+  }
 }
 
 - (void)setIconImage:(NSImage*)image withToastAnimation:(BOOL)animate {
-  if (image == nil) {
-    [self setIconView:nil];
-  } else {
-    BOOL isRTL = cocoa_l10n_util::ShouldDoExperimentalRTLLayout();
-    if (iconView_.get() == nil) {
-      base::scoped_nsobject<SpriteView> iconView([[SpriteView alloc] init]);
-      [iconView setAutoresizingMask:isRTL
-                                        ? NSViewMinXMargin | NSViewMinYMargin
-                                        : NSViewMaxXMargin | NSViewMinYMargin];
-      [self setIconView:iconView];
-    }
-
-    [iconView_ setImage:image withToastAnimation:animate];
-
-    if ([self pinned]) {
-      NSRect appIconFrame = [iconView_ frame];
-
-      const CGFloat tabWidth = [TabController pinnedTabWidth];
-
-      // Center the icon.
-      appIconFrame.origin = NSMakePoint(
-          std::floor((tabWidth - kIconSize) / 2.0), kTabElementYOrigin);
-      [iconView_ setFrame:appIconFrame];
-    } else {
-      const CGFloat tabWidth = NSWidth([[self tabView] frame]);
-      const CGFloat iconOrigin = isRTL
-                                     ? tabWidth - kIconSize - kTabLeadingPadding
-                                     : kTabLeadingPadding;
-      NSRect iconFrame =
-          NSMakeRect(iconOrigin, kTabElementYOrigin, kIconSize, kIconSize);
-      [iconView_ setFrame:iconFrame];
-    }
-  }
+  [iconView_ setTabDoneIcon:image];
 }
 
 - (void)updateVisibility {

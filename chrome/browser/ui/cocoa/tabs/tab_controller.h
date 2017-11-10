@@ -29,6 +29,7 @@ namespace TabControllerInternal {
 class MenuDelegate;
 }
 @class SpriteView;
+@class TabSpinnerIconView;
 @class TabView;
 @protocol TabControllerTarget;
 
@@ -45,7 +46,7 @@ class MenuDelegate;
 
 @interface TabController : NSViewController<TabDraggingEventTarget> {
  @private
-  base::scoped_nsobject<SpriteView> iconView_;
+  base::scoped_nsobject<TabSpinnerIconView> iconView_;
   base::scoped_nsobject<AlertIndicatorButton> alertIndicatorButton_;
   base::scoped_nsobject<HoverCloseButton> closeButton_;
 
@@ -54,6 +55,7 @@ class MenuDelegate;
   BOOL pinned_;
   BOOL active_;
   BOOL selected_;
+  BOOL hasFavicon_;
   GURL url_;
   TabLoadingState loadingState_;
   id<TabControllerTarget> target_;  // weak, where actions are sent
@@ -73,9 +75,9 @@ class MenuDelegate;
 // status/focus of the content.
 @property(assign, nonatomic) BOOL active;
 @property(assign, nonatomic) BOOL selected;
+@property(readonly, nonatomic) BOOL hasFavicon;
 @property(assign, nonatomic) id target;
 @property(assign, nonatomic) GURL url;
-@property(readonly, nonatomic) NSView* iconView;
 @property(readonly, nonatomic) AlertIndicatorButton* alertIndicatorButton;
 @property(readonly, nonatomic) HoverCloseButton* closeButton;
 
@@ -96,10 +98,9 @@ class MenuDelegate;
 // Sets the tab's icon image.
 // |image| must be 16x16 in size.
 // |image| can be a horizontal strip of image sprites which will be animated.
-// Setting |animate| to YES will animate away the old image before animating
-// the new image back to position.
-- (void)setIconImage:(NSImage*)image;
-- (void)setIconImage:(NSImage*)image withToastAnimation:(BOOL)animate;
+- (void)setIconImage:(NSImage*)image
+     forLoadingState:(TabLoadingState)loadingState
+            showIcon:(BOOL)showIcon;
 
 // Sets the current tab alert state and updates the views.
 - (void)setAlertState:(TabAlertState)alertState;
