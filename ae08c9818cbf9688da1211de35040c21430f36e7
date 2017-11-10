@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "aa0ec6a8_ce0b5373",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_retriever.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-10T00:55:31Z",
+      "side": 1,
+      "message": "I made visible_url no longer a reference.",
+      "parentUuid": "f047d531_3e7e6a45",
+      "range": {
+        "startLine": 107,
+        "startChar": 57,
+        "endLine": 107,
+        "endChar": 68
+      },
+      "revId": "ae08c9818cbf9688da1211de35040c21430f36e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0ed937b_c65db5a5",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_retriever_private.h",
         "patchSetId": 8
