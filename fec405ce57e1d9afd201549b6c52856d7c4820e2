@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "adc10569_48b308ea",
+        "filename": "content/public/common/url_loader.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-10T08:10:57Z",
+      "side": 1,
+      "message": "As we chatted offline, I don\u0027t think we\u0027ll need extra work as we can just add mojo definition and traits and they will be anyway needed, and we can get rid of //content dependency from URLLoaderStatus then.\n\nBut I agree that the change can be separated from this change and doing so will increase the # of files we\u0027ll need to touch whenever we change properties in the struct.  Given that I\u0027m fine with landing this as is for now.",
+      "parentUuid": "26f28a4b_5f501a63",
+      "revId": "fec405ce57e1d9afd201549b6c52856d7c4820e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "266d2256_ddaffa81",
         "filename": "content/public/common/url_loader_status.typemap",
         "patchSetId": 11
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "yep, mojo ipc traits still need the file to serialize this native object. this is actually used even we do not pass the object over process, but even do it inside the renderer.",
       "parentUuid": "266d2256_ddaffa81",
+      "revId": "fec405ce57e1d9afd201549b6c52856d7c4820e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef069429_7f9532cb",
+        "filename": "content/public/common/url_loader_status.typemap",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-10T08:10:57Z",
+      "side": 1,
+      "message": "Sorry, my mental model was that we\u0027ll be removing Native (per the other comment). Got it.",
+      "parentUuid": "1a373b37_45739c9e",
       "revId": "fec405ce57e1d9afd201549b6c52856d7c4820e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
