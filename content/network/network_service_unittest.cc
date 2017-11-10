@@ -14,6 +14,7 @@
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/test/test_url_loader_client.h"
+#include "net/base/mock_network_change_notifier.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "services/service_manager/public/cpp/service_context.h"
@@ -359,6 +360,33 @@ class TestNetworkChangeManagerClient
   DISALLOW_COPY_AND_ASSIGN(TestNetworkChangeManagerClient);
 };
 
+class NetworkChangeTest : public testing::Test {
+ public:
+  NetworkChangeTest()
+      : scoped_task_environment_(
+            base::test::ScopedTaskEnvironment::MainThreadType::IO) {
+#if defined(OS_ANDROID)
+    // On Android, NetworkChangeNotifier setup is more involved and needs to
+    // to be split between UI thread and network thread. Use a mock
+    // NetworkChangeNotifier in tests, so the test setup is simpler.
+    network_change_notifier_ =
+        std::make_unique<net::test::MockNetworkChangeNotifier>();
+#endif
+    service_ = NetworkServiceImpl::CreateForTesting();
+  }
+
+  ~NetworkChangeTest() override {}
+
+  NetworkService* service() const { return service_.get(); }
+
+ private:
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
+#if defined(OS_ANDROID)
+  std::unique_ptr<net::NetworkChangeNotifier> network_change_notifier_;
+#endif
+  std::unique_ptr<NetworkService> service_;
+};
+
 // mojom:NetworkChangeManager currently doesn't support ChromeOS, which has a
 // different code path to set up net::NetworkChangeNotifier.
 #if defined(OS_CHROMEOS) || defined(OS_FUCHSIA)
@@ -366,7 +394,7 @@ class TestNetworkChangeManagerClient
 #else
 #define MAYBE_NetworkChangeManagerRequest NetworkChangeManagerRequest
 #endif
-TEST_F(NetworkServiceTest, MAYBE_NetworkChangeManagerRequest) {
+TEST_F(NetworkChangeTest, MAYBE_NetworkChangeManagerRequest) {
   TestNetworkChangeManagerClient manager_client(service());
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_3G);
@@ -397,6 +425,13 @@ class NetworkServiceNetworkChangeTest
     void CreateService(service_manager::mojom::ServiceRequest request,
                        const std::string& name) override {
       if (name == mojom::kNetworkServiceName) {
+#if defined(OS_ANDROID)
+        // On Android, NetworkChangeNotifier setup is more involved and needs
+        // to be split between UI thread and network thread. Use a mock
+        // NetworkChangeNotifier in tests, so the test setup is simpler.
+        network_change_notifier_ =
+            std::make_unique<net::test::MockNetworkChangeNotifier>();
+#endif
         service_context_.reset(new service_manager::ServiceContext(
             NetworkServiceImpl::CreateForTesting(), std::move(request)));
         // Send a broadcast after NetworkService is actually created.
