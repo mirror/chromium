@@ -421,6 +421,10 @@ service_manifest("chrome_manifest") {
   source = "chrome_manifest.json"
 }
 
+service_manifest("chrome_renderer_manifest") {
+  source = "chrome_renderer_manifest.json"
+}
+
 service_manifest("chrome_content_packaged_services_manifest_overlay_for_mash") {
   source =
       "//chrome/browser/chrome_content_packaged_services_manifest_overlay.json"
@@ -466,6 +470,7 @@ service_manifest("chrome_content_plugin_manifest_overlay") {
 
 service_manifest("chrome_content_renderer_manifest_overlay") {
   source = "//chrome/browser/chrome_content_renderer_manifest_overlay.json"
+  packaged_services = [ ":chrome_renderer_manifest" ]
 }
 
 service_manifest("chrome_content_utility_manifest_overlay") {

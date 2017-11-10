@@ -72,6 +72,7 @@ namespace {
 constexpr char kThrottledErrorDescription[] =
     "Request throttled. Visit http://dev.chromium.org/throttling for more "
     "information.";
+
 }  // namespace
 
 AwContentRendererClient::AwContentRendererClient() {}
@@ -95,7 +96,7 @@ void AwContentRendererClient::RenderThreadStarted() {
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
   if (!spellcheck_) {
-    spellcheck_ = base::MakeUnique<SpellCheck>(this);
+    spellcheck_ = base::MakeUnique<SpellCheck>(nullptr, this);
     thread->AddObserver(spellcheck_.get());
   }
 #endif
