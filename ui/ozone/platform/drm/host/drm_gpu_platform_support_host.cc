@@ -104,6 +104,14 @@ bool DrmGpuPlatformSupportHost::IsConnected() {
   return host_id_ >= 0 && channel_established_;
 }
 
+void  DrmGpuPlatformSupportHost::OnGpuServiceLaunched(GpuHostBindInterfaceCallback binder) {
+	base::debug::StackTrace st;
+
+	LOG(ERROR) <<  ">> DrmGpuPlatformSupportHost::OnGpuServiceLaunched: \n"  <<  st.ToString();
+	
+}
+
+
 void DrmGpuPlatformSupportHost::OnGpuProcessLaunched(
     int host_id,
     scoped_refptr<base::SingleThreadTaskRunner> ui_runner,

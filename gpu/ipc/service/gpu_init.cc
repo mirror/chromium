@@ -28,6 +28,7 @@
 
 #if defined(USE_OZONE)
 #include "ui/ozone/public/ozone_platform.h"
+#include "ui/ozone/public/ozone_switches.h"
 #endif
 
 #if defined(OS_WIN)
@@ -201,7 +202,9 @@ bool GpuInit::InitializeAndStartSandbox(base::CommandLine* command_line,
   // may also have started at this point.
   ui::OzonePlatform::InitParams params;
   params.single_process = false;
-  ui::OzonePlatform::InitializeForGPU(params);
+  params.using_mojo = command_line->HasSwitch(switches::kEnableDrmMojo);
+ 	LOG(ERROR) << ">>>>>>>>>>>>>>>>> ui::OzonePlatform::InitializeForGPU" << params.using_mojo;
+ ui::OzonePlatform::InitializeForGPU(params);
 #endif
 
   // Load and initialize the GL implementation and locate the GL entry points if
@@ -271,6 +274,12 @@ bool GpuInit::InitializeAndStartSandbox(base::CommandLine* command_line,
       gles2::PassthroughCommandDecoderSupported();
 
   init_successful_ = true;
+#if defined(USE_OZONE)
+    LOG(ERROR)  << ">>> about to call   ui::OzonePlatform::GetInstance()->AfterSandboxEntry();\n";
+    ui::OzonePlatform::GetInstance()->AfterSandboxEntry();
+    LOG(ERROR)  << ">>> called  ui::OzonePlatform::GetInstance()->AfterSandboxEntry();\n";
+
+#endif
   return true;
 }
 
@@ -281,9 +290,11 @@ void GpuInit::InitializeInProcess(base::CommandLine* command_line,
   gpu_preferences_ = gpu_preferences;
   init_successful_ = true;
 #if defined(USE_OZONE)
-  ui::OzonePlatform::InitParams params;
+ ui::OzonePlatform::InitParams params;
   params.single_process = true;
+  params.using_mojo = command_line->HasSwitch(switches::kEnableDrmMojo);
   ui::OzonePlatform::InitializeForGPU(params);
+  ui::OzonePlatform::GetInstance()->AfterSandboxEntry();
 #endif
 
   if (gpu_info && gpu_feature_info) {

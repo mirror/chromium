@@ -235,8 +235,14 @@ scoped_refptr<GbmBuffer> GbmBuffer::CreateBuffer(
     uint32_t format,
     const gfx::Size& size,
     uint32_t flags) {
+
+
+	LOG(ERROR) << ">>> GbmBuffer::CreateBuffer";
+
   TRACE_EVENT2("drm", "GbmBuffer::CreateBuffer", "device",
                gbm->device_path().value(), "size", size.ToString());
+
+
 
   gbm_bo* bo =
       gbm_bo_create(gbm->device(), size.width(), size.height(), format, flags);

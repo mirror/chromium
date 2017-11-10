@@ -1038,10 +1038,17 @@ const Display& DisplayManager::GetDisplayAt(size_t index) const {
 }
 
 const Display& DisplayManager::GetPrimaryDisplayCandidate() const {
+
+
+LOG(ERROR) << "@@ DisplayManager::GetPrimaryDisplayCandidate, displays:" << GetNumDisplays();
+// the presumption is... that we'd have this already regularly?
+// how does headless work?
+
   if (GetNumDisplays() != 2)
     return active_display_list_[0];
   const DisplayLayout& layout =
       layout_store_->GetRegisteredDisplayLayout(GetCurrentDisplayIdList());
+
   return GetDisplayForId(layout.primary_id);
 }
 

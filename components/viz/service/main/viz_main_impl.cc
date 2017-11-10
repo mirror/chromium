@@ -22,6 +22,15 @@
 #include "gpu/ipc/service/gpu_memory_buffer_factory.h"
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
 
+#if defined(USE_OZONE)
+#include "ui/ozone/public/ozone_platform.h"
+#include "ui/ozone/public/ozone_switches.h"
+#endif
+
+#if defined(OS_MACOSX)
+#include "base/message_loop/message_pump_mac.h"
+#endif
+
 namespace {
 
 std::unique_ptr<base::Thread> CreateAndStartCompositorThread() {
@@ -93,6 +102,12 @@ VizMainImpl::VizMainImpl(Delegate* delegate,
     // Initialize GpuInit before starting the IO or compositor threads.
     gpu_init_ = std::make_unique<gpu::GpuInit>();
     gpu_init_->set_sandbox_helper(this);
+
+    auto command_line = base::CommandLine::ForCurrentProcess();
+#if defined(USE_OZONE)
+    command_line->AppendSwitch(switches::kEnableDrmMojo);
+#endif
+
     // TODO(crbug.com/609317): Use InitializeAndStartSandbox() when gpu-mus is
     // split into a separate process.
     gpu_init_->InitializeInProcess(command_line, gpu_preferences);

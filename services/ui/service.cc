@@ -244,6 +244,7 @@ void Service::OnStart() {
   ui::OzonePlatform::InitParams params;
   params.connector = context()->connector();
   params.single_process = true;
+  params.using_mojo = true;
   ui::OzonePlatform::InitializeForUI(params);
 
   // Assume a client will change the layout to an appropriate configuration.

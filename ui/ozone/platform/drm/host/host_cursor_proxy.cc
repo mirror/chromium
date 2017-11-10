@@ -13,8 +13,12 @@ namespace ui {
 HostCursorProxy::HostCursorProxy(service_manager::Connector* connector)
     : connector_(connector->Clone()) {
   ui_thread_ref_ = base::PlatformThread::CurrentRef();
-  connector->BindInterface(ui::mojom::kServiceName, &main_cursor_ptr_);
+  connector->BindInterface("content_gpu", &main_cursor_ptr_);
+
+//  connector->BindInterface(ui::mojom::kServiceName, &main_cursor_ptr_);
+
 }
+
 
 HostCursorProxy::~HostCursorProxy() {}
 
@@ -47,7 +51,8 @@ void HostCursorProxy::Move(gfx::AcceleratedWidget widget,
 // on cursor motions.
 void HostCursorProxy::InitializeOnEvdevIfNecessary() {
   if (ui_thread_ref_ != base::PlatformThread::CurrentRef()) {
-    connector_->BindInterface(ui::mojom::kServiceName, &evdev_cursor_ptr_);
+//    connector_->BindInterface(ui::mojom::kServiceName, &evdev_cursor_ptr_);
+    connector_->BindInterface("content_gpu", &evdev_cursor_ptr_);
   }
 }
 

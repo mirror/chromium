@@ -13,7 +13,12 @@
           "service_manager::mojom::ServiceFactory",
           "viz::mojom::VizMain"
         ],
-        "service_manager:service_factory": [
+        // Interfaces provided by mus-gpu for mus-ws.
+        "ozone": [
+          "ui::ozone::mojom::DeviceCursor",
+          "ui::ozone::mojom::DrmDevice"
+        ],
+         "service_manager:service_factory": [
           "service_manager::mojom::ServiceFactory"
         ]
       },

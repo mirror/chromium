@@ -41,6 +41,7 @@ class DrmGpuPlatformSupportHost : public GpuPlatformSupportHost,
       scoped_refptr<base::SingleThreadTaskRunner> send_runner,
       const base::Callback<void(IPC::Message*)>& send_callback) override;
   void OnChannelDestroyed(int host_id) override;
+  void OnGpuServiceLaunched(GpuHostBindInterfaceCallback binder) override;
 
   // IPC::Listener:
   bool OnMessageReceived(const IPC::Message& message) override;

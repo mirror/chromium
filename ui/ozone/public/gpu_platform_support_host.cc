@@ -23,6 +23,7 @@ class StubGpuPlatformSupportHost : public GpuPlatformSupportHost {
 
   void OnChannelDestroyed(int host_id) override {}
   bool OnMessageReceived(const IPC::Message&) override { return false; }
+  void OnGpuServiceLaunched(GpuHostBindInterfaceCallback binder) override {}
 };
 
 }  // namespace

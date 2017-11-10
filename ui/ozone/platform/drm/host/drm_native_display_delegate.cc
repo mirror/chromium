@@ -46,6 +46,7 @@ void DrmNativeDisplayDelegate::RelinquishDisplayControl(
 
 void DrmNativeDisplayDelegate::GetDisplays(
     const display::GetDisplaysCallback& callback) {
+LOG(ERROR) << "@@@ DrmNativeDisplayDelegate::GetDisplays\n";
   display_manager_->UpdateDisplays(callback);
 }
 
@@ -54,6 +55,7 @@ void DrmNativeDisplayDelegate::Configure(
     const display::DisplayMode* mode,
     const gfx::Point& origin,
     const display::ConfigureCallback& callback) {
+LOG(ERROR) << "@@@ DrmNativeDisplayDelegate::Configure\n";
   DrmDisplayHost* display = display_manager_->GetDisplay(output.display_id());
   display->Configure(mode, origin, callback);
 }

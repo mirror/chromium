@@ -21,30 +21,31 @@ namespace display {
 class DisplaySnapshot;
 }
 
-namespace service_manager {
-class Connector;
-}
-
 namespace ui {
 class DrmDisplayHostManager;
 class DrmOverlayManager;
 class GpuThreadObserver;
+class DrmDeviceConnector;
 
 // This is the Viz host-side library for the DRM device service provided by the
 // viz process.
 class HostDrmDevice : public GpuThreadAdapter {
  public:
-  HostDrmDevice(DrmCursor* cursor, service_manager::Connector* connector);
+  HostDrmDevice(DrmCursor* cursor);
   ~HostDrmDevice() override;
 
   // Start the DRM service. Runs the |OnDrmServiceStartedCallback| when the
   // service has launched and initiates the remaining startup.
-  void AsyncStartDrmDevice();
-
+  void AsyncStartDrmDevice(const DrmDeviceConnector& connector);
+ 
   // Blocks until the DRM service has come up. Use this entry point only when
   // supporting launch of the service where the ozone UI and GPU
   // reponsibilities are performed by the same underlying thread.
   void BlockingStartDrmDevice();
+
+// NEW
+// Called when we know that the DRM service (running in the Viz process) is ready to operate and can be connected to. The connector instance permits creating a DrmDevicePtr (and appropriate cursor interface pointers.)
+  void OnGpuServiceLaunched(const DrmDeviceConnector& connector);
 
   void ProvideManagers(DrmDisplayHostManager* display_manager,
                        DrmOverlayManager* overlay_manager);
@@ -92,8 +93,13 @@ class HostDrmDevice : public GpuThreadAdapter {
   bool GpuWindowBoundsChanged(gfx::AcceleratedWidget widget,
                               const gfx::Rect& bounds) override;
 
+  base::WeakPtr<HostDrmDevice>  GetWeakPtr() {
+	return weak_ptr_factory_.GetWeakPtr();
+  }
+
  private:
   void OnDrmServiceStartedCallback(bool success);
+  // TODO(rjkroege): Can I get rid of this?
   void PollForSingleThreadReady(int previous_delay);
   void RunObservers();
 
@@ -118,11 +124,13 @@ class HostDrmDevice : public GpuThreadAdapter {
   // Mojo implementation of the DrmDevice.
   ui::ozone::mojom::DrmDevicePtr drm_device_ptr_;
 
+
+
   DrmDisplayHostManager* display_manager_;  // Not owned.
   DrmOverlayManager* overlay_manager_;      // Not owned.
   DrmCursor* cursor_;                       // Not owned.
 
-  service_manager::Connector* connector_;
+//  service_manager::Connector* connector_;
   THREAD_CHECKER(on_window_server_thread_);
 
   bool connected_ = false;
