@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad808b75_accc971f",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-10T23:47:54Z",
+      "side": 1,
+      "message": "also, DCHECK((all_history \u0026\u0026 deleted_rows.empty()) || !deleted_rows.empty()) ?",
+      "range": {
+        "startLine": 634,
+        "startChar": 6,
+        "endLine": 634,
+        "endChar": 17
+      },
+      "revId": "ef125f9ab839019de850afc0ef9564dafdb1002f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
