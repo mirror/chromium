@@ -666,6 +666,23 @@
     },
     {
       "key": {
+        "uuid": "a38d619e_7e869e2b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-10T01:56:46Z",
+      "side": 1,
+      "message": "Your approach introduces extra complexity in the test.\n\n1) You need to check that the document is loaded. This isn\u0027t a concern with properly written HTML.\n2) HTML markup is declarative, so it\u0027s easier to scan than JS that creates the same DOM element(s).\n3) Building the elements in JS means you also need code to insert them in the DOM.\n\nI agree that reducing boilerplate is good, even in tests, but I think that should only be done when no additional complexity is introduced. This leads to more duplication in tests than we\u0027d want in code, and I think the outcome is acceptable here. Due to the nature of our work, LayoutTests change fairly rarely (the Web Platform changes very slowly), but are debugged somewhat frequently (code architecture changes result in failed tests).\n\nOverly complex tests make it likely that the engineer encountering the test failure will prefer to disable your test rather than debug and fix it. When that happens, your test isn\u0027t helping make the product better -- it just adds technical debt.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f32b2cb_47398214",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -908,6 +925,24 @@
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c59eadcd_f6a00b4c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-10T01:56:46Z",
+      "side": 1,
+      "message": "This is a very thoughtful reasoning. I like it!\n\nCan you please copy-paste this answer as a comment above the line? I claim that most engineers don\u0027t know these things by heart, so by documenting your thought process we\u0027ll be able to take advantage of your reasoning when debugging failures.",
+      "parentUuid": "3e260974_2cfd15e3",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
