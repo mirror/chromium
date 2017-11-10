@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "591fa873_0c464e9a",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-10T20:05:44Z",
+      "side": 1,
+      "message": "I think this comment is now optional.",
+      "range": {
+        "startLine": 249,
+        "startChar": 4,
+        "endLine": 251,
+        "endChar": 32
+      },
+      "revId": "3eeb141fb0a834dc3a1259c82d0f812749de1f64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b60d9d_f1e8595d",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-10T20:05:44Z",
+      "side": 1,
+      "message": "nit: can this be moved to the previous line?\ni.e.\nstatic void setAnalyticsComponent(Component component,\n                                  ComponentStateCallback callback)",
+      "revId": "3eeb141fb0a834dc3a1259c82d0f812749de1f64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
