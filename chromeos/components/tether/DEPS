@@ -1,5 +1,6 @@
 include_rules = [
   "+components/cryptauth",
+  "+components/pref_registry",
   "+components/proximity_auth/logging",
   "+components/signin/core/browser",
   "+device/bluetooth",

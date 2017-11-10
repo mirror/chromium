@@ -127,6 +127,7 @@ static_library("tether") {
     "//chromeos/components/tether/proto",
     "//components/cryptauth",
     "//components/cryptauth/ble",
+    "//components/pref_registry",
     "//components/prefs",
     "//components/proximity_auth/logging",
     "//components/signin/core/browser",
