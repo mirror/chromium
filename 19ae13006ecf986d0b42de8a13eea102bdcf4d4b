@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5be98b77_1b613508",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-10T23:24:06Z",
+      "side": 1,
+      "message": "Parent element instead of parent div, maybe?",
+      "revId": "19ae13006ecf986d0b42de8a13eea102bdcf4d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
