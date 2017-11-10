@@ -22,6 +22,30 @@
       "revId": "d9e651f6f0e7f270b9854a7c60139665f8a8e9cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e6862f_39997a9e",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-10T05:04:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fe707b4_a04722f9",
+      "range": {
+        "startLine": 213,
+        "startChar": 10,
+        "endLine": 213,
+        "endChar": 22
+      },
+      "revId": "d9e651f6f0e7f270b9854a7c60139665f8a8e9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
