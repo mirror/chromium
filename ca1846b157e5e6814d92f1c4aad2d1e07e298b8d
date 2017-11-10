@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41d6a771_4bd70e4e",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1652,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-10T03:34:00Z",
+      "side": 1,
+      "message": "introducing dispatch before the fast path could have a performance impact. I believe it will need to happen when we ribbonize fast paths (which rob.buis@samsung is currently working on), but double check that it doesn\u0027t have a big impact now",
+      "revId": "ca1846b157e5e6814d92f1c4aad2d1e07e298b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
