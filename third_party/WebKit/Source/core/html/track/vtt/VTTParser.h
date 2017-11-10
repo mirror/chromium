@@ -91,6 +91,10 @@ class VTTParser final : public GarbageCollectedFinalized<VTTParser> {
     // characters or U+0009 CHARACTER TABULATION (tab) characters.
     return c == ' ' || c == '\t';
   }
+  static inline bool IsAComma(UChar c) {
+    // WebVTT comma characters are U+002C COMMA
+    return c == ',';
+  }
   static bool CollectTimeStamp(const String&, double& time_stamp);
 
   // Useful functions for parsing percentage settings.

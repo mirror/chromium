@@ -278,37 +278,52 @@ void SnapToLinesLayouter::UpdateLayout() {
 
 }  // unnamed namespace
 
-LayoutVTTCue::LayoutVTTCue(ContainerNode* node, float snap_to_lines_position)
-    : LayoutBlockFlow(node), snap_to_lines_position_(snap_to_lines_position) {}
+LayoutVTTCue::LayoutVTTCue(ContainerNode* node,
+                           float snap_to_lines_position,
+                           int line_align)
+    : LayoutBlockFlow(node),
+      snap_to_lines_position_(snap_to_lines_position),
+      line_align_(line_align) {}
 
 void LayoutVTTCue::RepositionCueSnapToLinesNotSet() {
-  // FIXME: Implement overlapping detection when snap-to-lines is not set.
-  // http://wkb.ug/84296
 
   // http://dev.w3.org/html5/webvtt/#dfn-apply-webvtt-cue-settings
   // Step 13, "If cue's text track cue snap-to-lines flag is not set".
 
-  // 1. Let bounding box be the bounding box of the boxes in boxes.
+  if (line_align_) {
+    // 1. Let bounding box be the bounding box of the boxes in boxes.
+    LayoutRect boundingBox = ContentBoxRect();
 
-  // 2. Run the appropriate steps from the following list:
-  //    If the text track cue writing direction is horizontal
-  //       If the text track cue line alignment is middle alignment
-  //          Move all the boxes in boxes up by half of the height of
-  //          bounding box.
-  //       If the text track cue line alignment is end alignment
-  //          Move all the boxes in boxes up by the height of bounding box.
-  //
-  //    If the text track cue writing direction is vertical growing left or
-  //    vertical growing right
-  //       If the text track cue line alignment is middle alignment
-  //          Move all the boxes in boxes left by half of the width of
-  //          bounding box.
-  //       If the text track cue line alignment is end alignment
-  //          Move all the boxes in boxes left by the width of bounding box.
+    WritingMode writing_mode = StyleRef().GetWritingMode();
+    LayoutUnit extent = blink::IsHorizontalWritingMode(writing_mode)
+                            ? boundingBox.Height()
+                            : boundingBox.Width();
+    // 2. Run the appropriate steps from the following list:
+    //    If the text track cue writing direction is horizontal
+    //       If the text track cue line alignment is center alignment
+    //          Move all the boxes in boxes up by half of the height of
+    //          bounding box.
+    //       If the text track cue line alignment is end alignment
+    //          Move all the boxes in boxes up by the height of bounding box.
+    //
+    //    If the text track cue writing direction is vertical growing left or
+    //    vertical growing right
+    //       If the text track cue line alignment is center alignment
+    //          Move all the boxes in boxes left by half of the width of
+    //          bounding box.
+    //       If the text track cue line alignment is end alignment
+    //          Move all the boxes in boxes left by the width of bounding box.
+    LayoutUnit fraction(line_align_);
+    fraction /= 100;
+    SetLogicalTop(LogicalTop() - extent * fraction);
+  }
 
   // 3. If none of the boxes in boxes would overlap any of the boxes in
   // output, and all the boxes in output are within the video's rendering
   // area, then jump to the step labeled done positioning below.
+
+  // FIXME: Implement overlapping detection when snap-to-lines is not set.
+  // http://wkb.ug/84296
 
   // 4. If there is a position to which the boxes in boxes can be moved while
   // maintaining the relative positions of the boxes in boxes to each other
