@@ -74,3 +74,16 @@ wheel: <
   name: "infra/python/wheels/numpy/${platform}_${py_python}_${py_abi}"
   version: "version:1.11.3"
 >
+
+# Used by:
+#   third_party/catapult
+wheel: <
+  name: "infra/python/wheels/pywin32/${platform}_${py_python}_${py_abi}"
+  version: "version:219"
+  match_tag: <
+    platform: "win32"
+  >
+  match_tag: <
+    platform: "win_amd64"
+  >
+>
