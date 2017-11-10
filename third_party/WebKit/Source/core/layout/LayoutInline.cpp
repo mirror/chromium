@@ -273,6 +273,7 @@ LayoutRect LayoutInline::LocalCaretRect(
     const InlineBox* inline_box,
     int,
     LayoutUnit* extra_width_to_end_of_line) const {
+  DCHECK(CanUseInlineBox(*this));
   if (FirstChild()) {
     // This condition is possible if the LayoutInline is at an editing boundary,
     // i.e. the VisiblePosition is:
@@ -627,6 +628,7 @@ void LayoutInline::Paint(const PaintInfo& paint_info,
 
 template <typename GeneratorContext>
 void LayoutInline::GenerateLineBoxRects(GeneratorContext& yield) const {
+  DCHECK(CanUseInlineBox(*this));
   if (!AlwaysCreateLineBoxes()) {
     GenerateCulledLineBoxRects(yield, this);
   } else if (InlineFlowBox* curr = FirstLineBox()) {
@@ -639,6 +641,7 @@ static inline void ComputeItemTopHeight(const LayoutInline* container,
                                         const RootInlineBox& root_box,
                                         LayoutUnit* top,
                                         LayoutUnit* height) {
+  DCHECK(CanUseInlineBox(*container));
   bool first_line = root_box.IsFirstLineStyle();
   const SimpleFontData* font_data =
       root_box.GetLineLayoutItem().Style(first_line)->GetFont().PrimaryFont();
@@ -662,6 +665,7 @@ template <typename GeneratorContext>
 void LayoutInline::GenerateCulledLineBoxRects(
     GeneratorContext& yield,
     const LayoutInline* container) const {
+  DCHECK(CanUseInlineBox(*this));
   if (!CulledInlineFirstLineBox())
     return;
 
@@ -812,6 +816,7 @@ void LayoutInline::AbsoluteQuadsForSelf(Vector<FloatQuad>& quads,
 }
 
 LayoutPoint LayoutInline::FirstLineBoxTopLeft() const {
+  DCHECK(CanUseInlineBox(*this));
   if (InlineBox* first_box = FirstLineBoxIncludingCulling())
     return first_box->Location();
   return LayoutPoint();
@@ -953,6 +958,7 @@ class LinesBoundingBoxGeneratorContext {
 }  // unnamed namespace
 
 LayoutRect LayoutInline::LinesBoundingBox() const {
+  DCHECK(CanUseInlineBox(*this));
   if (!AlwaysCreateLineBoxes()) {
     DCHECK(!FirstLineBox());
     FloatRect float_result;
@@ -998,6 +1004,7 @@ LayoutRect LayoutInline::LinesBoundingBox() const {
 }
 
 InlineBox* LayoutInline::CulledInlineFirstLineBox() const {
+  DCHECK(CanUseInlineBox(*this));
   for (LayoutObject* curr = FirstChild(); curr; curr = curr->NextSibling()) {
     if (curr->IsFloatingOrOutOfFlowPositioned())
       continue;
@@ -1022,6 +1029,7 @@ InlineBox* LayoutInline::CulledInlineFirstLineBox() const {
 }
 
 InlineBox* LayoutInline::CulledInlineLastLineBox() const {
+  DCHECK(CanUseInlineBox(*this));
   for (LayoutObject* curr = LastChild(); curr; curr = curr->PreviousSibling()) {
     if (curr->IsFloatingOrOutOfFlowPositioned())
       continue;
@@ -1046,6 +1054,7 @@ InlineBox* LayoutInline::CulledInlineLastLineBox() const {
 }
 
 LayoutRect LayoutInline::CulledInlineVisualOverflowBoundingBox() const {
+  DCHECK(CanUseInlineBox(*this));
   FloatRect float_result;
   LinesBoundingBoxGeneratorContext context(float_result);
   GenerateCulledLineBoxRects(context, this);
@@ -1086,12 +1095,14 @@ LayoutRect LayoutInline::CulledInlineVisualOverflowBoundingBox() const {
 }
 
 LayoutRect LayoutInline::LinesVisualOverflowBoundingBox() const {
+  DCHECK(CanUseInlineBox(*this));
   if (!AlwaysCreateLineBoxes())
     return CulledInlineVisualOverflowBoundingBox();
 
   if (!FirstLineBox() || !LastLineBox())
     return LayoutRect();
 
+  DCHECK(CanUseInlineBox(*this));
   // Return the width of the minimal left side and the maximal right side.
   LayoutUnit logical_left_side = LayoutUnit::Max();
   LayoutUnit logical_right_side = LayoutUnit::Min();
@@ -1301,6 +1312,8 @@ void LayoutInline::UpdateHitTestResult(HitTestResult& result,
 }
 
 void LayoutInline::DirtyLineBoxes(bool full_layout) {
+  if (FirstLineBox())
+    DCHECK(CanUseInlineBox(*this));
   if (full_layout) {
     line_boxes_.DeleteLineBoxes();
     return;
@@ -1335,10 +1348,12 @@ void LayoutInline::DirtyLineBoxes(bool full_layout) {
 }
 
 InlineFlowBox* LayoutInline::CreateInlineFlowBox() {
+  DCHECK(CanUseInlineBox(*this));
   return new InlineFlowBox(LineLayoutItem(this));
 }
 
 InlineFlowBox* LayoutInline::CreateAndAppendInlineFlowBox() {
+  DCHECK(CanUseInlineBox(*this));
   SetAlwaysCreateLineBoxes();
   InlineFlowBox* flow_box = CreateInlineFlowBox();
   line_boxes_.AppendLineBox(flow_box);
@@ -1534,12 +1549,17 @@ void LayoutInline::InvalidateDisplayItemClients(
   ObjectPaintInvalidator paint_invalidator(*this);
   paint_invalidator.InvalidateDisplayItemClient(*this, invalidation_reason);
 
+  // TDOO(layout-dev): We should have LayoutNG version of line box.
   for (InlineFlowBox* box = FirstLineBox(); box; box = box->NextLineBox())
     paint_invalidator.InvalidateDisplayItemClient(*box, invalidation_reason);
 }
 
 // TODO(loonybear): Not to just dump 0, 0 as the x and y here
 LayoutRect LayoutInline::DebugRect() const {
+  // TODO(layout-dev): Once |LinesBoundingBox()| works with LayoutNG, we should
+  // remove |CanUseInlineBox()| check.
+  if (!CanUseInlineBox(*this))
+    return LayoutRect();
   IntRect lines_box = EnclosingIntRect(LinesBoundingBox());
   return LayoutRect(IntRect(0, 0, lines_box.Width(), lines_box.Height()));
 }
