@@ -701,6 +701,24 @@
     },
     {
       "key": {
+        "uuid": "86916fe8_04805e4a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T02:25:14Z",
+      "side": 1,
+      "message": "Thanks for the explanation! Actually the CSS is now deleted instead (as you suggested in our later offline follow-up) since this test isn\u0027t manual.",
+      "parentUuid": "a38d619e_7e869e2b",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f32b2cb_47398214",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -961,6 +979,24 @@
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a040380d_1b9010f0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T02:25:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c59eadcd_f6a00b4c",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
