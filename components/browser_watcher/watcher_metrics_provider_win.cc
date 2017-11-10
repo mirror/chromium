@@ -85,7 +85,7 @@ void RecordExitCodes(const base::string16& registry_path) {
   if (!regkey.Valid())
     return;
 
-  size_t num = regkey.GetValueCount();
+  int64_t num = regkey.GetValueCount();
   if (num == 0)
     return;
 
