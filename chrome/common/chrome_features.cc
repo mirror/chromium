@@ -573,4 +573,9 @@ const base::Feature kTPMFirmwareUpdate{"TPMFirmwareUpdate",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_CHROMEOS)
 
+#if defined(OS_ANDROID)
+const base::Feature kGrantNotificationsToDSE{"GrantNotificationsToDSE",
+                                             base::FEATURE_ENABLED_BY_DEFAULT};
+#endif  // defined(OS_ANDROID)
+
 }  // namespace features
