@@ -80,6 +80,7 @@ import org.chromium.chrome.browser.toolbar.ToolbarControlContainer;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.browser.util.UrlUtilities;
+import org.chromium.chrome.browser.webapps.WebappInterceptNavigationDelegate;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.WebContents;
@@ -280,6 +281,9 @@ public class CustomTabActivity extends ChromeActivity {
         mIsClosing = false;
         mIsKeepAlive = mConnection.keepAliveForSession(
                 mIntentDataProvider.getSession(), mIntentDataProvider.getKeepAliveServiceIntent());
+        WebappInterceptNavigationDelegate.startCountCustomTabTimeSpendIfNecessary(
+                getIntent().getIntExtra(
+                        CustomTabIntentDataProvider.EXTRA_BROWSER_LAUNCH_SOURCE, -1));
     }
 
     @Override
@@ -287,6 +291,7 @@ public class CustomTabActivity extends ChromeActivity {
         super.onStop();
         mConnection.dontKeepAliveForSession(mIntentDataProvider.getSession());
         mIsKeepAlive = false;
+        WebappInterceptNavigationDelegate.stopCountCustomTabTimeSpendIfNecessary();
     }
 
     @Override
