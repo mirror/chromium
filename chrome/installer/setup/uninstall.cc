@@ -7,6 +7,8 @@
 #include "chrome/installer/setup/uninstall.h"
 
 #include <windows.h>
+
+#include <objbase.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -637,6 +639,26 @@ bool DeleteChromeRegistrationKeys(const InstallerState& installer_state,
   // would otherwise try to figure out the currently installed suffix).
   reg_app_id.append(install_static::GetBaseAppId() + browser_entry_suffix);
   InstallUtil::DeleteRegistryKey(root, reg_app_id, WorkItem::kWow64Default);
+
+  // Delete Software\Classes\CLSID\|toast_activator_clsid|.
+  //
+  // CLSID has a string format of "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".
+  // It has 39 characters including '\0' in the end.
+  const int kCLSIDSize = 39;
+  wchar_t toast_activator_clsid[kCLSIDSize];
+  if (::StringFromGUID2(install_static::GetToastActivatorClsid(),
+                        toast_activator_clsid,
+                        arraysize(toast_activator_clsid)) == kCLSIDSize) {
+    base::string16 toast_activator_key(L"Software\\Classes\\CLSID\\");
+    toast_activator_key.append(toast_activator_clsid)
+        .append(browser_entry_suffix);
+    InstallUtil::DeleteRegistryKey(root, toast_activator_key,
+                                   WorkItem::kWow64Default);
+    InstallUtil::DeleteRegistryKey(HKEY_LOCAL_MACHINE, toast_activator_key,
+                                   WorkItem::kWow64Default);
+  } else {
+    LOG(DFATAL) << "Applying StringFromGUID2() to toast activator CLSID failed";
+  }
 
   // Delete all Start Menu Internet registrations that refer to this Chrome.
   {
