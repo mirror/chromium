@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "6d4c7a90_69871cb9",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-10T00:07:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e50d463_33803941",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0487a226_c1c647ce",
         "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
         "patchSetId": 5
@@ -87,6 +105,24 @@
       "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf03aad_205c44f8",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-10T00:07:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0487a226_c1c647ce",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "cebfc997_19388467",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-10T00:07:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0f040cb_8d65dbfb",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fd9598f_cb94455c",
         "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
         "patchSetId": 5
@@ -121,6 +175,24 @@
       "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b2fd76_fedd7b88",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-10T00:07:32Z",
+      "side": 1,
+      "message": "No constraints. Comment fixed \u0026 updated.",
+      "parentUuid": "7fd9598f_cb94455c",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "09865792_204796fc",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-10T00:07:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "236a7568_246a114c",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8a1fb23_4868c287",
         "filename": "ash/accessibility/accessibility_highlight_layer.cc",
         "patchSetId": 5
@@ -158,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "906d6536_651f7a6f",
+        "filename": "ash/accessibility/accessibility_highlight_layer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-10T00:07:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8a1fb23_4868c287",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfe06cf8_7e8dba5a",
         "filename": "ash/accessibility/accessibility_highlight_layer.h",
         "patchSetId": 5
@@ -172,6 +280,24 @@
       "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ebcf681_221c271c",
+        "filename": "ash/accessibility/accessibility_highlight_layer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-10T00:07:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfe06cf8_7e8dba5a",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
