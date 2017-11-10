@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "34ef1b8b_dfe58d67",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareMenuActionHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-10T18:51:27Z",
+      "side": 1,
+      "message": "The benefit of GURLUtils.getScheme() over Uri.getScheme() might be stricter checking. In this particular case, since the URL is from GURL in the native side, it is already kind of validated.\n\nThis is indeed a broader issue, so let\u0027s leave it as is for now.",
+      "parentUuid": "810a64c6_db3f5981",
+      "range": {
+        "startLine": 77,
+        "startChar": 46,
+        "endLine": 77,
+        "endChar": 86
+      },
+      "revId": "18fbac8cfac5a71addaa7bbfae4a0c5e73045f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea0d2322_9ad52e9f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareMenuActionHandler.java",
         "patchSetId": 4
