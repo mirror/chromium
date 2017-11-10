@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82b2576c_744209bb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-10T23:22:45Z",
+      "side": 1,
+      "message": "F2 is a shortcut!",
+      "revId": "6fb0e2cdbe05bc7e0ba5b32d7e1c67399c39b530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
