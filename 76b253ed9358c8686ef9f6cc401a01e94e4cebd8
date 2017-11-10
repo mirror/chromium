@@ -16,6 +16,24 @@
       "revId": "76b253ed9358c8686ef9f6cc401a01e94e4cebd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ff8efd_b42adabc",
+        "filename": "build/linux/sysroot_scripts/sysroot-creator.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-10T22:28:28Z",
+      "side": 1,
+      "message": "Good idea. I\u0027ll do that as a followup",
+      "parentUuid": "4de9a67c_458be80f",
+      "revId": "76b253ed9358c8686ef9f6cc401a01e94e4cebd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
