@@ -26,8 +26,7 @@ SNAPSHOT_EXPORT void GrabWindowSnapshotAsyncAura(
     const gfx::Rect& source_rect,
     const GrabWindowSnapshotAsyncCallback& callback);
 
-using GrabLayerSnapshotCallback =
-    base::Callback<void(const gfx::Image& snapshot)>;
+using GrabLayerSnapshotCallback = base::Callback<void(gfx::Image snapshot)>;
 
 // Grabs a snapshot of a |layer| and all its descendants.
 // |source_rect| is the bounds of the snapshot content relative to |layer|.

@@ -18,6 +18,8 @@
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/dip_util.h"
 #include "ui/compositor/layer.h"
+#include "ui/gfx/image/image.h"
+#include "ui/gfx/image/image_skia.h"
 #include "ui/snapshot/snapshot_async.h"
 
 namespace ui {
@@ -135,13 +137,29 @@ void GrabViewSnapshotAsync(gfx::NativeView view,
   GrabWindowSnapshotAsyncAura(view, source_rect, callback);
 }
 
+// This is similar to SnapshotAsync::RunCallbackWithCopyOutputResult
+// The only difference is the signature of the callback method.  Here the
+// callback takes an object value param instead of const ref.  We pass by value
+// here because gfx::Image is not thread safe, we pass the ownership of the
+// object so the downstream callback could decide if they want to process
+// the image object async or not.
+static void RunCallbackWithCopyOutputResult(
+    const GrabLayerSnapshotCallback& callback,
+    std::unique_ptr<viz::CopyOutputResult> result) {
+  const SkBitmap bitmap = result->AsSkBitmap();
+  if (!bitmap.readyToDraw()) {
+    callback.Run(gfx::Image());
+    return;
+  }
+  callback.Run(gfx::Image::CreateFrom1xBitmap(bitmap));
+}
+
 void GrabLayerSnapshotAsync(ui::Layer* layer,
                             const gfx::Rect& source_rect,
                             const GrabLayerSnapshotCallback& callback) {
   MakeAsyncCopyRequest(
       layer, source_rect,
-      base::BindOnce(&SnapshotAsync::RunCallbackWithCopyOutputResult,
-                     callback));
+      base::BindOnce(&RunCallbackWithCopyOutputResult, callback));
 }
 
 #endif
