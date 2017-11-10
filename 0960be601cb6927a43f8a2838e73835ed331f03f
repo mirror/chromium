@@ -87,6 +87,24 @@
       "revId": "0960be601cb6927a43f8a2838e73835ed331f03f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82423361_b969fbd4",
+        "filename": "chrome/common/extensions/manifest_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-10T00:49:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a267ba3c_e0b53be9",
+      "revId": "0960be601cb6927a43f8a2838e73835ed331f03f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
