@@ -81,6 +81,30 @@
       "revId": "4ad1fd5f95e86c2095922ae496531fb0c2422179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f589c18a_76139e9b",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-10T01:37:23Z",
+      "side": 1,
+      "message": "Because you commented the closing bracket of a class, not really of the namespace.",
+      "parentUuid": "4450bd54_cbdef56d",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 28
+      },
+      "revId": "4ad1fd5f95e86c2095922ae496531fb0c2422179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
