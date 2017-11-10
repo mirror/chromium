@@ -122,7 +122,7 @@ namespace {
 // BrowserMain.
 class LoadAndLaunchPlatformAppBrowserTest : public PlatformAppBrowserTest {
  protected:
-  LoadAndLaunchPlatformAppBrowserTest() {}
+  LoadAndLaunchPlatformAppBrowserTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     PlatformAppBrowserTest::SetUpCommandLine(command_line);
@@ -148,7 +148,7 @@ class LoadAndLaunchPlatformAppBrowserTest : public PlatformAppBrowserTest {
 // calling BrowserMain.
 class LoadAndLaunchExtensionBrowserTest : public PlatformAppBrowserTest {
  protected:
-  LoadAndLaunchExtensionBrowserTest() {}
+  LoadAndLaunchExtensionBrowserTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     PlatformAppBrowserTest::SetUpCommandLine(command_line);
