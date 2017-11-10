@@ -104,6 +104,24 @@
       "revId": "486502884976ddbb1370c53ddde7bb1c61d49e0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742c565e_ae05188c",
+        "filename": "services/device/public/cpp/generic_sensor/motion_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-10T19:40:06Z",
+      "side": 1,
+      "message": "Thanks, I actually meant to add it to the description of this patch i.e. in gerrit.",
+      "parentUuid": "5928e845_96206b2f",
+      "revId": "486502884976ddbb1370c53ddde7bb1c61d49e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

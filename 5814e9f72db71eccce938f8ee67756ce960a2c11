@@ -209,6 +209,58 @@
       "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57c2d33_ffdf40d3",
+        "filename": "device/sensors/android/javatests/src/org/chromium/device/sensors/DeviceSensorsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-10T19:40:06Z",
+      "side": 0,
+      "message": "OK, are there fallback tests? probably in the renderer?",
+      "parentUuid": "a2b20b38_86f009de",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e85117_a932d9ad",
+        "filename": "device/sensors/android/javatests/src/org/chromium/device/sensors/DeviceSensorsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-10T19:40:06Z",
+      "side": 0,
+      "message": "Looking at PlatformSensorAndProviderTest.java [1] it seems there could be a bit more testing there, because it\u0027s only testing the LIGHT sensor. In particular I think coverage of sensors with 3 or more values like ROTATION_VECTOR would be good. I guess this is not really part of this patch and could be done perhaps as a follow-up or before this patch lands.\n\n[1] https://cs.chromium.org/chromium/src/services/device/generic_sensor/android/junit/src/org/chromium/device/sensors/PlatformSensorAndProviderTest.java?q\u003dPlatformSensorAndProviderTest.java\u0026dr\u0026l\u003d286",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae4056f2_e321eba6",
+        "filename": "device/sensors/android/javatests/src/org/chromium/device/sensors/DeviceSensorsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-10T19:40:06Z",
+      "side": 0,
+      "message": "Do we have any tests for computation of angles from the rotation matrix in the new implementation?",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
