@@ -263,6 +263,30 @@
     },
     {
       "key": {
+        "uuid": "eeaa8c31_07c8ddcf",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-10T20:44:18Z",
+      "side": 1,
+      "message": "|io_task_runner| is necessary to ensure that certain variables are accessed on the same thread. I changed it to call sequence checker in certain functions, but I am not sure how much difference that makes.",
+      "parentUuid": "be63bd47_67ebf0e5",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 63
+      },
+      "revId": "7ba2971930f1aaf7c5164e10651f18e6a1197c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87183b86_fc126a37",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
         "patchSetId": 5
