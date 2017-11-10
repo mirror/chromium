@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bcb99ad_87c485ac",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-10T18:55:06Z",
+      "side": 1,
+      "message": "Caching.\n\n\nThis optimization is not related to cache. It was suggested and added in the cache cl, but seems totally not related and a bit confusion. In addition, if move this in if (cache) branch, it is redundant because when there is a cache, the damage_rect is full_rect.\nWDYT?",
+      "range": {
+        "startLine": 629,
+        "startChar": 62,
+        "endLine": 629,
+        "endChar": 70
+      },
+      "revId": "b9989cc59e16528901d66eb6a6821c7d187b5d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
