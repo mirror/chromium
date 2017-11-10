@@ -695,8 +695,12 @@ void GetFormAndField(autofill::FormData* form,
   // Because of the cost of communicating with the server, only forms that have
   // enough forms to make them likely candidates for profile completion are
   // extracted.
+  size_t min_required_fields =
+      MIN(autofill::MinRequiredFieldsForUpload(),
+          MIN(autofill::MinRequiredFieldsForHeuristics(),
+              autofill::MinRequiredFieldsForQuery()));
   [self fetchFormsWithName:base::string16()
-      minimumRequiredFieldsCount:autofill::kRequiredFieldsForPredictionRoutines
+      minimumRequiredFieldsCount:min_required_fields
                          pageURL:pageURL
                completionHandler:completionHandler];
 }

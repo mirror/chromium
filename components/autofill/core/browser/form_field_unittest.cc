@@ -131,40 +131,47 @@ TEST(FormFieldTest, ParseFormFields) {
   FormFieldData field_data;
   field_data.form_control_type = "text";
 
-  field_data.label = ASCIIToUTF16("Address line1");
-  fields.push_back(
-      base::MakeUnique<AutofillField>(field_data, field_data.label));
-
   field_data.check_status = FormFieldData::CHECKABLE_BUT_UNCHECKED;
   field_data.label = ASCIIToUTF16("Is PO Box");
   fields.push_back(
       base::MakeUnique<AutofillField>(field_data, field_data.label));
 
+  // Does not parse since there are only field and it's checkable.
+  EXPECT_TRUE(FormField::ParseFormFields(fields, true).empty());
+
   // reset |is_checkable| to false.
   field_data.check_status = FormFieldData::NOT_CHECKABLE;
 
+  field_data.label = ASCIIToUTF16("Address line1");
+  fields.push_back(
+      base::MakeUnique<AutofillField>(field_data, field_data.label));
+
+  // Parses a single address line 1 field.
+  {
+    const FieldCandidatesMap field_candidates_map =
+        FormField::ParseFormFields(fields, true);
+    ASSERT_EQ(1u, field_candidates_map.size());
+    EXPECT_EQ(ADDRESS_HOME_LINE1,
+              field_candidates_map.find(ASCIIToUTF16("Address line1"))
+                  ->second.BestHeuristicType());
+  }
+
+  // Parses address line 1 and 2.
   field_data.label = ASCIIToUTF16("Address line2");
   fields.push_back(
       base::MakeUnique<AutofillField>(field_data, field_data.label));
 
-  // Does not parse since there are only 2 recognized fields.
-  ASSERT_TRUE(FormField::ParseFormFields(fields, true).empty());
-
-  field_data.label = ASCIIToUTF16("City");
-  fields.push_back(
-      base::MakeUnique<AutofillField>(field_data, field_data.label));
-
-  // Checkable element shouldn't interfere with inference of Address line2.
-  const FieldCandidatesMap field_candidates_map =
-      FormField::ParseFormFields(fields, true);
-  ASSERT_EQ(3U, field_candidates_map.size());
-
-  EXPECT_EQ(ADDRESS_HOME_LINE1,
-            field_candidates_map.find(ASCIIToUTF16("Address line1"))
-                ->second.BestHeuristicType());
-  EXPECT_EQ(ADDRESS_HOME_LINE2,
-            field_candidates_map.find(ASCIIToUTF16("Address line2"))
-                ->second.BestHeuristicType());
+  {
+    const FieldCandidatesMap field_candidates_map =
+        FormField::ParseFormFields(fields, true);
+    ASSERT_EQ(2u, field_candidates_map.size());
+    EXPECT_EQ(ADDRESS_HOME_LINE1,
+              field_candidates_map.find(ASCIIToUTF16("Address line1"))
+                  ->second.BestHeuristicType());
+    EXPECT_EQ(ADDRESS_HOME_LINE2,
+              field_candidates_map.find(ASCIIToUTF16("Address line2"))
+                  ->second.BestHeuristicType());
+  }
 }
 
 // All parsers see the same form and should not modify it.

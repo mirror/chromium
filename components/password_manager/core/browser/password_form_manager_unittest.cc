@@ -18,6 +18,7 @@
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/user_action_tester.h"
+#include "components/autofill/core/browser/autofill_experiments.h"
 #include "components/autofill/core/browser/autofill_manager.h"
 #include "components/autofill/core/browser/proto/server.pb.h"
 #include "components/autofill/core/browser/test_autofill_client.h"
@@ -409,7 +410,7 @@ class PasswordFormManagerTest : public testing::Test {
     psl_saved_match_.signon_realm = "http://m.accounts.google.com";
 
     autofill::FormFieldData field;
-    field.label = ASCIIToUTF16("full_name");
+    field.label = ASCIIToUTF16("Full name");
     field.name = ASCIIToUTF16("full_name");
     field.form_control_type = "text";
     saved_match_.form_data.fields.push_back(field);
@@ -3368,6 +3369,12 @@ TEST_F(PasswordFormManagerTest, DoesManageDifferentSignonRealmSameDrivers) {
 }
 
 TEST_F(PasswordFormManagerTest, UploadUsernameCorrectionVote) {
+  // TODO(rogerm,kolos): Fix this test so that it works correctly when the
+  // enforcement of the minimum number of required for fields is upload is
+  // relaxed.
+  base::test::ScopedFeatureList features;
+  features.InitAndEnableFeature(
+      autofill::kAutofillEnforceMinRequiredFieldsForUpload);
   for (bool is_form_with_2_fields : {false, true}) {
     SCOPED_TRACE(testing::Message()
                  << "is_form_with_2_fields=" << is_form_with_2_fields);

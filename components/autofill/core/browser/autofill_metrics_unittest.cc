@@ -1470,26 +1470,39 @@ TEST_F(AutofillMetricsTest, PredictedMetricsWithAutocomplete) {
     std::string histogram_name =
         "Autofill.FieldPredictionQuality.ByFieldType." + source;
     // First verify that country was not predicted by client or server.
-    histogram_tester.ExpectBucketCount(
-        histogram_name,
-        GetFieldTypeGroupMetric(ADDRESS_HOME_COUNTRY,
-                                source == "Overall"
-                                    ? AutofillMetrics::TRUE_POSITIVE
-                                    : AutofillMetrics::FALSE_NEGATIVE_UNKNOWN),
-        1);
+    {
+      SCOPED_TRACE("ADDRESS_HOME_COUNTRY");
+      histogram_tester.ExpectBucketCount(
+          histogram_name,
+          GetFieldTypeGroupMetric(
+              ADDRESS_HOME_COUNTRY,
+              source == "Overall" ? AutofillMetrics::TRUE_POSITIVE
+                                  : AutofillMetrics::FALSE_NEGATIVE_UNKNOWN),
+          1);
+    }
 
-    // We did not predict zip code or phone number, because they did not have
-    // |autocomplete_attribute|, nor client or server predictions.
-    histogram_tester.ExpectBucketCount(
-        histogram_name,
-        GetFieldTypeGroupMetric(ADDRESS_HOME_ZIP,
-                                AutofillMetrics::FALSE_NEGATIVE_UNKNOWN),
-        1);
-    histogram_tester.ExpectBucketCount(
-        histogram_name,
-        GetFieldTypeGroupMetric(PHONE_HOME_WHOLE_NUMBER,
-                                AutofillMetrics::FALSE_NEGATIVE_UNKNOWN),
-        1);
+    // We did not predict zip code because it did not have an autocomplete
+    // attribute, nor client or server predictions.
+    {
+      SCOPED_TRACE("ADDRESS_HOME_ZIP");
+      histogram_tester.ExpectBucketCount(
+          histogram_name,
+          GetFieldTypeGroupMetric(ADDRESS_HOME_ZIP,
+                                  AutofillMetrics::FALSE_NEGATIVE_UNKNOWN),
+          1);
+    }
+
+    // Phone should have been predicted by the heuristics but not the server.
+    {
+      SCOPED_TRACE("PHONE_HOME_WHOLE_NUMBER");
+      histogram_tester.ExpectBucketCount(
+          histogram_name,
+          GetFieldTypeGroupMetric(PHONE_HOME_WHOLE_NUMBER,
+                                  source == "Server"
+                                      ? AutofillMetrics::FALSE_NEGATIVE_UNKNOWN
+                                      : AutofillMetrics::TRUE_POSITIVE),
+          1);
+    }
 
     // Sanity check.
     histogram_tester.ExpectTotalCount(histogram_name, 3);
@@ -1627,6 +1640,8 @@ TEST_F(AutofillMetricsTest, StoredProfileCountAutofillableFormSubmission) {
 // Verify that when submitting a non-autofillable form, the stored profile
 // metric is not logged.
 TEST_F(AutofillMetricsTest, StoredProfileCountNonAutofillableFormSubmission) {
+  base::test::ScopedFeatureList features;
+  features.InitAndEnableFeature(kAutofillEnforceMinRequiredFieldsForHeuristics);
   // Construct a non-fillable form.
   FormData form;
   form.name = ASCIIToUTF16("TestForm");
@@ -1771,12 +1786,26 @@ TEST_F(AutofillMetricsTest, DeveloperEngagement) {
 
   std::vector<FormData> forms(1, form);
 
-  // Ensure no metrics are logged when loading a non-fillable form.
+  // Ensure no metrics are logged when small form support is disabled (min
+  // number of fields enforced).
   {
     base::HistogramTester histogram_tester;
     autofill_manager_->OnFormsSeen(forms, TimeTicks());
     autofill_manager_->Reset();
     histogram_tester.ExpectTotalCount("Autofill.DeveloperEngagement", 0);
+  }
+
+  // Otherwise, log developer engagement for all forms.
+  {
+    base::test::ScopedFeatureList features;
+    features.InitAndDisableFeature(
+        kAutofillEnforceMinRequiredFieldsForHeuristics);
+    base::HistogramTester histogram_tester;
+    autofill_manager_->OnFormsSeen(forms, TimeTicks());
+    autofill_manager_->Reset();
+    histogram_tester.ExpectUniqueSample(
+        "Autofill.DeveloperEngagement",
+        AutofillMetrics::FILLABLE_FORM_PARSED_WITHOUT_TYPE_HINTS, 1);
   }
 
   // Add another field to the form, so that it becomes fillable.
@@ -1862,6 +1891,9 @@ TEST_F(AutofillMetricsTest,
 
   // Ensure no metrics are logged when loading a non-fillable form.
   {
+    base::test::ScopedFeatureList features;
+    features.InitAndEnableFeature(
+        kAutofillEnforceMinRequiredFieldsForHeuristics);
     autofill_manager_->OnFormsSeen(forms, TimeTicks::Now());
     autofill_manager_->Reset();
 
@@ -1964,8 +1996,10 @@ TEST_F(AutofillMetricsTest, UkmDeveloperEngagement_LogUpiVpaTypeHint) {
 
     ASSERT_EQ(1U, test_ukm_recorder_.entries_count());
     ASSERT_EQ(1U, test_ukm_recorder_.sources_count());
-    VerifyDeveloperEngagementUkm(test_ukm_recorder_, form,
-                                 {AutofillMetrics::FORM_CONTAINS_UPI_VPA_HINT});
+    VerifyDeveloperEngagementUkm(
+        test_ukm_recorder_, form,
+        {AutofillMetrics::FILLABLE_FORM_PARSED_WITH_TYPE_HINTS,
+         AutofillMetrics::FORM_CONTAINS_UPI_VPA_HINT});
     test_ukm_recorder_.Purge();
   }
 
@@ -4804,8 +4838,8 @@ TEST_F(AutofillMetricsTest, AutofillFormSubmittedState) {
   }
 
   // Non fillable form.
-  form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
-  form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+  form.fields[0].value = ASCIIToUTF16("Unknown Person");
+  form.fields[1].value = ASCIIToUTF16("unknown.person@gmail.com");
   forms.front() = form;
 
   {
@@ -4832,7 +4866,9 @@ TEST_F(AutofillMetricsTest, AutofillFormSubmittedState) {
                              expected_field_fill_status_ukm_metrics);
   }
 
-  // Fill in the third field.
+  // Fillable form.
+  form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+  form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
   form.fields[2].value = ASCIIToUTF16("12345678901");
   forms.front() = form;
 
@@ -4962,8 +4998,12 @@ TEST_F(AutofillMetricsTest, AutofillFormSubmittedState) {
   form.fields[2].value = base::string16();
   forms.front() = form;
 
-  // Non fillable form.
+  // This form is non-fillable if small form support is disabled (min number
+  // of fields enforced.)
   {
+    base::test::ScopedFeatureList features;
+    features.InitAndEnableFeature(
+        kAutofillEnforceMinRequiredFieldsForHeuristics);
     base::HistogramTester histogram_tester;
     base::UserActionTester user_action_tester;
     autofill_manager_->SubmitForm(form, TimeTicks::Now());
