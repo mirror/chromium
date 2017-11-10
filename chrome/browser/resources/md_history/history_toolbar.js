@@ -50,6 +50,8 @@ Polymer({
     // Whether to show the menu promo (a tooltip that points at the menu button
     // in narrow mode).
     showMenuPromo: Boolean,
+
+    guestSession: Boolean,
   },
 
   /** @return {CrToolbarSearchFieldElement} */
@@ -89,6 +91,16 @@ Polymer({
       this.searchField.showAndFocus();
       this.searchField.setValue(this.searchTerm);
     }
+  },
+
+  /**
+   * @param {boolean} showMenuPromo
+   * @param {boolean} guestSession
+   * @return {boolean}
+   * @private
+   */
+  canShowMenuPromo_: function(showMenuPromo, guestSession) {
+    return showMenuPromo && !guestSession;
   },
 
   /**

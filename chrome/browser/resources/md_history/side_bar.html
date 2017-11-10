@@ -109,8 +109,8 @@
       <a id="clear-browsing-data"
           href="chrome://settings/clearBrowserData"
           on-tap="onClearBrowsingDataTap_"
-          disabled$="[[guestSession_]]"
-          tabindex$="[[computeClearBrowsingDataTabIndex_(guestSession_)]]">
+          disabled$="[[guestSession]]"
+          tabindex$="[[computeClearBrowsingDataTabIndex_(guestSession)]]">
         $i18n{clearBrowsingData}
         <iron-icon icon="cr:open-in-new"></iron-icon>
         <paper-ripple id="cbd-ripple"></paper-ripple>

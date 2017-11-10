@@ -76,6 +76,11 @@ Polymer({
 
     // Used to display notices for profile sign-in status.
     showSidebarFooter: Boolean,
+
+    guestSession_: {
+        type: Boolean,
+        value: loadTimeData.getBoolean('isGuestSession'),
+    },
   },
 
   listeners: {
