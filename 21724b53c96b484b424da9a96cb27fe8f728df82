@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc643033_3060111c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-10T06:10:54Z",
+      "side": 1,
+      "message": "Posted in the bug :)",
+      "parentUuid": "2344d0a2_8c5be23f",
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b897910f_445fe1dc",
         "filename": "chrome/browser/ui/views/hover_button.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cb59ea8_0778774a",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-10T06:10:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b897910f_445fe1dc",
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6a395078_78766ce5",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-10T06:10:54Z",
+      "side": 1,
+      "message": "N/A since it was merged with SetTitleText()",
+      "parentUuid": "33a2ae7d_9e8e13bf",
+      "range": {
+        "startLine": 163,
+        "startChar": 18,
+        "endLine": 163,
+        "endChar": 40
+      },
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f22f119f_52ebda57",
         "filename": "chrome/browser/ui/views/hover_button.cc",
         "patchSetId": 4
@@ -79,6 +139,30 @@
       "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42c6271_2c9ce10c",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-10T06:10:54Z",
+      "side": 1,
+      "message": "Yep, sorry!",
+      "parentUuid": "f22f119f_52ebda57",
+      "range": {
+        "startLine": 166,
+        "startChar": 40,
+        "endLine": 166,
+        "endChar": 54
+      },
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "58873538_bad52682",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-10T06:10:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93cc3237_e3292060",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 12
+      },
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "252ec651_73e8d72d",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 4
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "6fcba46c_70ec9842",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-10T06:10:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "252ec651_73e8d72d",
+      "range": {
+        "startLine": 182,
+        "startChar": 40,
+        "endLine": 182,
+        "endChar": 46
+      },
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "079f1e5a_c6455512",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 4
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "88ecf3eb_7ad9f73f",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-10T06:10:54Z",
+      "side": 1,
+      "message": "Whoops, thanks",
+      "parentUuid": "079f1e5a_c6455512",
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6073fb37_4dae87c6",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 4
@@ -159,6 +309,24 @@
       "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cc8049f_f2770301",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-10T06:10:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6073fb37_4dae87c6",
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "b5239791_d573132f",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-10T06:10:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9667958_77826615",
+      "range": {
+        "startLine": 563,
+        "startChar": 6,
+        "endLine": 563,
+        "endChar": 28
+      },
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73ff0bce_ed0cb4d9",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 4
@@ -202,6 +394,24 @@
     },
     {
       "key": {
+        "uuid": "b8c3ed13_b363fdd6",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-10T06:10:54Z",
+      "side": 1,
+      "message": "Done - I think everything using it is OK (in this file anyway), but LMK if you don\u0027t agree. I deleted the bit on line 623 on this patchset though since it didn\u0027t seem to be changing anything.",
+      "parentUuid": "73ff0bce_ed0cb4d9",
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a655be0_66c8e929",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 4
@@ -216,6 +426,24 @@
       "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eaaf1ae_04f69a99",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-10T06:10:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a655be0_66c8e929",
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
