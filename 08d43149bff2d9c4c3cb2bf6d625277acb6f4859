@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac0e7974_2cf4d52f",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-10T09:35:53Z",
+      "side": 1,
+      "message": "Rather than add this parameter, I\u0027d suggest putting this as an argument to ChooseRPDQProgram.\n\nThe caller in DrawRenderPassQuadInternal can specify the current renderpass (like all other draw quads).\n\nThe caller in CopyRenderPassDrawQuadToOverlayResource can specify whatever color space it is using for its resource.",
+      "revId": "08d43149bff2d9c4c3cb2bf6d625277acb6f4859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1cd6954_9f320b90",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1863,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-10T09:35:53Z",
+      "side": 1,
+      "message": "Drive-by: That above comment is incorrect. At this time all solid colors are indeed sRGB. Can be deleted.",
+      "revId": "08d43149bff2d9c4c3cb2bf6d625277acb6f4859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554d7543_f0d94a18",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3326,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-10T09:35:53Z",
+      "side": 1,
+      "message": "Ultimately on Mac all render passes have the same color space.\n\nThe root render pass is still the right choice here (were that ever to change).",
+      "revId": "08d43149bff2d9c4c3cb2bf6d625277acb6f4859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17a3280_14c873c7",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3386,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-10T09:35:53Z",
+      "side": 1,
+      "message": "If we add the color space argument to ChooseRPDQProgram, then the color space to specify would be destination-\u003ecolor_space_for_raster()\n\n(the \"for raster\" part of that function name refers to the now-disappeared enable_color_correct_rasterization ... I need to rename that).",
+      "revId": "08d43149bff2d9c4c3cb2bf6d625277acb6f4859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
