@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bda736a7_571424ed",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-10T17:02:34Z",
+      "side": 1,
+      "message": "If the user backgrounds the tab before we detect interactive time, tasks on that main thread may be heavily throttled and we might end up detecting a spurious 5 second quiet window. It is important to discard the TTI value if the tab was backgrounded at point before we *detected* TTI.",
+      "revId": "05cd95aefa780e4d1331dcf23efae044f301d2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0389d25_499f99c5",
+        "filename": "third_party/WebKit/common/metrics/time_to_interactive_status.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-10T17:02:34Z",
+      "side": 1,
+      "message": "I wanted to have a single unified histogram for Time to Interactive Status. Since we\u0027re doing the user input invalidation on the renderer side, and the backgrounding invalidation on the browser side, I put the enum status in WebKit/common.",
+      "revId": "05cd95aefa780e4d1331dcf23efae044f301d2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
