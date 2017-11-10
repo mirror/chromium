@@ -306,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "77f1c2dd_51687b88",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T01:47:49Z",
+      "side": 1,
+      "message": "\u003e Done\n\nping?",
+      "parentUuid": "0b7c693e_7aa703cb",
+      "range": {
+        "startLine": 41,
+        "startChar": 26,
+        "endLine": 41,
+        "endChar": 49
+      },
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48bf5269_6f3c4fe0",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
         "patchSetId": 10
@@ -335,6 +359,24 @@
       "side": 1,
       "message": "Only doing DISALLOW_ASSIGN because otherwise I\u0027d need to declare a default move constructor for the vector emplace_back call. Keeping in this file to use std::vector which needs storage size.",
       "parentUuid": "48bf5269_6f3c4fe0",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "254be4a5_b9d695d3",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T01:47:49Z",
+      "side": 1,
+      "message": "Hm. Usually we use struct for things that need to be stored by value. This is almost certainly a bug. PasswordRow is a views::ButtonListener - that means views::Button has a weak pointer to it. If the object is copied into a new chunk of memory, that pointer is going to become invalid and the new object won\u0027t be listening to anything. It will be chaos.",
+      "parentUuid": "38c78e3f_1262b2e0",
       "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

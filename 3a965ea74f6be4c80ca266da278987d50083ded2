@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3474c15b_5b3f3d03",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T01:47:49Z",
+      "side": 1,
+      "message": "It\u0027s still like to remove this globals access with something like\n\nManagePasswordsBubbleDelegateViewBase* bubble_view \u003d\n    ManagePasswordsBubbleView::CreateBubble(web_contents(), nullptr, anchor_point,\n                                            reason);\n\nit is possible?",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8710c6_b8cce77a",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T01:47:49Z",
+      "side": 1,
+      "message": "const-ref",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71551cc_81bb97c2",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T01:47:49Z",
+      "side": 1,
+      "message": "this should be its own file -- ideally ManagePasswordItemsView doesn\u0027t #include manage_passwords_bubble_view.h so that the separation/decoupling is clear. Also needs a class comment",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e69542f2_8b86c59e",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T01:47:49Z",
+      "side": 1,
+      "message": "not const (unless it returns a `const ManagePasswordsBubbleModel*`). You can have both.",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d955bb_c52df952",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T01:47:49Z",
+      "side": 1,
+      "message": "GetWebContents()\n\n(also probably not declared `const`, unless it can return a `const WebContents*` as well)",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ef5dd6_d7b778c2",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T01:47:49Z",
+      "side": 1,
+      "message": "go/cppguide prohibits protected: data members (except in test harnesses). These need to move to private: and have accessors in protected:",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2b61c9_43e51c73",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T01:47:49Z",
+      "side": 1,
+      "message": "I think making this a value member is still possible... Can you just pass in DisplayReason to the constructor rather than a unique_ptr\u003cManagePasswordsBubbleModel\u003e, and initialize in the initializer list?",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0523801_97c34d4a",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T01:47:49Z",
+      "side": 1,
+      "message": "these should be in the public: section (Since they override methods declared public:). Also with a \n // LocationBarBubbleDelegate:\n\ncomment. Make sure the order is \"right\" -- WidgetDelegate methods first (in declaration order), etc.",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8e62c13_8993a2ba",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T01:47:49Z",
+      "side": 1,
+      "message": "comment?",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "423a7434_d0cb56a4",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T01:47:49Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d1a1b1_0d4a4d2c",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T01:47:49Z",
+      "side": 1,
+      "message": "move to base class. Or\n\n// TODO(pbos): Remove this.\nstatic ManagePasswordsBubbleDelegateViewBase* manage_password_bubble() {\n  return ManagePasswordsBubbleDelegateViewBase::manage_password_bubble();\n}\n\nbut I don\u0027t think the refactoring fallout will be bad",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
