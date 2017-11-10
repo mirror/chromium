@@ -46,6 +46,30 @@
       "revId": "40d14c1feabc1e1886626c44189b9790edc3d075",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f40e74_f289caf7",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-10T03:13:00Z",
+      "side": 1,
+      "message": "Thanks Matt for illuminating this.\n\nTo clarify this CL and the original bug was only concerned about GamepadEvent.timestamp\nand not Gamepad.timestamp.\n\nReading these it seems to me that getting an \"OS timestamp\" that can be converted to time tick\nis going to be a lot of work. And even then, these timestamps may not really be that relevant\nto the connect/disconnect events but rather the last data poll.\n\nSo for GamepadEvent (e.g., connect/disconnect), I think it is good enough\nto use the moment of creation of the event as the event timestamp. This is what \nwe do for many other event types and it was already the case. So let\u0027s keep\nit that way. So I think it is fine to close the original bug as \"WontFix\".\n\nAs for making Gamepad.timestamp actually follow the spec. I found that there is\nalready a bug for that: https://crbug.com/398642\nI am going to leave a comment on that bug with some of the valuable info here to make\nsure they are captured.\n\n\njj.lopezjaimez@: Given above, it seems that we don\u0027t really need to make any\nchanges here. Thanks for championing this issue and helping figure this out.",
+      "parentUuid": "0f4e5d29_49fe5db3",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 66
+      },
+      "revId": "40d14c1feabc1e1886626c44189b9790edc3d075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
