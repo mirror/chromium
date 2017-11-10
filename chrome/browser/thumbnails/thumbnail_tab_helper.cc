@@ -25,6 +25,10 @@
 #include "ui/gfx/color_utils.h"
 #include "ui/gfx/scrollbar_size.h"
 
+#include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/browser_navigator.h"
+#include "chrome/browser/ui/browser_navigator_params.h"
+
 using thumbnails::ThumbnailingContext;
 
 namespace {
@@ -110,12 +114,14 @@ void ThumbnailTabHelper::Observe(int type,
 void ThumbnailTabHelper::RenderViewHostChanged(
     content::RenderViewHost* old_host,
     content::RenderViewHost* new_host) {
+  LOG(ERROR) << "RenderViewHostChanged " << old_host << " " << new_host;
   StopWatchingRenderViewHost(old_host);
   StartWatchingRenderViewHost(new_host);
 }
 
 void ThumbnailTabHelper::RenderViewDeleted(
     content::RenderViewHost* render_view_host) {
+  LOG(ERROR) << "RenderViewDeleted " << render_view_host;
   StopWatchingRenderViewHost(render_view_host);
 }
 
@@ -125,6 +131,8 @@ void ThumbnailTabHelper::DidStartNavigation(
       navigation_handle->IsSameDocument()) {
     return;
   }
+
+  LOG(ERROR) << "DidStartNavigation " << navigation_handle->GetURL();
 
   if (capture_on_navigating_away_) {
     // At this point, the new navigation has just been started, but the
@@ -142,6 +150,13 @@ void ThumbnailTabHelper::DidStartNavigation(
   page_transition_ = ui::PAGE_TRANSITION_LINK;
 }
 
+void Navigate(content::WebContents* web_contents) {
+  Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
+  chrome::NavigateParams params(browser, GURL("https://www.amazon.com"),
+                                ui::PAGE_TRANSITION_TYPED);
+  chrome::Navigate(&params);
+}
+
 void ThumbnailTabHelper::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   if (!navigation_handle->HasCommitted() ||
@@ -149,10 +164,18 @@ void ThumbnailTabHelper::DidFinishNavigation(
       navigation_handle->IsSameDocument()) {
     return;
   }
+  LOG(ERROR) << "DidFinishNavigation";
   page_transition_ = navigation_handle->GetPageTransition();
+
+  if (navigation_handle->GetURL() == GURL("https://www.bing.com")) {
+    LOG(ERROR) << "Got bing, going on in 3";
+    timer_.Start(FROM_HERE, base::TimeDelta::FromSeconds(3),
+                 base::Bind(&Navigate, web_contents()));
+  }
 }
 
 void ThumbnailTabHelper::DocumentAvailableInMainFrame() {
+  LOG(ERROR) << "DocumentAvailableInMainFrame";
   // If there's currently a screen capture going on, ignore its result.
   // Otherwise there's a risk that we'll get a picture of the wrong page.
   // Note: It *looks* like WebContentsObserver::DidFirstVisuallyNonEmptyPaint
@@ -169,6 +192,7 @@ void ThumbnailTabHelper::DocumentOnLoadCompletedInMainFrame() {
 }
 
 void ThumbnailTabHelper::DidFirstVisuallyNonEmptyPaint() {
+  LOG(ERROR) << "DidFirstVisuallyNonEmptyPaint";
   has_painted_since_navigation_start_ = true;
 }
 
@@ -224,6 +248,7 @@ void ThumbnailTabHelper::UpdateThumbnailIfNecessary() {
   // Don't take a screenshot if we haven't painted anything since the last
   // navigation. This can happen when navigating away again very quickly.
   if (!has_painted_since_navigation_start_) {
+    LOG(ERROR) << "Hasn't painted";
     return;
   }
 
@@ -262,6 +287,7 @@ void ThumbnailTabHelper::UpdateThumbnailIfNecessary() {
       web_contents()->GetRenderViewHost()->GetWidget();
   content::RenderWidgetHostView* view = render_widget_host->GetView();
   if (!view || !view->IsSurfaceAvailableForCopy()) {
+    LOG(ERROR) << "Not available. Visible: " << web_contents()->IsVisible();
     return;
   }
 
@@ -278,6 +304,7 @@ void ThumbnailTabHelper::UpdateThumbnailIfNecessary() {
     return;
   }
 
+  LOG(ERROR) << "Copying from rvh " << web_contents()->GetRenderViewHost();
   thumbnailing_context_ = new ThumbnailingContext(web_contents(),
                                                   thumbnail_service.get(),
                                                   load_interrupted_);
@@ -291,6 +318,7 @@ void ThumbnailTabHelper::UpdateThumbnailIfNecessary() {
       &thumbnailing_context_->requested_copy_size);
   copy_from_surface_start_time_ = base::TimeTicks::Now();
   waiting_for_capture_ = true;
+  web_contents()->IncrementCapturerCount(gfx::Size());
   view->CopyFromSurface(copy_rect, thumbnailing_context_->requested_copy_size,
                         base::Bind(&ThumbnailTabHelper::ProcessCapturedBitmap,
                                    weak_factory_.GetWeakPtr()),
@@ -300,6 +328,10 @@ void ThumbnailTabHelper::UpdateThumbnailIfNecessary() {
 void ThumbnailTabHelper::ProcessCapturedBitmap(
     const SkBitmap& bitmap,
     content::ReadbackResponse response) {
+  LOG(ERROR) << "Got bitmap " << thumbnailing_context_->url
+             << ", good: " << (response == content::READBACK_SUCCESS) << " "
+             << waiting_for_capture_;
+  web_contents()->DecrementCapturerCount();
   // If |waiting_for_capture_| is false, that means something happened in the
   // meantime which makes the captured image unsafe to use.
   bool was_canceled = !waiting_for_capture_;
@@ -352,6 +384,7 @@ void ThumbnailTabHelper::CleanUpFromThumbnailGeneration() {
 
 void ThumbnailTabHelper::RenderViewHostCreated(
     content::RenderViewHost* render_view_host) {
+  LOG(ERROR) << "RenderViewHostCreated " << render_view_host;
   StartWatchingRenderViewHost(render_view_host);
 }
 
@@ -361,5 +394,5 @@ void ThumbnailTabHelper::WidgetHidden(content::RenderWidgetHost* widget) {
   if (!web_contents() || web_contents()->GetController().GetPendingEntry()) {
     return;
   }
-  UpdateThumbnailIfNecessary();
+  // UpdateThumbnailIfNecessary();
 }

@@ -76,6 +76,7 @@ bool ThumbnailServiceImpl::ShouldAcquirePageThumbnail(
   // Skip if the given URL is not appropriate for history.
   if (!CanAddURLToHistory(url))
     return false;
+  return true;
   // If the URL is not known (i.e. not a top site yet), do some extra checks.
   if (!local_ptr->IsKnownURL(url)) {
     // Skip if the top sites list is full - no point in taking speculative

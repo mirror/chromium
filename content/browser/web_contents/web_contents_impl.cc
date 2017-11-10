@@ -1342,8 +1342,8 @@ const std::string& WebContentsImpl::GetEncoding() const {
 void WebContentsImpl::IncrementCapturerCount(const gfx::Size& capture_size) {
   DCHECK(!is_being_destroyed_);
   ++capturer_count_;
-  DVLOG(1) << "There are now " << capturer_count_
-           << " capturing(s) of WebContentsImpl@" << this;
+  LOG(ERROR) << "There are now " << capturer_count_
+             << " capturing(s) of WebContentsImpl@" << this;
 
   // Note: This provides a hint to upstream code to size the views optimally
   // for quality (e.g., to avoid scaling).
@@ -1358,8 +1358,8 @@ void WebContentsImpl::IncrementCapturerCount(const gfx::Size& capture_size) {
 
 void WebContentsImpl::DecrementCapturerCount() {
   --capturer_count_;
-  DVLOG(1) << "There are now " << capturer_count_
-           << " capturing(s) of WebContentsImpl@" << this;
+  LOG(ERROR) << "There are now " << capturer_count_
+             << " capturing(s) of WebContentsImpl@" << this;
   DCHECK_LE(0, capturer_count_);
 
   if (is_being_destroyed_)
@@ -1491,6 +1491,7 @@ base::TimeTicks WebContentsImpl::GetLastHiddenTime() const {
 }
 
 void WebContentsImpl::WasShown() {
+  LOG(ERROR) << "WasShown";
   controller_.SetActive(true);
 
   if (auto* view = GetRenderWidgetHostView()) {
@@ -1514,6 +1515,7 @@ void WebContentsImpl::WasShown() {
 }
 
 void WebContentsImpl::WasHidden() {
+  LOG(ERROR) << "WasHidden";
   // If there are entities capturing screenshots or video (e.g., mirroring),
   // don't activate the "disable rendering" optimization.
   if (capturer_count_ == 0) {
@@ -1574,6 +1576,7 @@ bool WebContentsImpl::IsVisible() const {
 }
 
 void WebContentsImpl::WasOccluded() {
+  LOG(ERROR) << "WasOccluded";
   if (capturer_count_ == 0) {
     for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
       view->WasOccluded();
@@ -1583,6 +1586,7 @@ void WebContentsImpl::WasOccluded() {
 }
 
 void WebContentsImpl::WasUnOccluded() {
+  LOG(ERROR) << "WasUnOccluded";
   if (capturer_count_ == 0)
     DoWasUnOccluded();
 

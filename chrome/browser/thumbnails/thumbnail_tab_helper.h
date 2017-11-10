@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
+#include "base/timer/timer.h"
 #include "chrome/browser/thumbnails/thumbnailing_context.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
@@ -87,6 +88,8 @@ class ThumbnailTabHelper
   bool waiting_for_capture_;
 
   base::TimeTicks copy_from_surface_start_time_;
+
+  base::OneShotTimer timer_;
 
   base::WeakPtrFactory<ThumbnailTabHelper> weak_factory_;
 
