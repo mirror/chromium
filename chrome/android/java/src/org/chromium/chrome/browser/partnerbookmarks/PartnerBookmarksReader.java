@@ -13,11 +13,10 @@ import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.AppHooks;
-import org.chromium.chrome.browser.ChromeVersionInfo;
-import org.chromium.chrome.browser.ntp.snippets.FaviconFetchResult;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Reads bookmarks from the partner content provider (if any).
@@ -36,6 +35,9 @@ public class PartnerBookmarksReader {
     /** ID used to indicate an invalid bookmark node. */
     static final long INVALID_BOOKMARK_ID = -1;
 
+    /** Wait 30 days before fetching a favicon from server after a failed attempt. */
+    static final long FAVICON_RETRIEVAL_TIMEOUT_MS = 2592000000L;
+
     // JNI c++ pointer
     private long mNativePartnerBookmarksReader;
 
@@ -48,6 +50,11 @@ public class PartnerBookmarksReader {
     private Integer mNumFaviconsInProgress = 0;
     private Boolean mShutDown = false;
     private boolean mFinishedReading;
+
+    // The favicon retrieval cache, necessary for throttling server requests for previous favicon
+    // fetch failures.
+    PartnerBookmarksCache mFaviconCache;
+    Map<String, Long> mFaviconCacheMap;
 
     /**
      * A callback used to indicate success or failure of favicon fetching when retrieving favicons
@@ -98,6 +105,16 @@ public class PartnerBookmarksReader {
             @Override
             public void onFaviconFetched(@FaviconFetchResult int result) {
                 synchronized (mNumFaviconsInProgress) {
+                    if (result == FaviconFetchResult.FAILURE_SERVER_ERROR) {
+                        // We failed to fetch a favicon from the server, so let's set a restriction
+                        // on fetching it in the future with an expiry time.
+                        mFaviconCacheMap.put(
+                                url, System.currentTimeMillis() + FAVICON_RETRIEVAL_TIMEOUT_MS);
+                    } else {
+                        // Remove the entry if the server didn't give us back an error.
+                        mFaviconCacheMap.remove(url);
+                    }
+
                     --mNumFaviconsInProgress;
                     if (mNumFaviconsInProgress == 0 && mFinishedReading) {
                         shutDown();
@@ -112,11 +129,12 @@ public class PartnerBookmarksReader {
                 }
             }
         };
-        // TODO(thildebr): Enable fetching from server once we have a cache to store failed attempts
-        // to retrieve favicons so we don't retry too often.
+
+        boolean shouldFetchFaviconFromServer =
+                favicon == null && touchicon == null && shouldFetchFaviconFromServer(url);
+
         return nativeAddPartnerBookmark(mNativePartnerBookmarksReader, url, title, isFolder,
-                parentId, favicon, touchicon,
-                ChromeVersionInfo.isCanaryBuild() /* fetchUncachedFaviconsFromServer */, callback);
+                parentId, favicon, touchicon, shouldFetchFaviconFromServer, callback);
     }
 
     /**
@@ -140,8 +158,32 @@ public class PartnerBookmarksReader {
             nativePartnerBookmarksCreationComplete(mNativePartnerBookmarksReader);
             nativeDestroy(mNativePartnerBookmarksReader);
             mNativePartnerBookmarksReader = 0;
+
+            // If our favicon retrieval cache was involved, we need to commit changes to disk.
+            if (mFaviconCache != null) {
+                mFaviconCache.write(mFaviconCacheMap);
+            }
+
             mShutDown = true;
         }
+    }
+
+    /**
+     * Determines if we should reach out to a server to fetch a favicon if one isn't supplied.
+     * If the page URL isn't in our cache, then there isn't any restriction placed on it for
+     * retrieval, and if it is in the cache, we check if the restriction is expired.
+     *
+     * @param url The URL of the page we're fetching a favicon for.
+     * @return Whether or not we should reach out to a server if the favicon isn't cached.
+     */
+    private boolean shouldFetchFaviconFromServer(String url) {
+        if (mFaviconCache == null) {
+            mFaviconCache = new PartnerBookmarksCache(mContext);
+            mFaviconCacheMap = mFaviconCache.read();
+        }
+        return !mFaviconCacheMap.containsKey(url)
+                || (mFaviconCacheMap.containsKey(url)
+                           && System.currentTimeMillis() >= mFaviconCacheMap.get(url));
     }
 
     /** Handles fetching partner bookmarks in a background thread. */
