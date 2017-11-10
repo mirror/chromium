@@ -112,18 +112,21 @@ AccessibilityExpanded AXMenuList::IsExpanded() const {
 void AXMenuList::DidUpdateActiveOption(int option_index) {
   bool suppress_notifications =
       (GetNode() && !GetNode()->IsFinishedParsingChildren());
-  const auto& child_objects = Children();
-  if (!child_objects.IsEmpty()) {
-    DCHECK(child_objects.size() == 1);
-    DCHECK(child_objects[0]->IsMenuListPopup());
 
-    if (child_objects[0]->IsMenuListPopup()) {
-      if (AXMenuListPopup* popup = ToAXMenuListPopup(child_objects[0].Get()))
-        popup->DidUpdateActiveOption(option_index, !suppress_notifications);
+  if (HasChildren()) {
+    const auto& child_objects = Children();
+    if (!child_objects.IsEmpty()) {
+      DCHECK_EQ(child_objects.size(), 1ul);
+      DCHECK(child_objects[0]->IsMenuListPopup());
+
+      if (child_objects[0]->IsMenuListPopup()) {
+        if (AXMenuListPopup* popup = ToAXMenuListPopup(child_objects[0].Get()))
+          popup->DidUpdateActiveOption(option_index, !suppress_notifications);
+      }
     }
   }
 
-  AXObjectCache().PostNotification(this,
+  AxObjectCache().PostNotification(this,
                                    AXObjectCacheImpl::kAXMenuListValueChanged);
 }
 
@@ -143,7 +146,7 @@ void AXMenuList::DidHidePopup() {
   popup->DidHide();
 
   if (GetNode() && GetNode()->IsFocused())
-    AXObjectCache().PostNotification(
+    AxObjectCache().PostNotification(
         this, AXObjectCacheImpl::kAXFocusedUIElementChanged);
 }
 
