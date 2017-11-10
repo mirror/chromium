@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e478b1ff_74b9ff6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-10T02:28:17Z",
+      "side": 1,
+      "message": "Yes, they\u0027re all moving into blink as part of onion soup.",
+      "parentUuid": "ff79b2b5_b669eca4",
+      "revId": "a10aa0896fc71f36fd51e14258e006d92c283af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b951960d_af831e17",
         "filename": "content/browser/manifest/manifest_manager_host.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e312c3b3_f1411d40",
+        "filename": "content/browser/manifest/manifest_manager_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-10T02:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b951960d_af831e17",
+      "revId": "a10aa0896fc71f36fd51e14258e006d92c283af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6102c5_d75e12cd",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "a10aa0896fc71f36fd51e14258e006d92c283af0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e34c197b_d283535f",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 4916,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-10T02:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6102c5_d75e12cd",
+      "revId": "a10aa0896fc71f36fd51e14258e006d92c283af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
