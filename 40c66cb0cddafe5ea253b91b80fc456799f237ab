@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b5ebd54_9663465d",
+        "filename": "content/test/data/accessibility/html/bounds-clips-expected-blink.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-10T23:35:03Z",
+      "side": 1,
+      "message": "These sizes are probably going to be too flaky to include\nin the output, they\u0027ll change depending on fonts and\nother random layout issues that aren\u0027t guaranteed to be\n100% stable.\n\nIf you want to include any sizes, I\u0027d make them explicit\nin CSS and explicitly allow them like @BLINK-ALLOW:size\u003d(10, 10), etc.",
+      "revId": "40c66cb0cddafe5ea253b91b80fc456799f237ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6058038_dca15652",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-10T23:35:03Z",
+      "side": 1,
+      "message": "if |clipped| is not empty",
+      "revId": "40c66cb0cddafe5ea253b91b80fc456799f237ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
