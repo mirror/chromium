@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39e90da1_84cb8b44",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1002080
+      },
+      "writtenOn": "2017-11-10T22:36:42Z",
+      "side": 1,
+      "message": "I\u0027d do this as\nchromium.webkit|win rel|builder\nchromium.webkit|win rel|tester\nchromium.webkit|win dbg|builder\nchromium.webkit|win dbg\n\nInstead.  otherwise you just have a row of numbers\n\n32 | 64 | 7 | 10 | 32 | 64 | 7\n\nWhich might be confusing.",
+      "revId": "1c8a33b0d83d0b363b58d25ae501ae91cfffd904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
