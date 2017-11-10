@@ -94,7 +94,7 @@ class TabManagerStatsCollector final : public SessionRestoreObserver {
   // Record expected task queueing durations of foreground tabs in session
   // restore.
   void RecordExpectedTaskQueueingDuration(content::WebContents* contents,
-                                          base::TimeDelta queueing_time);
+                                          const base::TimeDelta& queueing_time);
 
   // Record background tab count for BackgroundTabOpening.
   void RecordBackgroundTabCount();
