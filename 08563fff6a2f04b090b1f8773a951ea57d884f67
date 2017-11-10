@@ -264,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "cf47c8be_e35babcc",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-10T09:52:18Z",
+      "side": 1,
+      "message": "I removed port and index.",
+      "parentUuid": "7d2792ff_87aec902",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77b63719_b20a0c16",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 14
