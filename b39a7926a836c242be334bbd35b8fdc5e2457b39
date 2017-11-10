@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40401e1f_2fc222fa",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-10T06:07:23Z",
+      "side": 1,
+      "message": "Why do you need to check this when IsOffline() is checked in GetCurrentAcceptedPriority()?\nAlso this change makes the comment below irrelevant.",
+      "revId": "b39a7926a836c242be334bbd35b8fdc5e2457b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
