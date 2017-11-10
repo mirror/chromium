@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d3484b5_e18efa5e",
+        "filename": "chrome/browser/permissions/permission_context_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-10T01:49:21Z",
+      "side": 1,
+      "message": "Strictly speaking this is a no-op as well now so it could also have been removed when the PermissionUtil:: method was removed.",
+      "range": {
+        "startLine": 441,
+        "startChar": 0,
+        "endLine": 445,
+        "endChar": 0
+      },
+      "revId": "6b22120e027b23237f1ff603d49995bab6e4a12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
