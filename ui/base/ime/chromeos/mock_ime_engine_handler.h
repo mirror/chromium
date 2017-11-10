@@ -29,7 +29,7 @@ class UI_BASE_IME_EXPORT MockIMEEngineHandler
   void MaybeSwitchEngine() override;
   bool IsInterestedInKeyEvent() const override;
   void ProcessKeyEvent(const ui::KeyEvent& key_event,
-                       KeyEventDoneCallback& callback) override;
+                       KeyEventDoneCallback callback) override;
   void CandidateClicked(uint32_t index) override;
   void SetSurroundingText(const std::string& text,
                           uint32_t cursor_pos,
