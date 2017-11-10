@@ -16,6 +16,24 @@
       "revId": "a69c75b50f2d0fe084ed51f44cde6e77544d3dc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be88360_14a3e30a",
+        "filename": "content/browser/web_contents/web_contents_view_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-10T16:49:00Z",
+      "side": 1,
+      "message": "Offhand, no, though there is a project to revamp interstitials so that this kind of machinery would no longer be needed",
+      "parentUuid": "3dff0751_d0e777cd",
+      "revId": "a69c75b50f2d0fe084ed51f44cde6e77544d3dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
