@@ -88,9 +88,9 @@ class DownloadController {
   static DownloadController* FromBrowserState(BrowserState* browser_state);
 
   // Creates a new download task. Clients may call this method to resume the
-  // download after the application relaunch or start a new download. Clients
-  // must not call this method to initiate a renderer-initiated download (those
-  // downloads are created automatically).
+  // download after the application relaunch. Clients must not to call this
+  // method to initiate a renderer-initiated download (those downloads are
+  // created automatically).
   // In order to resume the download after the application relaunch clients have
   // to pass |identifier| obtained from
   // application:handleEventsForBackgroundURLSession:completionHandler:
