@@ -452,7 +452,7 @@ void BookmarkEditorView::UserInputChanged() {
     else
       url_tf_->UseDefaultBackgroundColor();
   }
-  GetDialogClientView()->UpdateDialogButtons();
+  DialogModelChanged();
 }
 
 void BookmarkEditorView::NewFolder() {
