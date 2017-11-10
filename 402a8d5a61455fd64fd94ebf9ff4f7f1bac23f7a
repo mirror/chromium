@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "041bcc79_94a1034b",
+        "filename": "ios/chrome/browser/ui/util/view_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-10T06:37:09Z",
+      "side": 1,
+      "message": "nit: alive()",
+      "range": {
+        "startLine": 12,
+        "startChar": 51,
+        "endLine": 12,
+        "endChar": 62
+      },
+      "revId": "402a8d5a61455fd64fd94ebf9ff4f7f1bac23f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26369189_277bfadb",
+        "filename": "ios/chrome/browser/ui/util/view_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-10T06:37:09Z",
+      "side": 1,
+      "message": "I\u0027m just curious what this is used for.",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 16
+      },
+      "revId": "402a8d5a61455fd64fd94ebf9ff4f7f1bac23f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba91580b_0b753901",
+        "filename": "ios/chrome/browser/ui/util/view_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-10T06:37:09Z",
+      "side": 1,
+      "message": "nit: |view|\u0027s coordinate system.",
+      "range": {
+        "startLine": 31,
+        "startChar": 50,
+        "endLine": 31,
+        "endChar": 68
+      },
+      "revId": "402a8d5a61455fd64fd94ebf9ff4f7f1bac23f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1d2ffe_4a0f63f6",
+        "filename": "ios/chrome/browser/ui/util/view_info_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-10T06:37:09Z",
+      "side": 1,
+      "message": "nit: alive()",
+      "range": {
+        "startLine": 35,
+        "startChar": 14,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "402a8d5a61455fd64fd94ebf9ff4f7f1bac23f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
