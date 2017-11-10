@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffa4878e_2165c4a3",
+        "filename": "mojo/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-10T21:20:11Z",
+      "side": 1,
+      "message": "nit: \"an idiomatic method-calling interface\" or \"idiomatic method-calling interfaces\"",
+      "revId": "412398f5d823e8a9119fc74dfcca767143806ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
