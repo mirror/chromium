@@ -22,6 +22,7 @@
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/console_message_level.h"
 #include "services/metrics/public/cpp/ukm_builders.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
@@ -87,8 +88,10 @@ void ShowUI(content::WebContents* web_contents, const GURL& url) {
       web_contents, base::MakeUnique<FramebustBlockMessageDelegate>(
                         web_contents, url, base::BindOnce(&LogOutcome)));
 #else
-  NOTIMPLEMENTED() << "The BlockTabUnders experiment does not currently have a "
-                      "UI implemented on desktop platforms.";
+  // TODO(csharrison): Instrument click-through metrics. This may be a bit
+  // difficult and requires attribution since this UI surface is shared with
+  // framebusting.
+  web_contents->GetDelegate()->OnDidBlockFramebust(web_contents, url);
 #endif
 }
 
