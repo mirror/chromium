@@ -55,7 +55,8 @@ class MutationObserver::V8DelegateImpl final
   static V8DelegateImpl* Create(v8::Isolate* isolate,
                                 V8MutationCallback* callback) {
     ExecutionContext* execution_context =
-        ToExecutionContext(callback->v8Value(isolate)->CreationContext());
+        nullptr;
+    //ToExecutionContext(callback->v8Value(isolate)->CreationContext());        
 
     return new V8DelegateImpl(callback, execution_context);
   }
