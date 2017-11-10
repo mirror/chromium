@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f235f8d0_ae9fb15d",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-10T23:52:30Z",
+      "side": 1,
+      "message": "Let\u0027s refer to the name of the stable machine instead (in this case \u0027Win7 Release (NVIDIA)\u0027), and look up its configuration from there. Otherwise this will get out of sync with the specification of the stable builder.",
+      "range": {
+        "startLine": 311,
+        "startChar": 7,
+        "endLine": 311,
+        "endChar": 20
+      },
+      "revId": "9018d124cf9c24ea74d8b8d3c5965f7c7dd923c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24aeab6_87c28d03",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1888,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-10T23:52:30Z",
+      "side": 1,
+      "message": "This is a nice idea for how to specify that this test runs on the experimental bots. However, can you rename this for now to something like EXPERIMENTAL_CONDITIONALLY and change the logic below? I don\u0027t think we want to run this on the experimental bots if they have a different configuration than the stable bot.",
+      "range": {
+        "startLine": 1888,
+        "startChar": 32,
+        "endLine": 1888,
+        "endChar": 44
+      },
+      "revId": "9018d124cf9c24ea74d8b8d3c5965f7c7dd923c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "066dde14_7d7f03fa",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2494,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-10T23:52:30Z",
+      "side": 1,
+      "message": "To avoid wastage, let\u0027s filter out this test if the experimental bot has a different configuration than the stable bot. Can you implement that?",
+      "range": {
+        "startLine": 2494,
+        "startChar": 17,
+        "endLine": 2494,
+        "endChar": 21
+      },
+      "revId": "9018d124cf9c24ea74d8b8d3c5965f7c7dd923c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03077505_94808ac7",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2498,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-10T23:52:30Z",
+      "side": 1,
+      "message": "Can some of this logic be factored out into a separate function like experimental_bot_is_same_as_stable_bot?\n\nIt will need to take the waterfall as argument once the tester_config\u0027s stable_config points to a bot by name rather than having a clone of its configuration.",
+      "revId": "9018d124cf9c24ea74d8b8d3c5965f7c7dd923c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
