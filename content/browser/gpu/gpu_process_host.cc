@@ -70,6 +70,7 @@
 #include "ui/gfx/switches.h"
 #include "ui/gl/gl_switches.h"
 #include "ui/latency/latency_info.h"
+#include "content/public/common/bind_interface_helpers.h"
 
 #if defined(OS_ANDROID)
 #include "base/android/build_info.h"
@@ -151,6 +152,7 @@ static const char* const kSwitchNames[] = {
     switches::kShowMacOverlayBorders,
 #endif
 #if defined(USE_OZONE)
+    switches::kEnableDrmMojo,
     switches::kOzonePlatform,
 #endif
 #if defined(USE_X11)
@@ -339,6 +341,10 @@ class GpuProcessHost::ConnectionFilterImpl : public ConnectionFilter {
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle* interface_pipe,
                        service_manager::Connector* connector) override {
+
+	LOG(ERROR) << "@@@ OnBindInterface";
+
+
     if (!registry_.TryBindInterface(interface_name, interface_pipe)) {
       GetContentClient()->browser()->BindInterfaceRequest(
           source_info, interface_name, interface_pipe);
@@ -627,6 +633,27 @@ bool GpuProcessHost::Init() {
                                   activity_flags_.CloneHandle());
 
 #if defined(USE_OZONE)
+
+
+// TODO(rjk): should cache this? Or somehow change it in a different way
+ base::CommandLine* browser_command_line =
+      base::CommandLine::ForCurrentProcess();
+if (browser_command_line->HasSwitch(switches::kEnableDrmMojo)) {
+ 
+	// Give ozone a callback that permits constructing an interface.
+	// Might not play nice with the servicemanager. If we have a service manager we could
+	// use that instead?
+
+	  ui::OzonePlatform::GetInstance()
+	      ->GetGpuPlatformSupportHost()
+	      ->OnGpuServiceLaunched(
+			base::Bind(&GpuProcessHost::BindInterface, weak_ptr_factory_.GetWeakPtr()));
+
+	// I think that the callback will let us do the right binding...
+
+
+} else {
+
   // Ozone needs to send the primary DRM device to GPU process as early as
   // possible to ensure the latter always has a valid device. crbug.com/608839
   ui::OzonePlatform::GetInstance()
@@ -635,8 +662,12 @@ bool GpuProcessHost::Init() {
           host_id_, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
           base::ThreadTaskRunnerHandle::Get(),
           base::Bind(&SendGpuProcessMessage, weak_ptr_factory_.GetWeakPtr()));
-#endif
 
+
+}
+
+
+#endif
   return true;
 }
 

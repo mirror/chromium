@@ -94,4 +94,8 @@ void OzonePlatform::AddInterfaces(
     service_manager::BinderRegistryWithArgs<
         const service_manager::BindSourceInfo&>* registry) {}
 
+void OzonePlatform::SetServiceManagerInterfacePtr(ui::ozone::mojom::DrmDevicePtr drm_device_ptr) {}
+
+void OzonePlatform::AfterSandboxEntry() {}
+
 }  // namespace ui

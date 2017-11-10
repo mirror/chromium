@@ -37,6 +37,10 @@ template <typename MojoInterface>
 class InterfacePtr;
 }
 
+namespace service_manager {
+class Connector;
+}
+
 namespace ui {
 class ContextFactory;
 class ContextFactoryPrivate;

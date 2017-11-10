@@ -25,6 +25,11 @@ class HostCursorProxy : public DrmCursorProxy {
   explicit HostCursorProxy(service_manager::Connector* connector);
   ~HostCursorProxy() override;
 
+// want to be a DrmDeviceConnectionFactory observer
+// there is existing code that sort of does this...  
+// I could have done this bette.r
+
+
  private:
   // DrmCursorProxy.
   void CursorSet(gfx::AcceleratedWidget window,

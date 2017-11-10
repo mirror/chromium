@@ -16,16 +16,12 @@
 #include "ui/ozone/platform/drm/host/drm_display_host_manager.h"
 #include "ui/ozone/platform/drm/host/drm_overlay_manager.h"
 #include "ui/ozone/platform/drm/host/host_cursor_proxy.h"
+#include "ui/ozone/platform/drm/host/drm_device_connection.h"
 
 namespace ui {
 
-HostDrmDevice::HostDrmDevice(DrmCursor* cursor,
-                             service_manager::Connector* connector)
-    : cursor_(cursor), connector_(connector), weak_ptr_factory_(this) {
-  // Bind the viz process pointer here.
-  // TODO(rjkroege): Reconnect on error as that would indicate that the Viz
-  // process has failed.
-  connector->BindInterface(ui::mojom::kServiceName, &drm_device_ptr_);
+HostDrmDevice::HostDrmDevice(DrmCursor* cursor)
+    : cursor_(cursor) , weak_ptr_factory_(this) {
 }
 
 HostDrmDevice::~HostDrmDevice() {
@@ -34,12 +30,20 @@ HostDrmDevice::~HostDrmDevice() {
     observer.OnGpuThreadRetired();
 }
 
-void HostDrmDevice::AsyncStartDrmDevice() {
+// Setup the DRM device if we are using the ServiceManager.
+void HostDrmDevice::AsyncStartDrmDevice(const DrmDeviceConnector& connector) {
+	// We bind here using the provided connector object.
+	if (!connector.BindableNow())
+		return;
+
+	connector.BindInterface(&drm_device_ptr_);
+
   auto callback = base::BindOnce(&HostDrmDevice::OnDrmServiceStartedCallback,
                                  weak_ptr_factory_.GetWeakPtr());
   drm_device_ptr_->StartDrmDevice(std::move(callback));
 }
 
+// TODO(rjk): Surely I can get rid of this? Please.
 void HostDrmDevice::BlockingStartDrmDevice() {
   // Wait until startup related tasks posted to this thread that must precede
   // blocking on
@@ -54,15 +58,43 @@ void HostDrmDevice::BlockingStartDrmDevice() {
   return;
 }
 
-void HostDrmDevice::OnDrmServiceStartedCallback(bool success) {
+
+// The callback is executed in response to getting back a message from a DrmDevice service that we launched earlier via ServiceManager. 
+void HostDrmDevice::OnDrmServiceStartedCallback(bool success) {       
+
+	LOG(ERROR) << "@@@@@@@@@@@@@@@ HostDrmDevice::OnDrmServiceStartedCallback   mojo is wired up !!!!!";
+
+
   // This can be called multiple times in the course of single-threaded startup.
   if (connected_)
     return;
+
   if (success == true) {
     connected_ = true;
     RunObservers();
   }
-  // TODO(rjkroege): Handle failure of launching a viz process.
+  // TODO(rjkroege): Handle failure of launching a viz process with the ServiceManager.
+}
+
+// When the DrmDevice is launched as a result of the GpuProcessHost starting the GPU service, it calls into this class with a binder that permits binding a connection to the DRM process.
+void HostDrmDevice::OnGpuServiceLaunched(const DrmDeviceConnector& connector) {
+
+	LOG(ERROR) << "@@@ HostDrmDevice::OnGpuServiceLaunched";
+
+	// Now that the Viz process is running, we can bind the drm_device_ptr_
+	connector.BindInterface(&drm_device_ptr_);
+
+	// TODO(rjk): need to stick this into the cursor someohw.
+
+	// This is way too soon.
+
+//    connected_ = true;
+//    RunObservers();
+
+  auto callback = base::BindOnce(&HostDrmDevice::OnDrmServiceStartedCallback,
+                                 weak_ptr_factory_.GetWeakPtr());
+  drm_device_ptr_->StartDrmDevice(std::move(callback));
+
 }
 
 void HostDrmDevice::ProvideManagers(DrmDisplayHostManager* display_manager,
@@ -81,7 +113,10 @@ void HostDrmDevice::RunObservers() {
   // The cursor is special since it will process input events on the IO thread
   // and can by-pass the UI thread. This means that we need to special case it
   // and notify it after all other observers/handlers are notified.
-  cursor_->SetDrmCursorProxy(std::make_unique<HostCursorProxy>(connector_));
+// TODO(rjk): I am not dealing with this correctly. I need to correctly set this up in the case of
+// Chrome invocations. This means more ozone refactoring. 
+// crashes I think.  
+//  cursor_->SetDrmCursorProxy(std::make_unique<HostCursorProxy>(connector_));
 
   // TODO(rjkroege): Call ResetDrmCursorProxy when the mojo connection to the
   // DRM thread is broken.
@@ -122,9 +157,15 @@ void HostDrmDevice::UnRegisterHandlerForDrmDisplayHostManager() {
 }
 
 bool HostDrmDevice::GpuCreateWindow(gfx::AcceleratedWidget widget) {
+
+	LOG(ERROR) << "@@@  HostDrmDevice::GpuCreateWindow";
+
+
   DCHECK_CALLED_ON_VALID_THREAD(on_window_server_thread_);
   if (!IsConnected())
     return false;
+
+	LOG(ERROR) << "@@@  HostDrmDevice::GpuCreateWindow (we're connected)";
 
   drm_device_ptr_->CreateWindow(widget);
   return true;
@@ -181,8 +222,10 @@ bool HostDrmDevice::GpuCheckOverlayCapabilities(
 
 bool HostDrmDevice::GpuRefreshNativeDisplays() {
   DCHECK_CALLED_ON_VALID_THREAD(on_window_server_thread_);
+LOG(ERROR) << "@@@ HostDrmDevice::GpuRefreshNativeDisplays\n";
   if (!IsConnected())
     return false;
+LOG(ERROR) << "@@@ HostDrmDevice::GpuRefreshNativeDisplays was connected\n";
   auto callback =
       base::BindOnce(&HostDrmDevice::GpuRefreshNativeDisplaysCallback,
                      weak_ptr_factory_.GetWeakPtr());

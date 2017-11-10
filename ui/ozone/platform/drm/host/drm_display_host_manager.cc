@@ -225,11 +225,18 @@ void DrmDisplayHostManager::RelinquishDisplayControl(
 
 void DrmDisplayHostManager::UpdateDisplays(
     const display::GetDisplaysCallback& callback) {
+
+LOG(ERROR) << "@@@ DrmDisplayHostManager::UpdateDisplays\n";
+
+
   get_displays_callback_ = callback;
   if (!proxy_->GpuRefreshNativeDisplays()) {
+    LOG(ERROR) << "@@@ DrmDisplayHostManager::UpdateDisplays after calling proxy_->GpuRefreshNativeDisplays\n";
     get_displays_callback_.Reset();
     RunUpdateDisplaysCallback(callback);
+    LOG(ERROR) << "@@@ DrmDisplayHostManager::UpdateDisplays after calling RunUpdateDisplaysCallback\n";
   }
+LOG(ERROR) << "@@@ DrmDisplayHostManager::UpdateDisplays done\n";
 }
 
 void DrmDisplayHostManager::OnDeviceEvent(const DeviceEvent& event) {
@@ -462,9 +469,12 @@ void DrmDisplayHostManager::GpuRelinquishedDisplayControl(bool status) {
 
 void DrmDisplayHostManager::RunUpdateDisplaysCallback(
     const display::GetDisplaysCallback& callback) const {
+LOG(ERROR) << "@@@ DrmDisplayHostManager::RunUpdateDisplaysCallback\n";
   std::vector<display::DisplaySnapshot*> snapshots;
   for (const auto& display : displays_)
     snapshots.push_back(display->snapshot());
+
+LOG(ERROR) << "@@@ DrmDisplayHostManager::RunUpdateDisplaysCallback running callback\n";
 
   callback.Run(snapshots);
 }
