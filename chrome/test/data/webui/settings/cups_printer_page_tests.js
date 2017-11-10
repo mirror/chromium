@@ -340,4 +340,19 @@ suite('CupsAddPrinterDialogTests', function() {
           assertDeepEquals(usbInfo, printer.printerUsbInfo);
         });
   });
+
+  /**
+   * Verify that open-manually-add-printer-dialog only opens the manual dialog.
+   */
+  test('ManuallyOnly', function() {
+    dialog.fire('open-manually-add-printer-dialog');
+
+    return PolymerTest.flushTasks().then(function() {
+      assertTrue(dialog.showManuallyAddDialog_);
+      assertTrue(!!dialog.$$('add-printer-manually-dialog'));
+
+      assertFalse(dialog.showDiscoveryDialog_);
+      assertFalse(!!dialog.$$('add-printer-discovery-dialog'));
+    });
+  });
 });
