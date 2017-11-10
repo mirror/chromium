@@ -162,6 +162,8 @@ interface ArcBridgeHost {
 
   // Notifies Chrome that the WallpaperInstance interface is ready.
   [MinVersion=18] OnWallpaperInstanceReady@124(WallpaperInstance instance_ptr);
+
+  SetVariant@138() => (string v);
 };
 
 interface ArcBridgeInstance {
