@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f18a53c3_6e267d88",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-10T06:09:29Z",
+      "side": 1,
+      "message": "nit: Please put this near OnInputStart() and revise both sets of comments to clarify the difference between them.  (Move the implementation upward too.)\n\nAlso, please describe what the return value represents.",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb956d52_53ec2939",
+        "filename": "components/omnibox/browser/keyword_extensions_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-10T06:09:29Z",
+      "side": 1,
+      "message": "nit: Please put this next to EnterExtensionKeywordMode and also revise comments to clarify the difference between them.\n\nAnd move the implementation to the corresponding place too.",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "872f4d4e_449fa19a",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-10T06:09:29Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this function check somewhere around here that the template_url is actually an extension and not try to proceed if so?",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c647c3eb_5b6e7cbd",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-10T06:09:29Z",
+      "side": 1,
+      "message": "I don\u0027t thinks this test is right.  Previously GetKeywordForText() would return the empty string if it finds an extension keyword and that keyword is disabled.\nNow it returns the empty string if this function returns false.  This function returns false for all non-extension keywords and for disable keywords.\n\nI think this function should be called IsKeywordEnabled, and it should return\n  return (template_url-\u003etype() !\u003d TemplateURL::OMNIBOX_API_EXTENSION) ||\n         (extensions_delegate_ \u0026\u0026\n          extensions_delegate_-\u003eIsEnabledExtension(\n              template_url-\u003eGetExtensionId()));\n\nThe code in GetKeywordForText() does not need to be changed.\n\nYou will have to slightly revise the call in DeleteMatch() to make sure the keyword is an extension before calling this function.\n\nIf you take this implementation suggestion, remember to also revise the comment for this function.",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe39066e_8d9addcc",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-10T06:09:29Z",
+      "side": 1,
+      "message": "No need to comment in the code, but is there a reason this call goes where it does?\n(as opposed to before the OnTemporaryTextMaybeChanged calls in the if statements above, or even the calls around like 737-740)",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f054240_a1dfa03e",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-10T06:09:29Z",
+      "side": 1,
+      "message": "nit: Move declaration and implementation near the other keyword functions above.",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

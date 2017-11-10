@@ -396,6 +396,24 @@
       "revId": "b6c2f199b26573b181943db4f42674fbde661ebd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6894932f_a3765045",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 13565,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-10T06:09:29Z",
+      "side": 1,
+      "message": "Now moot; this change doesn\u0027t appear in the latest patchset.",
+      "parentUuid": "0e61d214_0028ecf6",
+      "revId": "b6c2f199b26573b181943db4f42674fbde661ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
