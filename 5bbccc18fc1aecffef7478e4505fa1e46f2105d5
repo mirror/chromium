@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "888d763a_41e9be86",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T19:07:49Z",
+      "side": 1,
+      "message": "Hmm. I\u0027m scanning through FakeShillServiceClient and it looks like calling this at line 291 should be sufficient. Can you clarify why this is necessary?",
+      "revId": "5bbccc18fc1aecffef7478e4505fa1e46f2105d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
