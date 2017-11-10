@@ -2712,7 +2712,7 @@ test("browser_tests") {
         ]
       }
       if (!is_chromeos) {
-        sources += [ "../browser/ui/views/message_center/web_notification_tray_browsertest.cc" ]
+        sources += [ "../browser/ui/views/message_center/message_center_ui_delegate_browsertest.cc" ]
       }
     }
 
