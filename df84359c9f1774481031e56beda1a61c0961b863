@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae6a3c84_3096e00d",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-10T17:55:53Z",
+      "side": 1,
+      "message": "Ping this one.\n\nIt would be good to make the style consistent, :).",
+      "parentUuid": "6acf988c_858d5b9d",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "df84359c9f1774481031e56beda1a61c0961b863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5af98d08_1907e12b",
         "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
         "patchSetId": 1
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "so that we can treat \u0027fusion_sensor_\u0027 as PlatformSensor::Client",
       "parentUuid": "5af98d08_1907e12b",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 53
+      },
+      "revId": "df84359c9f1774481031e56beda1a61c0961b863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f421a7_cc3e9b10",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-10T17:55:53Z",
+      "side": 1,
+      "message": "I see. Thanks!",
+      "parentUuid": "e6a00e01_26651351",
       "range": {
         "startLine": 109,
         "startChar": 2,
