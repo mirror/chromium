@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Upload UTF-8-named file in ISO-2022-JP form</title>
+<link rel="help"
+      href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#multipart-form-data">
+<link rel="author" title="Benjamin C. Wiley Sittler"
+      href="mailto:bsittler@chromium.org">
+<script src="../../../../resources/testharness.js"></script>
+<script src="../../../../resources/testharnessreport.js"></script>
+<script src="resources/send-dragged-file-form-helper.js"></script>
+<script>
+'use strict';
+
+formPostFileUploadTest({
+  fileNameEncoding: 'UTF-8',
+  fileToDrop: '../resources/file-for-drag-to-send3-ABC~¤•★星🌟星★•¤~XYZ.txt',
+  formEncoding: 'ISO-2022-JP',
+  expectedEncodedBaseName: 'file-for-drag-to-send3-ABC~&#164;&#8226;\x1b$B!z@1\x1b(B&#127775;\x1b$B@1!z\x1b(B&#8226;&#164;~XYZ',
+});
+
+</script>
