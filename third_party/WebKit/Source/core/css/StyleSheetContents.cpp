@@ -508,33 +508,16 @@ static bool ChildRulesHaveFailedOrCanceledSubresources(
     const HeapVector<Member<StyleRuleBase>>& rules) {
   for (unsigned i = 0; i < rules.size(); ++i) {
     const StyleRuleBase* rule = rules[i].Get();
-    switch (rule->GetType()) {
-      case StyleRuleBase::kStyle:
-        if (ToStyleRule(rule)->PropertiesHaveFailedOrCanceledSubresources())
-          return true;
-        break;
-      case StyleRuleBase::kFontFace:
-        if (ToStyleRuleFontFace(rule)
-                ->Properties()
-                .HasFailedOrCanceledSubresources())
-          return true;
-        break;
-      case StyleRuleBase::kMedia:
-        if (ChildRulesHaveFailedOrCanceledSubresources(
-                ToStyleRuleMedia(rule)->ChildRules()))
-          return true;
-        break;
-      case StyleRuleBase::kCharset:
-      case StyleRuleBase::kImport:
-      case StyleRuleBase::kNamespace:
-        NOTREACHED();
-      case StyleRuleBase::kPage:
-      case StyleRuleBase::kKeyframes:
-      case StyleRuleBase::kKeyframe:
-      case StyleRuleBase::kSupports:
-      case StyleRuleBase::kViewport:
-        break;
-    }
+    if (rule->IsMediaRule() && ChildRulesHaveFailedOrCanceledSubresources(
+                                   ToStyleRuleMedia(rule)->ChildRules()))
+      return true;
+    if (rule->IsPageRule() || rule->IsKeyframesRule() ||
+        rule->IsKeyframeRule() || rule->IsSupportsRule() ||
+        rule->IsViewportRule())
+      break;
+    if (rule->IsStyleRule() || rule->IsFontFaceRule())
+      return rule->HasFailedOrCanceledSubresources();
+    NOTREACHED();
   }
   return false;
 }

@@ -35,12 +35,10 @@
 
 namespace blink {
 
-StyleRuleKeyframes::StyleRuleKeyframes()
-    : StyleRuleBase(kKeyframes), version_(0) {}
+StyleRuleKeyframes::StyleRuleKeyframes() : version_(0) {}
 
 StyleRuleKeyframes::StyleRuleKeyframes(const StyleRuleKeyframes& o)
-    : StyleRuleBase(o),
-      keyframes_(o.keyframes_),
+    : keyframes_(o.keyframes_),
       name_(o.name_),
       version_(o.version_),
       is_prefixed_(o.is_prefixed_) {}
@@ -74,9 +72,15 @@ int StyleRuleKeyframes::FindKeyframeIndex(const String& key) const {
   return -1;
 }
 
-void StyleRuleKeyframes::TraceAfterDispatch(blink::Visitor* visitor) {
+void StyleRuleKeyframes::Trace(blink::Visitor* visitor) {
   visitor->Trace(keyframes_);
-  StyleRuleBase::TraceAfterDispatch(visitor);
+  StyleRuleBase::Trace(visitor);
+}
+
+CSSRule* StyleRuleKeyframes::CreateCSSOMWrapperInternal(
+    CSSStyleSheet* parent_sheet) const {
+  return CSSKeyframesRule::Create(const_cast<StyleRuleKeyframes*>(this),
+                                  parent_sheet);
 }
 
 CSSKeyframesRule::CSSKeyframesRule(StyleRuleKeyframes* keyframes_rule,
