@@ -705,14 +705,15 @@ void ClientSideDetectionHost::UpdateIPUrlMap(const std::string& ip,
 
 void ClientSideDetectionHost::DidGetResourceResponseStart(
     const content::ResourceRequestDetails& details) {
-  if (browse_info_.get() && should_extract_malware_features_ &&
-      details.url.is_valid()) {
-    UpdateIPUrlMap(details.socket_address.host() /* ip */,
-                   details.url.spec() /* url */,
-                   details.method,
-                   details.referrer,
-                   details.resource_type);
-  }
+
+  //if (browse_info_.get() && should_extract_malware_features_ &&
+    //  details.url.is_valid()) {
+    //UpdateIPUrlMap(details.socket_address.host() /* ip */,
+      //             details.url.spec() /* url */,
+        //           details.method,
+          //         details.referrer,
+            //       details.resource_type);
+  //}
 }
 
 bool ClientSideDetectionHost::DidShowSBInterstitial() const {
