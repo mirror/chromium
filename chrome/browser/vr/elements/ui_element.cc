@@ -10,9 +10,9 @@
 #include "base/numerics/ranges.h"
 #include "base/stl_util.h"
 #include "base/time/time.h"
-#include "chrome/browser/vr/elements/ui_element_transform_operations.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "ui/gfx/geometry/angle_conversions.h"
+#include "ui/gfx/geometry/rect_f.h"
 
 namespace vr {
 
@@ -165,13 +165,6 @@ bool UiElement::IsVisible() const {
 gfx::SizeF UiElement::size() const {
   DCHECK_LE(kUpdatedTexturesAndSizes, phase_);
   return size_;
-}
-
-void UiElement::SetTransformOperations(
-    const UiElementTransformOperations& ui_element_transform_operations) {
-  animation_player_.TransitionTransformOperationsTo(
-      last_frame_time_, TRANSFORM, transform_operations_,
-      ui_element_transform_operations.operations());
 }
 
 void UiElement::SetLayoutOffset(float x, float y) {
@@ -408,6 +401,40 @@ bool UiElement::IsAnimatingProperty(TargetProperty property) const {
   return animation_player_.IsAnimatingProperty(static_cast<int>(property));
 }
 
+void UiElement::DoLayOutChildren() {
+  LayOutChildren();
+  if (!bounds_contain_children_) {
+    DCHECK_EQ(0.0f, x_padding_);
+    DCHECK_EQ(0.0f, y_padding_);
+    return;
+  }
+
+  gfx::RectF bounds;
+  bool first = false;
+  for (auto& child : children_) {
+    if (!child->IsVisible()) {
+      continue;
+    }
+    gfx::Point3F child_center;
+    child->LocalTransform().TransformPoint(&child_center);
+    gfx::RectF local_rect =
+        gfx::RectF(child_center.x() - 0.5 * child->size().width(),
+                   child_center.y() - 0.5 * child->size().height(),
+                   child->size().width(), child->size().height());
+    if (first) {
+      bounds = local_rect;
+      first = false;
+    } else {
+      bounds.Union(local_rect);
+    }
+  }
+
+  bounds.Inset(-x_padding_, -y_padding_);
+  bounds.set_origin(bounds.CenterPoint());
+  size_ = bounds.size();
+  local_origin_ = bounds.origin();
+}
+
 void UiElement::LayOutChildren() {
   DCHECK_LE(kUpdatedTexturesAndSizes, phase_);
   for (auto& child : children_) {
@@ -440,6 +467,7 @@ void UiElement::UpdateComputedOpacity() {
 
 void UiElement::UpdateWorldSpaceTransformRecursive() {
   gfx::Transform transform;
+  transform.Translate(local_origin_.x(), local_origin_.y());
   transform.Scale(size_.width(), size_.height());
 
   // Compute an inheritable transformation that can be applied to this element,
