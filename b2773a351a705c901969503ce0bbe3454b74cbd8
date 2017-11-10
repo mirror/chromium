@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ab7e434_45c1254f",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-10T01:48:33Z",
+      "side": 1,
+      "message": "They are used in the DEFINE_TYPE_CASTS which define ToLonghand and ToShorthand.",
+      "parentUuid": "21f9ee8c_4cae9b8a",
+      "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb8a66c8_0916f5bc",
         "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilder.cpp.tmpl",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-09T22:40:47Z",
       "side": 1,
       "message": "where is ToLonghand defined?",
+      "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5cd9be_331bbba4",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilder.cpp.tmpl",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-10T01:48:33Z",
+      "side": 1,
+      "message": "It\u0027s defined in Longhand.h as DEFINE_TYPE_CASTS. Similarly for ToShorthand. This is some macro magic, hence the identifier \"ToLonghand\" doesn\u0027t seem to be declared anywhere.",
+      "parentUuid": "cb8a66c8_0916f5bc",
       "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7f11bdf5_48fdf8f5",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-10T01:48:33Z",
+      "side": 1,
+      "message": "Done\n\nI should do a follow up to replace this method everywhere and delete it. I think there\u0027s only about 10 of them.",
+      "parentUuid": "ec1c79ad_0d1d532c",
+      "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b5c313c_8f2edb81",
         "filename": "third_party/WebKit/Source/core/css/properties/Longhand.h",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522a385d_88bf5d85",
+        "filename": "third_party/WebKit/Source/core/css/properties/Longhand.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-10T01:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b5c313c_8f2edb81",
+      "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2f94df74_2048bd9c",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/ApplyAtRule.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-10T01:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a4c5d1a_09ab0953",
+      "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a58ecd53_6cc3af67",
         "filename": "third_party/WebKit/Source/core/css/properties/longhands/Variable.h",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bccec32a_ecd97d79",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/Variable.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-10T01:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a58ecd53_6cc3af67",
+      "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
