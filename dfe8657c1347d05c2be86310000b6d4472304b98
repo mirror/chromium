@@ -16,6 +16,24 @@
       "revId": "dfe8657c1347d05c2be86310000b6d4472304b98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d27e23_886c90a0",
+        "filename": "third_party/WebKit/Source/core/html/HTMLObjectElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-10T17:42:22Z",
+      "side": 1,
+      "message": "Just to keep old behaviour.  Is there someone who could comment on what the right behaviour per spec should be?  e.g. given the two sets\n\n{ src, movie, code, url } and { src, movie, data }, how do we unify?",
+      "parentUuid": "76e85904_3e476dad",
+      "revId": "dfe8657c1347d05c2be86310000b6d4472304b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
