@@ -82,6 +82,23 @@
     },
     {
       "key": {
+        "uuid": "e810d6e0_5de2659d",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-10T01:23:24Z",
+      "side": 1,
+      "message": "Out of the scope of this CL: this memoization could save us a lot of time if we can keep a persistent instance of the stack script alive for the entirety of a test suite\u0027s execution, particularly if we see the same crash repeatedly. (It wouldn\u0027t affect the runtime of symbolizing a single crash, though.)",
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b537a70e_7f5870a5",
         "filename": "third_party/android_platform/development/scripts/symbol.py",
         "patchSetId": 2
@@ -111,6 +128,59 @@
       "side": 1,
       "message": "When using multiprocessing, you\u0027re correct that any non-trivial data should be passed in globals for performance. However, if you used threads rather than multiple processes, it would be fine to pass it.\n\nMight be worth seeing if:\nimport multiprocessing.pool\npool \u003d multiprocessing.pool.ThreadPool()\n... same as you have...\n\nhas the same speed-up. I think either is fine though.\n\n\nIf you stick with the global though, you should add a comment explaining why you pass it like this.",
       "parentUuid": "b537a70e_7f5870a5",
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8737cc1a_2bc51f10",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-10T01:23:24Z",
+      "side": 1,
+      "message": "I think a thread pool should be fine here -- threads will mostly be blocked waiting for objdump anyway, so the GIL shouldn\u0027t cause you too much trouble.",
+      "parentUuid": "36cb9905_0e3c5985",
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59807a0a_aeddf8c4",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-10T01:23:24Z",
+      "side": 1,
+      "message": "I think a thread pool should be fine here -- threads will mostly be blocked waiting for objdump anyway, so the GIL shouldn\u0027t cause you too much trouble.",
+      "parentUuid": "36cb9905_0e3c5985",
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6794f0c_d0550240",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-10T01:23:24Z",
+      "side": 1,
+      "message": "This should call the function.",
       "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
