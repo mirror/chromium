@@ -1,0 +1,17 @@
+rootWebArea size=(800, 600)
+++genericContainer size=(784, 0)
+++++staticText size=(46, 17) name='Visible'
+++++++inlineTextBox size=(46, 17) name='Visible'
+++genericContainer size=(0, 36)
+++++staticText size=(43, 35) name='Also visible'
+++++++inlineTextBox size=(31, 17) name='Also '
+++++++inlineTextBox size=(43, 17) name='visible'
+++genericContainer offscreen size=(784, 0)
+++++staticText offscreen size=(48, 17) name='Hidden'
+++++++inlineTextBox offscreen size=(48, 17) name='Hidden'
+++genericContainer size=(10, 10)
+++++genericContainer offscreen size=(0, 36)
+++++++staticText offscreen size=(44, 35) name='Also hidden'
+++++++++inlineTextBox offscreen size=(31, 17) name='Also '
+++++++++inlineTextBox offscreen size=(44, 17) name='hidden'
+<-- End-of-file -->
