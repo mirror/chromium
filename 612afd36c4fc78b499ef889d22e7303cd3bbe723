@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2108cc20_7e5586ad",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-10T22:45:16Z",
+      "side": 1,
+      "message": "Will it introduce problem if we do the following instead?\nsize_ \u003d inline_flow.LinesBoundingBox().Size();",
+      "revId": "612afd36c4fc78b499ef889d22e7303cd3bbe723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea3f62d_12b20618",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-10T22:45:16Z",
+      "side": 1,
+      "message": "IIUC, the snapping here used an incomplete offset of ToLayoutBox(layout_object_).Location() because Location() can change due to ancestor movement, and we want to use a consistent value that matches scrollbar layout decision?\n\nCould add a comment to show where else ToLayoutBox(layout_object_).Location() was used for snapping? Is it possible to use LayoutPoint() instead for everywhere that needed premature snapping?",
+      "revId": "612afd36c4fc78b499ef889d22e7303cd3bbe723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f909ea_267bca57",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-10T22:45:16Z",
+      "side": 1,
+      "message": "Can we do this instead?\nlayer_bounds \u003d LayoutRect(offset, layer_.Size());",
+      "revId": "612afd36c4fc78b499ef889d22e7303cd3bbe723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be408146_fd5d91d5",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-10T22:45:16Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "612afd36c4fc78b499ef889d22e7303cd3bbe723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91078208_13eb1f2d",
+        "filename": "third_party/WebKit/Source/core/paint/ScrollableAreaPainter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-10T22:45:16Z",
+      "side": 1,
+      "message": "IntRect clip_rect \u003d PixelSnappedIntRect(LayoutRect(\n    LayoutPoint(adjusted_paint_offset)\n        + GetScrollableArea().Layer()-\u003eSubpixelAccumulation(),\n    GetScrollableArea().Layer()-\u003eSize()));",
+      "revId": "612afd36c4fc78b499ef889d22e7303cd3bbe723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
