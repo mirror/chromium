@@ -17446,6 +17446,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Download.Shelf.DragOutcome"
+    enum="Download.Shelf.DragOutcomeType">
+  <owner>sdy@chromium.org</owner>
+  <summary>
+    The outcome of dragging a completed download from the shelf, which
+    represents dragging a reference to the downloaded file.
+  </summary>
+</histogram>
+
 <histogram name="Download.ShelfInProgressSizeOnAutoClose">
   <owner>asanka@chromium.org</owner>
   <summary>

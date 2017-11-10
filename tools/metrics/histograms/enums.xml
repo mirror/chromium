@@ -9054,6 +9054,11 @@ Called by update_net_error_codes.py.-->
   <int value="4" label="FAILURE_REASON_FILE_MONITOR"/>
 </enum>
 
+<enum name="Download.Shelf.DragOutcomeType">
+  <int value="0" label="Canceled"/>
+  <int value="1" label="Dropped"/>
+</enum>
+
 <enum name="DownloadAudioType">
   <int value="0" label="UNRECOGNIZED"/>
   <int value="1" label="AAC"/>

@@ -121,4 +121,16 @@ void RecordDownloadPathGeneration(DownloadPathGenerationEvent event,
 void RecordDownloadPathValidation(PathValidationResult result,
                                   bool is_transient);
 
+enum class DownloadShelfDragOutcome {
+  // The download was dropped somewhere that isn't a drag target.
+  kCanceled,
+
+  // The download was dropped somewhere useful (a folder, an application, etc.)
+  kDropped,
+
+  kMax,
+};
+
+void RecordDownloadShelfDrag(DownloadShelfDragOutcome drag_outcome);
+
 #endif  // CHROME_BROWSER_DOWNLOAD_DOWNLOAD_STATS_H_
