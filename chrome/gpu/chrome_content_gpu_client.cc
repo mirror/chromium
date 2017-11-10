@@ -20,10 +20,16 @@
 #include "services/service_manager/public/cpp/connector.h"
 
 #if defined(OS_CHROMEOS)
-#include "chrome/gpu/gpu_arc_video_decode_accelerator.h"
+#include "chrome/gpu/gpu_arc_video_decode_accelerator_deprecated.h"
 #include "chrome/gpu/gpu_arc_video_encode_accelerator.h"
+#include "chrome/gpu/protected_buffer_manager.h"
+#include "chrome/gpu/protected_buffer_manager_proxy.h"
 #include "content/public/common/service_manager_connection.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#if defined(USE_OZONE)
+#include "ui/ozone/public/ozone_platform.h"
+#include "ui/ozone/public/surface_factory_ozone.h"
+#endif
 #endif
 
 namespace {
@@ -46,6 +52,10 @@ ChromeContentGpuClient::ChromeContentGpuClient()
                   metrics::CallStackProfileParams::MAY_SHUFFLE))) {
   if (StackSamplingConfiguration::Get()->IsProfilerEnabledForCurrentProcess())
     stack_sampling_profiler_.Start();
+
+#if defined(OS_CHROMEOS)
+  protected_buffer_manager_.reset(new chromeos::arc::ProtectedBufferManager());
+#endif
 }
 
 ChromeContentGpuClient::~ChromeContentGpuClient() {}
@@ -54,11 +64,16 @@ void ChromeContentGpuClient::InitializeRegistry(
     service_manager::BinderRegistry* registry) {
 #if defined(OS_CHROMEOS)
   registry->AddInterface(
-      base::Bind(&ChromeContentGpuClient::CreateArcVideoDecodeAccelerator,
-                 base::Unretained(this)),
+      base::Bind(
+          &ChromeContentGpuClient::CreateArcVideoDecodeAcceleratorDeprecated,
+          base::Unretained(this)),
       base::ThreadTaskRunnerHandle::Get());
   registry->AddInterface(
       base::Bind(&ChromeContentGpuClient::CreateArcVideoEncodeAccelerator,
+                 base::Unretained(this)),
+      base::ThreadTaskRunnerHandle::Get());
+  registry->AddInterface(
+      base::Bind(&ChromeContentGpuClient::CreateProtectedBufferManager,
                  base::Unretained(this)),
       base::ThreadTaskRunnerHandle::Get());
 #endif
@@ -68,6 +83,13 @@ void ChromeContentGpuClient::GpuServiceInitialized(
     const gpu::GpuPreferences& gpu_preferences) {
 #if defined(OS_CHROMEOS)
   gpu_preferences_ = gpu_preferences;
+#if defined(USE_OZONE)
+  ui::OzonePlatform::GetInstance()
+      ->GetSurfaceFactoryOzone()
+      ->SetGetProtectedNativePixmapDelegate(base::Bind(
+          &chromeos::arc::ProtectedBufferManager::GetProtectedNativePixmapFor,
+          base::Unretained(protected_buffer_manager_.get())));
+#endif
 #endif
 
   metrics::mojom::CallStackProfileCollectorPtr browser_interface;
@@ -78,12 +100,11 @@ void ChromeContentGpuClient::GpuServiceInitialized(
 }
 
 #if defined(OS_CHROMEOS)
-
-void ChromeContentGpuClient::CreateArcVideoDecodeAccelerator(
-    ::arc::mojom::VideoDecodeAcceleratorRequest request) {
+void ChromeContentGpuClient::CreateArcVideoDecodeAcceleratorDeprecated(
+    ::arc::mojom::VideoDecodeAcceleratorDeprecatedRequest request) {
   mojo::MakeStrongBinding(
-      base::MakeUnique<chromeos::arc::GpuArcVideoDecodeAccelerator>(
-          gpu_preferences_),
+      base::MakeUnique<chromeos::arc::GpuArcVideoDecodeAcceleratorDeprecated>(
+          gpu_preferences_, protected_buffer_manager_.get()),
       std::move(request));
 }
 
@@ -92,6 +113,14 @@ void ChromeContentGpuClient::CreateArcVideoEncodeAccelerator(
   mojo::MakeStrongBinding(
       base::MakeUnique<chromeos::arc::GpuArcVideoEncodeAccelerator>(
           gpu_preferences_),
+      std::move(request));
+}
+
+void ChromeContentGpuClient::CreateProtectedBufferManager(
+    ::arc::mojom::ProtectedBufferManagerRequest request) {
+  mojo::MakeStrongBinding(
+      base::MakeUnique<chromeos::arc::GpuArcProtectedBufferManagerProxy>(
+          protected_buffer_manager_.get()),
       std::move(request));
 }
 #endif
