@@ -413,6 +413,7 @@ void WindowState::AdjustSnappedBounds(gfx::Rect* bounds) {
     bounds->set_x(maximized_bounds.right() - bounds->width());
   bounds->set_y(maximized_bounds.y());
   bounds->set_height(maximized_bounds.height());
+  bounds->set_width(maximized_bounds.width() / 2);
 }
 
 void WindowState::UpdateWindowPropertiesFromStateType() {
