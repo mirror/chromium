@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "ed8c90e0_5c44a28a",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-10T21:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4c83b8_ae55445c",
+      "range": {
+        "startLine": 207,
+        "startChar": 7,
+        "endLine": 207,
+        "endChar": 36
+      },
+      "revId": "b1b717cdd6853b9a1aa0925eed4b8ad6a5c8ab70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa7c47f1_ead8d903",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.h",
         "patchSetId": 5
