@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c66a8e41_6c0cad00",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-10T23:15:49Z",
+      "side": 1,
+      "message": "This is a bit ambiguous. We only wait 30 days if we are sure the site has no favicon, but not on other failure modes.",
+      "range": {
+        "startLine": 38,
+        "startChar": 65,
+        "endLine": 38,
+        "endChar": 81
+      },
+      "revId": "556f006f13ab0205fb06315e0fd1635abcf93460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa9d046_3bd64941",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-10T23:15:49Z",
+      "side": 1,
+      "message": "This can be private.",
+      "range": {
+        "startLine": 39,
+        "startChar": 22,
+        "endLine": 39,
+        "endChar": 50
+      },
+      "revId": "556f006f13ab0205fb06315e0fd1635abcf93460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d088d63_05dc6e3a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-10T23:15:49Z",
+      "side": 1,
+      "message": "How about TimeUnit.DAYS.toMillis(30)?",
+      "range": {
+        "startLine": 39,
+        "startChar": 53,
+        "endLine": 39,
+        "endChar": 64
+      },
+      "revId": "556f006f13ab0205fb06315e0fd1635abcf93460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a61d12_108044ba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-10T23:15:49Z",
+      "side": 1,
+      "message": "These can be private.",
+      "range": {
+        "startLine": 56,
+        "startChar": 26,
+        "endLine": 56,
+        "endChar": 39
+      },
+      "revId": "556f006f13ab0205fb06315e0fd1635abcf93460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfaf0e3f_96b2bb31",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-10T23:15:49Z",
+      "side": 1,
+      "message": "Ditto. We can be more specific.",
+      "range": {
+        "startLine": 109,
+        "startChar": 30,
+        "endLine": 109,
+        "endChar": 71
+      },
+      "revId": "556f006f13ab0205fb06315e0fd1635abcf93460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f708f6f_df44c354",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-10T23:15:49Z",
+      "side": 1,
+      "message": "Partner bookmarks can change. Let\u0027s say a certain URL is present last time, and failed, then we have it in the map. If that URL is gone, then we keep it around unnecessarily.\n\nOne way to solve this is to use another map to store entries to save in shutDown().\n\nPractically partner bookmarks should be pretty stable, but it\u0027s better to be more defensive.",
+      "range": {
+        "startLine": 111,
+        "startChar": 24,
+        "endLine": 111,
+        "endChar": 40
+      },
+      "revId": "556f006f13ab0205fb06315e0fd1635abcf93460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "679ba2b0_a7feb917",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-10T23:15:49Z",
+      "side": 1,
+      "message": "Let\u0027s say we saw an URL without favicon last time, so shouldFetchFaviconFromServer \u003d\u003d false this time, and it would return FAILURE_NOT_IN_CACHE this time. Then it would be removed from the map, which seems wrong.",
+      "range": {
+        "startLine": 113,
+        "startChar": 22,
+        "endLine": 113,
+        "endChar": 26
+      },
+      "revId": "556f006f13ab0205fb06315e0fd1635abcf93460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd590cc_c920cff8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-10T23:15:49Z",
+      "side": 1,
+      "message": "Ditto. This is not very precise. FAILURE_CONNECTION_ERROR is also an error, but we still want to retry very soon.",
+      "range": {
+        "startLine": 114,
+        "startChar": 58,
+        "endLine": 114,
+        "endChar": 86
+      },
+      "revId": "556f006f13ab0205fb06315e0fd1635abcf93460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbb3a06_bdbb6dcc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-10T23:15:49Z",
+      "side": 1,
+      "message": "An UMA tracking the size of the map might be useful. Can be in a followup CL though.",
+      "range": {
+        "startLine": 182,
+        "startChar": 12,
+        "endLine": 182,
+        "endChar": 28
+      },
+      "revId": "556f006f13ab0205fb06315e0fd1635abcf93460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
