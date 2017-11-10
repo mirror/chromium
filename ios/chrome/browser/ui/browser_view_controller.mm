@@ -44,6 +44,7 @@
 #include "components/feature_engagement/public/tracker.h"
 #include "components/image_fetcher/ios/ios_image_data_fetcher_wrapper.h"
 #include "components/infobars/core/infobar_manager.h"
+#import "components/language/ios/browser/ios_language_detection_tab_helper.h"
 #include "components/payments/core/features.h"
 #include "components/prefs/pref_service.h"
 #include "components/reading_list/core/reading_list_model.h"
@@ -75,6 +76,7 @@
 #include "ios/chrome/browser/infobars/infobar_container_ios.h"
 #include "ios/chrome/browser/infobars/infobar_container_view.h"
 #include "ios/chrome/browser/infobars/infobar_manager_impl.h"
+#import "ios/chrome/browser/language/url_language_histogram_factory.h"
 #import "ios/chrome/browser/metrics/new_tab_page_uma.h"
 #include "ios/chrome/browser/metrics/tab_usage_recorder.h"
 #import "ios/chrome/browser/open_url_util.h"
@@ -107,6 +109,8 @@
 #import "ios/chrome/browser/tabs/tab_model_observer.h"
 #import "ios/chrome/browser/tabs/tab_private.h"
 #import "ios/chrome/browser/tabs/tab_snapshotting_delegate.h"
+#import "ios/chrome/browser/translate/chrome_ios_translate_client.h"
+#import "ios/chrome/browser/translate/language_selection_handler.h"
 #import "ios/chrome/browser/ui/activity_services/activity_service_legacy_coordinator.h"
 #import "ios/chrome/browser/ui/activity_services/requirements/activity_service_presentation.h"
 #import "ios/chrome/browser/ui/alert_coordinator/alert_coordinator.h"
@@ -179,6 +183,7 @@
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_view_item.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_popup_controller.h"
+#import "ios/chrome/browser/ui/translate/language_selection_coordinator.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/util/pasteboard_util.h"
@@ -569,6 +574,9 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 
   // Coordinator for the External Search UI.
   ExternalSearchCoordinator* _externalSearchCoordinator;
+
+  // Coordinator for the language selection UI.
+  LanguageSelectionCoordinator* _languageSelectionCoordinator;
 
   // Fake status bar view used to blend the toolbar into the status bar.
   UIView* _fakeStatusBarView;
@@ -2011,6 +2019,9 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _externalSearchCoordinator = [[ExternalSearchCoordinator alloc] init];
   _externalSearchCoordinator.dispatcher = _dispatcher;
 
+  _languageSelectionCoordinator =
+      [[LanguageSelectionCoordinator alloc] initWithBaseViewController:self];
+
   if (base::FeatureList::IsEnabled(payments::features::kWebPayments)) {
     _paymentRequestManager = [[PaymentRequestManager alloc]
         initWithBaseViewController:self
@@ -2503,6 +2514,17 @@ bubblePresenterForFeature:(const base::Feature&)feature
   RepostFormTabHelper::CreateForWebState(tab.webState, self);
   NetExportTabHelper::CreateForWebState(tab.webState, self);
   CaptivePortalDetectorTabHelper::CreateForWebState(tab.webState, self);
+
+  // The language detection helper accepts a callback from the translate
+  // client, so must be created after it.
+  ChromeIOSTranslateClient::CreateForWebState(tab.webState,
+                                              _languageSelectionCoordinator);
+  language::IOSLanguageDetectionTabHelper::CreateForWebState(
+      tab.webState,
+      ChromeIOSTranslateClient::FromWebState(tab.webState)
+          ->GetTranslateDriver()
+          ->CreateLanguageDetectionCallback(),
+      UrlLanguageHistogramFactory::GetForBrowserState(self.browserState));
 
   if (AccountConsistencyService* accountConsistencyService =
           ios::AccountConsistencyServiceFactory::GetForBrowserState(

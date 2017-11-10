@@ -7,6 +7,8 @@
 
 #include "ios/chrome/browser/infobars/infobar_controller.h"
 
+@protocol LanguageSelectionHandler;
+
 // The accessibility identifier of the cancel button on language picker view.
 // NOTE: this should not be used on iOS 9 for testing.
 extern NSString* const kLanguagePickerCancelButtonId;
@@ -16,6 +18,9 @@ extern NSString* const kLanguagePickerCancelButtonId;
 extern NSString* const kLanguagePickerDoneButtonId;
 
 @interface BeforeTranslateInfoBarController : InfoBarController
+
+@property(nonatomic, weak) id<LanguageSelectionHandler>
+    languageSelectionHandler;
 
 @end
 
