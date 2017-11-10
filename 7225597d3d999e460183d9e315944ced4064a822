@@ -22,6 +22,30 @@
       "revId": "7225597d3d999e460183d9e315944ced4064a822",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b309dd2_136ae73e",
+        "filename": "net/base/network_change_notifier.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-10T17:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d2fa827_c51acffd",
+      "range": {
+        "startLine": 506,
+        "startChar": 9,
+        "endLine": 506,
+        "endChar": 42
+      },
+      "revId": "7225597d3d999e460183d9e315944ced4064a822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
