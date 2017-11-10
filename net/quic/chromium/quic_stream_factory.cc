@@ -711,7 +711,8 @@ QuicStreamFactory::QuicStreamFactory(
       yield_after_duration_(QuicTime::Delta::FromMilliseconds(
           kQuicYieldAfterDurationMilliseconds)),
       connect_using_default_network_(
-          connect_using_default_network &&
+          (connect_using_default_network ||
+           migrate_sessions_on_network_change_v2) &&
           NetworkChangeNotifier::AreNetworkHandlesSupported()),
       migrate_sessions_on_network_change_(migrate_sessions_on_network_change),
       migrate_sessions_on_network_change_v2_(
@@ -1150,7 +1151,8 @@ void QuicStreamFactory::ClearCachedStatesInCryptoConfig(
 void QuicStreamFactory::OnIPAddressChanged() {
   LogPlatformNotificationInHistogram(NETWORK_IP_ADDRESS_CHANGED);
   // Do nothing if connection migration is in use.
-  if (migrate_sessions_on_network_change_)
+  if (migrate_sessions_on_network_change_ ||
+      migrate_sessions_on_network_change_v2_)
     return;
   CloseAllSessions(ERR_NETWORK_CHANGED, QUIC_IP_ADDRESS_CHANGED);
   set_require_confirmation(true);
@@ -1158,7 +1160,8 @@ void QuicStreamFactory::OnIPAddressChanged() {
 
 void QuicStreamFactory::OnNetworkConnected(NetworkHandle network) {
   LogPlatformNotificationInHistogram(NETWORK_CONNECTED);
-  if (!migrate_sessions_on_network_change_)
+  if (!migrate_sessions_on_network_change_ &&
+      !migrate_sessions_on_network_change_v2_)
     return;
   ScopedConnectionMigrationEventLog scoped_event_log(net_log_,
                                                      "OnNetworkConnected");
@@ -1174,7 +1177,8 @@ void QuicStreamFactory::OnNetworkConnected(NetworkHandle network) {
 void QuicStreamFactory::OnNetworkMadeDefault(NetworkHandle network) {
   LogPlatformNotificationInHistogram(NETWORK_MADE_DEFAULT);
 
-  if (!migrate_sessions_on_network_change_)
+  if (!migrate_sessions_on_network_change_ &&
+      !migrate_sessions_on_network_change_v2_)
     return;
   DCHECK_NE(NetworkChangeNotifier::kInvalidNetworkHandle, network);
   ScopedConnectionMigrationEventLog scoped_event_log(net_log_,
@@ -1193,7 +1197,8 @@ void QuicStreamFactory::OnNetworkMadeDefault(NetworkHandle network) {
 void QuicStreamFactory::OnNetworkDisconnected(NetworkHandle network) {
   LogPlatformNotificationInHistogram(NETWORK_DISCONNECTED);
 
-  if (!migrate_sessions_on_network_change_)
+  if (!migrate_sessions_on_network_change_ &&
+      !migrate_sessions_on_network_change_v2_)
     return;
   ScopedConnectionMigrationEventLog scoped_event_log(net_log_,
                                                      "OnNetworkDisconnected");
@@ -1203,7 +1208,11 @@ void QuicStreamFactory::OnNetworkDisconnected(NetworkHandle network) {
   while (it != all_sessions_.end()) {
     QuicChromiumClientSession* session = it->first;
     ++it;
-    session->OnNetworkDisconnected(new_network, scoped_event_log.net_log());
+    if (migrate_sessions_on_network_change_v2_) {
+      session->OnNetworkDisconnectedV2(network, scoped_event_log.net_log());
+    } else {
+      session->OnNetworkDisconnected(new_network, scoped_event_log.net_log());
+    }
   }
 }
 
@@ -1276,7 +1285,8 @@ int QuicStreamFactory::ConfigureSocket(DatagramClientSocket* socket,
   LOG(ERROR) << "Configure socket for address " << addr.ToString();
 
   int rv;
-  if (migrate_sessions_on_network_change_) {
+  if (migrate_sessions_on_network_change_ ||
+      migrate_sessions_on_network_change_v2_) {
     // If caller leaves network unspecified, use current default network.
     if (network == NetworkChangeNotifier::kInvalidNetworkHandle) {
       rv = socket->ConnectUsingDefaultNetwork(addr);
@@ -1404,7 +1414,8 @@ int QuicStreamFactory::CreateSession(const QuicSessionKey& key,
       connection, std::move(socket), this, quic_crypto_client_stream_factory_,
       clock_, transport_security_state_, std::move(server_info), server_id,
       require_confirmation, migrate_sessions_early_,
-      migrate_sessions_on_network_change_, yield_after_packets_,
+      migrate_sessions_on_network_change_,
+      migrate_sessions_on_network_change_v2_, yield_after_packets_,
       yield_after_duration_, cert_verify_flags, config, &crypto_config_,
       network_connection_.connection_description(), dns_resolution_start_time,
       dns_resolution_end_time, &push_promise_index_, push_delegate_,

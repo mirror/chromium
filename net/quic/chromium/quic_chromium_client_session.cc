@@ -648,6 +648,7 @@ QuicChromiumClientSession::QuicChromiumClientSession(
     bool require_confirmation,
     bool migrate_session_early,
     bool migrate_sessions_on_network_change,
+    bool migrate_sessions_on_network_change_v2,
     int yield_after_packets,
     QuicTime::Delta yield_after_duration,
     int cert_verify_flags,
@@ -663,10 +664,12 @@ QuicChromiumClientSession::QuicChromiumClientSession(
     NetLog* net_log)
     : QuicSpdyClientSessionBase(connection, push_promise_index, config),
       server_id_(server_id),
-      probing_pending_(false),
+      migration_pending_v2_(false),
       require_confirmation_(require_confirmation),
       migrate_session_early_(migrate_session_early),
       migrate_session_on_network_change_(migrate_sessions_on_network_change),
+      migrate_session_on_network_change_v2_(
+          migrate_sessions_on_network_change_v2),
       clock_(clock),
       yield_after_packets_(yield_after_packets),
       yield_after_duration_(yield_after_duration),
@@ -695,6 +698,7 @@ QuicChromiumClientSession::QuicChromiumClientSession(
       bytes_pushed_and_unclaimed_count_(0),
       migration_pending_(false),
       weak_factory_(this) {
+  default_network_ = socket->GetBoundNetwork();
   sockets_.push_back(std::move(socket));
   packet_readers_.push_back(std::make_unique<QuicChromiumPacketReader>(
       sockets_.back().get(), clock, this, yield_after_packets,
@@ -852,24 +856,6 @@ void QuicChromiumClientSession::OnStreamFrame(const QuicStreamFrame& frame) {
 
   // Record number of frames per stream in packet.
   UMA_HISTOGRAM_COUNTS_1M("Net.QuicNumStreamFramesPerStreamInPacket", 1);
-  if (!probing_pending_) {
-    probing_pending_ = true;
-    LOG(ERROR) << "=========== ZHONGYI SEND PROBING ==========";
-    const NetLogWithSource migration_net_log = NetLogWithSource::Make(
-        net_log_.net_log(), NetLogSourceType::QUIC_CONNECTION_MIGRATION);
-    migration_net_log.BeginEvent(
-        NetLogEventType::QUIC_CONNECTION_MIGRATION_TRIGGERED,
-        base::Bind(&NetLogQuicConnectionMigrationTriggerCallback,
-                   "zhongyi force the connection migration"));
-
-    SendConnectivityProbing(
-        NetworkChangeNotifier::kInvalidNetworkHandle,
-        connection()->peer_address().impl().socket_address(),
-        migration_net_log);
-
-    migration_net_log.EndEvent(
-        NetLogEventType::QUIC_CONNECTION_MIGRATION_TRIGGERED);
-  }
 
   return QuicSpdySession::OnStreamFrame(frame);
 }
@@ -1563,8 +1549,11 @@ void QuicChromiumClientSession::MigrateSessionOnWriteError(int error_code) {
 }
 
 void QuicChromiumClientSession::OnNoNewNetwork() {
-  migration_pending_ = true;
-
+  if (migrate_session_on_network_change_v2_) {
+    migration_pending_v2_ = true;
+  } else {
+    migration_pending_ = true;
+  }
   // Block the packet writer to avoid any writes while migration is in progress.
   static_cast<QuicChromiumPacketWriter*>(connection()->writer())
       ->set_write_blocked(true);
@@ -1579,6 +1568,7 @@ void QuicChromiumClientSession::OnNoNewNetwork() {
 void QuicChromiumClientSession::WriteToNewSocket() {
   // Prevent any pending migration from executing.
   migration_pending_ = false;
+  migration_pending_v2_ = false;
   static_cast<QuicChromiumPacketWriter*>(connection()->writer())
       ->set_write_blocked(false);
   if (packet_ == nullptr) {
@@ -1616,18 +1606,64 @@ void QuicChromiumClientSession::OnMigrationTimeout(size_t num_sockets) {
                       QUIC_CONNECTION_MIGRATION_NO_NEW_NETWORK);
 }
 
+void QuicChromiumClientSession::OnProbingTimeout() {
+  if (!probing_socket_) {
+    DCHECK(!probing_reader_ && !probing_writer_);
+    return;
+  }
+
+  // TODO(zhongyi): add retry logic.
+  CancelProbing();
+
+  if (probing_socket_->GetBoundNetwork() == default_network_) {
+    // The probing was sent on the default network.
+    if (GetDefaultSocket()->GetBoundNetwork() != default_network_) {
+      // Current default socket is not using the default network. It is okay to
+      // stay on this network, but we need to migrate back.
+      // TODO(zhongyi): add logic to migrate back to default network.
+      LOG(ERROR) << "zhongyi_log: Client probing times out for "
+                 << "connection_id = " << connection_id()
+                 << " on the default network, still using non-default network";
+    } else {
+      // Current defautl socket is using the default network.
+      LOG(ERROR) << "zhongyi_log: Client probing times out, and current deafult"
+                 << " socket is using default network";
+      // This probably means, originally we want to probe, but then force
+      // migrationi directly. For example, the non-default path that the default
+      // was on is being disconnected.
+    }
+  } else {
+    // The probing was sent on a non-default network.
+    if (GetDefaultSocket()->GetBoundNetwork() != default_network_) {
+      // Current default socket is already using the non-default network.
+      // TODO(zhongyi): what does this mean?
+
+    } else {
+      // Current default socket is on a non-default network.
+      CHECK_EQ(probing_socket_->GetBoundNetwork(),
+               GetDefaultSocket()->GetBoundNetwork());
+      // We have force migration to non-default network.
+      // Probably means the default network is being disconnected.
+      // TODO(zhongyi): add logic to migrate back to the default network.
+    }
+  }
+}
+
 void QuicChromiumClientSession::OnNetworkConnected(
     NetworkChangeNotifier::NetworkHandle network,
     const NetLogWithSource& net_log) {
   // If migration_pending_ is false, there was no migration pending or
   // an earlier task completed migration.
-  if (!migration_pending_)
+  if (!migration_pending_ && !migration_pending_v2_)
     return;
 
-  // TODO(jri): Ensure that OnSessionGoingAway is called consistently,
-  // and that it's always called at the same time in the whole
-  // migration process. Allows tests to be more uniform.
-  stream_factory_->OnSessionGoingAway(this);
+  if (!migration_pending_) {
+    // TODO(jri): Ensure that OnSessionGoingAway is called consistently,
+    // and that it's always called at the same time in the whole
+    // migration process. Allows tests to be more uniform.
+    stream_factory_->OnSessionGoingAway(this);
+  }
+
   Migrate(network, connection()->peer_address().impl().socket_address(),
           /*close_session_on_error=*/true, net_log);
 }
@@ -1667,6 +1703,63 @@ void QuicChromiumClientSession::OnNetworkDisconnected(
       alternate_network, /*close_if_cannot_migrate*/ true, migration_net_log);
 }
 
+void QuicChromiumClientSession::OnNetworkDisconnectedV2(
+    NetworkChangeNotifier::NetworkHandle disconnected_network,
+    const NetLogWithSource& migration_net_log) {
+  if (most_recent_path_degrading_timestamp_ != base::TimeTicks()) {
+    most_recent_network_disconnected_timestamp_ = base::TimeTicks::Now();
+    base::TimeDelta degrading_duration =
+        most_recent_network_disconnected_timestamp_ -
+        most_recent_path_degrading_timestamp_;
+    UMA_HISTOGRAM_CUSTOM_TIMES(
+        "Net.QuicNetworkDegradingDurationTillDisconnected", degrading_duration,
+        base::TimeDelta::FromMilliseconds(1), base::TimeDelta::FromMinutes(10),
+        100);
+  }
+  if (most_recent_write_error_timestamp_ != base::TimeTicks()) {
+    base::TimeDelta write_error_to_disconnection_gap =
+        most_recent_network_disconnected_timestamp_ -
+        most_recent_write_error_timestamp_;
+    UMA_HISTOGRAM_CUSTOM_TIMES(
+        "Net.QuicNetworkGapBetweenWriteErrorAndDisconnection",
+        write_error_to_disconnection_gap, base::TimeDelta::FromMilliseconds(1),
+        base::TimeDelta::FromMinutes(10), 100);
+    UMA_HISTOGRAM_SPARSE_SLOWLY(
+        "Net.QuicSession.WriteError.NetworkDisconnected",
+        -most_recent_write_error_);
+    most_recent_write_error_ = 0;
+    most_recent_write_error_timestamp_ = base::TimeTicks();
+  }
+
+  if (!migrate_session_on_network_change_v2_)
+    return;
+
+  // Stop probing if it is probing on the disconnected network.
+  if (probing_socket_ &&
+      probing_socket_->GetBoundNetwork() == disconnected_network) {
+    LOG(ERROR) << "zhongyi_log: Client cancelled previous probing as it's been "
+                  "disconnected";
+    CancelProbing();
+  }
+
+  // Check if the current path being used is affected.
+  if (GetDefaultSocket()->GetBoundNetwork() != disconnected_network) {
+    // TODO(zhongyi): maybe cancel the migrate back to default logic?
+    LOG(ERROR)
+        << "zhongyi_log: Client's current default network is not affected";
+    return;
+  }
+
+  // Attempt to find alternative network.
+  NetworkChangeNotifier::NetworkHandle new_network =
+      stream_factory_->FindAlternateNetwork(disconnected_network);
+
+  // Migrate immediately.
+  //
+  // TODO(zhongyi): check if we want to mark session as going away.
+  ForceMigrateOrCloseSession(new_network, true, migration_net_log);
+}
+
 void QuicChromiumClientSession::OnNetworkMadeDefault(
     NetworkChangeNotifier::NetworkHandle new_network,
     const NetLogWithSource& migration_net_log) {
@@ -1692,13 +1785,72 @@ void QuicChromiumClientSession::OnNetworkMadeDefault(
     most_recent_path_degrading_timestamp_ = base::TimeTicks();
   }
 
-  if (!migrate_session_on_network_change_)
+  if (!migrate_session_on_network_change_ &&
+      !migrate_session_on_network_change_v2_)
     return;
 
   DCHECK_NE(NetworkChangeNotifier::kInvalidNetworkHandle, new_network);
 
-  MaybeMigrateOrCloseSession(new_network, /*close_if_cannot_migrate*/ false,
-                             migration_net_log);
+  if (!migrate_session_on_network_change_v2_) {
+    MaybeMigrateOrCloseSession(new_network, /*close_if_cannot_migrate*/ false,
+                               migration_net_log);
+    return;
+  }
+  // ========================================================================
+  //
+  //                       connection migration v2
+  //
+  // =========================================================================
+
+  default_network_ = new_network;
+  // TODO(zhongyi): cancel probing timer when timer is added.
+
+  if (GetDefaultSocket()->GetBoundNetwork() == new_network) {
+    LOG(ERROR) << "zhongyi_log: Client has already migrated to the new network";
+    HistogramAndLogMigrationFailure(
+        migration_net_log, MIGRATION_STATUS_ALREADY_MIGRATED, connection_id(),
+        "Already bound to new network");
+    return;
+  }
+
+  // TODO(zhongyi): not sure if the default socket's bound network is
+  // disconnected, what would GetDefaultSocket()->GetBoundNetwork() would
+  // return???
+  if (GetDefaultSocket()->GetBoundNetwork() ==
+      NetworkChangeNotifier::kInvalidNetworkHandle) {
+    LOG(ERROR)
+        << "zhongyi_log: Client's default socket network has been disconnected";
+    // Old network has been disconnected, migrate directly to the new network
+    // immediately.
+    // TODO(zhongyi): this would mark session as going away, check whether we
+    // should do this.
+    ForceMigrateOrCloseSession(new_network, true, migration_net_log);
+    return;
+  }
+
+  if (probing_socket_) {
+    if (probing_socket_->GetBoundNetwork() == new_network) {
+      // A previous probing is already sent.
+      LOG(ERROR) << "zhongyi_log: Client has already sent a probing to the "
+                    "same network";
+      // TODO(zhongyi): MUST add code to mark probe as failed when timer fires,
+      return;
+    } else {
+      LOG(ERROR) << "zhongyi_log: Client cancelled a previous probing";
+      CancelProbing();
+    }
+  }
+
+  // TODO(zhongyi): If the migrate back to default network is set before, cancel
+  // that.
+
+  // TODO(zhongyi): add probng_net_log so that when probing finished, we could
+  // still log the status.
+  SendConnectivityProbing(new_network,
+                          connection()->peer_address().impl().socket_address(),
+                          migration_net_log);
+
+  return;
 }
 
 void QuicChromiumClientSession::OnWriteError(int error_code) {
@@ -1951,6 +2103,72 @@ void QuicChromiumClientSession::NotifyFactoryOfSessionClosed() {
     stream_factory_->OnSessionClosed(this);
 }
 
+void QuicChromiumClientSession::ForceMigrateOrCloseSession(
+    NetworkChangeNotifier::NetworkHandle new_network,
+    bool close_if_cannot_migrate,
+    const NetLogWithSource& migration_net_log) {
+  if (probing_socket_ && probing_socket_->GetBoundNetwork() == new_network) {
+    CancelProbing();
+  }
+
+  // If session is already bound to |new_network|, move on.
+  if (GetDefaultSocket()->GetBoundNetwork() == new_network) {
+    LOG(ERROR) << "zhongyi_log: Client is already on target network";
+    HistogramAndLogMigrationFailure(
+        migration_net_log, MIGRATION_STATUS_ALREADY_MIGRATED, connection_id(),
+        "Already bound to new network");
+    return;
+  }
+
+  // Close idle sessions.
+  if (GetNumActiveStreams() == 0) {
+    LOG(ERROR) << "zhongyi_log: Client closes session when force migration "
+               << "due to being idle";
+    HistogramAndLogMigrationFailure(migration_net_log,
+                                    MIGRATION_STATUS_NO_MIGRATABLE_STREAMS,
+                                    connection_id(), "No active streams");
+    if (close_if_cannot_migrate) {
+      CloseSessionOnError(ERR_NETWORK_CHANGED,
+                          QUIC_CONNECTION_MIGRATION_NO_MIGRATABLE_STREAMS);
+    }
+    return;
+  }
+
+  DCHECK(stream_factory_);
+
+  // Do not migrate sessions where connection migration is disabled.
+  if (config()->DisableConnectionMigration()) {
+    HistogramAndLogMigrationFailure(migration_net_log,
+                                    MIGRATION_STATUS_DISABLED, connection_id(),
+                                    "Migration disabled");
+    CloseSessionOnError(ERR_NETWORK_CHANGED, QUIC_IP_ADDRESS_CHANGED);
+    return;
+  }
+
+  // Do not migrate sessions with non-migratable streams.
+  if (HasNonMigratableStreams()) {
+    // TODO(zhongyi): migrate but reset migratable streams.
+    HistogramAndLogMigrationFailure(migration_net_log,
+                                    MIGRATION_STATUS_NON_MIGRATABLE_STREAM,
+                                    connection_id(), "Non-migratable stream");
+    if (close_if_cannot_migrate) {
+      CloseSessionOnError(ERR_NETWORK_CHANGED,
+                          QUIC_CONNECTION_MIGRATION_NON_MIGRATABLE_STREAM);
+    }
+    return;
+  }
+
+  // No new network was found. Notify session, so it can wait for a new
+  // network.
+  if (new_network == NetworkChangeNotifier::kInvalidNetworkHandle) {
+    OnNoNewNetwork();
+    return;
+  }
+
+  Migrate(new_network, connection()->peer_address().impl().socket_address(),
+          /*close_session_on_error*/ true, migration_net_log);
+}
+
 void QuicChromiumClientSession::MaybeMigrateOrCloseSession(
     NetworkChangeNotifier::NetworkHandle new_network,
     bool close_if_cannot_migrate,
@@ -2086,16 +2304,25 @@ MigrationResult QuicChromiumClientSession::Migrate(
 }
 
 void QuicChromiumClientSession::OnProbingSuccessful(const QuicSocketAddress& self_address) {
-  if (!probing_reader_ || !probing_writer_) {
+  if (!probing_socket_) {
+    CancelProbing();
     LOG(ERROR) << "zhongyi_log: Client: Probing is cancelled";
-    probing_reader_.reset();
-    probing_writer_.reset();
     return;
   }
+
+  // Mark probing socket as the default socket.
+  sockets_.push_back(std::move(probing_socket_));
   packet_readers_.push_back(std::move(probing_reader_));
   connection()->SetSelfAddress(self_address);
   connection()->SetQuicPacketWriter(probing_writer_.release(),
                                    /*owns_writer*/ true);
+}
+
+void QuicChromiumClientSession::CancelProbing() {
+  // TODO(zhongyi): cancel probing timer.
+  probing_reader_.reset();
+  probing_writer_.reset();
+  probing_socket_.reset();
 }
 
 bool QuicChromiumClientSession::MigrateToSocket(
@@ -2123,6 +2350,7 @@ bool QuicChromiumClientSession::MigrateToSocket(
                             weak_factory_.GetWeakPtr()));
   // Migration completed.
   migration_pending_ = false;
+  migration_pending_v2_ = false;
   return true;
 }
 
@@ -2130,22 +2358,51 @@ MigrationResult QuicChromiumClientSession::SendConnectivityProbing(
     NetworkChangeNotifier::NetworkHandle network,
     IPEndPoint peer_address,
     const NetLogWithSource& migration_net_log) {
-  LOG(ERROR) << "0";
   if (!stream_factory_)
     return MigrationResult::FAILURE;
-  LOG(ERROR) << "1";
+
+  CHECK_NE(NetworkChangeNotifier::kInvalidNetworkHandle, network);
+
+  // Close idle sessions.
+  if (GetNumActiveStreams() == 0) {
+    LOG(ERROR) << "zhongyi_log: Client closes session when send probing"
+               << "due to being idle";
+    HistogramAndLogMigrationFailure(migration_net_log,
+                                    MIGRATION_STATUS_NO_MIGRATABLE_STREAMS,
+                                    connection_id(), "No active streams");
+    CloseSessionOnError(ERR_NETWORK_CHANGED,
+                        QUIC_CONNECTION_MIGRATION_NO_MIGRATABLE_STREAMS);
+    return MigrationResult::FAILURE;
+  }
+
+  if (config()->DisableConnectionMigration()) {
+    // ABORT probing as connection migration is disabled.
+    HistogramAndLogMigrationFailure(migration_net_log,
+                                    MIGRATION_STATUS_DISABLED, connection_id(),
+                                    "Migration disabled");
+    return MigrationResult::FAILURE;
+  }
+
+  // Do not probe sessions with non-migratable streams.
+  if (HasNonMigratableStreams()) {
+    // TODO(zhongyi): migrate but reset migratable streams.
+    HistogramAndLogMigrationFailure(migration_net_log,
+                                    MIGRATION_STATUS_NON_MIGRATABLE_STREAM,
+                                    connection_id(), "Non-migratable stream");
+    return MigrationResult::FAILURE;
+  }
 
   // Create and configure socket on |network|
   probing_socket_ =
       stream_factory_->CreateSocket(net_log_.net_log(), net_log_.source());
   if (stream_factory_->ConfigureSocket(probing_socket_.get(), peer_address,
                                        network) != OK) {
+    probing_socket_.reset();
     HistogramAndLogMigrationFailure(
         migration_net_log, MIGRATION_STATUS_INTERNAL_ERROR, connection_id(),
         "Socket configuration failed");
     return MigrationResult::FAILURE;
   }
-  LOG(ERROR) << "2";
 
   // Create new packet reader and writer on the new socket.
   probing_reader_.reset(new QuicChromiumPacketReader(
@@ -2155,11 +2412,26 @@ MigrationResult QuicChromiumClientSession::SendConnectivityProbing(
   probing_writer_.reset(new QuicChromiumPacketWriter(probing_socket_.get()));
   probing_writer_->set_delegate(this);
 
-  sockets_.push_back(std::move(probing_socket_));
   StartReading();
-  // TODO(zhongyi): add logics similar to MigrateToSocket() to address packet
-  // reading.
+
   connection()->SendProbingPacket(probing_writer_.get());
+
+  int rtt = connection()
+                ->sent_packet_manager()
+                .GetRttStats()
+                ->smoothed_rtt()
+                .ToMicroseconds();
+  const int kDefaultRTT = 300 * kNumMicrosPerMilli;
+  if (rtt == 0 || rtt > kDefaultRTT) {
+    rtt = kDefaultRTT;
+  }
+
+  // Post a task to maybe close the session if the alarm fires.
+  task_runner_->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&QuicChromiumClientSession::OnMigrationTimeout,
+                 weak_factory_.GetWeakPtr(), sockets_.size()),
+      base::TimeDelta::FromMicroseconds(2 * rtt));
 
   return MigrationResult::SUCCESS;
 }
