@@ -54,6 +54,11 @@ using namespace HTMLNames;
 
 namespace {
 
+bool NodeIsSelectable(const ComputedStyle& style, Node* node) {
+  return !node->IsInert() && !(style.UserSelect() == EUserSelect::kNone &&
+                               style.UserModify() == EUserModify::kReadOnly);
+}
+
 template <typename Strategy>
 TextIteratorBehavior AdjustBehaviorFlags(const TextIteratorBehavior&);
 
@@ -987,9 +992,16 @@ static String CreatePlainText(const EphemeralRangeTemplate<Strategy>& range,
   StringBuilder builder;
   builder.ReserveCapacity(kInitialCapacity);
 
-  for (; !it.AtEnd(); it.Advance())
+  for (; !it.AtEnd(); it.Advance()) {
+    if (it.GetNode() && it.GetNode()->GetLayoutObject() &&
+        behavior.DoesRespectUserSelectStyleOption()) {
+      const ComputedStyle& style = it.GetNode()->GetLayoutObject()->StyleRef();
+      if (!NodeIsSelectable(style, it.GetNode())) {
+        continue;
+      }
+    }
     it.GetText().AppendTextToStringBuilder(builder);
-
+  }
   if (builder.IsEmpty())
     return g_empty_string;
 

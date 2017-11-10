@@ -119,6 +119,11 @@ TextIteratorBehavior::Builder::SetDoesNotEmitSpaceBeyondRangeEnd(bool value) {
   return *this;
 }
 
+TextIteratorBehavior::Builder&
+TextIteratorBehavior::Builder::SetDoesRespectUserSelectStyleOption(bool value) {
+  behavior_.values_.bits.respect_user_select_style_option = value;
+  return *this;
+}
 // -
 TextIteratorBehavior::TextIteratorBehavior(const TextIteratorBehavior& other) =
     default;

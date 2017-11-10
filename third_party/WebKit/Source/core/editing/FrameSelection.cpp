@@ -900,6 +900,7 @@ String FrameSelection::SelectedTextForClipboard() const {
                  .SetEmitsImageAltText(
                      frame_->GetSettings() &&
                      frame_->GetSettings()->GetSelectionIncludesAltImageText())
+                 .SetDoesRespectUserSelectStyleOption(true)
                  .Build());
 }
 
