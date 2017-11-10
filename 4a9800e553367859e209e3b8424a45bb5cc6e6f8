@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4a552f3_28b082df",
+        "filename": "chromecast/net/connectivity_checker_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-10T19:16:50Z",
+      "side": 1,
+      "message": "\"request-\u003estatus().is_success()\" can now be net_error \u003d\u003d net::OK.",
+      "range": {
+        "startLine": 180,
+        "startChar": 22,
+        "endLine": 180,
+        "endChar": 23
+      },
+      "revId": "4a9800e553367859e209e3b8424a45bb5cc6e6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "608a24a7_49e4e362",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-10T19:16:50Z",
+      "side": 1,
+      "message": "This can be net_error !\u003d net::OK.",
+      "range": {
+        "startLine": 428,
+        "startChar": 17,
+        "endLine": 428,
+        "endChar": 23
+      },
+      "revId": "4a9800e553367859e209e3b8424a45bb5cc6e6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
