@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9a1f2653_d112d033",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-10T20:00:39Z",
+      "side": 1,
+      "message": "Acknowledged. Yes, the component is the analytics service. The reason for this naming is because the downloading service is called ComponentUpdater so Component is a term which refers to the blob being downloaded. I think this naming is clear for our team and abloniarz@ \u0027s team, who will be the only clients of this API before go/mpp-v2",
+      "parentUuid": "68dcf698_29b531c8",
+      "range": {
+        "startLine": 76,
+        "startChar": 18,
+        "endLine": 76,
+        "endChar": 31
+      },
+      "revId": "d84d241e630664a3c76ad6c55a690b2c7888010d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "278ef14c_3efe5a17",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 5
@@ -155,6 +179,24 @@
       "side": 1,
       "message": "Yeah, I\u0027m OK with not going too much into support for multiple components.\n\nThat\u0027s why I think naming should be better here (especially if concurrent components are out of scope for this API) - setComponent/setAnalyticsComponent does better job conveying that there is only one service at the time, i.e. that |component| will actually replace the current component.",
       "parentUuid": "7fcdb23b_ae51485d",
+      "revId": "d84d241e630664a3c76ad6c55a690b2c7888010d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07922dcd_98956795",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-10T20:00:39Z",
+      "side": 1,
+      "message": "Changed to setAnalyticsComponent, I like that.",
+      "parentUuid": "1d19c3c1_9a2baad3",
       "revId": "d84d241e630664a3c76ad6c55a690b2c7888010d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
