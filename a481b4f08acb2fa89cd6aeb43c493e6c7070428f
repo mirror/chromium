@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f38ea0a_fd7f23ac",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T23:28:16Z",
+      "side": 1,
+      "message": "Sorry, I still don\u0027t understand the intended behavior here and how this interacts with the change to ShouldPaint... Can someone help me understand this part of the change or help clarify the comment? My primary concern is that immersive/fullscreen browser/popup windows used to pass this conditional in overview mode, but now they might unintentionally fail the conditional.\n\nWould it make sense to add something above the !ShouldPaint check like:\n  // Return a \u003cblah\u003e inset for V1 app windows in overview mode because \u003cblah\u003e.\n  if (in_overview_mode_ \u0026\u0026 browser_view()-\u003ebrowser()-\u003eis_app()) {\n    \u003creturn some value, maybe based on fullscreen/immersize/revealed/overview/etc.\u003e\n  }",
+      "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e4d655_5b32c8e6",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T23:28:16Z",
+      "side": 1,
+      "message": "nit: \"Schedule a paint to hide the header.\"",
+      "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e899e5_59819f6d",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T23:28:16Z",
+      "side": 1,
+      "message": "nit: \"Schedule a paint to show the header.\"",
+      "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd72028_9f9c5053",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T23:28:16Z",
+      "side": 1,
+      "message": "nit: \"Do not paint for V1 apps in overview mode.\"",
+      "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8626408a_4ef79e8c",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T23:28:16Z",
+      "side": 1,
+      "message": "Does this also change the behavior of popup windows? Is that intentional?\nTest with: javascript:window.open(\"about:blank\", \"_blank\", \"width\u003d300,height\u003d200\")\nShould this statement be changed to the following (as you mentioned earlier?):\n  return !browser_view()-\u003ebrowser()-\u003eis_app() || !in_overview_mode_;",
+      "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5287c4_51485790",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T23:28:16Z",
+      "side": 1,
+      "message": "nit: \"Indicates whether overview mode is active. Hide the header for V1 apps...\"",
+      "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
