@@ -45,13 +45,14 @@
     -webkit-mask-size: 30px 10px;
     -webkit-mask-repeat: no-repeat;
     background-color: rgb(48, 57, 66);
-    content: "&nbsp;";
+    content: "";
     color: transparent;
     text-shadow: none;
     margin-right: -2px;
     height: 12px;
     width: 14px;
     position: absolute;
+    display: inline-block;
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.1) {
