@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 /** @fileoverview Suite of tests for extension-keyboard-shortcuts. */
-cr.define('extension_keyboard_shortcut_tests', function() {
+cr.define('extension_shortcut_tests', function() {
   /** @enum {string} */
   var TestNames = {
     Layout: 'Layout',
@@ -12,7 +12,9 @@ cr.define('extension_keyboard_shortcut_tests', function() {
     ShortcutUtil: 'ExtensionShortcutUtilTest',
   };
 
-  suite('ExtensionKeyboardShortcutTest', function() {
+  var suiteName = 'ExtensionShortcutTest';
+
+  suite(suiteName, function() {
     /** @type {extensions.KeyboardShortcuts} */
     var keyboardShortcuts;
     /** @type {chrome.developerPrivate.ExtensionInfo} */
@@ -122,6 +124,7 @@ cr.define('extension_keyboard_shortcut_tests', function() {
   });
 
   return {
+    suiteName: suiteName,
     TestNames: TestNames,
   };
 });
