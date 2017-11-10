@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "4b21b1bc_1a7c1db8",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2155,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-10T22:50:17Z",
+      "side": 1,
+      "message": "That seems fine - it\u0027s currently mostly a no-op (turning it on may cause WebGL tearing in non-VR apps), I\u0027m intending to repurpose it for the new pipeline on Android. That\u0027ll still work if it shows on all platforms, it\u0027ll just be a no-op where there\u0027s nothing platform specific.",
+      "parentUuid": "4e68618f_e684d3ac",
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f888ce8_f35e0ab2",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 3
