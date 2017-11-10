@@ -226,6 +226,24 @@
       "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41841c2_5a51022b",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProviderClient.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-10T02:41:52Z",
+      "side": 1,
+      "message": "We already have a presubmit for this--but we can\u0027t #include the Blink variant in public headers (since non-Blink code can include this header). This is what https://chromium-review.googlesource.com/753451 is trying to fix.",
+      "parentUuid": "ae35e488_2a510d2e",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
