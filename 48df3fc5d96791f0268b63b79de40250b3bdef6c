@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ae85971_51ed7257",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-11-10T15:19:35Z",
+      "side": 1,
+      "message": "after the suggestions got cleared, does it even matter if the last fetch is considered stale? There are no suggestions present and I\u0027d hope we always replace them all then...",
+      "range": {
+        "startLine": 530,
+        "startChar": 51,
+        "endLine": 530,
+        "endChar": 0
+      },
+      "revId": "48df3fc5d96791f0268b63b79de40250b3bdef6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f37f1e_e130cdc0",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-11-10T15:19:35Z",
+      "side": 1,
+      "message": "nit: let\u0027s write this a bit more compact:\n// We cannot guarantee that the surface is not visible when the event happens.\n// To make sure the suggestions get replaced, we use the SURFACE_OPENED trigger.",
+      "range": {
+        "startLine": 534,
+        "startChar": 26,
+        "endLine": 534,
+        "endChar": 0
+      },
+      "revId": "48df3fc5d96791f0268b63b79de40250b3bdef6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b4981a_18f4d662",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-11-10T15:19:35Z",
+      "side": 1,
+      "message": "Is it really necessary to rename the method?\nIt looks like resetting the last-successfull fetch time when clearing the last attempt is the right thing to do and completely independent of the stale fetch issue.",
+      "range": {
+        "startLine": 891,
+        "startChar": 4,
+        "endLine": 891,
+        "endChar": 50
+      },
+      "revId": "48df3fc5d96791f0268b63b79de40250b3bdef6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
