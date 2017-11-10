@@ -159,6 +159,7 @@ void NGLineBreaker::BreakLine(NGLineInfo* line_info) {
     NGInlineItemResult* item_result = &item_results->back();
     if (item.Type() == NGInlineItem::kText) {
       state = HandleText(line_info, item, item_result);
+      item_result->CheckConsistency();
     } else if (item.Type() == NGInlineItem::kAtomicInline) {
       state = HandleAtomicInline(item, item_result, *line_info);
     } else if (item.Type() == NGInlineItem::kControl) {
@@ -369,6 +370,7 @@ void NGLineBreaker::BreakText(NGInlineItemResult* item_result,
     item_result->prohibit_break_after =
         !break_iterator_.IsBreakable(item_result->end_offset);
   }
+  item_result->CheckConsistency();
 }
 
 void NGLineBreaker::AppendHyphen(const ComputedStyle& style,
@@ -666,6 +668,7 @@ void NGLineBreaker::HandleOverflow(NGLineInfo* line_info,
       if (force_break_anywhere)
         break_iterator_.SetBreakType(LineBreakType::kBreakCharacter);
       BreakText(item_result, item, item_available_width, line_info);
+      item_result->CheckConsistency();
       if (item_result->inline_size <= item_available_width) {
         DCHECK(item_result->end_offset < item.EndOffset() ||
                (item_result->end_offset == item.EndOffset() &&
