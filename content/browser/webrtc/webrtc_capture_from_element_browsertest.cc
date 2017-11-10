@@ -7,6 +7,7 @@
 #include "build/build_config.h"
 #include "content/browser/webrtc/webrtc_content_browsertest_base.h"
 #include "content/public/common/content_switches.h"
+#include "content/shell/common/shell_switches.h"
 #include "media/base/media_switches.h"
 #include "media/base/test_data_util.h"
 #include "media/mojo/features.h"
@@ -70,6 +71,9 @@ class WebRtcCaptureFromElementBrowserTest
     // Allow experimental canvas features.
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kEnableExperimentalCanvasFeatures);
+    // Allow window.internals for simulating context loss.
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kExposeInternalsForTesting);
   }
 
  private:
@@ -141,6 +145,12 @@ IN_PROC_BROWSER_TEST_P(WebRtcCaptureFromElementBrowserTest,
                          GetParam().has_audio,
                          GetParam().use_audio_tag),
       kVideoAudioHtmlFile);
+}
+
+IN_PROC_BROWSER_TEST_F(WebRtcCaptureFromElementBrowserTest,
+                       CaptureFromCanvas2DHandlesContextLoss) {
+  MakeTypicalCall("testCanvas2DContextLoss();",
+                  kCanvasCaptureColorTestHtmlFile);
 }
 
 INSTANTIATE_TEST_CASE_P(,

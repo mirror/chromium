@@ -6,6 +6,7 @@
 #define COMPONENTS_VIZ_COMMON_GL_HELPER_H_
 
 #include <memory>
+#include <vector>
 
 #include "base/atomicops.h"
 #include "base/callback.h"
@@ -433,6 +434,10 @@ class VIZ_COMMON_EXPORT GLHelper {
       bool vertically_flip_texture,
       bool use_mrt);
 
+  // Returns a ReadbackYUVInterface instance that is lazily created and owned by
+  // this class. |use_mrt| is always true for these instances.
+  ReadbackYUVInterface* GetReadbackPipelineYUV(bool vertically_flip_texture);
+
   // Returns the maximum number of draw buffers available,
   // 0 if GL_EXT_draw_buffers is not available.
   GLint MaxDrawBuffers();
@@ -462,6 +467,8 @@ class VIZ_COMMON_EXPORT GLHelper {
   std::unique_ptr<CopyTextureToImpl> copy_texture_to_impl_;
   std::unique_ptr<GLHelperScaling> scaler_impl_;
   std::unique_ptr<GLHelperReadbackSupport> readback_support_;
+  std::unique_ptr<ReadbackYUVInterface> shared_readback_yuv_flip_;
+  std::unique_ptr<ReadbackYUVInterface> shared_readback_yuv_noflip_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(GLHelper);
@@ -538,6 +545,9 @@ class ReadbackYUVInterface {
 
   // Returns the currently-set scaler, or null.
   virtual GLHelper::ScalerInterface* scaler() const = 0;
+
+  // Returns true if the converter will vertically-flip the output.
+  virtual bool IsFlippingOutput() const = 0;
 
   // Transforms a RGBA texture into I420 planar form, and then reads it back
   // from the GPU into system memory. See the GLHelper::ScalerInterface::Scale()
