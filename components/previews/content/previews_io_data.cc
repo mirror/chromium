@@ -259,9 +259,20 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
       // Ensure the URL is whitelisted for NoScript.
       if (!previews_opt_guide_ ||
           !previews_opt_guide_->IsWhitelisted(request, type)) {
-        // TODO(dougarnett) bug 780859: Add and log eligibility reason for this.
+        LogPreviewDecisionMade(
+            PreviewsEligibilityReason::HOST_NOT_WHITELISTED_BY_SERVER,
+            request.url(), base::Time::Now(), type);
         return false;
       }
+    }
+  } else {
+    // For any preview types that expect to check server optimization hints,
+    // note if they are allowed but that hints check was not possible.
+    if (type == PreviewsType::NOSCRIPT) {
+      LogPreviewDecisionMade(
+          PreviewsEligibilityReason::ALLOWED_WITHOUT_OPTIMIZATION_HINTS,
+          request.url(), base::Time::Now(), type);
+      return true;
     }
   }
 
