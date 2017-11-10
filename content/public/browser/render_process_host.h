@@ -483,15 +483,6 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   static bool ShouldTryToUseExistingProcessHost(
       content::BrowserContext* browser_context, const GURL& site_url);
 
-  // Get an existing RenderProcessHost associated with the given browser
-  // context, if possible.  The renderer process is chosen randomly from
-  // suitable renderers that share the same context and type (determined by the
-  // site url).
-  // Returns nullptr if no suitable renderer process is available, in which case
-  // the caller is free to create a new renderer.
-  static RenderProcessHost* GetExistingProcessHost(
-      content::BrowserContext* browser_context, const GURL& site_url);
-
   // Overrides the default heuristic for limiting the max renderer process
   // count.  This is useful for unit testing process limit behaviors.  It is
   // also used to allow a command line parameter to configure the max number of
