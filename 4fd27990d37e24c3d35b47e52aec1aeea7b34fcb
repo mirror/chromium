@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bab81ae_d084152d",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T10:18:11Z",
+      "side": 1,
+      "message": "faling → failing",
+      "range": {
+        "startLine": 549,
+        "startChar": 40,
+        "endLine": 549,
+        "endChar": 46
+      },
+      "revId": "4fd27990d37e24c3d35b47e52aec1aeea7b34fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
