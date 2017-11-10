@@ -492,6 +492,24 @@
     },
     {
       "key": {
+        "uuid": "063012aa_73d63eb1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T03:54:33Z",
+      "side": 1,
+      "message": "Treating this as resolved given your +1 and explanation",
+      "parentUuid": "0af4377b_4133ebc0",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7627b1f_6c53fce3",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -527,6 +545,24 @@
     },
     {
       "key": {
+        "uuid": "c208a35e_3ed104ca",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T03:54:33Z",
+      "side": 1,
+      "message": "Treating this as resolved given your +1 and explanation",
+      "parentUuid": "058891a0_813c0921",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d384b07e_ffbc848a",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -559,6 +595,24 @@
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20974665_5048ce6f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T03:54:33Z",
+      "side": 1,
+      "message": "Treating this as resolved given your +1 and explanation",
+      "parentUuid": "fc52fd76_14e9c92f",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
