@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be820719_8eb0b5b8",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-10T17:17:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3fa7bf7_80211e04",
+      "revId": "13992d78cd4c5a2d3156ae4dae54a39a790a67a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3b67fc_835c6ec3",
         "filename": "chrome/browser/vr/elements/ui_element.cc",
         "patchSetId": 1
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f00e4815_70beee63",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-10T17:17:08Z",
+      "side": 1,
+      "message": "Totally agree. Using SkRRect is much nicer. I do have to come up with a somewhat randomly selected kHitTestResolutionInMeter value. Given that the size of element is in meters, I think that variable is small enough to give accurate hit test result. Let me know if you have better idea.\n\nI also kept the two optimization for rect and circle. Although SkRRect has optimization for circle and rect, but my measurement proves that it is still more than 10 times faster with around 20000 runs.",
+      "parentUuid": "76bcb96a_c822d914",
+      "revId": "13992d78cd4c5a2d3156ae4dae54a39a790a67a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ad2cc1b_49740005",
         "filename": "chrome/browser/vr/elements/ui_element.cc",
         "patchSetId": 1
@@ -85,6 +121,24 @@
       "revId": "13992d78cd4c5a2d3156ae4dae54a39a790a67a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc45b7c0_7143d7c2",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-10T17:17:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1ad2cc1b_49740005",
+      "revId": "13992d78cd4c5a2d3156ae4dae54a39a790a67a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
