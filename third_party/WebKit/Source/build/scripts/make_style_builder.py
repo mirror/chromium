@@ -52,6 +52,10 @@ def calculate_functions_to_declare(property_):
                  property_['custom_apply_functions_value']) \
         and property_['property_class'] \
         and isinstance(property_['property_class'], types.BooleanType)
+    if property_['custom_apply_functions_all']:
+        if (property_['upper_camel_name'] in
+                ['Clip', 'ColumnCount', 'ColumnWidth', 'ZIndex']):
+            property_['use_property_class_in_stylebuilder'] = True
 
 
 class StyleBuilderWriter(json5_generator.Writer):
