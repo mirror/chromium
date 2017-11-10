@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e439cfbf_9853f8ed",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-10T15:08:32Z",
+      "side": 1,
+      "message": "Oh, I see. I misread that the first loop is quic_server_info_map_ and the second is quic_server_info_map. I suspect the preference logic here is not intentional, but it\u0027s also probably not terribly important either way. So your existing logic is fine.",
+      "parentUuid": "099cfd86_bf7f1231",
+      "range": {
+        "startLine": 150,
+        "startChar": 50,
+        "endLine": 150,
+        "endChar": 0
+      },
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77166407_4cc8a496",
         "filename": "net/http/http_server_properties_impl.h",
         "patchSetId": 5
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "That was actually a question I forgot to ask. I made it consistent with |QuicServerInfoMap| that also uses QuicServerId as the key. Do we use QuicServerId in |QuicServerInfoMap| because the privacy flag cannot change for a non-canonical host over time? I see that we persist the privacy flag on disk.",
       "parentUuid": "48d0a85c_365fe7e9",
+      "range": {
+        "startLine": 154,
+        "startChar": 19,
+        "endLine": 154,
+        "endChar": 31
+      },
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8afbbe9e_4229cb98",
+        "filename": "net/http/http_server_properties_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-10T15:08:32Z",
+      "side": 1,
+      "message": "PrivacyMode depends on the request. Some requests can have cookies, some can\u0027t (for example) and need to go on different connections. So we use privacy mode as the key to the connection map at the socket pool layer. So when we persisted to disk, we just persisted what we have in memory, hence QuicServerId.\n\nIn the case of canonical hosts, we\u0027re just speculating that two server share the same ServerInfo, so I\u0027d just key off of host:port here. Does that makes sense?",
+      "parentUuid": "a96a7a65_2d4018b8",
       "range": {
         "startLine": 154,
         "startChar": 19,
