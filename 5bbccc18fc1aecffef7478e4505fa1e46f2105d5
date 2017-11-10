@@ -16,6 +16,24 @@
       "revId": "5bbccc18fc1aecffef7478e4505fa1e46f2105d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ef3b89_243ca968",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-10T19:49:53Z",
+      "side": 1,
+      "message": "NetworkConfigurationHandler looks at NetworkState\u0027s profile_path,\nhttps://cs.chromium.org/chromium/src/chromeos/network/network_configuration_handler.cc?l\u003d386\n\nThis is set via ShillService\u0027s GetProperties.\nhttps://cs.chromium.org/chromium/src/chromeos/network/network_state.cc?l\u003d140\n\nIn FakeShillServiceClient implementation, the property is set via SetServiceProperties.\nhttps://cs.chromium.org/chromium/src/chromeos/dbus/fake_shill_service_client.cc?l\u003d342\nThis is called from AddService called L271-L276,\n\nAt that timing, ShillProfileClient needs to return profile paths tied to the service.\nSetting here is to satisfy the condition, and L291 is too late.\nBTW, it looks kind of circular deps. L291 depends on properties, obtained from L281, which is created by AddService at L274. So, anyway it looks to need call AddEntry twice.\n\nPlease let me know, if we should fix fake side, instead.",
+      "parentUuid": "888d763a_41e9be86",
+      "revId": "5bbccc18fc1aecffef7478e4505fa1e46f2105d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
