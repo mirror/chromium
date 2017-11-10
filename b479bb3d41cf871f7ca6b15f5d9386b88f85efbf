@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c3292f69_9441e89f",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-10T00:55:55Z",
+      "side": 1,
+      "message": "Wait, we do need an unconditional dep to it because of the chrome/services/file_util/public/cpp/sandboxed_zip_analyzer.h above.",
+      "parentUuid": "c6a3310e_a8b9b440",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 22
+      },
+      "revId": "b479bb3d41cf871f7ca6b15f5d9386b88f85efbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "681027a1_858f07ba",
         "filename": "chrome/services/file_util/file_util_service.cc",
         "patchSetId": 11
