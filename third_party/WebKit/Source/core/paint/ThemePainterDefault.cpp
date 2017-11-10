@@ -143,6 +143,7 @@ ThemePainterDefault::ThemePainterDefault(LayoutThemeDefault& theme)
     : ThemePainter(), theme_(theme) {}
 
 bool ThemePainterDefault::PaintCheckbox(const Node* node,
+                                        const Document&,
                                         const ComputedStyle& style,
                                         const PaintInfo& paint_info,
                                         const IntRect& rect) {
@@ -184,6 +185,7 @@ bool ThemePainterDefault::PaintRadio(const Node* node,
 }
 
 bool ThemePainterDefault::PaintButton(const Node* node,
+                                      const Document&,
                                       const ComputedStyle& style,
                                       const PaintInfo& paint_info,
                                       const IntRect& rect) {
@@ -230,6 +232,7 @@ bool ThemePainterDefault::PaintTextField(const Node* node,
 }
 
 bool ThemePainterDefault::PaintMenuList(const Node* node,
+                                        const Document& document,
                                         const ComputedStyle& style,
                                         const PaintInfo& i,
                                         const IntRect& rect) {
@@ -251,7 +254,7 @@ bool ThemePainterDefault::PaintMenuList(const Node* node,
   extra_params.menu_list.fill_content_area =
       !style.HasBackgroundImage() && background_color.Alpha();
 
-  SetupMenuListArrow(node, style, rect, extra_params);
+  SetupMenuListArrow(document, style, rect, extra_params);
 
   WebCanvas* canvas = i.context.Canvas();
   Platform::Current()->ThemeEngine()->Paint(
@@ -261,6 +264,7 @@ bool ThemePainterDefault::PaintMenuList(const Node* node,
 }
 
 bool ThemePainterDefault::PaintMenuListButton(const Node* node,
+                                              const Document& document,
                                               const ComputedStyle& style,
                                               const PaintInfo& paint_info,
                                               const IntRect& rect) {
@@ -269,7 +273,7 @@ bool ThemePainterDefault::PaintMenuListButton(const Node* node,
   extra_params.menu_list.has_border_radius = style.HasBorderRadius();
   extra_params.menu_list.background_color = Color::kTransparent;
   extra_params.menu_list.fill_content_area = false;
-  SetupMenuListArrow(node, style, rect, extra_params);
+  SetupMenuListArrow(document, style, rect, extra_params);
 
   WebCanvas* canvas = paint_info.context.Canvas();
   Platform::Current()->ThemeEngine()->Paint(
@@ -279,7 +283,7 @@ bool ThemePainterDefault::PaintMenuListButton(const Node* node,
 }
 
 void ThemePainterDefault::SetupMenuListArrow(
-    const Node* node,
+    const Document& document,
     const ComputedStyle& style,
     const IntRect& rect,
     WebThemeEngine::ExtraParams& extra_params) {
@@ -289,7 +293,7 @@ void ThemePainterDefault::SetupMenuListArrow(
 
   extra_params.menu_list.arrow_y = middle;
   float arrow_box_width = theme_.ClampedMenuListArrowPaddingSize(
-      node->GetDocument().View()->GetChromeClient(), style);
+      document.View()->GetChromeClient(), style);
   float arrow_scale_factor = arrow_box_width / theme_.MenuListArrowWidthInDIP();
   if (UseMockTheme()) {
     // The size and position of the drop-down button is different between
