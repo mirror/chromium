@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.customtabs;
 
 import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_DEFAULT;
 import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_INFO_PAGE;
+import static org.chromium.chrome.browser.webapps.WebappActivity.ACTIVITY_TYPE_INVALID;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -80,6 +81,7 @@ import org.chromium.chrome.browser.toolbar.ToolbarControlContainer;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.browser.util.UrlUtilities;
+import org.chromium.chrome.browser.webapps.WebappInterceptNavigationDelegate;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.WebContents;
@@ -280,6 +282,9 @@ public class CustomTabActivity extends ChromeActivity {
         mIsClosing = false;
         mIsKeepAlive = mConnection.keepAliveForSession(
                 mIntentDataProvider.getSession(), mIntentDataProvider.getKeepAliveServiceIntent());
+        WebappInterceptNavigationDelegate.startCountCustomTabTimeSpendIfNecessary(
+                getIntent().getIntExtra(CustomTabIntentDataProvider.EXTRA_BROWSER_LAUNCH_SOURCE,
+                        ACTIVITY_TYPE_INVALID));
     }
 
     @Override
@@ -287,6 +292,7 @@ public class CustomTabActivity extends ChromeActivity {
         super.onStop();
         mConnection.dontKeepAliveForSession(mIntentDataProvider.getSession());
         mIsKeepAlive = false;
+        WebappInterceptNavigationDelegate.stopCountCustomTabTimeSpendIfNecessary();
     }
 
     @Override

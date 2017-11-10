@@ -88109,6 +88109,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="TrustedWebActivity.CustomTab.Duration" units="ms">
+  <owner>ranj@chromium.org</owner>
+  <owner>yfriedman@chromium.org</owner>
+  <summary>
+    Records the time during which Trusted Web Activity opens CustomTab.
+  </summary>
+</histogram>
+
 <histogram name="TryScroll.SlowScroll" enum="ScrollThread">
   <obsolete>
     Deprecated 02/2016 in Issue 1741103002, and replaced by
@@ -91696,6 +91704,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="WebApk.CustomTab.Duration" units="ms">
+  <owner>ranj@chromium.org</owner>
+  <owner>yfriedman@chromium.org</owner>
+  <summary>Records the time during which WebApk opens CustomTab.</summary>
+</histogram>
+
 <histogram name="WebApk.Install.AvailableSpace.Fail" units="MB">
   <owner>hanxi@chromium.org</owner>
   <owner>ranj@chromium.org</owner>
@@ -92029,6 +92043,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Records the number of milliseconds that the add to homescreen dialog
     required to check installability eligibility.
   </summary>
+</histogram>
+
+<histogram name="Webapp.CustomTab.Duration" units="ms">
+  <owner>ranj@chromium.org</owner>
+  <owner>yfriedman@chromium.org</owner>
+  <summary>Records the time during which Webapp opens CustomTab.</summary>
 </histogram>
 
 <histogram name="Webapp.Install.DisplayMode" enum="WebAppDisplayMode">
