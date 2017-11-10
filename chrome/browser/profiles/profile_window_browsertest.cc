@@ -41,7 +41,7 @@
 #include "url/gurl.h"
 
 // This test verifies the Desktop implementation of Guest only.
-#if !defined(OS_CHROMEOS) && !defined(OS_ANDROID)
+#if !defined(OS_CHROMEOS)
 
 namespace {
 
@@ -293,4 +293,4 @@ IN_PROC_BROWSER_TEST_F(ProfileWindowWebUIBrowserTest,
                                 base::Value(expected_path.AsUTF8Unsafe())));
 }
 
-#endif  // !defined(OS_CHROMEOS) && !defined(OS_ANDROID)
+#endif  // !defined(OS_CHROMEOS)
