@@ -22,6 +22,30 @@
       "revId": "57e3fde8eea1324f111a3d871d60c109469663ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0179a742_8dbfa4cb",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-10T18:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae333cdf_c94fb5b4",
+      "range": {
+        "startLine": 109,
+        "startChar": 34,
+        "endLine": 109,
+        "endChar": 58
+      },
+      "revId": "57e3fde8eea1324f111a3d871d60c109469663ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
