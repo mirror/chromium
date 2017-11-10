@@ -16,6 +16,24 @@
       "revId": "82c9b260957f56e745faba6a46c7ec738b06cd59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af982b0_76cd7c09",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 5788,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-10T02:48:20Z",
+      "side": 1,
+      "message": "If we always called LocalFrameClient::DispatchDidReceiveTitle() here, then the embedder would get two \"set title\" callbacks.\n\nThe objective is that when a page is loaded by Blink, Blink should guarantee at least one \"set title\" callback for the page.\n\nThere are three cases here.\n\n1. If the document has a \u003ctitle\u003e tag, then Document::SetTitleElement() will be called with it. Document::SetTitleElement() will call Document::UpdateTitle() which will call LocalFrameClient::DispatchDidReceiveTitle(). That is when the title is sent to the embedder. This is why we need an \"if (title_.IsEmpty())\" here, so that we don\u0027t send the title *again*.\n\n2. If the document has an empty \u003ctitle\u003e tag, then Document::SetTitleElement() will be called with it. Document::SetTitleElement() will call Document::UpdateTitle() which will immediately exit as the title is _already_ blank. Therefore, when parsing is complete, we check if the title is empty, find that it is, and dispatch a blank title.\n\n3. If the document has no \u003ctitle\u003e tag, then neither Document::SetTitleElement() nor Document::UpdateTitle() will be called. When parsing is complete, then the title is empty and we do a dispatch.\n\nThis is how we guarantee at least one \"set title\" callback per load without either dispatching extra blank title calls or dispatching redundant title calls.",
+      "parentUuid": "27b9550a_ecc04936",
+      "revId": "82c9b260957f56e745faba6a46c7ec738b06cd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
