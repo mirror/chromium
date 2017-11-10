@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70309120_c2dd2bb1",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-10T17:27:05Z",
+      "side": 1,
+      "message": "Do we need to start versioning this interface?",
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca350ef9_83cca6f0",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-10T17:27:05Z",
+      "side": 1,
+      "message": "Can you file a bug about this?",
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1626a827_ab996594",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-10T17:27:05Z",
+      "side": 1,
+      "message": "The idea of this method is that instead of calling GetUsbService() in all your methods you can cache the pointer you added this observer to and you know it\u0027s valid until this method is called.",
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
