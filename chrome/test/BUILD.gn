@@ -1426,6 +1426,11 @@ test("browser_tests") {
       "../browser/site_details_browsertest.cc",
       "../browser/thumbnails/thumbnail_browsertest.cc",
       "../browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+      "../browser/vr/test/vr_browser_test.cc",
+      "../browser/vr/test/vr_browser_test.h",
+      "../browser/vr/test/vr_transition_utils.cc",
+      "../browser/vr/test/vr_transition_utils.h",
+      "../browser/vr/vr_browser_navigation_test.cc",
 
       # If this list is used on Android in the future, these browser/speech/*
       # files will probably not be applicable.
