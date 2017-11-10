@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31df9448_5bea272b",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-10T19:00:38Z",
+      "side": 1,
+      "message": "That\u0027s correct. It would be possible to push this service to run on a different sequence (it could not be associated in that case, but that\u0027s not a critical part of this), but it\u0027s a simpler mental model if everything happens on the same thread.",
+      "parentUuid": "60eb4f91_b6119df7",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "735901ef_4cd75e75",
         "filename": "media/mojo/services/mojo_video_decoder_service.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-10T15:50:15Z",
       "side": 1,
       "message": "i\u0027m not a big fan of this part, but i don\u0027t have a better idea.  refcounting would, directly or indirectly, have refs to |this| stored in a map member variable of |this|.  that seems worse.\n\ncan the ~3 checks can be made uniform and moved into MaybeDeleteThis() { if (empty \u0026\u0026 destroying_) delete this; } .  at least it\u0027s all in one place, then.",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5157aed6_3e12ca47",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-10T19:00:38Z",
+      "side": 1,
+      "message": "I tried a few options, and this was the least ugly that I found.\n\nThe conditions are not *exactly* the same everywhere (in particular, we don\u0027t care whether the map is empty in OnConnectionError()), so it would be more code to unify them. I figured that since the entire implementation fits on one screen it was workable; I\u0027ll unify them if you still think that\u0027s better.",
+      "parentUuid": "735901ef_4cd75e75",
       "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
