@@ -11,4 +11,5 @@ deps = [
 type_mappings = [
   "content.mojom.CommonNavigationParams=content::CommonNavigationParams",
   "content.mojom.RequestNavigationParams=content::RequestNavigationParams",
+  "content.mojom.BeginNavigationParams=content::BeginNavigationParams",
 ]
