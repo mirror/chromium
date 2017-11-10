@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "88429fa1_792fb6db",
+        "filename": "chrome/browser/net/network_connection_tracker_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-10T16:30:58Z",
+      "side": 1,
+      "message": "Ack. Good point.",
+      "parentUuid": "2e1cbb97_eb205e35",
+      "revId": "51c5d17cf38ebff9c3bb445136eaefb313595bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39c20fa4_4283dcb7",
         "filename": "chrome/browser/net/network_connection_tracker_browsertest.cc",
         "patchSetId": 3
@@ -65,6 +83,30 @@
       "writtenOn": "2017-11-10T16:21:11Z",
       "side": 1,
       "message": "We can just FlushForTesting() on the NetworkService instead.  Though maybe this gives us a little extra test coverage?  I\u0027m fine, either way.",
+      "range": {
+        "startLine": 123,
+        "startChar": 27,
+        "endLine": 123,
+        "endChar": 28
+      },
+      "revId": "51c5d17cf38ebff9c3bb445136eaefb313595bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7d26bf_affc741d",
+        "filename": "chrome/browser/net/network_connection_tracker_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-10T16:30:58Z",
+      "side": 1,
+      "message": "Didn\u0027t know about \"FlushForTesting()\". Thanks!  I will keep this as it then.",
+      "parentUuid": "39c20fa4_4283dcb7",
       "range": {
         "startLine": 123,
         "startChar": 27,
