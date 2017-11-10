@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2f0cd0f_89220633",
+        "filename": "gpu/ipc/service/direct_composition_child_surface_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-10T23:57:15Z",
+      "side": 1,
+      "message": "Oh, nit: can you link to the bug so that we know when to clean them up (if we forget when closing the bug).",
+      "revId": "042e271aaec587436b96edc5ad54ed90a73ddefd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
