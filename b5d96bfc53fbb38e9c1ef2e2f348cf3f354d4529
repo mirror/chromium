@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "60a431c3_a0b87b68",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-10T17:44:14Z",
+      "side": 1,
+      "message": "That\u0027s the intent, yes. Should I perhaps write it as (1 \u003c\u003c 0) to make that clear?",
+      "parentUuid": "a05cc69a_fff39960",
+      "revId": "b5d96bfc53fbb38e9c1ef2e2f348cf3f354d4529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e704d0de_33dad9e3",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-10T17:16:46Z",
       "side": 1,
       "message": "The header for this API says \"this interface should not be used to make decisions\nthat affect correctness \". Does this impact this logic in any way?",
+      "revId": "b5d96bfc53fbb38e9c1ef2e2f348cf3f354d4529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da5aa0d8_552930ad",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2968,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-10T17:44:14Z",
+      "side": 1,
+      "message": "Nope. Getting a 0 incorrectly at decision time (high probability, 100% with block cache) will just result in previous behavior before the change --- will open the entry, look at its headers, etc. \n\nGetting the bit incorrectly (very low probability) will just cause us to doom the cache entry.  That\u0027s still correct behavior in that caches are permitted to miss and evict, and actually in practice with current implementation this case just happens to happen exactly where the implementation will be forced to doom itself shortly anyway (but that might not hold with other implementations).",
+      "parentUuid": "e704d0de_33dad9e3",
       "revId": "b5d96bfc53fbb38e9c1ef2e2f348cf3f354d4529",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2ecf703d_bd3e084e",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2969,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-10T17:44:14Z",
+      "side": 1,
+      "message": "Hmm, maybe my naming isn\u0027t so great --- it actually persists on disk, too; the point more is that neither set nor get result in disk I/O.",
+      "parentUuid": "3fcca1f2_1a457bb8",
+      "revId": "b5d96bfc53fbb38e9c1ef2e2f348cf3f354d4529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ebe726e_d86f0497",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 8
@@ -64,6 +118,30 @@
       "writtenOn": "2017-11-10T17:16:46Z",
       "side": 1,
       "message": "IsResponseConditionalizable",
+      "range": {
+        "startLine": 417,
+        "startChar": 7,
+        "endLine": 417,
+        "endChar": 32
+      },
+      "revId": "b5d96bfc53fbb38e9c1ef2e2f348cf3f354d4529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ce76f2_07534794",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-10T17:44:14Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "6ebe726e_d86f0497",
       "range": {
         "startLine": 417,
         "startChar": 7,
