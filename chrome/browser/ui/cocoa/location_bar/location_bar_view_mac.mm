@@ -103,6 +103,10 @@ LocationBarViewMac::LocationBarViewMac(AutocompleteTextField* field,
       star_decoration_(new StarDecoration(command_updater)),
       translate_decoration_(new TranslateDecoration(command_updater)),
       zoom_decoration_(new ZoomDecoration(this)),
+      framebust_block_decoration_(new ContentSettingDecoration(
+          std::make_unique<ContentSettingFramebustImageModel>(),
+          this,
+          profile)),
       keyword_hint_decoration_(new KeywordHintDecoration()),
       manage_passwords_decoration_(
           new ManagePasswordsDecoration(command_updater, this)),
@@ -170,6 +174,11 @@ void LocationBarViewMac::FocusSearch() {
 
 void LocationBarViewMac::UpdateContentSettingsIcons() {
   if (RefreshContentSettingsDecorations())
+    OnDecorationsChanged();
+}
+
+void LocationBarViewMac::UpdateFramebustBlockIcon() {
+  if (RefreshFramebustBlockDecoration())
     OnDecorationsChanged();
 }
 
@@ -351,6 +360,7 @@ void LocationBarViewMac::Layout() {
   [cell addTrailingDecoration:star_decoration_.get()];
   [cell addTrailingDecoration:translate_decoration_.get()];
   [cell addTrailingDecoration:zoom_decoration_.get()];
+  [cell addTrailingDecoration:framebust_block_decoration_.get()];
   [cell addTrailingDecoration:save_credit_card_decoration_.get()];
   [cell addTrailingDecoration:manage_passwords_decoration_.get()];
 
@@ -428,6 +438,7 @@ void LocationBarViewMac::Update(const WebContents* contents) {
   UpdateTranslateDecoration();
   UpdateZoomDecoration(/*default_zoom_changed=*/false);
   RefreshContentSettingsDecorations();
+  RefreshFramebustBlockDecoration();
   if (contents) {
     omnibox_view_->OnTabChanged(contents);
     AnimatePageInfoIfPossible(contents);
@@ -614,6 +625,15 @@ bool LocationBarViewMac::RefreshContentSettingsDecorations() {
   return icons_updated;
 }
 
+bool LocationBarViewMac::RefreshFramebustBlockDecoration() {
+  const bool input_in_progress = GetToolbarModel()->input_in_progress();
+  WebContents* web_contents =
+      input_in_progress ? NULL
+                        : browser_->tab_strip_model()->GetActiveWebContents();
+
+  return framebust_block_decoration_->UpdateFromWebContents(web_contents);
+}
+
 void LocationBarViewMac::UpdateTranslateDecoration() {
   if (!TranslateService::IsTranslateBubbleEnabled())
     return;
@@ -729,6 +749,7 @@ std::vector<LocationBarDecoration*> LocationBarViewMac::GetDecorations() {
   decorations.push_back(star_decoration_.get());
   decorations.push_back(translate_decoration_.get());
   decorations.push_back(zoom_decoration_.get());
+  decorations.push_back(framebust_block_decoration_.get());
   decorations.push_back(manage_passwords_decoration_.get());
   for (const auto& decoration : content_setting_decorations_)
     decorations.push_back(decoration.get());

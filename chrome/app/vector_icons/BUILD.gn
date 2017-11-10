@@ -16,10 +16,10 @@ aggregate_vector_icons("chrome_vector_icons") {
     "add.icon",
     "apps.icon",
     "blocked_badge.icon",
-    "browser_tools_animated.1x.icon",
-    "browser_tools_animated.icon",
     "browser_tools.1x.icon",
     "browser_tools.icon",
+    "browser_tools_animated.1x.icon",
+    "browser_tools_animated.icon",
     "browser_tools_error.icon",
     "browser_tools_update.icon",
     "caret_down.1x.icon",
@@ -140,6 +140,10 @@ aggregate_vector_icons("chrome_vector_icons") {
       "warning_badge_circle.1x.icon",
       "warning_badge_circle.icon",
     ]
+  }
+
+  if (is_win || is_mac || is_linux) {
+    icons += [ "blocked_redirect.icon" ]
   }
 }
 

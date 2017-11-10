@@ -227,6 +227,14 @@ void LocationBarView::Init() {
     AddChildView(image_view);
   }
 
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
+  framebust_block_icon_view_ = new ContentSettingImageView(
+      std::make_unique<ContentSettingFramebustBlockImageModel>(), this,
+      font_list);
+  framebust_block_icon_view_->SetVisible(true);
+  AddChildView(framebust_block_icon_view_);
+#endif  // defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
+
   auto add_icon = [this](BubbleIconView* icon_view) -> void {
     icon_view->Init();
     icon_view->SetVisible(false);
@@ -455,6 +463,10 @@ gfx::Size LocationBarView::CalculatePreferredSize() const {
   if (intent_picker_view_)
     trailing_width += IncrementalMinimumWidth(intent_picker_view_);
 #endif  // defined(OS_CHROMEOS)
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
+  trailing_width += IncrementalMinimumWidth(framebust_block_icon_view_);
+#endif
+
   for (auto i = content_setting_views_.begin();
        i != content_setting_views_.end(); ++i) {
     trailing_width += IncrementalMinimumWidth((*i));
@@ -533,6 +545,9 @@ void LocationBarView::Layout() {
 
 #if defined(OS_CHROMEOS)
   add_trailing_decoration(intent_picker_view_);
+#endif
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
+  add_trailing_decoration(framebust_block_icon_view_);
 #endif
   add_trailing_decoration(star_view_);
   add_trailing_decoration(find_bar_icon_);
@@ -615,6 +630,7 @@ void LocationBarView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
 
 void LocationBarView::Update(const WebContents* contents) {
   RefreshContentSettingViews();
+  RefreshFramebustBlockIconView();
   RefreshZoomView();
   RefreshTranslateIcon();
   RefreshSaveCreditCardIconView();
@@ -707,6 +723,18 @@ bool LocationBarView::RefreshContentSettingViews() {
       visibility_changed = true;
   }
   return visibility_changed;
+}
+
+bool LocationBarView::RefreshFramebustBlockIconView() {
+  if (!framebust_block_icon_view_)
+    return false;
+
+  WebContents* web_contents = GetWebContents();
+  if (!web_contents)
+    return false;
+  const bool was_visible = framebust_block_icon_view_->visible();
+  framebust_block_icon_view_->Update(web_contents);
+  return was_visible != framebust_block_icon_view_->visible();
 }
 
 bool LocationBarView::RefreshZoomView() {
@@ -874,6 +902,13 @@ void LocationBarView::FocusSearch() {
 
 void LocationBarView::UpdateContentSettingsIcons() {
   if (RefreshContentSettingViews()) {
+    Layout();
+    SchedulePaint();
+  }
+}
+
+void LocationBarView::UpdateFramebustBlockIcon() {
+  if (RefreshFramebustBlockIconView()) {
     Layout();
     SchedulePaint();
   }
