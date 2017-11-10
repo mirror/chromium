@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44a8943d_785ed448",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-11-10T15:41:35Z",
+      "side": 1,
+      "message": "This title suggests all of //chrome/gpu/* is moving to //c/arc/video_accelerator. In reality, only //chrome/gpu/*arc* and *proctected_buffer* stuff is moving. This is confusing.\n\nMaybe the title should be:\n\n\"Move //chrome/gpu/*{arc, protected_buffer}* to //components/arc/video_accelerator\".",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 57
+      },
+      "revId": "4d81dfabbeed418ae729e3a1fe0574d5e5f7ab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
