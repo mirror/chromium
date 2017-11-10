@@ -22,6 +22,30 @@
       "revId": "9f0eb3fdcfb3c6dcf2fe5418f51922931a07dd04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3931854_0b69430f",
+        "filename": "net/android/java/src/org/chromium/net/AndroidKeyStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-11-10T19:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc06312d_3934b277",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 16
+      },
+      "revId": "9f0eb3fdcfb3c6dcf2fe5418f51922931a07dd04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
