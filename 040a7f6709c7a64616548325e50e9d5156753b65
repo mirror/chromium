@@ -34,6 +34,24 @@
       "revId": "040a7f6709c7a64616548325e50e9d5156753b65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "466c4b12_e8e0b578",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-10T01:04:12Z",
+      "side": 0,
+      "message": "Sorry, my above comment isn\u0027t very clear. I\u0027ll try to make the behavior more precise:\n1) When enterprise policy is in effect, we will always query the correct permission value because callsites use PermissionManager/content settings directly\n2) We don\u0027t take enterprise policy into account when showing DSE labels in the UI which means we will always show DSE labels even if a setting is overridden by enterprise policy. This is consistent with current behavior though.\n3) I\u0027m going to add a function to HCSM which queries the user\u0027s content setting, so that we can keep transitioning DSE consistent and prevent it from being interfered with by enterprise policy that\u0027s in effect.\n4) This function is also used to check whether we should reset the setting back to ALLOW for Clear and Reset. If enterprise policy is in effect, we will still reset the value back to ALLOW but it won\u0027t do anything until the user changes DSE. Maybe we don\u0027t want that when EP is in effect?",
+      "parentUuid": "5ede92eb_76922f4a",
+      "revId": "040a7f6709c7a64616548325e50e9d5156753b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
