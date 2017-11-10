@@ -51,7 +51,8 @@
           "content::mojom::FrameInputHandler",
           "content::mojom::MediaStreamDispatcher",
           "content::mojom::Widget",
-          "mojom::MediaDevicesListener"
+          "mojom::MediaDevicesListener",
+          "viz::mojom::InputTargetClient"
         ]
       },
       "requires": {
