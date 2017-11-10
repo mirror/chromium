@@ -174,6 +174,24 @@
       "revId": "61dbf1015cc88f92e859e4adcb6cc83d1c1a4e68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e95cb957_b68889e3",
+        "filename": "third_party/WebKit/Source/core/dom/ng/SlotAssignmentTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-10T15:37:59Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s totally fine.",
+      "parentUuid": "75f0f23b_b8b43aac",
+      "revId": "61dbf1015cc88f92e859e4adcb6cc83d1c1a4e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
