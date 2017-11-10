@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e99620e9_684d17b1",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-10T17:04:59Z",
+      "side": 1,
+      "message": "\u003e Well, with \"received document since navigating\" I mean the document corresponding to that navigation (which can only be received after the navigation finishes). I could rename it to \"..since_navigation_finished_\" if you prefer?\n\nI\u0027d go with the least subtle name possible, since subtlety here was the problem :)",
+      "parentUuid": "022a3bb2_23878011",
+      "range": {
+        "startLine": 173,
+        "startChar": 32,
+        "endLine": 173,
+        "endChar": 42
+      },
+      "revId": "8d30a66713db26a6833bc4f9df1e792788180927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddac69e6_f750eddb",
         "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
         "patchSetId": 2
