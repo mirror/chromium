@@ -96,10 +96,13 @@ class PixelIntegrationTest(
     pages = pixel_test_pages.DefaultPages(name)
     pages += pixel_test_pages.GpuRasterizationPages(name)
     pages += pixel_test_pages.ExperimentalCanvasFeaturesPages(name)
+    pages += pixel_test_pages.NoGpuProcessPages(name)
     if sys.platform.startswith('darwin'):
       pages += pixel_test_pages.MacSpecificPages(name)
     if sys.platform.startswith('win'):
       pages += pixel_test_pages.DirectCompositionPages(name)
+    if sys.platform.startswith('win') or sys.platform.startswith('linux'):
+      pages += pixel_test_pages.SwiftShaderPages(name)
     for p in pages:
       yield(p.name, gpu_relative_path + p.url, (p))
 
