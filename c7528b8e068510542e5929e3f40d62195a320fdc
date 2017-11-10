@@ -52,6 +52,24 @@
       "revId": "c7528b8e068510542e5929e3f40d62195a320fdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0503646_d14d9c43",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/SystemDownloadNotifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-10T22:12:20Z",
+      "side": 1,
+      "message": "Have changed it to loop through and replace the entries instead of using a hashmap.",
+      "parentUuid": "451003ef_03154851",
+      "revId": "c7528b8e068510542e5929e3f40d62195a320fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
