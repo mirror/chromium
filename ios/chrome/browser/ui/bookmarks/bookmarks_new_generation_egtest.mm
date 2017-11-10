@@ -15,7 +15,6 @@
 #include "components/prefs/pref_service.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
-#include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/pref_names.h"
 #import "ios/chrome/browser/ui/authentication/signin_earlgrey_utils.h"
@@ -126,9 +125,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 @implementation BookmarksNewGenTestCase
 
 - (void)setUp {
-  // Set flags before setup.
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
   [super setUp];
 
   // Wait for bookmark model to be loaded.
@@ -169,9 +165,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
   }
 #endif
 
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -201,9 +194,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testUndoDeleteBookmarkFromSwipe {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -244,9 +234,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
   FLAKY_testSwipeToDeleteDisabledInEditMode
 #endif
 - (void)MAYBE_testSwipeToDeleteDisabledInEditMode {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -299,9 +286,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Tests that the bookmark context bar is shown in MobileBookmarks.
 - (void)testBookmarkContextBarShown {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -320,9 +304,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testBookmarkContextBarInVariousSelectionModes {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -545,9 +526,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testContextMenuForSingleURLSelection {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -573,9 +551,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Verify Edit functionality on single URL selection.
 - (void)testEditFunctionalityOnSingleURL {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -707,9 +682,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Verify Copy URL functionality on single URL selection.
 - (void)testCopyFunctionalityOnSingleURL {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -747,9 +719,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testContextMenuForMultipleURLSelection {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -795,9 +764,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Verify the Open All functionality on multiple url selection.
 - (void)testContextMenuForMultipleURLOpenAll {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -840,9 +806,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Verify the Open All in Incognito functionality on multiple url selection.
 - (void)testContextMenuForMultipleURLOpenAllInIncognito {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -883,9 +846,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Verify the Open and Open in Incognito functionality on single url.
 - (void)testOpenSingleBookmarkInNormalAndIncognitoTab {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -1017,9 +977,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testContextBarForSingleFolderSelection {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -1052,9 +1009,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testContextMenuForMultipleFolderSelection {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -1082,9 +1036,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testContextMenuForMixedSelection {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -1112,9 +1063,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testLongPressOnSingleURL {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -1128,9 +1076,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testLongPressOnSingleFolder {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -1177,9 +1122,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Verify Edit functionality for single folder selection.
 - (void)testEditFunctionalityOnSingleFolder {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -1275,9 +1217,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Verify Move functionality on single folder through long press.
 - (void)testMoveFunctionalityOnSingleFolder {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -1368,9 +1307,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Verify Move functionality on multiple folder selection.
 - (void)testMoveFunctionalityOnMultipleFolder {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -1446,9 +1382,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Verify Move functionality on mixed folder / url selection.
 - (void)testMoveFunctionalityOnMixedSelection {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -1525,9 +1458,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Verify Move functionality on multiple url selection.
 - (void)testMoveFunctionalityOnMultipleUrlSelection {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -1586,9 +1516,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Try deleting a bookmark from the edit screen, then undoing that delete.
 - (void)testUndoDeleteBookmarkFromEditScreen {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -1651,9 +1578,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testDeleteSingleURLNode {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -1690,9 +1614,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testDeleteSingleFolderNode {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -1729,9 +1650,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testDeleteMultipleNodes {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -1776,9 +1694,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 // Tests that the promo view is only seen at root level and not in any of the
 // child nodes.
 - (void)testPromoViewIsSeenOnlyInRootNode {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
 
@@ -1812,9 +1727,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Tests that tapping No thanks on the promo make it disappear.
 - (void)testPromoNoThanksMakeItDisappear {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
 
@@ -1844,9 +1756,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 // state makes the sign-in sheet appear, and the promo still appears after
 // dismissing the sheet.
 - (void)testSignInPromoWithColdStateUsingPrimaryButton {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase openBookmarks];
 
   // Check that sign-in promo view are visible.
@@ -1872,9 +1781,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 // state makes the confirmaiton sheet appear, and the promo still appears after
 // dismissing the sheet.
 - (void)testSignInPromoWithWarmStateUsingPrimaryButton {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
 
@@ -1916,9 +1822,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 // state makes the sign-in sheet appear, and the promo still appears after
 // dismissing the sheet.
 - (void)testSignInPromoWithWarmStateUsingSecondaryButton {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   // Set up a fake identity.
@@ -1951,9 +1854,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Tests that the sign-in promo should not be shown after been shown 19 times.
 - (void)testAutomaticSigninPromoDismiss {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   ios::ChromeBrowserState* browser_state =
       chrome_test_util::GetOriginalBrowserState();
   PrefService* prefs = browser_state->GetPrefs();
@@ -1979,9 +1879,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 // Tests the creation of new folders by tapping on 'New Folder' button of the
 // context bar.
 - (void)testCreateNewFolderWithContextBar {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -2009,9 +1906,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 // Tests the new folder name is committed when name editing is interrupted by
 // navigating away.
 - (void)testNewFolderNameCommittedOnNavigatingAway {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -2077,9 +1971,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testEmptyBackgroundAndSelectButton {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -2130,9 +2021,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testCachePositionIsRecreated {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -2154,9 +2042,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testCachePositionIsRecreatedWhenNodeIsDeleted {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -2184,9 +2069,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 }
 
 - (void)testCachePositionIsRecreatedWhenNodeIsMoved {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -2224,9 +2106,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Tests that all elements on the bookmarks landing page are accessible.
 - (void)testAccessibilityOnBookmarksLandingPage {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
 
@@ -2235,9 +2114,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Tests that all elements on mobile bookmarks are accessible.
 - (void)testAccessibilityOnMobileBookmarks {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -2247,9 +2123,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Tests that all elements on the bookmarks folder Edit page are accessible.
 - (void)testAccessibilityOnBookmarksFolderEditPage {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -2272,9 +2145,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Tests that all elements on the bookmarks Edit page are accessible.
 - (void)testAccessibilityOnBookmarksEditPage {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -2292,9 +2162,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Tests that all elements on the bookmarks Move page are accessible.
 - (void)testAccessibilityOnBookmarksMovePage {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -2314,9 +2181,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 // Tests that all elements on the bookmarks Move to New Folder page are
 // accessible.
 - (void)testAccessibilityOnBookmarksMoveToNewFolderPage {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -2340,9 +2204,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Tests that all elements on bookmarks Delete and Undo are accessible.
 - (void)testAccessibilityOnBookmarksDeleteUndo {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
@@ -2371,9 +2232,6 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 
 // Tests that all elements on the bookmarks Select page are accessible.
 - (void)testAccessibilityOnBookmarksSelect {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
-
   [BookmarksNewGenTestCase setupStandardBookmarks];
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
