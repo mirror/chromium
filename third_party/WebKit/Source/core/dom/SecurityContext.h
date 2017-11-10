@@ -61,6 +61,10 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
     return content_security_policy_.Get();
   }
 
+  // Do not use except for BlobRegistry::RegisterPublicBlobURL() and its
+  // related methods.
+  SecurityOrigin* GetMutableSecurityOrigin() { return security_origin_.get(); }
+
   // Explicitly override the security origin for this security context.
   // Note: It is dangerous to change the security origin of a script context
   //       that already contains content.

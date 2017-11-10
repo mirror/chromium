@@ -111,6 +111,10 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
   virtual LocalDOMWindow* ExecutingWindow() const { return nullptr; }
   virtual String UserAgent() const = 0;
 
+  // Do not use except for BlobRegistry::RegisterPublicBlobURL() and its
+  // related methods.
+  SecurityOrigin* GetMutableSecurityOrigin();
+
   // Gets the DOMTimerCoordinator which maintains the "active timer
   // list" of tasks created by setTimeout and setInterval. The
   // DOMTimerCoordinator is owned by the ExecutionContext and should
