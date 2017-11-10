@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "512b4999_b4e158fc",
+        "filename": "components/os_crypt/key_storage_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:07:49Z",
+      "side": 1,
+      "message": "nit: Please add a blank line after this line, to match the spacing above line 56.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 9
+      },
+      "revId": "39691387959b61e8ff32e66f4a10e951f641dcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178f819f_4f39371b",
+        "filename": "components/os_crypt/key_storage_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:07:49Z",
+      "side": 1,
+      "message": "nit: |reply| is none of the arguments. OTOH, |result| and |on_password_received| are and need an explanation.",
+      "range": {
+        "startLine": 36,
+        "startChar": 35,
+        "endLine": 36,
+        "endChar": 40
+      },
+      "revId": "39691387959b61e8ff32e66f4a10e951f641dcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc462b86_824e9879",
+        "filename": "components/os_crypt/key_storage_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:07:49Z",
+      "side": 1,
+      "message": "Do you know whether there are any restriction about waiting on the current thread?\nI was looking at ScopedAllowBaseSyncPrimitives in base/threading/thread_restrictions.h and at the way we use base::ThreadRestrictions::ScopedAllowWait in native_backend_kwallet_x.cc and I\u0027m surprised that this is not needed here.",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 21
+      },
+      "revId": "39691387959b61e8ff32e66f4a10e951f641dcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c735977_9cfccebb",
+        "filename": "components/os_crypt/key_storage_linux.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:07:49Z",
+      "side": 1,
+      "message": "nit: If you look at existing code and methods like \"InitOnBackgroundThread\", those methods expect to be run on the referenced thread or task runner. The InitOnTaskRunner here is different: it schedules the init on the task runner and waits for it. To avoid confusion, I propose renaming it to something like WaitForInitOnTaskRunner.\n\nGetKey() does the same scheduling+waiting, so perhaps we should also rename it accordingly.",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 23
+      },
+      "revId": "39691387959b61e8ff32e66f4a10e951f641dcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97aaeb1_1e9c8658",
+        "filename": "components/os_crypt/key_storage_linux_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:07:49Z",
+      "side": 1,
+      "message": "nit: Please separate this #include from the above one with a blank line.",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 8
+      },
+      "revId": "39691387959b61e8ff32e66f4a10e951f641dcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f764c39_9253ad0c",
+        "filename": "components/os_crypt/key_storage_linux_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:07:49Z",
+      "side": 1,
+      "message": "nit: Please check the sentence, I could not parse it properly. It seems that there should be a noun in place of \"wrapped\".",
+      "range": {
+        "startLine": 12,
+        "startChar": 25,
+        "endLine": 12,
+        "endChar": 32
+      },
+      "revId": "39691387959b61e8ff32e66f4a10e951f641dcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
