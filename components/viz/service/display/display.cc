@@ -359,7 +359,8 @@ bool Display::DrawAndSwap() {
     TRACE_EVENT_INSTANT0("viz", "Draw skipped.", TRACE_EVENT_SCOPE_THREAD);
   }
 
-  bool should_swap = should_draw && size_matches;
+  bool should_swap =
+      (should_draw && size_matches) || !presented_callbacks_.empty();
   if (should_swap) {
     swapped_since_resize_ = true;
     for (auto& latency : frame.metadata.latency_info) {
