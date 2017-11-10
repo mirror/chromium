@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "68dcf698_29b531c8",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-10T00:29:30Z",
+      "side": 1,
+      "message": "I still find \"component\" not well defined in the context of this API - it represents analytics service, right? Maybe replacing it with a term more specific might be better.\n\nThough, given it\u0027s private API, I won\u0027t push for it (as long the meaning is clear for teams that use the API).",
+      "parentUuid": "b3df2459_b2fb5f39",
+      "range": {
+        "startLine": 76,
+        "startChar": 18,
+        "endLine": 76,
+        "endChar": 31
+      },
+      "revId": "d84d241e630664a3c76ad6c55a690b2c7888010d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "278ef14c_3efe5a17",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 5
@@ -113,6 +137,24 @@
       "side": 1,
       "message": "We will leave managing of components to the ComponentUpdater API, which is responsible for loading and mounting the desired component when requested, and also for deleting or replacing components when they are no longer needed or need updating.\n\nI think it\u0027s very likely that this will be the last significant modification to this MPP API. We are actively working on go/mpp-v2 and after discussing with rkc@ it seems that creating a new parallel API (while this one still serves its purpose until deprecation) gives us a bit more flexibility. For that reason, I\u0027m not sure we need to think too deeply about how this API will support multiple components, concurrent components, etc whereas for the new API we will be sure to be meticulous.",
       "parentUuid": "f37b5f42_2e424db6",
+      "revId": "d84d241e630664a3c76ad6c55a690b2c7888010d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d19c3c1_9a2baad3",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-10T00:29:30Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m OK with not going too much into support for multiple components.\n\nThat\u0027s why I think naming should be better here (especially if concurrent components are out of scope for this API) - setComponent/setAnalyticsComponent does better job conveying that there is only one service at the time, i.e. that |component| will actually replace the current component.",
+      "parentUuid": "7fcdb23b_ae51485d",
       "revId": "d84d241e630664a3c76ad6c55a690b2c7888010d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3da1be9c_0f770531",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-10T00:29:30Z",
+      "side": 1,
+      "message": "nit: to succeed",
+      "range": {
+        "startLine": 248,
+        "startChar": 7,
+        "endLine": 248,
+        "endChar": 18
+      },
+      "revId": "8611c1612b017b439748d1d6f1e4f2be6cd7b5eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
