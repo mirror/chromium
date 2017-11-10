@@ -172,19 +172,25 @@ void PaymentRequest::Show() {
     return;
   }
 
-  if (!state_->AreRequestedMethodsSupported()) {
+  state_->AreRequestedMethodsSupported(
+      base::BindOnce(&PaymentRequest::AreRequestedMethodsSupportedCallback,
+                     weak_ptr_factory_.GetWeakPtr()));
+}
+
+void PaymentRequest::AreRequestedMethodsSupportedCallback(
+    bool methods_supported) {
+  if (methods_supported) {
+    journey_logger_.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+
+    delegate_->ShowDialog(this);
+  } else {
     journey_logger_.SetNotShown(
         JourneyLogger::NOT_SHOWN_REASON_NO_SUPPORTED_PAYMENT_METHOD);
     client_->OnError(mojom::PaymentErrorReason::NOT_SUPPORTED);
     if (observer_for_testing_)
       observer_for_testing_->OnNotSupportedError();
     OnConnectionTerminated();
-    return;
   }
-
-  journey_logger_.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
-
-  delegate_->ShowDialog(this);
 }
 
 void PaymentRequest::UpdateWith(mojom::PaymentDetailsPtr details) {
