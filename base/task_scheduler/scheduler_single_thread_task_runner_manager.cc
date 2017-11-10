@@ -294,14 +294,13 @@ class SchedulerSingleThreadTaskRunnerManager::SchedulerSingleThreadTaskRunner
     if (!g_manager_is_alive)
       return false;
 
-    auto task =
-        std::make_unique<Task>(from_here, std::move(closure), traits_, delay);
-    task->single_thread_task_runner_ref = this;
+    Task task(from_here, std::move(closure), traits_, delay);
+    task.single_thread_task_runner_ref = this;
 
-    if (!outer_->task_tracker_->WillPostTask(task.get()))
+    if (!outer_->task_tracker_->WillPostTask(&task))
       return false;
 
-    if (task->delayed_run_time.is_null()) {
+    if (task.delayed_run_time.is_null()) {
       PostTaskNow(std::move(task));
     } else {
       outer_->delayed_task_manager_->AddDelayedTask(
@@ -351,7 +350,7 @@ class SchedulerSingleThreadTaskRunnerManager::SchedulerSingleThreadTaskRunner
     }
   }
 
-  void PostTaskNow(std::unique_ptr<Task> task) {
+  void PostTaskNow(Task task) {
     scoped_refptr<Sequence> sequence = GetDelegate()->sequence();
     // If |sequence| is null, then the thread is effectively gone (either
     // shutdown or joined).
