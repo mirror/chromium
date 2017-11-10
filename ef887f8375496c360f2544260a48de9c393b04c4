@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfd08bd9_eb0121a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-10T14:57:40Z",
+      "side": 1,
+      "message": "probably orthogonal but worth considering moving this to attachBaseContext to make it more accurate",
+      "range": {
+        "startLine": 71,
+        "startChar": 17,
+        "endLine": 71,
+        "endChar": 41
+      },
+      "revId": "ef887f8375496c360f2544260a48de9c393b04c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
