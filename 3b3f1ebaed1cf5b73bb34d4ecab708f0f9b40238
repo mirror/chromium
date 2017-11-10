@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4f8e3401_966a7cfc",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3145,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-10T19:29:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40954c64_d2864e12",
+      "revId": "3b3f1ebaed1cf5b73bb34d4ecab708f0f9b40238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e36f2ff8_44c93ade",
         "filename": "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter_win.cc",
         "patchSetId": 11
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9bec1799_30c4e066",
+        "filename": "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-10T19:29:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e36f2ff8_44c93ade",
+      "range": {
+        "startLine": 158,
+        "startChar": 48,
+        "endLine": 158,
+        "endChar": 60
+      },
+      "revId": "3b3f1ebaed1cf5b73bb34d4ecab708f0f9b40238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a57f76b2_1e3dd4a2",
         "filename": "chrome/services/wifi_util_win/OWNERS",
         "patchSetId": 11
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "fbcb402c_96425d09",
+        "filename": "chrome/services/wifi_util_win/OWNERS",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-10T19:29:05Z",
+      "side": 1,
+      "message": "Yes. It\u0027s been hard to find other OWNERS and I am already OWNER of chrome/services.",
+      "parentUuid": "a57f76b2_1e3dd4a2",
+      "revId": "3b3f1ebaed1cf5b73bb34d4ecab708f0f9b40238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "982d0cc5_7e23ce31",
         "filename": "chrome/services/wifi_util_win/wifi_util_win_service.cc",
         "patchSetId": 11
@@ -73,6 +133,24 @@
       "revId": "3b3f1ebaed1cf5b73bb34d4ecab708f0f9b40238",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7915da64_b9e2edff",
+        "filename": "chrome/services/wifi_util_win/wifi_util_win_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-10T19:29:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "982d0cc5_7e23ce31",
+      "revId": "3b3f1ebaed1cf5b73bb34d4ecab708f0f9b40238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
