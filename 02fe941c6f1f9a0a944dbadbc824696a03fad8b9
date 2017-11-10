@@ -65,6 +65,72 @@
     },
     {
       "key": {
+        "uuid": "b416e394_63f5d6c1",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-10T02:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18d6a098_9ed97945",
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c1588da_a42c2c69",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-10T02:11:49Z",
+      "side": 1,
+      "message": "Actually I am not really sure whether it is mandatory or optional for some specific type of stack. Do you mind if we leave \u0027*\u0027 here instead of \u0027+\u0027? I am just afraid that some type of stack that I am not aware of may not have the number in the front.",
+      "parentUuid": "17f31cb8_41edac35",
+      "range": {
+        "startLine": 53,
+        "startChar": 36,
+        "endLine": 53,
+        "endChar": 37
+      },
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98449e0f_9f2f06d6",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-10T02:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f98a910_c81ca385",
+      "range": {
+        "startLine": 53,
+        "startChar": 39,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f2cd2f5_3eb0990b",
         "filename": "third_party/android_platform/development/scripts/symbol.py",
         "patchSetId": 2
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "696f2242_5b21117f",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-10T02:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f2cd2f5_3eb0990b",
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e810d6e0_5de2659d",
         "filename": "third_party/android_platform/development/scripts/symbol.py",
         "patchSetId": 2
@@ -96,6 +180,24 @@
       "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed2373f_d0c68634",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-10T02:11:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e810d6e0_5de2659d",
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -170,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "4a8bfe38_e5386d4a",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-10T02:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8737cc1a_2bc51f10",
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6794f0c_d0550240",
         "filename": "third_party/android_platform/development/scripts/symbol.py",
         "patchSetId": 2
@@ -184,6 +304,24 @@
       "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a52acf7_f6e94dae",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-10T02:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6794f0c_d0550240",
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
