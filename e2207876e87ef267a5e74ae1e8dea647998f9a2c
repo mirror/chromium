@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dc25521_0ae45bee",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-11-10T10:47:18Z",
+      "side": 1,
+      "message": "Checked inside IsNavigableContainer so I think we can remove these lines.",
+      "range": {
+        "startLine": 1404,
+        "startChar": 0,
+        "endLine": 1408,
+        "endChar": 60
+      },
+      "revId": "e2207876e87ef267a5e74ae1e8dea647998f9a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
