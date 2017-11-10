@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e5e73ed4_c1f5bd4b",
+        "filename": "net/base/net_error_list.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-10T22:49:13Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to go into that detail, but I don\u0027t have objections if you want to.",
+      "parentUuid": "247a3cf5_5c7e1826",
+      "range": {
+        "startLine": 771,
+        "startChar": 18,
+        "endLine": 771,
+        "endChar": 22
+      },
+      "revId": "9ab3f85d17f7ff7c6c1228e2478f71ad43553c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1503b505_f3ad692f",
         "filename": "net/http/http_cache.h",
         "patchSetId": 9
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "response_.headers is the C++ expression it\u0027s looking at. Should I just | | it?\n\nWhat this is also perhaps not sufficiently explicit about is this reflects only the portion of conditionalizability based on response --- while some is based on request as well.",
       "parentUuid": "49c2e03f_163fadfb",
+      "range": {
+        "startLine": 416,
+        "startChar": 57,
+        "endLine": 416,
+        "endChar": 58
+      },
+      "revId": "9ab3f85d17f7ff7c6c1228e2478f71ad43553c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed6c9c5_62662345",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-10T22:49:13Z",
+      "side": 1,
+      "message": "Do\u0027h!  Sorry about my comment; for some reason my C++ parser glitched.  Yeah, || it.",
+      "parentUuid": "cb47ce44_79f716f2",
       "range": {
         "startLine": 416,
         "startChar": 57,
