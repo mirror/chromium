@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7184e1e2_4bc42a24",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-10T20:19:11Z",
+      "side": 1,
+      "message": "Okay, I\u0027ll look at fixing GetBoundsForNode.",
+      "parentUuid": "c766c04c_e614b24d",
+      "range": {
+        "startLine": 745,
+        "startChar": 22,
+        "endLine": 745,
+        "endChar": 38
+      },
+      "revId": "8462d1fd4b85c648c4bd01d71d07beefe8119862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6256be19_20d95775",
         "filename": "ui/views/controls/tree/tree_view.cc",
         "patchSetId": 1
