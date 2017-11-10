@@ -6,9 +6,25 @@
 
 #include <utility>
 
+#include "base/metrics/histogram_macros.h"
 #include "net/quic/platform/api/quic_endian.h"
 
 namespace net {
+
+namespace {
+
+enum FilterSupportedAltSvcVersionsInputValue {
+  READ_GOOGLE_FORMAT = 0,
+  READ_IETF_FORMAT = 1,
+  FILTER_SUPPORTED_ALTSVC_VERSIONS_INPUT_VALUE_MAX
+};
+
+void RecordAltSvcFormat(FilterSupportedAltSvcVersionsInputValue mode) {
+  UMA_HISTOGRAM_ENUMERATION("Net.QuicFilterSupportedAltSvcVersionsInput", mode,
+                            FILTER_SUPPORTED_ALTSVC_VERSIONS_INPUT_VALUE_MAX);
+}
+
+};  // namespace
 
 SpdyPriority ConvertRequestPriorityToQuicPriority(
     const RequestPriority priority) {
@@ -56,6 +72,7 @@ QuicTransportVersionVector FilterSupportedAltSvcVersions(
           supported_alt_svc_versions.push_back(supported);
       }
     }
+    RecordAltSvcFormat(READ_IETF_FORMAT);
   } else if (quic_alt_svc.protocol_id == "quic") {
     for (uint32_t quic_version : quic_alt_svc.version) {
       for (QuicTransportVersion supported : supported_versions) {
@@ -63,6 +80,7 @@ QuicTransportVersionVector FilterSupportedAltSvcVersions(
           supported_alt_svc_versions.push_back(supported);
       }
     }
+    RecordAltSvcFormat(READ_GOOGLE_FORMAT);
   }
   return supported_alt_svc_versions;
 }

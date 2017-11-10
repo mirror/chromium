@@ -17847,6 +17847,11 @@ Called by update_net_error_codes.py.-->
   <int value="20" label=".log"/>
 </enum>
 
+<enum name="FilterSupportedAltSvcVersionsInputValue">
+  <int value="0" label="Read Google format"/>
+  <int value="1" label="Read IETF format"/>
+</enum>
+
 <enum name="FirstMeaningfulPaintOrdering">
   <int value="0" label="FMP 0-quiet &lt; FMP 2-quiet"/>
   <int value="1" label="FMP 0-quiet &gt; FMP 2-quiet"/>
