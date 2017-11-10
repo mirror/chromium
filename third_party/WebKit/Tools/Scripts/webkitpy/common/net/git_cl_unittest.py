@@ -145,8 +145,40 @@ class GitCLTest(unittest.TestCase):
             'Waiting for try jobs. 6600 seconds passed.\n'
             'Timed out waiting for try jobs.\n')
 
+    def test_wait_for_try_jobs_cl_closed(self):
+        host = MockHost()
+        host.executive = MockExecutive(output='closed')
+        git_cl = GitCL(host)
+        git_cl.fetch_raw_try_job_results = lambda: [
+            {
+                'builder_name': 'some-builder',
+                'status': 'STARTED',
+                'result': None,
+                'url': None,
+            },
+            {
+                'builder_name': 'another-builder',
+                'status': 'COMPLETED',
+                'result': 'SUCCESS',
+                'url': None,
+            },
+        ]
+        self.assertEqual(
+            git_cl.wait_for_try_jobs(),
+            {
+                'cl_status': 'closed',
+                'results': {
+                    Build('some-builder', None): TryJobStatus('STARTED', None),
+                    Build('another-builder', None): TryJobStatus('COMPLETED', 'SUCCESS'),
+                }
+            })
+        self.assertEqual(
+            host.stdout.getvalue(),
+            'Waiting for try jobs, timeout: 7200 seconds.\n')
+
     def test_wait_for_try_jobs_done(self):
         host = MockHost()
+        host.executive = MockExecutive(output='lgtm')
         git_cl = GitCL(host)
         git_cl.fetch_raw_try_job_results = lambda: [
             {
@@ -159,12 +191,14 @@ class GitCLTest(unittest.TestCase):
         self.assertEqual(
             git_cl.wait_for_try_jobs(),
             {
-                Build('some-builder', 100): TryJobStatus('COMPLETED', 'FAILURE')
+                'cl_status': 'lgtm',
+                'results': {
+                    Build('some-builder', 100): TryJobStatus('COMPLETED', 'FAILURE'),
+                }
             })
         self.assertEqual(
             host.stdout.getvalue(),
-            'Waiting for try jobs, timeout: 7200 seconds.\n'
-            'All jobs finished.\n')
+            'Waiting for try jobs, timeout: 7200 seconds.\n')
 
     def test_wait_for_closed_status_timeout(self):
         host = MockHost()

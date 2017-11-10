@@ -71,19 +71,28 @@ class GitCL(object):
         return self.run(['issue']).split()[2]
 
     def wait_for_try_jobs(self, poll_delay_seconds=10 * 60, timeout_seconds=120 * 60):
-        """Waits until all try jobs are finished and returns results, or None.
+        """Waits until either all try jobs are finished or the CL is closed,
+        whichever happens first.
 
         Returns:
-            A dict mapping Build objects to TryJobStatus objects, or
-            None if a timeout occurred.
+            None if a timeout occurs, otherwise a dict with two keys:
+                'cl_status': CL status as reported by `git cl status'.
+                'results': A dict mapping Build objects to TryJobStatus
+                           objects.
         """
 
         def finished_try_job_results_or_none():
-            results = self.try_job_results()
-            _log.debug('Fetched try results: %s', results)
-            if results and self.all_finished(results):
-                self._host.print_('All jobs finished.')
-                return results
+            cl_status = self.run(['status', '--field=status']).strip()
+            _log.debug('Fetched CL status: %s', cl_status)
+            try_job_results = self.try_job_results()
+            _log.debug('Fetched try results: %s', try_job_results)
+            result = {
+                'cl_status': cl_status,
+                'results': try_job_results,
+            }
+            if cl_status == 'closed' or \
+               (try_job_results and self.all_finished(try_job_results)):
+                return result
             return None
 
         return self._wait_for(
