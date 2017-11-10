@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75ad77e3_7b10f332",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-10T16:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16ad3ba2_675e6c78",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 35
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f039898d_032cbab5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea6a4b2_7ecc1e59",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-10T16:23:37Z",
+      "side": 1,
+      "message": "Correct, we load the bookmarks synchronously, and kick off asynchronous favicon fetching. |mFinishedReading| only gets set to true after the last increment of |mFaviconsInProgress| happens. However, it occurs to me that we might be decrementing this value while trying to increment it because of a favicon fetching callback, so I\u0027ve synchronized on it to avoid that.",
+      "parentUuid": "f039898d_032cbab5",
+      "range": {
+        "startLine": 107,
+        "startChar": 18,
+        "endLine": 107,
+        "endChar": 37
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c65f4d58_acb2f09a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-10T16:23:37Z",
+      "side": 1,
+      "message": "You\u0027re right, I changed it to initialize |mShutDown|.",
+      "parentUuid": "0bd2f315_b0936e68",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 25
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "047cbeff_885af145",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020ab08a_3248be52",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-10T16:23:37Z",
+      "side": 1,
+      "message": "Correct, the idea is that the Java side is handling the lifetime management of this class, it inits and destroys it, and should only be destroying it once the favicon fetching is complete.",
+      "parentUuid": "047cbeff_885af145",
+      "range": {
+        "startLine": 224,
+        "startChar": 27,
+        "endLine": 224,
+        "endChar": 37
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4572ea4f_e9cc65b7",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-10T16:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "726c36fb_c9f1830f",
+      "range": {
+        "startLine": 243,
+        "startChar": 6,
+        "endLine": 243,
+        "endChar": 25
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae69a69c_ca168e46",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f00f04f_35d815e5",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-10T16:23:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ae69a69c_ca168e46",
+      "range": {
+        "startLine": 309,
+        "startChar": 29,
+        "endLine": 309,
+        "endChar": 59
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "6b5ab074_e4e2a2a5",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-10T16:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48b31d8a_d4183793",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 49
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2ac7b40_01439bf1",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
         "patchSetId": 8
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "6dbd0321_94c90cdc",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-10T16:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2ac7b40_01439bf1",
+      "range": {
+        "startLine": 37,
+        "startChar": 5,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11b3a1ed_3568b0e8",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
         "patchSetId": 8
@@ -206,6 +398,30 @@
       "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c901d25_2359d0be",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-10T16:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11b3a1ed_3568b0e8",
+      "range": {
+        "startLine": 72,
+        "startChar": 11,
+        "endLine": 72,
+        "endChar": 27
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
