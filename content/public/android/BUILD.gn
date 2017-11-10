@@ -37,7 +37,6 @@ android_library("content_java") {
     "//base:base_java",
     "//device/bluetooth:java",
     "//device/gamepad:java",
-    "//device/sensors:java",
     "//device/usb:java",
     "//media/base/android:media_java",
     "//media/capture/content/android:screen_capture_java",
