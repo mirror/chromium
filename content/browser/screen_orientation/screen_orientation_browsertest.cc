@@ -64,7 +64,7 @@ class ScreenOrientationBrowserTest : public ContentBrowserTest  {
 
     ResizeParams params;
     params.screen_info = screen_info;
-    params.new_size = gfx::Size(0, 0);
+    params.new_size = gfx::Size(100, 100);
     params.physical_backing_size = gfx::Size(300, 300);
     params.top_controls_height = 0.f;
     params.browser_controls_shrink_blink_size = false;
