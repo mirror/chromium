@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5a4b418_67a0ce0c",
+        "filename": "chrome/browser/download/download_stats.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T09:21:38Z",
+      "side": 1,
+      "message": "usually UMA enums have a comment like ~do not add or remove items, since it will mess with histograms. We sometimes also put \"UMA\" in the name of the enum -- jwd@ might have a preference.",
+      "revId": "02d131198c5e7e32cee90ef269ac9480669e9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb4bfdba_c69d9017",
+        "filename": "chrome/browser/download/download_stats.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T09:21:38Z",
+      "side": 1,
+      "message": "I think both are acceptable in general, but kFooStyle is inconsistent with the other enums in this file, and consistency usually trumps.",
+      "revId": "02d131198c5e7e32cee90ef269ac9480669e9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c3c572_33f61263",
+        "filename": "chrome/browser/download/download_stats.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T09:21:38Z",
+      "side": 1,
+      "message": "nit: maybe omit the comma? The trailing comma makes a neater diff when appending items, but nothing should come after kMax - -the diff should be ugly!",
+      "revId": "02d131198c5e7e32cee90ef269ac9480669e9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ccb8f94_0e2898d1",
+        "filename": "chrome/browser/ui/views/download/download_item_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T09:21:38Z",
+      "side": 1,
+      "message": "do you just need to override\n\nView::OnPerformDrop(const ui::DropTargetEvent\u0026 event);\nView::OnDragDone();\n\nto get the others on non-mac?\n\n(I\u0027m pretty sure OnDragDone will be called when the drag source is a View - not so sure about OnPerformDrop though).",
+      "revId": "02d131198c5e7e32cee90ef269ac9480669e9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
