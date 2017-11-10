@@ -1869,6 +1869,16 @@ const char kReportArcStatusEnabled[] = "arc.status_reporting_enabled";
 // and download rate in kbits/s to throttle to)
 const char kNetworkThrottlingEnabled[] = "net.throttling_enabled";
 
+const char kPowerMetricsDailySample[] = "power.metrics.daily_sample";
+
+// Integer prefs used to back event counts reported by
+// chromeos::PowerMetricsReporter.
+const char kPowerMetricsIdleScreenDimCount[] =
+    "power.metrics.idle_screen_dim_count";
+const char kPowerMetricsIdleScreenOffCount[] =
+    "power.metrics.idle_screen_off_count";
+const char kPowerMetricsIdleSuspendCount[] = "power.metrics.idle_suspend_count";
+
 #endif  // defined(OS_CHROMEOS)
 
 // Whether there is a Flash version installed that supports clearing LSO data.
