@@ -270,12 +270,13 @@ void RenderFrameProxy::OnScreenInfoChanged(const ScreenInfo& screen_info) {
 
 void RenderFrameProxy::SetReplicatedState(const FrameReplicationState& state) {
   DCHECK(web_frame_);
-  web_frame_->SetReplicatedOrigin(state.origin);
+  blink::WebMutableSecurityOrigin security_origin(state.origin);
+  security_origin.SetUniqueOriginIsPotentiallyTrustworthy(
+      state.has_potentially_trustworthy_unique_origin);
+  web_frame_->SetReplicatedOrigin(security_origin);
   web_frame_->SetReplicatedSandboxFlags(state.frame_policy.sandbox_flags);
   web_frame_->SetReplicatedName(blink::WebString::FromUTF8(state.name));
   web_frame_->SetReplicatedInsecureRequestPolicy(state.insecure_request_policy);
-  web_frame_->SetReplicatedPotentiallyTrustworthyUniqueOrigin(
-      state.has_potentially_trustworthy_unique_origin);
   web_frame_->SetReplicatedFeaturePolicyHeader(state.feature_policy_header);
   if (state.has_received_user_gesture)
     web_frame_->SetHasReceivedUserGesture();
@@ -450,9 +451,10 @@ void RenderFrameProxy::OnSetFrameOwnerProperties(
 void RenderFrameProxy::OnDidUpdateOrigin(
     const url::Origin& origin,
     bool is_potentially_trustworthy_unique_origin) {
-  web_frame_->SetReplicatedOrigin(origin);
-  web_frame_->SetReplicatedPotentiallyTrustworthyUniqueOrigin(
+  blink::WebMutableSecurityOrigin security_origin(origin);
+  security_origin.SetUniqueOriginIsPotentiallyTrustworthy(
       is_potentially_trustworthy_unique_origin);
+  web_frame_->SetReplicatedOrigin(security_origin);
 }
 
 void RenderFrameProxy::OnSetPageFocus(bool is_focused) {

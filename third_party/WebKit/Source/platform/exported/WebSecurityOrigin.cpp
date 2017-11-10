@@ -70,6 +70,12 @@ WebMutableSecurityOrigin::WebMutableSecurityOrigin(const url::Origin& origin) {
   *this = SecurityOrigin::CreateFromUrlOrigin(origin);
 }
 
+void WebMutableSecurityOrigin::SetUniqueOriginIsPotentiallyTrustworthy(
+    bool is_unique_origin_potentially_trustworthy) {
+  Get()->SetUniqueOriginIsPotentiallyTrustworthy(
+      is_unique_origin_potentially_trustworthy);
+}
+
 WebSecurityOrigin WebSecurityOrigin::CreateFromString(const WebString& origin) {
   return WebSecurityOrigin(SecurityOrigin::CreateFromString(origin));
 }
