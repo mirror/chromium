@@ -103,7 +103,6 @@ class PLATFORM_EXPORT SimpleFontData : public FontData {
   }
 
   scoped_refptr<SimpleFontData> VerticalRightOrientationFontData() const;
-  scoped_refptr<SimpleFontData> UprightOrientationFontData() const;
 
   bool HasVerticalGlyphs() const { return has_vertical_glyphs_; }
   bool IsTextOrientationFallback() const {
@@ -223,7 +222,6 @@ class PLATFORM_EXPORT SimpleFontData : public FontData {
     scoped_refptr<SimpleFontData> small_caps;
     scoped_refptr<SimpleFontData> emphasis_mark;
     scoped_refptr<SimpleFontData> vertical_right_orientation;
-    scoped_refptr<SimpleFontData> upright_orientation;
 
    private:
     DerivedFontData() {}
