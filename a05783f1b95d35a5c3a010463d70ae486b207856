@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "002043de_0a979daa",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2262,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-10T16:17:17Z",
+      "side": 1,
+      "message": "nit: no need for extensions:: prefix.",
+      "revId": "a05783f1b95d35a5c3a010463d70ae486b207856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf66fb9_79b5cfcf",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2286,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-10T16:17:17Z",
+      "side": 1,
+      "message": "How many of the expectations below fail if we don\u0027t do this?  Is it only the last block (2319 - 2325)?  If so, I think I\u0027d prefer that we document test without this workaround, and either comment out the last block or flip the expectations, and then add a TODO.  That way, we still test the rest of these assertions without forcing the navigation.",
+      "revId": "a05783f1b95d35a5c3a010463d70ae486b207856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09c44d7_555b8c56",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2309,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-10T16:17:17Z",
+      "side": 1,
+      "message": "nit: initialize",
+      "revId": "a05783f1b95d35a5c3a010463d70ae486b207856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0a078d1_1c78f817",
         "filename": "chrome/common/extensions/api/windows.json",
         "patchSetId": 8
@@ -19,6 +70,46 @@
         "endLine": 228,
         "endChar": 30
       },
+      "revId": "a05783f1b95d35a5c3a010463d70ae486b207856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60565c4b_218802ec",
+        "filename": "chrome/common/extensions/api/windows.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-10T16:17:17Z",
+      "side": 1,
+      "message": "I think a footnote like this would look weird in the actual documentation.  This should support html - let\u0027s try\n\n... will be in the same \u003ca href\u003d\\\"https://www.w3.org/TR/html51/browsers.html#unit-of-related-browsing-contexts\\\"\u003eunit of related browsing contexts\u003c/a\u003e as the caller...\n\nThen, in your local checkout, you can do\n$ python chrome/common/extensions/docs/server2/preview.py\n\nand navigate to localhost:8000/extensions/tabs and check if the documentation looks okay.",
+      "range": {
+        "startLine": 228,
+        "startChar": 182,
+        "endLine": 228,
+        "endChar": 185
+      },
+      "revId": "a05783f1b95d35a5c3a010463d70ae486b207856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09ab585_9b070bd3",
+        "filename": "chrome/common/extensions/api/windows.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-10T16:17:17Z",
+      "side": 1,
+      "message": "Let\u0027s wrap this a bit:\n\"setSelfAsOpener\": {\n  \"type\": \"boolean\",\n  \"optional\": true,\n  \"description\": \u003c...\u003e\n}",
       "revId": "a05783f1b95d35a5c3a010463d70ae486b207856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
