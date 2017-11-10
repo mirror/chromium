@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6a14365_ae8aef7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-11-10T03:29:55Z",
+      "side": 1,
+      "message": "Why? It seems more logical to have VaapiWrapper coordinate all the moving parts rather than calling VADisplayState::Initialize() from an arbitrary point.",
+      "revId": "507ddbc8beec47d23345ed5999668db9310e0371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d41ce4_b319dec3",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-11-10T03:29:55Z",
+      "side": 1,
+      "message": "English nit: this sounds like PreSandboxInitialization() *has* been called. Maybe change to \"PreSandboxInitialization() must be called first\" or something like that?",
+      "revId": "507ddbc8beec47d23345ed5999668db9310e0371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
