@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "748318fd_becff8dc",
+        "filename": "chrome/test/data/webui/mocha_adapter.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-10T23:53:00Z",
+      "side": 1,
+      "message": "please add some JSDoc to explain why this function is needed and what the args are (for those less familiar with mocha testing)",
+      "revId": "ec0330ade4c988dfe4f2870f554636daadfdd93a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aeee451_30509e1a",
+        "filename": "chrome/test/data/webui/mocha_adapter.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-10T23:53:00Z",
+      "side": 1,
+      "message": "Most characters don\u0027t need to be escaped in a [] expression, just:\n* \"]\"\n* \"\\\"\n* \"-\" (except at the beginning or end, but since it\u0027s position-dependent, escaping that makes sense too)\n\nThe rest are treated as literals, since that\u0027s the point of []. Makes it a lot more readable that way.",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 40
+      },
+      "revId": "ec0330ade4c988dfe4f2870f554636daadfdd93a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a03702_cc234122",
+        "filename": "chrome/test/data/webui/mocha_adapter.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-10T23:53:00Z",
+      "side": 1,
+      "message": "nit: use single-quoted strings in JS",
+      "range": {
+        "startLine": 70,
+        "startChar": 45,
+        "endLine": 70,
+        "endChar": 51
+      },
+      "revId": "ec0330ade4c988dfe4f2870f554636daadfdd93a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a112405c_efc384f2",
+        "filename": "chrome/test/data/webui/mocha_adapter.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-10T23:53:00Z",
+      "side": 1,
+      "message": "this is a case where I\u0027d prefer not using `` since we need $ as a literal, but it\u0027s up to you",
+      "range": {
+        "startLine": 71,
+        "startChar": 57,
+        "endLine": 71,
+        "endChar": 58
+      },
+      "revId": "ec0330ade4c988dfe4f2870f554636daadfdd93a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
