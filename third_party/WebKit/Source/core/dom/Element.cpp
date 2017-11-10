@@ -3080,7 +3080,7 @@ void Element::SetInnerHTMLFromString(const String& html) {
 
 void Element::setInnerHTML(const StringOrTrustedHTML& string_or_html,
                            ExceptionState& exception_state) {
-  DCHECK(string_or_html.IsString() ||
+  DCHECK(string_or_html.IsString() || string_or_html.IsNull() ||
          RuntimeEnabledFeatures::TrustedDOMTypesEnabled());
 
   if (string_or_html.IsString() && GetDocument().RequireTrustedTypes()) {
@@ -3089,15 +3089,11 @@ void Element::setInnerHTML(const StringOrTrustedHTML& string_or_html,
     return;
   }
 
-  String html = string_or_html.IsString()
-                    ? string_or_html.GetAsString()
-                    : string_or_html.GetAsTrustedHTML()->toString();
-
-  // TODO(mkwst): This is an ugly hack that will be resolved once `TreatNullAs`
-  // is treated as an extended attribute on the `DOMString` type rather than
-  // as an extended attribute on the attribute. https://crbug.com/714866
-  if (html == "null")
-    html = "";
+  String html;
+  if (string_or_html.IsString())
+    html = string_or_html.GetAsString();
+  else if (string_or_html.IsTrustedHTML())
+    html = string_or_html.GetAsTrustedHTML()->toString();
 
   SetInnerHTMLFromString(html, exception_state);
 }
@@ -3142,7 +3138,7 @@ void Element::SetOuterHTMLFromString(const String& html,
 
 void Element::setOuterHTML(const StringOrTrustedHTML& string_or_html,
                            ExceptionState& exception_state) {
-  DCHECK(string_or_html.IsString() ||
+  DCHECK(string_or_html.IsString() || string_or_html.IsNull() ||
          RuntimeEnabledFeatures::TrustedDOMTypesEnabled());
 
   if (string_or_html.IsString() && GetDocument().RequireTrustedTypes()) {
@@ -3151,15 +3147,11 @@ void Element::setOuterHTML(const StringOrTrustedHTML& string_or_html,
     return;
   }
 
-  String html = string_or_html.IsString()
-                    ? string_or_html.GetAsString()
-                    : string_or_html.GetAsTrustedHTML()->toString();
-
-  // TODO(mkwst): This is an ugly hack that will be resolved once `TreatNullAs`
-  // is treated as an extended attribute on the `DOMString` type rather than
-  // as an extended attribute on the attribute. https://crbug.com/714866
-  if (html == "null")
-    html = "";
+  String html;
+  if (string_or_html.IsString())
+    html = string_or_html.GetAsString();
+  else if (string_or_html.IsTrustedHTML())
+    html = string_or_html.GetAsTrustedHTML()->toString();
 
   SetOuterHTMLFromString(html, exception_state);
 }
