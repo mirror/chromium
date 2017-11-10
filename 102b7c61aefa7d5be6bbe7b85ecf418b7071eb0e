@@ -16,6 +16,24 @@
       "revId": "102b7c61aefa7d5be6bbe7b85ecf418b7071eb0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f28b50_c77184bf",
+        "filename": "chrome/browser/extensions/api/certificate_provider/certificate_provider_apitest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-11-10T02:09:12Z",
+      "side": 0,
+      "message": "No, this change does not change the behavior. (I came across it just because of the reference in the comment.) This code should have been using RSA_sign from the beginning. Doing it manually like this worked, but didn\u0027t make much sense when the high-level API was available.\n\nThe PKCS#1 DigestInfo prefix is part of the standard way you use the hash algorithm. You will not commonly see it mentioned because it is below the abstraction layer. Callers should not be thinking about the decomposition.\n\nThe only reason RSA_add_pkcs1_prefix exists as a separate API is when you\u0027re interfacing with a weird low-level smartcard API that doesn\u0027t do the DigestInfo stuff. There are some historical weirdnesses here. You are interfacing with OpenSSL here, which provides the correct high-level operation.",
+      "parentUuid": "20a42f7b_f34625e8",
+      "revId": "102b7c61aefa7d5be6bbe7b85ecf418b7071eb0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

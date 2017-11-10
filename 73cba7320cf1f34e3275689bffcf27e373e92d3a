@@ -16,6 +16,24 @@
       "revId": "73cba7320cf1f34e3275689bffcf27e373e92d3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0cfd07c_b4dd29bb",
+        "filename": "chrome/browser/chromeos/certificate_provider/certificate_provider_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-11-10T02:09:12Z",
+      "side": 1,
+      "message": "I don\u0027t think it should matter much either way. I put it here since I was doing this change pretty mechanically, but happy to move it into SignDigestOnServiceTaskRunner if you like.\n\nFor the platform SSLPrivateKeys, we put it on a thread because the operation would get serviced by some smartcard, but hashing\u0027s uninteresting.",
+      "parentUuid": "4e4f9a21_73ff9ad1",
+      "revId": "73cba7320cf1f34e3275689bffcf27e373e92d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
