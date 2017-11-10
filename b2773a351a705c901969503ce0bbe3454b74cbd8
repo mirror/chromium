@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "50d0756f_efa3d53d",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-10T01:57:55Z",
+      "side": 1,
+      "message": "lol, I didn\u0027t understand that part so i ignored it. ack",
+      "parentUuid": "8ab7e434_45c1254f",
+      "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb8a66c8_0916f5bc",
         "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilder.cpp.tmpl",
         "patchSetId": 10
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Done\n\nI should do a follow up to replace this method everywhere and delete it. I think there\u0027s only about 10 of them.",
       "parentUuid": "ec1c79ad_0d1d532c",
+      "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b9c34e3_854a6bb9",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-10T01:57:55Z",
+      "side": 1,
+      "message": "agreed, this is a more efficient implementation than that one",
+      "parentUuid": "7f11bdf5_48fdf8f5",
       "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
