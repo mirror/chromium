@@ -43,7 +43,7 @@ using namespace HTMLNames;
 
 LayoutEmbeddedObject::LayoutEmbeddedObject(Element* element)
     : LayoutEmbeddedContent(element) {
-  View()->GetFrameView()->SetIsVisuallyNonEmpty();
+//  View()->GetFrameView()->SetIsVisuallyNonEmpty();
 }
 
 LayoutEmbeddedObject::~LayoutEmbeddedObject() {}

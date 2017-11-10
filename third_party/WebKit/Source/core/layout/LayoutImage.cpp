@@ -117,7 +117,8 @@ void LayoutImage::ImageChanged(WrappedImagePtr new_image,
         1 / image_resource_->CachedImage()->DevicePixelRatioHeaderValue();
   }
 
-  if (!did_increment_visually_non_empty_pixel_count_) {
+  if (!did_increment_visually_non_empty_pixel_count_ &&
+      image_resource_->CachedImage()->GetImage()->CurrentFrameIsComplete()) {
     // At a zoom level of 1 the image is guaranteed to have an integer size.
     View()->GetFrameView()->IncrementVisuallyNonEmptyPixelCount(
         FlooredIntSize(image_resource_->ImageSize(1.0f)));

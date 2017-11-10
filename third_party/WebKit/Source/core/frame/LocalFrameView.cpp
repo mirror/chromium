@@ -3518,11 +3518,11 @@ void LocalFrameView::UpdateStyleAndLayoutIfNeededRecursiveInternal() {
   if (Lifecycle().GetState() < DocumentLifecycle::kLayoutClean)
     Lifecycle().AdvanceTo(DocumentLifecycle::kLayoutClean);
 
-  // Ensure that we become visually non-empty eventually.
-  // TODO(esprehn): This should check isRenderingReady() instead.
-  if (GetFrame().GetDocument()->HasFinishedParsing() &&
-      GetFrame().Loader().StateMachine()->CommittedFirstRealDocumentLoad())
-    is_visually_non_empty_ = true;
+//  // Ensure that we become visually non-empty eventually.
+//  // TODO(esprehn): This should check isRenderingReady() instead.
+//  if (GetFrame().GetDocument()->HasFinishedParsing() &&
+//      GetFrame().Loader().StateMachine()->CommittedFirstRealDocumentLoad())
+//    is_visually_non_empty_ = true;
 
   GetFrame().Selection().UpdateStyleAndLayoutIfNeeded();
   GetFrame().GetPage()->GetDragCaret().UpdateStyleAndLayoutIfNeeded();

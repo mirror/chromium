@@ -39,7 +39,7 @@ using namespace HTMLNames;
 
 LayoutHTMLCanvas::LayoutHTMLCanvas(HTMLCanvasElement* element)
     : LayoutReplaced(element, LayoutSize(element->Size())) {
-  View()->GetFrameView()->SetIsVisuallyNonEmpty();
+//  View()->GetFrameView()->SetIsVisuallyNonEmpty();
 }
 
 PaintLayerType LayoutHTMLCanvas::LayerTypeRequired() const {

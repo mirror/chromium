@@ -277,17 +277,17 @@ bool IsMainFrameBeforeActivationEnabled() {
 }
 
 bool IsCheckerImagingEnabled() {
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          cc::switches::kDisableCheckerImaging))
-    return false;
-
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          cc::switches::kEnableCheckerImaging))
-    return true;
-
-  if (base::FeatureList::IsEnabled(features::kCheckerImaging))
-    return true;
-
+//  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+//          cc::switches::kDisableCheckerImaging))
+//    return false;
+//
+//  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+//          cc::switches::kEnableCheckerImaging))
+//    return true;
+//
+//  if (base::FeatureList::IsEnabled(features::kCheckerImaging))
+//    return true;
+//
   return false;
 }
 

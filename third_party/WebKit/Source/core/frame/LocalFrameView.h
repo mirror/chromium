@@ -1304,9 +1304,9 @@ inline void LocalFrameView::IncrementVisuallyNonEmptyCharacterCount(
   // Use a threshold value to prevent very small amounts of visible content from
   // triggering didMeaningfulLayout.  The first few hundred characters rarely
   // contain the interesting content of the page.
-  static const unsigned kVisualCharacterThreshold = 200;
-  if (visually_non_empty_character_count_ > kVisualCharacterThreshold)
-    SetIsVisuallyNonEmpty();
+//  static const unsigned kVisualCharacterThreshold = 200;
+//  if (visually_non_empty_character_count_ > kVisualCharacterThreshold)
+//    SetIsVisuallyNonEmpty();
 }
 
 inline void LocalFrameView::IncrementVisuallyNonEmptyPixelCount(
