@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7068d5de_2b5484d5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-10T22:57:01Z",
+      "side": 1,
+      "message": "My opinion is slightly different: we can see the early return as an optimization in a special case; the main task of this method remains to be waiting for try jobs.\n\nTherefore, we can keep the method name _and_ the summary line of the docstring unchanged, but add a short explanation in the second paragraph instead (e.g. \"if the CL is closed by others, stop waiting and return None\".), which also solves the next comment.",
+      "parentUuid": "8f0f87ec_c915fb9c",
+      "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b15b783_dfb0148b",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
         "patchSetId": 1
@@ -64,6 +82,24 @@
       "writtenOn": "2017-11-10T17:04:50Z",
       "side": 1,
       "message": "Rather than returning a dict with special keys, what do you think about returning a namedtuple (like TryJobStatus above)? It doesn\u0027t need to have value checking like that one, it could just be something like:\n\n  CLStatus \u003d collections.namedtuple(\u0027CLStatus\u0027, (\u0027status\u0027, \u0027try_results\u0027))\n\nThe advantages of a namedtuple over a dict with special keys is:\n (1) it\u0027s guaranteed to have certain fields, no chance of typos in key names\n (2) it\u0027s easier to talk about, you can just say \"A XX object\" rather than \"a dict with the keys x and y...\"",
+      "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e710fb29_85df3514",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-10T22:57:01Z",
+      "side": 1,
+      "message": "I like the parity with TryJobStatus at the top.",
+      "parentUuid": "30ca8da1_61862104",
       "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
