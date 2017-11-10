@@ -22,6 +22,16 @@ class RegistryVerifier(verifier.Verifier):
       raise KeyError("Unknown root registry key '%s'" % root_key)
     return root_key_mapping[root_key]
 
+  def _AccessRightConstant(self, access_right):
+  """Converts a registry key bitness string into a _winreg.KEY_* constant."""
+    access_right_mapping = {
+        'KEY_WOW64_32KEY': _winreg.KEY_WOW64_32KEY,
+        'KEY_WOW64_64KEY': _winreg.KEY_WOW64_64KEY,
+    }
+    if access_right not in access_right_mapping:
+      raise KeyError("Unknown registry access right '%s'" % access_right)
+    return access_right_mapping[access_right]
+
   def _ValueTypeConstant(self, value_type):
     """Converts a registry value type string into a _winreg.REG_* constant."""
     value_type_mapping = {
@@ -67,8 +77,14 @@ class RegistryVerifier(verifier.Verifier):
     try:
       # Query the Windows registry for the registry key. It will throw a
       # WindowsError if the key doesn't exist.
+      wow_key_bitness = _winreg.KEY_WOW64_32KEY
+      if 'wow_key' in expectation:
+        wow_key_bitness = self._AccessRightConstant(expectation['wow_key'])
+      elif variable_expander.Expand('BITNESS') == 'x64':
+        wow_key_bitness = _winreg.KEY_WOW64_64KEY
+
       key_handle = _winreg.OpenKey(self._RootKeyConstant(root_key), sub_key, 0,
-                                   _winreg.KEY_QUERY_VALUE)
+                                   _winreg.KEY_QUERY_VALUE | wow_key_bitness)
     except WindowsError:
       # Key doesn't exist. See that it matches the expectation.
       assert expectation['exists'] != 'required', ('Registry key %s is '
