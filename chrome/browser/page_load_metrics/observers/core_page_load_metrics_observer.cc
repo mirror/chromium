@@ -14,6 +14,7 @@
 #include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/rappor_service_impl.h"
 #include "net/http/http_response_headers.h"
+#include "third_party/WebKit/common/metrics/time_to_interactive_status.h"
 #include "ui/base/page_transition_types.h"
 
 namespace {
@@ -104,6 +105,8 @@ const char kBackgroundHistogramFirstContentfulPaint[] =
     "PageLoad.PaintTiming.NavigationToFirstContentfulPaint.Background";
 const char kHistogramFirstMeaningfulPaint[] =
     "PageLoad.Experimental.PaintTiming.NavigationToFirstMeaningfulPaint";
+const char kHistogramTimeToInteractive[] =
+    "PageLoad.Experimental.NavigationToInteractive";
 const char kHistogramParseStartToFirstMeaningfulPaint[] =
     "PageLoad.Experimental.PaintTiming.ParseStartToFirstMeaningfulPaint";
 const char kHistogramParseStartToFirstContentfulPaint[] =
@@ -489,6 +492,25 @@ void CorePageLoadMetricsObserver::OnFirstMeaningfulPaintInMainFrameDocument(
   }
 }
 
+void CorePageLoadMetricsObserver::OnPageInteractive(
+    const page_load_metrics::mojom::PageLoadTiming& timing,
+    const page_load_metrics::PageLoadExtraInfo& info) {
+  // Both interactive and interactive detection time must be present.
+  DCHECK(timing.interactive_timing->interactive);
+  DCHECK(timing.interactive_timing->interactive_detection);
+  // Only record UMA if page was never backgrounded before interactive timestamp
+  // was detected.
+  if (WasStartedInForegroundOptionalEventInForeground(
+          timing.interactive_timing->interactive_detection, info)) {
+    PAGE_LOAD_HISTOGRAM(internal::kHistogramTimeToInteractive,
+                        timing.interactive_timing->interactive.value());
+    blink::RecordTimeToInteractiveStatus(blink::TIME_TO_INTERACTIVE_RECORDED);
+  } else {
+    blink::RecordTimeToInteractiveStatus(
+        blink::TIME_TO_INTERACTIVE_BACKGROUNDED);
+  }
+}
+
 void CorePageLoadMetricsObserver::OnParseStart(
     const page_load_metrics::mojom::PageLoadTiming& timing,
     const page_load_metrics::PageLoadExtraInfo& info) {
@@ -688,6 +710,14 @@ void CorePageLoadMetricsObserver::RecordTimingHistograms(
             ? internal::FIRST_MEANINGFUL_PAINT_DID_NOT_REACH_NETWORK_STABLE
             : internal::
                   FIRST_MEANINGFUL_PAINT_DID_NOT_REACH_FIRST_CONTENTFUL_PAINT);
+  }
+
+  if (timing.paint_timing->first_paint &&
+      !timing.interactive_timing->interactive) {
+    blink::RecordTimeToInteractiveStatus(
+        timing.paint_timing->first_meaningful_paint
+            ? blink::TIME_TO_INTERACTIVE_DID_NOT_REACH_QUIESCENCE
+            : blink::TIME_TO_INTERACTIVE_DID_NOT_REACH_FIRST_MEANINGFUL_PAINT);
   }
 }
 
