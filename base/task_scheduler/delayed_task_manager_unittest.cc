@@ -12,6 +12,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/task_scheduler/task.h"
 #include "base/test/test_mock_time_task_runner.h"
+#include "base/test/test_simple_task_runner.h"
 #include "base/time/time.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -27,12 +28,12 @@ class MockTaskTarget {
   MockTaskTarget() = default;
   ~MockTaskTarget() = default;
 
-  // gMock currently doesn't support move-only types, so PostTaskNowCallback()
-  // handles the move-only type and forwards to the mocked method.
-  MOCK_METHOD1(DoPostTaskNowCallback, void(const Task*));
+  // Use the |single_thread_task_runner_ref| as a way to determine if we
+  // received the expected task.
+  MOCK_METHOD1(DoPostTaskNowCallback, void(const SingleThreadTaskRunner*));
 
-  void PostTaskNowCallback(std::unique_ptr<Task> task) {
-    DoPostTaskNowCallback(task.get());
+  void PostTaskNowCallback(Task task) {
+    DoPostTaskNowCallback(task.single_thread_task_runner_ref.get());
   }
 
  private:
@@ -40,31 +41,27 @@ class MockTaskTarget {
 };
 
 class TaskSchedulerDelayedTaskManagerTest : public testing::Test {
- public:
-  TaskSchedulerDelayedTaskManagerTest()
-      : delayed_task_manager_(service_thread_task_runner_->GetMockTickClock()) {
-  }
-  ~TaskSchedulerDelayedTaskManagerTest() override = default;
-
  protected:
-  std::unique_ptr<Task> CreateTask(TimeDelta delay) {
-    auto task = std::make_unique<Task>(FROM_HERE, BindOnce(&DoNothing),
-                                       TaskTraits(), delay);
+  TaskSchedulerDelayedTaskManagerTest()
+      : delayed_task_manager_(service_thread_task_runner_->GetMockTickClock()),
+        task_(FROM_HERE, BindOnce(&DoNothing), TaskTraits(), kLongDelay) {
+    task_.single_thread_task_runner_ref = task_runner_ref_;
 
     // The constructor of Task computes |delayed_run_time| by adding |delay| to
     // the real time. Recompute it by adding |delay| to the mock time.
-    task->delayed_run_time =
-        service_thread_task_runner_->GetMockTickClock()->NowTicks() + delay;
-
-    return task;
+    task_.delayed_run_time =
+        service_thread_task_runner_->GetMockTickClock()->NowTicks() +
+        kLongDelay;
   }
+  ~TaskSchedulerDelayedTaskManagerTest() override = default;
 
   testing::StrictMock<MockTaskTarget> task_target_;
   const scoped_refptr<TestMockTimeTaskRunner> service_thread_task_runner_ =
       MakeRefCounted<TestMockTimeTaskRunner>();
   DelayedTaskManager delayed_task_manager_;
-  std::unique_ptr<Task> task_ = CreateTask(kLongDelay);
-  Task* const task_raw_ = task_.get();
+  Task task_;
+  const scoped_refptr<SingleThreadTaskRunner> task_runner_ref_ =
+      MakeRefCounted<TestSimpleTaskRunner>();
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TaskSchedulerDelayedTaskManagerTest);
@@ -103,7 +100,7 @@ TEST_F(TaskSchedulerDelayedTaskManagerTest,
 
   // Fast-forward time until the task is ripe for execution. Expect the task to
   // be forwarded to |task_target_|.
-  EXPECT_CALL(task_target_, DoPostTaskNowCallback(task_raw_));
+  EXPECT_CALL(task_target_, DoPostTaskNowCallback(task_runner_ref_.get()));
   service_thread_task_runner_->FastForwardBy(kLongDelay);
 }
 
@@ -126,7 +123,7 @@ TEST_F(TaskSchedulerDelayedTaskManagerTest,
 
   // Start the DelayedTaskManager. Expect the task to be forwarded to
   // |task_target_|.
-  EXPECT_CALL(task_target_, DoPostTaskNowCallback(task_raw_));
+  EXPECT_CALL(task_target_, DoPostTaskNowCallback(task_runner_ref_.get()));
   delayed_task_manager_.Start(service_thread_task_runner_);
   service_thread_task_runner_->RunUntilIdle();
 }
@@ -157,7 +154,7 @@ TEST_F(TaskSchedulerDelayedTaskManagerTest, DelayedTaskRunsAfterDelay) {
                                  Unretained(&task_target_)));
 
   // Fast-forward time. Expect the task is forwarded to |task_target_|.
-  EXPECT_CALL(task_target_, DoPostTaskNowCallback(task_raw_));
+  EXPECT_CALL(task_target_, DoPostTaskNowCallback(task_runner_ref_.get()));
   service_thread_task_runner_->FastForwardBy(kLongDelay);
 }
 
@@ -165,17 +162,20 @@ TEST_F(TaskSchedulerDelayedTaskManagerTest, DelayedTaskRunsAfterDelay) {
 // they are ripe for execution.
 TEST_F(TaskSchedulerDelayedTaskManagerTest, DelayedTasksRunAfterDelay) {
   delayed_task_manager_.Start(service_thread_task_runner_);
-  auto task_a = std::make_unique<Task>(FROM_HERE, BindOnce(&DoNothing),
-                                       TaskTraits(), TimeDelta::FromHours(1));
-  const Task* task_a_raw = task_a.get();
+  Task task_a(FROM_HERE, BindOnce(&DoNothing), TaskTraits(),
+              TimeDelta::FromHours(1));
+  auto task_runner_ref_a = MakeRefCounted<TestSimpleTaskRunner>();
+  task_a.single_thread_task_runner_ref = task_runner_ref_a;
 
-  auto task_b = std::make_unique<Task>(FROM_HERE, BindOnce(&DoNothing),
-                                       TaskTraits(), TimeDelta::FromHours(2));
-  const Task* task_b_raw = task_b.get();
+  Task task_b(FROM_HERE, BindOnce(&DoNothing), TaskTraits(),
+              TimeDelta::FromHours(2));
+  auto task_runner_ref_b = MakeRefCounted<TestSimpleTaskRunner>();
+  task_b.single_thread_task_runner_ref = task_runner_ref_b;
 
-  auto task_c = std::make_unique<Task>(FROM_HERE, BindOnce(&DoNothing),
-                                       TaskTraits(), TimeDelta::FromHours(1));
-  const Task* task_c_raw = task_c.get();
+  Task task_c(FROM_HERE, BindOnce(&DoNothing), TaskTraits(),
+              TimeDelta::FromHours(1));
+  auto task_runner_ref_c = MakeRefCounted<TestSimpleTaskRunner>();
+  task_c.single_thread_task_runner_ref = task_runner_ref_c;
 
   // Send tasks to the DelayedTaskManager.
   delayed_task_manager_.AddDelayedTask(
@@ -194,13 +194,13 @@ TEST_F(TaskSchedulerDelayedTaskManagerTest, DelayedTasksRunAfterDelay) {
 
   // Fast-forward time. Expect |task_a_raw| and |task_c_raw| to be forwarded to
   // |task_target_|.
-  EXPECT_CALL(task_target_, DoPostTaskNowCallback(task_a_raw));
-  EXPECT_CALL(task_target_, DoPostTaskNowCallback(task_c_raw));
+  EXPECT_CALL(task_target_, DoPostTaskNowCallback(task_runner_ref_a.get()));
+  EXPECT_CALL(task_target_, DoPostTaskNowCallback(task_runner_ref_c.get()));
   service_thread_task_runner_->FastForwardBy(TimeDelta::FromHours(1));
   testing::Mock::VerifyAndClear(&task_target_);
 
   // Fast-forward time. Expect |task_b_raw| to be forwarded to |task_target_|.
-  EXPECT_CALL(task_target_, DoPostTaskNowCallback(task_b_raw));
+  EXPECT_CALL(task_target_, DoPostTaskNowCallback(task_runner_ref_b.get()));
   service_thread_task_runner_->FastForwardBy(TimeDelta::FromHours(1));
   testing::Mock::VerifyAndClear(&task_target_);
 }

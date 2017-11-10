@@ -155,9 +155,7 @@ class BASE_EXPORT TaskTracker {
   // have run. |sequence| is the sequence from which |task| was extracted. An
   // override is expected to call its parent's implementation but is free to
   // perform extra work before and after doing so.
-  virtual void RunOrSkipTask(std::unique_ptr<Task> task,
-                             Sequence* sequence,
-                             bool can_run_task);
+  virtual void RunOrSkipTask(Task task, Sequence* sequence, bool can_run_task);
 
 #if DCHECK_IS_ON()
   // Returns true if this context should be exempt from blocking shutdown
