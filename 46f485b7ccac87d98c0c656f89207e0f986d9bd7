@@ -191,6 +191,23 @@
       "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40d39676_3040aa92",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProviderClient.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T00:02:04Z",
+      "side": 1,
+      "message": "Use mojom-blink.h?\n\ndcheng: Shall we add a check to the presubmit script so that Blink directories include mojom-blihnk.h?",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
