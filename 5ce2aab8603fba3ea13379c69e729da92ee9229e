@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "729fb992_e84f233e",
+        "filename": "components/google_feed/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T16:21:16Z",
+      "side": 1,
+      "message": "This should probably depend on :google_feed.",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 11
+      },
+      "revId": "5ce2aab8603fba3ea13379c69e729da92ee9229e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4745297_59971c05",
+        "filename": "components/google_feed/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T16:21:16Z",
+      "side": 1,
+      "message": "Not that I\u0027m going to refuse to do reviews, but should we find OWNERS from SEA for this? maniscalco@?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "5ce2aab8603fba3ea13379c69e729da92ee9229e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
