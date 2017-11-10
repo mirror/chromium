@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13fe42ff_5849ccb2",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-10T22:46:00Z",
+      "side": 1,
+      "message": "BGRA is not guaranteed to be supported, that\u0027s why we have viz::PlatformColor::BestSupportedTextureFormat.\n\nUnfortunately we need to handle conversion in that case I think, if viz::PlatformColor::BestTextureFormat() (which should be equivalent to image_data_\u0027s format) doesn\u0027t match viz::PlatformColor::BestSupportedTextureFormat.\n\nThere is SkSwapRB that is used by ConvertImageData.",
+      "revId": "20a0ac2282b517a92b6775383a341d78fa78ccc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
