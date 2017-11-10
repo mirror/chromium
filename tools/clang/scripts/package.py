@@ -242,6 +242,10 @@ def main():
   else:
     so_ext = 'dylib' if sys.platform == 'darwin' else 'so'
     want.extend(['bin/clang',
+                 'bin/llvm-cxxfilt',
+                 'bin/llvm-nm',
+                 'bin/llvm-objdump',
+                 'bin/llvm-readobj',
                  'lib/libFindBadConstructs.' + so_ext,
                  'lib/libBlinkGCPlugin.' + so_ext,
                  ])
@@ -302,6 +306,7 @@ def main():
   if sys.platform != 'win32':
     os.symlink('clang', os.path.join(pdir, 'bin', 'clang++'))
     os.symlink('clang', os.path.join(pdir, 'bin', 'clang-cl'))
+    os.symlink('llvm-readobj', os.path.join(pdir, 'bin', 'llvm-readelf'))
 
   if sys.platform.startswith('linux'):
     os.symlink('lld', os.path.join(pdir, 'bin', 'ld.lld'))
