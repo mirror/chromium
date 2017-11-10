@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73409929_e224e9a9",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-10T14:27:45Z",
+      "side": 1,
+      "message": "Nit: static -- it\u0027s like to get optimized identically either way, but it matches the rest of the codebase\u0027s conventions a bit better.",
+      "revId": "329d416a2ed833ec39b3b921ef31523b8ddd4581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
