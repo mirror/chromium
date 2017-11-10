@@ -16,6 +16,24 @@
       "revId": "23106b6aac77d649a78cb0dbd525add35ae0030b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a5fd38_0f8f5c7e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTestHelper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-11-10T08:43:01Z",
+      "side": 1,
+      "message": "To be honest, I planned to modify FrameTestHelpers.h after landing this change. Thank you for good way how to fix this. Let me prepare a CL for it soon. \n\nThen, I will also prepare a CL to remove Settings::SetMockScrollbarEnabled(). Thanks.",
+      "parentUuid": "bd928d06_b4b57d3c",
+      "revId": "23106b6aac77d649a78cb0dbd525add35ae0030b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
