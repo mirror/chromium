@@ -57,6 +57,10 @@ class SiteInstanceImpl;
 ///////////////////////////////////////////////////////////////////////////////
 class CONTENT_EXPORT BrowsingInstance final
     : public base::RefCounted<BrowsingInstance> {
+ public:
+  // Get the browser context to which this BrowsingInstance belongs.
+  BrowserContext* browser_context() const { return browser_context_; }
+
  private:
   friend class base::RefCounted<BrowsingInstance>;
   friend class SiteInstanceImpl;
@@ -68,9 +72,6 @@ class CONTENT_EXPORT BrowsingInstance final
   explicit BrowsingInstance(BrowserContext* context);
 
   ~BrowsingInstance();
-
-  // Get the browser context to which this BrowsingInstance belongs.
-  BrowserContext* browser_context() const { return browser_context_; }
 
   // Returns whether this BrowsingInstance has registered a SiteInstance for
   // the site of the given URL.
