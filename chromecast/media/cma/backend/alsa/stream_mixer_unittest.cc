@@ -158,6 +158,7 @@ class MockInputQueue : public StreamMixer::InputQueue {
         primary_(true),
         deleting_(false),
         device_id_(device_id),
+        playout_channel_(kChannelAll),
         filter_group_(nullptr) {
     ON_CALL(*this, GetResampledData(_, _))
         .WillByDefault(
@@ -184,6 +185,7 @@ class MockInputQueue : public StreamMixer::InputQueue {
   AudioContentType content_type() const override {
     return AudioContentType::kMedia;
   }
+  int playout_channel() const override { return playout_channel_; }
   void set_filter_group(FilterGroup* group) override { filter_group_ = group; }
   FilterGroup* filter_group() override { return filter_group_; }
   int MaxReadSize() override { return max_read_size_; }
@@ -220,6 +222,7 @@ class MockInputQueue : public StreamMixer::InputQueue {
     CHECK(data_);
     return *data_;
   }
+  void SetPlayoutChannel(int channel) { playout_channel_ = channel; }
   float multiplier() const { return multiplier_; }
 
  private:
@@ -255,6 +258,7 @@ class MockInputQueue : public StreamMixer::InputQueue {
   bool primary_;
   bool deleting_;
   const std::string device_id_;
+  int playout_channel_;
   FilterGroup* filter_group_;
 
   std::unique_ptr<::media::AudioBus> data_;
@@ -332,6 +336,19 @@ class MockPostProcessor : public PostProcessingPipeline {
 
 std::unordered_map<std::string, MockPostProcessor*>
     MockPostProcessor::instances_;
+
+#define EXPECT_CALL_ALL_POSTPROCESSORS(call_sig)        \
+  do {                                                  \
+    for (auto& itr : *MockPostProcessor::instances()) { \
+      EXPECT_CALL(*itr.second, call_sig);               \
+    }                                                   \
+  } while (0);
+
+void VerifyAndClearPostProcessors() {
+  for (auto& itr : *MockPostProcessor::instances()) {
+    testing::Mock::VerifyAndClearExpectations(itr.second);
+  }
+}
 
 class MockPostProcessorFactory : public PostProcessingPipelineFactory {
  public:
@@ -1256,6 +1273,57 @@ TEST_F(StreamMixerTest, MultiplePostProcessorsInOneStream) {
   CHECK_EQ(post_processors->find("default")->second->delay(), 110);
   CHECK_EQ(post_processors->find("mix")->second->delay(), 11000);
   CHECK_EQ(post_processors->find("linearize")->second->delay(), 0);
+  mixer->WriteFramesForTest();
+}
+
+TEST_F(StreamMixerTest, PicksPlayoutChannel) {
+  StreamMixer* mixer = StreamMixer::Get();
+  mixer->ResetPostProcessorsForTest(
+      std::make_unique<MockPostProcessorFactory>(), "{}");
+
+  EXPECT_CALL_ALL_POSTPROCESSORS(UpdatePlayoutChannel(kChannelAll));
+
+  std::vector<testing::NiceMock<MockInputQueue>*> inputs;
+  const int kNumInputs = 2;
+  const int kNumFrames = 32;
+  for (int i = 0; i < kNumInputs; ++i) {
+    inputs.push_back(
+        new testing::NiceMock<MockInputQueue>(kTestSamplesPerSecond));
+    inputs.back()->SetPaused(false);
+    inputs.back()->SetData(GetTestData(i));
+    inputs.back()->SetPrimary(false);
+  }
+
+  inputs[0]->SetPlayoutChannel(kChannelAll);
+  inputs[1]->SetPlayoutChannel(0);
+
+  mixer->SetFilterFrameAlignmentForTest(4);
+  for (size_t i = 0; i < inputs.size(); ++i) {
+    mixer->AddInput(base::WrapUnique(inputs[i]));
+  }
+
+  // kChannelAll has priority (no update since it is already set).
+  EXPECT_CALL(*mock_alsa(), PcmWritei(_, _, kNumFrames)).Times(1);
+  mixer->WriteFramesForTest();
+  VerifyAndClearPostProcessors();
+
+  // Otherwise pick the channel that is present.
+  inputs[0]->SetMaxReadSize(0);
+  EXPECT_CALL_ALL_POSTPROCESSORS(UpdatePlayoutChannel(0));
+  EXPECT_CALL(*mock_alsa(), PcmWritei(_, _, kNumFrames)).Times(1);
+  mixer->WriteFramesForTest();
+  VerifyAndClearPostProcessors();
+
+  inputs[1]->SetPlayoutChannel(1);
+  EXPECT_CALL_ALL_POSTPROCESSORS(UpdatePlayoutChannel(1));
+  EXPECT_CALL(*mock_alsa(), PcmWritei(_, _, kNumFrames)).Times(1);
+  mixer->WriteFramesForTest();
+  VerifyAndClearPostProcessors();
+
+  // Back to kChannelAll.
+  inputs[0]->SetMaxReadSize(kNumFrames);
+  EXPECT_CALL_ALL_POSTPROCESSORS(UpdatePlayoutChannel(kChannelAll));
+  EXPECT_CALL(*mock_alsa(), PcmWritei(_, _, kNumFrames)).Times(1);
   mixer->WriteFramesForTest();
 }
 

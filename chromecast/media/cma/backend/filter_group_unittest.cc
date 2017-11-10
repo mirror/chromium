@@ -157,6 +157,10 @@ class MockInputQueue : public StreamMixer::InputQueue {
   bool primary() const override { return true; }
   std::string device_id() const override { return "test"; }
   AudioContentType content_type() const override { return content_type_; }
+  int playout_channel() const override {
+    NOTREACHED();
+    return -1;
+  }
   bool IsDeleting() const override { return false; }
   void Initialize(const MediaPipelineBackend::AudioDecoder::RenderingDelay&
                       mixer_rendering_delay) override {}
@@ -214,6 +218,7 @@ class FilterGroupTest : public testing::Test {
         std::vector<FilterGroup*>());
     filter_group_->Initialize(kInputSampleRate);
     filter_group_->AddActiveInput(input_.get());
+    filter_group_->UpdatePlayoutChannel(kChannelAll);
   }
 
   float Input(int channel, int frame) {

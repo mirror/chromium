@@ -79,12 +79,14 @@ StreamMixerInputImpl::StreamMixerInputImpl(StreamMixerInput::Delegate* delegate,
                                            bool primary,
                                            const std::string& device_id,
                                            AudioContentType content_type,
+                                           int playout_channel,
                                            StreamMixer* mixer)
     : delegate_(delegate),
       input_samples_per_second_(input_samples_per_second),
       primary_(primary),
       device_id_(device_id),
       content_type_(content_type),
+      playout_channel_(playout_channel),
       mixer_(mixer),
       filter_group_(nullptr),
       mixer_task_runner_(mixer_->task_runner()),
@@ -131,6 +133,10 @@ std::string StreamMixerInputImpl::device_id() const {
 
 AudioContentType StreamMixerInputImpl::content_type() const {
   return content_type_;
+}
+
+int StreamMixerInputImpl::playout_channel() const {
+  return playout_channel_;
 }
 
 bool StreamMixerInputImpl::IsDeleting() const {

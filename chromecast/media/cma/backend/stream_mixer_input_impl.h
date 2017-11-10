@@ -95,6 +95,7 @@ class StreamMixerInputImpl : public StreamMixer::InputQueue {
                        bool primary,
                        const std::string& device_id,
                        AudioContentType content_type,
+                       int playout_channel,
                        StreamMixer* mixer);
 
   ~StreamMixerInputImpl() override;
@@ -121,6 +122,7 @@ class StreamMixerInputImpl : public StreamMixer::InputQueue {
   bool primary() const override;
   std::string device_id() const override;
   AudioContentType content_type() const override;
+  int playout_channel() const override;
   bool IsDeleting() const override;
   void Initialize(const MediaPipelineBackend::AudioDecoder::RenderingDelay&
                       mixer_rendering_delay) override;
@@ -163,6 +165,7 @@ class StreamMixerInputImpl : public StreamMixer::InputQueue {
   const bool primary_;
   const std::string device_id_;
   const AudioContentType content_type_;
+  const int playout_channel_;
   StreamMixer* const mixer_;
   FilterGroup* filter_group_;
   const scoped_refptr<base::SingleThreadTaskRunner> mixer_task_runner_;

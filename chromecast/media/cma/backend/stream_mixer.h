@@ -80,6 +80,9 @@ class StreamMixer {
     // Returns the content type for volume control.
     virtual AudioContentType content_type() const = 0;
 
+    // Returns the channel that should be played on this device, or -1 for all.
+    virtual int playout_channel() const = 0;
+
     // Returns true if PrepareToDelete() has been called.
     virtual bool IsDeleting() const = 0;
 
@@ -213,9 +216,6 @@ class StreamMixer {
   void SetPostProcessorConfig(const std::string& name,
                               const std::string& config);
 
-  // Sets active channel in multichannel group.
-  void UpdatePlayoutChannel(int playout_channel);
-
   // Sets filter data alignment, required by some processors.
   // Must be called before audio playback starts.
   void SetFilterFrameAlignmentForTest(int filter_frame_alignment);
@@ -261,6 +261,9 @@ class StreamMixer {
   void UpdateRenderingDelay(int newly_pushed_frames);
   void ResizeBuffersIfNecessary(int chunk_size);
 
+  // Sets active channel in multichannel group.
+  void UpdatePlayoutChannel();
+
   static bool single_threaded_for_test_;
 
   std::unique_ptr<MixerOutputStream> output_;
@@ -275,6 +278,7 @@ class StreamMixer {
   int low_sample_rate_cutoff_ = 0;
 
   State state_;
+  int playout_channel_;
 
   std::vector<std::unique_ptr<InputQueue>> inputs_;
   std::vector<std::unique_ptr<InputQueue>> ignored_inputs_;

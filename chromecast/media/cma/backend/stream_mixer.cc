@@ -66,6 +66,8 @@ const unsigned int kLowSampleRateFallback = 48000;
 
 const int64_t kNoTimestamp = std::numeric_limits<int64_t>::min();
 
+const int kPlayoutChannelNone = -2;
+
 const int kUseDefaultFade = -1;
 const int kMediaDuckFadeMs = 150;
 const int kMediaUnduckFadeMs = 700;
@@ -132,6 +134,7 @@ StreamMixer::StreamMixer()
           std::make_unique<PostProcessingPipelineFactoryImpl>()),
       mixer_thread_(new base::Thread("CMA mixer thread")),
       state_(kStateUninitialized),
+      playout_channel_(kChannelAll),
       retry_write_frames_timer_(new base::Timer(false, false)),
       check_close_timeout_(kDefaultCheckCloseTimeoutMs),
       check_close_timer_(new base::Timer(false, false)),
@@ -298,6 +301,7 @@ bool StreamMixer::Start() {
   for (auto&& filter_group : filter_groups_) {
     filter_group->Initialize(output_samples_per_second_);
   }
+  UpdatePlayoutChannel();
 
   state_ = kStateNormalPlayback;
   return true;
@@ -528,10 +532,11 @@ bool StreamMixer::TryWriteFrames() {
   int chunk_size =
       (output_samples_per_second_ * kMaxAudioWriteTimeMilliseconds / 1000) &
       ~(filter_frame_alignment_ - 1);
-  bool is_silence = true;
   for (auto&& filter_group : filter_groups_) {
     filter_group->ClearActiveInputs();
   }
+  bool is_silence = true;
+  int new_playout_channel = kPlayoutChannelNone;
   for (auto&& input : inputs_) {
     int read_size = input->MaxReadSize() & ~(filter_frame_alignment_ - 1);
     if (read_size > 0) {
@@ -539,6 +544,17 @@ bool StreamMixer::TryWriteFrames() {
       input->filter_group()->AddActiveInput(input.get());
       chunk_size = std::min(chunk_size, read_size);
       is_silence = false;
+
+      // Play from both channels if any inputs request.
+      int playout_channel = input->playout_channel();
+      if (new_playout_channel == kPlayoutChannelNone) {
+        new_playout_channel = playout_channel;
+      } else if (playout_channel == kChannelAll) {
+        new_playout_channel = playout_channel;
+      } else if (new_playout_channel != kChannelAll) {
+        DCHECK_EQ(new_playout_channel, playout_channel)
+            << "Attempting to play from multiple channels";
+      }
     } else if (input->primary()) {
       base::TimeDelta time_until_underrun;
       if (!output_->GetTimeUntilUnderrun(&time_until_underrun)) {
@@ -565,6 +581,10 @@ bool StreamMixer::TryWriteFrames() {
   if (is_silence) {
     // No inputs have any data to provide. Push silence to prevent underrun.
     chunk_size = std::max(kPreventUnderrunChunkSize, filter_frame_alignment_);
+  } else if (new_playout_channel != playout_channel_) {
+    DCHECK_NE(new_playout_channel, kPlayoutChannelNone);
+    playout_channel_ = new_playout_channel;
+    UpdatePlayoutChannel();
   }
 
   DCHECK_EQ(chunk_size % filter_frame_alignment_, 0);
@@ -730,16 +750,16 @@ void StreamMixer::SetPostProcessorConfig(const std::string& name,
   }
 }
 
-void StreamMixer::UpdatePlayoutChannel(int playout_channel) {
-  RUN_ON_MIXER_THREAD(&StreamMixer::UpdatePlayoutChannel, playout_channel);
-  LOG(INFO) << "Update playout channel: " << playout_channel;
+void StreamMixer::UpdatePlayoutChannel() {
+  DCHECK(mixer_task_runner_->BelongsToCurrentThread());
+  LOG(INFO) << "Update playout channel: " << playout_channel_;
   DCHECK(mix_filter_);
   DCHECK(linearize_filter_);
 
   mix_filter_->SetMixToMono(num_output_channels_ == 1 &&
-                            playout_channel == kChannelAll);
+                            playout_channel_ == kChannelAll);
   for (auto& filter_group : filter_groups_) {
-    filter_group->UpdatePlayoutChannel(playout_channel);
+    filter_group->UpdatePlayoutChannel(playout_channel_);
   }
 }
 
