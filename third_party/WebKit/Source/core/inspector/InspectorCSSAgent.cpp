@@ -1102,7 +1102,7 @@ Response InspectorCSSAgent::getComputedStyleForNode(
     CSSPropertyID property_id = static_cast<CSSPropertyID>(id);
     CSSProperty property_class =
         CSSProperty::Get(resolveCSSPropertyID(property_id));
-    if (!property_class.IsEnabled() || isShorthandProperty(property_id) ||
+    if (!property_class.IsEnabled() || property_class.IsShorthand() ||
         !property_class.IsProperty())
       continue;
     (*style)->addItem(
