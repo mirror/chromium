@@ -49,9 +49,6 @@ grit("webui_resources_grd") {
     "-E",
     "root_gen_dir=" + rebase_path(root_gen_dir, root_build_dir),
   ]
-  deps = [
-    "//mojo/public/js:new_bindings",
-  ]
 }
 
 if (!is_mac) {
