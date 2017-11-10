@@ -230,8 +230,11 @@ Polymer({
     this.cameraSelected_ =
         selected.dataset.type == CrPicture.SelectionTypes.CAMERA;
     this.selectedItem = selected;
-    if (activate && selected.dataset.type == CrPicture.SelectionTypes.OLD)
-      this.fire('discard-image');
+
+    if (activate &&
+        (selected.dataset.type == CrPicture.SelectionTypes.OLD ||
+         selected.dataset.type == CrPicture.SelectionTypes.CAMERA))
+      this.fire('focus-action', selected);
     else if (activate || selected.dataset.type != CrPicture.SelectionTypes.FILE)
       this.fire('image-activate', selected);
   },
