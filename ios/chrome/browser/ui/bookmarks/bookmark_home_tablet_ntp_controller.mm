@@ -34,7 +34,6 @@
 #import "ios/chrome/browser/ui/bookmarks/bookmark_panel_view.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_promo_controller.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h"
-#include "ios/chrome/browser/ui/main/main_feature_flags.h"
 #import "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -273,16 +272,11 @@ const CGFloat kNavigationBarTopMargin = 8.0;
 }
 
 - (ActionSheetCoordinator*)createActionSheetCoordinatorOnView:(UIView*)view {
-  UIViewController* baseViewController =
-      TabSwitcherPresentsBVCEnabled() ? self
-                                      : self.view.window.rootViewController;
-
-  return [[ActionSheetCoordinator alloc]
-      initWithBaseViewController:baseViewController
-                           title:nil
-                         message:nil
-                            rect:view.bounds
-                            view:view];
+  return [[ActionSheetCoordinator alloc] initWithBaseViewController:self
+                                                              title:nil
+                                                            message:nil
+                                                               rect:view.bounds
+                                                               view:view];
 }
 
 #pragma mark - Private methods
