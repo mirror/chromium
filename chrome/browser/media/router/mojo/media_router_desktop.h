@@ -47,7 +47,7 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
 
  protected:
   // MediaRouterMojoImpl:
-  mojom::MediaRouteProvider* GetProviderForPresentation(
+  base::Optional<mojom::MediaRouteProvider::Id> GetProviderIdForPresentation(
       const std::string& presentation_id) override;
 
  private:

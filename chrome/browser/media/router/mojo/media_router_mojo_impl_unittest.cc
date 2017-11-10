@@ -132,10 +132,9 @@ class TestMediaRouterMojoImpl : public MediaRouterMojoImpl {
   ~TestMediaRouterMojoImpl() override {}
 
  protected:
-  mojom::MediaRouteProvider* GetProviderForPresentation(
+  base::Optional<mojom::MediaRouteProvider::Id> GetProviderIdForPresentation(
       const std::string& presentation_id) override {
-    return media_route_providers_[mojom::MediaRouteProvider::Id::EXTENSION]
-        .get();
+    return mojom::MediaRouteProvider::Id::EXTENSION;
   }
 };
 
@@ -172,6 +171,10 @@ class MediaRouterMojoImplTest : public MediaRouterMojoTest {
 TEST_F(MediaRouterMojoImplTest, CreateRoute) {
   TestCreateRoute();
   ExpectResultBucketCount("CreateRoute", RouteRequestResult::OK, 1);
+}
+
+TEST_F(MediaRouterMojoImplTest, RouteRecognizedAfterCreation) {
+
 }
 
 TEST_F(MediaRouterMojoImplTest, CreateIncognitoRoute) {

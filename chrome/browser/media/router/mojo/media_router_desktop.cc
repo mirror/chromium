@@ -57,10 +57,11 @@ void MediaRouterDesktop::OnUserGesture() {
 #endif
 }
 
-mojom::MediaRouteProvider* MediaRouterDesktop::GetProviderForPresentation(
+base::Optional<mojom::MediaRouteProvider::Id>
+MediaRouterDesktop::GetProviderIdForPresentation(
     const std::string& presentation_id) {
   // TODO(takumif): Support other MRPs as well.
-  return media_route_providers_[mojom::MediaRouteProvider::Id::EXTENSION].get();
+  return mojom::MediaRouteProvider::Id::EXTENSION;
 }
 
 MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context,
