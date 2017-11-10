@@ -60,7 +60,7 @@ class ScopedTaskEnvironment::TestTaskTracker
   friend class ScopedTaskEnvironment;
 
   // internal::TaskSchedulerImpl::TaskTrackerImpl:
-  void RunOrSkipTask(std::unique_ptr<internal::Task> task,
+  void RunOrSkipTask(internal::Task task,
                      internal::Sequence* sequence,
                      bool can_run_task) override;
   void OnRunNextTaskCompleted() override;
@@ -224,7 +224,7 @@ bool ScopedTaskEnvironment::TestTaskTracker::DisallowRunTasks() {
 }
 
 void ScopedTaskEnvironment::TestTaskTracker::RunOrSkipTask(
-    std::unique_ptr<internal::Task> task,
+    internal::Task task,
     internal::Sequence* sequence,
     bool can_run_task) {
   {
