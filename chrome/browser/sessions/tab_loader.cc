@@ -26,6 +26,7 @@
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
+#include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 
 using content::NavigationController;
 using content::RenderWidgetHost;
@@ -47,6 +48,8 @@ void TabLoader::Observe(int type,
       break;
     }
     case content::NOTIFICATION_LOAD_STOP: {
+      if (resource_coordinator::IsPageAlmostIdleSignalEnabled())
+        break;
       NavigationController* controller =
           content::Source<NavigationController>(source).ptr();
       HandleTabClosedOrLoaded(controller);
@@ -58,6 +61,10 @@ void TabLoader::Observe(int type,
   // Delete ourselves when we are done.
   if (tabs_loading_.empty() && tabs_to_load_.empty())
     this_retainer_ = nullptr;
+}
+
+void TabLoader::NotifyPageAlmostIdle(content::WebContents* web_contents) {
+  HandleTabClosedOrLoaded(&web_contents->GetController());
 }
 
 void TabLoader::SetTabLoadingEnabled(bool enable_tab_loading) {
@@ -103,12 +110,20 @@ TabLoader::TabLoader(base::TimeTicks restore_started)
   shared_tab_loader_ = this;
   this_retainer_ = this;
   base::MemoryCoordinatorClientRegistry::GetInstance()->Register(this);
+  if (auto* page_signal_receiver =
+          resource_coordinator::PageSignalReceiver::GetInstance()) {
+    page_signal_receiver->AddObserver(this);
+  }
 }
 
 TabLoader::~TabLoader() {
   DCHECK(tabs_loading_.empty() && tabs_to_load_.empty());
   DCHECK(shared_tab_loader_ == this);
   shared_tab_loader_ = nullptr;
+  if (auto* page_signal_receiver =
+          resource_coordinator::PageSignalReceiver::GetInstance()) {
+    page_signal_receiver->RemoveObserver(this);
+  }
   base::MemoryCoordinatorClientRegistry::GetInstance()->Unregister(this);
   SessionRestore::OnTabLoaderFinishedLoadingTabs();
 }
