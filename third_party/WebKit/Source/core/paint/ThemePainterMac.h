@@ -51,10 +51,12 @@ class ThemePainterMac final : public ThemePainter {
                             const PaintInfo&,
                             const IntRect&) override;
   bool PaintMenuList(const Node*,
+                     const Document&,
                      const ComputedStyle&,
                      const PaintInfo&,
                      const IntRect&) override;
   bool PaintMenuListButton(const Node*,
+                           const Document&,
                            const ComputedStyle&,
                            const PaintInfo&,
                            const IntRect&) override;
