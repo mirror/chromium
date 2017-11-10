@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "d87c2773_2a226292",
+        "filename": "services/ui/public/cpp/tests/gpu_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T17:53:20Z",
+      "side": 1,
+      "message": "That ... sounds a bit brittle! Any chance we can have a more explicit mechanism for this? For example, maybe do a PostTask on the IO thread, which then does a RunLoop().RunUntilIdle()? (this is also not really nice, but I feel at least better than having to count the number of tasks that\u0027s going to run)",
+      "parentUuid": "4b98cc66_529eb94e",
+      "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd7030bb_ad6ea015",
         "filename": "services/ui/public/cpp/tests/gpu_unittest.cc",
         "patchSetId": 5
