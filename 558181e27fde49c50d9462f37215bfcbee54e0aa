@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21216f99_904df607",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_tablet_ntp_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-10T14:19:48Z",
+      "side": 1,
+      "message": "Is there a reason this still needs to be here? Can\u0027t this just always be \u0027self\u0027?",
+      "range": {
+        "startLine": 278,
+        "startChar": 57,
+        "endLine": 278,
+        "endChar": 75
+      },
+      "revId": "558181e27fde49c50d9462f37215bfcbee54e0aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
