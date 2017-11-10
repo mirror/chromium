@@ -53,6 +53,13 @@ class GIN_EXPORT IsolateHolder {
     kStableAndExperimentalV8Extras,
   };
 
+  // Indicates which type of snapshot this isolate uses.
+  enum class SnapshotType {
+    kNone,
+    kV8Snapshot,
+    kV8ContextSnapshot,
+  };
+
   explicit IsolateHolder(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
   IsolateHolder(scoped_refptr<base::SingleThreadTaskRunner> task_runner,
@@ -60,13 +67,11 @@ class GIN_EXPORT IsolateHolder {
   IsolateHolder(scoped_refptr<base::SingleThreadTaskRunner> task_runner,
                 AccessMode access_mode,
                 AllowAtomicsWaitMode atomics_wait_mode,
-                const intptr_t* reference_table,
-                v8::StartupData* startup_data);
+                const intptr_t* reference_table);
 
   // This constructor is to create V8 snapshot for Blink.
   // Note this constructor calls isolate->Enter() internally.
-  IsolateHolder(const intptr_t* reference_table,
-                v8::StartupData* existing_blob);
+  IsolateHolder(const intptr_t* reference_table);
 
   ~IsolateHolder();
 
@@ -112,6 +117,8 @@ class GIN_EXPORT IsolateHolder {
     return isolate_memory_dump_provider_.get();
   }
 
+  SnapshotType snapshot_type() const { return snapshot_type_; }
+
  private:
   void SetUp(scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
@@ -121,6 +128,10 @@ class GIN_EXPORT IsolateHolder {
   std::unique_ptr<RunMicrotasksObserver> task_observer_;
   std::unique_ptr<V8IsolateMemoryDumpProvider> isolate_memory_dump_provider_;
   AccessMode access_mode_;
+#if defined(V8_USE_EXTERNAL_STARTUP_DATA)
+  v8::StartupData snapshot_blob_;
+#endif
+  SnapshotType snapshot_type_ = SnapshotType::kNone;
 
   DISALLOW_COPY_AND_ASSIGN(IsolateHolder);
 };
