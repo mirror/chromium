@@ -201,6 +201,29 @@
     },
     {
       "key": {
+        "uuid": "4ea926bb_e92e5618",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-10T15:02:02Z",
+      "side": 1,
+      "message": "Is it useful to expose these fields given that we discussed using only the last active time to decide which tab to discard first?\n\nisMedia could be exposed since it makes sense for an ARC process and a tab. \n\nisApp, isInternal, isPinned: I don\u0027t think we will continue to use those fields.",
+      "range": {
+        "startLine": 35,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 45
+      },
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54a5c9ab_5d5e389e",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 2
@@ -246,6 +269,98 @@
       "writtenOn": "2017-11-09T23:40:35Z",
       "side": 1,
       "message": "Instead of programmatically creating a complex DOM structure, how about using a \u003ctemplate\u003e (which is addressing exactly that case)? See example from other WebUI pages at [1] and [2] and official example at [3].\n\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/offline_pages/offline_internals.html?l\u003d71-80\n[2] https://cs.chromium.org/chromium/src/chrome/browser/resources/offline_pages/offline_internals.js?l\u003d36-51\n[3] https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template#Example",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e504321_0bad4290",
+        "filename": "chrome/browser/ui/webui/discards/discards.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-10T15:02:02Z",
+      "side": 1,
+      "message": "Use \"LifetimeUnit\", since as part of the TabManager refactor we\u0027ll also be able to discard ARC processes from this page.",
+      "range": {
+        "startLine": 8,
+        "startChar": 7,
+        "endLine": 8,
+        "endChar": 10
+      },
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5062c470_ce6bcebe",
+        "filename": "chrome/browser/ui/webui/discards/discards.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-10T15:02:02Z",
+      "side": 1,
+      "message": "lifetime_unit_id?",
+      "range": {
+        "startLine": 26,
+        "startChar": 27,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "082f46b6_ea09bced",
+        "filename": "chrome/browser/ui/webui/discards/discards_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-10T15:02:02Z",
+      "side": 1,
+      "message": "Not used",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5387563e_c7aa06c2",
+        "filename": "chrome/browser/ui/webui/discards/discards_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-10T15:02:02Z",
+      "side": 1,
+      "message": "Not used.",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 20
+      },
       "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
