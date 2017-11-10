@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "components/signin/core/browser/account_info.h"
 #include "components/version_info/version_info.h"
 
 namespace base {
@@ -70,8 +71,18 @@ extern const char kUpdate[];
 // This function returns a DictionaryValue which contains all the information
 // required to populate the 'About' tab of about:sync.
 // Note that |service| may be null.
+// DEPRECATED: Use the below function instead. crbug.com/783144
 std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
     SyncService* service,
+    version_info::Channel channel);
+
+// TODO(783144): Eliminate all callers of ConstructAboutInformation() and rename
+// this function to ConstructAboutInformation(). Note that it can't alias the
+// name as ConstructAboutInformation() is bound as a callback in some cases and
+// the compiler can't differentiate.
+std::unique_ptr<base::DictionaryValue> ConstructAboutInformationWithAccountInfo(
+    SyncService* service,
+    AccountInfo primary_account_info,
     version_info::Channel channel);
 
 }  // namespace sync_ui_util
