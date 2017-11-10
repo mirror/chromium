@@ -1772,7 +1772,8 @@ static bool PointHitsRect(
 
 static bool PointHitsRegion(const gfx::PointF& screen_space_point,
                             const gfx::Transform& screen_space_transform,
-                            const Region& layer_space_region) {
+                            const Region& layer_space_region,
+                            gfx::PointF* point_in_layer_space) {
   // If the transform is not invertible, then assume that this point doesn't hit
   // this region.
   gfx::Transform inverse_screen_space_transform(
@@ -1790,6 +1791,9 @@ static bool PointHitsRegion(const gfx::PointF& screen_space_point,
   // this point doesn't hit this region.
   if (clipped)
     return false;
+
+  if (point_in_layer_space)
+    *point_in_layer_space = hit_test_point_in_layer_space;
 
   return layer_space_region.Contains(
       gfx::ToRoundedPoint(hit_test_point_in_layer_space));
@@ -1944,12 +1948,15 @@ LayerImpl* LayerTreeImpl::FindLayerThatIsHitByPoint(
 }
 
 static bool LayerHasTouchEventHandlersAt(const gfx::PointF& screen_space_point,
+                                         TouchAction* out_touch_action,
                                          LayerImpl* layer_impl) {
   if (layer_impl->touch_action_region().region().IsEmpty())
     return false;
 
+  gfx::PointF hit_test_point_in_layer_space(0, 0);
   if (!PointHitsRegion(screen_space_point, layer_impl->ScreenSpaceTransform(),
-                       layer_impl->touch_action_region().region()))
+                       layer_impl->touch_action_region().region(),
+                       &hit_test_point_in_layer_space))
     return false;
 
   // At this point, we think the point does hit the touch event handler region
@@ -1959,23 +1966,32 @@ static bool LayerHasTouchEventHandlersAt(const gfx::PointF& screen_space_point,
   if (PointIsClippedBySurfaceOrClipRect(screen_space_point, layer_impl))
     return false;
 
+  if (out_touch_action) {
+    *out_touch_action &=
+        layer_impl->touch_action_region().GetWhiteListedTouchAction(
+            gfx::ToRoundedPoint(hit_test_point_in_layer_space));
+  }
+
   return true;
 }
 
 struct FindTouchEventLayerFunctor {
   bool operator()(LayerImpl* layer) const {
-    return LayerHasTouchEventHandlersAt(screen_space_point, layer);
+    return LayerHasTouchEventHandlersAt(screen_space_point, out_touch_action,
+                                        layer);
   }
   const gfx::PointF screen_space_point;
+  TouchAction* out_touch_action;
 };
 
 LayerImpl* LayerTreeImpl::FindLayerThatIsHitByPointInTouchHandlerRegion(
-    const gfx::PointF& screen_space_point) {
+    const gfx::PointF& screen_space_point,
+    TouchAction* out_touch_action) {
   if (layer_list_.empty())
     return nullptr;
   if (!UpdateDrawProperties())
     return nullptr;
-  FindTouchEventLayerFunctor func = {screen_space_point};
+  FindTouchEventLayerFunctor func = {screen_space_point, out_touch_action};
   FindClosestMatchingLayerState state;
   FindClosestMatchingLayer(screen_space_point, layer_list_[0], func, &state);
   return state.closest_match;
