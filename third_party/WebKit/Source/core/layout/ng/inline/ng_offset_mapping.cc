@@ -135,7 +135,7 @@ const NGOffsetMapping* NGOffsetMapping::GetFor(
     return nullptr;
   if (!layout_object || !layout_object->IsInline())
     return nullptr;
-  LayoutBlockFlow* block_flow = layout_object->EnclosingNGBlockFlow();
+  LayoutBlockFlow* const block_flow = layout_object->EnclosingNGMixin();
   if (!block_flow)
     return nullptr;
   DCHECK(block_flow->ChildrenInline());
