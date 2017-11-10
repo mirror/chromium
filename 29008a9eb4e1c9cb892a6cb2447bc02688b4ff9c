@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "520ba6ec_98a8b8de",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-10T21:39:47Z",
+      "side": 1,
+      "message": "DailyEvent intentionally triggers when it knows it\u0027s first-run (no existing pref): https://cs.chromium.org/chromium/src/components/metrics/daily_event.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d76\n\nWe could add a parameter to CheckInterval or the DailyEvent constructor to make that not happen.",
+      "parentUuid": "c28142f8_611be624",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "171ae0c7_3b641672",
         "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
         "patchSetId": 1
