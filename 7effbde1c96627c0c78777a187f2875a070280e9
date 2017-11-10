@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62f3da1e_e79c472e",
+        "filename": ".vpython",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2017-11-10T03:33:16Z",
+      "side": 1,
+      "message": "Ned,\n\nall deps in this file are needed by catapult and all of them are declared in \n//third_party/catapult/telemetry/telemetry/internal/util/external_modules.py\n(hence comments referencing it above)\n\nbut not this dep. Is this a catapult bug? Is there another place in catapult project that has an expected version of pywin32? I didn\u0027t find it\nhttps://cs.chromium.org/search/?q\u003dpywin32+file:%5Einfra/appengine/third_party/catapult/+package:%5Echromium$\u0026type\u003dcs",
+      "revId": "7effbde1c96627c0c78777a187f2875a070280e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
