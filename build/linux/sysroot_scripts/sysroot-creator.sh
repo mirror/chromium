@@ -291,6 +291,13 @@ HacksAndPatchesAmd64() {
   sed -i -e 's|/usr/lib/x86_64-linux-gnu/||g'  ${lscripts}
   sed -i -e 's|/lib/x86_64-linux-gnu/||g' ${lscripts}
 
+  # Unversion libdbus symbols.  This is required because libdbus-1-3
+  # switched from unversioned symbols to versioned ones, and we must
+  # still support distros using the unversioned library.  This hack
+  # can be removed once support for Ubuntu Trusty and Debian Jessie
+  # are dropped.
+  strip -R .gnu.version_d "${INSTALL_ROOT}/lib/x86_64-linux-gnu/libdbus-1.so.3"
+
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
   SubBanner "Move pkgconfig scripts"
@@ -310,6 +317,13 @@ HacksAndPatchesI386() {
   # Rewrite linker scripts
   sed -i -e 's|/usr/lib/i386-linux-gnu/||g'  ${lscripts}
   sed -i -e 's|/lib/i386-linux-gnu/||g' ${lscripts}
+
+  # Unversion libdbus symbols.  This is required because libdbus-1-3
+  # switched from unversioned symbols to versioned ones, and we must
+  # still support distros using the unversioned library.  This hack
+  # can be removed once support for Ubuntu Trusty and Debian Jessie
+  # are dropped.
+  strip -R .gnu.version_d "${INSTALL_ROOT}/lib/i386-linux-gnu/libdbus-1.so.3"
 
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
@@ -331,6 +345,14 @@ HacksAndPatchesARM() {
   sed -i -e 's|/usr/lib/arm-linux-gnueabihf/||g' ${lscripts}
   sed -i -e 's|/lib/arm-linux-gnueabihf/||g' ${lscripts}
 
+  # Unversion libdbus symbols.  This is required because libdbus-1-3
+  # switched from unversioned symbols to versioned ones, and we must
+  # still support distros using the unversioned library.  This hack
+  # can be removed once support for Ubuntu Trusty and Debian Jessie
+  # are dropped.
+  arm-linux-gnueabihf-strip -R .gnu.version_d \
+    "${INSTALL_ROOT}/lib/arm-linux-gnueabihf/libdbus-1.so.3"
+
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
   SubBanner "Move pkgconfig files"
@@ -349,6 +371,14 @@ HacksAndPatchesARM64() {
   # Rewrite linker scripts
   sed -i -e 's|/usr/lib/aarch64-linux-gnu/||g' ${lscripts}
   sed -i -e 's|/lib/aarch64-linux-gnu/||g' ${lscripts}
+
+  # Unversion libdbus symbols.  This is required because libdbus-1-3
+  # switched from unversioned symbols to versioned ones, and we must
+  # still support distros using the unversioned library.  This hack
+  # can be removed once support for Ubuntu Trusty and Debian Jessie
+  # are dropped.
+  aarch64-linux-gnu-strip -R .gnu.version_d \
+    "${INSTALL_ROOT}/lib/aarch64-linux-gnu/libdbus-1.so.3"
 
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
@@ -370,6 +400,14 @@ HacksAndPatchesMips() {
   sed -i -e 's|/usr/lib/mipsel-linux-gnu/||g' ${lscripts}
   sed -i -e 's|/lib/mipsel-linux-gnu/||g' ${lscripts}
 
+  # Unversion libdbus symbols.  This is required because libdbus-1-3
+  # switched from unversioned symbols to versioned ones, and we must
+  # still support distros using the unversioned library.  This hack
+  # can be removed once support for Ubuntu Trusty and Debian Jessie
+  # are dropped.
+  mipsel-linux-gnu-strip -R .gnu.version_d \
+    "${INSTALL_ROOT}/lib/mipsel-linux-gnu/libdbus-1.so.3"
+
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
   SubBanner "Move pkgconfig files"
@@ -389,6 +427,14 @@ HacksAndPatchesMips64el() {
   # Rewrite linker scripts
   sed -i -e 's|/usr/lib/mips64el-linux-gnuabi64/||g' ${lscripts}
   sed -i -e 's|/lib/mips64el-linux-gnuabi64/||g' ${lscripts}
+
+  # Unversion libdbus symbols.  This is required because libdbus-1-3
+  # switched from unversioned symbols to versioned ones, and we must
+  # still support distros using the unversioned library.  This hack
+  # can be removed once support for Ubuntu Trusty and Debian Jessie
+  # are dropped.
+  mips64el-linux-gnuabi64-strip -R .gnu.version_d \
+    "${INSTALL_ROOT}/lib/mips64el-linux-gnuabi64/libdbus-1.so.3"
 
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
