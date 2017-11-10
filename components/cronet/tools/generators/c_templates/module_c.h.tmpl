@@ -1,0 +1,133 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+/* DO NOT EDIT. Generated from {{module.path}} */
+
+{%- if variant -%}
+{%-   set variant_path = "%s-%s"|format(module.path, variant) -%}
+{%- else -%}
+{%-   set variant_path = module.path -%}
+{%- endif -%}
+
+{%- set header_guard = "%s_C_H_"|format(
+        variant_path|upper|replace("/","_")|replace(".","_")|
+            replace("-", "_")) %}
+
+{%- import "module_macros.tmpl" as module_macros %}
+
+#ifndef {{header_guard}}
+#define {{header_guard}}
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <stdint.h>
+
+typedef const char* CharString;
+typedef void* RawDataPtr;
+
+// Forward declare interfaces.
+{%- for interface in interfaces %}
+typedef struct {{interface.name}} {{interface.name}};
+typedef struct {{interface.name}}* {{interface.name}}Ptr;
+typedef void* {{interface.name}}Context;
+{%- endfor %}
+
+// Forward declare structs.
+{%- for struct in structs %}
+typedef struct {{struct.name}} {{struct.name}};
+typedef struct {{struct.name}}* {{struct.name}}Ptr;
+{%- endfor %}
+
+// Declare enums
+{%-  for enum in all_enums %}
+{%-   set enum_name = enum|get_name_for_kind(flatten_nested_kind=False) %}
+typedef enum {{enum_name}} {
+{%-   for field in enum.fields %}
+{%-     if field.value %}
+  {{enum_name}}_{{field.name}} = {{field.value|expression_to_text}},
+{%-     else %}
+  {{enum_name}}_{{field.name}},
+{%-     endif %}
+{%-   endfor %}
+} {{enum_name}};
+
+{%   endfor %}
+
+{#--- Interface Stubs -#}
+{%  for interface in interfaces %}
+
+// Interface {{interface.name}} methods.
+{{interface.name}}Ptr {{interface.name}}_Create();
+void {{interface.name}}_Destroy({{interface.name}}Ptr self);
+{{interface.name}}Context {{interface.name}}_GetContext({{interface.name}}Ptr self);
+{%- for method in interface.methods %}
+{%-  if method.response_parameters and method.sync %}
+{%-   for param in method.response_parameters %}
+{{param.kind|c_wrapper_type}}
+{%-   endfor -%}
+{%-  else %}
+void
+{%- endif %}
+ {{interface.name}}_{{method.name}}({{interface.name}}Ptr self
+{%-   if method.parameters %}, {{module_macros.declare_c_params("", method.parameters)}}
+{%-   endif %});
+{%- endfor %}
+
+// Interface {{interface.name}} methods as custom functions.
+{%- for method in interface.methods %}
+{%-  if method.response_parameters and method.sync %}
+{%-   for param in method.response_parameters %}
+typedef {{param.kind|c_wrapper_type}}
+{%-   endfor -%}
+{%-  else %}
+typedef void
+{%- endif %}
+ (*{{interface.name}}_{{method.name}}Func)({{interface.name}}Ptr self
+{%-   if method.parameters %}, {{module_macros.declare_c_params("", method.parameters)}}
+{%-   endif %});
+{%- endfor %}
+
+{{interface.name}}Ptr {{interface.name}}_CreateStub({{interface.name}}Context context,
+{%- for method in interface.methods -%}
+  {{interface.name}}_{{method.name}}Func {{method.name}}Func
+{%- if not loop.last %}, {% endif %}
+{%-   endfor %}
+  );
+{%- endfor %}
+
+{%- for struct in structs %}
+
+// Struct {{struct.name}}.
+{{struct.name}}Ptr {{struct.name}}_Create();
+void {{struct.name}}_Destroy({{struct.name}}Ptr self);
+// {{struct.name}} setters.
+{%- for packed_field in struct.packed.packed_fields_in_ordinal_order %}
+{%-  set kind = packed_field.field.kind %}
+{%-  if kind|is_array_kind %}
+void {{struct.name}}_add_{{packed_field.field.name}}({{struct.name}}Ptr self, {{kind.kind|c_wrapper_type}} {{packed_field.field.name}});
+{%-  else %}
+void {{struct.name}}_set_{{packed_field.field.name}}({{struct.name}}Ptr self, {{packed_field.field.kind|c_wrapper_type}} {{packed_field.field.name}});
+{%- endif %}
+{%- endfor %}
+
+// {{struct.name}} getters.
+{%- for packed_field in struct.packed.packed_fields_in_ordinal_order %}
+{%-  set kind = packed_field.field.kind %}
+{%-  if kind|is_array_kind %}
+uint32_t {{struct.name}}_get_{{packed_field.field.name}}Size({{struct.name}}Ptr self);
+{{kind.kind|c_wrapper_type}} {{struct.name}}_get_{{packed_field.field.name}}AtIndex({{struct.name}}Ptr self, uint32_t index);
+{%-  else %}
+{{packed_field.field.kind|c_wrapper_type}} {{struct.name}}_get_{{packed_field.field.name}}({{struct.name}}Ptr self);
+{%- endif %}
+{%- endfor %}
+{%- endfor %}
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif  // {{header_guard}}
+
