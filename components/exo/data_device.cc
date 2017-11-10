@@ -101,6 +101,9 @@ int DataDevice::OnPerformDrop(const ui::DropTargetEvent& event) {
   return ui::DragDropTypes::DRAG_NONE;
 }
 
+void DataDevice::OnClipboardDataChanged() {
+}
+
 void DataDevice::OnDataOfferDestroying(DataOffer* data_offer) {
   if (data_offer_ == data_offer)
     ClearDataOffer();
