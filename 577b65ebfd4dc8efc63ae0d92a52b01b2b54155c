@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7bf9191_78959073",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-10T00:39:23Z",
+      "side": 1,
+      "message": "Let\u0027s move the detailed comment here (since this where callers will look first), and just have a \"See comment on accessor\" on the declaration below.",
+      "revId": "577b65ebfd4dc8efc63ae0d92a52b01b2b54155c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0d7a05_891cc081",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-10T00:39:23Z",
+      "side": 1,
+      "message": "Can you add something about the following?\n\n1) The value should not be sent back to the browser.\n2) The value on DocumentLoader may be generated in the renderer in some cases, and thus shouldn\u0027t be trusted and could collide with other values if the renderer is compromised.\n3) Include a TODO to replace this with a general navigation token, with a bug number for a new bug to track that work.\n\nSame for the other comment descriptions in other files (e.g., frame.mojom, DocumentLoader.h, etc).",
+      "revId": "577b65ebfd4dc8efc63ae0d92a52b01b2b54155c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032120c9_7e62bcd1",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-10T00:39:23Z",
+      "side": 1,
+      "message": "Let\u0027s document this as well.",
+      "revId": "577b65ebfd4dc8efc63ae0d92a52b01b2b54155c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e93ebd_0d69f7f4",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoadRequest.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-10T00:39:23Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "577b65ebfd4dc8efc63ae0d92a52b01b2b54155c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
