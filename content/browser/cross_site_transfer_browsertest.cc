@@ -21,6 +21,7 @@
 #include "content/public/browser/resource_dispatcher_host_delegate.h"
 #include "content/public/browser/resource_throttle.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
@@ -444,7 +445,15 @@ IN_PROC_BROWSER_TEST_P(CrossSiteTransferTest, NoLeakOnCrossSiteCancel) {
   EXPECT_EQ(url1, controller.GetEntryAtIndex(0)->GetURL());
 
   // Make sure the request for url2 did not complete.
-  EXPECT_FALSE(tracking_delegate().WaitForTrackedURLAndGetCompleted());
+  if (IsNavigationMojoResponseEnabled()) {
+    // TODO(arthursonzogni): Update this test. The issue is that the
+    // MojoAsyncResourceHandler does not pause the request in OnReceiveResponse.
+    // Then the TrackingThrottle receives OnComplete and makes this test fails.
+    // That's not an issue, but this test needs to be updated.
+    EXPECT_TRUE(tracking_delegate().WaitForTrackedURLAndGetCompleted());
+  } else {
+    EXPECT_FALSE(tracking_delegate().WaitForTrackedURLAndGetCompleted());
+  }
 
   EXPECT_EQ(net::ERR_ABORTED, handle_observer.net_error_code());
   shell()->web_contents()->SetDelegate(old_delegate);

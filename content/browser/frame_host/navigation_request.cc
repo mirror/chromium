@@ -720,8 +720,9 @@ void NavigationRequest::OnRequestRedirected(
 
 void NavigationRequest::OnResponseStarted(
     const scoped_refptr<ResourceResponse>& response,
+    mojom::URLLoaderPtr url_loader,
+    mojom::URLLoaderClientRequest url_loader_client,
     std::unique_ptr<StreamHandle> body,
-    mojo::ScopedDataPipeConsumerHandle consumer_handle,
     const SSLStatus& ssl_status,
     std::unique_ptr<NavigationData> navigation_data,
     const GlobalRequestID& request_id,
@@ -798,7 +799,8 @@ void NavigationRequest::OnResponseStarted(
   // Store the response and the StreamHandle until checks have been processed.
   response_ = response;
   body_ = std::move(body);
-  handle_ = std::move(consumer_handle);
+  url_loader_ = std::move(url_loader);
+  url_loader_client_ = std::move(url_loader_client);
   ssl_status_ = ssl_status;
   is_download_ = is_download;
 
@@ -1118,6 +1120,7 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
     // DownloadManager, and cancel the navigation.
     if (is_download_ &&
         base::FeatureList::IsEnabled(features::kNetworkService)) {
+      /* TODO(arthursonzogni): FIX this.
       BrowserContext* browser_context =
           frame_tree_node_->navigator()->GetController()->GetBrowserContext();
       DownloadManagerImpl* download_manager = static_cast<DownloadManagerImpl*>(
@@ -1125,6 +1128,7 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
       loader_->InterceptNavigation(
           download_manager->GetNavigationInterceptionCB(
               response_, std::move(handle_), ssl_status_));
+      */
       OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
       return;
     }
@@ -1191,8 +1195,9 @@ void NavigationRequest::CommitNavigation() {
   TransferNavigationHandleOwnership(render_frame_host);
 
   render_frame_host->CommitNavigation(
-      response_.get(), std::move(body_), std::move(handle_), common_params_,
-      request_params_, is_view_source_, std::move(subresource_loader_params_));
+      response_.get(), std::move(url_loader_), std::move(url_loader_client_),
+      std::move(body_), common_params_, request_params_, is_view_source_,
+      std::move(subresource_loader_params_));
 
   frame_tree_node_->ResetNavigationRequest(true, true);
 }
