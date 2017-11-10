@@ -269,7 +269,7 @@ class DiskMountManagerImpl : public DiskMountManager {
     refresh_callbacks_.push_back(callback);
     if (refresh_callbacks_.size() == 1) {
       // If there's no in-flight refreshing task, start it.
-      cros_disks_client_->EnumerateAutoMountableDevices(
+      cros_disks_client_->EnumerateDevices(
           base::Bind(&DiskMountManagerImpl::RefreshAfterEnumerateDevices,
                      weak_ptr_factory_.GetWeakPtr()),
           base::Bind(&DiskMountManagerImpl::RefreshCompleted,
@@ -627,12 +627,6 @@ class DiskMountManagerImpl : public DiskMountManager {
 
   // Callback for GetDeviceProperties.
   void OnGetDeviceProperties(const DiskInfo& disk_info) {
-    // TODO(zelidrag): Find a better way to filter these out before we
-    // fetch the properties:
-    // Ignore disks coming from the device we booted the system from.
-    if (disk_info.on_boot_device())
-      return;
-
     LOG(WARNING) << "Found disk " << disk_info.device_path();
     // Delete previous disk info for this path:
     bool is_new = true;
