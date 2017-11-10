@@ -40,7 +40,7 @@ Ui::Ui(UiBrowserInterface* browser,
       ui_initial_state.web_vr_autopresentation_expected;
   model_->experimental_features_enabled =
       base::FeatureList::IsEnabled(features::kExperimentalVRFeatures);
-  model_->has_or_can_request_audio_permission =
+  model_->speech.has_or_can_request_audio_permission =
       ui_initial_state.has_or_can_request_audio_permission;
 }
 
@@ -110,11 +110,18 @@ void Ui::SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) {
 }
 
 void Ui::SetSpeechRecognitionEnabled(bool enabled) {
-  model_->recognizing_speech = enabled;
+  model_->speech.recognizing_speech = enabled;
+  if (enabled)
+    model_->speech.recognition_result_visibility = false;
+}
+
+void Ui::SetRecognitionResult(const base::string16& result) {
+  model_->speech.recognition_result_visibility = true;
+  model_->speech.recognition_result = result;
 }
 
 void Ui::OnSpeechRecognitionStateChanged(int new_state) {
-  model_->speech_recognition_state = new_state;
+  model_->speech.speech_recognition_state = new_state;
 }
 
 void Ui::SetOmniboxSuggestions(
