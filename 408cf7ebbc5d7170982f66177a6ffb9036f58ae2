@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa9745cd_7826db50",
+        "filename": "base/bits.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-10T09:37:48Z",
+      "side": 1,
+      "message": "Perhaps this could be moved into the std::enable_if condition?",
+      "revId": "408cf7ebbc5d7170982f66177a6ffb9036f58ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
