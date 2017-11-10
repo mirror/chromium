@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "b2201872_66b4572c",
+        "filename": "ios/web/download/download_controller_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:11:43Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755ab5e4_4cf4d479",
+        "filename": "ios/web/download/download_controller_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:11:43Z",
+      "side": 1,
+      "message": "We should now use std::make_unique\u003c\u003e instead of base::MakeUnique\u003c\u003e",
+      "range": {
+        "startLine": 31,
+        "startChar": 31,
+        "endLine": 31,
+        "endChar": 47
+      },
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02cec00d_f39504f6",
+        "filename": "ios/web/download/download_controller_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:11:43Z",
+      "side": 1,
+      "message": "Can we use SequenceChecker instead? It does not look like this class is thread-affine.",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 37
+      },
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25434a25_5c33e203",
+        "filename": "ios/web/download/download_controller_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:11:43Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 59,
+        "startChar": 41,
+        "endLine": 59,
+        "endChar": 57
+      },
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7ec6a40_f1d69a74",
         "filename": "ios/web/download/download_controller_impl_unittest.mm",
         "patchSetId": 2
@@ -13,6 +99,24 @@
       "writtenOn": "2017-11-10T01:47:31Z",
       "side": 1,
       "message": "Is this used?",
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b6dc34_f9ac33a4",
+        "filename": "ios/web/download/download_controller_impl_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:11:43Z",
+      "side": 1,
+      "message": "Looks like it is not. Remove?",
+      "parentUuid": "b7ec6a40_f1d69a74",
       "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "bc7cda0a_ddaab76f",
+        "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:11:43Z",
+      "side": 1,
+      "message": "Can you use a typedef for this type?",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 78
+      },
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d13ec4a0_136ef54e",
         "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.h",
         "patchSetId": 2
@@ -53,6 +180,40 @@
         "endLine": 31,
         "endChar": 41
       },
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99400f42_7cfc181e",
+        "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:11:43Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873ca86f_6b075ae7",
+        "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:11:43Z",
+      "side": 1,
+      "message": "nit: you can use std::find_if here\n\n  auto iterator \u003d std::find_if(\n      alive_download_tasks_.begin(),\n      alive_download_tasks_.end(),\n      [\u003d](const std::pair\u003cconst WebState*, std::unique_ptr\u003cDownloadTask\u003e\u003e\u0026 pair) {\n          return pair.second \u003d\u003d task;\n      });\n  DCHECK(iterator !\u003d alive_download_tasks_.end());\n  alive_download_tasks_.erase(iterator);",
       "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
