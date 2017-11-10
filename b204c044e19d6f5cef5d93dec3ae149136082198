@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "301a6944_f804fa35",
+        "filename": "chrome/browser/chromeos/extensions/input_method_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-10T17:37:33Z",
+      "side": 1,
+      "message": "Did you intend to comment this out here?",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 12
+      },
+      "revId": "b204c044e19d6f5cef5d93dec3ae149136082198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
