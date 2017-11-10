@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2cf2b921_70734d8d",
+        "filename": "net/nqe/network_quality_estimator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-10T20:49:20Z",
+      "side": 1,
+      "message": "I do not like out params either, but I am not sure if std::pair is the right answer. It does not scale to if we have to return more than 2 values back (may be we have to do that in future).\n\nMay be return a struct that contains everything we want?",
+      "parentUuid": "93a4b1bf_64a9d925",
+      "revId": "cbfed9f0273530df17c02625be7f8eca3e826d47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f86061a_69ce06e0",
         "filename": "net/nqe/network_quality_estimator.h",
         "patchSetId": 6
