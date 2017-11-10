@@ -7,6 +7,7 @@ import hashlib
 import os
 import string
 import win32api
+import win32file
 import win32com.client
 from win32com.shell import shell, shellcon
 import win32security
@@ -17,6 +18,9 @@ def _GetFileVersion(file_path):
   return win32com.client.Dispatch('Scripting.FileSystemObject').GetFileVersion(
       file_path)
 
+def _GetBinaryType(file_path):
+  """Returns the binary type (including bitness) of the given file."""
+  return win32file.GetBinaryType(file_path)
 
 def _GetProductName(file_path):
   """Returns the product name of the given file.
@@ -90,6 +94,7 @@ class VariableExpander:
         * $LOCAL_APPDATA: the unquoted path to the Local Application Data
             folder.
         * $MINI_INSTALLER: the unquoted path to the mini_installer.
+        * $MINI_INSTALLER_BITNESS: the bitness of the mini_installer.
         * $MINI_INSTALLER_FILE_VERSION: the file version of $MINI_INSTALLER.
         * $NEXT_VERSION_MINI_INSTALLER: the unquoted path to a mini_installer
             whose version is higher than $MINI_INSTALLER.
@@ -101,6 +106,14 @@ class VariableExpander:
         * $VERSION_[XP/SERVER_2003/VISTA/WIN7/WIN8/WIN8_1/WIN10]: a 2-tuple
             representing the version of the corresponding OS.
         * $WINDOWS_VERSION: a 2-tuple representing the current Windows version.
+        * $CHROME_TOAST_ACTIVATOR_KEY: the registry key, excluding the root key,
+            of Chrome for toast notication activator.
+        * $CHROME_TOAST_ACTIVATOR_KEY_BETA: the registry key, excluding the root
+            key, of Chrome Beta for toast notication activator.
+        * $CHROME_TOAST_ACTIVATOR_KEY_DEV: the registry key, excluding the root
+            key, of Chrome Dev for toast notication activator.
+        * $CHROME_TOAST_ACTIVATOR_KEY_SXS: the registry key, excluding the root
+            key, of Chrome SxS for toast notication activator.
 
     Args:
       mini_installer_path: The path to a mini_installer.
@@ -133,6 +146,16 @@ class VariableExpander:
         'WINDOWS_VERSION': '(%s, %s)' % (windows_major_ver, windows_minor_ver)
     }
 
+    binary_type = _GetBinaryType(mini_installer_abspath)
+    if binary_type == win32file.SCS_32BIT_BINARY:
+      self._variable_mapping.update({
+          'MINI_INSTALLER_BITNESS': '32'
+      })
+    else:
+      self._variable_mapping.update({
+          'MINI_INSTALLER_BITNESS': '64'
+      })
+
     mini_installer_product_name = _GetProductName(mini_installer_abspath)
     if mini_installer_product_name == 'Google Chrome Installer':
       self._variable_mapping.update({
@@ -150,6 +173,8 @@ class VariableExpander:
           'CHROME_CLIENT_STATE_KEY': (
             'Software\\Google\\Update\\ClientState\\'
             '{8A69D345-D564-463c-AFF1-A69D9E530F96}'),
+          'CHROME_TOAST_ACTIVATOR_KEY': (
+            '{A2C6CB58-C076-425C-ACB7-6D19D64428CD}'),
           'CHROME_DIR_BETA': 'Google\\Chrome Beta',
           'CHROME_DIR_DEV': 'Google\\Chrome Dev',
           'CHROME_DIR_SXS': 'Google\\Chrome SxS',
@@ -170,7 +195,13 @@ class VariableExpander:
             '{4ea16ac7-fd5a-47c3-875b-dbf4a2008c20}'),
           'LAUNCHER_UPDATE_REGISTRY_SUBKEY': (
             'Software\\Google\\Update\\Clients\\'
-            '{FDA71E6F-AC4C-4a00-8B70-9958A68906BF}')
+            '{FDA71E6F-AC4C-4a00-8B70-9958A68906BF}'),
+          'CHROME_TOAST_ACTIVATOR_KEY_BETA': (
+            '{B89B137F-96AA-4AE2-98C4-6373EAA1EA4D}'),
+          'CHROME_TOAST_ACTIVATOR_KEY_DEV': (
+            '{F01C03EB-D431-4C83-8D7A-902771E732FA}'),
+          'CHROME_TOAST_ACTIVATOR_KEY_SXS': (
+            '{FA372A6E-149F-4E95-832D-8F698D40AD7F}'),
       })
     elif mini_installer_product_name == 'Chromium Installer':
       self._variable_mapping.update({
@@ -182,6 +213,8 @@ class VariableExpander:
           'CHROME_SHORT_NAME': 'Chromium',
           'CHROME_UPDATE_REGISTRY_SUBKEY': 'Software\\Chromium',
           'CHROME_CLIENT_STATE_KEY': 'Software\\Chromium',
+          'CHROME_TOAST_ACTIVATOR_KEY': (
+            '{635EFA6F-08D6-4EC9-BD14-8A0FDE975159}'),
       })
     else:
       raise KeyError("Unknown mini_installer product name '%s'" %
