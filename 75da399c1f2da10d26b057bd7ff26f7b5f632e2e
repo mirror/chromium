@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a15853c_2eccbc86",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T17:15:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4117df30_1060e266",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 8
+      },
+      "revId": "75da399c1f2da10d26b057bd7ff26f7b5f632e2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fdef8aa_5a9bd568",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/params/MethodParamAnnotationProcessor.java",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "75da399c1f2da10d26b057bd7ff26f7b5f632e2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60d5a8e_56d8c226",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/params/MethodParamAnnotationProcessor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T17:15:35Z",
+      "side": 1,
+      "message": "Huh, good point. Renamed it to MethodParamAnnotationRule, but there is also an existing AnnotationProcessor class that *also* isn\u0027t a javac one :)",
+      "parentUuid": "2fdef8aa_5a9bd568",
+      "revId": "75da399c1f2da10d26b057bd7ff26f7b5f632e2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
