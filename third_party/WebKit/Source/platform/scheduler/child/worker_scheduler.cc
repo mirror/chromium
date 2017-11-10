@@ -8,7 +8,6 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
-#include "platform/scheduler/child/scheduler_tqm_delegate.h"
 #include "platform/scheduler/child/worker_scheduler_impl.h"
 
 namespace blink {
@@ -20,9 +19,9 @@ WorkerScheduler::WorkerScheduler(std::unique_ptr<WorkerSchedulerHelper> helper)
 WorkerScheduler::~WorkerScheduler() {}
 
 // static
-std::unique_ptr<WorkerScheduler> WorkerScheduler::Create(
-    scoped_refptr<SchedulerTqmDelegate> main_task_runner) {
-  return base::WrapUnique(new WorkerSchedulerImpl(std::move(main_task_runner)));
+std::unique_ptr<WorkerScheduler> WorkerScheduler::Create() {
+  return base::WrapUnique(
+      new WorkerSchedulerImpl(TaskQueueManager::TakeOverCurrentThread()));
 }
 
 scoped_refptr<WorkerTaskQueue> WorkerScheduler::CreateTaskRunner() {
@@ -30,6 +29,15 @@ scoped_refptr<WorkerTaskQueue> WorkerScheduler::CreateTaskRunner() {
   return helper_->NewTaskQueue(TaskQueue::Spec("worker_tq")
                                    .SetShouldMonitorQuiescence(true)
                                    .SetTimeDomain(nullptr));
+}
+
+void WorkerScheduler::SetDefaultTaskRunner(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+  helper_->SetDefaultTaskRunner(std::move(task_runner));
+}
+
+void WorkerScheduler::RestoreDefaultTaskRunner() {
+  helper_->RestoreDefaultTaskRunner();
 }
 
 }  // namespace scheduler
