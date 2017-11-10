@@ -121,7 +121,7 @@ void RemoveProviderHost(base::WeakPtr<ServiceWorkerContextCore> context,
   context->RemoveProviderHost(process_id, provider_id);
 }
 
-WebContents* GetWebContents(int render_process_id, int render_frame_id) {
+WebContents* ProviderHostGetWebContents(int render_process_id, int render_frame_id) {
   RenderFrameHost* rfh =
       RenderFrameHost::FromID(render_process_id, render_frame_id);
   return WebContents::FromRenderFrameHost(rfh);
@@ -1240,7 +1240,7 @@ bool ServiceWorkerProviderHost::CanServeContainerHostMethods(
 
   if (!GetContentClient()->browser()->AllowServiceWorker(
           scope, topmost_frame_url(), dispatcher_host_->resource_context(),
-          base::Bind(&GetWebContents, render_process_id_, frame_id()))) {
+          base::Bind(&ProviderHostGetWebContents, render_process_id_, frame_id()))) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kDisabled,
         std::string(error_prefix) +
