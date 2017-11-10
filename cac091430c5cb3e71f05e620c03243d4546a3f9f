@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9f4c6ef6_d0af983e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-10T01:10:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a85ea45a_d49e8532",
+      "revId": "cac091430c5cb3e71f05e620c03243d4546a3f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44e6a1ef_2c3da52d",
         "filename": "ui/webui/resources/cr_elements/chromeos/network/cr_network_icon.js",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-10T01:04:38Z",
       "side": 1,
       "message": "tiny nit: Maybe this is more confusing, I\u0027ll let you decide, but I would do:\nvar deviceState \u003d this.deviceState ? this.deviceState.State : \u0027\u0027;\n\nor maybe use \u0027var enabledState\u0027?",
+      "revId": "cac091430c5cb3e71f05e620c03243d4546a3f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6faaec06_737d2892",
+        "filename": "ui/webui/resources/cr_elements/chromeos/network/cr_network_icon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-10T01:10:18Z",
+      "side": 1,
+      "message": "We actually show \u0027no-network\u0027 if !deviceState, not if !!deviceState. I\u0027m going to keep it as-is.",
+      "parentUuid": "44e6a1ef_2c3da52d",
       "revId": "cac091430c5cb3e71f05e620c03243d4546a3f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
