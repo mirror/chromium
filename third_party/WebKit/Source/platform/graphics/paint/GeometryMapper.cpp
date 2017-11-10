@@ -172,25 +172,27 @@ void GeometryMapper::LocalToAncestorVisualRectInternal(
     rect_to_map = FloatClipRect(FloatRect());
     return;
   }
-  FloatRect mapped_rect = transform_matrix.MapRect(rect_to_map.Rect());
+  rect_to_map.Map(transform_matrix);
 
   const FloatClipRect& clip_rect =
       LocalToAncestorClipRectInternal(local_state.Clip(), ancestor_state.Clip(),
                                       ancestor_state.Transform(), success);
   if (success) {
-    // This is where we propagate the rounded-ness of |clipRect| to
-    // |rectToMap|.
-    rect_to_map = clip_rect;
-    rect_to_map.Intersect(mapped_rect);
-  } else if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+    // This is where we propagate the roundedness and tightness of |clip_rect|
+    // to |rect_to_map|.
+    rect_to_map.Intersect(clip_rect);
+    return;
+  }
+
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     // On SPv1* we may fail when the paint invalidation container creates an
-    // overflow clip (in ancestorState) which is not in localState of an
+    // overflow clip (in ancestor_state) which is not in localState of an
     // out-of-flow positioned descendant. See crbug.com/513108 and layout test
     // compositing/overflow/handle-non-ancestor-clip-parent.html (run with
     // --enable-prefer-compositing-to-lcd-text) for details.
     // Ignore it for SPv1* for now.
     success = true;
-    rect_to_map.SetRect(mapped_rect);
+    rect_to_map.ClearIsTight();
   }
 }
 
@@ -219,7 +221,7 @@ void GeometryMapper::SlowLocalToAncestorVisualRectWithEffects(
       return;
     }
 
-    mapping_rect.SetRect(effect->MapRect(mapping_rect.Rect()));
+    mapping_rect = FloatClipRect(effect->MapRect(mapping_rect.Rect()));
     last_transform_and_clip_state = transform_and_clip_state;
   }
 
@@ -228,6 +230,9 @@ void GeometryMapper::SlowLocalToAncestorVisualRectWithEffects(
   LocalToAncestorVisualRectInternal(last_transform_and_clip_state,
                                     final_transform_and_clip_state,
                                     mapping_rect, success);
+
+  // Many effects (e.g. filters, clip-paths) can make a clip rect not tight.
+  mapping_rect.ClearIsTight();
 }
 
 const FloatClipRect& GeometryMapper::LocalToAncestorClipRect(
@@ -262,7 +267,7 @@ const FloatClipRect& GeometryMapper::LocalToAncestorClipRectInternal(
 
   GeometryMapperClipCache::ClipAndTransform clip_and_transform(
       ancestor_clip, ancestor_transform);
-  // Iterate over the path from localState.clip to ancestorState.clip. Stop if
+  // Iterate over the path from localState.clip to ancestor_state.clip. Stop if
   // we've found a memoized (precomputed) clip for any particular node.
   while (clip_node && clip_node != ancestor_clip) {
     if (const FloatClipRect* cached_clip =
@@ -278,14 +283,16 @@ const FloatClipRect& GeometryMapper::LocalToAncestorClipRectInternal(
     success = false;
     if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       // On SPv1 we may fail when the paint invalidation container creates an
-      // overflow clip (in ancestorState) which is not in localState of an
+      // overflow clip (in ancestor_state) which is not in localState of an
       // out-of-flow positioned descendant. See crbug.com/513108 and layout
       // test compositing/overflow/handle-non-ancestor-clip-parent.html (run
       // with --enable-prefer-compositing-to-lcd-text) for details.
       // Ignore it for SPv1 for now.
       success = true;
     }
-    return infinite;
+    DEFINE_STATIC_LOCAL(FloatClipRect, loose_infinite, (FloatClipRect()));
+    loose_infinite.ClearIsTight();
+    return loose_infinite;
   }
 
   // Iterate down from the top intermediate node found in the previous loop,
@@ -299,18 +306,19 @@ const FloatClipRect& GeometryMapper::LocalToAncestorClipRectInternal(
       success = true;
       return empty;
     }
-    FloatRect mapped_rect = transform_matrix.MapRect((*it)->ClipRect().Rect());
-    clip.Intersect(mapped_rect);
-    if ((*it)->ClipRect().IsRounded())
-      clip.SetHasRadius();
 
+    // This is where we generate the roundedness and tightness of clip rect
+    // from clip and transform properties, and propagate them to |clip|.
+    FloatClipRect mapped_rect((*it)->ClipRect());
+    mapped_rect.Map(transform_matrix);
+    clip.Intersect(mapped_rect);
     (*it)->GetClipCache().SetCachedClip(clip_and_transform, clip);
   }
 
-  const FloatClipRect* cached_clip =
+  const auto* cached_clip =
       descendant->GetClipCache().GetCachedClip(clip_and_transform);
   DCHECK(cached_clip);
-  CHECK(clip.HasRadius() == cached_clip->HasRadius());
+  DCHECK(*cached_clip == clip);
 
   success = true;
   return *cached_clip;
