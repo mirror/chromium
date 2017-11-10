@@ -75,6 +75,24 @@
       "revId": "39c0a220f189d3fdb7550c13c29ba35ff685ff41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3bb3484_e3932e0d",
+        "filename": "gin/per_isolate_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-10T16:59:06Z",
+      "side": 1,
+      "message": "Yes you\u0027re right, the CancelableTaskManager should ensure we are safe within V8, it\u0027s just the RunWithLocker wrapper which is a potential issue (and is a pain since the task runner needs to keep the isolate around).\n\nAFAIK the locker mode is only used for PAC file processing in the browser process, and I don\u0027t think that isolate ever gets destroyed if it is created, so it should be safe.\n\nLet\u0027s do this - create two foreground-task-runners - one for locker use-case and the normal one without, that way we can avoid having a pointer to the isolate in the normal foreground-task-runner which will ensure we don\u0027t accidentally use it in the future. While doing this, could you put each of the task runners (and the background-task-runner) in seperate cc/h files.",
+      "parentUuid": "5b3deedf_8325d26a",
+      "revId": "39c0a220f189d3fdb7550c13c29ba35ff685ff41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
