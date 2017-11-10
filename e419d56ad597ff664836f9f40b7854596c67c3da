@@ -16,6 +16,47 @@
       "revId": "e419d56ad597ff664836f9f40b7854596c67c3da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d5fec9_4055ed0f",
+        "filename": "chrome/browser/interstitials/chrome_controller_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-10T21:11:30Z",
+      "side": 1,
+      "message": "Why do we need to override CanGoBack if it calls the superclass implementation unconditionally?",
+      "parentUuid": "2e5f67fe_5376e7bd",
+      "revId": "e419d56ad597ff664836f9f40b7854596c67c3da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1a8543a_1e1741b9",
+        "filename": "chrome/browser/ssl/chrome_ssl_host_state_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-10T21:11:30Z",
+      "side": 1,
+      "message": "unintentionally left in?",
+      "range": {
+        "startLine": 299,
+        "startChar": 0,
+        "endLine": 299,
+        "endChar": 56
+      },
+      "revId": "e419d56ad597ff664836f9f40b7854596c67c3da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
