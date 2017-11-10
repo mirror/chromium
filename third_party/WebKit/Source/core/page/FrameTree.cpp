@@ -216,8 +216,7 @@ Frame* FrameTree::Find(const AtomicString& name) const {
   }
 
   // Search the entire tree of each of the other pages in this namespace.
-  // FIXME: Is random order OK?
-  for (const Page* other_page : Page::OrdinaryPages()) {
+  for (const Page* other_page : page->RelatedPages()) {
     if (other_page == page || other_page->IsClosing())
       continue;
     for (Frame* frame = other_page->MainFrame(); frame;
@@ -227,7 +226,8 @@ Frame* FrameTree::Find(const AtomicString& name) const {
     }
   }
 
-  return nullptr;
+  // Ask the embedder as a fallback.
+  return ToLocalFrame(this_frame_)->Client()->FindFrame(name);
 }
 
 bool FrameTree::IsDescendantOf(const Frame* ancestor) const {
