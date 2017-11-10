@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "abb0b9ec_9dab5734",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-10T17:41:03Z",
+      "side": 1,
+      "message": "Currently it uses WebContents::DidStopLoading. We will run finch to see if page almost idle signal is going to be better.",
+      "parentUuid": "d3239c0e_ffe280e5",
+      "range": {
+        "startLine": 1650,
+        "startChar": 70,
+        "endLine": 1651,
+        "endChar": 11
+      },
+      "revId": "f7ed37320c917adb879d5f5bac3008b30c2d4d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "966a0839_5f7633e6",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "f7ed37320c917adb879d5f5bac3008b30c2d4d9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468d435d_cff3698e",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-10T17:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "966a0839_5f7633e6",
+      "range": {
+        "startLine": 1680,
+        "startChar": 25,
+        "endLine": 1680,
+        "endChar": 34
+      },
+      "revId": "f7ed37320c917adb879d5f5bac3008b30c2d4d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
