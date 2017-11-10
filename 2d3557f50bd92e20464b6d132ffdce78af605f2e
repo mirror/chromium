@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c8d58c1_67f60669",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-10T01:16:49Z",
+      "side": 1,
+      "message": "nit: How \u0027bout just \"AltSvcFormat\"?",
+      "revId": "2d3557f50bd92e20464b6d132ffdce78af605f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37b64ed_1c952373",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-10T01:16:49Z",
+      "side": 1,
+      "message": "nit: since there\u0027s no WRITE_ for this enum, I\u0027d just remove READ_",
+      "revId": "2d3557f50bd92e20464b6d132ffdce78af605f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8730a29_80b4dd24",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-10T01:16:49Z",
+      "side": 1,
+      "message": "nit: how \u0027bout Net.QuicAltSvcFormat?",
+      "revId": "2d3557f50bd92e20464b6d132ffdce78af605f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a961dafb_9f395e08",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-10T01:16:49Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be just after line 72?",
+      "revId": "2d3557f50bd92e20464b6d132ffdce78af605f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe249f2_acefa35c",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-10T01:16:49Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2d3557f50bd92e20464b6d132ffdce78af605f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
