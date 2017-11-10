@@ -581,7 +581,8 @@ void ServiceWorkerRegisterJob::CompleteInternal(
   if (status != SERVICE_WORKER_OK) {
     if (registration()) {
       if (should_uninstall_on_failure_)
-        registration()->ClearWhenReady();
+        registration()->ClearWhenReady(
+            base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
       if (new_version()) {
         if (status == SERVICE_WORKER_ERROR_EXISTS)
           new_version()->SetStartWorkerStatusCode(SERVICE_WORKER_ERROR_EXISTS);

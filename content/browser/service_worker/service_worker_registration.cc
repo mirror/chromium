@@ -221,17 +221,15 @@ void ServiceWorkerRegistration::ClaimClients() {
   }
 }
 
-void ServiceWorkerRegistration::ClearWhenReady() {
+void ServiceWorkerRegistration::ClearWhenReady(const StatusCallback& callback) {
   DCHECK(context_);
   if (is_uninstalling_)
     return;
   is_uninstalling_ = true;
 
   context_->storage()->NotifyUninstallingRegistration(this);
-  context_->storage()->DeleteRegistration(
-      id(),
-      pattern().GetOrigin(),
-      base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+  context_->storage()->DeleteRegistration(id(), pattern().GetOrigin(),
+                                          callback);
 
   if (!active_version() || !active_version()->HasControllee())
     Clear();
