@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d41eeed_7eba6ae9",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-10T19:41:30Z",
+      "side": 1,
+      "message": "nit: You might have forgotten to \"git cl format\". There are two tabs here.",
+      "revId": "150a5049df7bcb39ea5c2d68457efec2215a016f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a5e02b_c5e4fc83",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_io_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-10T19:41:30Z",
+      "side": 1,
+      "message": "Is this right? We use NV12 IOSurfaces where the number of planes should be 2.",
+      "revId": "150a5049df7bcb39ea5c2d68457efec2215a016f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0057e41_30afe9f0",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_native_pixmap.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-10T19:41:30Z",
+      "side": 1,
+      "message": "Nit: leftover.",
+      "revId": "150a5049df7bcb39ea5c2d68457efec2215a016f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77238ccf_2c2ec990",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-10T19:41:30Z",
+      "side": 1,
+      "message": "bo_ might be null.\nWe assumed it\u0027s not null only when the usage is scanout. Can we extend this assumption to any usage/format/modifier?",
+      "revId": "150a5049df7bcb39ea5c2d68457efec2215a016f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
