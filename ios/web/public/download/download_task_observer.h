@@ -15,7 +15,7 @@ class DownloadTask;
 // thread.
 class DownloadTaskObserver {
  public:
-  // Called when the download task has started, downloaded a chunk of data or
+  // Called when download task has started, downloaded a chunk of data or
   // the download has been completed. Clients may call DownloadTask::IsDone() to
   // check if the task has completed, call DownloadTask::GetErrorCode() to check
   // if the download has failed, DownloadTask::GetPercentComplete() to check
