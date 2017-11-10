@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a0593c3_b226964b",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-10T00:48:13Z",
+      "side": 1,
+      "message": "For this condition, it seems it doesn\u0027t handle the case of auto screen off due to user inactivity.\n\nNot this CL related, I found chrome doesn\u0027t report stylus rejected as user activity. Thus, stylus rejected doesn\u0027t turn screen on for user-inactivity screen off.\n\nAnd I agree with Dan, PowerButton* code doesn\u0027t look like a good host for note-taking impl.",
+      "parentUuid": "cbbb4de2_ce93e6e2",
+      "revId": "42a9100e2fa3d0be5ad67c2eeb36c9d89859448c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97b516bc_91ad8bb6",
         "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
         "patchSetId": 5
