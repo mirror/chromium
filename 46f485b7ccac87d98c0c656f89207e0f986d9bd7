@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7959891_c9e9a791",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-10T05:24:33Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "7d6aa3aa_d1ab2449",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e46e6bdc_d336ac79",
         "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
         "patchSetId": 7
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a9f007a0_c2eb4ea2",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-10T05:24:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce002f4f_d708a047",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d6f7476_d7c2f25f",
         "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 7
@@ -77,6 +113,30 @@
     },
     {
       "key": {
+        "uuid": "3c859f30_6b7319d5",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-10T05:24:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d6f7476_d7c2f25f",
+      "range": {
+        "startLine": 108,
+        "startChar": 42,
+        "endLine": 108,
+        "endChar": 43
+      },
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da21be43_234eea77",
         "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 7
@@ -91,6 +151,24 @@
       "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e708f4_08eb4fc4",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-10T05:24:33Z",
+      "side": 1,
+      "message": "Nice, done",
+      "parentUuid": "da21be43_234eea77",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -129,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "347c00c6_f186d2c3",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-10T05:24:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bdf5514_9b780685",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dd70d38_6d451bfa",
         "filename": "content/renderer/service_worker/web_service_worker_provider_impl.h",
         "patchSetId": 7
@@ -143,6 +239,24 @@
       "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cefe15e_2bb47d60",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-10T05:24:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dd70d38_6d451bfa",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -217,6 +331,24 @@
     },
     {
       "key": {
+        "uuid": "dce39b70_d2afeed4",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-10T05:24:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "272d0f88_4d3b164b",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40d39676_3040aa92",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProviderClient.h",
         "patchSetId": 7
@@ -264,6 +396,24 @@
       "side": 1,
       "message": "We already have a presubmit for this--but we can\u0027t #include the Blink variant in public headers (since non-Blink code can include this header). This is what https://chromium-review.googlesource.com/753451 is trying to fix.",
       "parentUuid": "ae35e488_2a510d2e",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb252336_0c1ed7c5",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProviderClient.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-10T05:24:33Z",
+      "side": 1,
+      "message": "Thanks a lot for you clear info.",
+      "parentUuid": "d41841c2_5a51022b",
       "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
