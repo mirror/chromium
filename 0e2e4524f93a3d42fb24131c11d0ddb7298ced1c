@@ -16,6 +16,24 @@
       "revId": "0e2e4524f93a3d42fb24131c11d0ddb7298ced1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c89be6_3b840b53",
+        "filename": "extensions/renderer/runtime_custom_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-10T19:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef968c1f_a05370b6",
+      "revId": "0e2e4524f93a3d42fb24131c11d0ddb7298ced1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
