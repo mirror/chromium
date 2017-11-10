@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7dcbfc08_6455229b",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-10T17:56:26Z",
+      "side": 1,
+      "message": "yeah, I didn\u0027t find adding this logic to PowerButton* class ideal either - the reason was that this is where setting screen state due to stylus ejection was done.\n\nThough, the main connection of this class to power button is that it\u0027s owned by power button classes (there doesn\u0027t seem to be anything power button specific in the class logic itself) - it seems like it could be easily generalized into display_power_controller that can be used by both power button and lock screen apps code (and maybe its ownership can be moved to ash/shell.h). Let me look into doing this.",
+      "parentUuid": "6a0593c3_b226964b",
+      "revId": "42a9100e2fa3d0be5ad67c2eeb36c9d89859448c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97b516bc_91ad8bb6",
         "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
         "patchSetId": 5
