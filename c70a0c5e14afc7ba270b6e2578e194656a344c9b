@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6157c3b_772af86e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-10T18:37:37Z",
+      "side": 1,
+      "message": "Can we link this CL to the bug? Ideally, the bug would describe why this CL is needed.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 3
+      },
+      "revId": "c70a0c5e14afc7ba270b6e2578e194656a344c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e01198_bb76d642",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-10T18:37:37Z",
+      "side": 1,
+      "message": "Add:\nDCHECK(io_task_runner_-\u003eBelongsToCurrentThread());",
+      "range": {
+        "startLine": 274,
+        "startChar": 25,
+        "endLine": 274,
+        "endChar": 39
+      },
+      "revId": "c70a0c5e14afc7ba270b6e2578e194656a344c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e668b7_1c8c79b0",
+        "filename": "components/previews/content/previews_io_data_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-10T18:37:37Z",
+      "side": 1,
+      "message": "#include \u003cunordered_set\u003e",
+      "range": {
+        "startLine": 1016,
+        "startChar": 7,
+        "endLine": 1016,
+        "endChar": 20
+      },
+      "revId": "c70a0c5e14afc7ba270b6e2578e194656a344c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba146652_4b9c1b4a",
+        "filename": "components/previews/content/previews_io_data_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-10T18:37:37Z",
+      "side": 1,
+      "message": "++i",
+      "range": {
+        "startLine": 1018,
+        "startChar": 50,
+        "endLine": 1018,
+        "endChar": 53
+      },
+      "revId": "c70a0c5e14afc7ba270b6e2578e194656a344c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0752a465_4a256b73",
+        "filename": "components/previews/core/previews_user_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-10T18:37:37Z",
+      "side": 1,
+      "message": "rm this since this class is directly taking in the page_id",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 67
+      },
+      "revId": "c70a0c5e14afc7ba270b6e2578e194656a344c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ece3c8c_eed507dc",
+        "filename": "components/previews/core/previews_user_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-10T18:37:37Z",
+      "side": 1,
+      "message": "can this be a const field?",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 19
+      },
+      "revId": "c70a0c5e14afc7ba270b6e2578e194656a344c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a028b36f_bb14efc5",
+        "filename": "components/previews/core/previews_user_data_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-10T18:37:37Z",
+      "side": 1,
+      "message": "s/*fake_request.get()/*fake_request/\nshould be enough (I think).",
+      "range": {
+        "startLine": 50,
+        "startChar": 44,
+        "endLine": 50,
+        "endChar": 63
+      },
+      "revId": "c70a0c5e14afc7ba270b6e2578e194656a344c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
