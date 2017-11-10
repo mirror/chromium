@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b26dcbcb_c2223613",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-10T14:39:19Z",
+      "side": 1,
+      "message": "The name of this function now makes sense to both the if and else if block code here.",
+      "revId": "dc5b2b77995266a2e4ca5fe82d776c7affa51a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
