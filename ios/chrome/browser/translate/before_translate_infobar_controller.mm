@@ -12,6 +12,9 @@
 #include "base/strings/utf_string_conversions.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/translate/core/browser/translate_infobar_delegate.h"
+#include "ios/chrome/browser/translate/language_selection_context.h"
+#include "ios/chrome/browser/translate/language_selection_delegate.h"
+#include "ios/chrome/browser/translate/language_selection_handler.h"
 #include "ios/chrome/browser/translate/translate_infobar_tags.h"
 #import "ios/chrome/browser/ui/infobars/infobar_view.h"
 #import "ios/chrome/browser/ui/infobars/infobar_view_delegate.h"
@@ -98,7 +101,7 @@ NSTimeInterval kPickerAnimationDurationInSeconds = 0.2;
 
 @end
 
-@interface BeforeTranslateInfoBarController ()
+@interface BeforeTranslateInfoBarController ()<LanguageSelectionDelegate>
 
 // Action for any of the user defined buttons.
 - (void)infoBarButtonDidPress:(id)sender;
@@ -129,6 +132,8 @@ NSTimeInterval kPickerAnimationDurationInSeconds = 0.2;
   // |_languagePicker| does not retain it.
   LanguagePickerController* _languagePickerController;
 }
+
+@synthesize languageSelectionHandler = _languageSelectionHandler;
 
 #pragma mark -
 #pragma mark InfoBarControllerProtocol
@@ -258,6 +263,38 @@ NSTimeInterval kPickerAnimationDurationInSeconds = 0.2;
 }
 
 - (void)infobarLinkDidPress:(NSUInteger)tag {
+  size_t selectedRow;
+  size_t disabledRow;
+  int originalLanguageIndex = -1;
+  int targetLanguageIndex = -1;
+
+  for (size_t i = 0; i < _translateInfoBarDelegate->num_languages(); ++i) {
+    if (_translateInfoBarDelegate->language_code_at(i) ==
+        _translateInfoBarDelegate->original_language_code()) {
+      originalLanguageIndex = i;
+    }
+    if (_translateInfoBarDelegate->language_code_at(i) ==
+        _translateInfoBarDelegate->target_language_code()) {
+      targetLanguageIndex = i;
+    }
+  }
+  DCHECK_GT(originalLanguageIndex, -1);
+  DCHECK_GT(targetLanguageIndex, -1);
+
+  if (_languageSelectionType ==
+      TranslateInfoBarIOSTag::BEFORE_SOURCE_LANGUAGE) {
+    selectedRow = originalLanguageIndex;
+    disabledRow = targetLanguageIndex;
+  } else {
+    selectedRow = targetLanguageIndex;
+    disabledRow = originalLanguageIndex;
+  }
+  LanguageSelectionContext* context = [LanguageSelectionContext
+      contextWithLanguageData:_translateInfoBarDelegate
+                 initialIndex:selectedRow
+             unavailableIndex:disabledRow];
+  [self.languageSelectionHandler showLanguageSelectorWithContext:context
+                                                        delegate:self];
   _languageSelectionType = tag;
   DCHECK(_languageSelectionType ==
              TranslateInfoBarIOSTag::BEFORE_SOURCE_LANGUAGE ||
@@ -274,9 +311,11 @@ NSTimeInterval kPickerAnimationDurationInSeconds = 0.2;
   CGRect parentFrame =
       CGRectApplyAffineTransform([parentView frame], [parentView transform]);
   const CGFloat totalPickerHeight = kUIPickerHeight + kNavigationBarHeight;
+  // CGRect infobarFrame = self.view.frame;
+  CGRect infobarFrame = parentFrame;
   CGRect languageSelectionViewFrame =
-      CGRectMake(0, parentFrame.size.height - totalPickerHeight,
-                 parentFrame.size.width, totalPickerHeight);
+      CGRectMake(0, infobarFrame.size.height - totalPickerHeight,
+                 infobarFrame.size.width, totalPickerHeight);
   _languageSelectionView =
       [[UIView alloc] initWithFrame:languageSelectionViewFrame];
   [_languageSelectionView
@@ -318,32 +357,6 @@ NSTimeInterval kPickerAnimationDurationInSeconds = 0.2;
   [_navigationBar pushNavigationItem:item animated:NO];
 
   // Creates the PickerView and its controller.
-  NSInteger selectedRow;
-  NSInteger disabledRow;
-  NSInteger originalLanguageIndex = -1;
-  NSInteger targetLanguageIndex = -1;
-
-  for (size_t i = 0; i < _translateInfoBarDelegate->num_languages(); ++i) {
-    if (_translateInfoBarDelegate->language_code_at(i) ==
-        _translateInfoBarDelegate->original_language_code()) {
-      originalLanguageIndex = i;
-    }
-    if (_translateInfoBarDelegate->language_code_at(i) ==
-        _translateInfoBarDelegate->target_language_code()) {
-      targetLanguageIndex = i;
-    }
-  }
-  DCHECK_GT(originalLanguageIndex, -1);
-  DCHECK_GT(targetLanguageIndex, -1);
-
-  if (_languageSelectionType ==
-      TranslateInfoBarIOSTag::BEFORE_SOURCE_LANGUAGE) {
-    selectedRow = originalLanguageIndex;
-    disabledRow = targetLanguageIndex;
-  } else {
-    selectedRow = targetLanguageIndex;
-    disabledRow = originalLanguageIndex;
-  }
   _languagePickerController = [[LanguagePickerController alloc]
       initWithDelegate:_translateInfoBarDelegate
             initialRow:selectedRow
@@ -378,6 +391,14 @@ NSTimeInterval kPickerAnimationDurationInSeconds = 0.2;
 - (void)detachView {
   [super detachView];
   [self dismissLanguageSelectionView];
+}
+
+#pragma mark - LanguageSelectionDelegate
+
+- (void)languageSelectorSelectedLanguage:(std::string)languageCode {
+}
+
+- (void)languageSelectorClosedWithoutSelection {
 }
 
 @end
