@@ -754,6 +754,39 @@ class InputMsgWatcher : public RenderWidgetHost::InputEventObserver {
   DISALLOW_COPY_AND_ASSIGN(InputMsgWatcher);
 };
 
+// Used to wait for a desired input event ack.
+class InputEventAckWaiter : public RenderWidgetHost::InputEventObserver {
+ public:
+  using InputEventAckPred =
+      base::RepeatingCallback<bool(InputEventAckSource source,
+                                   InputEventAckState state,
+                                   const blink::WebInputEvent& event)>;
+
+  // Wait for an event satisfying |predicate|.
+  InputEventAckWaiter(RenderWidgetHost* render_widget_host,
+                      InputEventAckPred predicate);
+  // Wait for any event of the given |type|.
+  InputEventAckWaiter(RenderWidgetHost* render_widget_host,
+                      blink::WebInputEvent::Type type);
+  ~InputEventAckWaiter() override;
+
+  void Wait();
+  void Reset();
+
+  // RenderWidgetHost::InputEventObserver:
+  void OnInputEventAck(InputEventAckSource source,
+                       InputEventAckState state,
+                       const blink::WebInputEvent& event) override;
+
+ private:
+  RenderWidgetHost* render_widget_host_;
+  InputEventAckPred predicate_;
+  bool event_received_;
+  base::Closure quit_;
+
+  DISALLOW_COPY_AND_ASSIGN(InputEventAckWaiter);
+};
+
 // Sets up a ui::TestClipboard for use in browser tests. On Windows,
 // clipboard is handled on the IO thread, BrowserTestClipboardScope
 // hops messages onto the right thread.
