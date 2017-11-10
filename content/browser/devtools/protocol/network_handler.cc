@@ -491,6 +491,32 @@ net::Error NetErrorFromString(const std::string& error, bool* ok) {
   return net::ERR_FAILED;
 }
 
+String NetErrorToString(int net_error) {
+  if (net_error == net::ERR_ABORTED)
+    return Network::ErrorReasonEnum::Aborted;
+  if (net_error == net::ERR_TIMED_OUT)
+    return Network::ErrorReasonEnum::TimedOut;
+  if (net_error == net::ERR_ACCESS_DENIED)
+    return Network::ErrorReasonEnum::AccessDenied;
+  if (net_error == net::ERR_CONNECTION_CLOSED)
+    return Network::ErrorReasonEnum::ConnectionClosed;
+  if (net_error == net::ERR_CONNECTION_RESET)
+    return Network::ErrorReasonEnum::ConnectionReset;
+  if (net_error == net::ERR_CONNECTION_REFUSED)
+    return Network::ErrorReasonEnum::ConnectionRefused;
+  if (net_error == net::ERR_CONNECTION_ABORTED)
+    return Network::ErrorReasonEnum::ConnectionAborted;
+  if (net_error == net::ERR_CONNECTION_FAILED)
+    return Network::ErrorReasonEnum::ConnectionFailed;
+  if (net_error == net::ERR_NAME_NOT_RESOLVED)
+    return Network::ErrorReasonEnum::NameNotResolved;
+  if (net_error == net::ERR_INTERNET_DISCONNECTED)
+    return Network::ErrorReasonEnum::InternetDisconnected;
+  if (net_error == net::ERR_ADDRESS_UNREACHABLE)
+    return Network::ErrorReasonEnum::AddressUnreachable;
+  return Network::ErrorReasonEnum::Failed;
+}
+
 bool AddInterceptedResourceType(
     const std::string& resource_type,
     base::flat_set<ResourceType>* intercepted_resource_types) {
@@ -1083,7 +1109,9 @@ DispatchResponse NetworkHandler::SetRequestInterception(
         }
       }
       interceptor_patterns.push_back(DevToolsURLRequestInterceptor::Pattern(
-          patterns->get(i)->GetUrlPattern("*"), std::move(resource_types)));
+          patterns->get(i)->GetUrlPattern("*"), std::move(resource_types),
+          patterns->get(i)->GetInterceptionStage(
+              protocol::Network::InterceptionStageEnum::Request)));
     }
 
     interceptor->StartInterceptingRequests(frame_tree_node,
@@ -1127,7 +1155,6 @@ bool GetPostData(const net::URLRequest* request, std::string* post_data) {
 }
 }  // namespace
 
-// TODO(alexclarke): Support structured data as well as |base64_raw_response|.
 void NetworkHandler::ContinueInterceptedRequest(
     const std::string& interception_id,
     Maybe<std::string> error_reason,
@@ -1176,6 +1203,20 @@ void NetworkHandler::ContinueInterceptedRequest(
           std::move(method), std::move(post_data), std::move(headers),
           std::move(auth_challenge_response), mark_as_canceled),
       std::move(callback));
+}
+
+void NetworkHandler::GetResponseBodyForInterception(
+    const String& interception_id,
+    std::unique_ptr<GetResponseBodyForInterceptionCallback> callback) {
+  DevToolsInterceptorController* interceptor =
+      DevToolsInterceptorController::FromBrowserContext(
+          process_->GetBrowserContext());
+
+  if (!interceptor) {
+    callback->sendFailure(Response::InternalError());
+    return;
+  }
+  interceptor->GetResponseBody(interception_id, std::move(callback));
 }
 
 // static
@@ -1290,12 +1331,15 @@ const char* ResourceTypeToString(ResourceType resource_type) {
 
 void NetworkHandler::RequestIntercepted(
     std::unique_ptr<InterceptedRequestInfo> info) {
+  protocol::Maybe<protocol::Network::ErrorReason> error_reason;
+  if (info->response_error_code < 0)
+    error_reason = NetErrorToString(info->response_error_code);
   frontend_->RequestIntercepted(
       info->interception_id, std::move(info->network_request),
       info->frame_id.ToString(), ResourceTypeToString(info->resource_type),
-      info->is_navigation, std::move(info->headers_object),
-      std::move(info->http_status_code), std::move(info->redirect_url),
-      std::move(info->auth_challenge));
+      info->is_navigation, std::move(info->redirect_url),
+      std::move(info->auth_challenge), std::move(error_reason),
+      std::move(info->response_status_code), std::move(info->response_headers));
 }
 
 void NetworkHandler::SetNetworkConditions(
