@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "452d6f20_64939b74",
+        "filename": "ios/chrome/browser/tabs/tab_model_favicon_driver_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T14:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2ea6956_2d1e0787",
+      "range": {
+        "startLine": 54,
+        "startChar": 14,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "8a46a88f25a28f86ad854043fbf1beba0ffad915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a36fb51a_022fe46e",
         "filename": "ios/chrome/browser/tabs/tab_model_favicon_driver_observer.mm",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "8a46a88f25a28f86ad854043fbf1beba0ffad915",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165ca0d6_5111fad1",
+        "filename": "ios/chrome/browser/tabs/tab_model_favicon_driver_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T14:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a36fb51a_022fe46e",
+      "revId": "8a46a88f25a28f86ad854043fbf1beba0ffad915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
