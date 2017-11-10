@@ -16,6 +16,24 @@
       "revId": "8ad2991b5fc4aa9b0da2ca62b4d05bef63f7c3ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15bb4690_7d325187",
+        "filename": "chrome/services/wifi_util_win/public/interfaces/wifi_credentials_getter.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-10T17:19:59Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "30b6e035_c77adf1c",
+      "revId": "8ad2991b5fc4aa9b0da2ca62b4d05bef63f7c3ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f61ee0f_df0d6d43",
+        "filename": "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-10T17:19:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ca2566f_09e1ddc5",
+      "revId": "236fe4baee74324ed9fb8f9a8debc94e0b758962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eaf7f8f_b932b3f3",
         "filename": "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter_win.cc",
         "patchSetId": 10
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "b42f192e_2743dc58",
+        "filename": "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-10T17:19:59Z",
+      "side": 1,
+      "message": "OK, removed them.",
+      "parentUuid": "c9550c21_65b4e132",
+      "revId": "236fe4baee74324ed9fb8f9a8debc94e0b758962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f97c7f15_14f6e1ad",
         "filename": "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter_win.cc",
         "patchSetId": 10
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "2431102d_af4caa1f",
+        "filename": "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-10T17:19:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f97c7f15_14f6e1ad",
+      "revId": "236fe4baee74324ed9fb8f9a8debc94e0b758962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad472199_0bb9c399",
         "filename": "chrome/utility/chrome_content_utility_client.cc",
         "patchSetId": 10
@@ -103,6 +157,24 @@
       "revId": "236fe4baee74324ed9fb8f9a8debc94e0b758962",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "936e45ad_30ded320",
+        "filename": "chrome/utility/chrome_content_utility_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-10T17:19:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad472199_0bb9c399",
+      "revId": "236fe4baee74324ed9fb8f9a8debc94e0b758962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
