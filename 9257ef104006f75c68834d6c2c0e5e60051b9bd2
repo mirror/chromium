@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48672cad_e60a2085",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/params/ParameterAnnotations.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T16:45:52Z",
+      "side": 1,
+      "message": "Is this actually used?",
+      "range": {
+        "startLine": 24,
+        "startChar": 44,
+        "endLine": 24,
+        "endChar": 55
+      },
+      "revId": "9257ef104006f75c68834d6c2c0e5e60051b9bd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2fa0ad_16231409",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/params/ParameterizedRunnerDelegateFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T16:45:52Z",
+      "side": 1,
+      "message": "Can you catch more specific exceptions? Also, if no empty constructor is found, it\u0027s going to be a NullPointerException, but can you treat that case separately?",
+      "range": {
+        "startLine": 107,
+        "startChar": 25,
+        "endLine": 107,
+        "endChar": 34
+      },
+      "revId": "9257ef104006f75c68834d6c2c0e5e60051b9bd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6b6ee4_8aa0e097",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/params/ParameterizedRunnerDelegateFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T16:45:52Z",
+      "side": 1,
+      "message": "Unbreak this line?",
+      "range": {
+        "startLine": 114,
+        "startChar": 69,
+        "endLine": 115,
+        "endChar": 18
+      },
+      "revId": "9257ef104006f75c68834d6c2c0e5e60051b9bd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c1efe5_4965effd",
+        "filename": "base/test/android/junit/src/org/chromium/base/test/params/ExampleParameterizedTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T16:45:52Z",
+      "side": 1,
+      "message": "You could just return sMethodParamA here -- no need to pretend it doesn\u0027t exist :)",
+      "range": {
+        "startLine": 49,
+        "startChar": 19,
+        "endLine": 51,
+        "endChar": 69
+      },
+      "revId": "9257ef104006f75c68834d6c2c0e5e60051b9bd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
