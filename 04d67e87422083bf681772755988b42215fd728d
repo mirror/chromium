@@ -113,6 +113,30 @@
       "revId": "04d67e87422083bf681772755988b42215fd728d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd1742d_94f05ef9",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-11-10T14:46:33Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "5a302cf4_6bf29328",
+      "range": {
+        "startLine": 363,
+        "startChar": 17,
+        "endLine": 363,
+        "endChar": 24
+      },
+      "revId": "04d67e87422083bf681772755988b42215fd728d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
