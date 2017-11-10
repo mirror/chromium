@@ -18,6 +18,11 @@
 #include "ui/gl/gl_fence_apple.h"
 #endif
 
+#if defined(USE_EGL)
+#include "ui/gl/gl_fence_android_native_fence_sync.h"
+#include "ui/gl/gl_surface_egl.h"
+#endif
+
 namespace gl {
 
 GLFence::GLFence() {
@@ -82,6 +87,42 @@ void GLFence::ResetState() {
 
 void GLFence::Invalidate() {
   NOTIMPLEMENTED();
+}
+
+bool GLFence::IsGpuFenceSupported() {
+#if defined(USE_EGL)
+  return gl::GLSurfaceEGL::IsAndroidNativeFenceSyncSupported();
+#endif
+  return false;
+}
+
+// static
+std::unique_ptr<GLFence> GLFence::CreateFromGpuFenceHandle(
+    const gfx::GpuFenceHandle& handle) {
+  DCHECK(IsGpuFenceSupported());
+  switch (handle.type) {
+#if defined(USE_EGL)
+    case gfx::GpuFenceHandleType::ANDROID_NATIVE_FENCE_SYNC:
+      return GLFenceAndroidNativeFenceSync::CreateFromGpuFenceHandle(handle);
+#endif
+    default:
+      NOTREACHED();
+      return nullptr;
+  }
+}
+
+// static
+std::unique_ptr<GLFence> GLFence::CreateForGpuFence() {
+  DCHECK(IsGpuFenceSupported());
+#if defined USE_EGL
+  return base::MakeUnique<GLFenceAndroidNativeFenceSync>();
+#endif
+  NOTREACHED();
+  return nullptr;
+}
+
+gfx::GpuFenceHandle GLFence::GetGpuFenceHandle() {
+  return gfx::GpuFenceHandle();
 }
 
 }  // namespace gl

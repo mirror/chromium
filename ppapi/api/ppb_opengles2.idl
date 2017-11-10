@@ -619,6 +619,10 @@ interface PPB_OpenGLES2 {
                 [in] GLint y,
                 [in] GLsizei width,
                 [in] GLsizei height);
+  void WaitGpuFenceCHROMIUM([in] PP_Resource context,
+                            [in] GLuint gpu_fence_id);
+  void DestroyGpuFenceCHROMIUM([in] PP_Resource context,
+                               [in] GLuint gpu_fence_id);
 };
 
 

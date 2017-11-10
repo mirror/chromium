@@ -402,5 +402,9 @@
 #define glTexStorage2DImageCHROMIUM GLES2_GET_FUN(TexStorage2DImageCHROMIUM)
 #define glSetColorSpaceMetadataCHROMIUM \
   GLES2_GET_FUN(SetColorSpaceMetadataCHROMIUM)
+#define glCreateGpuFenceCHROMIUM GLES2_GET_FUN(CreateGpuFenceCHROMIUM)
+#define glDuplicateGpuFenceCHROMIUM GLES2_GET_FUN(DuplicateGpuFenceCHROMIUM)
+#define glWaitGpuFenceCHROMIUM GLES2_GET_FUN(WaitGpuFenceCHROMIUM)
+#define glDestroyGpuFenceCHROMIUM GLES2_GET_FUN(DestroyGpuFenceCHROMIUM)
 
 #endif  // GPU_GLES2_GL2CHROMIUM_AUTOGEN_H_

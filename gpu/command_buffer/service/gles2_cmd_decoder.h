@@ -32,6 +32,7 @@ class GLImage;
 }
 
 namespace gfx {
+struct GpuFenceHandle;
 class Size;
 }
 
@@ -47,6 +48,7 @@ class ErrorState;
 class FeatureInfo;
 class FramebufferManager;
 class GLES2Util;
+class GpuFenceManager;
 class ImageManager;
 class Logger;
 class Outputter;
@@ -195,6 +197,12 @@ class GPU_EXPORT GLES2Decoder : public CommonDecoder, public AsyncAPIInterface {
   virtual void TakeFrontBuffer(const Mailbox& mailbox) = 0;
   virtual void ReturnFrontBuffer(const Mailbox& mailbox, bool is_lost) = 0;
 
+#if 0
+  virtual void CreateGpuFence(uint32_t create_id, const base::Callback<void(
+        const gfx::GpuFenceHandle& handle)>& callback) = 0;
+#endif
+  virtual void InsertGpuFence(const gfx::GpuFenceHandle& handle) = 0;
+
   // Resize an offscreen frame buffer.
   virtual bool ResizeOffscreenFramebuffer(const gfx::Size& size) = 0;
 
@@ -243,6 +251,9 @@ class GPU_EXPORT GLES2Decoder : public CommonDecoder, public AsyncAPIInterface {
 
   // Gets the QueryManager for this context.
   virtual QueryManager* GetQueryManager() = 0;
+
+  // Gets the GpuFenceManager for this context.
+  virtual GpuFenceManager* GetGpuFenceManager() = 0;
 
   // Gets the FramebufferManager for this context.
   virtual FramebufferManager* GetFramebufferManager() = 0;

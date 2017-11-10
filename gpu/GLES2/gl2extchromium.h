@@ -1255,6 +1255,18 @@ typedef void(GL_APIENTRYP PFNGLSETCOLORSPACEMETADATACHROMIUM)(
     GLColorSpace color_space);
 #endif /* GL_CHROMIUM_color_space_metadata */
 
+/* GL_CHROMIUM_fence */
+#ifndef GL_CHROMIUM_fence
+#define GL_CHROMIUM_fence 1
+
+typedef struct _ClientGpuFence* ClientGpUFence;
+
+#ifdef GL_GLEXT_PROTOTYPES
+GL_APICALL GLuint GL_APIENTRY glCreateGpuFenceCHROMIUM();
+#endif
+typedef GLuint(GL_APIENTRYP PFNGLCREATEGPUFENCECHROMIUMPROC)();
+#endif /* GL_CHROMIUM_fence */
+
 #ifdef __cplusplus
 }
 #endif

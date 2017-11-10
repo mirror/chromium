@@ -149,6 +149,13 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
 
   void ReturnFrontBuffer(const Mailbox& mailbox, bool is_lost) override;
 
+#if 0
+  void CreateGpuFence(uint32_t create_id, const base::Callback<void(
+        const gfx::GpuFenceHandle& handle)>& callback) override;
+#endif
+
+  void InsertGpuFence(const gfx::GpuFenceHandle& handle) override;
+
   // Resize an offscreen frame buffer.
   bool ResizeOffscreenFramebuffer(const gfx::Size& size) override;
 
@@ -199,6 +206,9 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
 
   // Gets the QueryManager for this context.
   QueryManager* GetQueryManager() override;
+
+  // Gets the GpuFenceManager for this context.
+  GpuFenceManager* GetGpuFenceManager() override;
 
   // Gets the FramebufferManager for this context.
   FramebufferManager* GetFramebufferManager() override;
