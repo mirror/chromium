@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "5deeb42f_fcdf285f",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-10T17:06:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8c49f31_ddedad5b",
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00704a94_ec10abd6",
         "filename": "components/arc/common/usb_host.mojom",
         "patchSetId": 7
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "b717161f_c6285e3c",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-10T17:06:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00704a94_ec10abd6",
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "013684c4_eb05d995",
         "filename": "components/arc/common/usb_host.mojom",
         "patchSetId": 7
@@ -70,6 +106,30 @@
       "writtenOn": "2017-11-08T14:50:19Z",
       "side": 1,
       "message": "Can you add more comments to illustrate a sample session? Why is it that RequestPermission asks for a package name, but OpenDevice does not? Permission checking and resource allocation should be atomic from an interface standpoint.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070e9750_56780152",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-10T17:06:13Z",
+      "side": 1,
+      "message": "It\u0027s working the same way as the current USB API for both Chrome/permission_broker and Android.\nOpenDevice will fail if you haven\u0027t called RequestPermission on the device guid in the past.\nRequestPermission might trigger a user pop-up if you haven\u0027t been given the authorization in the past (and the package name is used for the user popup to give him context).\nI have added some tentative comments there.",
+      "parentUuid": "013684c4_eb05d995",
       "range": {
         "startLine": 14,
         "startChar": 0,
@@ -99,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1614cb4f_9107f5c6",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-10T17:06:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "da929fcc_b8e807fc",
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9526ade9_d85c237f",
         "filename": "components/arc/usb/usb_host_bridge.cc",
         "patchSetId": 7
@@ -110,6 +188,30 @@
       "writtenOn": "2017-11-08T14:50:19Z",
       "side": 1,
       "message": "This is probably overkill since it doesn\u0027t even save you one line.",
+      "range": {
+        "startLine": 56,
+        "startChar": 20,
+        "endLine": 56,
+        "endChar": 33
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6e03f5_45169d11",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-10T17:06:13Z",
+      "side": 1,
+      "message": "Removed ...",
+      "parentUuid": "9526ade9_d85c237f",
       "range": {
         "startLine": 56,
         "startChar": 20,
@@ -145,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "ee523ca1_72b4c8ac",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-10T17:06:13Z",
+      "side": 1,
+      "message": "Yes, that\u0027s pointing I\u0027m not sure of the lifecycle of UsbService...\nI have updated to gracefully continue everywhere.",
+      "parentUuid": "636647fd_c2b54a4c",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 14
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85406522_e5bc4810",
         "filename": "components/arc/usb/usb_host_bridge.cc",
         "patchSetId": 7
@@ -156,6 +282,30 @@
       "writtenOn": "2017-11-08T14:50:19Z",
       "side": 1,
       "message": "Seems like this can be in the anonymous namespace, since you\u0027 re not using any members.",
+      "range": {
+        "startLine": 135,
+        "startChar": 20,
+        "endLine": 135,
+        "endChar": 34
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "068d474a_902056d2",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-10T17:06:13Z",
+      "side": 1,
+      "message": "Moved",
+      "parentUuid": "85406522_e5bc4810",
       "range": {
         "startLine": 135,
         "startChar": 20,
@@ -185,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "761b35e0_33a37d34",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-10T17:06:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "926a9221_7d942a2d",
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa50202_70f618c4",
         "filename": "components/arc/usb/usb_host_bridge.cc",
         "patchSetId": 7
@@ -196,6 +364,30 @@
       "writtenOn": "2017-11-08T14:50:19Z",
       "side": 1,
       "message": "Please convert all base::Bind to base::BindOnce: the latter is implicitly convertible to the former, and you\u0027ll save the folks who are performing the migration some time.",
+      "range": {
+        "startLine": 186,
+        "startChar": 12,
+        "endLine": 186,
+        "endChar": 16
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e95558_adf6a5dd",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-10T17:06:13Z",
+      "side": 1,
+      "message": "Ok I did it for the Mojo callbacks,\nbut here for permission broker D-Bus client, this is a \u0027real\u0027 Callback rather than a OnceCallback. Can I really do something now ?",
+      "parentUuid": "3aa50202_70f618c4",
       "range": {
         "startLine": 186,
         "startChar": 12,
@@ -231,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "5cdd5939_d4419bbb",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-10T17:06:13Z",
+      "side": 1,
+      "message": "Thanks for the hint.\nFixed",
+      "parentUuid": "1d607898_1397aeab",
+      "range": {
+        "startLine": 189,
+        "startChar": 30,
+        "endLine": 189,
+        "endChar": 49
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45141b17_f8e6eafb",
         "filename": "components/arc/usb/usb_host_bridge.cc",
         "patchSetId": 7
@@ -254,6 +470,30 @@
     },
     {
       "key": {
+        "uuid": "e6bdf52b_fa3dd24e",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-10T17:06:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45141b17_f8e6eafb",
+      "range": {
+        "startLine": 193,
+        "startChar": 2,
+        "endLine": 193,
+        "endChar": 16
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81a5a812_e738fdde",
         "filename": "components/arc/usb/usb_host_bridge.cc",
         "patchSetId": 7
@@ -265,6 +505,30 @@
       "writtenOn": "2017-11-08T14:50:19Z",
       "side": 1,
       "message": "I think you can also move this to the anonymous namespace if you pass in a callback:\n\n  service-\u003eGetDevices(base::BindOnce(\u0026OnGetDevicesComplete,\n                                     base::BindRepeating(\u0026UsbHostBridge::OnDeviceChecked,\n                                                         weak_factory_.GetWeakPtr()));\n\nand then here do\n\n  device-\u003eCheckUsbAccess(base::BindOnce(callback, device.get()-\u003eguid()));",
+      "range": {
+        "startLine": 204,
+        "startChar": 20,
+        "endLine": 204,
+        "endChar": 40
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe5946b_498012f6",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-10T17:06:13Z",
+      "side": 1,
+      "message": "Thanks for the detailed piece of advice.\n\nI have updated it\n(excepted s/BindOnce/Bind/ for UsbService::GetDevice() as it takes Callback rather than OnceCallback same as above)",
+      "parentUuid": "81a5a812_e738fdde",
       "range": {
         "startLine": 204,
         "startChar": 20,
@@ -300,6 +564,30 @@
     },
     {
       "key": {
+        "uuid": "cf781298_7829f7b9",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-10T17:06:13Z",
+      "side": 1,
+      "message": "So \u0027\u003d\u0027 and \u0027?\u0027 are a debugging leftover as you might have guessed,\nI have put back the empty String as originally intended.\n\nBy the way, about the workaround itself, I don\u0027t know why the optional String makes the mojo deserializer explode on the Android/java side, if you have more info / a KI / somebody with knowledge about this, I\u0027m somewhat interested",
+      "parentUuid": "bdb8fb6f_e9928c7d",
+      "range": {
+        "startLine": 233,
+        "startChar": 4,
+        "endLine": 233,
+        "endChar": 50
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba1e32b8_50a4e2ac",
         "filename": "components/arc/usb/usb_host_bridge.cc",
         "patchSetId": 7
@@ -311,6 +599,30 @@
       "writtenOn": "2017-11-08T14:50:19Z",
       "side": 1,
       "message": "These comments are unnecessary since they go out of sync with the interface pretty quickly.",
+      "range": {
+        "startLine": 250,
+        "startChar": 0,
+        "endLine": 252,
+        "endChar": 15
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64abc598_22af771b",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-10T17:06:13Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "ba1e32b8_50a4e2ac",
       "range": {
         "startLine": 250,
         "startChar": 0,
@@ -343,6 +655,30 @@
       "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3600490_7aa3736d",
+        "filename": "components/arc/usb/usb_host_bridge.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-10T17:06:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba6e6d3a_5f4ca6b5",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
