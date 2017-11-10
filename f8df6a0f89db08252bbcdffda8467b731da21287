@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a2dac99_2af5b307",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-10T22:04:41Z",
+      "side": 1,
+      "message": "nit: It looks like you added the \"Extensions.\" prefix to this histogram name.  Please mention that change in the CL description.",
+      "range": {
+        "startLine": 90,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 18
+      },
+      "revId": "f8df6a0f89db08252bbcdffda8467b731da21287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
