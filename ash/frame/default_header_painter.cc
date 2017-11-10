@@ -20,6 +20,7 @@
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/image/image.h"
+#include "ui/gfx/render_text.h"
 #include "ui/gfx/scoped_canvas.h"
 #include "ui/gfx/skia_util.h"
 #include "ui/views/view.h"
@@ -171,6 +172,8 @@ void DefaultHeaderPainter::LayoutHeader() {
                            : AshLayoutSize::BROWSER_RESTORED_CAPTION_BUTTON));
     caption_button_container_->SetButtonSize(button_size);
   }
+  if (back_button_)
+    back_button_->set_use_light_images(ShouldUseLightImages());
 
   caption_button_container_->SetUseLightImages(ShouldUseLightImages());
   UpdateSizeButtonImages();
@@ -305,6 +308,15 @@ void DefaultHeaderPainter::PaintTitleBar(gfx::Canvas* canvas) {
   // The window icon is painted by its own views::View.
   gfx::Rect title_bounds = GetTitleBounds();
   title_bounds.set_x(view_->GetMirroredXForRect(title_bounds));
+  auto title = frame_->widget_delegate()->GetWindowTitle();
+  LOG(ERROR) << "WindowTitle:" << title
+             << ", title bounds=" << title_bounds.ToString();
+  SkColor text_color = kTitleTextColor;
+  if (color_utils::GetRelativeLuminance(active_frame_color_) < 0.5) {
+    text_color = SK_ColorWHITE;
+  }
+  //int flag = gfx::Canvas::NO_SUBPIXEL_RENDERING |
+  //    gfx::Canvas::NO_ELLIPSIS;
   canvas->DrawStringRectWithFlags(
       frame_->widget_delegate()->GetWindowTitle(), GetTitleFontList(),
       GetTitleColor(), title_bounds, gfx::Canvas::NO_SUBPIXEL_RENDERING);

@@ -153,6 +153,7 @@ bool ExtendedMouseWarpController::WarpMouseCursor(ui::MouseEvent* event) {
 }
 
 void ExtendedMouseWarpController::SetEnabled(bool enabled) {
+  LOG(ERROR) << "SetEnabled:" << enabled;
   enabled_ = enabled;
 }
 

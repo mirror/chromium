@@ -19,6 +19,7 @@ class View;
 namespace ash {
 
 class FrameCaptionButtonContainerView;
+class HeaderView;
 
 // Returns the HitTestCompat for the specified point.
 ASH_EXPORT int FrameBorderNonClientHitTest(

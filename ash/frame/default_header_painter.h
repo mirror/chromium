@@ -28,6 +28,7 @@ class Widget;
 namespace ash {
 class FrameCaptionButton;
 class FrameCaptionButtonContainerView;
+class FrameCaptionButton;
 
 // Helper class for painting the default window header.
 class ASH_EXPORT DefaultHeaderPainter : public HeaderPainter,

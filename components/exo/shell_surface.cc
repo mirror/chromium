@@ -39,6 +39,7 @@
 #include "ui/display/screen.h"
 #include "ui/gfx/path.h"
 #include "ui/views/widget/widget.h"
+#include "ui/views/window/non_client_view.h"
 #include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/core/shadow.h"
 #include "ui/wm/core/shadow_controller.h"
@@ -64,14 +65,24 @@ constexpr int kOrientationLockTimeoutMs = 2500;
 // fullscreen or pinned state.
 constexpr int kMaximizedOrFullscreenOrPinnedLockTimeoutMs = 100;
 
-// The accelerator keys used to close ShellSurfaces.
-const struct {
+// Thpis is a struct for accelerator keys.
+struct Accelerator {
   ui::KeyboardCode keycode;
   int modifiers;
-} kCloseWindowAccelerators[] = {
+};
+
+// The accelerator keys used to close ShellSurfaces.
+const Accelerator kCloseWindowAccelerators[] = {
     {ui::VKEY_W, ui::EF_CONTROL_DOWN},
     {ui::VKEY_W, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN},
     {ui::VKEY_F4, ui::EF_ALT_DOWN}};
+
+// The accelerator keys reserved to be processed by the focus manager.
+const Accelerator kReservedAccelerators[] = {
+    {ui::VKEY_SPACE, ui::EF_CONTROL_DOWN},
+    {ui::VKEY_SPACE, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN},
+    {ui::VKEY_F13, ui::EF_NONE},
+    {ui::VKEY_I, ui::EF_SHIFT_DOWN | ui::EF_ALT_DOWN}};
 
 class CustomFrameView : public views::NonClientFrameView {
  public:
@@ -119,9 +130,13 @@ class CustomWindowTargeter : public aura::WindowTargeter {
     }
 
     int component = widget_->non_client_view()->NonClientHitTest(local_point);
+    if (component == HTCAPTION) {
+      return true;
+    }
     if (component != HTNOWHERE && component != HTCLIENT)
       return true;
 
+    // Otherwise, fallback to hit test on the surface.
     aura::Window::ConvertPointToTarget(window, surface->window(), &local_point);
     return surface->HitTestRect(gfx::Rect(local_point, gfx::Size(1, 1)));
   }
@@ -140,7 +155,9 @@ class CustomWindowResizer : public ash::WindowResizer {
       : WindowResizer(window_state) {}
 
   // Overridden from ash::WindowResizer:
-  void Drag(const gfx::Point& location, int event_flags) override {}
+  void Drag(const gfx::Point& location, int event_flags) override {
+    LOG(ERROR) << "Drag:" << location.ToString();
+  }
   void CompleteDrag() override {}
   void RevertDrag() override {}
 
@@ -156,10 +173,18 @@ class ShellSurfaceWidget : public views::Widget {
   // Overridden from views::Widget
   void Close() override { shell_surface_->Close(); }
   void OnKeyEvent(ui::KeyEvent* event) override {
-    // Handle only accelerators. Do not call Widget::OnKeyEvent that eats focus
-    // management keys (like the tab key) as well.
-    if (GetFocusManager()->ProcessAccelerator(ui::Accelerator(*event)))
-      event->SetHandled();
+    // TODO(hidehiko): Handle ESC + SHIFT + COMMAND accelerator key
+    // to escape pinned mode.
+    for (const auto& entry : kReservedAccelerators) {
+      // Handle only reserved accelerators.
+      if (event->flags() == entry.modifiers &&
+          event->key_code() == entry.keycode) {
+        if (GetFocusManager()->ProcessAccelerator(ui::Accelerator(*event)))
+          event->StopPropagation();
+      }
+    }
+    // Do not call Widget::OnKeyEvent that eats focus management keys (like the
+    // tab key) as well.
   }
 
  private:
@@ -757,6 +782,8 @@ void ShellSurface::OnSurfaceCommit() {
 
   // Apply new window geometry.
   geometry_ = pending_geometry_;
+  LOG(ERROR) << "OnCommit: geometry=:" << geometry_.ToString()
+             << ", shadow=" << (shadow_bounds_ ? shadow_bounds_->ToString() : std::string());
 
   // Apply new minimum/maximium size.
   minimum_size_ = pending_minimum_size_;
@@ -843,6 +870,23 @@ void ShellSurface::OnSetFrame(SurfaceFrameType type) {
       shadow_bounds_ = gfx::Rect();
       break;
   }
+  if (!GetWidget() || !GetWidget()->non_client_view())
+    return;
+  ash::CustomFrameViewAsh* frame_view = static_cast<ash::CustomFrameViewAsh*>(
+      GetWidget()->non_client_view()->frame_view());
+  if (frame_view != nullptr) {
+    frame_view->SetBackButtonState(ash::FrameBackButtonState::kVisibleEnabled);
+    frame_view->SetShowFrame(frame_enabled_);
+  }
+}
+
+void ShellSurface::ConfigureFrame(SkColor color) {
+  if (!GetWidget() || !GetWidget()->non_client_view())
+    return;
+  ash::CustomFrameViewAsh* frame_view = static_cast<ash::CustomFrameViewAsh*>(
+      GetWidget()->non_client_view()->frame_view());
+  if (frame_view != nullptr && color != 0)
+    frame_view->SetFrameColors(color, color);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -878,7 +922,8 @@ void ShellSurface::OnSurfaceDestroying(Surface* surface) {
 // views::WidgetDelegate overrides:
 
 bool ShellSurface::CanResize() const {
-  return bounds_mode_ == BoundsMode::SHELL;
+  //return true;
+  return bounds_mode_ != BoundsMode::FIXED;
 }
 
 bool ShellSurface::CanMaximize() const {
@@ -941,10 +986,11 @@ views::NonClientFrameView* ShellSurface::CreateNonClientFrameView(
   aura::Window* window = widget_->GetNativeWindow();
   // ShellSurfaces always use immersive mode.
   window->SetProperty(aura::client::kImmersiveFullscreenKey, true);
-  if (frame_enabled_)
-    return new ash::CustomFrameViewAsh(widget);
-
-  return new CustomFrameView(widget);
+  ash::CustomFrameViewAsh* frame = new ash::CustomFrameViewAsh(widget);
+  frame->SetShowFrame(frame_enabled_);
+  frame->SetBackButtonState(ash::FrameBackButtonState::kVisibleEnabled);
+  frame->SetPaintToLayer();
+  return frame;
 }
 
 bool ShellSurface::WidgetHasHitTestMask() const {
@@ -1203,9 +1249,6 @@ void ShellSurface::OnMouseEvent(ui::MouseEvent* event) {
 
   switch (event->type()) {
     case ui::ET_MOUSE_DRAGGED: {
-      if (bounds_mode_ == BoundsMode::CLIENT)
-        break;
-
       gfx::Point location(event->location());
       aura::Window::ConvertPointToTarget(widget_->GetNativeWindow(),
                                          widget_->GetNativeWindow()->parent(),
@@ -1360,7 +1403,7 @@ void ShellSurface::CreateShellSurfaceWidget(ui::WindowShowState show_state) {
 
   // Disable movement if bounds are controlled by the client or fixed.
   bool movement_disabled = bounds_mode_ != BoundsMode::SHELL;
-  widget_->set_movement_disabled(movement_disabled);
+  //widget_->set_movement_disabled(movement_disabled);
   window_state->set_ignore_keyboard_bounds_change(movement_disabled);
 
   // AutoHide shelf in fullscreen state.
@@ -1453,6 +1496,7 @@ aura::Window* ShellSurface::GetDragWindow() {
 
 void ShellSurface::AttemptToStartDrag(int component) {
   DCHECK(widget_);
+  LOG(ERROR) <<  "AttemptToStartDrag:" << component;
 
   // Cannot start another drag if one is already taking place.
   if (resizer_)
@@ -1462,7 +1506,7 @@ void ShellSurface::AttemptToStartDrag(int component) {
   if (!window || window->HasCapture())
     return;
 
-  if (bounds_mode_ == BoundsMode::SHELL) {
+  if (bounds_mode_ != BoundsMode::FIXED) {
     // Set the cursor before calling CreateWindowResizer(), as that will
     // eventually call LockCursor() and prevent the cursor from changing.
     aura::client::CursorClient* cursor_client =
@@ -1502,25 +1546,39 @@ void ShellSurface::AttemptToStartDrag(int component) {
         NOTREACHED();
         break;
     }
+    if (bounds_mode_ == BoundsMode::CLIENT) {
+      ash::wm::WindowState* window_state =
+          ash::wm::GetWindowState(widget_->GetNativeWindow());
+      DCHECK(!window_state->drag_details());
+      DCHECK_EQ(component, HTCAPTION);
+      window_state->CreateDragDetails(GetMouseLocation(), component,
+                                      wm::WINDOW_MOVE_SOURCE_MOUSE);
+      // Chained with a CustomWindowResizer, DragWindowResizer does not handle
+      // dragging. It only renders phantom windows and moves the window to the
+      // target root window when dragging ends.
+      resizer_.reset(ash::DragWindowResizer::Create(
+          new CustomWindowResizer(window_state), window_state));
+      LOG(ERROR) << "CreateResizer For Client Drag ";
+    } else {
+      resizer_ = ash::CreateWindowResizer(window, GetMouseLocation(), component,
+                                          wm::WINDOW_MOVE_SOURCE_MOUSE);
+      if (!resizer_)
+        return;
 
-    resizer_ = ash::CreateWindowResizer(window, GetMouseLocation(), component,
-                                        wm::WINDOW_MOVE_SOURCE_MOUSE);
-    if (!resizer_)
-      return;
-
-    // Apply pending origin offsets and resize direction before starting a
-    // new resize operation. These can still be pending if the client has
-    // acknowledged the configure request but not yet called Commit().
-    origin_offset_ += pending_origin_offset_;
-    pending_origin_offset_ = gfx::Vector2d();
-    resize_component_ = pending_resize_component_;
+      // Apply pending origin offsets and resize direction before starting a
+      // new resize operation. These can still be pending if the client has
+      // acknowledged the configure request but not yet called Commit().
+      origin_offset_ += pending_origin_offset_;
+      pending_origin_offset_ = gfx::Vector2d();
+      resize_component_ = pending_resize_component_;
+    }
   } else {
     DCHECK(bounds_mode_ == BoundsMode::CLIENT);
 
     ash::wm::WindowState* window_state =
         ash::wm::GetWindowState(widget_->GetNativeWindow());
     DCHECK(!window_state->drag_details());
-    DCHECK(component == HTCAPTION);
+    DCHECK_EQ(component, HTCAPTION);
     window_state->CreateDragDetails(GetMouseLocation(), component,
                                     wm::WINDOW_MOVE_SOURCE_MOUSE);
 
@@ -1529,6 +1587,7 @@ void ShellSurface::AttemptToStartDrag(int component) {
     // target root window when dragging ends.
     resizer_.reset(ash::DragWindowResizer::Create(
         new CustomWindowResizer(window_state), window_state));
+    LOG(ERROR) << "CreateResizer For Client Drag ";
   }
 
   WMHelper::GetInstance()->AddPreTargetHandler(this);
@@ -1618,8 +1677,23 @@ gfx::Point ShellSurface::GetSurfaceOrigin() const {
   }
 }
 
+void ShellSurface::RestackFrame() {
+  /*
+  CustomFrameView* frame = static_cast<CustomFrameView*>(widget_->non_client_view()->frame_view());
+  if (frame) {
+    frame->SetPaintToLayer();
+    ui::Layer* layer = frame->layer();
+    LOG(ERROR) << "Restack:" << layer;
+    if (layer) {
+      layer->parent()->StackAtTop(layer);
+    }
+  }
+  */
+}
+
 void ShellSurface::UpdateWidgetBounds() {
   DCHECK(widget_);
+  RestackFrame();
 
   // Return early if the shell is currently managing the bounds of the widget.
   // 1) When a window is either maximized/fullscreen/pinned, and the bounds
@@ -1705,7 +1779,6 @@ void ShellSurface::UpdateWidgetBounds() {
 void ShellSurface::UpdateSurfaceBounds() {
   gfx::Rect client_view_bounds =
       widget_->non_client_view()->frame_view()->GetBoundsForClientView();
-
   host_window()->SetBounds(
       gfx::Rect(GetSurfaceOrigin() + client_view_bounds.OffsetFromOrigin(),
                 host_window()->bounds().size()));
@@ -1744,7 +1817,7 @@ void ShellSurface::UpdateShadow() {
     // Maximized/Fullscreen window does not create a shadow.
     if (!shadow)
       return;
-
+    LOG(ERROR) << "final ShadowBounds:" << shadow_bounds.ToString();
     shadow->SetContentBounds(shadow_bounds);
     // Surfaces that can't be activated are usually menus and tooltips. Use a
     // small style shadow for them.

@@ -234,6 +234,8 @@ class ShellSurface : public SurfaceTreeHost,
   void OnSurfaceCommit() override;
   void OnSetFrame(SurfaceFrameType type) override;
 
+  void ConfigureFrame(SkColor color);
+
   // Overridden from SurfaceObserver:
   void OnSurfaceDestroying(Surface* surface) override;
 
@@ -335,6 +337,8 @@ class ShellSurface : public SurfaceTreeHost,
 
   // Updates the bounds of widget to match the current surface bounds.
   void UpdateWidgetBounds();
+
+  void RestackFrame();
 
   // Updates the bounds of surface to match the current widget bounds.
   void UpdateSurfaceBounds();

@@ -22,6 +22,7 @@ class ImageSkia;
 
 namespace views {
 class ImageView;
+class ImageButton;
 class Widget;
 }
 

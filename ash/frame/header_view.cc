@@ -7,16 +7,48 @@
 #include <memory>
 
 #include "ash/frame/caption_buttons/frame_back_button.h"
+#include "ash/ash_layout_constants.h"
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
 #include "ash/frame/custom_frame_view_ash.h"
 #include "ash/frame/default_header_painter.h"
+#include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/window_state.h"
+#include "ui/aura/window_tree_host.h"
+#include "ui/events/event_sink.h"
+#include "ui/gfx/paint_vector_icon.h"
+#include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/widget/widget.h"
 
 namespace ash {
+
+namespace {
+class BackButton : public FrameCaptionButton, public views::ButtonListener {
+ public:
+  BackButton() : FrameCaptionButton(this, CAPTION_BUTTON_ICON_BACK) {
+    SetImage(CAPTION_BUTTON_ICON_BACK, ANIMATE_NO, kShelfBackIcon);
+    SetPreferredSize(
+        GetAshLayoutSize(AshLayoutSize::NON_BROWSER_CAPTION_BUTTON));
+  }
+
+  void ButtonPressed(Button* sender, const ui::Event& event) override {
+    LOG(ERROR) << "BackButton";
+    aura::Window* root_window = GetWidget()->GetNativeWindow()->GetRootWindow();
+    ui::KeyEvent press_key_event(ui::ET_KEY_PRESSED, ui::VKEY_BROWSER_BACK, ui::EF_NONE);
+    ignore_result(
+        root_window->GetHost()->event_sink()->OnEventFromSource(&press_key_event));
+    ui::KeyEvent release_key_event(ui::ET_KEY_RELEASED, ui::VKEY_BROWSER_BACK, ui::EF_NONE);
+    ignore_result(
+        root_window->GetHost()->event_sink()->OnEventFromSource(&release_key_event));
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(BackButton);
+};
+
+}  // namespace
 
 HeaderView::HeaderView(views::Widget* target_widget,
                        mojom::WindowStyle window_style)
@@ -85,6 +117,8 @@ void HeaderView::SetAvatarIcon(const gfx::ImageSkia& avatar) {
     avatar_icon_ = nullptr;
   } else {
     DCHECK_EQ(avatar.width(), avatar.height());
+    Layout();
+
     if (!avatar_icon_) {
       avatar_icon_ = new views::ImageView();
       AddChildView(avatar_icon_);

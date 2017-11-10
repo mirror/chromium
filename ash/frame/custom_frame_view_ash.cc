@@ -250,7 +250,7 @@ void CustomFrameViewAsh::OverlayView::SetHeaderHeight(
     base::Optional<int> height) {
   if (header_height_ == height)
     return;
-
+  //LOG(ERROR) << "OverlayView::SetHeaderHeight:" << height ? *height : 0;
   header_height_ = height;
   Layout();
 }
@@ -343,6 +343,14 @@ void CustomFrameViewAsh::SetBackButtonState(FrameBackButtonState state) {
   header_view_->SetBackButtonState(state);
 }
 
+void CustomFrameViewAsh::SetShowFrame(bool show) {
+  if (show_frame_ == show)
+    return;
+  show_frame_ = show;
+  overlay_view_->SetVisible(show_frame_);
+  header_view_->SetVisible(false);
+}
+
 void CustomFrameViewAsh::SetHeaderHeight(base::Optional<int> height) {
   overlay_view_->SetHeaderHeight(height);
 }
@@ -356,14 +364,16 @@ views::View* CustomFrameViewAsh::GetHeaderView() {
 
 gfx::Rect CustomFrameViewAsh::GetBoundsForClientView() const {
   gfx::Rect client_bounds = bounds();
-  client_bounds.Inset(0, NonClientTopBorderHeight(), 0, 0);
+  //client_bounds.Inset(0, NonClientTopBorderHeight(), 0, 0);
+  client_bounds.Inset(0, 0, 0, 0);
   return client_bounds;
 }
 
 gfx::Rect CustomFrameViewAsh::GetWindowBoundsForClientBounds(
     const gfx::Rect& client_bounds) const {
   gfx::Rect window_bounds = client_bounds;
-  window_bounds.Inset(0, -NonClientTopBorderHeight(), 0, 0);
+  //window_bounds.Inset(0, -NonClientTopBorderHeight(), 0, 0);
+  window_bounds.Inset(0, 0, 0, 0);
   return window_bounds;
 }
 

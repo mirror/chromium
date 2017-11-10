@@ -8,18 +8,22 @@
 #include <memory>
 
 #include "ash/ash_export.h"
+#include "ash/frame/caption_buttons/caption_button_types.h"
 #include "ash/public/interfaces/window_style.mojom.h"
 #include "base/macros.h"
 #include "base/optional.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/views/window/non_client_view.h"
 
+namespace gfx {
+struct VectorIcon;
+}
+
 namespace views {
 class Widget;
 }
 
 namespace ash {
-
 class FrameCaptionButtonContainerView;
 class HeaderView;
 class ImmersiveFullscreenController;
@@ -69,6 +73,11 @@ class ASH_EXPORT CustomFrameViewAsh : public views::NonClientFrameView {
   // Set the back buttons status. If |show| is true, the button becomes visible.
   // |enabled| controls the enabled/disabled state of the back button.
   void SetBackButtonState(FrameBackButtonState state);
+
+  void SetShowFrame(bool show);
+  void SetButtonImage(
+      CaptionButtonIcon icon,
+      const gfx::VectorIcon& icon_definition);
 
   // Sets the height of the header. If |height| has no value (the default), the
   // preferred height is used.
@@ -120,6 +129,8 @@ class ASH_EXPORT CustomFrameViewAsh : public views::NonClientFrameView {
 
   // Not owned.
   views::Widget* frame_;
+
+  bool show_frame_ = true;
 
   // View which contains the title and window controls.
   HeaderView* header_view_;
