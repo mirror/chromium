@@ -93,6 +93,30 @@
       "revId": "ae32e9188a60656d081488947de355379428dbec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c0e62a_060e6600",
+        "filename": "components/infobars/core/infobar_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-10T11:00:34Z",
+      "side": 1,
+      "message": "I started looking into doing this, but I\u0027m not sure it would be best here.\nA difference with the message center notifications is that there can be many infobars with the same ID, at least on Android. That is what is currently happening before this patch. \nSo if we implement the \"replace_existing\" feature at the infobar manager level, there is some specifying to be done:\n- Do we define \"matching\" as having the same ID or as EqualsDelegate() returning true?\n- Do we allow a specific infobar to be replaced rather than the first that matches, or all of the ones matching?\n- etc.\nTo avoid having to deal with that just letting the caller handle it seems easier for now.\n\nAnother aspect is that AFAIK infobars are a deprecated messaging pattern on Desktop and we are planning a refactor on Android to separate them from the Desktop implementation and simplify some of the logic. Because of that I\u0027m not too keen on having to add more complex methods and tests etc to the current infobar manager, esp. if I\u0027m going to be the sole user.\n\nAbout usage, one option we were considering to address the current issue with framebust infobars was to only log via UMA the number of simultaneous infobars of that type, without replacing them. GetInfoBarsForId also would allow doing that if we plan to implement that instead.\nIt also seems to be in line with the purpose of the class, which says \"Provides access to creating, removing and enumerating info bars\", so that\u0027s why I went for it.\n\nIf you don\u0027t feel too strongly about it, I\u0027d like to have this simple getter instead and use existing methods for the replacing.",
+      "parentUuid": "b6f6f809_19f57289",
+      "range": {
+        "startLine": 82,
+        "startChar": 24,
+        "endLine": 82,
+        "endChar": 40
+      },
+      "revId": "ae32e9188a60656d081488947de355379428dbec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
