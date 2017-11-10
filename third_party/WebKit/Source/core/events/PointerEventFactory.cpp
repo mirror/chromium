@@ -128,8 +128,8 @@ void UpdateTouchPointerEventInit(const WebTouchPoint& touch_point,
     FloatSize point_radius =
         FloatSize(touch_point.radius_x, touch_point.radius_y)
             .ScaledBy(scale_factor);
-    pointer_event_init->setWidth(point_radius.Width());
-    pointer_event_init->setHeight(point_radius.Height());
+    pointer_event_init->setWidth(point_radius.Width() * 2.0);
+    pointer_event_init->setHeight(point_radius.Height() * 2.0);
   }
 
   pointer_event_init->setScreenX(touch_point.PositionInScreen().x);
