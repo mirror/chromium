@@ -556,6 +556,11 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
 
 - (void)searchFieldTapped:(id)sender {
   [self.dispatcher focusFakebox];
+  if (!_isShowing)
+    return;
+
+  _omniboxFocused = YES;
+  [self shiftTilesUp];
 }
 
 - (void)blurOmnibox {
