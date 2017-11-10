@@ -31,10 +31,7 @@ from py_utils import discover
 from core.sharding_map_generator import load_benchmark_sharding_map
 
 
-_UNSCHEDULED_TELEMETRY_BENCHMARKS = set([
-  'speedometer-future',
-  'speedometer2-future'
-  ])
+_UNSCHEDULED_TELEMETRY_BENCHMARKS = set([])
 
 
 ANDROID_BOT_TO_DEVICE_TYPE_MAP = {
