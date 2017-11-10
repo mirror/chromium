@@ -146,6 +146,13 @@ Polymer({
   shouldShowConfigureWhenNetworkLoaded_: false,
 
   /**
+   * Set in close_() to prevent close_() been called multiple times and cause
+   * wrong navigation. Reset in currentRouteChanged().
+   * @private {boolean}
+   */
+  isClosed_: false,
+
+  /**
    * settings.RouteObserverBehavior
    * @param {!settings.Route} route
    * @param {!settings.Route} oldRoute
@@ -188,12 +195,16 @@ Polymer({
       Name: {Active: name},
     };
     this.didSetFocus_ = false;
+    this.isClosed_ = false;
     this.getNetworkDetails_();
   },
 
   /** @private */
   close_: function() {
     // Delay navigating to allow other subpages to load first.
+    if (this.isClosed_)
+      return;
+    this.isClosed_ = true;
     requestAnimationFrame(function() {
       settings.navigateToPreviousRoute();
     });
@@ -311,6 +322,11 @@ Polymer({
       return;
     }
     this.networkProperties = properties;
+
+    // Detail page should not be shown when Arc VPN is not connected.
+    if (this.isArcVpn_(properties) && !this.isConnectedState_(properties))
+      this.close_();
+
     this.networkPropertiesReceived_ = true;
   },
 
@@ -435,6 +451,9 @@ Polymer({
   showConnect_: function(networkProperties, globalPolicy) {
     if (this.connectNotAllowed_(networkProperties, globalPolicy))
       return false;
+    if (this.isArcVpn_(networkProperties))
+      return false;
+
     return networkProperties.Type != CrOnc.Type.ETHERNET &&
         networkProperties.ConnectionState ==
         CrOnc.ConnectionState.NOT_CONNECTED;
@@ -460,6 +479,9 @@ Polymer({
     var type = networkProperties.Type;
     if (type != CrOnc.Type.WI_FI && type != CrOnc.Type.VPN)
       return false;
+    if (this.isArcVpn_(networkProperties))
+      return false;
+
     return !this.isPolicySource(networkProperties.Source) &&
         this.isRemembered_(networkProperties);
   },
@@ -787,6 +809,9 @@ Polymer({
    * @private
    */
   showAutoConnect_: function(networkProperties) {
+    if (this.isArcVpn_(networkProperties))
+      return false;
+
     return networkProperties.Type != CrOnc.Type.ETHERNET &&
         this.isRemembered_(networkProperties);
   },
@@ -824,6 +849,9 @@ Polymer({
   showPreferNetwork_: function(networkProperties) {
     // TODO(stevenjb): Resolve whether or not we want to allow "preferred" for
     // networkProperties.Type == CrOnc.Type.ETHERNET.
+    if (this.isArcVpn_(networkProperties))
+      return false;
+
     return this.isRemembered_(networkProperties);
   },
 
@@ -868,6 +896,8 @@ Polymer({
       var vpnType = CrOnc.getActiveValue(this.networkProperties.VPN.Type);
       if (vpnType == 'ThirdPartyVPN') {
         fields.push('VPN.ThirdPartyVPN.ProviderName');
+      } else if (vpnType == 'ARCVPN') {
+        fields.push('VPN.Type');
       } else {
         fields.push('VPN.Host', 'VPN.Type');
         if (vpnType == 'OpenVPN')
@@ -951,8 +981,9 @@ Polymer({
       // network.
       return false;
     }
-    return this.hasAdvancedFields_() || this.hasDeviceFields_() ||
-        this.isRememberedOrConnected_(networkProperties);
+    return !this.isArcVpn_(networkProperties) &&
+        (this.hasAdvancedFields_() || this.hasDeviceFields_() ||
+         this.isRememberedOrConnected_(networkProperties));
   },
 
   /**
@@ -1019,12 +1050,26 @@ Polymer({
   },
 
   /**
+   * @param {!CrOnc.NetworkProperties} networkProperties
+   * @return {boolean}
+   * @private
+   */
+  isArcVpn_: function(networkProperties) {
+    if (!networkProperties.VPN)
+      return false;
+    return CrOnc.getActiveValue(this.networkProperties.VPN.Type) == 'ARCVPN';
+  },
+
+  /**
    * @param {string} ipAddress
    * @param {!CrOnc.NetworkProperties} networkProperties
    * @return {boolean}
    * @private
    */
   showIpAddress_: function(ipAddress, networkProperties) {
+    if (this.isArcVpn_(networkProperties))
+      return false;
+
     return !!ipAddress && this.isConnectedState_(networkProperties);
   },
 
