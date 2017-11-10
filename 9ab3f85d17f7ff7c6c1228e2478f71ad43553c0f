@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "247a3cf5_5c7e1826",
+        "filename": "net/base/net_error_list.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-10T22:34:20Z",
+      "side": 1,
+      "message": "Maybe I should just explicitly talk about load flags or mode?",
+      "parentUuid": "7a658e62_6697eb86",
+      "range": {
+        "startLine": 771,
+        "startChar": 18,
+        "endLine": 771,
+        "endChar": 22
+      },
+      "revId": "9ab3f85d17f7ff7c6c1228e2478f71ad43553c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1503b505_f3ad692f",
         "filename": "net/http/http_cache.h",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-10T21:45:17Z",
       "side": 1,
       "message": "Why?",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 24
+      },
+      "revId": "9ab3f85d17f7ff7c6c1228e2478f71ad43553c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6e83d7_e1a5fabe",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-10T22:34:20Z",
+      "side": 1,
+      "message": "Hmm, probably historical, will revert.",
+      "parentUuid": "1503b505_f3ad692f",
       "range": {
         "startLine": 34,
         "startChar": 14,
@@ -82,6 +130,54 @@
       "writtenOn": "2017-11-10T21:45:17Z",
       "side": 1,
       "message": "nit: \"response_headers\" (elide \".\").\n\nAlso, it would be better if \"response_headers\" was a C++ expression that in the context of the transaction reflected the actual headers (there\u0027s no response_headers{,_} member).",
+      "range": {
+        "startLine": 416,
+        "startChar": 57,
+        "endLine": 416,
+        "endChar": 58
+      },
+      "revId": "9ab3f85d17f7ff7c6c1228e2478f71ad43553c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79255385_59890d82",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-10T22:34:20Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "f612e795_57ad84ea",
+      "range": {
+        "startLine": 416,
+        "startChar": 24,
+        "endLine": 416,
+        "endChar": 30
+      },
+      "revId": "9ab3f85d17f7ff7c6c1228e2478f71ad43553c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb47ce44_79f716f2",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-10T22:34:20Z",
+      "side": 1,
+      "message": "response_.headers is the C++ expression it\u0027s looking at. Should I just | | it?\n\nWhat this is also perhaps not sufficiently explicit about is this reflects only the portion of conditionalizability based on response --- while some is based on request as well.",
+      "parentUuid": "49c2e03f_163fadfb",
       "range": {
         "startLine": 416,
         "startChar": 57,
