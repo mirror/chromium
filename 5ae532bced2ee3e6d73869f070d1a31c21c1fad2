@@ -52,6 +52,24 @@
       "revId": "5ae532bced2ee3e6d73869f070d1a31c21c1fad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c181fa_35ec4790",
+        "filename": "testing/buildbot/filters/mus.browser_tests.filter",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-10T04:08:50Z",
+      "side": 0,
+      "message": "Sanity prevailed. Only enabling on the fyi bot.",
+      "parentUuid": "468882ca_90d9ef0c",
+      "revId": "5ae532bced2ee3e6d73869f070d1a31c21c1fad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
