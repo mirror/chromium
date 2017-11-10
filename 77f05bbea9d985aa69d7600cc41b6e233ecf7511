@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "265c49b4_308d2061",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-10T15:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94eaceb4_e15026a5",
+      "revId": "77f05bbea9d985aa69d7600cc41b6e233ecf7511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aad0fc08_36630794",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 2
@@ -53,6 +71,42 @@
     },
     {
       "key": {
+        "uuid": "3d92b983_a1bc90de",
+        "filename": "chrome/browser/vr/elements/audio_permission_prompt.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-10T15:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b64666d3_6ed04a34",
+      "revId": "77f05bbea9d985aa69d7600cc41b6e233ecf7511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb7f4e69_736f72b5",
+        "filename": "chrome/browser/vr/elements/audio_permission_prompt.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-10T15:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b64666d3_6ed04a34",
+      "revId": "77f05bbea9d985aa69d7600cc41b6e233ecf7511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60fa50b4_0bca68c0",
         "filename": "chrome/browser/vr/elements/audio_permission_prompt_texture.cc",
         "patchSetId": 2
@@ -84,6 +138,24 @@
       "revId": "77f05bbea9d985aa69d7600cc41b6e233ecf7511",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab6a3bbe_6242f2d8",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-10T15:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4df8d47c_63543184",
+      "revId": "77f05bbea9d985aa69d7600cc41b6e233ecf7511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
