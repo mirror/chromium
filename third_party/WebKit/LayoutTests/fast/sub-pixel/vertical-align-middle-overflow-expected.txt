@@ -2,5 +2,8 @@ PASS Does not overflow.
 PASS successfullyParsed is true
 
 TEST COMPLETE
-  Cell 2
+
+ 
+Cell 2
+
 The block above should not have a scrollbar.

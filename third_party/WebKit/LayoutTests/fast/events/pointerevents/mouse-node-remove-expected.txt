@@ -2,7 +2,6 @@ Verifies the compatibility mouse events are sent correctly when the node is dele
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
  ======= Nothing is removed  =======
    **** mouse move *****
 green received pointermove

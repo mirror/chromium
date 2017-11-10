@@ -8,4 +8,5 @@ CONSOLE ERROR: Blocked script execution in 'data:text/html,<script>console.log('
 CONSOLE MESSAGE: line 1: PASS: Tab is a delimiter.
 CONSOLE MESSAGE: line 1: PASS: Space is a delimiter character.
 This tests whether we correct parse various space characters in the sandbox attribute.
- 
+
+

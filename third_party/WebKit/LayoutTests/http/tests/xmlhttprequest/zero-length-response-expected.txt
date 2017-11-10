@@ -1,4 +1,5 @@
-Test for bug 5924 - zero-length responses to XMLHTTPRequest mishandled.
+Test for bug 5924
+- zero-length responses to XMLHTTPRequest mishandled.
 
 after creation: Uninitialized
   Status: 0

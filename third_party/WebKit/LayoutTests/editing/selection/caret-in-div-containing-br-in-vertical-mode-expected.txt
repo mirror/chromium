@@ -1,4 +1,6 @@
-Testcase for bug 103621: Caret is incorrectly painted for a contenteditable <div> containing a <br> in vertical writing mode. For the test to pass, carets in both the boxes should be exactly similar. To manually verify the issue, try clicking on the second box. A caret should be visible at the start of that container.
+Testcase for bug 103621: Caret is incorrectly painted for a contenteditable <div> containing a <br> in vertical writing mode.
+For the test to pass, carets in both the boxes should be exactly similar.
+To manually verify the issue, try clicking on the second box. A caret should be visible at the start of that container.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 

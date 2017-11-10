@@ -2,7 +2,6 @@ Test that scrolling editor commands while pinch-zoomed scrolls both viewports. T
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS successfullyParsed is true
 
 TEST COMPLETE
@@ -25,4 +24,9 @@ PASS internals.visualViewportScrollX() is 0
 PASS internals.visualViewportScrollY() is 0
 PASS internals.visualViewportScrollX() is 0
 
-Top of pageBottom of pageLeft of pageRight of pageMiddle of page
+
+Top of page
+Bottom of page
+Left of page
+Right of page
+Middle of page

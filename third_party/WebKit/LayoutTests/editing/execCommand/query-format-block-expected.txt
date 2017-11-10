@@ -2,7 +2,6 @@ Tests queryCommandValue('formatBlock')
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Basic cases
 PASS queryCommand('formatBlock') returned "" selecting none of "hello"
 PASS queryCommand('formatBlock') returned "" selecting first position of "hello"

@@ -1,4 +1,4 @@
-This tests for a crash when inserting into a tab into a tab span that contains a br. You should no longer be able to get a br inside a tab span while editing but we should still avoid the crash.
+This tests for a crash when inserting into a tab into a tab span that contains a br.  You should no longer be able to get a br inside a tab span while editing but we should still avoid the crash.
 
 foo
 	

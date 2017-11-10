@@ -3,7 +3,6 @@ It covers both the the one-argument (1.x) and two-argument (2.x) signatures of t
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 1.1 Add Option to empty Options
 PASS select1.options.length is 1
 PASS select1.selectedIndex is 0

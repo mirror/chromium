@@ -2,7 +2,6 @@ Test to make sure we push down inline styles properly.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS bold on first word of <b><ul><li><b>a</b></li></ul></b> yields <ul style=""><li style="">a</li></ul>
 PASS bold on first word of <b><ul><li>hello</li><li>world</li></ul></b> yields <ul style=""><li style="">hello</li><li style="font-weight: bold;">world</li></ul>
 PASS bold on last word of <ul><li>hello</li><li style="font-weight: bold;">world</li></ul> yields <ul><li>hello</li><li style="">world</li></ul>

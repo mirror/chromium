@@ -2,7 +2,6 @@ Test that hitting areas outside a paged container takes us to the right text con
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS successfullyParsed is true
 
 TEST COMPLETE
@@ -34,4 +33,5 @@ PASS document.caretRangeFromPoint(0,20).startOffset is 24
 PASS document.caretRangeFromPoint(0,60).startOffset is 27
 PASS document.caretRangeFromPoint(0,100).startOffset is 31
 PASS document.caretRangeFromPoint(0,140).startOffset is 35
+
 xxx xxx xxx xxx xxx xxx xxx xxx xxx

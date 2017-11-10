@@ -1,4 +1,5 @@
-This tests that we throw a NAMESPACE_ERR when parsing a selector string for querySelector and querySelectorAll that contains a namespace.
+This tests that we throw a NAMESPACE_ERR when parsing a selector string for querySelector and querySelectorAll
+        that contains a namespace.
 
 PASS: document.querySelector('bbb|pre') throws: SyntaxError: Failed to execute 'querySelector' on 'Document': 'bbb|pre' is not a valid selector.
 PASS: document.querySelectorAll('bbb|pre') throws: SyntaxError: Failed to execute 'querySelectorAll' on 'Document': 'bbb|pre' is not a valid selector.

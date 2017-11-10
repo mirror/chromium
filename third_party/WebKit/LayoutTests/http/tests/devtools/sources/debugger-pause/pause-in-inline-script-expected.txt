@@ -1,4 +1,5 @@
-Tests that main resource script text is correct when paused in inline script on reload. Bug 77548.
+Tests that main resource script text is correct when paused in inline script on reload.
+Bug 77548.
 
 Did load front-end
 Paused: false

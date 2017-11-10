@@ -1,5 +1,4 @@
 Tests that we clone object hierarchies
-
 PASS: (frames[0].tests[0]).eventData instanceof (frames[0]).Object is true of type boolean
 PASS: (frames[0].tests[0]).event.data instanceof (frames[0]).Object is true of type boolean
 PASS: (frames[0].tests[1]).eventData instanceof (frames[0]).Array is true of type boolean

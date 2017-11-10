@@ -2,7 +2,6 @@ Test that setting and getting grid-column-start and grid-row-start works as expe
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Test getting grid-column-start and grid-row-start set through CSS
 PASS getComputedStyle(gridElement, '').getPropertyValue('grid-column-start') is 'auto'
 PASS getComputedStyle(gridElement, '').getPropertyValue('grid-column') is 'auto / auto'

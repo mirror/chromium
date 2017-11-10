@@ -1,4 +1,5 @@
-Test for bug 39682: WebKit nightly adding insane height to div at random.
+Test for bug 39682:
+WebKit nightly adding insane height to div at random.
 
 PASS
 

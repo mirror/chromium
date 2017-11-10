@@ -2,7 +2,6 @@ Tests for tooLong flag with <textarea> elements.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 No maxlength and no value
 PASS textarea.validity.tooLong is false
 
@@ -60,5 +59,4 @@ PASS textarea.validity.tooShort is false
 PASS successfullyParsed is true
 
 TEST COMPLETE
-
 

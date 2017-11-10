@@ -7,4 +7,6 @@ Focus should be on the button after pressing tab
 PASS document.activeElement is button
 Focus should be on the label after pressing shift+tab
 PASS document.activeElement is label
-I'm editable. Just a button
+
+I'm editable.
+Just a button

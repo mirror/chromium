@@ -1,4 +1,3 @@
-
 This test passes if the "safe" HTML5 import occurs, because XSSAuditor gives a pass to resources from the same origin to cut down on the false positive rate.
 
 --------

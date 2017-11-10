@@ -1,4 +1,4 @@
-Tests that there is an upper limit on the number of hit rects generated per layer. http://crbug.com/299177.
+Tests that there is an upper limit on the number of hit rects generated per layer.  http://crbug.com/299177.
 
 Test node has 99 children with 100 rects
 Test node has 100 children with 1 rects

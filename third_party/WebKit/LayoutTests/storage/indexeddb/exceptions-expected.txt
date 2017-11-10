@@ -2,7 +2,6 @@ Test that expected exceptions are thrown per IndexedDB spec.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "exceptions.html"
 indexedDB.deleteDatabase(dbname)
 indexedDB.open(dbname)

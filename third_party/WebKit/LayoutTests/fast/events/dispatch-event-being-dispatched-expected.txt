@@ -1,4 +1,5 @@
-Tests that dispatchEvent raises DISPATCH_REQUEST_ERR if the event being dispatched is already being dispatched.
+Tests that dispatchEvent raises DISPATCH_REQUEST_ERR if the event
+being dispatched is already being dispatched.
 
 PASS should have got DISPATCH_REQUEST_ERR EventException
 PASS redispatchCustom.wasInvoked is true

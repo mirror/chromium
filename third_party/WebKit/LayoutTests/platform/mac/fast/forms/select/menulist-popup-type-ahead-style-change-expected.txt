@@ -2,6 +2,8 @@ FAIL picker didn't open
 PASS successfullyParsed is true
 
 TEST COMPLETE
-Tests <select> style change when popup is visible after selection is changed by keyboard typeahead. The selection should not change when style changes. Needs run-layout-test.
 
+Tests <select> style change when popup is visible after selection is changed
+by keyboard typeahead. The selection should not change when style changes.
+Needs run-layout-test.
 

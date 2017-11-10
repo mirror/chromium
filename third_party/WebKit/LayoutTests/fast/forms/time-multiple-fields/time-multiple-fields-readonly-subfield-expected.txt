@@ -2,7 +2,6 @@ Sub-fields in input[type=time] should be read-only in some cases. This requires 
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 createTimeInput argument order: min, max, step, value
 
 Milliseconds field:

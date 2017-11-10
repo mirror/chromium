@@ -2,7 +2,6 @@ Tests that when an href attribute is set, the href is no longer subject to updat
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Search attribute, update document base URI without attribute having been set
 PASS a.href is 'http://new_base/?search'
 Search attribute, update document base URI after attribute has been set

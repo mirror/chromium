@@ -1,6 +1,10 @@
-This scenario verifies that the green "container" element and lime "innerScrolling" element scroll properly even though there is a blue fixed-position element layered in between them.
+This scenario verifies that the green "container" element and lime
+    "innerScrolling" element scroll properly even though there is a blue
+    fixed-position element layered in between them.
 
-The catch is that the squashing requirements should be computed in correct paint order, so that the green container does not accidentally position itself with respect to the wrong layer and not scroll.
+The catch is that the squashing requirements should be computed in
+    correct paint order, so that the green container does not accidentally
+    position itself with respect to the wrong layer and not scroll.
 
 CASE 1, original layer tree:
 {
@@ -51,6 +55,7 @@ CASE 1, original layer tree:
     }
   ]
 }
+
 CASE 2, scrolling y by 10 pixels, both the "container" and "inner" should scroll properly.
 {
   "layers": [
@@ -124,6 +129,7 @@ CASE 2, scrolling y by 10 pixels, both the "container" and "inner" should scroll
     }
   ]
 }
+
 CASE 3, scrolling y further so that "inner" no longer overlaps the fixed-pos layer, then the stacking context of "container" includes the "innerScrolling" layer, and doubles in width:
 {
   "layers": [

@@ -1,4 +1,5 @@
-This page tests whether an exception thrown from an eval inside a closure prematurely tears off the closure's activation.
+This page tests whether an exception thrown from an eval inside a closure
+prematurely tears off the closure's activation.
 
 If the test passes, you'll see a PASS message below.
 

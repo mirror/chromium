@@ -1,4 +1,5 @@
-A  
+A
+
 PASS successfullyParsed is true
 
 TEST COMPLETE

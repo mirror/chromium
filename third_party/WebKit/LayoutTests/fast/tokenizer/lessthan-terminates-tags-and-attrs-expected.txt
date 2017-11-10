@@ -1,4 +1,5 @@
-Test for http://bugs.webkit.org/show_bug.cgi?id=8016 REPRO: Safari hangs loading 18 MB page (deeply nested DOM tree).
+Test for http://bugs.webkit.org/show_bug.cgi?id=8016
+    REPRO: Safari hangs loading 18 MB page (deeply nested DOM tree).
 
 Tests that the “<” character terminates tag and attribute names.
 

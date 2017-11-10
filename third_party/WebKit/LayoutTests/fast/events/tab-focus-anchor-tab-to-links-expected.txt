@@ -1,4 +1,5 @@
-This test ensures that we can tab to all anchor elements. Press tab three times to focus the elements below.
+This test ensures that we can tab to all anchor elements. Press tab three
+times to focus the elements below.
 
 Focusable
 
@@ -7,8 +8,6 @@ Not focusable
 Focusable
 
 Focusable
-
-
 
 Result
 

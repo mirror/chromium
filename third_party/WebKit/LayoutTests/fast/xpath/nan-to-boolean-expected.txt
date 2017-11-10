@@ -1,3 +1,4 @@
-Test for bug 12807: XPath incorrectly converts NaN to boolean.
+Test for bug 12807:
+XPath incorrectly converts NaN to boolean.
 
 SUCCESS

@@ -1,4 +1,5 @@
-This test ensures that we can tab to an a element with a tab index. Press tab to focus the element below.
+This test ensures that we can tab to an a element with a tab index. Press tab
+to focus the element below.
 
 Not focusable (given the WebKitTabToLinks pref is set to false)
 

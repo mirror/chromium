@@ -2,7 +2,6 @@ Tests the TreeWalker.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Test that TreeWalker.parent() doesn't set the currentNode to a node not under the root.
 
 PASS w.currentNode is subTree

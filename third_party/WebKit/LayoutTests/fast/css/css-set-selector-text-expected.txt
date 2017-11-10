@@ -2,7 +2,6 @@ This tests setting and re-serialization of some CSS selectors.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS setThenReadSelectorText('') is '_foo'
 PASS setThenReadSelectorText('123') is '_foo'
 PASS setThenReadSelectorText('-') is '_foo'

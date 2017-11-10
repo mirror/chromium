@@ -2,7 +2,6 @@ Test IndexedDB's objectStore.openKeyCursor + the cursor it produces in depth.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "objectstore-keycursor.html"
 indexedDB.deleteDatabase(dbname)
 indexedDB.open(dbname)

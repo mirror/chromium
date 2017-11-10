@@ -2,7 +2,6 @@ Test that focus events from a touch device should have a sourceCapabilities and 
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 tests on div
 focus
 PASS event.sourceCapabilities is non-null.

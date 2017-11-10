@@ -2,7 +2,6 @@ Test the parsing of the cursor property.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Test a bunch of cursor rules which should round-trip exactly.
 PASS roundtripCssRule(`cursor: auto;`) is "cursor: auto;"
 PASS roundtripCssRule(`cursor: none;`) is "cursor: none;"

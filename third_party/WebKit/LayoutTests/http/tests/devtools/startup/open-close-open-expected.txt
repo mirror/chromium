@@ -1,4 +1,5 @@
-Tests that scripts panel displays resource content correctly after the open - close - open sequence. Bug 56747
+Tests that scripts panel displays resource content correctly after the open - close - open sequence.
+Bug 56747
 
 
 Running: testSourceFrameContent

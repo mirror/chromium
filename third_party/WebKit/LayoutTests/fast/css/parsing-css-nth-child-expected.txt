@@ -19,6 +19,8 @@ Rules from the stylesheet:
 #o:nth-child(23n+123) { color: green; }
 #t:nth-child(1n+3) { color: green; }
 #u:nth-child(1n+7) { color: green; }
+
+
 Expected result:
 
 #a:nth-child(1n) { color: green; }
