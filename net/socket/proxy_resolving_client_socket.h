@@ -34,10 +34,10 @@ class HttpNetworkSession;
 class URLRequestContextGetter;
 }  // namespace net
 
-// TODO(sanjeevr): Move this to net/
-namespace jingle_glue {
+namespace net {
 
-class ProxyResolvingClientSocket : public net::StreamSocket {
+// Wraps a TransportClientSocket to resolve proxy before doing TCP connect.
+class NET_EXPORT ProxyResolvingClientSocket : public net::StreamSocket {
  public:
   // Constructs a new ProxyResolvingClientSocket. |socket_factory| is
   // the ClientSocketFactory that will be used by the underlying
@@ -115,6 +115,6 @@ class ProxyResolvingClientSocket : public net::StreamSocket {
   DISALLOW_COPY_AND_ASSIGN(ProxyResolvingClientSocket);
 };
 
-}  // namespace jingle_glue
+}  // namespace net
 
 #endif  // JINGLE_GLUE_PROXY_RESOLVING_CLIENT_SOCKET_H_

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "jingle/glue/proxy_resolving_client_socket.h"
+#include "net/socket/proxy_resolving_client_socket.h"
 
 #include <stdint.h>
 #include <string>
@@ -25,13 +25,13 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
-namespace jingle_glue {
+namespace net {
 
 ProxyResolvingClientSocket::ProxyResolvingClientSocket(
-    net::ClientSocketFactory* socket_factory,
-    const scoped_refptr<net::URLRequestContextGetter>& request_context_getter,
-    const net::SSLConfig& ssl_config,
-    const net::HostPortPair& dest_host_port_pair)
+    ClientSocketFactory* socket_factory,
+    const scoped_refptr<URLRequestContextGetter>& request_context_getter,
+    const SSLConfig& ssl_config,
+    const HostPortPair& dest_host_port_pair)
     : proxy_resolve_callback_(
           base::Bind(&ProxyResolvingClientSocket::ProcessProxyResolveDone,
                      base::Unretained(this))),
@@ -45,19 +45,19 @@ ProxyResolvingClientSocket::ProxyResolvingClientSocket(
       // current use cases do.
       proxy_url_("https://" + dest_host_port_pair_.ToString()),
       tried_direct_connect_fallback_(false),
-      net_log_(net::NetLogWithSource::Make(
+      net_log_(NetLogWithSource::Make(
           request_context_getter->GetURLRequestContext()->net_log(),
-          net::NetLogSourceType::SOCKET)),
+          NetLogSourceType::SOCKET)),
       weak_factory_(this) {
   DCHECK(request_context_getter.get());
-  net::URLRequestContext* request_context =
+  URLRequestContext* request_context =
       request_context_getter->GetURLRequestContext();
   DCHECK(request_context);
   DCHECK(!dest_host_port_pair_.host().empty());
   DCHECK_GT(dest_host_port_pair_.port(), 0);
   DCHECK(proxy_url_.is_valid());
 
-  net::HttpNetworkSession::Context session_context;
+  HttpNetworkSession::Context session_context;
   session_context.client_socket_factory = socket_factory;
   session_context.host_resolver = request_context->host_resolver();
   session_context.cert_verifier = request_context->cert_verifier();
@@ -79,9 +79,9 @@ ProxyResolvingClientSocket::ProxyResolvingClientSocket(
       request_context->http_server_properties();
   session_context.net_log = request_context->net_log();
 
-  const net::HttpNetworkSession::Params* reference_params =
+  const HttpNetworkSession::Params* reference_params =
       request_context->GetNetworkSessionParams();
-  net::HttpNetworkSession::Params session_params;
+  HttpNetworkSession::Params session_params;
   if (reference_params) {
     // TODO(mmenke):  Just copying specific parameters seems highly regression
     // prone.  Should have a better way to do this.
@@ -98,12 +98,11 @@ ProxyResolvingClientSocket::ProxyResolvingClientSocket(
   }
 
   network_session_.reset(
-      new net::HttpNetworkSession(session_params, session_context));
+      new HttpNetworkSession(session_params, session_context));
 
-  net::HttpAuthCache* other_auth_cache =
-      request_context->http_transaction_factory()
-          ->GetSession()
-          ->http_auth_cache();
+  HttpAuthCache* other_auth_cache = request_context->http_transaction_factory()
+                                        ->GetSession()
+                                        ->http_auth_cache();
   DCHECK(other_auth_cache);
   network_session_->http_auth_cache()->UpdateAllFrom(*other_auth_cache);
 }
@@ -112,54 +111,48 @@ ProxyResolvingClientSocket::~ProxyResolvingClientSocket() {
   Disconnect();
 }
 
-int ProxyResolvingClientSocket::Read(net::IOBuffer* buf, int buf_len,
-                                     const net::CompletionCallback& callback) {
+int ProxyResolvingClientSocket::Read(IOBuffer* buf,
+                                     int buf_len,
+                                     const CompletionCallback& callback) {
   if (transport_.get() && transport_->socket())
     return transport_->socket()->Read(buf, buf_len, callback);
   NOTREACHED();
-  return net::ERR_SOCKET_NOT_CONNECTED;
+  return ERR_SOCKET_NOT_CONNECTED;
 }
 
-int ProxyResolvingClientSocket::Write(
-    net::IOBuffer* buf,
-    int buf_len,
-    const net::CompletionCallback& callback) {
+int ProxyResolvingClientSocket::Write(IOBuffer* buf,
+                                      int buf_len,
+                                      const CompletionCallback& callback) {
   if (transport_.get() && transport_->socket())
     return transport_->socket()->Write(buf, buf_len, callback);
   NOTREACHED();
-  return net::ERR_SOCKET_NOT_CONNECTED;
+  return ERR_SOCKET_NOT_CONNECTED;
 }
 
 int ProxyResolvingClientSocket::SetReceiveBufferSize(int32_t size) {
   if (transport_.get() && transport_->socket())
     return transport_->socket()->SetReceiveBufferSize(size);
   NOTREACHED();
-  return net::ERR_SOCKET_NOT_CONNECTED;
+  return ERR_SOCKET_NOT_CONNECTED;
 }
 
 int ProxyResolvingClientSocket::SetSendBufferSize(int32_t size) {
   if (transport_.get() && transport_->socket())
     return transport_->socket()->SetSendBufferSize(size);
   NOTREACHED();
-  return net::ERR_SOCKET_NOT_CONNECTED;
+  return ERR_SOCKET_NOT_CONNECTED;
 }
 
-int ProxyResolvingClientSocket::Connect(
-    const net::CompletionCallback& callback) {
+int ProxyResolvingClientSocket::Connect(const CompletionCallback& callback) {
   DCHECK(user_connect_callback_.is_null());
 
   tried_direct_connect_fallback_ = false;
 
   // First we try and resolve the proxy.
   int status = network_session_->proxy_service()->ResolveProxy(
-      proxy_url_,
-      std::string(),
-      &proxy_info_,
-      proxy_resolve_callback_,
-      &pac_request_,
-      NULL,
-      net_log_);
-  if (status != net::ERR_IO_PENDING) {
+      proxy_url_, std::string(), &proxy_info_, proxy_resolve_callback_,
+      &pac_request_, NULL, net_log_);
+  if (status != ERR_IO_PENDING) {
     // We defer execution of ProcessProxyResolveDone instead of calling it
     // directly here for simplicity. From the caller's point of view,
     // the connect always happens asynchronously.
@@ -169,12 +162,12 @@ int ProxyResolvingClientSocket::Connect(
                    weak_factory_.GetWeakPtr(), status));
   }
   user_connect_callback_ = callback;
-  return net::ERR_IO_PENDING;
+  return ERR_IO_PENDING;
 }
 
 void ProxyResolvingClientSocket::RunUserConnectCallback(int status) {
-  DCHECK_LE(status, net::OK);
-  net::CompletionCallback user_connect_callback = user_connect_callback_;
+  DCHECK_LE(status, OK);
+  CompletionCallback user_connect_callback = user_connect_callback_;
   user_connect_callback_.Reset();
   user_connect_callback.Run(status);
 }
@@ -183,24 +176,24 @@ void ProxyResolvingClientSocket::RunUserConnectCallback(int status) {
 void ProxyResolvingClientSocket::ProcessProxyResolveDone(int status) {
   pac_request_ = NULL;
 
-  DCHECK_NE(status, net::ERR_IO_PENDING);
-  if (status == net::OK) {
+  DCHECK_NE(status, ERR_IO_PENDING);
+  if (status == OK) {
     // Remove unsupported proxies from the list.
     proxy_info_.RemoveProxiesWithoutScheme(
-        net::ProxyServer::SCHEME_DIRECT |
-        net::ProxyServer::SCHEME_HTTP | net::ProxyServer::SCHEME_HTTPS |
-        net::ProxyServer::SCHEME_SOCKS4 | net::ProxyServer::SCHEME_SOCKS5);
+        ProxyServer::SCHEME_DIRECT | ProxyServer::SCHEME_HTTP |
+        ProxyServer::SCHEME_HTTPS | ProxyServer::SCHEME_SOCKS4 |
+        ProxyServer::SCHEME_SOCKS5);
 
     if (proxy_info_.is_empty()) {
       // No proxies/direct to choose from. This happens when we don't support
       // any of the proxies in the returned list.
-      status = net::ERR_NO_SUPPORTED_PROXIES;
+      status = ERR_NO_SUPPORTED_PROXIES;
     }
   }
 
   // Since we are faking the URL, it is possible that no proxies match our URL.
   // Try falling back to a direct connection if we have not tried that before.
-  if (status != net::OK) {
+  if (status != OK) {
     if (!tried_direct_connect_fallback_) {
       tried_direct_connect_fallback_ = true;
       proxy_info_.UseDirect();
@@ -211,13 +204,13 @@ void ProxyResolvingClientSocket::ProcessProxyResolveDone(int status) {
     }
   }
 
-  transport_.reset(new net::ClientSocketHandle);
+  transport_.reset(new ClientSocketHandle);
   // Now that we have resolved the proxy, we need to connect.
-  status = net::InitSocketHandleForRawConnect(
+  status = InitSocketHandleForRawConnect(
       dest_host_port_pair_, network_session_.get(), proxy_info_, ssl_config_,
-      ssl_config_, net::PRIVACY_MODE_DISABLED, net_log_, transport_.get(),
+      ssl_config_, PRIVACY_MODE_DISABLED, net_log_, transport_.get(),
       connect_callback_);
-  if (status != net::ERR_IO_PENDING) {
+  if (status != ERR_IO_PENDING) {
     // Since this method is always called asynchronously. it is OK to call
     // ProcessConnectDone synchronously.
     ProcessConnectDone(status);
@@ -225,14 +218,14 @@ void ProxyResolvingClientSocket::ProcessProxyResolveDone(int status) {
 }
 
 void ProxyResolvingClientSocket::ProcessConnectDone(int status) {
-  if (status != net::OK) {
+  if (status != OK) {
     // If the connection fails, try another proxy.
     status = ReconsiderProxyAfterError(status);
     // ReconsiderProxyAfterError either returns an error (in which case it is
     // not reconsidering a proxy) or returns ERR_IO_PENDING if it is considering
     // another proxy.
-    DCHECK_NE(status, net::OK);
-    if (status == net::ERR_IO_PENDING)
+    DCHECK_NE(status, OK);
+    if (status == ERR_IO_PENDING)
       // Proxy reconsideration pending. Return.
       return;
     CloseTransportSocket();
@@ -250,8 +243,8 @@ void ProxyResolvingClientSocket::ProcessConnectDone(int status) {
 // ProcessProxyResolveDone with the result of the reconsideration.
 int ProxyResolvingClientSocket::ReconsiderProxyAfterError(int error) {
   DCHECK(!pac_request_);
-  DCHECK_NE(error, net::OK);
-  DCHECK_NE(error, net::ERR_IO_PENDING);
+  DCHECK_NE(error, OK);
+  DCHECK_NE(error, ERR_IO_PENDING);
   // A failure to resolve the hostname or any error related to establishing a
   // TCP connection could be grounds for trying a new proxy configuration.
   //
@@ -261,19 +254,19 @@ int ProxyResolvingClientSocket::ReconsiderProxyAfterError(int error) {
   // now exists that corresponds to a proxy server that could load the URL.
   //
   switch (error) {
-    case net::ERR_PROXY_CONNECTION_FAILED:
-    case net::ERR_NAME_NOT_RESOLVED:
-    case net::ERR_INTERNET_DISCONNECTED:
-    case net::ERR_ADDRESS_UNREACHABLE:
-    case net::ERR_CONNECTION_CLOSED:
-    case net::ERR_CONNECTION_RESET:
-    case net::ERR_CONNECTION_REFUSED:
-    case net::ERR_CONNECTION_ABORTED:
-    case net::ERR_TIMED_OUT:
-    case net::ERR_TUNNEL_CONNECTION_FAILED:
-    case net::ERR_SOCKS_CONNECTION_FAILED:
+    case ERR_PROXY_CONNECTION_FAILED:
+    case ERR_NAME_NOT_RESOLVED:
+    case ERR_INTERNET_DISCONNECTED:
+    case ERR_ADDRESS_UNREACHABLE:
+    case ERR_CONNECTION_CLOSED:
+    case ERR_CONNECTION_RESET:
+    case ERR_CONNECTION_REFUSED:
+    case ERR_CONNECTION_ABORTED:
+    case ERR_TIMED_OUT:
+    case ERR_TUNNEL_CONNECTION_FAILED:
+    case ERR_SOCKS_CONNECTION_FAILED:
       break;
-    case net::ERR_SOCKS_CONNECTION_HOST_UNREACHABLE:
+    case ERR_SOCKS_CONNECTION_HOST_UNREACHABLE:
       // Remap the SOCKS-specific "host unreachable" error to a more
       // generic error code (this way consumers like the link doctor
       // know to substitute their error page).
@@ -282,10 +275,10 @@ int ProxyResolvingClientSocket::ReconsiderProxyAfterError(int error) {
       // differentiate between a proxy-side "host not found" versus a proxy-side
       // "address unreachable" error, and will report both of these failures as
       // ERR_ADDRESS_UNREACHABLE.
-      return net::ERR_ADDRESS_UNREACHABLE;
-    case net::ERR_PROXY_AUTH_REQUESTED: {
-      net::ProxyClientSocket* proxy_socket =
-          static_cast<net::ProxyClientSocket*>(transport_->socket());
+      return ERR_ADDRESS_UNREACHABLE;
+    case ERR_PROXY_AUTH_REQUESTED: {
+      ProxyClientSocket* proxy_socket =
+          static_cast<ProxyClientSocket*>(transport_->socket());
 
       if (proxy_socket->GetAuthController()->HaveAuth())
         return proxy_socket->RestartWithAuth(connect_callback_);
@@ -304,7 +297,7 @@ int ProxyResolvingClientSocket::ReconsiderProxyAfterError(int error) {
   int rv = network_session_->proxy_service()->ReconsiderProxyAfterError(
       proxy_url_, std::string(), error, &proxy_info_, proxy_resolve_callback_,
       &pac_request_, NULL, net_log_);
-  if (rv == net::OK || rv == net::ERR_IO_PENDING) {
+  if (rv == OK || rv == ERR_IO_PENDING) {
     CloseTransportSocket();
   } else {
     // If ReconsiderProxyAfterError() failed synchronously, it means
@@ -316,14 +309,14 @@ int ProxyResolvingClientSocket::ReconsiderProxyAfterError(int error) {
   // We either have new proxy info or there was an error in falling back.
   // In both cases we want to post ProcessProxyResolveDone (in the error case
   // we might still want to fall back a direct connection).
-  if (rv != net::ERR_IO_PENDING) {
+  if (rv != ERR_IO_PENDING) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
         base::Bind(&ProxyResolvingClientSocket::ProcessProxyResolveDone,
                    weak_factory_.GetWeakPtr(), rv));
     // Since we potentially have another try to go (trying the direct connect)
     // set the return code code to ERR_IO_PENDING.
-    rv = net::ERR_IO_PENDING;
+    rv = ERR_IO_PENDING;
   }
   return rv;
 }
@@ -353,35 +346,33 @@ bool ProxyResolvingClientSocket::IsConnectedAndIdle() const {
   return transport_->socket()->IsConnectedAndIdle();
 }
 
-int ProxyResolvingClientSocket::GetPeerAddress(
-    net::IPEndPoint* address) const {
+int ProxyResolvingClientSocket::GetPeerAddress(IPEndPoint* address) const {
   if (!transport_.get() || !transport_->socket()) {
     NOTREACHED();
-    return net::ERR_SOCKET_NOT_CONNECTED;
+    return ERR_SOCKET_NOT_CONNECTED;
   }
 
   if (proxy_info_.is_direct())
     return transport_->socket()->GetPeerAddress(address);
 
-  net::IPAddress ip_address;
+  IPAddress ip_address;
   if (!ip_address.AssignFromIPLiteral(dest_host_port_pair_.host())) {
     // Do not expose the proxy IP address to the caller.
-    return net::ERR_NAME_NOT_RESOLVED;
+    return ERR_NAME_NOT_RESOLVED;
   }
 
-  *address = net::IPEndPoint(ip_address, dest_host_port_pair_.port());
-  return net::OK;
+  *address = IPEndPoint(ip_address, dest_host_port_pair_.port());
+  return OK;
 }
 
-int ProxyResolvingClientSocket::GetLocalAddress(
-    net::IPEndPoint* address) const {
+int ProxyResolvingClientSocket::GetLocalAddress(IPEndPoint* address) const {
   if (transport_.get() && transport_->socket())
     return transport_->socket()->GetLocalAddress(address);
   NOTREACHED();
-  return net::ERR_SOCKET_NOT_CONNECTED;
+  return ERR_SOCKET_NOT_CONNECTED;
 }
 
-const net::NetLogWithSource& ProxyResolvingClientSocket::NetLog() const {
+const NetLogWithSource& ProxyResolvingClientSocket::NetLog() const {
   if (transport_.get() && transport_->socket())
     return transport_->socket()->NetLog();
   NOTREACHED();
@@ -413,19 +404,19 @@ bool ProxyResolvingClientSocket::WasAlpnNegotiated() const {
   return false;
 }
 
-net::NextProto ProxyResolvingClientSocket::GetNegotiatedProtocol() const {
+NextProto ProxyResolvingClientSocket::GetNegotiatedProtocol() const {
   if (transport_.get() && transport_->socket())
     return transport_->socket()->GetNegotiatedProtocol();
   NOTREACHED();
-  return net::kProtoUnknown;
+  return kProtoUnknown;
 }
 
-bool ProxyResolvingClientSocket::GetSSLInfo(net::SSLInfo* ssl_info) {
+bool ProxyResolvingClientSocket::GetSSLInfo(SSLInfo* ssl_info) {
   return false;
 }
 
 void ProxyResolvingClientSocket::GetConnectionAttempts(
-    net::ConnectionAttempts* out) const {
+    ConnectionAttempts* out) const {
   out->clear();
 }
 
@@ -440,4 +431,4 @@ void ProxyResolvingClientSocket::CloseTransportSocket() {
   transport_.reset();
 }
 
-}  // namespace jingle_glue
+}  // namespace net

@@ -19,13 +19,13 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
-#include "jingle/glue/proxy_resolving_client_socket.h"
 #include "net/cert/cert_verifier.h"
 #include "net/cert/ct_policy_enforcer.h"
 #include "net/cert/multi_log_ct_verifier.h"
 #include "net/http/transport_security_state.h"
 #include "net/socket/client_socket_factory.h"
 #include "net/socket/client_socket_handle.h"
+#include "net/socket/proxy_resolving_client_socket.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "remoting/base/buffered_socket_writer.h"
@@ -178,7 +178,7 @@ void XmppSignalStrategy::Core::Connect() {
   for (auto& observer : listeners_)
     observer.OnSignalStrategyStateChange(CONNECTING);
 
-  socket_.reset(new jingle_glue::ProxyResolvingClientSocket(
+  socket_.reset(new net::ProxyResolvingClientSocket(
       socket_factory_, request_context_getter_, net::SSLConfig(),
       net::HostPortPair(xmpp_server_config_.host, xmpp_server_config_.port)));
 
