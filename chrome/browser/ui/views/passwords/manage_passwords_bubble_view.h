@@ -15,6 +15,38 @@ namespace content {
 class WebContents;
 }
 
+class ManagePasswordsBubbleDelegateViewBase
+    : public LocationBarBubbleDelegateView {
+ public:
+  ManagePasswordsBubbleDelegateViewBase(
+      content::WebContents* web_contents,
+      views::View* anchor_view,
+      const gfx::Point& anchor_point,
+      std::unique_ptr<ManagePasswordsBubbleModel> model);
+
+  ~ManagePasswordsBubbleDelegateViewBase() override;
+
+  ManagePasswordsBubbleModel* model() const { return model_.get(); }
+
+  content::WebContents* web_contents() const;
+
+  void CloseBubble() override;
+
+ protected:
+  // Singleton instance of the Password bubble. The Password bubble can only be
+  // shown on the active browser window, so there is no case in which it will be
+  // shown twice at the same time. The instance is owned by the Bubble and will
+  // be deleted when the bubble closes.
+  static ManagePasswordsBubbleDelegateViewBase* manage_passwords_bubble_;
+  std::unique_ptr<ManagePasswordsBubbleModel> model_;
+
+  base::string16 GetWindowTitle() const override;
+  bool ShouldShowWindowTitle() const override;
+
+ private:
+  std::unique_ptr<WebContentMouseHandler> mouse_handler_;
+};
+
 // The ManagePasswordsBubbleView controls the contents of the bubble which
 // pops up when Chrome offers to save a user's password, or when the user
 // interacts with the Omnibox icon. It has two distinct states:
@@ -22,8 +54,7 @@ class WebContents;
 // 1. PendingView: Offers the user the possibility of saving credentials.
 // 2. ManageView: Displays the current page's saved credentials.
 // 3. BlacklistedView: Informs the user that the current page is blacklisted.
-//
-class ManagePasswordsBubbleView : public LocationBarBubbleDelegateView,
+class ManagePasswordsBubbleView : public ManagePasswordsBubbleDelegateViewBase,
                                   public views::StyledLabelListener {
  public:
   static constexpr int kDesiredBubbleWidth = 370;
@@ -34,6 +65,11 @@ class ManagePasswordsBubbleView : public LocationBarBubbleDelegateView,
                          DisplayReason reason);
 #endif
 
+  static void CreateBubble(content::WebContents* web_contents,
+                           views::View* anchor_view,
+                           const gfx::Point& anchor_point,
+                           DisplayReason reason);
+
   // Closes the existing bubble.
   static void CloseCurrentBubble();
 
@@ -41,17 +77,14 @@ class ManagePasswordsBubbleView : public LocationBarBubbleDelegateView,
   static void ActivateBubble();
 
   // Returns a pointer to the bubble.
-  static ManagePasswordsBubbleView* manage_password_bubble() {
+  static ManagePasswordsBubbleDelegateViewBase* manage_password_bubble() {
     return manage_passwords_bubble_;
   }
 
   ManagePasswordsBubbleView(content::WebContents* web_contents,
                             views::View* anchor_view,
                             const gfx::Point& anchor_point,
-                            DisplayReason reason);
-
-  content::WebContents* web_contents() const;
-
+                            std::unique_ptr<ManagePasswordsBubbleModel> model);
 #if defined(UNIT_TEST)
   const View* initially_focused_view() const {
     return initially_focused_view_;
@@ -61,8 +94,6 @@ class ManagePasswordsBubbleView : public LocationBarBubbleDelegateView,
     auto_signin_toast_timeout_ = seconds;
   }
 #endif
-
-  ManagePasswordsBubbleModel* model() { return &model_; }
 
  private:
   class AutoSigninView;
@@ -78,10 +109,7 @@ class ManagePasswordsBubbleView : public LocationBarBubbleDelegateView,
   int GetDialogButtons() const override;
   views::View* GetInitiallyFocusedView() override;
   void Init() override;
-  void CloseBubble() override;
   void AddedToWidget() override;
-  base::string16 GetWindowTitle() const override;
-  bool ShouldShowWindowTitle() const override;
   gfx::ImageSkia GetWindowIcon() override;
   bool ShouldShowWindowIcon() const override;
   bool ShouldShowCloseButton() const override;
@@ -105,20 +133,10 @@ class ManagePasswordsBubbleView : public LocationBarBubbleDelegateView,
     initially_focused_view_ = view;
   }
 
-  // Singleton instance of the Password bubble. The Password bubble can only be
-  // shown on the active browser window, so there is no case in which it will be
-  // shown twice at the same time. The instance is owned by the Bubble and will
-  // be deleted when the bubble closes.
-  static ManagePasswordsBubbleView* manage_passwords_bubble_;
-
   // The timeout in seconds for the auto sign-in toast.
   static int auto_signin_toast_timeout_;
 
-  ManagePasswordsBubbleModel model_;
-
   views::View* initially_focused_view_;
-
-  std::unique_ptr<WebContentMouseHandler> mouse_handler_;
 
   DISALLOW_COPY_AND_ASSIGN(ManagePasswordsBubbleView);
 };
