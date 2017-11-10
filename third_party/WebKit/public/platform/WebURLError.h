@@ -33,6 +33,8 @@
 
 #include "WebURL.h"
 #include "base/logging.h"
+#include "base/optional.h"
+#include "services/network/public/cpp/cors_error_status.h"
 
 namespace blink {
 
@@ -70,21 +72,28 @@ struct WebURLError {
               int reason,
               HasCopyInCache has_copy_in_cache,
               IsWebSecurityViolation is_web_security_violation,
-              const WebURL& url)
+              const WebURL& url,
+              base::Optional<network::CORSErrorStatus> cors_error_status)
       : domain_(domain),
         reason_(reason),
         has_copy_in_cache_(has_copy_in_cache == HasCopyInCache::kTrue),
         is_web_security_violation_(is_web_security_violation ==
                                    IsWebSecurityViolation::kTrue),
-        url_(url) {
+        url_(url),
+        cors_error_status_(cors_error_status) {
     DCHECK_NE(reason_, 0);
   }
 
   Domain domain() const { return domain_; }
   int reason() const { return reason_; }
   bool has_copy_in_cache() const { return has_copy_in_cache_; }
-  bool is_web_security_violation() const { return is_web_security_violation_; }
+  bool is_web_security_violation() const {
+    return is_web_security_violation_ || cors_error_status_;
+  }
   const WebURL& url() const { return url_; }
+  const base::Optional<network::CORSErrorStatus> cors_error_status() const {
+    return cors_error_status_;
+  }
 
  private:
   Domain domain_;
@@ -102,6 +111,9 @@ struct WebURLError {
 
   // The url that failed to load.
   WebURL url_;
+
+  // Optional CORS error details.
+  base::Optional<network::CORSErrorStatus> cors_error_status_;
 };
 
 BLINK_PLATFORM_EXPORT std::ostream& operator<<(std::ostream&,
