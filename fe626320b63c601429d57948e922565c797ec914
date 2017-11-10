@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6165855c_281841b4",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-10T23:21:11Z",
+      "side": 1,
+      "message": "... in the sense that there is no API to tell content to poll these values again, except as part of resize.\n\nAnd then explain this isn\u0027t needed by embedder because it\u0027s always accompanied by view size change",
+      "range": {
+        "startLine": 536,
+        "startChar": 55,
+        "endLine": 539,
+        "endChar": 26
+      },
+      "revId": "fe626320b63c601429d57948e922565c797ec914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
