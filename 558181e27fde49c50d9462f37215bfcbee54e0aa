@@ -22,6 +22,30 @@
       "revId": "558181e27fde49c50d9462f37215bfcbee54e0aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975c1298_ae71e65b",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_tablet_ntp_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-10T14:29:22Z",
+      "side": 1,
+      "message": "I haven\u0027t done any due diligence to ensure that |self| works under containment, so I kept the changes scoped to the experiment.  I have a followup CL that always uses |self| that I was going to hand off to Ed to vet.",
+      "parentUuid": "21216f99_904df607",
+      "range": {
+        "startLine": 278,
+        "startChar": 57,
+        "endLine": 278,
+        "endChar": 75
+      },
+      "revId": "558181e27fde49c50d9462f37215bfcbee54e0aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
