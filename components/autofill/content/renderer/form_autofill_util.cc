@@ -1538,15 +1538,18 @@ bool UnownedCheckoutFormElementsAndFieldSetsToFormData(
         form, field);
   }
 
-  // A potential problem is that this only checks document.title(), but should
-  // actually check the main frame's title. Thus it may make bad decisions for
-  // iframes.
-  base::string16 title(base::ToLowerASCII(document.Title().Utf16()));
-
-  // Don't check the path for url's without a standard format path component,
-  // such as data:.
+  // If the top frame is accessible, check it's title and url for checkout
+  // related keywords. Otherwise, check the title and url of the current
+  // document. Note that in many/most cases, the top frame and current frame
+  // are the same. This code is to handle cases where part of a form is in
+  // an iframe.
+  const blink::WebDocument& doc_to_check =
+      document.GetFrame()->Top()->IsWebLocalFrame()
+          ? document.GetFrame()->Top()->ToWebLocalFrame()->GetDocument()
+          : document;
+  base::string16 title = base::ToLowerASCII(doc_to_check.Title().Utf16());
+  GURL url(doc_to_check.Url());
   std::string path;
-  GURL url(document.Url());
   if (url.IsStandard())
     path = base::ToLowerASCII(url.path());
 
