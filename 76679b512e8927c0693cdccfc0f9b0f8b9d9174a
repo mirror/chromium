@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbbc9307_dcdff5c0",
+        "filename": "third_party/WebKit/Source/core/testing/Internals.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3413,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-10T03:39:11Z",
+      "side": 1,
+      "message": "not sure about this one, this does a dispatch for every single property. is there a way to iterate through all the shorthands instead of all the property ids?",
+      "revId": "76679b512e8927c0693cdccfc0f9b0f8b9d9174a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
