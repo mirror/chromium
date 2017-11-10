@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fa50e876_e6832aca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-10T18:28:19Z",
+      "side": 1,
+      "message": "please verify the line length.  it\u0027s wrapping when viewed in gerrit.",
+      "revId": "dc5b2b77995266a2e4ca5fe82d776c7affa51a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b26dcbcb_c2223613",
         "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
         "patchSetId": 2
