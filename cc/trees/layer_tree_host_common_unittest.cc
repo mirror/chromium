@@ -60,8 +60,7 @@ namespace {
 
 class VerifyTreeCalcsLayerTreeSettings : public LayerTreeSettings {
  public:
-  VerifyTreeCalcsLayerTreeSettings() {
-  }
+  VerifyTreeCalcsLayerTreeSettings() = default;
 };
 
 class LayerTreeHostCommonTestBase : public LayerTestCommon::LayerImplTest {
@@ -303,12 +302,12 @@ class LayerTreeHostCommonTest : public LayerTreeHostCommonTestBase,
 
 class LayerWithForcedDrawsContent : public Layer {
  public:
-  LayerWithForcedDrawsContent() {}
+  LayerWithForcedDrawsContent() = default;
 
   bool DrawsContent() const override { return true; }
 
  private:
-  ~LayerWithForcedDrawsContent() override {}
+  ~LayerWithForcedDrawsContent() override = default;
 };
 
 class LayerTreeSettingsScaleContent : public VerifyTreeCalcsLayerTreeSettings {
@@ -7269,7 +7268,7 @@ class AnimationScaleFactorTrackingLayerImpl : public LayerImpl {
         new AnimationScaleFactorTrackingLayerImpl(tree_impl, id));
   }
 
-  ~AnimationScaleFactorTrackingLayerImpl() override {}
+  ~AnimationScaleFactorTrackingLayerImpl() override = default;
 
  private:
   explicit AnimationScaleFactorTrackingLayerImpl(LayerTreeImpl* tree_impl,

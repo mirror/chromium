@@ -18,8 +18,8 @@ namespace {
 
 class WorkletAnimationPlayerTest : public AnimationTimelinesTest {
  public:
-  WorkletAnimationPlayerTest() {}
-  ~WorkletAnimationPlayerTest() override {}
+  WorkletAnimationPlayerTest() = default;
+  ~WorkletAnimationPlayerTest() override = default;
 
   int worklet_player_id_ = 11;
 };

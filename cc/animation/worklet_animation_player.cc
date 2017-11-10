@@ -11,7 +11,7 @@ namespace cc {
 WorkletAnimationPlayer::WorkletAnimationPlayer(int id, const std::string& name)
     : AnimationPlayer(id), name_(name) {}
 
-WorkletAnimationPlayer::~WorkletAnimationPlayer() {}
+WorkletAnimationPlayer::~WorkletAnimationPlayer() = default;
 
 scoped_refptr<WorkletAnimationPlayer> WorkletAnimationPlayer::Create(
     int id,

@@ -12,19 +12,13 @@
 
 namespace cc {
 
-Region::Region() {
-}
+Region::Region() = default;
 
-Region::Region(const Region& region)
-    : skregion_(region.skregion_) {
-}
+Region::Region(const Region& region) = default;
 
-Region::Region(const gfx::Rect& rect)
-    : skregion_(gfx::RectToSkIRect(rect)) {
-}
+Region::Region(const gfx::Rect& rect) : skregion_(gfx::RectToSkIRect(rect)) {}
 
-Region::~Region() {
-}
+Region::~Region() = default;
 
 const Region& Region::operator=(const gfx::Rect& rect) {
   skregion_ = SkRegion(gfx::RectToSkIRect(rect));
@@ -142,14 +136,10 @@ void Region::AsValueInto(base::trace_event::TracedValue* result) const {
   }
 }
 
-Region::Iterator::Iterator() {
-}
+Region::Iterator::Iterator() = default;
 
-Region::Iterator::Iterator(const Region& region)
-    : it_(region.skregion_) {
-}
+Region::Iterator::Iterator(const Region& region) : it_(region.skregion_) {}
 
-Region::Iterator::~Iterator() {
-}
+Region::Iterator::~Iterator() = default;
 
 }  // namespace cc

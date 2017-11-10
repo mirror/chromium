@@ -1196,7 +1196,7 @@ TEST_P(ResourceProviderTest, ReadLockCountStopsReturnToChildOrDelete) {
 
 class TestFence : public viz::ResourceFence {
  public:
-  TestFence() {}
+  TestFence() = default;
 
   // viz::ResourceFence implementation.
   void Set() override {}
@@ -1206,7 +1206,7 @@ class TestFence : public viz::ResourceFence {
   bool passed = false;
 
  private:
-  ~TestFence() override {}
+  ~TestFence() override = default;
 };
 
 TEST_P(ResourceProviderTest, ReadLockFenceStopsReturnToChildOrDelete) {

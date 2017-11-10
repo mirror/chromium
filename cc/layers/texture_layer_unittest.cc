@@ -243,7 +243,7 @@ class TestMailboxHolder : public TextureLayer::TextureMailboxHolder {
   using TextureLayer::TextureMailboxHolder::Create;
 
  protected:
-  ~TestMailboxHolder() override {}
+  ~TestMailboxHolder() override = default;
 };
 
 class TextureLayerWithMailboxTest : public TextureLayerTest {

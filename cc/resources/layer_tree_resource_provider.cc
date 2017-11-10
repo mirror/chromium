@@ -34,7 +34,7 @@ LayerTreeResourceProvider::LayerTreeResourceProvider(
                        resource_settings,
                        kInitialResourceId) {}
 
-LayerTreeResourceProvider::~LayerTreeResourceProvider() {}
+LayerTreeResourceProvider::~LayerTreeResourceProvider() = default;
 
 viz::ResourceId LayerTreeResourceProvider::CreateResourceFromTextureMailbox(
     const viz::TextureMailbox& mailbox,
