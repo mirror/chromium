@@ -57,6 +57,24 @@
       "revId": "39c0a220f189d3fdb7550c13c29ba35ff685ff41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b3deedf_8325d26a",
+        "filename": "gin/per_isolate_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2017-11-10T15:00:18Z",
+      "side": 1,
+      "message": "With the CancelableTaskManager we already have a mechanism in V8 which invalidates tasks in the task queue which should not be executed. The contract in V8 is that any task which accesses the isolate has to be managed by a CancelableTaskManager. The CancelableTaskManager invalidates all its tasks when the isolate shuts down, which means they will just return when they get called, without executing any code.\n\nThere may be an issue though with the RunWithLocker wrapper which is sometimes used to wrap tasks. This wrapper accesses the isolate before the invalidated task is actually accessed. If you say that tasks are always executed, we have to fix this in some way. Ross, do you know more about this RunWithLocker stuff? Is this actually a problem we have to deal with?",
+      "parentUuid": "eca1c04d_7984efdb",
+      "revId": "39c0a220f189d3fdb7550c13c29ba35ff685ff41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
