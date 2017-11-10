@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f129fcaa_8f9289ba",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-10T08:39:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7ce80da_f4f81cd9",
+      "revId": "086b974e8a3aca2fd0da941430c37795538d840b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c707e113_d14940c8",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 21
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "431e5cf5_c48b3873",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-10T08:39:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8e65e3e_6bd8f467",
+      "revId": "086b974e8a3aca2fd0da941430c37795538d840b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad54892_0b179813",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 21
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "c445217c_40498368",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-10T08:39:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ad54892_0b179813",
+      "revId": "086b974e8a3aca2fd0da941430c37795538d840b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "273706bd_f0e5d396",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 21
@@ -84,6 +138,24 @@
       "revId": "086b974e8a3aca2fd0da941430c37795538d840b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f79f719_36ab4605",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-10T08:39:55Z",
+      "side": 1,
+      "message": "Because they are not using the same type:\n* mojom::URLLoaderPtr\n* std::unique_ptr\u003cThrottlingURLLoader\u003e.",
+      "parentUuid": "273706bd_f0e5d396",
+      "revId": "086b974e8a3aca2fd0da941430c37795538d840b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
