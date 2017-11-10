@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c14b14ba_b67d3ba3",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-10T17:19:12Z",
+      "side": 1,
+      "message": "Is there some way to make sure we\u0027re not following this path in production?  If we always return nullptr on Android, do any tests fail?",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "6019354cbb8dbeb96c086a7cc78b52706c880f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19894cb1_a3befcf1",
         "filename": "content/network/network_service_unittest.cc",
         "patchSetId": 9
@@ -13,6 +36,24 @@
       "writtenOn": "2017-11-10T17:13:18Z",
       "side": 1,
       "message": "Sorry I should have clarified. \nI need to reset the factory here, because unit tests are run in the same process.",
+      "revId": "6019354cbb8dbeb96c086a7cc78b52706c880f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9174da2e_11ffd0fa",
+        "filename": "content/network/network_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-10T17:19:12Z",
+      "side": 1,
+      "message": "Sorry, I somehow managed to miss this file.\n\nAny reason not just move this extra logic into the main test fixture?",
+      "parentUuid": "19894cb1_a3befcf1",
       "revId": "6019354cbb8dbeb96c086a7cc78b52706c880f10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
