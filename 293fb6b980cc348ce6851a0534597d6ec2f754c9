@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "085a337d_88418e65",
+        "filename": "ui/gfx/gpu_fence.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-10T19:37:41Z",
+      "side": 1,
+      "message": "nit:\n\n#ifdef OS_POSIX\nScopedFD fd_;\n#endif",
+      "revId": "293fb6b980cc348ce6851a0534597d6ec2f754c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc76d7b2_fefdfd01",
+        "filename": "ui/gfx/gpu_fence_handle.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-10T19:37:41Z",
+      "side": 1,
+      "message": "this will need a #ifdef OS_POSIX as FileDescriptor is posix only.",
+      "revId": "293fb6b980cc348ce6851a0534597d6ec2f754c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7079489f_82a918a3",
+        "filename": "ui/gl/gl_fence_egl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-10T19:37:41Z",
+      "side": 1,
+      "message": "instead of new ctor + IsValid. can we add a Initialize function with a return value? and maybe a static Create function for the old use where we call Init with default type.",
+      "revId": "293fb6b980cc348ce6851a0534597d6ec2f754c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
