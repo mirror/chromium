@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3430820c_fc7a0632",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-10T19:53:08Z",
+      "side": 1,
+      "message": "Updated description.",
+      "parentUuid": "e76319bb_3569e19c",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ec331d3_cca4a910",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-10T00:59:48Z",
       "side": 1,
       "message": "Is this the right bug number? \"Cannot filter network requests by arbitrary string and\"",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42252314_85f631f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-10T19:53:08Z",
+      "side": 1,
+      "message": "Thanks, updated the bug #.",
+      "parentUuid": "4ec331d3_cca4a910",
       "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e216d9c9_bba6dfcd",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-10T19:53:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c1902fc_1bf72647",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa60a371_58ecafb7",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-10T00:59:48Z",
       "side": 1,
       "message": "What is \"the other case\"? Please explicitly state what is meant here (non-fullscreen, etc.) It\u0027s also a little confusing to have a comment here that\u0027s not associated with actual logic, but the fallthrough to logic below. If that\u0027s desirable, this comment should explain why it\u0027s falling through (ie. how the code below contributes to the desired outcome).",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c337a72_e23da870",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-10T19:53:08Z",
+      "side": 1,
+      "message": "Removed the falling through with the new flag |in_overview_mode_| and better comments.",
+      "parentUuid": "aa60a371_58ecafb7",
       "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b882a9f4_6ef5523b",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-10T19:53:08Z",
+      "side": 1,
+      "message": "1) added comments: // We do not paint when V1 apps are in overview mode.\n2) Yes, only for V1 apps. Modified to return !in_overview_mode_ || !browser_view()-\u003ebrowser()-\u003ebrowser-\u003eis_app().\n3) It is intentional check this at last. If in immersive mode, the title show/hide is determined by immersive revealed. Added comments to member decl.",
+      "parentUuid": "fecab3b5_ebfc568a",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f543cb9f_69edf944",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-10T00:59:48Z",
       "side": 1,
       "message": "This needs a comment, or really, it might make sense to just remove this and inline |in_overview_mode \u003d \u003cvalue\u003e; SchedulePaint();| in the OnOverviewMode[Starting|Ended] functions. That seems more straightforward than encapsulating an early return (which shouldn\u0027t ever be hit) with a simple value assignment.",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba717c35_ce7ecc9e",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-10T19:53:08Z",
+      "side": 1,
+      "message": "Thanks. Modified code.\nI was thinking to make an API so that we can call it to hide/show header for V1 apps (e.g. settings in CrOS). But AFAIK, this is only used for overview mode so far. With the change you suggested with |in_overview_mode_|, it makes the code much clear. Thank you.",
+      "parentUuid": "f543cb9f_69edf944",
       "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e82c9a5a_4eba965e",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-10T19:53:08Z",
+      "side": 1,
+      "message": "Very good point and make the code more clear. As mentioned above, I was trying to make it generalized so not limited to overview mode. But apparently it makes more confusing.\nChanged to |in_overview_mode_| because AFAIK no other place requires not paint the header.\n\np.s. why we donot paint the header for V1 apps in overview mode: in overview mode, we add a fake caption/header for each windows to make the header looks better and only has close button. To avoid duplication of the header, there is a need to clip the header (except normal type browser by setting the kTopViewInset to 0). Current method is using alpha filter, but the alpha filter is slow and makes trilinear filter optimization not work (pls see the correct but crbug.com/775627). We come up different solutions, but seems only this solution is practical.",
+      "parentUuid": "7f4cecdd_29c4dcf8",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27cbe4f1_81fa6cfa",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "027817b7_5f1530bb",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-10T19:53:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27cbe4f1_81fa6cfa",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +302,30 @@
       "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c88eff0_51afb9b1",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-10T19:53:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae8abe65_c36d4c0c",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 10
+      },
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
