@@ -24,6 +24,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/browser/bookmark_utils.h"
 #include "components/history/core/browser/history_database.h"
@@ -33,6 +34,10 @@
 #include "components/search_engines/template_url_service.h"
 #include "components/url_formatter/url_formatter.h"
 #include "third_party/protobuf/src/google/protobuf/repeated_field.h"
+
+#if defined(OS_ANDROID)
+#include "base/sys_info.h"
+#endif
 
 namespace {
 
@@ -74,6 +79,18 @@ typedef in_memory_url_index::
 bool LengthGreater(const base::string16& string_a,
                    const base::string16& string_b) {
   return string_a.length() > string_b.length();
+}
+
+int MaxNumHQPUrlsIndexedAtStartup() {
+#if defined(OS_ANDROID)
+  // Limits are chosen based on experiment results from https://goo.gl/EfU2ti.
+  const int kMaxNumHQPUrlsIndexedAtStartupOnLowEndDevices = 100;
+  const int kMaxNumHQPUrlsIndexedAtStartupOnNonLowEndDevices = 1000;
+  if (base::SysInfo::IsLowEndDevice())
+    return kMaxNumHQPUrlsIndexedAtStartupOnLowEndDevices;
+  return kMaxNumHQPUrlsIndexedAtStartupOnNonLowEndDevices;
+#endif
+  return -1;  // Unlimited
 }
 
 }  // namespace
@@ -416,8 +433,7 @@ scoped_refptr<URLIndexPrivateData> URLIndexPrivateData::RebuildFromHistory(
   // save memory. This limit is only applied for urls indexed at startup and
   // more urls can be indexed during the browsing session. The primary use case
   // is for Android devices where the session is typically short.
-  const int max_urls_indexed =
-      OmniboxFieldTrial::MaxNumHQPUrlsIndexedAtStartup();
+  const int max_urls_indexed = MaxNumHQPUrlsIndexedAtStartup();
   int num_urls_indexed = 0;
   for (history::URLRow row; history_enum.GetNextURL(&row);) {
     // Do not use >= to account for case of -1 for unlimited urls.
