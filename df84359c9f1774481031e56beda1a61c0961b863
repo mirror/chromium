@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a20e0ac4_444ec749",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-10T20:45:31Z",
+      "side": 1,
+      "message": "ah, sorry for missing it. Done",
+      "parentUuid": "ae6a3c84_3096e00d",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "df84359c9f1774481031e56beda1a61c0961b863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5af98d08_1907e12b",
         "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
         "patchSetId": 1
