@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "ac96ff92_6a9bb837",
+        "filename": "chrome/browser/resources/print_preview/new/input_settings_behavior.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T19:30:20Z",
+      "side": 1,
+      "message": "SG. Let\u0027s try that and see how it goes.",
+      "parentUuid": "a1ecd9db_a7b9fc01",
+      "revId": "768f18bd0192f17c6bc9d20e5b4da12deee8ff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8081e4dd_ae9c14bb",
         "filename": "chrome/browser/resources/print_preview/new/input_settings_behavior.js",
         "patchSetId": 4

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceeadb65_7b0e91ae",
+        "filename": "chrome/browser/resources/print_preview/new/scaling_settings.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T19:30:20Z",
+      "side": 1,
+      "message": "Why are we listening on taps on the \u003clabel\u003e? Can we simply listen for on-change on the checkbox itself? This event would fire, even if the user taps anywhere on the label.",
+      "revId": "e8c576806d3f305288cd96f69de4a9d8f025f787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd274541_a73c7f46",
+        "filename": "chrome/browser/resources/print_preview/new/settings_section.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T19:30:20Z",
+      "side": 1,
+      "message": "Nit: Use newer syntax without parentheses, as described at https://www.polymer-project.org/2.0/docs/upgrade#shadow-dom-styles.",
+      "revId": "e8c576806d3f305288cd96f69de4a9d8f025f787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
