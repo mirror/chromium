@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c2e0145_5069a255",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-10T20:48:18Z",
+      "side": 1,
+      "message": "is this even used?",
+      "revId": "188afc660307304da0abcc7b100fd209fc69e64d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5295e95_003dedc5",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-10T20:48:18Z",
+      "side": 1,
+      "message": "nit: drop the trailing \" \" from here and move it to be a leading space in the loop?",
+      "revId": "188afc660307304da0abcc7b100fd209fc69e64d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98443fe7_2c4b2fcf",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-10T20:48:18Z",
+      "side": 1,
+      "message": "nit:\n\n  for (const FormFieldData\u0026 field : form.fields) {\n    os \u003c\u003c \" \" \u003c\u003c field;\n  }",
+      "revId": "188afc660307304da0abcc7b100fd209fc69e64d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
