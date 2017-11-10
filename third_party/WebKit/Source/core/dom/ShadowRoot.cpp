@@ -136,26 +136,22 @@ void ShadowRoot::SetInnerHTMLFromString(const String& markup,
     ReplaceChildrenWithFragment(this, fragment, exception_state);
 }
 
-void ShadowRoot::setInnerHTML(const StringOrTrustedHTML& stringOrHtml,
+void ShadowRoot::setInnerHTML(const StringOrTrustedHTML& string_or_html,
                               ExceptionState& exception_state) {
-  DCHECK(stringOrHtml.IsString() ||
+  DCHECK(string_or_html.IsString() || string_or_html.IsNull() ||
          RuntimeEnabledFeatures::TrustedDOMTypesEnabled());
 
-  if (stringOrHtml.IsString() && GetDocument().RequireTrustedTypes()) {
+  if (string_or_html.IsString() && GetDocument().RequireTrustedTypes()) {
     exception_state.ThrowTypeError(
         "This document requires `TrustedHTML` assignment.");
     return;
   }
 
-  String html = stringOrHtml.IsString()
-                    ? stringOrHtml.GetAsString()
-                    : stringOrHtml.GetAsTrustedHTML()->toString();
-
-  // TODO(mkwst): This is an ugly hack that will be resolved once `TreatNullAs`
-  // is treated as an extended attribute on the `DOMString` type rather than
-  // as an extended attribute on the attribute. https://crbug.com/714866
-  if (html == "null")
-    html = "";
+  String html;
+  if (string_or_html.IsString())
+    html = string_or_html.GetAsString();
+  else if (string_or_html.IsTrustedHTML())
+    html = string_or_html.GetAsTrustedHTML()->toString();
 
   SetInnerHTMLFromString(html, exception_state);
 }
