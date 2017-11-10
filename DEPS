@@ -333,7 +333,7 @@ deps = {
     Var('chromium_git') + '/chromium/third_party/ffmpeg.git' + '@' + 'c33a5ee8e7b013b43e7fa9e0224857abc21564c2',
 
   'src/third_party/findbugs': {
-      'url': Var('chromium_git') + '/chromium/deps/findbugs.git' + '@' + '57f05238d3ac77ea0a194813d3065dd780c6e566',
+      'url': Var('chromium_git') + '/chromium/deps/findbugs.git' + '@' + '4275d9ac8610db6b1bc9a5e887f97e41b33fac67',
       'condition': 'checkout_android',
   },
 
@@ -566,7 +566,7 @@ deps = {
   },
 
   'src/third_party/robolectric/robolectric': {
-      'url': Var('chromium_git') + '/external/robolectric.git' + '@' + 'b02c65cc6d7465f58f0de48a39914aa905692afa',
+      'url': Var('chromium_git') + '/external/robolectric.git' + '@' + '4a3f2156ab7eb5213dffc3afe2d08b78dedb1478',
       'condition': 'checkout_android',
   },
 
