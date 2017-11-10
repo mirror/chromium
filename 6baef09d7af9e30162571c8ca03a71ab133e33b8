@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02b2e93d_7f774f13",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-10T20:19:01Z",
+      "side": 1,
+      "message": "can we swap this to have a null early return if it is NONE?",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 35
+      },
+      "revId": "6baef09d7af9e30162571c8ca03a71ab133e33b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
