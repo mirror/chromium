@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7509bb99_fe03327e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-10T21:16:38Z",
+      "side": 1,
+      "message": "typo nit: symoink and hat",
+      "revId": "2582a2c3d0a00695b51596bc3d8592b465931a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c81154c_f0b1485b",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-10T21:16:38Z",
+      "side": 1,
+      "message": "We\u0027re starting to have a lot of these on-the-side packages. For this one, I wonder if it would make sense to combine it with the llvmobjdump package above, as the contents seems to overlap.",
+      "revId": "2582a2c3d0a00695b51596bc3d8592b465931a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
