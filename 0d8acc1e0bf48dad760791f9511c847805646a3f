@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74dca456_0270ef60",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-10T11:34:04Z",
+      "side": 1,
+      "message": "4 and 5 look confusing to me.\nIIUC, the responsibility of FileTasks.getDefaultTask() is to choose a default task among given |tasks|.\nIt should be enough to just return null when there is no appropriate default task in |tasks|, without involving detailed conditions.\n\nSince executeDefaultInternal_() is responsible to determine what to do when there is no default task, it would be sufficient to add comments in the function.",
+      "revId": "0d8acc1e0bf48dad760791f9511c847805646a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85286892_227307a9",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-10T11:34:04Z",
+      "side": 1,
+      "message": "What happens when there is a \"View (in browser\" task and two non-generic tasks which are not executed yet?\n\nMy guess is:\n (old behavior): \"View\" is executed by double click\"\n (new behavior): Task picker will be shown.\nDo I understand correctly?",
+      "range": {
+        "startLine": 1030,
+        "startChar": 8,
+        "endLine": 1030,
+        "endChar": 29
+      },
+      "revId": "0d8acc1e0bf48dad760791f9511c847805646a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
