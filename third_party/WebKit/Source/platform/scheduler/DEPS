@@ -25,6 +25,7 @@ include_rules = [
   "+base/single_thread_task_runner.h",
   "+base/strings/string_number_conversions.h",
   "+base/synchronization/lock.h",
+  "+base/task/sequence_manager",
   "+base/threading/platform_thread.h",
   "+base/threading/thread.h",
   "+base/threading/thread_checker.h",

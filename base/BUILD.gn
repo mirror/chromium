@@ -808,6 +808,8 @@ jumbo_component("base") {
     "system_monitor/system_monitor.h",
     "task/cancelable_task_tracker.cc",
     "task/cancelable_task_tracker.h",
+    "task/sequence_manager/enqueue_order.cc",
+    "task/sequence_manager/enqueue_order.h",
     "task_runner.cc",
     "task_runner.h",
     "task_runner_util.h",

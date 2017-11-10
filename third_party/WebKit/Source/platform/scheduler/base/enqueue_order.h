@@ -7,43 +7,18 @@
 
 #include <stdint.h>
 
-#include "base/synchronization/lock.h"
+#include "base/task/sequence_manager/enqueue_order.h"
 
 namespace blink {
 namespace scheduler {
 namespace internal {
 
-using EnqueueOrder = uint64_t;
-
-// TODO(scheduler-dev): Remove explicit casts when c++17 comes.
-enum class EnqueueOrderValues : EnqueueOrder {
-  // Invalid EnqueueOrder.
-  NONE = 0,
-
-  // Earliest possible EnqueueOrder, to be used for fence blocking.
-  BLOCKING_FENCE = 1,
-  FIRST = 2,
-};
-
-// A 64bit integer used to provide ordering of tasks. NOTE The scheduler assumes
-// these values will not overflow.
-class EnqueueOrderGenerator {
- public:
-  EnqueueOrderGenerator();
-  ~EnqueueOrderGenerator();
-
-  // Returns a monotonically increasing integer, starting from one. Can be
-  // called from any thread.
-  EnqueueOrder GenerateNext();
-
-  static bool IsValidEnqueueOrder(EnqueueOrder enqueue_order) {
-    return enqueue_order != 0ull;
-  }
-
- private:
-  base::Lock lock_;
-  EnqueueOrder enqueue_order_;
-};
+// Temporary symbol redirection during move of scheduler/base to
+// //base/task/sequence_manager.
+using EnqueueOrder = base::sequence_manager::internal::EnqueueOrder;
+using EnqueueOrderValues = base::sequence_manager::internal::EnqueueOrderValues;
+using EnqueueOrderGenerator =
+    base::sequence_manager::internal::EnqueueOrderGenerator;
 
 }  // namespace internal
 }  // namespace scheduler
