@@ -541,6 +541,8 @@ component("ash") {
     "system/power/battery_notification.h",
     "system/power/dual_role_notification.cc",
     "system/power/dual_role_notification.h",
+    "system/power/lock_screen_note_controller.cc",
+    "system/power/lock_screen_note_controller.h",
     "system/power/peripheral_battery_notifier.cc",
     "system/power/peripheral_battery_notifier.h",
     "system/power/power_button_controller.cc",
