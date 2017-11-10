@@ -616,21 +616,7 @@ bool DirectRenderer::CanSkipRenderPass(const RenderPass* render_pass) const {
     auto it = render_pass_textures_.find(render_pass->id);
     DCHECK(it != render_pass_textures_.end());
     DCHECK(it->second);
-    if (it->second->id() == 0)
-      return false;
-    // Normally the scissor rect shouldn't affect caching, as that is global
-    // damage and not local to the RenderPass. It can be part of the scissor
-    // without the contents of the RenderPass being dirty - which is why there
-    // is a check for |has_damage_from_contributing_content| above. However the
-    // damage in the RenderPass can be modified by SurfaceAggregator, so we
-    // check to verify if that's the case.
-    // TODO(danakj) This check was done to be sure to have the needed content
-    // available when partial swapping. But for a cached RenderPass we have all
-    // the content already, so this is redundant and prevents cacheing from
-    // working correctly. Just remove this?
-    if (!ComputeScissorRectForRenderPass(render_pass).IsEmpty())
-      return false;
-    return true;
+    return it->second->id() != 0;
   }
 
   return false;
