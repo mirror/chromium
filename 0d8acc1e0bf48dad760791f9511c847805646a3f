@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8950f88f_c5466081",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-10T13:06:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74dca456_0270ef60",
+      "revId": "0d8acc1e0bf48dad760791f9511c847805646a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85286892_227307a9",
         "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
         "patchSetId": 9
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-10T11:34:04Z",
       "side": 1,
       "message": "What happens when there is a \"View (in browser\" task and two non-generic tasks which are not executed yet?\n\nMy guess is:\n (old behavior): \"View\" is executed by double click\"\n (new behavior): Task picker will be shown.\nDo I understand correctly?",
+      "range": {
+        "startLine": 1030,
+        "startChar": 8,
+        "endLine": 1030,
+        "endChar": 29
+      },
+      "revId": "0d8acc1e0bf48dad760791f9511c847805646a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d994f38_4e05b207",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-10T13:06:27Z",
+      "side": 1,
+      "message": "Good catch.\n\n\u003e  // 5. Try to run in browser, or show suggested apps dialog.\nJust to make sure, this comment meant line 506-- in executeDefault. So this is not actually a task passed to here.\n\nIf \"View\" in browser in your question means \"hhaomjibdihmijegdhdafkllkbggdgoj|file|view-in-browser\", it is created as non-generic.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/file_manager/file_tasks.cc?type\u003dcs\u0026q\u003dFindFileBrowserHandlerTasks+is_generic_file_handler\u0026sq\u003dpackage:chromium\u0026l\u003d410\n\nAnd the app id is that of File Manager. So it will be the default (built-in app) until user changes the default explicitly.\n\nSo assuming that user hadn\u0027t executed any of them, I think it would have been:\nold: view in browser\nnew: view in browser\nby rule #1 in my source code comment.",
+      "parentUuid": "85286892_227307a9",
       "range": {
         "startLine": 1030,
         "startChar": 8,
