@@ -1,4 +1,4 @@
-This test creates an iFrame via document.write(), then immediately changes the source of that iframe while the main document is still being parsed. It then navigates the frame again. The first src change should not result in a new back/forward list entry, but the second should.
+This test creates an iFrame via document.write(), then immediately changes the source of that iframe while the main document is still being parsed.  It then navigates the frame again.  The first src change should not result in a new back/forward list entry, but the second should.
 
 
 ============== Back Forward List ==============

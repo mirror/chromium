@@ -3,7 +3,6 @@ Test importing keys with various uses from JWK.
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
 
-
 {"key_ops":["encrypt","encrypt"]}:
 Failed importing with encrypt: DataError: The "key_ops" member of the JWK dictionary contains duplicate usages.
 {"key_ops":["encrypt"]}:

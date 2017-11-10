@@ -1,4 +1,6 @@
-Test for http://bugs.webkit.org/show_bug.cgi?id=11692. If the title has been explicitly set via document.title, any further <title> tags parsed should not effect the document title.
+Test for http://bugs.webkit.org/show_bug.cgi?id=11692.
+   If the title has been explicitly set via document.title, any further <title> tags parsed should not effect
+   the document title.
 
 Expected , got : PASS
 

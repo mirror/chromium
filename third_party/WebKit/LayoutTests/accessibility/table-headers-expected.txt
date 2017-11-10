@@ -1,27 +1,85 @@
-No	Month	Expenses
-1	Jan	100
-2	Feb	150
-3	Mar	200
+No	
+Month	
+Expenses
+1	
+Jan	
+100
+
+
+2	
+Feb	
+150
+
+
+3	
+Mar	
+200
 scope test
-col head	row head	col head
-col head	data	row head
-row head	data	col head
+col head	
+row head	
+col head
+
+
+col head	
+data	
+row head
+
+
+row head	
+data	
+col head
 row header and column header (1)
-data	row head	column head
-column head	column head	data
-row head	data	row head
+data	
+row head	
+column head
+
+
+column head	
+column head	
+data
+
+
+row head	
+data	
+row head
 row header and column header (2)
-row head	data	data
-column head	column head	column head
-data	data	data
+row head	
+data	
+data
+
+
+column head	
+column head	
+column head
+
+
+data	
+data	
+data
 scope and rowspan
-row head	col head
+row head	
+col head
+
+
 row head
 scope and colspan
-col head	col head	col head
-data	data	data
-col head	col head
-data	data	row head
+col head	
+col head	
+col head
+
+
+data	
+data	
+data
+
+
+col head	
+col head
+
+
+data	
+data	
+row head
 col head
 col head
 col head
@@ -31,10 +89,10 @@ row head
 row head
 row head
 col head
+
 Check whether column and row headers are reported correctly
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 PASS table.rowHeaderAtIndex(0).isEqual(table.cellForColumnAndRow(0, 1)) is true
 PASS table.rowHeaderAtIndex(1).isEqual(table.cellForColumnAndRow(0, 2)) is true

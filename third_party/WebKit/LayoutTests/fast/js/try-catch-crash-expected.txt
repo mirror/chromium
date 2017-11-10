@@ -1,1 +1,2 @@
-This test checks whether funky scope chains created by catch blocks are properly protected from GC. It should not crash.
+This test checks whether funky scope chains created by catch blocks
+are properly protected from GC. It should not crash.

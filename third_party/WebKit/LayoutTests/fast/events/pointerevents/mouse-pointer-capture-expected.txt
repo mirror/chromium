@@ -2,7 +2,6 @@ Verifies that pointer capture works for mouse.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
  ======= Set pointer capture and release implicitly  =======
     **** Move to green box & mouse press & jiggle ***** 
 green received pointerover

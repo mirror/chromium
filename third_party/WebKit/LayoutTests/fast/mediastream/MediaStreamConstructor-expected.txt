@@ -2,7 +2,6 @@ Tests MediaStream constructor.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Interface tests.
 PASS typeof MediaStream is 'function'
 PASS MediaStream.length is 0

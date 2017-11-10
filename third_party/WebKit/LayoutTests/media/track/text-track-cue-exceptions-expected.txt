@@ -2,7 +2,6 @@ Verify that TextTrackCue exceptions are properly messaged to developers.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS cue.startTime = Number.NaN; threw exception TypeError: Failed to set the 'startTime' property on 'TextTrackCue': The provided double value is non-finite..
 PASS cue.startTime = Number.POSITIVE_INFINITY; threw exception TypeError: Failed to set the 'startTime' property on 'TextTrackCue': The provided double value is non-finite..
 PASS cue.startTime = Number.NEGATIVE_INFINITY; threw exception TypeError: Failed to set the 'startTime' property on 'TextTrackCue': The provided double value is non-finite..

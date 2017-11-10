@@ -1,4 +1,7 @@
-Test for bug 10681: REGRESSION: Reproducible crash at Wikipedia
+Test for bug 10681:
+REGRESSION: Reproducible crash at Wikipedia
+
+
 
 
 SUCCESS

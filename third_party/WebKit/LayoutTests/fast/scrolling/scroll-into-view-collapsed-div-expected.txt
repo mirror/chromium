@@ -1,9 +1,11 @@
-Focus Textbox  Collapse Div With Textbox
-Focus Textbox  Collapse Div With Textbox
+Focus Textbox
+Collapse Div With Textbox
+Focus Textbox
+Collapse Div With Textbox
+
 Tests that scrollIntoViewIfNeeded works correctly if the enclosing div has no height.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 PASS successfullyParsed is true
 

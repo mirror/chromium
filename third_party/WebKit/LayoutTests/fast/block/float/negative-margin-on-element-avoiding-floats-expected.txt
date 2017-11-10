@@ -1,4 +1,5 @@
-A box with negative margin should drop it in order to fit next to floats rather than push below the floats. This behaviour is not defined by CSS2.1, but the behaviour enforced by this test makes us match IE and FF.
+A box with negative margin should drop it in order to fit next to floats rather than push below the floats. This behaviour is not
+       defined by CSS2.1, but the behaviour enforced by this test makes us match IE and FF.
 
 Header
 PASS

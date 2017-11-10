@@ -2,7 +2,6 @@ Various tests for .willValidate property
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Existence of .willValidate
 PASS typeof controls[i].willValidate is "boolean"
 PASS typeof controls[i].willValidate is "boolean"

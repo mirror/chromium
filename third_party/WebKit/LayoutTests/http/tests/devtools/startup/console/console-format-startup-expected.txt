@@ -187,7 +187,7 @@ CONSOLE MESSAGE: line 11: [object Generator]
 CONSOLE MESSAGE: line 12: [object Generator]
 Tests console logging for messages that happen before DevTools is open.
 
- console-format-startup.html:25 Array(10)
+console-format-startup.html:25 Array(10)
 console-format-startup.html:26 Array(10)
 console-format-startup.html:27 Array(10)
 console-format-startup.html:28 Test for zero "0" in formatter

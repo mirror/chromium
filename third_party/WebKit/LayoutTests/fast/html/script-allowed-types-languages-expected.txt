@@ -1,4 +1,5 @@
-This page tests the allowed values for the type and language attributes of the <script> tag. Below you will see the allowed values.
+This page tests the allowed values for the type and language attributes
+    of the <script> tag. Below you will see the allowed values.
 
 Type: unspecified, Language: unspecified
 Type: "", Language: unspecified

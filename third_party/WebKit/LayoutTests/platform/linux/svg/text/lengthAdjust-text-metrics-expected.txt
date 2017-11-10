@@ -2,7 +2,6 @@ Complete test of the SVGTextContentElement API
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Test SVGTextContentElement SVG DOM properties
 PASS svgText.textLength.baseVal.value.toFixed(1) is "200.0"
 PASS svgText.lengthAdjust.baseVal is SVGTextContentElement.LENGTHADJUST_SPACINGANDGLYPHS

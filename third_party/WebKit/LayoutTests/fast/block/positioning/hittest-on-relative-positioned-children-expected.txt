@@ -1,4 +1,5 @@
-This tests hit testing on relative positioned children. To manually test, select text by a mouse drag starting in the blue box but outside red boxes and ending inside a red box.
+This tests hit testing on relative positioned children. To manually test, select text by a mouse drag
+starting in the blue box but outside red boxes and ending inside a red box.
 
 PASS Selecting line 1 of box 1 selected "first line"
 PASS Selecting line 2 of box 1 selected "second line"

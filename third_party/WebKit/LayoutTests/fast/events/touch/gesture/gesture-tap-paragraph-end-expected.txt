@@ -1,10 +1,9 @@
 Tap to the
 right:
 
-Verifies that tapping in the whitespace at the end of a paragraph sends mouse events properly to the paragraph node (even though there are no text line boxes here). http://crbug.com/398205
+Verifies that tapping in the whitespace at the end of a paragraph sends mouse events properly to the paragraph node (even though there are no text line boxes here).  http://crbug.com/398205
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 PASS point.x is > span.getBoundingClientRect().right
 PASS document.elementFromPoint(point.x, point.y).id is "target"

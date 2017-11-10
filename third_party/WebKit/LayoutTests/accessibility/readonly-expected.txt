@@ -1,4 +1,19 @@
-Link  Button A B C D E F G H I J K L M
+Link
+Button
+  A
+  B
+  C
+  D
+  E
+  F
+  G
+  H
+  I
+  J
+
+  K
+  L
+  M
 Focusable
 Heading
 Plain div can't be readonly
@@ -8,10 +23,10 @@ ARIA link
 ARIA slider
 ARIA progress meter
 Button
+
 This tests which elements expose themselves as readonly. Readonly here refers to whether the item is not editable, not whether a control value can be changed vs if it's unavailable.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 link1
 PASS document.activeElement == element is true

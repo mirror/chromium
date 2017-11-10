@@ -1,11 +1,17 @@
-Link  Button          
+Link
+Button
+
+
+
+
+
 Focusable
 ARIA button
 ARIA link
+
 This test makes sure that focusable elements in canvas fallback content are accessible.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 link1
 PASS document.activeElement == element is true

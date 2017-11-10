@@ -1,18 +1,76 @@
 Test Results
-solid on solid	alpha on solid	solid on alpha	alpha on alpha
-source-over				
-source-in				
-source-out				
-source-atop				
-destination-over				
-destination-in				
-destination-out				
-destination-atop				
-lighter				
-copy				
-xor				
-Test Image
+	
+solid on solid	
+alpha on solid	
+solid on alpha	
+alpha on alpha
 
+
+source-over	
+	
+	
+	
+
+
+source-in	
+	
+	
+	
+
+
+source-out	
+	
+	
+	
+
+
+source-atop	
+	
+	
+	
+
+
+destination-over	
+	
+	
+	
+
+
+destination-in	
+	
+	
+	
+
+
+destination-out	
+	
+	
+	
+
+
+destination-atop	
+	
+	
+	
+
+
+lighter	
+	
+	
+	
+
+
+copy	
+	
+	
+	
+
+
+xor	
+	
+	
+	
+Test Image
 Test Output
 Mode: source-over
 Test: solid on solid

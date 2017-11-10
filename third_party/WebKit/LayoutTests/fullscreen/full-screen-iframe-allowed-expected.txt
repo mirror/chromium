@@ -1,4 +1,5 @@
-Test for bug 56264: Handle entering full screen security restrictions
+Test for bug 56264: 
+Handle entering full screen security restrictions
 
 To test manually, click the "Go full screen" button - the page should enter full screen mode.
 

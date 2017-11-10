@@ -7,6 +7,7 @@ Parent Cell 3
 c1
 c2
 c3
+
 This test verifies the position and size of the highlight rectangles overlayed on an inspected CSS grid div.
 
 paddedGrid{

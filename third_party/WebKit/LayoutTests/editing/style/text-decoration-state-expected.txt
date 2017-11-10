@@ -1,7 +1,6 @@
-Test to make sure we return correct text-decoration state. Note that "text-decoration: none" SHOULD NOT cancel text decorations.
+Test to make sure we return correct text-decoration state.  Note that "text-decoration: none" SHOULD NOT cancel text decorations.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 PASS textdecorationState("underline","<u><b><i><span id=e>hello world</span></i></b></u>") is true
 PASS textdecorationState("underline","<b><i><u><span id=e>hello world</span></u></i></b>") is true

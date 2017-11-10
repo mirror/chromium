@@ -1,4 +1,11 @@
-This test covers the various ways of accessing DOM elements through the document object by name, id or index, directly as properties of the document object. This lookup is supposed to include embed, form, image, object and iframe by name, but only object by id. It should give the element itself in the case of a single match, or an HTMLCollection in the case of multiple matches; except that when exactly one item that is an iframe matches, it will give the window object for that iframe.
+This test covers the various ways of accessing DOM elements through
+the document object by name, id or index, directly as properties of
+the document object. This lookup is supposed to include embed,
+form, image, object and iframe by name, but only object by
+id. It should give the element itself in the case of a single match,
+or an HTMLCollection in the case of multiple matches; except that when
+exactly one item that is an iframe matches, it will give the window
+object for that iframe.
 
 Our results match IE.
 

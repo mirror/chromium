@@ -1,4 +1,5 @@
-Testcase for bug 108053: Caret is not displayed when trying to focus inside a contenteditable element containing an empty block. To manually verify the issue, click inside the three boxes. A caret should be displayed for each of them.
+Testcase for bug 108053: Caret is not displayed when trying to focus inside a contenteditable element containing an empty block.
+To manually verify the issue, click inside the three boxes. A caret should be displayed for each of them.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
