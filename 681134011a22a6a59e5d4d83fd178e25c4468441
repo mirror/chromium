@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dd13add_026dd8f7",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-10T13:04:20Z",
+      "side": 1,
+      "message": "s/Returns the whether/Whether",
+      "revId": "681134011a22a6a59e5d4d83fd178e25c4468441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
