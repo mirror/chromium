@@ -68,10 +68,9 @@ struct SwReporterInvocation {
 
 using SwReporterQueue = base::circular_deque<SwReporterInvocation>;
 
-// Tries to run the sw_reporter component, and then schedule the next try. If
-// called multiple times, then multiple sequences of trying to run will happen,
-// yet only one SwReporterQueue will actually run in the period of
-// |kDaysBetweenSuccessfulSwReporterRuns| days.
+// Tries to run the sw_reporter component, and then schedule the next try. In
+// the period of |kDaysBetweenSuccessfulSwReporterRuns| days, only the first
+// attempt will actually run.
 //
 // Each "run" of the sw_reporter component may aggregate the results of several
 // executions of the tool with different command lines. |invocations| is the
@@ -113,6 +112,10 @@ class SwReporterTestingDelegate {
   // A task runner used to spawn the reporter process (which blocks).
   // See ReporterRunner::ScheduleNextInvocation().
   virtual base::TaskRunner* BlockingTaskRunner() const = 0;
+
+  // Called once all invocations that should run have completed. Also called if
+  // no invocations are supposed to run.
+  virtual void OnSequenceDone() = 0;
 };
 
 // Set a delegate for testing. The implementation will not take ownership of
