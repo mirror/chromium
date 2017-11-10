@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8f56dfc_45c70c57",
+        "filename": "media/base/cdm_promise_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-10T04:46:56Z",
+      "side": 1,
+      "message": "CdmPromiseAdapter is used in a lot of places, so this will END many not-started trace.\n\nAgain, tracing is a performance tool, and usually we don\u0027t care about corner cases when investigating performance.",
+      "revId": "c99a0c8ae26a6b6733d863aa56b5f20077ef9626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c89c81_b968a244",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-10T04:46:56Z",
+      "side": 1,
+      "message": "Will logging be sufficient for this purpose? Or do you really want the visualization? Note that unlike DVLOG, these will all be built in release builds.",
+      "revId": "c99a0c8ae26a6b6733d863aa56b5f20077ef9626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
