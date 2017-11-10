@@ -4,7 +4,6 @@
 
 package org.chromium.base;
 
-import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -130,12 +129,5 @@ public class BuildInfo {
      */
     public static boolean isAtLeastO() {
         return Build.VERSION.SDK_INT >= 26;
-    }
-
-    /**
-     * @return Whether the current app targets the SDK for at least O
-     */
-    public static boolean targetsAtLeastO(Context appContext) {
-        return appContext.getApplicationInfo().targetSdkVersion >= 26;
     }
 }
