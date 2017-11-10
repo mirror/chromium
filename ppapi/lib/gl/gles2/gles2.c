@@ -1046,3 +1046,13 @@ void GL_APIENTRY glDrawBuffersEXT(GLsizei count, const GLenum* bufs) {
   if (ext)
     ext->DrawBuffersEXT(glGetCurrentContextPPAPI(), count, bufs);
 }
+
+void GL_APIENTRY glWaitGpuFenceCHROMIUM(GLuint gpu_fence_id) {
+  glGetInterfacePPAPI()->WaitGpuFenceCHROMIUM(glGetCurrentContextPPAPI(),
+                                              gpu_fence_id);
+}
+
+void GL_APIENTRY glDestroyGpuFenceCHROMIUM(GLuint gpu_fence_id) {
+  glGetInterfacePPAPI()->DestroyGpuFenceCHROMIUM(glGetCurrentContextPPAPI(),
+                                                 gpu_fence_id);
+}

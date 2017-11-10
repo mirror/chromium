@@ -28,6 +28,7 @@
 #include "gpu/ipc/common/gpu_messages.h"
 #include "gpu/ipc/common/gpu_param_traits.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/gfx/gpu_fence.h"
 #include "ui/gl/gl_bindings.h"
 
 #if defined(OS_MACOSX)
@@ -161,6 +162,8 @@ bool CommandBufferProxyImpl::OnMessageReceived(const IPC::Message& message) {
                         OnSwapBuffersCompleted);
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_UpdateVSyncParameters,
                         OnUpdateVSyncParameters);
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_GetGpuFenceHandleComplete,
+                        OnGetGpuFenceHandleComplete);
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -659,6 +662,112 @@ void CommandBufferProxyImpl::SignalQuery(uint32_t query,
   Send(new GpuCommandBufferMsg_SignalQuery(route_id_, query, signal_id));
   signal_tasks_.insert(std::make_pair(signal_id, callback));
 }
+
+void CommandBufferProxyImpl::SendGpuFence(uint32_t gpu_fence_id,
+                                          ClientGpuFence source) {
+  LOG(INFO) << __FUNCTION__ << ";;; gpu_fence_id=" << gpu_fence_id;
+  CheckLock();
+  base::AutoLock lock(last_state_lock_);
+  if (last_state_.error != gpu::error::kNoError) {
+    LOG(INFO) << __FUNCTION__ << ";;; got error=" << last_state_.error;
+    return;
+  }
+
+  gfx::GpuFence* gpu_fence = gfx::GpuFence::FromClientGpuFence(source);
+  gfx::GpuFenceHandle handle = gfx::CloneHandleForIPC(gpu_fence->GetHandle());
+  Send(new GpuCommandBufferMsg_SendGpuFenceHandle(route_id_, gpu_fence_id,
+                                                  handle));
+}
+
+void CommandBufferProxyImpl::GetGpuFenceHandle(
+    uint32_t gpu_fence_id,
+    const base::Callback<void(const gfx::GpuFenceHandle&)>& callback) {
+  LOG(INFO) << __FUNCTION__ << ";;; gpu_fence_id=" << gpu_fence_id;
+  CheckLock();
+  base::AutoLock lock(last_state_lock_);
+  if (last_state_.error != gpu::error::kNoError) {
+    LOG(INFO) << __FUNCTION__ << ";;; got error=" << last_state_.error;
+    return;
+  }
+
+  Send(new GpuCommandBufferMsg_GetGpuFenceHandle(route_id_, gpu_fence_id));
+  get_gpu_fence_tasks_.insert(std::make_pair(gpu_fence_id, callback));
+}
+
+void CommandBufferProxyImpl::OnGetGpuFenceHandleComplete(
+    uint32_t gpu_fence_id,
+    const gfx::GpuFenceHandle& handle) {
+  LOG(INFO) << __FUNCTION__ << ";;; gpu_fence_id=" << gpu_fence_id;
+  // LOG(INFO) << __FUNCTION__ << ";;; start, fd=" << ret.sync_fd.fd << " key="
+  // << sync_token.release_count();
+  GetGpuFenceTaskMap::iterator it = get_gpu_fence_tasks_.find(gpu_fence_id);
+  if (it == get_gpu_fence_tasks_.end()) {
+    LOG(ERROR) << "Gpu process sent invalid FetchNativeSyncPointFdComplete.";
+    base::AutoLock lock(last_state_lock_);
+    OnGpuAsyncMessageError(gpu::error::kInvalidGpuMessage,
+                           gpu::error::kLostContext);
+    return;
+  }
+  // LOG(INFO) << __FUNCTION__ << ";;; found callback, running it";
+  auto callback = it->second;
+  get_gpu_fence_tasks_.erase(it);
+  callback.Run(handle);
+}
+
+#if 0
+void CommandBufferProxyImpl::CreateGpuFence(
+    const base::Callback<void(const gfx::GpuFenceHandle&)>& callback) {
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+  CheckLock();
+  base::AutoLock lock(last_state_lock_);
+  if (last_state_.error != gpu::error::kNoError) {
+    LOG(INFO) << __FUNCTION__ << ";;; got error=" << last_state_.error;
+    return;
+  }
+
+  uint32_t create_id = next_create_gpu_fence_task_id_++;
+  Send(new GpuCommandBufferMsg_CreateGpuFence(route_id_, create_id));
+  // LOG(INFO) << ";;; waiting for response at key=" << release_count;
+  create_gpu_fence_tasks_.insert(
+      std::make_pair(create_id, callback));
+}
+
+void CommandBufferProxyImpl::OnCreateGpuFenceComplete(
+    uint32_t create_id,
+    const gfx::GpuFenceHandle& handle) {
+  // LOG(INFO) << __FUNCTION__ << ";;; start, fd=" << ret.sync_fd.fd << " key="
+  // << sync_token.release_count();
+  CreateGpuFenceTaskMap::iterator it = create_gpu_fence_tasks_.find(create_id);
+  if (it == create_gpu_fence_tasks_.end()) {
+    LOG(ERROR) << "Gpu process sent invalid FetchNativeSyncPointFdComplete.";
+    base::AutoLock lock(last_state_lock_);
+    OnGpuAsyncMessageError(gpu::error::kInvalidGpuMessage,
+                           gpu::error::kLostContext);
+    return;
+  }
+  // LOG(INFO) << __FUNCTION__ << ";;; found callback, running it";
+  auto callback = it->second;
+  create_gpu_fence_tasks_.erase(it);
+  callback.Run(handle);
+}
+
+void CommandBufferProxyImpl::InsertGpuFence(const gfx::GpuFenceHandle& handle) {
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+  CheckLock();
+  base::AutoLock lock(last_state_lock_);
+  if (last_state_.error != gpu::error::kNoError) {
+    LOG(INFO) << __FUNCTION__ << ";;; got error=" << last_state_.error;
+    return;
+  }
+
+  gfx::GpuFenceHandle handle_for_ipc =
+      gfx::CloneHandleForIPC(handle);
+
+  Send(new GpuCommandBufferMsg_InsertGpuFence(route_id_, handle_for_ipc));
+}
+#endif
 
 void CommandBufferProxyImpl::TakeFrontBuffer(const gpu::Mailbox& mailbox) {
   CheckLock();

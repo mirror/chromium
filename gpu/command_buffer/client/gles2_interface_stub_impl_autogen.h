@@ -1228,4 +1228,13 @@ void GLES2InterfaceStub::TexStorage2DImageCHROMIUM(GLenum /* target */,
 void GLES2InterfaceStub::SetColorSpaceMetadataCHROMIUM(
     GLuint /* texture_id */,
     GLColorSpace /* color_space */) {}
+GLuint GLES2InterfaceStub::CreateGpuFenceCHROMIUM() {
+  return 0;
+}
+GLuint GLES2InterfaceStub::DuplicateGpuFenceCHROMIUM(
+    ClientGpuFence /* source */) {
+  return 0;
+}
+void GLES2InterfaceStub::WaitGpuFenceCHROMIUM(GLuint /* gpu_fence_id */) {}
+void GLES2InterfaceStub::DestroyGpuFenceCHROMIUM(GLuint /* gpu_fence_id */) {}
 #endif  // GPU_COMMAND_BUFFER_CLIENT_GLES2_INTERFACE_STUB_IMPL_AUTOGEN_H_

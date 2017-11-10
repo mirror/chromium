@@ -16294,4 +16294,107 @@ static_assert(
     offsetof(SetColorSpaceMetadataCHROMIUM, color_space_size) == 16,
     "offset of SetColorSpaceMetadataCHROMIUM color_space_size should be 16");
 
+struct CreateGpuFenceINTERNAL {
+  typedef CreateGpuFenceINTERNAL ValueType;
+  static const CommandId kCmdId = kCreateGpuFenceINTERNAL;
+  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
+  static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
+
+  static uint32_t ComputeSize() {
+    return static_cast<uint32_t>(sizeof(ValueType));  // NOLINT
+  }
+
+  void SetHeader() { header.SetCmd<ValueType>(); }
+
+  void Init(GLuint _gpu_fence_id, bool _from_external) {
+    SetHeader();
+    gpu_fence_id = _gpu_fence_id;
+    from_external = _from_external;
+  }
+
+  void* Set(void* cmd, GLuint _gpu_fence_id, bool _from_external) {
+    static_cast<ValueType*>(cmd)->Init(_gpu_fence_id, _from_external);
+    return NextCmdAddress<ValueType>(cmd);
+  }
+
+  gpu::CommandHeader header;
+  uint32_t gpu_fence_id;
+  uint32_t from_external;
+};
+
+static_assert(sizeof(CreateGpuFenceINTERNAL) == 12,
+              "size of CreateGpuFenceINTERNAL should be 12");
+static_assert(offsetof(CreateGpuFenceINTERNAL, header) == 0,
+              "offset of CreateGpuFenceINTERNAL header should be 0");
+static_assert(offsetof(CreateGpuFenceINTERNAL, gpu_fence_id) == 4,
+              "offset of CreateGpuFenceINTERNAL gpu_fence_id should be 4");
+static_assert(offsetof(CreateGpuFenceINTERNAL, from_external) == 8,
+              "offset of CreateGpuFenceINTERNAL from_external should be 8");
+
+struct WaitGpuFenceCHROMIUM {
+  typedef WaitGpuFenceCHROMIUM ValueType;
+  static const CommandId kCmdId = kWaitGpuFenceCHROMIUM;
+  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
+  static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
+
+  static uint32_t ComputeSize() {
+    return static_cast<uint32_t>(sizeof(ValueType));  // NOLINT
+  }
+
+  void SetHeader() { header.SetCmd<ValueType>(); }
+
+  void Init(GLuint _gpu_fence_id) {
+    SetHeader();
+    gpu_fence_id = _gpu_fence_id;
+  }
+
+  void* Set(void* cmd, GLuint _gpu_fence_id) {
+    static_cast<ValueType*>(cmd)->Init(_gpu_fence_id);
+    return NextCmdAddress<ValueType>(cmd);
+  }
+
+  gpu::CommandHeader header;
+  uint32_t gpu_fence_id;
+};
+
+static_assert(sizeof(WaitGpuFenceCHROMIUM) == 8,
+              "size of WaitGpuFenceCHROMIUM should be 8");
+static_assert(offsetof(WaitGpuFenceCHROMIUM, header) == 0,
+              "offset of WaitGpuFenceCHROMIUM header should be 0");
+static_assert(offsetof(WaitGpuFenceCHROMIUM, gpu_fence_id) == 4,
+              "offset of WaitGpuFenceCHROMIUM gpu_fence_id should be 4");
+
+struct DestroyGpuFenceCHROMIUM {
+  typedef DestroyGpuFenceCHROMIUM ValueType;
+  static const CommandId kCmdId = kDestroyGpuFenceCHROMIUM;
+  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
+  static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
+
+  static uint32_t ComputeSize() {
+    return static_cast<uint32_t>(sizeof(ValueType));  // NOLINT
+  }
+
+  void SetHeader() { header.SetCmd<ValueType>(); }
+
+  void Init(GLuint _gpu_fence_id) {
+    SetHeader();
+    gpu_fence_id = _gpu_fence_id;
+  }
+
+  void* Set(void* cmd, GLuint _gpu_fence_id) {
+    static_cast<ValueType*>(cmd)->Init(_gpu_fence_id);
+    return NextCmdAddress<ValueType>(cmd);
+  }
+
+  gpu::CommandHeader header;
+  uint32_t gpu_fence_id;
+};
+
+static_assert(sizeof(DestroyGpuFenceCHROMIUM) == 8,
+              "size of DestroyGpuFenceCHROMIUM should be 8");
+static_assert(offsetof(DestroyGpuFenceCHROMIUM, header) == 0,
+              "offset of DestroyGpuFenceCHROMIUM header should be 0");
+static_assert(offsetof(DestroyGpuFenceCHROMIUM, gpu_fence_id) == 4,
+              "offset of DestroyGpuFenceCHROMIUM gpu_fence_id should be 4");
+
 #endif  // GPU_COMMAND_BUFFER_COMMON_GLES2_CMD_FORMAT_AUTOGEN_H_

@@ -1592,6 +1592,20 @@ void DrawBuffersEXT(PP_Resource context_id, GLsizei count, const GLenum* bufs) {
   }
 }
 
+void WaitGpuFenceCHROMIUM(PP_Resource context_id, GLuint gpu_fence_id) {
+  Enter3D enter(context_id, true);
+  if (enter.succeeded()) {
+    ToGles2Impl(&enter)->WaitGpuFenceCHROMIUM(gpu_fence_id);
+  }
+}
+
+void DestroyGpuFenceCHROMIUM(PP_Resource context_id, GLuint gpu_fence_id) {
+  Enter3D enter(context_id, true);
+  if (enter.succeeded()) {
+    ToGles2Impl(&enter)->DestroyGpuFenceCHROMIUM(gpu_fence_id);
+  }
+}
+
 }  // namespace
 const PPB_OpenGLES2* PPB_OpenGLES2_Shared::GetInterface() {
   static const struct PPB_OpenGLES2 ppb_opengles2 = {
@@ -1736,7 +1750,9 @@ const PPB_OpenGLES2* PPB_OpenGLES2_Shared::GetInterface() {
       &VertexAttrib4f,
       &VertexAttrib4fv,
       &VertexAttribPointer,
-      &Viewport};
+      &Viewport,
+      &WaitGpuFenceCHROMIUM,
+      &DestroyGpuFenceCHROMIUM};
   return &ppb_opengles2;
 }
 const PPB_OpenGLES2InstancedArrays*

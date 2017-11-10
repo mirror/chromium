@@ -414,6 +414,61 @@ void GLES2Implementation::SignalQuery(uint32_t query,
                  callback));
 }
 
+GLuint GLES2Implementation::CreateGpuFenceCHROMIUM() {
+  ShallowFlushCHROMIUM();  // FIXME
+  GLuint client_id;
+  GetIdHandler(SharedIdNamespaces::kGpuFences)->MakeIds(this, 0, 1, &client_id);
+  LOG(INFO) << __FUNCTION__ << ";;; gpu_fence_id=" << client_id;
+  helper_->CreateGpuFenceINTERNAL(client_id, false);
+  GPU_CLIENT_LOG("returned " << client_id);
+  CheckGLError();
+  return client_id;
+}
+
+GLuint GLES2Implementation::DuplicateGpuFenceCHROMIUM(ClientGpuFence source) {
+  ShallowFlushCHROMIUM();  // FIXME
+  GLuint client_id;
+  GetIdHandler(SharedIdNamespaces::kGpuFences)->MakeIds(this, 0, 1, &client_id);
+  LOG(INFO) << __FUNCTION__ << ";;; gpu_fence_id=" << client_id;
+
+  gpu_control_->SendGpuFence(client_id, source);
+  helper_->CreateGpuFenceINTERNAL(client_id, true);  // is this needed?
+
+  GPU_CLIENT_LOG("returned " << client_id);
+  CheckGLError();
+  return client_id;
+}
+
+void GLES2Implementation::GetGpuFenceHandle(
+    uint32_t gpu_fence_id,
+    const base::Callback<void(const gfx::GpuFenceHandle&)>& callback) {
+  LOG(INFO) << __FUNCTION__ << ";;; gpu_fence_id=" << gpu_fence_id;
+  gpu_control_->GetGpuFenceHandle(gpu_fence_id, callback);
+}
+
+#if 0
+void GLES2Implementation::CreateGpuFence(
+    const base::Callback<void(const gfx::GpuFenceHandle&)>& callback) {
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  {
+    TRACE_EVENT0("gpu", "ShallowFlush");
+    ShallowFlushCHROMIUM();
+  }
+  gpu_control_->CreateGpuFence(callback);
+}
+
+void GLES2Implementation::InsertGpuFence(const gfx::GpuFenceHandle& handle) {
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  {
+    TRACE_EVENT0("gpu", "ShallowFlush");
+    ShallowFlushCHROMIUM();
+  }
+  gpu_control_->InsertGpuFence(handle);
+}
+#endif
+
 void GLES2Implementation::SetAggressivelyFreeResources(
     bool aggressively_free_resources) {
   TRACE_EVENT1("gpu", "GLES2Implementation::SetAggressivelyFreeResources",

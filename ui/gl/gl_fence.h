@@ -6,6 +6,8 @@
 #define UI_GL_GL_FENCE_H_
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
+#include "ui/gfx/gpu_fence_handle.h"
 #include "ui/gl/gl_export.h"
 
 namespace gl {
@@ -33,6 +35,21 @@ class GL_EXPORT GLFence {
 
   // Loses the reference to the fence. Useful if the context is lost.
   virtual void Invalidate();
+
+  // GpuFenceHandle integration.
+  static bool IsGpuFenceSupported();
+
+  // Consumes the GpuFenceHandle to create a paired local GL fence.
+  static std::unique_ptr<GLFence> CreateFromGpuFenceHandle(
+      const gfx::GpuFenceHandle& handle);
+
+  // Create a new GLFence that can be used with GetGpuFenceHandle.
+  static std::unique_ptr<GLFence> CreateForGpuFence();
+
+  // Extracts a GpuFenceHandle. This handle must be used to construct a
+  // GpuFence (or passed to IPC directly) to avoid leaking file descriptors or
+  // other resources.
+  virtual gfx::GpuFenceHandle GetGpuFenceHandle();
 
  private:
   DISALLOW_COPY_AND_ASSIGN(GLFence);

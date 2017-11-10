@@ -115,6 +115,11 @@ class GPU_EXPORT CommandBufferProxyImpl : public gpu::CommandBuffer,
                       unsigned internal_format) override;
   void DestroyImage(int32_t id) override;
   void SignalQuery(uint32_t query, const base::Closure& callback) override;
+  void SendGpuFence(uint32_t gpu_fence_id, ClientGpuFence source) override;
+  void GetGpuFenceHandle(uint32_t gpu_fence_id,
+                         const base::Callback<void(const gfx::GpuFenceHandle&)>&
+                             callback) override;
+
   void SetLock(base::Lock* lock) override;
   void EnsureWorkVisible() override;
   gpu::CommandBufferNamespace GetNamespaceID() const override;
@@ -193,6 +198,8 @@ class GPU_EXPORT CommandBufferProxyImpl : public gpu::CommandBuffer,
       const GpuCommandBufferMsg_SwapBuffersCompleted_Params& params);
   void OnUpdateVSyncParameters(base::TimeTicks timebase,
                                base::TimeDelta interval);
+  void OnGetGpuFenceHandleComplete(uint32_t gpu_fence_id,
+                                   const gfx::GpuFenceHandle&);
 
   // Try to read an updated copy of the state from shared memory, and calls
   // OnGpuStateError() if the new state has an error.
@@ -285,6 +292,11 @@ class GPU_EXPORT CommandBufferProxyImpl : public gpu::CommandBuffer,
 
   SwapBuffersCompletionCallback swap_buffers_completion_callback_;
   UpdateVSyncParametersCallback update_vsync_parameters_completion_callback_;
+
+  typedef base::hash_map<uint32_t,
+                         base::Callback<void(const gfx::GpuFenceHandle&)>>
+      GetGpuFenceTaskMap;
+  GetGpuFenceTaskMap get_gpu_fence_tasks_;
 
   scoped_refptr<base::SingleThreadTaskRunner> callback_thread_;
   base::WeakPtrFactory<CommandBufferProxyImpl> weak_ptr_factory_;
