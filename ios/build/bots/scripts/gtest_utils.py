@@ -30,6 +30,7 @@ class GTestResult(object):
     passed_tests: A list of passed tests.
     perf_links: A dict mapping the names of perf data points collected
       to links to view those graphs.
+    perf_traces: A list with perf data points parsed from stdout.
     return_code: The return code of the command.
     success: Whether or not this run of the command was considered a
       successful GTest execution.
@@ -71,6 +72,12 @@ class GTestResult(object):
     return self._perf_links
 
   @property
+  def perf_traces(self):
+    if self.__finalized:
+      return copy.deepcopy(self._perf_traces)
+    return self._perf_traces
+
+  @property
   def return_code(self):
     return self._return_code
 
@@ -92,6 +99,7 @@ class GTestResult(object):
     self._flaked_tests = collections.OrderedDict()
     self._passed_tests = []
     self._perf_links = collections.OrderedDict()
+    self._perf_traces = []
     self._return_code = None
     self._success = None
     self.__finalized = False
