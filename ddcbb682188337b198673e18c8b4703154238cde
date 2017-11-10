@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b961e3be_2f0aae57",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-10T20:40:50Z",
+      "side": 0,
+      "message": "Why did you remove this call?",
+      "revId": "ddcbb682188337b198673e18c8b4703154238cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
