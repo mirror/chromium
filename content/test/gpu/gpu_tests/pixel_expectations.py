@@ -74,3 +74,10 @@ class PixelExpectations(GpuTestExpectations):
     self.Fail('Pixel_WebGLGreenTriangle_NonChromiumImage_NoAA_NoAlpha',
         ['highsierra', ('intel', 0xa2e)], bug=774809)
 
+    # New tests. Remove entries after completing first run on bots.
+    self.Fail('Pixel_Canvas2DRedBox_NoGpuProcess', bug=783069)
+    self.Fail('Pixel_CSS3DBlueBox_NoGpuProcess', bug=783069)
+    self.Fail('Pixel_Canvas2DRedBox_SwiftShader', ['win', 'linux'], bug=783069)
+    self.Fail('Pixel_CSS3DBlueBox_SwiftShader', ['win', 'linux'], bug=783069)
+    self.Fail('Pixel_WebGLGreenTriangle_AA_Alpha_SwiftShader',
+        ['win', 'linux'], bug=783069)
