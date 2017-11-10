@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e71e84ba_3005d421",
+        "filename": "ios/chrome/browser/open_url_util.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "This is no longer needed after stop using OpenURLCompletionBlock as a typedef.",
+      "parentUuid": "23bfa1be_e85c82f0",
+      "range": {
+        "startLine": 10,
+        "startChar": 37,
+        "endLine": 10,
+        "endChar": 53
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2049df2_3445c27b",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 19
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-10T17:43:40Z",
       "side": 1,
       "message": "Do we need to change the order and the logic here? This sounds like more changes than CL\u0027s \"Changed ExternalAppLauncher class be asynchronous\", but maybe I miss something.",
+      "range": {
+        "startLine": 617,
+        "startChar": 16,
+        "endLine": 617,
+        "endChar": 24
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ef7061_e7aa2c8a",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "We don\u0027t need to, but reorganizing the logic does not change the behavior and concentrates the calling of completionHandler in one place.",
+      "parentUuid": "f2049df2_3445c27b",
       "range": {
         "startLine": 617,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6466d0b3_f073032c",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to allow null. There\u0027s no current use that requires passing in null.",
+      "parentUuid": "7915a83e_f0a918e0",
+      "range": {
+        "startLine": 619,
+        "startChar": 8,
+        "endLine": 619,
+        "endChar": 25
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "925c407c_7e3a796b",
         "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
         "patchSetId": 19
@@ -91,6 +163,30 @@
       "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dec436e_7cc3b0d6",
+        "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "test[][] actually doesn\u0027t work. I switched to std::vector\u003cstd::string\u003e instead.",
+      "parentUuid": "925c407c_7e3a796b",
+      "range": {
+        "startLine": 330,
+        "startChar": 14,
+        "endLine": 330,
+        "endChar": 23
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8c5e26d3_8ef87b7a",
+        "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d1ac27f_f97d7672",
+      "range": {
+        "startLine": 336,
+        "startChar": 17,
+        "endLine": 336,
+        "endChar": 33
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4df8f3bc_9273b233",
         "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
         "patchSetId": 19
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-10T17:43:40Z",
       "side": 1,
       "message": "Isn\u0027t completionHandler supposed to be called asynchronously?",
+      "range": {
+        "startLine": 345,
+        "startChar": 16,
+        "endLine": 345,
+        "endChar": 32
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2784080e_3901b799",
+        "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "Valid point. I added SpinRunLoopWithMaxDelay() so there\u0027s a chance that the completion handler can be called asynchronously.",
+      "parentUuid": "4df8f3bc_9273b233",
       "range": {
         "startLine": 345,
         "startChar": 16,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "0b17b48e_b74b20ac",
+        "filename": "ios/chrome/browser/web/external_app_launcher.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "With OpenURLCompletionBlock removed, this is no longer needed.",
+      "parentUuid": "c2322848_ccdda315",
+      "range": {
+        "startLine": 10,
+        "startChar": 25,
+        "endLine": 10,
+        "endChar": 34
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07332156_ed2f01d9",
         "filename": "ios/chrome/browser/web/external_app_launcher.h",
         "patchSetId": 19
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "21897c3f_591e0254",
+        "filename": "ios/chrome/browser/web/external_app_launcher.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07332156_ed2f01d9",
+      "range": {
+        "startLine": 26,
+        "startChar": 26,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9a6b483_0a7e64e5",
         "filename": "ios/chrome/browser/web/external_app_launcher.mm",
         "patchSetId": 19
@@ -197,6 +389,24 @@
       "writtenOn": "2017-11-10T17:43:40Z",
       "side": 1,
       "message": "nit: s/completion/completionHandler \n\nThis name is consistently used in modern iOS SDK code. Same comment for other places (except CRWWebDelegate, which will soon be removed).",
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f323fa_6114cf49",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "I changed some here. There are a few others that are just renames which I prefer to change as a separate CL.",
+      "parentUuid": "e9a6b483_0a7e64e5",
       "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "a716cf90_7ec90c53",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1004d39_e65de940",
+      "range": {
+        "startLine": 107,
+        "startChar": 47,
+        "endLine": 107,
+        "endChar": 51
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51b040a4_1349770d",
         "filename": "ios/chrome/browser/web/external_app_launcher.mm",
         "patchSetId": 19
@@ -237,6 +471,30 @@
       "writtenOn": "2017-11-10T17:43:40Z",
       "side": 1,
       "message": "Should we even allow nil |completionHandler|?",
+      "range": {
+        "startLine": 220,
+        "startChar": 8,
+        "endLine": 220,
+        "endChar": 25
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe66486_2154123a",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "Yes, and done.",
+      "parentUuid": "51b040a4_1349770d",
       "range": {
         "startLine": 220,
         "startChar": 8,
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "623ae5a1_c003663e",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "513aea55_7983d87b",
+      "range": {
+        "startLine": 290,
+        "startChar": 8,
+        "endLine": 290,
+        "endChar": 25
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14a45455_9e9c9b3c",
         "filename": "ios/web/public/web_state/ui/crw_web_delegate.h",
         "patchSetId": 19
@@ -283,6 +565,24 @@
       "writtenOn": "2017-11-10T17:43:40Z",
       "side": 1,
       "message": "What is the advantage of using typedef? OpenURLCompletionBlock name conveys 0 information about the arguments and is much less informative than |void (^)(BOOL success)|. I know that Chrome for iOS code uses typedefs for blocks all over the place, but in most cases it\u0027s optimizing for writing rather than for reading. There are examples when typedefs improve the formatting, which makes code more readable, but is it really the case here? Style Guide explicitly asks to optimize for reading rather than for writing: https://g3doc.corp.google.com/company/teams/objc-readability/style_guide.md?cl\u003dhead\n\nAlso delegate header is not the right place for shared typedefs. Having typedef here introduced more dependencies on this deprecated header, and will make it harder to remove this header. There is no good place for this typedef in ios/web in general and creating ios/web/public/block_types.h was an old mistake.",
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03a7a0a_040fc845",
+        "filename": "ios/web/public/web_state/ui/crw_web_delegate.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "In this case, \"void (^)(BOOL)\" actually has fewer characters than OpenURLCompletionBlock :) This also has the positive side effect of not needing some include files.",
+      "parentUuid": "14a45455_9e9c9b3c",
       "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -312,6 +612,30 @@
     },
     {
       "key": {
+        "uuid": "b9328010_c0fe3374",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a68007cd_82feee8b",
+      "range": {
+        "startLine": 874,
+        "startChar": 61,
+        "endLine": 874,
+        "endChar": 76
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "795c5341_d5ff5853",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 19
@@ -335,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "91ef09fb_bf264406",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 2852,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "795c5341_d5ff5853",
+      "range": {
+        "startLine": 2852,
+        "startChar": 4,
+        "endLine": 2852,
+        "endChar": 19
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd301753_ac05bd2c",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 19
@@ -346,6 +694,30 @@
       "writtenOn": "2017-11-10T17:43:40Z",
       "side": 1,
       "message": "We should check for _isBeingDestroyed and early return if _isBeingDestroyed is YES",
+      "range": {
+        "startLine": 2895,
+        "startChar": 24,
+        "endLine": 2895,
+        "endChar": 31
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17bbcabd_87ceb621",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 2895,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "Added check for !_isBeingDestroyed",
+      "parentUuid": "bd301753_ac05bd2c",
       "range": {
         "startLine": 2895,
         "startChar": 24,
@@ -381,6 +753,30 @@
     },
     {
       "key": {
+        "uuid": "204ad30e_84130471",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 2901,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "Replaced with a DCHECK(webStateImpl);",
+      "parentUuid": "674b7c6f_8fe445be",
+      "range": {
+        "startLine": 2901,
+        "startChar": 14,
+        "endLine": 2901,
+        "endChar": 26
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4826fe55_f72f16fa",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 19
@@ -404,6 +800,30 @@
     },
     {
       "key": {
+        "uuid": "e75fefaa_313fb305",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 4247,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4826fe55_f72f16fa",
+      "range": {
+        "startLine": 4247,
+        "startChar": 25,
+        "endLine": 4247,
+        "endChar": 33
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c39c63e3_aeb740c6",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 19
@@ -415,6 +835,30 @@
       "writtenOn": "2017-11-10T17:43:40Z",
       "side": 1,
       "message": "We should check for _isBeingDestroyed and early return if _isBeingDestroyed is YES",
+      "range": {
+        "startLine": 4250,
+        "startChar": 17,
+        "endLine": 4250,
+        "endChar": 0
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969ec94c_76aeb5b0",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 4250,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-10T23:12:56Z",
+      "side": 1,
+      "message": "Added check for !_isBeingDestroyed.",
+      "parentUuid": "c39c63e3_aeb740c6",
       "range": {
         "startLine": 4250,
         "startChar": 17,
