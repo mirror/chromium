@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0971d430_9aa0fae2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-10T22:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41d5792a_4d1eb01d",
+      "range": {
+        "startLine": 20,
+        "startChar": 58,
+        "endLine": 20,
+        "endChar": 67
+      },
+      "revId": "120ef7baf8f16bef91681f7744d2f4e8962c8524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43f3bd7f_842129df",
         "filename": "ui/gfx/icc_profile.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "52e27d0e_1d90399b",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-10T22:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43f3bd7f_842129df",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 47
+      },
+      "revId": "120ef7baf8f16bef91681f7744d2f4e8962c8524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd5a742d_38e72edf",
         "filename": "ui/gfx/icc_profile.cc",
         "patchSetId": 6
@@ -59,6 +107,24 @@
       "writtenOn": "2017-11-10T05:00:37Z",
       "side": 1,
       "message": "Nit: consider DCHECK_EQ. The pointer values aren\u0027t usually useful, but maybe it will show a surprise nullptr.\n\nAlso, since is this data currently only passed from browser to renderer? Will that change at some point in the future?",
+      "revId": "120ef7baf8f16bef91681f7744d2f4e8962c8524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b9604e_b235fd2e",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-10T22:40:31Z",
+      "side": 1,
+      "message": "DCHECK_EQ didn\u0027t work on vector\u003cchar\u003e (huh!).\n\nYes, this is still only browser-\u003erenderer (it will also be browser-\u003egpu as the viz project comes along -- but it\u0027s strictly to less trusted processes)",
+      "parentUuid": "fd5a742d_38e72edf",
       "revId": "120ef7baf8f16bef91681f7744d2f4e8962c8524",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
