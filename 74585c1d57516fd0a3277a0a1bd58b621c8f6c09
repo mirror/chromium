@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11f00977_d4c9d581",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T02:23:43Z",
+      "side": 1,
+      "message": "DCHECK_EQ?",
+      "range": {
+        "startLine": 425,
+        "startChar": 2,
+        "endLine": 425,
+        "endChar": 8
+      },
+      "revId": "74585c1d57516fd0a3277a0a1bd58b621c8f6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29cb9d30_969b5c08",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T02:23:43Z",
+      "side": 1,
+      "message": "can this just be set_margins(gfx::Insets()) still?\n\nIf there is just a title, seems we shouldn\u0027t care about these insets...",
+      "revId": "74585c1d57516fd0a3277a0a1bd58b621c8f6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e440669f_2959a53e",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T02:23:43Z",
+      "side": 1,
+      "message": "I still think it\u0027s weird that simply asking the title not to be multiline doesn\u0027t fix this -- I think that must be a bug :/\n\nThe code in\n\nint BubbleFrameView::GetFrameWidthForClientWidth(int client_width) const {\n  // Note that GetMinimumSize() for multiline Labels is typically 0.\n  const int title_bar_width \u003d title()-\u003eGetMinimumSize().width() +\n                              GetTitleLabelInsetsFromFrame().width();\n\nshould handle this -- title()-\u003eGetMinimumSize().width() should be something meaningful.\n\nPerhaps! this is the fix:\n\n GetBubbleFrameView()-\u003etitle()-\u003eSetElideBehavior(gfx::NO_ELIDE)\n\n\nDoing that between views::BubbleDialogDelegateView::CreateBubble(this) and SizeToContents in the constructor may be the trick.",
+      "revId": "74585c1d57516fd0a3277a0a1bd58b621c8f6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49a2d77_78713d26",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T02:23:43Z",
+      "side": 1,
+      "message": "is this what\u0027s done elsewhere? (the extra \":\" seems weird - feels like GURL should have methods to help construct this kind of url without string concatenation)",
+      "revId": "74585c1d57516fd0a3277a0a1bd58b621c8f6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "760926cf_789917a7",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T02:23:43Z",
+      "side": 1,
+      "message": "we\u0027re not really interested in |index| so inline - something like\n  index -\u003e name.find(kInternal)\nor\n  const bool is_internal \u003d\u003d name.find(kInternal) \u003d\u003d std::string::npos;",
+      "range": {
+        "startLine": 198,
+        "startChar": 29,
+        "endLine": 198,
+        "endChar": 34
+      },
+      "revId": "74585c1d57516fd0a3277a0a1bd58b621c8f6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
