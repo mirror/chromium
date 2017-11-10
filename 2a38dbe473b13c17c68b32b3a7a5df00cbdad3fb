@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0951fa28_f845c86b",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-10T11:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99a0d9fc_3e92e8f1",
+      "revId": "2a38dbe473b13c17c68b32b3a7a5df00cbdad3fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91fa8c7f_b1f4d2dc",
         "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "2a38dbe473b13c17c68b32b3a7a5df00cbdad3fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c153406_2061f9e6",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-10T11:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91fa8c7f_b1f4d2dc",
+      "revId": "2a38dbe473b13c17c68b32b3a7a5df00cbdad3fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
