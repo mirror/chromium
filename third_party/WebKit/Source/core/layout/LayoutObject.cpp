@@ -690,7 +690,7 @@ LayoutBoxModelObject* LayoutObject::EnclosingBoxModelObject() const {
   return nullptr;
 }
 
-LayoutBlockFlow* LayoutObject::EnclosingNGBlockFlow() const {
+LayoutBlockFlow* LayoutObject::EnclosingNGMixin() const {
   LayoutBox* box = EnclosingBox();
   DCHECK(box);
   return box->IsLayoutNGMixin() ? ToLayoutBlockFlow(box) : nullptr;
