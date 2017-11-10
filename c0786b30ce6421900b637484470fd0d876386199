@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bd21bce_c0c1edaa",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-10T02:33:44Z",
+      "side": 1,
+      "message": "nit: Could you move the comment about bullets to here:\n\n      // Treat bullets used in the text security mode as regular\n      // characters when looking for boundaries",
+      "revId": "c0786b30ce6421900b637484470fd0d876386199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
