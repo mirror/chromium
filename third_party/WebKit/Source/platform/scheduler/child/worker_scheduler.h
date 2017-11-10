@@ -18,13 +18,12 @@
 
 namespace blink {
 namespace scheduler {
-class SchedulerTqmDelegate;
 
 class PLATFORM_EXPORT WorkerScheduler : public ChildScheduler {
  public:
   ~WorkerScheduler() override;
-  static std::unique_ptr<WorkerScheduler> Create(
-      scoped_refptr<SchedulerTqmDelegate> main_task_runner);
+
+  static std::unique_ptr<WorkerScheduler> Create();
 
   // Blink should use WorkerScheduler::DefaultTaskQueue instead of
   // ChildScheduler::DefaultTaskRunner.
@@ -35,6 +34,10 @@ class PLATFORM_EXPORT WorkerScheduler : public ChildScheduler {
   virtual void Init() = 0;
 
   scoped_refptr<WorkerTaskQueue> CreateTaskRunner();
+
+  void SetDefaultTaskRunner(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+  void RestoreDefaultTaskRunner();
 
  protected:
   explicit WorkerScheduler(std::unique_ptr<WorkerSchedulerHelper> helper);
