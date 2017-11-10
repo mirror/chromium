@@ -108,6 +108,8 @@ class UtilitySandboxedProcessLauncherDelegate
 #if !defined(OS_MACOSX) && !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
   ZygoteHandle GetZygote() override {
     if (service_manager::IsUnsandboxedSandboxType(sandbox_type_) ||
+        sandbox_type_ == service_manager::SANDBOX_TYPE_GPU ||
+        sandbox_type_ == service_manager::SANDBOX_TYPE_NETWORK ||
         !exposed_dir_.empty()) {
       return nullptr;
     }
