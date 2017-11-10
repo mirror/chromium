@@ -26,6 +26,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/time/default_tick_clock.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_configurator.h"
+#include "components/data_reduction_proxy/core/browser/network_properties_manager.h"
 #include "components/data_reduction_proxy/core/browser/warmup_url_fetcher.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_config_values.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_event_creator.h"
@@ -135,6 +136,7 @@ DataReductionProxyConfig::DataReductionProxyConfig(
       configurator_(configurator),
       event_creator_(event_creator),
       connection_type_(net::NetworkChangeNotifier::GetConnectionType()),
+      network_properties_manager_(nullptr),
       weak_factory_(this) {
   DCHECK(io_task_runner_);
   DCHECK(configurator);
@@ -144,7 +146,6 @@ DataReductionProxyConfig::DataReductionProxyConfig(
 }
 
 DataReductionProxyConfig::~DataReductionProxyConfig() {
-  net::NetworkChangeNotifier::RemoveIPAddressObserver(this);
   net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
 }
 
@@ -152,8 +153,11 @@ void DataReductionProxyConfig::InitializeOnIOThread(
     const scoped_refptr<net::URLRequestContextGetter>&
         basic_url_request_context_getter,
     const scoped_refptr<net::URLRequestContextGetter>&
-        url_request_context_getter) {
+        url_request_context_getter,
+    NetworkPropertiesManager* manager) {
   DCHECK(thread_checker_.CalledOnValidThread());
+  network_properties_manager_ = manager;
+  DCHECK(network_properties_manager_);
 
   secure_proxy_checker_.reset(
       new SecureProxyChecker(basic_url_request_context_getter));
@@ -161,7 +165,6 @@ void DataReductionProxyConfig::InitializeOnIOThread(
 
   if (ShouldAddDefaultProxyBypassRules())
     AddDefaultProxyBypassRules();
-  net::NetworkChangeNotifier::AddIPAddressObserver(this);
   net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
 }
 
@@ -176,9 +179,10 @@ void DataReductionProxyConfig::ReloadConfig() {
 
   if (enabled_by_user_ && !params::IsIncludedInHoldbackFieldTrial() &&
       !config_values_->proxies_for_http().empty()) {
-    configurator_->Enable(!network_properties_manager_.IsSecureProxyAllowed(),
-                          !network_properties_manager_.IsInsecureProxyAllowed(),
-                          config_values_->proxies_for_http());
+    configurator_->Enable(
+        !network_properties_manager_->IsSecureProxyAllowed(),
+        !network_properties_manager_->IsInsecureProxyAllowed(),
+        config_values_->proxies_for_http());
   } else {
     configurator_->Disable();
   }
@@ -367,9 +371,9 @@ void DataReductionProxyConfig::HandleCaptivePortal() {
   bool is_captive_portal = GetIsCaptivePortal();
   UMA_HISTOGRAM_BOOLEAN("DataReductionProxy.CaptivePortalDetected.Platform",
                         is_captive_portal);
-  if (is_captive_portal == network_properties_manager_.IsCaptivePortal())
+  if (is_captive_portal == network_properties_manager_->IsCaptivePortal())
     return;
-  network_properties_manager_.SetIsCaptivePortal(is_captive_portal);
+  network_properties_manager_->SetIsCaptivePortal(is_captive_portal);
   ReloadConfig();
 }
 
@@ -387,10 +391,15 @@ void DataReductionProxyConfig::UpdateConfigForTesting(
     bool secure_proxies_allowed,
     bool insecure_proxies_allowed) {
   enabled_by_user_ = enabled;
-  network_properties_manager_.SetIsSecureProxyDisallowedByCarrier(
+  network_properties_manager_->SetIsSecureProxyDisallowedByCarrier(
       !secure_proxies_allowed);
-  network_properties_manager_.SetHasWarmupURLProbeFailed(
+  network_properties_manager_->SetHasWarmupURLProbeFailed(
       false, !insecure_proxies_allowed);
+}
+
+void DataReductionProxyConfig::SetNetworkPropertiesManagerForTesting(
+    NetworkPropertiesManager* manager) {
+  network_properties_manager_ = manager;
 }
 
 void DataReductionProxyConfig::HandleSecureProxyCheckResponse(
@@ -417,29 +426,29 @@ void DataReductionProxyConfig::HandleSecureProxyCheckResponse(
   }
 
   bool secure_proxy_allowed_past =
-      !network_properties_manager_.IsSecureProxyDisallowedByCarrier();
-  network_properties_manager_.SetIsSecureProxyDisallowedByCarrier(
+      !network_properties_manager_->IsSecureProxyDisallowedByCarrier();
+  network_properties_manager_->SetIsSecureProxyDisallowedByCarrier(
       !success_response);
   if (!enabled_by_user_)
     return;
 
-  if (!network_properties_manager_.IsSecureProxyDisallowedByCarrier() !=
+  if (!network_properties_manager_->IsSecureProxyDisallowedByCarrier() !=
       secure_proxy_allowed_past)
     ReloadConfig();
 
   // Record the result.
   if (secure_proxy_allowed_past &&
-      !network_properties_manager_.IsSecureProxyDisallowedByCarrier()) {
+      !network_properties_manager_->IsSecureProxyDisallowedByCarrier()) {
     RecordSecureProxyCheckFetchResult(SUCCEEDED_PROXY_ALREADY_ENABLED);
   } else if (secure_proxy_allowed_past &&
-             network_properties_manager_.IsSecureProxyDisallowedByCarrier()) {
+             network_properties_manager_->IsSecureProxyDisallowedByCarrier()) {
     RecordSecureProxyCheckFetchResult(FAILED_PROXY_DISABLED);
   } else if (!secure_proxy_allowed_past &&
-             !network_properties_manager_.IsSecureProxyDisallowedByCarrier()) {
+             !network_properties_manager_->IsSecureProxyDisallowedByCarrier()) {
     RecordSecureProxyCheckFetchResult(SUCCEEDED_PROXY_ENABLED);
   } else {
     DCHECK(!secure_proxy_allowed_past &&
-           network_properties_manager_.IsSecureProxyDisallowedByCarrier());
+           network_properties_manager_->IsSecureProxyDisallowedByCarrier());
     RecordSecureProxyCheckFetchResult(FAILED_PROXY_ALREADY_DISABLED);
   }
 }
@@ -450,16 +459,15 @@ void DataReductionProxyConfig::OnNetworkChanged(
 
   connection_type_ = type;
   RecordNetworkChangeEvent(NETWORK_CHANGED);
+  // TODO(tbansal): crbug.com/779219: Use the full network ID (with SSID or
+  // MCCMNC).
+  // Map all cellular to single ID.
+  network_properties_manager_->OnChangeInNetworkID(
+      base::IntToString(static_cast<int>(connection_type_)));
 
   FetchWarmupURL();
-}
-
-void DataReductionProxyConfig::OnIPAddressChanged() {
-  DCHECK(thread_checker_.CalledOnValidThread());
 
   if (enabled_by_user_) {
-    RecordNetworkChangeEvent(IP_CHANGED);
-
     HandleCaptivePortal();
     // It is safe to use base::Unretained here, since it gets executed
     // synchronously on the IO thread, and |this| outlives
@@ -631,11 +639,11 @@ base::TimeTicks DataReductionProxyConfig::GetTicksNow() const {
 void DataReductionProxyConfig::OnInsecureProxyWarmupURLProbeStatusChange(
     bool insecure_proxies_allowed) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  bool old_status = network_properties_manager_.IsInsecureProxyAllowed();
-  network_properties_manager_.SetHasWarmupURLProbeFailed(
+  bool old_status = network_properties_manager_->IsInsecureProxyAllowed();
+  network_properties_manager_->SetHasWarmupURLProbeFailed(
       false, !insecure_proxies_allowed);
 
-  if (old_status == network_properties_manager_.IsInsecureProxyAllowed())
+  if (old_status == network_properties_manager_->IsInsecureProxyAllowed())
     return;
   ReloadConfig();
 }
@@ -644,19 +652,19 @@ net::ProxyConfig DataReductionProxyConfig::ProxyConfigIgnoringHoldback() const {
   if (!enabled_by_user_ || config_values_->proxies_for_http().empty())
     return net::ProxyConfig::CreateDirect();
   return configurator_->CreateProxyConfig(
-      !network_properties_manager_.IsSecureProxyAllowed(),
-      !network_properties_manager_.IsInsecureProxyAllowed(),
+      !network_properties_manager_->IsSecureProxyAllowed(),
+      !network_properties_manager_->IsInsecureProxyAllowed(),
       config_values_->proxies_for_http());
 }
 
 bool DataReductionProxyConfig::secure_proxy_allowed() const {
   DCHECK(thread_checker_.CalledOnValidThread());
-  return network_properties_manager_.IsSecureProxyAllowed();
+  return network_properties_manager_->IsSecureProxyAllowed();
 }
 
 bool DataReductionProxyConfig::insecure_proxies_allowed() const {
   DCHECK(thread_checker_.CalledOnValidThread());
-  return network_properties_manager_.IsInsecureProxyAllowed();
+  return network_properties_manager_->IsInsecureProxyAllowed();
 }
 
 std::vector<DataReductionProxyServer>
