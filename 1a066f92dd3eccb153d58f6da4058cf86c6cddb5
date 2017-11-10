@@ -191,6 +191,47 @@
     },
     {
       "key": {
+        "uuid": "46e65aa4_774ba6cc",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2178,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-10T18:22:47Z",
+      "side": 1,
+      "message": "name sgtm. No, this is not controlled via Finch. Do you think they should be?",
+      "parentUuid": "0076751c_56e4f89d",
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322292bd_08cbd43a",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2180,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-10T18:22:47Z",
+      "side": 1,
+      "message": "Should this also be kVrLaunchIntents?",
+      "range": {
+        "startLine": 2180,
+        "startChar": 41,
+        "endLine": 2180,
+        "endChar": 56
+      },
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "157f67fa_d0d2e95d",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 3
