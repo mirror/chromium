@@ -582,24 +582,15 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   self.navigationManager->GoToIndex(index);
 }
 
-- (BOOL)openExternalURL:(const GURL&)url
+- (void)openExternalURL:(const GURL&)url
               sourceURL:(const GURL&)sourceURL
-            linkClicked:(BOOL)linkClicked {
+            linkClicked:(BOOL)linkClicked
+             completion:(OpenURLCompletionBlock)completionHandler {
   if (!_externalAppLauncher)
     _externalAppLauncher = [[ExternalAppLauncher alloc] init];
 
   // Make a local url copy for possible modification.
   GURL finalURL = url;
-
-  // Check if it's a direct FIDO U2F x-callback call. If so, do not open it, to
-  // prevent pages from spoofing requests with different origins.
-  if (finalURL.SchemeIs("u2f-x-callback"))
-    return NO;
-
-  // Block attempts to open this application's settings in the native system
-  // settings application.
-  if (finalURL.SchemeIs("app-settings"))
-    return NO;
 
   // Check if it's a FIDO U2F call.
   if (finalURL.SchemeIs("u2f")) {
@@ -617,32 +608,44 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
                       originURL:origin
                          tabURL:self.webState->GetLastCommittedURL()
                           tabID:self.tabId];
-
-    if (!finalURL.is_valid())
-      return NO;
   }
 
-  if ([_externalAppLauncher requestToOpenURL:finalURL
-                               sourcePageURL:sourceURL
-                                 linkClicked:linkClicked]) {
-    // Clears pending navigation history after successfully launching the
-    // external app.
-    DCHECK([self navigationManager]);
-    [self navigationManager]->DiscardNonCommittedItems();
-    // Ensure the UI reflects the current entry, not the just-discarded pending
-    // entry.
-    [_parentTabModel notifyTabChanged:self];
+  // Check if it's a direct FIDO U2F x-callback call. If so, do not open it, to
+  // prevent pages from spoofing requests with different origins.
+  // Block attempts to open this application's settings in the native system
+  // settings application.
+  if (!finalURL.is_valid() || finalURL.SchemeIs("u2f-x-callback") ||
+      finalURL.SchemeIs("app-settings")) {
+    if (completionHandler)
+      completionHandler(NO);
+    return;
+  }
 
-    if (sourceURL.is_valid()) {
-      ReadingListModel* model =
-          ReadingListModelFactory::GetForBrowserState(_browserState);
-      if (model && model->loaded())
-        model->SetReadStatus(sourceURL, true);
+  __weak Tab* weakSelf = self;
+  OpenURLCompletionBlock callback = ^(BOOL success) {
+    Tab* strongSelf = weakSelf;
+    if (success && strongSelf) {
+      // Clears pending navigation history after successfully launching the
+      // external app.
+      DCHECK([strongSelf navigationManager]);
+      [strongSelf navigationManager]->DiscardNonCommittedItems();
+      // Ensures that the UI reflects the current entry, not the
+      // just-discarded pending entry.
+      [strongSelf->_parentTabModel notifyTabChanged:strongSelf];
+      if (sourceURL.is_valid()) {
+        ReadingListModel* model = ReadingListModelFactory::GetForBrowserState(
+            strongSelf->_browserState);
+        if (model && model->loaded())
+          model->SetReadStatus(sourceURL, true);
+      }
     }
-
-    return YES;
-  }
-  return NO;
+    if (completionHandler)
+      completionHandler(success);
+  };
+  [_externalAppLauncher requestToOpenURL:finalURL
+                           sourcePageURL:sourceURL
+                             linkClicked:linkClicked
+                              completion:callback];
 }
 
 - (void)webState:(web::WebState*)webState
