@@ -245,6 +245,24 @@
       "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95697dea_522db29e",
+        "filename": "chrome/utility/chrome_content_utility_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-10T01:18:03Z",
+      "side": 1,
+      "message": "Actually I ended up only registering that service (the only one running elevated as of now), so we are now as safe as before.",
+      "parentUuid": "6ab4e2ab_76a2731c",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

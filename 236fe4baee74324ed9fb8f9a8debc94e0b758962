@@ -16,6 +16,24 @@
       "revId": "236fe4baee74324ed9fb8f9a8debc94e0b758962",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81b9913_53aec3e4",
+        "filename": "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-10T01:18:03Z",
+      "side": 1,
+      "message": "That was I thought, but someone pointed that /*param\u003d*/ is the better way and the style guide seems to corroborate it:\nhttps://google.github.io/styleguide/cppguide.html#Implementation_Comments\n(see the Function Argument Comments part)",
+      "parentUuid": "6eaf7f8f_b932b3f3",
+      "revId": "236fe4baee74324ed9fb8f9a8debc94e0b758962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
