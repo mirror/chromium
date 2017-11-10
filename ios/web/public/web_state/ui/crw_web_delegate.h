@@ -25,6 +25,9 @@ class GURL;
 // TODO(crbug.com/674991): Remove this protocol.
 @protocol CRWWebDelegate<NSObject>
 
+// Called when the CRWWebController is about to close.
+- (void)webControllerWillClose:(CRWWebController*)webController;
+
 // Called when an external app needs to be opened, it also passes |linkClicked|
 // to track if this call was a result of user action or not. Returns YES iff
 // |URL| is launched in an external app.
