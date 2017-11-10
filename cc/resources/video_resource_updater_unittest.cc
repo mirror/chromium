@@ -625,37 +625,6 @@ TEST_F(VideoResourceUpdaterTest, PassReleaseSyncToken) {
   EXPECT_EQ(release_sync_token_, sync_token);
 }
 
-// Generate new sync token because video frame has an existing sync token.
-TEST_F(VideoResourceUpdaterTest, GenerateReleaseSyncToken) {
-  VideoResourceUpdater updater(context_provider_.get(),
-                               resource_provider3d_.get(),
-                               false /* use_stream_video_draw_quad */);
-
-  const gpu::SyncToken sync_token1(gpu::CommandBufferNamespace::GPU_IO, 0,
-                                   gpu::CommandBufferId::FromUnsafeValue(0x123),
-                                   123);
-
-  const gpu::SyncToken sync_token2(gpu::CommandBufferNamespace::GPU_IO, 0,
-                                   gpu::CommandBufferId::FromUnsafeValue(0x234),
-                                   234);
-
-  {
-    scoped_refptr<media::VideoFrame> video_frame =
-        CreateTestRGBAHardwareVideoFrame();
-
-    VideoFrameExternalResources resources =
-        updater.CreateExternalResourcesFromVideoFrame(video_frame);
-
-    ASSERT_EQ(resources.release_callbacks.size(), 1u);
-    resources.release_callbacks[0].Run(sync_token1, false);
-    resources.release_callbacks[0].Run(sync_token2, false);
-  }
-
-  EXPECT_TRUE(release_sync_token_.HasData());
-  EXPECT_NE(release_sync_token_, sync_token1);
-  EXPECT_NE(release_sync_token_, sync_token2);
-}
-
 // Pass mailbox sync token as is if no GL operations are performed before frame
 // resources are handed off to the compositor.
 TEST_F(VideoResourceUpdaterTest, PassMailboxSyncToken) {
