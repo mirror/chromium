@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd928d06_b4b57d3c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTestHelper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-10T07:10:43Z",
+      "side": 1,
+      "message": "Did a little code search, and found that there is another usage of RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled() in Source/core/frame/FrameTestHelpers.h.\n\nPlease update UseMockScrollbarSettings class in FrameTestHelpers.h to use ScopedOverlayScrollbarForTest, and use UseMockScrollbarSettings here, so that we can also eliminate the usage of Settings::SetMockScrollbarsEnabled() in this class which doesn\u0027t restore it.\n\nBecause it doesn\u0027t look good to include FrameTestHelpers.h here, please move UseMockScrollbarSettings class into a standalone header, e.g. Source/platform/testing/UseMockScrollbarSettings.h, and include it from FrameTestHelpers.h and from this file. To do that, you also need to change Settings::SetMockScrollbarEnabled() to ScrollbarTheme::SetMockScrollbarEnabled() in the class because Settings is a core/ class which is not accessible from platform/.\n\nIf you would like do more work on this, the next step is to remove Settings::SetMockScrollbarEnabled() (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/frame/Settings.h?rcl\u003d626ddef09338ab3e0582e0188d0c7633e23178af\u0026l\u003d81) and change all callers to use ScrollbarTheme::SetMockScrollbarEnabled() or UseMockScrollbarSettings.",
+      "revId": "23106b6aac77d649a78cb0dbd525add35ae0030b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
