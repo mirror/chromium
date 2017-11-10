@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b017fc21_866f127c",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-10T07:54:26Z",
+      "side": 1,
+      "message": "The recent BrowserTest failures seem to come from the fact that this runs on the IO thread, but the UserManager usually lives on the UI thread\u0027s taskrunner. We can\u0027t switch back to the UI thread here without serious re-architecturing (and possibly adding latency).\n\nAn alternative to querying this here would be to\n- create a pref, e.g. prefs::kIsChildAccount or prefs::kAccountConsistencyRequired (depending on which layer should perform the child_user -\u003e account_consistency_reqiured inference) \n- create another *PrefMember variable in ProfileIOData (like for example ProfileIOData::incognito_availability_pref) and doing the same logic for the new pref (Init() it with the created pref, and especially call MoveToIOThread).\n- set the pref on user sign-in accordingly\n- only access the pref through the *PrefMember on the IO thread\n\nThen the *PrefMember takes care of safely transferring the information to the IO thread.\nIIUC from what we\u0027ve discussed offline, the child user is the primary user and there can be no additional user, so it should be fine that this is not explicitly referring to the primary user anymore.",
+      "range": {
+        "startLine": 389,
+        "startChar": 23,
+        "endLine": 389,
+        "endChar": 37
+      },
+      "revId": "25f21344234978802b9f0b9d75a1a84a77dab487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
