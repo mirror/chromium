@@ -2,6 +2,125 @@
   "comments": [
     {
       "key": {
+        "uuid": "e76319bb_3569e19c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T00:59:48Z",
+      "side": 1,
+      "message": "Why should the header be hidden at all in overview mode?",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec331d3_cca4a910",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T00:59:48Z",
+      "side": 1,
+      "message": "Is this the right bug number? \"Cannot filter network requests by arbitrary string and\"",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c1902fc_1bf72647",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T00:59:48Z",
+      "side": 1,
+      "message": "nit: move initialization to the decl in the header.",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa60a371_58ecafb7",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T00:59:48Z",
+      "side": 1,
+      "message": "What is \"the other case\"? Please explicitly state what is meant here (non-fullscreen, etc.) It\u0027s also a little confusing to have a comment here that\u0027s not associated with actual logic, but the fallthrough to logic below. If that\u0027s desirable, this comment should explain why it\u0027s falling through (ie. how the code below contributes to the desired outcome).",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fecab3b5_ebfc568a",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T00:59:48Z",
+      "side": 1,
+      "message": "1) Generally, this logic deserves a comment explaining the crux of the change (ie. explain here why the header should or shouldn\u0027t be painted in xyz scenarios).\n2) Should the should_paint_for_v1_app_ only apply if browser_view()-\u003ebrowser()-\u003ebrowser-\u003eis_app()? Otherwise, this would seem to affect all browser windows in overview mode.\n3) Also, is it intentional (or a defect) that this is ignored for immersive revealed windows, as described in the member decl comment? If that\u0027s not desirable, this could be moved up above the immersive mode check...",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f543cb9f_69edf944",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T00:59:48Z",
+      "side": 1,
+      "message": "This needs a comment, or really, it might make sense to just remove this and inline |in_overview_mode \u003d \u003cvalue\u003e; SchedulePaint();| in the OnOverviewMode[Starting|Ended] functions. That seems more straightforward than encapsulating an early return (which shouldn\u0027t ever be hit) with a simple value assignment.",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f4cecdd_29c4dcf8",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T00:59:48Z",
+      "side": 1,
+      "message": "I think this comment needs to explain *why* we don\u0027t paint the header for V1 apps in overview mode, or maybe it would make way more sense if this flag was simply |in_overview_mode_| and the logic/comment for header painting was elsewhere. I\u0027m definitely having trouble understanding the code and comments as-is.",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27cbe4f1_81fa6cfa",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 4
