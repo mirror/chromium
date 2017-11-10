@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac1f175d_fb0426c1",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-10T01:03:50Z",
+      "side": 1,
+      "message": "do you need static_cast?",
+      "revId": "8e2bad011c6d95161651ecaa9474680019079037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489e3b65_46cfa52a",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-10T01:03:50Z",
+      "side": 1,
+      "message": "just create it on a stack?",
+      "revId": "8e2bad011c6d95161651ecaa9474680019079037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
