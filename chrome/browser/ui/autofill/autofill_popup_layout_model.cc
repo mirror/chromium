@@ -18,6 +18,9 @@
 #include "components/autofill/core/common/autofill_util.h"
 #include "components/grit/components_scaled_resources.h"
 #include "third_party/skia/include/core/SkColor.h"
+#if !defined(OS_ANDROID)
+#include "ui/aura/window.h"
+#endif
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/color_utils.h"
@@ -146,9 +149,11 @@ void AutofillPopupLayoutModel::UpdatePopupBounds() {
   int popup_width = GetDesiredPopupWidth();
   int popup_height = GetDesiredPopupHeight();
 
+  gfx::NativeView native_view = delegate_->container_view();
   popup_bounds_ = view_common_.CalculatePopupBounds(
-      popup_width, popup_height, RoundedElementBounds(),
-      delegate_->container_view(), delegate_->IsRTL());
+                      popup_width, popup_height, RoundedElementBounds(),
+                      native_view, delegate_->IsRTL()) +
+                  native_view->GetBoundsInScreen().OffsetFromOrigin();
 }
 
 const gfx::FontList& AutofillPopupLayoutModel::GetValueFontListForRow(

@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <utility>
 
+#include "base/command_line.h"
+#include "content/public/common/content_switches.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/geometry/point.h"
@@ -123,8 +125,16 @@ gfx::Rect PopupViewCommon::CalculatePopupBounds(int desired_width,
   std::pair<int, int> popup_y_and_height = CalculatePopupYAndHeight(
       top_left_display, bottom_right_display, desired_height, element_bounds);
 
-  return gfx::Rect(popup_x_and_width.first, popup_y_and_height.first,
-                   popup_x_and_width.second, popup_y_and_height.second);
+  gfx::Rect popup_bounds(popup_x_and_width.first, popup_y_and_height.first,
+                         popup_x_and_width.second, popup_y_and_height.second);
+
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(switches::kEnableUseZoomForDSF)) {
+    return ScaleToEnclosingRect(popup_bounds,
+                                1 / top_left_display.device_scale_factor());
+  }
+
+  return popup_bounds;
 }
 
 display::Display PopupViewCommon::GetDisplayNearestPoint(
