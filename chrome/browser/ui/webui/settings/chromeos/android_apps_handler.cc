@@ -34,6 +34,10 @@ void AndroidAppsHandler::RegisterMessages() {
       "showAndroidAppsSettings",
       base::Bind(&AndroidAppsHandler::ShowAndroidAppsSettings,
                  weak_ptr_factory_.GetWeakPtr()));
+  web_ui()->RegisterMessageCallback(
+      "showAndroidManageAppLinks",
+      base::Bind(&AndroidAppsHandler::ShowAndroidManageAppLinks,
+                 weak_ptr_factory_.GetWeakPtr()));
 }
 
 void AndroidAppsHandler::OnJavascriptAllowed() {
@@ -108,6 +112,20 @@ void AndroidAppsHandler::ShowAndroidAppsSettings(const base::ListValue* args) {
           ->GetDisplayNearestView(web_ui()->GetWebContents()->GetNativeView())
           .id();
   arc::LaunchAndroidSettingsApp(profile_, flags, display_id);
+}
+
+void AndroidAppsHandler::ShowAndroidManageAppLinks(
+    const base::ListValue* args) {
+  CHECK_EQ(0U, args->GetSize());
+
+  // Settings in secondary profile cannot access ARC.
+  CHECK(arc::IsArcAllowedForProfile(profile_));
+  const int64_t display_id =
+      display::Screen::GetScreen()
+          ->GetDisplayNearestView(web_ui()->GetWebContents()->GetNativeView())
+          .id();
+  arc::LaunchSettingsAppActivity(profile_, arc::kSettingsAppDomainUrlActivity,
+                                 ui::EF_NONE /* flags */, display_id);
 }
 
 }  // namespace settings

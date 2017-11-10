@@ -59,6 +59,16 @@ Polymer({
     /* Labels for the toggle on/off positions. */
     toggleOffLabel: String,
     toggleOnLabel: String,
+
+    playStoreEnabled: {
+      type: Boolean,
+      value: false,
+    },
+
+    settingsAppAvailable: {
+      type: Boolean,
+      value: false,
+    },
   },
 
   /** @override */
@@ -71,6 +81,39 @@ Polymer({
         'setIgnoredProtocolHandlers',
         this.setIgnoredProtocolHandlers_.bind(this));
     this.browserProxy.observeProtocolHandlers();
+  },
+
+  /** @override */
+  attached: function() {
+    if (settings.AndroidAppsBrowserProxyImpl) {
+      cr.addWebUIListener(
+          'android-apps-info-update', this.androidAppsInfoUpdate_.bind(this));
+      settings.AndroidAppsBrowserProxyImpl.getInstance()
+          .requestAndroidAppsInfo();
+    }
+  },
+
+  /**
+   * @return {boolean}
+   * @private
+   */
+  isVisible_: function() {
+    if (!this.playStoreEnabled || !this.settingsAppAvailable) {
+      return false;
+    }
+    return true;
+  },
+
+  /**
+   * @private
+   */
+  androidAppsInfoUpdate_: function(info) {
+    if (info == null)
+      return;
+
+    this.playStoreEnabled = info.playStoreEnabled;
+    this.settingsAppAvailable = info.settingsAppAvailable;
+    this.$.manageApps.hidden = !this.isVisible_();
   },
 
   /**
@@ -177,5 +220,13 @@ Polymer({
         .showAt(
             /** @type {!Element} */ (
                 Polymer.dom(/** @type {!Event} */ (event)).localTarget));
-  }
+  },
+
+  /**
+   * Opens an activity to handle App links (preferred apps).
+   * @private
+   */
+  onManageAndroidAppsTap_: function() {
+    this.browserProxy.showAndroidManageAppLinks();
+  },
 });

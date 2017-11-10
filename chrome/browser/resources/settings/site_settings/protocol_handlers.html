@@ -10,6 +10,11 @@
 <link rel="import" href="site_settings_behavior.html">
 <link rel="import" href="site_settings_prefs_browser_proxy.html">
 
+<if expr="chromeos">
+<link rel="import" href="../android_apps_page/android_apps_browser_proxy.html">
+<link rel="import" href="../android_apps_page/android_apps_page.html">
+</if>
+
 <dom-module id="protocol-handlers">
   <template>
     <style include="settings-shared">
@@ -67,6 +72,16 @@
         $i18n{handlerRemove}
       </button>
     </dialog>
+
+<if expr="chromeos">
+    <div id="manageApps" class="settings-box first"
+        on-tap="onManageAndroidAppsTap_" actionable>
+      <div class="start">
+        <div>$i18n{androidAppsManageAppLinks}</div>
+      </div>
+      <button class="icon-external" is="paper-icon-button-light"></button>
+    </div>
+</if>
   </template>
   <script src="protocol_handlers.js"></script>
 </dom-module>
