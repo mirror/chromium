@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cef49f4f_9e2236f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataPreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-10T10:15:58Z",
+      "side": 1,
+      "message": "I think this can be reduced to\nList\u003cTimePeriodSpinnerOption\u003e options \u003d new ArrayList\u003c\u003e();",
+      "revId": "056070877a436678342ac2caa07e7d560711a858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc329d6_c3041158",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataPreferencesTab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-10T10:15:58Z",
+      "side": 1,
+      "message": "I merged ClearBrowsingDataPreferencesTab.java and ClearBrowsingDataPreferences.java a few days ago as we don\u0027t use the old class anymore. Just a warning that you will get some merge conflicts. \nThe TimePeriod options from this file will need to go to ClearBrowsingDataPreferences.java",
+      "revId": "056070877a436678342ac2caa07e7d560711a858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f071feb7_86c25d45",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-10T10:15:58Z",
+      "side": 1,
+      "message": "This message can be removed when you have rebased",
+      "revId": "056070877a436678342ac2caa07e7d560711a858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bcc0a1c_63965457",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1627,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-10T10:15:58Z",
+      "side": 1,
+      "message": "I think the comment from chrome_features.h describes the purpose of this flag better: \"Enables clearing of browsing data which is older than a given time period.\"",
+      "revId": "056070877a436678342ac2caa07e7d560711a858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57de2701_5302b6bb",
+        "filename": "components/browsing_data/core/browsing_data_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-10T10:15:58Z",
+      "side": 1,
+      "message": "Could we keep using base::Time::Max() for the other cases? changing this to \n\nif (time_period \u003d\u003d TimePeriod::OLDER_THAN_30_DAYS) {\n   return base::Time::Now() - base::TimeDelta::FromDays(30);\n}\nreturn base::Time::Max();\n\nwould make the code a bit simpler in my opinion.",
+      "revId": "056070877a436678342ac2caa07e7d560711a858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
