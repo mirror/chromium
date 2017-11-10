@@ -808,6 +808,19 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
   // pixels, so we need to scale by the |device_scale_factor|.
   gfx::Rect damage_rect = gfx::SkIRectToRect(damage_.getBounds());
   damage_rect.Offset(origin.x(), origin.y());
+
+  // Outset damage using |device_scale_factor|. This is needed as damage is in
+  // surface coordinate space and client might not be aware of the scaling and
+  // filtering that takes place as a result of this scale factor.
+  // TODO(reveman): Add support for damage reporting in buffer space to avoid
+  // this.
+  if (!damage_rect.IsEmpty()) {
+    float damage_outset = std::ceil(device_scale_factor - 1.0f);
+    damage_rect.Inset(-damage_outset, -damage_outset);
+    // Constrain damage rectangle to output rectangle.
+    damage_rect.Intersect(output_rect);
+  }
+
   render_pass->damage_rect.Union(
       gfx::ConvertRectToPixel(device_scale_factor, damage_rect));
   render_pass->output_rect.Union(
