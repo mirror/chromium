@@ -425,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "8099939d_d771ef2f",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-10T02:40:02Z",
+      "side": 1,
+      "message": "I think in this case you can just construct a TestSSLBlockingPage directly, and pass it a dummy MetricsHelper. You\u0027re not testing the code of SSLBlockingPage::Create here, so you don\u0027t need the test to run or duplicate that code.",
+      "parentUuid": "dab1d79e_ba297977",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 6
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2184c5b_439d9954",
         "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
         "patchSetId": 29
