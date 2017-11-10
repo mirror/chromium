@@ -531,6 +531,16 @@ class CONTENT_EXPORT WebContentsDelegate {
                                                  const url::Origin& origin,
                                                  const GURL& resource_url);
 
+  // Requests to get browser controls info such as the height of the top/bottom
+  // controls, and whether they will shrink the Blink's view size.
+  // Note that they are not complete in the sense that they can be called
+  // not only when browser controls info are updated but also when viewport
+  // size itself alone changes, for renderer can't tell which causes changes in
+  // the actual view size.
+  virtual int GetTopControlsHeight() const;
+  virtual int GetBottomControlsHeight() const;
+  virtual bool DoBrowserControlsShrinkBlinkSize() const;
+
   // Give WebContentsDelegates the opportunity to adjust the previews state.
   virtual void AdjustPreviewsStateForNavigation(PreviewsState* previews_state) {
   }
