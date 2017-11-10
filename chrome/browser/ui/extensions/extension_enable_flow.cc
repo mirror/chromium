@@ -83,10 +83,17 @@ void ExtensionEnableFlow::Run() {
 }
 
 void ExtensionEnableFlow::CheckPermissionAndMaybePromptUser() {
-  ExtensionService* service =
-      extensions::ExtensionSystem::Get(profile_)->extension_service();
+  extensions::ExtensionSystem* system =
+      extensions::ExtensionSystem::Get(profile_);
+  ExtensionService* service = system->extension_service();
   const Extension* extension = service->GetExtensionById(extension_id_, true);
   if (!extension) {
+    delegate_->ExtensionEnableFlowAborted(false);  // |delegate_| may delete us.
+    return;
+  }
+
+  if (system->management_policy()->MustRemainDisabled(extension, nullptr,
+                                                      nullptr)) {
     delegate_->ExtensionEnableFlowAborted(false);  // |delegate_| may delete us.
     return;
   }
