@@ -85,10 +85,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
                                         WindowAndroidProvider, ImeEventObserver {
     private static final String TAG = "cr_ContentViewCore";
 
-    // Used to avoid enabling zooming in / out if resulting zooming will
-    // produce little visible difference.
-    private static final float ZOOM_CONTROLS_EPSILON = 0.007f;
-
     /**
      * A {@link WebContentsObserver} that listens to frame navigation events.
      */
@@ -670,13 +666,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
      */
     public boolean isFocusedNodeEditable() {
         return mSelectionPopupController.isSelectionEditable();
-    }
-
-    /**
-     * @return Whether the HTML5 gamepad API is active.
-     */
-    public boolean isGamepadAPIActive() {
-        return GamepadList.isGamepadAPIActive();
     }
 
     @CalledByNative
@@ -1531,98 +1520,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         mSystemCaptioningBridge.syncToListener(this);
     }
 
-    /**
-     * Checks whether the ContentViewCore can be zoomed in.
-     *
-     * @return True if the ContentViewCore can be zoomed in.
-     */
-    // This method uses the term 'zoom' for legacy reasons, but relates
-    // to what chrome calls the 'page scale factor'.
-    public boolean canZoomIn() {
-        final float zoomInExtent = mRenderCoordinates.getMaxPageScaleFactor()
-                - mRenderCoordinates.getPageScaleFactor();
-        return zoomInExtent > ZOOM_CONTROLS_EPSILON;
-    }
-
-    /**
-     * Checks whether the ContentViewCore can be zoomed out.
-     *
-     * @return True if the ContentViewCore can be zoomed out.
-     */
-    // This method uses the term 'zoom' for legacy reasons, but relates
-    // to what chrome calls the 'page scale factor'.
-    public boolean canZoomOut() {
-        final float zoomOutExtent = mRenderCoordinates.getPageScaleFactor()
-                - mRenderCoordinates.getMinPageScaleFactor();
-        return zoomOutExtent > ZOOM_CONTROLS_EPSILON;
-    }
-
-    /**
-     * Zooms in the ContentViewCore by 25% (or less if that would result in
-     * zooming in more than possible).
-     *
-     * @return True if there was a zoom change, false otherwise.
-     */
-    // This method uses the term 'zoom' for legacy reasons, but relates
-    // to what chrome calls the 'page scale factor'.
-    public boolean zoomIn() {
-        if (!canZoomIn()) {
-            return false;
-        }
-        return pinchByDelta(1.25f);
-    }
-
-    /**
-     * Zooms out the ContentViewCore by 20% (or less if that would result in
-     * zooming out more than possible).
-     *
-     * @return True if there was a zoom change, false otherwise.
-     */
-    // This method uses the term 'zoom' for legacy reasons, but relates
-    // to what chrome calls the 'page scale factor'.
-    public boolean zoomOut() {
-        if (!canZoomOut()) {
-            return false;
-        }
-        return pinchByDelta(0.8f);
-    }
-
-    /**
-     * Resets the zoom factor of the ContentViewCore.
-     *
-     * @return True if there was a zoom change, false otherwise.
-     */
-    // This method uses the term 'zoom' for legacy reasons, but relates
-    // to what chrome calls the 'page scale factor'.
-    public boolean zoomReset() {
-        // The page scale factor is initialized to mNativeMinimumScale when
-        // the page finishes loading. Thus sets it back to mNativeMinimumScale.
-        if (!canZoomOut()) return false;
-        return pinchByDelta(
-                mRenderCoordinates.getMinPageScaleFactor()
-                        / mRenderCoordinates.getPageScaleFactor());
-    }
-
-    /**
-     * Simulate a pinch zoom gesture.
-     *
-     * @param delta the factor by which the current page scale should be multiplied by.
-     * @return whether the gesture was sent.
-     */
-    private boolean pinchByDelta(float delta) {
-        if (mNativeContentViewCore == 0) return false;
-
-        long timeMs = SystemClock.uptimeMillis();
-        int xPix = getViewportWidthPix() / 2;
-        int yPix = getViewportHeightPix() / 2;
-
-        nativePinchBegin(mNativeContentViewCore, timeMs, xPix, yPix);
-        nativePinchBy(mNativeContentViewCore, timeMs, xPix, yPix, delta);
-        nativePinchEnd(mNativeContentViewCore, timeMs);
-
-        return true;
-    }
-
     @Override
     public void onAccessibilityStateChanged(boolean enabled) {
         setAccessibilityState(enabled);
@@ -2008,13 +1905,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
             long nativeContentViewCore, long timeMs, boolean fromGamepad);
 
     private native void nativeDoubleTap(long nativeContentViewCore, long timeMs, float x, float y);
-
-    private native void nativePinchBegin(long nativeContentViewCore, long timeMs, float x, float y);
-
-    private native void nativePinchEnd(long nativeContentViewCore, long timeMs);
-
-    private native void nativePinchBy(long nativeContentViewCore, long timeMs, float anchorX,
-            float anchorY, float deltaScale);
 
     private native void nativeSetTextHandlesTemporarilyHidden(
             long nativeContentViewCore, boolean hidden);

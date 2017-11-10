@@ -125,20 +125,6 @@ class ContentViewCore : public WebContentsObserver {
                  jfloat x,
                  jfloat y);
 
-  void PinchBegin(JNIEnv* env,
-                  const base::android::JavaParamRef<jobject>& obj,
-                  jlong time_ms,
-                  jfloat x,
-                  jfloat y);
-  void PinchEnd(JNIEnv* env,
-                const base::android::JavaParamRef<jobject>& obj,
-                jlong time_ms);
-  void PinchBy(JNIEnv* env,
-               const base::android::JavaParamRef<jobject>& obj,
-               jlong time_ms,
-               jfloat x,
-               jfloat y,
-               jfloat delta);
   void SetTextHandlesTemporarilyHidden(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,

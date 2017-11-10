@@ -138,6 +138,7 @@ class UI_ANDROID_EXPORT ViewAndroid {
                         const base::android::JavaRef<jobject>& jimage);
 
   gfx::Size GetPhysicalBackingSize();
+  gfx::Size GetSize() const;
 
   void OnSizeChanged(int width, int height);
   void OnPhysicalBackingSizeChanged(const gfx::Size& size);

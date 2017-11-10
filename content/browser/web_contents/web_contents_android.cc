@@ -23,6 +23,7 @@
 #include "content/browser/frame_host/interstitial_page_impl.h"
 #include "content/browser/media/android/browser_media_player_manager.h"
 #include "content/browser/media/android/media_web_contents_observer_android.h"
+#include "content/browser/renderer_host/input/web_input_event_builders_android.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/browser/web_contents/web_contents_view_android.h"
@@ -56,6 +57,8 @@ using base::android::JavaRef;
 using base::android::ScopedJavaGlobalRef;
 using base::android::ScopedJavaLocalRef;
 using base::android::ToJavaIntArray;
+using blink::WebInputEvent;
+using blink::WebGestureEvent;
 
 namespace content {
 
@@ -795,6 +798,52 @@ void WebContentsAndroid::UpdateFrameInfo(
       content_height, viewport_size.width(), viewport_size.height(),
       page_scale_factor, page_scale_factor_limits.x(),
       page_scale_factor_limits.y(), top_shown_pix);
+}
+
+void WebContentsAndroid::PinchBegin(JNIEnv* env,
+                                    const JavaParamRef<jobject>& obj,
+                                    jlong time_ms) {
+  auto size = web_contents_->GetView()->GetNativeView()->GetSize();
+  WebGestureEvent event =
+      MakeGestureEvent(WebInputEvent::kGesturePinchBegin, time_ms,
+                       size.width() / 2, size.height() / 2);
+  SendGestureEvent(event);
+}
+
+void WebContentsAndroid::PinchEnd(JNIEnv* env,
+                                  const JavaParamRef<jobject>& obj,
+                                  jlong time_ms) {
+  WebGestureEvent event =
+      MakeGestureEvent(WebInputEvent::kGesturePinchEnd, time_ms, 0, 0);
+  SendGestureEvent(event);
+}
+
+void WebContentsAndroid::PinchBy(JNIEnv* env,
+                                 const JavaParamRef<jobject>& obj,
+                                 jlong time_ms,
+                                 jfloat delta) {
+  auto size = web_contents_->GetView()->GetNativeView()->GetSize();
+  WebGestureEvent event =
+      MakeGestureEvent(WebInputEvent::kGesturePinchUpdate, time_ms,
+                       size.width() / 2, size.height() / 2);
+  event.data.pinch_update.scale = delta;
+
+  SendGestureEvent(event);
+}
+
+WebGestureEvent WebContentsAndroid::MakeGestureEvent(WebInputEvent::Type type,
+                                                     int64_t time_ms,
+                                                     float x,
+                                                     float y) const {
+  float dip_scale = web_contents_->GetView()->GetNativeView()->GetDipScale();
+  return WebGestureEventBuilder::Build(type, time_ms / 1000.0, x / dip_scale,
+                                       y / dip_scale);
+}
+
+void WebContentsAndroid::SendGestureEvent(const blink::WebGestureEvent& event) {
+  RenderWidgetHostViewAndroid* rwhv = GetRenderWidgetHostViewAndroid();
+  if (rwhv)
+    rwhv->SendGestureEvent(event);
 }
 
 }  // namespace content
