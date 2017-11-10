@@ -5,6 +5,8 @@
 #ifndef CHROME_RENDERER_CHROME_RENDER_FRAME_OBSERVER_H_
 #define CHROME_RENDERER_CHROME_RENDER_FRAME_OBSERVER_H_
 
+#include <vector>
+
 #include "base/macros.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
@@ -14,7 +16,6 @@
 #include "mojo/public/cpp/bindings/associated_binding_set.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
-
 
 namespace gfx {
 class Size;
@@ -68,7 +69,8 @@ class ChromeRenderFrameObserver
   // chrome::mojom::ChromeRenderFrame:
   void SetWindowFeatures(
       blink::mojom::WindowFeaturesPtr window_features) override;
-  void ExecuteWebUIJavaScript(const base::string16& javascript) override;
+  void ExecuteWebUIJavaScriptForTesting(
+      const base::string16& javascript) override;
   void RequestThumbnailForContextNode(
       int32_t thumbnail_min_area_pixels,
       const gfx::Size& thumbnail_max_size_pixels,

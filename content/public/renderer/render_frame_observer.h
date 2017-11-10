@@ -64,7 +64,7 @@ class CONTENT_EXPORT RenderFrameObserver : public IPC::Listener,
   virtual void DidCreateDocumentElement() {}
   // Called when a provisional load is about to commit in a frame. This is
   // dispatched just before the Javascript unload event.
-  virtual void WillCommitProvisionalLoad() {}
+  virtual void WillCommitProvisionalLoad(bool is_same_document_navigation) {}
   virtual void DidCommitProvisionalLoad(bool is_new_navigation,
                                         bool is_same_document_navigation) {}
   virtual void DidStartProvisionalLoad(

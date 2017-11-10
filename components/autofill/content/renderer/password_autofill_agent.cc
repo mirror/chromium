@@ -1208,8 +1208,10 @@ void PasswordAutofillAgent::DidFinishLoad() {
   SendPasswordForms(true);
 }
 
-void PasswordAutofillAgent::WillCommitProvisionalLoad() {
-  FrameClosing();
+void PasswordAutofillAgent::WillCommitProvisionalLoad(
+    bool is_same_document_navigation) {
+  if (!is_same_document_navigation)
+    FrameClosing();
 }
 
 void PasswordAutofillAgent::DidCommitProvisionalLoad(

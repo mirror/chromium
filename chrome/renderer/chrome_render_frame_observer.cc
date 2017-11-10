@@ -314,7 +314,7 @@ void ChromeRenderFrameObserver::SetClientSidePhishingDetection(
 #endif
 }
 
-void ChromeRenderFrameObserver::ExecuteWebUIJavaScript(
+void ChromeRenderFrameObserver::ExecuteWebUIJavaScriptForTesting(
     const base::string16& javascript) {
 #if !defined(OS_ANDROID)
   webui_javascript_.push_back(javascript);

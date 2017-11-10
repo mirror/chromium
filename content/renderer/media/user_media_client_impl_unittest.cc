@@ -499,7 +499,7 @@ class UserMediaClientImplTest : public ::testing::Test {
   }
 
   void LoadNewDocumentInFrame() {
-    user_media_client_impl_->WillCommitProvisionalLoad();
+    user_media_client_impl_->WillCommitProvisionalLoad(false);
   }
 
   blink::WebMediaStream RequestLocalMediaStream() {
