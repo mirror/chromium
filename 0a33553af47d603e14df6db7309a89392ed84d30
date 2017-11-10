@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4f1837b3_6d415900",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-10T23:21:55Z",
+      "side": 1,
+      "message": "Right. Using a non-final object as lock seems dangerous. Using a dedicated object for lock is easier to reason about. Sorry for not catching this earlier.",
+      "parentUuid": "a4feba94_adf52426",
+      "revId": "0a33553af47d603e14df6db7309a89392ed84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4f98ec0_4826b17d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
         "patchSetId": 10
