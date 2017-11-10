@@ -13,13 +13,9 @@ Polymer({
       notify: true,
     },
 
-    /** @private */
-    guestSession_: {
-      type: Boolean,
-      value: loadTimeData.getBoolean('isGuestSession'),
-    },
-
     showFooter: Boolean,
+
+    guestSession: Boolean,
   },
 
   keyBindings: {
@@ -59,7 +55,7 @@ Polymer({
    * @private
    */
   computeClearBrowsingDataTabIndex_: function() {
-    return this.guestSession_ ? '-1' : '';
+    return this.guestSession ? '-1' : '';
   },
 
   /**

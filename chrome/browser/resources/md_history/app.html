@@ -71,6 +71,7 @@
         querying="[[queryState_.querying]]"
         search-term="[[queryState_.searchTerm]]"
         show-menu-promo="[[showMenuPromo_]]"
+        guest-session="[[guestSession_]]"
         spinner-active="[[shouldShowSpinner_(queryState_.querying,
                                              queryState_.incremental,
                                              queryState_.searchTerm)]]">
@@ -80,6 +81,7 @@
     <div id="main-container">
       <history-side-bar id="content-side-bar" selected-page="{{selectedPage_}}"
           show-footer="[[showSidebarFooter]]"
+          guest-session="[[guestSession_]]"
           hidden$="[[hasDrawer_]]">
       </history-side-bar>
       <iron-pages id="content" attr-for-selected="path"
