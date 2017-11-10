@@ -1,4 +1,3 @@
-
 Tests the coverage list view after finishing recording in the Coverage view.
 
 .../devtools/coverage/resources/coverage.js JS used: 385 unused: 183 total: 568

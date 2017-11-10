@@ -2,7 +2,6 @@ Test string list ordering in IndexedDB.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "list-ordering.html"
 indexedDB.deleteDatabase(dbname)
 indexedDB.open(dbname)

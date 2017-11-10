@@ -6,9 +6,14 @@ PASS document.getElementById("foo2").clientWidth is 400
 PASS document.getElementById("foo3").clientWidth is 100
 PASS document.getElementById("foo4").clientWidth is 200
 PASS document.getElementById("foo5").clientWidth is 200
+
 This test passes if the images are all displayed with appropriate dimensions.
- 
- 
- 
- 
+
+
+
+
+
+
+
+
 

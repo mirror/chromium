@@ -1,6 +1,5 @@
 Tests the Timeline API instrumentation of a paint image event
 
-
 PaintImage Properties:
 {
     data : {

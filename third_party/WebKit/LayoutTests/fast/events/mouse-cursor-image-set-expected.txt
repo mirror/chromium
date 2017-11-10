@@ -2,8 +2,8 @@ Test that mouse cursors are applied correctly.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Bug 99493
+
 
 
 Checking cursors with device pixel ratio of 1

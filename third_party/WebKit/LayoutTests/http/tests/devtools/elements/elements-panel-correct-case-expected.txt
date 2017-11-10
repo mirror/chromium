@@ -1,6 +1,7 @@
 Tests that elements panel shows all types of elements in the correct case.
 
- 
+
+
   <!DOCTYPE html>
 - <html>
     - <head>

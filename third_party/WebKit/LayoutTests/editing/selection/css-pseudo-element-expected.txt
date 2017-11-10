@@ -1,9 +1,17 @@
 To manually test select text below by mouse and use right arrow key to navigate across the quotes. The caret should move to the right of quote.
 
-preceding text content following text
-اردو وڑ پروسیسرس پر تبصر
-preceding text content following text
-اردو وڑ پروسیسرس پر تبصر
+preceding text
+content
+following text
+اردو وڑ
+پروسیسرس پر
+تبصر
+preceding text
+content
+following text
+اردو وڑ
+پروسیسرس پر
+تبصر
 PASS 1 is 1
 PASS 16 is 16
 PASS 1 is 1

@@ -1,7 +1,8 @@
 Test that a table-caption with a table-cell sibling is wrapped inside an inline-table when the parent is inline.
 
  
- There should be a blue square to the left of this line.
+ 
+There should be a blue square to the left of this line.
 PASS firstRects.length is 1
 PASS secondRects.length is 1
 PASS lastRects.length is 1

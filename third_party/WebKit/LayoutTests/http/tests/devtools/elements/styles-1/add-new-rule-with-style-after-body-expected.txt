@@ -1,4 +1,4 @@
-Tests that adding a new rule works when there is a STYLE element after BODY. TIMEOUT SHOULD NOT OCCUR! Bug 111299
+Tests that adding a new rule works when there is a STYLE element after BODY. TIMEOUT SHOULD NOT OCCUR!Bug 111299
 
 Text
 After adding new rule:

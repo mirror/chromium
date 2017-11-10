@@ -2,7 +2,6 @@ CONSOLE MESSAGE: line 2: button clicked!
 Tests installing compiler source map in scripts panel.
 
 
-
 Running: testSetBreakpoint
 Script source was shown.
 Script execution paused.

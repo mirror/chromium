@@ -1,6 +1,9 @@
 Tests that stepping out of an event listener will lead to a pause in the next event listener.
 
-Recieved foo event(1)! Recieved foo event(2)! Recieved foo event(1)! Recieved foo event(2)!
+Recieved foo event(1)!
+Recieved foo event(2)!
+Recieved foo event(1)!
+Recieved foo event(2)!
 Set timer for test function.
 Call stack:
     0) inner (debugger-step-out-event-listener.html:26)

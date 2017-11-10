@@ -1576,7 +1576,6 @@ crbug.com/501659 fast/css/stylesheet-candidate-nodes-crash.xhtml [ Failure ]
 # rebaseline. See crbug.com/508768#c6
 crbug.com/509025 [ Mac10.10 ] fast/css/css2-system-fonts.html [ Failure ]
 crbug.com/509025 [ Mac10.10 ] fast/forms/select/hidden-listbox.html [ Failure ]
-crbug.com/509025 [ Mac10.10 ] fast/forms/textarea/textarea-newline.html [ Failure ]
 
 crbug.com/545140 [ Mac10.10 Mac10.11 Retina Mac10.12 ] fast/encoding/denormalised-voiced-japanese-chars.html [ Failure ]
 

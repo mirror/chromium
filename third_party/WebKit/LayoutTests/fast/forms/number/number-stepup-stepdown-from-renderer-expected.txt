@@ -8,7 +8,6 @@ Check stepping-up and -down for number input from renderer.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Number type
 Function arguments are (value, step, {min or max}, [stepCount]).
 Invalid value

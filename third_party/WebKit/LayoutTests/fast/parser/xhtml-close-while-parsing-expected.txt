@@ -1,1 +1,2 @@
-This tests that the XML parser doesn't fail if window.close() is called from a script tag while parsing. If you see this text the test has passed.
+This tests that the XML parser doesn't fail if window.close() is called from a script tag while parsing.
+If you see this text the test has passed.

@@ -2,7 +2,6 @@ This test makes sure that calls to pushState() and replaceState() with less than
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS successfullyParsed is true
 
 TEST COMPLETE

@@ -1,9 +1,7 @@
-
 Original texts which will be copied
 \ from UTF8 page
 \ FROM UTF8 PAGE (TRANSFORMED)
 •••••••••••••••••••••••••
-
 Texts in the EUC frame will be pasted here
 from EUC div to UTF8 text-control: 
 from EUC div to UTF8 content-editable: \ from EUC page
@@ -14,7 +12,10 @@ from EUC secure to UTF8 content-editable: ••••••••••••�
 from EUC control to UTF8 text-control: 
 from EUC control to UTF8 content-editable: \ from EUC text control
 
+
+
 Results
+
 from EUC div to UTF8 text-control: PASS
 from EUC div to UTF8 content-editable: PASS
 from EUC transform to UTF8 text-control: PASS

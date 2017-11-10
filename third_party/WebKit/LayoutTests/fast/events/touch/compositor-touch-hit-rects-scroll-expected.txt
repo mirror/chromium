@@ -1,4 +1,5 @@
-This test verifies the hit test regions given to the compositor specifically around composited overflow scroll elements.
+This test verifies the hit test regions given to the compositor specifically around composited
+overflow scroll elements.
 
 scrollContent: DIV#scroll1 (1, 14, 273, 12)
 

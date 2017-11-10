@@ -1,4 +1,5 @@
-This page tests whether global declarations are cleared after a navigation. If the test passes, you'll see a series of PASS messages below.
+This page tests whether global declarations are cleared after a navigation.
+If the test passes, you'll see a series of PASS messages below.
 
 
 Page 0:

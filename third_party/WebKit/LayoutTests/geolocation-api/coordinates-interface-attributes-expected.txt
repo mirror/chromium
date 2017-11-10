@@ -2,7 +2,6 @@ Test the attribute handling of the Coordinates interface
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS globalCoordinates.latitude is testSet[currentTestIndex][1][0]
 PASS globalCoordinates.longitude is testSet[currentTestIndex][1][1]
 PASS globalCoordinates.accuracy is testSet[currentTestIndex][1][2]

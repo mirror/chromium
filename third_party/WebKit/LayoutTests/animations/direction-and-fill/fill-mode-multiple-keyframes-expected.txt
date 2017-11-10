@@ -1,4 +1,8 @@
-This test performs an animation of the left property with four different fill modes on two sets of objects. The first set has animations with only from and to keyframes. The second set has animations with from, to and a third keyframe at 50%. It animates over 0.1 second with a 0.1 second delay. It takes snapshots at document load and the end of the animation.
+This test performs an animation of the left property with four different
+fill modes on two sets of objects. The first set has animations with
+only from and to keyframes. The second set has animations with from, to and
+a third keyframe at 50%. It animates over 0.1 second with a 0.1 second delay.
+It takes snapshots at document load and the end of the animation.
 None - 2 keyframes
 Backwards - 2 keyframes
 Forwards - 2 keyframes

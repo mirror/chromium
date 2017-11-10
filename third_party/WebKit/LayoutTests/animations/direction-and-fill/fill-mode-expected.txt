@@ -1,4 +1,6 @@
-This test performs an animation of the left property with four different fill modes. It animates over 0.1 second with a 0.1 second delay. It takes snapshots at document load and the end of the animation.
+This test performs an animation of the left property with four different
+fill modes. It animates over 0.1 second with a 0.1 second delay.
+It takes snapshots at document load and the end of the animation.
 None
 Backwards
 Forwards

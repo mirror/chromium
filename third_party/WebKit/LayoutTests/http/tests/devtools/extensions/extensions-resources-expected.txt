@@ -1,7 +1,6 @@
 CONSOLE MESSAGE: line 3: don't panic!
 Tests resource-related methods of WebInspector extension API
 
-
 Started extension.
 Running tests...
 RUNNING TEST: extension_testGetAllResources

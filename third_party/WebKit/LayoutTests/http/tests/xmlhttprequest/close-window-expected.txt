@@ -1,5 +1,4 @@
-Test for bug 22630: Assertion failure in XMLHttpRequest::contextDestroyed.
+Test for bug 22630:
+Assertion failure in XMLHttpRequest::contextDestroyed.
 
 SUCCESS! Did not assert!
-
-

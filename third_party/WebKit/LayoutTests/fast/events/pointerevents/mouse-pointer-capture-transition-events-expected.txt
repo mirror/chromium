@@ -2,7 +2,6 @@ Verifies that trasition events are correctly fired in different pointer capture 
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
     ==== 'none' is capturing and then 'blue' will capture; will move pointer to 'blue' ====
  **** Move mouse to green and press *****
 green received pointerover

@@ -1,4 +1,5 @@
-Tests that changing the display property of a running animation to a value other than 'none' does not cause it to terminate or re-start.
+Tests that changing the display property of a running animation to a value
+    other than 'none' does not cause it to terminate or re-start.
 
 target
 INFO: Start event fired

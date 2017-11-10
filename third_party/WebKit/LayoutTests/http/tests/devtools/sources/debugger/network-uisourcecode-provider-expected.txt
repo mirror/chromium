@@ -3,7 +3,6 @@ CONSOLE MESSAGE: line 8: Iframe loaded
 Tests NetworkUISourceCodeProvider class.
 
 
-
 Running: testDocumentResource
 Creating resource.
 UISourceCode: http://127.0.0.1:8000/devtools/sources/debugger/resources/syntax-error.html

@@ -2,7 +2,6 @@ Test whether Range.selectNode and Range.selectNodeContents work across documents
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS selectNodeRange.startContainer === otherDocument.documentElement is true
 PASS selectNodeRange.endContainer === otherDocument.documentElement is true
 PASS selectNodeRange.startContainer.ownerDocument === otherDocument is true

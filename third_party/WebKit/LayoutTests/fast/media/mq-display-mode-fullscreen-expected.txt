@@ -1,4 +1,5 @@
-Test the (display-mode: ...) media features while the browser window entering/leaving fullscreen mode.
+Test the (display-mode: ...)
+    media features while the browser window entering/leaving fullscreen mode.
 
 ------------- before entering fullscreen -------------
 Query "(display-mode)": true

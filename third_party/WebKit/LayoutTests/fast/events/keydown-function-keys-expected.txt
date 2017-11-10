@@ -1,6 +1,5 @@
 This test verifies the keycodes sent when we press function keys.
 
-
 Type=keydown,keyCode=112,ctrlKey=false,shiftKey=false,altKey=false,metaKey=false
 Type=keyup,keyCode=112,ctrlKey=false,shiftKey=false,altKey=false,metaKey=false
 Type=keydown,keyCode=113,ctrlKey=false,shiftKey=false,altKey=false,metaKey=false

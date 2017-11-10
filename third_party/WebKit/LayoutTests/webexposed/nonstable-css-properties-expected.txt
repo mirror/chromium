@@ -2,7 +2,6 @@ Test getting and setting nonstable css properties to non-default values
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 el.style.setProperty('shape-margin', '10px')
 el.style.getPropertyValue('shape-margin') is 10px
 getComputedStyle(el).getPropertyValue('shape-margin') is 10px

@@ -1,5 +1,5 @@
-Test that debugger will pause in all event listeners when corresponding breakpoint is set. Bug 77331.
-
+Test that debugger will pause in all event listeners when corresponding breakpoint is set.
+Bug 77331.
 
 
 Running: testClickBreakpoint

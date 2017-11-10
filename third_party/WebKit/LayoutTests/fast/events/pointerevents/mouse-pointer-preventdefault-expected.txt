@@ -2,7 +2,6 @@ Verifies the effect of pointer event prevent-default on following pointer & mous
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 --- test with preventDefault on none ---
 - start with mouse outside target -
 - move into target & click -

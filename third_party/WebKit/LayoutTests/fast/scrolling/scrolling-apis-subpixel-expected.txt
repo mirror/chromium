@@ -2,7 +2,6 @@ Verifies that scrolling APIs support fractional offsets.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Scrolling DIV with scrollTop/scrollLeft
 PASS scroller.scrollTop is within 0.01 of 4
 PASS scroller.scrollLeft is within 0.01 of 4

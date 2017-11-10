@@ -2,7 +2,6 @@ Verifies the effect of pointer event prevent-default on pointerdown & mouse/pen 
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 --- test with preventDefault on non-primary none ---
 - start with mouse, primary pen and non-primary pen outside target -
 - move mouse into target & press -

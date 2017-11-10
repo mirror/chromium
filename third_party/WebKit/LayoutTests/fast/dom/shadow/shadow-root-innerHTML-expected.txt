@@ -3,7 +3,6 @@ This tests the innerHTML property of a shadow root.
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
 
-
 PASS 'innerHTML' in internals.shadowRoot is false
 PASS root.innerHTML is defined.
 PASS root.innerHTML is '<div id="div1"></div><div id="div2"></div>'

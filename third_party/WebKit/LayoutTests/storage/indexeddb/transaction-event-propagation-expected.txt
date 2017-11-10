@@ -2,7 +2,6 @@ Test event propogation on IDBTransaction.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "transaction-event-propagation.html"
 indexedDB.deleteDatabase(dbname)
 indexedDB.open(dbname)

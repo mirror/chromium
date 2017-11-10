@@ -3,13 +3,15 @@ This tests that list items are properly marked when a reversed list contains nes
 10 Ten
 9 Nine
 8 Eight
-7 Seven One Two
--> -> ◦ One
--> -> ◦ Two
+7 Seven
+One
+Two
+-> ->   ◦ One
+-> ->   ◦ Two
 6 Six
 5 Five
--> 2 Two
--> 1 One
+->   2 Two
+->   1 One
 4 Four
 3 Three
 2 Two

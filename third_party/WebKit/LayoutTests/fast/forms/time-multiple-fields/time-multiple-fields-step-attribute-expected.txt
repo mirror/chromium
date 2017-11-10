@@ -2,7 +2,6 @@ Check step attribute change causes appearance change
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Set step to 0.001
 PASS widthOfStep001 > widthOfStep60 is true
 Set step to 60

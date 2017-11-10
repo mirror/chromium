@@ -70,7 +70,7 @@
 [ok].//*[contains(.,"b")]
 [ok].//*[string-length() = 3]
 [ok].//*[string-length(.) = 3]
-[ok].//*[.=translate(normalize-space(" s u b ")," ","")]
+[ok].//*[.=translate(normalize-space("  s  u  b  ")," ","")]
 [ok].//*[normalize-space()="q"]
 [ok].//*[boolean(@title - 1) = false()]
 [ok].//*[not(@title - 1) = true()]
@@ -87,6 +87,7 @@ emstrong
 bs
 blockquoteText1:
 blockquoteText2
+
 delins
 
 font
