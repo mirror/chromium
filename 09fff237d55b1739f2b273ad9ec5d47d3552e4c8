@@ -22,6 +22,30 @@
       "revId": "09fff237d55b1739f2b273ad9ec5d47d3552e4c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb945eee_6cf76147",
+        "filename": "chrome/browser/vr/ui_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-10T14:49:27Z",
+      "side": 1,
+      "message": "We don\u0027t use it anywhere now.  You\u0027re right, we should set it once.",
+      "parentUuid": "d263c50a_5fa16b58",
+      "range": {
+        "startLine": 84,
+        "startChar": 12,
+        "endLine": 84,
+        "endChar": 25
+      },
+      "revId": "09fff237d55b1739f2b273ad9ec5d47d3552e4c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
