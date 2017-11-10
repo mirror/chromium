@@ -34,6 +34,24 @@
       "revId": "3c2656096ce471cff40cb5c2c012bc1741cde798",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a161507e_0ab46507",
+        "filename": "chrome/browser/pdf/pdf_extension_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-11-10T21:29:38Z",
+      "side": 1,
+      "message": "The usage of this is a bit confusing https://g3doc.corp.google.com/third_party/gtest/g3doc/primer.md#simple-tests\nAnyway, it doesn\u0027t matter now https://critique.corp.google.com/#review/114704762",
+      "parentUuid": "a7eb7e61_294b0b25",
+      "revId": "3c2656096ce471cff40cb5c2c012bc1741cde798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
