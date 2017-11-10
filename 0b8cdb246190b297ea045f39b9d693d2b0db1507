@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b4cf71e_a63e196c",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:27:40Z",
+      "side": 0,
+      "message": "I think we still want this in the .json file until it\u0027s removed entirely.",
+      "range": {
+        "startLine": 880,
+        "startChar": 24,
+        "endLine": 880,
+        "endChar": 59
+      },
+      "revId": "0b8cdb246190b297ea045f39b9d693d2b0db1507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
