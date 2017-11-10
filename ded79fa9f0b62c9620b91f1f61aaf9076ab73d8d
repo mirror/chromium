@@ -22,6 +22,30 @@
       "revId": "ded79fa9f0b62c9620b91f1f61aaf9076ab73d8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "250f08e3_7412c30d",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-10T16:44:57Z",
+      "side": 1,
+      "message": "\u003e Does this make any difference?\n\n\"this\"?\n\nUsing ANIMATED matters, because that\u0027s what the JS now uses to determine that it should do the CTA swap.",
+      "parentUuid": "e2c1a3ab_f9b25f8e",
+      "range": {
+        "startLine": 1365,
+        "startChar": 77,
+        "endLine": 1365,
+        "endChar": 0
+      },
+      "revId": "ded79fa9f0b62c9620b91f1f61aaf9076ab73d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
