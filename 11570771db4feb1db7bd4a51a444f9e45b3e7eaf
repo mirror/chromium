@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e97dc5b6_4a8da19d",
+        "filename": "content/child/child_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-11-10T10:34:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9087342d_2692f939",
+      "range": {
+        "startLine": 442,
+        "startChar": 31,
+        "endLine": 442,
+        "endChar": 43
+      },
+      "revId": "11570771db4feb1db7bd4a51a444f9e45b3e7eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19747dcd_8fcc8013",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-10T02:58:14Z",
       "side": 1,
       "message": "protip: We can take advantage of covariant return types here and return RendererScheduler in GetScheduler: blink::scheduler::RendererScheduler* GetScheduler() override;\n\nWith this we would be able to replace GetRendererScheduler method with the new GetScheduler method.",
+      "range": {
+        "startLine": 1639,
+        "startChar": 9,
+        "endLine": 1639,
+        "endChar": 29
+      },
+      "revId": "11570771db4feb1db7bd4a51a444f9e45b3e7eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f1d3dc1_3f87672e",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1639,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-11-10T10:34:55Z",
+      "side": 1,
+      "message": "That\u0027s good to know: I didn\u0027t know Covariant Return Types.\n\nRenaming GetRendererScheduler to GetScheduler would be a big change, so I\u0027d like to do it in another CL.",
+      "parentUuid": "19747dcd_8fcc8013",
       "range": {
         "startLine": 1639,
         "startChar": 9,
@@ -68,6 +116,30 @@
       "revId": "11570771db4feb1db7bd4a51a444f9e45b3e7eaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004fb1fe_b2d7dab6",
+        "filename": "third_party/WebKit/public/platform/scheduler/child/child_scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-11-10T10:34:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43492680_8e1c2e69",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 23
+      },
+      "revId": "11570771db4feb1db7bd4a51a444f9e45b3e7eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
