@@ -34,6 +34,24 @@
       "revId": "76679b512e8927c0693cdccfc0f9b0f8b9d9174a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb7d07bd_503bf544",
+        "filename": "third_party/WebKit/Source/core/testing/Internals.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3413,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-10T04:27:56Z",
+      "side": 1,
+      "message": "On second thought, I\u0027m not sure I can improve this. Get just looks up the CSSProperty in an array using the ID as an index. Is that particularly worse than what we were doing before?",
+      "parentUuid": "779023df_84b6bf22",
+      "revId": "76679b512e8927c0693cdccfc0f9b0f8b9d9174a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
