@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5be6c3cb_d39d8971",
+        "filename": "content/test/data/media/getusermedia.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-10T12:40:27Z",
+      "side": 1,
+      "message": "nit: I think the parentheses around stream are unnecessary, but it\u0027s fine if you keep them.",
+      "range": {
+        "startLine": 185,
+        "startChar": 15,
+        "endLine": 185,
+        "endChar": 21
+      },
+      "revId": "898a9691b046d5bae129bcfff6718e53f82afcb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
