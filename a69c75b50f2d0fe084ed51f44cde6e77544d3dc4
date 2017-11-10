@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dff0751_d0e777cd",
+        "filename": "content/browser/web_contents/web_contents_view_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T10:14:56Z",
+      "side": 1,
+      "message": "the duplicated logic here isn\u0027t ideal - avi might know a good way to merge it.",
+      "revId": "a69c75b50f2d0fe084ed51f44cde6e77544d3dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
