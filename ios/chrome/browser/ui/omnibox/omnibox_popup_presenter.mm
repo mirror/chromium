@@ -16,7 +16,6 @@
 namespace {
 const CGFloat kExpandAnimationDuration = 0.1;
 const CGFloat kCollapseAnimationDuration = 0.05;
-const CGFloat kWhiteBackgroundHeight = 74;
 NS_INLINE CGFloat ShadowHeight() {
   return IsIPadIdiom() ? 10 : 0;
 }
@@ -166,34 +165,6 @@ NS_INLINE CGFloat ShadowHeight() {
   // from the top when it appears.
   view.layer.anchorPoint = CGPointMake(0.5, 0);
 
-  // Add a white background to prevent seeing the logo scroll through the
-  // omnibox.
-  UIView* whiteBackground = [[UIView alloc] initWithFrame:CGRectZero];
-  [view addSubview:whiteBackground];
-  [whiteBackground setBackgroundColor:[UIColor whiteColor]];
-
-  // Set constraints to |whiteBackground|.
-  [whiteBackground setTranslatesAutoresizingMaskIntoConstraints:NO];
-  NSDictionary* metrics = @{ @"height" : @(kWhiteBackgroundHeight) };
-  NSDictionary* views = NSDictionaryOfVariableBindings(whiteBackground);
-  [view addConstraints:[NSLayoutConstraint
-                           constraintsWithVisualFormat:@"H:|[whiteBackground]|"
-                                               options:0
-                                               metrics:nil
-                                                 views:views]];
-  [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:
-                                               @"V:[whiteBackground(==height)]"
-                                                               options:0
-                                                               metrics:metrics
-                                                                 views:views]];
-  [view addConstraint:[NSLayoutConstraint
-                          constraintWithItem:whiteBackground
-                                   attribute:NSLayoutAttributeBottom
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:view
-                                   attribute:NSLayoutAttributeTop
-                                  multiplier:1
-                                    constant:0]];
   return view;
 }
 
