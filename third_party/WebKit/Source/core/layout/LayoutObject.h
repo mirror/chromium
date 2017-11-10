@@ -307,8 +307,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   LayoutBox* EnclosingScrollableBox() const;
 
-  // Returns |EnclosingBox()| if it's a LayoutNGBlockFlow, or nullptr otherwise.
-  LayoutBlockFlow* EnclosingNGBlockFlow() const;
+  // Returns |EnclosingBox()| if it's a LayoutNGMixin, or nullptr otherwise.
+  LayoutBlockFlow* EnclosingNGMixin() const;
 
   // Function to return our enclosing flow thread if we are contained inside
   // one. This function follows the containing block chain.
