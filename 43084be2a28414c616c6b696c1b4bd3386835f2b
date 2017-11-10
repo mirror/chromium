@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0247c09e_866e101b",
+        "filename": "third_party/WebKit/Source/core/html/track/TextTrackCue.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-10T17:35:43Z",
+      "side": 1,
+      "message": "Just a query: any reason other than readability for having an enum (CueMutationAffectsOrder). Can we directly pass true from the calling places so that we can avoid this check here?",
+      "revId": "43084be2a28414c616c6b696c1b4bd3386835f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
