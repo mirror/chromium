@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "41a8b757_cf7d5115",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T17:04:04Z",
+      "side": 1,
+      "message": "\u003e The profiles used by this class are owned by it and so can\u0027t follow the normal destruction path for OTR profiles. \n\nRight, I think that\u0027s your problem right there :) OTR profiles are owned by their parent profile, so if you want to have an OTR profile that is deleted somewhere else, you\u0027re violating / changing the contract of Profile. Now, I will fully admit that the ownership story in Profile / OTRProfile is kind of muddled, but that doesn\u0027t mean we should make it worse.\n\nMaybe we should just bite the bullet and allow others to delete OTR profiles instead of pretending they\u0027re owned by the original profile (which even in the regular case is somewhat debatable, because they\u0027re de-facto owned by the Browser, and in this case just outright wrong). Tell you what, I\u0027ll try to come up with a CL that lets OTRProfile be deleted, so this CL can just call do that without needing to track profiles or modify profile destruction. I would probably even be okay with this with a TODO added, but you might have to change some things to address Scott\u0027s comment anyway, right?\n\n\u003e This method keeps the set of tracked profiles up-to-date so IsPresentationReceiverWindowProfile() will be accurate, which is in turn used by ~Browser to decide which destruction path to take.  I\u0027m not sure I understand the objection here?",
+      "parentUuid": "021f3842_91173b64",
+      "range": {
+        "startLine": 31,
+        "startChar": 14,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "961c571532ab761150a094f3751c6b59420d365d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c0e317f_1138cc80",
         "filename": "chrome/browser/profiles/profile_destroyer.cc",
         "patchSetId": 4
