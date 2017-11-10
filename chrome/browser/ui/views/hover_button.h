@@ -16,6 +16,7 @@ class ImageSkia;
 namespace views {
 class ButtonListener;
 class Label;
+class StyledLabel;
 class View;
 }  // namespace views
 
@@ -42,6 +43,11 @@ class HoverButton : public views::LabelButton {
 
   ~HoverButton() override;
 
+  // Updates the title text, and applies the secondary style to the text
+  // specified by |range|. If |range| is invalid, no style is applied.
+  void SetTitleTextWithHintRange(const base::string16& title_text,
+                                 const gfx::Range& range);
+
   void SetSubtitleElideBehavior(gfx::ElideBehavior elide_behavior);
 
  protected:
@@ -58,7 +64,7 @@ class HoverButton : public views::LabelButton {
   views::View* GetTooltipHandlerForPoint(const gfx::Point& point) override;
 
  private:
-  views::Label* title_;
+  views::StyledLabel* title_;
   views::Label* subtitle_;
 
   DISALLOW_COPY_AND_ASSIGN(HoverButton);
