@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9e364756_50e21c76",
+        "filename": "media/audio/win/audio_low_latency_output_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-10T18:42:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2b89325_c26b6d37",
+      "revId": "7720a43ec3d40fc59a0f4159044500deffc6ec1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19c5cfd9_a48158f3",
         "filename": "media/audio/win/core_audio_util_win.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "7720a43ec3d40fc59a0f4159044500deffc6ec1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab51e7c_1efa1b73",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-10T18:42:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19c5cfd9_a48158f3",
+      "revId": "7720a43ec3d40fc59a0f4159044500deffc6ec1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "84322c23_2580b615",
+        "filename": "media/audio/win/core_audio_util_win_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-10T18:42:58Z",
+      "side": 1,
+      "message": "Maybe in a future CL. This test will prevent logging output uma stats when input params are created.",
+      "parentUuid": "76d940fa_9ac5a753",
+      "revId": "7720a43ec3d40fc59a0f4159044500deffc6ec1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6822ab03_464b3fb3",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "7720a43ec3d40fc59a0f4159044500deffc6ec1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9641b9f2_2ed81d7f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 32296,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-10T18:42:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6822ab03_464b3fb3",
+      "revId": "7720a43ec3d40fc59a0f4159044500deffc6ec1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

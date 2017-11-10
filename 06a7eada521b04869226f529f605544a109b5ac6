@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "55f3c95c_d4bb8aaf",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-10T18:42:58Z",
+      "side": 1,
+      "message": "Ok, I agree to that, since the enum is intended for UMA logging functions only.",
+      "parentUuid": "921503df_44677ff7",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19eef7e1_8b0278ce",
         "filename": "media/audio/win/core_audio_util_win.cc",
         "patchSetId": 9
@@ -318,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "4d92369d_9ee656de",
+        "filename": "media/audio/win/core_audio_util_win_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-10T18:42:58Z",
+      "side": 1,
+      "message": "TODO add more tests for failure scenarios in a future CL.",
+      "parentUuid": "7b4223e6_99b9b22c",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fce0507_92463cfb",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -368,6 +404,24 @@
       "revId": "06a7eada521b04869226f529f605544a109b5ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a43edb_dfa4b0c8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 32233,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-10T18:42:58Z",
+      "side": 1,
+      "message": "Makes sense, I removed it.",
+      "parentUuid": "0d319433_5b76cca0",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
