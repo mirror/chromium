@@ -58,7 +58,6 @@
 #endif
 
 namespace {
-const char kAppSettingsUrl[] = "app-settings://";
 const char kNewTabUrl[] = "chrome://newtab/";
 const char kGoogleUserUrl[] = "http://google.com";
 const char kGoogleRedirectUrl[] = "http://www.google.fr/";
@@ -327,11 +326,24 @@ TEST_F(TabTest, AddToHistoryWithRedirect) {
   CheckCurrentItem(results[0]);
 }
 
-TEST_F(TabTest, FailToOpenAppSettings) {
-  GURL app_settings_url = GURL(kAppSettingsUrl);
-  BOOL will_open_app_settings =
-      [tab_ openExternalURL:app_settings_url sourceURL:GURL() linkClicked:YES];
-  EXPECT_FALSE(will_open_app_settings);
+TEST_F(TabTest, FailToOpenDisallowedUrls) {
+  const char* test_urls[] = {
+      "app-settings://", "u2f-x-callback://", "invalid-url",
+  };
+
+  for (size_t i = 0; i < arraysize(test_urls); ++i) {
+    GURL url = GURL(test_urls[i]);
+    __block BOOL completionCalled = NO;
+    [tab_ openExternalURL:url
+                sourceURL:GURL()
+              linkClicked:YES
+               completion:^(BOOL success) {
+                 completionCalled = YES;
+                 EXPECT_FALSE(success)
+                     << ": expected failure on " << url.spec();
+               }];
+    EXPECT_TRUE(completionCalled) << ": completion not called: " << url.spec();
+  }
 }
 
 // TODO(crbug.com/378098): Disabled because forward/back is now implemented in
