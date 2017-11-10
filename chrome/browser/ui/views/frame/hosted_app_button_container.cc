@@ -5,8 +5,11 @@
 #include "chrome/browser/ui/views/frame/hosted_app_button_container.h"
 
 #include "chrome/app/vector_icons/vector_icons.h"
+#include "chrome/browser/ui/browser_content_setting_bubble_model_delegate.h"
+#include "chrome/browser/ui/content_settings/content_setting_image_model.h"
 #include "chrome/browser/ui/extensions/hosted_app_menu_model.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/location_bar/content_setting_image_view.h"
 #include "chrome/browser/ui/views/toolbar/app_menu.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/color_palette.h"
@@ -55,13 +58,52 @@ HostedAppButtonContainer::HostedAppButtonContainer(BrowserView* browser_view,
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
   SetLayoutManager(layout.release());
 
+  gfx::FontList font_list = ui::ResourceBundle::GetSharedInstance().GetFontList(
+      ui::ResourceBundle::BaseFont);
+  std::vector<std::unique_ptr<ContentSettingImageModel>> models =
+      ContentSettingImageModel::GenerateContentSettingImageModels();
+  for (auto& model : models) {
+    auto image_view = std::make_unique<ContentSettingImageView>(
+        std::move(model), this, this, font_list);
+    image_view->SetIconColor(active_icon_color);
+    image_view->SetVisible(false);
+    content_setting_views_.push_back(image_view.get());
+    AddChildView(image_view.release());
+  }
+
   app_menu_button_->SetIconColor(active_icon_color);
   AddChildView(app_menu_button_);
 }
 
 HostedAppButtonContainer::~HostedAppButtonContainer() {}
 
+content::WebContents* HostedAppButtonContainer::GetWebContents() {
+  return browser_view_->GetActiveWebContents();
+}
+
+ContentSettingBubbleModelDelegate*
+HostedAppButtonContainer::GetContentSettingBubbleModelDelegate() {
+  return browser_view_->browser()->content_setting_bubble_model_delegate();
+}
+
+void HostedAppButtonContainer::RefreshContentSettingViews() {
+  bool needs_layout = false;
+  for (auto* v : content_setting_views_) {
+    bool was_visible = v->visible();
+    v->Update(browser_view_->GetActiveWebContents());
+    needs_layout = needs_layout || was_visible != v->visible();
+  }
+
+  // Since this is called from outside the view hierarchy, any changes to layout
+  // need to be taken into account by the frame view.
+  if (needs_layout)
+    browser_view_->frame()->GetFrameView()->Layout();
+}
+
 void HostedAppButtonContainer::SetPaintAsActive(bool active) {
+  for (auto* v : content_setting_views_)
+    v->SetIconColor(active ? active_icon_color_ : inactive_icon_color_);
+
   app_menu_button_->SetIconColor(active ? active_icon_color_
                                         : inactive_icon_color_);
 }

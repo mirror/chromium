@@ -42,7 +42,11 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/web_application_info.h"
 #include "chrome/test/base/in_process_browser_test.h"
+#include "chrome/test/base/ui_test_utils.h"
 #include "components/signin/core/account_id/account_id.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
+#include "content/public/test/test_navigation_observer.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/test/env_test_helper.h"
 #include "ui/base/hit_test.h"
@@ -456,15 +460,24 @@ IN_PROC_BROWSER_TEST_F(ImmersiveModeBrowserViewTest,
 // Creates a browser for a bookmark app and verifies the window frame is
 // correct.
 IN_PROC_BROWSER_TEST_F(HostedAppNonClientFrameViewAshTest, HostedAppFrame) {
+  const GURL kAppStartURL("http://example.org/");
+
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndEnableFeature(features::kDesktopPWAWindowing);
 
   WebApplicationInfo web_app_info;
-  web_app_info.app_url = GURL("http://example.org/");
+  web_app_info.app_url = kAppStartURL;
   web_app_info.theme_color = SK_ColorBLUE;
 
   const extensions::Extension* app = InstallBookmarkApp(web_app_info);
   Browser* app_browser = LaunchAppBrowser(app);
+  content::TestNavigationObserver observer(
+      app_browser->tab_strip_model()->GetActiveWebContents(),
+      content::MessageLoopRunner::QuitMode::DEFERRED);
+  chrome::NavigateParams params(app_browser, kAppStartURL,
+                                ui::PAGE_TRANSITION_LINK);
+  ui_test_utils::NavigateToURL(&params);
+  observer.Wait();
 
   BrowserView* browser_view =
       BrowserView::GetBrowserViewForBrowser(app_browser);
@@ -473,7 +486,7 @@ IN_PROC_BROWSER_TEST_F(HostedAppNonClientFrameViewAshTest, HostedAppFrame) {
       static_cast<BrowserNonClientFrameViewAsh*>(
           browser_view->frame()->GetFrameView());
 
-  EXPECT_TRUE(frame_view->hosted_app_button_container_->visible());
+  EXPECT_TRUE(frame_view->hosted_app_button_container()->visible());
 
   // Ensure the theme color is set.
   auto* header_painter = static_cast<ash::DefaultHeaderPainter*>(
@@ -483,12 +496,32 @@ IN_PROC_BROWSER_TEST_F(HostedAppNonClientFrameViewAshTest, HostedAppFrame) {
 
   // Show the menu.
   HostedAppButtonContainer::AppMenuButton* menu_button =
-      frame_view->hosted_app_button_container_->app_menu_button_;
+      frame_view->hosted_app_button_container()->app_menu_button_;
 
   ui::MouseEvent e(ui::ET_MOUSE_PRESSED, gfx::Point(), gfx::Point(),
                    ui::EventTimeForNow(), ui::EF_LEFT_MOUSE_BUTTON, 0);
   menu_button->OnMousePressed(e);
   EXPECT_TRUE(menu_button->menu()->IsShowing());
+
+  // Show a content setting icon.
+  const auto& content_setting_views =
+      frame_view->hosted_app_button_container()->content_setting_views_;
+
+  for (auto* v : content_setting_views)
+    EXPECT_FALSE(v->visible());
+
+  content::RenderFrameHost* frame =
+      app_browser->tab_strip_model()->GetActiveWebContents()->GetMainFrame();
+  TabSpecificContentSettings* content_settings =
+      TabSpecificContentSettings::GetForFrame(frame->GetProcess()->GetID(),
+                                              frame->GetRoutingID());
+
+  content_settings->OnGeolocationPermissionSet(kAppStartURL.GetOrigin(), true);
+
+  int visible =
+      std::count_if(content_setting_views.begin(), content_setting_views.end(),
+                    [](auto v) { return v->visible(); });
+  EXPECT_EQ(1, visible);
 }
 
 namespace {
