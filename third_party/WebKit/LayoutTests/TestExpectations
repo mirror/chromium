@@ -555,6 +555,7 @@ crbug.com/714962 virtual/layout_ng_paint/fast/inline/styledEmptyInlinesWithBRs.h
 
 ### Crash site: ShapeResultBloberizer.cpp
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/crash-new-continuation-with-outline.html [ Crash ]
+crbug.com/714962 virtual/layout_ng_paint/fast/inline/inline-box-background-repeat-x.html [ Crash Failure ]
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/inline-position-top-align.html [ Crash Failure ]
 
 ### Crash site: layout_ng_block_flow.cc
@@ -596,7 +597,6 @@ crbug.com/714962 virtual/layout_ng_paint/fast/inline/continuation-outlines-with-
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/continuation-outlines.html [ Failure ]
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/drawStyledEmptyInlines.html [ Failure ]
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/inline-borders-with-bidi-override.html [ Failure ]
-crbug.com/714962 virtual/layout_ng_paint/fast/inline/inline-box-background-repeat-x.html [ Failure ]
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/inline-destroy-dirty-lines-crash.html [ Failure ]
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/inline-focus-ring-under-absolute-enclosing-relative-div.html [ Failure ]
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/inline-with-empty-inline-children.html [ Failure ]
