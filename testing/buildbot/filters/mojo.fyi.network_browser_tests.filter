@@ -1003,8 +1003,3 @@
 -ReferrerPolicyTest.ContextMenuRedirect
 -ReferrerPolicyTest.HttpsContextMenuOrigin
 -ReferrerPolicyTest.HttpsContextMenuRedirect
-
-# crbug.com/781565
--DownloadTest.CloseNewTab1
--DownloadTest.CloseNewTab2
--DownloadTest.CloseNewTab3
