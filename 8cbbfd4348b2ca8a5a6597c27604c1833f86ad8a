@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d33b9e16_a030b152",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-10T18:07:09Z",
+      "side": 1,
+      "message": "Should we use ChromeWebTest instead or creating own TestChromeBrowserState?",
+      "revId": "8cbbfd4348b2ca8a5a6597c27604c1833f86ad8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "628c9063_b414ea44",
         "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
         "patchSetId": 2
@@ -36,6 +53,30 @@
       "writtenOn": "2017-11-10T16:53:07Z",
       "side": 1,
       "message": "Trivial: Fixing a nit from the original review by making private with a protected accessor.",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 24
+      },
+      "revId": "8cbbfd4348b2ca8a5a6597c27604c1833f86ad8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb958db_8f076051",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-10T18:07:09Z",
+      "side": 1,
+      "message": "nit: There is no need for making data members private in tests:\nhttps://google.github.io/styleguide/cppguide.html#Access_Control",
+      "parentUuid": "ac6a803d_f47f1d72",
       "range": {
         "startLine": 90,
         "startChar": 2,
