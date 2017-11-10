@@ -46,6 +46,30 @@
       "revId": "3e1134c2477b654d115f56c75c1e590b8d50f97d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3042ce0f_156ea92d",
+        "filename": "ui/events/event.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-10T00:03:52Z",
+      "side": 1,
+      "message": "We could do that, but actually I think it\u0027s preferable just to move this block down to come after the initial checks for a last-event and for it having the same underlying native event, so we can keep most of this logic shared.\n\nWDYT?",
+      "parentUuid": "392eacc1_7fb061fa",
+      "range": {
+        "startLine": 1122,
+        "startChar": 0,
+        "endLine": 1128,
+        "endChar": 6
+      },
+      "revId": "3e1134c2477b654d115f56c75c1e590b8d50f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
