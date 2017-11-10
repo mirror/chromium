@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "81835d27_4483e7ca",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-10T23:58:48Z",
+      "side": 1,
+      "message": "I\u0027m OK with the comment including some text about this, but it needs to be very clear that the scope of collisions is limited to tokens it was previously told about, and not anything else.",
+      "parentUuid": "b8da7885_1beabad8",
+      "range": {
+        "startLine": 191,
+        "startChar": 41,
+        "endLine": 192,
+        "endChar": 35
+      },
+      "revId": "edb47c676ba7a1dd129389a20d44a531cdaeed1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9742b8f9_80cb255f",
         "filename": "content/test/test_render_frame_host.cc",
         "patchSetId": 12
@@ -229,6 +253,24 @@
       "revId": "edb47c676ba7a1dd129389a20d44a531cdaeed1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9144e3d1_1ef7943e",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-10T23:58:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e5824a7f_e70f48fd",
+      "revId": "edb47c676ba7a1dd129389a20d44a531cdaeed1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
