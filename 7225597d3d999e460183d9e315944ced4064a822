@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d2fa827_c51acffd",
+        "filename": "net/base/network_change_notifier.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-10T16:55:17Z",
+      "side": 1,
+      "message": "Why this change?  I assume it\u0027s to clear the factory, but I\u0027m not seeing any code to do this.\n\nAnd if that\u0027s what it\u0027s for, shouldn\u0027t this be:\n\nCHECK((!g_network_change_notifier_factory \u0026\u0026 factory) ||\n      (g_network_change_notifier_factory \u0026\u0026 ~factory));?",
+      "range": {
+        "startLine": 506,
+        "startChar": 9,
+        "endLine": 506,
+        "endChar": 42
+      },
+      "revId": "7225597d3d999e460183d9e315944ced4064a822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
