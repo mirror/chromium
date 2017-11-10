@@ -93,6 +93,76 @@
       "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240485f4_736476d4",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-10T16:27:15Z",
+      "side": 1,
+      "message": "For functions implemented by Cronet it seems kinda wasteful, I thought UrlRequest_Read() would simply be implemented by Cronet.  This adds an extra load and indirect call to every API call.  Perhaps it isn\u0027t a big deal and it does facilitate mocking...  Just seems a bit at odds with what I thought was one of the C++ API\u0027s goals: performance.  Anyhow I\u0027m just griping; marking as resolved.",
+      "parentUuid": "1066dcc3_223dd51f",
+      "range": {
+        "startLine": 177,
+        "startChar": 40,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79bf3e6c_9662c14b",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-10T16:27:15Z",
+      "side": 1,
+      "message": "Hmm what is \"Create\" for, if \"CreateStub\" is the one for users to use.  Can we remove \"Create\" and rename \"CreateStub\" to \"Create\"?",
+      "range": {
+        "startLine": 202,
+        "startChar": 50,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72fe2ed4_64b2f184",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-10T16:27:15Z",
+      "side": 1,
+      "message": "What\u0027s the goal of separating out \"Create\" and \"InitWithParams\"?  This seems to mask the fact that (AFAIK) InitWithParams is required.",
+      "range": {
+        "startLine": 323,
+        "startChar": 50,
+        "endLine": 323,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
