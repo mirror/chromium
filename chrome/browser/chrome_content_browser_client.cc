@@ -1106,6 +1106,12 @@ void ChromeContentBrowserClient::RenderProcessWillLaunch(
         HostContentSettingsMapFactory::GetForProfile(profile), &rules);
   }
   rc_interface->SetContentSettingRules(rules);
+
+  service_manager::Identity renderer_identity = host->GetChildIdentity();
+  ChromeService::GetInstance()->connector()->StartService(
+      service_manager::Identity(chrome::mojom::kRendererServiceName,
+                                renderer_identity.user_id(),
+                                renderer_identity.instance()));
 }
 
 GURL ChromeContentBrowserClient::GetEffectiveURL(
@@ -3073,7 +3079,7 @@ void ChromeContentBrowserClient::RegisterInProcessServices(
     StaticServiceMap* services) {
   {
     service_manager::EmbeddedServiceInfo info;
-    info.factory = base::Bind(&ChromeService::Create);
+    info.factory = ChromeService::GetInstance()->CreateChromeServiceFactory();
     services->insert(std::make_pair(chrome::mojom::kServiceName, info));
   }
   if (g_browser_process->pref_service_factory()) {
