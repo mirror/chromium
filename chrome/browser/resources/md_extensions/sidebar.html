@@ -1,59 +1,65 @@
 <link rel="import" href="chrome://resources/html/polymer.html">
 
+<link rel="import" href="chrome://resources/cr_elements/cr_icons_css.html">
 <link rel="import" href="chrome://resources/html/cr.html">
-<link rel="import" href="chrome://resources/polymer/v1_0/paper-icon-button/paper-icon-button-light.html">
-<link rel="import" href="chrome://resources/polymer/v1_0/paper-menu/paper-menu.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/iron-selector/iron-selector.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-styles/color.html">
 <link rel="import" href="navigation_helper.html">
 
 <dom-module id="extensions-sidebar">
   <template>
-    <style>
+    <style include="cr-icons">
       :host {
         display: flex;
-        flex-direction: column;
         height: 100%;
-        white-space: nowrap;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: var(--side-bar-width, 256px);
       }
 
-      #section-menu {
-        --paper-menu-background-color: transparent;
-        --paper-menu-selected-item: {
-          background-color: transparent;
-          color: var(--google-blue-700);
-          font-weight: normal;
-        }
-
-        padding: 0;
+      .cr-icon {
+        -webkit-margin-end: calc(
+            var(--cr-section-padding) - var(--cr-icon-ripple-padding));
       }
 
-      #more-extensions {
-        -webkit-padding-end: 16px;
-        justify-content: space-between;
-        text-decoration: none;
+      iron-selector .iron-selected {
+        color: var(--side-bar-selected-color, var(--google-blue-700));
+      }
+
+      iron-selector .separator {
+        background-color:  var(--side-bar-separator-color, rgba(0, 0, 0, 0.08));
+        flex-shrink: 0;
+        height: 1px;
+        margin: 8px 0;
+      }
+
+      #sectionMenu {
+        background-color: transparent;
+        color: var(--side-bar-unselected-color, #5a5a5a);
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding-top: 8px;
+        user-select: none;
       }
 
       .section-item {
+        /* Ensure the focus outline appears correctly (crbug.com/655503). */
+        -webkit-margin-end: 4px;
         -webkit-padding-start: 24px;
         align-items: center;
-        color: #5A5A5A;
+        box-sizing: border-box;
+        color: inherit;
         cursor: pointer;
         display: flex;
-        height: 48px;
-      }
-
-      div.section-item {
-        font-size: 123%;  /* 16px when 100% is 13px */
-      }
-
-      button[is='paper-icon-button-light'].open-in-new {
-        background-image: url(chrome://resources/images/open_in_new.svg);
-        background-size: contain;
-        height: 15px;
-        width: 15px;
+        font-weight: 500;
+        justify-content: space-between;
+        min-height: 40px;
+        position: relative;
+        text-decoration: none;
       }
     </style>
-    <paper-menu id="section-menu" selected="{{selected_}}">
+    <iron-selector id="sectionMenu">
       <div class="section-item" id="sections-extensions"
           on-tap="onExtensionsTap_">
         $i18n{sidebarExtensions}
@@ -62,12 +68,13 @@
           on-tap="onKeyboardShortcutsTap_">
         $i18n{keyboardShortcuts}
       </div>
-    </paper-menu>
-    <a class="section-item" id="more-extensions" target="_blank"
-        href="$i18n{getMoreExtensionsUrl}">
-      <span>$i18n{getMoreExtensions}</span>
-      <button class="open-in-new" is="paper-icon-button-light"></button>
-    </a>
+      <div class="separator"></div>
+      <a class="section-item" id="more-extensions" target="_blank"
+          href="$i18n{getMoreExtensionsUrl}">
+        <span>$i18n{getMoreExtensions}</span>
+        <div class="cr-icon icon-external"></div>
+      </a>
+    </iron-selector>
   </template>
   <script src="sidebar.js"></script>
 </dom-module>
