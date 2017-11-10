@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "997ff451_de88376a",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T02:12:42Z",
+      "side": 1,
+      "message": "Do we really need to clear the bitmap here?\n\nEven if we do nothing, I guess it will \"just work\". We could remove SetBit at line 753.\n\nThe same comment for other Clear \u003d\u003e SetBit patterns in this file.",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b7b068_e09999f4",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T02:12:42Z",
+      "side": 1,
+      "message": "I\u0027d prefer keeping the bit for PromptlyFreed objects.\n\nOtherwise, FindHeader(pointer_to_promptly_freed_object) will search an object head exceeding the boundary of a promptly freed object. This would be safe but not nice.",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab050e26_2915f0fc",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1432,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T02:12:42Z",
+      "side": 1,
+      "message": "Add VerifyObjectStartBitmapIsConsistentWithPayload() before calling Clear().",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27334862_9a6270bb",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T02:12:42Z",
+      "side": 1,
+      "message": "Add VerifyObjectStartBitmapIsConsistentWithPayload() before calling Clear().",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5b89898_0aa735c8",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T02:12:42Z",
+      "side": 1,
+      "message": "static_cast\u003cNormalPage*\u003e(BasePage::FromHeader(header)) should be equal to |this|.",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa82c9e_9f5defa1",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1612,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T02:12:42Z",
+      "side": 1,
+      "message": "Also CheckHeader() ?",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c875254a_042acaf3",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T02:12:42Z",
+      "side": 1,
+      "message": "It would be heavy to call Verify at each call of NormalPage::FindHeaderFromAddress() because it is called for all addresses on the stack. Move the verification to the beginning of CollectGarbage().",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54567d02_fa549a96",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T02:12:42Z",
+      "side": 1,
+      "message": "Remove this?",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c2c11f_f004f69d",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T02:12:42Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754d3c09_95551a0a",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T02:12:42Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8da859a_1bbb581f",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T02:12:42Z",
+      "side": 1,
+      "message": "offset_ \u003d\u003e payload_start_",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb266153_9b643faf",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T02:12:42Z",
+      "side": 1,
+      "message": "Can you add a DCHECK to check that object_address is pointing to a valid object header?",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

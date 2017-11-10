@@ -316,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "43d29a59_b8737eda",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T02:12:42Z",
+      "side": 1,
+      "message": "Would you address this comment?",
+      "parentUuid": "b08fa69e_3ba6686c",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "795ddf86_b81854af",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 14
@@ -397,6 +415,24 @@
       "writtenOn": "2017-11-09T09:35:42Z",
       "side": 1,
       "message": "This code is a bit misleading.\n\nIf |page| is a LargeObjectPage, how is it guaranteed that |page| is pointing to the beginning of the page? ...yes, it\u0027s guaranteed because LargeObjectPage will call HeapObjectHeader() only for that large object (which locates at the very beginning of the large object page).\n\nTo avoid the confusion, can we add two constructors for HeapObjectHeader()? One for objects in NormalPage and the other for LargeObjectPage. Then we can remove the IsLargeObjectPage() check.",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151831d6_06e3e0eb",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T02:12:42Z",
+      "side": 1,
+      "message": "Would you address this comment?",
+      "parentUuid": "d0a06ea2_3aef1d0d",
       "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
