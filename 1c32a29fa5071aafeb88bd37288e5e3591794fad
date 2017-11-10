@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce4cc1f3_bd8d17ac",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-10T22:05:55Z",
+      "side": 0,
+      "message": "Should we keep the equivalent DCHECK(task.task) here? Seems useful.",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 199,
+        "endChar": 15
+      },
+      "revId": "1c32a29fa5071aafeb88bd37288e5e3591794fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21355d66_c493d3f1",
+        "filename": "base/task_scheduler/sequence.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-10T22:05:55Z",
+      "side": 0,
+      "message": "Keeping a DCHECK(queue_.front().task) might be useful.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 25
+      },
+      "revId": "1c32a29fa5071aafeb88bd37288e5e3591794fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

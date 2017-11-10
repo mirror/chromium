@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "259ff495_9bc70075",
+        "filename": "base/task_scheduler/delayed_task_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-10T22:05:55Z",
+      "side": 1,
+      "message": "We\u0027ll need to update this comment with whatever signal we decide to use.",
+      "range": {
+        "startLine": 195,
+        "startChar": 24,
+        "endLine": 196,
+        "endChar": 20
+      },
+      "revId": "1cf38391dfd38724095ade9622992f1fd7a65422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35cee0f_0f260a5a",
+        "filename": "base/task_scheduler/delayed_task_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-10T22:05:55Z",
+      "side": 1,
+      "message": "Maybe instead of depending on the task_runner_ref, we can run the task and have it return a value that we expect here.",
+      "range": {
+        "startLine": 197,
+        "startChar": 50,
+        "endLine": 197,
+        "endChar": 73
+      },
+      "revId": "1cf38391dfd38724095ade9622992f1fd7a65422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1faf63_d50630a6",
+        "filename": "base/task_scheduler/delayed_task_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-10T22:05:55Z",
+      "side": 1,
+      "message": "We\u0027ll need to update this too.",
+      "range": {
+        "startLine": 202,
+        "startChar": 31,
+        "endLine": 202,
+        "endChar": 43
+      },
+      "revId": "1cf38391dfd38724095ade9622992f1fd7a65422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ccf7b17_a2641454",
+        "filename": "base/task_scheduler/priority_queue_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-10T22:05:55Z",
+      "side": 1,
+      "message": "Maybe Sequence should have an emplace push, but this is fine too.",
+      "range": {
+        "startLine": 63,
+        "startChar": 23,
+        "endLine": 65,
+        "endChar": 42
+      },
+      "revId": "1cf38391dfd38724095ade9622992f1fd7a65422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64793b3f_644b261a",
+        "filename": "base/task_scheduler/sequence.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-10T22:05:55Z",
+      "side": 1,
+      "message": "Is this supposed to be \"preparation for\"?",
+      "range": {
+        "startLine": 57,
+        "startChar": 61,
+        "endLine": 57,
+        "endChar": 73
+      },
+      "revId": "1cf38391dfd38724095ade9622992f1fd7a65422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a552e4c0_8ae3ca56",
+        "filename": "base/task_scheduler/sequence_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-10T22:05:55Z",
+      "side": 1,
+      "message": "What\u0027s the motivation in changing this test to add E before dequeuing D?",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 47
+      },
+      "revId": "1cf38391dfd38724095ade9622992f1fd7a65422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2edf728e_98dca0da",
+        "filename": "base/task_scheduler/sequence_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-10T22:05:55Z",
+      "side": 1,
+      "message": "Let\u0027s add something along the lines of that this tests adds a single task of a particular priority and then removes it, verifying the sequence sort key along the way.",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 45
+      },
+      "revId": "1cf38391dfd38724095ade9622992f1fd7a65422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40769993_2d5b6843",
+        "filename": "base/task_scheduler/sequence_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-10T22:05:55Z",
+      "side": 1,
+      "message": "Should we have a corresponding Pop() sometime? (same with below).",
+      "range": {
+        "startLine": 105,
+        "startChar": 30,
+        "endLine": 105,
+        "endChar": 62
+      },
+      "revId": "1cf38391dfd38724095ade9622992f1fd7a65422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f0bd43_25eb6e59",
+        "filename": "base/task_scheduler/task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-10T22:05:55Z",
+      "side": 1,
+      "message": "Let\u0027s go ahead and delete Task\u0026 operator\u003d(const Task\u0026 other)",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 32
+      },
+      "revId": "1cf38391dfd38724095ade9622992f1fd7a65422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7548ad1a_3e4656eb",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-10T22:05:55Z",
+      "side": 1,
+      "message": "I wonder if we should make this a const Task\u0026",
+      "range": {
+        "startLine": 255,
+        "startChar": 31,
+        "endLine": 255,
+        "endChar": 42
+      },
+      "revId": "1cf38391dfd38724095ade9622992f1fd7a65422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
