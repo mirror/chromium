@@ -16,6 +16,24 @@
       "revId": "408cf7ebbc5d7170982f66177a6ffb9036f58ae2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c877657_1d950ec8",
+        "filename": "base/bits.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-10T09:40:14Z",
+      "side": 1,
+      "message": "You mean separating the definitions, e.g. having one for \"sizeof(T) \u003c\u003d4\" and one for \"sizeof(T) \u003d\u003d 8\"?",
+      "parentUuid": "aa9745cd_7826db50",
+      "revId": "408cf7ebbc5d7170982f66177a6ffb9036f58ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
