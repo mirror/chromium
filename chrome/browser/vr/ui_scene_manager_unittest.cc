@@ -60,8 +60,8 @@ const std::set<UiElementName> kHitTestableElements = {
     kWebVrTimeoutMessageIcon,
     kWebVrTimeoutMessageText,
     kWebVrTimeoutMessageButtonText,
-    kSpeechRecognitionPromptMicrophoneIcon,
-    kSpeechRecognitionPromptBackplane,
+    kSpeechRecognitionResultBackplane,
+    kSpeechRecognitionListeningBackplane,
 };
 const std::set<UiElementName> kSpecialHitTestableElements = {
     kCloseButton, kWebVrTimeoutMessageButton, kVoiceSearchButton,
@@ -279,11 +279,11 @@ TEST_F(UiSceneManagerTest, VoiceSearchHiddenWhenCantAskForPermission) {
   MakeManager(kNotInCct, kNotInWebVr);
   model_->experimental_features_enabled = true;
 
-  model_->has_or_can_request_audio_permission = true;
+  model_->speech.has_or_can_request_audio_permission = true;
   EXPECT_TRUE(OnBeginFrame());
   EXPECT_TRUE(IsVisible(kVoiceSearchButton));
 
-  model_->has_or_can_request_audio_permission = false;
+  model_->speech.has_or_can_request_audio_permission = false;
   EXPECT_TRUE(OnBeginFrame());
   EXPECT_FALSE(IsVisible(kVoiceSearchButton));
 }
@@ -724,28 +724,47 @@ TEST_F(UiSceneManagerTest, WebVrTimeout) {
       true);
 }
 
-TEST_F(UiSceneManagerTest, SpeechRecognitionPromptBindings) {
+TEST_F(UiSceneManagerTest, SpeechRecognitionUiVisibility) {
   MakeManager(kNotInCct, kNotInWebVr);
   UiElement* growing_circle =
-      scene_->GetUiElementByName(kSpeechRecognitionPromptGrowingCircle);
+      scene_->GetUiElementByName(kSpeechRecognitionListeningGrowingCircle);
 
-  model_->recognizing_speech = true;
+  model_->speech.recognizing_speech = true;
   EXPECT_TRUE(AnimateBy(MsToDelta(200)));
   VerifyVisibility(
-      {kSpeechRecognitionPrompt, kSpeechRecognitionPromptBackplane}, true);
+      {kSpeechRecognitionListening, kSpeechRecognitionListeningMicrophoneIcon,
+       kSpeechRecognitionListeningBackplane,
+       kSpeechRecognitionListeningInnerCircle,
+       kSpeechRecognitionListeningGrowingCircle},
+      true);
   EXPECT_FALSE(IsVisible(k2dBrowsingForeground));
+  EXPECT_FALSE(IsVisible(kSpeechRecognitionResult));
   EXPECT_FALSE(IsAnimating(growing_circle, {CIRCLE_GROW}));
 
-  model_->speech_recognition_state = SPEECH_RECOGNITION_READY;
+  model_->speech.speech_recognition_state = SPEECH_RECOGNITION_READY;
   EXPECT_TRUE(AnimateBy(MsToDelta(300)));
   EXPECT_TRUE(IsAnimating(growing_circle, {CIRCLE_GROW}));
 
-  model_->recognizing_speech = false;
-  model_->speech_recognition_state = SPEECH_RECOGNITION_END;
+  model_->speech.recognition_result_visibility = true;
+  model_->speech.recognizing_speech = false;
+  model_->speech.speech_recognition_state = SPEECH_RECOGNITION_END;
   EXPECT_TRUE(AnimateBy(MsToDelta(500)));
+
+  VerifyVisibility({kSpeechRecognitionResult, kSpeechRecognitionResultCircle,
+                    kSpeechRecognitionResultMicrophoneIcon,
+                    kSpeechRecognitionResultBackplane},
+                   true);
   EXPECT_FALSE(IsAnimating(growing_circle, {CIRCLE_GROW}));
-  VerifyVisibility(
-      {kSpeechRecognitionPrompt, kSpeechRecognitionPromptBackplane}, false);
+  EXPECT_FALSE(IsVisible(kSpeechRecognitionListening));
+  EXPECT_FALSE(IsVisible(k2dBrowsingForeground));
+
+  // The visibility of Speech Recognition UI should not change at this point.
+  EXPECT_FALSE(AnimateBy(MsToDelta(600)));
+
+  EXPECT_TRUE(AnimateBy(
+      MsToDelta(500 + kSpeechRecognitionResultTimeoutSeconds * 1000)));
+  EXPECT_FALSE(IsVisible(kSpeechRecognitionListening));
+  EXPECT_FALSE(IsVisible(kSpeechRecognitionResult));
   EXPECT_TRUE(IsVisible(k2dBrowsingForeground));
 }
 
