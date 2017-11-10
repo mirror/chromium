@@ -34,6 +34,24 @@
       "revId": "408cf7ebbc5d7170982f66177a6ffb9036f58ae2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f280305_5bf96ce6",
+        "filename": "base/bits.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-10T11:46:13Z",
+      "side": 1,
+      "message": "Split up the definitions now using std::enable_if. LMK if you wanted something else.",
+      "parentUuid": "9c877657_1d950ec8",
+      "revId": "408cf7ebbc5d7170982f66177a6ffb9036f58ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
