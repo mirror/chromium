@@ -9,10 +9,10 @@
 #include "base/command_line.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/login/users/chrome_user_manager_impl.h"
-#include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/scoped_cros_settings_test_helper.h"
@@ -27,6 +27,7 @@
 #include "chromeos/settings/cros_settings_names.h"
 #include "components/prefs/pref_service.h"
 #include "components/user_manager/known_user.h"
+#include "components/user_manager/scoped_user_manager.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/common/content_switches.h"
@@ -118,9 +119,10 @@ class UserManagerTest : public testing::Test {
     // Reset the UserManager singleton.
     user_manager_enabler_.reset();
     // Initialize the UserManager singleton to a fresh ChromeUserManagerImpl
-    // instance.
-    user_manager_enabler_.reset(
-        new ScopedUserManagerEnabler(new ChromeUserManagerImpl));
+    // instance. base::WrapUnique is used because ChromeUserManagerImpl
+    // constructor is private.
+    user_manager_enabler_ = std::make_unique<user_manager::ScopedUserManager>(
+        base::WrapUnique(new ChromeUserManagerImpl));
 
     // ChromeUserManagerImpl ctor posts a task to reload policies.
     base::RunLoop().RunUntilIdle();
@@ -153,7 +155,7 @@ class UserManagerTest : public testing::Test {
   ScopedCrosSettingsTestHelper settings_helper_;
   std::unique_ptr<ScopedTestingLocalState> local_state_;
 
-  std::unique_ptr<ScopedUserManagerEnabler> user_manager_enabler_;
+  std::unique_ptr<user_manager::ScopedUserManager> user_manager_enabler_;
   base::ScopedTempDir temp_dir_;
 };
 
