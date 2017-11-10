@@ -16,22 +16,32 @@ PageResourceCoordinator::PageResourceCoordinator(
 PageResourceCoordinator::~PageResourceCoordinator() = default;
 
 void PageResourceCoordinator::SetVisibility(bool visible) {
+  if (!service_)
+    return;
   service_->SetVisibility(visible);
 }
 
 void PageResourceCoordinator::SetUKMSourceId(int64_t ukm_source_id) {
+  if (!service_)
+    return;
   service_->SetUKMSourceId(ukm_source_id);
 }
 
 void PageResourceCoordinator::OnFaviconUpdated() {
+  if (!service_)
+    return;
   service_->OnFaviconUpdated();
 }
 
 void PageResourceCoordinator::OnTitleUpdated() {
+  if (!service_)
+    return;
   service_->OnTitleUpdated();
 }
 
 void PageResourceCoordinator::OnMainFrameNavigationCommitted() {
+  if (!service_)
+    return;
   service_->OnMainFrameNavigationCommitted();
 }
 
@@ -62,11 +72,15 @@ void PageResourceCoordinator::ConnectToService(
 
 void PageResourceCoordinator::AddFrameByID(const CoordinationUnitID& cu_id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  if (!service_)
+    return;
   service_->AddFrame(cu_id);
 }
 
 void PageResourceCoordinator::RemoveFrameByID(const CoordinationUnitID& cu_id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  if (!service_)
+    return;
   service_->RemoveFrame(cu_id);
 }
 
