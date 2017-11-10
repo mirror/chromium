@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b562156e_8e4666d9",
+        "filename": "chrome/services/media_util/public/cpp/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-10T00:38:38Z",
+      "side": 1,
+      "message": "Great, thanks! You are off the hook :-)",
+      "parentUuid": "a67e5d86_cf27e857",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 29
+      },
+      "revId": "6a23938344657d5ad943a609eb6bfac36bd90690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a946f57b_2b4f7e63",
         "filename": "chrome/services/media_util/public/cpp/safe_audio_video_checker.h",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "6a23938344657d5ad943a609eb6bfac36bd90690",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed866b38_4a6af927",
+        "filename": "chrome/services/media_util/public/cpp/safe_audio_video_checker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-10T00:38:38Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a946f57b_2b4f7e63",
+      "revId": "6a23938344657d5ad943a609eb6bfac36bd90690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
