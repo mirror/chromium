@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd0be427_10f5924e",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-10T20:10:39Z",
+      "side": 1,
+      "message": "Do all the DVLOG statements need to be checked in? DVLOG is not as big a deal since they are removed from release builds, but they do affect developer compilation time.",
+      "revId": "6b007f22cdc94bc31152b5b307f3e6ea4544378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894cc6d1_3f1a4ea3",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-10T20:10:39Z",
+      "side": 1,
+      "message": "Can you make sure there is a link to the DIAL specification in the README.md so that developers know what the expected input and output of this process is?",
+      "revId": "6b007f22cdc94bc31152b5b307f3e6ea4544378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39bbe170_43651213",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-10T20:10:39Z",
+      "side": 1,
+      "message": "Are we launching a completely separate process to parse application info?\nTypically this will happen immediately after discovering a DIAL device and parsing\nits description.  It should be more efficient to do both in the same process.",
+      "revId": "6b007f22cdc94bc31152b5b307f3e6ea4544378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccba12ff_b9ef0e86",
+        "filename": "chrome/common/media_router/mojo/dial_app_info_parser.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-10T20:10:39Z",
+      "side": 1,
+      "message": "Nit: s/chrome/Chrome/",
+      "revId": "6b007f22cdc94bc31152b5b307f3e6ea4544378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a440c2ab_3d48f81e",
+        "filename": "chrome/common/media_router/mojo/dial_app_info_parser.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-10T20:10:39Z",
+      "side": 1,
+      "message": "Let\u0027s drop this.",
+      "revId": "6b007f22cdc94bc31152b5b307f3e6ea4544378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e7417f_78ffdef1",
+        "filename": "chrome/common/media_router/mojo/dial_app_info_parser.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-10T20:10:39Z",
+      "side": 1,
+      "message": "It would be helpful to refer to section 6.1.2 of the specification here to document the defined meanings of these fields.\n\nhttp://www.dial-multiscreen.org/dial-protocol-specification",
+      "revId": "6b007f22cdc94bc31152b5b307f3e6ea4544378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27f70e3_2f63e449",
+        "filename": "chrome/common/media_router/mojo/dial_app_info_parser.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-10T20:10:39Z",
+      "side": 1,
+      "message": "Can we also expose:\n@allowStop\n@dialVer\n@href",
+      "revId": "6b007f22cdc94bc31152b5b307f3e6ea4544378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911eafdb_a70cb63f",
+        "filename": "chrome/common/media_router/mojo/dial_app_info_parser.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-10T20:10:39Z",
+      "side": 1,
+      "message": "Let\u0027s replace this with a generic additionalData field, which is treated as a list of key-value pairs after being parsed.\n\nThe Netflix-specific capability is not currently being used.",
+      "revId": "6b007f22cdc94bc31152b5b307f3e6ea4544378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6737f2_4c0112aa",
+        "filename": "chrome/common/media_router/mojo/dial_app_info_parser.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-10T20:10:39Z",
+      "side": 1,
+      "message": "The current spec can be found at http://www.dial-multiscreen.org/dial-protocol-specification",
+      "revId": "6b007f22cdc94bc31152b5b307f3e6ea4544378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4664336_4f9d2bc8",
+        "filename": "chrome/utility/media_router/dial_app_info_parser_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-10T20:10:39Z",
+      "side": 1,
+      "message": "This should just fail validation.",
+      "revId": "6b007f22cdc94bc31152b5b307f3e6ea4544378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6342525_18128391",
+        "filename": "chrome/utility/media_router/dial_app_info_parser_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-10T20:10:39Z",
+      "side": 1,
+      "message": "I believe existing parser is stricter: it only iterates over the child elements of \u003cservice\u003e which matches the schema in the DIAL spec.",
+      "revId": "6b007f22cdc94bc31152b5b307f3e6ea4544378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f721faf1_d9bb7c85",
+        "filename": "chrome/utility/media_router/dial_app_info_parser_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-10T20:10:39Z",
+      "side": 1,
+      "message": "It would be better to check the namespace here, but that would make the parser stricter than the current implementation.  Maybe add a NOTE to enforce this in the future.",
+      "revId": "6b007f22cdc94bc31152b5b307f3e6ea4544378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
