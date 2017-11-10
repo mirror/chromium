@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47d8ba7d_aedcbe28",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-relative-table-tbody-left.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-10T11:31:56Z",
+      "side": 1,
+      "message": "So position-relative-table-td-left-ref.html is used by multiple tests? Maybe it\u0027s better to give the ref a more generic name, then?",
+      "revId": "879855b0256d495084f18dffe799ed843a305313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6290d9ec_546ac69b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-relative-table-tbody-left.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-10T11:31:56Z",
+      "side": 1,
+      "message": "This is about left and tbody, not top and tr.",
+      "revId": "879855b0256d495084f18dffe799ed843a305313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05282e1b_d8b3bad8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-relative-table-tbody-left.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-10T11:31:56Z",
+      "side": 1,
+      "message": "Why is it inline-block?",
+      "revId": "879855b0256d495084f18dffe799ed843a305313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310ea30a_4e8d283b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-relative-table-tbody-left.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-10T11:31:56Z",
+      "side": 1,
+      "message": "If \"left\" were consistently placed either in the style sheet OR as a style attribute (both for .indicator and .relative), this would be a bit easier to follow. I\u0027m a fan of using the style attribute in tests, unless it causes too much duplication, but whatever you prefer...",
+      "revId": "879855b0256d495084f18dffe799ed843a305313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87d79f6_430ca749",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-10T11:31:56Z",
+      "side": 1,
+      "message": "We now DO honor relative, I guess. :)",
+      "revId": "879855b0256d495084f18dffe799ed843a305313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5108b8_3bacdf51",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-10T11:31:56Z",
+      "side": 1,
+      "message": "Is there any reason to disallow this for sticky, though?",
+      "revId": "879855b0256d495084f18dffe799ed843a305313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8c5e6f_86f58ff8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableRow.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-10T11:31:56Z",
+      "side": 1,
+      "message": "IsStickyPositioned() || IsRelPositioned() -\u003e IsInFlowPositioned()?",
+      "revId": "879855b0256d495084f18dffe799ed843a305313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
