@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0a07557_7c674573",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-10T16:22:00Z",
+      "side": 1,
+      "message": "the path needs to include blocked_content",
+      "revId": "722bf44b95dd8607d4e19046bc3a204c4d301020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25c609b_a6d04dcc",
+        "filename": "components/subresource_filter/content/browser/content_activation_list_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-10T16:22:00Z",
+      "side": 1,
+      "message": "Looks like most places that were using ActivationList::ABUSIVE_ADS are now not there. May be removing the value from the enum makes sense in this CL?",
+      "revId": "722bf44b95dd8607d4e19046bc3a204c4d301020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
