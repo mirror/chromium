@@ -22,6 +22,30 @@
       "revId": "c562e045e02fb40b73e5807c197574188cf97457",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0c52be_2b679317",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-10T01:30:42Z",
+      "side": 1,
+      "message": "Yep it needs to be first or it doesn\u0027t get loaded properly. Done.",
+      "parentUuid": "aecc2a3f_bb0bc354",
+      "range": {
+        "startLine": 483,
+        "startChar": 11,
+        "endLine": 483,
+        "endChar": 24
+      },
+      "revId": "c562e045e02fb40b73e5807c197574188cf97457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
