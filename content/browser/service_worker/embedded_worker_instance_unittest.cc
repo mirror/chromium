@@ -166,6 +166,7 @@ class EmbeddedWorkerInstanceTest : public testing::Test,
     worker->Start(
         std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
         CreateController(), GetInstalledScriptsInfoPtr(),
+        GetServiceWorkerHostPtrInfo(),
         base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     return status;
@@ -226,6 +227,13 @@ class EmbeddedWorkerInstanceTest : public testing::Test,
     return info;
   }
 
+  blink::mojom::ServiceWorkerHostAssociatedPtrInfo
+  GetServiceWorkerHostPtrInfo() {
+    blink::mojom::ServiceWorkerHostAssociatedPtrInfo ptr_info;
+    service_worker_host_requests_.push_back(mojo::MakeRequest(&ptr_info));
+    return ptr_info;
+  }
+
   ServiceWorkerContextCore* context() { return helper_->context(); }
 
   EmbeddedWorkerRegistry* embedded_worker_registry() {
@@ -248,6 +256,8 @@ class EmbeddedWorkerInstanceTest : public testing::Test,
       installed_scripts_managers_;
   std::vector<mojom::ServiceWorkerInstalledScriptsManagerHostRequest>
       installed_scripts_manager_host_requests_;
+  std::vector<blink::mojom::ServiceWorkerHostAssociatedRequest>
+      service_worker_host_requests_;
   std::vector<std::unique_ptr<ProviderHostEndpoints>> provider_host_endpoints_;
 
   TestBrowserThreadBundle thread_bundle_;
@@ -334,6 +344,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StartAndStop) {
   worker->Start(
       std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
       CreateController(), GetInstalledScriptsInfoPtr(),
+      GetServiceWorkerHostPtrInfo(),
       base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
   EXPECT_EQ(EmbeddedWorkerStatus::STARTING, worker->status());
   run_loop.Run();
@@ -392,6 +403,7 @@ TEST_F(EmbeddedWorkerInstanceTest, ForceNewProcess) {
     worker->Start(
         std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
         CreateController(), GetInstalledScriptsInfoPtr(),
+        GetServiceWorkerHostPtrInfo(),
         base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     EXPECT_EQ(SERVICE_WORKER_OK, status);
@@ -418,6 +430,7 @@ TEST_F(EmbeddedWorkerInstanceTest, ForceNewProcess) {
     worker->Start(
         std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
         CreateController(), GetInstalledScriptsInfoPtr(),
+        GetServiceWorkerHostPtrInfo(),
         base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     EXPECT_EQ(EmbeddedWorkerStatus::STARTING, worker->status());
     run_loop.Run();
@@ -500,6 +513,7 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveWorkerInSharedProcess) {
     worker1->Start(
         std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
         CreateController(), GetInstalledScriptsInfoPtr(),
+        GetServiceWorkerHostPtrInfo(),
         base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     EXPECT_EQ(SERVICE_WORKER_OK, status);
@@ -514,6 +528,7 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveWorkerInSharedProcess) {
     worker2->Start(
         std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
         CreateController(), GetInstalledScriptsInfoPtr(),
+        GetServiceWorkerHostPtrInfo(),
         base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     EXPECT_EQ(SERVICE_WORKER_OK, status);
@@ -552,7 +567,7 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachDuringProcessAllocation) {
       CreateStartParams(version_id, scope, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(),
+                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&SaveStatusAndCall, &status,
                                base::BindOnce(&base::DoNothing)));
   worker->Detach();
@@ -587,7 +602,7 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachAfterSendingStartWorkerMessage) {
       CreateStartParams(version_id, scope, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(),
+                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&SaveStatusAndCall, &status,
                                base::BindOnce(&base::DoNothing)));
   base::RunLoop().RunUntilIdle();
@@ -629,7 +644,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringProcessAllocation) {
       CreateStartParams(version_id, scope, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(),
+                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&SaveStatusAndCall, &status,
                                base::BindOnce(&base::DoNothing)));
   worker->Stop();
@@ -655,6 +670,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringProcessAllocation) {
   worker->Start(
       std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
       CreateController(), GetInstalledScriptsInfoPtr(),
+      GetServiceWorkerHostPtrInfo(),
       base::BindOnce(&SaveStatusAndCall, &status, run_loop->QuitClosure()));
   run_loop->Run();
 
@@ -707,7 +723,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringPausedAfterDownload) {
   params->pause_after_download = true;
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(),
+                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&SaveStatusAndCall, &status,
                                base::BindOnce(&base::DoNothing)));
   base::RunLoop().RunUntilIdle();
@@ -739,7 +755,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopAfterSendingStartWorkerMessage) {
       CreateStartParams(version_id, scope, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(),
+                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&SaveStatusAndCall, &status,
                                base::BindOnce(&base::DoNothing)));
   base::RunLoop().RunUntilIdle();
@@ -775,6 +791,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopAfterSendingStartWorkerMessage) {
   worker->Start(
       std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
       CreateController(), GetInstalledScriptsInfoPtr(),
+      GetServiceWorkerHostPtrInfo(),
       base::BindOnce(&SaveStatusAndCall, &status, run_loop->QuitClosure()));
   run_loop->Run();
 
@@ -807,6 +824,7 @@ TEST_F(EmbeddedWorkerInstanceTest, Detach) {
   worker->Start(
       std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
       CreateController(), GetInstalledScriptsInfoPtr(),
+      GetServiceWorkerHostPtrInfo(),
       base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
   run_loop.Run();
 
@@ -842,7 +860,7 @@ TEST_F(EmbeddedWorkerInstanceTest, FailToSendStartIPC) {
       CreateStartParams(version_id, pattern, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(),
+                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   base::RunLoop().RunUntilIdle();
 
@@ -867,6 +885,7 @@ class FailEmbeddedWorkerInstanceClientImpl
                    mojom::ServiceWorkerEventDispatcherRequest,
                    mojom::ControllerServiceWorkerRequest,
                    mojom::ServiceWorkerInstalledScriptsInfoPtr /* unused */,
+                   blink::mojom::ServiceWorkerHostAssociatedPtrInfo,
                    mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo,
                    mojom::ServiceWorkerProviderInfoForStartWorkerPtr,
                    blink::mojom::WorkerContentSettingsProxyPtr
@@ -897,7 +916,7 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveRemoteInterface) {
       CreateStartParams(version_id, pattern, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(),
+                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   base::RunLoop().RunUntilIdle();
 
@@ -955,7 +974,7 @@ TEST_F(EmbeddedWorkerInstanceTest, AddMessageToConsole) {
       CreateStartParams(version_id, pattern, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(),
+                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   worker->AddMessageToConsole(test_message.first, test_message.second);
   base::RunLoop().RunUntilIdle();
