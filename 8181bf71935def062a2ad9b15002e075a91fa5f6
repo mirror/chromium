@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "60eff6e3_7ebf6463",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-10T14:42:54Z",
+      "side": 1,
+      "message": "Thanks for the clarification, makes sense!\n\nMy preference is (b) because it (should be safe but) is not really nice to let FindHeader(address) to search objects exceeding the boundary of the object that had existed on the address.",
+      "parentUuid": "e2418340_80a2a11d",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07b7b068_e09999f4",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
         "patchSetId": 17
