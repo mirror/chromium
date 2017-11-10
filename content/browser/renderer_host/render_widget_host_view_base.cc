@@ -410,6 +410,13 @@ ScreenOrientationValues RenderWidgetHostViewBase::GetOrientationTypeForDesktop(
 void RenderWidgetHostViewBase::OnDidNavigateMainFrameToNewPage() {
 }
 
+void RenderWidgetHostViewBase::OnFrameTokenChanged(uint32_t frame_token) {
+  RenderWidgetHostImpl* host =
+      RenderWidgetHostImpl::From(GetRenderWidgetHost());
+  if (host)
+    host->DidProcessFrame(frame_token);
+}
+
 viz::FrameSinkId RenderWidgetHostViewBase::GetFrameSinkId() {
   return viz::FrameSinkId();
 }
