@@ -121,4 +121,21 @@ void RecordDownloadPathGeneration(DownloadPathGenerationEvent event,
 void RecordDownloadPathValidation(PathValidationResult result,
                                   bool is_transient);
 
+enum class DownloadShelfDragEvent {
+  // A download was dragged. All platforms.
+  kStarted,
+
+  // The download was dropped somewhere that isn't a drag target. Currently
+  // only recorded on Mac.
+  kCanceled,
+
+  // The download was dropped somewhere useful (a folder, an application, etc.).
+  // Currently only recorded on Mac.
+  kDropped,
+
+  kMax,
+};
+
+void RecordDownloadShelfDragEvent(DownloadShelfDragEvent drag_event);
+
 #endif  // CHROME_BROWSER_DOWNLOAD_DOWNLOAD_STATS_H_
