@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6c7d029_2db2e363",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1471,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-10T23:54:46Z",
+      "side": 1,
+      "message": "This if() statement is sufficiently magical that we should probably comment why each clause is necessary. :)",
+      "revId": "5b1b80fc2071564ff978d50d7c026c0151a966c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
