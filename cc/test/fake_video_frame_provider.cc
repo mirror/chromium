@@ -23,6 +23,11 @@ void FakeVideoFrameProvider::SetVideoFrameProviderClient(Client* client) {
   client_ = client;
 }
 
+scoped_refptr<base::SingleThreadTaskRunner>
+FakeVideoFrameProvider::GetTaskRunner() {
+  return nullptr;
+}
+
 bool FakeVideoFrameProvider::HasCurrentFrame() {
   return static_cast<bool>(frame_);
 }
