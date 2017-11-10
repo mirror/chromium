@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07301471_09eec656",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T01:31:20Z",
+      "side": 1,
+      "message": "Done. Trivia: \"FMP chrome\" query instead finds https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint as 1st result.",
+      "parentUuid": "b80c2368_2543d1eb",
+      "revId": "ba98e72a5b20aaaa3148c2e85d0bd14078d0948b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67f88c17_4f3172da",
         "filename": "chrome/browser/resources/md_extensions/item_list.html",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "ba98e72a5b20aaaa3148c2e85d0bd14078d0948b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceba8ce8_7df39d38",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T01:31:20Z",
+      "side": 1,
+      "message": "Correct. The ::dom-change part is unfortunately needed because of https://github.com/Polymer/polymer/issues/4465.",
+      "parentUuid": "67f88c17_4f3172da",
+      "revId": "ba98e72a5b20aaaa3148c2e85d0bd14078d0948b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7ba83b27_a20639bf",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T01:31:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b0139ea_e11a31a7",
+      "revId": "ba98e72a5b20aaaa3148c2e85d0bd14078d0948b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ea66229_599b42c0",
         "filename": "chrome/browser/resources/md_extensions/item_list.js",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "ba98e72a5b20aaaa3148c2e85d0bd14078d0948b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd9cf106_d5b3f112",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T01:31:20Z",
+      "side": 1,
+      "message": "Removed. I initially named this with \"Fn\" suffix to make it more clear that this function returns another function. Not just because it is used in the bindings. Either way, removed the suffix.",
+      "parentUuid": "4ea66229_599b42c0",
+      "revId": "ba98e72a5b20aaaa3148c2e85d0bd14078d0948b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
