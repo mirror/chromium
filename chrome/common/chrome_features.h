@@ -106,7 +106,9 @@ extern const base::Feature kExperimentalAppBanners;
 extern const base::Feature kExperimentalKeyboardLockUI;
 
 #if BUILDFLAG(ENABLE_VR)
-extern const base::Feature kExperimentalVRFeatures;
+extern const base::Feature kVrBrowsing;
+extern const base::Feature kVrBrowsingExperimentalFeatures;
+extern const base::Feature kVrBrowsingExperimentalRendering;
 #endif
 
 #if defined(OS_MACOSX)
@@ -267,9 +269,6 @@ extern const base::Feature kUseGoogleLocalNtp;
 #if !defined(OS_ANDROID)
 extern const base::Feature kVoiceSearchOnLocalNtp;
 #endif
-
-extern const base::Feature kVrShell;
-extern const base::Feature kVrShellExperimentalRendering;
 
 #if defined(OS_CHROMEOS)
 extern const base::Feature kOptInImeMenu;
