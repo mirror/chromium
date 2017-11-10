@@ -173,6 +173,24 @@
     },
     {
       "key": {
+        "uuid": "2d313353_2ed52192",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_apitest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-10T13:05:24Z",
+      "side": 1,
+      "message": "On second thought, that test wouldn\u0027t add much, since not being able to create a WebRTC Logs directory in the profile directory would mean something severely wrong with profile directory permissions, which should be covered by other tests.",
+      "parentUuid": "be05801b_a5fa38ef",
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1fbe45a_24245afa",
         "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_browsertest.cc",
         "patchSetId": 17
