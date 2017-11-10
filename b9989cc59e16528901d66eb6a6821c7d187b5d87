@@ -70,6 +70,30 @@
       "revId": "b9989cc59e16528901d66eb6a6821c7d187b5d87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d92d27_e25fac08",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-10T21:24:31Z",
+      "side": 1,
+      "message": "\u003e 1. with cache: if there is some damage and also ScissorRect is empty as the same time, which indicates the content_rect is empty? This seems should never happen? Or there is some bug other place?\n\nYeah that\u0027d be really weird to have an empty renderpass, and not something we need to optimize for here. I don\u0027t think it can happen in practice, anyways, 0x0 textures don\u0027t make sense etc.\n\n\u003e 2. without cache: the ScissorRect is empty. This is possible.\n\nYeah, this is the bug the new unit test exposes. We still have to draw the renderpass when the scissor rect is empty when partial swap is not enabled.",
+      "parentUuid": "9c461d7a_9be12758",
+      "range": {
+        "startLine": 629,
+        "startChar": 62,
+        "endLine": 629,
+        "endChar": 70
+      },
+      "revId": "b9989cc59e16528901d66eb6a6821c7d187b5d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
