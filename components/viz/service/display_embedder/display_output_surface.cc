@@ -153,4 +153,9 @@ void DisplayOutputSurface::OnVSyncParametersUpdated(base::TimeTicks timebase,
       interval.is_zero() ? BeginFrameArgs::DefaultInterval() : interval);
 }
 
+gpu::VulkanSurface* DisplayOutputSurface::GetVulkanSurface() {
+  NOTIMPLEMENTED();
+  return nullptr;
+}
+
 }  // namespace viz

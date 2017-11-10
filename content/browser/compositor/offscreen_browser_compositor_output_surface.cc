@@ -203,4 +203,12 @@ void OffscreenBrowserCompositorOutputSurface::OnSwapBuffersComplete(
   client_->DidReceiveSwapBuffersAck();
 }
 
+#if BUILDFLAG(ENABLE_VULKAN)
+gpu::VulkanSurface*
+OffscreenBrowserCompositorOutputSurface::GetVulkanSurface() {
+  NOTIMPLEMENTED();
+  return nullptr;
+}
+#endif
+
 }  // namespace content
