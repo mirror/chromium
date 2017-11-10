@@ -73,6 +73,7 @@ class LocationBarViewMac : public LocationBar,
   void FocusLocation(bool select_all) override;
   void FocusSearch() override;
   void UpdateContentSettingsIcons() override;
+  void UpdateFramebustBlockIcon() override;
   void UpdateManagePasswordsIconAndBubble() override;
   void UpdateSaveCreditCardIcon() override;
   void UpdateFindBarIconVisibility() override;
@@ -226,6 +227,10 @@ class LocationBarViewMac : public LocationBar,
   // tab contents state.
   bool RefreshContentSettingsDecorations();
 
+  // Updates the visibility of the blocked framebust decoration. Returns true if
+  // the visibility of the decoration changed.
+  bool RefreshFramebustBlockDecoration();
+
   // Updates the translate decoration in the omnibox with the current translate
   // state.
   void UpdateTranslateDecoration();
@@ -233,6 +238,8 @@ class LocationBarViewMac : public LocationBar,
   // Updates the zoom decoration in the omnibox with the current zoom level.
   // Returns whether any updates were made.
   bool UpdateZoomDecoration(bool default_zoom_changed);
+
+  bool UpdateFramebustBlockDecoration();
 
   // Animates |page_info_decoration_| in or out if applicable. Otherwise,
   // show it without animation.
@@ -274,6 +281,9 @@ class LocationBarViewMac : public LocationBar,
   // A zoom icon at the end of the omnibox, which shows at non-standard zoom
   // levels.
   std::unique_ptr<ZoomDecoration> zoom_decoration_;
+
+  // An icon that shows up when a framebust was blocked on the page.
+  std::unique_ptr<ContentSettingDecoration> framebust_block_decoration_;
 
   // The content blocked decorations.
   std::vector<std::unique_ptr<ContentSettingDecoration>>
