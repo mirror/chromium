@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7508b5a5_cc4d000b",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-10T14:41:42Z",
+      "side": 0,
+      "message": "This is not correct. In the case of OffscreenCanvas resizing, HTMLCanvasElement needs to call SetNeedsCompositingUpdate(); without this, some OffscreenCanvas tests about resizing will go flaky.\n\nAlso, it changes the initial intention of the observer for OffscreenCanvas (See https://chromium-review.googlesource.com/c/chromium/src/+/763767).",
+      "revId": "49934e69906c679e67e7611864f3f9446efa6307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
