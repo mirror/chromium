@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e2418340_80a2a11d",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-10T12:48:55Z",
+      "side": 1,
+      "message": "We need to clear the bitmap because free list entries are coalesced and the bitmap has to stay in sync with actual object iteration on the page.\n\nIf we would not clear here and remove the SetBit, then the bits for FreeListEntries get out of sync.\n\nIn general we can either\n(a) keep only bits for live objects, which requires clearing (of ranges) when adding stuff to the free list\n(b) keep bits for *all* objects, this requires rebuilding during operations sweep, compaction, and coalescing.",
+      "parentUuid": "997ff451_de88376a",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07b7b068_e09999f4",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
         "patchSetId": 17
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a60b3fc6_15e28720",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-10T12:48:55Z",
+      "side": 1,
+      "message": "Done. I think we have to keep it as promptly freed objects are still part of the payload and not yet in a free list.",
+      "parentUuid": "07b7b068_e09999f4",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab050e26_2915f0fc",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
         "patchSetId": 17
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-10T02:12:42Z",
       "side": 1,
       "message": "Add VerifyObjectStartBitmapIsConsistentWithPayload() before calling Clear().",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d2f5ad_92c13498",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1432,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-10T12:48:55Z",
+      "side": 1,
+      "message": "As far as I can see, we cannot verify during compaction as the page is not completely iterable due to the compaction_frontier.\n\nThat\u0027s why the verify calls are on the caller level for this operation.",
+      "parentUuid": "ab050e26_2915f0fc",
       "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "cf8c69bf_24d55d17",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-10T12:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27334862_9a6270bb",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5b89898_0aa735c8",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
         "patchSetId": 17
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a97dc47d_a3148cbe",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-10T12:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5b89898_0aa735c8",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffa82c9e_9f5defa1",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
         "patchSetId": 17
@@ -101,6 +191,24 @@
       "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612aa944_31fbb7a9",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1612,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-10T12:48:55Z",
+      "side": 1,
+      "message": "Should be IsValidOrZapped()",
+      "parentUuid": "ffa82c9e_9f5defa1",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "24837c28_8ccf86ba",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-10T12:48:55Z",
+      "side": 1,
+      "message": "Done. Something got mixed up in the merge here.",
+      "parentUuid": "54567d02_fa549a96",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6c2c11f_f004f69d",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 17
@@ -152,6 +278,24 @@
       "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02bb963_a8dc8fdc",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-10T12:48:55Z",
+      "side": 1,
+      "message": "Used for unit tests.",
+      "parentUuid": "f6c2c11f_f004f69d",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "8618f2c8_29d45af7",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-10T12:48:55Z",
+      "side": 1,
+      "message": "Used for unit tests.",
+      "parentUuid": "754d3c09_95551a0a",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8da859a_1bbb581f",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 17
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "e25c8e87_b3dd8f23",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-10T12:48:55Z",
+      "side": 1,
+      "message": "The bitmap does not know about pages, or payloads. The offset_ is just a general base for all addresses in the bitmap.",
+      "parentUuid": "c8da859a_1bbb581f",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb266153_9b643faf",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 17
@@ -203,6 +383,24 @@
       "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d22cb8_d04a4d37",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-10T12:48:55Z",
+      "side": 1,
+      "message": "The bitmap does not know about objects, headers, or pages. That\u0027s the responsibility of the Verify call on NormalPage.",
+      "parentUuid": "bb266153_9b643faf",
+      "revId": "8181bf71935def062a2ad9b15002e075a91fa5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
