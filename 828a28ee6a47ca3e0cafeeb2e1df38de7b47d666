@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de8186a8_6cdea978",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5927,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-10T00:55:11Z",
+      "side": 1,
+      "message": "You might want to use:\n\n  for (HTMLLinkElement\u0026 link_element : Traversal\u003cHTMLLinkElement\u003e::ChildrenOf(*head())) {\n\n, instead of iterating children manually.\n\n# It is up-to you because this change is not related to CL.",
+      "revId": "828a28ee6a47ca3e0cafeeb2e1df38de7b47d666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d23a22e_79b7df6b",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5938,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-10T00:55:11Z",
+      "side": 1,
+      "message": "Nit: This can be \u0027HTMLLinkElement\u0026\u0027 instead of \u0027HTMLLinkElement*\u0027, if you use Traversal\u003cHTMLLinkElement\u003e::ChildrenOf(*head()).",
+      "revId": "828a28ee6a47ca3e0cafeeb2e1df38de7b47d666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01251cb_8982f29a",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5944,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-10T00:55:11Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "828a28ee6a47ca3e0cafeeb2e1df38de7b47d666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
