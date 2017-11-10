@@ -46,6 +46,30 @@
       "revId": "ded79fa9f0b62c9620b91f1f61aaf9076ab73d8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df9a27eb_f5a385a4",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-10T17:00:22Z",
+      "side": 1,
+      "message": "Ah, I was looking at the diff between two patchsets, and saw a change from a regular URL to a data: URL, but I guess that was reverted again.\nAnyway, not a big deal, I was just curious.",
+      "parentUuid": "250f08e3_7412c30d",
+      "range": {
+        "startLine": 1365,
+        "startChar": 77,
+        "endLine": 1365,
+        "endChar": 0
+      },
+      "revId": "ded79fa9f0b62c9620b91f1f61aaf9076ab73d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
