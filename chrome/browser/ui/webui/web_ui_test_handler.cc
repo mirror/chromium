@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/webui/web_ui_test_handler.h"
 
+#include <string>
+
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/message_loop/message_loop.h"
@@ -39,7 +41,7 @@ void WebUITestHandler::PreloadJavaScript(const base::string16& js_text,
   chrome::mojom::ChromeRenderFrameAssociatedPtr chrome_render_frame;
   preload_host->GetMainFrame()->GetRemoteAssociatedInterfaces()->GetInterface(
       &chrome_render_frame);
-  chrome_render_frame->ExecuteWebUIJavaScript(js_text);
+  chrome_render_frame->ExecuteWebUIJavaScriptForTesting(js_text);
 }
 
 void WebUITestHandler::RunJavaScript(const base::string16& js_text) {
