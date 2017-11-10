@@ -34,10 +34,6 @@
 
 namespace subresource_filter {
 
-namespace {
-
-}  // namespace
-
 SubresourceFilterBrowserTest::SubresourceFilterBrowserTest() {
   scoped_feature_list_.InitWithFeatures(
       {kSafeBrowsingSubresourceFilter,
@@ -62,7 +58,7 @@ void SubresourceFilterBrowserTest::TearDown() {
 
 void SubresourceFilterBrowserTest::SetUpOnMainThread() {
   base::FilePath test_data_dir;
-  PathService::Get(chrome::DIR_TEST_DATA, &test_data_dir);
+  ASSERT_TRUE(PathService::Get(chrome::DIR_TEST_DATA, &test_data_dir));
   embedded_test_server()->ServeFilesFromDirectory(test_data_dir);
   host_resolver()->AddSimulatedFailure("host-with-dns-lookup-failure");
 
@@ -70,17 +66,15 @@ void SubresourceFilterBrowserTest::SetUpOnMainThread() {
   content::SetupCrossSiteRedirector(embedded_test_server());
 
   // Add content/test/data for cross_site_iframe_factory.html
-  embedded_test_server()->ServeFilesFromSourceDirectory("content/test/data");
+  ASSERT_TRUE(PathService::Get(content::DIR_TEST_DATA, &test_data_dir));
+  embedded_test_server()->ServeFilesFromSourceDirectory(test_data_dir);
 
   ASSERT_TRUE(embedded_test_server()->Start());
   ResetConfigurationToEnableOnPhishingSites();
 
-  settings_manager_ = SubresourceFilterProfileContextFactory::GetForProfile(
-                          browser()->profile())
-                          ->settings_manager();
-#if defined(OS_ANDROID)
-  EXPECT_TRUE(settings_manager->should_use_smart_ui());
-#endif
+  auto* factory = SubresourceFilterProfileContextFactory::GetForProfile(
+      browser()->profile());
+  settings_manager_ = factory->settings_manager();
 }
 
 std::unique_ptr<TestSafeBrowsingDatabaseHelper>
