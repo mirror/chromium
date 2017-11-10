@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47c0b624_6c35cc2e",
+        "filename": "content/browser/loader/stream_resource_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T19:36:27Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "98a00237_912e118a",
+      "revId": "214dccc66a7998be95b48e389e51eef699ec1a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afbad091_83d5cba8",
         "filename": "content/renderer/loader/web_url_loader_impl.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-09T10:50:06Z",
       "side": 0,
       "message": "This is used by the network service, and your change won\u0027t fix the issue in network service mode but we\u0027ll address it soon for that case. This code shouldn\u0027t be removed in the meantime.",
+      "revId": "214dccc66a7998be95b48e389e51eef699ec1a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a52c536_6cd7751c",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T19:36:27Z",
+      "side": 0,
+      "message": "There are just two places where total_transfer_size_delta is used, this one and the one below that you say is safe to remove :-) I guess this one should also be safe to remove?",
+      "parentUuid": "afbad091_83d5cba8",
       "revId": "214dccc66a7998be95b48e389e51eef699ec1a95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "14754f23_6e744a5a",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T19:36:27Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "76c2d74d_34f291a9",
+      "revId": "214dccc66a7998be95b48e389e51eef699ec1a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54cae011_9960e626",
         "filename": "content/renderer/loader/web_url_loader_impl.cc",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0cb3649f_670250f5",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T19:36:27Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "54cae011_9960e626",
+      "revId": "214dccc66a7998be95b48e389e51eef699ec1a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "738e13d5_ad4bedbd",
         "filename": "content/renderer/loader/web_url_loader_impl.cc",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "214dccc66a7998be95b48e389e51eef699ec1a95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3759228_93c6f86f",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T19:36:27Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "738e13d5_ad4bedbd",
+      "revId": "214dccc66a7998be95b48e389e51eef699ec1a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

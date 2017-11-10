@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb24bb01_7d510bc0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T19:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa2c913f_32bbf601",
+      "revId": "5cbef023fe57d02dcf9f8d9ed34b7e278aec89ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11a4bf9a_d4fcfda9",
         "filename": "content/browser/streams/stream_metadata.h",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "67528ff7_2dfdaa6a",
+        "filename": "content/browser/streams/stream_metadata.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T19:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11a4bf9a_d4fcfda9",
+      "revId": "5cbef023fe57d02dcf9f8d9ed34b7e278aec89ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc7c802f_67d8aa71",
         "filename": "content/browser/streams/stream_url_request_job.cc",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-09T04:45:56Z",
       "side": 1,
       "message": "how about trying metadata first and then returning after copying?\n\nI also wonder if it\u0027s better to have failed_response_info_ override the metadata, meaning that request verification happens first and then we look at the response.",
+      "revId": "5cbef023fe57d02dcf9f8d9ed34b7e278aec89ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea9439b_1e9c2d15",
+        "filename": "content/browser/streams/stream_url_request_job.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T19:36:27Z",
+      "side": 1,
+      "message": "Yep, you\u0027re right, I was presuming these two are mutually exlusive, but we can actuall have both error and onResponseStarted. I just added a return if failed_response_info_ is present above.",
+      "parentUuid": "dc7c802f_67d8aa71",
       "revId": "5cbef023fe57d02dcf9f8d9ed34b7e278aec89ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
