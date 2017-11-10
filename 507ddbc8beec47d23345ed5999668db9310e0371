@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c3c6cc0_69508a6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-10T16:15:53Z",
+      "side": 1,
+      "message": "The biggest problem is the existence of stateful singleton \nobjects that forces its clients to jump through hoops, like\non ToT where we have to create and destroy a VaapiWrapper \njust so that it can in turn Initialize() VADisplayState, which\nis a waste and an abstraction leak. Instead, we should teach\nVADisplayState to initialize itself upon construction, but \nthat I\u0027ll leave it for another CL.  Up until now I\u0027ve been\nbusy just encapsulating the private things.",
+      "parentUuid": "e6a14365_ae8aef7c",
+      "revId": "507ddbc8beec47d23345ed5999668db9310e0371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60d41ce4_b319dec3",
         "filename": "media/gpu/vaapi_wrapper.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "507ddbc8beec47d23345ed5999668db9310e0371",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08643321_2dd8e6d9",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-10T16:15:53Z",
+      "side": 1,
+      "message": "Done. The understanding depends if you look at it from \nthe point of view of stating a fact vs trying to guess\nwhat has gone wrong.",
+      "parentUuid": "60d41ce4_b319dec3",
+      "revId": "507ddbc8beec47d23345ed5999668db9310e0371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
