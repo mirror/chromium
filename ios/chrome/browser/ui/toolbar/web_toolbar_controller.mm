@@ -1142,13 +1142,12 @@ using ios::material::TimingFunction;
     // there's no need to indicate interaction was initiated from the fakebox.
     model->OnSetFocus(false);
     model->SetCaretVisibility(false);
+    [self focusOmnibox];
   } else {
     // Set the omnibox background's frame to full bleed.
     CGRect mobFrame = CGRectInset([_clippingView bounds], -2, -2);
     [_omniboxBackground setFrame:mobFrame];
   }
-
-  [self focusOmnibox];
 }
 
 - (void)onFakeboxBlur {
@@ -1163,6 +1162,7 @@ using ios::material::TimingFunction;
 - (void)onFakeboxAnimationComplete {
   DCHECK(!IsIPadIdiom());
   [self.view setHidden:NO];
+  [self focusOmnibox];
 }
 
 #pragma mark -
