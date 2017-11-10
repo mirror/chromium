@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "cfd11c77_e9762287",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-10T21:45:13Z",
+      "side": 1,
+      "message": "We wait for a network change before making another network request because, for IP-only geolocation, we have no expectation of a different result from our previous network request unless there has been a network change.\n\nNote that clients can and should use the \u0027timestamp\u0027 argument to get any cached older value if they don\u0027t want to wait for a change. In the followup CL the client is using a default (zero) timestamp for their first call.",
+      "parentUuid": "d2e06eef_abd865d0",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc4aa95d_f1b4108c",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
         "patchSetId": 4

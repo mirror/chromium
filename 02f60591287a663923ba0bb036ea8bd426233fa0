@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "12c03f59_be64c847",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-10T21:45:13Z",
+      "side": 1,
+      "message": "I propose it should actually be a DCHECK(!lastest_geoposition_.has_value());\n\n1. There can only be one network request in flight at a time.\n2. All paths to start a network request involve clearing latest_geoposition_.\nPath 1: Class still has default-constructed latest_geoposition_ and client requests position.\nPath 2: Network location changes (clearing latest_geoposition_) and clients are waiting for position update.\nPath 3: Client queries position and network has changed since last request. But the network changed flag only gets flipped in conjunction with clearing latest_geoposition_ (or in this method).",
+      "parentUuid": "67eb6452_b3fb596d",
+      "revId": "02f60591287a663923ba0bb036ea8bd426233fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8a48a20_6703b5ab",
         "filename": "services/device/geolocation/public_ip_address_location_notifier_unittest.cc",
         "patchSetId": 5
