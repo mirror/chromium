@@ -20863,6 +20863,7 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
   <int value="2" label="Validate Flag"/>
   <int value="3" label="Stale Resource"/>
   <int value="4" label="Zero Freshness"/>
+  <int value="5" label="Zero Freshness Mem Hint"/>
 </enum>
 
 <enum name="HttpHeaderParserEvent">
