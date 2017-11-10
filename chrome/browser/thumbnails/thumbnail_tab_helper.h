@@ -79,7 +79,10 @@ class ThumbnailTabHelper
 
   content::NotificationRegistrar registrar_;
 
-  bool has_painted_since_navigation_start_;
+  bool is_currently_navigating_;
+  bool has_received_document_since_navigating_;
+  bool has_painted_since_navigating_;
+
   ui::PageTransition page_transition_;
   bool load_interrupted_;
 
