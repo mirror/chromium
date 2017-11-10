@@ -34,6 +34,24 @@
       "revId": "5bbccc18fc1aecffef7478e4505fa1e46f2105d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4ff3f4_898b49ee",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T20:28:31Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t notice the profile lookup in SetServiceProperties).\n\nIt sounds like ProfileClient::AddEntry should *probably* also set kProfileProperty in |properties|, but it is possible that will break something else. An alternative would be to add a test interface method \u0027AddServiceToProfile\u0027.\n\nIf fixing that is straightforward and works, great. If not, just clarify the comment a bit, thanks!",
+      "parentUuid": "75ef3b89_243ca968",
+      "revId": "5bbccc18fc1aecffef7478e4505fa1e46f2105d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
