@@ -43,8 +43,8 @@ void LogAnalyzerCreationError(AnalyzerCreationError error) {
 
 }  // namespace
 
-ThreadActivityAnalyzer::Snapshot::Snapshot() {}
-ThreadActivityAnalyzer::Snapshot::~Snapshot() {}
+ThreadActivityAnalyzer::Snapshot::Snapshot() = default;
+ThreadActivityAnalyzer::Snapshot::~Snapshot() = default;
 
 ThreadActivityAnalyzer::ThreadActivityAnalyzer(
     const ThreadActivityTracker& tracker)
@@ -62,7 +62,7 @@ ThreadActivityAnalyzer::ThreadActivityAnalyzer(
                                  PersistentMemoryAllocator::kSizeAny),
                              allocator->GetAllocSize(reference)) {}
 
-ThreadActivityAnalyzer::~ThreadActivityAnalyzer() {}
+ThreadActivityAnalyzer::~ThreadActivityAnalyzer() = default;
 
 void ThreadActivityAnalyzer::AddGlobalInformation(
     GlobalActivityAnalyzer* global) {
@@ -89,7 +89,7 @@ GlobalActivityAnalyzer::GlobalActivityAnalyzer(
   DCHECK(allocator_);
 }
 
-GlobalActivityAnalyzer::~GlobalActivityAnalyzer() {}
+GlobalActivityAnalyzer::~GlobalActivityAnalyzer() = default;
 
 #if !defined(OS_NACL)
 // static
@@ -271,12 +271,12 @@ bool GlobalActivityAnalyzer::IsDataComplete() const {
   return !allocator_->IsFull();
 }
 
-GlobalActivityAnalyzer::UserDataSnapshot::UserDataSnapshot() {}
+GlobalActivityAnalyzer::UserDataSnapshot::UserDataSnapshot() = default;
 GlobalActivityAnalyzer::UserDataSnapshot::UserDataSnapshot(
     const UserDataSnapshot& rhs) = default;
 GlobalActivityAnalyzer::UserDataSnapshot::UserDataSnapshot(
     UserDataSnapshot&& rhs) = default;
-GlobalActivityAnalyzer::UserDataSnapshot::~UserDataSnapshot() {}
+GlobalActivityAnalyzer::UserDataSnapshot::~UserDataSnapshot() = default;
 
 void GlobalActivityAnalyzer::PrepareAllAnalyzers() {
   // Record the time when analysis started.

@@ -51,7 +51,7 @@ struct Derived : public Base {};
 
 struct TargetBase {};
 struct Target : public TargetBase, public SupportsWeakPtr<Target> {
-  virtual ~Target() {}
+  virtual ~Target() = default;
 };
 struct DerivedTarget : public Target {};
 struct Arrow {

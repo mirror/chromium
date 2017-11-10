@@ -330,7 +330,7 @@ class ConcurrentHelper : public RefCounted<ConcurrentHelper>  {
  private:
   friend class RefCounted<ConcurrentHelper>;
 
-  ~ConcurrentHelper() {}
+  ~ConcurrentHelper() = default;
 
   static const int kStartingEventCount = 20;
   static const int kStartingTaskCount = 20;
@@ -426,7 +426,7 @@ class GLibLoopRunner : public RefCounted<GLibLoopRunner> {
  private:
   friend class RefCounted<GLibLoopRunner>;
 
-  ~GLibLoopRunner() {}
+  ~GLibLoopRunner() = default;
 
   bool quit_;
 };
