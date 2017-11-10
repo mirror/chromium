@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "57015c23_6db86b61",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-10T18:51:51Z",
+      "side": 1,
+      "message": "My understanding of UnitTests is that we should be running as little code as possible to exercise the target checks. \n\nBut I\u0027m happy to use the other class if it\u0027s more maintainable. Changed.",
+      "parentUuid": "83eb90c9_3e035aa2",
+      "revId": "8cbbfd4348b2ca8a5a6597c27604c1833f86ad8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "628c9063_b414ea44",
         "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
         "patchSetId": 2
@@ -75,6 +93,30 @@
       "revId": "8cbbfd4348b2ca8a5a6597c27604c1833f86ad8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d82c6076_5d697cae",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-10T18:51:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "628c9063_b414ea44",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 16
+      },
+      "revId": "8cbbfd4348b2ca8a5a6597c27604c1833f86ad8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +203,30 @@
       "side": 1,
       "message": "Not worth the effort of reverting the change, just do what you feel is right.",
       "parentUuid": "31b64ffb_3796394f",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 24
+      },
+      "revId": "8cbbfd4348b2ca8a5a6597c27604c1833f86ad8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e7d6fa2_baa6b101",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-10T18:51:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5c152067_83e829ea",
       "range": {
         "startLine": 90,
         "startChar": 2,
