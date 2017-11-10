@@ -218,7 +218,8 @@ void MediaStreamDispatcherHost::StopStreamDevice(int32_t render_frame_id,
 void MediaStreamDispatcherHost::OpenDevice(int32_t render_frame_id,
                                            int32_t page_request_id,
                                            const std::string& device_id,
-                                           MediaStreamType type) {
+                                           MediaStreamType type,
+                                           OpenDeviceCallback callback) {
   DVLOG(1) << __func__ << " render_frame_id=" << render_frame_id
            << " page_request_id=" << page_request_id
            << " device_id=" << device_id << " type=" << type;
@@ -230,7 +231,8 @@ void MediaStreamDispatcherHost::OpenDevice(int32_t render_frame_id,
                      render_frame_id),
       base::BindOnce(&MediaStreamDispatcherHost::DoOpenDevice,
                      weak_factory_.GetWeakPtr(), render_frame_id,
-                     page_request_id, device_id, type));
+                     page_request_id, device_id, type,
+                     base::Passed(&callback)));
 }
 
 void MediaStreamDispatcherHost::DoOpenDevice(
@@ -238,18 +240,19 @@ void MediaStreamDispatcherHost::DoOpenDevice(
     int32_t page_request_id,
     const std::string& device_id,
     MediaStreamType type,
+    OpenDeviceCallback callback,
     const std::pair<std::string, url::Origin>& salt_and_origin) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!MediaStreamManager::IsOriginAllowed(render_process_id_,
                                            salt_and_origin.second)) {
-    DeviceOpenFailed(render_frame_id, page_request_id);
+    std::move(callback).Run(false, std::string(), MediaStreamDevice());
     return;
   }
 
-  media_stream_manager_->OpenDevice(weak_factory_.GetWeakPtr(),
-                                    render_process_id_, render_frame_id,
-                                    salt_and_origin.first, page_request_id,
-                                    device_id, type, salt_and_origin.second);
+  media_stream_manager_->OpenDevice(
+      weak_factory_.GetWeakPtr(), render_process_id_, render_frame_id,
+      salt_and_origin.first, page_request_id, device_id, type,
+      salt_and_origin.second, std::move(callback));
 }
 
 void MediaStreamDispatcherHost::CloseDevice(const std::string& label) {

@@ -369,7 +369,11 @@ class MediaStreamManager::DeviceRequest {
   // Callback to the requester which audio/video devices have been selected.
   // It can be null if the requester has no interest to know the result.
   // Currently it is only used by |DEVICE_ACCESS| type.
-  MediaStreamManager::MediaRequestResponseCallback callback;
+  MediaRequestResponseCallback callback;
+
+  GenerateStreamCallback generate_stream_cb;
+
+  OpenDeviceCallback open_device_cb;
 
   std::unique_ptr<MediaStreamUIProxy> ui_proxy;
 
@@ -745,7 +749,8 @@ void MediaStreamManager::OpenDevice(
     int page_request_id,
     const std::string& device_id,
     MediaStreamType type,
-    const url::Origin& security_origin) {
+    const url::Origin& security_origin,
+    OpenDeviceCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(type == MEDIA_DEVICE_AUDIO_CAPTURE ||
          type == MEDIA_DEVICE_VIDEO_CAPTURE);
@@ -766,6 +771,8 @@ void MediaStreamManager::OpenDevice(
       MEDIA_OPEN_DEVICE_PEPPER_ONLY, controls, salt, std::move(requester));
 
   const std::string& label = AddRequest(request);
+
+  request->open_device_cb = std::move(callback);
   // Post a task and handle the request asynchronously. The reason is that the
   // requester won't have a label for the request until this function returns
   // and thus can not handle a response. Using base::Unretained is safe since
@@ -1255,11 +1262,9 @@ void MediaStreamManager::FinalizeOpenDevice(const std::string& label,
                                             DeviceRequest* request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  if (request->requester) {
-    request->requester->DeviceOpened(request->requesting_frame_id,
-                                     request->page_request_id, label,
-                                     request->devices.front());
-  }
+  if (!request->open_device_cb.is_null())
+    std::move(request->open_device_cb)
+        .Run(true, label, request->devices.front());
 }
 
 void MediaStreamManager::FinalizeMediaAccessRequest(

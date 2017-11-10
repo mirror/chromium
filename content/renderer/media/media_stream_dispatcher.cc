@@ -70,7 +70,8 @@ MediaStreamDispatcher::MediaStreamDispatcher(RenderFrame* render_frame)
     : RenderFrameObserver(render_frame),
       dispatcher_host_(nullptr),
       binding_(this),
-      next_ipc_id_(0) {
+      next_ipc_id_(0),
+      weak_factory_(this) {
   registry_.AddInterface(
       base::Bind(&MediaStreamDispatcher::BindMediaStreamDispatcherRequest,
                  base::Unretained(this)));
@@ -143,8 +144,11 @@ void MediaStreamDispatcher::OpenDevice(
   DCHECK(thread_checker_.CalledOnValidThread());
 
   requests_.push_back(Request(event_handler, request_id, next_ipc_id_));
-  GetMediaStreamDispatcherHost()->OpenDevice(routing_id(), next_ipc_id_++,
-                                             device_id, type);
+  GetMediaStreamDispatcherHost()->OpenDevice(
+      routing_id(), next_ipc_id_, device_id, type,
+      base::BindOnce(&MediaStreamDispatcher::DeviceOpenCallback,
+                     weak_factory_.GetWeakPtr(), next_ipc_id_));
+  next_ipc_id_++;
 }
 
 void MediaStreamDispatcher::CancelOpenDevice(
@@ -240,6 +244,19 @@ void MediaStreamDispatcher::OnStreamGenerationFailed(
     requests_.erase(it);
     break;
   }
+}
+
+void MediaStreamDispatcher::DeviceOpenCallback(
+    int32_t request_id,
+    bool success,
+    const std::string& label,
+    const MediaStreamDevice& device) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  if (success)
+    OnDeviceOpened(request_id, label, device);
+  else
+    OnDeviceOpenFailed(request_id);
 }
 
 void MediaStreamDispatcher::OnDeviceOpened(int32_t request_id,

@@ -75,13 +75,23 @@ class CONTENT_EXPORT MediaStreamManager
       public base::PowerObserver {
  public:
   // Callback to deliver the result of a media request.
-  typedef base::OnceCallback<void(const MediaStreamDevices& devices,
-                                  std::unique_ptr<MediaStreamUIProxy> ui)>
-      MediaRequestResponseCallback;
+  using MediaRequestResponseCallback =
+      base::OnceCallback<void(const MediaStreamDevices& devices,
+                              std::unique_ptr<MediaStreamUIProxy> ui)>;
+
+  using GenerateStreamCallback =
+      base::OnceCallback<void(const std::string& label,
+                              const MediaStreamDevices& audio_devices,
+                              const MediaStreamDevices& video_devices)>;
+
+  using OpenDeviceCallback =
+      base::OnceCallback<void(bool success,
+                              const std::string& label,
+                              const MediaStreamDevice& device)>;
 
   // Callback for testing.
-  typedef base::Callback<bool(const StreamControls&)>
-      GenerateStreamTestCallback;
+  using GenerateStreamTestCallback =
+      base::Callback<bool(const StreamControls&)>;
 
   // Adds |message| to native logs for outstanding device requests, for use by
   // render processes hosts whose corresponding render processes are requesting
@@ -175,7 +185,8 @@ class CONTENT_EXPORT MediaStreamManager
                   int page_request_id,
                   const std::string& device_id,
                   MediaStreamType type,
-                  const url::Origin& security_origin);
+                  const url::Origin& security_origin,
+                  OpenDeviceCallback callback);
 
   // Finds and returns the device id corresponding to the given
   // |source_id|. Returns true if there was a raw device id that matched the

@@ -122,6 +122,11 @@ class CONTENT_EXPORT MediaStreamDispatcher
   void OnDeviceStopped(const std::string& label,
                        const MediaStreamDevice& device) override;
 
+  void DeviceOpenCallback(int32_t request_id,
+                          bool success,
+                          const std::string& label,
+                          const MediaStreamDevice& device);
+
   void BindMediaStreamDispatcherRequest(
       mojom::MediaStreamDispatcherRequest request);
 
@@ -143,6 +148,8 @@ class CONTENT_EXPORT MediaStreamDispatcher
   RequestList requests_;
 
   service_manager::BinderRegistry registry_;
+
+  base::WeakPtrFactory<MediaStreamDispatcher> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaStreamDispatcher);
 };

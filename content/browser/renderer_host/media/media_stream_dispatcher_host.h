@@ -87,7 +87,8 @@ class CONTENT_EXPORT MediaStreamDispatcherHost
   void OpenDevice(int32_t render_frame_id,
                   int32_t request_id,
                   const std::string& device_id,
-                  MediaStreamType type) override;
+                  MediaStreamType type,
+                  OpenDeviceCallback callback) override;
   void CloseDevice(const std::string& label) override;
   void SetCapturingLinkSecured(int32_t session_id,
                                MediaStreamType type,
@@ -104,6 +105,7 @@ class CONTENT_EXPORT MediaStreamDispatcherHost
                     int32_t request_id,
                     const std::string& device_id,
                     MediaStreamType type,
+                    OpenDeviceCallback callback,
                     const std::pair<std::string, url::Origin>& salt_and_origin);
 
   const int render_process_id_;

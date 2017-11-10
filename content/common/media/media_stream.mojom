@@ -95,7 +95,7 @@ interface MediaStreamDispatcherHost {
 
   // Opens a device identified by |device_id|.
   OpenDevice(int32 render_frame_id, int32 request_id, string device_id,
-             MediaStreamType type);
+             MediaStreamType type) => (bool success, string label, MediaStreamDevice device);
 
   // Cancels an open request identified by |label|.
   CloseDevice(string label);
