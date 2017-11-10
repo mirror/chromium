@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "65ddc4d7_acb7e6ee",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-10T17:01:43Z",
+      "side": 1,
+      "message": "Actually, functions like UrlRequest_Read will be simply calling the underlying UrlRequest::Read interface implementation. \n\nCronet will provide the concrete implementation, and that implementation will be instantiated by UrlRequest_Create function. \n\nIt is also possible for app to create different implementations using UrlRequest_CreateStub with custom methods, but there is no good reason to do that.\n\nThe app MUST provide implementation of UrlRequestCallback, and that will be created using UrlRequestCallback_CreateStub function.\n\nMaybe we could / should mark different interfaces as concrete/abstract and provide different methods of creation, but I\u0027m not sure whether it is better than having both for every interface.",
+      "parentUuid": "240485f4_736476d4",
+      "range": {
+        "startLine": 177,
+        "startChar": 40,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79bf3e6c_9662c14b",
         "filename": "components/cronet/native/cronet.idl_c.h",
         "patchSetId": 36
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "de096321_6ce568a2",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-10T17:01:43Z",
+      "side": 1,
+      "message": "Per other comment the XYZ_Create() method will be used to create instance of interface implemented by Cronet, where as XYZ_CreateStub() will be used to create instance based on methods implemented by consumer.\n\nDoes it make sense?\n\nI\u0027m not very happy about the naming, and open for suggestions.",
+      "parentUuid": "79bf3e6c_9662c14b",
+      "range": {
+        "startLine": 202,
+        "startChar": 50,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72fe2ed4_64b2f184",
         "filename": "components/cronet/native/cronet.idl_c.h",
         "patchSetId": 36
@@ -154,6 +202,30 @@
       "writtenOn": "2017-11-10T16:27:15Z",
       "side": 1,
       "message": "What\u0027s the goal of separating out \"Create\" and \"InitWithParams\"?  This seems to mask the fact that (AFAIK) InitWithParams is required.",
+      "range": {
+        "startLine": 323,
+        "startChar": 50,
+        "endLine": 323,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56741139_81cc35cf",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-10T17:01:43Z",
+      "side": 1,
+      "message": "The idea is that \u0027Create\u0027 creates an instance and returns it as a result. The original motivation was that mojo doesn\u0027t have a concept of static methods or constructors, and the pattern create/init is very similar to one used on iOS.\n\nAll other methods take an existing instance as an argument.\nAs such UrlRequest_Create is the only one that needs to be synchronous, the rest could be async.\nI wonder whether InitWithParams should merge with Start and be StartWithParams though.\n\nWDYT, does this make sense?",
+      "parentUuid": "72fe2ed4_64b2f184",
       "range": {
         "startLine": 323,
         "startChar": 50,
