@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "323066c5_86e5a6cb",
+        "filename": "chrome/browser/chrome_network_service_restart_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-10T23:26:33Z",
+      "side": 1,
+      "message": "Done. Will actually patch \"network_context_configuration_browsertest.cc\" in another CL.",
+      "parentUuid": "268d3615_208911e8",
+      "range": {
+        "startLine": 67,
+        "startChar": 23,
+        "endLine": 67,
+        "endChar": 60
+      },
+      "revId": "9d7ac85521b88c3b785ce3b8199223bd5233005c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "809e7fbb_8f83cfa7",
         "filename": "chrome/browser/chrome_network_service_restart_browsertest.cc",
         "patchSetId": 4
@@ -369,6 +393,30 @@
       "side": 1,
       "message": "I see. I didn\u0027t realize those life-cycle issues while writing the test. Will give a try on your suggestion and do more experiments.\n\nThanks for pointing out!",
       "parentUuid": "ef9864ce_29b346c4",
+      "range": {
+        "startLine": 115,
+        "startChar": 29,
+        "endLine": 115,
+        "endChar": 30
+      },
+      "revId": "9d7ac85521b88c3b785ce3b8199223bd5233005c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db56ed5f_ece4db35",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-10T23:26:33Z",
+      "side": 1,
+      "message": "For |mojom::NetworkContext*| concern:\nI\u0027ve changed test to compare old/new pointer values.\n\nFor pipe race concern:\nIt seems that we will always get ERR_FAILED regardless which pipe closed first. Please see updated tests below where the URL request was sent from invalid NetworkContext (also +yzshen@ for mojo questions):\nhttps://chromium-review.googlesource.com/c/chromium/src/+/758831/5/content/browser/network_service_restart_browsertest.cc#59",
+      "parentUuid": "c6362be7_da916d17",
       "range": {
         "startLine": 115,
         "startChar": 29,

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e46915d9_f839d674",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-10T23:26:33Z",
+      "side": 1,
+      "message": "yzshen@: May I have 2 questions about the promise of error handlers?\n* At this line of code, |network_context| could have already |encountered_error()|. Is it still safe to create |url_loader_factory|, and even create URLLoader and pass in URLLoaderClientPtr?\n\n* Is it guaranteed that InterfacePtr\u0027s error_handler will be called, even if the parent interface has encountered error and dropped the request message?",
+      "revId": "8194fa938e70333efa26a39ee6de6e6e4b77f0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a34930c_7f4f2420",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-10T23:26:33Z",
+      "side": 1,
+      "message": "yzshen@: |network_context| do notice error in my experiments, but I assume it\u0027s not a guarantee. Is that correct?",
+      "revId": "8194fa938e70333efa26a39ee6de6e6e4b77f0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
