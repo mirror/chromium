@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "21d1dc97_84af8dd5",
+        "filename": "chrome/services/wifi_util_win/OWNERS",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T00:07:38Z",
+      "side": 1,
+      "message": "Not it :) I\u0027ll happily review this CL, but only for my familiarity with the networkingPrivate API. The Win implementation was done a number of years back, for Chromecast IIRC, and has not been especially maintained as far as I am aware.",
+      "parentUuid": "359ad82b_3e88ca43",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9711e282_aedcf4ba",
         "filename": "chrome/services/wifi_util_win/public/interfaces/BUILD.gn",
         "patchSetId": 8
