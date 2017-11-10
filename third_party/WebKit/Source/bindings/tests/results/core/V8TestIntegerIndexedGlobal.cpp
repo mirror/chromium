@@ -68,6 +68,8 @@ static_assert(
 namespace TestIntegerIndexedGlobalV8Internal {
 
 static void lengthAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestIntegerIndexedGlobal* impl = V8TestIntegerIndexedGlobal::ToImpl(holder);
@@ -77,7 +79,7 @@ static void lengthAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& inf
 
 static void lengthAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  V8CallbackHookScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -152,6 +154,7 @@ void V8TestIntegerIndexedGlobal::lengthAttributeSetterCallback(const v8::Functio
 }
 
 void V8TestIntegerIndexedGlobal::voidMethodDocumentMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestIntegerIndexedGlobal_voidMethodDocument");
 
   TestIntegerIndexedGlobalV8Internal::voidMethodDocumentMethod(info);

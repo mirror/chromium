@@ -71,6 +71,8 @@ static_assert(
 namespace TestIntegerIndexedV8Internal {
 
 static void lengthAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestIntegerIndexed* impl = V8TestIntegerIndexed::ToImpl(holder);
@@ -80,7 +82,7 @@ static void lengthAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& inf
 
 static void lengthAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  V8CallbackHookScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -212,24 +214,28 @@ void V8TestIntegerIndexed::lengthAttributeSetterCallback(const v8::FunctionCallb
 }
 
 void V8TestIntegerIndexed::voidMethodDocumentMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestIntegerIndexed_voidMethodDocument");
 
   TestIntegerIndexedV8Internal::voidMethodDocumentMethod(info);
 }
 
 void V8TestIntegerIndexed::keysMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestIntegerIndexed_keys");
 
   TestIntegerIndexedV8Internal::keysMethod(info);
 }
 
 void V8TestIntegerIndexed::valuesMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestIntegerIndexed_values");
 
   TestIntegerIndexedV8Internal::valuesMethod(info);
 }
 
 void V8TestIntegerIndexed::forEachMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestIntegerIndexed_forEach");
 
   TestIntegerIndexedV8Internal::forEachMethod(info);

@@ -68,6 +68,8 @@ static_assert(
 namespace TestInterfaceEventInitConstructorV8Internal {
 
 static void readonlyStringAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceEventInitConstructor* impl = V8TestInterfaceEventInitConstructor::ToImpl(holder);
@@ -76,6 +78,8 @@ static void readonlyStringAttributeAttributeGetter(const v8::FunctionCallbackInf
 }
 
 static void isTrustedAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceEventInitConstructor* impl = V8TestInterfaceEventInitConstructor::ToImpl(holder);

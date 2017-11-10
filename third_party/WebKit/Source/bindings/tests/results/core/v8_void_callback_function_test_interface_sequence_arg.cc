@@ -19,6 +19,7 @@
 #include "bindings/core/v8/V8TestInterface.h"
 #include "core/dom/ExecutionContext.h"
 #include "platform/bindings/ScriptState.h"
+#include "platform/bindings/V8PerIsolateData.h"
 #include "platform/wtf/Assertions.h"
 
 namespace blink {

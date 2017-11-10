@@ -27,6 +27,7 @@
 
 #include <memory>
 
+#include "base/run_loop.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/bindings/DOMDataStore.h"
 #include "platform/bindings/ScriptForbiddenScope.h"
@@ -43,6 +44,15 @@
 
 namespace blink {
 
+V8CallbackHookScope::V8CallbackHookScope(v8::Isolate* isolate)
+    : per_isolate_data_(V8PerIsolateData::From(isolate)) {
+  per_isolate_data_->EnterNestedLoopCheckpoint();
+}
+
+V8CallbackHookScope::~V8CallbackHookScope() {
+  per_isolate_data_->LeaveNestedLoopCheckpoint();
+}
+
 // Wrapper function defined in WebKit.h
 v8::Isolate* MainThreadIsolate() {
   return V8PerIsolateData::MainThreadIsolate();
@@ -55,8 +65,13 @@ static void BeforeCallEnteredCallback(v8::Isolate* isolate) {
 }
 
 static void MicrotasksCompletedCallback(v8::Isolate* isolate) {
+  V8CallbackHookScope scope(isolate);
   V8PerIsolateData::From(isolate)->RunEndOfScopeTasks();
 }
+
+// static void NestedLoopCheckpointCallback(v8::Isolate* isolate) {
+//   V8PerIsolateData::From(isolate)->RunNestedLoopCheckpoint();
+// }
 
 V8PerIsolateData::V8PerIsolateData(
     WebTaskRunner* task_runner,
@@ -90,6 +105,7 @@ V8PerIsolateData::V8PerIsolateData(
   GetIsolate()->Enter();
   GetIsolate()->AddBeforeCallEnteredCallback(&BeforeCallEnteredCallback);
   GetIsolate()->AddMicrotasksCompletedCallback(&MicrotasksCompletedCallback);
+  // GetIsolate()->AddNestedLoopCheckpointCallback(&NestedLoopCheckpointCallback);
   if (IsMainThread())
     g_main_thread_per_isolate_data = this;
 }
@@ -163,6 +179,7 @@ void V8PerIsolateData::WillBeDestroyed(v8::Isolate* isolate) {
 void V8PerIsolateData::Destroy(v8::Isolate* isolate) {
   isolate->RemoveBeforeCallEnteredCallback(&BeforeCallEnteredCallback);
   isolate->RemoveMicrotasksCompletedCallback(&MicrotasksCompletedCallback);
+  // isolate->RemoveNestedLoopCheckpointCallback(&NestedLoopCheckpointCallback);
   V8PerIsolateData* data = From(isolate);
 
   // Clear everything before exiting the Isolate.
@@ -345,6 +362,37 @@ void V8PerIsolateData::RunEndOfScopeTasks() {
     task->Run();
   DCHECK(end_of_scope_tasks_.IsEmpty());
 }
+
+void V8PerIsolateData::EnterNestedLoopCheckpoint() {
+  DCHECK_GE(preemption_checkpoint_nest_level_, 0);
+  if (++preemption_checkpoint_nest_level_ != 1)
+    return;
+
+  static base::TimeTicks next;
+  base::TimeTicks now = base::TimeTicks::Now();
+  if (is_running_top_level_script_ && now > next) {
+    TRACE_EVENT2("tzik", "V8PerIsolateData::RunNestedLoopCheckpoint", "bit",
+                 is_running_top_level_script_, "delta",
+                 (next - now).InMilliseconds());
+    base::RunLoop run_loop(base::RunLoop::Type::kNestableTasksAllowed);
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(
+                       [](base::TimeTicks* next, base::OnceClosure cb) {
+                         *next = base::TimeTicks::Now() +
+                                 base::TimeDelta::FromMilliseconds(100);
+                         std::move(cb).Run();
+                       },
+                       &next, run_loop.QuitClosure()));
+    run_loop.Run();
+  }
+}
+
+void V8PerIsolateData::LeaveNestedLoopCheckpoint() {
+  --preemption_checkpoint_nest_level_;
+  DCHECK_GE(preemption_checkpoint_nest_level_, 0);
+}
+
+void V8PerIsolateData::RunNestedLoopCheckpoint() {}
 
 void V8PerIsolateData::ClearEndOfScopeTasks() {
   end_of_scope_tasks_.clear();

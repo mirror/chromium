@@ -175,6 +175,7 @@ static void namedPropertyEnumerator(const v8::PropertyCallbackInfo<v8::Array>& i
 } // namespace TestSpecialOperationsV8Internal
 
 void V8TestSpecialOperations::namedItemMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestSpecialOperations_namedItem");
 
   TestSpecialOperationsV8Internal::namedItemMethod(info);

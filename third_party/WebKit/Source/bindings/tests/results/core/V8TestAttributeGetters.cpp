@@ -67,6 +67,8 @@ static_assert(
 namespace TestAttributeGettersV8Internal {
 
 static void lenientThisLongAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   // [LenientThis]
   // Make sure that info.Holder() really points to an instance if [LenientThis].
   if (!V8TestAttributeGetters::hasInstance(info.Holder(), info.GetIsolate()))
@@ -80,6 +82,8 @@ static void lenientThisLongAttributeAttributeGetter(const v8::FunctionCallbackIn
 }
 
 static void stringPromiseAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   // This attribute returns a Promise.
   // Per https://heycam.github.io/webidl/#dfn-attribute-getter, all exceptions
   // must be turned into a Promise rejection.
@@ -102,6 +106,8 @@ static void stringPromiseAttributeAttributeGetter(const v8::FunctionCallbackInfo
 }
 
 static void lenientThisStringPromiseAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   // [LenientThis]
   // Make sure that info.Holder() really points to an instance if [LenientThis].
   if (!V8TestAttributeGetters::hasInstance(info.Holder(), info.GetIsolate()))
@@ -115,6 +121,8 @@ static void lenientThisStringPromiseAttributeAttributeGetter(const v8::FunctionC
 }
 
 static void raisesExceptionShortPromiseAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   // This attribute returns a Promise.
   // Per https://heycam.github.io/webidl/#dfn-attribute-getter, all exceptions
   // must be turned into a Promise rejection.
@@ -142,6 +150,8 @@ static void raisesExceptionShortPromiseAttributeAttributeGetter(const v8::Functi
 }
 
 static void floatAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestAttributeGetters* impl = V8TestAttributeGetters::ToImpl(holder);

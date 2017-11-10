@@ -66,6 +66,8 @@ static_assert(
 namespace TestInheritedLegacyUnenumerableNamedPropertiesV8Internal {
 
 static void longAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInheritedLegacyUnenumerableNamedProperties* impl = V8TestInheritedLegacyUnenumerableNamedProperties::ToImpl(holder);

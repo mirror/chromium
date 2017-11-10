@@ -71,6 +71,8 @@ static_assert(
 namespace TestInterfaceNodeV8Internal {
 
 static void nodeNameAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceNode* impl = V8TestInterfaceNode::ToImpl(holder);
@@ -80,7 +82,7 @@ static void nodeNameAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& i
 
 static void nodeNameAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  V8CallbackHookScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -96,6 +98,8 @@ static void nodeNameAttributeSetter(v8::Local<v8::Value> v8Value, const v8::Func
 }
 
 static void stringAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceNode* impl = V8TestInterfaceNode::ToImpl(holder);
@@ -105,7 +109,7 @@ static void stringAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Va
 
 static void stringAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  V8CallbackHookScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -121,6 +125,8 @@ static void stringAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v
 }
 
 static void readonlyTestInterfaceEmptyAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceNode* impl = V8TestInterfaceNode::ToImpl(holder);
@@ -129,6 +135,8 @@ static void readonlyTestInterfaceEmptyAttributeAttributeGetter(const v8::Functio
 }
 
 static void eventHandlerAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceNode* impl = V8TestInterfaceNode::ToImpl(holder);
@@ -140,7 +148,7 @@ static void eventHandlerAttributeAttributeGetter(const v8::FunctionCallbackInfo<
 
 static void eventHandlerAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  V8CallbackHookScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -153,6 +161,8 @@ static void eventHandlerAttributeAttributeSetter(v8::Local<v8::Value> v8Value, c
 }
 
 static void perWorldBindingsReadonlyTestInterfaceEmptyAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceNode* impl = V8TestInterfaceNode::ToImpl(holder);
@@ -161,6 +171,8 @@ static void perWorldBindingsReadonlyTestInterfaceEmptyAttributeAttributeGetter(c
 }
 
 static void perWorldBindingsReadonlyTestInterfaceEmptyAttributeAttributeGetterForMainWorld(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceNode* impl = V8TestInterfaceNode::ToImpl(holder);
@@ -169,6 +181,8 @@ static void perWorldBindingsReadonlyTestInterfaceEmptyAttributeAttributeGetterFo
 }
 
 static void reflectStringAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceNode* impl = V8TestInterfaceNode::ToImpl(holder);
@@ -178,7 +192,7 @@ static void reflectStringAttributeAttributeGetter(const v8::FunctionCallbackInfo
 
 static void reflectStringAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  V8CallbackHookScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -196,6 +210,8 @@ static void reflectStringAttributeAttributeSetter(v8::Local<v8::Value> v8Value, 
 }
 
 static void reflectUrlStringAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceNode* impl = V8TestInterfaceNode::ToImpl(holder);
@@ -205,7 +221,7 @@ static void reflectUrlStringAttributeAttributeGetter(const v8::FunctionCallbackI
 
 static void reflectUrlStringAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  V8CallbackHookScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -377,30 +393,35 @@ void V8TestInterfaceNode::reflectUrlStringAttributeAttributeSetterCallback(const
 }
 
 void V8TestInterfaceNode::testInterfaceEmptyMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceNode_testInterfaceEmptyMethod");
 
   TestInterfaceNodeV8Internal::testInterfaceEmptyMethodMethod(info);
 }
 
 void V8TestInterfaceNode::perWorldBindingsTestInterfaceEmptyMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceNode_perWorldBindingsTestInterfaceEmptyMethod");
 
   TestInterfaceNodeV8Internal::perWorldBindingsTestInterfaceEmptyMethodMethod(info);
 }
 
 void V8TestInterfaceNode::perWorldBindingsTestInterfaceEmptyMethodMethodCallbackForMainWorld(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceNode_perWorldBindingsTestInterfaceEmptyMethod");
 
   TestInterfaceNodeV8Internal::perWorldBindingsTestInterfaceEmptyMethodMethodForMainWorld(info);
 }
 
 void V8TestInterfaceNode::perWorldBindingsTestInterfaceEmptyMethodOptionalBooleanArgMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceNode_perWorldBindingsTestInterfaceEmptyMethodOptionalBooleanArg");
 
   TestInterfaceNodeV8Internal::perWorldBindingsTestInterfaceEmptyMethodOptionalBooleanArgMethod(info);
 }
 
 void V8TestInterfaceNode::perWorldBindingsTestInterfaceEmptyMethodOptionalBooleanArgMethodCallbackForMainWorld(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8CallbackHookScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceNode_perWorldBindingsTestInterfaceEmptyMethodOptionalBooleanArg");
 
   TestInterfaceNodeV8Internal::perWorldBindingsTestInterfaceEmptyMethodOptionalBooleanArgMethodForMainWorld(info);

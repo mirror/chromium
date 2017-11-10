@@ -53,6 +53,17 @@ struct WrapperTypeInfo;
 
 typedef WTF::Vector<DOMDataStore*> DOMDataStoreList;
 
+class V8PerIsolateData;
+
+class PLATFORM_EXPORT V8CallbackHookScope {
+ public:
+  explicit V8CallbackHookScope(v8::Isolate*);
+  ~V8CallbackHookScope();
+
+ private:
+  V8PerIsolateData* per_isolate_data_;
+};
+
 // Used to hold data that is associated with a single v8::Isolate object, and
 // has a 1:1 relationship with v8::Isolate.
 class PLATFORM_EXPORT V8PerIsolateData {
@@ -197,6 +208,16 @@ class PLATFORM_EXPORT V8PerIsolateData {
   void RunEndOfScopeTasks();
   void ClearEndOfScopeTasks();
 
+  void set_running_top_level_script(bool b) {
+    is_running_top_level_script_ = b;
+  }
+  bool is_running_top_level_script() const {
+    return is_running_top_level_script_;
+  }
+  void EnterNestedLoopCheckpoint();
+  void LeaveNestedLoopCheckpoint();
+  void RunNestedLoopCheckpoint();
+
   void SetThreadDebugger(std::unique_ptr<Data>);
   Data* ThreadDebugger();
 
@@ -308,6 +329,8 @@ class PLATFORM_EXPORT V8PerIsolateData {
 
   bool is_handling_recursion_level_error_;
   bool is_reporting_exception_;
+  bool is_running_top_level_script_ = false;
+  int preemption_checkpoint_nest_level_ = 0;
 
   Vector<std::unique_ptr<EndOfScopeTask>> end_of_scope_tasks_;
   std::unique_ptr<Data> thread_debugger_;

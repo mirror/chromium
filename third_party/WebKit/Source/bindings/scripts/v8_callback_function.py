@@ -25,6 +25,7 @@ CALLBACK_FUNCTION_CPP_INCLUDES = frozenset([
     'bindings/core/v8/ToV8ForCore.h',
     'bindings/core/v8/V8BindingForCore.h',
     'core/dom/ExecutionContext.h',
+    'platform/bindings/V8PerIsolateData.h',
     'platform/wtf/Assertions.h',
 ])
 

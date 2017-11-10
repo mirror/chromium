@@ -27,6 +27,7 @@
 
 #include <algorithm>
 #include "bindings/core/v8/ScriptStreamer.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/Document.h"
 #include "core/dom/ScriptLoader.h"
 #include "platform/heap/Handle.h"
@@ -231,11 +232,22 @@ void ScriptRunner::ExecuteTask() {
   if (is_suspended_)
     return;
 
-  if (ExecuteAsyncTask())
-    return;
+  TRACE_EVENT0("tzik", "ScriptRunner::ExecuteTask");
+  V8PerIsolateData* data = V8PerIsolateData::From(ToIsolate(document_));
+  bool old_value = data->is_running_top_level_script();
+  data->set_running_top_level_script(true);
 
-  if (ExecuteInOrderTask())
+  if (ExecuteAsyncTask()) {
+    data->set_running_top_level_script(old_value);
     return;
+  }
+
+  if (ExecuteInOrderTask()) {
+    data->set_running_top_level_script(old_value);
+    return;
+  }
+
+  data->set_running_top_level_script(old_value);
 
 #ifndef NDEBUG
   // Extra tasks should be posted only when we resume after suspending,
