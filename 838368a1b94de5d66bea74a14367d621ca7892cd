@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69c48ad9_6a42bda1",
+        "filename": "content/test/data/media/peerconnection-call.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-10T15:21:02Z",
+      "side": 1,
+      "message": "Can you add a TODO to fix  or disable that test this? I don\u0027t think any test using hangup() should wait for 1 second to avoid this flake.",
+      "revId": "838368a1b94de5d66bea74a14367d621ca7892cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
