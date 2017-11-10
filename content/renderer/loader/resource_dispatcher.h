@@ -119,7 +119,8 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
       blink::WebURLRequest::LoadingIPCType ipc_type,
       mojom::URLLoaderFactory* url_loader_factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
-      mojo::ScopedDataPipeConsumerHandle consumer_handle);
+      mojom::URLLoaderPtr url_loader,
+      mojom::URLLoaderClientRequest url_loader_client);
 
   // Removes a request from the |pending_requests_| list, returning true if the
   // request was found and removed.
@@ -262,9 +263,9 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
   // invocations will return current time until set_io_timestamp is called.
   base::TimeTicks ConsumeIOTimestamp();
 
-  void ContinueForNavigation(
-      int request_id,
-      mojo::ScopedDataPipeConsumerHandle consumer_handle);
+  void ContinueForNavigation(int request_id,
+                             mojom::URLLoaderPtr url_loader,
+                             mojom::URLLoaderClientRequest url_loader_client);
 
   // Returns true if the message passed in is a resource related message.
   static bool IsResourceDispatcherMessage(const IPC::Message& message);

@@ -524,7 +524,8 @@ class CONTENT_EXPORT RenderFrameImpl
       const GURL& body_url,
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
-      mojo::ScopedDataPipeConsumerHandle body_data,
+      mojom::URLLoaderPtr url_loader,
+      mojom::URLLoaderClientRequest url_loader_client,
       base::Optional<URLLoaderFactoryBundle> subresource_loaders) override;
 
   // mojom::HostZoom implementation:

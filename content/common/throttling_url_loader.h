@@ -78,6 +78,11 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
     forwarding_client_ = client;
   }
 
+  // Disconnect the forwarding client and the URLLoader. Move the datapipe
+  // endpoints into |url_loader_client| and |url_loader|.
+  void Unbind(mojom::URLLoaderPtr* url_loader,
+              mojom::URLLoaderClientRequest* url_loader_client);
+
  private:
   class ForwardingThrottleDelegate;
 
