@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/gpu/chrome_arc_video_decode_accelerator.h"
+#include "chrome/gpu/chrome_arc_video_decode_accelerator_deprecated.h"
 
 #include "base/callback_helpers.h"
 #include "base/logging.h"
@@ -31,9 +31,9 @@ const int kMaxConcurrentClients = 8;
 
 }  // anonymous namespace
 
-int ChromeArcVideoDecodeAccelerator::client_count_ = 0;
+int ChromeArcVideoDecodeAcceleratorDeprecated::client_count_ = 0;
 
-ChromeArcVideoDecodeAccelerator::InputRecord::InputRecord(
+ChromeArcVideoDecodeAcceleratorDeprecated::InputRecord::InputRecord(
     int32_t bitstream_buffer_id,
     uint32_t buffer_index,
     int64_t timestamp)
@@ -41,16 +41,19 @@ ChromeArcVideoDecodeAccelerator::InputRecord::InputRecord(
       buffer_index(buffer_index),
       timestamp(timestamp) {}
 
-ChromeArcVideoDecodeAccelerator::InputBufferInfo::InputBufferInfo() = default;
+ChromeArcVideoDecodeAcceleratorDeprecated::InputBufferInfo::InputBufferInfo() =
+    default;
 
-ChromeArcVideoDecodeAccelerator::InputBufferInfo::~InputBufferInfo() {
+ChromeArcVideoDecodeAcceleratorDeprecated::InputBufferInfo::~InputBufferInfo() {
   if (shm_handle.OwnershipPassesToIPC())
     shm_handle.Close();
 }
 
-ChromeArcVideoDecodeAccelerator::OutputBufferInfo::OutputBufferInfo() = default;
+ChromeArcVideoDecodeAcceleratorDeprecated::OutputBufferInfo::
+    OutputBufferInfo() = default;
 
-ChromeArcVideoDecodeAccelerator::OutputBufferInfo::~OutputBufferInfo() {
+ChromeArcVideoDecodeAcceleratorDeprecated::OutputBufferInfo::
+    ~OutputBufferInfo() {
   if (!gpu_memory_buffer_handle.is_null()) {
     for (const auto& fd : gpu_memory_buffer_handle.native_pixmap_handle.fds) {
       // Close the fd by wrapping it in a ScopedFD and letting
@@ -60,9 +63,10 @@ ChromeArcVideoDecodeAccelerator::OutputBufferInfo::~OutputBufferInfo() {
   }
 }
 
-ChromeArcVideoDecodeAccelerator::ChromeArcVideoDecodeAccelerator(
-    const gpu::GpuPreferences& gpu_preferences,
-    ProtectedBufferManager* protected_buffer_manager)
+ChromeArcVideoDecodeAcceleratorDeprecated::
+    ChromeArcVideoDecodeAcceleratorDeprecated(
+        const gpu::GpuPreferences& gpu_preferences,
+        ProtectedBufferManager* protected_buffer_manager)
     : arc_client_(nullptr),
       next_bitstream_buffer_id_(0),
       output_pixel_format_(media::PIXEL_FORMAT_UNKNOWN),
@@ -71,16 +75,18 @@ ChromeArcVideoDecodeAccelerator::ChromeArcVideoDecodeAccelerator(
       gpu_preferences_(gpu_preferences),
       protected_buffer_manager_(protected_buffer_manager) {}
 
-ChromeArcVideoDecodeAccelerator::~ChromeArcVideoDecodeAccelerator() {
+ChromeArcVideoDecodeAcceleratorDeprecated::
+    ~ChromeArcVideoDecodeAcceleratorDeprecated() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (vda_) {
     client_count_--;
   }
 }
 
-ArcVideoDecodeAccelerator::Result ChromeArcVideoDecodeAccelerator::Initialize(
+ArcVideoDecodeAcceleratorDeprecated::Result
+ChromeArcVideoDecodeAcceleratorDeprecated::Initialize(
     const Config& config,
-    ArcVideoDecodeAccelerator::Client* client) {
+    ArcVideoDecodeAcceleratorDeprecated::Client* client) {
   auto result = InitializeTask(config, client);
   // Report initialization status to UMA.
   UMA_HISTOGRAM_ENUMERATION(
@@ -89,12 +95,13 @@ ArcVideoDecodeAccelerator::Result ChromeArcVideoDecodeAccelerator::Initialize(
   return result;
 }
 
-ArcVideoDecodeAccelerator::Result
-ChromeArcVideoDecodeAccelerator::InitializeTask(
+ArcVideoDecodeAcceleratorDeprecated::Result
+ChromeArcVideoDecodeAcceleratorDeprecated::InitializeTask(
     const Config& config,
-    ArcVideoDecodeAccelerator::Client* client) {
+    ArcVideoDecodeAcceleratorDeprecated::Client* client) {
   DVLOG(5) << "Initialize(input_pixel_format=" << config.input_pixel_format
            << ", num_input_buffers=" << config.num_input_buffers << ")";
+
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(client);
 
@@ -157,8 +164,10 @@ ChromeArcVideoDecodeAccelerator::InitializeTask(
   return SUCCESS;
 }
 
-void ChromeArcVideoDecodeAccelerator::SetNumberOfOutputBuffers(size_t number) {
+void ChromeArcVideoDecodeAcceleratorDeprecated::SetNumberOfOutputBuffers(
+    size_t number) {
   DVLOG(5) << "SetNumberOfOutputBuffers(" << number << ")";
+
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (!vda_) {
     DLOG(ERROR) << "VDA not initialized";
@@ -183,7 +192,7 @@ void ChromeArcVideoDecodeAccelerator::SetNumberOfOutputBuffers(size_t number) {
   buffers_pending_import_.resize(number);
 }
 
-bool ChromeArcVideoDecodeAccelerator::AllocateProtectedBuffer(
+bool ChromeArcVideoDecodeAcceleratorDeprecated::AllocateProtectedBuffer(
     PortType port,
     uint32_t index,
     base::ScopedFD handle_fd,
@@ -237,11 +246,12 @@ bool ChromeArcVideoDecodeAccelerator::AllocateProtectedBuffer(
   return true;
 }
 
-void ChromeArcVideoDecodeAccelerator::BindSharedMemory(PortType port,
-                                                       uint32_t index,
-                                                       base::ScopedFD ashmem_fd,
-                                                       off_t offset,
-                                                       size_t length) {
+void ChromeArcVideoDecodeAcceleratorDeprecated::BindSharedMemory(
+    PortType port,
+    uint32_t index,
+    base::ScopedFD ashmem_fd,
+    off_t offset,
+    size_t length) {
   DVLOG(5) << "ArcGVDA::BindSharedMemory, offset: " << offset
            << ", length: " << length;
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -276,7 +286,7 @@ void ChromeArcVideoDecodeAccelerator::BindSharedMemory(PortType port,
   input_buffer_info_[index] = std::move(input_info);
 }
 
-bool ChromeArcVideoDecodeAccelerator::VerifyDmabuf(
+bool ChromeArcVideoDecodeAcceleratorDeprecated::VerifyDmabuf(
     const base::ScopedFD& dmabuf_fd,
     const std::vector<::arc::VideoFramePlane>& planes) const {
   size_t num_planes = media::VideoFrame::NumPlanes(output_pixel_format_);
@@ -314,7 +324,7 @@ bool ChromeArcVideoDecodeAccelerator::VerifyDmabuf(
   return true;
 }
 
-void ChromeArcVideoDecodeAccelerator::BindDmabuf(
+void ChromeArcVideoDecodeAcceleratorDeprecated::BindDmabuf(
     PortType port,
     uint32_t index,
     base::ScopedFD dmabuf_fd,
@@ -361,7 +371,7 @@ void ChromeArcVideoDecodeAccelerator::BindDmabuf(
 #endif
 }
 
-void ChromeArcVideoDecodeAccelerator::UseBuffer(
+void ChromeArcVideoDecodeAcceleratorDeprecated::UseBuffer(
     PortType port,
     uint32_t index,
     const BufferMetadata& metadata) {
@@ -427,7 +437,7 @@ void ChromeArcVideoDecodeAccelerator::UseBuffer(
   }
 }
 
-void ChromeArcVideoDecodeAccelerator::Reset() {
+void ChromeArcVideoDecodeAcceleratorDeprecated::Reset() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (!vda_) {
     DLOG(ERROR) << "VDA not initialized";
@@ -436,7 +446,7 @@ void ChromeArcVideoDecodeAccelerator::Reset() {
   vda_->Reset();
 }
 
-void ChromeArcVideoDecodeAccelerator::Flush() {
+void ChromeArcVideoDecodeAcceleratorDeprecated::Flush() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (!vda_) {
     DLOG(ERROR) << "VDA not initialized";
@@ -445,7 +455,7 @@ void ChromeArcVideoDecodeAccelerator::Flush() {
   vda_->Flush();
 }
 
-void ChromeArcVideoDecodeAccelerator::ProvidePictureBuffers(
+void ChromeArcVideoDecodeAcceleratorDeprecated::ProvidePictureBuffers(
     uint32_t requested_num_of_buffers,
     media::VideoPixelFormat output_pixel_format,
     uint32_t textures_per_buffer,
@@ -473,7 +483,7 @@ void ChromeArcVideoDecodeAccelerator::ProvidePictureBuffers(
   NotifyOutputFormatChanged();
 }
 
-void ChromeArcVideoDecodeAccelerator::NotifyOutputFormatChanged() {
+void ChromeArcVideoDecodeAcceleratorDeprecated::NotifyOutputFormatChanged() {
   VideoFormat video_format;
   switch (output_pixel_format_) {
     case media::PIXEL_FORMAT_I420:
@@ -504,12 +514,12 @@ void ChromeArcVideoDecodeAccelerator::NotifyOutputFormatChanged() {
   arc_client_->OnOutputFormatChanged(video_format);
 }
 
-void ChromeArcVideoDecodeAccelerator::DismissPictureBuffer(
+void ChromeArcVideoDecodeAcceleratorDeprecated::DismissPictureBuffer(
     int32_t picture_buffer) {
   // no-op
 }
 
-void ChromeArcVideoDecodeAccelerator::PictureReady(
+void ChromeArcVideoDecodeAcceleratorDeprecated::PictureReady(
     const media::Picture& picture) {
   DVLOG(5) << "PictureReady(picture_buffer_id=" << picture.picture_buffer_id()
            << ", bitstream_buffer_id=" << picture.bitstream_buffer_id();
@@ -536,7 +546,7 @@ void ChromeArcVideoDecodeAccelerator::PictureReady(
   arc_client_->OnBufferDone(PORT_OUTPUT, picture.picture_buffer_id(), metadata);
 }
 
-void ChromeArcVideoDecodeAccelerator::NotifyEndOfBitstreamBuffer(
+void ChromeArcVideoDecodeAcceleratorDeprecated::NotifyEndOfBitstreamBuffer(
     int32_t bitstream_buffer_id) {
   DVLOG(5) << "NotifyEndOfBitstreamBuffer(" << bitstream_buffer_id << ")";
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -549,41 +559,41 @@ void ChromeArcVideoDecodeAccelerator::NotifyEndOfBitstreamBuffer(
                             BufferMetadata());
 }
 
-void ChromeArcVideoDecodeAccelerator::NotifyFlushDone() {
+void ChromeArcVideoDecodeAcceleratorDeprecated::NotifyFlushDone() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   arc_client_->OnFlushDone();
 }
 
-void ChromeArcVideoDecodeAccelerator::NotifyResetDone() {
+void ChromeArcVideoDecodeAcceleratorDeprecated::NotifyResetDone() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   arc_client_->OnResetDone();
 }
 
-static ArcVideoDecodeAccelerator::Result ConvertErrorCode(
+static ArcVideoDecodeAcceleratorDeprecated::Result ConvertErrorCode(
     media::VideoDecodeAccelerator::Error error) {
   switch (error) {
     case media::VideoDecodeAccelerator::ILLEGAL_STATE:
-      return ArcVideoDecodeAccelerator::ILLEGAL_STATE;
+      return ArcVideoDecodeAcceleratorDeprecated::ILLEGAL_STATE;
     case media::VideoDecodeAccelerator::INVALID_ARGUMENT:
-      return ArcVideoDecodeAccelerator::INVALID_ARGUMENT;
+      return ArcVideoDecodeAcceleratorDeprecated::INVALID_ARGUMENT;
     case media::VideoDecodeAccelerator::UNREADABLE_INPUT:
-      return ArcVideoDecodeAccelerator::UNREADABLE_INPUT;
+      return ArcVideoDecodeAcceleratorDeprecated::UNREADABLE_INPUT;
     case media::VideoDecodeAccelerator::PLATFORM_FAILURE:
-      return ArcVideoDecodeAccelerator::PLATFORM_FAILURE;
+      return ArcVideoDecodeAcceleratorDeprecated::PLATFORM_FAILURE;
     default:
       DLOG(ERROR) << "Unknown error: " << error;
-      return ArcVideoDecodeAccelerator::PLATFORM_FAILURE;
+      return ArcVideoDecodeAcceleratorDeprecated::PLATFORM_FAILURE;
   }
 }
 
-void ChromeArcVideoDecodeAccelerator::NotifyError(
+void ChromeArcVideoDecodeAcceleratorDeprecated::NotifyError(
     media::VideoDecodeAccelerator::Error error) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DLOG(ERROR) << "Error notified: " << error;
   arc_client_->OnError(ConvertErrorCode(error));
 }
 
-void ChromeArcVideoDecodeAccelerator::CreateInputRecord(
+void ChromeArcVideoDecodeAcceleratorDeprecated::CreateInputRecord(
     int32_t bitstream_buffer_id,
     uint32_t buffer_index,
     int64_t timestamp) {
@@ -600,8 +610,9 @@ void ChromeArcVideoDecodeAccelerator::CreateInputRecord(
     input_records_.pop_back();
 }
 
-ChromeArcVideoDecodeAccelerator::InputRecord*
-ChromeArcVideoDecodeAccelerator::FindInputRecord(int32_t bitstream_buffer_id) {
+ChromeArcVideoDecodeAcceleratorDeprecated::InputRecord*
+ChromeArcVideoDecodeAcceleratorDeprecated::FindInputRecord(
+    int32_t bitstream_buffer_id) {
   for (auto& record : input_records_) {
     if (record.bitstream_buffer_id == bitstream_buffer_id)
       return &record;
@@ -609,7 +620,7 @@ ChromeArcVideoDecodeAccelerator::FindInputRecord(int32_t bitstream_buffer_id) {
   return nullptr;
 }
 
-bool ChromeArcVideoDecodeAccelerator::ValidatePortAndIndex(
+bool ChromeArcVideoDecodeAcceleratorDeprecated::ValidatePortAndIndex(
     PortType port,
     uint32_t index) const {
   switch (port) {
