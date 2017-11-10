@@ -16,6 +16,24 @@
       "revId": "25e522d789733ef63b5a776d7b5d778df9d54af9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77878f4e_27eb7336",
+        "filename": "ui/compositor/compositor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-10T00:18:57Z",
+      "side": 1,
+      "message": "Gerrit never emailed this :(",
+      "parentUuid": "e992468e_7f937d41",
+      "revId": "25e522d789733ef63b5a776d7b5d778df9d54af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
