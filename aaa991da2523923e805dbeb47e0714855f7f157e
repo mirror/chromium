@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6500b74e_8a23638e",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRect.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-10T19:28:03Z",
+      "side": 1,
+      "message": "Yes. The modified FloatClipRectTest covers this.",
+      "parentUuid": "c3d0ab14_00f0aa7a",
+      "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce0f6590_66723c1f",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRect.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-10T17:08:25Z",
       "side": 1,
       "message": "Why does rectilinear suffice? It\u0027s not immediately obvious to me why\nthere can\u0027t be a lossy matrix which happens to result in a\nrectilinear output. Either this needs a proof or you need to change it\nto check for certain types of matrices like translation or scale.",
+      "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d5514f_3de84d88",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRect.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-10T19:28:03Z",
+      "side": 1,
+      "message": "The proof might be to prove that any transformation on a straight line results a straight line, then any transformation on a quad is lossless. I\u0027m not sure if it\u0027s correct. checking for types seems safer and clearer. Done.",
+      "parentUuid": "ce0f6590_66723c1f",
       "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "780c471a_a98c05c2",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRectTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-10T19:28:03Z",
+      "side": 1,
+      "message": "Line 58 and 59 expect that HasRadius and !IsTight are propagated from both inputs of intersection.",
+      "parentUuid": "7d786000_b4a51b7b",
+      "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "008eeec4_b72a32ce",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRectTest.cpp",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-10T17:08:25Z",
       "side": 1,
       "message": "Is under rotation a case we can actually handle anyway?",
+      "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0efa52_d692bc19",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRectTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-10T19:28:03Z",
+      "side": 1,
+      "message": "Sorry, what\u0027s \"under rotation\"? Is it related to the quad.IsRectilinear condition?",
+      "parentUuid": "008eeec4_b72a32ce",
       "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08ae29b2_8fc0cbc1",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-10T19:28:03Z",
+      "side": 0,
+      "message": "This is not intentional. Reverted.",
+      "parentUuid": "109f70db_87280545",
+      "revId": "7f1c5627aef1313223c30509b1d6cf7eb50c2993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b408eb86_3ea8ac1d",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTest.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "7f1c5627aef1313223c30509b1d6cf7eb50c2993",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3deda687_106bb465",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-10T19:28:03Z",
+      "side": 0,
+      "message": "Done: https://chromium-review.googlesource.com/c/chromium/src/+/764046",
+      "parentUuid": "b408eb86_3ea8ac1d",
+      "revId": "7f1c5627aef1313223c30509b1d6cf7eb50c2993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
