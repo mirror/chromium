@@ -75,6 +75,10 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   bool IsCurrentScreenOrientationLandscape() const;
   bool IsCurrentScreenOrientationPrimary() const;
 
+  // Returns true if for the current screen orientation LEFT does not literally
+  // mean the left side or the top side of the screen.
+  bool IsCurrentScreenOrientationInverted() const;
+
   // Snaps window to left/right.
   void SnapWindow(aura::Window* window, SnapPosition snap_position);
 

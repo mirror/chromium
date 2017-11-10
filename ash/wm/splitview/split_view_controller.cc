@@ -136,6 +136,12 @@ bool SplitViewController::IsCurrentScreenOrientationPrimary() const {
          screen_orientation_ == blink::kWebScreenOrientationLockPortraitPrimary;
 }
 
+bool SplitViewController::IsCurrentScreenOrientationInverted() const {
+  return screen_orientation_ ==
+             blink::kWebScreenOrientationLockLandscapeSecondary ||
+         screen_orientation_ == blink::kWebScreenOrientationLockPortraitPrimary;
+}
+
 void SplitViewController::SnapWindow(aura::Window* window,
                                      SnapPosition snap_position) {
   DCHECK(window && CanSnap(window));
