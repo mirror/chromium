@@ -22,6 +22,30 @@
       "revId": "d3b52b81edec3b76818abd6c30209eb7e2359ba6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d300fa_5281b162",
+        "filename": "chrome/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-10T19:46:23Z",
+      "side": 1,
+      "message": "There\u0027s ~260 unique extensions in chrome/ but ya, most of them don\u0027t need to be checked. I\u0027ll narrow the list down to c/cc/cpp/h/m/mm.",
+      "parentUuid": "43908092_0b964936",
+      "range": {
+        "startLine": 77,
+        "startChar": 21,
+        "endLine": 78,
+        "endChar": 73
+      },
+      "revId": "d3b52b81edec3b76818abd6c30209eb7e2359ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
