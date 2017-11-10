@@ -1278,7 +1278,8 @@ void CrasAudioHandler::HandleHotPlugDevice(
 
   // Whenever 35mm headphone is hot plugged, always pick it as the active
   // output device.
-  if (hotplug_device.type == AUDIO_TYPE_HEADPHONE) {
+  if (hotplug_device.type == AUDIO_TYPE_HEADPHONE ||
+      hotplug_device.type == AUDIO_TYPE_MIC) {
     SwitchToDevice(hotplug_device, true, ACTIVATE_BY_USER);
     return;
   }
