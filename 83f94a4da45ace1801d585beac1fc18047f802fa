@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "d3ba89fa_6385faaa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-11-10T11:27:32Z",
+      "side": 1,
+      "message": "I\u0027ve inlined them. Fingers crossed.",
+      "parentUuid": "f508cbc4_5d406696",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 13
+      },
+      "revId": "83f94a4da45ace1801d585beac1fc18047f802fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55f0326c_13854060",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
         "patchSetId": 1
@@ -68,6 +92,30 @@
       "revId": "83f94a4da45ace1801d585beac1fc18047f802fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51eff745_0fcbc9cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-11-10T11:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55f0326c_13854060",
+      "range": {
+        "startLine": 80,
+        "startChar": 46,
+        "endLine": 81,
+        "endChar": 19
+      },
+      "revId": "83f94a4da45ace1801d585beac1fc18047f802fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
