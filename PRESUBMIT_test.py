@@ -193,6 +193,20 @@ class InvalidOSMacroNamesTest(unittest.TestCase):
         MockInputApi(), MockFile('some/path/foo_platform.cc', lines))
     self.assertEqual(0, len(errors))
 
+  def testChromeDoesNotUseOSIOS(self):
+    lines = ['#if defined(OS_IOS)']
+    errors = PRESUBMIT._CheckForInvalidOSMacrosInFile(
+        MockInputApi(), MockFile('chrome/path/foo_platform.cc', lines))
+    self.assertEqual(1, len(errors))
+    self.assertTrue('chrome/path/foo_platform.cc:1' in errors[0])
+    self.assertTrue('OS_IOS is not used in chrome/' in errors[0])
+
+  def testComponentsDoesUseOSIOS(self):
+    lines = ['#if defined(OS_IOS)']
+    errors = PRESUBMIT._CheckForInvalidOSMacrosInFile(
+        MockInputApi(), MockFile('components/path/foo_platform.cc', lines))
+    self.assertEqual(0, len(errors))
+
 
 class InvalidIfDefinedMacroNamesTest(unittest.TestCase):
   def testInvalidIfDefinedMacroNames(self):

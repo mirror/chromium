@@ -2571,6 +2571,10 @@ def _CheckForInvalidOSMacrosInFile(input_api, f):
                                              lnum,
                                              match.group(1),
                                              did_you_mean))
+        if f.LocalPath().startswith('chrome/') and match.group(1) == 'OS_IOS':
+          results.append('    %s:%d OS_IOS is not used in chrome/' %
+                         (f.LocalPath(), lnum))
+
   return results
 
 
