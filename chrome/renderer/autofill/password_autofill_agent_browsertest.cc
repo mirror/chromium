@@ -16,6 +16,7 @@
 #include "chrome/test/base/chrome_render_view_test.h"
 #include "components/autofill/content/renderer/autofill_agent.h"
 #include "components/autofill/content/renderer/form_autofill_util.h"
+#include "components/autofill/content/renderer/interacted_form_tracker.h"
 #include "components/autofill/content/renderer/test_password_autofill_agent.h"
 #include "components/autofill/content/renderer/test_password_generation_agent.h"
 #include "components/autofill/core/common/autofill_constants.h"
@@ -42,6 +43,7 @@
 #include "third_party/WebKit/public/web/WebView.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 
+using autofill::InteractedFormTracker;
 using autofill::PasswordForm;
 using base::ASCIIToUTF16;
 using base::UTF16ToUTF8;
@@ -1877,7 +1879,8 @@ TEST_F(PasswordAutofillAgentTest, RememberFieldPropertiesOnInPageNavigation) {
       "username.style = 'display:none';";
   ExecuteJavaScriptForTests(hide_elements.c_str());
 
-  password_autofill_agent_->AJAXSucceeded();
+  password_autofill_agent_->OnSuccessfulSubmission(
+      InteractedFormTracker::Observer::SubmissionSource::XHR_SUCCEEDED);
 
   std::map<base::string16, FieldPropertiesMask> expected_properties_masks;
   expected_properties_masks[ASCIIToUTF16("username")] =
@@ -1896,7 +1899,8 @@ TEST_F(PasswordAutofillAgentTest, RememberFieldPropertiesOnInPageNavigation_2) {
   SimulateUsernameTyping("Bob");
   SimulatePasswordTyping("mypassword");
 
-  password_autofill_agent_->AJAXSucceeded();
+  password_autofill_agent_->OnSuccessfulSubmission(
+      InteractedFormTracker::Observer::SubmissionSource::XHR_SUCCEEDED);
 
   std::string hide_elements =
       "var password = document.getElementById('password');"
@@ -2499,7 +2503,8 @@ TEST_F(PasswordAutofillAgentTest, NoForm_PromptForAJAXSubmitWithoutNavigation) {
       "username.style = 'display:none';";
   ExecuteJavaScriptForTests(hide_elements.c_str());
 
-  password_autofill_agent_->AJAXSucceeded();
+  password_autofill_agent_->OnSuccessfulSubmission(
+      InteractedFormTracker::Observer::SubmissionSource::XHR_SUCCEEDED);
 
   ExpectInPageNavigationWithUsernameAndPasswords(
       "Bob", "mypassword", "",
@@ -2514,7 +2519,8 @@ TEST_F(PasswordAutofillAgentTest,
   SimulateUsernameTyping("Bob");
   SimulatePasswordTyping("mypassword");
 
-  password_autofill_agent_->AJAXSucceeded();
+  password_autofill_agent_->OnSuccessfulSubmission(
+      InteractedFormTracker::Observer::SubmissionSource::XHR_SUCCEEDED);
 
   std::string hide_elements =
       "var password = document.getElementById('password');"
@@ -2538,7 +2544,8 @@ TEST_F(PasswordAutofillAgentTest,
   SimulateUsernameTyping("Bob");
   SimulatePasswordTyping("mypassword");
 
-  password_autofill_agent_->AJAXSucceeded();
+  password_autofill_agent_->OnSuccessfulSubmission(
+      InteractedFormTracker::Observer::SubmissionSource::XHR_SUCCEEDED);
 
   base::RunLoop().RunUntilIdle();
   ASSERT_FALSE(fake_driver_.called_password_form_submitted());
@@ -2567,7 +2574,8 @@ TEST_F(PasswordAutofillAgentTest,
       "var captcha = document.getElementById('captcha');"
       "captcha.style = 'display:inline';";
   ExecuteJavaScriptForTests(show_captcha.c_str());
-  password_autofill_agent_->AJAXSucceeded();
+  password_autofill_agent_->OnSuccessfulSubmission(
+      InteractedFormTracker::Observer::SubmissionSource::XHR_SUCCEEDED);
 
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(fake_driver_.called_inpage_navigation());
@@ -2590,7 +2598,8 @@ TEST_F(PasswordAutofillAgentTest,
   SimulateUsernameTyping("Bob");
   SimulatePasswordTyping("mypassword");
 
-  password_autofill_agent_->AJAXSucceeded();
+  password_autofill_agent_->OnSuccessfulSubmission(
+      InteractedFormTracker::Observer::SubmissionSource::XHR_SUCCEEDED);
 
   // Simulate captcha element show up right after AJAX completed.
   std::string show_captcha =
@@ -2628,7 +2637,8 @@ TEST_F(PasswordAutofillAgentTest,
 
   // Simulate captcha element show up right before AJAX completed.
   captcha_element.SetAttribute("style", "display:inline;");
-  password_autofill_agent_->AJAXSucceeded();
+  password_autofill_agent_->OnSuccessfulSubmission(
+      InteractedFormTracker::Observer::SubmissionSource::XHR_SUCCEEDED);
 
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(fake_driver_.called_inpage_navigation());
@@ -2656,7 +2666,8 @@ TEST_F(PasswordAutofillAgentTest,
   SimulateUsernameTyping("Bob");
   SimulatePasswordTyping("mypassword");
 
-  password_autofill_agent_->AJAXSucceeded();
+  password_autofill_agent_->OnSuccessfulSubmission(
+      InteractedFormTracker::Observer::SubmissionSource::XHR_SUCCEEDED);
 
   // Simulate captcha element show up right after AJAX completed.
   captcha_element.SetAttribute("style", "display:inline;");
@@ -2888,7 +2899,8 @@ TEST_F(PasswordAutofillAgentTest,
         "username.style = 'display:none';";
     ExecuteJavaScriptForTests(hide_elements.c_str());
 
-    password_autofill_agent_->AJAXSucceeded();
+    password_autofill_agent_->OnSuccessfulSubmission(
+        InteractedFormTracker::Observer::SubmissionSource::XHR_SUCCEEDED);
 
     ExpectInPageNavigationWithUsernameAndPasswords(
         "Alice", "mypassword", "",
@@ -2905,7 +2917,8 @@ TEST_F(PasswordAutofillAgentTest,
   SimulatePasswordTyping("mypassword");
   SimulateUsernameTyping("Alice");
 
-  password_autofill_agent_->AJAXSucceeded();
+  password_autofill_agent_->OnSuccessfulSubmission(
+      InteractedFormTracker::Observer::SubmissionSource::XHR_SUCCEEDED);
 
   // Hide form elements to simulate successful login.
   std::string hide_elements =
@@ -3142,12 +3155,14 @@ TEST_F(PasswordAutofillAgentTest, NoForm_MultipleAJAXEventsWithoutSubmission) {
   SimulateUsernameTyping("Bob");
   SimulatePasswordTyping("mypassword");
 
-  password_autofill_agent_->AJAXSucceeded();
+  password_autofill_agent_->OnSuccessfulSubmission(
+      InteractedFormTracker::Observer::SubmissionSource::XHR_SUCCEEDED);
   base::RunLoop().RunUntilIdle();
 
   // Repeatedly occurring AJAX events without removing the input elements
   // shouldn't be treated as a password submission.
-  password_autofill_agent_->AJAXSucceeded();
+  password_autofill_agent_->OnSuccessfulSubmission(
+      InteractedFormTracker::Observer::SubmissionSource::XHR_SUCCEEDED);
   base::RunLoop().RunUntilIdle();
 
   ASSERT_FALSE(fake_driver_.called_password_form_submitted());
