@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "036c26a4_d5adf2e6",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:51:14Z",
+      "side": 1,
+      "message": "nit: Might not be needed any more.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "56bfdbc125f00c64f0d458cf6e89ef7fd37ed0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2000c36c_44810f5a",
+        "filename": "components/password_manager/core/browser/password_list_sorter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:51:14Z",
+      "side": 1,
+      "message": "Let\u0027s modernise while we move the code over: use constexpr instead of const.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 5
+      },
+      "revId": "56bfdbc125f00c64f0d458cf6e89ef7fd37ed0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9a986f_08850b61",
+        "filename": "components/password_manager/core/browser/password_list_sorter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:51:14Z",
+      "side": 1,
+      "message": "ditto: constexpr",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 5
+      },
+      "revId": "56bfdbc125f00c64f0d458cf6e89ef7fd37ed0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de2f2da_ff5e4dfb",
+        "filename": "components/password_manager/core/browser/password_list_sorter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:51:14Z",
+      "side": 1,
+      "message": "Please #include \u003ctuple\u003e for std::tie.",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "56bfdbc125f00c64f0d458cf6e89ef7fd37ed0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fae3007_566cb6ea",
+        "filename": "components/password_manager/core/browser/password_list_sorter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:51:14Z",
+      "side": 1,
+      "message": "I know this seems to have worked so far, but I suspect it\u0027s only accidental that we don\u0027t get a null dereference. The compiler is free to evaluate the arguments in any order. If it first moves out the PasswordForm held by |form|, and only then dereferences |form| in the CreateSortKey call, we have undefined behaviour.\n\nTherefore I propose the following change:\n\nstd::string key \u003d CreateSortKey(*form, entry_type);\npairs.push_back(std::make_pair(std::move(key), std::move(form)));",
+      "range": {
+        "startLine": 87,
+        "startChar": 23,
+        "endLine": 87,
+        "endChar": 55
+      },
+      "revId": "56bfdbc125f00c64f0d458cf6e89ef7fd37ed0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7d7f14a_8ea5c3b0",
+        "filename": "components/password_manager/core/browser/password_list_sorter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:51:14Z",
+      "side": 1,
+      "message": "It might be enough to forward-declare and only #include in the .cc file?\nnamespace autofill {\nstruct PasswordForm;\n}",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 58
+      },
+      "revId": "56bfdbc125f00c64f0d458cf6e89ef7fd37ed0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ee6b2e_29c962a5",
+        "filename": "components/password_manager/core/browser/password_list_sorter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:51:14Z",
+      "side": 1,
+      "message": "Seems like this could go to the .cc file as well?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 71
+      },
+      "revId": "56bfdbc125f00c64f0d458cf6e89ef7fd37ed0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5173d35_79480cb0",
+        "filename": "components/password_manager/core/browser/password_list_sorter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:51:14Z",
+      "side": 1,
+      "message": "Please #include \u003cmap\u003e for the multimap.",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 17
+      },
+      "revId": "56bfdbc125f00c64f0d458cf6e89ef7fd37ed0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36dc71f_4e0b30f4",
+        "filename": "components/password_manager/core/browser/password_list_sorter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:51:14Z",
+      "side": 1,
+      "message": "If you change the argument from an array to a vector (see the comment at a callsite), we could modernise with a range-based for-loop:\nfor (const SortEntry\u0026 entry : test_entries) {",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 45
+      },
+      "revId": "56bfdbc125f00c64f0d458cf6e89ef7fd37ed0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7de2bd6_408780b7",
+        "filename": "components/password_manager/core/browser/password_list_sorter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:51:14Z",
+      "side": 1,
+      "message": "Let\u0027s spare type name duplication:\nauto form \u003d std::make_unique\u003cautofill::PasswordForm\u003e();",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 79
+      },
+      "revId": "56bfdbc125f00c64f0d458cf6e89ef7fd37ed0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb24323_2d03c757",
+        "filename": "components/password_manager/core/browser/password_list_sorter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:51:14Z",
+      "side": 1,
+      "message": "#include \u003curl/gurl.h\u003e",
+      "range": {
+        "startLine": 33,
+        "startChar": 19,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "56bfdbc125f00c64f0d458cf6e89ef7fd37ed0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce6d0bd_ea8ea325",
+        "filename": "components/password_manager/core/browser/password_list_sorter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:51:14Z",
+      "side": 1,
+      "message": "Also here, let\u0027s use range-based for loop and get rid of the counter |i|.",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 45
+      },
+      "revId": "56bfdbc125f00c64f0d458cf6e89ef7fd37ed0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fdb119c_fbd8619d",
+        "filename": "components/password_manager/core/browser/password_list_sorter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-10T08:51:14Z",
+      "side": 1,
+      "message": "To get rid of the arraysize and allow range-based for loops, what about using a std::vector\u003cSortEntry\u003e instead of the array? The initialisation should work the same with the braces syntax and SortAndCheckPositions could get rid of the second argument completely.",
+      "range": {
+        "startLine": 81,
+        "startChar": 36,
+        "endLine": 81,
+        "endChar": 45
+      },
+      "revId": "56bfdbc125f00c64f0d458cf6e89ef7fd37ed0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
