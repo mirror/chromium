@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "520e4bd1_221d2f5c",
+        "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureElements.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-11-10T17:23:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09f7c1a8_38987adf",
+      "revId": "4ab929b9c5a1f0f1027ee71b0b9b9fb03e691b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb35b1b4_f8c41227",
         "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureElements.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a3b19462_84ca1ed5",
+        "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureElements.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-11-10T17:23:51Z",
+      "side": 1,
+      "message": "It looks like HTMLDivElement has a protected constructor, so I do need to make this class.",
+      "parentUuid": "fb35b1b4_f8c41227",
+      "revId": "4ab929b9c5a1f0f1027ee71b0b9b9fb03e691b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1182123_310285af",
         "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureInterstitial.h",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-27T13:39:54Z",
       "side": 1,
       "message": "nit: override?",
+      "revId": "4ab929b9c5a1f0f1027ee71b0b9b9fb03e691b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35754cb7_e3ef78fb",
+        "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureInterstitial.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-11-10T17:23:51Z",
+      "side": 1,
+      "message": "This doesn\u0027t override anything, just used when tracing the dom.",
+      "parentUuid": "a1182123_310285af",
       "revId": "4ab929b9c5a1f0f1027ee71b0b9b9fb03e691b73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
