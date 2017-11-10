@@ -63183,6 +63183,30 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Power.IdleScreenDimCountDaily">
+  <owner>derat@chromium.org</owner>
+  <summary>
+    Number of times that that the screen has been dimmed in response to user
+    inactivity, reported daily. Chrome OS only.
+  </summary>
+</histogram>
+
+<histogram name="Power.IdleScreenOffCountDaily">
+  <owner>derat@chromium.org</owner>
+  <summary>
+    Number of times that that the screen has been turned off in response to user
+    inactivity, reported daily. Chrome OS only.
+  </summary>
+</histogram>
+
+<histogram name="Power.IdleSuspendCountDaily">
+  <owner>derat@chromium.org</owner>
+  <summary>
+    Number of times that that the system has suspended in response to user
+    inactivity, reported daily. Chrome OS only.
+  </summary>
+</histogram>
+
 <histogram name="Power.IdleTimeAfterDimOnAC" units="ms">
   <owner>derat@chromium.org</owner>
   <summary>
@@ -63277,6 +63301,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     The length of time, in seconds, that a user spent in a single session.
     Values for this metric are clamped to 12 hours, so the last bucket should be
     considered to be including all metrics above 12 hours.
+  </summary>
+</histogram>
+
+<histogram name="Power.MetricsDailyEventInterval" enum="DailyEventIntervalType">
+  <owner>derat@chromium.org</owner>
+  <summary>
+    Reasons why power-management-related daily metrics were reported. Chrome OS
+    only.
   </summary>
 </histogram>
 
