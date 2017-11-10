@@ -53,6 +53,8 @@ class ShellDevToolsBindings : public WebContentsObserver,
                           const base::Value* arg3);
   ~ShellDevToolsBindings() override;
 
+  WebContents* inspected_contents() { return inspected_contents_; }
+
  protected:
   // content::DevToolsAgentHostClient implementation.
   void AgentHostClosed(DevToolsAgentHost* agent_host) override;
@@ -61,6 +63,7 @@ class ShellDevToolsBindings : public WebContentsObserver,
 
   void SetPreferences(const std::string& json);
   virtual void HandleMessageFromDevToolsFrontend(const std::string& message);
+  base::WeakPtr<ShellDevToolsBindings> GetWeakPtr();
 
  private:
   // WebContentsObserver overrides

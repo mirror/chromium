@@ -388,4 +388,8 @@ void ShellDevToolsBindings::AgentHostClosed(DevToolsAgentHost* agent_host) {
     delegate_->Close();
 }
 
+base::WeakPtr<ShellDevToolsBindings> ShellDevToolsBindings::GetWeakPtr() {
+  return weak_factory_.GetWeakPtr();
+}
+
 }  // namespace content
