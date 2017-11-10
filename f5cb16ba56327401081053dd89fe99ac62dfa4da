@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51ee6b32_e1a183de",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-10T02:26:19Z",
+      "side": 1,
+      "message": "I suspect we can actually just use WebContentsImpl::FromRenderFrameHostID() ?",
+      "revId": "f5cb16ba56327401081053dd89fe99ac62dfa4da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
