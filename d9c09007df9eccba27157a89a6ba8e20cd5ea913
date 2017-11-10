@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11240946_894da8fc",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-10T22:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc0bb9aa_8a4f4def",
+      "range": {
+        "startLine": 136,
+        "startChar": 38,
+        "endLine": 136,
+        "endChar": 42
+      },
+      "revId": "d9c09007df9eccba27157a89a6ba8e20cd5ea913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8ac8c95_a67eb3cb",
         "filename": "content/renderer/render_frame_proxy.h",
         "patchSetId": 12
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "19c7fcc9_4a4986b0",
+        "filename": "content/renderer/render_frame_proxy.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-10T22:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8ac8c95_a67eb3cb",
+      "revId": "d9c09007df9eccba27157a89a6ba8e20cd5ea913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76845445_59f350e4",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 12
@@ -53,6 +95,30 @@
       "writtenOn": "2017-11-10T19:43:52Z",
       "side": 1,
       "message": "The DCHECK on line 3156 seems to imply this is only called on local roots anyway (and the is_attached_ case I would expect to be handled by the early return line 3165). What changes between line 3171 and here that would cause ShouldThrottleRendering() to now return true? Is it because the lifecycle is now past layout?\n\n(Sorry I basically don\u0027t get why this block of logic belongs here / exactly how it works...)",
+      "range": {
+        "startLine": 3194,
+        "startChar": 63,
+        "endLine": 3195,
+        "endChar": 43
+      },
+      "revId": "d9c09007df9eccba27157a89a6ba8e20cd5ea913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a0cdb7f_6da659a8",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 3195,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-10T22:17:54Z",
+      "side": 1,
+      "message": "Yes, because it is past layout, and ShouldThrottleRendering() checks past_layout_lifecycle_update_ (which is now set).\n\nI hadn\u0027t noticed this before, but it might be that the earlier ShouldThrottleRendering() was a no-op before this patch, because no local frame roots were ever throttled, including the main frame, which still isn\u0027t. It makes sense to still keep it because throttled OOPIFs that don\u0027t need new intersection observer calculations can return there.\n\nI had to add this second check because a throttled local frame root here would then proceed to try to do all the paint steps, but painting would return early, breaking assumptions in the later function calls in this method.\n\nIn the current patch I removed the !frame_-\u003eIsMainFrame() part of the condition because that is redundant, again given that main frames are never throttled.",
+      "parentUuid": "76845445_59f350e4",
       "range": {
         "startLine": 3194,
         "startChar": 63,
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "63afbff9_63df4de1",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 5230,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-10T22:17:54Z",
+      "side": 1,
+      "message": "It\u0027s not. Previously, (frame_-\u003eDeprecatedLocalOwner() \u003d\u003d nullptr) \u003d\u003e (hidden_for_throttling_ \u003d\u003d false)\nThat is no longer true, because OOPIF local frame roots.",
+      "parentUuid": "efbb3ef0_6819f7a0",
+      "revId": "d9c09007df9eccba27157a89a6ba8e20cd5ea913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c26d4d8_b1a6ca8e",
         "filename": "third_party/WebKit/Source/core/frame/RemoteFrameClientImpl.cpp",
         "patchSetId": 12
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "e1806217_92211dbd",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameClientImpl.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-10T22:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c26d4d8_b1a6ca8e",
+      "range": {
+        "startLine": 171,
+        "startChar": 53,
+        "endLine": 171,
+        "endChar": 64
+      },
+      "revId": "d9c09007df9eccba27157a89a6ba8e20cd5ea913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49d5de52_9d713c97",
         "filename": "third_party/WebKit/Source/core/loader/EmptyClients.h",
         "patchSetId": 12
@@ -125,6 +233,30 @@
       "revId": "d9c09007df9eccba27157a89a6ba8e20cd5ea913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f780702_0983f9ef",
+        "filename": "third_party/WebKit/Source/core/loader/EmptyClients.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-10T22:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49d5de52_9d713c97",
+      "range": {
+        "startLine": 469,
+        "startChar": 36,
+        "endLine": 469,
+        "endChar": 40
+      },
+      "revId": "d9c09007df9eccba27157a89a6ba8e20cd5ea913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
