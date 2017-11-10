@@ -34,6 +34,24 @@
       "revId": "f6287b3c44a53e496b480b93137c4d159b8464b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64fe7d0e_332be11e",
+        "filename": "device/geolocation/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-10T00:22:38Z",
+      "side": 0,
+      "message": "This is needed to link successfully on Android. Previously network_location_request wasn\u0027t included in the Android build but now we are using it.\n\nI did some archaeology on this Android-exlcusion BTW: The exclusion is very old and appears to be just because Android never used NetworkLocationProvider/NetworkLocationRequest, rather than any issue on Android.",
+      "parentUuid": "39f97265_e378097e",
+      "revId": "f6287b3c44a53e496b480b93137c4d159b8464b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

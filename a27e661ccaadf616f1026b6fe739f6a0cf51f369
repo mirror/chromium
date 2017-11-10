@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cbc191e6_e151fa1a",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-10T00:22:38Z",
+      "side": 1,
+      "message": "Ah sorry, what we are waiting for is: A network change.\n\nA fuller comment would be:\n// The cached geoposition is not new enough for this client, and\n// there hasn\u0027t been a recent network change, so add the client\n// to the list of clients waiting for a network change.\n\nRenjie do you want to update the comment?",
+      "parentUuid": "c3032de8_d490478c",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc4aa95d_f1b4108c",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
         "patchSetId": 4
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "1741f0af_150aa198",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-10T00:22:38Z",
+      "side": 1,
+      "message": "Sorry, yeah, \"Ignore destructive signals\" is a terminology from NetworkChangeNotifier.\n\nA fuller comment of what I intended here would be:\n\n// Ignore network changes whose state is \"no network connection\":\n// We only update try to update position when we have a network connection.\n\nImplicit in this is a choice that, upon \"losing network connection\", we don\u0027t update waiting clients with some kind of error/unknown geoposition.\n\nHowever, shining a light on this makes me realize we should instead allow such errors to propagate to the client. And this applies down below where you noticed we are silently letting failed requests pass by instead of reporting to the client (or retrying).\n\nIn summary: I think we should delete this block of code.",
+      "parentUuid": "fc4aa95d_f1b4108c",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "378e1993_a366fa23",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
         "patchSetId": 4
@@ -65,6 +101,24 @@
       "writtenOn": "2017-11-09T14:13:01Z",
       "side": 1,
       "message": "WRT passing the WeakPtr, I assume (but please verify ;) that the cancelable task gets cancelled when it\u0027s destroyed (which it will be on the destruction of |this| since it\u0027s an ivar), and so passing the WeakPtr shouldn\u0027t be necessary here.",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5316229_0ca5c05c",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-10T00:22:38Z",
+      "side": 1,
+      "message": "Good point Colin! base::Unretained(this) would be safe here for the reason you pointed out.",
+      "parentUuid": "378e1993_a366fa23",
       "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +172,30 @@
     },
     {
       "key": {
+        "uuid": "a8a2d9ac_0f0b410a",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-10T00:22:38Z",
+      "side": 1,
+      "message": "You\u0027re right, we should pass this information to the client (or retry but I\u0027d rather let clients decide whether it is worthwhile to request again).\n\nRenjie, we shouldn\u0027t need to add any extra argument to the callback because Geoposition mojo struct (https://cs.chromium.org/chromium/src/device/geolocation/public/interfaces/geoposition.mojom?q\u003dmojom::geoposition\u0026sq\u003dpackage:chromium) already has an ErrorCode apparatus.\n\nCould you also add a test to cover this error situation? It should be doable similar to the existing tests, by responding to the TestURLRequest object with an error instead of a code 200 success.",
+      "parentUuid": "3e571d69_7a139976",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 39
+      },
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "056dfc55_136ef8dd",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
         "patchSetId": 4
@@ -129,6 +207,24 @@
       "writtenOn": "2017-11-09T14:13:01Z",
       "side": 1,
       "message": "Is it useful for clients to outlive this object (i.e., can clients still do useful things once this object has died)? If not, a better pattern might be for clients to get notified on this object\u0027s destruction and shut themselves down on that event.",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf2ec9c_9ba4b2c0",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-10T00:22:38Z",
+      "side": 1,
+      "message": "Yeah good question.\n\nNo, clients cannot do useful things after this object has died. Indeed the client has this line of code at the start of its most important method:\n  if (!notifier) return;\n\nThinking about how to do your suggestion without having the notifier have to own a vector\u003cWeakPtr\u003cclient\u003e\u003e or something ...\n\nThe clients are self-owned mojo::StrongBindings at present ...\n\nHow about this: The notifier could have a\n  vector\u003cOnceClosure\u003e on_destruction_callbacks_;\n\nAnd then at their construction time, clients could add themselves to this list via a callback bound to a weak ptr to themselves:\n  notifier-\u003eAddDestructionCallback(base::Bind(\u0026client::foo, this.GetWeakPtr());\n\nIn client::foo, the clients could self-destruct.\n\nIs something like that what you were envisaging?\n\nThis has a more predictable lifetime story (when the notifier goes away, all the clients immediately go away too) though at the cost of being slightly more complex I feel.\n\nWDYT?",
+      "parentUuid": "056dfc55_136ef8dd",
       "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -167,6 +263,24 @@
       "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c681b6d_594110f9",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-10T00:22:38Z",
+      "side": 1,
+      "message": "Yeah this was an empirical observation rather than any deeper analysis or documented expectation of behaviour of NetworkChangeNotifier.\n\nBasically: I added some logging and then tried yanking the ethernet cable on my computer. I observed a bunch of network change notifications over a number of seconds.\n\nThis made sense in hindsight. Then I figured, there are actually various scenarios where I would expect several network changes in a short time. (e.g. temporarily lose Wifi -\u003e drop to 3G -\u003e back to wifi, or connect to network 1 then VPN to network 2).\n\nBut the above reasoning is a bit hand wavy I admit.",
+      "parentUuid": "1fec87fa_692a4567",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
