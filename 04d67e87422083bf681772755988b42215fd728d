@@ -59,6 +59,40 @@
     },
     {
       "key": {
+        "uuid": "98b1be8d_564a1bac",
+        "filename": "base/command_line.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-10T03:25:31Z",
+      "side": 1,
+      "message": "I suspect the reason this did not exist is because everyone else just calls GetSwitches() on an existing CommandLine and construct a new one from it.\n\nYou can then call: *base::CommandLine::ForCurrentProcess() \u003d other_cmdline; There are a few other places that do it. Like base/test/test_suite.cc.\n\nCan you try that and see if you can avoid adding this?",
+      "revId": "04d67e87422083bf681772755988b42215fd728d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6c8253_6e99cd9d",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-10T03:25:31Z",
+      "side": 1,
+      "message": "Why not just remove the const, and use |command_line| everywhere else below?",
+      "revId": "04d67e87422083bf681772755988b42215fd728d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a302cf4_6bf29328",
         "filename": "base/test/test_suite.cc",
         "patchSetId": 8
