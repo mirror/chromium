@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e1d8d4c_cec7ed38",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-10T21:04:46Z",
+      "side": 1,
+      "message": "nit: Creates",
+      "range": {
+        "startLine": 46,
+        "startChar": 52,
+        "endLine": 46,
+        "endChar": 58
+      },
+      "revId": "8d2e1121974cf90dc1d15744325c0ea9861e24ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ec456e_02454580",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-10T21:04:46Z",
+      "side": 1,
+      "message": "nit: it\u0027s",
+      "range": {
+        "startLine": 46,
+        "startChar": 65,
+        "endLine": 46,
+        "endChar": 68
+      },
+      "revId": "8d2e1121974cf90dc1d15744325c0ea9861e24ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e1a831f_a32513d2",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-10T21:04:46Z",
+      "side": 1,
+      "message": "nit: same as above",
+      "range": {
+        "startLine": 49,
+        "startChar": 64,
+        "endLine": 50,
+        "endChar": 11
+      },
+      "revId": "8d2e1121974cf90dc1d15744325c0ea9861e24ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22c805eb_f9b1a542",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-10T21:04:46Z",
+      "side": 1,
+      "message": "nit: command_updater_",
+      "range": {
+        "startLine": 87,
+        "startChar": 18,
+        "endLine": 87,
+        "endChar": 33
+      },
+      "revId": "8d2e1121974cf90dc1d15744325c0ea9861e24ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff2d5798_59c7c817",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-10T21:04:46Z",
+      "side": 1,
+      "message": "This could just be EXPECT_TRUE or EXPECT_FALSE rather than EXPECT_EQ.",
+      "revId": "8d2e1121974cf90dc1d15744325c0ea9861e24ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
