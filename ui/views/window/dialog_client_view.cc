@@ -24,6 +24,7 @@
 #include "ui/views/view_tracker.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/window/dialog_delegate.h"
+#include "ui/views/window/dialog_observer.h"
 
 namespace views {
 
@@ -86,9 +87,15 @@ DialogClientView::DialogClientView(Widget* owner, View* contents_view)
   AddAccelerator(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));
   button_row_container_ = new ButtonRowContainer(this);
   AddChildView(button_row_container_);
+  DCHECK(GetDialogDelegate());
+  GetDialogDelegate()->AddObserver(this);
 }
 
-DialogClientView::~DialogClientView() {}
+DialogClientView::~DialogClientView() {
+  DialogDelegate* dialog = GetDialogDelegate();
+  if (dialog)
+    dialog->RemoveObserver(this);
+}
 
 void DialogClientView::AcceptWindow() {
   // Only notify the delegate once. See |delegate_allowed_close_|'s comment.
@@ -104,11 +111,6 @@ void DialogClientView::CancelWindow() {
     delegate_allowed_close_ = true;
     GetWidget()->Close();
   }
-}
-
-void DialogClientView::UpdateDialogButtons() {
-  SetupLayout();
-  InvalidateLayout();
 }
 
 void DialogClientView::SetButtonRowInsets(const gfx::Insets& insets) {
@@ -264,6 +266,15 @@ void DialogClientView::ChildVisibilityChanged(View* child) {
   if (child == extra_view_)
     UpdateDialogButtons();
   ChildPreferredSizeChanged(child);
+}
+
+void DialogClientView::OnDialogModelChanged() {
+  UpdateDialogButtons();
+}
+
+void DialogClientView::UpdateDialogButtons() {
+  SetupLayout();
+  InvalidateLayout();
 }
 
 void DialogClientView::UpdateDialogButton(LabelButton** member,
