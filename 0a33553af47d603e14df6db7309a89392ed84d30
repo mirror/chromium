@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "df611a29_258280f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-10T23:34:18Z",
+      "side": 1,
+      "message": "I\u0027ve added a final |mProgressLock| for both with the @GuardedBy annotation.",
+      "parentUuid": "4f1837b3_6d415900",
+      "revId": "0a33553af47d603e14df6db7309a89392ed84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4f98ec0_4826b17d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
         "patchSetId": 10
@@ -57,6 +75,30 @@
       "revId": "0a33553af47d603e14df6db7309a89392ed84d30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246e4615_61115141",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-10T23:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4f98ec0_4826b17d",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "0a33553af47d603e14df6db7309a89392ed84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "b24faac8_7bf9f129",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-10T23:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc5dcec8_907bc671",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 3
+      },
+      "revId": "0a33553af47d603e14df6db7309a89392ed84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db6b6aaf_47e265bd",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
         "patchSetId": 10
@@ -103,6 +169,30 @@
       "revId": "0a33553af47d603e14df6db7309a89392ed84d30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32916387_6473eeaf",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-10T23:34:18Z",
+      "side": 1,
+      "message": "No, it\u0027s used by functions in the anonymous namespace in partner_bookmarks_reader.cc that need access to it. Right now it\u0027s publicly visible, yea.",
+      "parentUuid": "db6b6aaf_47e265bd",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 9
+      },
+      "revId": "0a33553af47d603e14df6db7309a89392ed84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
