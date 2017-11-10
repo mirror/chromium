@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3227e12e_6d739e41",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-10T07:17:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ccb8939_3a736f14",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 42
+      },
+      "revId": "bf788cc83e0624e0fbf35ed9db33e0ffc60c972e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b28614a4_6d26c537",
         "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "bf788cc83e0624e0fbf35ed9db33e0ffc60c972e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5765570b_d0698a31",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-10T07:17:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b28614a4_6d26c537",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "bf788cc83e0624e0fbf35ed9db33e0ffc60c972e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8bf03e2c_515a57be",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-10T07:17:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ecb54b2_5fd4238e",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 59
+      },
+      "revId": "bf788cc83e0624e0fbf35ed9db33e0ffc60c972e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0e3e8c2_a7d0897c",
         "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6c43ddae_7069c31a",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-10T07:17:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0e3e8c2_a7d0897c",
+      "range": {
+        "startLine": 61,
+        "startChar": 18,
+        "endLine": 61,
+        "endChar": 65
+      },
+      "revId": "bf788cc83e0624e0fbf35ed9db33e0ffc60c972e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "564f2136_ae58563b",
         "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "bf788cc83e0624e0fbf35ed9db33e0ffc60c972e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54a47f7_63e74276",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-10T07:17:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "564f2136_ae58563b",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 39
+      },
+      "revId": "bf788cc83e0624e0fbf35ed9db33e0ffc60c972e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
