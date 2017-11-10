@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "cb26dac0_090525c9",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-11-10T05:45:11Z",
+      "side": 1,
+      "message": "Ah, that\u0027s fair enough. Thank you for elaborating.",
+      "parentUuid": "58b0bc71_b95200ab",
+      "revId": "013f50c19c4c3fd81576592a515e9d4d3893bd66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca6a8752_c48a3e70",
         "filename": "components/translate/core/browser/translate_manager.cc",
         "patchSetId": 4
