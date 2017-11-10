@@ -87,10 +87,6 @@ class WebRemoteFrame : public WebFrame {
   // process.
   virtual void SetReplicatedInsecureRequestPolicy(WebInsecureRequestPolicy) = 0;
 
-  // Set the frame to a unique origin that is potentially trustworthy,
-  // replicated from another process.
-  virtual void SetReplicatedPotentiallyTrustworthyUniqueOrigin(bool) = 0;
-
   virtual void DispatchLoadEventOnFrameOwner() = 0;
 
   virtual void DidStartLoading() = 0;
