@@ -9,6 +9,7 @@
 #include "components/exo/data_offer.h"
 #include "components/exo/surface.h"
 #include "ui/base/clipboard/clipboard.h"
+#include "ui/base/clipboard/clipboard_monitor.h"
 #include "ui/base/dragdrop/drag_drop_types.h"
 #include "ui/base/dragdrop/drop_target_event.h"
 
@@ -17,11 +18,13 @@ namespace exo {
 DataDevice::DataDevice(DataDeviceDelegate* delegate, FileHelper* file_helper)
     : delegate_(delegate), file_helper_(file_helper), data_offer_(nullptr) {
   WMHelper::GetInstance()->AddDragDropObserver(this);
+  ui::ClipboardMonitor::GetInstance()->AddObserver(this);
 }
 
 DataDevice::~DataDevice() {
   delegate_->OnDataDeviceDestroying(this);
   WMHelper::GetInstance()->RemoveDragDropObserver(this);
+  ui::ClipboardMonitor::GetInstance()->RemoveObserver(this);
   ClearDataOffer();
 }
 
@@ -99,6 +102,14 @@ int DataDevice::OnPerformDrop(const ui::DropTargetEvent& event) {
   delegate_->OnDrop();
   ClearDataOffer();
   return ui::DragDropTypes::DRAG_NONE;
+}
+
+void DataDevice::OnClipboardDataChanged() {
+  LOG(ERROR) << "OnClipboardDataChanged";
+  // TODO(hirono): Check if we have focus here
+  DataOffer* const data_offer = delegate_->OnDataOffer();
+  data_offer_->AddObserver(this);
+  delegate_->OnSelection(*data_offer);
 }
 
 void DataDevice::OnDataOfferDestroying(DataOffer* data_offer) {

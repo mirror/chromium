@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "components/exo/data_offer_observer.h"
 #include "components/exo/wm_helper.h"
+#include "ui/base/clipboard/clipboard_observer.h"
 
 namespace ui {
 class DropTargetEvent;
@@ -26,7 +27,9 @@ class Surface;
 enum class DndAction { kNone, kCopy, kMove, kAsk };
 
 // DataDevice to start drag and drop and copy and paste oprations.
-class DataDevice : public WMHelper::DragDropObserver, public DataOfferObserver {
+class DataDevice : public WMHelper::DragDropObserver,
+                   public DataOfferObserver,
+                   public ui::ClipboardObserver {
  public:
   explicit DataDevice(DataDeviceDelegate* delegate, FileHelper* file_helper);
   ~DataDevice() override;
@@ -53,6 +56,9 @@ class DataDevice : public WMHelper::DragDropObserver, public DataOfferObserver {
   int OnDragUpdated(const ui::DropTargetEvent& event) override;
   void OnDragExited() override;
   int OnPerformDrop(const ui::DropTargetEvent& event) override;
+
+  // Overridden from ui::ClipbaordObserver:
+  void OnClipboardDataChanged() override;
 
   // Overridden from DataOfferObserver:
   void OnDataOfferDestroying(DataOffer* data_offer) override;
