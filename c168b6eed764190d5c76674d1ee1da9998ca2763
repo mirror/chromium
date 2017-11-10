@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "956a4a97_12dcae8a",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-10T06:40:03Z",
+      "side": 1,
+      "message": "Was this change required due to changes in this CL?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "c168b6eed764190d5c76674d1ee1da9998ca2763",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
