@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67eb6452_b3fb596d",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-10T13:26:23Z",
+      "side": 1,
+      "message": "Should |latest_geoposition_| be nulled out in the if case above?",
+      "revId": "02f60591287a663923ba0bb036ea8bd426233fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a48a20_6703b5ab",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-10T13:26:23Z",
+      "side": 1,
+      "message": "nit: I actually think this would be clearer from the callsites if you made a new helper function RespondToFetchWithServerError() instead of multiplexing this one.",
+      "revId": "02f60591287a663923ba0bb036ea8bd426233fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
