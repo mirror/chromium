@@ -31,6 +31,7 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test_utils.h"
 #include "content/public/test/test_utils.h"
@@ -705,8 +706,11 @@ class TestBrowserClientForSpellCheck : public ChromeContentBrowserClient {
   void BindSpellCheckHostRequest(
       spellcheck::mojom::SpellCheckHostRequest request,
       const service_manager::BindSourceInfo& source_info) {
+    service_manager::Identity renderer_identity(
+        content::mojom::kRendererServiceName, source_info.identity.user_id(),
+        source_info.identity.instance());
     content::RenderProcessHost* host =
-        content::RenderProcessHost::FromRendererIdentity(source_info.identity);
+        content::RenderProcessHost::FromRendererIdentity(renderer_identity);
     scoped_refptr<TestSpellCheckMessageFilter> filter =
         GetSpellCheckMessageFilterForProcess(host);
     CHECK(filter);

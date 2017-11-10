@@ -178,6 +178,7 @@
 #include "net/url_request/url_request.h"
 #include "printing/features/features.h"
 #include "rlz/features/features.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/layout.h"
 #include "ui/base/material_design/material_design_controller.h"

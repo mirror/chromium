@@ -29,7 +29,10 @@
 #include "media/media_features.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/local_interface_provider.h"
+#include "services/service_manager/public/cpp/service.h"
 #include "v8/include/v8.h"
 
 #if defined (OS_CHROMEOS)
@@ -109,6 +112,7 @@ enum YouTubeRewriteStatus {
 
 class ChromeContentRendererClient
     : public content::ContentRendererClient,
+      public service_manager::Service,
       public service_manager::LocalInterfaceProvider {
  public:
   ChromeContentRendererClient();
@@ -220,6 +224,7 @@ class ChromeContentRendererClient
       const GURL& url,
       base::Time cert_validity_start,
       std::string* console_messsage) override;
+  void RegisterServices(StaticServiceMap* services) override;
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
   // Sets a new |spellcheck|. Used for testing only.
@@ -249,6 +254,12 @@ class ChromeContentRendererClient
   static GURL GetNaClContentHandlerURL(const std::string& actual_mime_type,
                                        const content::WebPluginInfo& plugin);
 
+  // service_manager::Service:
+  void OnStart() override;
+  void OnBindInterface(const service_manager::BindSourceInfo& remote_info,
+                       const std::string& name,
+                       mojo::ScopedMessagePipeHandle handle) override;
+
   // service_manager::LocalInterfaceProvider:
   void GetInterface(const std::string& name,
                     mojo::ScopedMessagePipeHandle request_handle) override;
@@ -276,6 +287,10 @@ class ChromeContentRendererClient
                             const extensions::Extension* extension,
                             blink::WebPluginParams* params);
 #endif
+
+  std::unique_ptr<service_manager::Service> CreateRendererService();
+
+  service_manager::Connector* GetConnector();
 
   rappor::mojom::RapporRecorderPtr rappor_recorder_;
 
@@ -317,6 +332,10 @@ class ChromeContentRendererClient
   std::unique_ptr<ModuleWatcher> module_watcher_;
   mojom::ModuleEventSinkPtr module_event_sink_;
 #endif
+
+  std::unique_ptr<service_manager::Connector> connector_;
+  service_manager::mojom::ConnectorRequest connector_request_;
+  service_manager::BinderRegistry registry_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeContentRendererClient);
 };
