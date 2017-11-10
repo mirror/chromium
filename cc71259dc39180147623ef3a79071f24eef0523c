@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae99a9cd_3e33f304",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-10T22:37:10Z",
+      "side": 1,
+      "message": "After more convo with wutao@, I added a TODO about skipping child passes when the scissor rect is empty. I can\u0027t explain how you\u0027d get a missing texture without the child having damage that overlaps it, other than some bug in under-reporting damage from the client.\n\nIf that\u0027s so we shouldn\u0027t really crash.. so we\u0027d have to check for missing texture, but it feels very fragile and could lead to bugs where we have a texture that is missing contents cuz we skipped it after not skipping it on the initial frame, with under-reported damage.",
+      "revId": "cc71259dc39180147623ef3a79071f24eef0523c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
