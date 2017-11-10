@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6735fd9_674f3a3c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T16:14:12Z",
+      "side": 1,
+      "message": "This comment needs to be updated.",
+      "range": {
+        "startLine": 673,
+        "startChar": 27,
+        "endLine": 675,
+        "endChar": 65
+      },
+      "revId": "16c3e33fbc59aa732f41879960ae784804a9fa25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f95c623_24dce2d9",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T16:14:12Z",
+      "side": 1,
+      "message": "^^^ :)\n\nThe feature should probably go in line 120 or so.",
+      "range": {
+        "startLine": 306,
+        "startChar": 3,
+        "endLine": 307,
+        "endChar": 21
+      },
+      "revId": "16c3e33fbc59aa732f41879960ae784804a9fa25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
