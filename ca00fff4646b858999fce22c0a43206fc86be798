@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0593b2e5_732f7c74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-10T23:28:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c6022317_1598d282",
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4838a319_9f033047",
         "filename": "chrome/browser/renderer_host/render_process_host_chrome_browsertest.cc",
         "patchSetId": 15
@@ -119,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "13621393_6544748c",
+        "filename": "chrome/renderer/chrome_render_frame_observer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-10T23:28:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dce56dc5_8ee25532",
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22a3f1d7_ef7c8330",
         "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
         "patchSetId": 15
@@ -148,6 +184,24 @@
       "side": 1,
       "message": "Good catch.  I\u0027ve added checking that the document URL didn\u0027t change.\n\n\nI also wondered whether I should also call |weak_factory_.InvalidateWeakPtrs()| somewhere (at the beginning of RFO::DidClearWindowObject?  in a new override of RFO::DidFinishLoad?).  I didn\u0027t do this, because 1) it seemed ad-hoc (unless |weak_factory_| is renamed to something navigation/script-specific) and therefore fragile and 2) it seemed unnecessary given the URL checking.  WDYT (for here and for the other PostTask;  this is [for now] assuming that we might still end up pursuing the PostTask approach)?\n\n\nNote that this RenderFrameImpl::ExecuteJavaScript would still happen *before* the DidCommitProvisionalLoad IPC, even after changing the timings of RFO calls.  This is because this script execution is not trigerred via RFO, but instead goes like this:\n\n    #2 0x7f214486e199 content::RenderFrameImpl::OnJavaScriptExecuteRequest()\n    #3 0x7f214487a0f3 content::RenderFrameImpl::ExecuteJavaScript()\n    #4 0x7f214468655f content::DevToolsClient::DidClearWindowObject()\n    #5 0x7f21448890a8 content::RenderFrameImpl::DidClearWindowObject()\n    #6 0x7f2138f4d5e1 blink::LocalFrameClientImpl::DispatchDidClearWindowObjectInMainWorld()\n    #7 0x7f2139892bfb blink::FrameLoader::DispatchDidClearWindowObjectInMainWorld()\n    #8 0x7f213869b40b blink::LocalWindowProxy::Initialize()\n    #9 0x7f213873146a blink::WindowProxy::SetGlobalProxy()\n    #10 0x7f213873213b blink::WindowProxyManager::SetGlobalProxies()\n    #11 0x7f2138f80d13 blink::WebFrame::Swap()\n    #12 0x7f21448762ff content::RenderFrameImpl::SwapIn()\n    #13 0x7f21448856da content::RenderFrameImpl::DidCommitProvisionalLoad()\n    ...\n\nI am a bit hesitant to try and change the timing of blink::WebFrame::Swap.  WDYT?  Is the PostTask good enough here?\n\n\nFWIW, I see that the script execution here happens only for DevTools windows (via DevToolsFrontendHostImpl::DevToolsFrontendHostImpl which executes contents of third_party/WebKit/Source/devtools/front_end/devtools_compatibility.js OR via DevToolsFrontendHost::SetupExtensionsAPI which I think can execute arbitrary scripts requested by DevTools extensions - see \u0026Delegate::RegisterExtensionsAPI).",
       "parentUuid": "22a3f1d7_ef7c8330",
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bac7a53_eae67d43",
+        "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-10T23:28:12Z",
+      "side": 1,
+      "message": "\u003e Good catch.  I\u0027ve added checking that the document URL didn\u0027t change.\n\u003e \n\u003e \n\u003e I also wondered whether I should also call |weak_factory_.InvalidateWeakPtrs()| somewhere (at the beginning of RFO::DidClearWindowObject?  in a new override of RFO::DidFinishLoad?).  I didn\u0027t do this, because 1) it seemed ad-hoc (unless |weak_factory_| is renamed to something navigation/script-specific) and therefore fragile and 2) it seemed unnecessary given the URL checking.  WDYT (for here and for the other PostTask;  this is [for now] assuming that we might still end up pursuing the PostTask approach)?\n\nIs there another PostTask?  I only see the one here in DidClearWindowObject.\n\n\u003e \n\u003e \n\u003e Note that this RenderFrameImpl::ExecuteJavaScript would still happen *before* the DidCommitProvisionalLoad IPC, even after changing the timings of RFO calls.  This is because this script execution is not trigerred via RFO, but instead goes like this:\n\u003e \n\u003e     #2 0x7f214486e199 content::RenderFrameImpl::OnJavaScriptExecuteRequest()\n\u003e     #3 0x7f214487a0f3 content::RenderFrameImpl::ExecuteJavaScript()\n\u003e     #4 0x7f214468655f content::DevToolsClient::DidClearWindowObject()\n\u003e     #5 0x7f21448890a8 content::RenderFrameImpl::DidClearWindowObject()\n\u003e     #6 0x7f2138f4d5e1 blink::LocalFrameClientImpl::DispatchDidClearWindowObjectInMainWorld()\n\u003e     #7 0x7f2139892bfb blink::FrameLoader::DispatchDidClearWindowObjectInMainWorld()\n\u003e     #8 0x7f213869b40b blink::LocalWindowProxy::Initialize()\n\u003e     #9 0x7f213873146a blink::WindowProxy::SetGlobalProxy()\n\u003e     #10 0x7f213873213b blink::WindowProxyManager::SetGlobalProxies()\n\u003e     #11 0x7f2138f80d13 blink::WebFrame::Swap()\n\u003e     #12 0x7f21448762ff content::RenderFrameImpl::SwapIn()\n\u003e     #13 0x7f21448856da content::RenderFrameImpl::DidCommitProvisionalLoad()\n\u003e     ...\n\u003e \n\u003e I am a bit hesitant to try and change the timing of blink::WebFrame::Swap.  WDYT?  Is the PostTask good enough here?\n\nThis is probably ok for now, though it\u0027s not perfect.  Ideally we\u0027d invalidate the task if the document changed, even with the same URL.  (There\u0027s a risk we could run the same task twice on a document if we load the URL twice in succession.)\n\nI think that\u0027s something that might be solvable with a sort of document ID (as is being discussed for https://crbug.com/783506).\n\n\u003e \n\u003e \n\u003e FWIW, I see that the script execution here happens only for DevTools windows (via DevToolsFrontendHostImpl::DevToolsFrontendHostImpl which executes contents of third_party/WebKit/Source/devtools/front_end/devtools_compatibility.js OR via DevToolsFrontendHost::SetupExtensionsAPI which I think can execute arbitrary scripts requested by DevTools extensions - see \u0026Delegate::RegisterExtensionsAPI).\n\nYeah, that seems to limit it further, so I\u0027m ok with it for now (though we should get a sanity check from someone from DevTools, perhaps?).",
+      "parentUuid": "38b28a36_e76f63fe",
       "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
