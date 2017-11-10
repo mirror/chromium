@@ -114,6 +114,43 @@ AccessibilityPrivateSetFocusRingFunction::Run() {
 }
 
 ExtensionFunction::ResponseAction
+AccessibilityPrivateSetHighlightsFunction::Run() {
+#if defined(OS_CHROMEOS)
+  // TODO: Refactor this into helper function for this and above.
+  base::ListValue* rect_values = NULL;
+  EXTENSION_FUNCTION_VALIDATE(args_->GetList(0, &rect_values));
+
+  std::vector<gfx::Rect> rects;
+  for (size_t i = 0; i < rect_values->GetSize(); ++i) {
+    base::DictionaryValue* rect_value = NULL;
+    EXTENSION_FUNCTION_VALIDATE(rect_values->GetDictionary(i, &rect_value));
+    int left, top, width, height;
+    EXTENSION_FUNCTION_VALIDATE(rect_value->GetInteger(kLeft, &left));
+    EXTENSION_FUNCTION_VALIDATE(rect_value->GetInteger(kTop, &top));
+    EXTENSION_FUNCTION_VALIDATE(rect_value->GetInteger(kWidth, &width));
+    EXTENSION_FUNCTION_VALIDATE(rect_value->GetInteger(kHeight, &height));
+    rects.push_back(gfx::Rect(left, top, width, height));
+  }
+
+  std::string color_str;
+  SkColor color;
+  if (args_->GetSize() >= 2 && args_->GetString(1, &color_str)) {
+    if (!extensions::image_util::ParseHexColorString(color_str, &color))
+      return RespondNow(Error("Could not parse hex color"));
+  } else {
+    return RespondNow(Error("Must pass hex color"));
+  }
+
+  // Set the highlights to cover all of these rects.
+  AccessibilityFocusRingController::GetInstance()->SetHighlights(rects, color);
+
+  return RespondNow(NoArguments());
+#endif  // defined(OS_CHROMEOS)
+
+  return RespondNow(Error(kErrorNotSupported));
+}
+
+ExtensionFunction::ResponseAction
 AccessibilityPrivateSetKeyboardListenerFunction::Run() {
   ChromeExtensionFunctionDetails details(this);
   CHECK(extension());
