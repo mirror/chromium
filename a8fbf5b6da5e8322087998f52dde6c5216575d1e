@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "44b32e79_0aa088b7",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-11-10T20:48:38Z",
+      "side": 1,
+      "message": "The mini-container is being started for the OOBE case. Or rather, it\u0027s being started during the login screen, and is kept running the in OOBE case, so starting it isn\u0027t necessary. It looks like we CAN call RequestStart again in that case though, since it\u0027ll just early out if the mini-container start request was already running. In the other cases, where ARC is managed but in the case of accepted TOS but no sign in, the management check seems to be very quick (simple boolean check, no network access), so I don\u0027t think we\u0027d gain anything by starting the mini-container earlier. In fact, I think we might take a small performance penalty because the starting the mini-container then upgrading it is slower than just starting the full container outright.",
+      "parentUuid": "8e4359ca_60099814",
+      "revId": "a8fbf5b6da5e8322087998f52dde6c5216575d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2a8f65b_33b3b5aa",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "a8fbf5b6da5e8322087998f52dde6c5216575d1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa132dc8_7b1329d1",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-11-10T20:48:38Z",
+      "side": 1,
+      "message": "Good point. I can\u0027t call ShouldARcOnlyStartAfterLogin from here, since that function is defined in componenets/arc/, not in chrome/browser/chromeos/arc/. Instead, I\u0027ll change the IsRequestAllowed to disallow starting the mini-instance when we should only start after login.",
+      "parentUuid": "d2a8f65b_33b3b5aa",
+      "revId": "a8fbf5b6da5e8322087998f52dde6c5216575d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
