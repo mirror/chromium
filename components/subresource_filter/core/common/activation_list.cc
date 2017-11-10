@@ -30,9 +30,6 @@ std::ostream& operator<<(std::ostream& os, const ActivationList& type) {
     case ActivationList::ABUSIVE_ADS:
       os << "ABUSIVE_ADS";
       break;
-    case ActivationList::ALL_ADS:
-      os << "ALL_ADS";
-      break;
     default:
       NOTREACHED();
       break;

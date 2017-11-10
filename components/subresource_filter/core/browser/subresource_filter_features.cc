@@ -96,8 +96,6 @@ ActivationList ParseActivationList(std::string activation_lists_string) {
   } else if (activation_lists.CaseInsensitiveContains(
                  kActivationListAbusiveAds)) {
     return ActivationList::ABUSIVE_ADS;
-  } else if (activation_lists.CaseInsensitiveContains(kActivationListAllAds)) {
-    return ActivationList::ALL_ADS;
   }
   return ActivationList::NONE;
 }
@@ -133,9 +131,7 @@ std::vector<Configuration> FillEnabledPresetConfigurations(
       {kPresetLiveRunForAbusiveAds, false,
        &Configuration::MakePresetForLiveRunForAbusiveAds},
       {kPresetLiveRunForBetterAds, false,
-       &Configuration::MakePresetForLiveRunForBetterAds},
-      {kPresetLiveRunForAllAds, false,
-       &Configuration::MakePresetForLiveRunForAllAds}};
+       &Configuration::MakePresetForLiveRunForBetterAds}};
 
   CommaSeparatedStrings enabled_presets(
       TakeVariationParamOrReturnEmpty(params, kEnablePresetsParameterName));
@@ -274,7 +270,6 @@ const char kActivationListPhishingInterstitial[] = "phishing_interstitial";
 const char kActivationListSubresourceFilter[] = "subresource_filter";
 const char kActivationListBetterAds[] = "better_ads";
 const char kActivationListAbusiveAds[] = "abusive_ads";
-const char kActivationListAllAds[] = "all_ads";
 
 const char kActivationPriorityParameterName[] = "activation_priority";
 
@@ -296,7 +291,6 @@ const char kPresetLiveRunForAbusiveAds[] =
     "liverun_on_abusive_ad_violating_sites";
 const char kPresetLiveRunForBetterAds[] =
     "liverun_on_better_ads_violating_sites";
-const char kPresetLiveRunForAllAds[] = "liverun_on_all_ads_violating_sites";
 
 // Configuration --------------------------------------------------------------
 
@@ -345,16 +339,6 @@ Configuration Configuration::MakePresetForLiveRunForBetterAds() {
                        ActivationScope::ACTIVATION_LIST,
                        ActivationList::BETTER_ADS);
   config.activation_conditions.priority = 800;
-  return config;
-}
-
-// static
-Configuration Configuration::MakePresetForLiveRunForAllAds() {
-  Configuration config(ActivationLevel::ENABLED,
-                       ActivationScope::ACTIVATION_LIST,
-                       ActivationList::ALL_ADS);
-  config.activation_options.should_strengthen_popup_blocker = true;
-  config.activation_conditions.priority = 850;
   return config;
 }
 

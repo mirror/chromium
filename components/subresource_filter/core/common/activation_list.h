@@ -23,11 +23,8 @@ enum class ActivationList : int {
   // Site shows abusive ads.
   ABUSIVE_ADS,
 
-  // Site violates the better ads standard and shows abusive ads.
-  ALL_ADS,
-
   // Make sure new elements added update the LAST value.
-  LAST = ALL_ADS
+  LAST = ABUSIVE_ADS
 };
 
 // For logging use only.

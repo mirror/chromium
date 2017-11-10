@@ -254,7 +254,6 @@ TEST(SubresourceFilterFeaturesTest, ActivationList) {
        ActivationList::SOCIAL_ENG_ADS_INTERSTITIAL},
       {true, kActivationListBetterAds, ActivationList::BETTER_ADS},
       {true, kActivationListAbusiveAds, ActivationList::ABUSIVE_ADS},
-      {true, kActivationListAllAds, ActivationList::ALL_ADS},
       {true, kActivationListPhishingInterstitial,
        ActivationList::PHISHING_INTERSTITIAL},
       {true, socEngPhising.c_str(), ActivationList::NONE},
@@ -635,31 +634,6 @@ TEST(SubresourceFilterFeaturesTest, PresetForLiveRunOnBetterAdsSites) {
   EXPECT_FALSE(config.activation_options.should_suppress_notifications);
   EXPECT_FALSE(config.activation_options.should_whitelist_site_on_reload);
   EXPECT_FALSE(config.activation_options.should_strengthen_popup_blocker);
-  EXPECT_FALSE(config.activation_options.should_disable_ruleset_rules);
-}
-
-TEST(SubresourceFilterFeaturesTest, PresetForLiveRunOnAllAdsSites) {
-  ExpectPresetCanBeEnabledByName(Configuration::MakePresetForLiveRunForAllAds(),
-                                 kPresetLiveRunForAllAds);
-  const Configuration config = Configuration::MakePresetForLiveRunForAllAds();
-  ExpectPresetIsEquivalentToVariationParams(
-      config, {{kActivationLevelParameterName, kActivationLevelEnabled},
-               {kActivationScopeParameterName, kActivationScopeActivationList},
-               {kActivationListsParameterName, kActivationListAllAds},
-               {kActivationPriorityParameterName, "850"},
-               {kStrengthenPopupBlockerParameterName, "true"}});
-  EXPECT_EQ(ActivationList::ALL_ADS,
-            config.activation_conditions.activation_list);
-  EXPECT_EQ(ActivationScope::ACTIVATION_LIST,
-            config.activation_conditions.activation_scope);
-  EXPECT_EQ(850, config.activation_conditions.priority);
-  EXPECT_FALSE(config.activation_conditions.forced_activation);
-  EXPECT_EQ(ActivationLevel::ENABLED,
-            config.activation_options.activation_level);
-  EXPECT_EQ(0.0, config.activation_options.performance_measurement_rate);
-  EXPECT_FALSE(config.activation_options.should_suppress_notifications);
-  EXPECT_FALSE(config.activation_options.should_whitelist_site_on_reload);
-  EXPECT_TRUE(config.activation_options.should_strengthen_popup_blocker);
   EXPECT_FALSE(config.activation_options.should_disable_ruleset_rules);
 }
 
