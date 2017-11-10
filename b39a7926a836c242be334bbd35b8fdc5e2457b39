@@ -34,6 +34,24 @@
       "revId": "b39a7926a836c242be334bbd35b8fdc5e2457b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79951ff_92131adc",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-10T14:04:35Z",
+      "side": 1,
+      "message": "From the OnNetworkChanged documentation:\nhttps://cs.chromium.org/chromium/src/net/base/network_change_notifier.h?rcl\u003de99515dd2ad918eb2b6ae93488d3aff6832b6945\u0026l\u003d173\n\"Observers performing \"constructive\" activities like trying to establish a connection to a server should only do so when |type !\u003d CONNECTION_NONE|.\"\n\"OnNetworkChanged will always be called with CONNECTION_NONE immediately prior to being called with an online state; this is done to make sure that destructive actions take place prior to constructive actions.\"\nThe IsOffline() check won\u0027t catch when OnNetworkChanged is called with CONNECTION_NONE.",
+      "parentUuid": "033d5385_e7aab324",
+      "revId": "b39a7926a836c242be334bbd35b8fdc5e2457b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
