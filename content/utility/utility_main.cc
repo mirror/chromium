@@ -7,7 +7,9 @@
 #include "base/message_loop/message_loop.h"
 #include "base/optional.h"
 #include "base/power_monitor/power_monitor.h"
+#include "base/rand_util.h"
 #include "base/run_loop.h"
+#include "base/sys_info.h"
 #include "base/threading/platform_thread.h"
 #include "base/timer/hi_res_timer_manager.h"
 #include "build/build_config.h"
@@ -49,9 +51,10 @@ int UtilityMain(const MainFunctionParams& parameters) {
   // Initializes the sandbox before any threads are created.
   // TODO(jorgelo): move this after GTK initialization when we enable a strict
   // Seccomp-BPF policy.
-  if (parameters.zygote_child) {
-    auto sandbox_type =
-        service_manager::SandboxTypeFromCommandLine(parameters.command_line);
+  auto sandbox_type =
+      service_manager::SandboxTypeFromCommandLine(parameters.command_line);
+  if (parameters.zygote_child ||
+      sandbox_type == service_manager::SANDBOX_TYPE_NETWORK) {
     service_manager::Sandbox::Initialize(
         sandbox_type, service_manager::SandboxLinux::PreSandboxHook(),
         service_manager::SandboxLinux::Options());
