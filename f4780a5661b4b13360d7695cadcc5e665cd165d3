@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a1acae8_b26aa4b2",
+        "filename": "remoting/android/java/src/org/chromium/chromoting/jni/JniOAuthTokenGetter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-10T00:56:04Z",
+      "side": 1,
+      "message": "Is it allowed to pass null to native method that expects const JavaParamRef\u003cjstring\u003e\u0026 ?",
+      "revId": "f4780a5661b4b13360d7695cadcc5e665cd165d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
