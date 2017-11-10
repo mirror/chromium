@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "0aa5c8a6_e75ef934",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:54:38Z",
+      "side": 1,
+      "message": "It\u0027s running from a \"file:\" URI tied to the real filesystem, so absolute paths won\u0027t work portably.",
+      "parentUuid": "2e5ae91c_57e45687",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfb153d8_93c3adf4",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -907,6 +925,24 @@
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aebbe50_9597c2a9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5519501b_4cdd9107",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
