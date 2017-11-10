@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9dee071a_7bec407f",
+        "filename": "net/http/http_proxy_client_socket_wrapper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-10T18:20:41Z",
+      "side": 1,
+      "message": "Yes, I\u0027ve removed the params quic_proxy_server, quic_privacy_mode, and quic_cert_verify_flags in the newest patch.",
+      "parentUuid": "480339d4_791d8ece",
+      "range": {
+        "startLine": 67,
+        "startChar": 44,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "af602d181737b90392d26f74421432398bf4e02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d324d13_a6a4f726",
         "filename": "net/http/http_proxy_client_socket_wrapper.h",
         "patchSetId": 4
