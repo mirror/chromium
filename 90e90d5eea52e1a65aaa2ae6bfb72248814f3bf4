@@ -16,6 +16,24 @@
       "revId": "90e90d5eea52e1a65aaa2ae6bfb72248814f3bf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c117755_ccb609eb",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-10T01:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74a5e4e7_57a32606",
+      "revId": "90e90d5eea52e1a65aaa2ae6bfb72248814f3bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
