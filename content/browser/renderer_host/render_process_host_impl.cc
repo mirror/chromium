@@ -3448,6 +3448,9 @@ bool RenderProcessHost::ShouldUseProcessPerSite(BrowserContext* browser_context,
   if (command_line.HasSwitch(switches::kProcessPerSite))
     return true;
 
+  if (url == GURL(kUnreachableWebDataURL))
+    return true;
+
   // We want to consolidate particular sites like WebUI even when we are using
   // the process-per-tab or process-per-site-instance models.
   // Note: DevTools pages have WebUI type but should not reuse the same host.

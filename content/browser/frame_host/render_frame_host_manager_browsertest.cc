@@ -47,6 +47,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/navigation_handle_observer.h"
 #include "content/public/test/test_frame_navigation_observer.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
@@ -55,6 +56,7 @@
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/request_handler_util.h"
+#include "net/test/url_request/url_request_failed_job.h"
 #include "testing/gmock/include/gmock/gmock-matchers.h"
 
 using base::ASCIIToUTF16;
@@ -3470,5 +3472,114 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
   ASSERT_EQ(1U, grandchild->child_count());
   EXPECT_EQ(child_url, grandchild->child_at(0)->current_url());
 }
+
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
+                       ErrorPageNavigationInMainFrame) {
+  StartEmbeddedServer();
+  GURL url(embedded_test_server()->GetURL("a.com", "/title1.html"));
+  GURL error_url(
+      net::URLRequestFailedJob::GetMockHttpUrl(net::ERR_DNS_TIMED_OUT));
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::Bind(&net::URLRequestFailedJob::AddUrlHandler));
+
+  // Start with a successful navigation to a document.
+  EXPECT_TRUE(NavigateToURL(shell(), url));
+  RenderFrameHost* success_rfh = shell()->web_contents()->GetMainFrame();
+  scoped_refptr<SiteInstance> success_site_instance =
+      success_rfh->GetSiteInstance();
+
+  // Browser-initiated navigation to an error page should result in changing the
+  // SiteInstance and process.
+  {
+    NavigationHandleObserver observer(shell()->web_contents(), error_url);
+    EXPECT_FALSE(NavigateToURL(shell(), error_url));
+    EXPECT_TRUE(observer.is_error());
+    EXPECT_EQ(net::ERR_DNS_TIMED_OUT, observer.net_error_code());
+    EXPECT_NE(success_rfh, shell()->web_contents()->GetMainFrame());
+
+    scoped_refptr<SiteInstance> error_site_instance =
+        shell()->web_contents()->GetMainFrame()->GetSiteInstance();
+    EXPECT_NE(success_site_instance->GetId(), error_site_instance->GetId());
+    EXPECT_TRUE(success_site_instance->IsRelatedSiteInstance(
+        error_site_instance.get()));
+    EXPECT_NE(success_site_instance->GetProcess()->GetID(),
+              error_site_instance->GetProcess()->GetID());
+    EXPECT_EQ(GURL(kUnreachableWebDataURL), error_site_instance->GetSiteURL());
+  }
+
+  // Navigate successfully again to a document, then perform a
+  // renderer-initiated navigation and verify it behaves the same way.
+  EXPECT_TRUE(NavigateToURL(shell(), url));
+  success_rfh = shell()->web_contents()->GetMainFrame();
+  success_site_instance = success_rfh->GetSiteInstance();
+
+  {
+    NavigationHandleObserver observer(shell()->web_contents(), error_url);
+    TestFrameNavigationObserver frame_observer(shell()->web_contents());
+    LOG(ERROR) << "Starting renderer initiated navigation to error";
+    EXPECT_TRUE(ExecuteScript(shell()->web_contents(),
+                              "location.href = '" + error_url.spec() + "';"));
+    frame_observer.Wait();
+    TRACE_EVENT1("navigation",
+                 "RenderFrameHostManagerTest::ErrorPageNavigationInMainFrame",
+                 "Finished waiting", 0);
+    EXPECT_TRUE(observer.is_error());
+    EXPECT_EQ(net::ERR_DNS_TIMED_OUT, observer.net_error_code());
+    EXPECT_NE(success_rfh, shell()->web_contents()->GetMainFrame());
+
+    scoped_refptr<SiteInstance> error_site_instance =
+        shell()->web_contents()->GetMainFrame()->GetSiteInstance();
+    EXPECT_NE(success_site_instance->GetId(), error_site_instance->GetId());
+    EXPECT_TRUE(success_site_instance->IsRelatedSiteInstance(
+        error_site_instance.get()));
+    EXPECT_NE(success_site_instance->GetProcess()->GetID(),
+              error_site_instance->GetProcess()->GetID());
+    EXPECT_EQ(GURL(kUnreachableWebDataURL), error_site_instance->GetSiteURL());
+  }
+}
+
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
+                       ErrorPageNavigationInChildFrame) {
+  StartEmbeddedServer();
+  GURL url(embedded_test_server()->GetURL("a.com", "/page_with_iframe.html"));
+  GURL error_url(
+      net::URLRequestFailedJob::GetMockHttpUrl(net::ERR_DNS_TIMED_OUT));
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::Bind(&net::URLRequestFailedJob::AddUrlHandler));
+
+  // Start with a successful navigation to a document.
+  EXPECT_TRUE(NavigateToURL(shell(), url));
+
+  WebContentsImpl* web_contents =
+      static_cast<WebContentsImpl*>(shell()->web_contents());
+
+  FrameTreeNode* root = web_contents->GetFrameTree()->root();
+  FrameTreeNode* child = root->child_at(0);
+
+  RenderFrameHost* success_rfh = child->current_frame_host();
+  scoped_refptr<SiteInstance> success_site_instance =
+      success_rfh->GetSiteInstance();
+
+  NavigationHandleObserver observer(web_contents, error_url);
+  TestFrameNavigationObserver frame_observer(child);
+  EXPECT_TRUE(
+      ExecuteScript(child, "location.href = '" + error_url.spec() + "';"));
+  frame_observer.Wait();
+
+  EXPECT_TRUE(observer.is_error());
+  EXPECT_EQ(net::ERR_DNS_TIMED_OUT, observer.net_error_code());
+  EXPECT_EQ(success_rfh, child->current_frame_host());
+
+  scoped_refptr<SiteInstance> error_site_instance =
+      shell()->web_contents()->GetMainFrame()->GetSiteInstance();
+  EXPECT_EQ(success_site_instance->GetId(), error_site_instance->GetId());
+  EXPECT_TRUE(
+      success_site_instance->IsRelatedSiteInstance(error_site_instance.get()));
+  EXPECT_EQ(success_site_instance->GetProcess()->GetID(),
+            error_site_instance->GetProcess()->GetID());
+  EXPECT_NE(GURL(kUnreachableWebDataURL), error_site_instance->GetSiteURL());
+}
+
+// TODO(nasko): Add a test case for window.open to an error page.
 
 }  // namespace content

@@ -3021,7 +3021,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ProcessTransferAfterError) {
         " Site A ------------ proxies for B\n"
         "   +--Site B ------- proxies for A\n"
         "Where A = http://a.com/\n"
-        "      B = http://b.com/",
+        "      B = chrome-error://chromewebdata/",
         DepictFrameTree(root));
     EXPECT_NE(shell()->web_contents()->GetSiteInstance(),
               child->current_frame_host()->GetSiteInstance());
@@ -3061,10 +3061,10 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ProcessTransferAfterError) {
   // Ensure that we have created a new process for the subframe.
   // PlzNavigate: the subframe should still be in its separate process.
   EXPECT_EQ(
-      " Site A ------------ proxies for B\n"
-      "   +--Site B ------- proxies for A\n"
+      " Site A ------------ proxies for C\n"
+      "   +--Site C ------- proxies for A\n"
       "Where A = http://a.com/\n"
-      "      B = http://b.com/",
+      "      C = http://b.com/",
       DepictFrameTree(root));
   EXPECT_NE(shell()->web_contents()->GetSiteInstance(),
             child->current_frame_host()->GetSiteInstance());

@@ -13,6 +13,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/navigation_handle_observer.h"
 #include "content/public/test/test_frame_navigation_observer.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
@@ -928,6 +929,53 @@ IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, LocalStorageOriginEnforcement) {
   ignore_result(ExecuteScript(shell()->web_contents()->GetMainFrame(),
                               "localStorage.length;"));
   crash_observer.Wait();
+}
+
+// Check that navigating a subframe to an isolated origin error page puts the
+// subframe into an OOPIF and its own SiteInstance.  Also check that a
+// non-isolated error page in a subfram ends up in the parent SiteInstance.
+IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, SubframeErrorPages) {
+  GURL top_url(
+      embedded_test_server()->GetURL("/frame_tree/page_with_two_frames.html"));
+  GURL isolated_url(
+      embedded_test_server()->GetURL("isolated.foo.com", "/close-socket"));
+  GURL regular_url(embedded_test_server()->GetURL("a.com", "/close-socket"));
+
+  EXPECT_TRUE(NavigateToURL(shell(), top_url));
+  FrameTreeNode* root = web_contents()->GetFrameTree()->root();
+  EXPECT_EQ(2u, root->child_count());
+
+  FrameTreeNode* child1 = root->child_at(0);
+  FrameTreeNode* child2 = root->child_at(1);
+
+  {
+    TestFrameNavigationObserver observer(child1);
+    NavigationHandleObserver handle_observer(web_contents(), isolated_url);
+    EXPECT_TRUE(ExecuteScript(
+        child1, "location.href = '" + isolated_url.spec() + "';"));
+    observer.Wait();
+    EXPECT_EQ(child1->current_url(), isolated_url);
+    EXPECT_TRUE(handle_observer.is_error());
+
+    EXPECT_NE(root->current_frame_host()->GetSiteInstance(),
+              child1->current_frame_host()->GetSiteInstance());
+    EXPECT_EQ(GURL(kUnreachableWebDataURL),
+              child1->current_frame_host()->GetSiteInstance()->GetSiteURL());
+  }
+
+  {
+    TestFrameNavigationObserver observer(child2);
+    NavigationHandleObserver handle_observer(web_contents(), regular_url);
+    EXPECT_TRUE(
+        ExecuteScript(child2, "location.href = '" + regular_url.spec() + "';"));
+    observer.Wait();
+    EXPECT_EQ(child2->current_url(), regular_url);
+    EXPECT_TRUE(handle_observer.is_error());
+    EXPECT_EQ(root->current_frame_host()->GetSiteInstance(),
+              child2->current_frame_host()->GetSiteInstance());
+    EXPECT_NE(GURL(kUnreachableWebDataURL),
+              child2->current_frame_host()->GetSiteInstance()->GetSiteURL());
+  }
 }
 
 }  // namespace content
