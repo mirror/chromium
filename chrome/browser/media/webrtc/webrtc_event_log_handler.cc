@@ -101,7 +101,9 @@ void WebRtcEventLogHandler::DoStartWebRtcEventLogging(
 
   base::FilePath prefix_path =
       GetWebRtcEventLogPrefixPath(log_directory, ++current_rtc_event_log_id_);
-  if (!host->StartWebRTCEventLog(prefix_path)) {
+  // TODO(eladalon): This was leading into local logging, and still is. It will
+  // be fixed by later CLs (likely by removing this entire class).
+  if (!host->StartLocalRtcEventLogging(prefix_path)) {
     error_callback.Run("RTC event logging already in progress");
     return;
   }
@@ -150,7 +152,9 @@ void WebRtcEventLogHandler::DoStopWebRtcEventLogging(
     return;
   }
 
-  if (!host->StopWebRTCEventLog()) {
+  // TODO(eladalon): This was leading into local logging, and still is. It will
+  // be fixed by later CLs (likely by removing this entire class).
+  if (!host->StopLocalRtcEventLogging()) {
     error_callback.Run("No RTC event logging in progress");
     return;
   }
