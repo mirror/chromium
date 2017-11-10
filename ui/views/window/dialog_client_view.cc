@@ -24,6 +24,7 @@
 #include "ui/views/view_tracker.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/window/dialog_delegate.h"
+#include "ui/views/window/dialog_observer.h"
 
 namespace views {
 
@@ -109,12 +110,22 @@ void DialogClientView::CancelWindow() {
 void DialogClientView::UpdateDialogButtons() {
   SetupLayout();
   InvalidateLayout();
+  for (DialogObserver& observer : observer_list_)
+    observer.OnDialogModelChanged();
 }
 
 void DialogClientView::SetButtonRowInsets(const gfx::Insets& insets) {
   button_row_insets_ = insets;
   if (GetWidget())
     UpdateDialogButtons();
+}
+
+void DialogClientView::AddObserver(DialogObserver* observer) {
+  observer_list_.AddObserver(observer);
+}
+
+void DialogClientView::RemoveObserver(DialogObserver* observer) {
+  observer_list_.RemoveObserver(observer);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
