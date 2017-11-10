@@ -176,16 +176,14 @@ class TestResolveProxyDelegate : public ProxyDelegate {
   TestResolveProxyDelegate()
       : on_resolve_proxy_called_(false),
         add_proxy_(false),
-        remove_proxy_(false),
-        proxy_service_(nullptr) {}
+        remove_proxy_(false) {}
 
   void OnResolveProxy(const GURL& url,
                       const std::string& method,
-                      const ProxyService& proxy_service,
+                      const ProxyRetryInfoMap& proxy_retry_info,
                       ProxyInfo* result) override {
     method_ = method;
     on_resolve_proxy_called_ = true;
-    proxy_service_ = &proxy_service;
     DCHECK(!add_proxy_ || !remove_proxy_);
     if (add_proxy_) {
       result->UseNamedProxy("delegate_proxy.com");
@@ -206,10 +204,6 @@ class TestResolveProxyDelegate : public ProxyDelegate {
 
   void set_remove_proxy(bool remove_proxy) {
     remove_proxy_ = remove_proxy;
-  }
-
-  const ProxyService* proxy_service() const {
-    return proxy_service_;
   }
 
   void OnTunnelConnectCompleted(const HostPortPair& endpoint,
@@ -237,7 +231,6 @@ class TestResolveProxyDelegate : public ProxyDelegate {
   bool add_proxy_;
   bool remove_proxy_;
   std::string method_;
-  const ProxyService* proxy_service_;
 };
 
 // A test network delegate that exercises the OnProxyFallback callback.
@@ -249,7 +242,7 @@ class TestProxyFallbackProxyDelegate : public ProxyDelegate {
   // ProxyDelegate implementation:
   void OnResolveProxy(const GURL& url,
                       const std::string& method,
-                      const ProxyService& proxy_service,
+                      const ProxyRetryInfoMap& proxy_retry_info,
                       ProxyInfo* result) override {}
   void OnTunnelConnectCompleted(const HostPortPair& endpoint,
                                 const HostPortPair& proxy_server,
@@ -425,7 +418,6 @@ TEST_F(ProxyServiceTest, OnResolveProxyCallbackAddProxy) {
   rv = service.ResolveProxy(url, "GET", &info, callback.callback(), nullptr,
                             &delegate, log.bound());
   EXPECT_TRUE(delegate.on_resolve_proxy_called());
-  EXPECT_EQ(&service, delegate.proxy_service());
   EXPECT_EQ(delegate.method(), "GET");
 
   // Verify that the ProxyDelegate's behavior is stateless across
