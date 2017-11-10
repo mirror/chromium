@@ -4,42 +4,28 @@
 
 #include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
-#include "content/browser/storage_partition_impl.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/net/system_network_context_manager.h"
+#include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/test/base/in_process_browser_test.h"
 #include "content/public/browser/browser_context.h"
-#include "content/public/browser/network_service_instance.h"
-#include "content/public/browser/web_contents.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_features.h"
-#include "content/public/common/network_service.mojom.h"
 #include "content/public/common/network_service_test.mojom.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
-#include "content/public/test/content_browser_test.h"
-#include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/browser_test.h"
+#include "content/public/test/browser_test_utils.h"
 #include "content/public/test/simple_url_loader_test_helper.h"
-#include "content/shell/browser/shell.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "services/service_manager/public/cpp/connector.h"
 
 namespace content {
 
-namespace {
-
-mojom::NetworkContextPtr CreateNetworkContext() {
-  mojom::NetworkContextPtr network_context;
-  mojom::NetworkContextParamsPtr context_params =
-      mojom::NetworkContextParams::New();
-  GetNetworkService()->CreateNetworkContext(mojo::MakeRequest(&network_context),
-                                            std::move(context_params));
-  return network_context;
-}
-
-}  // namespace
-
-// This test source has been excluded from Android as Android doesn't have
-// out-of-process Network Service.
-class NetworkServiceRestartBrowserTest : public ContentBrowserTest {
+class ChromeNetworkServiceRestartBrowserTest : public InProcessBrowserTest {
  public:
-  NetworkServiceRestartBrowserTest() {
+  ChromeNetworkServiceRestartBrowserTest() {
     scoped_feature_list_.InitAndEnableFeature(features::kNetworkService);
     EXPECT_TRUE(embedded_test_server()->Start());
   }
@@ -49,14 +35,12 @@ class NetworkServiceRestartBrowserTest : public ContentBrowserTest {
     ServiceManagerConnection::GetForProcess()->GetConnector()->BindInterface(
         mojom::kNetworkServiceName, &network_service_test);
     network_service_test->SimulateCrash();
-    network_service_test.FlushForTesting();
   }
 
   int LoadBasicRequest(mojom::NetworkContext* network_context) {
     mojom::URLLoaderFactoryPtr url_loader_factory;
     network_context->CreateURLLoaderFactory(MakeRequest(&url_loader_factory),
                                             0);
-    EXPECT_FALSE(url_loader_factory.encountered_error());
 
     content::SimpleURLLoaderTestHelper simple_loader_helper;
     std::unique_ptr<content::SimpleURLLoader> simple_loader =
@@ -76,41 +60,19 @@ class NetworkServiceRestartBrowserTest : public ContentBrowserTest {
  private:
   base::test::ScopedFeatureList scoped_feature_list_;
 
-  DISALLOW_COPY_AND_ASSIGN(NetworkServiceRestartBrowserTest);
+  DISALLOW_COPY_AND_ASSIGN(ChromeNetworkServiceRestartBrowserTest);
 };
 
-IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
-                       NetworkServiceProcessRecovery) {
-  mojom::NetworkContextPtr network_context = CreateNetworkContext();
-  EXPECT_EQ(net::OK, LoadBasicRequest(network_context.get()));
-  EXPECT_TRUE(network_context.is_bound());
-  EXPECT_FALSE(network_context.encountered_error());
-
-  // Crash the NetworkService process. Existing interfaces should observe
-  // connection errors when making new requests.
-  SimulateNetworkServiceCrash();
-  // |network_context| is not guarantee to noticed error immediately. Try a
-  // request and it should fail.
-  EXPECT_EQ(net::ERR_FAILED, LoadBasicRequest(network_context.get()));
-  EXPECT_TRUE(network_context.is_bound());
-  EXPECT_TRUE(network_context.encountered_error());
-  // Make sure we could get |net::ERR_FAILED| with an invalid |network_context|.
-  EXPECT_EQ(net::ERR_FAILED, LoadBasicRequest(network_context.get()));
-
-  // NetworkService should restart automatically and return valid interface.
-  mojom::NetworkContextPtr network_context2 = CreateNetworkContext();
-  EXPECT_EQ(net::OK, LoadBasicRequest(network_context2.get()));
-  EXPECT_TRUE(network_context2.is_bound());
-  EXPECT_FALSE(network_context2.encountered_error());
-}
-
-// Make sure |StoragePartitionImpl::GetNetworkContext()| returns valid interface
+// Make sure |StoragePartition::GetNetworkContext()| returns valid interface
 // after crash.
-IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
-                       StoragePartitionImplGetNetworkContext) {
-  StoragePartitionImpl* partition = static_cast<StoragePartitionImpl*>(
-      BrowserContext::GetDefaultStoragePartition(
-          shell()->web_contents()->GetBrowserContext()));
+IN_PROC_BROWSER_TEST_F(ChromeNetworkServiceRestartBrowserTest,
+                       StoragePartitionGetNetworkContext) {
+#if defined(OS_MACOSX)
+  // |NetworkServiceTestHelper| doesn't work on browser_tests on macOS.
+  return;
+#endif
+  StoragePartition* partition =
+      BrowserContext::GetDefaultStoragePartition(browser()->profile());
 
   mojom::NetworkContext* old_network_context = partition->GetNetworkContext();
   EXPECT_EQ(net::OK, LoadBasicRequest(old_network_context));
@@ -127,6 +89,37 @@ IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
   // crash.
   EXPECT_NE(old_network_context, partition->GetNetworkContext());
   EXPECT_EQ(net::OK, LoadBasicRequest(partition->GetNetworkContext()));
+}
+
+// Make sure |SystemNetworkContextManager::GetContext()| returns valid interface
+// after crash.
+IN_PROC_BROWSER_TEST_F(ChromeNetworkServiceRestartBrowserTest,
+                       SystemNetworkContextManagerGetContext) {
+#if defined(OS_MACOSX)
+  // |NetworkServiceTestHelper| doesn't work on browser_tests on macOS.
+  return;
+#endif
+  SystemNetworkContextManager* system_network_context_manager =
+      g_browser_process->system_network_context_manager();
+
+  mojom::NetworkContext* old_network_context =
+      system_network_context_manager->GetContext();
+  EXPECT_EQ(net::OK, LoadBasicRequest(old_network_context));
+
+  // Crash the NetworkService process. Existing interfaces should observe
+  // connection errors when doing requests.
+  SimulateNetworkServiceCrash();
+  // Make sure the error was detected. Note that we cannot expect
+  // |system_network_context_manager->network_service_network_context_| to be
+  // invalid since the MessageLoop above may contain network operations and
+  // already restarted the service.
+  LoadBasicRequest(system_network_context_manager->GetContext());
+
+  // |system_network_context_manager->GetContext()| should return a valid new
+  // pointer after crash.
+  EXPECT_NE(old_network_context, system_network_context_manager->GetContext());
+  EXPECT_EQ(net::OK,
+            LoadBasicRequest(system_network_context_manager->GetContext()));
 }
 
 }  // namespace content
