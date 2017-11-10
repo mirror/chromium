@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b4457651_abce6b2d",
+        "filename": "chrome/browser/accessibility/accessibility_extension_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-10T17:11:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean. I\u0027m copying AccessibilityPrivateSetFocusRingFunction above, because this function needs the same types of args processed the same way.\n\nCould you explain more what the generated types and conversion is? Maybe I can switch them both.",
+      "parentUuid": "0629573b_baa67088",
+      "revId": "af3033c1730d820f666aba6239c1557009ec13fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a6b4d7b_5b0f19c0",
         "filename": "chrome/common/extensions/api/accessibility_private.json",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "af3033c1730d820f666aba6239c1557009ec13fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65e37bb_a32fa9c2",
+        "filename": "chrome/common/extensions/api/accessibility_private.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-10T17:11:32Z",
+      "side": 1,
+      "message": "Done here and in the function above, which I was copying.",
+      "parentUuid": "5a6b4d7b_5b0f19c0",
+      "revId": "af3033c1730d820f666aba6239c1557009ec13fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
