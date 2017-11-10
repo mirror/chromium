@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fab990c6_114aecbe",
+        "filename": "chrome/browser/android/search_permissions/search_geolocation_disclosure_tab_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-10T04:15:35Z",
+      "side": 0,
+      "message": "That\u0027s true. Hopefully this doesn\u0027t affect too many people.",
+      "parentUuid": "ef82131a_fdd3e48d",
+      "range": {
+        "startLine": 152,
+        "startChar": 16,
+        "endLine": 152,
+        "endChar": 35
+      },
+      "revId": "97c4eaf604ddff53e02a8ef88a52f7c2efa74939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54213654_a3a71933",
         "filename": "chrome/browser/geolocation/geolocation_permission_context_unittest.cc",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-10T02:22:33Z",
       "side": 0,
       "message": "Shouldn\u0027t there be some kind of test to ensure geolocation isn\u0027t enabled by default in incognito?",
+      "range": {
+        "startLine": 1111,
+        "startChar": 42,
+        "endLine": 1111,
+        "endChar": 70
+      },
+      "revId": "97c4eaf604ddff53e02a8ef88a52f7c2efa74939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4808d4_52851401",
+        "filename": "chrome/browser/geolocation/geolocation_permission_context_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-10T04:15:35Z",
+      "side": 0,
+      "message": "I didn\u0027t add a test here because now that we\u0027re using a content setting, we just use the default inheritance behavior of geolocation which is to not inherit the content setting if it\u0027s less permissive. Does that sound ok?",
+      "parentUuid": "54213654_a3a71933",
       "range": {
         "startLine": 1111,
         "startChar": 42,

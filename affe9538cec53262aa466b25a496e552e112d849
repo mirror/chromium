@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "9ab86f09_a4f7c43f",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-10T04:15:35Z",
+      "side": 1,
+      "message": "Ohh, I see. Sorry I misread your comment. That makes sense. Done.",
+      "parentUuid": "3ee8b747_336047e3",
+      "revId": "affe9538cec53262aa466b25a496e552e112d849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa0f79f7_08175d8b",
         "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
         "patchSetId": 7
@@ -219,6 +237,24 @@
       "side": 1,
       "message": "This is good. It might be good to also handle the case of ASK in release builds (i.e. have both the DCHECK and the code to set ASK to BLOCK), but I\u0027ll leave that up to you.",
       "parentUuid": "82551fce_e2ff7ca2",
+      "revId": "affe9538cec53262aa466b25a496e552e112d849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "481cd0cf_d13ac088",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-10T04:15:35Z",
+      "side": 1,
+      "message": "Done - I\u0027ve left it reverting to BLOCK in that case. Although the style guide recommends not to handle cases which are invalid states in the code (failing DCHECKs) I think we can make an exception due to the risks associated with invalid states.",
+      "parentUuid": "2b910bfa_0ef11c52",
       "revId": "affe9538cec53262aa466b25a496e552e112d849",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

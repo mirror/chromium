@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78a41de1_ca6c5a72",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/geo/GeolocationHeader.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-10T04:15:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "87621574_04c41b1c",
+      "revId": "ebc6f39d97582b711f1b211f7013e0ef03144710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12926d3e_3cf985a2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
         "patchSetId": 12
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-10T02:22:33Z",
       "side": 1,
       "message": "Are there other UI entry points to do similar things? E.g. removing browsing data?\n\nI\u0027d be more comfortable if this was done at a lower level somehow.",
+      "range": {
+        "startLine": 859,
+        "startChar": 36,
+        "endLine": 859,
+        "endChar": 65
+      },
+      "revId": "ebc6f39d97582b711f1b211f7013e0ef03144710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b3f94a_1e368d80",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-10T04:15:35Z",
+      "side": 1,
+      "message": "As discussed I\u0027ll pull this out and put it in a separate CL.",
+      "parentUuid": "12926d3e_3cf985a2",
       "range": {
         "startLine": 859,
         "startChar": 36,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "b6e2063d_06d1313c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/Website.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-10T04:15:35Z",
+      "side": 1,
+      "message": "I think that should probably happen at a lower level in the code. I can put one here if you like, but there\u0027s lots of places that assertion should hold true that we don\u0027t check right now. WDYT?",
+      "parentUuid": "d5defcc4_0d52d0ec",
+      "range": {
+        "startLine": 251,
+        "startChar": 56,
+        "endLine": 251,
+        "endChar": 61
+      },
+      "revId": "ebc6f39d97582b711f1b211f7013e0ef03144710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70073c7e_fffeb39c",
         "filename": "chrome/browser/android/search_permissions/search_geolocation_disclosure_tab_helper.cc",
         "patchSetId": 12
@@ -85,6 +151,30 @@
       "revId": "ebc6f39d97582b711f1b211f7013e0ef03144710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64554bc_604a4333",
+        "filename": "chrome/browser/android/search_permissions/search_geolocation_disclosure_tab_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-10T04:15:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70073c7e_fffeb39c",
+      "range": {
+        "startLine": 148,
+        "startChar": 5,
+        "endLine": 148,
+        "endChar": 8
+      },
+      "revId": "ebc6f39d97582b711f1b211f7013e0ef03144710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "e542bf11_75aa287f",
+        "filename": "chrome/browser/android/search_permissions/search_geolocation_disclosure_tab_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-10T04:15:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4bed376_9fed1db4",
+      "range": {
+        "startLine": 224,
+        "startChar": 47,
+        "endLine": 224,
+        "endChar": 52
+      },
+      "revId": "ebc6f39d97582b711f1b211f7013e0ef03144710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8940daaa_52679a0e",
         "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
         "patchSetId": 12
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "aa1b28f2_080e2b54",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-10T04:15:35Z",
+      "side": 1,
+      "message": "Good idea.",
+      "parentUuid": "8940daaa_52679a0e",
+      "revId": "ebc6f39d97582b711f1b211f7013e0ef03144710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cdc101a_b31bb876",
         "filename": "chrome/browser/android/search_permissions/search_permissions_service_unittest.cc",
         "patchSetId": 12
@@ -139,6 +271,30 @@
       "writtenOn": "2017-11-10T01:57:08Z",
       "side": 1,
       "message": "Can you add a test that ensures that if the feature is turned off, the behavior is the same as before?",
+      "range": {
+        "startLine": 77,
+        "startChar": 18,
+        "endLine": 77,
+        "endChar": 42
+      },
+      "revId": "ebc6f39d97582b711f1b211f7013e0ef03144710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6e79df_9b9b313e",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-10T04:15:35Z",
+      "side": 1,
+      "message": "As discussed, I\u0027ll do this in a followup.",
+      "parentUuid": "3cdc101a_b31bb876",
       "range": {
         "startLine": 77,
         "startChar": 18,
