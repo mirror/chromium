@@ -455,6 +455,24 @@
     },
     {
       "key": {
+        "uuid": "bfa1bb4c_659a234e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-10T23:09:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "22d0ea59_9e63b0ee",
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e00faad1_bf065994",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
         "patchSetId": 2
@@ -774,6 +792,30 @@
       "side": 1,
       "message": "\u003e Or we need to consider the case when tab modal can also fill the whole screen for future use case?\n\nI think a fullscreen tab can trigger JS dialogs",
       "parentUuid": "c700cfa4_873a371f",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 103,
+        "endChar": 78
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77626d4d_edc239fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-10T23:09:56Z",
+      "side": 1,
+      "message": "I\u0027m not so sure what the expected behavior should be on Android. Should we exit fullscreen or show the dialog on full screen? My concern is that if showing on fullscreen, the user does not have the options to switch tab or close the tab. Is this something security team can answer?\n\nI think on desktop, exiting fullscreen is called when a page shows a JS dialog.\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d728276",
+      "parentUuid": "8c6b0487_11aaf49a",
       "range": {
         "startLine": 102,
         "startChar": 7,
@@ -1223,6 +1265,30 @@
     },
     {
       "key": {
+        "uuid": "09e8b9dc_d3033b88",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-10T23:09:56Z",
+      "side": 1,
+      "message": "Sure I\u0027ll follow up with UX about the BottomSheet opened before dialog is shown, and I agree that this can in a future CL.",
+      "parentUuid": "fd024089_143eac47",
+      "range": {
+        "startLine": 255,
+        "startChar": 16,
+        "endLine": 255,
+        "endChar": 78
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a29668c4_5694d5bf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
         "patchSetId": 2
@@ -1294,6 +1360,30 @@
     },
     {
       "key": {
+        "uuid": "54249114_e587e0b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-10T23:09:56Z",
+      "side": 1,
+      "message": "Let\u0027s leave as is then :)",
+      "parentUuid": "4151aff6_6e5a07df",
+      "range": {
+        "startLine": 262,
+        "startChar": 12,
+        "endLine": 264,
+        "endChar": 13
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9de4c05e_f6073c87",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
         "patchSetId": 2
@@ -1353,6 +1443,30 @@
       "side": 1,
       "message": "Is this for the mock where the dialog overlaps the toolbar for svelte?\n\nI think this is fine for now, but let\u0027s checkout how this performs on really small screens when the keyboard is showing or at really small heights in multi-window mode. We may want to allow the dialog to overlap the toolbar more.. or we may have a hard requirement to keep the URL visible.",
       "parentUuid": "d67afd11_f2585b64",
+      "range": {
+        "startLine": 266,
+        "startChar": 74,
+        "endLine": 266,
+        "endChar": 81
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59cfc330_82bc3fa3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-10T23:09:56Z",
+      "side": 1,
+      "message": "Yes this is for the mock where the dialog overlaps the toolbar, but the overlap should happen for all devices if the dialog fills up all the available space. Basically the available space for the dialog contents is (scrim height + 8dp).\n\nThe multi-window mode on small screen is a good point. The dialog could be really small if we don\u0027t allow overlap more of the toolbar. We should follow up with UX and see what the options are.",
+      "parentUuid": "5fae394e_fbded834",
       "range": {
         "startLine": 266,
         "startChar": 74,
@@ -1601,6 +1715,30 @@
     },
     {
       "key": {
+        "uuid": "655ba5f1_977ec04c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-10T23:09:56Z",
+      "side": 1,
+      "message": "Yes I checked that the message can still be focused on accessibility. Even if isFocusable set to false, isImportantForAccessibility is still true.",
+      "parentUuid": "f3a6a506_ae8720d5",
+      "range": {
+        "startLine": 57,
+        "startChar": 24,
+        "endLine": 57,
+        "endChar": 53
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bc9936a_7253123f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
         "patchSetId": 2
@@ -1740,6 +1878,30 @@
       "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f27286_653a2d1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-10T23:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44dae417_e6046bf6",
+      "range": {
+        "startLine": 88,
+        "startChar": 22,
+        "endLine": 88,
+        "endChar": 70
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
