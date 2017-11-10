@@ -62,6 +62,8 @@ source_set("audio") {
 
     # TODO(dalecurtis): Move android audio pieces into //media/audio.
     "//media/base/android",
+
+    "//services/audio/*",
   ]
   sources = [
     "agc_audio_stream.h",
