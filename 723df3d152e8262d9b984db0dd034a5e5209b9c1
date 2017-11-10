@@ -279,6 +279,24 @@
       "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf345b0_1c68f58d",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 7227,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-10T00:07:05Z",
+      "side": 1,
+      "message": "I think you can still use that API, by passing a scale in the AxisTransform2d.",
+      "parentUuid": "3803bd5d_f95b91b4",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
