@@ -8,7 +8,10 @@ Polymer({
   properties: {
     // Determines if the combined variant should be displayed. The combined
     // variant includes instructions on how to pin Chrome to the taskbar.
-    isCombined: Boolean
+    isCombined: Boolean,
+
+    // Indicates if the accelerated flow is enabled.
+    isAccelerated: Boolean,
   },
 
   receivePinnedState_: function(isPinnedToTaskbar) {
@@ -17,7 +20,7 @@ Polymer({
     /** @const */
     var VARIANT_KEY = 'variant';
     var VariantTypeMap = {'defaultonly': false, 'combined': true};
-    var params = new URLSearchParams(location.search.slice(1));
+    var params = new URLSearchParams(location.search);
     if (params.has(VARIANT_KEY) && params.get(VARIANT_KEY) in VariantTypeMap)
       this.isCombined = VariantTypeMap[params.get(VARIANT_KEY)];
     else
@@ -29,6 +32,20 @@ Polymer({
 
   ready: function() {
     this.isCombined = false;
+
+    /** @const */
+    this.isAccelerated = false;
+    var FLOWTYPE_KEY = 'flowtype';
+    var FlowTypeMap = {'regular': false, 'accelerated': true};
+    var params = new URLSearchParams(location.search);
+    if (params.has(FLOWTYPE_KEY) && params.get(FLOWTYPE_KEY) in FlowTypeMap) {
+      this.isAccelerated = FlowTypeMap[params.get(FLOWTYPE_KEY)];
+
+      // Ajust the height since the accelerated flow contains fewer steps.
+      this.customStyle['--expandable-section-height'] = '26.375em';
+      this.updateStyles();
+    }
+
     // Asynchronously check if Chrome is pinned to the taskbar.
     cr.sendWithPromise('getPinnedToTaskbarState')
         .then(this.receivePinnedState_.bind(this));
