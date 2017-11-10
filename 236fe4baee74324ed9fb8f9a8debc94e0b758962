@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2ca2566f_09e1ddc5",
+        "filename": "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-10T06:37:47Z",
+      "side": 1,
+      "message": "wifi_credentials_getter_ptr_ -\u003e wifi_credentials_getter_",
+      "revId": "236fe4baee74324ed9fb8f9a8debc94e0b758962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6eaf7f8f_b932b3f3",
         "filename": "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter_win.cc",
         "patchSetId": 10
@@ -34,6 +51,58 @@
       "revId": "236fe4baee74324ed9fb8f9a8debc94e0b758962",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9550c21_65b4e132",
+        "filename": "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-10T06:37:47Z",
+      "side": 1,
+      "message": "Arg comments do make sense when caller/callee are miles from each other, or in different files. In this case, callee GetWiFiCredentialsDone is adjacent (5 lines below) and so one option might be to drop them entirely.",
+      "parentUuid": "d81b9913_53aec3e4",
+      "revId": "236fe4baee74324ed9fb8f9a8debc94e0b758962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f97c7f15_14f6e1ad",
+        "filename": "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-10T06:37:47Z",
+      "side": 1,
+      "message": "nit: space before this line.",
+      "revId": "236fe4baee74324ed9fb8f9a8debc94e0b758962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad472199_0bb9c399",
+        "filename": "chrome/utility/chrome_content_utility_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-10T06:37:47Z",
+      "side": 1,
+      "message": "Nice.",
+      "revId": "236fe4baee74324ed9fb8f9a8debc94e0b758962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

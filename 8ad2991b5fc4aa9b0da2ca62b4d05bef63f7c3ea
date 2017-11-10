@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30b6e035_c77adf1c",
+        "filename": "chrome/services/wifi_util_win/public/interfaces/wifi_credentials_getter.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-10T06:37:47Z",
+      "side": 0,
+      "message": "nit: style [1] would be to have some comment.\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#documentation",
+      "revId": "8ad2991b5fc4aa9b0da2ca62b4d05bef63f7c3ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -263,6 +263,24 @@
       "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "563c61c3_a6152c0a",
+        "filename": "chrome/utility/chrome_content_utility_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-10T06:37:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "95697dea_522db29e",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
