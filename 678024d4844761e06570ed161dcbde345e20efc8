@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "099cfd86_bf7f1231",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-10T01:28:04Z",
+      "side": 1,
+      "message": "I was considering it but I think it won\u0027t work without iterating |quic_server_info_map| before swapping. The goal is actually to add entries from |quic_server_info_map| input. The loop iterates over |quic_server_info_map| but after swapping, i.e. it iterates through entries that we already have in the cache. In addition, |canonical_server_info_map_| should reference the most recent entries for |quic_server_info_map_|.\n\nI don\u0027t know whether it was implemented intentionally, but the logic that determines recency is interesting here. It gives the priority to records from the persistent storage except for those that are unique in the memory cache.",
+      "parentUuid": "f47a2c60_7d9eef1f",
+      "range": {
+        "startLine": 150,
+        "startChar": 50,
+        "endLine": 150,
+        "endChar": 0
+      },
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77166407_4cc8a496",
         "filename": "net/http/http_server_properties_impl.h",
         "patchSetId": 5
@@ -59,6 +83,30 @@
       "writtenOn": "2017-11-09T19:38:59Z",
       "side": 1,
       "message": "As it happens, QuicServerId includes PrivacyMode. By including this as the key in this map we\u0027ll be prevented from doing speculative 0-RTT from across PrivacyMode boundaries in this way. I wondering if it would be better to have the key in this map just be host:port.",
+      "range": {
+        "startLine": 154,
+        "startChar": 19,
+        "endLine": 154,
+        "endChar": 31
+      },
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a96a7a65_2d4018b8",
+        "filename": "net/http/http_server_properties_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-10T01:28:04Z",
+      "side": 1,
+      "message": "That was actually a question I forgot to ask. I made it consistent with |QuicServerInfoMap| that also uses QuicServerId as the key. Do we use QuicServerId in |QuicServerInfoMap| because the privacy flag cannot change for a non-canonical host over time? I see that we persist the privacy flag on disk.",
+      "parentUuid": "48d0a85c_365fe7e9",
       "range": {
         "startLine": 154,
         "startChar": 19,
