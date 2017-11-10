@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53944835_48098e98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-10T22:43:22Z",
+      "side": 1,
+      "message": "BTW, no need for chromium: prefix with Chromium CLs.",
+      "revId": "fe54af6e8df62db242f05596eb1c1df3d9723919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
