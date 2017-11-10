@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd5ccec3_89a4e6be",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RENDER_TESTS.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T10:31:46Z",
+      "side": 1,
+      "message": "Can you make this a link to #running-the-tests-locally?",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 46
+      },
+      "revId": "00ae0df5bfb45bd98366a566e32ae8bc2e9e634b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b832579d_bab53fb3",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RENDER_TESTS.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T10:31:46Z",
+      "side": 1,
+      "message": "Here too.",
+      "range": {
+        "startLine": 42,
+        "startChar": 47,
+        "endLine": 42,
+        "endChar": 67
+      },
+      "revId": "00ae0df5bfb45bd98366a566e32ae8bc2e9e634b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3761c9e3_622db7ab",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RENDER_TESTS.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T10:31:46Z",
+      "side": 1,
+      "message": "Nit: Capitalize SDK",
+      "range": {
+        "startLine": 69,
+        "startChar": 71,
+        "endLine": 69,
+        "endChar": 74
+      },
+      "revId": "00ae0df5bfb45bd98366a566e32ae8bc2e9e634b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9927be10_1ba56711",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RENDER_TESTS.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T10:31:46Z",
+      "side": 1,
+      "message": "Nit: `EditText`s?",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 8
+      },
+      "revId": "00ae0df5bfb45bd98366a566e32ae8bc2e9e634b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
