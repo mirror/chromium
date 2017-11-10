@@ -1628,7 +1628,7 @@ TEST_F(TaskQueueManagerTest, ShutdownTaskQueueInNestedLoop) {
 TEST_F(TaskQueueManagerTest, TimeDomainsAreIndependant) {
   Initialize(2u);
 
-  base::TimeTicks start_time = manager_->Delegate()->NowTicks();
+  base::TimeTicks start_time = manager_->delegate()->NowTicks();
   std::unique_ptr<VirtualTimeDomain> domain_a(
       new VirtualTimeDomain(start_time));
   std::unique_ptr<VirtualTimeDomain> domain_b(
@@ -1675,7 +1675,7 @@ TEST_F(TaskQueueManagerTest, TimeDomainsAreIndependant) {
 TEST_F(TaskQueueManagerTest, TimeDomainMigration) {
   Initialize(1u);
 
-  base::TimeTicks start_time = manager_->Delegate()->NowTicks();
+  base::TimeTicks start_time = manager_->delegate()->NowTicks();
   std::unique_ptr<VirtualTimeDomain> domain_a(
       new VirtualTimeDomain(start_time));
   manager_->RegisterTimeDomain(domain_a.get());
@@ -1716,7 +1716,7 @@ TEST_F(TaskQueueManagerTest, TimeDomainMigration) {
 TEST_F(TaskQueueManagerTest, TimeDomainMigrationWithIncomingImmediateTasks) {
   Initialize(1u);
 
-  base::TimeTicks start_time = manager_->Delegate()->NowTicks();
+  base::TimeTicks start_time = manager_->delegate()->NowTicks();
   std::unique_ptr<VirtualTimeDomain> domain_a(
       new VirtualTimeDomain(start_time));
   std::unique_ptr<VirtualTimeDomain> domain_b(
@@ -1813,7 +1813,7 @@ TEST_F(TaskQueueManagerTest, TaskQueueObserver_ImmediateTask) {
 TEST_F(TaskQueueManagerTest, TaskQueueObserver_DelayedTask) {
   Initialize(1u);
 
-  base::TimeTicks start_time = manager_->Delegate()->NowTicks();
+  base::TimeTicks start_time = manager_->delegate()->NowTicks();
   base::TimeDelta delay10s(base::TimeDelta::FromSeconds(10));
   base::TimeDelta delay100s(base::TimeDelta::FromSeconds(100));
   base::TimeDelta delay1s(base::TimeDelta::FromSeconds(1));
@@ -1862,7 +1862,7 @@ TEST_F(TaskQueueManagerTest, TaskQueueObserver_DelayedTaskMultipleQueues) {
   runners_[0]->SetObserver(&observer);
   runners_[1]->SetObserver(&observer);
 
-  base::TimeTicks start_time = manager_->Delegate()->NowTicks();
+  base::TimeTicks start_time = manager_->delegate()->NowTicks();
   base::TimeDelta delay1s(base::TimeDelta::FromSeconds(1));
   base::TimeDelta delay10s(base::TimeDelta::FromSeconds(10));
 
@@ -1964,7 +1964,7 @@ TEST_F(TaskQueueManagerTest, TaskQueueObserver_SweepCanceledDelayedTasks) {
   MockTaskQueueObserver observer;
   runners_[0]->SetObserver(&observer);
 
-  base::TimeTicks start_time = manager_->Delegate()->NowTicks();
+  base::TimeTicks start_time = manager_->delegate()->NowTicks();
   base::TimeDelta delay1(base::TimeDelta::FromSeconds(5));
   base::TimeDelta delay2(base::TimeDelta::FromSeconds(10));
 
@@ -2356,7 +2356,7 @@ TEST_F(TaskQueueManagerTestWithTracing, BlameContextAttribution) {
 TEST_F(TaskQueueManagerTest, NoWakeUpsForCanceledDelayedTasks) {
   Initialize(1u);
 
-  base::TimeTicks start_time = manager_->Delegate()->NowTicks();
+  base::TimeTicks start_time = manager_->delegate()->NowTicks();
 
   CancelableTask task1(now_src_.get());
   CancelableTask task2(now_src_.get());
@@ -2404,7 +2404,7 @@ TEST_F(TaskQueueManagerTest, NoWakeUpsForCanceledDelayedTasks) {
 TEST_F(TaskQueueManagerTest, NoWakeUpsForCanceledDelayedTasksReversePostOrder) {
   Initialize(1u);
 
-  base::TimeTicks start_time = manager_->Delegate()->NowTicks();
+  base::TimeTicks start_time = manager_->delegate()->NowTicks();
 
   CancelableTask task1(now_src_.get());
   CancelableTask task2(now_src_.get());
@@ -2452,7 +2452,7 @@ TEST_F(TaskQueueManagerTest, NoWakeUpsForCanceledDelayedTasksReversePostOrder) {
 TEST_F(TaskQueueManagerTest, TimeDomainWakeUpOnlyCancelledIfAllUsesCancelled) {
   Initialize(1u);
 
-  base::TimeTicks start_time = manager_->Delegate()->NowTicks();
+  base::TimeTicks start_time = manager_->delegate()->NowTicks();
 
   CancelableTask task1(now_src_.get());
   CancelableTask task2(now_src_.get());
@@ -2637,23 +2637,23 @@ TEST_F(TaskQueueManagerTest, ComputeDelayTillNextTask) {
                                base::TimeDelta::FromSeconds(10));
 
   EXPECT_EQ(base::TimeDelta::FromSeconds(10),
-            ComputeDelayTillNextTask(&lazy_now)->Delay());
+            ComputeDelayTillNextTask(&lazy_now)->delay());
 
   runners_[1]->PostDelayedTask(FROM_HERE, base::Bind(&NopTask),
                                base::TimeDelta::FromSeconds(15));
 
   EXPECT_EQ(base::TimeDelta::FromSeconds(10),
-            ComputeDelayTillNextTask(&lazy_now)->Delay());
+            ComputeDelayTillNextTask(&lazy_now)->delay());
 
   runners_[1]->PostDelayedTask(FROM_HERE, base::Bind(&NopTask),
                                base::TimeDelta::FromSeconds(5));
 
   EXPECT_EQ(base::TimeDelta::FromSeconds(5),
-            ComputeDelayTillNextTask(&lazy_now)->Delay());
+            ComputeDelayTillNextTask(&lazy_now)->delay());
 
   runners_[0]->PostTask(FROM_HERE, base::Bind(&NopTask));
 
-  EXPECT_EQ(base::TimeDelta(), ComputeDelayTillNextTask(&lazy_now)->Delay());
+  EXPECT_EQ(base::TimeDelta(), ComputeDelayTillNextTask(&lazy_now)->delay());
 }
 
 TEST_F(TaskQueueManagerTest, ComputeDelayTillNextTask_Disabled) {
@@ -2686,7 +2686,7 @@ TEST_F(TaskQueueManagerTest, ComputeDelayTillNextTask_FenceUnblocking) {
   runners_[0]->InsertFence(TaskQueue::InsertFencePosition::NOW);
 
   LazyNow lazy_now(now_src_.get());
-  EXPECT_EQ(base::TimeDelta(), ComputeDelayTillNextTask(&lazy_now)->Delay());
+  EXPECT_EQ(base::TimeDelta(), ComputeDelayTillNextTask(&lazy_now)->delay());
 }
 
 TEST_F(TaskQueueManagerTest, ComputeDelayTillNextTask_DelayedTaskReady) {
@@ -2698,7 +2698,7 @@ TEST_F(TaskQueueManagerTest, ComputeDelayTillNextTask_DelayedTaskReady) {
   now_src_->Advance(base::TimeDelta::FromSeconds(10));
 
   LazyNow lazy_now(now_src_.get());
-  EXPECT_EQ(base::TimeDelta(), ComputeDelayTillNextTask(&lazy_now)->Delay());
+  EXPECT_EQ(base::TimeDelta(), ComputeDelayTillNextTask(&lazy_now)->delay());
 }
 
 TEST_F(TaskQueueManagerTest, PostDoWorkContinuation_NoMoreWork) {
@@ -2991,7 +2991,7 @@ TEST_F(TaskQueueManagerTest, GetNextScheduledWakeUp) {
 
   EXPECT_EQ(base::nullopt, runners_[0]->GetNextScheduledWakeUp());
 
-  base::TimeTicks start_time = manager_->Delegate()->NowTicks();
+  base::TimeTicks start_time = manager_->delegate()->NowTicks();
   base::TimeDelta delay1 = base::TimeDelta::FromMilliseconds(10);
   base::TimeDelta delay2 = base::TimeDelta::FromMilliseconds(2);
 
@@ -3036,7 +3036,7 @@ TEST_F(TaskQueueManagerTest, SetTimeDomainForDisabledQueue) {
   EXPECT_CALL(observer, OnQueueNextWakeUpChanged(_, _)).Times(0);
 
   std::unique_ptr<VirtualTimeDomain> domain(
-      new VirtualTimeDomain(manager_->Delegate()->NowTicks()));
+      new VirtualTimeDomain(manager_->delegate()->NowTicks()));
   manager_->RegisterTimeDomain(domain.get());
   runners_[0]->SetTimeDomain(domain.get());
 
