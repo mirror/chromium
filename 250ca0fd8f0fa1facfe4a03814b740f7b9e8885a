@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0b0a84c_6a6f239d",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRect.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-10T16:35:36Z",
+      "side": 1,
+      "message": "We still need separate has_radius_ and is_tight_ flags because ClipRect needs the former.",
+      "revId": "250ca0fd8f0fa1facfe4a03814b740f7b9e8885a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

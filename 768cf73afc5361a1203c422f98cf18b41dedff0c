@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a83b1cd3_87e50c7a",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRect.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-10T16:35:36Z",
+      "side": 0,
+      "message": "I removed this method because it was not clear whether has_radius_ and is_tight_ should be preserved. In the following situation they should be preserved:\n  clip_rect.SetRect(filter.MapRect(clip_rect.GetRect()))\nbut sometimes this method was used to reset a clip_rect where the flags should not be preserved. Now the caller should use the constructor for the latter case. For the former case, the caller should either use other mutation methods or explicitly propagate the flags if needed constructing a new ClipRect.",
+      "revId": "768cf73afc5361a1203c422f98cf18b41dedff0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
