@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2720896_4799a985",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-10T15:10:45Z",
+      "side": 1,
+      "message": "What\u0027s this used for now, if we don\u0027t add the white background?  Just the anchorPoint change?",
+      "range": {
+        "startLine": 161,
+        "startChar": 11,
+        "endLine": 161,
+        "endChar": 34
+      },
+      "revId": "43e957186adb57c7c4798dda866a7927e8eed2f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
