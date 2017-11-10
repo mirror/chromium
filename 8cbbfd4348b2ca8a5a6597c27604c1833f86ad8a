@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d6f6cc7_d070c913",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-10T18:24:24Z",
+      "side": 1,
+      "message": "That\u0027s how I did it originally, but the ChromeWebTest class seems to include some other functionality that I don\u0027t need for these tests. The comments in the ChromeWebTest header are either wrong or just confusing to me (\"// An abstract class of tests that need to create real web controllers.\" and \"// WebTestWithWebController\" ) and I couldn\u0027t find any guidance that suggested that this class should be preferred over only adding what I need to WebTestWithWebState.\n\nHappy to flip back to using ChromeWebTest if you prefer.",
+      "parentUuid": "d33b9e16_a030b152",
+      "revId": "8cbbfd4348b2ca8a5a6597c27604c1833f86ad8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "628c9063_b414ea44",
         "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
         "patchSetId": 2
@@ -77,6 +95,30 @@
       "side": 1,
       "message": "nit: There is no need for making data members private in tests:\nhttps://google.github.io/styleguide/cppguide.html#Access_Control",
       "parentUuid": "ac6a803d_f47f1d72",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 24
+      },
+      "revId": "8cbbfd4348b2ca8a5a6597c27604c1833f86ad8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b64ffb_3796394f",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-10T18:24:24Z",
+      "side": 1,
+      "message": "I\u0027d seen that, but it implies that protected fields are only allowed due to an unspecified \"technical limitation\" in GoogleTest, and such limitation doesn\u0027t seem to apply here.\n\nHappy to switch this back if you prefer.",
+      "parentUuid": "dfb958db_8f076051",
       "range": {
         "startLine": 90,
         "startChar": 2,
