@@ -13,6 +13,7 @@
 #include "ui/views/animation/ink_drop_ripple.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
+#include "ui/views/controls/styled_label.h"
 #include "ui/views/focus/focus_manager.h"
 #include "ui/views/layout/grid_layout.h"
 
@@ -24,6 +25,25 @@ std::unique_ptr<views::Border> CreateBorderWithVerticalSpacing(
       views::DISTANCE_BUTTON_HORIZONTAL_PADDING);
   return views::CreateEmptyBorder(vert_spacing, horz_spacing, vert_spacing,
                                   horz_spacing);
+}
+
+// Combines the tooltips from |first| and |second| if either show a tooltip and
+// sets it as a tooltip for |parent|.
+void CombineTooltipsIfEitherShown(views::Button* parent,
+                                  views::StyledLabel* first,
+                                  views::Label* second) {
+  const base::string16 accessible_name = base::JoinString(
+      {first->text(), second->text()}, base::ASCIIToUTF16("\n"));
+
+  base::string16 first_tooltip, second_tooltip;
+  first->GetTooltipText(gfx::Point(), &first_tooltip);
+  second->GetTooltipText(gfx::Point(), &second_tooltip);
+  if (!first_tooltip.empty() || !second_tooltip.empty()) {
+    // Setting the tooltip text also happens to set the accessible name.
+    parent->SetTooltipText(accessible_name);
+  } else {
+    parent->SetAccessibleName(accessible_name);
+  }
 }
 
 }  // namespace
@@ -96,9 +116,11 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
   columns->AddColumn(views::GridLayout::CENTER, views::GridLayout::CENTER,
                      kFixed, views::GridLayout::USE_PREF, 0, 0);
   columns->AddPaddingColumn(kFixed, icon_label_spacing);
-  columns->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER,
+  columns->AddColumn(views::GridLayout::LEADING, views::GridLayout::FILL,
                      kStretchy, views::GridLayout::USE_PREF, 0, 0);
 
+  // Make sure hovering over the icon also hovers the |HoverButton|.
+  icon_view->set_can_process_events_within_subtree(false);
   // Don't cover |icon_view| when the ink drops are being painted. |LabelButton|
   // already does this with its own image.
   icon_view->SetPaintToLayer();
@@ -109,8 +131,13 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
   grid_layout->StartRow(0, 0, row_height);
   grid_layout->AddView(icon_view.release(), 1, num_labels);
 
-  title_ = new views::Label(title);
+  title_ = new views::StyledLabel(title, nullptr);
+  // Hover the whole button when hovering |title_|. This is OK because |title_|
+  // will never have a link in it.
+  title_->set_can_process_events_within_subtree(false);
   grid_layout->AddView(title_);
+  // Size without a maximum width to get a single line label.
+  title_->SizeToFit(0);
 
   if (!subtitle.empty()) {
     grid_layout->StartRow(0, 0, row_height);
@@ -121,18 +148,7 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
     grid_layout->SkipColumns(1);
     grid_layout->AddView(subtitle_);
 
-    const base::string16 accessible_name =
-        base::JoinString({title, subtitle}, base::ASCIIToUTF16("\n"));
-    // Only set a tooltip if either |title_| or |subtitle_| are too long.
-    base::string16 title_tooltip, subtitle_tooltip;
-    title_->GetTooltipText(gfx::Point(), &title_tooltip);
-    subtitle_->GetTooltipText(gfx::Point(), &subtitle_tooltip);
-    if (!title_tooltip.empty() || !subtitle_tooltip.empty()) {
-      // Setting the tooltip text also happens to set the accessible name.
-      SetTooltipText(accessible_name);
-    } else {
-      SetAccessibleName(accessible_name);
-    }
+    CombineTooltipsIfEitherShown(this, title_, subtitle_);
   } else {
     SetAccessibleName(title);
   }
@@ -148,6 +164,25 @@ void HoverButton::SetSubtitleElideBehavior(gfx::ElideBehavior elide_behavior) {
   DCHECK(subtitle_);
   if (!subtitle_->text().empty())
     subtitle_->SetElideBehavior(elide_behavior);
+}
+
+void HoverButton::SetTitleTextWithHintRange(const base::string16& title_text,
+                                            const gfx::Range& range) {
+  DCHECK(title_);
+  title_->SetText(title_text);
+
+  if (subtitle_) {
+    CombineTooltipsIfEitherShown(this, title_, subtitle_);
+  } else {
+    SetAccessibleName(title_text);
+  }
+
+  if (range.IsValid()) {
+    views::StyledLabel::RangeStyleInfo style_info;
+    style_info.text_style = STYLE_SECONDARY;
+    title_->AddStyleRange(range, style_info);
+  }
+  title_->SizeToFit(0);
 }
 
 bool HoverButton::ShouldUseFloodFillInkDrop() const {
@@ -187,5 +222,6 @@ views::View* HoverButton::GetTooltipHandlerForPoint(const gfx::Point& point) {
   // only sets the tooltip when the text is too long.
   if (title_ && subtitle_)
     return this;
-  return title_ ? title_ : label();
+  return title_ ? static_cast<views::View*>(title_)
+                : static_cast<views::View*>(label());
 }
