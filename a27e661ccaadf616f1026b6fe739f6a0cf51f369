@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c4a483e_b514442c",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-10T00:09:17Z",
+      "side": 1,
+      "message": "I think we should fire another MakeNetworkLocationRequest so it will satisfy the two scenarios: a) network changes; b) geolocation expired.\n\n+amoylan@ WDYT?",
+      "parentUuid": "c3032de8_d490478c",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc4aa95d_f1b4108c",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
         "patchSetId": 4
@@ -76,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "3e571d69_7a139976",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-10T00:09:17Z",
+      "side": 1,
+      "message": "I think we can slightly modified the callback to takes a second parameter (error), but since we\u0027re not really processing any error, maybe we can just add a TODO here?\n\n+amoylan@ WDYT?",
+      "parentUuid": "fc9cd116_015c7f0f",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 39
+      },
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "056dfc55_136ef8dd",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
         "patchSetId": 4
@@ -107,6 +149,24 @@
       "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f46d1eb_e62bf85b",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-10T00:09:17Z",
+      "side": 1,
+      "message": "yeah, I think Andrew did a few tests and got this observation",
+      "parentUuid": "1fec87fa_692a4567",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
