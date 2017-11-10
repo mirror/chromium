@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8cae7791_3bf73006",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-10T02:31:57Z",
+      "side": 1,
+      "message": "This is a parameterized test where the flag is enabled for one of the param values. I don\u0027t think there\u0027s much worth testing when it\u0027s in the mode where the flag isn\u0027t enabled, so I early returned.",
+      "parentUuid": "867d1191_fbeb993b",
+      "revId": "70ebc171200d6fb8968d871be07682e09fd0c679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56a9a5f0_dd553cad",
         "filename": "chrome/browser/ui/page_info/page_info.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-09T04:49:46Z",
       "side": 1,
       "message": "this doesn\u0027t look right  - isn\u0027t this called whenever the bubble closes? This should only happen when it closes due to the site settings link being clicked. (maybe this is not the #endif you were looking for).",
+      "revId": "70ebc171200d6fb8968d871be07682e09fd0c679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce3b494_0a5e522d",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-10T02:31:57Z",
+      "side": 1,
+      "message": "Oh wups, fixed.",
+      "parentUuid": "56a9a5f0_dd553cad",
       "revId": "70ebc171200d6fb8968d871be07682e09fd0c679",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
