@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "003e5893_ee59e113",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1491,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-10T22:55:08Z",
+      "side": 1,
+      "message": "We should. Renaming either of them is good enough.\n\nOr it\u0027s even better if someone does some archaeology in revision history to see if the overwritten variable is a bug or not. That takes time, though...",
+      "parentUuid": "b7755032_cc79e0ea",
+      "range": {
+        "startLine": 1491,
+        "startChar": 6,
+        "endLine": 1491,
+        "endChar": 46
+      },
+      "revId": "b8257614ca277e176a6e853e06bd01ee15168154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4238307e_6b91cbec",
         "filename": "third_party/WebKit/Source/core/editing/serializers/Serialization.cpp",
         "patchSetId": 2

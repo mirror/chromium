@@ -175,6 +175,24 @@
       "revId": "378caa6672d5e69dcebbd3ff8495e109cca602e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6945dcf3_ce20ac35",
+        "filename": "third_party/WebKit/Source/core/editing/serializers/Serialization.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-10T22:55:08Z",
+      "side": 1,
+      "message": "We can\u0027t make |CommonAncestorContainer()| return ContainerNode. Unfortunately, the term \"container\" is overloaded and leads to confusion.\n\nThe \"container node\" of a Position is not necessarily a ContainerNode -- when the position is an offset in a text node, the \"container node\" is the text node, which is not a ContainerNode.\n\nSame for CommonAncestorContainer -- if the range is an offset range in a text node, it returns the text node, which is not a ContainerNode.",
+      "parentUuid": "fc0b8b6e_f925430e",
+      "revId": "378caa6672d5e69dcebbd3ff8495e109cca602e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
