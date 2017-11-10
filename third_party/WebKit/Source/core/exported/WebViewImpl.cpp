@@ -151,6 +151,7 @@
 #include "public/platform/WebTextInputInfo.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebVector.h"
+#include "public/platform/web_page_visibility_state.mojom-blink.h"
 #include "public/web/WebAutofillClient.h"
 #include "public/web/WebConsoleMessage.h"
 #include "public/web/WebElement.h"
@@ -295,12 +296,13 @@ class ColorOverlay final : public PageOverlay::Delegate {
 // WebView ----------------------------------------------------------------
 
 WebView* WebView::Create(WebViewClient* client,
-                         WebPageVisibilityState visibility_state) {
+                         mojom::WebPageVisibilityState visibility_state) {
   return WebViewImpl::Create(client, visibility_state);
 }
 
-WebViewImpl* WebViewImpl::Create(WebViewClient* client,
-                                 WebPageVisibilityState visibility_state) {
+WebViewImpl* WebViewImpl::Create(
+    WebViewClient* client,
+    mojom::WebPageVisibilityState visibility_state) {
   // Pass the WebViewImpl's self-reference to the caller.
   auto web_view = base::AdoptRef(new WebViewImpl(client, visibility_state));
   web_view->AddRef();
@@ -330,7 +332,7 @@ void WebViewImpl::SetPrerendererClient(
 }
 
 WebViewImpl::WebViewImpl(WebViewClient* client,
-                         WebPageVisibilityState visibility_state)
+                         mojom::WebPageVisibilityState visibility_state)
     : client_(client),
       chrome_client_(ChromeClientImpl::Create(this)),
       context_menu_client_(*this),
@@ -3862,11 +3864,12 @@ WebViewScheduler* WebViewImpl::Scheduler() const {
   return scheduler_.get();
 }
 
-void WebViewImpl::SetVisibilityState(WebPageVisibilityState visibility_state,
-                                     bool is_initial_state) {
-  DCHECK(visibility_state == kWebPageVisibilityStateVisible ||
-         visibility_state == kWebPageVisibilityStateHidden ||
-         visibility_state == kWebPageVisibilityStatePrerender);
+void WebViewImpl::SetVisibilityState(
+    mojom::WebPageVisibilityState visibility_state,
+    bool is_initial_state) {
+  DCHECK(visibility_state == mojom::WebPageVisibilityState::kVisible ||
+         visibility_state == mojom::WebPageVisibilityState::kHidden ||
+         visibility_state == mojom::WebPageVisibilityState::kPrerender);
 
   if (GetPage()) {
     page_->SetVisibilityState(
@@ -3874,7 +3877,7 @@ void WebViewImpl::SetVisibilityState(WebPageVisibilityState visibility_state,
         is_initial_state);
   }
 
-  bool visible = visibility_state == kWebPageVisibilityStateVisible;
+  bool visible = visibility_state == mojom::WebPageVisibilityState::kVisible;
   if (layer_tree_view_ && !override_compositor_visibility_)
     layer_tree_view_->SetVisible(visible);
   scheduler_->SetPageVisible(visible);

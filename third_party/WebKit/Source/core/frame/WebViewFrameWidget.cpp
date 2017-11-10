@@ -8,6 +8,7 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/layout/HitTestResult.h"
 #include "platform/exported/WebActiveGestureAnimation.h"
+#include "public/platform/web_page_visibility_state.mojom-blink.h"
 
 namespace blink {
 
@@ -177,7 +178,7 @@ void WebViewFrameWidget::UpdateBrowserControlsState(
 }
 
 void WebViewFrameWidget::SetVisibilityState(
-    WebPageVisibilityState visibility_state) {
+    mojom::WebPageVisibilityState visibility_state) {
   return web_view_->SetVisibilityState(visibility_state, false);
 }
 

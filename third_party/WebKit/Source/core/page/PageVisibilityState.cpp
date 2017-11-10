@@ -30,7 +30,7 @@
 
 #include "core/page/PageVisibilityState.h"
 #include "platform/wtf/Assertions.h"
-#include "public/platform/WebPageVisibilityState.h"
+#include "public/platform/web_page_visibility_state.mojom-blink.h"
 
 namespace blink {
 
@@ -48,9 +48,11 @@ String PageVisibilityStateString(PageVisibilityState state) {
   return String();
 }
 
-STATIC_ASSERT_ENUM(kWebPageVisibilityStateVisible, kPageVisibilityStateVisible);
-STATIC_ASSERT_ENUM(kWebPageVisibilityStateHidden, kPageVisibilityStateHidden);
-STATIC_ASSERT_ENUM(kWebPageVisibilityStatePrerender,
+STATIC_ASSERT_ENUM(mojom::WebPageVisibilityState::kVisible,
+                   kPageVisibilityStateVisible);
+STATIC_ASSERT_ENUM(mojom::WebPageVisibilityState::kHidden,
+                   kPageVisibilityStateHidden);
+STATIC_ASSERT_ENUM(mojom::WebPageVisibilityState::kPrerender,
                    kPageVisibilityStatePrerender);
 
 }  // namespace blink
