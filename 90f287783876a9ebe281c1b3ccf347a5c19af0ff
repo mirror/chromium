@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "4e1fb652_60e8f493",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-10T00:28:52Z",
+      "side": 1,
+      "message": "Thanks, adding such generic texture reading API directly to the ContextProvider sgtm. I think junov@ was also looking forward to such method for another JS API.\n\nEach blink::WebGraphicsContext3DProvider creates its own GLHelper, which creates its own shared readback instances. Making them directly owned by blink::WebGraphicsContext3DProvider wouldn\u0027t make any difference AFAICT. Since this is the only user of shared instance and we will process with refactors, it should be fine for now. I added DCHECKs as you asked.",
+      "parentUuid": "4a8613db_ec184637",
+      "range": {
+        "startLine": 315,
+        "startChar": 0,
+        "endLine": 317,
+        "endChar": 74
+      },
+      "revId": "90f287783876a9ebe281c1b3ccf347a5c19af0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d83e0ce_dfb2aadb",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 8

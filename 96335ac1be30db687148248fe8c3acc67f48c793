@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f28da466_ad6629e4",
+        "filename": "components/viz/common/gl_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-10T00:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac2f1fa1_223d5acf",
+      "range": {
+        "startLine": 469,
+        "startChar": 2,
+        "endLine": 469,
+        "endChar": 77
+      },
+      "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66e0700d_ae5804b9",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e9c7200_d80633f1",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-10T00:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e0700d_ae5804b9",
+      "range": {
+        "startLine": 101,
+        "startChar": 28,
+        "endLine": 101,
+        "endChar": 39
+      },
+      "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7108d75b_394f49e3",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-10T00:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fa29cf0_4b4efc5f",
+      "range": {
+        "startLine": 124,
+        "startChar": 22,
+        "endLine": 124,
+        "endChar": 36
+      },
+      "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42181bc1_ebb8665b",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76ba8289_8bd06f18",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-10T00:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42181bc1_ebb8665b",
+      "range": {
+        "startLine": 150,
+        "startChar": 49,
+        "endLine": 150,
+        "endChar": 63
+      },
+      "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1a88fc2d_7b1bea7c",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-10T00:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f06bf2d5_7c2d0fbb",
+      "range": {
+        "startLine": 320,
+        "startChar": 0,
+        "endLine": 320,
+        "endChar": 3
+      },
+      "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bceebae8_400d6ea2",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 9
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "7c8e5c99_17a4bc1d",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-10T00:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bceebae8_400d6ea2",
+      "range": {
+        "startLine": 335,
+        "startChar": 4,
+        "endLine": 335,
+        "endChar": 24
+      },
+      "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41766034_43aa94c1",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 9
@@ -160,6 +304,30 @@
       "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1005903_d69579d9",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-10T00:28:52Z",
+      "side": 1,
+      "message": "Thanks for the pointer. I will remove the ref knowing that it is safe.",
+      "parentUuid": "41766034_43aa94c1",
+      "range": {
+        "startLine": 355,
+        "startChar": 4,
+        "endLine": 355,
+        "endChar": 25
+      },
+      "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
