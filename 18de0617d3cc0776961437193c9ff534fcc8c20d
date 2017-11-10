@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "787ad3f1_9823d69e",
+        "filename": "third_party/tensorflow/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2017-11-10T10:02:07Z",
+      "side": 1,
+      "message": "How about change this to //components/machine_intelligence/* to also include sub_directories of //components/machine_intelligence",
+      "range": {
+        "startLine": 8,
+        "startChar": 56,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "18de0617d3cc0776961437193c9ff534fcc8c20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c007ca_091b8ca2",
+        "filename": "third_party/tensorflow/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2017-11-10T10:02:07Z",
+      "side": 1,
+      "message": "How about change here to be proto_out_dir \u003d \"third_party\" so that these two protos can both be included as:\n\n\"third_party/tensorflow/core/example/feature.pb.h\"\n\"third_party/tensorflow/core/example/example.pb.h\"\n\nwhich are also the directories in google3.",
+      "range": {
+        "startLine": 20,
+        "startChar": 41,
+        "endLine": 20,
+        "endChar": 42
+      },
+      "revId": "18de0617d3cc0776961437193c9ff534fcc8c20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
