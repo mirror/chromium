@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f9a4773_31b0f53b",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-10T19:21:04Z",
+      "side": 1,
+      "message": "Do we have to worry about this not being initialized yet?",
+      "range": {
+        "startLine": 506,
+        "startChar": 2,
+        "endLine": 506,
+        "endChar": 40
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c12229_501d2beb",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-10T19:21:04Z",
+      "side": 1,
+      "message": "Looks like this is also doing the file existence check.  Should we make it something more generic like disk_access_task_runner_?",
+      "range": {
+        "startLine": 195,
+        "startChar": 49,
+        "endLine": 195,
+        "endChar": 79
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c925c68_15f5aade",
+        "filename": "components/download/downloader/in_progress/download_entry.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-10T19:21:04Z",
+      "side": 1,
+      "message": "Space before {",
+      "range": {
+        "startLine": 15,
+        "startChar": 48,
+        "endLine": 15,
+        "endChar": 49
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e870ad0_6276489c",
+        "filename": "components/download/downloader/in_progress/download_entry.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-10T19:21:04Z",
+      "side": 1,
+      "message": "const std::string\u0026.  Same for second argument.",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122c022a_1959edba",
+        "filename": "components/download/downloader/in_progress/in_progress_cache.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-10T19:21:04Z",
+      "side": 1,
+      "message": "If we move all in-progress data here this may not be the case in the long run (e.g. might be too much disk churn).",
+      "range": {
+        "startLine": 20,
+        "startChar": 49,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e1c146_5f9d0d18",
+        "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-10T19:21:04Z",
+      "side": 1,
+      "message": "Should have a unit test for these",
+      "range": {
+        "startLine": 5,
+        "startChar": 53,
+        "endLine": 5,
+        "endChar": 78
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b0fae7_6911b421",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-10T19:21:04Z",
+      "side": 1,
+      "message": "return download::DownloadEntry(params-\u003eguid(), params-\u003erequest_origin());\n\nSmall enough it might be better to inline than use the helper if it\u0027s only used once.",
+      "range": {
+        "startLine": 218,
+        "startChar": 2,
+        "endLine": 220,
+        "endChar": 24
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82481885_42e9a2ed",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-10T19:21:04Z",
+      "side": 1,
+      "message": "What if cache is null?",
+      "range": {
+        "startLine": 301,
+        "startChar": 6,
+        "endLine": 301,
+        "endChar": 24
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee7ee8a_68d45fa5",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-10T19:21:04Z",
+      "side": 1,
+      "message": "Do we ever have downloads in the INTERRUPTED state for a *long* time (e.g. failed downloads)?  I don\u0027t remember if we remove them from the history db or not.",
+      "range": {
+        "startLine": 304,
+        "startChar": 4,
+        "endLine": 304,
+        "endChar": 50
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c2f86b_58ecbf70",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-10T19:21:04Z",
+      "side": 1,
+      "message": "Do resumption cases go through this codepath as well?",
+      "range": {
+        "startLine": 508,
+        "startChar": 2,
+        "endLine": 508,
+        "endChar": 18
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845896f7_971c23d8",
+        "filename": "content/browser/download/download_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-10T19:21:04Z",
+      "side": 1,
+      "message": "Move this to the CC file and make the member variable just a DownloadItem::Observer?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 66
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
