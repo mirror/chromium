@@ -224,6 +224,11 @@ bool IsRendererDebugURL(const GURL& url) {
   if (url.SchemeIs(url::kJavaScriptScheme))
     return true;
 
+  // Early return for non chrome schemes so we don't have to perform half a
+  // dozen string compares in the normal case.
+  if (!url.SchemeIs(kChromeUIScheme))
+    return false;
+
   return url == kChromeUICheckCrashURL ||
          url == kChromeUIBadCastCrashURL ||
          url == kChromeUICrashURL ||
