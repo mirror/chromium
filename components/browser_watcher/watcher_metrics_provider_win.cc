@@ -85,7 +85,7 @@ void RecordExitCodes(const base::string16& registry_path) {
   if (!regkey.Valid())
     return;
 
-  size_t num = regkey.GetValueCount();
+  int64_t num = regkey.GetValueCount();
   if (num == 0)
     return;
 
@@ -115,9 +115,9 @@ void RecordExitCodes(const base::string16& registry_path) {
     LOG(FATAL) << "Corrupt histogram " << corruption;
   }
 
-  for (size_t i = 0; i < num; ++i) {
+  for (int i = 0; i < num; ++i) {
     base::string16 name;
-    LONG error = regkey.GetValueNameAt(static_cast<int>(i), &name);
+    LONG error = regkey.GetValueNameAt(i, &name);
     if (error != ERROR_SUCCESS) {
       // See http://crbug.com/779674.
       base::debug::Alias(&error);
