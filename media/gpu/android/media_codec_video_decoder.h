@@ -18,6 +18,7 @@
 #include "media/gpu/android/avda_codec_allocator.h"
 #include "media/gpu/android/codec_wrapper.h"
 #include "media/gpu/android/device_info.h"
+#include "media/gpu/android/surface_chooser_helper.h"
 #include "media/gpu/android/video_frame_factory.h"
 #include "media/gpu/media_gpu_export.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
@@ -174,12 +175,15 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   // Releases |codec_| if it's not null.
   void ReleaseCodec();
 
+  // Notify us about a promotion hint.
+  void NotifyPromotionHint(PromotionHintAggregator::Hint hint);
+
   // Creates an overlay factory cb based on the value of overlay_info_.
   AndroidOverlayFactoryCB CreateOverlayFactoryCb();
 
   // Create a callback that will handle promotion hints, and set the overlay
   // position if required.
-  PromotionHintAggregator::NotifyPromotionHintCB CreatePromotionHintCB() const;
+  PromotionHintAggregator::NotifyPromotionHintCB CreatePromotionHintCB();
 
   State state_ = State::kInitializing;
 
@@ -234,12 +238,8 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   // The current overlay info, which possibly specifies an overlay to render to.
   OverlayInfo overlay_info_;
 
-  // The surface chooser we use to decide which kind of surface to configure the
-  // codec with.
-  std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser_;
-
-  // Current state for the chooser.
-  AndroidVideoSurfaceChooser::State chooser_state_;
+  // The helper which manages our surface chooser for us.
+  SurfaceChooserHelper surface_chooser_helper_;
 
   // The factory for creating VideoFrames from CodecOutputBuffers.
   std::unique_ptr<VideoFrameFactory> video_frame_factory_;
