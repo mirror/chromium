@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a19e5c8_0c72973e",
+        "filename": "chrome/browser/loader/chrome_navigation_data_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-10T22:25:09Z",
+      "side": 1,
+      "message": "nit: use std::make_unique",
+      "revId": "a79fb26895f3d41d490ea4fe396b4013b81e59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32dd3c80_92b7ba00",
+        "filename": "chrome/browser/loader/chrome_navigation_data_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-10T22:25:09Z",
+      "side": 1,
+      "message": "ditto.\nauto previews_user_data \u003d std::make_unique\u003cpreviews::PreviewsUserData\u003e(1u);\nauto* previews_user_data_raw \u003d previews_user_data.get();\ndata-\u003eset_previews_user_data(std::move(previews_user_data));\n...",
+      "revId": "a79fb26895f3d41d490ea4fe396b4013b81e59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127c95fe_3061af21",
+        "filename": "chrome/browser/loader/chrome_navigation_data_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-10T22:25:09Z",
+      "side": 1,
+      "message": "same",
+      "revId": "a79fb26895f3d41d490ea4fe396b4013b81e59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
