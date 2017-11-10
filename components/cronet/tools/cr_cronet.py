@@ -95,6 +95,7 @@ def main():
     target_os = 'android'
     test_target = 'cronet_test_instrumentation_apk'
     gn_args = 'use_errorprone_java_compiler=true arm_use_neon=false '
+    gn_args += 'target_cpu="arm64" '
     gn_extra = ''
     out_dir_suffix = ''
 

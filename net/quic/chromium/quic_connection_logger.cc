@@ -379,6 +379,8 @@ void QuicConnectionLogger::OnFrameAddedToPacket(const QuicFrame& frame) {
       break;
     case MTU_DISCOVERY_FRAME:
       break;
+    case CONNECTIVITY_PROBING_FRAME:
+      break;
     default:
       DCHECK(false) << "Illegal frame type: " << frame.type;
   }
@@ -442,6 +444,11 @@ void QuicConnectionLogger::OnFrameAddedToPacket(const QuicFrame& frame) {
     case MTU_DISCOVERY_FRAME:
       // MtuDiscoveryFrame is PingFrame on wire, it does not have any payload.
       net_log_.AddEvent(NetLogEventType::QUIC_SESSION_MTU_DISCOVERY_FRAME_SENT);
+      break;
+    case CONNECTIVITY_PROBING_FRAME:
+      // CONNECTIVITY_PROBING_FRAME is PingFrame on wire, it does not have any
+      // payload.
+      // TODO(zhongyi): add new NetLogEventType for CONNECTIVITY_PROBING_FRAME
       break;
     default:
       DCHECK(false) << "Illegal frame type: " << frame.type;

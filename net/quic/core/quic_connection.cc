@@ -182,6 +182,7 @@ QuicConnection::QuicConnection(
     : framer_(supported_versions,
               helper->GetClock()->ApproximateNow(),
               perspective),
+      probing_packet_status_(NO_FRAME_RECEIVED),
       helper_(helper),
       alarm_factory_(alarm_factory),
       per_packet_options_(nullptr),
@@ -245,10 +246,7 @@ QuicConnection::QuicConnection(
           &arena_)),
       visitor_(nullptr),
       debug_visitor_(nullptr),
-      packet_generator_(connection_id_,
-                        &framer_,
-                        random_generator_,
-                        this),
+      packet_generator_(connection_id_, &framer_, random_generator_, this),
       idle_network_timeout_(QuicTime::Delta::Infinite()),
       handshake_timeout_(QuicTime::Delta::Infinite()),
       time_of_last_received_packet_(clock_->ApproximateNow()),
@@ -640,6 +638,9 @@ bool QuicConnection::OnPacketHeader(const QuicPacketHeader& header) {
     return false;
   }
 
+  // Initialize packet status.
+  probing_packet_status_ = NO_FRAME_RECEIVED;
+
   PeerAddressChangeType peer_migration_type =
       QuicUtils::DetermineAddressChangeType(peer_address_,
                                             last_packet_source_address_);
@@ -660,7 +661,12 @@ bool QuicConnection::OnPacketHeader(const QuicPacketHeader& header) {
   }
 
   --stats_.packets_dropped;
-  QUIC_DVLOG(1) << ENDPOINT << "Received packet header: " << header;
+
+  LOG(ERROR) << "zhongyi_log: " << ENDPOINT
+             << "receive packet header for connection_id = " << connection_id_;
+
+  LOG(ERROR) << ENDPOINT << "Received packet header: " << header;
+
   last_header_ = header;
   // An ack will be sent if a missing retransmittable packet was received;
   was_last_packet_missing_ =
@@ -676,6 +682,7 @@ bool QuicConnection::OnPacketHeader(const QuicPacketHeader& header) {
 
 bool QuicConnection::OnStreamFrame(const QuicStreamFrame& frame) {
   DCHECK(connected_);
+  probing_packet_status_ = INVALID_PROBING;
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnStreamFrame(frame);
   }
@@ -707,6 +714,7 @@ bool QuicConnection::OnStreamFrame(const QuicStreamFrame& frame) {
 
 bool QuicConnection::OnAckFrame(const QuicAckFrame& incoming_ack) {
   DCHECK(connected_);
+  probing_packet_status_ = INVALID_PROBING;
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnAckFrame(incoming_ack);
   }
@@ -756,6 +764,7 @@ bool QuicConnection::OnAckFrame(const QuicAckFrame& incoming_ack) {
 
 bool QuicConnection::OnStopWaitingFrame(const QuicStopWaitingFrame& frame) {
   DCHECK(connected_);
+  probing_packet_status_ = INVALID_PROBING;
   if (no_stop_waiting_frames_) {
     return true;
   }
@@ -782,7 +791,14 @@ bool QuicConnection::OnStopWaitingFrame(const QuicStopWaitingFrame& frame) {
 }
 
 bool QuicConnection::OnPaddingFrame(const QuicPaddingFrame& frame) {
+  LOG(ERROR) << "zhongyi_log: Padding frame received for connection_id = "
+             << connection_id_;
   DCHECK(connected_);
+  if (probing_packet_status_ == FIRST_PING_RECEIVED) {
+    probing_packet_status_ = REMAINING_PADDING_RECEIVED;
+  } else {
+    probing_packet_status_ = INVALID_PROBING;
+  }
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnPaddingFrame(frame);
   }
@@ -791,6 +807,13 @@ bool QuicConnection::OnPaddingFrame(const QuicPaddingFrame& frame) {
 
 bool QuicConnection::OnPingFrame(const QuicPingFrame& frame) {
   DCHECK(connected_);
+  if (probing_packet_status_ == NO_FRAME_RECEIVED) {
+    probing_packet_status_ = FIRST_PING_RECEIVED;
+  } else {
+    probing_packet_status_ = INVALID_PROBING;
+  }
+  LOG(ERROR) << "zhongyi_log: Ping frame received for connection_id = "
+             << connection_id_;
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnPingFrame(frame);
   }
@@ -857,6 +880,7 @@ const char* QuicConnection::ValidateStopWaitingFrame(
 
 bool QuicConnection::OnRstStreamFrame(const QuicRstStreamFrame& frame) {
   DCHECK(connected_);
+  probing_packet_status_ = INVALID_PROBING;
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnRstStreamFrame(frame);
   }
@@ -873,6 +897,7 @@ bool QuicConnection::OnRstStreamFrame(const QuicRstStreamFrame& frame) {
 bool QuicConnection::OnConnectionCloseFrame(
     const QuicConnectionCloseFrame& frame) {
   DCHECK(connected_);
+  probing_packet_status_ = INVALID_PROBING;
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnConnectionCloseFrame(frame);
   }
@@ -892,6 +917,7 @@ bool QuicConnection::OnConnectionCloseFrame(
 
 bool QuicConnection::OnGoAwayFrame(const QuicGoAwayFrame& frame) {
   DCHECK(connected_);
+  probing_packet_status_ = INVALID_PROBING;
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnGoAwayFrame(frame);
   }
@@ -909,6 +935,7 @@ bool QuicConnection::OnGoAwayFrame(const QuicGoAwayFrame& frame) {
 
 bool QuicConnection::OnWindowUpdateFrame(const QuicWindowUpdateFrame& frame) {
   DCHECK(connected_);
+  probing_packet_status_ = INVALID_PROBING;
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnWindowUpdateFrame(frame, time_of_last_received_packet_);
   }
@@ -923,6 +950,7 @@ bool QuicConnection::OnWindowUpdateFrame(const QuicWindowUpdateFrame& frame) {
 
 bool QuicConnection::OnBlockedFrame(const QuicBlockedFrame& frame) {
   DCHECK(connected_);
+  probing_packet_status_ = INVALID_PROBING;
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnBlockedFrame(frame);
   }
@@ -940,6 +968,32 @@ void QuicConnection::OnPacketComplete() {
   if (!connected_) {
     ClearLastFrames();
     return;
+  }
+
+  LOG(ERROR) << "zhongyi_log: " << ENDPOINT << " received packet "
+             << last_header_.packet_number << " for "
+             << last_header_.public_header.connection_id
+             << "  <<<  probing status " << probing_packet_status_;
+  if (probing_packet_status_ == REMAINING_PADDING_RECEIVED) {
+    LOG(ERROR) << "zhongyi_log: probing packet received for "
+               << last_header_.public_header.connection_id;
+    LOG(ERROR) << "zhongyi_log: ======== self address changed from ip:port "
+               << self_address_.ToString() << " to "
+               << last_packet_destination_address_.ToString();
+
+    // TODO(zhongyi): move this to OnProbeSuccessful.
+    if (perspective_ == Perspective::IS_CLIENT) {
+      if (self_address_ != last_packet_destination_address_) {
+        LOG(ERROR) << "zhongyi_log: " << ENDPOINT << "received a probing response"
+                   << " to " << last_packet_destination_address_.ToString();
+        visitor_->OnConnectivityProbingReceived(last_packet_destination_address_,
+                                                last_packet_source_address_);
+      } else if (peer_address_ != last_packet_source_address_) {
+        LOG(ERROR) << "zhongyi_log: " << ENDPOINT << "received a probing request"
+                   << " from " << last_packet_source_address_.ToString();
+        // TODO(zhongyi): also call visitor to report probing request.
+      }
+    }
   }
 
   QUIC_DVLOG(1) << ENDPOINT << "Got packet " << last_header_.packet_number
@@ -2349,11 +2403,49 @@ QuicByteCount QuicConnection::GetLimitedMaxPacketSize(
   return max_packet_size;
 }
 
+void QuicConnection::SendProbingPacket(QuicPacketWriter* probing_writer) {
+  LOG(ERROR) << "zhongyi_log : send probing packet for connection id = "
+             << connection_id_;
+  if (probing_writer->IsWriteBlocked()) {
+    QUIC_BUG << "Write Blocked when send probing";
+    visitor_->OnWriteBlocked();
+    return;
+  }
+
+  LOG(ERROR) << ENDPOINT << "Send connectivity probing packet";
+
+  std::unique_ptr<QuicEncryptedPacket> probing_packet(
+      packet_generator_.SerializeConnectivityProbingPacket());
+
+  // TODO(zhongyi): switch writer. Figure out self_address().host().
+  QuicSocketAddress new_self_address;
+  WriteResult result = probing_writer->WritePacket(
+      probing_packet->data(), probing_packet->length(), new_self_address.host(),
+      peer_address(), per_packet_options_);
+
+  if (result.status == WRITE_STATUS_ERROR) {
+    OnWriteError(result.error_code);
+    LOG(ERROR) << "Write probing packet failed with error = "
+               << result.error_code;
+    return;
+  }
+
+  if (result.status == WRITE_STATUS_BLOCKED) {
+    visitor_->OnWriteBlocked();
+    if (writer_->IsWriteBlockedDataBuffered()) {
+      LOG(ERROR) << "Write probing packet blocked";
+      return;
+    }
+  }
+}
+
 void QuicConnection::SendMtuDiscoveryPacket(QuicByteCount target_mtu) {
   // Currently, this limit is ensured by the caller.
   DCHECK_EQ(target_mtu, GetLimitedMaxPacketSize(target_mtu));
 
   // Send the probe.
+  LOG(ERROR) << "zhongyi_log: send mtu probe packet for connection_id = "
+             << connection_id_;
   packet_generator_.GenerateMtuDiscoveryPacket(target_mtu);
 }
 

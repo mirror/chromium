@@ -402,6 +402,8 @@ size_t QuicFramer::BuildDataPacket(const QuicPacketHeader& header,
         break;
       case MTU_DISCOVERY_FRAME:
       // MTU discovery frames are serialized as ping frames.
+      case CONNECTIVITY_PROBING_FRAME:
+      // Connectivity probing frames are serialized as ping frames.
       case PING_FRAME:
         // Ping has no payload.
         break;
@@ -442,6 +444,41 @@ size_t QuicFramer::BuildDataPacket(const QuicPacketHeader& header,
         return 0;
     }
     ++i;
+  }
+
+  return writer.length();
+}
+
+size_t QuicFramer::BuildConnectivityProbingPacket(
+    const QuicPacketHeader& header,
+    char* buffer,
+    size_t packet_length) {
+  QuicDataWriter writer(packet_length, buffer, endianness());
+
+  if (!AppendPacketHeader(header, &writer)) {
+    QUIC_BUG << "AppendPacketHeader failed";
+    return 0;
+  }
+
+  // Write a probing frame. As probing frame is a PING now, there's no data
+  // payload.
+  QuicFrame probing_frame((QuicConnectivityProbingFrame()));
+  if (!AppendTypeByte(probing_frame, false, &writer)) {
+    QUIC_BUG << "AppendTypeByte failed for probing frame";
+    return 0;
+  }
+
+  // Add paddings to the rest of the packet.
+  QuicFrame padding_frame((QuicPaddingFrame()));
+  if (!AppendTypeByte(padding_frame, true, &writer)) {
+    QUIC_BUG << "AppendTypeByte failed for padding frame";
+    return 0;
+  }
+
+  if (!AppendPaddingFrame(padding_frame.padding_frame, &writer)) {
+    QUIC_BUG << "AppendPaddingFrame of "
+             << padding_frame.padding_frame.num_padding_bytes << " failed";
+    return 0;
   }
 
   return writer.length();
@@ -1030,6 +1067,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
     set_detailed_error("Packet has no frames.");
     return RaiseError(QUIC_MISSING_PAYLOAD);
   }
+  LOG(ERROR) << "zhongyi_log: start process frame data >>>>";
   while (!reader->IsDoneReading()) {
     uint8_t frame_type;
     if (!reader->ReadBytes(&frame_type, 1)) {
@@ -1086,6 +1124,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
 
     switch (frame_type) {
       case PADDING_FRAME: {
+        LOG(ERROR) << "zhongyi_log: ---- RECEIVED padding";
         QuicPaddingFrame frame;
         ProcessPaddingFrame(reader, &frame);
         if (!visitor_->OnPaddingFrame(frame)) {
@@ -1097,6 +1136,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
       }
 
       case RST_STREAM_FRAME: {
+        LOG(ERROR) << "zhongyi_log: ---- RECEIVED reset";
         QuicRstStreamFrame frame;
         if (!ProcessRstStreamFrame(reader, &frame)) {
           return RaiseError(QUIC_INVALID_RST_STREAM_DATA);
@@ -1110,6 +1150,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
       }
 
       case CONNECTION_CLOSE_FRAME: {
+        LOG(ERROR) << "zhongyi_log: ---- RECEIVED connection close";
         QuicConnectionCloseFrame frame;
         if (!ProcessConnectionCloseFrame(reader, &frame)) {
           return RaiseError(QUIC_INVALID_CONNECTION_CLOSE_DATA);
@@ -1125,6 +1166,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
       }
 
       case GOAWAY_FRAME: {
+        LOG(ERROR) << "zhongyi_log: ---- RECEIVED go away";
         QuicGoAwayFrame goaway_frame;
         if (!ProcessGoAwayFrame(reader, &goaway_frame)) {
           return RaiseError(QUIC_INVALID_GOAWAY_DATA);
@@ -1139,6 +1181,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
       }
 
       case WINDOW_UPDATE_FRAME: {
+        LOG(ERROR) << "zhongyi_log: ---- RECEIVED window update";
         QuicWindowUpdateFrame window_update_frame;
         if (!ProcessWindowUpdateFrame(reader, &window_update_frame)) {
           return RaiseError(QUIC_INVALID_WINDOW_UPDATE_DATA);
@@ -1153,6 +1196,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
       }
 
       case BLOCKED_FRAME: {
+        LOG(ERROR) << "zhongyi_log: ---- RECEIVED blocked frame";
         QuicBlockedFrame blocked_frame;
         if (!ProcessBlockedFrame(reader, &blocked_frame)) {
           return RaiseError(QUIC_INVALID_BLOCKED_DATA);
@@ -1167,6 +1211,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
       }
 
       case STOP_WAITING_FRAME: {
+        LOG(ERROR) << "zhongyi_log: ---- RECEIVED stop waiting";
         QuicStopWaitingFrame stop_waiting_frame;
         if (!ProcessStopWaitingFrame(reader, header, &stop_waiting_frame)) {
           return RaiseError(QUIC_INVALID_STOP_WAITING_DATA);
@@ -1180,6 +1225,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
         continue;
       }
       case PING_FRAME: {
+        LOG(ERROR) << "zhongyi_log: ---- RECEIVED ping";
         // Ping has no payload.
         QuicPingFrame ping_frame;
         if (!visitor_->OnPingFrame(ping_frame)) {
@@ -1192,6 +1238,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
       }
 
       default:
+        LOG(ERROR) << "zhongyi_log: ---- RECEIVED illegal frame";
         set_detailed_error("Illegal frame type.");
         QUIC_DLOG(WARNING) << ENDPOINT << "Illegal frame type: "
                            << static_cast<int>(frame_type);
@@ -1199,6 +1246,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
     }
   }
 
+  LOG(ERROR) << "zhongyi_log: finish process frame data <<<";
   return true;
 }
 
@@ -1859,6 +1907,8 @@ size_t QuicFramer::ComputeFrameLength(
       return GetStopWaitingFrameSize(transport_version_, packet_number_length);
     case MTU_DISCOVERY_FRAME:
     // MTU discovery frames are serialized as ping frames.
+    case CONNECTIVITY_PROBING_FRAME:
+    // Connectivity probing frames are serialized as ping frames.
     case PING_FRAME:
       // Ping has no payload.
       return kQuicFrameTypeSize;
@@ -1956,6 +2006,9 @@ bool QuicFramer::AppendTypeByte(const QuicFrame& frame,
     case ACK_FRAME:
       return true;
     case MTU_DISCOVERY_FRAME:
+      type_byte = static_cast<uint8_t>(PING_FRAME);
+      break;
+    case CONNECTIVITY_PROBING_FRAME:
       type_byte = static_cast<uint8_t>(PING_FRAME);
       break;
     default:

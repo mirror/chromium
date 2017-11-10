@@ -112,6 +112,9 @@ class QUIC_EXPORT_PRIVATE QuicPacketGenerator {
   // Generates an MTU discovery packet of specified size.
   void GenerateMtuDiscoveryPacket(QuicByteCount target_mtu);
 
+  // Creates a connectivity probing packet.
+  std::unique_ptr<QuicEncryptedPacket> SerializeConnectivityProbingPacket();
+
   // Indicates whether batch mode is currently enabled.
   bool InBatchMode();
   // Disables flushing.

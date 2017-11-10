@@ -1243,6 +1243,7 @@ component("net") {
       "quic/core/frames/quic_blocked_frame.h",
       "quic/core/frames/quic_connection_close_frame.cc",
       "quic/core/frames/quic_connection_close_frame.h",
+      "quic/core/frames/quic_connetivity_probing_frame.h",
       "quic/core/frames/quic_frame.cc",
       "quic/core/frames/quic_frame.h",
       "quic/core/frames/quic_goaway_frame.cc",
@@ -6247,8 +6248,8 @@ proto_library("reporting_policy_proto") {
 fuzzer_test("net_reporting_header_parser_fuzzer") {
   sources = [
     "reporting/reporting_header_parser_fuzzer.cc",
-    "reporting/reporting_test_util.h",
     "reporting/reporting_test_util.cc",
+    "reporting/reporting_test_util.h",
   ]
 
   deps = [
