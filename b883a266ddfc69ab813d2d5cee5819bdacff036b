@@ -475,6 +475,24 @@
     },
     {
       "key": {
+        "uuid": "e78e2545_a2ee6848",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T21:22:42Z",
+      "side": 1,
+      "message": "The parent (i.e. the browser) is the one interested in this message right now. Having to go from embedded client (renderer) to viz to viz-host (mus) to embedder (browser) is I think one too many hops. viz has all the information needed to directly notify the embedder at the right time, and I think that\u0027s the right thing to do. We can discuss whether that happens through CompositorFrameSinkClient, or some other interface. Although CFSC feels like the right place to know about frame-tokens.\n\nAnyway, I don\u0027t want to block this CL. There\u0027s work left to do for mus anyway.",
+      "parentUuid": "d51678d5_1b3a75dd",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10f50c8e_20880f4e",
         "filename": "ui/android/delegated_frame_host_android.cc",
         "patchSetId": 14

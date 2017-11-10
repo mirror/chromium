@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3da7e8d4_09aab705",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T21:22:42Z",
+      "side": 1,
+      "message": "Don\u0027t override if you are not doing anything different.",
+      "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1134c901_8b074faf",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T21:22:42Z",
+      "side": 1,
+      "message": "Don\u0027t override since you are not doing anything different?",
+      "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86d0ab4_06181fb4",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T21:22:42Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3016c56_c8891c7a",
+        "filename": "content/test/test_render_view_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T21:22:42Z",
+      "side": 1,
+      "message": "ditto.\n\nIt doesn\u0027t look like any of the overrides do anything different. So, does the function on RWHVBase need to be virtual at all?",
+      "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5589d2d7_1c8b9da3",
+        "filename": "ui/aura/local/layer_tree_frame_sink_local.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T21:22:42Z",
+      "side": 1,
+      "message": "Should this be NOTREACHED()?",
+      "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f8f3c5d_c3fb87bd",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T21:22:42Z",
+      "side": 1,
+      "message": "We don\u0027t expect these to be reached right now, right? Can these be NOTREACHED()?",
+      "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
