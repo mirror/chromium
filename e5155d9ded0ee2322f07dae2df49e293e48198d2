@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d64b13e_f6e5f9a1",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-10T18:44:04Z",
+      "side": 1,
+      "message": "This seems like it should be a nop.  Is it needed just to process the side effect of SetAccessibilityFontScaleFactor?  Maybe we can go through the WebView to set the accessibility setting instead.",
+      "revId": "e5155d9ded0ee2322f07dae2df49e293e48198d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2157b20b_5438488f",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2742,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-10T18:44:04Z",
+      "side": 1,
+      "message": "We should rename the setting, since it\u0027s no longer related to fonts/text.  Can be TODO here and done in a separate change.",
+      "range": {
+        "startLine": 2742,
+        "startChar": 43,
+        "endLine": 2742,
+        "endChar": 74
+      },
+      "revId": "e5155d9ded0ee2322f07dae2df49e293e48198d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
