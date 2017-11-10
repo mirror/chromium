@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1786f64f_fc811566",
+        "filename": "chrome/browser/chromeos/login/users/user_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-10T06:51:17Z",
+      "side": 1,
+      "message": "nit std::make_unique\u003cChromeUserManagerImpl\u003e()",
+      "revId": "360cddc3101fe8bffb9d9e22a44a42427910353f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1eace7a_fe8f5417",
+        "filename": "components/arc/arc_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-10T06:51:17Z",
+      "side": 1,
+      "message": "Could you add ()?\n\ncf) https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Prefer-MakeUnique-to-WrapUnique  item 2.",
+      "revId": "360cddc3101fe8bffb9d9e22a44a42427910353f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "945be31a_005de481",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-10T06:51:17Z",
+      "side": 1,
+      "message": "You can remove this empty line.",
+      "revId": "360cddc3101fe8bffb9d9e22a44a42427910353f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
