@@ -260,7 +260,8 @@ UI.isEditing = function() {
   var focused = document.deepActiveElement();
   if (!focused)
     return false;
-  return focused.classList.contains('text-prompt') || focused.nodeName === 'INPUT' || focused.nodeName === 'TEXTAREA';
+  return focused.classList.contains('text-prompt') || (focused.nodeName === 'INPUT' && focused.type === 'text') ||
+      focused.nodeName === 'TEXTAREA';
 };
 
 /**
