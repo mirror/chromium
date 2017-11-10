@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42f1f5f0_606d0d4f",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-10T15:45:45Z",
+      "side": 1,
+      "message": "Good question. It would be cool, and hopefully that\u0027s possible, but needs more research and is IMHO lower priority.",
+      "parentUuid": "9807470c_17329028",
+      "range": {
+        "startLine": 165,
+        "startChar": 63,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e935a873_7f34ab67",
         "filename": "components/cronet/native/cronet.idl_c.h",
         "patchSetId": 36
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-09T16:47:25Z",
       "side": 1,
       "message": "what is this function for?  should this be part of the API?",
+      "range": {
+        "startLine": 177,
+        "startChar": 40,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1066dcc3_223dd51f",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-10T15:45:45Z",
+      "side": 1,
+      "message": "Ah, this is super cool. It creates stub class based on provided C functions. \nIt is the app will use to create an instance of UrlRequestCallback based on app implementation.\n\nIt is not clearly needed for interfaces implemented by Cronet, but it could be useful to create mocks or somesuch.",
+      "parentUuid": "e935a873_7f34ab67",
       "range": {
         "startLine": 177,
         "startChar": 40,

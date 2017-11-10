@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94744d5b_1a212b5c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 35
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-10T15:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "381601cb_e0aca5a9",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 23
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e428649e_b896bbd7",
         "filename": "components/cronet/native/BUILD.gn",
         "patchSetId": 35
@@ -166,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "3ed8ab72_92d87794",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-10T15:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b2e2d84_6b8c3588",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24a3c994_3ac69366",
         "filename": "components/cronet/native/cronet.mojom",
         "patchSetId": 35
@@ -216,6 +264,24 @@
       "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff22aa9_09a98bee",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-10T15:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cb9c8e2_3627dcc1",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -657,6 +723,24 @@
       "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e92ae1_a81b10a9",
+        "filename": "components/cronet/native/cronet.mojom_c.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-10T15:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3ee218e_c0b8ea09",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
