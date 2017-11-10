@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/log_util.h"
 #include "base/bind_helpers.h"
 #include "base/memory/free_deleter.h"
 #include "base/threading/sequenced_worker_pool.h"
@@ -55,6 +56,8 @@ DhcpProxyScriptFetcherWin::DhcpProxyScriptFetcherWin(
       num_pending_fetchers_(0),
       destination_string_(NULL),
       url_request_context_(url_request_context) {
+  logging::ScopedLogDuration log1(
+      "DhcpProxyScriptFetcherWin::DhcpProxyScriptFetcherWin");
   DCHECK(url_request_context_);
 
   worker_pool_ = new base::SequencedWorkerPool(
@@ -62,6 +65,8 @@ DhcpProxyScriptFetcherWin::DhcpProxyScriptFetcherWin(
 }
 
 DhcpProxyScriptFetcherWin::~DhcpProxyScriptFetcherWin() {
+  logging::ScopedLogDuration log1(
+      "DhcpProxyScriptFetcherWin::~DhcpProxyScriptFetcherWin");
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   // Count as user-initiated if we are not yet in STATE_DONE.
   Cancel();
@@ -71,6 +76,7 @@ DhcpProxyScriptFetcherWin::~DhcpProxyScriptFetcherWin() {
 
 int DhcpProxyScriptFetcherWin::Fetch(base::string16* utf16_text,
                                      const CompletionCallback& callback) {
+  logging::ScopedLogDuration log1("DhcpProxyScriptFetcherWin::Fetch");
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (state_ != STATE_START && state_ != STATE_DONE) {
     NOTREACHED();
@@ -99,12 +105,15 @@ int DhcpProxyScriptFetcherWin::Fetch(base::string16* utf16_text,
 }
 
 void DhcpProxyScriptFetcherWin::Cancel() {
+  logging::ScopedLogDuration log1(
+      "DhcpProxyScriptFetcherWin::Cancel");
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   CancelImpl();
 }
 
 void DhcpProxyScriptFetcherWin::OnShutdown() {
+  logging::ScopedLogDuration log1("DhcpProxyScriptFetcherWin::OnShutdown");
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   // Back up callback, if there is one, as CancelImpl() will destroy it.
@@ -122,6 +131,7 @@ void DhcpProxyScriptFetcherWin::OnShutdown() {
 }
 
 void DhcpProxyScriptFetcherWin::CancelImpl() {
+  logging::ScopedLogDuration log1("DhcpProxyScriptFetcherWin::CancelImpl");
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   if (state_ != STATE_DONE) {
@@ -141,12 +151,16 @@ void DhcpProxyScriptFetcherWin::CancelImpl() {
 
 void DhcpProxyScriptFetcherWin::OnGetCandidateAdapterNamesDone(
     scoped_refptr<AdapterQuery> query) {
+  logging::ScopedLogDuration log1(
+      "DhcpProxyScriptFetcherWin::OnGetCandidateAdapterNamesDone");
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   // This can happen if this object is reused for multiple queries,
   // and a previous query was cancelled before it completed.
-  if (query.get() != last_query_.get())
+  if (query.get() != last_query_.get()) {
+    LOG(INFO) << "query != last_query_";
     return;
+  }
   last_query_ = NULL;
 
   // Enable unit tests to wait for this to happen; in production this function
@@ -154,17 +168,22 @@ void DhcpProxyScriptFetcherWin::OnGetCandidateAdapterNamesDone(
   ImplOnGetCandidateAdapterNamesDone();
 
   // We may have been cancelled.
-  if (state_ != STATE_WAIT_ADAPTERS)
+  if (state_ != STATE_WAIT_ADAPTERS) {
+    LOG(INFO) << "state_ != STATE_WAIT_ADAPTERS";
     return;
+  }
 
   state_ = STATE_NO_RESULTS;
 
   const std::set<std::string>& adapter_names = query->adapter_names();
 
   if (adapter_names.empty()) {
+    LOG(INFO) << "adapter_names.empty()";
     TransitionToDone();
     return;
   }
+
+  LOG(INFO) << "adapter_names.size() = " << adapter_names.size();
 
   for (std::set<std::string>::const_iterator it = adapter_names.begin();
        it != adapter_names.end();
@@ -192,9 +211,12 @@ const GURL& DhcpProxyScriptFetcherWin::GetPacURL() const {
 }
 
 void DhcpProxyScriptFetcherWin::OnFetcherDone(int result) {
+  logging::ScopedLogDuration log1("DhcpProxyScriptFetcherWin::OnFetcherDone(" +
+                                  std::to_string(result) + ")");
   DCHECK(state_ == STATE_NO_RESULTS || state_ == STATE_SOME_RESULTS);
 
   if (--num_pending_fetchers_ == 0) {
+    LOG(INFO) << "pending_fetchers = 0";
     TransitionToDone();
     return;
   }
@@ -204,13 +226,16 @@ void DhcpProxyScriptFetcherWin::OnFetcherDone(int result) {
   for (FetcherVector::iterator it = fetchers_.begin();
        it != fetchers_.end();
        ++it) {
+    LOG(INFO) << "looping fetchers_";
     bool did_finish = (*it)->DidFinish();
     int result = (*it)->GetResult();
     if (did_finish && result == OK) {
+      LOG(INFO) << "did_finish && result == OK";
       TransitionToDone();
       return;
     }
     if (!did_finish || result != ERR_PAC_NOT_IN_DHCP) {
+      LOG(INFO) << "!did_finish || result != ERR_PAC_NOT_IN_DHCP";
       break;
     }
   }
@@ -219,12 +244,15 @@ void DhcpProxyScriptFetcherWin::OnFetcherDone(int result) {
   // for the rest of the results.
   if (state_ == STATE_NO_RESULTS) {
     state_ = STATE_SOME_RESULTS;
+    auto tt = ImplGetMaxWait();
+    LOG(INFO) << "Starting wait_timer_ " << tt.InSecondsF() << " seconds";
     wait_timer_.Start(FROM_HERE,
-        ImplGetMaxWait(), this, &DhcpProxyScriptFetcherWin::OnWaitTimer);
+        tt, this, &DhcpProxyScriptFetcherWin::OnWaitTimer);
   }
 }
 
 void DhcpProxyScriptFetcherWin::OnWaitTimer() {
+  logging::ScopedLogDuration log1("DhcpProxyScriptFetcherWin::OnWaitTimer");
   DCHECK_EQ(state_, STATE_SOME_RESULTS);
 
   TransitionToDone();
@@ -305,6 +333,8 @@ base::TimeDelta DhcpProxyScriptFetcherWin::ImplGetMaxWait() {
 
 bool DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(
     std::set<std::string>* adapter_names) {
+  logging::ScopedLogDuration log1(
+      "DhcpProxyScriptFetcherWin::GetCandidateAdapterNames");
   DCHECK(adapter_names);
   adapter_names->clear();
 

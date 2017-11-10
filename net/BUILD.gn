@@ -2775,6 +2775,27 @@ if (!is_ios && !is_android) {
     }
   }
 
+  executable("proxy_tool") {
+    testonly = true
+    sources = [
+      "tools/proxy_tool/proxy_tool_main.cc",
+    ]
+
+    # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
+    configs += [ "//build/config/compiler:no_size_t_to_int_warning" ]
+    deps = [
+      ":net",
+      ":test_support",
+      "//base",
+      "//build/config:exe_and_shlib_deps",
+      "//build/win:default_exe_manifest",
+    ]
+
+    if (is_mac) {
+      libs = [ "Security.framework" ]
+    }
+  }
+
   executable("crash_cache") {
     testonly = true
     sources = [

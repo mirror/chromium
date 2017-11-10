@@ -66,6 +66,8 @@ size_t WriteToFile(FILE* file,
       bytes_written += fwrite(data2.data(), 1, data2.size(), file);
     if (!data3.empty())
       bytes_written += fwrite(data3.data(), 1, data3.size(), file);
+
+    fflush(file);
   }
 
   return bytes_written;

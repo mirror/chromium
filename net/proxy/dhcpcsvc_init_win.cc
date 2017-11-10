@@ -5,7 +5,9 @@
 #include "net/proxy/dhcpcsvc_init_win.h"
 
 #include "base/lazy_instance.h"
+#include "base/log_util.h"
 #include "base/logging.h"
+#include "base/strings/string_piece.h"
 
 #include <dhcpcsdk.h>
 #include <dhcpv6csdk.h>
@@ -15,6 +17,8 @@ namespace {
 class DhcpcsvcInitSingleton {
  public:
   DhcpcsvcInitSingleton() {
+    logging::ScopedLogDuration log1(
+        "DhcpsvcInitSingleton::DhcpsvcInitSingleton");
     DWORD version = 0;
     DWORD err = DhcpCApiInitialize(&version);
     DCHECK(err == ERROR_SUCCESS);  // DCHECK_EQ complains of unsigned mismatch.

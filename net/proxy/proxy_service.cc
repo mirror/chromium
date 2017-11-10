@@ -12,6 +12,7 @@
 #include "base/bind_helpers.h"
 #include "base/compiler_specific.h"
 #include "base/location.h"
+#include "base/log_util.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -391,6 +392,8 @@ class ProxyService::InitProxyResolver {
             const ProxyConfig& config,
             TimeDelta wait_delay,
             const CompletionCallback& callback) {
+    logging::ScopedLogDuration log1("ProxyService::InitProxyResolver::Start");
+    LOG(INFO) << "wait_delay (InitProxyResolver) = " << wait_delay.InSecondsF() << " seconds";
     DCHECK_EQ(STATE_NONE, next_state_);
     proxy_resolver_ = proxy_resolver;
     proxy_resolver_factory_ = proxy_resolver_factory;
@@ -417,6 +420,7 @@ class ProxyService::InitProxyResolver {
                        int decider_result,
                        ProxyResolverScriptData* script_data,
                        const CompletionCallback& callback) {
+    logging::ScopedLogDuration log1("ProxyService::InitProxyResolver::StartSkipDecider");
     DCHECK_EQ(STATE_NONE, next_state_);
     proxy_resolver_ = proxy_resolver;
     proxy_resolver_factory_ = proxy_resolver_factory;
@@ -474,6 +478,7 @@ class ProxyService::InitProxyResolver {
   };
 
   int DoLoop(int result) {
+    logging::ScopedLogDuration log1("ProxyService::InitProxyResolver::DoLoop");
     DCHECK_NE(next_state_, STATE_NONE);
     int rv = result;
     do {
@@ -504,6 +509,7 @@ class ProxyService::InitProxyResolver {
   }
 
   int DoDecideProxyScript() {
+    logging::ScopedLogDuration log1("ProxyService::InitProxyResolver::DoDecideProxyScript");
     next_state_ = STATE_DECIDE_PROXY_SCRIPT_COMPLETE;
 
     return decider_->Start(
@@ -512,6 +518,7 @@ class ProxyService::InitProxyResolver {
   }
 
   int DoDecideProxyScriptComplete(int result) {
+    logging::ScopedLogDuration log1("ProxyService::InitProxyResolver::DoDecideProxyScriptComplete");
     if (result != OK)
       return result;
 
@@ -523,6 +530,7 @@ class ProxyService::InitProxyResolver {
   }
 
   int DoCreateResolver() {
+    logging::ScopedLogDuration log1("ProxyService::InitProxyResolver::DoCreateResolver");
     DCHECK(script_data_.get());
     // TODO(eroman): Should log this latency to the NetLog.
     next_state_ = STATE_CREATE_RESOLVER_COMPLETE;
@@ -533,12 +541,14 @@ class ProxyService::InitProxyResolver {
   }
 
   int DoCreateResolverComplete(int result) {
+    logging::ScopedLogDuration log1("ProxyService::InitProxyResolver::DoCreateResolverComplete");
     if (result != OK)
       proxy_resolver_->reset();
     return result;
   }
 
   void OnIOCompletion(int result) {
+    logging::ScopedLogDuration log1("ProxyService::InitProxyResolver::OnIOCompletion");
     DCHECK_NE(STATE_NONE, next_state_);
     int rv = DoLoop(result);
     if (rv != ERR_IO_PENDING)
@@ -546,6 +556,7 @@ class ProxyService::InitProxyResolver {
   }
 
   void DoCallback(int result) {
+    logging::ScopedLogDuration log1("ProxyService::InitProxyResolver::DoCallback");
     DCHECK_NE(ERR_IO_PENDING, result);
     callback_.Run(result);
   }
@@ -801,6 +812,7 @@ class ProxyService::PacRequest
 
   // Starts the resolve proxy request.
   int Start() {
+    logging::ScopedLogDuration log1("ProxyService::PacRequest::Start");
     DCHECK(!was_cancelled());
     DCHECK(!is_started());
 
@@ -837,6 +849,7 @@ class ProxyService::PacRequest
   }
 
   void Cancel() {
+    logging::ScopedLogDuration log1("ProxyService::PacRequest::Cancel");
     net_log_.AddEvent(NetLogEventType::CANCELLED);
 
     if (is_started())
@@ -858,6 +871,7 @@ class ProxyService::PacRequest
   // Helper to call after ProxyResolver completion (both synchronous and
   // asynchronous). Fixes up the result that is to be returned to user.
   int QueryDidComplete(int result_code) {
+    logging::ScopedLogDuration log1("ProxyService::PacRequest::QueryDidComplete");
     DCHECK(!was_cancelled());
 
     // Clear |resolve_job_| so is_started() returns false while
@@ -898,6 +912,7 @@ class ProxyService::PacRequest
 
   // Callback for when the ProxyResolver request has completed.
   void QueryComplete(int result_code) {
+    logging::ScopedLogDuration log1("ProxyService::PacRequest::QueryComplete");
     result_code = QueryDidComplete(result_code);
 
     // Remove this completed PacRequest from the service's pending list.
@@ -943,6 +958,7 @@ ProxyService::ProxyService(
           TimeDelta::FromMilliseconds(kDelayAfterNetworkChangesMs)),
       quick_check_enabled_(true),
       sanitize_url_policy_(SanitizeUrlPolicy::SAFE) {
+  logging::ScopedLogDuration log1("ProxyService::ProxyService");
   NetworkChangeNotifier::AddIPAddressObserver(this);
   NetworkChangeNotifier::AddDNSObserver(this);
   ResetConfigService(std::move(config_service));
@@ -1023,6 +1039,8 @@ int ProxyService::ResolveProxy(const GURL& raw_url,
                                PacRequest** pac_request,
                                ProxyDelegate* proxy_delegate,
                                const NetLogWithSource& net_log) {
+  logging::ScopedLogDuration log1(
+      "ProxyService::ResolveProxy(url=" + raw_url.spec() + ")");
   DCHECK(!callback.is_null());
   return ResolveProxyHelper(raw_url, method, result, callback, pac_request,
                             proxy_delegate, net_log);
@@ -1035,6 +1053,7 @@ int ProxyService::ResolveProxyHelper(const GURL& raw_url,
                                      PacRequest** pac_request,
                                      ProxyDelegate* proxy_delegate,
                                      const NetLogWithSource& net_log) {
+  logging::ScopedLogDuration log1("ProxyService::ResolveProxyHelper");
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   net_log.BeginEvent(NetLogEventType::PROXY_SERVICE);
@@ -1143,6 +1162,7 @@ ProxyService::~ProxyService() {
 }
 
 void ProxyService::SuspendAllPendingRequests() {
+  logging::ScopedLogDuration log1("ProxyService::SuspendAllPendingRequests");
   for (PendingRequests::iterator it = pending_requests_.begin();
        it != pending_requests_.end();
        ++it) {
@@ -1157,6 +1177,7 @@ void ProxyService::SuspendAllPendingRequests() {
 }
 
 void ProxyService::SetReady() {
+  logging::ScopedLogDuration log1("ProxyService::SetReady");
   DCHECK(!init_proxy_resolver_.get());
   current_state_ = STATE_READY;
 
@@ -1181,6 +1202,7 @@ void ProxyService::SetReady() {
 }
 
 void ProxyService::ApplyProxyConfigIfAvailable() {
+  logging::ScopedLogDuration log1("ProxyService::ApplyProxyConfigsIfAvailable");
   DCHECK_EQ(STATE_NONE, current_state_);
 
   config_service_->OnLazyPoll();
@@ -1205,6 +1227,7 @@ void ProxyService::ApplyProxyConfigIfAvailable() {
 }
 
 void ProxyService::OnInitProxyResolverComplete(int result) {
+  logging::ScopedLogDuration log1("ProxyService::OnInitProxyResolverComplete");
   DCHECK_EQ(STATE_WAITING_FOR_INIT_PROXY_RESOLVER, current_state_);
   DCHECK(init_proxy_resolver_.get());
   DCHECK(fetched_config_.HasAutomaticSettings());
@@ -1259,6 +1282,7 @@ int ProxyService::ReconsiderProxyAfterError(const GURL& url,
                                             PacRequest** pac_request,
                                             ProxyDelegate* proxy_delegate,
                                             const NetLogWithSource& net_log) {
+  logging::ScopedLogDuration log1("ProxyService::ReconsiderProxyAfterError");
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   // Check to see if we have a new config since ResolveProxy was called.  We
@@ -1293,6 +1317,7 @@ bool ProxyService::MarkProxiesAsBadUntil(
     base::TimeDelta retry_delay,
     const std::vector<ProxyServer>& additional_bad_proxies,
     const NetLogWithSource& net_log) {
+  logging::ScopedLogDuration log1("ProxyService::MarkProxiesAsBadUntil");
   result.proxy_list_.UpdateRetryInfoOnFallback(&proxy_retry_info_, retry_delay,
                                                false, additional_bad_proxies,
                                                OK, net_log);
@@ -1301,6 +1326,7 @@ bool ProxyService::MarkProxiesAsBadUntil(
 
 void ProxyService::ReportSuccess(const ProxyInfo& result,
                                  ProxyDelegate* proxy_delegate) {
+  logging::ScopedLogDuration log1("ProxyService::ReportSuccess");
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   const ProxyRetryInfoMap& new_retry_info = result.proxy_retry_info();
@@ -1330,6 +1356,7 @@ void ProxyService::ReportSuccess(const ProxyInfo& result,
 }
 
 void ProxyService::CancelPacRequest(PacRequest* req) {
+  logging::ScopedLogDuration log1("ProxyService::CancelPacRequest");
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(req);
   req->Cancel();
@@ -1358,6 +1385,7 @@ int ProxyService::DidFinishResolvingProxy(const GURL& url,
                                           ProxyInfo* result,
                                           int result_code,
                                           const NetLogWithSource& net_log) {
+  logging::ScopedLogDuration log1("ProxyService::DidFinishResolvingProxy");
   // Log the result of the proxy resolution.
   if (result_code == OK) {
     // Allow the proxy delegate to interpose on the resolution decision,
@@ -1416,6 +1444,7 @@ int ProxyService::DidFinishResolvingProxy(const GURL& url,
 void ProxyService::SetProxyScriptFetchers(
     std::unique_ptr<ProxyScriptFetcher> proxy_script_fetcher,
     std::unique_ptr<DhcpProxyScriptFetcher> dhcp_proxy_script_fetcher) {
+  logging::ScopedLogDuration log1("ProxyService::SetProxyScriptFetcher");
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   State previous_state = ResetProxyConfig(false);
   proxy_script_fetcher_ = std::move(proxy_script_fetcher);
@@ -1441,6 +1470,7 @@ ProxyScriptFetcher* ProxyService::GetProxyScriptFetcher() const {
 }
 
 ProxyService::State ProxyService::ResetProxyConfig(bool reset_fetched_config) {
+  logging::ScopedLogDuration log1("ProxyService::ResetProxyConfig");
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   State previous_state = current_state_;
 
@@ -1460,6 +1490,7 @@ ProxyService::State ProxyService::ResetProxyConfig(bool reset_fetched_config) {
 
 void ProxyService::ResetConfigService(
     std::unique_ptr<ProxyConfigService> new_proxy_config_service) {
+  logging::ScopedLogDuration log1("ProxyService::ResetConfigService");
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   State previous_state = ResetProxyConfig(true);
 
@@ -1476,6 +1507,7 @@ void ProxyService::ResetConfigService(
 }
 
 void ProxyService::ForceReloadProxyConfig() {
+  logging::ScopedLogDuration log1("ProxyService::ForceReloadProxyConfig");
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   ResetProxyConfig(false);
   ApplyProxyConfigIfAvailable();
@@ -1539,6 +1571,7 @@ ProxyService::CreateDefaultPacPollPolicy() {
 void ProxyService::OnProxyConfigChanged(
     const ProxyConfig& config,
     ProxyConfigService::ConfigAvailability availability) {
+  logging::ScopedLogDuration log1("ProxyService::OnProxyConfigChanged");
   // Retrieve the current proxy configuration from the ProxyConfigService.
   // If a configuration is not available yet, we will get called back later
   // by our ProxyConfigService::Observer once it changes.
@@ -1571,6 +1604,9 @@ void ProxyService::OnProxyConfigChanged(
 }
 
 void ProxyService::InitializeUsingLastFetchedConfig() {
+  logging::ScopedLogDuration log1(
+      "ProxyService::InitializeUsingLastFetchedConfig");
+
   ResetProxyConfig(false);
 
   DCHECK(fetched_config_.is_valid());
@@ -1591,6 +1627,8 @@ void ProxyService::InitializeUsingLastFetchedConfig() {
   TimeDelta wait_delay =
       stall_proxy_autoconfig_until_ - TimeTicks::Now();
 
+  LOG(INFO) << "wait_delay (InitializeLastFetchedConfig) = " << wait_delay.InSecondsF() << " seconds";
+
   init_proxy_resolver_.reset(new InitProxyResolver());
   init_proxy_resolver_->set_quick_check_enabled(quick_check_enabled_);
   int rv = init_proxy_resolver_->Start(
@@ -1607,6 +1645,7 @@ void ProxyService::InitializeUsingDecidedConfig(
     int decider_result,
     ProxyResolverScriptData* script_data,
     const ProxyConfig& effective_config) {
+  logging::ScopedLogDuration log1("ProxyService::InitializeUsingDecidedConfig");
   DCHECK(fetched_config_.is_valid());
   DCHECK(fetched_config_.HasAutomaticSettings());
 
@@ -1625,6 +1664,7 @@ void ProxyService::InitializeUsingDecidedConfig(
 }
 
 void ProxyService::OnIPAddressChanged() {
+  logging::ScopedLogDuration log1("ProxyService::OnIPAddressChanged");
   // See the comment block by |kDelayAfterNetworkChangesMs| for info.
   stall_proxy_autoconfig_until_ =
       TimeTicks::Now() + stall_proxy_auto_config_delay_;
@@ -1635,6 +1675,7 @@ void ProxyService::OnIPAddressChanged() {
 }
 
 void ProxyService::OnDNSChanged() {
+  logging::ScopedLogDuration log1("ProxyService::OnDNSChanged");
   OnIPAddressChanged();
 }
 
