@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37d3299b_0ca08647",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-10T04:13:25Z",
+      "side": 1,
+      "message": "crashpad",
+      "range": {
+        "startLine": 17,
+        "startChar": 48,
+        "endLine": 17,
+        "endChar": 55
+      },
+      "revId": "042ebec699c0f5b23cd621cef3e59f04fae5eb8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2197e999_ffcaf75e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-10T04:13:25Z",
+      "side": 1,
+      "message": "Will this bug morph into “fix Crashpad under ASan and re-enable crashpad_tests”? Or should we get a new bug on file for that?\n\nIf there’s a master bug tracking issues blocking shipping an ASan Chrome, we should hang a bug about Crashpad under ASan off of it.",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "042ebec699c0f5b23cd621cef3e59f04fae5eb8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
