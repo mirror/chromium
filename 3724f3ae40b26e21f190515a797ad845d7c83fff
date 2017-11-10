@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f5281e4_fd601b40",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-11-10T12:37:48Z",
+      "side": 1,
+      "message": "Check whether clip_rect we can make it as reference variable",
+      "range": {
+        "startLine": 145,
+        "startChar": 59,
+        "endLine": 145,
+        "endChar": 64
+      },
+      "revId": "3724f3ae40b26e21f190515a797ad845d7c83fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f10c18_158e4978",
+        "filename": "content/browser/web_contents/web_contents_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-11-10T12:37:48Z",
+      "side": 1,
+      "message": "Keep clip_rect as reference variable",
+      "range": {
+        "startLine": 86,
+        "startChar": 38,
+        "endLine": 86,
+        "endChar": 39
+      },
+      "revId": "3724f3ae40b26e21f190515a797ad845d7c83fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3e871b_c54a2362",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-11-10T12:37:48Z",
+      "side": 1,
+      "message": "keep it as final if not modifying later",
+      "range": {
+        "startLine": 135,
+        "startChar": 12,
+        "endLine": 135,
+        "endChar": 18
+      },
+      "revId": "3724f3ae40b26e21f190515a797ad845d7c83fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
