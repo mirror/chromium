@@ -16,6 +16,24 @@
       "revId": "ddcbb682188337b198673e18c8b4703154238cde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c18f7e_ce2dce44",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-11-10T21:12:01Z",
+      "side": 0,
+      "message": "Update is calling it anyway: https://cs.chromium.org/chromium/src/ash/message_center/message_center_view.cc?rcl\u003dd4e4d0c9e9d319e7a7def1a78afaef56986dcfba\u0026l\u003d573\n\nAny reason to call it twice?",
+      "parentUuid": "b961e3be_2f0aae57",
+      "revId": "ddcbb682188337b198673e18c8b4703154238cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
