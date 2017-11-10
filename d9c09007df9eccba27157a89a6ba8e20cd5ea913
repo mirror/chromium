@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc0bb9aa_8a4f4def",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-10T19:43:52Z",
+      "side": 1,
+      "message": "Nit: please add a parameter name for the bools here, since it\u0027s not clear from the function signature which bool is which",
+      "range": {
+        "startLine": 136,
+        "startChar": 38,
+        "endLine": 136,
+        "endChar": 42
+      },
+      "revId": "d9c09007df9eccba27157a89a6ba8e20cd5ea913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ac8c95_a67eb3cb",
+        "filename": "content/renderer/render_frame_proxy.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-10T19:43:52Z",
+      "side": 1,
+      "message": "Ditto here for including param names",
+      "revId": "d9c09007df9eccba27157a89a6ba8e20cd5ea913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76845445_59f350e4",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 3195,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-10T19:43:52Z",
+      "side": 1,
+      "message": "The DCHECK on line 3156 seems to imply this is only called on local roots anyway (and the is_attached_ case I would expect to be handled by the early return line 3165). What changes between line 3171 and here that would cause ShouldThrottleRendering() to now return true? Is it because the lifecycle is now past layout?\n\n(Sorry I basically don\u0027t get why this block of logic belongs here / exactly how it works...)",
+      "range": {
+        "startLine": 3194,
+        "startChar": 63,
+        "endLine": 3195,
+        "endChar": 43
+      },
+      "revId": "d9c09007df9eccba27157a89a6ba8e20cd5ea913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbb3ef0_6819f7a0",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 5230,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-10T19:43:52Z",
+      "side": 1,
+      "message": "Nit: revert this so it matches the block in RemoveFrameView (it seems functionally equivalent)",
+      "revId": "d9c09007df9eccba27157a89a6ba8e20cd5ea913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c26d4d8_b1a6ca8e",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameClientImpl.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-10T19:43:52Z",
+      "side": 1,
+      "message": "Naming here as well.",
+      "range": {
+        "startLine": 171,
+        "startChar": 53,
+        "endLine": 171,
+        "endChar": 64
+      },
+      "revId": "d9c09007df9eccba27157a89a6ba8e20cd5ea913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49d5de52_9d713c97",
+        "filename": "third_party/WebKit/Source/core/loader/EmptyClients.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-10T19:43:52Z",
+      "side": 1,
+      "message": "Nit: include param names here as well (and for all the other bool, bool params)",
+      "range": {
+        "startLine": 469,
+        "startChar": 36,
+        "endLine": 469,
+        "endChar": 40
+      },
+      "revId": "d9c09007df9eccba27157a89a6ba8e20cd5ea913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
