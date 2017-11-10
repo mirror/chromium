@@ -2,6 +2,131 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a12f7e6_6e0eb740",
+        "filename": "media/mojo/clients/mojo_video_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-10T23:01:07Z",
+      "side": 1,
+      "message": "IIUIC, AssociatedInterfacePtr isn\u0027t thread safe. Do you mean to use ThreadSafeAssociatedInterfacePtr?",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60a3635_20deb8a7",
+        "filename": "media/mojo/clients/mojo_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-10T23:01:07Z",
+      "side": 1,
+      "message": "optional naming nit: This class doesn\u0027t release a video frame; rather, it release some resources used by a video frame. How about *VideoFrameResourceReleaser? It\u0027s longer (which I don\u0027t like) but seems more accurate.",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0dd2ea_aa5c9827",
+        "filename": "media/mojo/clients/mojo_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-10T23:01:07Z",
+      "side": 1,
+      "message": "naming nit: Since this class is a \"Releaser\", does it make sense to call this method Release*() instead of On*Released(). The nice part about that is that then you have the same name along the stack, given you already have Release*() on your mojom interface.",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd1bbdc_523c6c50",
+        "filename": "media/mojo/clients/mojo_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-10T23:01:07Z",
+      "side": 1,
+      "message": "Will it work if you forward declare MVFR in this .h file, and move all the declaration/definition to the .cc file?",
+      "range": {
+        "startLine": 110,
+        "startChar": 16,
+        "endLine": 110,
+        "endChar": 38
+      },
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92059d6_7f7331f6",
+        "filename": "media/mojo/interfaces/video_decoder.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-10T23:01:07Z",
+      "side": 1,
+      "message": "Thanks for adding this, I think we should (have the same mechanism for releasing resources for all types of video frames). But we can solve that problem later.",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aabd014b_b01b3bfd",
+        "filename": "media/mojo/interfaces/video_decoder.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-10T23:01:07Z",
+      "side": 1,
+      "message": "See naming nit above. Will ReleaseResource() be better?",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5dcf72_29e970fc",
+        "filename": "media/mojo/services/media_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-10T23:01:07Z",
+      "side": 1,
+      "message": "This comment is old and I think now we only run one MediaService instance. I\u0027ll check this and update the comment if necessary.",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60eb4f91_b6119df7",
         "filename": "media/mojo/services/mojo_video_decoder_service.cc",
         "patchSetId": 1
@@ -105,6 +230,92 @@
       "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "042512ac_b165e60d",
+        "filename": "media/mojo/services/mojo_video_decoder_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-10T23:01:07Z",
+      "side": 1,
+      "message": "ditto, can you forward declare this class and declare/define it in the .cc file?",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 35
+      },
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75b03c9_a35ec5b5",
+        "filename": "media/mojo/services/mojo_video_decoder_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-10T23:01:07Z",
+      "side": 1,
+      "message": "As discussed offline, please file a bug and add a TODO here for exploring binding the releaser to a sequence, so that we don\u0027t need this context_ref_.",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133792b0_377f2e4c",
+        "filename": "media/mojo/services/mojo_video_decoder_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-10T23:01:07Z",
+      "side": 1,
+      "message": "You current approach is okay. But let me try to see whether you like this more:\n1. Let MVDS owns a std::unique_ptr\u003cMVFRS, MVFRSDeleter\u003e here.\n2. In MVFRSDeleter, if |video_frames_| is not empty in |mvfrs|, do not destroy it. Instead, call Unbind() on the |binding_|, and bind |mvfrs| and the request (returned by Unbind) using a mojo::StrongBinding, so from now on, it\u0027s owned by the connection.\n\nThis needs some tricks, but IMHO makes the lifetime more clear.\n\nOr you can ask chromium-mojo@ to see whether there are any canned solution for this. If this is a common pattern, we can add something for it, like how we added StrongBindingSet.",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 78
+      },
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1180ec_0c28f5fd",
+        "filename": "media/mojo/services/mojo_video_decoder_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-10T23:01:07Z",
+      "side": 1,
+      "message": "For raw pointers that\u0027s not passed in (which typically outlive |this|), we should add a comment about ownership and lifetime.",
+      "range": {
+        "startLine": 108,
+        "startChar": 33,
+        "endLine": 108,
+        "endChar": 68
+      },
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
