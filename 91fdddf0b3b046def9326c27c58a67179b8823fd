@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbc12375_e4cf09d8",
+        "filename": "ui/views/bubble/tooltip_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T19:25:42Z",
+      "side": 1,
+      "message": "Does it make sense for the icon that shows a tooltip to be labeled as a tooltip itself?",
+      "revId": "91fdddf0b3b046def9326c27c58a67179b8823fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
