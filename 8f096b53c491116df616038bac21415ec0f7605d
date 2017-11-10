@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f72223d_834188e9",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-10T13:30:07Z",
+      "side": 1,
+      "message": "Wonder if we should use the result of WebCORS::GetErrorString to construct ResourceError?",
+      "revId": "8f096b53c491116df616038bac21415ec0f7605d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba63ec0_307f8f9f",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-10T13:30:07Z",
+      "side": 1,
+      "message": "\u0027are not supported\u0027, or \u0027are not allowed\u0027...? (I know this text is from DocumentThreadableLoader.cpp)",
+      "revId": "8f096b53c491116df616038bac21415ec0f7605d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
