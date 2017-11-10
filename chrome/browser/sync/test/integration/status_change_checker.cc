@@ -41,18 +41,20 @@ void StatusChangeChecker::StartBlockingWait() {
 }
 
 void StatusChangeChecker::StopWaiting() {
+  LOG(INFO) << "QuitCurrent() due to StatusChangeChecker::StopWaiting()";
   base::RunLoop::QuitCurrentWhenIdleDeprecated();
 }
 
 void StatusChangeChecker::CheckExitCondition() {
   DVLOG(1) << "Await -> Checking Condition: " << GetDebugMessage();
   if (IsExitConditionSatisfied()) {
-    DVLOG(1) << "Await -> Condition met: " << GetDebugMessage();
+    LOG(INFO) << "Await -> Condition met: " << GetDebugMessage();
     StopWaiting();
   }
 }
 
 void StatusChangeChecker::OnTimeout() {
+  LOG(INFO) << "StatusChangeChecker::OnTimeout()";
   DVLOG(1) << "Await -> Timed out: " << GetDebugMessage();
   timed_out_ = true;
   StopWaiting();
