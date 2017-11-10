@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "531c576b_36a01d51",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-11-10T00:27:03Z",
+      "side": 1,
+      "message": "We can either modify all call sites to also pass a callback, or we can allow null callbacks. Unfortunately, null callbacks passed through JNI has strange errors and potentially crashes.  So, we pass in a callback wrapper that ignores the result if there was no callback.",
+      "parentUuid": "a0f61638_74ae37b9",
+      "range": {
+        "startLine": 427,
+        "startChar": 8,
+        "endLine": 434,
+        "endChar": 10
+      },
+      "revId": "0f33399aae010c2c1cc92219da5acea939322040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa54c38d_58041966",
         "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "0f33399aae010c2c1cc92219da5acea939322040",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f43b954_b7813a7f",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-11-10T00:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa54c38d_58041966",
+      "revId": "0f33399aae010c2c1cc92219da5acea939322040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
