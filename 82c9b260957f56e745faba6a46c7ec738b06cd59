@@ -34,6 +34,24 @@
       "revId": "82c9b260957f56e745faba6a46c7ec738b06cd59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df4b2694_55ead6a4",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 5788,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-10T03:47:41Z",
+      "side": 1,
+      "message": "Thank you. I am getting to understand what is happening behind scenes. I really appreciate that!\n\nHow about like that?\n\n1. If a document doesn\u0027t have a title element here, call \nDocument::UpdateTitle(String()), instead of calling frame-\u003eClient()-\u003eDispatchDidReceiveTitle(String()) here.\n2. It looks Document::UpdateTitle exit early because raw_title_ is already *empty*. Is my understanding correct? How about initialize raw_tile to Null (or anything), instead of empty, in Document\u0027s constructor, so that we can distinguish between empty title and \"a title which is not set at all\".",
+      "parentUuid": "2af982b0_76cd7c09",
+      "revId": "82c9b260957f56e745faba6a46c7ec738b06cd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
