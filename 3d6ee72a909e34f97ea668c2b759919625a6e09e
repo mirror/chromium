@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d42acf4_a87b4f00",
+        "filename": "components/viz/service/gl/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-10T21:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba7f20ad_9b319a05",
+      "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50420fd4_89394793",
         "filename": "components/viz/service/gl/gpu_service_impl.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce5b27e6_62351914",
+        "filename": "components/viz/service/gl/gpu_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-10T21:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50420fd4_89394793",
+      "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e179eb1b_800ca703",
+        "filename": "components/viz/service/main/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-10T21:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f0d9f73_132c79e3",
+      "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86ab7be4_0b779b15",
         "filename": "content/browser/gpu/gpu_client.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb93303_93bfc81a",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-10T21:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86ab7be4_0b779b15",
+      "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "93f3e994_f69ea6ee",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-10T21:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "133cbf29_867b5a27",
+      "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a296d8f_7fbd12ec",
         "filename": "services/ui/ws/gpu_client.cc",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d692b240_aa556e68",
+        "filename": "services/ui/ws/gpu_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-10T21:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a296d8f_7fbd12ec",
+      "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e15f6f9_0085e744",
         "filename": "ui/aura/env.h",
         "patchSetId": 4
@@ -118,6 +226,24 @@
       "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac93b719_d6d78fe1",
+        "filename": "ui/aura/env.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-10T21:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e15f6f9_0085e744",
+      "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
