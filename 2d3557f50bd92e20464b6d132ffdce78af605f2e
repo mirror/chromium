@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "c288e52f_05b9b8fb",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-10T03:39:03Z",
+      "side": 1,
+      "message": "If I understand correctly, the current location of the histogram recording would mean that if we saw hq\u003d, but failed to correctly interpret the list of versions, we\u0027d add an entry to the histogram. Is that correct? It seems like we really want to know if we actually found supported versions, right?",
+      "parentUuid": "70874d7a_a06e512d",
+      "revId": "2d3557f50bd92e20464b6d132ffdce78af605f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffe249f2_acefa35c",
         "filename": "net/quic/chromium/quic_http_utils.cc",
         "patchSetId": 5
