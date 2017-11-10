@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a66f69f_3fa26239",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-10T23:59:20Z",
+      "side": 1,
+      "message": "std::make_unique instead of raw new.",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1035a8fa_ca35fefa",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-10T23:59:20Z",
+      "side": 1,
+      "message": "would unordered_set work as well. I think it would be more scalable since it is hash tree vs r-b tree. (there is definitely a high threshold for when the trade-off kicks in though in C++, so if this is going to be under 100, either is probably fine)",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a045c9_44c23908",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-10T23:59:20Z",
+      "side": 1,
+      "message": "Can you add a comment for this for loop? A lot happens in it. You might even want to move it to a helper method.",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6eebe5e_dc5537bd",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-10T23:59:20Z",
+      "side": 1,
+      "message": "Not sure this break; is necessary. Do we expect to send more than we support?",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28526a2c_198ba568",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-10T23:59:20Z",
+      "side": 1,
+      "message": "So if this is a set (as opposed to unordered_set), do these IDs come in a specific order such that rules go from more specific to less specific? If so, I don\u0027t think you need that TODO below. It might be a cheap way to handle it by enforcing the server gives rules in specific -\u003e aspecific ordering.",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070e0c32_c7030725",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-10T23:59:20Z",
+      "side": 1,
+      "message": "You should either use sequence_checker_ on every method call or DCHECK(io_task_runner_-\u003eBelongsToCurrentThread()) like you have it. \n\nSequenceChecker is really just a thread checker.",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8bb52f1_3fe335cd",
+        "filename": "components/previews/content/previews_optimization_guide_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-10T23:59:20Z",
+      "side": 1,
+      "message": "Is there any reason in particular that you went with a interface + impl split for this? It seems like it shouldn\u0027t be necessary.",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a441958_023478bb",
+        "filename": "components/previews/content/previews_optimization_guide_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-10T23:59:20Z",
+      "side": 1,
+      "message": "Add a comment like: \"The embedder guarantees |optimization_guide_service| outlives |this|.\"",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035be707_60cdca90",
+        "filename": "components/previews/content/previews_optimization_guide_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-10T23:59:20Z",
+      "side": 1,
+      "message": "nit: Maybe just forward declare Hints here and have the class fulyl declared/defined in the cc file",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a55278_7c3aeb76",
+        "filename": "components/previews/content/previews_ui_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-10T23:59:20Z",
+      "side": 1,
+      "message": "If possible, would it be better to create the PreviewsOptOutGuide in the IO thread and pass the OptimizationGuide through instead?",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
