@@ -14,6 +14,7 @@
 namespace views {
 
 class DialogDelegate;
+class DialogObserver;
 class LabelButton;
 class Widget;
 
@@ -44,6 +45,11 @@ class VIEWS_EXPORT DialogClientView : public ClientView,
   // Update the dialog buttons to match the dialog's delegate.
   void UpdateDialogButtons();
   void SetButtonRowInsets(const gfx::Insets& insets);
+
+  // Add or remove an observer that is notified whenever a client calls
+  // UpdateDialogButtons().
+  void AddObserver(DialogObserver* observer);
+  void RemoveObserver(DialogObserver* observer);
 
   // ClientView implementation:
   bool CanClose() override;
@@ -117,6 +123,8 @@ class VIEWS_EXPORT DialogClientView : public ClientView,
 
   // Container view for the button row.
   ButtonRowContainer* button_row_container_ = nullptr;
+
+  base::ObserverList<DialogObserver> observer_list_;
 
   // True if we've notified the delegate the window is closing and the delegate
   // allowed the close. In some situations it's possible to get two closes (see
