@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2abfdb2_96bc30d8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTransitionTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-10T22:12:36Z",
+      "side": 1,
+      "message": "Pretty sure this should be enable-features\u003dVrLaunchIntents",
+      "range": {
+        "startLine": 142,
+        "startChar": 27,
+        "endLine": 142,
+        "endChar": 42
+      },
+      "revId": "7b274a605591c926b88909632bd1627e64663a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
