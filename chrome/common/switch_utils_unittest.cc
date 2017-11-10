@@ -11,7 +11,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 TEST(SwitchUtilsTest, RemoveSwitches) {
-  static const base::CommandLine::CharType* argv[] = {
+  static const base::CommandLine::CharType* const argv[] = {
       FILE_PATH_LITERAL("program"),
       FILE_PATH_LITERAL("--app=http://www.google.com/"),
       FILE_PATH_LITERAL("--force-first-run"),
@@ -53,11 +53,9 @@ TEST(SwitchUtilsTest, RemoveSwitchesFromString) {
 }
 
 TEST(SwitchUtilsTest, RemovePrefetchSwitch) {
-  static const base::CommandLine::CharType* argv[] = {
-      FILE_PATH_LITERAL("program"),
-      FILE_PATH_LITERAL("--foo"),
-      FILE_PATH_LITERAL("/prefetch:1"),
-      FILE_PATH_LITERAL("--bar")};
+  static const base::CommandLine::CharType* const argv[] = {
+      FILE_PATH_LITERAL("program"), FILE_PATH_LITERAL("--foo"),
+      FILE_PATH_LITERAL("/prefetch:1"), FILE_PATH_LITERAL("--bar")};
   base::CommandLine cmd_line(arraysize(argv), argv);
   EXPECT_FALSE(cmd_line.GetCommandLineString().empty());
 
@@ -71,11 +69,9 @@ TEST(SwitchUtilsTest, RemovePrefetchSwitch) {
 }
 
 TEST(SwitchUtilsTest, RemovePrefetchSwitchAndNormalSwitch) {
-  static const base::CommandLine::CharType* argv[] = {
-      FILE_PATH_LITERAL("program"),
-      FILE_PATH_LITERAL("--foo"),
-      FILE_PATH_LITERAL("/prefetch:1"),
-      FILE_PATH_LITERAL("--force-first-run"),
+  static const base::CommandLine::CharType* const argv[] = {
+      FILE_PATH_LITERAL("program"), FILE_PATH_LITERAL("--foo"),
+      FILE_PATH_LITERAL("/prefetch:1"), FILE_PATH_LITERAL("--force-first-run"),
       FILE_PATH_LITERAL("--bar")};
   base::CommandLine cmd_line(arraysize(argv), argv);
   EXPECT_FALSE(cmd_line.GetCommandLineString().empty());
@@ -88,4 +84,4 @@ TEST(SwitchUtilsTest, RemovePrefetchSwitchAndNormalSwitch) {
   EXPECT_TRUE(cmd_line.HasSwitch("foo"));
   EXPECT_TRUE(cmd_line.HasSwitch("bar"));
 }
-#endif
+#endif  // defined(OS_WIN)
