@@ -127,6 +127,13 @@ Polymer({
    */
   networksChangedListener_: null,
 
+  /**
+   * Listener function for chrome.networkingPrivate.onNetworkListChanged event.
+   * @type {?function(!Array<string>)}
+   * @private
+   */
+  networkListChangedListener_: null,
+
   /** @private {boolean} */
   didSetFocus_: false,
 
@@ -158,12 +165,23 @@ Polymer({
             this.networksChangedListener_);
         this.networksChangedListener_ = null;
       }
+      if (this.networkListChangedListener_) {
+        this.networkingPrivate.onNetworkListChanged.removeListener(
+            this.networkListChangedListener_);
+        this.networkListChangedListener_ = null;
+      }
       return;
     }
     if (!this.networksChangedListener_) {
       this.networksChangedListener_ = this.onNetworksChangedEvent_.bind(this);
       this.networkingPrivate.onNetworksChanged.addListener(
           this.networksChangedListener_);
+    }
+    if (!this.networkListChangedListener_) {
+      this.networkListChangedListener_ =
+          this.onNetworkListChangedEvent_.bind(this);
+      this.networkingPrivate.onNetworkListChanged.addListener(
+          this.networkListChangedListener_);
     }
     var queryParams = settings.getQueryParameters();
     this.guid = queryParams.get('guid') || '';
@@ -270,6 +288,16 @@ Polymer({
   onNetworksChangedEvent_: function(networkIds) {
     if (networkIds.indexOf(this.guid) != -1)
       this.getNetworkDetails_();
+  },
+
+  /**
+   * networkingPrivate.onNetworkListChanged event callback.
+   * @param {!Array<string>} networkIds The list of all network GUIDs.
+   * @private
+   */
+  onNetworkListChangedEvent_: function(networkIds) {
+    if (networkIds.indexOf(this.guid) == -1)
+      this.close_();
   },
 
   /**
