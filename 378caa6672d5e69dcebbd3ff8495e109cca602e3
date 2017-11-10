@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df35af66_d5d093be",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-10T15:02:53Z",
+      "side": 1,
+      "message": "At line 1377 above |inserted_nodes.FirstNodeInserted()| checked for nullptr.",
+      "revId": "378caa6672d5e69dcebbd3ff8495e109cca602e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09db427_61c769fb",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1457,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-10T15:02:53Z",
+      "side": 1,
+      "message": "But here I can\u0027t be sure about contents of |inserted_nodes| and should do an additional check.\nAm I right?",
+      "revId": "378caa6672d5e69dcebbd3ff8495e109cca602e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1900e818_8370ac6d",
+        "filename": "third_party/WebKit/Source/core/editing/serializers/Serialization.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-10T15:02:53Z",
+      "side": 1,
+      "message": "This function is called from one place, so it is easy to change it to |const Node\u0026|",
+      "revId": "378caa6672d5e69dcebbd3ff8495e109cca602e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a95810_dadd7c2b",
+        "filename": "third_party/WebKit/Source/core/editing/serializers/Serialization.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-10T15:02:53Z",
+      "side": 1,
+      "message": "This should be |const Node\u0026| but ParserTakeAllChildrenFrom function takes a on-const ref object \u003d(",
+      "revId": "378caa6672d5e69dcebbd3ff8495e109cca602e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
