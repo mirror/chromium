@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3b2ff1ec_f58be9d9",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-10T01:28:28Z",
+      "side": 1,
+      "message": "(It\u0027s a leftover from something else I was looking into, removed it)\n\nDone",
+      "parentUuid": "08f80d36_ab016276",
+      "range": {
+        "startLine": 20,
+        "startChar": 46,
+        "endLine": 20,
+        "endChar": 68
+      },
+      "revId": "4bcdc5bfa2dc95b87da14579032ba3da3db934b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cf9bb7b_76b7d572",
         "filename": "chrome/browser/resources/md_extensions/sidebar.js",
         "patchSetId": 2
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "I don\u0027t think this matters much in this case, but out of curiosity, what is the difference of using the ternary operator vs the other options in absolute numbers?\n\nMy guess is that getCurrentPage() is the slowest part of this command, which exists in all versions you listed, so a bit surprised that you are meausing significant difference among the listed versions.",
       "parentUuid": "0cf9bb7b_76b7d572",
+      "revId": "4bcdc5bfa2dc95b87da14579032ba3da3db934b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d3cc3d_5ebf7502",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-10T01:28:28Z",
+      "side": 1,
+      "message": "Discussed off-line: Sorry, I was fishing for a preference, the performance is not a concern really. dpapad@ is cool with the ?:, so going with that.",
+      "parentUuid": "f06a1a3c_ef8df0e4",
       "revId": "4bcdc5bfa2dc95b87da14579032ba3da3db934b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
