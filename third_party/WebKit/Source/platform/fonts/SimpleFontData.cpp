@@ -329,16 +329,6 @@ scoped_refptr<SimpleFontData> SimpleFontData::VerticalRightOrientationFontData()
   return derived_font_data_->vertical_right_orientation;
 }
 
-scoped_refptr<SimpleFontData> SimpleFontData::UprightOrientationFontData() const {
-  if (!derived_font_data_)
-    derived_font_data_ = DerivedFontData::Create();
-  if (!derived_font_data_->upright_orientation)
-    derived_font_data_->upright_orientation =
-        Create(platform_data_,
-               IsCustomFont() ? CustomFontData::Create() : nullptr, true);
-  return derived_font_data_->upright_orientation;
-}
-
 scoped_refptr<SimpleFontData> SimpleFontData::SmallCapsFontData(
     const FontDescription& font_description) const {
   if (!derived_font_data_)
@@ -365,8 +355,7 @@ bool SimpleFontData::IsTextOrientationFallbackOf(
     const SimpleFontData* font_data) const {
   if (!IsTextOrientationFallback() || !font_data->derived_font_data_)
     return false;
-  return font_data->derived_font_data_->upright_orientation == this ||
-         font_data->derived_font_data_->vertical_right_orientation == this;
+  return font_data->derived_font_data_->vertical_right_orientation == this;
 }
 
 std::unique_ptr<SimpleFontData::DerivedFontData>
