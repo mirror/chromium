@@ -49,9 +49,9 @@ int UtilityMain(const MainFunctionParams& parameters) {
   // Initializes the sandbox before any threads are created.
   // TODO(jorgelo): move this after GTK initialization when we enable a strict
   // Seccomp-BPF policy.
-  if (parameters.zygote_child) {
-    auto sandbox_type =
-        service_manager::SandboxTypeFromCommandLine(parameters.command_line);
+  auto sandbox_type =
+      service_manager::SandboxTypeFromCommandLine(parameters.command_line);
+  if (!service_manager::IsUnsandboxedSandboxType(sandbox_type)) {
     service_manager::Sandbox::Initialize(
         sandbox_type, service_manager::SandboxLinux::PreSandboxHook(),
         service_manager::SandboxLinux::Options());

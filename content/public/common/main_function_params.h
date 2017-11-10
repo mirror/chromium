@@ -38,8 +38,6 @@ struct MainFunctionParams {
         sandbox_info(NULL),
 #elif defined(OS_MACOSX)
         autorelease_pool(NULL),
-#elif defined(OS_POSIX) && !defined(OS_ANDROID)
-        zygote_child(false),
 #endif
         ui_task(NULL) {
   }
@@ -50,8 +48,6 @@ struct MainFunctionParams {
   sandbox::SandboxInterfaceInfo* sandbox_info;
 #elif defined(OS_MACOSX)
   base::mac::ScopedNSAutoreleasePool* autorelease_pool;
-#elif defined(OS_POSIX) && !defined(OS_ANDROID)
-  bool zygote_child;
 #endif
 
 #if defined(USE_AURA)
