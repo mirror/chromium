@@ -367,6 +367,14 @@ class TabSpecificContentSettings
  private:
   friend class content::WebContentsUserData<TabSpecificContentSettings>;
 
+  // The reason why the site was muted. This is logged to UKM, so add new values
+  // at the end.
+  enum MuteReason {
+    kSiteException = 0,  // Muted due to an explicit block exception.
+    kMuteByDefault = 1,  // Muted due to the default sound setting being set to
+                         // block.
+  };
+
   explicit TabSpecificContentSettings(content::WebContents* tab);
 
   // content::WebContentsObserver overrides.
@@ -407,6 +415,12 @@ class TabSpecificContentSettings
 
   // Sets sound as blocked if site is muted and sound is playing.
   void CheckSoundBlocked(bool is_audible);
+
+  // Record a UKM event that audio was blocked on the page.
+  void RecordSiteMutedUKM();
+
+  // Determine the reason why audio was blocked on the page.
+  MuteReason GetSiteMutedReason();
 
   // Gets the current sound setting state.
   ContentSetting GetSoundContentSetting() const;
@@ -468,6 +482,9 @@ class TabSpecificContentSettings
 
   // Holds the previous committed url during a navigation.
   GURL previous_url_;
+
+  // True if we have already logged a SiteMuted UKM event since last navigation.
+  bool logged_site_muted_ukm_;
 
   // Observer to watch for content settings changed.
   ScopedObserver<HostContentSettingsMap, content_settings::Observer> observer_;
