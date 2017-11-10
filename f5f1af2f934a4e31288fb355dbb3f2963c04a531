@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "905a854b_717593e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-10T00:29:23Z",
+      "side": 1,
+      "message": "nit; \"Eliminate unused\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "f5f1af2f934a4e31288fb355dbb3f2963c04a531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
