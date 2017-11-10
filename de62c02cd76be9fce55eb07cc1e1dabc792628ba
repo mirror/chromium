@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82d3dc42_6c51b2ab",
+        "filename": "chrome/app/chrome_manifest.json",
+        "patchSetId": 25
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-10T20:39:31Z",
+      "side": 1,
+      "message": "The confusion is because in the \"provides\", \"chrome_renderer\" is referring to a capability. The name is arbitrary and decided by this entry.\n\nIn the \"requires\" clause it\u0027s referring to a service from which the \"chrome\" capability is required.\n\nWe don\u0027t have this confusion with other content services because e.g. the capability is \"renderer\" and the service requiring it is \"content_renderer\".\n\nI don\u0027t really have a great suggestion for ways to disambiguate the two types of strings here specifically.\n\nIt may be worth considering and enforcing a new universal convention, like qualifying all manifest strings with a scheme-like prefix:\n\n \"service:chrome\", \"service:content_browser\", \"capability:chrome\", \"capability:renderer\", etc.",
+      "parentUuid": "d3ae4d07_09d9ff68",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 40
+      },
+      "revId": "de62c02cd76be9fce55eb07cc1e1dabc792628ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aedf2d3f_a8a0d4dd",
         "filename": "chrome/browser/chrome_service.cc",
         "patchSetId": 25
