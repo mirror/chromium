@@ -32,7 +32,6 @@
 #include "chrome/browser/vr/elements/transient_element.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_name.h"
-#include "chrome/browser/vr/elements/ui_element_transform_operations.h"
 #include "chrome/browser/vr/elements/ui_texture.h"
 #include "chrome/browser/vr/elements/url_bar.h"
 #include "chrome/browser/vr/elements/vector_icon.h"
@@ -309,6 +308,37 @@ void UiSceneManager::CreateContentQuad(ContentInputDelegate* delegate) {
   hit_plane->SetTranslate(0, 0, -kTextureOffset);
   scene_->AddUiElement(k2dBrowsingContentGroup, std::move(hit_plane));
 
+  auto child = base::MakeUnique<Rect>();
+  child->set_draw_phase(kPhaseForeground);
+  child->SetSize(0.1 * kContentWidth, 0.1 * kContentHeight);
+  child->SetTranslate(0.3 * kContentWidth, 0, 0);
+  child->SetColor(SK_ColorBLUE);
+  child->set_corner_radius(kContentCornerRadius * 2.5);
+
+  auto child2 = base::MakeUnique<Rect>();
+  child2->set_draw_phase(kPhaseForeground);
+  child2->SetSize(0.1 * kContentWidth, 0.1 * kContentHeight);
+  child2->SetTranslate(0.1 * kContentWidth, 0.2 * kContentHeight, 0);
+  child2->SetColor(SK_ColorGREEN);
+  child2->set_corner_radius(kContentCornerRadius * 2.5);
+
+  auto child3 = base::MakeUnique<Rect>();
+  child3->set_draw_phase(kPhaseForeground);
+  child3->SetSize(0.05 * kContentWidth, 0.05 * kContentHeight);
+  child3->SetTranslate(0.2 * kContentWidth, -0.6 * kContentHeight, 0);
+  child3->SetColor(SK_ColorRED);
+  child3->set_corner_radius(kContentCornerRadius * 3.5);
+
+  auto parent = base::MakeUnique<Rect>();
+  parent->set_draw_phase(kPhaseForeground);
+  parent->set_corner_radius(kContentCornerRadius * 2.5);
+  parent->set_bounds_contain_children(true);
+  parent->SetColor(SK_ColorGRAY);
+  parent->set_padding(kContentCornerRadius * 4.5, kContentCornerRadius * 2.5);
+  parent->AddChild(std::move(child));
+  parent->AddChild(std::move(child2));
+  parent->AddChild(std::move(child3));
+
   auto main_content = base::MakeUnique<ContentElement>(delegate);
   main_content->set_name(kContentQuad);
   main_content->set_draw_phase(kPhaseForeground);
@@ -316,6 +346,7 @@ void UiSceneManager::CreateContentQuad(ContentInputDelegate* delegate) {
   main_content->set_corner_radius(kContentCornerRadius);
   main_content->SetTransitionedProperties({BOUNDS});
   main_content_ = main_content.get();
+  main_content->AddChild(std::move(parent));
   scene_->AddUiElement(k2dBrowsingContentGroup, std::move(main_content));
 
   // Limit reticle distance to a sphere based on content distance.
