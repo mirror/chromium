@@ -10,7 +10,8 @@
 Polymer({
   is: 'settings-internet-page',
 
-  behaviors: [I18nBehavior, settings.RouteObserverBehavior],
+  behaviors:
+      [I18nBehavior, settings.RouteObserverBehavior, WebUIListenerBehavior],
 
   properties: {
     /**
@@ -89,6 +90,18 @@ Polymer({
       }
     },
 
+    /**
+     * List of Arc VPN providers.
+     * @type {!Array<!chrome.networkingPrivate.ArcVPNProperties>}
+     * @private
+     */
+    arcVpnProviders_: {
+      type: Array,
+      value: function() {
+        return [];
+      }
+    },
+
     /** @private {!Map<string, string>} */
     focusConfig_: {
       type: Object,
@@ -138,6 +151,15 @@ Polymer({
     chrome.management.onDisabled.addListener(this.onExtensionDisabledListener_);
 
     chrome.management.getAll(this.onGetAllExtensions_.bind(this));
+
+    this.addWebUIListener(
+        'sendArcVpnProviders', this.onArcVpnProvidersReceived_.bind(this));
+    this.addWebUIListener(
+        'removeArcVpnProvider', this.onArcVpnProviderRemoved_.bind(this));
+    this.addWebUIListener(
+        'updateArcVpnProvider', this.onArcVpnProviderUpdated_.bind(this));
+
+    chrome.send('requestArcVpnProviders');
 
     this.networkingPrivate.getGlobalPolicy(policy => {
       this.globalPolicy_ = policy;
@@ -356,6 +378,15 @@ Polymer({
     chrome.send('addNetwork', [CrOnc.Type.VPN, provider.ExtensionID]);
   },
 
+  /** @private */
+  onAddArcVpnTap_: function() {
+    this.detailType_ = CrOnc.Type.VPN;
+    var params = new URLSearchParams;
+    params.append('type', CrOnc.Type.VPN);
+    this.subpageType_ = CrOnc.Type.VPN;
+    settings.navigateTo(settings.routes.INTERNET_NETWORKS, params);
+  },
+
   /**
    * chrome.management.getAll callback.
    * @param {!Array<!chrome.management.ExtensionInfo>} extensions
@@ -411,6 +442,58 @@ Polymer({
       var provider = this.thirdPartyVpnProviders_[i];
       if (provider.ExtensionID == extensionId) {
         this.splice('thirdPartyVpnProviders_', i, 1);
+        break;
+      }
+    }
+  },
+
+  /**
+   * Compares Arc VPN Providers based on LastlauchTime
+   * @param {!chrome.networkingPrivate.ArcVPNProperties} arcVpnProvider1
+   * @param {!chrome.networkingPrivate.ArcVPNProperties} arcVpnProvider2
+   * @private
+   */
+  compareArcVpnProviders_: function(arcVpnProvider1, arcVpnProvider2) {
+    if (arcVpnProvider1.LastLaunchTime > arcVpnProvider2.LastLaunchTime) {
+      return -1;
+    } else if (
+        arcVpnProvider1.LastLaunchTime < arcVpnProvider2.LastLaunchTime) {
+      return 1;
+    }
+    return 0;
+  },
+
+  /**
+   * @param {!Array<!chrome.networkingPrivate.ArcVPNProperties>} arcVpnProviders
+   * @private
+   */
+  onArcVpnProvidersReceived_: function(arcVpnProviders) {
+    arcVpnProviders.sort(this.compareArcVpnProviders_);
+    this.arcVpnProviders_ = arcVpnProviders;
+  },
+
+  /**
+   * @param {!chrome.networkingPrivate.ArcVPNProperties} arcVpnProvider
+   * @private
+   */
+  onArcVpnProviderUpdated_: function(arcVpnProvider) {
+    for (var i = 0; i < this.arcVpnProviders_.length; ++i) {
+      if (this.arcVpnProviders_[i].PackageName == arcVpnProvider.PackageName) {
+        this.splice('arcVpnProviders_', i, 1);
+        break;
+      }
+    }
+    this.unshift('arcVpnProviders_', arcVpnProvider);
+  },
+
+  /**
+   * @param {string} packageName
+   * @private
+   */
+  onArcVpnProviderRemoved_: function(packageName) {
+    for (var i = 0; i < this.arcVpnProviders_.length; ++i) {
+      if (this.arcVpnProviders_[i].PackageName == packageName) {
+        this.splice('arcVpnProviders_', i, 1);
         break;
       }
     }
