@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Service worker test setup
+FAIL writableStrategy highWaterMark should work TransformStream is not defined
+FAIL readableStrategy highWaterMark should work TransformStream is not defined
+FAIL writable should have the correct size() function TransformStream is not defined
+FAIL default writable strategy should be equivalent to { highWaterMark: 1 } TransformStream is not defined
+FAIL default readable strategy should be equivalent to { highWaterMark: 0 } TransformStream is not defined
+Harness: the test ran to completion.
+

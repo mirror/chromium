@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS Service worker test setup
+FAIL enqueue() inside size() should work TransformStream is not defined
+FAIL terminate() inside size() should work TransformStream is not defined
+FAIL error() inside size() should work TransformStream is not defined
+FAIL desiredSize inside size() should work TransformStream is not defined
+FAIL readable cancel() inside size() should work TransformStream is not defined
+FAIL pipeTo() inside size() should work TransformStream is not defined
+FAIL read() inside of size() should work TransformStream is not defined
+FAIL writer.write() inside size() should work TransformStream is not defined
+FAIL synchronous writer.write() inside size() should work TransformStream is not defined
+FAIL writer.close() inside size() should work TransformStream is not defined
+FAIL writer.abort() inside size() should work TransformStream is not defined
+Harness: the test ran to completion.
+

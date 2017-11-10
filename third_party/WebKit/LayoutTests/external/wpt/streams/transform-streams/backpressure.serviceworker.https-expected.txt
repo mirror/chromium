@@ -1,0 +1,18 @@
+This is a testharness.js-based test.
+PASS Service worker test setup
+FAIL backpressure allows no transforms with a default identity transform and no reader TransformStream is not defined
+FAIL backpressure only allows one transform() with a identity transform with a readable HWM of 1 and no reader TransformStream is not defined
+FAIL transform() should keep being called as long as there is no backpressure TransformStream is not defined
+FAIL writes should resolve as soon as transform completes TransformStream is not defined
+FAIL calling pull() before the first write() with backpressure should work TransformStream is not defined
+FAIL transform() should be able to read the chunk it just enqueued TransformStream is not defined
+FAIL blocking transform() should cause backpressure TransformStream is not defined
+FAIL writer.closed should resolve after readable is canceled during start TransformStream is not defined
+FAIL writer.closed should resolve after readable is canceled with backpressure TransformStream is not defined
+FAIL writer.closed should resolve after readable is canceled with no backpressure TransformStream is not defined
+FAIL cancelling the readable should cause a pending write to resolve TransformStream is not defined
+FAIL cancelling the readable side of a TransformStream should abort an empty pipe TransformStream is not defined
+FAIL cancelling the readable side of a TransformStream should abort an empty pipe after startup TransformStream is not defined
+FAIL cancelling the readable side of a TransformStream should abort a full pipe TransformStream is not defined
+Harness: the test ran to completion.
+

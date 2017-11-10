@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+FAIL controller.terminate() should error pipeTo() TransformStream is not defined
+FAIL controller.terminate() should prevent remaining chunks from being processed TransformStream is not defined
+FAIL controller.enqueue() should throw after controller.terminate() TransformStream is not defined
+FAIL controller.error() after controller.terminate() with queued chunk should error the readable TransformStream is not defined
+FAIL controller.error() after controller.terminate() without queued chunk should do nothing TransformStream is not defined
+FAIL controller.terminate() inside flush() should not prevent writer.close() from succeeding TransformStream is not defined
+Harness: the test ran to completion.
+

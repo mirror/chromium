@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Service worker test setup
+FAIL TransformStream flush is called immediately when the writable is closed, if no writes are queued TransformStream is not defined
+FAIL TransformStream flush is called after all queued writes finish, once the writable is closed TransformStream is not defined
+FAIL TransformStream flush gets a chance to enqueue more into the readable TransformStream is not defined
+FAIL TransformStream flush gets a chance to enqueue more into the readable, and can then async close TransformStream is not defined
+FAIL error() during flush should cause writer.close() to reject TransformStream is not defined
+Harness: the test ran to completion.
+

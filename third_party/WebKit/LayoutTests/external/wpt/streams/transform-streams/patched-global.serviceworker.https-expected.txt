@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Service worker test setup
+FAIL TransformStream constructor should not call setters for highWaterMark or size TransformStream is not defined
+FAIL TransformStream should use the original value of ReadableStream and WritableStream TransformStream is not defined
+Harness: the test ran to completion.
+
