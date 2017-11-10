@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "833baf90_3d366139",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationSettingsBridge.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-10T11:15:20Z",
+      "side": 0,
+      "message": "Actually this comment is about removing the whole method and skipping the jni call in favour of checking sdk_int from c++, so could you leave it in please.\n\nThanks.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 97
+      },
+      "revId": "b336d705f4e01900f5a18357c8a5cbde9e56669d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
