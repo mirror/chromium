@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef968c1f_a05370b6",
+        "filename": "extensions/renderer/runtime_custom_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-10T18:27:27Z",
+      "side": 1,
+      "message": "It seems we\u0027d end up calling expensive CHECK more frequently with this change. How about preserving the behavior?\nbool got_view_type \u003d GetViewTypeFromString(..);\nif (!got_view_type) CHECK_EQ(\"ALL\", view_type_string);",
+      "revId": "0e2e4524f93a3d42fb24131c11d0ddb7298ced1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
