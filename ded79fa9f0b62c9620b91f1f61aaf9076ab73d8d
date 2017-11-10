@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2c1a3ab_f9b25f8e",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-10T16:04:47Z",
+      "side": 1,
+      "message": "Does this make any difference?",
+      "range": {
+        "startLine": 1365,
+        "startChar": 77,
+        "endLine": 1365,
+        "endChar": 0
+      },
+      "revId": "ded79fa9f0b62c9620b91f1f61aaf9076ab73d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

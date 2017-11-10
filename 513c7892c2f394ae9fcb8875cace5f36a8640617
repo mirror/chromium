@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "147275ba_ecddb28b",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-10T16:04:47Z",
+      "side": 1,
+      "message": "nit: Why the extra parens?",
+      "range": {
+        "startLine": 677,
+        "startChar": 29,
+        "endLine": 677,
+        "endChar": 0
+      },
+      "revId": "513c7892c2f394ae9fcb8875cace5f36a8640617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90eaae9d_a0e52bcc",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-10T16:04:47Z",
+      "side": 1,
+      "message": "nit: This is a bit weird now. Before, it was somewhat reasonable that one of the two frames must be a non-MainFrame, but now it\u0027s not really clear why one of the frame must have that name. I\u0027d just remove the NOTREACHED. (And maybe also the CHECK above, since it doesn\u0027t really say anything meaningful.)",
+      "range": {
+        "startLine": 558,
+        "startChar": 15,
+        "endLine": 558,
+        "endChar": 0
+      },
+      "revId": "513c7892c2f394ae9fcb8875cace5f36a8640617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7377b4_eb7b523a",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-10T16:04:47Z",
+      "side": 1,
+      "message": "I think you could directly open an NTP tab here. Also the HistogramTester isn\u0027t used.",
+      "revId": "513c7892c2f394ae9fcb8875cace5f36a8640617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69689135_da99caec",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1246,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-10T16:04:47Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 1246,
+        "startChar": 76,
+        "endLine": 1246,
+        "endChar": 0
+      },
+      "revId": "513c7892c2f394ae9fcb8875cace5f36a8640617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
