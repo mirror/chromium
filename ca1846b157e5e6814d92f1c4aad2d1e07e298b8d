@@ -16,6 +16,24 @@
       "revId": "ca1846b157e5e6814d92f1c4aad2d1e07e298b8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7e2bd4_c80097d8",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1652,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-10T03:40:25Z",
+      "side": 1,
+      "message": "This method is only called from a few places anyway. I think I will just delete this DCHECK.",
+      "parentUuid": "41d6a771_4bd70e4e",
+      "revId": "ca1846b157e5e6814d92f1c4aad2d1e07e298b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
