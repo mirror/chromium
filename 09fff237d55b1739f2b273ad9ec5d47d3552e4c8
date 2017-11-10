@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7dc61a90_367b04f8",
+        "filename": "chrome/browser/vr/ui_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-10T18:52:15Z",
+      "side": 1,
+      "message": "do we need depth for the controller?",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 13
+      },
+      "revId": "09fff237d55b1739f2b273ad9ec5d47d3552e4c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d263c50a_5fa16b58",
         "filename": "chrome/browser/vr/ui_renderer.cc",
         "patchSetId": 1
