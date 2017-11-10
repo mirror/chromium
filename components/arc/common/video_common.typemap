@@ -5,7 +5,7 @@
 mojom = "//components/arc/common/video_common.mojom"
 public_headers = [
   "//components/arc/video_accelerator/video_frame_plane.h",
-  "//ui/gfx/geometry/size.h",
+  #  "//ui/gfx/geometry/size.h",
 ]
 traits_headers = [ "//components/arc/common/video_accelerator_struct_traits.h" ]
 sources = [
