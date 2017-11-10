@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "1429fa0e_b87c0510",
+        "filename": "chrome/services/file_util/public/cpp/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-10T00:41:13Z",
+      "side": 1,
+      "message": "Yep, that\u0027s what I have done.",
+      "parentUuid": "7e00b985_00292d3f",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "b479bb3d41cf871f7ca6b15f5d9386b88f85efbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11d3e5cc_6c6f3229",
         "filename": "chrome/services/file_util/public/cpp/sandboxed_dmg_analyzer_mac.cc",
         "patchSetId": 11
