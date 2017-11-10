@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "7e00b985_00292d3f",
+        "filename": "chrome/services/file_util/public/cpp/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-10T00:30:32Z",
+      "side": 1,
+      "message": "Probably easiest way is to move this block (23-27) above the conditional. That way public_deps is always defined.",
+      "parentUuid": "a519cd63_ae09bb34",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "b479bb3d41cf871f7ca6b15f5d9386b88f85efbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11d3e5cc_6c6f3229",
         "filename": "chrome/services/file_util/public/cpp/sandboxed_dmg_analyzer_mac.cc",
         "patchSetId": 11
