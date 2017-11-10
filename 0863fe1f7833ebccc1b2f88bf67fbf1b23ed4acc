@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fff7d0b4_3c6b4cca",
+        "filename": "content/browser/devtools/devtools_interceptor_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T23:44:08Z",
+      "side": 1,
+      "message": "nit: drop base::Passed()",
+      "revId": "0863fe1f7833ebccc1b2f88bf67fbf1b23ed4acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad3b0707_33b2d641",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T23:44:08Z",
+      "side": 1,
+      "message": "nit: add blank line above this one.",
+      "revId": "0863fe1f7833ebccc1b2f88bf67fbf1b23ed4acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a48ba01_9fcc4ab1",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T23:44:08Z",
+      "side": 1,
+      "message": "nit: you can probably defer this till OnResponseStarted?",
+      "revId": "0863fe1f7833ebccc1b2f88bf67fbf1b23ed4acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ebb6a9f_958ebd1d",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T23:44:08Z",
+      "side": 1,
+      "message": "Let\u0027s use something more appropriate than InvalidParams here, just Response::Error() would be fine.",
+      "revId": "0863fe1f7833ebccc1b2f88bf67fbf1b23ed4acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97e3ab4_28e98382",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T23:44:08Z",
+      "side": 1,
+      "message": "nit: drop base::Passed()",
+      "revId": "0863fe1f7833ebccc1b2f88bf67fbf1b23ed4acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a52e529_8415fcd9",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T23:44:08Z",
+      "side": 1,
+      "message": "Let\u0027s drop this return.",
+      "revId": "0863fe1f7833ebccc1b2f88bf67fbf1b23ed4acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bbdc16b_ba9b22e4",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T23:44:08Z",
+      "side": 1,
+      "message": "Why is it here? Let\u0027s move to NetworkHandler!",
+      "revId": "0863fe1f7833ebccc1b2f88bf67fbf1b23ed4acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ac55fe_db3c98bb",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T23:44:08Z",
+      "side": 1,
+      "message": "nit: I think having http somewhere in the member name here may help.",
+      "revId": "0863fe1f7833ebccc1b2f88bf67fbf1b23ed4acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c6b163_97b2a080",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T23:44:08Z",
+      "side": 1,
+      "message": "nit: it would be nice to have one array and use it both for this and the reverse function above.",
+      "revId": "0863fe1f7833ebccc1b2f88bf67fbf1b23ed4acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707d2a07_2fa0552f",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 1938,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T23:44:08Z",
+      "side": 1,
+      "message": "\"... or if a redirect occurred while intercepting the request\"?",
+      "revId": "0863fe1f7833ebccc1b2f88bf67fbf1b23ed4acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c624bca_3d2d3e20",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 1939,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T23:44:08Z",
+      "side": 1,
+      "message": "... or if a redirect or auth retry occurred [...]?",
+      "revId": "0863fe1f7833ebccc1b2f88bf67fbf1b23ed4acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d3ac5d_7d57f82d",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-10T23:44:08Z",
+      "side": 1,
+      "message": "as above.",
+      "revId": "0863fe1f7833ebccc1b2f88bf67fbf1b23ed4acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
