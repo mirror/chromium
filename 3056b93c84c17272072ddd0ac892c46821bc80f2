@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1e2d739_2617761f",
+        "filename": "chrome/services/media_gallery_util/ipc_data_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-10T00:49:36Z",
+      "side": 1,
+      "message": "It\u0027s odd that you need media::DataSource only for meta data parsing. But you didn\u0027t change this in this CL, so it\u0027s okay. But please file a bug on this. Basically we should improve AudioVideoMetadataExtractor to make it easier to use.",
+      "range": {
+        "startLine": 27,
+        "startChar": 29,
+        "endLine": 27,
+        "endChar": 46
+      },
+      "revId": "3056b93c84c17272072ddd0ac892c46821bc80f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
