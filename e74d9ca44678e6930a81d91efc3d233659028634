@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d85b3365_9a908972",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3794,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-10T15:23:49Z",
+      "side": 1,
+      "message": "nit: I find the \"DeviceLoginScreen\" prefix a bit clearer than just \"Device\" - this has a better indication of the scope of the policy.",
+      "range": {
+        "startLine": 3794,
+        "startChar": 15,
+        "endLine": 3794,
+        "endChar": 21
+      },
+      "revId": "e74d9ca44678e6930a81d91efc3d233659028634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac45c378_2415a4b9",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3805,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-10T15:23:49Z",
+      "side": 1,
+      "message": "nit: A weird escaping (even though I see you just copied the AutoSelectCertificateForUrls\u0027s sample).\nBut won\u0027t replacing the outer double quotes with single quotes make this simpler?",
+      "range": {
+        "startLine": 3805,
+        "startChar": 26,
+        "endLine": 3805,
+        "endChar": 29
+      },
+      "revId": "e74d9ca44678e6930a81d91efc3d233659028634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406e9e58_14fa4a52",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3809,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-10T15:23:49Z",
+      "side": 1,
+      "message": "nit: s/requested/selected/",
+      "range": {
+        "startLine": 3809,
+        "startChar": 138,
+        "endLine": 3809,
+        "endChar": 147
+      },
+      "revId": "e74d9ca44678e6930a81d91efc3d233659028634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e810d0f1_46e4d0cd",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3809,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-10T15:23:49Z",
+      "side": 1,
+      "message": "nit: Saying \"SAML IdP\" sounds too restrictive to me - the actual sequence of visited pages in the SAML frame may contain anything else.\nSo maybe reword it to something like:\n\n  \"\u003c...\u003e patterns that specify sites \u003c...\u003e on the sign-in screen in the SAML frame \u003c...\u003e\"\n\nOr you intentionally wanted to provide a hint into how this policy is expected to be used?",
+      "range": {
+        "startLine": 3809,
+        "startChar": 75,
+        "endLine": 3809,
+        "endChar": 83
+      },
+      "revId": "e74d9ca44678e6930a81d91efc3d233659028634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b382b72_70fd6e7d",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3811,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-10T15:23:49Z",
+      "side": 1,
+      "message": "nit: The indentation should be aligned with the left margin of \u0027desc\u0027.\n(Even though the indentation is already broken throughout the file due to a recent restructuring.)",
+      "range": {
+        "startLine": 3811,
+        "startChar": 0,
+        "endLine": 3811,
+        "endChar": 10
+      },
+      "revId": "e74d9ca44678e6930a81d91efc3d233659028634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
