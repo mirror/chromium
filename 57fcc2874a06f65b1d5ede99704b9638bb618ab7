@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a1d9d50_1c9113aa",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-10T18:42:38Z",
+      "side": 1,
+      "message": "This is kind of ugly. :(  Basically, this is because RPHI::IsSuitableHost checks origin locks, and allowing reuse for matching locks, before checking the content client.  So the issue I described with nonexisting extensions in https://crbug.com/782349 won\u0027t occur with --site-per-process, as origin locks effectively override the process privilege level comparison.\n\nI still think having IsSuitableHost() checks in the Unmatched SW tracker makes sense to have in general, but perhaps we should also consider changing CCBCEP::SiteInstanceGotProcess to assign PRIV_EXTENSION for nonexistent extensions, which would allow process reuse in this case without --site-per-process as well.  Or is that undesirable in general?",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 13
+      },
+      "revId": "57fcc2874a06f65b1d5ede99704b9638bb618ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
