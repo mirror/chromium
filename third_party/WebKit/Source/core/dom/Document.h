@@ -1470,6 +1470,7 @@ class CORE_EXPORT Document : public ContainerNode,
   ShadowCascadeOrder shadow_cascade_order_ = kShadowCascadeNone;
 
   void UpdateTitle(const String&);
+  void DispatchDidReceiveTitle();
   void UpdateFocusAppearanceTimerFired(TimerBase*);
   void UpdateBaseURL();
 
