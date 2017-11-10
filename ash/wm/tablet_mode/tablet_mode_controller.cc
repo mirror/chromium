@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "ash/display/screen_orientation_controller_chromeos.h"
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
@@ -172,13 +173,18 @@ void TabletModeController::EnableTabletModeWindowManager(bool should_enable) {
     RecordTabletModeUsageInterval(TABLET_MODE_INTERVAL_INACTIVE);
     for (auto& observer : tablet_mode_observers_)
       observer.OnTabletModeStarted();
+    display::Screen::GetScreen()->AddObserver(this);
 
     if (client_)  // Null at startup and in tests.
       client_->OnTabletModeToggled(true);
+
+    screen_orientation_ =
+        Shell::Get()->screen_orientation_controller()->GetCurrentOrientation();
   } else {
     tablet_mode_window_manager_->SetIgnoreWmEventsForExit();
     for (auto& observer : tablet_mode_observers_)
       observer.OnTabletModeEnding();
+    display::Screen::GetScreen()->RemoveObserver(this);
     tablet_mode_window_manager_.reset();
     base::RecordAction(base::UserMetricsAction("Touchview_Disabled"));
     RecordTabletModeUsageInterval(TABLET_MODE_INTERVAL_ACTIVE);
@@ -300,6 +306,36 @@ void TabletModeController::SuspendImminent(
 void TabletModeController::SuspendDone(const base::TimeDelta& sleep_duration) {
   // We do not want TabletMode usage metrics to include time spent in suspend.
   tabletmode_usage_interval_start_time_ = base::Time::Now();
+}
+
+void TabletModeController::OnDisplayMetricsChanged(
+    const display::Display& display,
+    uint32_t changed_metrics) {
+  DCHECK(!!tablet_mode_window_manager_.get());
+  // Only check the rotation change which will may update the orientation.
+  if (!(changed_metrics & display::DisplayObserver::DISPLAY_METRIC_ROTATION))
+    return;
+
+  blink::WebScreenOrientationLockType current_screen_orientation =
+      Shell::Get()->screen_orientation_controller()->GetCurrentOrientation();
+  bool is_previous_landscape =
+      IsScreenOrientationLandscape(screen_orientation_);
+  bool is_current_landscape =
+      IsScreenOrientationLandscape(current_screen_orientation);
+
+  // No need to update if both are landscape or portrait after rotation.
+  if (is_previous_landscape == is_current_landscape)
+    return;
+
+  base::Time current_time = base::Time::Now();
+  base::TimeDelta delta = current_time - tabletmode_orientation_start_time_;
+  if (is_previous_landscape)
+    total_landscape_time_ += delta;
+  else
+    total_portrait_time_ += delta;
+
+  tabletmode_orientation_start_time_ = current_time;
+  screen_orientation_ = current_screen_orientation;
 }
 
 void TabletModeController::HandleHingeRotation(
@@ -428,9 +464,17 @@ void TabletModeController::RecordTabletModeUsageInterval(
     case TABLET_MODE_INTERVAL_ACTIVE:
       UMA_HISTOGRAM_LONG_TIMES("Ash.TouchView.TouchViewActive", delta);
       total_tabletmode_time_ += delta;
+
+      base::TimeDelta orientation_delta =
+          current_time - tabletmode_orientation_start_time_;
+      if (IsScreenOrientationLandscape(screen_orientation_))
+        total_landscape_time_ += orientation_delta;
+      else
+        total_portrait_time_ += orientation_delta;
       break;
   }
 
+  tabletmode_orientation_start_time_ = current_time;
   tabletmode_usage_interval_start_time_ = current_time;
 }
 
@@ -455,21 +499,29 @@ void TabletModeController::OnChromeTerminating() {
   // metrics based on whether TabletMode mode is currently active.
   RecordTabletModeUsageInterval(CurrentTabletModeIntervalType());
 
-  if (CanEnterTabletMode()) {
-    UMA_HISTOGRAM_CUSTOM_COUNTS("Ash.TouchView.TouchViewActiveTotal",
-                                total_tabletmode_time_.InMinutes(), 1,
-                                base::TimeDelta::FromDays(7).InMinutes(), 50);
-    UMA_HISTOGRAM_CUSTOM_COUNTS("Ash.TouchView.TouchViewInactiveTotal",
-                                total_non_tabletmode_time_.InMinutes(), 1,
-                                base::TimeDelta::FromDays(7).InMinutes(), 50);
-    base::TimeDelta total_runtime =
-        total_tabletmode_time_ + total_non_tabletmode_time_;
-    if (total_runtime.InSeconds() > 0) {
-      UMA_HISTOGRAM_PERCENTAGE(
-          "Ash.TouchView.TouchViewActivePercentage",
-          100 * total_tabletmode_time_.InSeconds() / total_runtime.InSeconds());
-    }
+  if (!CanEnterTabletMode())
+    return;
+
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Ash.TouchView.TouchViewActiveTotal",
+                              total_tabletmode_time_.InMinutes(), 1,
+                              base::TimeDelta::FromDays(7).InMinutes(), 50);
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Ash.TouchView.TouchViewInactiveTotal",
+                              total_non_tabletmode_time_.InMinutes(), 1,
+                              base::TimeDelta::FromDays(7).InMinutes(), 50);
+  base::TimeDelta total_runtime =
+      total_tabletmode_time_ + total_non_tabletmode_time_;
+  if (total_runtime.InSeconds() > 0) {
+    UMA_HISTOGRAM_PERCENTAGE(
+        "Ash.TouchView.TouchViewActivePercentage",
+        100 * total_tabletmode_time_.InSeconds() / total_runtime.InSeconds());
   }
+
+  DCHECK(total_tabletmode_time_ ==
+         total_landscape_time_ + total_portrait_time_);
+  UMA_HISTOGRAM_LONG_TIMES("Ash.TouchView.TouchViewActiveLandscapeTotal",
+                           total_landscape_time_);
+  UMA_HISTOGRAM_LONG_TIMES("Ash.TouchView.TouchViewActivePortraitTotal",
+                           total_portrait_time_);
 }
 
 void TabletModeController::OnGetSwitchStates(
@@ -494,6 +546,14 @@ void TabletModeController::SetTickClockForTest(
     std::unique_ptr<base::TickClock> tick_clock) {
   DCHECK(tick_clock_);
   tick_clock_ = std::move(tick_clock);
+}
+
+bool TabletModeController::IsScreenOrientationLandscape(
+    blink::WebScreenOrientationLockType screen_orientation) const {
+  return screen_orientation ==
+             blink::kWebScreenOrientationLockLandscapePrimary ||
+         screen_orientation ==
+             blink::kWebScreenOrientationLockLandscapeSecondary;
 }
 
 }  // namespace ash
