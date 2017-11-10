@@ -149,6 +149,24 @@ string16 QuoteForCommandLineToArgvW(const string16& arg,
 }
 #endif
 
+// Convert string to native string.
+std::string ToNativeString(const std::string& str) {
+#if defined(OS_WIN)
+  return ToLowerASCII(str);
+#elif defined(OS_POSIX)
+  return str;
+#endif
+}
+
+// Convert native string to StringType
+CommandLine::StringType ToStringType(const std::string native_string) {
+#if defined(OS_WIN)
+  return ASCIIToUTF16(native_string);
+#elif defined(OS_POSIX)
+  return native_string;
+#endif
+}
+
 }  // namespace
 
 CommandLine::CommandLine(NoProgram no_program)
@@ -330,13 +348,8 @@ void CommandLine::AppendSwitchPath(const std::string& switch_string,
 
 void CommandLine::AppendSwitchNative(const std::string& switch_string,
                                      const CommandLine::StringType& value) {
-#if defined(OS_WIN)
-  const std::string switch_key = ToLowerASCII(switch_string);
-  StringType combined_switch_string(ASCIIToUTF16(switch_key));
-#elif defined(OS_POSIX)
-  const std::string& switch_key = switch_string;
-  StringType combined_switch_string(switch_key);
-#endif
+  const std::string switch_key = ToNativeString(switch_string);
+  StringType combined_switch_string = ToStringType(switch_key);
   size_t prefix_length = GetSwitchPrefixLength(combined_switch_string);
   auto insertion =
       switches_.insert(make_pair(switch_key.substr(prefix_length), value));
@@ -353,11 +366,21 @@ void CommandLine::AppendSwitchNative(const std::string& switch_string,
 
 void CommandLine::AppendSwitchASCII(const std::string& switch_string,
                                     const std::string& value_string) {
-#if defined(OS_WIN)
-  AppendSwitchNative(switch_string, ASCIIToUTF16(value_string));
-#elif defined(OS_POSIX)
-  AppendSwitchNative(switch_string, value_string);
-#endif
+  StringType value = ToStringType(value_string);
+  AppendSwitchNative(switch_string, value);
+}
+
+void CommandLine::RemoveSwitchForTesting(const std::string& switch_string) {
+  const std::string switch_key = ToNativeString(switch_string);
+  StringType combined_switch_string = ToStringType(switch_key);
+  size_t prefix_length = GetSwitchPrefixLength(combined_switch_string);
+  switches_.erase(switch_string.substr(prefix_length));
+
+  auto find_switch = [&combined_switch_string](const StringType& argv_entry) {
+    return argv_entry.find(combined_switch_string) != std::string::npos;
+  };
+
+  base::EraseIf(argv_, find_switch);
 }
 
 void CommandLine::CopySwitchesFrom(const CommandLine& source,
