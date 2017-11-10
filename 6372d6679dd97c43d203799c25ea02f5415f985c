@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b5dc0160_29249ace",
+        "filename": "ash/display/display_configuration_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-10T19:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "643be336_a084a58a",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7464c800_e6e77796",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5aebe45_f3ee44ba",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-10T19:28:21Z",
+      "side": 1,
+      "message": "Thanks! Yes, I mean the total combined display. Done",
+      "parentUuid": "7464c800_e6e77796",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "770ac5b6_6095ab26",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-10T19:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aff39879_e072175e",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbec04fc_373a6880",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444bb1d0_85db6715",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-10T19:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbec04fc_373a6880",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "155727cc_982eff61",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-10T19:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f8043c0_c6233108",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "637c1b3b_47c1c954",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 7
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-10T18:10:56Z",
       "side": 1,
       "message": "Is GetPrimaryMirroringDisplayForUnifiedDesktop() gauranteed to return a valid display? If not we need to handle that, otherwise we should use a local and add a DCHECK to document that.",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835bfae9_e1920f19",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-10T19:28:21Z",
+      "side": 1,
+      "message": "When Unified mode is on, yes, it will return a valid display. Basically \u0026software_mirroring_display_list()[0].\n\nWe already check that the software mirroring list is not empty in the CHECK_GT(displays.size(), 0u); above.",
+      "parentUuid": "637c1b3b_47c1c954",
       "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "a0abe758_529ef9bb",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-10T19:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6a74d33_fa973a70",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1db72f4b_07ce430d",
         "filename": "extensions/browser/api/system_display/system_display_api.cc",
         "patchSetId": 7
@@ -132,6 +258,24 @@
       "writtenOn": "2017-11-10T18:10:56Z",
       "side": 1,
       "message": "Is passing the error details to the JS useful? We are already logging the error details.",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52c4109_5eecc9e0",
+        "filename": "extensions/browser/api/system_display/system_display_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-10T19:28:21Z",
+      "side": 1,
+      "message": "I believe it will be useful to help the developers understand what went wrong, since this API can be tricky in the case of unified desktop.",
+      "parentUuid": "1db72f4b_07ce430d",
       "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -152,6 +296,24 @@
       "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "458fdc2b_e141da30",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-10T19:28:21Z",
+      "side": 1,
+      "message": "Done. I also renamed it to current_unified_desktop_matrix() to be more clear.",
+      "parentUuid": "11298ee0_1cb8c0a0",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
