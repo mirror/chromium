@@ -120,6 +120,9 @@ class Supplement : public GarbageCollectedMixin,
   static void ProvideTo(Supplementable<T>& supplementable,
                         const char* key,
                         Supplement<T>* supplement) {
+#if DCHECK_IS_ON()
+    DCHECK_EQ(&supplementable, GetSupplementable())
+#endif
     supplementable.ProvideSupplement(key, supplement);
   }
 
