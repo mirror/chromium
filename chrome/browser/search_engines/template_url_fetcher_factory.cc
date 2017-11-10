@@ -37,8 +37,7 @@ TemplateURLFetcherFactory::TemplateURLFetcherFactory()
   DependsOn(TemplateURLServiceFactory::GetInstance());
 }
 
-TemplateURLFetcherFactory::~TemplateURLFetcherFactory() {
-}
+TemplateURLFetcherFactory::~TemplateURLFetcherFactory() = default;
 
 KeyedService* TemplateURLFetcherFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

@@ -69,7 +69,7 @@ class TypeDisabledChecker : public SingleClientStatusChangeChecker {
 class SyncErrorTest : public SyncTest {
  public:
   SyncErrorTest() : SyncTest(SINGLE_CLIENT) {}
-  ~SyncErrorTest() override {}
+  ~SyncErrorTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SyncErrorTest);
@@ -81,7 +81,7 @@ class ActionableErrorChecker : public SingleClientStatusChangeChecker {
   explicit ActionableErrorChecker(ProfileSyncService* service)
       : SingleClientStatusChangeChecker(service) {}
 
-  ~ActionableErrorChecker() override {}
+  ~ActionableErrorChecker() override = default;
 
   // Checks if an actionable error has been hit. Called repeatedly each time PSS
   // notifies observers of a state change.

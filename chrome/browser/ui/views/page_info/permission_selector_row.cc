@@ -118,7 +118,7 @@ PermissionMenuButton::PermissionMenuButton(const base::string16& text,
       base::i18n::RIGHT_TO_LEFT == base::i18n::GetStringDirection(text);
 }
 
-PermissionMenuButton::~PermissionMenuButton() {}
+PermissionMenuButton::~PermissionMenuButton() = default;
 
 void PermissionMenuButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   MenuButton::GetAccessibleNodeData(node_data);
@@ -155,7 +155,7 @@ void PermissionMenuButton::OnMenuButtonClicked(views::MenuButton* source,
 class ComboboxModelAdapter : public ui::ComboboxModel {
  public:
   explicit ComboboxModelAdapter(PermissionMenuModel* model) : model_(model) {}
-  ~ComboboxModelAdapter() override {}
+  ~ComboboxModelAdapter() override = default;
 
   void OnPerformAction(int index);
 
@@ -243,7 +243,7 @@ PermissionCombobox::PermissionCombobox(ComboboxModelAdapter* model,
   }
 }
 
-PermissionCombobox::~PermissionCombobox() {}
+PermissionCombobox::~PermissionCombobox() = default;
 
 void PermissionCombobox::UpdateSelectedIndex(bool use_default) {
   int index = model_->GetCheckedIndex();

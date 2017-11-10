@@ -53,7 +53,7 @@ void InvokeCallbackOnNthInvocation(int* count, const base::Closure& callback) {
 
 LocalFileSyncService::OriginChangeMap::OriginChangeMap()
     : next_(change_count_map_.end()) {}
-LocalFileSyncService::OriginChangeMap::~OriginChangeMap() {}
+LocalFileSyncService::OriginChangeMap::~OriginChangeMap() = default;
 
 bool LocalFileSyncService::OriginChangeMap::NextOriginToProcess(GURL* origin) {
   DCHECK(origin);

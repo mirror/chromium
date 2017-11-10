@@ -251,11 +251,9 @@ InputImeEventRouterFactory* InputImeEventRouterFactory::GetInstance() {
   return base::Singleton<InputImeEventRouterFactory>::get();
 }
 
-InputImeEventRouterFactory::InputImeEventRouterFactory() {
-}
+InputImeEventRouterFactory::InputImeEventRouterFactory() = default;
 
-InputImeEventRouterFactory::~InputImeEventRouterFactory() {
-}
+InputImeEventRouterFactory::~InputImeEventRouterFactory() = default;
 
 InputImeEventRouter* InputImeEventRouterFactory::GetRouter(Profile* profile) {
   if (!profile)

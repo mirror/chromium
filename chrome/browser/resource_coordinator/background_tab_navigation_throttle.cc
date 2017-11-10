@@ -62,7 +62,7 @@ BackgroundTabNavigationThrottle::BackgroundTabNavigationThrottle(
     content::NavigationHandle* navigation_handle)
     : content::NavigationThrottle(navigation_handle) {}
 
-BackgroundTabNavigationThrottle::~BackgroundTabNavigationThrottle() {}
+BackgroundTabNavigationThrottle::~BackgroundTabNavigationThrottle() = default;
 
 content::NavigationThrottle::ThrottleCheckResult
 BackgroundTabNavigationThrottle::WillStartRequest() {

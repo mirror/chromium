@@ -20,11 +20,9 @@ using content::BrowserThread;
 
 namespace extensions {
 
-EventRouterForwarder::EventRouterForwarder() {
-}
+EventRouterForwarder::EventRouterForwarder() = default;
 
-EventRouterForwarder::~EventRouterForwarder() {
-}
+EventRouterForwarder::~EventRouterForwarder() = default;
 
 void EventRouterForwarder::BroadcastEventToRenderers(
     events::HistogramValue histogram_value,

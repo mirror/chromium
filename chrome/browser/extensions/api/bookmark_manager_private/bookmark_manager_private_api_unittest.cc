@@ -16,7 +16,7 @@ namespace extensions {
 
 class BookmarkManagerPrivateApiUnitTest : public ExtensionServiceTestBase {
  public:
-  BookmarkManagerPrivateApiUnitTest() {}
+  BookmarkManagerPrivateApiUnitTest() = default;
 
   void SetUp() override {
     ExtensionServiceTestBase::SetUp();

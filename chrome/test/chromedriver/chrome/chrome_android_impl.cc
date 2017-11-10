@@ -29,7 +29,7 @@ ChromeAndroidImpl::ChromeAndroidImpl(
                  page_load_strategy),
       device_(std::move(device)) {}
 
-ChromeAndroidImpl::~ChromeAndroidImpl() {}
+ChromeAndroidImpl::~ChromeAndroidImpl() = default;
 
 Status ChromeAndroidImpl::GetAsDesktop(ChromeDesktopImpl** desktop) {
   return Status(kUnknownError, "operation is unsupported on Android");

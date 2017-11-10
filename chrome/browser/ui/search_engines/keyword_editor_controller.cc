@@ -18,8 +18,7 @@ KeywordEditorController::KeywordEditorController(Profile* profile)
   table_model_.reset(new TemplateURLTableModel(url_model_));
 }
 
-KeywordEditorController::~KeywordEditorController() {
-}
+KeywordEditorController::~KeywordEditorController() = default;
 
 int KeywordEditorController::AddTemplateURL(const base::string16& title,
                                             const base::string16& keyword,

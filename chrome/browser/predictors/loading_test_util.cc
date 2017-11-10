@@ -248,8 +248,8 @@ void MockURLRequestJob::GetLoadTimingInfo(net::LoadTimingInfo* info) const {
   *info = load_timing_info_;
 }
 
-MockURLRequestJobFactory::MockURLRequestJobFactory() {}
-MockURLRequestJobFactory::~MockURLRequestJobFactory() {}
+MockURLRequestJobFactory::MockURLRequestJobFactory() = default;
+MockURLRequestJobFactory::~MockURLRequestJobFactory() = default;
 
 void MockURLRequestJobFactory::Reset() {
   response_info_ = net::HttpResponseInfo();

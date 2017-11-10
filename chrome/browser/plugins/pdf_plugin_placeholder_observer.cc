@@ -38,7 +38,7 @@ PDFPluginPlaceholderObserver::PDFPluginPlaceholderObserver(
     content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents) {}
 
-PDFPluginPlaceholderObserver::~PDFPluginPlaceholderObserver() {}
+PDFPluginPlaceholderObserver::~PDFPluginPlaceholderObserver() = default;
 
 bool PDFPluginPlaceholderObserver::OnMessageReceived(
     const IPC::Message& message,

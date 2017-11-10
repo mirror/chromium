@@ -27,7 +27,7 @@ class TestDownloadCoreService : public DownloadCoreServiceImpl {
  public:
   explicit TestDownloadCoreService(Profile* profile)
       : DownloadCoreServiceImpl(profile), profile_(profile) {}
-  ~TestDownloadCoreService() override {}
+  ~TestDownloadCoreService() override = default;
 
   void Shutdown() override {
     DownloadCoreServiceImpl::Shutdown();
@@ -63,8 +63,8 @@ class TestDownloadCoreService : public DownloadCoreServiceImpl {
 
 class DownloadsApiUnitTest : public ExtensionApiUnittest {
  public:
-  DownloadsApiUnitTest() {}
-  ~DownloadsApiUnitTest() override {}
+  DownloadsApiUnitTest() = default;
+  ~DownloadsApiUnitTest() override = default;
   void SetUp() override {
     ExtensionApiUnittest::SetUp();
 

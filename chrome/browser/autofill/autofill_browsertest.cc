@@ -71,7 +71,7 @@ class WindowedPersonalDataManagerObserver : public PersonalDataManagerObserver {
         AddObserver(this);
   }
 
-  ~WindowedPersonalDataManagerObserver() override {}
+  ~WindowedPersonalDataManagerObserver() override = default;
 
   void Wait() {
     if (!alerted_) {
@@ -101,7 +101,7 @@ class WindowedPersonalDataManagerObserver : public PersonalDataManagerObserver {
 
 class AutofillTest : public InProcessBrowserTest {
  protected:
-  AutofillTest() {}
+  AutofillTest() = default;
 
   void SetUpOnMainThread() override {
     // Don't want Keychain coming up on Mac.

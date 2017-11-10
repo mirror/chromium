@@ -61,7 +61,7 @@ class ExtensionInstalledBubbleObserver
   void Run() { OnExtensionLoaded(nullptr, bubble_->extension()); }
 
  private:
-  ~ExtensionInstalledBubbleObserver() override {}
+  ~ExtensionInstalledBubbleObserver() override = default;
 
   // chrome::BrowserListObserver:
   void OnBrowserClosing(Browser* browser) override {
@@ -198,7 +198,7 @@ ExtensionInstalledBubble::ExtensionInstalledBubble(const Extension* extension,
       anchor_position_(ANCHOR_APP_MENU) {
 }
 
-ExtensionInstalledBubble::~ExtensionInstalledBubble() {}
+ExtensionInstalledBubble::~ExtensionInstalledBubble() = default;
 
 bool ExtensionInstalledBubble::ShouldClose(BubbleCloseReason reason) const {
   // Installing an extension triggers a navigation event that should be ignored.

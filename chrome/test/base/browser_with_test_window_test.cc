@@ -55,7 +55,7 @@ BrowserWithTestWindowTest::BrowserWithTestWindowTest(Browser::Type browser_type,
 #endif
 }
 
-BrowserWithTestWindowTest::~BrowserWithTestWindowTest() {}
+BrowserWithTestWindowTest::~BrowserWithTestWindowTest() = default;
 
 void BrowserWithTestWindowTest::SetUp() {
   testing::Test::SetUp();

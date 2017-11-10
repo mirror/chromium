@@ -95,8 +95,8 @@ PasswordGenerationPopupControllerImpl::PasswordGenerationPopupControllerImpl(
   link_range_ = gfx::Range(offset, offset + link.length());
 }
 
-PasswordGenerationPopupControllerImpl::~PasswordGenerationPopupControllerImpl()
-  {}
+PasswordGenerationPopupControllerImpl::
+    ~PasswordGenerationPopupControllerImpl() = default;
 
 base::WeakPtr<PasswordGenerationPopupControllerImpl>
 PasswordGenerationPopupControllerImpl::GetWeakPtr() {

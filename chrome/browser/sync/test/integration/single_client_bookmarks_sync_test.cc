@@ -46,7 +46,7 @@ const int kSingleProfileIndex = 0;
 class SingleClientBookmarksSyncTest : public SyncTest {
  public:
   SingleClientBookmarksSyncTest() : SyncTest(SINGLE_CLIENT) {}
-  ~SingleClientBookmarksSyncTest() override {}
+  ~SingleClientBookmarksSyncTest() override = default;
 
   // Verify that the local bookmark model (for the Profile corresponding to
   // |index|) matches the data on the FakeServer. It is assumed that FakeServer

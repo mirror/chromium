@@ -22,7 +22,7 @@ MouseEvent::MouseEvent(MouseEventType type,
       modifiers(modifiers),
       click_count(click_count) {}
 
-MouseEvent::~MouseEvent() {}
+MouseEvent::~MouseEvent() = default;
 
 TouchEvent::TouchEvent(TouchEventType type,
                        int x,
@@ -31,7 +31,7 @@ TouchEvent::TouchEvent(TouchEventType type,
       x(x),
       y(y) {}
 
-TouchEvent::~TouchEvent() {}
+TouchEvent::~TouchEvent() = default;
 
 KeyEvent::KeyEvent()
     : type(kInvalidEventType),
@@ -41,19 +41,13 @@ KeyEvent::KeyEvent()
       key(std::string()),
       key_code(ui::VKEY_UNKNOWN) {}
 
-KeyEvent::KeyEvent(const KeyEvent& that)
-    : type(that.type),
-      modifiers(that.modifiers),
-      modified_text(that.modified_text),
-      unmodified_text(that.unmodified_text),
-      key(that.key),
-      key_code(that.key_code) {}
+KeyEvent::KeyEvent(const KeyEvent& that) = default;
 
-KeyEvent::~KeyEvent() {}
+KeyEvent::~KeyEvent() = default;
 
-KeyEventBuilder::KeyEventBuilder() {}
+KeyEventBuilder::KeyEventBuilder() = default;
 
-KeyEventBuilder::~KeyEventBuilder() {}
+KeyEventBuilder::~KeyEventBuilder() = default;
 
 KeyEventBuilder* KeyEventBuilder::SetType(KeyEventType type) {
   key_event_.type = type;

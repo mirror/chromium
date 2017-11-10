@@ -214,8 +214,8 @@ void MoveMouseAndPress(const gfx::Point& screen_pos,
 // PageNavigator implementation that records the URL.
 class TestingPageNavigator : public PageNavigator {
  public:
-  TestingPageNavigator() {}
-  ~TestingPageNavigator() override {}
+  TestingPageNavigator() = default;
+  ~TestingPageNavigator() override = default;
 
   WebContents* OpenURL(const OpenURLParams& params) override {
     urls_.push_back(params.url);
@@ -1888,8 +1888,7 @@ class BookmarkBarViewTest20 : public BookmarkBarViewEventTestBase {
 
   class ContainerViewForMenuExit : public views::View {
    public:
-    ContainerViewForMenuExit() {
-    }
+    ContainerViewForMenuExit() = default;
 
     void Layout() override {
       DCHECK_EQ(2, child_count());

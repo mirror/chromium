@@ -131,7 +131,7 @@ ForeignSessionHandler::ForeignSessionHandler() : scoped_observer_(this) {
   load_attempt_time_ = base::TimeTicks::Now();
 }
 
-ForeignSessionHandler::~ForeignSessionHandler() {}
+ForeignSessionHandler::~ForeignSessionHandler() = default;
 
 // static
 void ForeignSessionHandler::RegisterProfilePrefs(

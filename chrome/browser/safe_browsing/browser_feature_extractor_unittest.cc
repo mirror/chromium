@@ -52,12 +52,12 @@ namespace {
 
 class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
  public:
-  MockSafeBrowsingDatabaseManager() {}
+  MockSafeBrowsingDatabaseManager() = default;
 
   MOCK_METHOD1(MatchMalwareIP, bool(const std::string& ip_address));
 
  protected:
-  virtual ~MockSafeBrowsingDatabaseManager() {}
+  virtual ~MockSafeBrowsingDatabaseManager() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockSafeBrowsingDatabaseManager);
@@ -72,7 +72,7 @@ class MockClientSideDetectionHost : public ClientSideDetectionHost {
     set_safe_browsing_managers(NULL, database_manager);
   }
 
-  virtual ~MockClientSideDetectionHost() {}
+  virtual ~MockClientSideDetectionHost() = default;
 
   MOCK_METHOD1(IsBadIpAddress, bool(const std::string&));
 };

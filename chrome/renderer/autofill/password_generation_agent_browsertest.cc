@@ -43,7 +43,7 @@ namespace autofill {
 
 class PasswordGenerationAgentTest : public ChromeRenderViewTest {
  public:
-  PasswordGenerationAgentTest() {}
+  PasswordGenerationAgentTest() = default;
 
   void RegisterMainFrameRemoteInterfaces() override {
     // We only use the fake driver for main frame

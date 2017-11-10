@@ -46,7 +46,7 @@ SafeBrowsingUIManager::SafeBrowsingUIManager(
     const scoped_refptr<SafeBrowsingService>& service)
     : sb_service_(service) {}
 
-SafeBrowsingUIManager::~SafeBrowsingUIManager() {}
+SafeBrowsingUIManager::~SafeBrowsingUIManager() = default;
 
 void SafeBrowsingUIManager::StopOnIOThread(bool shutdown) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);

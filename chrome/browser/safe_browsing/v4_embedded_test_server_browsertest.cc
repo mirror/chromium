@@ -28,8 +28,8 @@ namespace safe_browsing {
 // thing.
 class V4EmbeddedTestServerBrowserTest : public InProcessBrowserTest {
  public:
-  V4EmbeddedTestServerBrowserTest() {}
-  ~V4EmbeddedTestServerBrowserTest() override {}
+  V4EmbeddedTestServerBrowserTest() = default;
+  ~V4EmbeddedTestServerBrowserTest() override = default;
 
   void SetUp() override {
     // We only need to mock a local database. The tests will use a true real V4

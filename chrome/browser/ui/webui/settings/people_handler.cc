@@ -91,7 +91,7 @@ SyncConfigInfo::SyncConfigInfo()
       payments_integration_enabled(false),
       set_new_passphrase(false) {}
 
-SyncConfigInfo::~SyncConfigInfo() {}
+SyncConfigInfo::~SyncConfigInfo() = default;
 
 bool GetConfiguration(const std::string& json, SyncConfigInfo* config) {
   std::unique_ptr<base::Value> parsed_value = base::JSONReader::Read(json);

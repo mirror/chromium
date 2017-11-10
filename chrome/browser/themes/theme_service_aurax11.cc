@@ -72,13 +72,13 @@ bool SystemThemeX11::HasCustomImage(int id) const {
   return false;
 }
 
-SystemThemeX11::~SystemThemeX11() {}
+SystemThemeX11::~SystemThemeX11() = default;
 
 }  // namespace
 
-ThemeServiceAuraX11::ThemeServiceAuraX11() {}
+ThemeServiceAuraX11::ThemeServiceAuraX11() = default;
 
-ThemeServiceAuraX11::~ThemeServiceAuraX11() {}
+ThemeServiceAuraX11::~ThemeServiceAuraX11() = default;
 
 bool ThemeServiceAuraX11::ShouldInitWithSystemTheme() const {
   return profile()->GetPrefs()->GetBoolean(prefs::kUsesSystemTheme);

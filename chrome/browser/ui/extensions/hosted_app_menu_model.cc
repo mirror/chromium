@@ -16,7 +16,7 @@ HostedAppMenuModel::HostedAppMenuModel(ui::AcceleratorProvider* provider,
                                        Browser* browser)
     : AppMenuModel(provider, browser) {}
 
-HostedAppMenuModel::~HostedAppMenuModel() {}
+HostedAppMenuModel::~HostedAppMenuModel() = default;
 
 void HostedAppMenuModel::Build() {
   AddItemWithStringId(IDC_COPY_URL, IDS_COPY_URL);

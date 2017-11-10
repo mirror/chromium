@@ -129,7 +129,7 @@ class ConnectionListener
         num_accepted_connections_needed_(0),
         num_accepted_connections_loop_(nullptr) {}
 
-  ~ConnectionListener() override {}
+  ~ConnectionListener() override = default;
 
   // Get called from the EmbeddedTestServer thread to be notified that
   // a connection was accepted.
@@ -285,7 +285,7 @@ class MatchingPortRequestInterceptor : public net::URLRequestInterceptor {
                                          net::NetworkDelegate*)>
           create_job_callback)
       : create_job_callback_(create_job_callback), port_(port) {}
-  ~MatchingPortRequestInterceptor() override {}
+  ~MatchingPortRequestInterceptor() override = default;
 
  private:
   net::URLRequestJob* MaybeInterceptRequest(
@@ -517,7 +517,7 @@ class PredictorBrowserTest : public InProcessBrowserTest {
     scoped_feature_list_.InitAndEnableFeature(features::kPreconnectMore);
   }
 
-  ~PredictorBrowserTest() override {}
+  ~PredictorBrowserTest() override = default;
 
  protected:
   void SetUpInProcessBrowserTestFixture() override {

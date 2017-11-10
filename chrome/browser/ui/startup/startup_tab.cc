@@ -11,5 +11,4 @@ StartupTab::StartupTab()
 StartupTab::StartupTab(const GURL& url, bool is_pinned)
     : url(url), is_pinned(is_pinned) {}
 
-StartupTab::~StartupTab() {
-}
+StartupTab::~StartupTab() = default;

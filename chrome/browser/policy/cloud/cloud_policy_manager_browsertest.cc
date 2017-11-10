@@ -49,8 +49,8 @@ namespace policy {
 // to intercept requests and produce canned responses.
 class CloudPolicyManagerTest : public InProcessBrowserTest {
  protected:
-  CloudPolicyManagerTest() {}
-  ~CloudPolicyManagerTest() override {}
+  CloudPolicyManagerTest() = default;
+  ~CloudPolicyManagerTest() override = default;
 
   void SetUpInProcessBrowserTestFixture() override {
     base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();

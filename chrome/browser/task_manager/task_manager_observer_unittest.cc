@@ -18,7 +18,7 @@ class TestObserver : public TaskManagerObserver {
   TestObserver(base::TimeDelta refresh_time, int64_t resources_flags)
       : TaskManagerObserver(refresh_time, resources_flags) {}
 
-  ~TestObserver() override {}
+  ~TestObserver() override = default;
 
   // task_manager::TaskManagerObserver:
   void OnTaskAdded(TaskId id) override {}
@@ -33,8 +33,8 @@ class TestObserver : public TaskManagerObserver {
 // adding and removing different kind of observers.
 class TaskManagerObserverTest : public testing::Test {
  public:
-  TaskManagerObserverTest() {}
-  ~TaskManagerObserverTest() override {}
+  TaskManagerObserverTest() = default;
+  ~TaskManagerObserverTest() override = default;
 
   TestTaskManager& task_manager() { return task_manager_; }
 

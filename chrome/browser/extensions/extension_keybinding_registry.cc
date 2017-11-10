@@ -43,8 +43,7 @@ ExtensionKeybindingRegistry::ExtensionKeybindingRegistry(
                  content::Source<Profile>(profile->GetOriginalProfile()));
 }
 
-ExtensionKeybindingRegistry::~ExtensionKeybindingRegistry() {
-}
+ExtensionKeybindingRegistry::~ExtensionKeybindingRegistry() = default;
 
 void ExtensionKeybindingRegistry::SetShortcutHandlingSuspended(bool suspended) {
   shortcut_handling_suspended_ = suspended;

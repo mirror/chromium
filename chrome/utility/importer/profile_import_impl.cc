@@ -24,7 +24,7 @@ ProfileImportImpl::ProfileImportImpl(
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
     : service_ref_(std::move(service_ref)) {}
 
-ProfileImportImpl::~ProfileImportImpl() {}
+ProfileImportImpl::~ProfileImportImpl() = default;
 
 void ProfileImportImpl::StartImport(
     const importer::SourceProfile& source_profile,

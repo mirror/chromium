@@ -105,7 +105,7 @@ InitSessionParams::InitSessionParams(
 
 InitSessionParams::InitSessionParams(const InitSessionParams& other) = default;
 
-InitSessionParams::~InitSessionParams() {}
+InitSessionParams::~InitSessionParams() = default;
 
 namespace {
 

@@ -71,8 +71,7 @@ BookmarkModelFactory::BookmarkModelFactory()
   DependsOn(StartupTaskRunnerServiceFactory::GetInstance());
 }
 
-BookmarkModelFactory::~BookmarkModelFactory() {
-}
+BookmarkModelFactory::~BookmarkModelFactory() = default;
 
 KeyedService* BookmarkModelFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

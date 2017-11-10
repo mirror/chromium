@@ -48,8 +48,7 @@ TestExtensionSystem::TestExtensionSystem(Profile* profile)
 #endif
 }
 
-TestExtensionSystem::~TestExtensionSystem() {
-}
+TestExtensionSystem::~TestExtensionSystem() = default;
 
 void TestExtensionSystem::Shutdown() {
   if (extension_service_)

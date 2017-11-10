@@ -136,8 +136,8 @@ void ShowExtensionInstallDialogImpl(
 // A custom scrollable view implementation for the dialog.
 class CustomScrollableView : public views::View {
  public:
-  CustomScrollableView() {}
-  ~CustomScrollableView() override {}
+  CustomScrollableView() = default;
+  ~CustomScrollableView() override = default;
 
   // Called when one of the child elements has expanded/collapsed.
   void ChildPreferredSizeChanged(views::View* child) override {
@@ -728,8 +728,7 @@ ExpandableContainerView::ExpandableContainerView(
   layout->AddView(arrow_toggle_);
 }
 
-ExpandableContainerView::~ExpandableContainerView() {
-}
+ExpandableContainerView::~ExpandableContainerView() = default;
 
 void ExpandableContainerView::ButtonPressed(
     views::Button* sender, const ui::Event& event) {

@@ -47,8 +47,8 @@ class MockAutofillPopupViewDelegate : public AutofillPopupViewDelegate {
 
 class AutofillPopupBaseViewTest : public InProcessBrowserTest {
  public:
-  AutofillPopupBaseViewTest() {}
-  ~AutofillPopupBaseViewTest() override {}
+  AutofillPopupBaseViewTest() = default;
+  ~AutofillPopupBaseViewTest() override = default;
 
   void SetUpOnMainThread() override {
     gfx::NativeView native_view =

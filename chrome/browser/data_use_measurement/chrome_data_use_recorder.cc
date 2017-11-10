@@ -12,6 +12,6 @@ ChromeDataUseRecorder::ChromeDataUseRecorder(DataUse::TrafficType traffic_type)
   set_page_transition(ui::PAGE_TRANSITION_LAST_CORE + 1);
 }
 
-ChromeDataUseRecorder::~ChromeDataUseRecorder() {}
+ChromeDataUseRecorder::~ChromeDataUseRecorder() = default;
 
 }  // namespace data_use_measurement

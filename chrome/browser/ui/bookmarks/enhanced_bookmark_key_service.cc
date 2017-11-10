@@ -25,8 +25,7 @@ EnhancedBookmarkKeyService::EnhancedBookmarkKeyService(
                  content::Source<Profile>(profile->GetOriginalProfile()));
 }
 
-EnhancedBookmarkKeyService::~EnhancedBookmarkKeyService() {
-}
+EnhancedBookmarkKeyService::~EnhancedBookmarkKeyService() = default;
 
 void EnhancedBookmarkKeyService::Observe(
     int type,

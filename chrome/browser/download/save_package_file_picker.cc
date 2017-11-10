@@ -230,8 +230,7 @@ SavePackageFilePicker::SavePackageFilePicker(
   }
 }
 
-SavePackageFilePicker::~SavePackageFilePicker() {
-}
+SavePackageFilePicker::~SavePackageFilePicker() = default;
 
 void SavePackageFilePicker::SetShouldPromptUser(bool should_prompt) {
   g_should_prompt_for_filename = should_prompt;

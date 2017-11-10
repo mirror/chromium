@@ -125,7 +125,7 @@ TestManagePasswordsUIController::TestManagePasswordsUIController(
   set_client(client);
 }
 
-TestManagePasswordsUIController::~TestManagePasswordsUIController() {}
+TestManagePasswordsUIController::~TestManagePasswordsUIController() = default;
 
 void TestManagePasswordsUIController::UpdateBubbleAndIconVisibility() {
   opened_bubble_ = IsAutomaticallyOpeningBubble();

@@ -56,7 +56,7 @@ class MockTCPServerSocket : public net::TCPServerSocket {
 
 class CompleteHandler {
  public:
-  CompleteHandler() {}
+  CompleteHandler() = default;
   MOCK_METHOD1(OnComplete, void(int result_code));
   MOCK_METHOD3(OnReadComplete,
                void(int result_code,

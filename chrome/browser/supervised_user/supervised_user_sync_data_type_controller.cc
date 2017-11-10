@@ -24,7 +24,8 @@ SupervisedUserSyncDataTypeController::SupervisedUserSyncDataTypeController(
          type == syncer::SUPERVISED_USER_WHITELISTS);
 }
 
-SupervisedUserSyncDataTypeController::~SupervisedUserSyncDataTypeController() {}
+SupervisedUserSyncDataTypeController::~SupervisedUserSyncDataTypeController() =
+    default;
 
 bool SupervisedUserSyncDataTypeController::ReadyForStart() const {
   DCHECK(CalledOnValidThread());

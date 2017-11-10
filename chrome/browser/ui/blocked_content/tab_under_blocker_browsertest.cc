@@ -28,8 +28,8 @@
 
 class TabUnderBlockerBrowserTest : public InProcessBrowserTest {
  public:
-  TabUnderBlockerBrowserTest() {}
-  ~TabUnderBlockerBrowserTest() override {}
+  TabUnderBlockerBrowserTest() = default;
+  ~TabUnderBlockerBrowserTest() override = default;
 
   void SetUpOnMainThread() override {
     scoped_feature_list_.InitAndEnableFeature(

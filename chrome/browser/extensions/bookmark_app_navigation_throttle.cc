@@ -65,7 +65,7 @@ BookmarkAppNavigationThrottle::BookmarkAppNavigationThrottle(
     content::NavigationHandle* navigation_handle)
     : content::NavigationThrottle(navigation_handle), weak_ptr_factory_(this) {}
 
-BookmarkAppNavigationThrottle::~BookmarkAppNavigationThrottle() {}
+BookmarkAppNavigationThrottle::~BookmarkAppNavigationThrottle() = default;
 
 const char* BookmarkAppNavigationThrottle::GetNameForLogging() {
   return "BookmarkAppNavigationThrottle";

@@ -27,7 +27,7 @@ EasyUnlockPrivateConnection::EasyUnlockPrivateConnection(
       persistent_(persistent),
       connection_(connection.release()) {}
 
-EasyUnlockPrivateConnection::~EasyUnlockPrivateConnection() {}
+EasyUnlockPrivateConnection::~EasyUnlockPrivateConnection() = default;
 
 cryptauth::Connection* EasyUnlockPrivateConnection::GetConnection() const {
   return connection_.get();

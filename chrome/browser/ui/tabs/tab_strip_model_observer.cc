@@ -6,8 +6,7 @@
 
 using content::WebContents;
 
-TabStripModelObserver::TabStripModelObserver() {
-}
+TabStripModelObserver::TabStripModelObserver() = default;
 
 void TabStripModelObserver::TabInsertedAt(TabStripModel* tab_strip_model,
                                           WebContents* contents,

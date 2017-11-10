@@ -39,8 +39,8 @@
 
 class BackgroundContentsServiceTest : public testing::Test {
  public:
-  BackgroundContentsServiceTest() {}
-  ~BackgroundContentsServiceTest() override {}
+  BackgroundContentsServiceTest() = default;
+  ~BackgroundContentsServiceTest() override = default;
   void SetUp() override {
     command_line_.reset(new base::CommandLine(base::CommandLine::NO_PROGRAM));
     BackgroundContentsService::DisableCloseBalloonForTesting(true);
@@ -128,7 +128,7 @@ class NotificationWaiter : public message_center::MessageCenterObserver {
  public:
   explicit NotificationWaiter(const std::string& target_id, Profile* profile)
       : target_id_(target_id), profile_(profile) {}
-  ~NotificationWaiter() override {}
+  ~NotificationWaiter() override = default;
 
   void WaitForNotificationAdded() {
     DCHECK(!run_loop_.running());
@@ -170,8 +170,8 @@ class NotificationWaiter : public message_center::MessageCenterObserver {
 class BackgroundContentsServiceNotificationTest
     : public BrowserWithTestWindowTest {
  public:
-  BackgroundContentsServiceNotificationTest() {}
-  ~BackgroundContentsServiceNotificationTest() override {}
+  BackgroundContentsServiceNotificationTest() = default;
+  ~BackgroundContentsServiceNotificationTest() override = default;
 
   // Overridden from testing::Test
   void SetUp() override {

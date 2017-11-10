@@ -134,8 +134,8 @@ class SafeArchiveAnalyzerImpl : public chrome::mojom::SafeArchiveAnalyzer {
 #if !defined(OS_ANDROID)
 class ResourceUsageReporterImpl : public chrome::mojom::ResourceUsageReporter {
  public:
-  ResourceUsageReporterImpl() {}
-  ~ResourceUsageReporterImpl() override {}
+  ResourceUsageReporterImpl() = default;
+  ~ResourceUsageReporterImpl() override = default;
 
  private:
   void GetUsageData(const GetUsageDataCallback& callback) override {

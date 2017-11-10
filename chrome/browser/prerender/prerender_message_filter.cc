@@ -37,7 +37,7 @@ class ShutdownNotifierFactory
             "PrerenderMessageFilter") {
     DependsOn(PrerenderLinkManagerFactory::GetInstance());
   }
-  ~ShutdownNotifierFactory() override {}
+  ~ShutdownNotifierFactory() override = default;
 
   DISALLOW_COPY_AND_ASSIGN(ShutdownNotifierFactory);
 };

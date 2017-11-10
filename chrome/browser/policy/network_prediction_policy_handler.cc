@@ -15,11 +15,9 @@
 
 namespace policy {
 
-NetworkPredictionPolicyHandler::NetworkPredictionPolicyHandler() {
-}
+NetworkPredictionPolicyHandler::NetworkPredictionPolicyHandler() = default;
 
-NetworkPredictionPolicyHandler::~NetworkPredictionPolicyHandler() {
-}
+NetworkPredictionPolicyHandler::~NetworkPredictionPolicyHandler() = default;
 
 bool NetworkPredictionPolicyHandler::CheckPolicySettings(
     const PolicyMap& policies,

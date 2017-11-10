@@ -56,9 +56,9 @@
 
 namespace extensions {
 
-ChromeExtensionsAPIClient::ChromeExtensionsAPIClient() {}
+ChromeExtensionsAPIClient::ChromeExtensionsAPIClient() = default;
 
-ChromeExtensionsAPIClient::~ChromeExtensionsAPIClient() {}
+ChromeExtensionsAPIClient::~ChromeExtensionsAPIClient() = default;
 
 void ChromeExtensionsAPIClient::AddAdditionalValueStoreCaches(
     content::BrowserContext* context,

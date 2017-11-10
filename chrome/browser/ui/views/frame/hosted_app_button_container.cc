@@ -21,7 +21,7 @@ HostedAppButtonContainer::AppMenuButton::AppMenuButton(
   SetInkDropMode(InkDropMode::ON);
 }
 
-HostedAppButtonContainer::AppMenuButton::~AppMenuButton() {}
+HostedAppButtonContainer::AppMenuButton::~AppMenuButton() = default;
 
 void HostedAppButtonContainer::AppMenuButton::SetIconColor(SkColor color) {
   SetImage(views::Button::STATE_NORMAL,
@@ -59,7 +59,7 @@ HostedAppButtonContainer::HostedAppButtonContainer(BrowserView* browser_view,
   AddChildView(app_menu_button_);
 }
 
-HostedAppButtonContainer::~HostedAppButtonContainer() {}
+HostedAppButtonContainer::~HostedAppButtonContainer() = default;
 
 void HostedAppButtonContainer::SetPaintAsActive(bool active) {
   app_menu_button_->SetIconColor(active ? active_icon_color_

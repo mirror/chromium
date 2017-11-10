@@ -36,8 +36,7 @@ InstallVerifierFactory::InstallVerifierFactory()
   DependsOn(ExtensionRegistryFactory::GetInstance());
 }
 
-InstallVerifierFactory::~InstallVerifierFactory() {
-}
+InstallVerifierFactory::~InstallVerifierFactory() = default;
 
 KeyedService* InstallVerifierFactory::BuildServiceInstanceFor(
     BrowserContext* context) const {

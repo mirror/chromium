@@ -57,8 +57,8 @@ ui::NativeTheme* GetNativeThemeForWindow(aura::Window* window) {
 
 }  // namespace
 
-ChromeBrowserMainExtraPartsViewsLinux::ChromeBrowserMainExtraPartsViewsLinux() {
-}
+ChromeBrowserMainExtraPartsViewsLinux::ChromeBrowserMainExtraPartsViewsLinux() =
+    default;
 
 ChromeBrowserMainExtraPartsViewsLinux::
     ~ChromeBrowserMainExtraPartsViewsLinux() {

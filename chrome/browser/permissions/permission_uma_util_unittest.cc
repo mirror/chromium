@@ -34,7 +34,7 @@ constexpr char kTestingUsername[] = "fake_username";
 
 class PermissionUmaUtilTest : public testing::Test {
  protected:
-  PermissionUmaUtilTest() {}
+  PermissionUmaUtilTest() = default;
 
   static bool IsOptedIntoPermissionActionReporting(Profile* profile) {
     return PermissionUmaUtil::IsOptedIntoPermissionActionReporting(profile);

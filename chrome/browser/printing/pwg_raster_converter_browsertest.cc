@@ -37,7 +37,7 @@ class PDFToPWGRasterBrowserTest : public InProcessBrowserTest {
  public:
   PDFToPWGRasterBrowserTest()
       : converter_(PWGRasterConverter::CreateDefault()) {}
-  ~PDFToPWGRasterBrowserTest() override {}
+  ~PDFToPWGRasterBrowserTest() override = default;
 
   void Convert(base::RefCountedMemory* pdf_data,
                const PdfRenderSettings& conversion_settings,

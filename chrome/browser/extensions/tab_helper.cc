@@ -96,7 +96,7 @@ class TabHelper::InlineInstallObserver : public InstallObserver {
     if (install_tracker)
       install_observer_.Add(install_tracker);
   }
-  ~InlineInstallObserver() override {}
+  ~InlineInstallObserver() override = default;
 
  private:
   // InstallObserver:

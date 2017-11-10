@@ -16,7 +16,7 @@
 HostedAppsCounter::HostedAppsCounter(Profile* profile)
     : profile_(profile) {}
 
-HostedAppsCounter::~HostedAppsCounter() {}
+HostedAppsCounter::~HostedAppsCounter() = default;
 
 const char* HostedAppsCounter::GetPrefName() const {
   return browsing_data::prefs::kDeleteHostedAppsData;
@@ -52,4 +52,4 @@ HostedAppsCounter::HostedAppsResult::HostedAppsResult(
     const std::vector<std::string>& examples)
     : FinishedResult(source, num_apps), examples_(examples) {}
 
-HostedAppsCounter::HostedAppsResult::~HostedAppsResult() {}
+HostedAppsCounter::HostedAppsResult::~HostedAppsResult() = default;

@@ -33,8 +33,7 @@ WarningBadgeServiceFactory::WarningBadgeServiceFactory()
   DependsOn(WarningServiceFactory::GetInstance());
 }
 
-WarningBadgeServiceFactory::~WarningBadgeServiceFactory() {
-}
+WarningBadgeServiceFactory::~WarningBadgeServiceFactory() = default;
 
 KeyedService* WarningBadgeServiceFactory::BuildServiceInstanceFor(
     BrowserContext* context) const {

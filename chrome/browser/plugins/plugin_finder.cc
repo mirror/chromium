@@ -226,8 +226,7 @@ std::unique_ptr<base::DictionaryValue> PluginFinder::LoadBuiltInPluginList() {
   return base::DictionaryValue::From(std::move(value));
 }
 
-PluginFinder::~PluginFinder() {
-}
+PluginFinder::~PluginFinder() = default;
 
 bool PluginFinder::FindPluginWithIdentifier(
     const std::string& identifier,

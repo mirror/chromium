@@ -16,7 +16,7 @@ StartupTaskRunnerServiceFactory::StartupTaskRunnerServiceFactory()
         BrowserContextDependencyManager::GetInstance()) {
 }
 
-StartupTaskRunnerServiceFactory::~StartupTaskRunnerServiceFactory() {}
+StartupTaskRunnerServiceFactory::~StartupTaskRunnerServiceFactory() = default;
 
 // static
 StartupTaskRunnerService* StartupTaskRunnerServiceFactory::GetForProfile(

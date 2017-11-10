@@ -92,7 +92,7 @@ namespace {
 class DetachChrome : public StubChrome {
  public:
   DetachChrome() : quit_called_(false) {}
-  ~DetachChrome() override {}
+  ~DetachChrome() override = default;
 
   // Overridden from Chrome:
   Status Quit() override {
@@ -151,8 +151,8 @@ namespace {
 
 class FailsToQuitChrome : public StubChrome {
  public:
-  FailsToQuitChrome() {}
-  ~FailsToQuitChrome() override {}
+  FailsToQuitChrome() = default;
+  ~FailsToQuitChrome() override = default;
 
   // Overridden from Chrome:
   Status Quit() override { return Status(kUnknownError); }

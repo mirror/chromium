@@ -22,8 +22,8 @@ namespace speech {
 
 class ChromeSpeechRecognitionTest : public InProcessBrowserTest {
  public:
-  ChromeSpeechRecognitionTest() {}
-  ~ChromeSpeechRecognitionTest() override {}
+  ChromeSpeechRecognitionTest() = default;
+  ~ChromeSpeechRecognitionTest() override = default;
 
   void SetUp() override {
     // SpeechRecognition test specific SetUp.
@@ -58,7 +58,7 @@ class SpeechWebContentsObserver : public content::WebContentsObserver {
       : WebContentsObserver(web_contents),
         render_view_host_changed_(false),
         web_contents_destroyed_(false) {}
-  ~SpeechWebContentsObserver() override {}
+  ~SpeechWebContentsObserver() override = default;
 
   // content::WebContentsObserver overrides.
   void RenderViewHostChanged(content::RenderViewHost* old_host,

@@ -114,7 +114,7 @@ bool ParseAndHandleWithCallback(
  */
 class DispatcherImpl : public DevToolsEmbedderMessageDispatcher {
  public:
-  ~DispatcherImpl() override {}
+  ~DispatcherImpl() override = default;
 
   bool Dispatch(const DispatchCallback& callback,
                 const std::string& method,

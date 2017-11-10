@@ -65,9 +65,9 @@ class SinkResponseCallbackHandler {
 
 }  // namespace
 
-MockMediaRouteProvider::MockMediaRouteProvider() {}
+MockMediaRouteProvider::MockMediaRouteProvider() = default;
 
-MockMediaRouteProvider::~MockMediaRouteProvider() {}
+MockMediaRouteProvider::~MockMediaRouteProvider() = default;
 
 void MockMediaRouteProvider::RouteRequestSuccess(RouteCallback& cb) const {
   DCHECK(route_);
@@ -107,9 +107,9 @@ void MockMediaRouteProvider::SetRouteToReturn(const MediaRoute& route) {
   route_ = route;
 }
 
-MockEventPageTracker::MockEventPageTracker() {}
+MockEventPageTracker::MockEventPageTracker() = default;
 
-MockEventPageTracker::~MockEventPageTracker() {}
+MockEventPageTracker::~MockEventPageTracker() = default;
 
 // static
 std::unique_ptr<KeyedService> MockEventPageRequestManager::Create(
@@ -132,7 +132,7 @@ void MockEventPageRequestManager::RunOrDefer(
 MockMediaController::MockMediaController()
     : binding_(this), hangouts_binding_(this) {}
 
-MockMediaController::~MockMediaController() {}
+MockMediaController::~MockMediaController() = default;
 
 void MockMediaController::Bind(mojom::MediaControllerRequest request) {
   binding_.Bind(std::move(request));
@@ -153,13 +153,13 @@ MockMediaRouteController::MockMediaRouteController(
     content::BrowserContext* context)
     : MediaRouteController(route_id, context) {}
 
-MockMediaRouteController::~MockMediaRouteController() {}
+MockMediaRouteController::~MockMediaRouteController() = default;
 
 MockMediaRouteControllerObserver::MockMediaRouteControllerObserver(
     scoped_refptr<MediaRouteController> controller)
     : MediaRouteController::Observer(controller) {}
 
-MockMediaRouteControllerObserver::~MockMediaRouteControllerObserver() {}
+MockMediaRouteControllerObserver::~MockMediaRouteControllerObserver() = default;
 
 MediaRouterMojoTest::MediaRouterMojoTest() {
   request_manager_ = static_cast<MockEventPageRequestManager*>(
@@ -173,7 +173,7 @@ MediaRouterMojoTest::MediaRouterMojoTest() {
       }));
 }
 
-MediaRouterMojoTest::~MediaRouterMojoTest() {}
+MediaRouterMojoTest::~MediaRouterMojoTest() = default;
 
 void MediaRouterMojoTest::RegisterExtensionProvider() {
   RegisterMediaRouteProvider(&mock_extension_provider_,

@@ -30,7 +30,7 @@ class BrowsingDataQuotaHelperTest : public testing::Test {
 
   BrowsingDataQuotaHelperTest() : weak_factory_(this) {}
 
-  ~BrowsingDataQuotaHelperTest() override {}
+  ~BrowsingDataQuotaHelperTest() override = default;
 
   void SetUp() override {
     EXPECT_TRUE(dir_.CreateUniqueTempDir());

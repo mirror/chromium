@@ -26,7 +26,7 @@ namespace {
 
 class MouseLeaveTest : public InProcessBrowserTest {
  public:
-  MouseLeaveTest() {}
+  MouseLeaveTest() = default;
 
   void LoadTestPageAndWaitForMouseOver(content::WebContents* tab) {
     gfx::Rect tab_view_bounds = tab->GetContainerBounds();

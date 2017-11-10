@@ -51,7 +51,7 @@ class ExtensionWebUiTimer : public content::WebContentsObserver {
  public:
   explicit ExtensionWebUiTimer(content::WebContents* web_contents, bool is_md)
       : content::WebContentsObserver(web_contents), is_md_(is_md) {}
-  ~ExtensionWebUiTimer() override {}
+  ~ExtensionWebUiTimer() override = default;
 
   void DidStartNavigation(
       content::NavigationHandle* navigation_handle) override {
@@ -424,7 +424,7 @@ ExtensionsUI::ExtensionsUI(content::WebUI* web_ui) : WebUIController(web_ui) {
   new ExtensionWebUiTimer(web_ui->GetWebContents(), is_md);
 }
 
-ExtensionsUI::~ExtensionsUI() {}
+ExtensionsUI::~ExtensionsUI() = default;
 
 // static
 base::RefCountedMemory* ExtensionsUI::GetFaviconResourceBytes(

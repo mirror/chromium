@@ -67,8 +67,7 @@ HotwordServiceFactory::HotwordServiceFactory()
   // No dependencies.
 }
 
-HotwordServiceFactory::~HotwordServiceFactory() {
-}
+HotwordServiceFactory::~HotwordServiceFactory() = default;
 
 void HotwordServiceFactory::UpdateMicrophoneState() {
   // In order to trigger the monitor, just call getAudioCaptureDevices.

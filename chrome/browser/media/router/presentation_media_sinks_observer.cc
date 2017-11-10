@@ -22,8 +22,7 @@ PresentationMediaSinksObserver::PresentationMediaSinksObserver(
   DCHECK(listener_);
 }
 
-PresentationMediaSinksObserver::~PresentationMediaSinksObserver() {
-}
+PresentationMediaSinksObserver::~PresentationMediaSinksObserver() = default;
 
 void PresentationMediaSinksObserver::OnSinksReceived(
     const std::vector<MediaSink>& result) {

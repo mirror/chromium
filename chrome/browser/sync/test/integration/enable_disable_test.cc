@@ -103,7 +103,7 @@ ModelTypeSet MultiGroupTypes(const SyncPrefs& sync_prefs,
 class EnableDisableSingleClientTest : public SyncTest {
  public:
   EnableDisableSingleClientTest() : SyncTest(SINGLE_CLIENT) {}
-  ~EnableDisableSingleClientTest() override {}
+  ~EnableDisableSingleClientTest() override = default;
 
   // Don't use self-notifications as they can trigger additional sync cycles.
   bool TestUsesSelfNotifications() override { return false; }

@@ -34,8 +34,7 @@ PluginManager::PluginManager(content::BrowserContext* context)
   extension_registry_observer_.Add(ExtensionRegistry::Get(profile_));
 }
 
-PluginManager::~PluginManager() {
-}
+PluginManager::~PluginManager() = default;
 
 static base::LazyInstance<BrowserContextKeyedAPIFactory<PluginManager>>::
     DestructorAtExit g_plugin_manager_factory = LAZY_INSTANCE_INITIALIZER;

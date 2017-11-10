@@ -23,7 +23,7 @@ BudgetManager::BudgetManager(Profile* profile)
           profile->GetPath().Append(FILE_PATH_LITERAL("BudgetDatabase"))),
       weak_ptr_factory_(this) {}
 
-BudgetManager::~BudgetManager() {}
+BudgetManager::~BudgetManager() = default;
 
 // static
 double BudgetManager::GetCost(blink::mojom::BudgetOperationType type) {

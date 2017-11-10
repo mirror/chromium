@@ -24,8 +24,7 @@ CollectedCookiesInfoBarDelegate::CollectedCookiesInfoBarDelegate()
     : ConfirmInfoBarDelegate() {
 }
 
-CollectedCookiesInfoBarDelegate::~CollectedCookiesInfoBarDelegate() {
-}
+CollectedCookiesInfoBarDelegate::~CollectedCookiesInfoBarDelegate() = default;
 
 infobars::InfoBarDelegate::Type
 CollectedCookiesInfoBarDelegate::GetInfoBarType() const {

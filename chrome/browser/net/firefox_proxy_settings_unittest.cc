@@ -15,7 +15,7 @@ class FirefoxProxySettingsTest : public testing::Test {
 
 class TestFirefoxProxySettings : public FirefoxProxySettings {
  public:
-  TestFirefoxProxySettings() {}
+  TestFirefoxProxySettings() = default;
 
   static bool TestGetSettingsFromFile(const base::FilePath& pref_file,
                                       FirefoxProxySettings* settings) {

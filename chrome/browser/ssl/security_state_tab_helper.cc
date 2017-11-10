@@ -54,7 +54,7 @@ SecurityStateTabHelper::SecurityStateTabHelper(
   }
 }
 
-SecurityStateTabHelper::~SecurityStateTabHelper() {}
+SecurityStateTabHelper::~SecurityStateTabHelper() = default;
 
 void SecurityStateTabHelper::GetSecurityInfo(
     security_state::SecurityInfo* result) const {

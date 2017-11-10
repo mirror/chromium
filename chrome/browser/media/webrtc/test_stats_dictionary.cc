@@ -15,8 +15,7 @@ TestStatsReportDictionary::TestStatsReportDictionary(
   CHECK(report_);
 }
 
-TestStatsReportDictionary::~TestStatsReportDictionary() {
-}
+TestStatsReportDictionary::~TestStatsReportDictionary() = default;
 
 void TestStatsReportDictionary::ForEach(
     std::function<void(const TestStatsDictionary&)> iteration) {
@@ -68,8 +67,7 @@ TestStatsDictionary::TestStatsDictionary(
 TestStatsDictionary::TestStatsDictionary(
     const TestStatsDictionary& other) = default;
 
-TestStatsDictionary::~TestStatsDictionary() {
-}
+TestStatsDictionary::~TestStatsDictionary() = default;
 
 bool TestStatsDictionary::IsBoolean(const std::string& key) const {
   bool value;

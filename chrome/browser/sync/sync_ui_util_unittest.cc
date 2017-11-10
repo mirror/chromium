@@ -84,7 +84,7 @@ class FakeSigninManagerForSyncUIUtilTest : public FakeSigninManagerBase {
     Initialize(nullptr);
   }
 
-  ~FakeSigninManagerForSyncUIUtilTest() override {}
+  ~FakeSigninManagerForSyncUIUtilTest() override = default;
 
   bool AuthInProgress() const override { return auth_in_progress_; }
 

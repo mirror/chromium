@@ -60,7 +60,7 @@ MDUserManagerUI::MDUserManagerUI(content::WebUI* web_ui)
   content::URLDataSource::Add(profile, theme);
 }
 
-MDUserManagerUI::~MDUserManagerUI() {}
+MDUserManagerUI::~MDUserManagerUI() = default;
 
 content::WebUIDataSource* MDUserManagerUI::CreateUIDataSource(
     const base::DictionaryValue& localized_strings) {

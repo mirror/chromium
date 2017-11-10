@@ -108,7 +108,7 @@ ChromeNativeAppWindowViews::ChromeNativeAppWindowViews()
       inactive_frame_color_(SK_ColorBLACK) {
 }
 
-ChromeNativeAppWindowViews::~ChromeNativeAppWindowViews() {}
+ChromeNativeAppWindowViews::~ChromeNativeAppWindowViews() = default;
 
 void ChromeNativeAppWindowViews::OnBeforeWidgetInit(
     const AppWindow::CreateParams& create_params,

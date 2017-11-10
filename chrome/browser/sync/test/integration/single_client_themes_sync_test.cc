@@ -26,7 +26,7 @@ namespace {
 class SingleClientThemesSyncTest : public SyncTest {
  public:
   SingleClientThemesSyncTest() : SyncTest(SINGLE_CLIENT) {}
-  ~SingleClientThemesSyncTest() override {}
+  ~SingleClientThemesSyncTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SingleClientThemesSyncTest);

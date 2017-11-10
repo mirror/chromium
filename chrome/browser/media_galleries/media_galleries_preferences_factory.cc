@@ -28,7 +28,7 @@ MediaGalleriesPreferencesFactory::MediaGalleriesPreferencesFactory()
         "MediaGalleriesPreferences",
         BrowserContextDependencyManager::GetInstance()) {}
 
-MediaGalleriesPreferencesFactory::~MediaGalleriesPreferencesFactory() {}
+MediaGalleriesPreferencesFactory::~MediaGalleriesPreferencesFactory() = default;
 
 KeyedService* MediaGalleriesPreferencesFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

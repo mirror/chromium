@@ -505,11 +505,11 @@ Status ParseChromeOptions(
 
 }  // namespace
 
-Switches::Switches() {}
+Switches::Switches() = default;
 
 Switches::Switches(const Switches& other) = default;
 
-Switches::~Switches() {}
+Switches::~Switches() = default;
 
 void Switches::SetSwitch(const std::string& name) {
   SetSwitch(name, NativeString());
@@ -620,7 +620,7 @@ PerfLoggingPrefs::PerfLoggingPrefs()
       trace_categories(),
       buffer_usage_reporting_interval(1000) {}
 
-PerfLoggingPrefs::~PerfLoggingPrefs() {}
+PerfLoggingPrefs::~PerfLoggingPrefs() = default;
 
 Capabilities::Capabilities()
     : android_use_running_app(false),
@@ -630,7 +630,7 @@ Capabilities::Capabilities()
       network_emulation_enabled(false),
       use_automation_extension(true) {}
 
-Capabilities::~Capabilities() {}
+Capabilities::~Capabilities() = default;
 
 bool Capabilities::IsAndroid() const {
   return !android_package.empty();

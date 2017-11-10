@@ -73,7 +73,7 @@ class SyncableFileSystemOperation::QueueableTask
   DISALLOW_COPY_AND_ASSIGN(QueueableTask);
 };
 
-SyncableFileSystemOperation::~SyncableFileSystemOperation() {}
+SyncableFileSystemOperation::~SyncableFileSystemOperation() = default;
 
 void SyncableFileSystemOperation::CreateFile(
     const FileSystemURL& url,

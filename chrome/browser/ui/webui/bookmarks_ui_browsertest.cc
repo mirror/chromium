@@ -18,7 +18,7 @@
 
 class BookmarksTest : public InProcessBrowserTest {
  public:
-  BookmarksTest() {}
+  BookmarksTest() = default;
 
   void SetUpOnMainThread() override {
     // Re-enable accessibility checks when audit failures are resolved.

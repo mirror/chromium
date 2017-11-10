@@ -38,8 +38,8 @@ const int kHelpVerticalOffset = 5;
 // prompting text).
 class PasswordTextBox : public views::View {
  public:
-  PasswordTextBox() {}
-  ~PasswordTextBox() override {}
+  PasswordTextBox() = default;
+  ~PasswordTextBox() override = default;
 
   // |suggestion_text| prompts the user to select the password,
   // |generated_password| is the generated password.
@@ -82,8 +82,8 @@ class PasswordTextBox : public views::View {
 // image and some explanatory text).
 class PasswordGenerationPopupViewViews::PasswordBox : public views::View {
  public:
-  PasswordBox() {}
-  ~PasswordBox() override {}
+  PasswordBox() = default;
+  ~PasswordBox() override = default;
 
   // |password| is the generated password, |suggestion| is the text prompting
   // the user to select the password.
@@ -156,7 +156,7 @@ PasswordGenerationPopupViewViews::PasswordGenerationPopupViewViews(
       this, ui::NativeTheme::kColorId_ResultsTableNormalBackground));
 }
 
-PasswordGenerationPopupViewViews::~PasswordGenerationPopupViewViews() {}
+PasswordGenerationPopupViewViews::~PasswordGenerationPopupViewViews() = default;
 
 void PasswordGenerationPopupViewViews::CreatePasswordView() {
   if (password_view_)

@@ -41,8 +41,8 @@ namespace {
 
 class MockObserver : public SigninTracker::Observer {
  public:
-  MockObserver() {}
-  ~MockObserver() {}
+  MockObserver() = default;
+  ~MockObserver() = default;
 
   MOCK_METHOD1(SigninFailed, void(const GoogleServiceAuthError&));
   MOCK_METHOD0(SigninSuccess, void(void));
@@ -53,7 +53,7 @@ class MockObserver : public SigninTracker::Observer {
 
 class SigninTrackerTest : public testing::Test {
  public:
-  SigninTrackerTest() {}
+  SigninTrackerTest() = default;
   void SetUp() override {
     TestingProfile::Builder builder;
     builder.AddTestingFactory(ProfileOAuth2TokenServiceFactory::GetInstance(),

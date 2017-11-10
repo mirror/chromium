@@ -68,7 +68,7 @@ AppMenuButton::AppMenuButton(ToolbarView* toolbar_view)
   }
 }
 
-AppMenuButton::~AppMenuButton() {}
+AppMenuButton::~AppMenuButton() = default;
 
 void AppMenuButton::SetSeverity(AppMenuIconController::IconType type,
                                 AppMenuIconController::Severity severity,

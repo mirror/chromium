@@ -289,8 +289,7 @@ class ChannelDestructionWatcher {
   ChannelDestructionWatcher() : channel_destroyed_(false) {
   }
 
-  ~ChannelDestructionWatcher() {
-  }
+  ~ChannelDestructionWatcher() = default;
 
   void WatchChannel(content::RenderProcessHost* host) {
     host->AddFilter(new DestructionMessageFilter(this));
@@ -484,8 +483,8 @@ class NewTabNavigationOrSwapObserver {
 
 class FakeDevToolsClient : public content::DevToolsAgentHostClient {
  public:
-  FakeDevToolsClient() {}
-  ~FakeDevToolsClient() override {}
+  FakeDevToolsClient() = default;
+  ~FakeDevToolsClient() override = default;
   void DispatchProtocolMessage(DevToolsAgentHost* agent_host,
                                const std::string& message) override {}
   void AgentHostClosed(DevToolsAgentHost* agent_host) override {}
@@ -494,8 +493,8 @@ class FakeDevToolsClient : public content::DevToolsAgentHostClient {
 // A ContentBrowserClient that cancels all prerenderers on OpenURL.
 class TestContentBrowserClient : public ChromeContentBrowserClient {
  public:
-  TestContentBrowserClient() {}
-  ~TestContentBrowserClient() override {}
+  TestContentBrowserClient() = default;
+  ~TestContentBrowserClient() override = default;
 
   // ChromeContentBrowserClient:
   bool ShouldAllowOpenURL(content::SiteInstance* site_instance,
@@ -514,8 +513,8 @@ class TestContentBrowserClient : public ChromeContentBrowserClient {
 // A ContentBrowserClient that forces cross-process navigations.
 class SwapProcessesContentBrowserClient : public ChromeContentBrowserClient {
  public:
-  SwapProcessesContentBrowserClient() {}
-  ~SwapProcessesContentBrowserClient() override {}
+  SwapProcessesContentBrowserClient() = default;
+  ~SwapProcessesContentBrowserClient() override = default;
 
   // ChromeContentBrowserClient:
   bool ShouldSwapProcessesForRedirect(
@@ -561,7 +560,7 @@ class PrerenderBrowserTest : public test_utils::PrerenderInProcessBrowserTest {
         check_load_events_(true),
         loader_path_("/prerender/prerender_loader.html") {}
 
-  ~PrerenderBrowserTest() override {}
+  ~PrerenderBrowserTest() override = default;
 
   std::unique_ptr<TestPrerender> PrerenderTestURL(
       const std::string& html_file,
@@ -2219,7 +2218,7 @@ class TestClientCertStore : public net::ClientCertStore {
  public:
   explicit TestClientCertStore(const net::CertificateList& certs)
       : certs_(certs) {}
-  ~TestClientCertStore() override {}
+  ~TestClientCertStore() override = default;
 
   // net::ClientCertStore:
   void GetClientCerts(const net::SSLCertRequestInfo& cert_request_info,
@@ -3813,8 +3812,8 @@ IN_PROC_BROWSER_TEST_F(PrerenderOmniboxBrowserTest,
 #if BUILDFLAG(ENABLE_NACL)
 class PrerenderBrowserTestWithNaCl : public PrerenderBrowserTest {
  public:
-  PrerenderBrowserTestWithNaCl() {}
-  ~PrerenderBrowserTestWithNaCl() override {}
+  PrerenderBrowserTestWithNaCl() = default;
+  ~PrerenderBrowserTestWithNaCl() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitch(switches::kEnableNaCl);

@@ -24,7 +24,7 @@ namespace content {
 // first renderer process.
 class ChromeContentBrowserClientBrowserTest : public InProcessBrowserTest {
  public:
-  ChromeContentBrowserClientBrowserTest() {}
+  ChromeContentBrowserClientBrowserTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     IsolateAllSitesForTesting(command_line);

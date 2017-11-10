@@ -38,7 +38,7 @@ const char kTestMedia[] = "/media/pink_noise_140ms.wav";
 
 class ViewSourceTest : public InProcessBrowserTest {
  public:
-  ViewSourceTest() {}
+  ViewSourceTest() = default;
 
  protected:
   void SetUpOnMainThread() override {

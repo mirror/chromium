@@ -70,4 +70,4 @@ WelcomeUI::WelcomeUI(content::WebUI* web_ui, const GURL& url)
   content::WebUIDataSource::Add(profile, html_source);
 }
 
-WelcomeUI::~WelcomeUI() {}
+WelcomeUI::~WelcomeUI() = default;

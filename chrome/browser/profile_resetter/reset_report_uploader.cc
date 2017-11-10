@@ -36,7 +36,7 @@ ResetReportUploader::ResetReportUploader(content::BrowserContext* context)
           content::BrowserContext::GetDefaultStoragePartition(context)->
               GetURLRequestContext()) {}
 
-ResetReportUploader::~ResetReportUploader() {}
+ResetReportUploader::~ResetReportUploader() = default;
 
 void ResetReportUploader::DispatchReport(
     const reset_report::ChromeResetReport& report) {

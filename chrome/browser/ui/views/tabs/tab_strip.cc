@@ -4,10 +4,9 @@
 
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
 
-TabStrip::TabStrip() {}
+TabStrip::TabStrip() = default;
 
-TabStrip::~TabStrip() {
-}
+TabStrip::~TabStrip() = default;
 
 void TabStrip::AddObserver(TabStripObserver* observer) {
   observers_.AddObserver(observer);

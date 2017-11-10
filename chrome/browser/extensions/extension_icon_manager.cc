@@ -27,9 +27,9 @@
 #include "ui/native_theme/common_theme.h"
 #include "ui/native_theme/native_theme.h"
 
-ExtensionIconManager::ExtensionIconManager() {}
+ExtensionIconManager::ExtensionIconManager() = default;
 
-ExtensionIconManager::~ExtensionIconManager() {}
+ExtensionIconManager::~ExtensionIconManager() = default;
 
 void ExtensionIconManager::LoadIcon(content::BrowserContext* context,
                                     const extensions::Extension* extension) {

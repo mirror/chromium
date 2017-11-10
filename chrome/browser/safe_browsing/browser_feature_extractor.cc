@@ -73,11 +73,11 @@ IPUrlInfo::IPUrlInfo(const std::string& url,
 
 IPUrlInfo::IPUrlInfo(const IPUrlInfo& other) = default;
 
-IPUrlInfo::~IPUrlInfo() {}
+IPUrlInfo::~IPUrlInfo() = default;
 
 BrowseInfo::BrowseInfo() : http_status_code(0) {}
 
-BrowseInfo::~BrowseInfo() {}
+BrowseInfo::~BrowseInfo() = default;
 
 static void AddFeature(const std::string& feature_name,
                        double feature_value,

@@ -50,7 +50,7 @@ DomDistillerServiceFactory::DomDistillerServiceFactory()
           "DomDistillerService",
           BrowserContextDependencyManager::GetInstance()) {}
 
-DomDistillerServiceFactory::~DomDistillerServiceFactory() {}
+DomDistillerServiceFactory::~DomDistillerServiceFactory() = default;
 
 KeyedService* DomDistillerServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

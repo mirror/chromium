@@ -66,8 +66,7 @@ GCMProfileServiceFactory::GCMProfileServiceFactory()
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 }
 
-GCMProfileServiceFactory::~GCMProfileServiceFactory() {
-}
+GCMProfileServiceFactory::~GCMProfileServiceFactory() = default;
 
 KeyedService* GCMProfileServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

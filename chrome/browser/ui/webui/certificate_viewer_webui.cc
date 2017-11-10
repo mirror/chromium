@@ -138,8 +138,7 @@ CertificateViewerModalDialog::CertificateViewerModalDialog(
           x509_certificate_model::GetTitle(nss_certs_.front().get())));
 }
 
-CertificateViewerModalDialog::~CertificateViewerModalDialog() {
-}
+CertificateViewerModalDialog::~CertificateViewerModalDialog() = default;
 
 void CertificateViewerModalDialog::Show(content::WebContents* web_contents,
                                         gfx::NativeWindow parent) {
@@ -303,8 +302,7 @@ CertificateViewerDialog::CertificateViewerDialog(
     net::ScopedCERTCertificateList certs)
     : CertificateViewerModalDialog(std::move(certs)), dialog_(NULL) {}
 
-CertificateViewerDialog::~CertificateViewerDialog() {
-}
+CertificateViewerDialog::~CertificateViewerDialog() = default;
 
 void CertificateViewerDialog::Show(WebContents* web_contents,
                                    gfx::NativeWindow parent) {
@@ -334,8 +332,7 @@ CertificateViewerDialogHandler::CertificateViewerDialogHandler(
     net::ScopedCERTCertificateList cert_chain)
     : dialog_(dialog), cert_chain_(std::move(cert_chain)) {}
 
-CertificateViewerDialogHandler::~CertificateViewerDialogHandler() {
-}
+CertificateViewerDialogHandler::~CertificateViewerDialogHandler() = default;
 
 void CertificateViewerDialogHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback("exportCertificate",

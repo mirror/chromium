@@ -34,8 +34,7 @@ MediaRouterBaseBrowserTest::MediaRouterBaseBrowserTest()
       extension_host_created_(false) {
 }
 
-MediaRouterBaseBrowserTest::~MediaRouterBaseBrowserTest() {
-}
+MediaRouterBaseBrowserTest::~MediaRouterBaseBrowserTest() = default;
 
 void MediaRouterBaseBrowserTest::SetUp() {
   ParseCommandLine();

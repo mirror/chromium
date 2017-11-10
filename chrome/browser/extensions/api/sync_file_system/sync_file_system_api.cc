@@ -207,11 +207,11 @@ void SyncFileSystemGetFileStatusFunction::DidGetFileStatus(
   SendResponse(true);
 }
 
-SyncFileSystemGetFileStatusesFunction::SyncFileSystemGetFileStatusesFunction() {
-}
+SyncFileSystemGetFileStatusesFunction::SyncFileSystemGetFileStatusesFunction() =
+    default;
 
-SyncFileSystemGetFileStatusesFunction::~SyncFileSystemGetFileStatusesFunction(
-    ) {}
+SyncFileSystemGetFileStatusesFunction::
+    ~SyncFileSystemGetFileStatusesFunction() = default;
 
 bool SyncFileSystemGetFileStatusesFunction::RunAsync() {
   // All FileEntries converted into array of URL Strings in JS custom bindings.

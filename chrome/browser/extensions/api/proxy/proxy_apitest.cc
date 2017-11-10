@@ -29,7 +29,7 @@ const char kNoPac[] = "";
 
 class ProxySettingsApiTest : public ExtensionApiTest {
  public:
-  ProxySettingsApiTest() {}
+  ProxySettingsApiTest() = default;
 
  protected:
   void ValidateSettings(int expected_mode,

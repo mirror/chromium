@@ -17,7 +17,7 @@ namespace {
 
 class ChromeBubbleManagerTest : public BrowserWithTestWindowTest {
  public:
-  ChromeBubbleManagerTest() {}
+  ChromeBubbleManagerTest() = default;
 
   // testing::Test:
   void SetUp() override;

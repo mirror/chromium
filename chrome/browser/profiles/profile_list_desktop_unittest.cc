@@ -36,7 +36,7 @@ namespace {
 class MockObserver : public AvatarMenuObserver {
  public:
   MockObserver() : count_(0) {}
-  ~MockObserver() override {}
+  ~MockObserver() override = default;
 
   void OnAvatarMenuChanged(AvatarMenu* avatar_menu) override { ++count_; }
 

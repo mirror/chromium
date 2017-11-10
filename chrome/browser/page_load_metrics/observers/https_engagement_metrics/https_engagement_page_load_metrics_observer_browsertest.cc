@@ -27,7 +27,7 @@ class HttpsEngagementPageLoadMetricsBrowserTest : public InProcessBrowserTest {
  public:
   HttpsEngagementPageLoadMetricsBrowserTest()
       : metrics_provider_(new HttpsEngagementMetricsProvider()) {}
-  ~HttpsEngagementPageLoadMetricsBrowserTest() override {}
+  ~HttpsEngagementPageLoadMetricsBrowserTest() override = default;
 
   void StartHttpsServer(bool cert_error) {
     https_test_server_.reset(

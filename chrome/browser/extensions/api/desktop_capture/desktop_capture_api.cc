@@ -28,12 +28,10 @@ const char kTabUrlNotSecure[] =
 }  // namespace
 
 DesktopCaptureChooseDesktopMediaFunction::
-    DesktopCaptureChooseDesktopMediaFunction() {
-}
+    DesktopCaptureChooseDesktopMediaFunction() = default;
 
 DesktopCaptureChooseDesktopMediaFunction::
-    ~DesktopCaptureChooseDesktopMediaFunction() {
-}
+    ~DesktopCaptureChooseDesktopMediaFunction() = default;
 
 bool DesktopCaptureChooseDesktopMediaFunction::RunAsync() {
   EXTENSION_FUNCTION_VALIDATE(args_->GetSize() > 0);
@@ -102,9 +100,9 @@ std::string DesktopCaptureChooseDesktopMediaFunction::GetExtensionTargetName()
 }
 
 DesktopCaptureCancelChooseDesktopMediaFunction::
-    DesktopCaptureCancelChooseDesktopMediaFunction() {}
+    DesktopCaptureCancelChooseDesktopMediaFunction() = default;
 
 DesktopCaptureCancelChooseDesktopMediaFunction::
-    ~DesktopCaptureCancelChooseDesktopMediaFunction() {}
+    ~DesktopCaptureCancelChooseDesktopMediaFunction() = default;
 
 }  // namespace extensions

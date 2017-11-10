@@ -40,7 +40,7 @@ class ProfileContentSettingObserver : public content_settings::Observer {
  public:
   explicit ProfileContentSettingObserver(Profile* profile)
       : profile_(profile) {}
-  ~ProfileContentSettingObserver() override {}
+  ~ProfileContentSettingObserver() override = default;
   void OnContentSettingChanged(const ContentSettingsPattern& primary_pattern,
                                const ContentSettingsPattern& secondary_pattern,
                                ContentSettingsType content_type,
@@ -100,14 +100,14 @@ ChromePluginServiceFilter::ContextInfo::~ContextInfo() {
 ChromePluginServiceFilter::OverriddenPlugin::OverriddenPlugin()
     : render_frame_id(MSG_ROUTING_NONE) {}
 
-ChromePluginServiceFilter::OverriddenPlugin::~OverriddenPlugin() {}
+ChromePluginServiceFilter::OverriddenPlugin::~OverriddenPlugin() = default;
 
-ChromePluginServiceFilter::ProcessDetails::ProcessDetails() {}
+ChromePluginServiceFilter::ProcessDetails::ProcessDetails() = default;
 
 ChromePluginServiceFilter::ProcessDetails::ProcessDetails(
     const ProcessDetails& other) = default;
 
-ChromePluginServiceFilter::ProcessDetails::~ProcessDetails() {}
+ChromePluginServiceFilter::ProcessDetails::~ProcessDetails() = default;
 
 // ChromePluginServiceFilter definitions.
 
@@ -284,7 +284,7 @@ ChromePluginServiceFilter::ChromePluginServiceFilter() {
                  content::NotificationService::AllSources());
 }
 
-ChromePluginServiceFilter::~ChromePluginServiceFilter() {}
+ChromePluginServiceFilter::~ChromePluginServiceFilter() = default;
 
 void ChromePluginServiceFilter::Observe(
     int type,

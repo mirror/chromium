@@ -34,7 +34,7 @@ DnsSdDeviceLister::DnsSdDeviceLister(
       device_lister_(this, service_discovery_client, service_type),
       started_(false) {}
 
-DnsSdDeviceLister::~DnsSdDeviceLister() {}
+DnsSdDeviceLister::~DnsSdDeviceLister() = default;
 
 void DnsSdDeviceLister::Discover() {
   if (!started_) {

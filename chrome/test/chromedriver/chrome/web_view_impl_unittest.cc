@@ -19,7 +19,7 @@ namespace {
 class FakeDevToolsClient : public DevToolsClient {
  public:
   FakeDevToolsClient() : id_("fake-id"), status_(kOk) {}
-  ~FakeDevToolsClient() override {}
+  ~FakeDevToolsClient() override = default;
 
   void set_status(const Status& status) {
     status_ = status;

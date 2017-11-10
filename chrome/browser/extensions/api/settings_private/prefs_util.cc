@@ -79,7 +79,7 @@ namespace settings_private = api::settings_private;
 
 PrefsUtil::PrefsUtil(Profile* profile) : profile_(profile) {}
 
-PrefsUtil::~PrefsUtil() {}
+PrefsUtil::~PrefsUtil() = default;
 
 #if defined(OS_CHROMEOS)
 using CrosSettings = chromeos::CrosSettings;

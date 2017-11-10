@@ -15,8 +15,7 @@ ContentsLayoutManager::ContentsLayoutManager(
       active_top_margin_(0) {
 }
 
-ContentsLayoutManager::~ContentsLayoutManager() {
-}
+ContentsLayoutManager::~ContentsLayoutManager() = default;
 
 void ContentsLayoutManager::SetContentsResizingStrategy(
     const DevToolsContentsResizingStrategy& strategy) {

@@ -34,7 +34,7 @@ AppIconWebUIHandler::AppIconWebUIHandler() {
   extension_icon_manager_.set_observer(this);
 }
 
-AppIconWebUIHandler::~AppIconWebUIHandler() {}
+AppIconWebUIHandler::~AppIconWebUIHandler() = default;
 
 void AppIconWebUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

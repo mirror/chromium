@@ -53,8 +53,7 @@ OperationManager::OperationManager(content::BrowserContext* context)
                  content::Source<Profile>(profile));
 }
 
-OperationManager::~OperationManager() {
-}
+OperationManager::~OperationManager() = default;
 
 void OperationManager::Shutdown() {
   for (OperationMap::iterator iter = operations_.begin();

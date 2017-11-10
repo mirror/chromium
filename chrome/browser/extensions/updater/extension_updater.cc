@@ -99,7 +99,7 @@ ExtensionUpdater::CheckParams::CheckParams()
     : install_immediately(false),
       fetch_priority(ManifestFetchData::FetchPriority::BACKGROUND) {}
 
-ExtensionUpdater::CheckParams::~CheckParams() {}
+ExtensionUpdater::CheckParams::~CheckParams() = default;
 
 ExtensionUpdater::FetchedCRXFile::FetchedCRXFile(
     const CRXFileInfo& file,
@@ -119,7 +119,7 @@ ExtensionUpdater::FetchedCRXFile::FetchedCRXFile()
 ExtensionUpdater::FetchedCRXFile::FetchedCRXFile(const FetchedCRXFile& other) =
     default;
 
-ExtensionUpdater::FetchedCRXFile::~FetchedCRXFile() {}
+ExtensionUpdater::FetchedCRXFile::~FetchedCRXFile() = default;
 
 ExtensionUpdater::InProgressCheck::InProgressCheck()
     : install_immediately(false) {}
@@ -127,7 +127,7 @@ ExtensionUpdater::InProgressCheck::InProgressCheck()
 ExtensionUpdater::InProgressCheck::InProgressCheck(
     const InProgressCheck& other) = default;
 
-ExtensionUpdater::InProgressCheck::~InProgressCheck() {}
+ExtensionUpdater::InProgressCheck::~InProgressCheck() = default;
 
 ExtensionUpdater::ExtensionUpdater(
     ExtensionServiceInterface* service,

@@ -12,7 +12,7 @@
 #include "base/metrics/user_metrics.h"
 #include "ui/message_center/message_center.h"
 
-MessageCenterStatsCollector::NotificationStats::NotificationStats() {}
+MessageCenterStatsCollector::NotificationStats::NotificationStats() = default;
 
 MessageCenterStatsCollector::NotificationStats::NotificationStats(
     const std::string& id) : id_(id) {
@@ -21,7 +21,7 @@ MessageCenterStatsCollector::NotificationStats::NotificationStats(
   }
 }
 
-MessageCenterStatsCollector::NotificationStats::~NotificationStats() {}
+MessageCenterStatsCollector::NotificationStats::~NotificationStats() = default;
 
 void MessageCenterStatsCollector::NotificationStats::CollectAction(
     NotificationActionType type) {

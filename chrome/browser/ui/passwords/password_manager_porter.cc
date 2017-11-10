@@ -109,7 +109,7 @@ PasswordManagerPorter::PasswordManagerPorter(
         credential_provider_interface)
     : credential_provider_interface_(credential_provider_interface) {}
 
-PasswordManagerPorter::~PasswordManagerPorter() {}
+PasswordManagerPorter::~PasswordManagerPorter() = default;
 
 void PasswordManagerPorter::Store() {
   // In unittests a null WebContents means: "Abort creating the file Selector."

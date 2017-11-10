@@ -64,7 +64,7 @@ class UserGestureCatcher : public content::NotificationObserver {
                    content::NotificationService::AllSources());
   }
 
-  ~UserGestureCatcher() override {}
+  ~UserGestureCatcher() override = default;
 
   bool GetNextResult() {
     if (results_.empty()) {

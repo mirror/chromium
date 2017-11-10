@@ -80,7 +80,7 @@ class OperationForTest : public Operation {
   base::FilePath GetImagePath() { return image_path_; }
 
  private:
-  ~OperationForTest() override {}
+  ~OperationForTest() override = default;
 };
 
 class ImageWriterOperationTest : public ImageWriterUnitTestBase {

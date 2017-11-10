@@ -19,7 +19,7 @@ class BrowserProcessTaskProviderTest
       : provided_task_(nullptr) {
   }
 
-  ~BrowserProcessTaskProviderTest() override {}
+  ~BrowserProcessTaskProviderTest() override = default;
 
   // task_manager::TaskProviderObserver:
   void TaskAdded(Task* task) override {

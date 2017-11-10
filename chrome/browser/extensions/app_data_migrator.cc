@@ -139,8 +139,7 @@ AppDataMigrator::AppDataMigrator(Profile* profile, ExtensionRegistry* registry)
     : profile_(profile), registry_(registry), weak_factory_(this) {
 }
 
-AppDataMigrator::~AppDataMigrator() {
-}
+AppDataMigrator::~AppDataMigrator() = default;
 
 bool AppDataMigrator::NeedsMigration(const Extension* old,
                                      const Extension* extension) {

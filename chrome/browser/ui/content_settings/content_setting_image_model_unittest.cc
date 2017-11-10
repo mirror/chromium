@@ -37,7 +37,7 @@ class NotificationForwarder : public content::NotificationObserver {
                    chrome::NOTIFICATION_WEB_CONTENT_SETTINGS_CHANGED,
                    content::NotificationService::AllSources());
   }
-  ~NotificationForwarder() override {}
+  ~NotificationForwarder() override = default;
 
   void clear() {
     registrar_.RemoveAll();

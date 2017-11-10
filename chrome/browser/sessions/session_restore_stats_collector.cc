@@ -122,8 +122,7 @@ SessionRestoreStatsCollector::SessionRestoreStatsCollector(
   this_retainer_ = this;
 }
 
-SessionRestoreStatsCollector::~SessionRestoreStatsCollector() {
-}
+SessionRestoreStatsCollector::~SessionRestoreStatsCollector() = default;
 
 void SessionRestoreStatsCollector::TrackTabs(
     const std::vector<SessionRestoreDelegate::RestoredTab>& tabs) {

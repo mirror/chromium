@@ -225,11 +225,9 @@ gfx::NativeWindow FindParentWindowForWebContents(
 
 }  // namespace
 
-DesktopCaptureAccessHandler::DesktopCaptureAccessHandler() {
-}
+DesktopCaptureAccessHandler::DesktopCaptureAccessHandler() = default;
 
-DesktopCaptureAccessHandler::~DesktopCaptureAccessHandler() {
-}
+DesktopCaptureAccessHandler::~DesktopCaptureAccessHandler() = default;
 
 void DesktopCaptureAccessHandler::ProcessScreenCaptureAccessRequest(
     content::WebContents* web_contents,

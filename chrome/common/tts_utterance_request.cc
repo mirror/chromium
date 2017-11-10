@@ -11,8 +11,7 @@ TtsUtteranceRequest::TtsUtteranceRequest()
       pitch(1.0) {
 }
 
-TtsUtteranceRequest::~TtsUtteranceRequest() {
-}
+TtsUtteranceRequest::~TtsUtteranceRequest() = default;
 
 TtsVoice::TtsVoice()
     : local_service(true),
@@ -21,5 +20,4 @@ TtsVoice::TtsVoice()
 
 TtsVoice::TtsVoice(const TtsVoice& other) = default;
 
-TtsVoice::~TtsVoice() {
-}
+TtsVoice::~TtsVoice() = default;

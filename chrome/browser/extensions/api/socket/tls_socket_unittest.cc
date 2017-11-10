@@ -37,7 +37,7 @@ namespace extensions {
 
 class MockSSLClientSocket : public net::SSLClientSocket {
  public:
-  MockSSLClientSocket() {}
+  MockSSLClientSocket() = default;
   MOCK_METHOD0(Disconnect, void());
   MOCK_METHOD3(Read,
                int(net::IOBuffer* buf,
@@ -110,7 +110,7 @@ class MockTCPSocket : public net::TCPClientSocket {
 
 class CompleteHandler {
  public:
-  CompleteHandler() {}
+  CompleteHandler() = default;
   MOCK_METHOD1(OnComplete, void(int result_code));
   MOCK_METHOD3(OnReadComplete,
                void(int result_code,
@@ -124,7 +124,7 @@ class CompleteHandler {
 
 class TLSSocketTest : public ::testing::Test {
  public:
-  TLSSocketTest() {}
+  TLSSocketTest() = default;
 
   void SetUp() override {
     net::AddressList address_list;

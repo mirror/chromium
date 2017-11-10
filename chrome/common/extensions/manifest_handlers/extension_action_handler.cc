@@ -18,11 +18,9 @@
 
 namespace extensions {
 
-ExtensionActionHandler::ExtensionActionHandler() {
-}
+ExtensionActionHandler::ExtensionActionHandler() = default;
 
-ExtensionActionHandler::~ExtensionActionHandler() {
-}
+ExtensionActionHandler::~ExtensionActionHandler() = default;
 
 bool ExtensionActionHandler::Parse(Extension* extension,
                                    base::string16* error) {

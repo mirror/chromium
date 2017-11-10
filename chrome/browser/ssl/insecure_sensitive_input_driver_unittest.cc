@@ -20,9 +20,9 @@ namespace {
 class InsecureSensitiveInputDriverTest
     : public ChromeRenderViewHostTestHarness {
  protected:
-  InsecureSensitiveInputDriverTest() {}
+  InsecureSensitiveInputDriverTest() = default;
 
-  ~InsecureSensitiveInputDriverTest() override {}
+  ~InsecureSensitiveInputDriverTest() override = default;
 
   security_state::InsecureInputEventData GetInputEvents(
       content::NavigationEntry* entry) {

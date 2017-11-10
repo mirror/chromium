@@ -23,9 +23,9 @@ void OnPDFToPWGRasterConverterRequest(
 
 }  // namespace
 
-PDFToPWGRasterConverterService::PDFToPWGRasterConverterService() {}
+PDFToPWGRasterConverterService::PDFToPWGRasterConverterService() = default;
 
-PDFToPWGRasterConverterService::~PDFToPWGRasterConverterService() {}
+PDFToPWGRasterConverterService::~PDFToPWGRasterConverterService() = default;
 
 std::unique_ptr<service_manager::Service>
 PDFToPWGRasterConverterService::CreateService() {

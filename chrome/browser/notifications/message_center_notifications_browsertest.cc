@@ -64,7 +64,7 @@ class TestAddObserver : public message_center::MessageCenterObserver {
 
 class MessageCenterNotificationsTest : public InProcessBrowserTest {
  public:
-  MessageCenterNotificationsTest() {}
+  MessageCenterNotificationsTest() = default;
 
   MessageCenterNotificationManager* manager() {
     return static_cast<MessageCenterNotificationManager*>(
@@ -94,7 +94,7 @@ class MessageCenterNotificationsTest : public InProcessBrowserTest {
     const std::string& log() { return log_; }
 
    private:
-    ~TestDelegate() override {}
+    ~TestDelegate() override = default;
     std::string log_;
 
     DISALLOW_COPY_AND_ASSIGN(TestDelegate);

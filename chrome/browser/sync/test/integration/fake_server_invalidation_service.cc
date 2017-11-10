@@ -18,8 +18,7 @@ FakeServerInvalidationService::FakeServerInvalidationService()
   invalidator_registrar_.UpdateInvalidatorState(syncer::INVALIDATIONS_ENABLED);
 }
 
-FakeServerInvalidationService::~FakeServerInvalidationService() {
-}
+FakeServerInvalidationService::~FakeServerInvalidationService() = default;
 
 void FakeServerInvalidationService::RegisterInvalidationHandler(
       syncer::InvalidationHandler* handler) {

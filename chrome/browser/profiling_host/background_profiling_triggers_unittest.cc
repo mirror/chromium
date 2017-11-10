@@ -25,8 +25,8 @@ using ProcessType = memory_instrumentation::mojom::ProcessType;
 
 class MockProfilingProcessHost : public ProfilingProcessHost {
  public:
-  MockProfilingProcessHost() {}
-  ~MockProfilingProcessHost() override {}
+  MockProfilingProcessHost() = default;
+  ~MockProfilingProcessHost() override = default;
 
   void SetMode(Mode mode) { ProfilingProcessHost::SetMode(mode); }
 };

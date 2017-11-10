@@ -108,9 +108,9 @@ gcm::GCMDriver* GcmApiFunction::GetGCMDriver() const {
       Profile::FromBrowserContext(browser_context()))->driver();
 }
 
-GcmRegisterFunction::GcmRegisterFunction() {}
+GcmRegisterFunction::GcmRegisterFunction() = default;
 
-GcmRegisterFunction::~GcmRegisterFunction() {}
+GcmRegisterFunction::~GcmRegisterFunction() = default;
 
 bool GcmRegisterFunction::DoWork() {
   std::unique_ptr<api::gcm::Register::Params> params(
@@ -133,9 +133,9 @@ void GcmRegisterFunction::CompleteFunctionWithResult(
   SendResponse(gcm::GCMClient::SUCCESS == result);
 }
 
-GcmUnregisterFunction::GcmUnregisterFunction() {}
+GcmUnregisterFunction::GcmUnregisterFunction() = default;
 
-GcmUnregisterFunction::~GcmUnregisterFunction() {}
+GcmUnregisterFunction::~GcmUnregisterFunction() = default;
 
 bool GcmUnregisterFunction::DoWork() {
   UMA_HISTOGRAM_BOOLEAN("GCM.APICallUnregister", true);
@@ -153,9 +153,9 @@ void GcmUnregisterFunction::CompleteFunctionWithResult(
   SendResponse(gcm::GCMClient::SUCCESS == result);
 }
 
-GcmSendFunction::GcmSendFunction() {}
+GcmSendFunction::GcmSendFunction() = default;
 
-GcmSendFunction::~GcmSendFunction() {}
+GcmSendFunction::~GcmSendFunction() = default;
 
 bool GcmSendFunction::DoWork() {
   std::unique_ptr<api::gcm::Send::Params> params(
@@ -206,8 +206,7 @@ bool GcmSendFunction::ValidateMessageData(const gcm::MessageData& data) const {
 GcmJsEventRouter::GcmJsEventRouter(Profile* profile) : profile_(profile) {
 }
 
-GcmJsEventRouter::~GcmJsEventRouter() {
-}
+GcmJsEventRouter::~GcmJsEventRouter() = default;
 
 void GcmJsEventRouter::OnMessage(const std::string& app_id,
                                  const gcm::IncomingMessage& message) {

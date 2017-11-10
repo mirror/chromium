@@ -10,7 +10,7 @@
 
 StubWebView::StubWebView(const std::string& id) : id_(id) {}
 
-StubWebView::~StubWebView() {}
+StubWebView::~StubWebView() = default;
 
 std::string StubWebView::GetId() {
   return id_;

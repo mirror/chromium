@@ -27,7 +27,7 @@ MessageCenterFrameView::MessageCenterFrameView() {
 #endif
 }
 
-MessageCenterFrameView::~MessageCenterFrameView() {}
+MessageCenterFrameView::~MessageCenterFrameView() = default;
 
 gfx::Rect MessageCenterFrameView::GetBoundsForClientView() const {
   gfx::Rect client_bounds = GetLocalBounds();

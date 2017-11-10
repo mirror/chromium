@@ -77,7 +77,7 @@ IdentityTokenCacheValue::IdentityTokenCacheValue(const std::string& token,
 IdentityTokenCacheValue::IdentityTokenCacheValue(
     const IdentityTokenCacheValue& other) = default;
 
-IdentityTokenCacheValue::~IdentityTokenCacheValue() {}
+IdentityTokenCacheValue::~IdentityTokenCacheValue() = default;
 
 IdentityTokenCacheValue::CacheValueStatus IdentityTokenCacheValue::status()
     const {
@@ -116,7 +116,7 @@ IdentityAPI::IdentityAPI(content::BrowserContext* context)
   account_tracker_.AddObserver(this);
 }
 
-IdentityAPI::~IdentityAPI() {}
+IdentityAPI::~IdentityAPI() = default;
 
 IdentityMintRequestQueue* IdentityAPI::mint_queue() { return &mint_queue_; }
 

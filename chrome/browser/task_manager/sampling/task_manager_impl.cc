@@ -76,8 +76,7 @@ TaskManagerImpl::TaskManagerImpl()
 #endif  // defined(OS_CHROMEOS)
 }
 
-TaskManagerImpl::~TaskManagerImpl() {
-}
+TaskManagerImpl::~TaskManagerImpl() = default;
 
 // static
 TaskManagerImpl* TaskManagerImpl::GetInstance() {

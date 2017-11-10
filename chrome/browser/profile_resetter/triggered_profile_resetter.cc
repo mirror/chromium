@@ -13,7 +13,7 @@ TriggeredProfileResetter::TriggeredProfileResetter(Profile* profile)
 {
 }
 
-TriggeredProfileResetter::~TriggeredProfileResetter() {}
+TriggeredProfileResetter::~TriggeredProfileResetter() = default;
 
 bool TriggeredProfileResetter::HasResetTrigger() {
   DCHECK(activate_called_);

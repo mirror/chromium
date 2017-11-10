@@ -36,7 +36,7 @@ class ShippingOptionItem : public PaymentRequestItemList::Item {
         shipping_option_(shipping_option) {
     Init();
   }
-  ~ShippingOptionItem() override {}
+  ~ShippingOptionItem() override = default;
 
  private:
   // payments::PaymentRequestItemList::Item:

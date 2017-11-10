@@ -25,7 +25,8 @@ ProfileNetworkContextServiceFactory::ProfileNetworkContextServiceFactory()
           "ProfileNetworkContextService",
           BrowserContextDependencyManager::GetInstance()) {}
 
-ProfileNetworkContextServiceFactory::~ProfileNetworkContextServiceFactory() {}
+ProfileNetworkContextServiceFactory::~ProfileNetworkContextServiceFactory() =
+    default;
 
 KeyedService* ProfileNetworkContextServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

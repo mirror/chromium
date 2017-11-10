@@ -28,8 +28,7 @@ DialAPIFactory::DialAPIFactory() : RefcountedBrowserContextKeyedServiceFactory(
   DependsOn(ExtensionsBrowserClient::Get()->GetExtensionSystemFactory());
 }
 
-DialAPIFactory::~DialAPIFactory() {
-}
+DialAPIFactory::~DialAPIFactory() = default;
 
 scoped_refptr<RefcountedKeyedService> DialAPIFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

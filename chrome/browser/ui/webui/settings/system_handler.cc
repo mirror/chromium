@@ -16,9 +16,9 @@
 
 namespace settings {
 
-SystemHandler::SystemHandler() {}
+SystemHandler::SystemHandler() = default;
 
-SystemHandler::~SystemHandler() {}
+SystemHandler::~SystemHandler() = default;
 
 // static
 void SystemHandler::AddLoadTimeData(content::WebUIDataSource* data_source) {

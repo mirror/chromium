@@ -136,8 +136,7 @@ ExtensionBrowserTest::ExtensionBrowserTest()
   EXPECT_TRUE(temp_dir_.CreateUniqueTempDir());
 }
 
-ExtensionBrowserTest::~ExtensionBrowserTest() {
-}
+ExtensionBrowserTest::~ExtensionBrowserTest() = default;
 
 Profile* ExtensionBrowserTest::profile() {
   if (!profile_) {

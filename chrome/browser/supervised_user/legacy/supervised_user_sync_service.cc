@@ -136,8 +136,7 @@ SupervisedUserSyncService::SupervisedUserSyncService(Profile* profile)
   SigninManagerFactory::GetForProfile(profile_)->AddObserver(this);
 }
 
-SupervisedUserSyncService::~SupervisedUserSyncService() {
-}
+SupervisedUserSyncService::~SupervisedUserSyncService() = default;
 
 // static
 void SupervisedUserSyncService::RegisterProfilePrefs(

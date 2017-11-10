@@ -40,8 +40,8 @@ ChromeWebViewPermissionHelperDelegate::ChromeWebViewPermissionHelperDelegate(
       plugin_auth_host_bindings_(web_contents(), this),
       weak_factory_(this) {}
 
-ChromeWebViewPermissionHelperDelegate::~ChromeWebViewPermissionHelperDelegate()
-{}
+ChromeWebViewPermissionHelperDelegate::
+    ~ChromeWebViewPermissionHelperDelegate() = default;
 
 #if BUILDFLAG(ENABLE_PLUGINS)
 bool ChromeWebViewPermissionHelperDelegate::OnMessageReceived(

@@ -242,7 +242,7 @@ RecentTabsSubMenuModel::RecentTabsSubMenuModel(
   }
 }
 
-RecentTabsSubMenuModel::~RecentTabsSubMenuModel() {}
+RecentTabsSubMenuModel::~RecentTabsSubMenuModel() = default;
 
 bool RecentTabsSubMenuModel::IsCommandIdChecked(int command_id) const {
   return false;

@@ -76,7 +76,7 @@ class TestWebRequestRulesRegistry : public WebRequestRulesRegistry {
   }
 
  protected:
-  ~TestWebRequestRulesRegistry() override {}
+  ~TestWebRequestRulesRegistry() override = default;
 
   void ClearCacheOnNavigation() override { ++num_clear_cache_calls_; }
 
@@ -90,7 +90,7 @@ class WebRequestRulesRegistryTest : public testing::Test {
       : test_browser_thread_bundle_(
             content::TestBrowserThreadBundle::IO_MAINLOOP) {}
 
-  ~WebRequestRulesRegistryTest() override {}
+  ~WebRequestRulesRegistryTest() override = default;
 
   void SetUp() override;
 

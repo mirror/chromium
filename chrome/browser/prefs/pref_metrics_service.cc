@@ -78,8 +78,7 @@ PrefMetricsService::PrefMetricsService(Profile* profile,
       weak_factory_(this) {
 }
 
-PrefMetricsService::~PrefMetricsService() {
-}
+PrefMetricsService::~PrefMetricsService() = default;
 
 // static
 void PrefMetricsService::RecordHomePageLaunchMetrics(bool show_home_button,
@@ -260,8 +259,7 @@ PrefMetricsService::Factory::Factory()
   DependsOn(TemplateURLServiceFactory::GetInstance());
 }
 
-PrefMetricsService::Factory::~Factory() {
-}
+PrefMetricsService::Factory::~Factory() = default;
 
 KeyedService* PrefMetricsService::Factory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

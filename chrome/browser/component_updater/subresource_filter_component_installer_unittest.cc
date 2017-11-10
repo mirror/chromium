@@ -47,7 +47,7 @@ class TestRulesetService : public subresource_filter::RulesetService {
                                            content_service,
                                            base_dir) {}
 
-  ~TestRulesetService() override {}
+  ~TestRulesetService() override = default;
 
   using UnindexedRulesetInfo = subresource_filter::UnindexedRulesetInfo;
   void IndexAndStoreAndPublishRulesetIfNeeded(
@@ -76,8 +76,8 @@ class TestRulesetService : public subresource_filter::RulesetService {
 class SubresourceFilterMockComponentUpdateService
     : public component_updater::MockComponentUpdateService {
  public:
-  SubresourceFilterMockComponentUpdateService() {}
-  ~SubresourceFilterMockComponentUpdateService() override {}
+  SubresourceFilterMockComponentUpdateService() = default;
+  ~SubresourceFilterMockComponentUpdateService() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SubresourceFilterMockComponentUpdateService);
@@ -96,7 +96,7 @@ namespace component_updater {
 
 class SubresourceFilterComponentInstallerTest : public PlatformTest {
  public:
-  SubresourceFilterComponentInstallerTest() {}
+  SubresourceFilterComponentInstallerTest() = default;
 
   void SetUp() override {
     PlatformTest::SetUp();

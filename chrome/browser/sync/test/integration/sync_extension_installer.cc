@@ -23,8 +23,7 @@ SyncedExtensionInstaller::SyncedExtensionInstaller(Profile* profile)
                  content::Source<Profile>(profile_));
 }
 
-SyncedExtensionInstaller::~SyncedExtensionInstaller() {
-}
+SyncedExtensionInstaller::~SyncedExtensionInstaller() = default;
 
 void SyncedExtensionInstaller::Observe(
     int type,

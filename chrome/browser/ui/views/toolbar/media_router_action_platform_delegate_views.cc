@@ -23,8 +23,7 @@ MediaRouterActionPlatformDelegateViews::MediaRouterActionPlatformDelegateViews(
 }
 
 MediaRouterActionPlatformDelegateViews::
-    ~MediaRouterActionPlatformDelegateViews() {
-}
+    ~MediaRouterActionPlatformDelegateViews() = default;
 
 bool MediaRouterActionPlatformDelegateViews::CloseOverflowMenuIfOpen() {
   AppMenuButton* app_menu_button =

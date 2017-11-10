@@ -24,7 +24,7 @@ class PasswordReuseModalWarningTest : public DialogBrowserTest {
       : dialog_(nullptr),
         latest_user_action_(PasswordProtectionService::MAX_ACTION) {}
 
-  ~PasswordReuseModalWarningTest() override {}
+  ~PasswordReuseModalWarningTest() override = default;
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {

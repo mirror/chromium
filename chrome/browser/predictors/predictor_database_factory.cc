@@ -30,8 +30,7 @@ PredictorDatabaseFactory::PredictorDatabaseFactory()
         "PredictorDatabase", BrowserContextDependencyManager::GetInstance()) {
 }
 
-PredictorDatabaseFactory::~PredictorDatabaseFactory() {
-}
+PredictorDatabaseFactory::~PredictorDatabaseFactory() = default;
 
 KeyedService* PredictorDatabaseFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

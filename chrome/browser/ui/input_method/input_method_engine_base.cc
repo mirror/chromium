@@ -149,7 +149,7 @@ InputMethodEngineBase::KeyboardEvent::KeyboardEvent()
 InputMethodEngineBase::KeyboardEvent::KeyboardEvent(
     const KeyboardEvent& other) = default;
 
-InputMethodEngineBase::KeyboardEvent::~KeyboardEvent() {}
+InputMethodEngineBase::KeyboardEvent::~KeyboardEvent() = default;
 
 InputMethodEngineBase::InputMethodEngineBase()
     : current_input_type_(ui::TEXT_INPUT_TYPE_NONE),
@@ -165,7 +165,7 @@ InputMethodEngineBase::InputMethodEngineBase()
       commit_text_changed_(false),
       handling_key_event_(false) {}
 
-InputMethodEngineBase::~InputMethodEngineBase() {}
+InputMethodEngineBase::~InputMethodEngineBase() = default;
 
 void InputMethodEngineBase::Initialize(
     std::unique_ptr<InputMethodEngineBase::Observer> observer,

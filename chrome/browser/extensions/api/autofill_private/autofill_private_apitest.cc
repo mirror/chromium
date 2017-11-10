@@ -17,8 +17,8 @@ namespace {
 
 class AutofillPrivateApiTest : public ExtensionApiTest {
  public:
-  AutofillPrivateApiTest() {}
-  ~AutofillPrivateApiTest() override {}
+  AutofillPrivateApiTest() = default;
+  ~AutofillPrivateApiTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ExtensionApiTest::SetUpCommandLine(command_line);

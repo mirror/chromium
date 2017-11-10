@@ -78,7 +78,7 @@ int SetSSLCipherSuite(int connection_status, int cipher_suite) {
 
 class MockPageInfoUI : public PageInfoUI {
  public:
-  virtual ~MockPageInfoUI() {}
+  virtual ~MockPageInfoUI() = default;
   MOCK_METHOD1(SetCookieInfo, void(const CookieInfoList& cookie_info_list));
   MOCK_METHOD0(SetPermissionInfoStub, void());
   MOCK_METHOD1(SetIdentityInfo, void(const IdentityInfo& identity_info));
@@ -102,7 +102,7 @@ class PageInfoTest : public ChromeRenderViewHostTestHarness {
  public:
   PageInfoTest() : url_("http://www.example.com") {}
 
-  ~PageInfoTest() override {}
+  ~PageInfoTest() override = default;
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();

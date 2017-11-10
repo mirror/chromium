@@ -108,8 +108,7 @@ ResourceThrottle* UserScriptListener::CreateResourceThrottle(
   return throttle;
 }
 
-UserScriptListener::~UserScriptListener() {
-}
+UserScriptListener::~UserScriptListener() = default;
 
 bool UserScriptListener::ShouldDelayRequest(const GURL& url,
                                             ResourceType resource_type) {

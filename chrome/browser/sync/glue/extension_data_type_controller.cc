@@ -25,7 +25,7 @@ ExtensionDataTypeController::ExtensionDataTypeController(
   DCHECK(type == syncer::EXTENSIONS || type == syncer::APPS);
 }
 
-ExtensionDataTypeController::~ExtensionDataTypeController() {}
+ExtensionDataTypeController::~ExtensionDataTypeController() = default;
 
 bool ExtensionDataTypeController::StartModels() {
   DCHECK(CalledOnValidThread());

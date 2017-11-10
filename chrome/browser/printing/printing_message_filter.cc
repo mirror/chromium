@@ -56,7 +56,7 @@ class ShutdownNotifierFactory
       : BrowserContextKeyedServiceShutdownNotifierFactory(
           "PrintingMessageFilter") {}
 
-  ~ShutdownNotifierFactory() override {}
+  ~ShutdownNotifierFactory() override = default;
 
   DISALLOW_COPY_AND_ASSIGN(ShutdownNotifierFactory);
 };

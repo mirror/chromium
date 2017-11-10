@@ -39,7 +39,7 @@ ChromeMetricsHelper::ChromeMetricsHelper(
   DCHECK(!sampling_event_name_.empty());
 }
 
-ChromeMetricsHelper::~ChromeMetricsHelper() {}
+ChromeMetricsHelper::~ChromeMetricsHelper() = default;
 
 void ChromeMetricsHelper::StartRecordingCaptivePortalMetrics(bool overridable) {
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)

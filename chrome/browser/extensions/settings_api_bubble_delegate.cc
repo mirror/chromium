@@ -38,7 +38,7 @@ SettingsApiBubbleDelegate::SettingsApiBubbleDelegate(
   set_acknowledged_flag_pref_name(kSettingsBubbleAcknowledged);
 }
 
-SettingsApiBubbleDelegate::~SettingsApiBubbleDelegate() {}
+SettingsApiBubbleDelegate::~SettingsApiBubbleDelegate() = default;
 
 bool SettingsApiBubbleDelegate::ShouldIncludeExtension(
     const Extension* extension) {

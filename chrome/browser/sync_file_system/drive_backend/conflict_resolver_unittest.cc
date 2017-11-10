@@ -54,7 +54,7 @@ class ConflictResolverTest : public testing::Test {
 
   ConflictResolverTest()
       : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP) {}
-  ~ConflictResolverTest() override {}
+  ~ConflictResolverTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(database_dir_.CreateUniqueTempDir());

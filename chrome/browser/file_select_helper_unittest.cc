@@ -24,7 +24,7 @@ using content::FileChooserParams;
 
 class FileSelectHelperTest : public testing::Test {
  public:
-  FileSelectHelperTest() {}
+  FileSelectHelperTest() = default;
 
  protected:
   void SetUp() override {

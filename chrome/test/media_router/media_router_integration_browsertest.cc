@@ -144,7 +144,7 @@ class TestFailMediaRouterFileDialog : public MediaRouterFileDialog {
   TestFailMediaRouterFileDialog(MediaRouterFileDialogDelegate* delegate,
                                 const IssueInfo& issue)
       : MediaRouterFileDialog(nullptr), delegate_(delegate), issue_(issue) {}
-  ~TestFailMediaRouterFileDialog() override {}
+  ~TestFailMediaRouterFileDialog() override = default;
 
   MediaRouterFileDialogDelegate* delegate_;
   const IssueInfo issue_;
@@ -159,7 +159,7 @@ class TestMediaRouterFileDialog : public MediaRouterFileDialog {
  public:
   TestMediaRouterFileDialog(MediaRouterFileDialogDelegate* delegate, GURL url)
       : MediaRouterFileDialog(nullptr), delegate_(delegate), file_url_(url) {}
-  ~TestMediaRouterFileDialog() override {}
+  ~TestMediaRouterFileDialog() override = default;
 
   MediaRouterFileDialogDelegate* delegate_;
   GURL file_url_;
@@ -172,11 +172,11 @@ class TestMediaRouterFileDialog : public MediaRouterFileDialog {
 
 }  // namespace
 
-MediaRouterIntegrationBrowserTest::MediaRouterIntegrationBrowserTest() {
-}
+MediaRouterIntegrationBrowserTest::MediaRouterIntegrationBrowserTest() =
+    default;
 
-MediaRouterIntegrationBrowserTest::~MediaRouterIntegrationBrowserTest() {
-}
+MediaRouterIntegrationBrowserTest::~MediaRouterIntegrationBrowserTest() =
+    default;
 
 void MediaRouterIntegrationBrowserTest::TearDownOnMainThread() {
   MediaRouterBaseBrowserTest::TearDownOnMainThread();

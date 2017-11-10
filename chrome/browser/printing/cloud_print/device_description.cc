@@ -54,7 +54,6 @@ DeviceDescription::DeviceDescription(
 
 DeviceDescription::DeviceDescription(const DeviceDescription& other) = default;
 
-DeviceDescription::~DeviceDescription() {
-}
+DeviceDescription::~DeviceDescription() = default;
 
 }  // namespace cloud_print

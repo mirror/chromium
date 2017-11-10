@@ -43,7 +43,7 @@ WebUSBPermissionProvider::WebUSBPermissionProvider(
   DCHECK(render_frame_host_);
 }
 
-WebUSBPermissionProvider::~WebUSBPermissionProvider() {}
+WebUSBPermissionProvider::~WebUSBPermissionProvider() = default;
 
 base::WeakPtr<device::usb::PermissionProvider>
 WebUSBPermissionProvider::GetWeakPtr() {

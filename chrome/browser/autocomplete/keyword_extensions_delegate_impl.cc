@@ -44,8 +44,7 @@ KeywordExtensionsDelegateImpl::KeywordExtensionsDelegateImpl(
                  content::Source<Profile>(profile_));
 }
 
-KeywordExtensionsDelegateImpl::~KeywordExtensionsDelegateImpl() {
-}
+KeywordExtensionsDelegateImpl::~KeywordExtensionsDelegateImpl() = default;
 
 void KeywordExtensionsDelegateImpl::DeleteSuggestion(
     const TemplateURL* template_url,

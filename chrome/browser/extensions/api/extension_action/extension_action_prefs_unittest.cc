@@ -18,8 +18,8 @@ namespace extensions {
 // Tests force hiding browser actions.
 class ExtensionPrefsHidingBrowserActions : public ExtensionPrefsTest {
  public:
-  ExtensionPrefsHidingBrowserActions() {}
-  ~ExtensionPrefsHidingBrowserActions() override {}
+  ExtensionPrefsHidingBrowserActions() = default;
+  ~ExtensionPrefsHidingBrowserActions() override = default;
 
   void Initialize() override {
     profile_.reset(new TestingProfile());

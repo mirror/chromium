@@ -134,7 +134,7 @@ class SeparatorBorder : public views::FocusableBorder {
     // change when FocusableBorder relies on FocusRings instead.
     SetColorId(ui::NativeTheme::kColorId_FocusedBorderColor);
   }
-  ~SeparatorBorder() override {}
+  ~SeparatorBorder() override = default;
 
   void Paint(const views::View& view, gfx::Canvas* canvas) override {
     if (view.HasFocus())

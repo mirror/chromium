@@ -81,7 +81,7 @@ PageLoadMetricsEmbedder::PageLoadMetricsEmbedder(
     content::WebContents* web_contents)
     : web_contents_(web_contents) {}
 
-PageLoadMetricsEmbedder::~PageLoadMetricsEmbedder() {}
+PageLoadMetricsEmbedder::~PageLoadMetricsEmbedder() = default;
 
 void PageLoadMetricsEmbedder::RegisterObservers(
     page_load_metrics::PageLoadTracker* tracker) {

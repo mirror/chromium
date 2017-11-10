@@ -19,8 +19,8 @@
 class ComponentToolbarActionsFactoryTest
     : public extensions::ExtensionServiceTestBase {
  public:
-  ComponentToolbarActionsFactoryTest() {}
-  ~ComponentToolbarActionsFactoryTest() override {}
+  ComponentToolbarActionsFactoryTest() = default;
+  ~ComponentToolbarActionsFactoryTest() override = default;
 
   void SetUp() override {
     extensions::ExtensionServiceTestBase::SetUp();

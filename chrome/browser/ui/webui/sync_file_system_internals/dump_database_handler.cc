@@ -16,7 +16,7 @@ namespace syncfs_internals {
 
 DumpDatabaseHandler::DumpDatabaseHandler(Profile* profile)
     : profile_(profile) {}
-DumpDatabaseHandler::~DumpDatabaseHandler() {}
+DumpDatabaseHandler::~DumpDatabaseHandler() = default;
 
 void DumpDatabaseHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

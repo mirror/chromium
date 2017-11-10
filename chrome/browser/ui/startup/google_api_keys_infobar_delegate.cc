@@ -27,8 +27,7 @@ GoogleApiKeysInfoBarDelegate::GoogleApiKeysInfoBarDelegate()
     : ConfirmInfoBarDelegate() {
 }
 
-GoogleApiKeysInfoBarDelegate::~GoogleApiKeysInfoBarDelegate() {
-}
+GoogleApiKeysInfoBarDelegate::~GoogleApiKeysInfoBarDelegate() = default;
 
 infobars::InfoBarDelegate::InfoBarIdentifier
 GoogleApiKeysInfoBarDelegate::GetIdentifier() const {

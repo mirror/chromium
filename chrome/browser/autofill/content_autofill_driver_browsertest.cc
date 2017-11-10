@@ -38,8 +38,8 @@ const base::FilePath::CharType kDocRoot[] =
 
 class MockAutofillClient : public TestAutofillClient {
  public:
-  MockAutofillClient() {}
-  virtual ~MockAutofillClient() {}
+  MockAutofillClient() = default;
+  virtual ~MockAutofillClient() = default;
 
   virtual PrefService* GetPrefs() { return &prefs_; }
 
@@ -72,7 +72,7 @@ class TestContentAutofillDriver : public ContentAutofillDriver {
                               g_browser_process->GetApplicationLocale(),
                               AutofillManager::ENABLE_AUTOFILL_DOWNLOAD_MANAGER,
                               nullptr) {}
-  ~TestContentAutofillDriver() override {}
+  ~TestContentAutofillDriver() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestContentAutofillDriver);
@@ -83,8 +83,8 @@ class TestContentAutofillDriver : public ContentAutofillDriver {
 class ContentAutofillDriverBrowserTest : public InProcessBrowserTest,
                                          public content::WebContentsObserver {
  public:
-  ContentAutofillDriverBrowserTest() {}
-  virtual ~ContentAutofillDriverBrowserTest() {}
+  ContentAutofillDriverBrowserTest() = default;
+  virtual ~ContentAutofillDriverBrowserTest() = default;
 
   void SetUpOnMainThread() override {
     content::WebContents* web_contents =

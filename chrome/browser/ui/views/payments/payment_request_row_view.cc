@@ -25,7 +25,7 @@ PaymentRequestRowView::PaymentRequestRowView(views::ButtonListener* listener,
   SetFocusBehavior(views::View::FocusBehavior::ALWAYS);
 }
 
-PaymentRequestRowView::~PaymentRequestRowView() {}
+PaymentRequestRowView::~PaymentRequestRowView() = default;
 
 void PaymentRequestRowView::SetActiveBackground() {
   ui::NativeTheme* theme = GetWidget()->GetNativeTheme();

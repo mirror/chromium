@@ -37,10 +37,9 @@ FrameNavigationState::FrameState::FrameState() {
 // static
 bool FrameNavigationState::allow_extension_scheme_ = false;
 
-FrameNavigationState::FrameNavigationState() {
-}
+FrameNavigationState::FrameNavigationState() = default;
 
-FrameNavigationState::~FrameNavigationState() {}
+FrameNavigationState::~FrameNavigationState() = default;
 
 // static
 bool FrameNavigationState::IsValidUrl(const GURL& url) {

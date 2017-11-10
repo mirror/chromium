@@ -64,7 +64,7 @@ class TestCommandLinePrefStore : public ChromeCommandLinePrefStore {
   }
 
  private:
-  ~TestCommandLinePrefStore() override {}
+  ~TestCommandLinePrefStore() override = default;
 };
 
 // Tests a simple string pref on the command line.

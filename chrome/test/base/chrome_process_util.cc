@@ -107,7 +107,7 @@ size_t ChromeTestProcessMetrics::GetWorkingSetSize() {
 
 #endif  // !defined(OS_MACOSX)
 
-ChromeTestProcessMetrics::~ChromeTestProcessMetrics() {}
+ChromeTestProcessMetrics::~ChromeTestProcessMetrics() = default;
 
 ChromeTestProcessMetrics::ChromeTestProcessMetrics(
     base::ProcessHandle process) {

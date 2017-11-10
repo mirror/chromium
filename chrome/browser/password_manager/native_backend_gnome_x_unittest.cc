@@ -46,7 +46,7 @@ namespace {
 // the GNOME Keyring library at runtime to avoid a static dependency on it.
 
 struct MockKeyringItem {
-  MockKeyringItem() {}
+  MockKeyringItem() = default;
   MockKeyringItem(const char* keyring,
                   const std::string& display_name,
                   const std::string& password)

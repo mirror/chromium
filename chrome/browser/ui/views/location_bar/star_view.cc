@@ -28,7 +28,7 @@ StarView::StarView(CommandUpdater* command_updater, Browser* browser)
   SetToggled(false);
 }
 
-StarView::~StarView() {}
+StarView::~StarView() = default;
 
 void StarView::SetToggled(bool on) {
   BubbleIconView::SetActiveInternal(on);

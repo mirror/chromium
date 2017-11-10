@@ -117,7 +117,7 @@ class ProtocolHandlerRegistry::IOThreadDelegate
 
 ProtocolHandlerRegistry::IOThreadDelegate::IOThreadDelegate(bool)
     : enabled_(true) {}
-ProtocolHandlerRegistry::IOThreadDelegate::~IOThreadDelegate() {}
+ProtocolHandlerRegistry::IOThreadDelegate::~IOThreadDelegate() = default;
 
 bool ProtocolHandlerRegistry::IOThreadDelegate::IsHandledProtocol(
     const std::string& scheme) const {
@@ -173,8 +173,8 @@ ProtocolHandlerRegistry::JobInterceptorFactory::JobInterceptorFactory(
   DETACH_FROM_THREAD(thread_checker_);
 }
 
-ProtocolHandlerRegistry::JobInterceptorFactory::~JobInterceptorFactory() {
-}
+ProtocolHandlerRegistry::JobInterceptorFactory::~JobInterceptorFactory() =
+    default;
 
 void ProtocolHandlerRegistry::JobInterceptorFactory::Chain(
     std::unique_ptr<net::URLRequestJobFactory> job_factory) {
@@ -227,7 +227,7 @@ bool ProtocolHandlerRegistry::JobInterceptorFactory::IsSafeRedirectTarget(
 
 // Delegate --------------------------------------------------------------------
 
-ProtocolHandlerRegistry::Delegate::~Delegate() {}
+ProtocolHandlerRegistry::Delegate::~Delegate() = default;
 
 void ProtocolHandlerRegistry::Delegate::RegisterExternalHandler(
     const std::string& protocol) {

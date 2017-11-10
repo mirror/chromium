@@ -9,7 +9,7 @@
 #include "content/public/browser/navigation_handle.h"
 #include "extensions/features/features.h"
 
-ChromeNavigationUIData::ChromeNavigationUIData() {}
+ChromeNavigationUIData::ChromeNavigationUIData() = default;
 
 ChromeNavigationUIData::ChromeNavigationUIData(
     content::NavigationHandle* navigation_handle) {
@@ -24,7 +24,7 @@ ChromeNavigationUIData::ChromeNavigationUIData(
 #endif
 }
 
-ChromeNavigationUIData::~ChromeNavigationUIData() {}
+ChromeNavigationUIData::~ChromeNavigationUIData() = default;
 
 std::unique_ptr<content::NavigationUIData> ChromeNavigationUIData::Clone()
     const {

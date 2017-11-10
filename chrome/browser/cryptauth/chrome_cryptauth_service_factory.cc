@@ -34,7 +34,7 @@ ChromeCryptAuthServiceFactory::ChromeCryptAuthServiceFactory()
   DependsOn(gcm::GCMProfileServiceFactory::GetInstance());
 }
 
-ChromeCryptAuthServiceFactory::~ChromeCryptAuthServiceFactory() {}
+ChromeCryptAuthServiceFactory::~ChromeCryptAuthServiceFactory() = default;
 
 KeyedService* ChromeCryptAuthServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

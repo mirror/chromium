@@ -126,7 +126,7 @@ ChromeControllerClient::ChromeControllerClient(
         g_browser_process->GetApplicationLocale(),
         GURL(chrome::kChromeUINewTabURL)) {}
 
-ChromeControllerClient::~ChromeControllerClient() {}
+ChromeControllerClient::~ChromeControllerClient() = default;
 
 bool ChromeControllerClient::CanLaunchDateAndTimeSettings() {
 #if defined(OS_ANDROID) || defined(OS_LINUX) || defined(OS_MACOSX) || \

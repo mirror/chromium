@@ -145,7 +145,7 @@ using subresource_filter::testing::TestRulesetPair;
 class SubresourceFilterDisabledByDefaultBrowserTest
     : public InProcessBrowserTest {
  public:
-  SubresourceFilterDisabledByDefaultBrowserTest() {}
+  SubresourceFilterDisabledByDefaultBrowserTest() = default;
 
  protected:
   void SetUpCommandLine(base::CommandLine* command_line) override {

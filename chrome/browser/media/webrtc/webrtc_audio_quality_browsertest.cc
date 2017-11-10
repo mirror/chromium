@@ -517,8 +517,8 @@ namespace {
 
 class AudioRecorder {
  public:
-  AudioRecorder() {}
-  ~AudioRecorder() {}
+  AudioRecorder() = default;
+  ~AudioRecorder() = default;
 
   // Starts the recording program for the specified duration. Returns true
   // on success. We record in 16-bit 44.1 kHz Stereo (mostly because that's

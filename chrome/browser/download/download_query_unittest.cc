@@ -55,9 +55,9 @@ bool AlwaysReturn(bool result, const DownloadItem& item) {
 
 class DownloadQueryTest : public testing::Test {
  public:
-  DownloadQueryTest() {}
+  DownloadQueryTest() = default;
 
-  ~DownloadQueryTest() override {}
+  ~DownloadQueryTest() override = default;
 
   void TearDown() override {}
 

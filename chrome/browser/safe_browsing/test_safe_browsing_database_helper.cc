@@ -26,10 +26,10 @@ namespace {
 class FakeSafeBrowsingUIManager
     : public safe_browsing::TestSafeBrowsingUIManager {
  public:
-  FakeSafeBrowsingUIManager() {}
+  FakeSafeBrowsingUIManager() = default;
 
  protected:
-  ~FakeSafeBrowsingUIManager() override {}
+  ~FakeSafeBrowsingUIManager() override = default;
 
   void DisplayBlockingPage(const UnsafeResource& resource) override {
     resource.callback_thread->PostTask(

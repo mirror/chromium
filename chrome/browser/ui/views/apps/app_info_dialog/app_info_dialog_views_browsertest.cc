@@ -20,7 +20,7 @@
 
 class AppInfoDialogBrowserTest : public DialogBrowserTest {
  public:
-  AppInfoDialogBrowserTest() {}
+  AppInfoDialogBrowserTest() = default;
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {

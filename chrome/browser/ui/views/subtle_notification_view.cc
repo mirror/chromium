@@ -170,7 +170,7 @@ SubtleNotificationView::SubtleNotificationView(
   SetLayoutManager(layout);
 }
 
-SubtleNotificationView::~SubtleNotificationView() {}
+SubtleNotificationView::~SubtleNotificationView() = default;
 
 void SubtleNotificationView::UpdateContent(
     const base::string16& instruction_text,

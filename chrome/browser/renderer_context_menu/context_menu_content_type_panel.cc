@@ -10,8 +10,7 @@ ContextMenuContentTypePanel::ContextMenuContentTypePanel(
     : ContextMenuContentType(web_contents, params, false) {
 }
 
-ContextMenuContentTypePanel::~ContextMenuContentTypePanel() {
-}
+ContextMenuContentTypePanel::~ContextMenuContentTypePanel() = default;
 
 bool ContextMenuContentTypePanel::SupportsGroup(int group) {
   switch (group) {

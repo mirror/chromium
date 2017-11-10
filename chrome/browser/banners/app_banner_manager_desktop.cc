@@ -42,7 +42,7 @@ AppBannerManagerDesktop::AppBannerManagerDesktop(
     content::WebContents* web_contents)
     : AppBannerManager(web_contents) { }
 
-AppBannerManagerDesktop::~AppBannerManagerDesktop() { }
+AppBannerManagerDesktop::~AppBannerManagerDesktop() = default;
 
 void AppBannerManagerDesktop::DidFinishCreatingBookmarkApp(
     const extensions::Extension* extension,

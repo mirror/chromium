@@ -154,7 +154,7 @@ class SyncSessionsClientImpl : public sync_sessions::SyncSessionsClient {
         new browser_sync::BrowserSyncedWindowDelegatesGetter(profile));
 #endif  // defined(OS_ANDROID)
   }
-  ~SyncSessionsClientImpl() override {}
+  ~SyncSessionsClientImpl() override = default;
 
   // SyncSessionsClient implementation.
   bookmarks::BookmarkModel* GetBookmarkModel() override {
@@ -210,8 +210,7 @@ ChromeSyncClient::ChromeSyncClient(Profile* profile)
       sync_sessions_client_(new SyncSessionsClientImpl(profile)),
       weak_ptr_factory_(this) {}
 
-ChromeSyncClient::~ChromeSyncClient() {
-}
+ChromeSyncClient::~ChromeSyncClient() = default;
 
 void ChromeSyncClient::Initialize() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

@@ -18,7 +18,7 @@
 
 class ProfileSigninConfirmationHelperBrowserTest : public InProcessBrowserTest {
  public:
-  ProfileSigninConfirmationHelperBrowserTest() {}
+  ProfileSigninConfirmationHelperBrowserTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     // Force the first-run flow to trigger autoimport.

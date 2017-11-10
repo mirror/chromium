@@ -17,7 +17,7 @@ FakeBluetoothChooserController::FakeBluetoothChooserController(
                                  base::ASCIIToUTF16("example.com")));
 }
 
-FakeBluetoothChooserController::~FakeBluetoothChooserController() {}
+FakeBluetoothChooserController::~FakeBluetoothChooserController() = default;
 
 bool FakeBluetoothChooserController::ShouldShowIconBeforeText() const {
   return true;

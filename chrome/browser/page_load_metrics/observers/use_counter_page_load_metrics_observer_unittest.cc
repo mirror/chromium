@@ -24,7 +24,7 @@ using WebFeature = blink::mojom::WebFeature;
 class UseCounterPageLoadMetricsObserverTest
     : public page_load_metrics::PageLoadMetricsObserverTestHarness {
  public:
-  UseCounterPageLoadMetricsObserverTest() {}
+  UseCounterPageLoadMetricsObserverTest() = default;
 
   void HistogramBasicTest(
       const page_load_metrics::mojom::PageLoadFeatures& first_features,

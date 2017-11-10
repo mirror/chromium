@@ -73,7 +73,7 @@ class NonResumingBackgroundTabNavigationThrottle
 
 class TabStripDummyDelegate : public TestTabStripModelDelegate {
  public:
-  TabStripDummyDelegate() {}
+  TabStripDummyDelegate() = default;
 
   bool RunUnloadListenerBeforeClosing(WebContents* contents) override {
     return false;

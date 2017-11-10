@@ -40,8 +40,7 @@ ManagePasswordsTest::ManagePasswordsTest() {
   test_form_.password_value = base::ASCIIToUTF16(kTestPassword);
 }
 
-ManagePasswordsTest::~ManagePasswordsTest() {
-}
+ManagePasswordsTest::~ManagePasswordsTest() = default;
 
 void ManagePasswordsTest::SetUpOnMainThread() {
   AddTabAtIndex(0, GURL(kTestOrigin), ui::PAGE_TRANSITION_TYPED);

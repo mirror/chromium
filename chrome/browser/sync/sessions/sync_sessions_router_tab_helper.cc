@@ -35,7 +35,7 @@ SyncSessionsRouterTabHelper::SyncSessionsRouterTabHelper(
       router_(router),
       source_tab_id_(kInvalidTabID) {}
 
-SyncSessionsRouterTabHelper::~SyncSessionsRouterTabHelper() {}
+SyncSessionsRouterTabHelper::~SyncSessionsRouterTabHelper() = default;
 
 void SyncSessionsRouterTabHelper::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {

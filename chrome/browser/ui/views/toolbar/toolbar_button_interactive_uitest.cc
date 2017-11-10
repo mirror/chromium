@@ -29,7 +29,7 @@ class ToolbarButtonTestApi {
 
 class ToolbarButtonUITest : public ViewEventTestBase {
  public:
-  ToolbarButtonUITest() {}
+  ToolbarButtonUITest() = default;
 
   // ViewEventTestBase:
   views::View* CreateContentsView() override {

@@ -33,7 +33,7 @@ const char MediaBrowserTest::kError[] = "error";
 
 MediaBrowserTest::MediaBrowserTest() : ignore_plugin_crash_(false) {}
 
-MediaBrowserTest::~MediaBrowserTest() {}
+MediaBrowserTest::~MediaBrowserTest() = default;
 
 void MediaBrowserTest::RunMediaTestPage(const std::string& html_page,
                                         const base::StringPairs& query_params,

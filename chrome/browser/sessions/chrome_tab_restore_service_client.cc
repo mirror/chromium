@@ -48,7 +48,7 @@ void RecordAppLaunch(Profile* profile, const GURL& url) {
 ChromeTabRestoreServiceClient::ChromeTabRestoreServiceClient(Profile* profile)
     : profile_(profile) {}
 
-ChromeTabRestoreServiceClient::~ChromeTabRestoreServiceClient() {}
+ChromeTabRestoreServiceClient::~ChromeTabRestoreServiceClient() = default;
 
 sessions::LiveTabContext* ChromeTabRestoreServiceClient::CreateLiveTabContext(
     const std::string& app_name,

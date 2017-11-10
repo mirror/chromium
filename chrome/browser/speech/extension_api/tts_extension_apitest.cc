@@ -167,7 +167,7 @@ class MockTtsPlatformImpl : public TtsPlatformImpl {
 class FakeNetworkOnlineStateForTest : public net::NetworkChangeNotifier {
  public:
   explicit FakeNetworkOnlineStateForTest(bool online) : online_(online) {}
-  ~FakeNetworkOnlineStateForTest() override {}
+  ~FakeNetworkOnlineStateForTest() override = default;
 
   ConnectionType GetCurrentConnectionType() const override {
     return online_ ?

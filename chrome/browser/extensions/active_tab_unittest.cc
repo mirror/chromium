@@ -87,8 +87,8 @@ enum PermittedFeature {
 class ActiveTabPermissionGranterTestDelegate
     : public ActiveTabPermissionGranter::Delegate {
  public:
-  ActiveTabPermissionGranterTestDelegate() {}
-  ~ActiveTabPermissionGranterTestDelegate() override {}
+  ActiveTabPermissionGranterTestDelegate() = default;
+  ~ActiveTabPermissionGranterTestDelegate() override = default;
 
   // ActiveTabPermissionGranterTestDelegate::Delegate
   bool ShouldGrantActiveTab(const Extension* extension,

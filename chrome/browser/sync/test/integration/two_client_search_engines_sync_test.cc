@@ -18,7 +18,7 @@ using base::ASCIIToUTF16;
 class TwoClientSearchEnginesSyncTest : public SyncTest {
  public:
   TwoClientSearchEnginesSyncTest() : SyncTest(TWO_CLIENT) {}
-  ~TwoClientSearchEnginesSyncTest() override {}
+  ~TwoClientSearchEnginesSyncTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TwoClientSearchEnginesSyncTest);

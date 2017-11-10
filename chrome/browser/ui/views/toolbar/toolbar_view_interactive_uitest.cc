@@ -86,8 +86,7 @@ ToolbarViewInteractiveUITest::ToolbarViewInteractiveUITest()
       browser_actions_(NULL) {
 }
 
-ToolbarViewInteractiveUITest::~ToolbarViewInteractiveUITest() {
-}
+ToolbarViewInteractiveUITest::~ToolbarViewInteractiveUITest() = default;
 
 void ToolbarViewInteractiveUITest::DoDragAndDrop(const gfx::Point& start,
                                                  const gfx::Point& end) {
@@ -186,7 +185,7 @@ IN_PROC_BROWSER_TEST_F(ToolbarViewInteractiveUITest,
 
 class ToolbarViewTest : public InProcessBrowserTest {
  public:
-  ToolbarViewTest() {}
+  ToolbarViewTest() = default;
 
   void RunToolbarCycleFocusTest(Browser* browser);
 

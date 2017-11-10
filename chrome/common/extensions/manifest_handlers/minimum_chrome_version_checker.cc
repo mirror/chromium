@@ -18,11 +18,9 @@ namespace extensions {
 namespace keys = manifest_keys;
 namespace errors = manifest_errors;
 
-MinimumChromeVersionChecker::MinimumChromeVersionChecker() {
-}
+MinimumChromeVersionChecker::MinimumChromeVersionChecker() = default;
 
-MinimumChromeVersionChecker::~MinimumChromeVersionChecker() {
-}
+MinimumChromeVersionChecker::~MinimumChromeVersionChecker() = default;
 
 bool MinimumChromeVersionChecker::Parse(Extension* extension,
                                         base::string16* error) {

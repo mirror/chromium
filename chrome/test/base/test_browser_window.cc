@@ -57,9 +57,9 @@ LocationBarTesting*
 
 // TestBrowserWindow ----------------------------------------------------------
 
-TestBrowserWindow::TestBrowserWindow() {}
+TestBrowserWindow::TestBrowserWindow() = default;
 
-TestBrowserWindow::~TestBrowserWindow() {}
+TestBrowserWindow::~TestBrowserWindow() = default;
 
 bool TestBrowserWindow::IsActive() const {
   return false;

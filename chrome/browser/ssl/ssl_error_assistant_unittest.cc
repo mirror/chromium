@@ -104,7 +104,7 @@ class SSLErrorAssistantTest : public ChromeRenderViewHostTestHarness {
     embedded_test_server_ = base::MakeUnique<net::EmbeddedTestServer>();
   }
 
-  ~SSLErrorAssistantTest() override {}
+  ~SSLErrorAssistantTest() override = default;
 
   SSLErrorAssistant* error_assistant() const { return error_assistant_.get(); }
 

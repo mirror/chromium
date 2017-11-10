@@ -83,7 +83,7 @@ class WriteFromUrlOperationForTest : public WriteFromUrlOperation {
   base::FilePath GetImagePath() { return image_path_; }
 
  private:
-  ~WriteFromUrlOperationForTest() override {}
+  ~WriteFromUrlOperationForTest() override = default;
 };
 
 class ImageWriterWriteFromUrlOperationTest : public ImageWriterUnitTestBase {

@@ -14,7 +14,7 @@ MockSettingsObserver::MockSettingsObserver(HostContentSettingsMap* map)
   observer_.Add(map_);
 }
 
-MockSettingsObserver::~MockSettingsObserver() {}
+MockSettingsObserver::~MockSettingsObserver() = default;
 
 void MockSettingsObserver::OnContentSettingChanged(
     const ContentSettingsPattern& primary_pattern,

@@ -44,7 +44,7 @@ namespace {
 class TestDelegate : public DownloadUIController::Delegate {
  public:
   explicit TestDelegate(base::WeakPtr<content::DownloadItem*> receiver);
-  ~TestDelegate() override {}
+  ~TestDelegate() override = default;
 
  private:
   void OnNewDownloadReady(content::DownloadItem* item) override;
@@ -79,7 +79,7 @@ class TestDownloadCoreService : public DownloadCoreServiceImpl {
 TestDownloadCoreService::TestDownloadCoreService(Profile* profile)
     : DownloadCoreServiceImpl(profile) {}
 
-TestDownloadCoreService::~TestDownloadCoreService() {}
+TestDownloadCoreService::~TestDownloadCoreService() = default;
 
 DownloadHistory* TestDownloadCoreService::GetDownloadHistory() {
   return download_history_.get();

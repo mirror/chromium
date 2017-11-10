@@ -35,7 +35,7 @@ class DummyDevToolsClient : public StubDevToolsClient {
         error_after_events_(error_after_events),
         uid_(1),
         disabled_(false) {}
-  ~DummyDevToolsClient() override {}
+  ~DummyDevToolsClient() override = default;
 
   bool IsDisabled() { return disabled_; }
 

@@ -29,12 +29,11 @@
 
 namespace plugins {
 
-ChromeContentBrowserClientPluginsPart::ChromeContentBrowserClientPluginsPart() {
-}
+ChromeContentBrowserClientPluginsPart::ChromeContentBrowserClientPluginsPart() =
+    default;
 
 ChromeContentBrowserClientPluginsPart::
-    ~ChromeContentBrowserClientPluginsPart() {
-}
+    ~ChromeContentBrowserClientPluginsPart() = default;
 
 void ChromeContentBrowserClientPluginsPart::ExposeInterfacesToRenderer(
     service_manager::BinderRegistry* registry,

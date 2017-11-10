@@ -69,5 +69,4 @@ PolicyUI::PolicyUI(content::WebUI* web_ui) : WebUIController(web_ui) {
                                 CreatePolicyUIHtmlSource());
 }
 
-PolicyUI::~PolicyUI() {
-}
+PolicyUI::~PolicyUI() = default;

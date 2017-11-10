@@ -136,7 +136,7 @@ class CrashNotificationDelegate : public message_center::NotificationDelegate {
   }
 
  private:
-  ~CrashNotificationDelegate() override {}
+  ~CrashNotificationDelegate() override = default;
 
   Profile* profile_;
   bool is_hosted_app_;

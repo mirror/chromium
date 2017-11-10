@@ -15,4 +15,4 @@ DeviceMetrics::DeviceMetrics(int width, int height, double device_scale_factor,
     text_autosizing(true),
     font_scale_factor(1) {}
 
-DeviceMetrics::~DeviceMetrics() {}
+DeviceMetrics::~DeviceMetrics() = default;

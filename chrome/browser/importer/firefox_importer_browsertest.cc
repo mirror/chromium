@@ -247,7 +247,7 @@ class FirefoxObserver : public ProfileWriter,
       const favicon_base::FaviconUsageDataList& favicons) override {}
 
  private:
-  ~FirefoxObserver() override {}
+  ~FirefoxObserver() override = default;
 
   size_t bookmark_count_;
   size_t history_count_;

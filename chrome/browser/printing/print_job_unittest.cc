@@ -34,7 +34,7 @@ class TestPrintJobWorker : public PrintJobWorker {
 
 class TestOwner : public PrintJobWorkerOwner {
  public:
-  TestOwner() {}
+  TestOwner() = default;
 
   void GetSettingsDone(const PrintSettings& new_settings,
                        PrintingContext::Result result) override {
@@ -57,7 +57,7 @@ class TestOwner : public PrintJobWorkerOwner {
   int cookie() const override { return 42; }
 
  private:
-  ~TestOwner() override {}
+  ~TestOwner() override = default;
 
   PrintSettings settings_;
 

@@ -195,7 +195,7 @@ class PrerenderContents::WebContentsDelegateImpl
   PrerenderContents* prerender_contents_;
 };
 
-PrerenderContents::Observer::~Observer() {}
+PrerenderContents::Observer::~Observer() = default;
 
 PrerenderContents::PrerenderContents(
     PrerenderManager* prerender_manager,

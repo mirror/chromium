@@ -30,7 +30,7 @@ class ExtensionActivityDataService final
     : public update_client::ActivityDataService {
  public:
   explicit ExtensionActivityDataService(ExtensionPrefs* extension_prefs);
-  ~ExtensionActivityDataService() override {}
+  ~ExtensionActivityDataService() override = default;
 
   // update_client::ActivityDataService:
   bool GetActiveBit(const std::string& id) const override;
@@ -197,6 +197,6 @@ std::vector<uint8_t> ChromeUpdateClientConfig::GetRunActionKeyHash() const {
   return impl_.GetRunActionKeyHash();
 }
 
-ChromeUpdateClientConfig::~ChromeUpdateClientConfig() {}
+ChromeUpdateClientConfig::~ChromeUpdateClientConfig() = default;
 
 }  // namespace extensions

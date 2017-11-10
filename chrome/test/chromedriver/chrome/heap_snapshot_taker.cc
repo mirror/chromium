@@ -19,7 +19,7 @@ HeapSnapshotTaker::HeapSnapshotTaker(DevToolsClient* client)
   client_->AddListener(this);
 }
 
-HeapSnapshotTaker::~HeapSnapshotTaker() {}
+HeapSnapshotTaker::~HeapSnapshotTaker() = default;
 
 Status HeapSnapshotTaker::TakeSnapshot(std::unique_ptr<base::Value>* snapshot) {
   Status status1 = TakeSnapshotInternal();

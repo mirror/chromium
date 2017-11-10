@@ -187,7 +187,7 @@ class TranslateManagerBrowserTest : public InProcessBrowserTest {
             base::Bind(&TranslateManagerBrowserTest::OnTranslateError,
                        base::Unretained(this)));
   }
-  ~TranslateManagerBrowserTest() override {}
+  ~TranslateManagerBrowserTest() override = default;
 
   void WaitUntilLanguageDetected() { language_detected_signal_->Wait(); }
   void WaitUntilPageTranslated() { page_translated_signal_->Wait(); }

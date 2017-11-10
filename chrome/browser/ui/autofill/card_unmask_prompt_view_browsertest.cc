@@ -36,7 +36,7 @@ class TestCardUnmaskDelegate : public CardUnmaskDelegate {
  public:
   TestCardUnmaskDelegate() : weak_factory_(this) {}
 
-  virtual ~TestCardUnmaskDelegate() {}
+  virtual ~TestCardUnmaskDelegate() = default;
 
   // CardUnmaskDelegate implementation.
   void OnUnmaskResponse(const UnmaskResponse& response) override {
@@ -89,9 +89,9 @@ class TestCardUnmaskPromptController : public CardUnmaskPromptControllerImpl {
 
 class CardUnmaskPromptViewBrowserTest : public DialogBrowserTest {
  public:
-  CardUnmaskPromptViewBrowserTest() {}
+  CardUnmaskPromptViewBrowserTest() = default;
 
-  ~CardUnmaskPromptViewBrowserTest() override {}
+  ~CardUnmaskPromptViewBrowserTest() override = default;
 
   // DialogBrowserTest:
   void SetUpOnMainThread() override {

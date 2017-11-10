@@ -40,7 +40,7 @@ class MockModelLoader : public ModelLoader {
   explicit MockModelLoader(base::Closure update_renderers_callback,
                            const std::string model_name)
       : ModelLoader(update_renderers_callback, model_name) {}
-  ~MockModelLoader() override {}
+  ~MockModelLoader() override = default;
 
   MOCK_METHOD1(ScheduleFetch, void(int64_t));
   MOCK_METHOD2(EndFetch, void(ClientModelStatus, base::TimeDelta));

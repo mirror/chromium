@@ -42,7 +42,7 @@ LocalDataContainer::LocalDataContainer(
       media_license_helper_(std::move(media_license_helper)),
       weak_ptr_factory_(this) {}
 
-LocalDataContainer::~LocalDataContainer() {}
+LocalDataContainer::~LocalDataContainer() = default;
 
 void LocalDataContainer::Init(CookiesTreeModel* model) {
   DCHECK(!model_);

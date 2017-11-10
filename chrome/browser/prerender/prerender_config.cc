@@ -17,6 +17,6 @@ Config::Config() : max_bytes(150 * 1024 * 1024),
                    is_overriding_user_agent(false) {
 }
 
-Config::~Config() { }
+Config::~Config() = default;
 
 }  // namespace prerender

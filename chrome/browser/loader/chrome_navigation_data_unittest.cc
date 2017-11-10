@@ -13,8 +13,8 @@
 
 class ChromeNavigationDataTest : public testing::Test {
  public:
-  ChromeNavigationDataTest() {}
-  ~ChromeNavigationDataTest() override {}
+  ChromeNavigationDataTest() = default;
+  ~ChromeNavigationDataTest() override = default;
 };
 
 TEST_F(ChromeNavigationDataTest, AddingDataReductionProxyData) {

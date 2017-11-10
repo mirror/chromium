@@ -28,8 +28,7 @@ SelectedKeywordView::SelectedKeywordView(const gfx::FontList& font_list,
   label()->SetElideBehavior(gfx::FADE_TAIL);
 }
 
-SelectedKeywordView::~SelectedKeywordView() {
-}
+SelectedKeywordView::~SelectedKeywordView() = default;
 
 void SelectedKeywordView::ResetImage() {
   SetImage(gfx::CreateVectorIcon(vector_icons::kSearchIcon,

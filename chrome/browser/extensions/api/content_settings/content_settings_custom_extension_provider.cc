@@ -20,8 +20,7 @@ CustomExtensionProvider::CustomExtensionProvider(
   extensions_settings_->AddObserver(this);
 }
 
-CustomExtensionProvider::~CustomExtensionProvider() {
-}
+CustomExtensionProvider::~CustomExtensionProvider() = default;
 
 std::unique_ptr<RuleIterator> CustomExtensionProvider::GetRuleIterator(
     ContentSettingsType content_type,

@@ -123,8 +123,8 @@ const char kProcessChannelID[] = "process-channel-id";
 
 class TestServiceProcess : public ServiceProcess {
  public:
-  TestServiceProcess() { }
-  ~TestServiceProcess() override {}
+  TestServiceProcess() = default;
+  ~TestServiceProcess() override = default;
 
   bool Initialize(base::MessageLoopForUI* message_loop,
                   ServiceProcessState* state);
@@ -361,8 +361,7 @@ CloudPrintProxyPolicyStartupTest::CloudPrintProxyPolicyStartupTest()
   ChromeUnitTestSuite::InitializeResourceBundle();
 }
 
-CloudPrintProxyPolicyStartupTest::~CloudPrintProxyPolicyStartupTest() {
-}
+CloudPrintProxyPolicyStartupTest::~CloudPrintProxyPolicyStartupTest() = default;
 
 void CloudPrintProxyPolicyStartupTest::SetUp() {
   content_client_.reset(new ChromeContentClient);

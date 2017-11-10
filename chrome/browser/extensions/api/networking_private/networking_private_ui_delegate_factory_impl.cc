@@ -14,10 +14,10 @@
 namespace extensions {
 
 NetworkingPrivateUIDelegateFactoryImpl::
-    NetworkingPrivateUIDelegateFactoryImpl() {}
+    NetworkingPrivateUIDelegateFactoryImpl() = default;
 
 NetworkingPrivateUIDelegateFactoryImpl::
-    ~NetworkingPrivateUIDelegateFactoryImpl() {}
+    ~NetworkingPrivateUIDelegateFactoryImpl() = default;
 
 std::unique_ptr<NetworkingPrivateDelegate::UIDelegate>
 NetworkingPrivateUIDelegateFactoryImpl::CreateDelegate() {

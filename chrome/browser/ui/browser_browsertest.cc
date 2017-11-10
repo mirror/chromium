@@ -235,7 +235,7 @@ class TestInterstitialPage : public content::InterstitialPageDelegate {
         tab, new_navigation, url , this);
     interstitial_page_->Show();
   }
-  ~TestInterstitialPage() override {}
+  ~TestInterstitialPage() override = default;
   void Proceed() {
     interstitial_page_->Proceed();
   }
@@ -1626,7 +1626,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest,
 
 class BrowserTestWithExtensionsDisabled : public BrowserTest {
  protected:
-  BrowserTestWithExtensionsDisabled() {}
+  BrowserTestWithExtensionsDisabled() = default;
   ~BrowserTestWithExtensionsDisabled() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
@@ -2049,7 +2049,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, DisallowFileUrlUniversalAccessTest) {
 
 class KioskModeTest : public BrowserTest {
  public:
-  KioskModeTest() {}
+  KioskModeTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitch(switches::kKioskMode);
@@ -2135,7 +2135,7 @@ IN_PROC_BROWSER_TEST_F(LaunchBrowserWithTrailingSlashDatadir,
 // the last window closes.
 class RunInBackgroundTest : public BrowserTest {
  public:
-  RunInBackgroundTest() {}
+  RunInBackgroundTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitch(switches::kKeepAliveForTest);
@@ -2165,7 +2165,7 @@ IN_PROC_BROWSER_TEST_F(RunInBackgroundTest, RunInBackgroundBasicTest) {
 // the last window closes.
 class NoStartupWindowTest : public BrowserTest {
  public:
-  NoStartupWindowTest() {}
+  NoStartupWindowTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitch(switches::kNoStartupWindow);
@@ -2216,7 +2216,7 @@ IN_PROC_BROWSER_TEST_F(NoStartupWindowTest, DontInitSessionServiceForApps) {
 // need to access private type of Browser.
 class AppModeTest : public BrowserTest {
  public:
-  AppModeTest() {}
+  AppModeTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     GURL url = ui_test_utils::GetTestUrl(
@@ -2257,8 +2257,7 @@ static const char kSecondPageTitle[] = "New window!";
 
 class ClickModifierTest : public InProcessBrowserTest {
  public:
-  ClickModifierTest() {
-  }
+  ClickModifierTest() = default;
 
   // Returns a url that opens a new window or tab when clicked, via javascript.
   GURL GetWindowOpenURL() {

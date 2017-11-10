@@ -4,8 +4,8 @@
 
 #include "chrome/test/base/testing_browser_process_platform_part.h"
 
-TestingBrowserProcessPlatformPart::TestingBrowserProcessPlatformPart() {
-}
+TestingBrowserProcessPlatformPart::TestingBrowserProcessPlatformPart() =
+    default;
 
-TestingBrowserProcessPlatformPart::~TestingBrowserProcessPlatformPart() {
-}
+TestingBrowserProcessPlatformPart::~TestingBrowserProcessPlatformPart() =
+    default;

@@ -252,8 +252,7 @@ namespace autofill {
 
 class PasswordAutofillAgentTest : public ChromeRenderViewTest {
  public:
-  PasswordAutofillAgentTest() {
-  }
+  PasswordAutofillAgentTest() = default;
 
   // Simulates the fill password form message being sent to the renderer.
   // We use that so we don't have to make RenderView::OnFillPasswordForm()

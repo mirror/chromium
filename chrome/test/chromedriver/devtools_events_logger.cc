@@ -15,7 +15,7 @@ DevToolsEventsLogger::DevToolsEventsLogger(Log* log,
     : log_(log),
       prefs_(prefs) {}
 
-inline DevToolsEventsLogger::~DevToolsEventsLogger() {}
+inline DevToolsEventsLogger::~DevToolsEventsLogger() = default;
 
 Status DevToolsEventsLogger::OnConnected(DevToolsClient* client) {
   for (base::ListValue::const_iterator it = prefs_->begin();

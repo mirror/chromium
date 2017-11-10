@@ -74,7 +74,7 @@ class TestSigninManagerObserver : public SigninManagerBase::Observer {
         num_successful_signins_with_password_(0),
         num_signouts_(0) {}
 
-  ~TestSigninManagerObserver() override {}
+  ~TestSigninManagerObserver() override = default;
 
   int num_failed_signins_;
   int num_successful_signins_;
@@ -110,7 +110,7 @@ class TestSigninManagerObserver : public SigninManagerBase::Observer {
 class SigninManagerTest : public testing::Test {
  public:
   SigninManagerTest() : manager_(NULL) {}
-  ~SigninManagerTest() override {}
+  ~SigninManagerTest() override = default;
 
   void SetUp() override {
     manager_ = NULL;

@@ -18,8 +18,8 @@
 
 class LocationBarBrowserTest : public ExtensionBrowserTest {
  public:
-  LocationBarBrowserTest() {}
-  ~LocationBarBrowserTest() override {}
+  LocationBarBrowserTest() = default;
+  ~LocationBarBrowserTest() override = default;
 
  protected:
   void SetUpCommandLine(base::CommandLine* command_line) override;

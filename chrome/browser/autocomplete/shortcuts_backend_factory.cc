@@ -66,7 +66,7 @@ ShortcutsBackendFactory::ShortcutsBackendFactory()
   DependsOn(TemplateURLServiceFactory::GetInstance());
 }
 
-ShortcutsBackendFactory::~ShortcutsBackendFactory() {}
+ShortcutsBackendFactory::~ShortcutsBackendFactory() = default;
 
 scoped_refptr<RefcountedKeyedService>
 ShortcutsBackendFactory::BuildServiceInstanceFor(

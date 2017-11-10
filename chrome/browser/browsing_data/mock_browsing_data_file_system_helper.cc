@@ -13,8 +13,7 @@ MockBrowsingDataFileSystemHelper::MockBrowsingDataFileSystemHelper(
     Profile* profile) {
 }
 
-MockBrowsingDataFileSystemHelper::~MockBrowsingDataFileSystemHelper() {
-}
+MockBrowsingDataFileSystemHelper::~MockBrowsingDataFileSystemHelper() = default;
 
 void MockBrowsingDataFileSystemHelper::StartFetching(
     const FetchCallback& callback) {

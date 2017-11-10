@@ -32,7 +32,7 @@ class DevToolsTagTest : public InProcessBrowserTest {
     CHECK(embedded_test_server()->Start());
   }
 
-  ~DevToolsTagTest() override {}
+  ~DevToolsTagTest() override = default;
 
   void LoadTestPage(const std::string& test_page) {
     GURL url = embedded_test_server()->GetURL(test_page);

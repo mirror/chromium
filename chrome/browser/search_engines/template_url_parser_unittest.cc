@@ -37,8 +37,7 @@ ParamFilterImpl::ParamFilterImpl(const std::string& name_str,
                                  const std::string& value_str)
     : name_str_(name_str), value_str_(value_str) {}
 
-ParamFilterImpl::~ParamFilterImpl() {
-}
+ParamFilterImpl::~ParamFilterImpl() = default;
 
 bool ParamFilterImpl::KeepParameter(const std::string& key,
                                     const std::string& value) {
@@ -68,11 +67,9 @@ class TemplateURLParserTest : public testing::Test {
   base::FilePath osdd_dir_;
 };
 
-TemplateURLParserTest::TemplateURLParserTest() {
-}
+TemplateURLParserTest::TemplateURLParserTest() = default;
 
-TemplateURLParserTest::~TemplateURLParserTest() {
-}
+TemplateURLParserTest::~TemplateURLParserTest() = default;
 
 void TemplateURLParserTest::SetUp() {
   ASSERT_TRUE(PathService::Get(chrome::DIR_TEST_DATA, &osdd_dir_));

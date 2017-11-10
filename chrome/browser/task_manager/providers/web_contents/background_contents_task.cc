@@ -63,8 +63,7 @@ BackgroundContentsTask::BackgroundContentsTask(
           GetDefaultIcon(),
           background_contents->web_contents()) {}
 
-BackgroundContentsTask::~BackgroundContentsTask() {
-}
+BackgroundContentsTask::~BackgroundContentsTask() = default;
 
 void BackgroundContentsTask::UpdateTitle() {
   // TODO(afakhry): At the time of integration testing figure out whether we

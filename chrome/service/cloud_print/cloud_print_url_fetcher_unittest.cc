@@ -80,7 +80,7 @@ class TestCloudPrintURLFetcher : public CloudPrintURLFetcher {
   }
 
  private:
-  ~TestCloudPrintURLFetcher() override {}
+  ~TestCloudPrintURLFetcher() override = default;
 
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 

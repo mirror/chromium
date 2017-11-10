@@ -143,7 +143,7 @@ ComponentLoader::ComponentExtensionInfo::operator=(
   return *this;
 }
 
-ComponentLoader::ComponentExtensionInfo::~ComponentExtensionInfo() {}
+ComponentLoader::ComponentExtensionInfo::~ComponentExtensionInfo() = default;
 
 ComponentLoader::ComponentLoader(ExtensionServiceInterface* extension_service,
                                  PrefService* profile_prefs,
@@ -156,8 +156,7 @@ ComponentLoader::ComponentLoader(ExtensionServiceInterface* extension_service,
       ignore_whitelist_for_testing_(false),
       weak_factory_(this) {}
 
-ComponentLoader::~ComponentLoader() {
-}
+ComponentLoader::~ComponentLoader() = default;
 
 void ComponentLoader::LoadAll() {
   TRACE_EVENT0("browser,startup", "ComponentLoader::LoadAll");

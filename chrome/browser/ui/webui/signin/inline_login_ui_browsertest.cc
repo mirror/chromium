@@ -275,7 +275,7 @@ MockSyncStarterInlineSigninHelper::MockSyncStarterInlineSigninHelper(
 
 class InlineLoginUIBrowserTest : public InProcessBrowserTest {
  public:
-  InlineLoginUIBrowserTest() {}
+  InlineLoginUIBrowserTest() = default;
 
   void SetUpSigninManager(const std::string& username);
   void EnableSigninAllowed(bool enable);
@@ -458,7 +458,7 @@ IN_PROC_BROWSER_TEST_F(InlineLoginUIBrowserTest, CanOfferNoSigninCookies) {
 
 class InlineLoginHelperBrowserTest : public InProcessBrowserTest {
  public:
-  InlineLoginHelperBrowserTest() {}
+  InlineLoginHelperBrowserTest() = default;
 
   void SetUpInProcessBrowserTestFixture() override {
     will_create_browser_context_services_subscription_ =

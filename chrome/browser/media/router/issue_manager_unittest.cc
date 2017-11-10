@@ -35,7 +35,7 @@ class IssueManagerTest : public ::testing::Test {
         runner_handler_(task_runner_) {
     manager_.set_task_runner_for_test(task_runner_);
   }
-  ~IssueManagerTest() override {}
+  ~IssueManagerTest() override = default;
 
   scoped_refptr<base::TestMockTimeTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle runner_handler_;

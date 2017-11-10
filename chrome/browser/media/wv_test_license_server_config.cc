@@ -32,11 +32,9 @@ const base::FilePath::CharType kProfilesFileName[] =
 const base::FilePath::CharType kLicenseServerConfigDirName[] =
     FILE_PATH_LITERAL("config");
 
-WVTestLicenseServerConfig::WVTestLicenseServerConfig() {
-}
+WVTestLicenseServerConfig::WVTestLicenseServerConfig() = default;
 
-WVTestLicenseServerConfig::~WVTestLicenseServerConfig() {
-}
+WVTestLicenseServerConfig::~WVTestLicenseServerConfig() = default;
 
 bool WVTestLicenseServerConfig::GetServerCommandLine(
     base::CommandLine* command_line) {

@@ -37,9 +37,9 @@
 
 namespace policy {
 
-ProfilePolicyConnector::ProfilePolicyConnector() {}
+ProfilePolicyConnector::ProfilePolicyConnector() = default;
 
-ProfilePolicyConnector::~ProfilePolicyConnector() {}
+ProfilePolicyConnector::~ProfilePolicyConnector() = default;
 
 void ProfilePolicyConnector::Init(
     const user_manager::User* user,

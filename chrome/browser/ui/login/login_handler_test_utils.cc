@@ -11,8 +11,7 @@ LoginPromptBrowserTestObserver::LoginPromptBrowserTestObserver()
     : auth_needed_count_(0), auth_supplied_count_(0), auth_cancelled_count_(0) {
 }
 
-LoginPromptBrowserTestObserver::~LoginPromptBrowserTestObserver() {
-}
+LoginPromptBrowserTestObserver::~LoginPromptBrowserTestObserver() = default;
 
 void LoginPromptBrowserTestObserver::Observe(
     int type,

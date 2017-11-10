@@ -163,7 +163,7 @@ NTPResourceCache::NTPResourceCache(Profile* profile)
 #endif
 }
 
-NTPResourceCache::~NTPResourceCache() {}
+NTPResourceCache::~NTPResourceCache() = default;
 
 bool NTPResourceCache::NewTabHTMLNeedsRefresh() {
 #if defined(OS_MACOSX)

@@ -45,7 +45,7 @@ class SessionRestorePageLoadMetricsObserverTest
   }
 
  protected:
-  SessionRestorePageLoadMetricsObserverTest() {}
+  SessionRestorePageLoadMetricsObserverTest() = default;
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();

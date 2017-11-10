@@ -36,8 +36,7 @@ LanguageSettingsPrivateDelegateFactory::LanguageSettingsPrivateDelegateFactory()
 }
 
 LanguageSettingsPrivateDelegateFactory::
-    ~LanguageSettingsPrivateDelegateFactory() {
-}
+    ~LanguageSettingsPrivateDelegateFactory() = default;
 
 KeyedService* LanguageSettingsPrivateDelegateFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

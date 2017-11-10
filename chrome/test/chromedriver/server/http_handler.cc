@@ -59,7 +59,7 @@ CommandMapping::CommandMapping(HttpMethod method,
 
 CommandMapping::CommandMapping(const CommandMapping& other) = default;
 
-CommandMapping::~CommandMapping() {}
+CommandMapping::~CommandMapping() = default;
 
 HttpHandler::HttpHandler(const std::string& url_base)
     : url_base_(url_base),
@@ -567,7 +567,7 @@ HttpHandler::HttpHandler(
       new CommandMap(commands, commands + arraysize(commands)));
 }
 
-HttpHandler::~HttpHandler() {}
+HttpHandler::~HttpHandler() = default;
 
 void HttpHandler::Handle(const net::HttpServerRequestInfo& request,
                          const HttpResponseSenderFunc& send_response_func) {

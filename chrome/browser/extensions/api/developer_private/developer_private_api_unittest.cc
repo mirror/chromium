@@ -85,8 +85,8 @@ bool HasPrefsPermission(bool (*has_pref)(const std::string&,
 
 class DeveloperPrivateApiUnitTest : public ExtensionServiceTestWithInstall {
  protected:
-  DeveloperPrivateApiUnitTest() {}
-  ~DeveloperPrivateApiUnitTest() override {}
+  DeveloperPrivateApiUnitTest() = default;
+  ~DeveloperPrivateApiUnitTest() override = default;
 
   void AddMockExternalProvider(
       std::unique_ptr<ExternalProviderInterface> provider) {

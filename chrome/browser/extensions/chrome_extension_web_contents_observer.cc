@@ -39,7 +39,8 @@ ChromeExtensionWebContentsObserver::ChromeExtensionWebContentsObserver(
     content::WebContents* web_contents)
     : ExtensionWebContentsObserver(web_contents) {}
 
-ChromeExtensionWebContentsObserver::~ChromeExtensionWebContentsObserver() {}
+ChromeExtensionWebContentsObserver::~ChromeExtensionWebContentsObserver() =
+    default;
 
 void ChromeExtensionWebContentsObserver::RenderFrameCreated(
     content::RenderFrameHost* render_frame_host) {

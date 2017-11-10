@@ -75,9 +75,9 @@ class XmlConfigParser {
   DISALLOW_COPY_AND_ASSIGN(XmlConfigParser);
 };
 
-XmlConfigParser::XmlConfigParser() {}
+XmlConfigParser::XmlConfigParser() = default;
 
-XmlConfigParser::~XmlConfigParser() {}
+XmlConfigParser::~XmlConfigParser() = default;
 
 void XmlConfigParser::Parse(const std::string& input_buffer,
                             std::string* output_buffer) {
@@ -184,7 +184,7 @@ BrandcodeConfigFetcher::BrandcodeConfigFetcher(const FetchCallback& callback,
                         &BrandcodeConfigFetcher::OnDownloadTimeout);
 }
 
-BrandcodeConfigFetcher::~BrandcodeConfigFetcher() {}
+BrandcodeConfigFetcher::~BrandcodeConfigFetcher() = default;
 
 void BrandcodeConfigFetcher::SetCallback(const FetchCallback& callback) {
   fetch_callback_ = callback;

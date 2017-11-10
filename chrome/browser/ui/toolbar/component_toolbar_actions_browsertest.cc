@@ -17,8 +17,8 @@
 
 class ComponentToolbarActionsBrowserTest : public InProcessBrowserTest {
  protected:
-  ComponentToolbarActionsBrowserTest() {}
-  ~ComponentToolbarActionsBrowserTest() override {}
+  ComponentToolbarActionsBrowserTest() = default;
+  ~ComponentToolbarActionsBrowserTest() override = default;
 
   void SetUpOnMainThread() override {
     // Replace the actions factory with a mock one.

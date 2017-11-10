@@ -34,9 +34,9 @@ constexpr size_t kAllocationDelaySeconds = 5;
 constexpr size_t kTouchDelayMilliseconds = 250;
 constexpr size_t kTouchChunkSize = 512 * 1024;
 
-MemoryAblationExperiment::MemoryAblationExperiment() {}
+MemoryAblationExperiment::MemoryAblationExperiment() = default;
 
-MemoryAblationExperiment::~MemoryAblationExperiment() {}
+MemoryAblationExperiment::~MemoryAblationExperiment() = default;
 
 MemoryAblationExperiment* MemoryAblationExperiment::GetInstance() {
   static auto* instance = new MemoryAblationExperiment();

@@ -80,7 +80,7 @@ bool CallbackTester::WasCalledExactlyOnce() {
 
 class ChromeSigninClientTest : public testing::Test {
  public:
-  ChromeSigninClientTest() {}
+  ChromeSigninClientTest() = default;
   void SetUp() override;
 
   Profile* profile() { return profile_.get(); }

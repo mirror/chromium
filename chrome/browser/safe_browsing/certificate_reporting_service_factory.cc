@@ -76,7 +76,8 @@ CertificateReportingServiceFactory::CertificateReportingServiceFactory()
       max_queued_report_count_(kMaxReportCountInQueue),
       service_reset_callback_(base::Bind(&base::DoNothing)) {}
 
-CertificateReportingServiceFactory::~CertificateReportingServiceFactory() {}
+CertificateReportingServiceFactory::~CertificateReportingServiceFactory() =
+    default;
 
 KeyedService* CertificateReportingServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

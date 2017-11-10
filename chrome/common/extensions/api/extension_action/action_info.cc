@@ -35,8 +35,7 @@ struct ActionInfoData : public Extension::ManifestData {
 ActionInfoData::ActionInfoData(ActionInfo* info) : action_info(info) {
 }
 
-ActionInfoData::~ActionInfoData() {
-}
+ActionInfoData::~ActionInfoData() = default;
 
 static const ActionInfo* GetActionInfo(const Extension* extension,
                                        const std::string& key) {
@@ -51,8 +50,7 @@ ActionInfo::ActionInfo() : synthesized(false) {}
 
 ActionInfo::ActionInfo(const ActionInfo& other) = default;
 
-ActionInfo::~ActionInfo() {
-}
+ActionInfo::~ActionInfo() = default;
 
 // static
 std::unique_ptr<ActionInfo> ActionInfo::Load(const Extension* extension,

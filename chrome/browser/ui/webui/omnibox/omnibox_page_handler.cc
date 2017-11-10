@@ -120,7 +120,7 @@ OmniboxPageHandler::OmniboxPageHandler(
   ResetController();
 }
 
-OmniboxPageHandler::~OmniboxPageHandler() {}
+OmniboxPageHandler::~OmniboxPageHandler() = default;
 
 void OmniboxPageHandler::OnResultChanged(bool default_match_changed) {
   mojom::OmniboxResultPtr result(mojom::OmniboxResult::New());

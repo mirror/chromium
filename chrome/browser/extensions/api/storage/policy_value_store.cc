@@ -33,7 +33,7 @@ PolicyValueStore::PolicyValueStore(
       observers_(observers),
       delegate_(std::move(delegate)) {}
 
-PolicyValueStore::~PolicyValueStore() {}
+PolicyValueStore::~PolicyValueStore() = default;
 
 void PolicyValueStore::SetCurrentPolicy(const policy::PolicyMap& policy) {
   DCHECK(IsOnBackendSequence());

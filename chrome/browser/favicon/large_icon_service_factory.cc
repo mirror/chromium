@@ -36,7 +36,7 @@ LargeIconServiceFactory::LargeIconServiceFactory()
   DependsOn(FaviconServiceFactory::GetInstance());
 }
 
-LargeIconServiceFactory::~LargeIconServiceFactory() {}
+LargeIconServiceFactory::~LargeIconServiceFactory() = default;
 
 content::BrowserContext* LargeIconServiceFactory::GetBrowserContextToUse(
       content::BrowserContext* context) const {

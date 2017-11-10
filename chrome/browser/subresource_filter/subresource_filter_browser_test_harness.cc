@@ -46,7 +46,7 @@ SubresourceFilterBrowserTest::SubresourceFilterBrowserTest() {
       {});
 }
 
-SubresourceFilterBrowserTest::~SubresourceFilterBrowserTest() {}
+SubresourceFilterBrowserTest::~SubresourceFilterBrowserTest() = default;
 
 void SubresourceFilterBrowserTest::SetUp() {
   database_helper_ = CreateTestDatabase();

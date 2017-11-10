@@ -57,7 +57,7 @@ Action::Action(const std::string& extension_id,
       count_(0),
       action_id_(action_id) {}
 
-Action::~Action() {}
+Action::~Action() = default;
 
 // TODO(mvrable): As an optimization, we might return this directly if the
 // refcount is one.  However, there are likely to be other stray references in

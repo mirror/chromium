@@ -52,7 +52,7 @@ PermissionBlacklistClient::PermissionBlacklistClient(
                      request_origin));
 }
 
-PermissionBlacklistClient::~PermissionBlacklistClient() {}
+PermissionBlacklistClient::~PermissionBlacklistClient() = default;
 
 void PermissionBlacklistClient::StartCheck(const GURL& request_origin) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);

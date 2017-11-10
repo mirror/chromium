@@ -36,8 +36,8 @@ int kNoPendingOperation = -1;
 
 class PermissionManagerTestingProfile final : public TestingProfile {
  public:
-  PermissionManagerTestingProfile() {}
-  ~PermissionManagerTestingProfile() override {}
+  PermissionManagerTestingProfile() = default;
+  ~PermissionManagerTestingProfile() override = default;
 
   PermissionManager* GetPermissionManager() override {
     return PermissionManagerFactory::GetForProfile(this);

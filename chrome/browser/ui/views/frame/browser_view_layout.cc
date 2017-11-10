@@ -137,8 +137,7 @@ BrowserViewLayout::BrowserViewLayout()
       dialog_host_(new WebContentsModalDialogHostViews(this)),
       web_contents_modal_dialog_top_y_(-1) {}
 
-BrowserViewLayout::~BrowserViewLayout() {
-}
+BrowserViewLayout::~BrowserViewLayout() = default;
 
 void BrowserViewLayout::Init(
     BrowserViewLayoutDelegate* delegate,

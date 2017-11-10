@@ -221,7 +221,7 @@ class NotificationListener : public content::NotificationObserver {
           this, types[i], content::NotificationService::AllSources());
     }
   }
-  ~NotificationListener() override {}
+  ~NotificationListener() override = default;
 
   bool started() { return started_; }
 

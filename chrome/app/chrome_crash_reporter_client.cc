@@ -39,9 +39,9 @@
 #include "components/version_info/version_info.h"
 #endif
 
-ChromeCrashReporterClient::ChromeCrashReporterClient() {}
+ChromeCrashReporterClient::ChromeCrashReporterClient() = default;
 
-ChromeCrashReporterClient::~ChromeCrashReporterClient() {}
+ChromeCrashReporterClient::~ChromeCrashReporterClient() = default;
 
 #if !defined(OS_MACOSX)
 void ChromeCrashReporterClient::SetCrashReporterClientIdFromGUID(

@@ -56,7 +56,7 @@ class AdbTransportSocket : public AdbClientSocket {
   }
 
  private:
-  ~AdbTransportSocket() {}
+  ~AdbTransportSocket() = default;
 
   void OnConnected(int result) {
     if (!CheckNetResultOrDie(result))
@@ -113,8 +113,7 @@ class AdbQuerySocket : AdbClientSocket {
   }
 
  private:
-  ~AdbQuerySocket() {
-  }
+  ~AdbQuerySocket() = default;
 
   void SendNextQuery(int result) {
     if (!CheckNetResultOrDie(result))
@@ -172,8 +171,7 @@ AdbClientSocket::AdbClientSocket(int port)
     : host_(kLocalhost), port_(port) {
 }
 
-AdbClientSocket::~AdbClientSocket() {
-}
+AdbClientSocket::~AdbClientSocket() = default;
 
 void AdbClientSocket::Connect(const net::CompletionCallback& callback) {
   net::IPAddress ip_address;

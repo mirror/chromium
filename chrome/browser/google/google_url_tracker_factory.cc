@@ -31,8 +31,7 @@ GoogleURLTrackerFactory::GoogleURLTrackerFactory()
         BrowserContextDependencyManager::GetInstance()) {
 }
 
-GoogleURLTrackerFactory::~GoogleURLTrackerFactory() {
-}
+GoogleURLTrackerFactory::~GoogleURLTrackerFactory() = default;
 
 KeyedService* GoogleURLTrackerFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

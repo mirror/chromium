@@ -95,8 +95,8 @@ class ExtensionManagementServiceTest : public testing::Test {
  public:
   typedef ExtensionManagementPrefUpdater<TestingPrefServiceSimple> PrefUpdater;
 
-  ExtensionManagementServiceTest() {}
-  ~ExtensionManagementServiceTest() override {}
+  ExtensionManagementServiceTest() = default;
+  ~ExtensionManagementServiceTest() override = default;
 
   // testing::Test:
   void SetUp() override { InitPrefService(); }
@@ -250,8 +250,8 @@ class ExtensionManagementServiceTest : public testing::Test {
 
 class ExtensionAdminPolicyTest : public ExtensionManagementServiceTest {
  public:
-  ExtensionAdminPolicyTest() {}
-  ~ExtensionAdminPolicyTest() override {}
+  ExtensionAdminPolicyTest() = default;
+  ~ExtensionAdminPolicyTest() override = default;
 
   void SetUpPolicyProvider() {
     provider_.reset(

@@ -71,7 +71,7 @@ class MockAutofillAgent : public AutofillAgent {
     ON_CALL(*this, IsUserGesture()).WillByDefault(Return(true));
   }
 
-  ~MockAutofillAgent() override {}
+  ~MockAutofillAgent() override = default;
 
   void WaitForAutofillDidAssociateFormControl() {
     DCHECK(run_loop_ == nullptr);
@@ -103,8 +103,7 @@ ChromeRenderViewTest::ChromeRenderViewTest()
       chrome_render_thread_(NULL) {
 }
 
-ChromeRenderViewTest::~ChromeRenderViewTest() {
-}
+ChromeRenderViewTest::~ChromeRenderViewTest() = default;
 
 void ChromeRenderViewTest::SetUp() {
   ChromeUnitTestSuite::InitializeProviders();

@@ -40,7 +40,7 @@ ToolbarButton::ToolbarButton(Profile* profile,
   SetLeadingMargin(0);
 }
 
-ToolbarButton::~ToolbarButton() {}
+ToolbarButton::~ToolbarButton() = default;
 
 void ToolbarButton::Init() {
   SetFocusBehavior(FocusBehavior::ACCESSIBLE_ONLY);

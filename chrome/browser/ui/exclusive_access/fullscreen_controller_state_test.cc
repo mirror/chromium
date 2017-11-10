@@ -124,8 +124,7 @@ FullscreenControllerStateTest::FullscreenControllerStateTest()
   }
 }
 
-FullscreenControllerStateTest::~FullscreenControllerStateTest() {
-}
+FullscreenControllerStateTest::~FullscreenControllerStateTest() = default;
 
 // static
 const char* FullscreenControllerStateTest::GetStateString(State state) {

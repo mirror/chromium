@@ -21,7 +21,7 @@ AccountReconcilorFactory::AccountReconcilorFactory()
   DependsOn(SigninManagerFactory::GetInstance());
 }
 
-AccountReconcilorFactory::~AccountReconcilorFactory() {}
+AccountReconcilorFactory::~AccountReconcilorFactory() = default;
 
 // static
 AccountReconcilor* AccountReconcilorFactory::GetForProfile(

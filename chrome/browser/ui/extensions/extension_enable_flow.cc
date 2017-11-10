@@ -31,8 +31,7 @@ ExtensionEnableFlow::ExtensionEnableFlow(Profile* profile,
       extension_registry_observer_(this),
       weak_ptr_factory_(this) {}
 
-ExtensionEnableFlow::~ExtensionEnableFlow() {
-}
+ExtensionEnableFlow::~ExtensionEnableFlow() = default;
 
 void ExtensionEnableFlow::StartForWebContents(
     content::WebContents* parent_contents) {

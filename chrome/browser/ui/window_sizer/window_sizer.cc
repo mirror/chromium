@@ -142,8 +142,8 @@ class DefaultStateProvider : public WindowSizer::StateProvider {
 
 class DefaultTargetDisplayProvider : public WindowSizer::TargetDisplayProvider {
  public:
-  DefaultTargetDisplayProvider() {}
-  ~DefaultTargetDisplayProvider() override {}
+  DefaultTargetDisplayProvider() = default;
+  ~DefaultTargetDisplayProvider() override = default;
 
   display::Display GetTargetDisplay(const display::Screen* screen,
                                     const gfx::Rect& bounds) const override {
@@ -189,8 +189,7 @@ WindowSizer::WindowSizer(
   DCHECK(screen_);
 }
 
-WindowSizer::~WindowSizer() {
-}
+WindowSizer::~WindowSizer() = default;
 
 // static
 void WindowSizer::GetBrowserWindowBoundsAndShowState(

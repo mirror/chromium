@@ -12,7 +12,7 @@
 
 class ImportLockDialogViewBrowserTest : public DialogBrowserTest {
  public:
-  ImportLockDialogViewBrowserTest() {}
+  ImportLockDialogViewBrowserTest() = default;
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {

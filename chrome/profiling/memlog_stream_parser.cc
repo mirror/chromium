@@ -30,7 +30,7 @@ MemlogStreamParser::Block::~Block() = default;
 MemlogStreamParser::MemlogStreamParser(MemlogReceiver* receiver)
     : receiver_(receiver) {}
 
-MemlogStreamParser::~MemlogStreamParser() {}
+MemlogStreamParser::~MemlogStreamParser() = default;
 
 void MemlogStreamParser::DisconnectReceivers() {
   base::AutoLock lock(lock_);

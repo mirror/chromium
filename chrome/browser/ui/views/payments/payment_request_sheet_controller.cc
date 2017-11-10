@@ -133,7 +133,7 @@ class BorderedScrollView : public views::ScrollView {
     BorderedScrollViewBorderPainter(SkColor color,
                                     BorderedScrollView* scroll_view)
         : color_(color), scroll_view_(scroll_view) {}
-    ~BorderedScrollViewBorderPainter() override {}
+    ~BorderedScrollViewBorderPainter() override = default;
 
    private:
     // views::Painter:
@@ -194,7 +194,7 @@ PaymentRequestSheetController::PaymentRequestSheetController(
     PaymentRequestDialogView* dialog)
     : spec_(spec), state_(state), dialog_(dialog) {}
 
-PaymentRequestSheetController::~PaymentRequestSheetController() {}
+PaymentRequestSheetController::~PaymentRequestSheetController() = default;
 
 std::unique_ptr<views::View> PaymentRequestSheetController::CreateView() {
   // Create the footer now so that it's known if there's a primary button or not

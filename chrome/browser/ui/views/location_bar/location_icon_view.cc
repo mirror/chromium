@@ -34,8 +34,7 @@ LocationIconView::LocationIconView(const gfx::FontList& font_list,
   animation_.SetSlideDuration(kOpenTimeMS);
 }
 
-LocationIconView::~LocationIconView() {
-}
+LocationIconView::~LocationIconView() = default;
 
 gfx::Size LocationIconView::GetMinimumSize() const {
   return GetMinimumSizeForPreferredSize(GetPreferredSize());

@@ -51,7 +51,7 @@ class RemoteToLocalSyncerTest : public testing::Test {
 
   RemoteToLocalSyncerTest()
       : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP) {}
-  ~RemoteToLocalSyncerTest() override {}
+  ~RemoteToLocalSyncerTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(database_dir_.CreateUniqueTempDir());

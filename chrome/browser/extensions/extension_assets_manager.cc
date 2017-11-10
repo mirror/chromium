@@ -46,8 +46,8 @@ class ExtensionAssetsManagerImpl :  public ExtensionAssetsManager {
  private:
   friend struct base::DefaultSingletonTraits<ExtensionAssetsManagerImpl>;
 
-  ExtensionAssetsManagerImpl() {}
-  ~ExtensionAssetsManagerImpl() override {}
+  ExtensionAssetsManagerImpl() = default;
+  ~ExtensionAssetsManagerImpl() override = default;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionAssetsManagerImpl);
 };

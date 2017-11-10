@@ -22,7 +22,7 @@ ExtensionActionIconFactory::ExtensionActionIconFactory(
     icon_image_observer_.Add(action->default_icon_image());
 }
 
-ExtensionActionIconFactory::~ExtensionActionIconFactory() {}
+ExtensionActionIconFactory::~ExtensionActionIconFactory() = default;
 
 // extensions::IconImage::Observer overrides.
 void ExtensionActionIconFactory::OnExtensionIconImageChanged(IconImage* image) {

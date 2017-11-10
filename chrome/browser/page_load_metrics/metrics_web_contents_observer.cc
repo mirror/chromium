@@ -96,7 +96,7 @@ MetricsWebContentsObserver* MetricsWebContentsObserver::CreateForWebContents(
   return metrics;
 }
 
-MetricsWebContentsObserver::~MetricsWebContentsObserver() {}
+MetricsWebContentsObserver::~MetricsWebContentsObserver() = default;
 
 void MetricsWebContentsObserver::WebContentsDestroyed() {
   // TODO(csharrison): Use a more user-initiated signal for CLOSE.

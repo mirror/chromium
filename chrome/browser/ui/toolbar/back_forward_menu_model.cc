@@ -48,8 +48,7 @@ BackForwardMenuModel::BackForwardMenuModel(Browser* browser,
       menu_model_delegate_(NULL) {
 }
 
-BackForwardMenuModel::~BackForwardMenuModel() {
-}
+BackForwardMenuModel::~BackForwardMenuModel() = default;
 
 bool BackForwardMenuModel::HasIcons() const {
   return true;

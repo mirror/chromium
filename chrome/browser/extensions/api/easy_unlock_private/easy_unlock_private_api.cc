@@ -122,7 +122,7 @@ BrowserContextKeyedAPIFactory<EasyUnlockPrivateAPI>*
 EasyUnlockPrivateAPI::EasyUnlockPrivateAPI(content::BrowserContext* context)
     : connection_manager_(new EasyUnlockPrivateConnectionManager(context)) {}
 
-EasyUnlockPrivateAPI::~EasyUnlockPrivateAPI() {}
+EasyUnlockPrivateAPI::~EasyUnlockPrivateAPI() = default;
 
 EasyUnlockPrivateCryptoDelegate* EasyUnlockPrivateAPI::GetCryptoDelegate() {
   if (!crypto_delegate_)
@@ -130,10 +130,10 @@ EasyUnlockPrivateCryptoDelegate* EasyUnlockPrivateAPI::GetCryptoDelegate() {
   return crypto_delegate_.get();
 }
 
-EasyUnlockPrivateGetStringsFunction::EasyUnlockPrivateGetStringsFunction() {
-}
-EasyUnlockPrivateGetStringsFunction::~EasyUnlockPrivateGetStringsFunction() {
-}
+EasyUnlockPrivateGetStringsFunction::EasyUnlockPrivateGetStringsFunction() =
+    default;
+EasyUnlockPrivateGetStringsFunction::~EasyUnlockPrivateGetStringsFunction() =
+    default;
 
 ExtensionFunction::ResponseAction EasyUnlockPrivateGetStringsFunction::Run() {
   std::unique_ptr<base::DictionaryValue> strings(new base::DictionaryValue);
@@ -359,10 +359,10 @@ ExtensionFunction::ResponseAction EasyUnlockPrivateGetStringsFunction::Run() {
 }
 
 EasyUnlockPrivatePerformECDHKeyAgreementFunction::
-EasyUnlockPrivatePerformECDHKeyAgreementFunction() {}
+    EasyUnlockPrivatePerformECDHKeyAgreementFunction() = default;
 
 EasyUnlockPrivatePerformECDHKeyAgreementFunction::
-~EasyUnlockPrivatePerformECDHKeyAgreementFunction() {}
+    ~EasyUnlockPrivatePerformECDHKeyAgreementFunction() = default;
 
 bool EasyUnlockPrivatePerformECDHKeyAgreementFunction::RunAsync() {
   std::unique_ptr<easy_unlock_private::PerformECDHKeyAgreement::Params> params =
@@ -387,10 +387,10 @@ void EasyUnlockPrivatePerformECDHKeyAgreementFunction::OnData(
 }
 
 EasyUnlockPrivateGenerateEcP256KeyPairFunction::
-EasyUnlockPrivateGenerateEcP256KeyPairFunction() {}
+    EasyUnlockPrivateGenerateEcP256KeyPairFunction() = default;
 
 EasyUnlockPrivateGenerateEcP256KeyPairFunction::
-~EasyUnlockPrivateGenerateEcP256KeyPairFunction() {}
+    ~EasyUnlockPrivateGenerateEcP256KeyPairFunction() = default;
 
 bool EasyUnlockPrivateGenerateEcP256KeyPairFunction::RunAsync() {
   GetCryptoDelegate(browser_context())->GenerateEcP256KeyPair(
@@ -412,10 +412,10 @@ void EasyUnlockPrivateGenerateEcP256KeyPairFunction::OnData(
 }
 
 EasyUnlockPrivateCreateSecureMessageFunction::
-EasyUnlockPrivateCreateSecureMessageFunction() {}
+    EasyUnlockPrivateCreateSecureMessageFunction() = default;
 
 EasyUnlockPrivateCreateSecureMessageFunction::
-~EasyUnlockPrivateCreateSecureMessageFunction() {}
+    ~EasyUnlockPrivateCreateSecureMessageFunction() = default;
 
 bool EasyUnlockPrivateCreateSecureMessageFunction::RunAsync() {
   std::unique_ptr<easy_unlock_private::CreateSecureMessage::Params> params =
@@ -440,10 +440,10 @@ void EasyUnlockPrivateCreateSecureMessageFunction::OnData(
 }
 
 EasyUnlockPrivateUnwrapSecureMessageFunction::
-EasyUnlockPrivateUnwrapSecureMessageFunction() {}
+    EasyUnlockPrivateUnwrapSecureMessageFunction() = default;
 
 EasyUnlockPrivateUnwrapSecureMessageFunction::
-~EasyUnlockPrivateUnwrapSecureMessageFunction() {}
+    ~EasyUnlockPrivateUnwrapSecureMessageFunction() = default;
 
 bool EasyUnlockPrivateUnwrapSecureMessageFunction::RunAsync() {
   std::unique_ptr<easy_unlock_private::UnwrapSecureMessage::Params> params =
@@ -468,10 +468,10 @@ void EasyUnlockPrivateUnwrapSecureMessageFunction::OnData(
 }
 
 EasyUnlockPrivateSeekBluetoothDeviceByAddressFunction::
-    EasyUnlockPrivateSeekBluetoothDeviceByAddressFunction() {}
+    EasyUnlockPrivateSeekBluetoothDeviceByAddressFunction() = default;
 
 EasyUnlockPrivateSeekBluetoothDeviceByAddressFunction::
-    ~EasyUnlockPrivateSeekBluetoothDeviceByAddressFunction() {}
+    ~EasyUnlockPrivateSeekBluetoothDeviceByAddressFunction() = default;
 
 bool EasyUnlockPrivateSeekBluetoothDeviceByAddressFunction::RunAsync() {
   std::unique_ptr<easy_unlock_private::SeekBluetoothDeviceByAddress::Params>
@@ -505,10 +505,10 @@ void EasyUnlockPrivateSeekBluetoothDeviceByAddressFunction::OnSeekFailure(
 }
 
 EasyUnlockPrivateConnectToBluetoothServiceInsecurelyFunction::
-    EasyUnlockPrivateConnectToBluetoothServiceInsecurelyFunction() {}
+    EasyUnlockPrivateConnectToBluetoothServiceInsecurelyFunction() = default;
 
 EasyUnlockPrivateConnectToBluetoothServiceInsecurelyFunction::
-    ~EasyUnlockPrivateConnectToBluetoothServiceInsecurelyFunction() {}
+    ~EasyUnlockPrivateConnectToBluetoothServiceInsecurelyFunction() = default;
 
 void EasyUnlockPrivateConnectToBluetoothServiceInsecurelyFunction::
     ConnectToService(device::BluetoothDevice* device,
@@ -524,10 +524,10 @@ void EasyUnlockPrivateConnectToBluetoothServiceInsecurelyFunction::
 }
 
 EasyUnlockPrivateUpdateScreenlockStateFunction::
-    EasyUnlockPrivateUpdateScreenlockStateFunction() {}
+    EasyUnlockPrivateUpdateScreenlockStateFunction() = default;
 
 EasyUnlockPrivateUpdateScreenlockStateFunction::
-    ~EasyUnlockPrivateUpdateScreenlockStateFunction() {}
+    ~EasyUnlockPrivateUpdateScreenlockStateFunction() = default;
 
 ExtensionFunction::ResponseAction
 EasyUnlockPrivateUpdateScreenlockStateFunction::Run() {
@@ -544,12 +544,10 @@ EasyUnlockPrivateUpdateScreenlockStateFunction::Run() {
 }
 
 EasyUnlockPrivateSetPermitAccessFunction::
-    EasyUnlockPrivateSetPermitAccessFunction() {
-}
+    EasyUnlockPrivateSetPermitAccessFunction() = default;
 
 EasyUnlockPrivateSetPermitAccessFunction::
-    ~EasyUnlockPrivateSetPermitAccessFunction() {
-}
+    ~EasyUnlockPrivateSetPermitAccessFunction() = default;
 
 ExtensionFunction::ResponseAction
 EasyUnlockPrivateSetPermitAccessFunction::Run() {
@@ -564,12 +562,10 @@ EasyUnlockPrivateSetPermitAccessFunction::Run() {
 }
 
 EasyUnlockPrivateGetPermitAccessFunction::
-    EasyUnlockPrivateGetPermitAccessFunction() {
-}
+    EasyUnlockPrivateGetPermitAccessFunction() = default;
 
 EasyUnlockPrivateGetPermitAccessFunction::
-    ~EasyUnlockPrivateGetPermitAccessFunction() {
-}
+    ~EasyUnlockPrivateGetPermitAccessFunction() = default;
 
 ExtensionFunction::ResponseAction
 EasyUnlockPrivateGetPermitAccessFunction::Run() {
@@ -640,12 +636,10 @@ EasyUnlockPrivateGetPermitAccessFunction::GetPermitAccessForExperiment() {
 }
 
 EasyUnlockPrivateClearPermitAccessFunction::
-    EasyUnlockPrivateClearPermitAccessFunction() {
-}
+    EasyUnlockPrivateClearPermitAccessFunction() = default;
 
 EasyUnlockPrivateClearPermitAccessFunction::
-    ~EasyUnlockPrivateClearPermitAccessFunction() {
-}
+    ~EasyUnlockPrivateClearPermitAccessFunction() = default;
 
 ExtensionFunction::ResponseAction
 EasyUnlockPrivateClearPermitAccessFunction::Run() {
@@ -655,12 +649,10 @@ EasyUnlockPrivateClearPermitAccessFunction::Run() {
 }
 
 EasyUnlockPrivateSetRemoteDevicesFunction::
-    EasyUnlockPrivateSetRemoteDevicesFunction() {
-}
+    EasyUnlockPrivateSetRemoteDevicesFunction() = default;
 
 EasyUnlockPrivateSetRemoteDevicesFunction::
-    ~EasyUnlockPrivateSetRemoteDevicesFunction() {
-}
+    ~EasyUnlockPrivateSetRemoteDevicesFunction() = default;
 
 ExtensionFunction::ResponseAction
 EasyUnlockPrivateSetRemoteDevicesFunction::Run() {
@@ -685,12 +677,10 @@ EasyUnlockPrivateSetRemoteDevicesFunction::Run() {
 }
 
 EasyUnlockPrivateGetRemoteDevicesFunction::
-    EasyUnlockPrivateGetRemoteDevicesFunction() {
-}
+    EasyUnlockPrivateGetRemoteDevicesFunction() = default;
 
 EasyUnlockPrivateGetRemoteDevicesFunction::
-    ~EasyUnlockPrivateGetRemoteDevicesFunction() {
-}
+    ~EasyUnlockPrivateGetRemoteDevicesFunction() = default;
 
 bool EasyUnlockPrivateGetRemoteDevicesFunction::RunAsync() {
   // Return the remote devices stored with the native CryptAuthDeviceManager if
@@ -817,12 +807,10 @@ void EasyUnlockPrivateGetRemoteDevicesFunction::OnPSKDerivedForDevice(
 }
 
 EasyUnlockPrivateGetSignInChallengeFunction::
-    EasyUnlockPrivateGetSignInChallengeFunction() {
-}
+    EasyUnlockPrivateGetSignInChallengeFunction() = default;
 
 EasyUnlockPrivateGetSignInChallengeFunction::
-    ~EasyUnlockPrivateGetSignInChallengeFunction() {
-}
+    ~EasyUnlockPrivateGetSignInChallengeFunction() = default;
 
 bool EasyUnlockPrivateGetSignInChallengeFunction::RunAsync() {
   std::unique_ptr<easy_unlock_private::GetSignInChallenge::Params> params(
@@ -865,12 +853,10 @@ void EasyUnlockPrivateGetSignInChallengeFunction::OnDone(
 }
 
 EasyUnlockPrivateTrySignInSecretFunction::
-    EasyUnlockPrivateTrySignInSecretFunction() {
-}
+    EasyUnlockPrivateTrySignInSecretFunction() = default;
 
 EasyUnlockPrivateTrySignInSecretFunction::
-    ~EasyUnlockPrivateTrySignInSecretFunction() {
-}
+    ~EasyUnlockPrivateTrySignInSecretFunction() = default;
 
 ExtensionFunction::ResponseAction
 EasyUnlockPrivateTrySignInSecretFunction::Run() {
@@ -884,11 +870,11 @@ EasyUnlockPrivateTrySignInSecretFunction::Run() {
   return RespondNow(NoArguments());
 }
 
-EasyUnlockPrivateGetUserInfoFunction::EasyUnlockPrivateGetUserInfoFunction() {
-}
+EasyUnlockPrivateGetUserInfoFunction::EasyUnlockPrivateGetUserInfoFunction() =
+    default;
 
-EasyUnlockPrivateGetUserInfoFunction::~EasyUnlockPrivateGetUserInfoFunction() {
-}
+EasyUnlockPrivateGetUserInfoFunction::~EasyUnlockPrivateGetUserInfoFunction() =
+    default;
 
 ExtensionFunction::ResponseAction EasyUnlockPrivateGetUserInfoFunction::Run() {
   EasyUnlockService* service =
@@ -914,12 +900,10 @@ ExtensionFunction::ResponseAction EasyUnlockPrivateGetUserInfoFunction::Run() {
 }
 
 EasyUnlockPrivateGetConnectionInfoFunction::
-    EasyUnlockPrivateGetConnectionInfoFunction() {
-}
+    EasyUnlockPrivateGetConnectionInfoFunction() = default;
 
 EasyUnlockPrivateGetConnectionInfoFunction::
-    ~EasyUnlockPrivateGetConnectionInfoFunction() {
-}
+    ~EasyUnlockPrivateGetConnectionInfoFunction() = default;
 
 bool EasyUnlockPrivateGetConnectionInfoFunction::DoWork(
     scoped_refptr<device::BluetoothAdapter> adapter) {
@@ -957,12 +941,10 @@ void EasyUnlockPrivateGetConnectionInfoFunction::OnConnectionInfo(
 }
 
 EasyUnlockPrivateShowErrorBubbleFunction::
-    EasyUnlockPrivateShowErrorBubbleFunction() {
-}
+    EasyUnlockPrivateShowErrorBubbleFunction() = default;
 
 EasyUnlockPrivateShowErrorBubbleFunction::
-    ~EasyUnlockPrivateShowErrorBubbleFunction() {
-}
+    ~EasyUnlockPrivateShowErrorBubbleFunction() = default;
 
 ExtensionFunction::ResponseAction
 EasyUnlockPrivateShowErrorBubbleFunction::Run() {
@@ -998,12 +980,10 @@ EasyUnlockPrivateShowErrorBubbleFunction::Run() {
 }
 
 EasyUnlockPrivateHideErrorBubbleFunction::
-    EasyUnlockPrivateHideErrorBubbleFunction() {
-}
+    EasyUnlockPrivateHideErrorBubbleFunction() = default;
 
 EasyUnlockPrivateHideErrorBubbleFunction::
-    ~EasyUnlockPrivateHideErrorBubbleFunction() {
-}
+    ~EasyUnlockPrivateHideErrorBubbleFunction() = default;
 
 ExtensionFunction::ResponseAction
 EasyUnlockPrivateHideErrorBubbleFunction::Run() {
@@ -1016,12 +996,10 @@ EasyUnlockPrivateHideErrorBubbleFunction::Run() {
 }
 
 EasyUnlockPrivateSetAutoPairingResultFunction::
-    EasyUnlockPrivateSetAutoPairingResultFunction() {
-}
+    EasyUnlockPrivateSetAutoPairingResultFunction() = default;
 
 EasyUnlockPrivateSetAutoPairingResultFunction::
-    ~EasyUnlockPrivateSetAutoPairingResultFunction() {
-}
+    ~EasyUnlockPrivateSetAutoPairingResultFunction() = default;
 
 ExtensionFunction::ResponseAction
 EasyUnlockPrivateSetAutoPairingResultFunction::Run() {
@@ -1041,7 +1019,7 @@ EasyUnlockPrivateSetAutoPairingResultFunction::Run() {
 }
 
 EasyUnlockPrivateFindSetupConnectionFunction::
-    EasyUnlockPrivateFindSetupConnectionFunction() {}
+    EasyUnlockPrivateFindSetupConnectionFunction() = default;
 
 EasyUnlockPrivateFindSetupConnectionFunction::
     ~EasyUnlockPrivateFindSetupConnectionFunction() {
@@ -1092,10 +1070,10 @@ bool EasyUnlockPrivateFindSetupConnectionFunction::RunAsync() {
 }
 
 EasyUnlockPrivateSetupConnectionStatusFunction::
-    EasyUnlockPrivateSetupConnectionStatusFunction() {}
+    EasyUnlockPrivateSetupConnectionStatusFunction() = default;
 
 EasyUnlockPrivateSetupConnectionStatusFunction::
-    ~EasyUnlockPrivateSetupConnectionStatusFunction() {}
+    ~EasyUnlockPrivateSetupConnectionStatusFunction() = default;
 
 ExtensionFunction::ResponseAction
 EasyUnlockPrivateSetupConnectionStatusFunction::Run() {
@@ -1112,10 +1090,10 @@ EasyUnlockPrivateSetupConnectionStatusFunction::Run() {
 }
 
 EasyUnlockPrivateSetupConnectionDisconnectFunction::
-    EasyUnlockPrivateSetupConnectionDisconnectFunction() {}
+    EasyUnlockPrivateSetupConnectionDisconnectFunction() = default;
 
 EasyUnlockPrivateSetupConnectionDisconnectFunction::
-    ~EasyUnlockPrivateSetupConnectionDisconnectFunction() {}
+    ~EasyUnlockPrivateSetupConnectionDisconnectFunction() = default;
 
 ExtensionFunction::ResponseAction
 EasyUnlockPrivateSetupConnectionDisconnectFunction::Run() {
@@ -1131,10 +1109,10 @@ EasyUnlockPrivateSetupConnectionDisconnectFunction::Run() {
 }
 
 EasyUnlockPrivateSetupConnectionSendFunction::
-    EasyUnlockPrivateSetupConnectionSendFunction() {}
+    EasyUnlockPrivateSetupConnectionSendFunction() = default;
 
 EasyUnlockPrivateSetupConnectionSendFunction::
-    ~EasyUnlockPrivateSetupConnectionSendFunction() {}
+    ~EasyUnlockPrivateSetupConnectionSendFunction() = default;
 
 ExtensionFunction::ResponseAction
 EasyUnlockPrivateSetupConnectionSendFunction::Run() {
@@ -1150,10 +1128,10 @@ EasyUnlockPrivateSetupConnectionSendFunction::Run() {
 }
 
 EasyUnlockPrivateSetupConnectionGetDeviceAddressFunction::
-    EasyUnlockPrivateSetupConnectionGetDeviceAddressFunction() {}
+    EasyUnlockPrivateSetupConnectionGetDeviceAddressFunction() = default;
 
 EasyUnlockPrivateSetupConnectionGetDeviceAddressFunction::
-    ~EasyUnlockPrivateSetupConnectionGetDeviceAddressFunction() {}
+    ~EasyUnlockPrivateSetupConnectionGetDeviceAddressFunction() = default;
 
 ExtensionFunction::ResponseAction
 EasyUnlockPrivateSetupConnectionGetDeviceAddressFunction::Run() {

@@ -25,7 +25,8 @@
 #include "extensions/renderer/guest_view/mime_handler_view/mime_handler_view_container.h"
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
-ChromePrintRenderFrameHelperDelegate::~ChromePrintRenderFrameHelperDelegate() {}
+ChromePrintRenderFrameHelperDelegate::~ChromePrintRenderFrameHelperDelegate() =
+    default;
 
 bool ChromePrintRenderFrameHelperDelegate::CancelPrerender(
     content::RenderFrame* render_frame) {

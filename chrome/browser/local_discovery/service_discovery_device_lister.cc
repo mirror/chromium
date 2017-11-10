@@ -32,8 +32,7 @@ ServiceDiscoveryDeviceLister::ServiceDiscoveryDeviceLister(
       weak_factory_(this) {
 }
 
-ServiceDiscoveryDeviceLister::~ServiceDiscoveryDeviceLister() {
-}
+ServiceDiscoveryDeviceLister::~ServiceDiscoveryDeviceLister() = default;
 
 void ServiceDiscoveryDeviceLister::Start() {
   VLOG(1) << "DeviceListerStart: service_type: " << service_type_;

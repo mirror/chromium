@@ -16,8 +16,8 @@ PrivetHTTPAsynchronousFactoryImpl::PrivetHTTPAsynchronousFactoryImpl(
     : request_context_(request_context) {
 }
 
-PrivetHTTPAsynchronousFactoryImpl::~PrivetHTTPAsynchronousFactoryImpl() {
-}
+PrivetHTTPAsynchronousFactoryImpl::~PrivetHTTPAsynchronousFactoryImpl() =
+    default;
 
 std::unique_ptr<PrivetHTTPResolution>
 PrivetHTTPAsynchronousFactoryImpl::CreatePrivetHTTP(
@@ -33,8 +33,7 @@ PrivetHTTPAsynchronousFactoryImpl::ResolutionImpl::ResolutionImpl(
       request_context_(request_context),
       endpoint_resolver_(new local_discovery::EndpointResolver()) {}
 
-PrivetHTTPAsynchronousFactoryImpl::ResolutionImpl::~ResolutionImpl() {
-}
+PrivetHTTPAsynchronousFactoryImpl::ResolutionImpl::~ResolutionImpl() = default;
 
 const std::string&
 PrivetHTTPAsynchronousFactoryImpl::ResolutionImpl::GetName() {

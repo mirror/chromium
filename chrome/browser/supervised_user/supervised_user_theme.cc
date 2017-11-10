@@ -36,7 +36,7 @@ int MapToSupervisedUserResourceIds(int id) {
 SupervisedUserTheme::SupervisedUserTheme()
     : CustomThemeSupplier(SUPERVISED_USER_THEME) {}
 
-SupervisedUserTheme::~SupervisedUserTheme() {}
+SupervisedUserTheme::~SupervisedUserTheme() = default;
 
 bool SupervisedUserTheme::GetColor(int id, SkColor* color) const {
   switch (id) {

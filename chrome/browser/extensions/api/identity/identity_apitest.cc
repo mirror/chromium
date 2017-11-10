@@ -392,7 +392,7 @@ class FakeGetAuthTokenFunction : public IdentityGetAuthTokenFunction {
   }
 
  private:
-  ~FakeGetAuthTokenFunction() override {}
+  ~FakeGetAuthTokenFunction() override = default;
   bool login_access_token_result_;
   bool auto_login_access_token_;
   bool login_ui_result_;
@@ -745,7 +745,7 @@ class GetAuthTokenFunctionTest
     IdentityTestWithSignin::TearDownOnMainThread();
   }
 
-  ~GetAuthTokenFunctionTest() override {}
+  ~GetAuthTokenFunctionTest() override = default;
 
   // Helper to create an extension with specific OAuth2Info fields set.
   // |fields_to_set| should be computed by using fields of Oauth2Fields enum.

@@ -61,8 +61,7 @@ StreamsPrivateAPI::StreamsPrivateAPI(content::BrowserContext* context)
   extension_registry_observer_.Add(ExtensionRegistry::Get(browser_context_));
 }
 
-StreamsPrivateAPI::~StreamsPrivateAPI() {
-}
+StreamsPrivateAPI::~StreamsPrivateAPI() = default;
 
 void StreamsPrivateAPI::ExecuteMimeTypeHandler(
     const std::string& extension_id,
@@ -164,8 +163,7 @@ void StreamsPrivateAPI::OnExtensionUnloaded(
   streams_.erase(extension->id());
 }
 
-StreamsPrivateAbortFunction::StreamsPrivateAbortFunction() {
-}
+StreamsPrivateAbortFunction::StreamsPrivateAbortFunction() = default;
 
 ExtensionFunction::ResponseAction StreamsPrivateAbortFunction::Run() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);

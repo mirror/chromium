@@ -17,8 +17,7 @@ ScreenLockNotificationBlocker::ScreenLockNotificationBlocker(
       is_locked_(false) {
 }
 
-ScreenLockNotificationBlocker::~ScreenLockNotificationBlocker() {
-}
+ScreenLockNotificationBlocker::~ScreenLockNotificationBlocker() = default;
 
 void ScreenLockNotificationBlocker::CheckState() {
   bool was_locked = is_locked_;

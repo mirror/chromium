@@ -24,7 +24,7 @@
 class TestingDownloadCoreService : public DownloadCoreService {
  public:
   TestingDownloadCoreService() : download_count_(0) {}
-  ~TestingDownloadCoreService() override {}
+  ~TestingDownloadCoreService() override = default;
 
   // All methods that aren't expected to be called in the execution of
   // this unit test are marked to result in test failure.  Using a simple
@@ -88,7 +88,7 @@ class BrowserCloseTest : public testing::Test {
   BrowserCloseTest()
       : profile_manager_(TestingBrowserProcess::GetGlobal()), name_index_(0) {}
 
-  ~BrowserCloseTest() override {}
+  ~BrowserCloseTest() override = default;
 
   void SetUp() override { ASSERT_TRUE(profile_manager_.SetUp()); }
 

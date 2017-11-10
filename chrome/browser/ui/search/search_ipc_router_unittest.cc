@@ -54,7 +54,7 @@ namespace {
 
 class MockSearchIPCRouterDelegate : public SearchIPCRouter::Delegate {
  public:
-  virtual ~MockSearchIPCRouterDelegate() {}
+  virtual ~MockSearchIPCRouterDelegate() = default;
 
   MOCK_METHOD1(FocusOmnibox, void(OmniboxFocusState state));
   MOCK_METHOD1(OnDeleteMostVisitedItem, void(const GURL& url));
@@ -73,7 +73,7 @@ class MockSearchIPCRouterDelegate : public SearchIPCRouter::Delegate {
 
 class MockSearchIPCRouterPolicy : public SearchIPCRouter::Policy {
  public:
-  virtual ~MockSearchIPCRouterPolicy() {}
+  virtual ~MockSearchIPCRouterPolicy() = default;
 
   MOCK_METHOD1(ShouldProcessFocusOmnibox, bool(bool));
   MOCK_METHOD0(ShouldProcessDeleteMostVisitedItem, bool());

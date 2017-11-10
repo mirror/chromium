@@ -25,8 +25,7 @@ BitmapFetcherServiceFactory::BitmapFetcherServiceFactory()
           BrowserContextDependencyManager::GetInstance()) {
 }
 
-BitmapFetcherServiceFactory::~BitmapFetcherServiceFactory() {
-}
+BitmapFetcherServiceFactory::~BitmapFetcherServiceFactory() = default;
 
 KeyedService* BitmapFetcherServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

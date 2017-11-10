@@ -35,7 +35,7 @@ class WindowedPersonalDataManagerObserver : public PersonalDataManagerObserver {
         message_loop_runner_(new content::MessageLoopRunner){
     PersonalDataManagerFactory::GetForProfile(profile_)->AddObserver(this);
   }
-  ~WindowedPersonalDataManagerObserver() override {}
+  ~WindowedPersonalDataManagerObserver() override = default;
 
   // Waits for the PersonalDataManager's list of profiles to be updated.
   void Wait() {
@@ -59,7 +59,7 @@ class WindowedNetworkObserver : public net::TestURLFetcher::DelegateForTests {
         message_loop_runner_(new content::MessageLoopRunner) {
     factory_->SetDelegateForTests(this);
   }
-  ~WindowedNetworkObserver() {}
+  ~WindowedNetworkObserver() = default;
 
   // Waits for a network request with the |expected_upload_data_|.
   void Wait() {

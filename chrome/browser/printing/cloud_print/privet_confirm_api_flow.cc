@@ -20,8 +20,7 @@ PrivetConfirmApiCallFlow::PrivetConfirmApiCallFlow(
     : callback_(callback), token_(token) {
 }
 
-PrivetConfirmApiCallFlow::~PrivetConfirmApiCallFlow() {
-}
+PrivetConfirmApiCallFlow::~PrivetConfirmApiCallFlow() = default;
 
 void PrivetConfirmApiCallFlow::OnGCDApiFlowError(GCDApiFlow::Status status) {
   callback_.Run(status);

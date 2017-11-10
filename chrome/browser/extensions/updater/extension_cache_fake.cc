@@ -10,11 +10,9 @@
 
 namespace extensions {
 
-ExtensionCacheFake::ExtensionCacheFake() {
-}
+ExtensionCacheFake::ExtensionCacheFake() = default;
 
-ExtensionCacheFake::~ExtensionCacheFake() {
-}
+ExtensionCacheFake::~ExtensionCacheFake() = default;
 
 void ExtensionCacheFake::Start(const base::Closure& callback) {
   content::BrowserThread::PostTask(

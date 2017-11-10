@@ -310,8 +310,7 @@ class PrefMapping {
                             base::MakeUnique<NetworkPredictionTransformer>());
   }
 
-  ~PrefMapping() {
-  }
+  ~PrefMapping() = default;
 
   void RegisterPrefTransformer(
       const std::string& browser_pref,
@@ -378,7 +377,7 @@ PreferenceEventRouter::PreferenceEventRouter(Profile* profile)
   OnIncognitoProfileCreated(profile->GetOffTheRecordPrefs());
 }
 
-PreferenceEventRouter::~PreferenceEventRouter() { }
+PreferenceEventRouter::~PreferenceEventRouter() = default;
 
 void PreferenceEventRouter::OnPrefChanged(PrefService* pref_service,
                                           const std::string& browser_pref) {
@@ -553,8 +552,7 @@ PreferenceAPI::PreferenceAPI(content::BrowserContext* context)
   content_settings_store()->AddObserver(this);
 }
 
-PreferenceAPI::~PreferenceAPI() {
-}
+PreferenceAPI::~PreferenceAPI() = default;
 
 void PreferenceAPI::Shutdown() {
   EventRouter::Get(profile_)->UnregisterObserver(this);
@@ -630,9 +628,9 @@ BrowserContextKeyedAPIFactory<PreferenceAPI>::DeclareFactoryDependencies() {
   DependsOn(ExtensionsBrowserClient::Get()->GetExtensionSystemFactory());
 }
 
-PreferenceFunction::~PreferenceFunction() { }
+PreferenceFunction::~PreferenceFunction() = default;
 
-GetPreferenceFunction::~GetPreferenceFunction() { }
+GetPreferenceFunction::~GetPreferenceFunction() = default;
 
 ExtensionFunction::ResponseAction GetPreferenceFunction::Run() {
   std::string pref_key;
@@ -697,7 +695,7 @@ ExtensionFunction::ResponseAction GetPreferenceFunction::Run() {
   return RespondNow(OneArgument(std::move(result)));
 }
 
-SetPreferenceFunction::~SetPreferenceFunction() { }
+SetPreferenceFunction::~SetPreferenceFunction() = default;
 
 ExtensionFunction::ResponseAction SetPreferenceFunction::Run() {
   std::string pref_key;
@@ -778,7 +776,7 @@ ExtensionFunction::ResponseAction SetPreferenceFunction::Run() {
   return RespondNow(NoArguments());
 }
 
-ClearPreferenceFunction::~ClearPreferenceFunction() { }
+ClearPreferenceFunction::~ClearPreferenceFunction() = default;
 
 ExtensionFunction::ResponseAction ClearPreferenceFunction::Run() {
   std::string pref_key;

@@ -96,7 +96,7 @@ class ProfileAttributesStorageTest : public testing::Test {
  public:
   ProfileAttributesStorageTest()
       : testing_profile_manager_(TestingBrowserProcess::GetGlobal()) {}
-  ~ProfileAttributesStorageTest() override {}
+  ~ProfileAttributesStorageTest() override = default;
 
  protected:
   void SetUp() override {

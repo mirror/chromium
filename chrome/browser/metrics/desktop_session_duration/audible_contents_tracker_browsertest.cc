@@ -17,7 +17,7 @@ namespace {
 class MockAudibleContentsObserver
     : public metrics::AudibleContentsTracker::Observer {
  public:
-  MockAudibleContentsObserver() {}
+  MockAudibleContentsObserver() = default;
 
   // AudibleContentsTracker::Observer:
   void OnAudioStart() override { is_audio_playing_ = true; }
@@ -35,7 +35,7 @@ class MockAudibleContentsObserver
 
 class AudibleContentsTrackerTest : public InProcessBrowserTest {
  public:
-  AudibleContentsTrackerTest() {}
+  AudibleContentsTrackerTest() = default;
 
   void SetUp() override {
     observer_.reset(new MockAudibleContentsObserver());

@@ -32,8 +32,8 @@ namespace webui {
 
 class LogWebUIUrlTest : public InProcessBrowserTest {
  public:
-  LogWebUIUrlTest() {}
-  ~LogWebUIUrlTest() override {}
+  LogWebUIUrlTest() = default;
+  ~LogWebUIUrlTest() override = default;
 
   void RunTest(int title_ids, const GURL& url) {
     auto* tab = browser()->tab_strip_model()->GetActiveWebContents();

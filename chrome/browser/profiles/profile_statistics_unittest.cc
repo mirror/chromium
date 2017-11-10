@@ -77,7 +77,7 @@ class BookmarkStatHelper {
 class ProfileStatisticsTest : public testing::Test {
  public:
   ProfileStatisticsTest() : manager_(TestingBrowserProcess::GetGlobal()) {}
-  ~ProfileStatisticsTest() override {}
+  ~ProfileStatisticsTest() override = default;
 
  protected:
   void SetUp() override {

@@ -23,7 +23,7 @@ class FakeDevToolsClient : public StubDevToolsClient {
  public:
   explicit FakeDevToolsClient(const std::string& id)
       : id_(id), listener_(NULL) {}
-  ~FakeDevToolsClient() override {}
+  ~FakeDevToolsClient() override = default;
 
   std::string PopSentCommand() {
     std::string command;

@@ -108,8 +108,8 @@ ResourcePrefetchPredictorTablesTest::ResourcePrefetchPredictorTablesTest()
   content::RunAllTasksUntilIdle();
 }
 
-ResourcePrefetchPredictorTablesTest::~ResourcePrefetchPredictorTablesTest() {
-}
+ResourcePrefetchPredictorTablesTest::~ResourcePrefetchPredictorTablesTest() =
+    default;
 
 void ResourcePrefetchPredictorTablesTest::SetUp() {
   DeleteAllData();

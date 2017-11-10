@@ -70,7 +70,7 @@ class ManagedValueStoreCache::ExtensionTracker
     : public ExtensionRegistryObserver {
  public:
   ExtensionTracker(Profile* profile, policy::PolicyDomain policy_domain);
-  ~ExtensionTracker() override {}
+  ~ExtensionTracker() override = default;
 
  private:
   // ExtensionRegistryObserver implementation.

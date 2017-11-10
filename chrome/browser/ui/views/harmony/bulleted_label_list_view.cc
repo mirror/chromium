@@ -64,7 +64,7 @@ BulletedLabelListView::BulletedLabelListView(
     AddLabel(text);
 }
 
-BulletedLabelListView::~BulletedLabelListView() {}
+BulletedLabelListView::~BulletedLabelListView() = default;
 
 void BulletedLabelListView::AddLabel(const base::string16& text) {
   views::GridLayout* layout =

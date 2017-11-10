@@ -24,7 +24,7 @@ using ssl_config::SSLConfigServiceManager;
 
 class CommandLinePrefStoreSSLManagerTest : public testing::Test {
  public:
-  CommandLinePrefStoreSSLManagerTest() {}
+  CommandLinePrefStoreSSLManagerTest() = default;
 
  protected:
   base::MessageLoop message_loop_;

@@ -33,7 +33,7 @@ class TestPopupObserver : public autofill::PasswordGenerationPopupObserver {
   TestPopupObserver()
       : popup_showing_(false),
         password_visible_(false) {}
-  virtual ~TestPopupObserver() {}
+  virtual ~TestPopupObserver() = default;
 
   void OnPopupShown(bool password_visible) override {
     popup_showing_ = true;

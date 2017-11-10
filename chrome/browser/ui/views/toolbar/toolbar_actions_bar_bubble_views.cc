@@ -39,7 +39,7 @@ ToolbarActionsBarBubbleViews::ToolbarActionsBarBubbleViews(
   chrome::RecordDialogCreation(chrome::DialogIdentifier::TOOLBAR_ACTIONS_BAR);
 }
 
-ToolbarActionsBarBubbleViews::~ToolbarActionsBarBubbleViews() {}
+ToolbarActionsBarBubbleViews::~ToolbarActionsBarBubbleViews() = default;
 
 void ToolbarActionsBarBubbleViews::Show() {
   // Passing the Widget pointer (via GetWidget()) below in the lambda is safe

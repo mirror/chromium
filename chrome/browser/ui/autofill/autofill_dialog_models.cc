@@ -56,9 +56,9 @@ base::string16 FormatMonth(int month) {
 
 // MonthComboboxModel ----------------------------------------------------------
 
-MonthComboboxModel::MonthComboboxModel() {}
+MonthComboboxModel::MonthComboboxModel() = default;
 
-MonthComboboxModel::~MonthComboboxModel() {}
+MonthComboboxModel::~MonthComboboxModel() = default;
 
 int MonthComboboxModel::GetItemCount() const {
   // 12 months plus the empty entry.
@@ -76,6 +76,6 @@ base::string16 MonthComboboxModel::GetItemAt(int index) {
 YearComboboxModel::YearComboboxModel(int additional_year)
     : ui::SimpleComboboxModel(GetExpirationYearItems(additional_year)) {}
 
-YearComboboxModel::~YearComboboxModel() {}
+YearComboboxModel::~YearComboboxModel() = default;
 
 }  // namespace autofill

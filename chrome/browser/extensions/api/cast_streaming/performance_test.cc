@@ -119,7 +119,7 @@ class SkewedCastEnvironment : public media::cast::StandaloneCastEnvironment {
   }
 
  protected:
-  ~SkewedCastEnvironment() override {}
+  ~SkewedCastEnvironment() override = default;
 
  private:
   base::DefaultTickClock default_clock_;
@@ -354,7 +354,7 @@ class CastV2PerformanceTest
     : public ExtensionApiTest,
       public testing::WithParamInterface<int> {
  public:
-  CastV2PerformanceTest() {}
+  CastV2PerformanceTest() = default;
 
   bool HasFlag(TestFlags flag) const {
     return (GetParam() & flag) == flag;

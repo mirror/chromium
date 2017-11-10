@@ -78,7 +78,7 @@ class TestResourcePrefetcher : public ResourcePrefetcher {
                            main_frame_url,
                            urls) {}
 
-  ~TestResourcePrefetcher() override {}
+  ~TestResourcePrefetcher() override = default;
 
   MOCK_METHOD1(StartURLRequest, void(net::URLRequest* request));
 
@@ -161,8 +161,7 @@ ResourcePrefetcherTest::ResourcePrefetcherTest()
       context_getter_(base::MakeRefCounted<net::TestURLRequestContextGetter>(
           base::ThreadTaskRunnerHandle::Get())) {}
 
-ResourcePrefetcherTest::~ResourcePrefetcherTest() {
-}
+ResourcePrefetcherTest::~ResourcePrefetcherTest() = default;
 
 TEST_F(ResourcePrefetcherTest, TestPrefetcherFinishes) {
   GURL main_frame_url("http://www.google.com");

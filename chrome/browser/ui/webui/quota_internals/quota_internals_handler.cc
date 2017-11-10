@@ -19,7 +19,7 @@ using content::BrowserContext;
 
 namespace quota_internals {
 
-QuotaInternalsHandler::QuotaInternalsHandler() {}
+QuotaInternalsHandler::QuotaInternalsHandler() = default;
 
 QuotaInternalsHandler::~QuotaInternalsHandler() {
   if (proxy_.get())

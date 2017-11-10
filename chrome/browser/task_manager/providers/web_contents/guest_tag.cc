@@ -14,7 +14,6 @@ GuestTag::GuestTag(content::WebContents* web_contents)
     : WebContentsTag(web_contents) {
 }
 
-GuestTag::~GuestTag() {
-}
+GuestTag::~GuestTag() = default;
 
 }  // namespace task_manager

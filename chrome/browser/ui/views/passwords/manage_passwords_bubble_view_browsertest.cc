@@ -13,8 +13,8 @@
 class ManagePasswordsBubbleDialogViewTest
     : public SupportsTestDialog<ManagePasswordsTest> {
  public:
-  ManagePasswordsBubbleDialogViewTest() {}
-  ~ManagePasswordsBubbleDialogViewTest() override {}
+  ManagePasswordsBubbleDialogViewTest() = default;
+  ~ManagePasswordsBubbleDialogViewTest() override = default;
 
   void ShowDialog(const std::string& name) override {
     if (name == "PendingPasswordBubble") {

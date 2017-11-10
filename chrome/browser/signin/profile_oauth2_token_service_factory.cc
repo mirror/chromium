@@ -33,8 +33,7 @@ ProfileOAuth2TokenServiceFactory::ProfileOAuth2TokenServiceFactory()
   DependsOn(AccountTrackerServiceFactory::GetInstance());
 }
 
-ProfileOAuth2TokenServiceFactory::~ProfileOAuth2TokenServiceFactory() {
-}
+ProfileOAuth2TokenServiceFactory::~ProfileOAuth2TokenServiceFactory() = default;
 
 ProfileOAuth2TokenService*
 ProfileOAuth2TokenServiceFactory::GetForProfile(Profile* profile) {

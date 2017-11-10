@@ -21,7 +21,7 @@ BrowserPageTrackDecider::BrowserPageTrackDecider(
       web_contents_(web_contents),
       navigation_handle_(navigation_handle) {}
 
-BrowserPageTrackDecider::~BrowserPageTrackDecider() {}
+BrowserPageTrackDecider::~BrowserPageTrackDecider() = default;
 
 bool BrowserPageTrackDecider::HasCommitted() {
   return navigation_handle_->HasCommitted();

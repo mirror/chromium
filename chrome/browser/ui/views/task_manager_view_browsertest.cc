@@ -39,8 +39,8 @@ using browsertest_util::WaitForTaskManagerRows;
 
 class TaskManagerViewTest : public InProcessBrowserTest {
  public:
-  TaskManagerViewTest() {}
-  ~TaskManagerViewTest() override {}
+  TaskManagerViewTest() = default;
+  ~TaskManagerViewTest() override = default;
 
   void SetUpOnMainThread() override {
     host_resolver()->AddRule("*", "127.0.0.1");

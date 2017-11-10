@@ -254,7 +254,7 @@ SystemURLRequestContextGetter::SystemURLRequestContextGetter(
       network_task_runner_(
           BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)) {}
 
-SystemURLRequestContextGetter::~SystemURLRequestContextGetter() {}
+SystemURLRequestContextGetter::~SystemURLRequestContextGetter() = default;
 
 net::URLRequestContext* SystemURLRequestContextGetter::GetURLRequestContext() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -284,7 +284,7 @@ IOThread::Globals::Globals()
     : system_request_context(nullptr),
       system_request_context_leak_checker(this) {}
 
-IOThread::Globals::~Globals() {}
+IOThread::Globals::~Globals() = default;
 
 // |local_state| is passed in explicitly in order to (1) reduce implicit
 // dependencies and (2) make IOThread more flexible for testing.

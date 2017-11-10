@@ -186,7 +186,7 @@ class SimpleHttpServer {
   class Parser {
    public:
     virtual int Consume(const char* data, int size) = 0;
-    virtual ~Parser() {}
+    virtual ~Parser() = default;
   };
 
   using SendCallback = base::Callback<void(const std::string&)>;
@@ -517,8 +517,7 @@ MockAndroidConnection::MockAndroidConnection(
   ProcessCommand(command);
 }
 
-MockAndroidConnection::~MockAndroidConnection() {
-}
+MockAndroidConnection::~MockAndroidConnection() = default;
 
 void MockAndroidConnection::Receive(const std::string& data) {
   request_ += data;

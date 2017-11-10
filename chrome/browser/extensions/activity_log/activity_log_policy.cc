@@ -27,7 +27,7 @@ namespace extensions {
 
 ActivityLogPolicy::ActivityLogPolicy(Profile* profile) {}
 
-ActivityLogPolicy::~ActivityLogPolicy() {}
+ActivityLogPolicy::~ActivityLogPolicy() = default;
 
 void ActivityLogPolicy::SetClockForTesting(std::unique_ptr<base::Clock> clock) {
   testing_clock_ = std::move(clock);

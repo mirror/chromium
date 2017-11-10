@@ -19,8 +19,8 @@
 
 class ManagePasswordsIconViewTest : public ManagePasswordsTest {
  public:
-  ManagePasswordsIconViewTest() {}
-  ~ManagePasswordsIconViewTest() override {}
+  ManagePasswordsIconViewTest() = default;
+  ~ManagePasswordsIconViewTest() override = default;
 
   password_manager::ui::State ViewState() { return GetView()->state_; }
 

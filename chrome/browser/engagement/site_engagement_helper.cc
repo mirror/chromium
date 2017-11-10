@@ -69,7 +69,7 @@ SiteEngagementService::Helper::PeriodicTracker::PeriodicTracker(
     SiteEngagementService::Helper* helper)
     : helper_(helper), pause_timer_(new base::Timer(true, false)) {}
 
-SiteEngagementService::Helper::PeriodicTracker::~PeriodicTracker() {}
+SiteEngagementService::Helper::PeriodicTracker::~PeriodicTracker() = default;
 
 void SiteEngagementService::Helper::PeriodicTracker::Start(
     base::TimeDelta initial_delay) {
@@ -163,7 +163,7 @@ SiteEngagementService::Helper::MediaTracker::MediaTracker(
       content::WebContentsObserver(web_contents),
       is_hidden_(false) {}
 
-SiteEngagementService::Helper::MediaTracker::~MediaTracker() {}
+SiteEngagementService::Helper::MediaTracker::~MediaTracker() = default;
 
 void SiteEngagementService::Helper::MediaTracker::TrackingStarted() {
   if (!active_media_players_.empty())

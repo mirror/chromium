@@ -88,7 +88,7 @@ AutofillPopupLayoutModel::AutofillPopupLayoutModel(
 #endif
 }
 
-AutofillPopupLayoutModel::~AutofillPopupLayoutModel() {}
+AutofillPopupLayoutModel::~AutofillPopupLayoutModel() = default;
 
 #if !defined(OS_ANDROID)
 int AutofillPopupLayoutModel::GetDesiredPopupHeight() const {

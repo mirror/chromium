@@ -39,7 +39,7 @@ class ProfileDownloaderTest : public testing::Test,
  protected:
   ProfileDownloaderTest()
     : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP) {}
-  ~ProfileDownloaderTest() override {}
+  ~ProfileDownloaderTest() override = default;
 
   void SetUp() override {
     TestingProfile::Builder builder;

@@ -43,7 +43,7 @@ BrowsingDataCacheStorageHelper::BrowsingDataCacheStorageHelper(
   DCHECK(cache_storage_context_);
 }
 
-BrowsingDataCacheStorageHelper::~BrowsingDataCacheStorageHelper() {}
+BrowsingDataCacheStorageHelper::~BrowsingDataCacheStorageHelper() = default;
 
 void BrowsingDataCacheStorageHelper::StartFetching(
     const FetchCallback& callback) {
@@ -88,7 +88,7 @@ CannedBrowsingDataCacheStorageHelper::PendingCacheStorageUsageInfo::
       last_modified(last_modified) {}
 
 CannedBrowsingDataCacheStorageHelper::PendingCacheStorageUsageInfo::
-    ~PendingCacheStorageUsageInfo() {}
+    ~PendingCacheStorageUsageInfo() = default;
 
 bool CannedBrowsingDataCacheStorageHelper::PendingCacheStorageUsageInfo::
 operator<(const PendingCacheStorageUsageInfo& other) const {
@@ -99,7 +99,8 @@ CannedBrowsingDataCacheStorageHelper::CannedBrowsingDataCacheStorageHelper(
     content::CacheStorageContext* context)
     : BrowsingDataCacheStorageHelper(context) {}
 
-CannedBrowsingDataCacheStorageHelper::~CannedBrowsingDataCacheStorageHelper() {}
+CannedBrowsingDataCacheStorageHelper::~CannedBrowsingDataCacheStorageHelper() =
+    default;
 
 void CannedBrowsingDataCacheStorageHelper::AddCacheStorage(const GURL& origin) {
   if (!BrowsingDataHelper::HasWebScheme(origin))

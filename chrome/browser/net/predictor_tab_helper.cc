@@ -24,8 +24,7 @@ PredictorTabHelper::PredictorTabHelper(content::WebContents* web_contents)
       predicted_from_pending_entry_(false) {
 }
 
-PredictorTabHelper::~PredictorTabHelper() {
-}
+PredictorTabHelper::~PredictorTabHelper() = default;
 
 void PredictorTabHelper::DidStartNavigation(
     content::NavigationHandle* navigation_handle) {

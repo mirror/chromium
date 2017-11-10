@@ -57,7 +57,7 @@ DesktopMediaSourceView::DesktopMediaSourceView(
   SetStyle(style_);
 }
 
-DesktopMediaSourceView::~DesktopMediaSourceView() {}
+DesktopMediaSourceView::~DesktopMediaSourceView() = default;
 
 const char DesktopMediaSourceView::kDesktopMediaSourceViewClassName[] =
     "DesktopMediaPicker_DesktopMediaSourceView";

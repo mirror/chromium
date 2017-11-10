@@ -69,8 +69,7 @@ NativeMediaFileUtil::NativeMediaFileUtil(MediaPathFilter* media_path_filter)
       weak_factory_(this) {
 }
 
-NativeMediaFileUtil::~NativeMediaFileUtil() {
-}
+NativeMediaFileUtil::~NativeMediaFileUtil() = default;
 
 // static
 base::File::Error NativeMediaFileUtil::IsMediaFile(

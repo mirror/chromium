@@ -33,8 +33,7 @@ ExtensionStorageMonitorFactory::ExtensionStorageMonitorFactory()
   DependsOn(ExtensionPrefsFactory::GetInstance());
 }
 
-ExtensionStorageMonitorFactory::~ExtensionStorageMonitorFactory() {
-}
+ExtensionStorageMonitorFactory::~ExtensionStorageMonitorFactory() = default;
 
 KeyedService* ExtensionStorageMonitorFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

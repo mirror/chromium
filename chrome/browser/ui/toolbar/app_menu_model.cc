@@ -117,8 +117,7 @@ ZoomMenuModel::ZoomMenuModel(ui::SimpleMenuModel::Delegate* delegate)
   Build();
 }
 
-ZoomMenuModel::~ZoomMenuModel() {
-}
+ZoomMenuModel::~ZoomMenuModel() = default;
 
 void ZoomMenuModel::Build() {
   AddItemWithStringId(IDC_ZOOM_PLUS, IDS_ZOOM_PLUS);
@@ -175,7 +174,7 @@ ToolsMenuModel::ToolsMenuModel(ui::SimpleMenuModel::Delegate* delegate,
   Build(browser);
 }
 
-ToolsMenuModel::~ToolsMenuModel() {}
+ToolsMenuModel::~ToolsMenuModel() = default;
 
 // More tools submenu is constructed as follows:
 // - Page specific actions overflow (save page, adding to desktop).

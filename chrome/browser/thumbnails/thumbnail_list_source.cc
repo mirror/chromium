@@ -88,8 +88,7 @@ ThumbnailListSource::ThumbnailListSource(Profile* profile)
       weak_ptr_factory_(this) {
 }
 
-ThumbnailListSource::~ThumbnailListSource() {
-}
+ThumbnailListSource::~ThumbnailListSource() = default;
 
 std::string ThumbnailListSource::GetSource() const {
   return chrome::kChromeUIThumbnailListHost;

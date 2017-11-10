@@ -60,7 +60,7 @@ ExtensionActionRunner::PendingScript::PendingScript(
 ExtensionActionRunner::PendingScript::PendingScript(
     const PendingScript& other) = default;
 
-ExtensionActionRunner::PendingScript::~PendingScript() {}
+ExtensionActionRunner::PendingScript::~PendingScript() = default;
 
 ExtensionActionRunner::ExtensionActionRunner(content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents),

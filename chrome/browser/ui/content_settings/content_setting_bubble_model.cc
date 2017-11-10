@@ -1007,7 +1007,7 @@ class ContentSettingDomainListBubbleModel
                                       WebContents* web_contents,
                                       Profile* profile,
                                       ContentSettingsType content_type);
-  ~ContentSettingDomainListBubbleModel() override {}
+  ~ContentSettingDomainListBubbleModel() override = default;
 
  private:
   void MaybeAddDomainList(const std::set<std::string>& hosts, int title_id);
@@ -1107,7 +1107,7 @@ class ContentSettingMixedScriptBubbleModel
                                        WebContents* web_contents,
                                        Profile* profile);
 
-  ~ContentSettingMixedScriptBubbleModel() override {}
+  ~ContentSettingMixedScriptBubbleModel() override = default;
 
  private:
   void SetManageText();
@@ -1340,7 +1340,7 @@ ContentSettingSubresourceFilterBubbleModel::
 }
 
 ContentSettingSubresourceFilterBubbleModel::
-    ~ContentSettingSubresourceFilterBubbleModel() {}
+    ~ContentSettingSubresourceFilterBubbleModel() = default;
 
 void ContentSettingSubresourceFilterBubbleModel::SetTitle() {}
 
@@ -1394,7 +1394,7 @@ class ContentSettingMidiSysExBubbleModel
   ContentSettingMidiSysExBubbleModel(Delegate* delegate,
                                      WebContents* web_contents,
                                      Profile* profile);
-  ~ContentSettingMidiSysExBubbleModel() override {}
+  ~ContentSettingMidiSysExBubbleModel() override = default;
 
  private:
   void MaybeAddDomainList(const std::set<std::string>& hosts, int title_id);
@@ -1654,30 +1654,29 @@ ContentSettingBubbleModel::ContentSettingBubbleModel(Delegate* delegate,
                  content::Source<Profile>(profile_));
 }
 
-ContentSettingBubbleModel::~ContentSettingBubbleModel() {
-}
+ContentSettingBubbleModel::~ContentSettingBubbleModel() = default;
 
 ContentSettingBubbleModel::RadioGroup::RadioGroup() : default_item(0) {}
 
-ContentSettingBubbleModel::RadioGroup::~RadioGroup() {}
+ContentSettingBubbleModel::RadioGroup::~RadioGroup() = default;
 
-ContentSettingBubbleModel::DomainList::DomainList() {}
+ContentSettingBubbleModel::DomainList::DomainList() = default;
 
 ContentSettingBubbleModel::DomainList::DomainList(const DomainList& other) =
     default;
 
-ContentSettingBubbleModel::DomainList::~DomainList() {}
+ContentSettingBubbleModel::DomainList::~DomainList() = default;
 
 ContentSettingBubbleModel::MediaMenu::MediaMenu() : disabled(false) {}
 
 ContentSettingBubbleModel::MediaMenu::MediaMenu(const MediaMenu& other) =
     default;
 
-ContentSettingBubbleModel::MediaMenu::~MediaMenu() {}
+ContentSettingBubbleModel::MediaMenu::~MediaMenu() = default;
 
-ContentSettingBubbleModel::BubbleContent::BubbleContent() {}
+ContentSettingBubbleModel::BubbleContent::BubbleContent() = default;
 
-ContentSettingBubbleModel::BubbleContent::~BubbleContent() {}
+ContentSettingBubbleModel::BubbleContent::~BubbleContent() = default;
 
 void ContentSettingBubbleModel::Observe(
     int type,

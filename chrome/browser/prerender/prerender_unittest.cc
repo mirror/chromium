@@ -145,7 +145,7 @@ class UnitTestPrerenderManager : public PrerenderManager {
     set_rate_limit_enabled(false);
   }
 
-  ~UnitTestPrerenderManager() override {}
+  ~UnitTestPrerenderManager() override = default;
 
   // From KeyedService, via PrererenderManager:
   void Shutdown() override {

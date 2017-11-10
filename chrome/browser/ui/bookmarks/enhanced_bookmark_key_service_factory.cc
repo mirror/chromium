@@ -21,8 +21,8 @@ EnhancedBookmarkKeyServiceFactory::EnhancedBookmarkKeyServiceFactory()
         BrowserContextDependencyManager::GetInstance()) {
 }
 
-EnhancedBookmarkKeyServiceFactory::~EnhancedBookmarkKeyServiceFactory() {
-}
+EnhancedBookmarkKeyServiceFactory::~EnhancedBookmarkKeyServiceFactory() =
+    default;
 
 KeyedService* EnhancedBookmarkKeyServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

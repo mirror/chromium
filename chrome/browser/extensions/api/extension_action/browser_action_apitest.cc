@@ -91,7 +91,7 @@ class BlankImageSource : public gfx::CanvasImageSource {
  public:
   explicit BlankImageSource(const gfx::Size& size)
      : gfx::CanvasImageSource(size, false) {}
-  ~BlankImageSource() override {}
+  ~BlankImageSource() override = default;
 
   void Draw(gfx::Canvas* canvas) override {}
 
@@ -121,8 +121,8 @@ void VerifyIconsMatch(const gfx::Image& bar_rendering,
 
 class BrowserActionApiTest : public ExtensionApiTest {
  public:
-  BrowserActionApiTest() {}
-  ~BrowserActionApiTest() override {}
+  BrowserActionApiTest() = default;
+  ~BrowserActionApiTest() override = default;
 
   void SetUpOnMainThread() override {
     ExtensionApiTest::SetUpOnMainThread();

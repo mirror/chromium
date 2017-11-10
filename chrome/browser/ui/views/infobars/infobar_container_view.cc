@@ -31,7 +31,7 @@ class ContentShadow : public views::View {
     SetPaintToLayer();
     layer()->SetFillsBoundsOpaquely(false);
   }
-  ~ContentShadow() override {}
+  ~ContentShadow() override = default;
 
  protected:
   // views::View:

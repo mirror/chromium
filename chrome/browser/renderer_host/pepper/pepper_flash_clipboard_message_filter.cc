@@ -97,9 +97,11 @@ void WriteDataToPickle(const std::map<base::string16, std::string>& data,
 
 }  // namespace
 
-PepperFlashClipboardMessageFilter::PepperFlashClipboardMessageFilter() {}
+PepperFlashClipboardMessageFilter::PepperFlashClipboardMessageFilter() =
+    default;
 
-PepperFlashClipboardMessageFilter::~PepperFlashClipboardMessageFilter() {}
+PepperFlashClipboardMessageFilter::~PepperFlashClipboardMessageFilter() =
+    default;
 
 scoped_refptr<base::TaskRunner>
 PepperFlashClipboardMessageFilter::OverrideTaskRunnerForMessage(

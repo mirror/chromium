@@ -171,8 +171,7 @@ ProfileAttributesStorage::ProfileAttributesStorage(
           {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
            base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})) {}
 
-ProfileAttributesStorage::~ProfileAttributesStorage() {
-}
+ProfileAttributesStorage::~ProfileAttributesStorage() = default;
 
 std::vector<ProfileAttributesEntry*>
 ProfileAttributesStorage::GetAllProfilesAttributes() {

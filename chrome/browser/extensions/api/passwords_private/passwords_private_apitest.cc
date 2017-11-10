@@ -67,7 +67,7 @@ class TestDelegate : public PasswordsPrivateDelegate {
       current_exceptions_.push_back(CreateException(i));
     }
   }
-  ~TestDelegate() override {}
+  ~TestDelegate() override = default;
 
   void SendSavedPasswordsList() override {
     PasswordsPrivateEventRouter* router =
@@ -181,7 +181,7 @@ class PasswordsPrivateApiTest : public ExtensionApiTest {
       s_test_delegate_ = new TestDelegate();
     }
   }
-  ~PasswordsPrivateApiTest() override {}
+  ~PasswordsPrivateApiTest() override = default;
 
   static std::unique_ptr<KeyedService> GetPasswordsPrivateDelegate(
       content::BrowserContext* profile) {

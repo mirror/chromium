@@ -35,8 +35,8 @@ using zoom::ZoomObserver;
 
 class ZoomControllerBrowserTest : public InProcessBrowserTest {
  public:
-  ZoomControllerBrowserTest() {}
-  ~ZoomControllerBrowserTest() override {}
+  ZoomControllerBrowserTest() = default;
+  ~ZoomControllerBrowserTest() override = default;
 
   void TestResetOnNavigation(ZoomController::ZoomMode zoom_mode) {
     DCHECK(zoom_mode == ZoomController::ZOOM_MODE_ISOLATED ||

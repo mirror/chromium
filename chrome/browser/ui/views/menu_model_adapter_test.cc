@@ -38,10 +38,9 @@ const int kSubMenuBaseId = 200;
 //  virtual base::string16 GetLabelAt(int index) const = 0;
 class CommonMenuModel : public ui::MenuModel {
  public:
-  CommonMenuModel() {
-  }
+  CommonMenuModel() = default;
 
-  ~CommonMenuModel() override {}
+  ~CommonMenuModel() override = default;
 
  protected:
   // ui::MenuModel implementation.
@@ -90,7 +89,7 @@ class SubMenuModel : public CommonMenuModel {
       : showing_(false) {
   }
 
-  ~SubMenuModel() override {}
+  ~SubMenuModel() override = default;
 
   bool showing() const {
     return showing_;
@@ -122,10 +121,9 @@ class SubMenuModel : public CommonMenuModel {
 
 class TopMenuModel : public CommonMenuModel {
  public:
-  TopMenuModel() {
-  }
+  TopMenuModel() = default;
 
-  ~TopMenuModel() override {}
+  ~TopMenuModel() override = default;
 
   bool IsSubmenuShowing() {
     return sub_menu_model_.showing();
@@ -166,7 +164,7 @@ class MenuModelAdapterTest : public ViewEventTestBase,
         menu_(NULL) {
   }
 
-  ~MenuModelAdapterTest() override {}
+  ~MenuModelAdapterTest() override = default;
 
   // ViewEventTestBase implementation.
 

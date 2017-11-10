@@ -65,7 +65,7 @@ DeviceIDFetcher::DeviceIDFetcher(int render_process_id)
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 }
 
-DeviceIDFetcher::~DeviceIDFetcher() {}
+DeviceIDFetcher::~DeviceIDFetcher() = default;
 
 bool DeviceIDFetcher::Start(const IDCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);

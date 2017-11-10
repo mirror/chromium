@@ -339,7 +339,7 @@ class CertificateReportingServiceTest : public ::testing::Test {
         io_task_runner_(content::BrowserThread::GetTaskRunnerForThread(
             content::BrowserThread::IO)) {}
 
-  ~CertificateReportingServiceTest() override {}
+  ~CertificateReportingServiceTest() override = default;
 
   void SetUp() override {
     service_observer_.Clear();

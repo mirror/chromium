@@ -30,8 +30,7 @@ NavigationMetricsRecorder::NavigationMetricsRecorder(
     content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents) {}
 
-NavigationMetricsRecorder::~NavigationMetricsRecorder() {
-}
+NavigationMetricsRecorder::~NavigationMetricsRecorder() = default;
 
 void NavigationMetricsRecorder::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {

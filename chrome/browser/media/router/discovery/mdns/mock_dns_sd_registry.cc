@@ -9,7 +9,7 @@ namespace media_router {
 MockDnsSdRegistry::MockDnsSdRegistry(DnsSdRegistry::DnsSdObserver* observer)
     : DnsSdRegistry(nullptr), observer_(observer) {}
 
-MockDnsSdRegistry::~MockDnsSdRegistry() {}
+MockDnsSdRegistry::~MockDnsSdRegistry() = default;
 
 void MockDnsSdRegistry::DispatchMDnsEvent(const std::string& service_type,
                                           const DnsSdServiceList& services) {

@@ -167,7 +167,7 @@ PermissionDecisionAutoBlocker::Factory::Factory()
           "PermissionDecisionAutoBlocker",
           BrowserContextDependencyManager::GetInstance()) {}
 
-PermissionDecisionAutoBlocker::Factory::~Factory() {}
+PermissionDecisionAutoBlocker::Factory::~Factory() = default;
 
 KeyedService* PermissionDecisionAutoBlocker::Factory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
@@ -437,7 +437,7 @@ PermissionDecisionAutoBlocker::PermissionDecisionAutoBlocker(Profile* profile)
     db_manager_ = sb_service->database_manager();
 }
 
-PermissionDecisionAutoBlocker::~PermissionDecisionAutoBlocker() {}
+PermissionDecisionAutoBlocker::~PermissionDecisionAutoBlocker() = default;
 
 void PermissionDecisionAutoBlocker::CheckSafeBrowsingResult(
     const GURL& request_origin,

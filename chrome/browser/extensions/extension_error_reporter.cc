@@ -41,7 +41,7 @@ ExtensionErrorReporter::ExtensionErrorReporter(bool enable_noisy_errors)
     ui_task_runner_ = base::ThreadTaskRunnerHandle::Get();
 }
 
-ExtensionErrorReporter::~ExtensionErrorReporter() {}
+ExtensionErrorReporter::~ExtensionErrorReporter() = default;
 
 void ExtensionErrorReporter::ReportLoadError(
     const base::FilePath& extension_path,

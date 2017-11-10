@@ -12,9 +12,9 @@
 
 namespace media_router {
 
-SafeDialDeviceDescriptionParser::SafeDialDeviceDescriptionParser() {}
+SafeDialDeviceDescriptionParser::SafeDialDeviceDescriptionParser() = default;
 
-SafeDialDeviceDescriptionParser::~SafeDialDeviceDescriptionParser() {}
+SafeDialDeviceDescriptionParser::~SafeDialDeviceDescriptionParser() = default;
 
 void SafeDialDeviceDescriptionParser::Start(
     const std::string& xml_text,

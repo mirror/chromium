@@ -63,8 +63,7 @@ TabIconView::TabIconView(TabIconViewModel* model,
   InitializeIfNeeded();
 }
 
-TabIconView::~TabIconView() {
-}
+TabIconView::~TabIconView() = default;
 
 void TabIconView::Update() {
   if (!model_->ShouldTabIconViewAnimate())

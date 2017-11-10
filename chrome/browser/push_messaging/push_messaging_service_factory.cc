@@ -52,7 +52,7 @@ PushMessagingServiceFactory::PushMessagingServiceFactory()
   DependsOn(PermissionManagerFactory::GetInstance());
 }
 
-PushMessagingServiceFactory::~PushMessagingServiceFactory() {}
+PushMessagingServiceFactory::~PushMessagingServiceFactory() = default;
 
 void PushMessagingServiceFactory::RestoreFactoryForTests(
     content::BrowserContext* context) {

@@ -25,8 +25,7 @@ LanguagesHandler::LanguagesHandler(content::WebUI* webui)
     : profile_(Profile::FromWebUI(webui)) {
 }
 
-LanguagesHandler::~LanguagesHandler() {
-}
+LanguagesHandler::~LanguagesHandler() = default;
 
 void LanguagesHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

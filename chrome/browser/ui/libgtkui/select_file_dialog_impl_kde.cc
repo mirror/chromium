@@ -216,8 +216,7 @@ SelectFileDialogImplKDE::SelectFileDialogImplKDE(
          desktop_ == base::nix::DESKTOP_ENVIRONMENT_KDE5);
 }
 
-SelectFileDialogImplKDE::~SelectFileDialogImplKDE() {
-}
+SelectFileDialogImplKDE::~SelectFileDialogImplKDE() = default;
 
 bool SelectFileDialogImplKDE::IsRunning(gfx::NativeWindow parent_window) const {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

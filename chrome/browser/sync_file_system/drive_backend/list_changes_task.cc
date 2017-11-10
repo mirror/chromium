@@ -31,8 +31,7 @@ ListChangesTask::ListChangesTask(SyncEngineContext* sync_context)
       weak_ptr_factory_(this) {
 }
 
-ListChangesTask::~ListChangesTask() {
-}
+ListChangesTask::~ListChangesTask() = default;
 
 void ListChangesTask::RunPreflight(std::unique_ptr<SyncTaskToken> token) {
   token->InitializeTaskLog("List Changes");

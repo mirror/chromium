@@ -82,7 +82,7 @@ class DeleteWebContentsOnDestroyedObserver
 class TabStripDummyDelegate : public TestTabStripModelDelegate {
  public:
   TabStripDummyDelegate() : run_unload_(false) {}
-  ~TabStripDummyDelegate() override {}
+  ~TabStripDummyDelegate() override = default;
 
   void set_run_unload_listener(bool value) { run_unload_ = value; }
 
@@ -102,7 +102,7 @@ const char kTabStripModelTestIDUserDataKey[] = "TabStripModelTestIDUserData";
 class TabStripModelTestIDUserData : public base::SupportsUserData::Data {
  public:
   explicit TabStripModelTestIDUserData(int id) : id_(id) {}
-  ~TabStripModelTestIDUserData() override {}
+  ~TabStripModelTestIDUserData() override = default;
   int id() { return id_; }
 
  private:
@@ -116,7 +116,7 @@ class DummySingleWebContentsDialogManager
       gfx::NativeWindow dialog,
       web_modal::SingleWebContentsDialogManagerDelegate* delegate)
       : delegate_(delegate), dialog_(dialog) {}
-  ~DummySingleWebContentsDialogManager() override {}
+  ~DummySingleWebContentsDialogManager() override = default;
 
   void Show() override {}
   void Hide() override {}
@@ -268,7 +268,7 @@ class MockTabStripModelObserver : public TabStripModelObserver {
  public:
   explicit MockTabStripModelObserver(TabStripModel* model)
       : empty_(true), model_(model) {}
-  ~MockTabStripModelObserver() override {}
+  ~MockTabStripModelObserver() override = default;
 
   enum TabStripModelObserverAction {
     INSERT,

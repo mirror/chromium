@@ -20,7 +20,7 @@
 HistoryLoginHandler::HistoryLoginHandler(const base::Closure& signin_callback)
     : signin_callback_(signin_callback) {}
 
-HistoryLoginHandler::~HistoryLoginHandler() {}
+HistoryLoginHandler::~HistoryLoginHandler() = default;
 
 void HistoryLoginHandler::RegisterMessages() {
   profile_info_watcher_.reset(new ProfileInfoWatcher(

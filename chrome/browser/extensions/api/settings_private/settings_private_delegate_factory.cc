@@ -33,8 +33,7 @@ SettingsPrivateDelegateFactory::SettingsPrivateDelegateFactory()
           BrowserContextDependencyManager::GetInstance()) {
 }
 
-SettingsPrivateDelegateFactory::~SettingsPrivateDelegateFactory() {
-}
+SettingsPrivateDelegateFactory::~SettingsPrivateDelegateFactory() = default;
 
 content::BrowserContext* SettingsPrivateDelegateFactory::GetBrowserContextToUse(
     content::BrowserContext* context) const {

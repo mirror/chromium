@@ -53,7 +53,7 @@ class FakeHistoryAdapter : public DownloadHistory::HistoryAdapter {
       should_commit_immediately_(false) {
   }
 
-  ~FakeHistoryAdapter() override {}
+  ~FakeHistoryAdapter() override = default;
 
   void QueryDownloads(
       const history::HistoryService::DownloadQueryCallback& callback) override {
@@ -200,7 +200,7 @@ class DownloadHistoryTest : public testing::Test {
         history_(NULL),
         manager_observer_(NULL),
         download_created_index_(0) {}
-  ~DownloadHistoryTest() override {}
+  ~DownloadHistoryTest() override = default;
 
  protected:
   void TearDown() override { download_history_.reset(); }

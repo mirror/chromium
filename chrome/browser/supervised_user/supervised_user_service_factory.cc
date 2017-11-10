@@ -53,7 +53,7 @@ SupervisedUserServiceFactory::SupervisedUserServiceFactory()
   DependsOn(ProfileSyncServiceFactory::GetInstance());
 }
 
-SupervisedUserServiceFactory::~SupervisedUserServiceFactory() {}
+SupervisedUserServiceFactory::~SupervisedUserServiceFactory() = default;
 
 content::BrowserContext* SupervisedUserServiceFactory::GetBrowserContextToUse(
     content::BrowserContext* context) const {

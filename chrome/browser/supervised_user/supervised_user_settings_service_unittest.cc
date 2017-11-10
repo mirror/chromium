@@ -40,7 +40,7 @@ class MockSyncErrorFactory : public syncer::SyncErrorFactory {
 MockSyncErrorFactory::MockSyncErrorFactory(syncer::ModelType type)
     : type_(type) {}
 
-MockSyncErrorFactory::~MockSyncErrorFactory() {}
+MockSyncErrorFactory::~MockSyncErrorFactory() = default;
 
 syncer::SyncError MockSyncErrorFactory::CreateAndUploadError(
     const base::Location& location,
@@ -61,7 +61,7 @@ const char kSplitItemName[] = "X-SuperMoosePowers";
 class SupervisedUserSettingsServiceTest : public ::testing::Test {
  protected:
   SupervisedUserSettingsServiceTest() : settings_service_(nullptr) {}
-  ~SupervisedUserSettingsServiceTest() override {}
+  ~SupervisedUserSettingsServiceTest() override = default;
 
   std::unique_ptr<syncer::SyncChangeProcessor> CreateSyncProcessor() {
     sync_processor_.reset(new syncer::FakeSyncChangeProcessor);

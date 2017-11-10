@@ -34,7 +34,7 @@ TestBrowserWindowAura::TestBrowserWindowAura(
     std::unique_ptr<aura::Window> native_window)
     : native_window_(std::move(native_window)) {}
 
-TestBrowserWindowAura::~TestBrowserWindowAura() {}
+TestBrowserWindowAura::~TestBrowserWindowAura() = default;
 
 gfx::NativeWindow TestBrowserWindowAura::GetNativeWindow() const {
   return native_window_.get();

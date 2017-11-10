@@ -52,8 +52,8 @@
 
 class ChromeSitePerProcessTest : public InProcessBrowserTest {
  public:
-  ChromeSitePerProcessTest() {}
-  ~ChromeSitePerProcessTest() override {}
+  ChromeSitePerProcessTest() = default;
+  ~ChromeSitePerProcessTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     content::IsolateAllSitesForTesting(command_line);
@@ -323,7 +323,7 @@ IN_PROC_BROWSER_TEST_F(ChromeSitePerProcessTest,
 class ChromeSitePerProcessPDFTest : public ChromeSitePerProcessTest {
  public:
   ChromeSitePerProcessPDFTest() : test_guest_view_manager_(nullptr) {}
-  ~ChromeSitePerProcessPDFTest() override {}
+  ~ChromeSitePerProcessPDFTest() override = default;
 
   void SetUpOnMainThread() override {
     ChromeSitePerProcessTest::SetUpOnMainThread();
@@ -608,7 +608,7 @@ class TestSpellCheckMessageFilter : public content::BrowserMessageFilter,
 #endif
 
  private:
-  ~TestSpellCheckMessageFilter() override {}
+  ~TestSpellCheckMessageFilter() override = default;
 
 #if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
   void HandleMessage(int, int, const base::string16& text) {

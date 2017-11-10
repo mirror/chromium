@@ -37,7 +37,7 @@ namespace {
 class SyncAwareCounterTest : public SyncTest {
  public:
   SyncAwareCounterTest() : SyncTest(SINGLE_CLIENT) {}
-  ~SyncAwareCounterTest() override {}
+  ~SyncAwareCounterTest() override = default;
 
   void SetUpOnMainThread() override {
     fake_web_history_service_.reset(new history::FakeWebHistoryService(

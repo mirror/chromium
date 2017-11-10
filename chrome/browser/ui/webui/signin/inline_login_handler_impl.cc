@@ -189,7 +189,7 @@ InlineSigninHelper::InlineSigninHelper(
   }
 }
 
-InlineSigninHelper::~InlineSigninHelper() {}
+InlineSigninHelper::~InlineSigninHelper() = default;
 
 void InlineSigninHelper::OnClientOAuthSuccess(const ClientOAuthResult& result) {
   if (is_force_sign_in_with_usermanager_) {
@@ -396,7 +396,7 @@ InlineLoginHandlerImpl::InlineLoginHandlerImpl()
         weak_factory_(this) {
 }
 
-InlineLoginHandlerImpl::~InlineLoginHandlerImpl() {}
+InlineLoginHandlerImpl::~InlineLoginHandlerImpl() = default;
 
 // This method is not called with webview sign in enabled.
 void InlineLoginHandlerImpl::DidFinishNavigation(
@@ -711,8 +711,8 @@ InlineLoginHandlerImpl::FinishCompleteLoginParams::FinishCompleteLoginParams(
 InlineLoginHandlerImpl::FinishCompleteLoginParams::FinishCompleteLoginParams(
     const FinishCompleteLoginParams& other) = default;
 
-InlineLoginHandlerImpl::
-    FinishCompleteLoginParams::~FinishCompleteLoginParams() {}
+InlineLoginHandlerImpl::FinishCompleteLoginParams::
+    ~FinishCompleteLoginParams() = default;
 
 // static
 void InlineLoginHandlerImpl::FinishCompleteLogin(

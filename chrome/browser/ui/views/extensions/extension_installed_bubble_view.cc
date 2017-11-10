@@ -169,7 +169,7 @@ ExtensionInstalledBubbleView::ExtensionInstalledBubbleView(
   chrome::RecordDialogCreation(chrome::DialogIdentifier::EXTENSION_INSTALLED);
 }
 
-ExtensionInstalledBubbleView::~ExtensionInstalledBubbleView() {}
+ExtensionInstalledBubbleView::~ExtensionInstalledBubbleView() = default;
 
 void ExtensionInstalledBubbleView::UpdateAnchorView() {
   views::View* reference_view = AnchorViewForBrowser(controller_, browser());

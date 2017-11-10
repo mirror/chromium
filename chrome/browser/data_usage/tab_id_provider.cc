@@ -89,7 +89,7 @@ TabIdProvider::TabIdProvider(base::TaskRunner* task_runner,
                      base::Owned(callback_runner.release())));
 }
 
-TabIdProvider::~TabIdProvider() {}
+TabIdProvider::~TabIdProvider() = default;
 
 void TabIdProvider::ProvideTabId(TabIdCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());

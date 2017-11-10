@@ -61,8 +61,8 @@ class MockObserver : public DesktopMediaListObserver {
 
 class FakeScreenCapturer : public webrtc::DesktopCapturer {
  public:
-  FakeScreenCapturer() {}
-  ~FakeScreenCapturer() override {}
+  FakeScreenCapturer() = default;
+  ~FakeScreenCapturer() override = default;
 
   // webrtc::ScreenCapturer implementation.
   void Start(Callback* callback) override { callback_ = callback; }
@@ -97,7 +97,7 @@ class FakeWindowCapturer : public webrtc::DesktopCapturer {
   FakeWindowCapturer()
       : callback_(NULL) {
   }
-  ~FakeWindowCapturer() override {}
+  ~FakeWindowCapturer() override = default;
 
   void SetWindowList(const SourceList& list) {
     base::AutoLock lock(window_list_lock_);

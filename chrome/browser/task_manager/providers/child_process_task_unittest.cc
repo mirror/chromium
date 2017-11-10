@@ -49,9 +49,9 @@ class ChildProcessTaskTest
     : public testing::Test,
       public TaskProviderObserver {
  public:
-  ChildProcessTaskTest() {}
+  ChildProcessTaskTest() = default;
 
-  ~ChildProcessTaskTest() override {}
+  ~ChildProcessTaskTest() override = default;
 
   // task_manager::TaskProviderObserver:
   void TaskAdded(Task* task) override {

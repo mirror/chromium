@@ -157,7 +157,7 @@ ChromeExpectCTReporter::ChromeExpectCTReporter(
           new net::ReportSender(request_context, kTrafficAnnotation)),
       request_context_(request_context) {}
 
-ChromeExpectCTReporter::~ChromeExpectCTReporter() {}
+ChromeExpectCTReporter::~ChromeExpectCTReporter() = default;
 
 void ChromeExpectCTReporter::OnExpectCTFailed(
     const net::HostPortPair& host_port_pair,
@@ -256,7 +256,7 @@ ChromeExpectCTReporter::PreflightInProgress::PreflightInProgress(
       serialized_report(serialized_report),
       report_uri(report_uri) {}
 
-ChromeExpectCTReporter::PreflightInProgress::~PreflightInProgress() {}
+ChromeExpectCTReporter::PreflightInProgress::~PreflightInProgress() = default;
 
 void ChromeExpectCTReporter::SendPreflight(
     const GURL& report_uri,

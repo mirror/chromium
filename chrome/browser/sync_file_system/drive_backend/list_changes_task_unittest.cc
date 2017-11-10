@@ -40,7 +40,7 @@ class ListChangesTaskTest : public testing::Test {
  public:
   ListChangesTaskTest()
       : browser_threads_(content::TestBrowserThreadBundle::IO_MAINLOOP) {}
-  ~ListChangesTaskTest() override {}
+  ~ListChangesTaskTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(database_dir_.CreateUniqueTempDir());

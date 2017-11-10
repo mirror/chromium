@@ -33,7 +33,7 @@ NavigationObserver::NavigationObserver(Profile* profile)
   extension_registry_observer_.Add(ExtensionRegistry::Get(profile));
 }
 
-NavigationObserver::~NavigationObserver() {}
+NavigationObserver::~NavigationObserver() = default;
 
 void NavigationObserver::Observe(int type,
                                  const content::NotificationSource& source,

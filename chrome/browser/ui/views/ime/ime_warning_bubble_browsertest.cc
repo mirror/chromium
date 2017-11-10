@@ -13,7 +13,7 @@
 class ImeWarningBubbleTest : public ExtensionBrowserTest {
  public:
   ImeWarningBubbleTest();
-  ~ImeWarningBubbleTest() override {}
+  ~ImeWarningBubbleTest() override = default;
 
   void SetUpOnMainThread() override;
 

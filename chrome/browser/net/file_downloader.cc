@@ -55,7 +55,7 @@ FileDownloader::FileDownloader(
   }
 }
 
-FileDownloader::~FileDownloader() {}
+FileDownloader::~FileDownloader() = default;
 
 void FileDownloader::OnURLFetchComplete(const net::URLFetcher* source) {
   DCHECK_EQ(fetcher_.get(), source);

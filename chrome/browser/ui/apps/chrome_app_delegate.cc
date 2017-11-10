@@ -122,8 +122,8 @@ void ChromeAppDelegate::RelinquishKeepAliveAfterTimeout(
 class ChromeAppDelegate::NewWindowContentsDelegate
     : public content::WebContentsDelegate {
  public:
-  NewWindowContentsDelegate() {}
-  ~NewWindowContentsDelegate() override {}
+  NewWindowContentsDelegate() = default;
+  ~NewWindowContentsDelegate() override = default;
 
   content::WebContents* OpenURLFromTab(
       content::WebContents* source,

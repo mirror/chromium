@@ -264,7 +264,7 @@ MediaRouterWebUIMessageHandler::MediaRouterWebUIMessageHandler(
           features::kMediaRouterUIRouteController)),
       media_router_ui_(media_router_ui) {}
 
-MediaRouterWebUIMessageHandler::~MediaRouterWebUIMessageHandler() {}
+MediaRouterWebUIMessageHandler::~MediaRouterWebUIMessageHandler() = default;
 
 void MediaRouterWebUIMessageHandler::UpdateSinks(
     const std::vector<MediaSinkWithCastModes>& sinks) {

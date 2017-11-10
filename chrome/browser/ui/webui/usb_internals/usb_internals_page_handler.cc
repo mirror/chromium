@@ -51,7 +51,7 @@ void TestUsbDevice::Open(OpenCallback callback) {
   std::move(callback).Run(nullptr);
 }
 
-TestUsbDevice::~TestUsbDevice() {}
+TestUsbDevice::~TestUsbDevice() = default;
 
 }  // namespace
 
@@ -59,7 +59,7 @@ UsbInternalsPageHandler::UsbInternalsPageHandler(
     mojom::UsbInternalsPageHandlerRequest request)
     : binding_(this, std::move(request)) {}
 
-UsbInternalsPageHandler::~UsbInternalsPageHandler() {}
+UsbInternalsPageHandler::~UsbInternalsPageHandler() = default;
 
 void UsbInternalsPageHandler::AddDeviceForTesting(
     const std::string& name,

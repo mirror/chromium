@@ -11,8 +11,7 @@
 #include "components/crx_file/id_util.h"
 #include "components/search_engines/search_engines_pref_names.h"
 
-BrandcodedDefaultSettings::BrandcodedDefaultSettings() {
-}
+BrandcodedDefaultSettings::BrandcodedDefaultSettings() = default;
 
 BrandcodedDefaultSettings::BrandcodedDefaultSettings(const std::string& prefs) {
   if (!prefs.empty()) {
@@ -33,8 +32,7 @@ BrandcodedDefaultSettings::BrandcodedDefaultSettings(const std::string& prefs) {
   }
 }
 
-BrandcodedDefaultSettings::~BrandcodedDefaultSettings() {
-}
+BrandcodedDefaultSettings::~BrandcodedDefaultSettings() = default;
 
 std::unique_ptr<base::ListValue>
 BrandcodedDefaultSettings::GetSearchProviderOverrides() const {

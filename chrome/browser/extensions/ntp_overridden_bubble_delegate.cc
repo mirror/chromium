@@ -49,7 +49,7 @@ NtpOverriddenBubbleDelegate::NtpOverriddenBubbleDelegate(
   set_acknowledged_flag_pref_name(kNtpBubbleAcknowledged);
 }
 
-NtpOverriddenBubbleDelegate::~NtpOverriddenBubbleDelegate() {}
+NtpOverriddenBubbleDelegate::~NtpOverriddenBubbleDelegate() = default;
 
 // static
 void NtpOverriddenBubbleDelegate::RegisterPrefs(PrefRegistrySimple* registry) {

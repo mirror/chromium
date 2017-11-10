@@ -77,7 +77,7 @@ class MockWebContentsLoadFailObserver : public content::WebContentsObserver {
  public:
   explicit MockWebContentsLoadFailObserver(content::WebContents* web_contents)
       : content::WebContentsObserver(web_contents) {}
-  virtual ~MockWebContentsLoadFailObserver() {}
+  virtual ~MockWebContentsLoadFailObserver() = default;
 
   MOCK_METHOD1(DidFinishNavigation,
                void(content::NavigationHandle* navigation_handle));

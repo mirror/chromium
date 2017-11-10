@@ -70,8 +70,7 @@ EasyUnlockAppManagerImpl::EasyUnlockAppManagerImpl(
       app_path_(app_path) {
 }
 
-EasyUnlockAppManagerImpl::~EasyUnlockAppManagerImpl() {
-}
+EasyUnlockAppManagerImpl::~EasyUnlockAppManagerImpl() = default;
 
 void EasyUnlockAppManagerImpl::EnsureReady(
     const base::Closure& ready_callback) {
@@ -193,8 +192,7 @@ bool EasyUnlockAppManagerImpl::SendAuthAttemptEvent() {
 
 }  // namespace
 
-EasyUnlockAppManager::~EasyUnlockAppManager() {
-}
+EasyUnlockAppManager::~EasyUnlockAppManager() = default;
 
 // static
 std::unique_ptr<EasyUnlockAppManager> EasyUnlockAppManager::Create(

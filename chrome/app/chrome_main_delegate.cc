@@ -504,8 +504,7 @@ ChromeMainDelegate::ChromeMainDelegate(base::TimeTicks exe_entry_point_ticks) {
 #endif  // !defined(CHROME_MULTIPLE_DLL_CHILD)
 }
 
-ChromeMainDelegate::~ChromeMainDelegate() {
-}
+ChromeMainDelegate::~ChromeMainDelegate() = default;
 
 bool ChromeMainDelegate::BasicStartupComplete(int* exit_code) {
 #if defined(OS_CHROMEOS)

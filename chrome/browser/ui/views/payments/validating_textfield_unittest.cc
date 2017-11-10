@@ -19,14 +19,14 @@ namespace payments {
 
 class ValidatingTextfieldTest : public views::ViewsTestBase {
  public:
-  ValidatingTextfieldTest() {}
-  ~ValidatingTextfieldTest() override {}
+  ValidatingTextfieldTest() = default;
+  ~ValidatingTextfieldTest() override = default;
 
  protected:
   class TestValidationDelegate : public ValidationDelegate {
    public:
-    TestValidationDelegate() {}
-    ~TestValidationDelegate() override {}
+    TestValidationDelegate() = default;
+    ~TestValidationDelegate() override = default;
 
     // ValidationDelegate:
     bool TextfieldValueChanged(views::Textfield* textfield,

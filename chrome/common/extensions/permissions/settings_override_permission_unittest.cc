@@ -32,8 +32,7 @@ class SettingsOverridePermissionTest : public ChromeManifestTest {
 #if defined(OS_MACOSX)
       : scoped_channel_(version_info::Channel::UNKNOWN)
 #endif
-  {
-  }
+        = default;
 
   enum Flags {
     kHomepage = 1,

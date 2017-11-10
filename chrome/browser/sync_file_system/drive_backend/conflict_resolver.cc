@@ -31,7 +31,7 @@ ConflictResolver::ConflictResolver(SyncEngineContext* sync_context)
     : sync_context_(sync_context),
       weak_ptr_factory_(this) {}
 
-ConflictResolver::~ConflictResolver() {}
+ConflictResolver::~ConflictResolver() = default;
 
 void ConflictResolver::RunPreflight(std::unique_ptr<SyncTaskToken> token) {
   token->InitializeTaskLog("Conflict Resolution");

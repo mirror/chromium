@@ -23,8 +23,8 @@ using content::BrowserThread;
 
 class ChromeURLRequestContextFactory {
  public:
-  ChromeURLRequestContextFactory() {}
-  virtual ~ChromeURLRequestContextFactory() {}
+  ChromeURLRequestContextFactory() = default;
+  virtual ~ChromeURLRequestContextFactory() = default;
 
   // Called to create a new instance (will only be called once).
   virtual net::URLRequestContext* Create() = 0;

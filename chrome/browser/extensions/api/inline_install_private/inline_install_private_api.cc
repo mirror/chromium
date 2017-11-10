@@ -50,8 +50,7 @@ Installer::Installer(const std::string& id,
   set_show_post_install_ui(false);
 }
 
-Installer::~Installer() {
-}
+Installer::~Installer() = default;
 
 std::unique_ptr<ExtensionInstallPrompt::Prompt> Installer::CreateInstallPrompt()
     const {
@@ -89,13 +88,11 @@ void Installer::OnManifestParsed() {
 
 }  // namespace
 
-InlineInstallPrivateInstallFunction::
-    InlineInstallPrivateInstallFunction() {
-}
+InlineInstallPrivateInstallFunction::InlineInstallPrivateInstallFunction() =
+    default;
 
-InlineInstallPrivateInstallFunction::
-    ~InlineInstallPrivateInstallFunction() {
-}
+InlineInstallPrivateInstallFunction::~InlineInstallPrivateInstallFunction() =
+    default;
 
 ExtensionFunction::ResponseAction
 InlineInstallPrivateInstallFunction::Run() {

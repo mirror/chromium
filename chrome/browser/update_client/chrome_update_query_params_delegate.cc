@@ -17,11 +17,9 @@ base::LazyInstance<ChromeUpdateQueryParamsDelegate>::DestructorAtExit
 
 }  // namespace
 
-ChromeUpdateQueryParamsDelegate::ChromeUpdateQueryParamsDelegate() {
-}
+ChromeUpdateQueryParamsDelegate::ChromeUpdateQueryParamsDelegate() = default;
 
-ChromeUpdateQueryParamsDelegate::~ChromeUpdateQueryParamsDelegate() {
-}
+ChromeUpdateQueryParamsDelegate::~ChromeUpdateQueryParamsDelegate() = default;
 
 // static
 ChromeUpdateQueryParamsDelegate*

@@ -59,7 +59,7 @@ SuggestionsServiceFactory::SuggestionsServiceFactory()
   DependsOn(ProfileSyncServiceFactory::GetInstance());
 }
 
-SuggestionsServiceFactory::~SuggestionsServiceFactory() {}
+SuggestionsServiceFactory::~SuggestionsServiceFactory() = default;
 
 KeyedService* SuggestionsServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

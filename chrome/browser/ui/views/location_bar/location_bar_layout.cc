@@ -76,8 +76,7 @@ LocationBarLayout::LocationBarLayout(Position position,
       item_padding_(item_padding),
       item_edit_padding_(item_edit_padding) {}
 
-LocationBarLayout::~LocationBarLayout() {
-}
+LocationBarLayout::~LocationBarLayout() = default;
 
 void LocationBarLayout::AddDecoration(int y,
                                       int height,

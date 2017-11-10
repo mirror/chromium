@@ -197,7 +197,7 @@ std::vector<std::unique_ptr<FakeDownloadItem>> CreateDummyAssetDownloads(
 
 class ObservedMockDownloadManager : public MockDownloadManager {
  public:
-  ObservedMockDownloadManager() {}
+  ObservedMockDownloadManager() = default;
   ~ObservedMockDownloadManager() override {
     for (auto& observer : observers_) {
       observer.ManagerGoingDown(this);

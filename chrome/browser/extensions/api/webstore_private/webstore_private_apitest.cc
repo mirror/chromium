@@ -101,8 +101,8 @@ class WebstoreInstallListener : public WebstoreInstaller::Delegate {
 // A base class for tests below.
 class ExtensionWebstorePrivateApiTest : public ExtensionApiTest {
  public:
-  ExtensionWebstorePrivateApiTest() {}
-  ~ExtensionWebstorePrivateApiTest() override {}
+  ExtensionWebstorePrivateApiTest() = default;
+  ~ExtensionWebstorePrivateApiTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ExtensionApiTest::SetUpCommandLine(command_line);

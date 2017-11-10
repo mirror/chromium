@@ -29,7 +29,8 @@ const char kHistogramTotalBytes[] =
 TabRestorePageLoadMetricsObserver::TabRestorePageLoadMetricsObserver()
     : cache_bytes_(0), network_bytes_(0) {}
 
-TabRestorePageLoadMetricsObserver::~TabRestorePageLoadMetricsObserver() {}
+TabRestorePageLoadMetricsObserver::~TabRestorePageLoadMetricsObserver() =
+    default;
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 TabRestorePageLoadMetricsObserver::OnStart(

@@ -58,7 +58,7 @@ base::File::Error ScanFile(const base::FilePath& dest_platform_path) {
 
 }  // namespace
 
-AVScanningFileValidator::~AVScanningFileValidator() {}
+AVScanningFileValidator::~AVScanningFileValidator() = default;
 
 void AVScanningFileValidator::StartPostWriteValidation(
     const base::FilePath& dest_platform_path,
@@ -76,5 +76,4 @@ void AVScanningFileValidator::StartPostWriteValidation(
 #endif
 }
 
-AVScanningFileValidator::AVScanningFileValidator() {
-}
+AVScanningFileValidator::AVScanningFileValidator() = default;

@@ -3584,7 +3584,7 @@ class FlagsStateSingleton {
  public:
   FlagsStateSingleton()
       : flags_state_(kFeatureEntries, arraysize(kFeatureEntries)) {}
-  ~FlagsStateSingleton() {}
+  ~FlagsStateSingleton() = default;
 
   static FlagsStateSingleton* GetInstance() {
     return base::Singleton<FlagsStateSingleton>::get();

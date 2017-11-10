@@ -17,7 +17,7 @@ using spellcheck::MAX_SYNCABLE_DICTIONARY_WORDS;
 class TwoClientDictionarySyncTest : public SyncTest {
  public:
   TwoClientDictionarySyncTest() : SyncTest(TWO_CLIENT) {}
-  ~TwoClientDictionarySyncTest() override {}
+  ~TwoClientDictionarySyncTest() override = default;
 
   bool TestUsesSelfNotifications() override { return false; }
 

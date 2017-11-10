@@ -204,8 +204,7 @@ void OmniboxAPI::Shutdown() {
   template_url_sub_.reset();
 }
 
-OmniboxAPI::~OmniboxAPI() {
-}
+OmniboxAPI::~OmniboxAPI() = default;
 
 static base::LazyInstance<BrowserContextKeyedAPIFactory<OmniboxAPI>>::
     DestructorAtExit g_omnibox_api_factory = LAZY_INSTANCE_INITIALIZER;

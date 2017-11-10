@@ -198,7 +198,7 @@ class FailFirstNRequestsInterceptor : public net::URLRequestInterceptor {
  public:
   explicit FailFirstNRequestsInterceptor(int requests_to_fail)
       : requests_(0), failures_(0), requests_to_fail_(requests_to_fail) {}
-  ~FailFirstNRequestsInterceptor() override {}
+  ~FailFirstNRequestsInterceptor() override = default;
 
   // net::URLRequestInterceptor implementation
   net::URLRequestJob* MaybeInterceptRequest(
@@ -244,7 +244,7 @@ class LinkDoctorInterceptor : public net::URLRequestInterceptor {
                             weak_factory_(this) {
   }
 
-  ~LinkDoctorInterceptor() override {}
+  ~LinkDoctorInterceptor() override = default;
 
   // net::URLRequestInterceptor implementation
   net::URLRequestJob* MaybeInterceptRequest(
@@ -346,7 +346,7 @@ class ErrorPageTest : public InProcessBrowserTest {
   };
 
   ErrorPageTest() : link_doctor_interceptor_(NULL) {}
-  ~ErrorPageTest() override {}
+  ~ErrorPageTest() override = default;
 
   // Navigates the active tab to a mock url created for the file at |file_path|.
   // Needed for StaleCacheStatus and StaleCacheStatusFailedCorrections tests.
@@ -529,7 +529,7 @@ class TestFailProvisionalLoadObserver : public content::WebContentsObserver {
  public:
   explicit TestFailProvisionalLoadObserver(content::WebContents* contents)
       : content::WebContentsObserver(contents) {}
-  ~TestFailProvisionalLoadObserver() override {}
+  ~TestFailProvisionalLoadObserver() override = default;
 
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override {
@@ -1190,8 +1190,8 @@ IN_PROC_BROWSER_TEST_F(ErrorPageAutoReloadTest, IgnoresSameDocumentNavigation) {
 // Interceptor that fails all requests with net::ERR_ADDRESS_UNREACHABLE.
 class AddressUnreachableInterceptor : public net::URLRequestInterceptor {
  public:
-  AddressUnreachableInterceptor() {}
-  ~AddressUnreachableInterceptor() override {}
+  AddressUnreachableInterceptor() = default;
+  ~AddressUnreachableInterceptor() override = default;
 
   // net::URLRequestInterceptor:
   net::URLRequestJob* MaybeInterceptRequest(

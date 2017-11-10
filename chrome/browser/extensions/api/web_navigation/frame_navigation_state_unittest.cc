@@ -21,8 +21,8 @@ class FrameNavigationStateTest : public ChromeRenderViewHostTestHarness {
   }
 
  protected:
-  FrameNavigationStateTest() {}
-  ~FrameNavigationStateTest() override {}
+  FrameNavigationStateTest() = default;
+  ~FrameNavigationStateTest() override = default;
 
   FrameNavigationState navigation_state_;
 

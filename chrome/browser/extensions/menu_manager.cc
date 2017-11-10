@@ -137,8 +137,7 @@ MenuItem::MenuItem(const Id& id,
       enabled_(enabled),
       contexts_(contexts) {}
 
-MenuItem::~MenuItem() {
-}
+MenuItem::~MenuItem() = default;
 
 std::unique_ptr<MenuItem> MenuItem::ReleaseChild(const Id& child_id,
                                                  bool recursive) {
@@ -326,8 +325,7 @@ MenuManager::MenuManager(content::BrowserContext* context, StateStore* store)
     store_->RegisterKey(kContextMenusKey);
 }
 
-MenuManager::~MenuManager() {
-}
+MenuManager::~MenuManager() = default;
 
 // static
 MenuManager* MenuManager::Get(content::BrowserContext* context) {
@@ -976,8 +974,7 @@ MenuItem::Id::Id() : incognito(false), uid(0) {}
 MenuItem::Id::Id(bool incognito, const MenuItem::ExtensionKey& extension_key)
     : incognito(incognito), extension_key(extension_key), uid(0) {}
 
-MenuItem::Id::~Id() {
-}
+MenuItem::Id::~Id() = default;
 
 bool MenuItem::Id::operator==(const Id& other) const {
   return (incognito == other.incognito &&

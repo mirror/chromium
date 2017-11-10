@@ -90,7 +90,8 @@ ContentSettingBubbleContents::MediaComboboxModel::MediaComboboxModel(
          type_ == content::MEDIA_DEVICE_VIDEO_CAPTURE);
 }
 
-ContentSettingBubbleContents::MediaComboboxModel::~MediaComboboxModel() {}
+ContentSettingBubbleContents::MediaComboboxModel::~MediaComboboxModel() =
+    default;
 
 const content::MediaStreamDevices&
 ContentSettingBubbleContents::MediaComboboxModel::GetDevices() const {
@@ -151,8 +152,7 @@ ContentSettingBubbleContents::Favicon::Favicon(
   SetImage(image.AsImageSkia());
 }
 
-ContentSettingBubbleContents::Favicon::~Favicon() {
-}
+ContentSettingBubbleContents::Favicon::~Favicon() = default;
 
 bool ContentSettingBubbleContents::Favicon::OnMousePressed(
     const ui::MouseEvent& event) {

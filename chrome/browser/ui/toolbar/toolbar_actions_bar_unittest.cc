@@ -92,7 +92,7 @@ std::string VerifyToolbarOrderForBar(
 ToolbarActionsBarUnitTest::ToolbarActionsBarUnitTest()
     : toolbar_model_(nullptr) {}
 
-ToolbarActionsBarUnitTest::~ToolbarActionsBarUnitTest() {}
+ToolbarActionsBarUnitTest::~ToolbarActionsBarUnitTest() = default;
 
 void ToolbarActionsBarUnitTest::SetUp() {
   BrowserWithTestWindowTest::SetUp();

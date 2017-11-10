@@ -84,9 +84,9 @@ base::string16 CreateElementWithClass(const base::string16& content,
 
 }  // namespace
 
-AppLauncherLoginHandler::AppLauncherLoginHandler() {}
+AppLauncherLoginHandler::AppLauncherLoginHandler() = default;
 
-AppLauncherLoginHandler::~AppLauncherLoginHandler() {}
+AppLauncherLoginHandler::~AppLauncherLoginHandler() = default;
 
 void AppLauncherLoginHandler::RegisterMessages() {
   profile_info_watcher_.reset(new ProfileInfoWatcher(

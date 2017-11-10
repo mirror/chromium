@@ -77,7 +77,7 @@ content::WebUIDataSource* CreateComponentsUIHTMLSource(Profile* profile) {
 class ComponentsDOMHandler : public WebUIMessageHandler {
  public:
   ComponentsDOMHandler();
-  ~ComponentsDOMHandler() override {}
+  ~ComponentsDOMHandler() override = default;
 
   // WebUIMessageHandler implementation.
   void RegisterMessages() override;
@@ -94,8 +94,7 @@ class ComponentsDOMHandler : public WebUIMessageHandler {
   DISALLOW_COPY_AND_ASSIGN(ComponentsDOMHandler);
 };
 
-ComponentsDOMHandler::ComponentsDOMHandler() {
-}
+ComponentsDOMHandler::ComponentsDOMHandler() = default;
 
 void ComponentsDOMHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

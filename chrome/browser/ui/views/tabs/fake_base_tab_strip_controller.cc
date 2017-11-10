@@ -7,10 +7,9 @@
 #include "chrome/browser/ui/views/tabs/tab_renderer_data.h"
 #include "chrome/browser/ui/views/tabs/tab_strip_impl.h"
 
-FakeBaseTabStripController::FakeBaseTabStripController() {}
+FakeBaseTabStripController::FakeBaseTabStripController() = default;
 
-FakeBaseTabStripController::~FakeBaseTabStripController() {
-}
+FakeBaseTabStripController::~FakeBaseTabStripController() = default;
 
 void FakeBaseTabStripController::AddTab(int index, bool is_active) {
   num_tabs_++;

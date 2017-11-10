@@ -15,7 +15,7 @@ ChromeSigninClientFactory::ChromeSigninClientFactory()
   DependsOn(SigninErrorControllerFactory::GetInstance());
 }
 
-ChromeSigninClientFactory::~ChromeSigninClientFactory() {}
+ChromeSigninClientFactory::~ChromeSigninClientFactory() = default;
 
 // static
 SigninClient* ChromeSigninClientFactory::GetForProfile(Profile* profile) {

@@ -75,11 +75,9 @@ int X11EmptyIOErrorHandler(Display* d) {
 
 }  // namespace
 
-ChromeBrowserMainExtraPartsX11::ChromeBrowserMainExtraPartsX11() {
-}
+ChromeBrowserMainExtraPartsX11::ChromeBrowserMainExtraPartsX11() = default;
 
-ChromeBrowserMainExtraPartsX11::~ChromeBrowserMainExtraPartsX11() {
-}
+ChromeBrowserMainExtraPartsX11::~ChromeBrowserMainExtraPartsX11() = default;
 
 void ChromeBrowserMainExtraPartsX11::PreEarlyInitialization() {
   // Installs the X11 error handlers for the browser process used during

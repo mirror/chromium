@@ -4,5 +4,4 @@
 
 #include "chrome/browser/ui/bookmarks/bookmark_tab_helper_delegate.h"
 
-BookmarkTabHelperDelegate::~BookmarkTabHelperDelegate() {
-}
+BookmarkTabHelperDelegate::~BookmarkTabHelperDelegate() = default;

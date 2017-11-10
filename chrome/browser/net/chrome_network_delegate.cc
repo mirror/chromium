@@ -217,7 +217,7 @@ ChromeNetworkDelegate::ChromeNetworkDelegate(
       ChromeExtensionsNetworkDelegate::Create(event_router));
 }
 
-ChromeNetworkDelegate::~ChromeNetworkDelegate() {}
+ChromeNetworkDelegate::~ChromeNetworkDelegate() = default;
 
 void ChromeNetworkDelegate::set_extension_info_map(
     extensions::InfoMap* extension_info_map) {

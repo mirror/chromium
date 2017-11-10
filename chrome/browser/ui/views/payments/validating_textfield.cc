@@ -12,7 +12,7 @@ ValidatingTextfield::ValidatingTextfield(
     std::unique_ptr<ValidationDelegate> delegate)
     : Textfield(), delegate_(std::move(delegate)) {}
 
-ValidatingTextfield::~ValidatingTextfield() {}
+ValidatingTextfield::~ValidatingTextfield() = default;
 
 void ValidatingTextfield::OnBlur() {
   Textfield::OnBlur();

@@ -44,8 +44,7 @@ StandardManagementPolicyProvider::StandardManagementPolicyProvider(
     : settings_(settings) {
 }
 
-StandardManagementPolicyProvider::~StandardManagementPolicyProvider() {
-}
+StandardManagementPolicyProvider::~StandardManagementPolicyProvider() = default;
 
 std::string
     StandardManagementPolicyProvider::GetDebugPolicyProviderName() const {

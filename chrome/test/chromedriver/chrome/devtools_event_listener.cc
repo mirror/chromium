@@ -6,7 +6,7 @@
 
 #include "chrome/test/chromedriver/chrome/status.h"
 
-DevToolsEventListener::~DevToolsEventListener() {}
+DevToolsEventListener::~DevToolsEventListener() = default;
 
 Status DevToolsEventListener::OnConnected(DevToolsClient* client) {
   return Status(kOk);

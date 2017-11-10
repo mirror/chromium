@@ -34,8 +34,7 @@ const char kInvalidTypeOfParameter[] = "Attribute '%s' has an invalid type";
 // DeclarativeContentCssPredicate
 //
 
-DeclarativeContentCssPredicate::~DeclarativeContentCssPredicate() {
-}
+DeclarativeContentCssPredicate::~DeclarativeContentCssPredicate() = default;
 
 // static
 std::unique_ptr<DeclarativeContentCssPredicate>
@@ -94,8 +93,7 @@ PerWebContentsTracker(
 }
 
 DeclarativeContentCssConditionTracker::PerWebContentsTracker::
-~PerWebContentsTracker() {
-}
+    ~PerWebContentsTracker() = default;
 
 void DeclarativeContentCssConditionTracker::PerWebContentsTracker::
 OnWebContentsNavigation(content::NavigationHandle* navigation_handle) {
@@ -154,7 +152,7 @@ DeclarativeContentCssConditionTracker::DeclarativeContentCssConditionTracker(
 }
 
 DeclarativeContentCssConditionTracker::
-~DeclarativeContentCssConditionTracker() {}
+    ~DeclarativeContentCssConditionTracker() = default;
 
 std::string DeclarativeContentCssConditionTracker::
 GetPredicateApiAttributeName() const {

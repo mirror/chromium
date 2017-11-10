@@ -44,8 +44,7 @@ SupervisedUserWhitelistService::SupervisedUserWhitelistService(
   DCHECK(prefs);
 }
 
-SupervisedUserWhitelistService::~SupervisedUserWhitelistService() {
-}
+SupervisedUserWhitelistService::~SupervisedUserWhitelistService() = default;
 
 // static
 void SupervisedUserWhitelistService::RegisterProfilePrefs(

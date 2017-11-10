@@ -16,7 +16,8 @@ CustodianProfileDownloaderService::CustodianProfileDownloaderService(
         : custodian_profile_(custodian_profile) {
 }
 
-CustodianProfileDownloaderService::~CustodianProfileDownloaderService() {}
+CustodianProfileDownloaderService::~CustodianProfileDownloaderService() =
+    default;
 
 void CustodianProfileDownloaderService::Shutdown() {
   profile_downloader_.reset();

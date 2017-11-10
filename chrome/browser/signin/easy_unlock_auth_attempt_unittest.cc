@@ -65,7 +65,7 @@ class FakeAppManager : public EasyUnlockAppManager {
  public:
   FakeAppManager()
       : auth_attempt_count_(0u), auth_attempt_should_fail_(false) {}
-  ~FakeAppManager() override {}
+  ~FakeAppManager() override = default;
 
   void EnsureReady(const base::Closure& ready_callback) override {
     ADD_FAILURE() << "Not reached";
@@ -123,7 +123,7 @@ class TestLockHandler : public proximity_auth::ScreenlockBridge::LockHandler {
         auth_type_(proximity_auth::mojom::AuthType::USER_CLICK),
         account_id_(account_id) {}
 
-  ~TestLockHandler() override {}
+  ~TestLockHandler() override = default;
 
   void set_state(AuthState value) { state_ = value; }
   AuthState state() const { return state_; }
@@ -215,8 +215,8 @@ class TestLockHandler : public proximity_auth::ScreenlockBridge::LockHandler {
 
 class EasyUnlockAuthAttemptUnlockTest : public testing::Test {
  public:
-  EasyUnlockAuthAttemptUnlockTest() {}
-  ~EasyUnlockAuthAttemptUnlockTest() override {}
+  EasyUnlockAuthAttemptUnlockTest() = default;
+  ~EasyUnlockAuthAttemptUnlockTest() override = default;
 
   void SetUp() override {
     app_manager_.reset(new FakeAppManager());

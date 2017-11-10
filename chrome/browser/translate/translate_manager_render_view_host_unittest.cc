@@ -71,7 +71,7 @@ namespace {
 
 class MockTranslateBubbleFactory : public TranslateBubbleFactory {
  public:
-  MockTranslateBubbleFactory() {}
+  MockTranslateBubbleFactory() = default;
 
   ShowTranslateBubbleResult ShowImplementation(
       BrowserWindow* window,
@@ -123,7 +123,7 @@ class FakePageImpl : public translate::mojom::Page {
       : called_translate_(false),
         called_revert_translation_(false),
         binding_(this) {}
-  ~FakePageImpl() override {}
+  ~FakePageImpl() override = default;
 
   translate::mojom::PagePtr BindToNewPagePtr() {
     binding_.Close();

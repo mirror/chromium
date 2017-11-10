@@ -39,8 +39,7 @@ IndividualSettings::IndividualSettings(
   // here since it's not applicable to default settings.
 }
 
-IndividualSettings::~IndividualSettings() {
-}
+IndividualSettings::~IndividualSettings() = default;
 
 bool IndividualSettings::Parse(const base::DictionaryValue* dict,
                                ParsingScope scope) {
@@ -198,8 +197,7 @@ GlobalSettings::GlobalSettings() {
   Reset();
 }
 
-GlobalSettings::~GlobalSettings() {
-}
+GlobalSettings::~GlobalSettings() = default;
 
 void GlobalSettings::Reset() {
   has_restricted_install_sources = false;

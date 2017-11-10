@@ -85,8 +85,7 @@ PrivetNotificationsListener::PrivetNotificationsListener(
   privet_http_factory_.swap(privet_http_factory);
 }
 
-PrivetNotificationsListener::~PrivetNotificationsListener() {
-}
+PrivetNotificationsListener::~PrivetNotificationsListener() = default;
 
 void PrivetNotificationsListener::DeviceChanged(
     const std::string& name,
@@ -192,11 +191,9 @@ void PrivetNotificationsListener::NotifyDeviceRemoved() {
   }
 }
 
-PrivetNotificationsListener::DeviceContext::DeviceContext() {
-}
+PrivetNotificationsListener::DeviceContext::DeviceContext() = default;
 
-PrivetNotificationsListener::DeviceContext::~DeviceContext() {
-}
+PrivetNotificationsListener::DeviceContext::~DeviceContext() = default;
 
 PrivetNotificationService::PrivetNotificationService(
     content::BrowserContext* profile)
@@ -207,8 +204,7 @@ PrivetNotificationService::PrivetNotificationService(
                                    base::RandInt(0, kStartDelaySeconds / 4)));
 }
 
-PrivetNotificationService::~PrivetNotificationService() {
-}
+PrivetNotificationService::~PrivetNotificationService() = default;
 
 void PrivetNotificationService::DeviceChanged(
     const std::string& name,
@@ -359,8 +355,7 @@ PrivetNotificationService::CreateNotificationDelegate(Profile* profile) {
 PrivetNotificationDelegate::PrivetNotificationDelegate(Profile* profile)
     : profile_(profile) {}
 
-PrivetNotificationDelegate::~PrivetNotificationDelegate() {
-}
+PrivetNotificationDelegate::~PrivetNotificationDelegate() = default;
 
 void PrivetNotificationDelegate::ButtonClick(int button_index) {
   if (button_index == 0) {

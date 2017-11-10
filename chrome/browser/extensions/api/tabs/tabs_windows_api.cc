@@ -45,8 +45,7 @@ TabsWindowsAPI::TabsWindowsAPI(content::BrowserContext* context)
                                  api::windows::OnFocusChanged::kEventName);
 }
 
-TabsWindowsAPI::~TabsWindowsAPI() {
-}
+TabsWindowsAPI::~TabsWindowsAPI() = default;
 
 // static
 TabsWindowsAPI* TabsWindowsAPI::Get(content::BrowserContext* context) {

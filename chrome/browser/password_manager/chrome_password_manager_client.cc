@@ -194,7 +194,7 @@ ChromePasswordManagerClient::ChromePasswordManagerClient(
   driver_factory_->RequestSendLoggingAvailability();
 }
 
-ChromePasswordManagerClient::~ChromePasswordManagerClient() {}
+ChromePasswordManagerClient::~ChromePasswordManagerClient() = default;
 
 bool ChromePasswordManagerClient::IsPasswordManagementEnabledForCurrentPage()
     const {

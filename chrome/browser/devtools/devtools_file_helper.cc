@@ -113,7 +113,7 @@ class SelectFileDialog : public ui::SelectFileDialog::Listener,
 
  private:
   friend class base::RefCounted<SelectFileDialog>;
-  ~SelectFileDialog() override {}
+  ~SelectFileDialog() override = default;
 
   scoped_refptr<ui::SelectFileDialog> select_file_dialog_;
   SelectedCallback selected_callback_;

@@ -54,7 +54,7 @@ OffscreenTabsOwner::OffscreenTabsOwner(WebContents* extension_web_contents)
   DCHECK(extension_web_contents_);
 }
 
-OffscreenTabsOwner::~OffscreenTabsOwner() {}
+OffscreenTabsOwner::~OffscreenTabsOwner() = default;
 
 // static
 OffscreenTabsOwner* OffscreenTabsOwner::Get(

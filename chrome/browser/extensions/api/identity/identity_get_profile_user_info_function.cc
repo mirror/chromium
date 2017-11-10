@@ -15,11 +15,11 @@
 
 namespace extensions {
 
-IdentityGetProfileUserInfoFunction::IdentityGetProfileUserInfoFunction() {
-}
+IdentityGetProfileUserInfoFunction::IdentityGetProfileUserInfoFunction() =
+    default;
 
-IdentityGetProfileUserInfoFunction::~IdentityGetProfileUserInfoFunction() {
-}
+IdentityGetProfileUserInfoFunction::~IdentityGetProfileUserInfoFunction() =
+    default;
 
 ExtensionFunction::ResponseAction IdentityGetProfileUserInfoFunction::Run() {
   if (GetProfile()->IsOffTheRecord()) {

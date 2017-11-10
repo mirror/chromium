@@ -41,7 +41,7 @@ class TestCertificateReportSender : public net::ReportSender {
  public:
   TestCertificateReportSender()
       : ReportSender(nullptr, TRAFFIC_ANNOTATION_FOR_TESTS) {}
-  ~TestCertificateReportSender() override {}
+  ~TestCertificateReportSender() override = default;
 
   void Send(const GURL& report_uri,
             base::StringPiece content_type,
@@ -327,7 +327,7 @@ class ChromeExpectCTReporterTest : public ::testing::Test {
  public:
   ChromeExpectCTReporterTest()
       : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP) {}
-  ~ChromeExpectCTReporterTest() override {}
+  ~ChromeExpectCTReporterTest() override = default;
 
   void SetUp() override {
     report_server_.RegisterRequestHandler(

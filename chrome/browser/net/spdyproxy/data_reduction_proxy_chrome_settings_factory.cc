@@ -40,8 +40,7 @@ DataReductionProxyChromeSettingsFactory::
 }
 
 DataReductionProxyChromeSettingsFactory::
-    ~DataReductionProxyChromeSettingsFactory() {
-}
+    ~DataReductionProxyChromeSettingsFactory() = default;
 
 KeyedService* DataReductionProxyChromeSettingsFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

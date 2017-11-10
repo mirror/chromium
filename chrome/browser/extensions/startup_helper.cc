@@ -96,7 +96,7 @@ class ValidateCrxHelper : public SandboxedUnpackerClient {
   }
 
  protected:
-  ~ValidateCrxHelper() override {}
+  ~ValidateCrxHelper() override = default;
 
   void OnUnpackSuccess(
       const base::FilePath& temp_dir,
@@ -184,6 +184,6 @@ bool StartupHelper::ValidateCrx(const base::CommandLine& cmd_line,
   return success;
 }
 
-StartupHelper::~StartupHelper() {}
+StartupHelper::~StartupHelper() = default;
 
 }  // namespace extensions

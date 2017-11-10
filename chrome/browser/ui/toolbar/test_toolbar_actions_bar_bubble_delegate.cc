@@ -13,7 +13,7 @@ class TestToolbarActionsBarBubbleDelegate::DelegateImpl
  public:
   explicit DelegateImpl(TestToolbarActionsBarBubbleDelegate* parent)
       : parent_(parent) {}
-  ~DelegateImpl() override {}
+  ~DelegateImpl() override = default;
 
  private:
   bool ShouldShow() override { return true; }

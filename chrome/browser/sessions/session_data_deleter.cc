@@ -95,7 +95,7 @@ void SessionDataDeleter::Run(
                  url_request_context_getter));
 }
 
-SessionDataDeleter::~SessionDataDeleter() {}
+SessionDataDeleter::~SessionDataDeleter() = default;
 
 void SessionDataDeleter::ClearSessionOnlyLocalStorage(
     content::StoragePartition* storage_partition,

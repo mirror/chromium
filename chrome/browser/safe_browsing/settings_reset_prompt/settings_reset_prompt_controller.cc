@@ -74,7 +74,7 @@ SettingsResetPromptController::SettingsResetPromptController(
   InitMainText();
 }
 
-SettingsResetPromptController::~SettingsResetPromptController() {}
+SettingsResetPromptController::~SettingsResetPromptController() = default;
 
 base::string16 SettingsResetPromptController::GetWindowTitle() const {
   if (ResetSearchEnabled(*model_)) {

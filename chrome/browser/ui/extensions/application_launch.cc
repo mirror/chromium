@@ -83,7 +83,7 @@ class EnableViaDialogFlow : public ExtensionEnableFlowDelegate {
         callback_(callback) {
   }
 
-  ~EnableViaDialogFlow() override {}
+  ~EnableViaDialogFlow() override = default;
 
   void Run() {
     DCHECK(!service_->IsExtensionEnabled(extension_id_));

@@ -21,8 +21,7 @@ SessionTabHelper::SessionTabHelper(content::WebContents* contents)
     : content::WebContentsObserver(contents) {
 }
 
-SessionTabHelper::~SessionTabHelper() {
-}
+SessionTabHelper::~SessionTabHelper() = default;
 
 void SessionTabHelper::SetWindowID(const SessionID& id) {
   window_id_ = id;

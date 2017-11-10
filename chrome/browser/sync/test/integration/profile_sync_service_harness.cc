@@ -120,7 +120,7 @@ ProfileSyncServiceHarness::ProfileSyncServiceHarness(
       oauth2_refesh_token_number_(0),
       profile_debug_name_(profile->GetDebugName()) {}
 
-ProfileSyncServiceHarness::~ProfileSyncServiceHarness() { }
+ProfileSyncServiceHarness::~ProfileSyncServiceHarness() = default;
 
 bool ProfileSyncServiceHarness::SetupSync() {
   bool result = SetupSync(syncer::UserSelectableTypes(), false);

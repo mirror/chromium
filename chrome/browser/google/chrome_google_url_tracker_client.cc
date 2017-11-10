@@ -12,8 +12,7 @@ ChromeGoogleURLTrackerClient::ChromeGoogleURLTrackerClient(Profile* profile)
     : profile_(profile) {
 }
 
-ChromeGoogleURLTrackerClient::~ChromeGoogleURLTrackerClient() {
-}
+ChromeGoogleURLTrackerClient::~ChromeGoogleURLTrackerClient() = default;
 
 bool ChromeGoogleURLTrackerClient::IsBackgroundNetworkingEnabled() {
   return !base::CommandLine::ForCurrentProcess()->HasSwitch(

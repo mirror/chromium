@@ -46,7 +46,7 @@ using content::BrowserThread;
 
 class FileHandlers {
  public:
-  FileHandlers() {}
+  FileHandlers() = default;
 
   ~FileHandlers() { base::AssertBlockingAllowed(); }
 
@@ -152,7 +152,7 @@ PWGRasterConverterHelper::PWGRasterConverterHelper(
            base::TaskShutdownBehavior::BLOCK_SHUTDOWN})),
       files_(nullptr, base::OnTaskRunnerDeleter(blocking_task_runner_)) {}
 
-PWGRasterConverterHelper::~PWGRasterConverterHelper() {}
+PWGRasterConverterHelper::~PWGRasterConverterHelper() = default;
 
 void PWGRasterConverterHelper::Convert(
     base::RefCountedMemory* data,
@@ -222,8 +222,7 @@ class PWGRasterConverterImpl : public PWGRasterConverter {
 
 PWGRasterConverterImpl::PWGRasterConverterImpl() : weak_ptr_factory_(this) {}
 
-PWGRasterConverterImpl::~PWGRasterConverterImpl() {
-}
+PWGRasterConverterImpl::~PWGRasterConverterImpl() = default;
 
 void PWGRasterConverterImpl::Start(base::RefCountedMemory* data,
                                    const PdfRenderSettings& conversion_settings,

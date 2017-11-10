@@ -33,7 +33,7 @@ class SubresourceFilterInterceptingBrowserTest
   SubresourceFilterInterceptingBrowserTest()
       : safe_browsing_test_server_(
             std::make_unique<net::test_server::EmbeddedTestServer>()) {}
-  ~SubresourceFilterInterceptingBrowserTest() override {}
+  ~SubresourceFilterInterceptingBrowserTest() override = default;
 
   net::test_server::EmbeddedTestServer* safe_browsing_test_server() {
     return safe_browsing_test_server_.get();

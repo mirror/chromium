@@ -59,8 +59,8 @@ bool RunLoopUntil(const base::Callback<bool()>& condition) {
 // desired interactive behaviors.
 class FlashFullscreenInteractiveBrowserTest : public OutOfProcessPPAPITest {
  public:
-  FlashFullscreenInteractiveBrowserTest() {}
-  ~FlashFullscreenInteractiveBrowserTest() override {}
+  FlashFullscreenInteractiveBrowserTest() = default;
+  ~FlashFullscreenInteractiveBrowserTest() override = default;
 
  protected:
   content::WebContents* GetActiveWebContents() const {

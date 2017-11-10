@@ -51,7 +51,7 @@ class PermissionRequestManagerTest : public ChromeRenderViewHostTestHarness {
             "iframe",
             PermissionRequestType::PERMISSION_MEDIASTREAM_MIC,
             GURL("http://www.youtube.com")) {}
-  ~PermissionRequestManagerTest() override {}
+  ~PermissionRequestManagerTest() override = default;
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();

@@ -20,7 +20,7 @@
 namespace {
 class TestCompletionCallback {
  public:
-  TestCompletionCallback() {}
+  TestCompletionCallback() = default;
 
   bool have_result() const { return info_collection_.get(); }
 

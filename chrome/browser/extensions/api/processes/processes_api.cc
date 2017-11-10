@@ -181,8 +181,7 @@ ProcessesEventRouter::ProcessesEventRouter(content::BrowserContext* context)
       listeners_(0) {
 }
 
-ProcessesEventRouter::~ProcessesEventRouter() {
-}
+ProcessesEventRouter::~ProcessesEventRouter() = default;
 
 void ProcessesEventRouter::ListenerAdded() {
   UpdateRefreshTypesFlagsBasedOnListeners();
@@ -613,7 +612,7 @@ ProcessesGetProcessInfoFunction::OnTasksRefreshedWithBackgroundCalculations(
   GatherDataAndRespond(task_ids);
 }
 
-ProcessesGetProcessInfoFunction::~ProcessesGetProcessInfoFunction() {}
+ProcessesGetProcessInfoFunction::~ProcessesGetProcessInfoFunction() = default;
 
 void ProcessesGetProcessInfoFunction::GatherDataAndRespond(
     const task_manager::TaskIdList& task_ids) {

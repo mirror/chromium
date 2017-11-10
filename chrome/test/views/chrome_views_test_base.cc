@@ -6,9 +6,9 @@
 
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 
-ChromeViewsTestBase::ChromeViewsTestBase() {}
+ChromeViewsTestBase::ChromeViewsTestBase() = default;
 
-ChromeViewsTestBase::~ChromeViewsTestBase() {}
+ChromeViewsTestBase::~ChromeViewsTestBase() = default;
 
 void ChromeViewsTestBase::SetUp() {
   views::ViewsTestBase::SetUp();

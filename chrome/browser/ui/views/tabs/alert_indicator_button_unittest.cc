@@ -12,9 +12,9 @@
 
 class AlertIndicatorButtonTest : public views::ViewsTestBase {
  public:
-  AlertIndicatorButtonTest() {}
+  AlertIndicatorButtonTest() = default;
 
-  ~AlertIndicatorButtonTest() override {}
+  ~AlertIndicatorButtonTest() override = default;
 
   void SetUp() override {
     views::ViewsTestBase::SetUp();

@@ -34,7 +34,7 @@ ProfileStatisticsAggregator::ProfileStatisticsAggregator(
       profile_path_(profile_->GetPath()),
       done_callback_(done_callback) {}
 
-ProfileStatisticsAggregator::~ProfileStatisticsAggregator() {}
+ProfileStatisticsAggregator::~ProfileStatisticsAggregator() = default;
 
 void ProfileStatisticsAggregator::AddCallbackAndStartAggregator(
     const profiles::ProfileStatisticsCallback& stats_callback) {

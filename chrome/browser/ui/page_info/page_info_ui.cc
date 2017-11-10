@@ -195,7 +195,7 @@ PageInfoUI::ChosenObjectInfo::ChosenObjectInfo(
     std::unique_ptr<base::DictionaryValue> object)
     : ui_info(ui_info), object(std::move(object)) {}
 
-PageInfoUI::ChosenObjectInfo::~ChosenObjectInfo() {}
+PageInfoUI::ChosenObjectInfo::~ChosenObjectInfo() = default;
 
 PageInfoUI::IdentityInfo::IdentityInfo()
     : identity_status(PageInfo::SITE_IDENTITY_STATUS_UNKNOWN),
@@ -203,7 +203,7 @@ PageInfoUI::IdentityInfo::IdentityInfo()
       show_ssl_decision_revoke_button(false),
       show_change_password_buttons(false) {}
 
-PageInfoUI::IdentityInfo::~IdentityInfo() {}
+PageInfoUI::IdentityInfo::~IdentityInfo() = default;
 
 std::unique_ptr<PageInfoUI::SecurityDescription>
 PageInfoUI::IdentityInfo::GetSecurityDescription() const {
@@ -278,7 +278,7 @@ PageInfoUI::IdentityInfo::GetSecurityDescription() const {
   }
 }
 
-PageInfoUI::~PageInfoUI() {}
+PageInfoUI::~PageInfoUI() = default;
 
 // static
 base::string16 PageInfoUI::PermissionTypeToUIString(ContentSettingsType type) {

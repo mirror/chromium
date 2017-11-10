@@ -92,8 +92,7 @@ MasterPreferences::MasterPreferences(const std::string& prefs) {
   InitializeFromString(prefs);
 }
 
-MasterPreferences::~MasterPreferences() {
-}
+MasterPreferences::~MasterPreferences() = default;
 
 void MasterPreferences::InitializeFromCommandLine(
     const base::CommandLine& cmd_line) {

@@ -105,11 +105,9 @@ Profile* ProfileForWebContents(content::WebContents* web_contents) {
 }  // namespace
 
 ExtensionInstallPrompt::Prompt::InstallPromptPermissions::
-    InstallPromptPermissions() {
-}
+    InstallPromptPermissions() = default;
 ExtensionInstallPrompt::Prompt::InstallPromptPermissions::
-    ~InstallPromptPermissions() {
-}
+    ~InstallPromptPermissions() = default;
 
 ExtensionInstallPrompt::PromptType
 ExtensionInstallPrompt::g_last_prompt_type_for_tests =
@@ -157,8 +155,7 @@ ExtensionInstallPrompt::Prompt::Prompt(PromptType type)
   DCHECK_NE(type_, NUM_PROMPT_TYPES);
 }
 
-ExtensionInstallPrompt::Prompt::~Prompt() {
-}
+ExtensionInstallPrompt::Prompt::~Prompt() = default;
 
 void ExtensionInstallPrompt::Prompt::AddPermissions(
     const PermissionMessages& permissions,
@@ -643,8 +640,7 @@ ExtensionInstallPrompt::ExtensionInstallPrompt(Profile* profile,
       weak_factory_(this) {
 }
 
-ExtensionInstallPrompt::~ExtensionInstallPrompt() {
-}
+ExtensionInstallPrompt::~ExtensionInstallPrompt() = default;
 
 void ExtensionInstallPrompt::ShowDialog(
     const DoneCallback& done_callback,

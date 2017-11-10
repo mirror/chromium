@@ -16,11 +16,9 @@ using base::ASCIIToUTF16;
 template<int INDEX>
 class MenuItemViewTestBasic : public MenuTestBase {
  public:
-  MenuItemViewTestBasic() {
-  }
+  MenuItemViewTestBasic() = default;
 
-  ~MenuItemViewTestBasic() override {
-  }
+  ~MenuItemViewTestBasic() override = default;
 
   // MenuTestBase implementation
   void BuildMenu(views::MenuItemView* menu) override {
@@ -72,8 +70,7 @@ class MenuItemViewTestInsert : public MenuTestBase {
   MenuItemViewTestInsert() : inserted_item_(NULL) {
   }
 
-  ~MenuItemViewTestInsert() override {
-  }
+  ~MenuItemViewTestInsert() override = default;
 
   // MenuTestBase implementation
   void BuildMenu(views::MenuItemView* menu) override {
@@ -169,8 +166,7 @@ class MenuItemViewTestInsertWithSubmenu : public MenuTestBase {
       inserted_item_(NULL) {
   }
 
-  ~MenuItemViewTestInsertWithSubmenu() override {
-  }
+  ~MenuItemViewTestInsertWithSubmenu() override = default;
 
   // MenuTestBase implementation
   void BuildMenu(views::MenuItemView* menu) override {
@@ -230,11 +226,9 @@ VIEW_TEST(MenuItemViewTestInsertWithSubmenu1, InsertItemWithSubmenu1)
 template<int REMOVE_INDEX, int SELECT_INDEX>
 class MenuItemViewTestRemove : public MenuTestBase {
  public:
-  MenuItemViewTestRemove() {
-  }
+  MenuItemViewTestRemove() = default;
 
-  ~MenuItemViewTestRemove() override {
-  }
+  ~MenuItemViewTestRemove() override = default;
 
   // MenuTestBase implementation
   void BuildMenu(views::MenuItemView* menu) override {
@@ -310,8 +304,7 @@ class MenuItemViewTestRemoveWithSubmenu : public MenuTestBase {
   MenuItemViewTestRemoveWithSubmenu() : submenu_(NULL) {
   }
 
-  ~MenuItemViewTestRemoveWithSubmenu() override {
-  }
+  ~MenuItemViewTestRemoveWithSubmenu() override = default;
 
   // MenuTestBase implementation
   void BuildMenu(views::MenuItemView* menu) override {

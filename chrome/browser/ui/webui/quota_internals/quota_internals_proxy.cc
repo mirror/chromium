@@ -70,7 +70,7 @@ void QuotaInternalsProxy::RequestInfo(
   ReportStatistics(stats);
 }
 
-QuotaInternalsProxy::~QuotaInternalsProxy() {}
+QuotaInternalsProxy::~QuotaInternalsProxy() = default;
 
 #define RELAY_TO_HANDLER(func, arg_t)                             \
   void QuotaInternalsProxy::func(arg_t arg) {                     \

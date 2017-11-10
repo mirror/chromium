@@ -30,8 +30,7 @@ StackedTabStripLayout::StackedTabStripLayout(const gfx::Size& size,
       first_tab_x_(0) {
 }
 
-StackedTabStripLayout::~StackedTabStripLayout() {
-}
+StackedTabStripLayout::~StackedTabStripLayout() = default;
 
 void StackedTabStripLayout::SetXAndPinnedCount(int x, int pinned_tab_count) {
   first_tab_x_ = x;

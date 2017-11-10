@@ -62,7 +62,7 @@ MediaGalleryCheckboxView::MediaGalleryCheckboxView(
   AddChildView(secondary_text_);
 }
 
-MediaGalleryCheckboxView::~MediaGalleryCheckboxView() {}
+MediaGalleryCheckboxView::~MediaGalleryCheckboxView() = default;
 
 void MediaGalleryCheckboxView::Layout() {
   views::View::Layout();

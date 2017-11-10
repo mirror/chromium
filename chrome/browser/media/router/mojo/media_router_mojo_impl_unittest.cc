@@ -129,7 +129,7 @@ class TestMediaRouterMojoImpl : public MediaRouterMojoImpl {
  public:
   explicit TestMediaRouterMojoImpl(content::BrowserContext* context)
       : MediaRouterMojoImpl(context) {}
-  ~TestMediaRouterMojoImpl() override {}
+  ~TestMediaRouterMojoImpl() override = default;
 
  protected:
   mojom::MediaRouteProvider* GetProviderForPresentation(
@@ -141,8 +141,8 @@ class TestMediaRouterMojoImpl : public MediaRouterMojoImpl {
 
 class MediaRouterMojoImplTest : public MediaRouterMojoTest {
  public:
-  MediaRouterMojoImplTest() {}
-  ~MediaRouterMojoImplTest() override {}
+  MediaRouterMojoImplTest() = default;
+  ~MediaRouterMojoImplTest() override = default;
 
  protected:
   void ExpectResultBucketCount(const std::string& operation,

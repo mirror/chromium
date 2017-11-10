@@ -7,7 +7,7 @@
 
 class ResourcesPrivateApiTest : public ExtensionApiTest {
  public:
-  ResourcesPrivateApiTest() {}
+  ResourcesPrivateApiTest() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ResourcesPrivateApiTest);

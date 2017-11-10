@@ -58,8 +58,7 @@ ExtensionLoaderHandler::ExtensionLoaderHandler(Profile* profile)
   extension_error_reporter_observer_.Add(ExtensionErrorReporter::GetInstance());
 }
 
-ExtensionLoaderHandler::~ExtensionLoaderHandler() {
-}
+ExtensionLoaderHandler::~ExtensionLoaderHandler() = default;
 
 void ExtensionLoaderHandler::GetLocalizedValues(
     content::WebUIDataSource* source) {

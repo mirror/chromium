@@ -163,7 +163,7 @@ class AutofillManagerTestDelegateImpl
  public:
   AutofillManagerTestDelegateImpl()
       : waiting_for_text_change_(false) {}
-  ~AutofillManagerTestDelegateImpl() override {}
+  ~AutofillManagerTestDelegateImpl() override = default;
 
   // autofill::AutofillManagerTestDelegate:
   void DidPreviewFormData() override {
@@ -228,7 +228,7 @@ class AutofillInteractiveTest : public InProcessBrowserTest {
       key_press_event_sink_(
           base::Bind(&AutofillInteractiveTest::HandleKeyPressEvent,
                      base::Unretained(this))) {}
-  ~AutofillInteractiveTest() override {}
+  ~AutofillInteractiveTest() override = default;
 
   // InProcessBrowserTest:
   void SetUpOnMainThread() override {

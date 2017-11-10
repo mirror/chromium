@@ -242,7 +242,7 @@ SimpleMessageBoxViews::SimpleMessageBoxViews(
   chrome::RecordDialogCreation(chrome::DialogIdentifier::SIMPLE_MESSAGE_BOX);
 }
 
-SimpleMessageBoxViews::~SimpleMessageBoxViews() {}
+SimpleMessageBoxViews::~SimpleMessageBoxViews() = default;
 
 void SimpleMessageBoxViews::Run(MessageBoxResultCallback result_callback) {
   result_callback_ = std::move(result_callback);

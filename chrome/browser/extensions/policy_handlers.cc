@@ -32,7 +32,7 @@ ExtensionListPolicyHandler::ExtensionListPolicyHandler(const char* policy_name,
       pref_path_(pref_path),
       allow_wildcards_(allow_wildcards) {}
 
-ExtensionListPolicyHandler::~ExtensionListPolicyHandler() {}
+ExtensionListPolicyHandler::~ExtensionListPolicyHandler() = default;
 
 bool ExtensionListPolicyHandler::CheckListEntry(const base::Value& value) {
   const std::string& str = value.GetString();
@@ -158,7 +158,8 @@ ExtensionURLPatternListPolicyHandler::ExtensionURLPatternListPolicyHandler(
     : policy::TypeCheckingPolicyHandler(policy_name, base::Value::Type::LIST),
       pref_path_(pref_path) {}
 
-ExtensionURLPatternListPolicyHandler::~ExtensionURLPatternListPolicyHandler() {}
+ExtensionURLPatternListPolicyHandler::~ExtensionURLPatternListPolicyHandler() =
+    default;
 
 bool ExtensionURLPatternListPolicyHandler::CheckPolicySettings(
     const policy::PolicyMap& policies,
@@ -219,8 +220,7 @@ ExtensionSettingsPolicyHandler::ExtensionSettingsPolicyHandler(
           policy::SCHEMA_ALLOW_UNKNOWN) {
 }
 
-ExtensionSettingsPolicyHandler::~ExtensionSettingsPolicyHandler() {
-}
+ExtensionSettingsPolicyHandler::~ExtensionSettingsPolicyHandler() = default;
 
 bool ExtensionSettingsPolicyHandler::CheckPolicySettings(
     const policy::PolicyMap& policies,

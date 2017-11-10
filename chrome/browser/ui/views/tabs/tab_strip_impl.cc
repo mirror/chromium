@@ -141,7 +141,7 @@ class TabAnimationDelegate : public gfx::AnimationDelegate {
 TabAnimationDelegate::TabAnimationDelegate(TabStripImpl* tab_strip, Tab* tab)
     : tab_strip_(tab_strip), tab_(tab) {}
 
-TabAnimationDelegate::~TabAnimationDelegate() {}
+TabAnimationDelegate::~TabAnimationDelegate() = default;
 
 void TabAnimationDelegate::AnimationProgressed(
     const gfx::Animation* animation) {
@@ -166,7 +166,7 @@ ResetDraggingStateDelegate::ResetDraggingStateDelegate(TabStripImpl* tab_strip,
                                                        Tab* tab)
     : TabAnimationDelegate(tab_strip, tab) {}
 
-ResetDraggingStateDelegate::~ResetDraggingStateDelegate() {}
+ResetDraggingStateDelegate::~ResetDraggingStateDelegate() = default;
 
 void ResetDraggingStateDelegate::AnimationEnded(
     const gfx::Animation* animation) {

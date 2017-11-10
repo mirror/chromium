@@ -85,7 +85,7 @@ namespace {
 // class.
 class FirstRunMasterPrefsBrowserTestBase : public InProcessBrowserTest {
  public:
-  FirstRunMasterPrefsBrowserTestBase() {}
+  FirstRunMasterPrefsBrowserTestBase() = default;
 
  protected:
   void SetUp() override {
@@ -129,7 +129,7 @@ template<const char Text[]>
 class FirstRunMasterPrefsBrowserTestT
     : public FirstRunMasterPrefsBrowserTestBase {
  public:
-  FirstRunMasterPrefsBrowserTestT() {}
+  FirstRunMasterPrefsBrowserTestT() = default;
 
  protected:
   void SetUp() override {
@@ -275,7 +275,7 @@ class FirstRunMasterPrefsWithTrackedPreferences
     : public FirstRunMasterPrefsBrowserTestT<kWithTrackedPrefs>,
       public testing::WithParamInterface<std::string> {
  public:
-  FirstRunMasterPrefsWithTrackedPreferences() {}
+  FirstRunMasterPrefsWithTrackedPreferences() = default;
 
  protected:
   void SetUpCommandLine(base::CommandLine* command_line) override {

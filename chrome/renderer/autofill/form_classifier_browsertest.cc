@@ -17,7 +17,7 @@ namespace autofill {
 
 class FormClassifierTest : public ChromeRenderViewTest {
  public:
-  FormClassifierTest() {}
+  FormClassifierTest() = default;
 
   void SetUp() override {
     blink::WebRuntimeFeatures::EnableOverlayScrollbars(

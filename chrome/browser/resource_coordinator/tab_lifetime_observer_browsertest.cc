@@ -25,7 +25,7 @@ namespace resource_coordinator {
 
 class TabLifetimeObserverTest : public InProcessBrowserTest {
  public:
-  TabLifetimeObserverTest() {}
+  TabLifetimeObserverTest() = default;
 
   // Helper functions.
   void set_tab_strip_model(TabStripModel* tsm) { tab_strip_model_ = tsm; }

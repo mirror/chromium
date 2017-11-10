@@ -21,7 +21,7 @@ SupervisedUserPrefMappingService::SupervisedUserPrefMappingService(
       supervised_user_id_(prefs->GetString(prefs::kSupervisedUserId)),
       weak_ptr_factory_(this) {}
 
-SupervisedUserPrefMappingService::~SupervisedUserPrefMappingService() {}
+SupervisedUserPrefMappingService::~SupervisedUserPrefMappingService() = default;
 
 void SupervisedUserPrefMappingService::Init() {
   subscription_ = shared_settings_->Subscribe(

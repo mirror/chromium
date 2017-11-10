@@ -33,8 +33,7 @@ CryptoModulePasswordDialogView::CryptoModulePasswordDialogView(
   chrome::RecordDialogCreation(chrome::DialogIdentifier::CRYPTO_PASSWORD);
 }
 
-CryptoModulePasswordDialogView::~CryptoModulePasswordDialogView() {
-}
+CryptoModulePasswordDialogView::~CryptoModulePasswordDialogView() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // CryptoModulePasswordDialogView, private:

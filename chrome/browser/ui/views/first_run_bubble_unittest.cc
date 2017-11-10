@@ -48,7 +48,7 @@ class FirstRunBubbleTest : public views::ViewsTestBase {
 FirstRunBubbleTest::FirstRunBubbleTest()
     : ui_thread_(content::BrowserThread::UI, base::MessageLoop::current()) {}
 
-FirstRunBubbleTest::~FirstRunBubbleTest() {}
+FirstRunBubbleTest::~FirstRunBubbleTest() = default;
 
 void FirstRunBubbleTest::SetUp() {
   ViewsTestBase::SetUp();

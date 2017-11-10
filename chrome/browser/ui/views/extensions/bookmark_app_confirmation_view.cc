@@ -39,7 +39,7 @@ class WebAppInfoImageSource : public gfx::ImageSkiaSource {
  public:
   WebAppInfoImageSource(int dip_size, const WebApplicationInfo& info)
       : dip_size_(dip_size), info_(info) {}
-  ~WebAppInfoImageSource() override {}
+  ~WebAppInfoImageSource() override = default;
 
  private:
   gfx::ImageSkiaRep GetImageForScale(float scale) override {
@@ -57,7 +57,7 @@ class WebAppInfoImageSource : public gfx::ImageSkiaSource {
 
 }  // namespace
 
-BookmarkAppConfirmationView::~BookmarkAppConfirmationView() {}
+BookmarkAppConfirmationView::~BookmarkAppConfirmationView() = default;
 
 BookmarkAppConfirmationView::BookmarkAppConfirmationView(
     const WebApplicationInfo& web_app_info,

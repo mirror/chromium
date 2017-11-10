@@ -48,7 +48,7 @@ class MockFileSystemDelegate
     : public MediaRouterFileDialog::FileSystemDelegate {
  public:
   MockFileSystemDelegate() : MediaRouterFileDialog::FileSystemDelegate() {}
-  ~MockFileSystemDelegate() override {}
+  ~MockFileSystemDelegate() override = default;
 
   MOCK_CONST_METHOD1(FileExists, bool(const base::FilePath& file_path));
   MOCK_CONST_METHOD1(IsFileReadable, bool(const base::FilePath& file_path));

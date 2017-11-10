@@ -13,8 +13,8 @@
 #include "chrome/test/chromedriver/chrome/mobile_device_list.h"
 #include "chrome/test/chromedriver/chrome/status.h"
 
-MobileDevice::MobileDevice() {}
-MobileDevice::~MobileDevice() {}
+MobileDevice::MobileDevice() = default;
+MobileDevice::~MobileDevice() = default;
 
 Status FindMobileDevice(std::string device_name,
                         std::unique_ptr<MobileDevice>* mobile_device) {

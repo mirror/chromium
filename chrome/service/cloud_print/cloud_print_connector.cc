@@ -205,7 +205,7 @@ std::string CloudPrintConnector::GetAuthHeader() {
   return GetCloudPrintAuthHeaderFromStore();
 }
 
-CloudPrintConnector::~CloudPrintConnector() {}
+CloudPrintConnector::~CloudPrintConnector() = default;
 
 CloudPrintURLFetcher::ResponseAction
 CloudPrintConnector::HandlePrinterListResponse(

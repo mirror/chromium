@@ -109,7 +109,7 @@ class ServiceWorkerTest : public ExtensionApiTest,
   explicit ServiceWorkerTest(version_info::Channel channel)
       : current_channel_(channel) {}
 
-  ~ServiceWorkerTest() override {}
+  ~ServiceWorkerTest() override = default;
 
   void SetUpOnMainThread() override {
     ExtensionApiTest::SetUpOnMainThread();
@@ -222,8 +222,8 @@ class ServiceWorkerTest : public ExtensionApiTest,
 
 class ServiceWorkerBackgroundSyncTest : public ServiceWorkerTest {
  public:
-  ServiceWorkerBackgroundSyncTest() {}
-  ~ServiceWorkerBackgroundSyncTest() override {}
+  ServiceWorkerBackgroundSyncTest() = default;
+  ~ServiceWorkerBackgroundSyncTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     // ServiceWorkerRegistration.sync requires experimental flag.
@@ -245,7 +245,7 @@ class ServiceWorkerPushMessagingTest : public ServiceWorkerTest {
  public:
   ServiceWorkerPushMessagingTest()
       : gcm_driver_(nullptr), push_service_(nullptr) {}
-  ~ServiceWorkerPushMessagingTest() override {}
+  ~ServiceWorkerPushMessagingTest() override = default;
 
   void GrantNotificationPermissionForTest(const GURL& url) {
     GURL origin = url.GetOrigin();
@@ -311,7 +311,7 @@ class ServiceWorkerLazyBackgroundTest : public ServiceWorkerTest {
             // visible in renderers running with service workers (and no
             // extension).
             version_info::Channel::UNKNOWN) {}
-  ~ServiceWorkerLazyBackgroundTest() override {}
+  ~ServiceWorkerLazyBackgroundTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ServiceWorkerTest::SetUpCommandLine(command_line);

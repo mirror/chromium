@@ -13,9 +13,9 @@
 
 namespace task_manager {
 
-MockWebContentsTaskManager::MockWebContentsTaskManager() {}
+MockWebContentsTaskManager::MockWebContentsTaskManager() = default;
 
-MockWebContentsTaskManager::~MockWebContentsTaskManager() {}
+MockWebContentsTaskManager::~MockWebContentsTaskManager() = default;
 
 void MockWebContentsTaskManager::TaskAdded(Task* task) {
   DCHECK(task);

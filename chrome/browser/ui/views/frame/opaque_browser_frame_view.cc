@@ -126,7 +126,7 @@ OpaqueBrowserFrameView::OpaqueBrowserFrameView(
       ThemeServiceFactory::GetForProfile(browser_view->browser()->profile())));
 }
 
-OpaqueBrowserFrameView::~OpaqueBrowserFrameView() {}
+OpaqueBrowserFrameView::~OpaqueBrowserFrameView() = default;
 
 ///////////////////////////////////////////////////////////////////////////////
 // OpaqueBrowserFrameView, BrowserNonClientFrameView implementation:

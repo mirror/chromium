@@ -46,8 +46,7 @@ ChildProcessTaskProvider::ChildProcessTaskProvider()
     : weak_ptr_factory_(this) {
 }
 
-ChildProcessTaskProvider::~ChildProcessTaskProvider() {
-}
+ChildProcessTaskProvider::~ChildProcessTaskProvider() = default;
 
 Task* ChildProcessTaskProvider::GetTaskOfUrlRequest(int origin_pid,
                                                     int child_id,

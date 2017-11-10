@@ -20,7 +20,7 @@ class TestMultiTabLoadingPageLoadMetricsObserver
  public:
   explicit TestMultiTabLoadingPageLoadMetricsObserver(bool multi_tab_loading)
       : multi_tab_loading_(multi_tab_loading) {}
-  ~TestMultiTabLoadingPageLoadMetricsObserver() override {}
+  ~TestMultiTabLoadingPageLoadMetricsObserver() override = default;
 
  private:
   bool IsAnyTabLoading(content::NavigationHandle* navigation_handle) override {

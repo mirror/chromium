@@ -16,8 +16,7 @@ NetworkConditionsOverrideManager::NetworkConditionsOverrideManager(
   client_->AddListener(this);
 }
 
-NetworkConditionsOverrideManager::~NetworkConditionsOverrideManager() {
-}
+NetworkConditionsOverrideManager::~NetworkConditionsOverrideManager() = default;
 
 Status NetworkConditionsOverrideManager::OverrideNetworkConditions(
     const NetworkConditions& network_conditions) {

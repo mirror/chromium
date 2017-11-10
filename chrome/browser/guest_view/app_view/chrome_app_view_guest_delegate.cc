@@ -12,11 +12,9 @@
 
 namespace extensions {
 
-ChromeAppViewGuestDelegate::ChromeAppViewGuestDelegate() {
-}
+ChromeAppViewGuestDelegate::ChromeAppViewGuestDelegate() = default;
 
-ChromeAppViewGuestDelegate::~ChromeAppViewGuestDelegate() {
-}
+ChromeAppViewGuestDelegate::~ChromeAppViewGuestDelegate() = default;
 
 bool ChromeAppViewGuestDelegate::HandleContextMenu(
     content::WebContents* web_contents,

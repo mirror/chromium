@@ -28,7 +28,7 @@ namespace {
 class TestDialog : public views::DialogDelegateView {
  public:
   TestDialog() { SetFocusBehavior(FocusBehavior::ALWAYS); }
-  ~TestDialog() override {}
+  ~TestDialog() override = default;
 
   views::View* GetInitiallyFocusedView() override { return this; }
   // Don't delete the delegate yet. Keep it around for inspection later.

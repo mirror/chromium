@@ -31,7 +31,7 @@ AssistRankerServiceFactory::AssistRankerServiceFactory()
           "AssistRankerService",
           BrowserContextDependencyManager::GetInstance()) {}
 
-AssistRankerServiceFactory::~AssistRankerServiceFactory() {}
+AssistRankerServiceFactory::~AssistRankerServiceFactory() = default;
 
 KeyedService* AssistRankerServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* browser_context) const {

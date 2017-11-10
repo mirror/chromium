@@ -267,7 +267,7 @@ void ExternalProcessImporterClient::OnIE7PasswordReceived(
 #endif
 }
 
-ExternalProcessImporterClient::~ExternalProcessImporterClient() {}
+ExternalProcessImporterClient::~ExternalProcessImporterClient() = default;
 
 void ExternalProcessImporterClient::Cleanup() {
   if (cancelled_)

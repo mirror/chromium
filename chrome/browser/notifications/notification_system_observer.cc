@@ -31,8 +31,7 @@ NotificationSystemObserver::NotificationSystemObserver(
   }
 }
 
-NotificationSystemObserver::~NotificationSystemObserver() {
-}
+NotificationSystemObserver::~NotificationSystemObserver() = default;
 
 void NotificationSystemObserver::Observe(
     int type,

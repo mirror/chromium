@@ -30,8 +30,7 @@ InstantUnitTestBase::InstantUnitTestBase() {
       base::MakeUnique<metrics::SHA1EntropyProvider>("42")));
 }
 
-InstantUnitTestBase::~InstantUnitTestBase() {
-}
+InstantUnitTestBase::~InstantUnitTestBase() = default;
 
 void InstantUnitTestBase::SetUp() {
   BrowserWithTestWindowTest::SetUp();

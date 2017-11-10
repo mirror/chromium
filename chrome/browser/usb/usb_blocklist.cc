@@ -37,7 +37,7 @@ UsbBlocklist::Entry::Entry(uint16_t vendor_id,
                            uint16_t version)
     : vendor_id(vendor_id), product_id(product_id), version(version) {}
 
-UsbBlocklist::~UsbBlocklist() {}
+UsbBlocklist::~UsbBlocklist() = default;
 
 // static
 UsbBlocklist& UsbBlocklist::Get() {

@@ -153,7 +153,7 @@ class ScopedWebContentsTestHelper {
 
 class PageInfoBubbleViewTest : public testing::Test {
  public:
-  PageInfoBubbleViewTest() {}
+  PageInfoBubbleViewTest() = default;
 
   // testing::Test:
   void SetUp() override {

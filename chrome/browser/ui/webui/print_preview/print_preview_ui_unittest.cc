@@ -55,8 +55,8 @@ class PrintPreviewUIUnitTest : public PrintPreviewTest {
   DISALLOW_COPY_AND_ASSIGN(PrintPreviewUIUnitTest);
 };
 
-PrintPreviewUIUnitTest::PrintPreviewUIUnitTest() {}
-PrintPreviewUIUnitTest::~PrintPreviewUIUnitTest() {}
+PrintPreviewUIUnitTest::PrintPreviewUIUnitTest() = default;
+PrintPreviewUIUnitTest::~PrintPreviewUIUnitTest() = default;
 
 void PrintPreviewUIUnitTest::SetUp() {
   PrintPreviewTest::SetUp();

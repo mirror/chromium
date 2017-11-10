@@ -41,7 +41,7 @@ class BrowserThemePackTest : public ::testing::Test {
     scoped_set_supported_scale_factors_.reset(
         new ui::test::ScopedSetSupportedScaleFactors(scale_factors));
   }
-  ~BrowserThemePackTest() override {}
+  ~BrowserThemePackTest() override = default;
 
   // Transformation for link underline colors.
   SkColor BuildThirdOpacity(SkColor color_link) {

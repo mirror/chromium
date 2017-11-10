@@ -27,7 +27,7 @@ FlashTemporaryPermissionTrackerFactory::FlashTemporaryPermissionTrackerFactory()
           BrowserContextDependencyManager::GetInstance()) {}
 
 FlashTemporaryPermissionTrackerFactory::
-    ~FlashTemporaryPermissionTrackerFactory() {}
+    ~FlashTemporaryPermissionTrackerFactory() = default;
 
 scoped_refptr<RefcountedKeyedService>
 FlashTemporaryPermissionTrackerFactory::BuildServiceInstanceFor(

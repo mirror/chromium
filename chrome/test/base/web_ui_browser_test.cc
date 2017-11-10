@@ -93,8 +93,7 @@ class WebUIJsInjectionReadyObserver : public content::WebContentsObserver {
 
 }  // namespace
 
-WebUIBrowserTest::~WebUIBrowserTest() {
-}
+WebUIBrowserTest::~WebUIBrowserTest() = default;
 
 bool WebUIBrowserTest::RunJavascriptFunction(const std::string& function_name) {
   std::vector<base::Value> empty_args;
@@ -324,10 +323,10 @@ namespace {
 // event).
 class MockWebUIDataSource : public content::URLDataSource {
  public:
-  MockWebUIDataSource() {}
+  MockWebUIDataSource() = default;
 
  private:
-  ~MockWebUIDataSource() override {}
+  ~MockWebUIDataSource() override = default;
 
   std::string GetSource() const override { return "dummyurl"; }
 
@@ -353,7 +352,7 @@ class MockWebUIDataSource : public content::URLDataSource {
 class MockWebUIProvider
     : public TestChromeWebUIControllerFactory::WebUIProvider {
  public:
-  MockWebUIProvider() {}
+  MockWebUIProvider() = default;
 
   // Returns a new WebUI
   WebUIController* NewWebUI(content::WebUI* web_ui, const GURL& url) override {

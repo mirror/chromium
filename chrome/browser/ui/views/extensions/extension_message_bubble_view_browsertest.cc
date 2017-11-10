@@ -44,8 +44,8 @@ void CheckBubbleAgainstReferenceBounds(views::BubbleDialogDelegateView* bubble,
 class ExtensionMessageBubbleViewBrowserTest
     : public SupportsTestDialog<ExtensionMessageBubbleBrowserTest> {
  protected:
-  ExtensionMessageBubbleViewBrowserTest() {}
-  ~ExtensionMessageBubbleViewBrowserTest() override {}
+  ExtensionMessageBubbleViewBrowserTest() = default;
+  ~ExtensionMessageBubbleViewBrowserTest() override = default;
 
   // ExtensionMessageBubbleBrowserTest:
   void SetUp() override;

@@ -30,7 +30,7 @@ using sessions_helper::WindowsMatch;
 class TwoClientSessionsSyncTest : public SyncTest {
  public:
   TwoClientSessionsSyncTest() : SyncTest(TWO_CLIENT) {}
-  ~TwoClientSessionsSyncTest() override {}
+  ~TwoClientSessionsSyncTest() override = default;
 
   void WaitForWindowsInForeignSession(int index, ScopedWindowMap windows) {
     std::vector<ScopedWindowMap> expected_windows(1);

@@ -14,7 +14,6 @@ PrerenderTag::PrerenderTag(content::WebContents* web_contents)
     : WebContentsTag(web_contents) {
 }
 
-PrerenderTag::~PrerenderTag() {
-}
+PrerenderTag::~PrerenderTag() = default;
 
 }  // namespace task_manager

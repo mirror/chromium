@@ -33,8 +33,7 @@ ChromeWebViewGuestDelegate::ChromeWebViewGuestDelegate(
       weak_ptr_factory_(this) {
 }
 
-ChromeWebViewGuestDelegate::~ChromeWebViewGuestDelegate() {
-}
+ChromeWebViewGuestDelegate::~ChromeWebViewGuestDelegate() = default;
 
 bool ChromeWebViewGuestDelegate::HandleContextMenu(
     const content::ContextMenuParams& params) {

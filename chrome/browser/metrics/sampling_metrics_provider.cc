@@ -10,8 +10,8 @@
 
 namespace metrics {
 
-SamplingMetricsProvider::SamplingMetricsProvider() {}
-SamplingMetricsProvider::~SamplingMetricsProvider() {}
+SamplingMetricsProvider::SamplingMetricsProvider() = default;
+SamplingMetricsProvider::~SamplingMetricsProvider() = default;
 
 void SamplingMetricsProvider::ProvideStabilityMetrics(
     SystemProfileProto* system_profile_proto) {

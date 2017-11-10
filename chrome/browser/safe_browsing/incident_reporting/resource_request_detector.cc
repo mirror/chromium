@@ -79,7 +79,7 @@ class ResourceRequestDetectorClient
 
  private:
   friend class base::RefCountedThreadSafe<ResourceRequestDetectorClient>;
-  ~ResourceRequestDetectorClient() override {}
+  ~ResourceRequestDetectorClient() override = default;
 
   void StartCheck(const GURL& resource_url) {
     DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
@@ -141,8 +141,7 @@ ResourceRequestDetector::ResourceRequestDetector(
       allow_null_profile_for_testing_(false),
       weak_ptr_factory_(this) {}
 
-ResourceRequestDetector::~ResourceRequestDetector() {
-}
+ResourceRequestDetector::~ResourceRequestDetector() = default;
 
 void ResourceRequestDetector::ProcessResourceRequest(
     const ResourceRequestInfo* request) {

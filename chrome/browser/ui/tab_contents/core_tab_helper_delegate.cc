@@ -4,8 +4,7 @@
 
 #include "chrome/browser/ui/tab_contents/core_tab_helper_delegate.h"
 
-CoreTabHelperDelegate::~CoreTabHelperDelegate() {
-}
+CoreTabHelperDelegate::~CoreTabHelperDelegate() = default;
 
 void CoreTabHelperDelegate::SwapTabContents(
     content::WebContents* old_contents,

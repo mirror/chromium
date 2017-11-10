@@ -89,7 +89,7 @@ PepperUMAHost::PepperUMAHost(content::RendererPpapiHost* host,
     allowed_plugin_base_names_.insert(kWhitelistedPluginBaseNames[i]);
 }
 
-PepperUMAHost::~PepperUMAHost() {}
+PepperUMAHost::~PepperUMAHost() = default;
 
 int32_t PepperUMAHost::OnResourceMessageReceived(
     const IPC::Message& msg,

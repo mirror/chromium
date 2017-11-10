@@ -28,7 +28,7 @@ class ShapedAppWindowTargeterTest : public aura::test::AuraTestBase {
       : web_view_(NULL) {
   }
 
-  ~ShapedAppWindowTargeterTest() override {}
+  ~ShapedAppWindowTargeterTest() override = default;
 
   views::Widget* widget() { return widget_.get(); }
 

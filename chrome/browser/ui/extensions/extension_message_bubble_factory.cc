@@ -109,8 +109,7 @@ ExtensionMessageBubbleFactory::ExtensionMessageBubbleFactory(Browser* browser)
     : browser_(browser) {
 }
 
-ExtensionMessageBubbleFactory::~ExtensionMessageBubbleFactory() {
-}
+ExtensionMessageBubbleFactory::~ExtensionMessageBubbleFactory() = default;
 
 std::unique_ptr<extensions::ExtensionMessageBubbleController>
 ExtensionMessageBubbleFactory::GetController() {

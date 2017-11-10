@@ -50,8 +50,7 @@ AppInfoFooterPanel::AppInfoFooterPanel(gfx::NativeWindow parent_window,
   LayoutButtons();
 }
 
-AppInfoFooterPanel::~AppInfoFooterPanel() {
-}
+AppInfoFooterPanel::~AppInfoFooterPanel() = default;
 
 void AppInfoFooterPanel::CreateButtons() {
   if (CanCreateShortcuts()) {

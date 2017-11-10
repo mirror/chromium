@@ -29,8 +29,7 @@ TabDialogsViews::TabDialogsViews(content::WebContents* contents)
   DCHECK(contents);
 }
 
-TabDialogsViews::~TabDialogsViews() {
-}
+TabDialogsViews::~TabDialogsViews() = default;
 
 gfx::NativeView TabDialogsViews::GetDialogParentView() const {
   return web_contents_->GetNativeView();

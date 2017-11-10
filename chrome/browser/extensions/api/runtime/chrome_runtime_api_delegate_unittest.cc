@@ -40,7 +40,7 @@ class TestEventRouter : public EventRouter {
  public:
   explicit TestEventRouter(content::BrowserContext* context)
       : EventRouter(context, ExtensionPrefs::Get(context)) {}
-  ~TestEventRouter() override {}
+  ~TestEventRouter() override = default;
 
   // An entry in our fake event registry.
   using Entry = std::pair<std::string, std::string>;
@@ -71,7 +71,7 @@ std::unique_ptr<KeyedService> TestEventRouterFactoryFunction(
 // either no update was found, or one was (and it was downloaded).
 class DownloaderTestDelegate : public ExtensionDownloaderTestDelegate {
  public:
-  DownloaderTestDelegate() {}
+  DownloaderTestDelegate() = default;
 
   // On the next update check for extension |id|, we'll respond that no update
   // is available.
@@ -156,7 +156,7 @@ class DownloaderTestDelegate : public ExtensionDownloaderTestDelegate {
 // Helper to let test code wait for and return an update check result.
 class UpdateCheckResultCatcher {
  public:
-  UpdateCheckResultCatcher() {}
+  UpdateCheckResultCatcher() = default;
 
   void OnResult(const RuntimeAPIDelegate::UpdateCheckResult& result) {
     EXPECT_EQ(nullptr, result_.get());
@@ -183,7 +183,7 @@ class UpdateCheckResultCatcher {
 
 class ChromeRuntimeAPIDelegateTest : public ExtensionServiceTestWithInstall {
  public:
-  ChromeRuntimeAPIDelegateTest() {}
+  ChromeRuntimeAPIDelegateTest() = default;
 
   void SetUp() override {
     ExtensionServiceTestWithInstall::SetUp();

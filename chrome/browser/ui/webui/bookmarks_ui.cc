@@ -19,8 +19,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-BookmarksUIHTMLSource::BookmarksUIHTMLSource() {
-}
+BookmarksUIHTMLSource::BookmarksUIHTMLSource() = default;
 
 std::string BookmarksUIHTMLSource::GetSource() const {
   return chrome::kChromeUIBookmarksHost;
@@ -42,7 +41,7 @@ std::string BookmarksUIHTMLSource::GetMimeType(const std::string& path) const {
   return "text/html";
 }
 
-BookmarksUIHTMLSource::~BookmarksUIHTMLSource() {}
+BookmarksUIHTMLSource::~BookmarksUIHTMLSource() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 //

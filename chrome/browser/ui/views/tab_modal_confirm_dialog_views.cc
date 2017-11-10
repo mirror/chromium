@@ -46,8 +46,7 @@ TabModalConfirmDialogViews::TabModalConfirmDialogViews(
   chrome::RecordDialogCreation(chrome::DialogIdentifier::TAB_MODAL_CONFIRM);
 }
 
-TabModalConfirmDialogViews::~TabModalConfirmDialogViews() {
-}
+TabModalConfirmDialogViews::~TabModalConfirmDialogViews() = default;
 
 void TabModalConfirmDialogViews::AcceptTabModalDialog() {
   GetDialogClientView()->AcceptWindow();

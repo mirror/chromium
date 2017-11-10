@@ -23,8 +23,8 @@ ResourcePrefetchPredictorTabHelper::ResourcePrefetchPredictorTabHelper(
     : content::WebContentsObserver(web_contents) {
 }
 
-ResourcePrefetchPredictorTabHelper::~ResourcePrefetchPredictorTabHelper() {
-}
+ResourcePrefetchPredictorTabHelper::~ResourcePrefetchPredictorTabHelper() =
+    default;
 
 void ResourcePrefetchPredictorTabHelper::DocumentOnLoadCompletedInMainFrame() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

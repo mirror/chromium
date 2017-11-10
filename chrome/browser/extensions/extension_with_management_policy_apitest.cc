@@ -10,7 +10,8 @@
 ExtensionApiTestWithManagementPolicy::ExtensionApiTestWithManagementPolicy()
     : ExtensionApiTest() {}
 
-ExtensionApiTestWithManagementPolicy::~ExtensionApiTestWithManagementPolicy() {}
+ExtensionApiTestWithManagementPolicy::~ExtensionApiTestWithManagementPolicy() =
+    default;
 
 void ExtensionApiTestWithManagementPolicy::SetUpInProcessBrowserTestFixture() {
   ExtensionApiTest::SetUpInProcessBrowserTestFixture();

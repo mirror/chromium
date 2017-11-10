@@ -39,7 +39,7 @@ namespace {
 
 class PrintPreviewBrowserTest : public InProcessBrowserTest {
  public:
-  PrintPreviewBrowserTest() {}
+  PrintPreviewBrowserTest() = default;
 
   void Print() {
     content::TestNavigationObserver nav_observer(NULL);

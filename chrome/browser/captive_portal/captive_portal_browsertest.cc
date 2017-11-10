@@ -376,7 +376,7 @@ void URLRequestTimeoutOnDemandJob::FailOrAbandonJobsOnIOThread(
 class URLRequestMockCaptivePortalJobFactory {
  public:
   URLRequestMockCaptivePortalJobFactory() : behind_captive_portal_(true) {}
-  virtual ~URLRequestMockCaptivePortalJobFactory() {}
+  virtual ~URLRequestMockCaptivePortalJobFactory() = default;
 
   // Adds the testing URLs to the net::URLRequestFilter.  Should only be called
   // once.
@@ -391,7 +391,7 @@ class URLRequestMockCaptivePortalJobFactory {
    public:
     explicit Interceptor(bool behind_captive_portal)
         : behind_captive_portal_(behind_captive_portal) {}
-    ~Interceptor() override {}
+    ~Interceptor() override = default;
 
     // Returns a URLRequestJob that reflects the current captive portal state
     // for the URLs: kMockCaptivePortalTestUrl, kMockHttpsUrl, and
@@ -609,8 +609,7 @@ MultiNavigationObserver::MultiNavigationObserver()
                  content::NotificationService::AllSources());
 }
 
-MultiNavigationObserver::~MultiNavigationObserver() {
-}
+MultiNavigationObserver::~MultiNavigationObserver() = default;
 
 void MultiNavigationObserver::WaitForNavigations(
     int num_navigations_to_wait_for) {
@@ -701,8 +700,7 @@ FailLoadsAfterLoginObserver::FailLoadsAfterLoginObserver()
   }
 }
 
-FailLoadsAfterLoginObserver::~FailLoadsAfterLoginObserver() {
-}
+FailLoadsAfterLoginObserver::~FailLoadsAfterLoginObserver() = default;
 
 void FailLoadsAfterLoginObserver::WaitForNavigations() {
   // Shouldn't already be waiting for navigations.
@@ -1131,8 +1129,7 @@ class CaptivePortalBrowserTest : public InProcessBrowserTest {
   DISALLOW_COPY_AND_ASSIGN(CaptivePortalBrowserTest);
 };
 
-CaptivePortalBrowserTest::CaptivePortalBrowserTest() {
-}
+CaptivePortalBrowserTest::CaptivePortalBrowserTest() = default;
 
 void CaptivePortalBrowserTest::SetUpOnMainThread() {
   // Enable mock requests.

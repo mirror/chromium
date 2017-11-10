@@ -35,9 +35,9 @@ const base::ListValue* GetListPolicy(const policy::PolicyMap& policies,
 
 }  // namespace
 
-PluginPolicyHandler::PluginPolicyHandler() {}
+PluginPolicyHandler::PluginPolicyHandler() = default;
 
-PluginPolicyHandler::~PluginPolicyHandler() {}
+PluginPolicyHandler::~PluginPolicyHandler() = default;
 
 void PluginPolicyHandler::ProcessPolicy(const policy::PolicyMap& policies,
                                         PrefValueMap* prefs,

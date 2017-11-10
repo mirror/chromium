@@ -123,4 +123,4 @@ ServiceURLRequestContextGetter::GetNetworkTaskRunner() const {
   return network_task_runner_;
 }
 
-ServiceURLRequestContextGetter::~ServiceURLRequestContextGetter() {}
+ServiceURLRequestContextGetter::~ServiceURLRequestContextGetter() = default;

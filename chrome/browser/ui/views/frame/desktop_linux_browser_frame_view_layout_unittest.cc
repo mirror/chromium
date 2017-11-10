@@ -37,8 +37,8 @@ static gfx::ImageSkia GetTestImageForSize(gfx::Size size) {
 
 class TestLayoutDelegate : public OpaqueBrowserFrameViewLayoutDelegate {
  public:
-  TestLayoutDelegate() {}
-  ~TestLayoutDelegate() override {}
+  TestLayoutDelegate() = default;
+  ~TestLayoutDelegate() override = default;
 
   // OpaqueBrowserFrameViewLayoutDelegate:
   bool ShouldShowWindowIcon() const override { return false; }
@@ -72,9 +72,9 @@ class TestLayoutDelegate : public OpaqueBrowserFrameViewLayoutDelegate {
 
 class TestNavButtonProvider : public views::NavButtonProvider {
  public:
-  TestNavButtonProvider() {}
+  TestNavButtonProvider() = default;
 
-  ~TestNavButtonProvider() override {}
+  ~TestNavButtonProvider() override = default;
 
   void RedrawImages(int top_area_height, bool maximized, bool active) override {
     ASSERT_EQ(false, maximized);  // This only tests the restored state.
@@ -132,8 +132,8 @@ class TestNavButtonProvider : public views::NavButtonProvider {
 
 class DesktopLinuxBrowserFrameViewLayoutTest : public views::ViewsTestBase {
  public:
-  DesktopLinuxBrowserFrameViewLayoutTest() {}
-  ~DesktopLinuxBrowserFrameViewLayoutTest() override {}
+  DesktopLinuxBrowserFrameViewLayoutTest() = default;
+  ~DesktopLinuxBrowserFrameViewLayoutTest() override = default;
 
   void SetUp() override {
     views::ViewsTestBase::SetUp();

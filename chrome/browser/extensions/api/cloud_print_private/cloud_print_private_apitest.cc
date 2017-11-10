@@ -61,7 +61,7 @@ using extensions::api::cloud_print_private::UserSettings;
 
 class CloudPrintTestsDelegateMock : public extensions::CloudPrintTestsDelegate {
  public:
-  CloudPrintTestsDelegateMock() {}
+  CloudPrintTestsDelegateMock() = default;
 
   MOCK_METHOD4(SetupConnector,
                void(const std::string& user_email,

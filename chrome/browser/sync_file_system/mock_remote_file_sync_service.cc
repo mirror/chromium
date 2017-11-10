@@ -39,8 +39,7 @@ MockRemoteFileSyncService::MockRemoteFileSyncService()
       .WillByDefault(Invoke(this, &self::GetCurrentStateStub));
 }
 
-MockRemoteFileSyncService::~MockRemoteFileSyncService() {
-}
+MockRemoteFileSyncService::~MockRemoteFileSyncService() = default;
 
 void MockRemoteFileSyncService::DumpFiles(const GURL& origin,
                                           const ListCallback& callback) {

@@ -29,7 +29,7 @@ class PermissionMessageCombinationsUnittest : public testing::Test {
   PermissionMessageCombinationsUnittest()
       : message_provider_(new ChromePermissionMessageProvider()),
         whitelisted_extension_id_(kWhitelistedExtensionID) {}
-  ~PermissionMessageCombinationsUnittest() override {}
+  ~PermissionMessageCombinationsUnittest() override = default;
 
   // Overridden from testing::Test:
   void SetUp() override {

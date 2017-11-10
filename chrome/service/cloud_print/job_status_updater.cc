@@ -126,6 +126,6 @@ std::string JobStatusUpdater::GetAuthHeader() {
   return GetCloudPrintAuthHeaderFromStore();
 }
 
-JobStatusUpdater::~JobStatusUpdater() {}
+JobStatusUpdater::~JobStatusUpdater() = default;
 
 }  // namespace cloud_print

@@ -53,8 +53,7 @@ ContentSettingsStore::ContentSettingsStore() {
   DCHECK(OnCorrectThread());
 }
 
-ContentSettingsStore::~ContentSettingsStore() {
-}
+ContentSettingsStore::~ContentSettingsStore() = default;
 
 std::unique_ptr<RuleIterator> ContentSettingsStore::GetRuleIterator(
     ContentSettingsType type,

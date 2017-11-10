@@ -47,8 +47,7 @@ BrailleDisplayPrivateAPI::BrailleDisplayPrivateAPI(
       scoped_observer_(this),
       event_delegate_(new DefaultEventDelegate(this, profile_)) {}
 
-BrailleDisplayPrivateAPI::~BrailleDisplayPrivateAPI() {
-}
+BrailleDisplayPrivateAPI::~BrailleDisplayPrivateAPI() = default;
 
 void BrailleDisplayPrivateAPI::Shutdown() {
   event_delegate_.reset();
@@ -160,12 +159,10 @@ bool BrailleDisplayPrivateGetDisplayStateFunction::Respond() {
 }
 
 BrailleDisplayPrivateWriteDotsFunction::
-BrailleDisplayPrivateWriteDotsFunction() {
-}
+    BrailleDisplayPrivateWriteDotsFunction() = default;
 
 BrailleDisplayPrivateWriteDotsFunction::
-~BrailleDisplayPrivateWriteDotsFunction() {
-}
+    ~BrailleDisplayPrivateWriteDotsFunction() = default;
 
 bool BrailleDisplayPrivateWriteDotsFunction::Prepare() {
   params_ = WriteDots::Params::Create(*args_);

@@ -6,6 +6,6 @@
 
 #include "components/autofill/core/common/password_form.h"
 
-PasswordDialogControllerMock::PasswordDialogControllerMock() {}
+PasswordDialogControllerMock::PasswordDialogControllerMock() = default;
 
-PasswordDialogControllerMock::~PasswordDialogControllerMock() {}
+PasswordDialogControllerMock::~PasswordDialogControllerMock() = default;

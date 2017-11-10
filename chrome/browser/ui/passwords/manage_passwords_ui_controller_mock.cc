@@ -20,4 +20,4 @@ ManagePasswordsUIControllerMock::ManagePasswordsUIControllerMock(
   contents->SetUserData(UserDataKey(), base::WrapUnique(this));
 }
 
-ManagePasswordsUIControllerMock::~ManagePasswordsUIControllerMock() {}
+ManagePasswordsUIControllerMock::~ManagePasswordsUIControllerMock() = default;

@@ -9,8 +9,8 @@
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 
-SigninTrackerFactory::SigninTrackerFactory() {}
-SigninTrackerFactory::~SigninTrackerFactory() {}
+SigninTrackerFactory::SigninTrackerFactory() = default;
+SigninTrackerFactory::~SigninTrackerFactory() = default;
 
 // static
 std::unique_ptr<SigninTracker> SigninTrackerFactory::CreateForProfile(

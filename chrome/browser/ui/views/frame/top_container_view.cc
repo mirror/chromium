@@ -13,8 +13,7 @@ TopContainerView::TopContainerView(BrowserView* browser_view)
     : browser_view_(browser_view) {
 }
 
-TopContainerView::~TopContainerView() {
-}
+TopContainerView::~TopContainerView() = default;
 
 const char* TopContainerView::GetClassName() const {
   return "TopContainerView";

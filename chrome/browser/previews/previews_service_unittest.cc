@@ -37,7 +37,7 @@ class TestPreviewsIOData : public previews::PreviewsIOData {
                                      content::BrowserThread::UI),
                                  content::BrowserThread::GetTaskRunnerForThread(
                                      content::BrowserThread::UI)) {}
-  ~TestPreviewsIOData() override {}
+  ~TestPreviewsIOData() override = default;
 
   void Initialize(
       base::WeakPtr<previews::PreviewsUIService> previews_ui_service,
@@ -77,7 +77,7 @@ class PreviewsServiceTest : public testing::Test {
 
   void TearDown() override { variations::testing::ClearAllVariationParams(); }
 
-  ~PreviewsServiceTest() override {}
+  ~PreviewsServiceTest() override = default;
 
   TestPreviewsIOData* io_data() const { return io_data_.get(); }
 

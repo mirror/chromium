@@ -9,11 +9,9 @@
 
 namespace extensions {
 
-DisplayInfoProviderAura::DisplayInfoProviderAura() {
-}
+DisplayInfoProviderAura::DisplayInfoProviderAura() = default;
 
-DisplayInfoProviderAura::~DisplayInfoProviderAura() {
-}
+DisplayInfoProviderAura::~DisplayInfoProviderAura() = default;
 
 bool DisplayInfoProviderAura::SetInfo(
     const std::string& display_id,

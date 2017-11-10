@@ -89,7 +89,7 @@ class AccountReconcilorLockWrapper
 
  private:
   friend class base::RefCountedThreadSafe<AccountReconcilorLockWrapper>;
-  ~AccountReconcilorLockWrapper() {}
+  ~AccountReconcilorLockWrapper() = default;
 
   // The account reconcilor lock is created and deleted on UI thread.
   std::unique_ptr<AccountReconcilor::Lock,

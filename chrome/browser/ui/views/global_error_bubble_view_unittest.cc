@@ -26,7 +26,7 @@ using ::testing::StrictMock;
 namespace views {
 class FakeButtonListener : public views::ButtonListener {
  public:
-  FakeButtonListener() {}
+  FakeButtonListener() = default;
   ~FakeButtonListener() override;
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
@@ -34,7 +34,7 @@ class FakeButtonListener : public views::ButtonListener {
   DISALLOW_COPY_AND_ASSIGN(FakeButtonListener);
 };
 
-FakeButtonListener::~FakeButtonListener() {}
+FakeButtonListener::~FakeButtonListener() = default;
 void FakeButtonListener::ButtonPressed(views::Button* sender,
                                        const ui::Event& event) {}
 
@@ -42,7 +42,7 @@ namespace {
 
 class MockGlobalErrorWithStandardBubble : public GlobalErrorWithStandardBubble {
  public:
-  MockGlobalErrorWithStandardBubble() {}
+  MockGlobalErrorWithStandardBubble() = default;
   ~MockGlobalErrorWithStandardBubble() override;
 
   MOCK_METHOD0(GetBubbleViewIcon, gfx::Image());
@@ -71,7 +71,8 @@ class MockGlobalErrorWithStandardBubble : public GlobalErrorWithStandardBubble {
   DISALLOW_COPY_AND_ASSIGN(MockGlobalErrorWithStandardBubble);
 };
 
-MockGlobalErrorWithStandardBubble::~MockGlobalErrorWithStandardBubble() {}
+MockGlobalErrorWithStandardBubble::~MockGlobalErrorWithStandardBubble() =
+    default;
 
 }  // namespace
 

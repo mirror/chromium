@@ -96,8 +96,8 @@ const char kPrivetInfoURL[] = "http://1.2.3.4:8888/privet/info";
 class MockLocalPrinterListerDelegate
     : public PrivetLocalPrinterLister::Delegate {
  public:
-  MockLocalPrinterListerDelegate() {}
-  ~MockLocalPrinterListerDelegate() override {}
+  MockLocalPrinterListerDelegate() = default;
+  ~MockLocalPrinterListerDelegate() override = default;
 
   MOCK_METHOD3(LocalPrinterChanged,
                void(const std::string& name,
@@ -122,7 +122,7 @@ class PrivetLocalPrinterListerTest : public testing::Test {
         &delegate_));
   }
 
-  ~PrivetLocalPrinterListerTest() override {}
+  ~PrivetLocalPrinterListerTest() override = default;
 
   bool SuccessfulResponseToURL(const GURL& url,
                                const std::string& response) {

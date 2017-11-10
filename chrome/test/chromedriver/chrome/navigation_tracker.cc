@@ -68,7 +68,7 @@ NavigationTracker::NavigationTracker(
   client_->AddListener(this);
 }
 
-NavigationTracker::~NavigationTracker() {}
+NavigationTracker::~NavigationTracker() = default;
 
 Status NavigationTracker::IsPendingNavigation(const std::string& frame_id,
                                               const Timeout* timeout,

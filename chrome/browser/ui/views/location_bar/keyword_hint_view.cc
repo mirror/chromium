@@ -61,7 +61,7 @@ KeywordHintView::KeywordHintView(views::ButtonListener* listener,
       CreateLabel(font_list, text_color, background_color);
 }
 
-KeywordHintView::~KeywordHintView() {}
+KeywordHintView::~KeywordHintView() = default;
 
 void KeywordHintView::SetKeyword(const base::string16& keyword) {
   // When the virtual keyboard is visible, we show a modified touch UI

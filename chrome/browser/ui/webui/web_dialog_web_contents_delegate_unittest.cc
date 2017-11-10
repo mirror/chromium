@@ -39,7 +39,7 @@ class TestWebContentsDelegate : public WebDialogWebContentsDelegate {
   explicit TestWebContentsDelegate(content::BrowserContext* context)
       : WebDialogWebContentsDelegate(context, new ChromeWebContentsHandler) {
   }
-  ~TestWebContentsDelegate() override {}
+  ~TestWebContentsDelegate() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestWebContentsDelegate);

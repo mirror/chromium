@@ -111,7 +111,7 @@ const GURL OpenSiteSettingsForUrl(Browser* browser,
 
 class PageInfoBubbleViewBrowserTest : public DialogBrowserTest {
  public:
-  PageInfoBubbleViewBrowserTest() {}
+  PageInfoBubbleViewBrowserTest() = default;
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {

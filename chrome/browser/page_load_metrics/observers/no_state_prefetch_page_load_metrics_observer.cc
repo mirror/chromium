@@ -30,7 +30,7 @@ NoStatePrefetchPageLoadMetricsObserver::NoStatePrefetchPageLoadMetricsObserver(
 }
 
 NoStatePrefetchPageLoadMetricsObserver::
-    ~NoStatePrefetchPageLoadMetricsObserver() {}
+    ~NoStatePrefetchPageLoadMetricsObserver() = default;
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 NoStatePrefetchPageLoadMetricsObserver::OnCommit(

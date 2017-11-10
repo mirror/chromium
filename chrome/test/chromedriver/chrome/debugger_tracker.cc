@@ -12,7 +12,7 @@ DebuggerTracker::DebuggerTracker(DevToolsClient* client) {
   client->AddListener(this);
 }
 
-DebuggerTracker::~DebuggerTracker() {}
+DebuggerTracker::~DebuggerTracker() = default;
 
 Status DebuggerTracker::OnEvent(DevToolsClient* client,
                          const std::string& method,

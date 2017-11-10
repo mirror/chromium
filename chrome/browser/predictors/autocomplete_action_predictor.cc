@@ -580,13 +580,11 @@ void AutocompleteActionPredictor::OnHistoryServiceLoaded(
     TryDeleteOldEntries(history_service);
 }
 
-AutocompleteActionPredictor::TransitionalMatch::TransitionalMatch() {
-}
+AutocompleteActionPredictor::TransitionalMatch::TransitionalMatch() = default;
 
 AutocompleteActionPredictor::TransitionalMatch::TransitionalMatch(
     const TransitionalMatch& other) = default;
 
-AutocompleteActionPredictor::TransitionalMatch::~TransitionalMatch() {
-}
+AutocompleteActionPredictor::TransitionalMatch::~TransitionalMatch() = default;
 
 }  // namespace predictors

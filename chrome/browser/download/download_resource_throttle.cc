@@ -76,7 +76,7 @@ DownloadResourceThrottle::DownloadRequestInfo::DownloadRequestInfo(
       request_method(request_method),
       continue_callback(continue_callback) {}
 
-DownloadResourceThrottle::DownloadRequestInfo::~DownloadRequestInfo() {}
+DownloadResourceThrottle::DownloadRequestInfo::~DownloadRequestInfo() = default;
 
 DownloadResourceThrottle::DownloadResourceThrottle(
     scoped_refptr<DownloadRequestLimiter> limiter,
@@ -97,8 +97,7 @@ DownloadResourceThrottle::DownloadResourceThrottle(
                   base::Bind(&OnCanDownloadDecided, AsWeakPtr()))))));
 }
 
-DownloadResourceThrottle::~DownloadResourceThrottle() {
-}
+DownloadResourceThrottle::~DownloadResourceThrottle() = default;
 
 void DownloadResourceThrottle::WillStartRequest(bool* defer) {
   WillDownload(defer);

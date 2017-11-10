@@ -32,7 +32,7 @@
 
 InlineLoginHandler::InlineLoginHandler() : weak_ptr_factory_(this) {}
 
-InlineLoginHandler::~InlineLoginHandler() {}
+InlineLoginHandler::~InlineLoginHandler() = default;
 
 void InlineLoginHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback("initialize",

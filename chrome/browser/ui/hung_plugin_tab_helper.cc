@@ -125,8 +125,7 @@ HungPluginInfoBarDelegate::HungPluginInfoBarDelegate(
           IDS_BROWSER_HANGMONITOR_PLUGIN_INFOBAR_KILLBUTTON)) {
 }
 
-HungPluginInfoBarDelegate::~HungPluginInfoBarDelegate() {
-}
+HungPluginInfoBarDelegate::~HungPluginInfoBarDelegate() = default;
 
 infobars::InfoBarDelegate::InfoBarIdentifier
 HungPluginInfoBarDelegate::GetIdentifier() const {
@@ -201,9 +200,7 @@ HungPluginTabHelper::PluginState::PluginState(const base::FilePath& p,
       timer(false, false) {
 }
 
-HungPluginTabHelper::PluginState::~PluginState() {
-}
-
+HungPluginTabHelper::PluginState::~PluginState() = default;
 
 // HungPluginTabHelper --------------------------------------------------------
 
@@ -215,8 +212,7 @@ HungPluginTabHelper::HungPluginTabHelper(content::WebContents* contents)
                  content::NotificationService::AllSources());
 }
 
-HungPluginTabHelper::~HungPluginTabHelper() {
-}
+HungPluginTabHelper::~HungPluginTabHelper() = default;
 
 void HungPluginTabHelper::PluginCrashed(const base::FilePath& plugin_path,
                                         base::ProcessId plugin_pid) {

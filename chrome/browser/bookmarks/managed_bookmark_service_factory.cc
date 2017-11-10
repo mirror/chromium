@@ -62,7 +62,7 @@ ManagedBookmarkServiceFactory::ManagedBookmarkServiceFactory()
   DependsOn(policy::ProfilePolicyConnectorFactory::GetInstance());
 }
 
-ManagedBookmarkServiceFactory::~ManagedBookmarkServiceFactory() {}
+ManagedBookmarkServiceFactory::~ManagedBookmarkServiceFactory() = default;
 
 KeyedService* ManagedBookmarkServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

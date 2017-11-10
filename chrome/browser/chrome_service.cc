@@ -46,7 +46,7 @@ ChromeService::ChromeService() {
 #endif
 }
 
-ChromeService::~ChromeService() {}
+ChromeService::~ChromeService() = default;
 
 void ChromeService::OnBindInterface(
     const service_manager::BindSourceInfo& remote_info,

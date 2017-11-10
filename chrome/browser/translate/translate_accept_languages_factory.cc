@@ -36,7 +36,7 @@ TranslateAcceptLanguagesService::TranslateAcceptLanguagesService(
     PrefService* prefs)
     : accept_languages_(prefs, prefs::kAcceptLanguages) {}
 
-TranslateAcceptLanguagesService::~TranslateAcceptLanguagesService() {}
+TranslateAcceptLanguagesService::~TranslateAcceptLanguagesService() = default;
 
 }  // namespace
 
@@ -61,7 +61,7 @@ TranslateAcceptLanguagesFactory::TranslateAcceptLanguagesFactory()
           "TranslateAcceptLanguagesService",
           BrowserContextDependencyManager::GetInstance()) {}
 
-TranslateAcceptLanguagesFactory::~TranslateAcceptLanguagesFactory() {}
+TranslateAcceptLanguagesFactory::~TranslateAcceptLanguagesFactory() = default;
 
 KeyedService* TranslateAcceptLanguagesFactory::BuildServiceInstanceFor(
     content::BrowserContext* browser_context) const {

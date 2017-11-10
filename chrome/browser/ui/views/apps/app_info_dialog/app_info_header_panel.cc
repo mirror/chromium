@@ -60,8 +60,7 @@ AppInfoHeaderPanel::AppInfoHeaderPanel(Profile* profile,
   CreateControls();
 }
 
-AppInfoHeaderPanel::~AppInfoHeaderPanel() {
-}
+AppInfoHeaderPanel::~AppInfoHeaderPanel() = default;
 
 void AppInfoHeaderPanel::CreateControls() {
   app_icon_view_ = new views::ImageView();

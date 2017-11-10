@@ -122,7 +122,7 @@ class SyncErrorFactoryStub : public syncer::SyncErrorFactory {
  public:
   explicit SyncErrorFactoryStub(int* error_counter)
       : error_counter_(error_counter) {}
-  ~SyncErrorFactoryStub() override {}
+  ~SyncErrorFactoryStub() override = default;
 
   // Overridden from syncer::SyncErrorFactory:
   syncer::SyncError CreateAndUploadError(const base::Location& location,
@@ -143,7 +143,7 @@ class SyncErrorFactoryStub : public syncer::SyncErrorFactory {
 class DictionaryObserverCounter : public SpellcheckCustomDictionary::Observer {
  public:
   DictionaryObserverCounter() : loads_(0), changes_(0) {}
-  virtual ~DictionaryObserverCounter() {}
+  virtual ~DictionaryObserverCounter() = default;
 
   int loads() const { return loads_; }
   int changes() const { return changes_; }

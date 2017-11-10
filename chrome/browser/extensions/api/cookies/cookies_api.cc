@@ -114,8 +114,7 @@ CookiesEventRouter::CookiesEventRouter(content::BrowserContext* context)
                  content::NotificationService::AllBrowserContextsAndSources());
 }
 
-CookiesEventRouter::~CookiesEventRouter() {
-}
+CookiesEventRouter::~CookiesEventRouter() = default;
 
 void CookiesEventRouter::Observe(
     int type,
@@ -199,11 +198,9 @@ void CookiesEventRouter::DispatchEvent(
   router->BroadcastEvent(std::move(event));
 }
 
-CookiesGetFunction::CookiesGetFunction() {
-}
+CookiesGetFunction::CookiesGetFunction() = default;
 
-CookiesGetFunction::~CookiesGetFunction() {
-}
+CookiesGetFunction::~CookiesGetFunction() = default;
 
 bool CookiesGetFunction::RunAsync() {
   parsed_args_ = Get::Params::Create(*args_);
@@ -271,11 +268,9 @@ void CookiesGetFunction::RespondOnUIThread() {
   SendResponse(true);
 }
 
-CookiesGetAllFunction::CookiesGetAllFunction() {
-}
+CookiesGetAllFunction::CookiesGetAllFunction() = default;
 
-CookiesGetAllFunction::~CookiesGetAllFunction() {
-}
+CookiesGetAllFunction::~CookiesGetAllFunction() = default;
 
 bool CookiesGetAllFunction::RunAsync() {
   parsed_args_ = GetAll::Params::Create(*args_);
@@ -337,8 +332,7 @@ void CookiesGetAllFunction::RespondOnUIThread() {
 CookiesSetFunction::CookiesSetFunction() : success_(false) {
 }
 
-CookiesSetFunction::~CookiesSetFunction() {
-}
+CookiesSetFunction::~CookiesSetFunction() = default;
 
 bool CookiesSetFunction::RunAsync() {
   parsed_args_ = Set::Params::Create(*args_);
@@ -462,11 +456,9 @@ void CookiesSetFunction::RespondOnUIThread() {
   SendResponse(success_);
 }
 
-CookiesRemoveFunction::CookiesRemoveFunction() {
-}
+CookiesRemoveFunction::CookiesRemoveFunction() = default;
 
-CookiesRemoveFunction::~CookiesRemoveFunction() {
-}
+CookiesRemoveFunction::~CookiesRemoveFunction() = default;
 
 bool CookiesRemoveFunction::RunAsync() {
   parsed_args_ = Remove::Params::Create(*args_);
@@ -572,8 +564,7 @@ CookiesAPI::CookiesAPI(content::BrowserContext* context)
       ->RegisterObserver(this, cookies::OnChanged::kEventName);
 }
 
-CookiesAPI::~CookiesAPI() {
-}
+CookiesAPI::~CookiesAPI() = default;
 
 void CookiesAPI::Shutdown() {
   EventRouter::Get(browser_context_)->UnregisterObserver(this);

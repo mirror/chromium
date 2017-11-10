@@ -39,7 +39,7 @@ PresentationUrlType GetPresentationUrlType(const GURL& url) {
 
 }  // namespace
 
-MediaRouterMetrics::MediaRouterMetrics() {}
+MediaRouterMetrics::MediaRouterMetrics() = default;
 MediaRouterMetrics::~MediaRouterMetrics() = default;
 
 // static

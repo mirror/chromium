@@ -73,7 +73,7 @@ class ProcessMemoryMetricsEmitterFake : public ProcessMemoryMetricsEmitter {
       : run_loop_(run_loop), recorder_(recorder) {}
 
  private:
-  ~ProcessMemoryMetricsEmitterFake() override {}
+  ~ProcessMemoryMetricsEmitterFake() override = default;
 
   void ReceivedMemoryDump(
       bool success,
@@ -205,7 +205,7 @@ class ProcessMemoryMetricsEmitterTest : public ExtensionBrowserTest {
     scoped_feature_list_.InitAndEnableFeature(ukm::kUkmFeature);
   }
 
-  ~ProcessMemoryMetricsEmitterTest() override {}
+  ~ProcessMemoryMetricsEmitterTest() override = default;
 
   void SetUpOnMainThread() override {
     ExtensionBrowserTest::SetUpOnMainThread();

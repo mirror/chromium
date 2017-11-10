@@ -36,8 +36,7 @@ BackgroundContentsServiceFactory::BackgroundContentsServiceFactory()
   DependsOn(extensions::ExtensionSystemFactory::GetInstance());
 }
 
-BackgroundContentsServiceFactory::~BackgroundContentsServiceFactory() {
-}
+BackgroundContentsServiceFactory::~BackgroundContentsServiceFactory() = default;
 
 KeyedService* BackgroundContentsServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

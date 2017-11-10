@@ -27,7 +27,7 @@ UnzipHelper::UnzipHelper(
       progress_callback_(progress_callback),
       zip_reader_(base::MakeUnique<zip::ZipReader>()) {}
 
-UnzipHelper::~UnzipHelper() {}
+UnzipHelper::~UnzipHelper() = default;
 
 void UnzipHelper::Unzip(const base::FilePath& image_path,
                         const base::FilePath& temp_dir_path) {

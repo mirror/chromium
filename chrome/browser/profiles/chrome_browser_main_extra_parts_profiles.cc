@@ -167,11 +167,11 @@ void AddProfilesExtraParts(ChromeBrowserMainParts* main_parts) {
 
 }  // namespace chrome
 
-ChromeBrowserMainExtraPartsProfiles::ChromeBrowserMainExtraPartsProfiles() {
-}
+ChromeBrowserMainExtraPartsProfiles::ChromeBrowserMainExtraPartsProfiles() =
+    default;
 
-ChromeBrowserMainExtraPartsProfiles::~ChromeBrowserMainExtraPartsProfiles() {
-}
+ChromeBrowserMainExtraPartsProfiles::~ChromeBrowserMainExtraPartsProfiles() =
+    default;
 
 // This method gets the instance of each ServiceFactory. We do this so that
 // each ServiceFactory initializes itself and registers its dependencies with

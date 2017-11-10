@@ -67,8 +67,7 @@ ExperienceSamplingEvent::ExperienceSamplingEvent(
   ui_element_.time = base::Time::Now().ToJsTime();
 }
 
-ExperienceSamplingEvent::~ExperienceSamplingEvent() {
-}
+ExperienceSamplingEvent::~ExperienceSamplingEvent() = default;
 
 void ExperienceSamplingEvent::CreateUserDecisionEvent(
     const std::string& decision_name) {

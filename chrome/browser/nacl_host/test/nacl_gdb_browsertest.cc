@@ -27,8 +27,7 @@ static const base::FilePath::CharType kMockNaClGdb[] =
 
 class NaClGdbTest : public PPAPINaClNewlibTest {
  public:
-  NaClGdbTest() {
-  }
+  NaClGdbTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     PPAPINaClNewlibTest::SetUpCommandLine(command_line);

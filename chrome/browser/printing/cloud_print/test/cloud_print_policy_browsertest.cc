@@ -25,7 +25,7 @@ namespace {
 
 class CloudPrintPolicyTest : public InProcessBrowserTest {
  public:
-  CloudPrintPolicyTest() {}
+  CloudPrintPolicyTest() = default;
 };
 
 IN_PROC_BROWSER_TEST_F(CloudPrintPolicyTest, NormalPassedFlag) {

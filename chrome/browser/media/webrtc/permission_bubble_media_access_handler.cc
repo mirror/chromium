@@ -36,7 +36,7 @@ struct PermissionBubbleMediaAccessHandler::PendingAccessRequest {
   PendingAccessRequest(const content::MediaStreamRequest& request,
                        const content::MediaResponseCallback& callback)
       : request(request), callback(callback) {}
-  ~PendingAccessRequest() {}
+  ~PendingAccessRequest() = default;
 
   // TODO(gbillock): make the MediaStreamDevicesController owned by
   // this object when we're using bubbles.
@@ -55,7 +55,8 @@ PermissionBubbleMediaAccessHandler::PermissionBubbleMediaAccessHandler() {
                                content::NotificationService::AllSources());
 }
 
-PermissionBubbleMediaAccessHandler::~PermissionBubbleMediaAccessHandler() {}
+PermissionBubbleMediaAccessHandler::~PermissionBubbleMediaAccessHandler() =
+    default;
 
 bool PermissionBubbleMediaAccessHandler::SupportsStreamType(
     content::WebContents* web_contents,

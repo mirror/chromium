@@ -258,11 +258,9 @@ void MDnsAPI::WriteToConsole(const std::string& service_type,
   }
 }
 
-MdnsForceDiscoveryFunction::MdnsForceDiscoveryFunction() {
-}
+MdnsForceDiscoveryFunction::MdnsForceDiscoveryFunction() = default;
 
-MdnsForceDiscoveryFunction::~MdnsForceDiscoveryFunction() {
-}
+MdnsForceDiscoveryFunction::~MdnsForceDiscoveryFunction() = default;
 
 AsyncApiFunction::ResponseAction MdnsForceDiscoveryFunction::Run() {
   MDnsAPI* api = MDnsAPI::Get(browser_context());

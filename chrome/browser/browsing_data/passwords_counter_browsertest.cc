@@ -26,7 +26,7 @@ using browsing_data::BrowsingDataCounter;
 
 class PasswordsCounterTest : public InProcessBrowserTest {
  public:
-  PasswordsCounterTest() {}
+  PasswordsCounterTest() = default;
 
   void SetUpOnMainThread() override {
     finished_ = false;

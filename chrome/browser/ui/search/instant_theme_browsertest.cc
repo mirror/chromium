@@ -26,7 +26,7 @@
 
 class InstantThemeTest : public ExtensionBrowserTest, public InstantTestBase {
  public:
-  InstantThemeTest() {}
+  InstantThemeTest() = default;
 
  protected:
   void SetUpInProcessBrowserTestFixture() override {

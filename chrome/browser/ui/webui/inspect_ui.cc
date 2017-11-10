@@ -83,7 +83,7 @@ class InspectMessageHandler : public WebUIMessageHandler {
  public:
   explicit InspectMessageHandler(InspectUI* inspect_ui)
       : inspect_ui_(inspect_ui) {}
-  ~InspectMessageHandler() override {}
+  ~InspectMessageHandler() override = default;
 
  private:
   // WebUIMessageHandler implementation.
@@ -280,7 +280,7 @@ class DevToolsUIBindingsEnabler
  public:
   DevToolsUIBindingsEnabler(WebContents* web_contents,
                             const GURL& url);
-  ~DevToolsUIBindingsEnabler() override {}
+  ~DevToolsUIBindingsEnabler() override = default;
 
   DevToolsUIBindings* GetBindings();
 

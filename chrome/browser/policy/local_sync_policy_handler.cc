@@ -19,7 +19,7 @@ LocalSyncPolicyHandler::LocalSyncPolicyHandler()
     : TypeCheckingPolicyHandler(key::kRoamingProfileLocation,
                                 base::Value::Type::STRING) {}
 
-LocalSyncPolicyHandler::~LocalSyncPolicyHandler() {}
+LocalSyncPolicyHandler::~LocalSyncPolicyHandler() = default;
 
 void LocalSyncPolicyHandler::ApplyPolicySettings(const PolicyMap& policies,
                                                  PrefValueMap* prefs) {

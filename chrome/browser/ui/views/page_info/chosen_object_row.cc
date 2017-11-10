@@ -87,7 +87,7 @@ void ChosenObjectRow::AddObserver(ChosenObjectRowObserver* observer) {
   observer_list_.AddObserver(observer);
 }
 
-ChosenObjectRow::~ChosenObjectRow() {}
+ChosenObjectRow::~ChosenObjectRow() = default;
 
 void ChosenObjectRow::ButtonPressed(views::Button* sender,
                                     const ui::Event& event) {

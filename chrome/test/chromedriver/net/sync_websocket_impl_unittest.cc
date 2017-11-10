@@ -25,7 +25,7 @@ class SyncWebSocketImplTest : public testing::Test {
   SyncWebSocketImplTest()
       : client_thread_("ClientThread"),
         long_timeout_(base::TimeDelta::FromMinutes(1)) {}
-  ~SyncWebSocketImplTest() override {}
+  ~SyncWebSocketImplTest() override = default;
 
   void SetUp() override {
     base::Thread::Options options(base::MessageLoop::TYPE_IO, 0);

@@ -77,7 +77,7 @@ const char* FirstContentfulPaintHiddenName(bool was_hidden) {
 
 }  // namespace
 
-PrerenderHistograms::PrerenderHistograms() {}
+PrerenderHistograms::PrerenderHistograms() = default;
 
 void PrerenderHistograms::RecordPerceivedFirstContentfulPaintStatus(
     Origin origin,

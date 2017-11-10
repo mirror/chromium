@@ -57,8 +57,7 @@ PreferenceValidationDelegate::PreferenceValidationDelegate(
     std::unique_ptr<IncidentReceiver> incident_receiver)
     : profile_(profile), incident_receiver_(std::move(incident_receiver)) {}
 
-PreferenceValidationDelegate::~PreferenceValidationDelegate() {
-}
+PreferenceValidationDelegate::~PreferenceValidationDelegate() = default;
 
 void PreferenceValidationDelegate::OnAtomicPreferenceValidation(
     const std::string& pref_path,

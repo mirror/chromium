@@ -48,7 +48,7 @@ class MockAudioHistoryHandler : public HotwordAudioHistoryHandler {
         get_audio_history_calls_(0),
         web_history_(web_history) {
   }
-  ~MockAudioHistoryHandler() override {}
+  ~MockAudioHistoryHandler() override = default;
 
   void GetAudioHistoryEnabled(
       const HotwordAudioHistoryCallback& callback) override {
@@ -127,8 +127,8 @@ class HotwordServiceTest :
   public extensions::ExtensionServiceTestBase,
   public ::testing::WithParamInterface<const char*> {
  protected:
-  HotwordServiceTest() {}
-  virtual ~HotwordServiceTest() {}
+  HotwordServiceTest() = default;
+  virtual ~HotwordServiceTest() = default;
 
   void SetApplicationLocale(Profile* profile, const std::string& new_locale) {
 #if defined(OS_CHROMEOS)

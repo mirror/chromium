@@ -30,9 +30,9 @@ const char kPreviewsOptOut[] = "opt_out";
 
 }  // namespace
 
-PreviewsUKMObserver::PreviewsUKMObserver() {}
+PreviewsUKMObserver::PreviewsUKMObserver() = default;
 
-PreviewsUKMObserver::~PreviewsUKMObserver() {}
+PreviewsUKMObserver::~PreviewsUKMObserver() = default;
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 PreviewsUKMObserver::OnCommit(content::NavigationHandle* navigation_handle,

@@ -42,5 +42,4 @@ bool MockBrowsingDataFlashLSOHelper::AllDeleted() {
   return domains_.empty();
 }
 
-MockBrowsingDataFlashLSOHelper::~MockBrowsingDataFlashLSOHelper() {
-}
+MockBrowsingDataFlashLSOHelper::~MockBrowsingDataFlashLSOHelper() = default;

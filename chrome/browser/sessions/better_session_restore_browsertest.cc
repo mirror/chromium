@@ -71,7 +71,7 @@ class URLRequestFakerInterceptor : public net::URLRequestInterceptor {
   // MaybeInterceptRequests.
   explicit URLRequestFakerInterceptor(const std::string& response_contents)
       : response_contents_(response_contents) {}
-  ~URLRequestFakerInterceptor() override {}
+  ~URLRequestFakerInterceptor() override = default;
 
   // URLRequestInterceptor implementation:
   net::URLRequestJob* MaybeInterceptRequest(
@@ -91,8 +91,8 @@ class URLRequestFakerInterceptor : public net::URLRequestInterceptor {
 class URLRequestFakerForPostRequestsInterceptor
     : public net::URLRequestInterceptor {
  public:
-  URLRequestFakerForPostRequestsInterceptor() {}
-  ~URLRequestFakerForPostRequestsInterceptor() override {}
+  URLRequestFakerForPostRequestsInterceptor() = default;
+  ~URLRequestFakerForPostRequestsInterceptor() override = default;
 
   // URLRequestInterceptor implementation:
   net::URLRequestJob* MaybeInterceptRequest(
@@ -378,7 +378,7 @@ class BetterSessionRestoreTest : public InProcessBrowserTest {
 
 class ContinueWhereILeftOffTest : public BetterSessionRestoreTest {
  public:
-  ContinueWhereILeftOffTest() { }
+  ContinueWhereILeftOffTest() = default;
 
   void SetUpOnMainThread() override {
     BetterSessionRestoreTest::SetUpOnMainThread();
@@ -609,8 +609,8 @@ IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest,
 #if !defined(OS_CHROMEOS)
 class RestartTest : public BetterSessionRestoreTest {
  public:
-  RestartTest() { }
-  ~RestartTest() override {}
+  RestartTest() = default;
+  ~RestartTest() override = default;
 
  protected:
   void Restart() {
@@ -689,7 +689,7 @@ IN_PROC_BROWSER_TEST_F(RestartTest, PostWithPassword) {
 // when they shouldn't be.
 class NoSessionRestoreTest : public BetterSessionRestoreTest {
  public:
-  NoSessionRestoreTest() { }
+  NoSessionRestoreTest() = default;
 
   void SetUpOnMainThread() override {
     BetterSessionRestoreTest::SetUpOnMainThread();

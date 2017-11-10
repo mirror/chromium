@@ -17,7 +17,7 @@ DownloadShelfContextMenuView::DownloadShelfContextMenuView(
     : DownloadShelfContextMenu(download_item_view->download()),
       download_item_view_(download_item_view) {}
 
-DownloadShelfContextMenuView::~DownloadShelfContextMenuView() {}
+DownloadShelfContextMenuView::~DownloadShelfContextMenuView() = default;
 
 void DownloadShelfContextMenuView::Run(
     views::Widget* parent_widget,

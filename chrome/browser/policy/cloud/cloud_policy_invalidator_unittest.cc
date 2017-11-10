@@ -877,11 +877,11 @@ class CloudPolicyInvalidatorUserTypedTest
   DISALLOW_COPY_AND_ASSIGN(CloudPolicyInvalidatorUserTypedTest);
 };
 
-CloudPolicyInvalidatorUserTypedTest::CloudPolicyInvalidatorUserTypedTest() {
-}
+CloudPolicyInvalidatorUserTypedTest::CloudPolicyInvalidatorUserTypedTest() =
+    default;
 
-CloudPolicyInvalidatorUserTypedTest::~CloudPolicyInvalidatorUserTypedTest() {
-}
+CloudPolicyInvalidatorUserTypedTest::~CloudPolicyInvalidatorUserTypedTest() =
+    default;
 
 void CloudPolicyInvalidatorUserTypedTest::SetUp() {
   base::StatisticsRecorder::Initialize();

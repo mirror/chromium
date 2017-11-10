@@ -24,7 +24,7 @@ SigninDiceInternalsHandler::SigninDiceInternalsHandler(Profile* profile)
   DCHECK(!profile_->IsOffTheRecord());
 }
 
-SigninDiceInternalsHandler::~SigninDiceInternalsHandler() {}
+SigninDiceInternalsHandler::~SigninDiceInternalsHandler() = default;
 
 void SigninDiceInternalsHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

@@ -25,7 +25,7 @@ namespace policy {
 
 class MockRemoteCommandInvalidator : public RemoteCommandsInvalidator {
  public:
-  MockRemoteCommandInvalidator() {}
+  MockRemoteCommandInvalidator() = default;
 
   MOCK_METHOD0(OnInitialize, void());
   MOCK_METHOD0(OnShutdown, void());

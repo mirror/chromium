@@ -31,7 +31,7 @@ MediaEngagementServiceFactory::MediaEngagementServiceFactory()
   DependsOn(HostContentSettingsMapFactory::GetInstance());
 }
 
-MediaEngagementServiceFactory::~MediaEngagementServiceFactory() {}
+MediaEngagementServiceFactory::~MediaEngagementServiceFactory() = default;
 
 KeyedService* MediaEngagementServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

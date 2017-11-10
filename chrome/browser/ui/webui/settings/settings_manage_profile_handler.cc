@@ -54,7 +54,7 @@ const char kProfileShortcutNotFound[] = "profileShortcutNotFound";
 ManageProfileHandler::ManageProfileHandler(Profile* profile)
     : profile_(profile), observer_(this), weak_factory_(this) {}
 
-ManageProfileHandler::~ManageProfileHandler() {}
+ManageProfileHandler::~ManageProfileHandler() = default;
 
 void ManageProfileHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

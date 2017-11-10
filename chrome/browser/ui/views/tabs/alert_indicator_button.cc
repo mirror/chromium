@@ -42,7 +42,7 @@ class AlertIndicatorButton::FadeAnimationDelegate
  public:
   explicit FadeAnimationDelegate(AlertIndicatorButton* button)
       : button_(button) {}
-  ~FadeAnimationDelegate() override {}
+  ~FadeAnimationDelegate() override = default;
 
  private:
   // gfx::AnimationDelegate
@@ -79,7 +79,7 @@ AlertIndicatorButton::AlertIndicatorButton(Tab* parent_tab)
   set_animate_on_state_change(false);
 }
 
-AlertIndicatorButton::~AlertIndicatorButton() {}
+AlertIndicatorButton::~AlertIndicatorButton() = default;
 
 void AlertIndicatorButton::TransitionToAlertState(TabAlertState next_state) {
   if (next_state == alert_state_)

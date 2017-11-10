@@ -28,7 +28,7 @@ OnStartupHandler::OnStartupHandler(Profile* profile)
     : extension_registry_observer_(this), profile_(profile) {
   DCHECK(profile);
 }
-OnStartupHandler::~OnStartupHandler() {}
+OnStartupHandler::~OnStartupHandler() = default;
 
 void OnStartupHandler::OnJavascriptAllowed() {
   extension_registry_observer_.Add(

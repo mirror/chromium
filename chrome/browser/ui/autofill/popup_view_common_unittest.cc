@@ -38,8 +38,8 @@ class TestPopupViewCommon : public PopupViewCommon {
 
 class PopupViewCommonTest : public ChromeRenderViewHostTestHarness {
  public:
-  PopupViewCommonTest() {}
-  ~PopupViewCommonTest() override {}
+  PopupViewCommonTest() = default;
+  ~PopupViewCommonTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PopupViewCommonTest);

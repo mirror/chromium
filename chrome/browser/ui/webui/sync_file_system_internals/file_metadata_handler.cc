@@ -28,7 +28,7 @@ FileMetadataHandler::FileMetadataHandler(Profile* profile)
     : profile_(profile),
       weak_factory_(this) {}
 
-FileMetadataHandler::~FileMetadataHandler() {}
+FileMetadataHandler::~FileMetadataHandler() = default;
 
 void FileMetadataHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

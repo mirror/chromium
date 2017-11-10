@@ -7,8 +7,7 @@
 
 class GeolocationApiTest : public ExtensionApiTest {
  public:
-  GeolocationApiTest() {
-  }
+  GeolocationApiTest() = default;
 
   // InProcessBrowserTest
   void SetUpOnMainThread() override {

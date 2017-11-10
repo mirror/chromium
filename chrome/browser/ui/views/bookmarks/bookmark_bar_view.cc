@@ -540,8 +540,8 @@ struct BookmarkBarView::DropInfo {
 
 class BookmarkBarView::ButtonSeparatorView : public views::View {
  public:
-  ButtonSeparatorView() {}
-  ~ButtonSeparatorView() override {}
+  ButtonSeparatorView() = default;
+  ~ButtonSeparatorView() override = default;
 
   void OnPaint(gfx::Canvas* canvas) override {
     gfx::ScopedCanvas scoped_canvas(canvas);

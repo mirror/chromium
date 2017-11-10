@@ -10,11 +10,9 @@
 #include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/common/url_constants.h"
 
-AvatarMenuActionsDesktop::AvatarMenuActionsDesktop() {
-}
+AvatarMenuActionsDesktop::AvatarMenuActionsDesktop() = default;
 
-AvatarMenuActionsDesktop::~AvatarMenuActionsDesktop() {
-}
+AvatarMenuActionsDesktop::~AvatarMenuActionsDesktop() = default;
 
 // static
 AvatarMenuActions* AvatarMenuActions::Create() {

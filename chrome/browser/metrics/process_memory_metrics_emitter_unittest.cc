@@ -70,7 +70,7 @@ class ProcessMemoryMetricsEmitterFake : public ProcessMemoryMetricsEmitter {
   }
 
  private:
-  ~ProcessMemoryMetricsEmitterFake() override {}
+  ~ProcessMemoryMetricsEmitterFake() override = default;
 
   ukm::UkmRecorder* ukm_recorder_;
   DISALLOW_COPY_AND_ASSIGN(ProcessMemoryMetricsEmitterFake);
@@ -309,8 +309,8 @@ ProcessInfoVector GetProcessInfo(ukm::UkmRecorder& ukm_recorder) {
 class ProcessMemoryMetricsEmitterTest
     : public testing::TestWithParam<ProcessType> {
  public:
-  ProcessMemoryMetricsEmitterTest() {}
-  ~ProcessMemoryMetricsEmitterTest() override {}
+  ProcessMemoryMetricsEmitterTest() = default;
+  ~ProcessMemoryMetricsEmitterTest() override = default;
 
  protected:
   void CheckMemoryUkmEntryMetrics(

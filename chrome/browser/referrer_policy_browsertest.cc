@@ -32,8 +32,8 @@
 
 class ReferrerPolicyTest : public InProcessBrowserTest {
  public:
-  ReferrerPolicyTest() {}
-  ~ReferrerPolicyTest() override {}
+  ReferrerPolicyTest() = default;
+  ~ReferrerPolicyTest() override = default;
 
   void SetUpOnMainThread() override {
     content::BrowserThread::PostTask(

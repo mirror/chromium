@@ -8,7 +8,7 @@
 
 using extensions::Extension;
 
-TestExtensionService::~TestExtensionService() {}
+TestExtensionService::~TestExtensionService() = default;
 
 extensions::PendingExtensionManager*
 TestExtensionService::pending_extension_manager() {

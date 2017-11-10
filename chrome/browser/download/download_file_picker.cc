@@ -97,8 +97,7 @@ DownloadFilePicker::DownloadFilePicker(DownloadItem* item,
                                   NULL);
 }
 
-DownloadFilePicker::~DownloadFilePicker() {
-}
+DownloadFilePicker::~DownloadFilePicker() = default;
 
 void DownloadFilePicker::OnFileSelected(const base::FilePath& path) {
   if (should_record_file_picker_result_)

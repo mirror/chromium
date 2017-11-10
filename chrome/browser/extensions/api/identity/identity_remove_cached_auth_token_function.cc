@@ -13,11 +13,11 @@ namespace extensions {
 
 namespace identity = api::identity;
 
-IdentityRemoveCachedAuthTokenFunction::IdentityRemoveCachedAuthTokenFunction() {
-}
+IdentityRemoveCachedAuthTokenFunction::IdentityRemoveCachedAuthTokenFunction() =
+    default;
 
 IdentityRemoveCachedAuthTokenFunction::
-    ~IdentityRemoveCachedAuthTokenFunction() {}
+    ~IdentityRemoveCachedAuthTokenFunction() = default;
 
 ExtensionFunction::ResponseAction IdentityRemoveCachedAuthTokenFunction::Run() {
   if (Profile::FromBrowserContext(browser_context())->IsOffTheRecord())

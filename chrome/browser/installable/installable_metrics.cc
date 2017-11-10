@@ -177,7 +177,7 @@ class DirectRecorder : public InstallableMetrics::Recorder {
                 : AddToHomescreenTimeoutStatus::
                       TIMEOUT_INSTALLABILITY_CHECK_NON_PROGRESSIVE_WEB_APP) {}
 
-  ~DirectRecorder() override {}
+  ~DirectRecorder() override = default;
 
   void Resolve(bool check_passed) override {}
   void Flush(bool waiting_for_service_worker) override {}
@@ -213,7 +213,7 @@ class DirectRecorder : public InstallableMetrics::Recorder {
 InstallableMetrics::InstallableMetrics()
     : recorder_(base::MakeUnique<AccumulatingRecorder>()) {}
 
-InstallableMetrics::~InstallableMetrics() {}
+InstallableMetrics::~InstallableMetrics() = default;
 
 void InstallableMetrics::RecordMenuOpen() {
   recorder_->RecordMenuOpen();

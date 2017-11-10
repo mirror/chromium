@@ -160,7 +160,7 @@ class FakeDatabaseManager
   }
 
  protected:
-  ~FakeDatabaseManager() override {}
+  ~FakeDatabaseManager() override = default;
 };
 
 class FakeDownloadProtectionService : public DownloadProtectionService {

@@ -74,8 +74,7 @@ InvertBubbleView::InvertBubbleView(Browser* browser, views::View* anchor_view)
   chrome::RecordDialogCreation(chrome::DialogIdentifier::INVERT);
 }
 
-InvertBubbleView::~InvertBubbleView() {
-}
+InvertBubbleView::~InvertBubbleView() = default;
 
 int InvertBubbleView::GetDialogButtons() const {
   return ui::DIALOG_BUTTON_NONE;

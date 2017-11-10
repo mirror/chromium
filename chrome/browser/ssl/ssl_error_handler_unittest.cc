@@ -287,8 +287,8 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
 // mismatch error.
 class SSLErrorHandlerNameMismatchTest : public ChromeRenderViewHostTestHarness {
  public:
-  SSLErrorHandlerNameMismatchTest() {}
-  ~SSLErrorHandlerNameMismatchTest() override {}
+  SSLErrorHandlerNameMismatchTest() = default;
+  ~SSLErrorHandlerNameMismatchTest() override = default;
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
@@ -341,7 +341,7 @@ class SSLErrorHandlerNameMismatchTest : public ChromeRenderViewHostTestHarness {
 class SSLErrorHandlerNameMismatchNoSANTest
     : public SSLErrorHandlerNameMismatchTest {
  public:
-  SSLErrorHandlerNameMismatchNoSANTest() {}
+  SSLErrorHandlerNameMismatchNoSANTest() = default;
 
  private:
   // Return a certificate that contains no SubjectAltName field.
@@ -378,8 +378,8 @@ class SSLErrorAssistantProtoTest : public ChromeRenderViewHostTestHarness {
   const net::SSLInfo& ssl_info() { return ssl_info_; }
 
  protected:
-  SSLErrorAssistantProtoTest() {}
-  ~SSLErrorAssistantProtoTest() override {}
+  SSLErrorAssistantProtoTest() = default;
+  ~SSLErrorAssistantProtoTest() override = default;
 
   void SetCaptivePortalFeatureEnabled(bool enabled) {
     if (enabled) {

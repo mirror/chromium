@@ -27,7 +27,7 @@ const char kDefaultTestUrl[] = "https://google.com";
 class MediaPageLoadMetricsObserverTest
     : public page_load_metrics::PageLoadMetricsObserverTestHarness {
  public:
-  MediaPageLoadMetricsObserverTest() {}
+  MediaPageLoadMetricsObserverTest() = default;
   ~MediaPageLoadMetricsObserverTest() override = default;
 
   void ResetTest() {

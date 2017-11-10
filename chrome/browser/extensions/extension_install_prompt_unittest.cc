@@ -77,8 +77,8 @@ void SetImage(gfx::Image* image_out,
 
 class ExtensionInstallPromptUnitTest : public testing::Test {
  public:
-  ExtensionInstallPromptUnitTest() {}
-  ~ExtensionInstallPromptUnitTest() override {}
+  ExtensionInstallPromptUnitTest() = default;
+  ~ExtensionInstallPromptUnitTest() override = default;
 
   // testing::Test:
   void SetUp() override {

@@ -42,8 +42,7 @@ UMABrowsingActivityObserver::UMABrowsingActivityObserver() {
                   content::NotificationService::AllSources());
 }
 
-UMABrowsingActivityObserver::~UMABrowsingActivityObserver() {
-}
+UMABrowsingActivityObserver::~UMABrowsingActivityObserver() = default;
 
 void UMABrowsingActivityObserver::Observe(
     int type,

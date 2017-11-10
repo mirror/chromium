@@ -231,8 +231,8 @@ OneClickSigninSyncStarter::SigninDialogDelegate::SigninDialogDelegate(
     : sync_starter_(sync_starter) {
 }
 
-OneClickSigninSyncStarter::SigninDialogDelegate::~SigninDialogDelegate() {
-}
+OneClickSigninSyncStarter::SigninDialogDelegate::~SigninDialogDelegate() =
+    default;
 
 void OneClickSigninSyncStarter::SigninDialogDelegate::OnCancelSignin() {
   SetUserChoiceHistogram(SIGNIN_CHOICE_CANCEL);

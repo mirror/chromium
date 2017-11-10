@@ -95,8 +95,7 @@ void PluginsResourceService::Init() {
   StartAfterDelay();
 }
 
-PluginsResourceService::~PluginsResourceService() {
-}
+PluginsResourceService::~PluginsResourceService() = default;
 
 // static
 void PluginsResourceService::RegisterPrefs(PrefRegistrySimple* registry) {

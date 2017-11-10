@@ -19,7 +19,8 @@ static const char kChromiumDomainRedirectUrlPattern[] =
 
 namespace identity = api::identity;
 
-IdentityLaunchWebAuthFlowFunction::IdentityLaunchWebAuthFlowFunction() {}
+IdentityLaunchWebAuthFlowFunction::IdentityLaunchWebAuthFlowFunction() =
+    default;
 
 IdentityLaunchWebAuthFlowFunction::~IdentityLaunchWebAuthFlowFunction() {
   if (auth_flow_)

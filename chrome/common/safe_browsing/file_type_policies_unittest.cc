@@ -18,8 +18,8 @@ namespace safe_browsing {
 
 class MockFileTypePolicies : public FileTypePolicies {
  public:
-  MockFileTypePolicies() {}
-  virtual ~MockFileTypePolicies() {}
+  MockFileTypePolicies() = default;
+  virtual ~MockFileTypePolicies() = default;
 
   MOCK_METHOD2(RecordUpdateMetrics, void(UpdateResult, const std::string&));
 
@@ -29,8 +29,8 @@ class MockFileTypePolicies : public FileTypePolicies {
 
 class FileTypePoliciesTest : public testing::Test {
  protected:
-  FileTypePoliciesTest() {}
-  ~FileTypePoliciesTest() {}
+  FileTypePoliciesTest() = default;
+  ~FileTypePoliciesTest() = default;
 
  protected:
   NiceMock<MockFileTypePolicies> policies_;

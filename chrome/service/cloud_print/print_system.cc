@@ -23,13 +23,13 @@ void PrintJobDetails::Clear() {
   pages_printed = 0;
 }
 
-PrintSystem::PrintServerWatcher::~PrintServerWatcher() {}
+PrintSystem::PrintServerWatcher::~PrintServerWatcher() = default;
 
-PrintSystem::PrinterWatcher::~PrinterWatcher() {}
+PrintSystem::PrinterWatcher::~PrinterWatcher() = default;
 
-PrintSystem::JobSpooler::~JobSpooler() {}
+PrintSystem::JobSpooler::~JobSpooler() = default;
 
-PrintSystem::~PrintSystem() {}
+PrintSystem::~PrintSystem() = default;
 
 std::string PrintSystem::GenerateProxyId() {
   return base::GenerateGUID();

@@ -38,7 +38,7 @@ namespace safe_browsing {
 
 class SafeBrowsingCallbackWaiter {
   public:
-   SafeBrowsingCallbackWaiter() {}
+   SafeBrowsingCallbackWaiter() = default;
 
    bool callback_called() const { return callback_called_; }
    bool proceed() const { return proceed_; }
@@ -76,7 +76,7 @@ class SafeBrowsingUIManagerTest : public ChromeRenderViewHostTestHarness {
             content::TestBrowserThreadBundle::REAL_IO_THREAD),
         ui_manager_(new SafeBrowsingUIManager(NULL)) {}
 
-  ~SafeBrowsingUIManagerTest() override {}
+  ~SafeBrowsingUIManagerTest() override = default;
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
@@ -399,8 +399,8 @@ namespace {
 // VisibleSecurityStateChanged() was called.
 class SecurityStateWebContentsDelegate : public content::WebContentsDelegate {
  public:
-  SecurityStateWebContentsDelegate() {}
-  ~SecurityStateWebContentsDelegate() override {}
+  SecurityStateWebContentsDelegate() = default;
+  ~SecurityStateWebContentsDelegate() override = default;
 
   bool visible_security_state_changed() const {
     return visible_security_state_changed_;
@@ -452,8 +452,8 @@ class TestSafeBrowsingBlockingPage : public SafeBrowsingBlockingPage {
 class TestSafeBrowsingBlockingPageFactory
     : public SafeBrowsingBlockingPageFactory {
  public:
-  TestSafeBrowsingBlockingPageFactory() {}
-  ~TestSafeBrowsingBlockingPageFactory() override {}
+  TestSafeBrowsingBlockingPageFactory() = default;
+  ~TestSafeBrowsingBlockingPageFactory() override = default;
 
   SafeBrowsingBlockingPage* CreateSafeBrowsingPage(
       BaseUIManager* delegate,

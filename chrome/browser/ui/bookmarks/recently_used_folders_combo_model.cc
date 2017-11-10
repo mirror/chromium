@@ -45,7 +45,7 @@ RecentlyUsedFoldersComboModel::Item::Item(const BookmarkNode* node,
       type(type) {
 }
 
-RecentlyUsedFoldersComboModel::Item::~Item() {}
+RecentlyUsedFoldersComboModel::Item::~Item() = default;
 
 bool RecentlyUsedFoldersComboModel::Item::operator==(const Item& item) const {
   return item.node == node && item.type == type;

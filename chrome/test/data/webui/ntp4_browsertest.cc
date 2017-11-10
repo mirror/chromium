@@ -11,9 +11,9 @@
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 
-NTP4LoggedInWebUITest::NTP4LoggedInWebUITest() {}
+NTP4LoggedInWebUITest::NTP4LoggedInWebUITest() = default;
 
-NTP4LoggedInWebUITest::~NTP4LoggedInWebUITest() {}
+NTP4LoggedInWebUITest::~NTP4LoggedInWebUITest() = default;
 
 void NTP4LoggedInWebUITest::SetLoginName(const std::string& name) {
   SigninManagerFactory::GetForProfile(browser()->profile())->

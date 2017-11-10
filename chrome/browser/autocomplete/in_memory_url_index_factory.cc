@@ -35,8 +35,7 @@ InMemoryURLIndexFactory::InMemoryURLIndexFactory()
   DependsOn(TemplateURLServiceFactory::GetInstance());
 }
 
-InMemoryURLIndexFactory::~InMemoryURLIndexFactory() {
-}
+InMemoryURLIndexFactory::~InMemoryURLIndexFactory() = default;
 
 KeyedService* InMemoryURLIndexFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

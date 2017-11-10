@@ -72,7 +72,7 @@ TemplateURLServiceFactory::TemplateURLServiceFactory()
   DependsOn(WebDataServiceFactory::GetInstance());
 }
 
-TemplateURLServiceFactory::~TemplateURLServiceFactory() {}
+TemplateURLServiceFactory::~TemplateURLServiceFactory() = default;
 
 KeyedService* TemplateURLServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

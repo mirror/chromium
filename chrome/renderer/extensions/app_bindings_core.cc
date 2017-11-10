@@ -25,7 +25,7 @@ namespace extensions {
 
 AppBindingsCore::AppBindingsCore(Dispatcher* dispatcher)
     : dispatcher_(dispatcher) {}
-AppBindingsCore::~AppBindingsCore() {}
+AppBindingsCore::~AppBindingsCore() = default;
 
 bool AppBindingsCore::GetIsInstalled(ScriptContext* script_context) const {
   const Extension* extension = script_context->extension();

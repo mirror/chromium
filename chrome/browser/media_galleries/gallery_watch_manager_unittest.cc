@@ -68,7 +68,7 @@ class GalleryWatchManagerTest : public GalleryWatchManagerObserver,
         pending_loop_(NULL) {
   }
 
-  ~GalleryWatchManagerTest() override {}
+  ~GalleryWatchManagerTest() override = default;
 
   void SetUp() override {
     monitor_ = storage_monitor::TestStorageMonitor::CreateAndInstall();

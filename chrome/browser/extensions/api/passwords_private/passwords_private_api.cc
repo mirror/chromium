@@ -23,7 +23,7 @@ namespace extensions {
 // PasswordsPrivateRemoveSavedPasswordFunction
 
 PasswordsPrivateRemoveSavedPasswordFunction::
-    ~PasswordsPrivateRemoveSavedPasswordFunction() {}
+    ~PasswordsPrivateRemoveSavedPasswordFunction() = default;
 
 ExtensionFunction::ResponseAction
     PasswordsPrivateRemoveSavedPasswordFunction::Run() {
@@ -45,7 +45,7 @@ ExtensionFunction::ResponseAction
 // PasswordsPrivateRemovePasswordExceptionFunction
 
 PasswordsPrivateRemovePasswordExceptionFunction::
-    ~PasswordsPrivateRemovePasswordExceptionFunction() {}
+    ~PasswordsPrivateRemovePasswordExceptionFunction() = default;
 
 ExtensionFunction::ResponseAction
     PasswordsPrivateRemovePasswordExceptionFunction::Run() {
@@ -67,7 +67,7 @@ ExtensionFunction::ResponseAction
 // PasswordsPrivateUndoRemoveSavedPasswordOrExceptionFunction
 
 PasswordsPrivateUndoRemoveSavedPasswordOrExceptionFunction::
-    ~PasswordsPrivateUndoRemoveSavedPasswordOrExceptionFunction() {}
+    ~PasswordsPrivateUndoRemoveSavedPasswordOrExceptionFunction() = default;
 
 ExtensionFunction::ResponseAction
 PasswordsPrivateUndoRemoveSavedPasswordOrExceptionFunction::Run() {
@@ -83,7 +83,7 @@ PasswordsPrivateUndoRemoveSavedPasswordOrExceptionFunction::Run() {
 // PasswordsPrivateRequestPlaintextPasswordFunction
 
 PasswordsPrivateRequestPlaintextPasswordFunction::
-    ~PasswordsPrivateRequestPlaintextPasswordFunction() {}
+    ~PasswordsPrivateRequestPlaintextPasswordFunction() = default;
 
 ExtensionFunction::ResponseAction
     PasswordsPrivateRequestPlaintextPasswordFunction::Run() {
@@ -107,7 +107,7 @@ ExtensionFunction::ResponseAction
 // PasswordsPrivateGetSavedPasswordListFunction
 
 PasswordsPrivateGetSavedPasswordListFunction::
-    ~PasswordsPrivateGetSavedPasswordListFunction() {}
+    ~PasswordsPrivateGetSavedPasswordListFunction() = default;
 
 ExtensionFunction::ResponseAction
 PasswordsPrivateGetSavedPasswordListFunction::Run() {
@@ -138,7 +138,7 @@ void PasswordsPrivateGetSavedPasswordListFunction::GotList(
 // PasswordsPrivateGetPasswordExceptionListFunction
 
 PasswordsPrivateGetPasswordExceptionListFunction::
-    ~PasswordsPrivateGetPasswordExceptionListFunction() {}
+    ~PasswordsPrivateGetPasswordExceptionListFunction() = default;
 
 ExtensionFunction::ResponseAction
 PasswordsPrivateGetPasswordExceptionListFunction::Run() {
@@ -170,7 +170,7 @@ void PasswordsPrivateGetPasswordExceptionListFunction::GotList(
 // PasswordsPrivateImportPasswordsFunction
 
 PasswordsPrivateImportPasswordsFunction::
-    ~PasswordsPrivateImportPasswordsFunction() {}
+    ~PasswordsPrivateImportPasswordsFunction() = default;
 
 ExtensionFunction::ResponseAction
 PasswordsPrivateImportPasswordsFunction::Run() {
@@ -185,7 +185,7 @@ PasswordsPrivateImportPasswordsFunction::Run() {
 // PasswordsPrivateExportPasswordsFunction
 
 PasswordsPrivateExportPasswordsFunction::
-    ~PasswordsPrivateExportPasswordsFunction() {}
+    ~PasswordsPrivateExportPasswordsFunction() = default;
 
 ExtensionFunction::ResponseAction
 PasswordsPrivateExportPasswordsFunction::Run() {

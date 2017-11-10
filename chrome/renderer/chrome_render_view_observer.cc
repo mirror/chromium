@@ -45,8 +45,7 @@ ChromeRenderViewObserver::ChromeRenderViewObserver(
     : content::RenderViewObserver(render_view),
       web_cache_impl_(web_cache_impl) {}
 
-ChromeRenderViewObserver::~ChromeRenderViewObserver() {
-}
+ChromeRenderViewObserver::~ChromeRenderViewObserver() = default;
 
 bool ChromeRenderViewObserver::OnMessageReceived(const IPC::Message& message) {
 #if defined(OS_ANDROID)

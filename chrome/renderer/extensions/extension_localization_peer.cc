@@ -44,8 +44,7 @@ ExtensionLocalizationPeer::ExtensionLocalizationPeer(
       message_sender_(message_sender),
       request_url_(request_url) {}
 
-ExtensionLocalizationPeer::~ExtensionLocalizationPeer() {
-}
+ExtensionLocalizationPeer::~ExtensionLocalizationPeer() = default;
 
 // static
 std::unique_ptr<content::RequestPeer>

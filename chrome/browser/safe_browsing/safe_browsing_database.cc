@@ -290,7 +290,7 @@ class SafeBrowsingDatabaseFactoryImpl : public SafeBrowsingDatabaseFactory {
         CreateStore(true, db_task_runner));  // resource_blacklist_store
   }
 
-  SafeBrowsingDatabaseFactoryImpl() {}
+  SafeBrowsingDatabaseFactoryImpl() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingDatabaseFactoryImpl);
@@ -322,7 +322,7 @@ std::unique_ptr<SafeBrowsingDatabase> SafeBrowsingDatabase::Create(
       enable_unwanted_software_list);
 }
 
-SafeBrowsingDatabase::~SafeBrowsingDatabase() {}
+SafeBrowsingDatabase::~SafeBrowsingDatabase() = default;
 
 // static
 base::FilePath SafeBrowsingDatabase::BrowseDBFilename(
@@ -557,7 +557,8 @@ SafeBrowsingDatabaseNew::ThreadSafeStateManager::ThreadSafeStateManager(
     const scoped_refptr<const base::SequencedTaskRunner>& db_task_runner)
     : db_task_runner_(db_task_runner) {}
 
-SafeBrowsingDatabaseNew::ThreadSafeStateManager::~ThreadSafeStateManager() {}
+SafeBrowsingDatabaseNew::ThreadSafeStateManager::~ThreadSafeStateManager() =
+    default;
 
 SafeBrowsingDatabaseNew::DatabaseStateManager::DatabaseStateManager(
     const scoped_refptr<const base::SequencedTaskRunner>& db_task_runner)
@@ -565,7 +566,8 @@ SafeBrowsingDatabaseNew::DatabaseStateManager::DatabaseStateManager(
       corruption_detected_(false),
       change_detected_(false) {}
 
-SafeBrowsingDatabaseNew::DatabaseStateManager::~DatabaseStateManager() {}
+SafeBrowsingDatabaseNew::DatabaseStateManager::~DatabaseStateManager() =
+    default;
 
 std::unique_ptr<SafeBrowsingDatabaseNew::ReadTransaction>
 SafeBrowsingDatabaseNew::ThreadSafeStateManager::BeginReadTransaction() {

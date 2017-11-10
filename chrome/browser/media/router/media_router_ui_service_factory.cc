@@ -37,7 +37,7 @@ MediaRouterUIServiceFactory::MediaRouterUIServiceFactory()
   DependsOn(ToolbarActionsModelFactory::GetInstance());
 }
 
-MediaRouterUIServiceFactory::~MediaRouterUIServiceFactory() {}
+MediaRouterUIServiceFactory::~MediaRouterUIServiceFactory() = default;
 
 BrowserContext* MediaRouterUIServiceFactory::GetBrowserContextToUse(
     BrowserContext* context) const {

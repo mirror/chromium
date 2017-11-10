@@ -205,8 +205,7 @@ bool FaviconRawBitmapsMatch(const SkBitmap& bitmap_a,
 
 // Represents a favicon image and the icon URL associated with it.
 struct FaviconData {
-  FaviconData() {
-  }
+  FaviconData() = default;
 
   FaviconData(const gfx::Image& favicon_image,
               const GURL& favicon_url)

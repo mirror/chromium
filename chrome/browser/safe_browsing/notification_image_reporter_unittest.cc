@@ -76,7 +76,7 @@ class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
                AsyncMatch(const GURL&, SafeBrowsingDatabaseManager::Client*));
 
  protected:
-  ~MockSafeBrowsingDatabaseManager() override {}
+  ~MockSafeBrowsingDatabaseManager() override = default;
 };
 
 SkBitmap CreateBitmap(int width, int height) {

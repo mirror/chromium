@@ -217,8 +217,8 @@ void ValidatePrinter(const base::DictionaryValue* cdd_out,
 
 class PrinterCapabilitiesTest : public testing::Test {
  public:
-  PrinterCapabilitiesTest() {}
-  ~PrinterCapabilitiesTest() override {}
+  PrinterCapabilitiesTest() = default;
+  ~PrinterCapabilitiesTest() override = default;
 
  protected:
   void SetUp() override {

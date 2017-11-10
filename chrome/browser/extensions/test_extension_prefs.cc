@@ -51,7 +51,7 @@ class IncrementalClock : public base::Clock {
  public:
   IncrementalClock() : current_time_(base::Time::Now()) {}
 
-  ~IncrementalClock() override {}
+  ~IncrementalClock() override = default;
 
   base::Time Now() override {
     current_time_ += base::TimeDelta::FromSeconds(10);
@@ -78,8 +78,7 @@ TestExtensionPrefs::TestExtensionPrefs(
   RecreateExtensionPrefs();
 }
 
-TestExtensionPrefs::~TestExtensionPrefs() {
-}
+TestExtensionPrefs::~TestExtensionPrefs() = default;
 
 ExtensionPrefs* TestExtensionPrefs::prefs() {
   return ExtensionPrefs::Get(&profile_);

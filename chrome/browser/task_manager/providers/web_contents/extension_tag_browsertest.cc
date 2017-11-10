@@ -20,8 +20,8 @@ namespace task_manager {
 
 class ExtensionTagsTest : public ExtensionBrowserTest {
  public:
-  ExtensionTagsTest() {}
-  ~ExtensionTagsTest() override {}
+  ExtensionTagsTest() = default;
+  ~ExtensionTagsTest() override = default;
 
  protected:
   // ExtensionBrowserTest:

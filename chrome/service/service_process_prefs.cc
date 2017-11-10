@@ -17,7 +17,7 @@ ServiceProcessPrefs::ServiceProcessPrefs(const base::FilePath& pref_filename,
                                task_runner,
                                std::unique_ptr<PrefFilter>())) {}
 
-ServiceProcessPrefs::~ServiceProcessPrefs() {}
+ServiceProcessPrefs::~ServiceProcessPrefs() = default;
 
 void ServiceProcessPrefs::ReadPrefs() {
   prefs_->ReadPrefs();

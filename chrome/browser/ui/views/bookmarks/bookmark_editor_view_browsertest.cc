@@ -10,7 +10,7 @@
 // Test harness for integration tests using BookmarkEditorView.
 class BookmarkEditorViewBrowserTest : public DialogBrowserTest {
  public:
-  BookmarkEditorViewBrowserTest() {}
+  BookmarkEditorViewBrowserTest() = default;
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {

@@ -40,7 +40,7 @@ FindBarStateFactory::FindBarStateFactory()
         BrowserContextDependencyManager::GetInstance()) {
 }
 
-FindBarStateFactory::~FindBarStateFactory() {}
+FindBarStateFactory::~FindBarStateFactory() = default;
 
 KeyedService* FindBarStateFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

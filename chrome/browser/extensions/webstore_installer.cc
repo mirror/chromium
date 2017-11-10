@@ -284,7 +284,7 @@ WebstoreInstaller::Approval::CreateWithNoInstallPrompt(
   return result;
 }
 
-WebstoreInstaller::Approval::~Approval() {}
+WebstoreInstaller::Approval::~Approval() = default;
 
 const WebstoreInstaller::Approval* WebstoreInstaller::GetAssociatedApproval(
     const DownloadItem& download) {

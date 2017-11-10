@@ -65,11 +65,9 @@ void RecordBadSyncData(BadSyncDataReason reason) {
 
 }  // namespace
 
-ExtensionSyncData::LinkedAppIconInfo::LinkedAppIconInfo() {
-}
+ExtensionSyncData::LinkedAppIconInfo::LinkedAppIconInfo() = default;
 
-ExtensionSyncData::LinkedAppIconInfo::~LinkedAppIconInfo() {
-}
+ExtensionSyncData::LinkedAppIconInfo::~LinkedAppIconInfo() = default;
 
 ExtensionSyncData::ExtensionSyncData()
     : is_app_(false),
@@ -142,7 +140,7 @@ ExtensionSyncData::ExtensionSyncData(const Extension& extension,
 
 ExtensionSyncData::ExtensionSyncData(const ExtensionSyncData& other) = default;
 
-ExtensionSyncData::~ExtensionSyncData() {}
+ExtensionSyncData::~ExtensionSyncData() = default;
 
 // static
 std::unique_ptr<ExtensionSyncData> ExtensionSyncData::CreateFromSyncData(

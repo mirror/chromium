@@ -14,17 +14,13 @@ namespace extensions {
 namespace keys = manifest_keys;
 namespace errors = manifest_errors;
 
-SpellcheckDictionaryInfo::SpellcheckDictionaryInfo() {
-}
+SpellcheckDictionaryInfo::SpellcheckDictionaryInfo() = default;
 
-SpellcheckDictionaryInfo::~SpellcheckDictionaryInfo() {
-}
+SpellcheckDictionaryInfo::~SpellcheckDictionaryInfo() = default;
 
-SpellcheckHandler::SpellcheckHandler() {
-}
+SpellcheckHandler::SpellcheckHandler() = default;
 
-SpellcheckHandler::~SpellcheckHandler() {
-}
+SpellcheckHandler::~SpellcheckHandler() = default;
 
 bool SpellcheckHandler::Parse(Extension* extension, base::string16* error) {
   const base::DictionaryValue* spellcheck_value = NULL;

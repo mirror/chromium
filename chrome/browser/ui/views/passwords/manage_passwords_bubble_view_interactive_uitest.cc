@@ -68,8 +68,8 @@ namespace metrics_util = password_manager::metrics_util;
 
 class ManagePasswordsBubbleViewTest : public ManagePasswordsTest {
  public:
-  ManagePasswordsBubbleViewTest() {}
-  ~ManagePasswordsBubbleViewTest() override {}
+  ManagePasswordsBubbleViewTest() = default;
+  ~ManagePasswordsBubbleViewTest() override = default;
 
   // ManagePasswordsTest:
   void SetUp() override {

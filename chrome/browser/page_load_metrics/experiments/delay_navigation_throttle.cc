@@ -105,7 +105,7 @@ DelayNavigationThrottle::DelayNavigationThrottle(
       navigation_delay_(navigation_delay),
       weak_ptr_factory_(this) {}
 
-DelayNavigationThrottle::~DelayNavigationThrottle() {}
+DelayNavigationThrottle::~DelayNavigationThrottle() = default;
 
 content::NavigationThrottle::ThrottleCheckResult
 DelayNavigationThrottle::WillStartRequest() {

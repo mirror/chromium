@@ -71,10 +71,11 @@ class AutocompleteActionPredictorTableReopenTest
   }
 };
 
-AutocompleteActionPredictorTableTest::AutocompleteActionPredictorTableTest() {}
+AutocompleteActionPredictorTableTest::AutocompleteActionPredictorTableTest() =
+    default;
 
-AutocompleteActionPredictorTableTest::~AutocompleteActionPredictorTableTest() {
-}
+AutocompleteActionPredictorTableTest::~AutocompleteActionPredictorTableTest() =
+    default;
 
 void AutocompleteActionPredictorTableTest::SetUp() {
   db_ = base::MakeUnique<PredictorDatabase>(

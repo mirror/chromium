@@ -83,7 +83,7 @@ PermissionsUpdater::PermissionsUpdater(content::BrowserContext* browser_context,
     : browser_context_(browser_context), init_flag_(init_flag) {
 }
 
-PermissionsUpdater::~PermissionsUpdater() {}
+PermissionsUpdater::~PermissionsUpdater() = default;
 
 // static
 void PermissionsUpdater::SetPlatformDelegate(Delegate* delegate) {

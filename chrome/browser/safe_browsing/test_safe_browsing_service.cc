@@ -21,7 +21,7 @@ TestSafeBrowsingService::TestSafeBrowsingService(
       protocol_manager_delegate_disabled_(false),
       serialized_download_report_(base::EmptyString()) {}
 
-TestSafeBrowsingService::~TestSafeBrowsingService() {}
+TestSafeBrowsingService::~TestSafeBrowsingService() = default;
 
 SafeBrowsingProtocolConfig TestSafeBrowsingService::GetProtocolConfig() const {
   if (protocol_config_)
@@ -99,7 +99,7 @@ TestSafeBrowsingServiceFactory::TestSafeBrowsingServiceFactory(
       test_protocol_config_(nullptr),
       v4_usage_status_(v4_usage_status) {}
 
-TestSafeBrowsingServiceFactory::~TestSafeBrowsingServiceFactory() {}
+TestSafeBrowsingServiceFactory::~TestSafeBrowsingServiceFactory() = default;
 
 SafeBrowsingService*
 TestSafeBrowsingServiceFactory::CreateSafeBrowsingService() {
@@ -159,5 +159,5 @@ std::list<std::string>* TestSafeBrowsingUIManager::GetThreatDetails() {
   return &details_;
 }
 
-TestSafeBrowsingUIManager::~TestSafeBrowsingUIManager() {}
+TestSafeBrowsingUIManager::~TestSafeBrowsingUIManager() = default;
 }  // namespace safe_browsing

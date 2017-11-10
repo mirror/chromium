@@ -91,7 +91,7 @@ class SafeBrowsingBlockingPageFactoryImpl
   friend struct base::LazyInstanceTraitsBase<
       SafeBrowsingBlockingPageFactoryImpl>;
 
-  SafeBrowsingBlockingPageFactoryImpl() { }
+  SafeBrowsingBlockingPageFactoryImpl() = default;
 
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingBlockingPageFactoryImpl);
 };
@@ -144,8 +144,7 @@ SafeBrowsingBlockingPage::SafeBrowsingBlockingPage(
   }
 }
 
-SafeBrowsingBlockingPage::~SafeBrowsingBlockingPage() {
-}
+SafeBrowsingBlockingPage::~SafeBrowsingBlockingPage() = default;
 
 void SafeBrowsingBlockingPage::OverrideRendererPrefs(
       content::RendererPreferences* prefs) {

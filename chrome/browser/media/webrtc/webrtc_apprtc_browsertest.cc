@@ -46,7 +46,7 @@ const char kIsApprtcCallUpJavascript[] =
 // call gets up when connecting to the same room from two tabs in a browser.
 class WebRtcApprtcBrowserTest : public WebRtcTestBase {
  public:
-  WebRtcApprtcBrowserTest() {}
+  WebRtcApprtcBrowserTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     EXPECT_FALSE(command_line->HasSwitch(switches::kUseFakeUIForMediaStream));

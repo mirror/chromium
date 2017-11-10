@@ -38,7 +38,7 @@ UserEventServiceFactory::UserEventServiceFactory()
           "UserEventService",
           BrowserContextDependencyManager::GetInstance()) {}
 
-UserEventServiceFactory::~UserEventServiceFactory() {}
+UserEventServiceFactory::~UserEventServiceFactory() = default;
 
 KeyedService* UserEventServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

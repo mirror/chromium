@@ -55,7 +55,7 @@ ThreadWatcher::ThreadWatcher(const WatchingParams& params)
   Initialize();
 }
 
-ThreadWatcher::~ThreadWatcher() {}
+ThreadWatcher::~ThreadWatcher() = default;
 
 // static
 void ThreadWatcher::StartWatching(const WatchingParams& params) {

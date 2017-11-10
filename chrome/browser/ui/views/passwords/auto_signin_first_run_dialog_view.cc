@@ -23,8 +23,7 @@ AutoSigninFirstRunDialogView::AutoSigninFirstRunDialogView(
   chrome::RecordDialogCreation(chrome::DialogIdentifier::AUTO_SIGNIN_FIRST_RUN);
 }
 
-AutoSigninFirstRunDialogView::~AutoSigninFirstRunDialogView() {
-}
+AutoSigninFirstRunDialogView::~AutoSigninFirstRunDialogView() = default;
 
 void AutoSigninFirstRunDialogView::ShowAutoSigninPrompt() {
   InitWindow();

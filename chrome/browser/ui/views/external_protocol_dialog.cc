@@ -47,7 +47,7 @@ void ExternalProtocolHandler::RunExternalProtocolDialog(
 }
 #endif  // !OS_MACOSX || MAC_VIEWS_BROWSER
 
-ExternalProtocolDialog::~ExternalProtocolDialog() {}
+ExternalProtocolDialog::~ExternalProtocolDialog() = default;
 
 gfx::Size ExternalProtocolDialog::CalculatePreferredSize() const {
   constexpr int kDialogContentWidth = 400;

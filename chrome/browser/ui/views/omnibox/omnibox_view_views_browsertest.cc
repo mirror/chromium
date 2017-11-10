@@ -44,7 +44,7 @@ void SetClipboardText(ui::ClipboardType type, const std::string& text) {
 
 class OmniboxViewViewsTest : public InProcessBrowserTest {
  protected:
-  OmniboxViewViewsTest() {}
+  OmniboxViewViewsTest() = default;
 
   static void GetOmniboxViewForBrowser(const Browser* browser,
                                        OmniboxView** omnibox_view) {

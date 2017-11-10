@@ -35,8 +35,7 @@ ExclusiveAccessManager::ExclusiveAccessManager(
       mouse_lock_controller_(this) {
 }
 
-ExclusiveAccessManager::~ExclusiveAccessManager() {
-}
+ExclusiveAccessManager::~ExclusiveAccessManager() = default;
 
 ExclusiveAccessBubbleType
 ExclusiveAccessManager::GetExclusiveAccessExitBubbleType() const {

@@ -36,7 +36,7 @@ ToolbarActionsModelFactory::ToolbarActionsModelFactory()
   DependsOn(extensions::ExtensionSystemFactory::GetInstance());
 }
 
-ToolbarActionsModelFactory::~ToolbarActionsModelFactory() {}
+ToolbarActionsModelFactory::~ToolbarActionsModelFactory() = default;
 
 KeyedService* ToolbarActionsModelFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

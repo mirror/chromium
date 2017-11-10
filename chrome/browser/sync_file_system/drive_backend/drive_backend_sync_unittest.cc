@@ -82,7 +82,7 @@ class DriveBackendSyncTest : public testing::Test,
       : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP),
         pending_remote_changes_(0),
         pending_local_changes_(0) {}
-  ~DriveBackendSyncTest() override {}
+  ~DriveBackendSyncTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(base_dir_.CreateUniqueTempDir());

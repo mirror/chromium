@@ -50,7 +50,7 @@ class RequestPrintPreviewObserver : public WebContentsObserver {
   explicit RequestPrintPreviewObserver(WebContents* dialog)
       : WebContentsObserver(dialog) {
   }
-  ~RequestPrintPreviewObserver() override {}
+  ~RequestPrintPreviewObserver() override = default;
 
   void set_quit_closure(const base::Closure& quit_closure) {
     quit_closure_ = quit_closure;
@@ -83,7 +83,7 @@ class PrintPreviewDialogClonedObserver : public WebContentsObserver {
   explicit PrintPreviewDialogClonedObserver(WebContents* dialog)
       : WebContentsObserver(dialog) {
   }
-  ~PrintPreviewDialogClonedObserver() override {}
+  ~PrintPreviewDialogClonedObserver() override = default;
 
   RequestPrintPreviewObserver* request_preview_dialog_observer() {
     return request_preview_dialog_observer_.get();
@@ -108,7 +108,7 @@ class PrintPreviewDialogDestroyedObserver : public WebContentsObserver {
       : WebContentsObserver(dialog),
         dialog_destroyed_(false) {
   }
-  ~PrintPreviewDialogDestroyedObserver() override {}
+  ~PrintPreviewDialogDestroyedObserver() override = default;
 
   bool dialog_destroyed() const { return dialog_destroyed_; }
 
@@ -156,7 +156,7 @@ void CheckPdfPluginForRenderFrame(content::RenderFrameHost* frame) {
 class PrintPreviewDialogControllerBrowserTest : public InProcessBrowserTest {
  public:
   PrintPreviewDialogControllerBrowserTest() : initiator_(nullptr) {}
-  ~PrintPreviewDialogControllerBrowserTest() override {}
+  ~PrintPreviewDialogControllerBrowserTest() override = default;
 
   WebContents* initiator() {
     return initiator_;

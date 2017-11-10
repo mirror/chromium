@@ -48,7 +48,7 @@ class TestPreferenceAPI : public PreferenceAPIBase {
                              ContentSettingsService* content_settings)
       : test_extension_prefs_(test_extension_prefs),
         content_settings_(content_settings) {}
-  ~TestPreferenceAPI() {}
+  ~TestPreferenceAPI() = default;
 
  private:
   // PreferenceAPIBase implementation.
@@ -107,8 +107,7 @@ ExtensionControlledPrefsTest::ExtensionControlledPrefsTest()
   prefs_.prefs()->AddObserver(content_settings_);
 }
 
-ExtensionControlledPrefsTest::~ExtensionControlledPrefsTest() {
-}
+ExtensionControlledPrefsTest::~ExtensionControlledPrefsTest() = default;
 
 void ExtensionControlledPrefsTest::RegisterPreferences(
     user_prefs::PrefRegistrySyncable* registry) {
@@ -438,7 +437,7 @@ class ControlledPrefsDisableExtensions : public ExtensionControlledPrefsTest {
  public:
   ControlledPrefsDisableExtensions()
       : iteration_(0) {}
-  ~ControlledPrefsDisableExtensions() override {}
+  ~ControlledPrefsDisableExtensions() override = default;
   void Initialize() override {
     InstallExtensionControlledPref(extension1(), kPref1,
                                    new base::Value("val1"));

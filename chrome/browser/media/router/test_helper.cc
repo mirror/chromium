@@ -30,23 +30,21 @@ std::string PresentationConnectionMessageToString(
 
 MockIssuesObserver::MockIssuesObserver(IssueManager* issue_manager)
     : IssuesObserver(issue_manager) {}
-MockIssuesObserver::~MockIssuesObserver() {}
+MockIssuesObserver::~MockIssuesObserver() = default;
 
 MockMediaSinksObserver::MockMediaSinksObserver(MediaRouter* router,
                                                const MediaSource& source,
                                                const url::Origin& origin)
     : MediaSinksObserver(router, source, origin) {}
-MockMediaSinksObserver::~MockMediaSinksObserver() {
-}
+MockMediaSinksObserver::~MockMediaSinksObserver() = default;
 
 MockMediaRoutesObserver::MockMediaRoutesObserver(MediaRouter* router,
     const MediaSource::Id source_id)
     : MediaRoutesObserver(router, source_id) {
 }
-MockMediaRoutesObserver::~MockMediaRoutesObserver() {
-}
+MockMediaRoutesObserver::~MockMediaRoutesObserver() = default;
 
-MockPresentationConnectionProxy::MockPresentationConnectionProxy() {}
-MockPresentationConnectionProxy::~MockPresentationConnectionProxy() {}
+MockPresentationConnectionProxy::MockPresentationConnectionProxy() = default;
+MockPresentationConnectionProxy::~MockPresentationConnectionProxy() = default;
 
 }  // namespace media_router

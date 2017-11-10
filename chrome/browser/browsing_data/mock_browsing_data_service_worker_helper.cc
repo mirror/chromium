@@ -21,8 +21,8 @@ MockBrowsingDataServiceWorkerHelper::MockBrowsingDataServiceWorkerHelper(
             GetServiceWorkerContext()) {
 }
 
-MockBrowsingDataServiceWorkerHelper::~MockBrowsingDataServiceWorkerHelper() {
-}
+MockBrowsingDataServiceWorkerHelper::~MockBrowsingDataServiceWorkerHelper() =
+    default;
 
 void MockBrowsingDataServiceWorkerHelper::StartFetching(
     const FetchCallback& callback) {

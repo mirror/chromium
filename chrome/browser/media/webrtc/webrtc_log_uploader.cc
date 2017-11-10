@@ -75,12 +75,12 @@ void AddRtpDumpData(std::string* post_data,
 
 }  // namespace
 
-WebRtcLogUploadDoneData::WebRtcLogUploadDoneData() {}
+WebRtcLogUploadDoneData::WebRtcLogUploadDoneData() = default;
 
 WebRtcLogUploadDoneData::WebRtcLogUploadDoneData(
     const WebRtcLogUploadDoneData& other) = default;
 
-WebRtcLogUploadDoneData::~WebRtcLogUploadDoneData() {}
+WebRtcLogUploadDoneData::~WebRtcLogUploadDoneData() = default;
 
 WebRtcLogUploader::WebRtcLogUploader()
     : background_task_runner_(base::CreateSequencedTaskRunnerWithTraits(

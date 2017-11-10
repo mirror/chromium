@@ -10,7 +10,7 @@ SingleClientStatusChangeChecker::SingleClientStatusChangeChecker(
     browser_sync::ProfileSyncService* service)
     : MultiClientStatusChangeChecker({service}) {}
 
-SingleClientStatusChangeChecker::~SingleClientStatusChangeChecker() {}
+SingleClientStatusChangeChecker::~SingleClientStatusChangeChecker() = default;
 
 browser_sync::ProfileSyncService* SingleClientStatusChangeChecker::service() {
   return services()[0];

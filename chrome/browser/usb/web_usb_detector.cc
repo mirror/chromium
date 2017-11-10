@@ -180,7 +180,7 @@ class WebUsbNotificationDelegate : public TabStripModelObserver,
 
 WebUsbDetector::WebUsbDetector() : observer_(this) {}
 
-WebUsbDetector::~WebUsbDetector() {}
+WebUsbDetector::~WebUsbDetector() = default;
 
 void WebUsbDetector::Initialize() {
 #if defined(OS_WIN)

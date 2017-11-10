@@ -168,8 +168,7 @@ NativeBackendLibsecret::NativeBackendLibsecret(LocalProfileId id)
     : app_string_(GetProfileSpecificAppString(id)),
       ensured_keyring_unlocked_(false) {}
 
-NativeBackendLibsecret::~NativeBackendLibsecret() {
-}
+NativeBackendLibsecret::~NativeBackendLibsecret() = default;
 
 bool NativeBackendLibsecret::Init() {
   return LibsecretLoader::EnsureLibsecretLoaded();

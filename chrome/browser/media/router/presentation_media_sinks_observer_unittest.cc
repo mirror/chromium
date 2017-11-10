@@ -28,7 +28,7 @@ class PresentationMediaSinksObserverTest : public ::testing::Test {
  public:
   PresentationMediaSinksObserverTest()
       : listener_(GURL("http://example.com/presentation.html")) {}
-  ~PresentationMediaSinksObserverTest() override {}
+  ~PresentationMediaSinksObserverTest() override = default;
 
   void SetUp() override {
     EXPECT_CALL(router_, RegisterMediaSinksObserver(_)).WillOnce(Return(true));

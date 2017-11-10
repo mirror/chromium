@@ -64,7 +64,7 @@ CoreTabHelper::CoreTabHelper(WebContents* web_contents)
       content_restrictions_(0),
       weak_factory_(this) {}
 
-CoreTabHelper::~CoreTabHelper() {}
+CoreTabHelper::~CoreTabHelper() = default;
 
 base::string16 CoreTabHelper::GetDefaultTitle() {
   return l10n_util::GetStringUTF16(IDS_DEFAULT_TAB_TITLE);

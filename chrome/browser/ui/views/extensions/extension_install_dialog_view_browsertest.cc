@@ -38,7 +38,7 @@ class ExtensionInstallDialogViewTestBase : public ExtensionBrowserTest {
  protected:
   explicit ExtensionInstallDialogViewTestBase(
       ExtensionInstallPrompt::PromptType prompt_type);
-  ~ExtensionInstallDialogViewTestBase() override {}
+  ~ExtensionInstallDialogViewTestBase() override = default;
 
   void SetUpOnMainThread() override;
 
@@ -87,7 +87,7 @@ ExtensionInstallDialogViewTestBase::CreatePrompt() {
 class ScrollbarTest : public ExtensionInstallDialogViewTestBase {
  protected:
   ScrollbarTest();
-  ~ScrollbarTest() override {}
+  ~ScrollbarTest() override = default;
 
   bool IsScrollbarVisible(
       std::unique_ptr<ExtensionInstallPrompt::Prompt> prompt);
@@ -153,7 +153,7 @@ class ExtensionInstallDialogViewTest
   ExtensionInstallDialogViewTest()
       : ExtensionInstallDialogViewTestBase(
             ExtensionInstallPrompt::INSTALL_PROMPT) {}
-  ~ExtensionInstallDialogViewTest() override {}
+  ~ExtensionInstallDialogViewTest() override = default;
 
   views::DialogDelegateView* CreateAndShowPrompt(
       ExtensionInstallPromptTestHelper* helper) {

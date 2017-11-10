@@ -38,7 +38,7 @@ class TestPermissionContext : public MidiSysexPermissionContext {
         permission_granted_(false),
         tab_context_updated_(false) {}
 
-  ~TestPermissionContext() override {}
+  ~TestPermissionContext() override = default;
 
   bool permission_granted() { return permission_granted_; }
 

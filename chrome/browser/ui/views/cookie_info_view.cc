@@ -45,8 +45,7 @@ CookieInfoView::CookieInfoView()
       expires_value_field_(NULL) {
 }
 
-CookieInfoView::~CookieInfoView() {
-}
+CookieInfoView::~CookieInfoView() = default;
 
 void CookieInfoView::SetCookie(const std::string& domain,
                                const net::CanonicalCookie& cookie) {

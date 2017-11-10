@@ -27,11 +27,9 @@
 
 namespace extensions {
 
-InstallExtensionHandler::InstallExtensionHandler() {
-}
+InstallExtensionHandler::InstallExtensionHandler() = default;
 
-InstallExtensionHandler::~InstallExtensionHandler() {
-}
+InstallExtensionHandler::~InstallExtensionHandler() = default;
 
 void InstallExtensionHandler::GetLocalizedValues(
     content::WebUIDataSource* source) {

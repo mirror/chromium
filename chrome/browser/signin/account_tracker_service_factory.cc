@@ -18,8 +18,7 @@ AccountTrackerServiceFactory::AccountTrackerServiceFactory()
   DependsOn(ChromeSigninClientFactory::GetInstance());
 }
 
-AccountTrackerServiceFactory::~AccountTrackerServiceFactory() {
-}
+AccountTrackerServiceFactory::~AccountTrackerServiceFactory() = default;
 
 // static
 AccountTrackerService*

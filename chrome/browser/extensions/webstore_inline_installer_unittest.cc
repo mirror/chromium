@@ -47,7 +47,7 @@ TestWebstoreInlineInstaller::TestWebstoreInlineInstaller(
                               base::Bind(&TestInstallerCallback)) {
 }
 
-TestWebstoreInlineInstaller::~TestWebstoreInlineInstaller() {}
+TestWebstoreInlineInstaller::~TestWebstoreInlineInstaller() = default;
 
 // We inherit from ChromeRenderViewHostTestHarness only for
 // CreateTestWebContents, because we need a mock WebContents to support the

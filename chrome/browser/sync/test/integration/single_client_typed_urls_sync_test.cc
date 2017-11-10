@@ -21,7 +21,7 @@ const char kSanityHistoryUrl[] = "http://www.sanity-history.google.com";
 class SingleClientTypedUrlsSyncTest : public SyncTest {
  public:
   SingleClientTypedUrlsSyncTest() : SyncTest(SINGLE_CLIENT) {}
-  ~SingleClientTypedUrlsSyncTest() override {}
+  ~SingleClientTypedUrlsSyncTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SingleClientTypedUrlsSyncTest);

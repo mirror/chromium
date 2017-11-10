@@ -30,8 +30,8 @@ namespace {
 // URLFetcherDelegate that expects a request to hang.
 class HangingURLFetcherDelegate : public net::URLFetcherDelegate {
  public:
-  HangingURLFetcherDelegate() {}
-  ~HangingURLFetcherDelegate() override {}
+  HangingURLFetcherDelegate() = default;
+  ~HangingURLFetcherDelegate() override = default;
 
   void OnURLFetchComplete(const net::URLFetcher* source) override {
     ADD_FAILURE() << "This request should never complete.";
@@ -44,8 +44,8 @@ class HangingURLFetcherDelegate : public net::URLFetcherDelegate {
 // URLFetcherDelegate that can wait for a request to succeed.
 class TestURLFetcherDelegate : public net::URLFetcherDelegate {
  public:
-  TestURLFetcherDelegate() {}
-  ~TestURLFetcherDelegate() override {}
+  TestURLFetcherDelegate() = default;
+  ~TestURLFetcherDelegate() override = default;
 
   void OnURLFetchComplete(const net::URLFetcher* source) override {
     run_loop_.Quit();
@@ -61,8 +61,8 @@ class TestURLFetcherDelegate : public net::URLFetcherDelegate {
 
 class IOThreadBrowserTest : public InProcessBrowserTest {
  public:
-  IOThreadBrowserTest() {}
-  ~IOThreadBrowserTest() override {}
+  IOThreadBrowserTest() = default;
+  ~IOThreadBrowserTest() override = default;
 
   void SetUp() override {
     // Must start listening (And get a port for the proxy) before calling
@@ -112,8 +112,8 @@ IN_PROC_BROWSER_TEST_F(IOThreadBrowserTest, NoCache) {
 
 class IOThreadBrowserTestWithHangingPacRequest : public IOThreadBrowserTest {
  public:
-  IOThreadBrowserTestWithHangingPacRequest() {}
-  ~IOThreadBrowserTestWithHangingPacRequest() override {}
+  IOThreadBrowserTestWithHangingPacRequest() = default;
+  ~IOThreadBrowserTestWithHangingPacRequest() override = default;
 
   void SetUpOnMainThread() override {
     // This must be created after the main message loop has been set up.
@@ -160,7 +160,7 @@ class IOThreadBrowserTestWithPacFileURL : public IOThreadBrowserTest {
     EXPECT_TRUE(temp_dir_.CreateUniqueTempDir());
   }
 
-  ~IOThreadBrowserTestWithPacFileURL() override {}
+  ~IOThreadBrowserTestWithPacFileURL() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     base::FilePath pac_file_path;

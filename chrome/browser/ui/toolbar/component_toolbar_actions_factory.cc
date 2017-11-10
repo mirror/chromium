@@ -28,7 +28,7 @@ ComponentToolbarActionsFactory::ComponentToolbarActionsFactory(
   }
 }
 
-ComponentToolbarActionsFactory::~ComponentToolbarActionsFactory() {}
+ComponentToolbarActionsFactory::~ComponentToolbarActionsFactory() = default;
 
 std::set<std::string> ComponentToolbarActionsFactory::GetInitialComponentIds() {
   // TODO(takumif): Instead of keeping track of |initial_ids_|, simplify by

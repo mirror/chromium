@@ -27,8 +27,7 @@ PrerenderTabHelper::PrerenderTabHelper(content::WebContents* web_contents)
       origin_(ORIGIN_NONE),
       weak_factory_(this) {}
 
-PrerenderTabHelper::~PrerenderTabHelper() {
-}
+PrerenderTabHelper::~PrerenderTabHelper() = default;
 
 void PrerenderTabHelper::DidGetRedirectForResourceRequest(
     const content::ResourceRedirectDetails& details) {

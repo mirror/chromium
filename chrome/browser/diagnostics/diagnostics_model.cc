@@ -50,7 +50,7 @@ class DiagnosticsModelImpl : public DiagnosticsModel {
  public:
   DiagnosticsModelImpl() : tests_run_(0) {}
 
-  ~DiagnosticsModelImpl() override {}
+  ~DiagnosticsModelImpl() override = default;
 
   int GetTestRunCount() const override { return tests_run_; }
 

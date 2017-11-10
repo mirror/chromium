@@ -39,8 +39,8 @@ MediaGalleryPrefInfo MakePrefInfo(MediaGalleryPrefId id) {
 
 class MediaGalleriesInteractiveDialogTest : public DialogBrowserTest {
  public:
-  MediaGalleriesInteractiveDialogTest() {}
-  ~MediaGalleriesInteractiveDialogTest() override {}
+  MediaGalleriesInteractiveDialogTest() = default;
+  ~MediaGalleriesInteractiveDialogTest() override = default;
 
   void PreRunTestOnMainThread() override {
     DialogBrowserTest::PreRunTestOnMainThread();

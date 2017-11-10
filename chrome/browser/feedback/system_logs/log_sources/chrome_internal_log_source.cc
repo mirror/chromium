@@ -108,8 +108,7 @@ ChromeInternalLogSource::ChromeInternalLogSource()
     : SystemLogsSource("ChromeInternal") {
 }
 
-ChromeInternalLogSource::~ChromeInternalLogSource() {
-}
+ChromeInternalLogSource::~ChromeInternalLogSource() = default;
 
 void ChromeInternalLogSource::Fetch(const SysLogsSourceCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);

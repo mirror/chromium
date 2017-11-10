@@ -62,8 +62,7 @@ HotwordPrivateEventService::HotwordPrivateEventService(
                  base::Unretained(this)));
 }
 
-HotwordPrivateEventService::~HotwordPrivateEventService() {
-}
+HotwordPrivateEventService::~HotwordPrivateEventService() = default;
 
 void HotwordPrivateEventService::Shutdown() {
 }

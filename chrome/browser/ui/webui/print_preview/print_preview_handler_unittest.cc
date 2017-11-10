@@ -171,7 +171,7 @@ class TestPrinterHandler : public PrinterHandler {
     SetPrinters(printers);
   }
 
-  ~TestPrinterHandler() override {}
+  ~TestPrinterHandler() override = default;
 
   void Reset() override {}
 
@@ -233,7 +233,7 @@ class FakePrintPreviewUI : public PrintPreviewUI {
                      std::unique_ptr<PrintPreviewHandler> handler)
       : PrintPreviewUI(web_ui, std::move(handler)) {}
 
-  ~FakePrintPreviewUI() override {}
+  ~FakePrintPreviewUI() override = default;
 
   void GetPrintPreviewDataForIndex(
       int index,

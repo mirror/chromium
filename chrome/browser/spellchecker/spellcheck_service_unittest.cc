@@ -49,7 +49,7 @@ struct TestCase {
     }
   }
 
-  ~TestCase() {}
+  ~TestCase() = default;
 
   std::string accept_languages;
   std::vector<std::string> spellcheck_dictionaries;
@@ -86,7 +86,7 @@ class SpellcheckServiceUnitTest : public testing::TestWithParam<TestCase> {
   SpellcheckServiceUnitTest() {
     user_prefs::UserPrefs::Set(&context_, &prefs_);
   }
-  ~SpellcheckServiceUnitTest() override {}
+  ~SpellcheckServiceUnitTest() override = default;
 
   void SetUp() override {
     prefs()->registry()->RegisterListPref(

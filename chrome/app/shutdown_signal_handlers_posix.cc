@@ -101,7 +101,7 @@ ShutdownDetector::ShutdownDetector(
   CHECK(task_runner_);
 }
 
-ShutdownDetector::~ShutdownDetector() {}
+ShutdownDetector::~ShutdownDetector() = default;
 
 // These functions are used to help us diagnose crash dumps that happen
 // during the shutdown process.

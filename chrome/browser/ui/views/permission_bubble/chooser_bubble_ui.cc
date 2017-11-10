@@ -102,7 +102,7 @@ ChooserBubbleUiViewDelegate::ChooserBubbleUiViewDelegate(
   chrome::RecordDialogCreation(chrome::DialogIdentifier::CHOOSER_UI);
 }
 
-ChooserBubbleUiViewDelegate::~ChooserBubbleUiViewDelegate() {}
+ChooserBubbleUiViewDelegate::~ChooserBubbleUiViewDelegate() = default;
 
 base::string16 ChooserBubbleUiViewDelegate::GetWindowTitle() const {
   return device_chooser_content_view_->GetWindowTitle();

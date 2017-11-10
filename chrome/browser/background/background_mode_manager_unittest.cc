@@ -77,8 +77,7 @@ class FakeBackgroundTrigger : public BackgroundTrigger {
   int on_menu_click_call_count_ = 0;
 };
 
-FakeBackgroundTrigger::~FakeBackgroundTrigger() {
-}
+FakeBackgroundTrigger::~FakeBackgroundTrigger() = default;
 
 base::string16 FakeBackgroundTrigger::GetName() {
   get_name_call_count_++;
@@ -129,7 +128,7 @@ class TestBackgroundModeManager : public StrictMock<BackgroundModeManager> {
 
 class TestStatusIcon : public StatusIcon {
  public:
-  TestStatusIcon() {}
+  TestStatusIcon() = default;
   void SetImage(const gfx::ImageSkia& image) override {}
   void SetToolTip(const base::string16& tool_tip) override {}
   void DisplayBalloon(const gfx::ImageSkia& icon,
@@ -197,8 +196,8 @@ class AdvancedTestBackgroundModeManager : public TestBackgroundModeManager {
 
 class BackgroundModeManagerTest : public testing::Test {
  public:
-  BackgroundModeManagerTest() {}
-  ~BackgroundModeManagerTest() override {}
+  BackgroundModeManagerTest() = default;
+  ~BackgroundModeManagerTest() override = default;
 
   void SetUp() override {
     command_line_.reset(new base::CommandLine(base::CommandLine::NO_PROGRAM));
@@ -220,8 +219,8 @@ class BackgroundModeManagerTest : public testing::Test {
 
 class BackgroundModeManagerWithExtensionsTest : public testing::Test {
  public:
-  BackgroundModeManagerWithExtensionsTest() {}
-  ~BackgroundModeManagerWithExtensionsTest() override {}
+  BackgroundModeManagerWithExtensionsTest() = default;
+  ~BackgroundModeManagerWithExtensionsTest() override = default;
 
   void SetUp() override {
     command_line_.reset(new base::CommandLine(base::CommandLine::NO_PROGRAM));

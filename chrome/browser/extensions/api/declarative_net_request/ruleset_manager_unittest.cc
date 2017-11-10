@@ -32,7 +32,7 @@ const base::FilePath::CharType kJSONRulesetFilepath[] =
 
 class RulesetManagerTest : public DNRTestBase {
  public:
-  RulesetManagerTest() {}
+  RulesetManagerTest() = default;
 
  protected:
   // Helper to create a ruleset matcher instance for the given |rules|.

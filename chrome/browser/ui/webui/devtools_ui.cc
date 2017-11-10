@@ -358,5 +358,4 @@ DevToolsUI::DevToolsUI(content::WebUI* web_ui)
       new DevToolsDataSource(profile->GetRequestContext()));
 }
 
-DevToolsUI::~DevToolsUI() {
-}
+DevToolsUI::~DevToolsUI() = default;

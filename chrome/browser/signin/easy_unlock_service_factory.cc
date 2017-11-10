@@ -75,8 +75,7 @@ EasyUnlockServiceFactory::EasyUnlockServiceFactory()
 #endif
 }
 
-EasyUnlockServiceFactory::~EasyUnlockServiceFactory() {
-}
+EasyUnlockServiceFactory::~EasyUnlockServiceFactory() = default;
 
 KeyedService* EasyUnlockServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

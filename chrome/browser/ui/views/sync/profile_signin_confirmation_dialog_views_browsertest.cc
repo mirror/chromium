@@ -21,7 +21,7 @@ namespace {
 // ignore) the result from the dialog.
 class TestSigninDialogDelegate : public ui::ProfileSigninConfirmationDelegate {
  public:
-  TestSigninDialogDelegate() {}
+  TestSigninDialogDelegate() = default;
 
   void OnCancelSignin() override {}
   void OnContinueSignin() override {}
@@ -35,7 +35,7 @@ class TestSigninDialogDelegate : public ui::ProfileSigninConfirmationDelegate {
 
 class ProfileSigninConfirmationDialogTest : public DialogBrowserTest {
  public:
-  ProfileSigninConfirmationDialogTest() {}
+  ProfileSigninConfirmationDialogTest() = default;
 
   // DialogBrowserTest:
   void SetUp() override {

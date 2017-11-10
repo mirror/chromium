@@ -139,8 +139,7 @@ CommandService::CommandService(content::BrowserContext* context)
   extension_registry_observer_.Add(ExtensionRegistry::Get(profile_));
 }
 
-CommandService::~CommandService() {
-}
+CommandService::~CommandService() = default;
 
 static base::LazyInstance<BrowserContextKeyedAPIFactory<CommandService>>::
     DestructorAtExit g_command_service_factory = LAZY_INSTANCE_INITIALIZER;

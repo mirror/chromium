@@ -79,10 +79,7 @@ bool MaybeEnableResourcePrefetching(LoadingPredictorConfig* config) {
 
 NavigationID::NavigationID() : tab_id(-1) {}
 
-NavigationID::NavigationID(const NavigationID& other)
-    : tab_id(other.tab_id),
-      main_frame_url(other.main_frame_url),
-      creation_time(other.creation_time) {}
+NavigationID::NavigationID(const NavigationID& other) = default;
 
 NavigationID::NavigationID(content::WebContents* web_contents)
     : tab_id(SessionTabHelper::IdForTab(web_contents)),

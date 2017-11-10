@@ -71,8 +71,7 @@ void StartDnsProbeOnIOThread(
 
 }  // namespace
 
-NetErrorTabHelper::~NetErrorTabHelper() {
-}
+NetErrorTabHelper::~NetErrorTabHelper() = default;
 
 // static
 void NetErrorTabHelper::set_state_for_testing(TestingState state) {

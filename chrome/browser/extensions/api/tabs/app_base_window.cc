@@ -11,7 +11,7 @@ namespace extensions {
 
 AppBaseWindow::AppBaseWindow(AppWindow* app_window) : app_window_(app_window) {}
 
-AppBaseWindow::~AppBaseWindow() {}
+AppBaseWindow::~AppBaseWindow() = default;
 
 bool AppBaseWindow::IsActive() const {
   return GetBaseWindow()->IsActive();

@@ -431,7 +431,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestPaymentMethodIdentifierTest,
 class PaymentsRequestVisualTest
     : public SupportsTestDialog<PaymentRequestNoShippingTest> {
  protected:
-  PaymentsRequestVisualTest() {}
+  PaymentsRequestVisualTest() = default;
 
   // TestBrowserDialog:
   void ShowDialog(const std::string& name) override {

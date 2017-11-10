@@ -38,8 +38,8 @@ const std::vector<DesktopMediaID::Type> kSourceTypes = {
 
 class DesktopMediaPickerViewsTest : public testing::Test {
  public:
-  DesktopMediaPickerViewsTest() {}
-  ~DesktopMediaPickerViewsTest() override {}
+  DesktopMediaPickerViewsTest() = default;
+  ~DesktopMediaPickerViewsTest() override = default;
 
   void SetUp() override {
     test_helper_.test_views_delegate()->set_layout_provider(

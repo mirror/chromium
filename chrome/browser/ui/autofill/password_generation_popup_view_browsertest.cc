@@ -36,7 +36,7 @@ class TestPasswordGenerationPopupController :
             web_contents,
             native_view) {}
 
-  ~TestPasswordGenerationPopupController() override {}
+  ~TestPasswordGenerationPopupController() override = default;
 
   PasswordGenerationPopupView* view() {
     return view_;

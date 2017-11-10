@@ -33,7 +33,7 @@ class ExternalPolicyLoaderTest : public testing::Test {
       : test_browser_thread_bundle_(
             content::TestBrowserThreadBundle::IO_MAINLOOP) {}
 
-  ~ExternalPolicyLoaderTest() override {}
+  ~ExternalPolicyLoaderTest() override = default;
 
  private:
   // Needed to satisfy BrowserThread::CurrentlyOn(BrowserThread::UI) checks in
@@ -44,8 +44,7 @@ class ExternalPolicyLoaderTest : public testing::Test {
 class MockExternalPolicyProviderVisitor
     : public ExternalProviderInterface::VisitorInterface {
  public:
-  MockExternalPolicyProviderVisitor() {
-  }
+  MockExternalPolicyProviderVisitor() = default;
 
   // Initialize a provider with |policy_forcelist|, and check that it installs
   // exactly the extensions specified in |expected_extensions|.

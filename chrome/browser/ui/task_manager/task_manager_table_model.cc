@@ -125,7 +125,7 @@ class TaskManagerValuesStringifier {
             IDS_TASK_MANAGER_MEMORY_STATE_SUSPENDED_TEXT)) {
   }
 
-  ~TaskManagerValuesStringifier() {}
+  ~TaskManagerValuesStringifier() = default;
 
   base::string16 GetCpuUsageText(double cpu_usage) {
     return base::UTF8ToUTF16(base::StringPrintf(kCpuTextFormatString,

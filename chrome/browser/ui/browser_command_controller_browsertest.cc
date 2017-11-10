@@ -34,8 +34,8 @@
 
 class BrowserCommandControllerBrowserTest: public InProcessBrowserTest {
  public:
-  BrowserCommandControllerBrowserTest() {}
-  ~BrowserCommandControllerBrowserTest() override {}
+  BrowserCommandControllerBrowserTest() = default;
+  ~BrowserCommandControllerBrowserTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
 #if defined(OS_CHROMEOS)

@@ -174,7 +174,7 @@ class ClientSideDetectionHost::ShouldClassifyUrlRequest
   };
 
   // The destructor can be called either from the UI or the IO thread.
-  virtual ~ShouldClassifyUrlRequest() { }
+  virtual ~ShouldClassifyUrlRequest() = default;
 
   bool ShouldClassifyForPhishing() const {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);

@@ -12,7 +12,7 @@ SubresourceFilterProfileContext::SubresourceFilterProfileContext(
     : settings_manager_(
           base::MakeUnique<SubresourceFilterContentSettingsManager>(profile)) {}
 
-SubresourceFilterProfileContext::~SubresourceFilterProfileContext() {}
+SubresourceFilterProfileContext::~SubresourceFilterProfileContext() = default;
 
 void SubresourceFilterProfileContext::Shutdown() {
   settings_manager_.reset();

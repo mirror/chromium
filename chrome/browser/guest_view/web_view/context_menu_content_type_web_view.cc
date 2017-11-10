@@ -23,8 +23,7 @@ ContextMenuContentTypeWebView::ContextMenuContentTypeWebView(
     : ContextMenuContentType(web_contents, params, true) {
 }
 
-ContextMenuContentTypeWebView::~ContextMenuContentTypeWebView() {
-}
+ContextMenuContentTypeWebView::~ContextMenuContentTypeWebView() = default;
 
 const Extension* ContextMenuContentTypeWebView::GetExtension() const {
   ProcessManager* process_manager =

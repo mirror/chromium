@@ -52,11 +52,9 @@ const char WasInProgressData::kKey[] =
 
 }  // anonymous namespace
 
-DownloadStatusUpdater::DownloadStatusUpdater() {
-}
+DownloadStatusUpdater::DownloadStatusUpdater() = default;
 
-DownloadStatusUpdater::~DownloadStatusUpdater() {
-}
+DownloadStatusUpdater::~DownloadStatusUpdater() = default;
 
 bool DownloadStatusUpdater::GetProgress(float* progress,
                                         int* download_count) const {

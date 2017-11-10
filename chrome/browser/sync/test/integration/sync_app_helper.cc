@@ -56,7 +56,7 @@ using AppStateMap = std::map<std::string, AppState>;
 AppState::AppState()
     : launch_type(extensions::LAUNCH_TYPE_INVALID), from_bookmark(false) {}
 
-AppState::~AppState() {}
+AppState::~AppState() = default;
 
 bool AppState::IsValid() const {
   return page_ordinal.IsValid() && app_launch_ordinal.IsValid();
@@ -239,4 +239,4 @@ void SyncAppHelper::FixNTPOrdinalCollisions(Profile* profile) {
 
 SyncAppHelper::SyncAppHelper() : setup_completed_(false) {}
 
-SyncAppHelper::~SyncAppHelper() {}
+SyncAppHelper::~SyncAppHelper() = default;

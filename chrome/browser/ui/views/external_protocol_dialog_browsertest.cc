@@ -74,7 +74,7 @@ class TestExternalProtocolDialogDelegate
 
 class ExternalProtocolDialogBrowserTest : public DialogBrowserTest {
  public:
-  ExternalProtocolDialogBrowserTest() {}
+  ExternalProtocolDialogBrowserTest() = default;
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name = "") override {

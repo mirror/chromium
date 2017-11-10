@@ -27,7 +27,7 @@ bool IsUberOrUberReplacementURL(const GURL& url) {
 
 }  // namespace
 
-ChromeSerializedNavigationDriver::~ChromeSerializedNavigationDriver() {}
+ChromeSerializedNavigationDriver::~ChromeSerializedNavigationDriver() = default;
 
 // static
 ChromeSerializedNavigationDriver*
@@ -90,4 +90,4 @@ void ChromeSerializedNavigationDriver::Sanitize(
 #endif  // defined(OS_ANDROID)
 }
 
-ChromeSerializedNavigationDriver::ChromeSerializedNavigationDriver() {}
+ChromeSerializedNavigationDriver::ChromeSerializedNavigationDriver() = default;

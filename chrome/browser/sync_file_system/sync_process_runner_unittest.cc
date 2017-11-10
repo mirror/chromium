@@ -21,7 +21,7 @@ namespace {
 class FakeClient : public SyncProcessRunner::Client {
  public:
   FakeClient() : service_state_(SYNC_SERVICE_RUNNING) {}
-  ~FakeClient() override {}
+  ~FakeClient() override = default;
 
   SyncServiceState GetSyncServiceState() override { return service_state_; }
 
@@ -39,8 +39,8 @@ class FakeClient : public SyncProcessRunner::Client {
 
 class FakeTimerHelper : public SyncProcessRunner::TimerHelper {
  public:
-  FakeTimerHelper() {}
-  ~FakeTimerHelper() override {}
+  FakeTimerHelper() = default;
+  ~FakeTimerHelper() override = default;
 
   bool IsRunning() override { return !timer_task_.is_null(); }
 
@@ -96,7 +96,7 @@ class FakeSyncProcessRunner : public SyncProcessRunner {
     running_tasks_.push(callback);
   }
 
-  ~FakeSyncProcessRunner() override {}
+  ~FakeSyncProcessRunner() override = default;
 
   void UpdateChanges(int num_changes) {
     OnChangesUpdated(num_changes);

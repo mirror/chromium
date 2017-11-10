@@ -41,7 +41,7 @@ class TestBookmarkTabHelperDelegate : public BookmarkTabHelperDelegate {
   TestBookmarkTabHelperDelegate()
       : starred_(false) {
   }
-  ~TestBookmarkTabHelperDelegate() override {}
+  ~TestBookmarkTabHelperDelegate() override = default;
 
   void URLStarredChanged(content::WebContents*, bool starred) override {
     starred_ = starred;
@@ -56,7 +56,7 @@ class TestBookmarkTabHelperDelegate : public BookmarkTabHelperDelegate {
 
 class BookmarkBrowsertest : public InProcessBrowserTest {
  public:
-  BookmarkBrowsertest() {}
+  BookmarkBrowsertest() = default;
 
   bool IsVisible() {
     return browser()->bookmark_bar_state() == BookmarkBar::SHOW;

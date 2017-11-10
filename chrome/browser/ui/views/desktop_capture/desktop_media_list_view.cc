@@ -69,7 +69,7 @@ DesktopMediaListView::DesktopMediaListView(
   SetFocusBehavior(FocusBehavior::ALWAYS);
 }
 
-DesktopMediaListView::~DesktopMediaListView() {}
+DesktopMediaListView::~DesktopMediaListView() = default;
 
 void DesktopMediaListView::StartUpdating(DesktopMediaID dialog_window_id) {
   media_list_->SetViewDialogWindowId(dialog_window_id);

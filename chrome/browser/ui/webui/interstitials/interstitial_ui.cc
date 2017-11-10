@@ -403,8 +403,7 @@ InterstitialUI::InterstitialUI(content::WebUI* web_ui)
   content::URLDataSource::Add(profile, new InterstitialHTMLSource());
 }
 
-InterstitialUI::~InterstitialUI() {
-}
+InterstitialUI::~InterstitialUI() = default;
 
 // InterstitialHTMLSource
 

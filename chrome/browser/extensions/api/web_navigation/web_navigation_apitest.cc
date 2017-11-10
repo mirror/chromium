@@ -69,7 +69,7 @@ namespace {
 class TestNavigationListener
     : public base::RefCountedThreadSafe<TestNavigationListener> {
  public:
-  TestNavigationListener() {}
+  TestNavigationListener() = default;
 
   // Add |url| to the set of URLs we should delay.
   void DelayRequestsForURL(const GURL& url) {
@@ -135,7 +135,7 @@ class TestNavigationListener
  private:
   friend class base::RefCountedThreadSafe<TestNavigationListener>;
 
-  virtual ~TestNavigationListener() {}
+  virtual ~TestNavigationListener() = default;
 
   // Stores a throttle per URL request that we have delayed.
   class Throttle : public content::ResourceThrottle,
@@ -193,7 +193,7 @@ class DelayLoadStartAndExecuteJavascript
                    content::NotificationService::AllSources());
     test_navigation_listener_->DelayRequestsForURL(delay_url_);
   }
-  ~DelayLoadStartAndExecuteJavascript() override {}
+  ~DelayLoadStartAndExecuteJavascript() override = default;
 
   void Observe(int type,
                const content::NotificationSource& source,
@@ -264,7 +264,7 @@ class StartProvisionalLoadObserver : public content::WebContentsObserver {
         url_(expected_url),
         url_seen_(false),
         message_loop_runner_(new content::MessageLoopRunner) {}
-  ~StartProvisionalLoadObserver() override {}
+  ~StartProvisionalLoadObserver() override = default;
 
   void DidStartNavigation(
       content::NavigationHandle* navigation_handle) override {
@@ -300,7 +300,7 @@ class TestResourceDispatcherHostDelegate
       TestNavigationListener* test_navigation_listener)
       : test_navigation_listener_(test_navigation_listener) {
   }
-  ~TestResourceDispatcherHostDelegate() override {}
+  ~TestResourceDispatcherHostDelegate() override = default;
 
   void RequestBeginning(net::URLRequest* request,
                         content::ResourceContext* resource_context,
@@ -348,7 +348,7 @@ class WebNavigationApiTest : public ExtensionApiTest {
     embedded_test_server()->RegisterRequestHandler(
         base::Bind(&HandleTestRequest));
   }
-  ~WebNavigationApiTest() override {}
+  ~WebNavigationApiTest() override = default;
 
   void SetUpInProcessBrowserTestFixture() override {
     ExtensionApiTest::SetUpInProcessBrowserTestFixture();

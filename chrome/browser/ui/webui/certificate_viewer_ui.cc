@@ -73,8 +73,7 @@ CertificateViewerModalDialogUI::CertificateViewerModalDialogUI(
       GetWebUIDataSource(chrome::kChromeUICertificateViewerDialogHost));
 }
 
-CertificateViewerModalDialogUI::~CertificateViewerModalDialogUI() {
-}
+CertificateViewerModalDialogUI::~CertificateViewerModalDialogUI() = default;
 
 CertificateViewerUI::CertificateViewerUI(content::WebUI* web_ui)
     : ConstrainedWebDialogUI(web_ui) {
@@ -85,5 +84,4 @@ CertificateViewerUI::CertificateViewerUI(content::WebUI* web_ui)
       GetWebUIDataSource(chrome::kChromeUICertificateViewerHost));
 }
 
-CertificateViewerUI::~CertificateViewerUI() {
-}
+CertificateViewerUI::~CertificateViewerUI() = default;

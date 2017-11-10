@@ -18,7 +18,7 @@ SyncWebSocketImpl::SyncWebSocketImpl(
     net::URLRequestContextGetter* context_getter)
     : core_(new Core(context_getter)) {}
 
-SyncWebSocketImpl::~SyncWebSocketImpl() {}
+SyncWebSocketImpl::~SyncWebSocketImpl() = default;
 
 bool SyncWebSocketImpl::IsConnected() {
   return core_->IsConnected();
@@ -107,7 +107,7 @@ void SyncWebSocketImpl::Core::OnClose() {
   on_update_event_.Signal();
 }
 
-SyncWebSocketImpl::Core::~Core() { }
+SyncWebSocketImpl::Core::~Core() = default;
 
 void SyncWebSocketImpl::Core::ConnectOnIO(
     const GURL& url,

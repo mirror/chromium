@@ -84,9 +84,9 @@ base::FilePath PolicyToolUITest::GetSessionPath(
       .AddExtension(GetSessionExtension());
 }
 
-PolicyToolUITest::PolicyToolUITest() {}
+PolicyToolUITest::PolicyToolUITest() = default;
 
-PolicyToolUITest::~PolicyToolUITest() {}
+PolicyToolUITest::~PolicyToolUITest() = default;
 
 void PolicyToolUITest::SetUpInProcessBrowserTestFixture() {}
 

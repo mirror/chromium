@@ -73,7 +73,7 @@ WebDataServiceFactory::WebDataServiceFactory()
   // WebDataServiceFactory has no dependecies.
 }
 
-WebDataServiceFactory::~WebDataServiceFactory() {}
+WebDataServiceFactory::~WebDataServiceFactory() = default;
 
 // static
 WebDataServiceWrapper* WebDataServiceFactory::GetForProfile(

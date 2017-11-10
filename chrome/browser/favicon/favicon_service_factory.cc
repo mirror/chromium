@@ -66,8 +66,7 @@ FaviconServiceFactory::FaviconServiceFactory()
   DependsOn(HistoryServiceFactory::GetInstance());
 }
 
-FaviconServiceFactory::~FaviconServiceFactory() {
-}
+FaviconServiceFactory::~FaviconServiceFactory() = default;
 
 KeyedService* FaviconServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

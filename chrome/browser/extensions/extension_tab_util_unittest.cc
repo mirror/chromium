@@ -17,8 +17,8 @@ const char kCustomUrl[] = "www.example.com/foo?bar=baz";
 
 class ExtensionTabUtilTestDelegate : public ExtensionTabUtil::Delegate {
  public:
-  ExtensionTabUtilTestDelegate() {}
-  ~ExtensionTabUtilTestDelegate() override {}
+  ExtensionTabUtilTestDelegate() = default;
+  ~ExtensionTabUtilTestDelegate() override = default;
 
   // ExtensionTabUtil::Delegate
   void ScrubTabForExtension(const Extension* extension,

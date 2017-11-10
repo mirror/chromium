@@ -24,7 +24,7 @@ using preferences_helper::GetPrefs;
 class TwoClientPreferencesSyncTest : public SyncTest {
  public:
   TwoClientPreferencesSyncTest() : SyncTest(TWO_CLIENT) {}
-  ~TwoClientPreferencesSyncTest() override {}
+  ~TwoClientPreferencesSyncTest() override = default;
 
   bool TestUsesSelfNotifications() override { return false; }
 

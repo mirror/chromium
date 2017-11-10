@@ -137,7 +137,7 @@ SupervisedUserRegistrationInfo::SupervisedUserRegistrationInfo(
       name(name) {
 }
 
-SupervisedUserRegistrationInfo::~SupervisedUserRegistrationInfo() {}
+SupervisedUserRegistrationInfo::~SupervisedUserRegistrationInfo() = default;
 
 ScopedTestingSupervisedUserRegistrationUtility::
     ScopedTestingSupervisedUserRegistrationUtility(

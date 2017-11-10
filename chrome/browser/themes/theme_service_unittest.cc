@@ -48,7 +48,7 @@ class ThemeServiceTest : public extensions::ExtensionServiceTestBase {
  public:
   ThemeServiceTest() : is_supervised_(false),
                        registry_(NULL) {}
-  ~ThemeServiceTest() override {}
+  ~ThemeServiceTest() override = default;
 
   void SetUp() override {
     extensions::ExtensionServiceTestBase::SetUp();
@@ -307,7 +307,7 @@ class InfobarDestroyerOnThemeChange : public content::NotificationObserver {
         content::Source<ThemeService>(theme_service_));
   }
 
-  ~InfobarDestroyerOnThemeChange() override {}
+  ~InfobarDestroyerOnThemeChange() override = default;
 
  private:
   void Observe(int type,
@@ -367,8 +367,8 @@ TEST_F(ThemeServiceTest, UninstallThemeOnThemeChangeNotification) {
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
 class ThemeServiceSupervisedUserTest : public ThemeServiceTest {
  public:
-  ThemeServiceSupervisedUserTest() {}
-  ~ThemeServiceSupervisedUserTest() override {}
+  ThemeServiceSupervisedUserTest() = default;
+  ~ThemeServiceSupervisedUserTest() override = default;
 
   void SetUp() override {
     is_supervised_ = true;

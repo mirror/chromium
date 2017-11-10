@@ -22,7 +22,7 @@ ChromeExtensionBluetoothChooser::ChromeExtensionBluetoothChooser(
   chooser_dialog_->ShowDialog(std::move(bluetooth_chooser_controller));
 }
 
-ChromeExtensionBluetoothChooser::~ChromeExtensionBluetoothChooser() {}
+ChromeExtensionBluetoothChooser::~ChromeExtensionBluetoothChooser() = default;
 
 void ChromeExtensionBluetoothChooser::SetAdapterPresence(
     AdapterPresence presence) {

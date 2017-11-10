@@ -68,8 +68,8 @@ const developer::ExtensionInfo* GetInfoFromList(
 
 class ExtensionInfoGeneratorUnitTest : public ExtensionServiceTestBase {
  public:
-  ExtensionInfoGeneratorUnitTest() {}
-  ~ExtensionInfoGeneratorUnitTest() override {}
+  ExtensionInfoGeneratorUnitTest() = default;
+  ~ExtensionInfoGeneratorUnitTest() override = default;
 
  protected:
   void SetUp() override {

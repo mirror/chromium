@@ -157,8 +157,7 @@ AutomationManagerAura::AutomationManagerAura()
       enabled_(false),
       processing_events_(false) {}
 
-AutomationManagerAura::~AutomationManagerAura() {
-}
+AutomationManagerAura::~AutomationManagerAura() = default;
 
 void AutomationManagerAura::Reset(bool reset_serializer) {
   if (!current_tree_)

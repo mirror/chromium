@@ -252,7 +252,7 @@ CorePageLoadMetricsObserver::CorePageLoadMetricsObserver()
       network_bytes_(0),
       redirect_chain_size_(0) {}
 
-CorePageLoadMetricsObserver::~CorePageLoadMetricsObserver() {}
+CorePageLoadMetricsObserver::~CorePageLoadMetricsObserver() = default;
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 CorePageLoadMetricsObserver::OnRedirect(

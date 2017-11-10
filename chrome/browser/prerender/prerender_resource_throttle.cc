@@ -71,7 +71,7 @@ class PrerenderThrottleInfo
   friend class base::RefCountedThreadSafe<PrerenderThrottleInfo>;
   friend struct BrowserThread::DeleteOnThread<BrowserThread::UI>;
   friend class base::DeleteHelper<PrerenderThrottleInfo>;
-  ~PrerenderThrottleInfo() {}
+  ~PrerenderThrottleInfo() = default;
 
   PrerenderMode mode_;
   Origin origin_;
@@ -110,7 +110,7 @@ PrerenderResourceThrottle::PrerenderResourceThrottle(net::URLRequest* request)
 #endif  // OS_ANDROID
 }
 
-PrerenderResourceThrottle::~PrerenderResourceThrottle() {}
+PrerenderResourceThrottle::~PrerenderResourceThrottle() = default;
 
 void PrerenderResourceThrottle::WillStartRequest(bool* defer) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);

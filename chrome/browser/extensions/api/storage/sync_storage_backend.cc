@@ -62,7 +62,7 @@ SyncStorageBackend::SyncStorageBackend(
          sync_type_ == syncer::APP_SETTINGS);
 }
 
-SyncStorageBackend::~SyncStorageBackend() {}
+SyncStorageBackend::~SyncStorageBackend() = default;
 
 ValueStore* SyncStorageBackend::GetStorage(const std::string& extension_id) {
   DCHECK(IsOnBackendSequence());

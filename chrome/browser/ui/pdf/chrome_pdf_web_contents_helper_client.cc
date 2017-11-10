@@ -25,11 +25,9 @@ content::WebContents* GetWebContentsToUse(
 
 }  // namespace
 
-ChromePDFWebContentsHelperClient::ChromePDFWebContentsHelperClient() {
-}
+ChromePDFWebContentsHelperClient::ChromePDFWebContentsHelperClient() = default;
 
-ChromePDFWebContentsHelperClient::~ChromePDFWebContentsHelperClient() {
-}
+ChromePDFWebContentsHelperClient::~ChromePDFWebContentsHelperClient() = default;
 
 void ChromePDFWebContentsHelperClient::UpdateContentRestrictions(
     content::WebContents* contents,

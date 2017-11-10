@@ -243,7 +243,7 @@ class CastVideoSink : public base::SupportsWeakPtr<CastVideoSink>,
 
    private:
     friend class base::RefCountedThreadSafe<Deliverer>;
-    ~Deliverer() {}
+    ~Deliverer() = default;
 
     const scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
     const CastRtpStream::ErrorCallback error_callback_;

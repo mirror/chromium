@@ -322,9 +322,9 @@ class ResourcePrefetchPredictorBrowserTest : public InProcessBrowserTest {
  protected:
   using URLRequestSummary = URLRequestSummary;
 
-  ResourcePrefetchPredictorBrowserTest() {}
+  ResourcePrefetchPredictorBrowserTest() = default;
 
-  ~ResourcePrefetchPredictorBrowserTest() override {}
+  ~ResourcePrefetchPredictorBrowserTest() override = default;
 
   void SetUp() override {
     std::map<std::string, std::string> parameters = {
@@ -736,8 +736,8 @@ class ResourcePrefetchPredictorBrowserTest : public InProcessBrowserTest {
 class ResourcePrefetchPredictorPrefetchingBrowserTest
     : public ResourcePrefetchPredictorBrowserTest {
  public:
-  ResourcePrefetchPredictorPrefetchingBrowserTest() {}
-  ~ResourcePrefetchPredictorPrefetchingBrowserTest() override {}
+  ResourcePrefetchPredictorPrefetchingBrowserTest() = default;
+  ~ResourcePrefetchPredictorPrefetchingBrowserTest() override = default;
 
   void SetUp() override {
     std::map<std::string, std::string> parameters = {

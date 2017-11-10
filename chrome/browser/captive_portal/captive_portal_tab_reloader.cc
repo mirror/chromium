@@ -58,8 +58,7 @@ CaptivePortalTabReloader::CaptivePortalTabReloader(
       weak_factory_(this) {
 }
 
-CaptivePortalTabReloader::~CaptivePortalTabReloader() {
-}
+CaptivePortalTabReloader::~CaptivePortalTabReloader() = default;
 
 void CaptivePortalTabReloader::OnLoadStart(bool is_ssl) {
   provisional_main_frame_load_ = true;

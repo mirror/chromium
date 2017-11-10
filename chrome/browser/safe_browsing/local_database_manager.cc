@@ -213,7 +213,8 @@ LocalSafeBrowsingDatabaseManager::SafeBrowsingCheck::SafeBrowsingCheck(
       << "Exactly one of urls and full_hashes must be set";
 }
 
-LocalSafeBrowsingDatabaseManager::SafeBrowsingCheck::~SafeBrowsingCheck() {}
+LocalSafeBrowsingDatabaseManager::SafeBrowsingCheck::~SafeBrowsingCheck() =
+    default;
 
 void LocalSafeBrowsingDatabaseManager::SafeBrowsingCheck::
     OnSafeBrowsingResult() {
@@ -732,7 +733,7 @@ LocalSafeBrowsingDatabaseManager::QueuedCheck::QueuedCheck(
 LocalSafeBrowsingDatabaseManager::QueuedCheck::QueuedCheck(
     const QueuedCheck& other) = default;
 
-LocalSafeBrowsingDatabaseManager::QueuedCheck::~QueuedCheck() {}
+LocalSafeBrowsingDatabaseManager::QueuedCheck::~QueuedCheck() = default;
 
 void LocalSafeBrowsingDatabaseManager::DoStopOnIOThread() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);

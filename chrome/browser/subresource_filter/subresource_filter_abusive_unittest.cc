@@ -60,7 +60,7 @@ class SubresourceFilterAbusiveTest
   SubresourceFilterAbusiveTest() {
     std::tie(abusive_level_, bas_level_) = GetParam();
   }
-  ~SubresourceFilterAbusiveTest() override {}
+  ~SubresourceFilterAbusiveTest() override = default;
 
   // SubresourceFilterTestHarness:
   void SetUp() override {

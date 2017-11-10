@@ -46,8 +46,8 @@ namespace {
 
 class MockChangeProcessor : public SyncChangeProcessor {
  public:
-  MockChangeProcessor() {}
-  ~MockChangeProcessor() override {}
+  MockChangeProcessor() = default;
+  ~MockChangeProcessor() override = default;
 
   // SyncChangeProcessor implementation:
   SyncError ProcessSyncChanges(const base::Location& from_here,
@@ -121,7 +121,7 @@ SupervisedUserSyncServiceTest::SupervisedUserSyncServiceTest()
   service_ = SupervisedUserSyncServiceFactory::GetForProfile(&profile_);
 }
 
-SupervisedUserSyncServiceTest::~SupervisedUserSyncServiceTest() {}
+SupervisedUserSyncServiceTest::~SupervisedUserSyncServiceTest() = default;
 
 std::unique_ptr<SyncChangeProcessor>
 SupervisedUserSyncServiceTest::CreateChangeProcessor() {

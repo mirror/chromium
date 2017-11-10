@@ -8,11 +8,9 @@
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 
-ConfirmBubbleModel::ConfirmBubbleModel() {
-}
+ConfirmBubbleModel::ConfirmBubbleModel() = default;
 
-ConfirmBubbleModel::~ConfirmBubbleModel() {
-}
+ConfirmBubbleModel::~ConfirmBubbleModel() = default;
 
 int ConfirmBubbleModel::GetButtons() const {
   return BUTTON_OK | BUTTON_CANCEL;

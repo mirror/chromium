@@ -118,8 +118,7 @@ SiteSettingsHandler::SiteSettingsHandler(Profile* profile)
     : profile_(profile), observer_(this) {
 }
 
-SiteSettingsHandler::~SiteSettingsHandler() {
-}
+SiteSettingsHandler::~SiteSettingsHandler() = default;
 
 void SiteSettingsHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

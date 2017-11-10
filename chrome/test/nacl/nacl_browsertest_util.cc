@@ -187,11 +187,9 @@ static void AddPnaclParm(const base::FilePath::StringType& url,
   }
 }
 
-NaClBrowserTestBase::NaClBrowserTestBase() {
-}
+NaClBrowserTestBase::NaClBrowserTestBase() = default;
 
-NaClBrowserTestBase::~NaClBrowserTestBase() {
-}
+NaClBrowserTestBase::~NaClBrowserTestBase() = default;
 
 void NaClBrowserTestBase::SetUpCommandLine(base::CommandLine* command_line) {
   command_line->AppendSwitch(switches::kEnableNaCl);

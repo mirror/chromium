@@ -31,8 +31,7 @@ SiteEngagementServiceFactory::SiteEngagementServiceFactory()
   DependsOn(HostContentSettingsMapFactory::GetInstance());
 }
 
-SiteEngagementServiceFactory::~SiteEngagementServiceFactory() {
-}
+SiteEngagementServiceFactory::~SiteEngagementServiceFactory() = default;
 
 bool SiteEngagementServiceFactory::ServiceIsNULLWhileTesting() const {
   return false;

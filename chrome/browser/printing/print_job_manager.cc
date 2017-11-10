@@ -14,8 +14,7 @@
 
 namespace printing {
 
-PrintQueriesQueue::PrintQueriesQueue() {
-}
+PrintQueriesQueue::PrintQueriesQueue() = default;
 
 PrintQueriesQueue::~PrintQueriesQueue() {
   base::AutoLock lock(lock_);
@@ -70,8 +69,7 @@ PrintJobManager::PrintJobManager() : is_shutdown_(false) {
                  content::NotificationService::AllSources());
 }
 
-PrintJobManager::~PrintJobManager() {
-}
+PrintJobManager::~PrintJobManager() = default;
 
 scoped_refptr<PrintQueriesQueue> PrintJobManager::queue() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);

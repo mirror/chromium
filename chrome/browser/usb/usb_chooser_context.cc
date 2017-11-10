@@ -61,7 +61,7 @@ UsbChooserContext::UsbChooserContext(Profile* profile)
     observer_.Add(usb_service_);
 }
 
-UsbChooserContext::~UsbChooserContext() {}
+UsbChooserContext::~UsbChooserContext() = default;
 
 std::vector<std::unique_ptr<base::DictionaryValue>>
 UsbChooserContext::GetGrantedObjects(const GURL& requesting_origin,

@@ -39,8 +39,7 @@ InstanceIDProfileServiceFactory::InstanceIDProfileServiceFactory()
   DependsOn(gcm::GCMProfileServiceFactory::GetInstance());
 }
 
-InstanceIDProfileServiceFactory::~InstanceIDProfileServiceFactory() {
-}
+InstanceIDProfileServiceFactory::~InstanceIDProfileServiceFactory() = default;
 
 KeyedService* InstanceIDProfileServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

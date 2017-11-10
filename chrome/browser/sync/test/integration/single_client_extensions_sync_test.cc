@@ -20,7 +20,7 @@ class SingleClientExtensionsSyncTest : public SyncTest {
  public:
   SingleClientExtensionsSyncTest() : SyncTest(SINGLE_CLIENT) {}
 
-  ~SingleClientExtensionsSyncTest() override {}
+  ~SingleClientExtensionsSyncTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SingleClientExtensionsSyncTest);

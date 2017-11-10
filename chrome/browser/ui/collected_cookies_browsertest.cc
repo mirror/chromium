@@ -21,7 +21,7 @@
 
 class CollectedCookiesTest : public DialogBrowserTest {
  public:
-  CollectedCookiesTest() {}
+  CollectedCookiesTest() = default;
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {
@@ -48,7 +48,7 @@ class CollectedCookiesTest : public DialogBrowserTest {
 // when that is the default.
 class CollectedCookiesTestMd : public CollectedCookiesTest {
  public:
-  CollectedCookiesTestMd() {}
+  CollectedCookiesTestMd() = default;
 
   // CollectedCookiesTest:
   void SetUp() override {

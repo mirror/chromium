@@ -106,9 +106,9 @@ void RecordAppLauncherPromoHistogram(
 
 }  // namespace
 
-AppLauncherHandler::AppInstallInfo::AppInstallInfo() {}
+AppLauncherHandler::AppInstallInfo::AppInstallInfo() = default;
 
-AppLauncherHandler::AppInstallInfo::~AppInstallInfo() {}
+AppLauncherHandler::AppInstallInfo::~AppInstallInfo() = default;
 
 AppLauncherHandler::AppLauncherHandler(ExtensionService* extension_service)
     : extension_service_(extension_service),

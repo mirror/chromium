@@ -61,7 +61,7 @@ Session::Session(const std::string& id, std::unique_ptr<Chrome> chrome)
       script_timeout(kDefaultScriptTimeout),
       auto_reporting_enabled(false) {}
 
-Session::~Session() {}
+Session::~Session() = default;
 
 Status Session::GetTargetWindow(WebView** web_view) {
   if (!chrome)

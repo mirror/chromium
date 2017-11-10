@@ -38,11 +38,9 @@ void JavaScriptBrowserTest::AddLibrary(const base::FilePath& library_path) {
   user_libraries_.push_back(library_path);
 }
 
-JavaScriptBrowserTest::JavaScriptBrowserTest() {
-}
+JavaScriptBrowserTest::JavaScriptBrowserTest() = default;
 
-JavaScriptBrowserTest::~JavaScriptBrowserTest() {
-}
+JavaScriptBrowserTest::~JavaScriptBrowserTest() = default;
 
 void JavaScriptBrowserTest::SetUpOnMainThread() {
   base::FilePath test_data_directory;

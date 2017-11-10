@@ -111,7 +111,7 @@ class WebAppReadyMsgWatcher : public content::BrowserMessageFilter {
   }
 
  private:
-  ~WebAppReadyMsgWatcher() override {}
+  ~WebAppReadyMsgWatcher() override = default;
 
   Browser* browser_;
   base::Closure quit_closure_;
@@ -124,7 +124,7 @@ class WebAppReadyMsgWatcher : public content::BrowserMessageFilter {
 
 class BookmarkAppHelperTest : public DialogBrowserTest {
  public:
-  BookmarkAppHelperTest() {}
+  BookmarkAppHelperTest() = default;
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {

@@ -15,7 +15,7 @@ namespace {
 
 class InvalidFileValidator : public storage::CopyOrMoveFileValidator {
  public:
-  ~InvalidFileValidator() override {}
+  ~InvalidFileValidator() override = default;
   void StartPreWriteValidation(
       const storage::CopyOrMoveFileValidator::ResultCallback& result_callback)
       override {
@@ -32,15 +32,15 @@ class InvalidFileValidator : public storage::CopyOrMoveFileValidator {
  private:
   friend class ::MediaFileValidatorFactory;
 
-  InvalidFileValidator() {}
+  InvalidFileValidator() = default;
 
   DISALLOW_COPY_AND_ASSIGN(InvalidFileValidator);
 };
 
 }  // namespace
 
-MediaFileValidatorFactory::MediaFileValidatorFactory() {}
-MediaFileValidatorFactory::~MediaFileValidatorFactory() {}
+MediaFileValidatorFactory::MediaFileValidatorFactory() = default;
+MediaFileValidatorFactory::~MediaFileValidatorFactory() = default;
 
 storage::CopyOrMoveFileValidator*
 MediaFileValidatorFactory::CreateCopyOrMoveFileValidator(

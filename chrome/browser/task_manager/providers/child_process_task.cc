@@ -176,8 +176,7 @@ ChildProcessTask::ChildProcessTask(const content::ChildProcessData& data)
       uses_v8_memory_(UsesV8Memory(process_type_)) {
 }
 
-ChildProcessTask::~ChildProcessTask() {
-}
+ChildProcessTask::~ChildProcessTask() = default;
 
 void ChildProcessTask::Refresh(const base::TimeDelta& update_interval,
                                int64_t refresh_flags) {

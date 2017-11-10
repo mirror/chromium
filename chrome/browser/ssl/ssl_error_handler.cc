@@ -119,7 +119,7 @@ class CommonNameMismatchRedirectObserver
     : public content::WebContentsObserver,
       public content::WebContentsUserData<CommonNameMismatchRedirectObserver> {
  public:
-  ~CommonNameMismatchRedirectObserver() override {}
+  ~CommonNameMismatchRedirectObserver() override = default;
 
   static void AddToConsoleAfterNavigation(
       content::WebContents* web_contents,
@@ -676,8 +676,7 @@ SSLErrorHandler::SSLErrorHandler(
       callback_(callback),
       weak_ptr_factory_(this) {}
 
-SSLErrorHandler::~SSLErrorHandler() {
-}
+SSLErrorHandler::~SSLErrorHandler() = default;
 
 void SSLErrorHandler::StartHandlingError() {
   RecordUMA(HANDLE_ALL);

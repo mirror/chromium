@@ -89,7 +89,7 @@ DownloadsListTracker::DownloadsListTracker(
   Init();
 }
 
-DownloadsListTracker::~DownloadsListTracker() {}
+DownloadsListTracker::~DownloadsListTracker() = default;
 
 void DownloadsListTracker::Reset() {
   if (sending_updates_)

@@ -78,7 +78,7 @@ class SafeBrowsingProtocolManagerTest : public testing::Test {
       : thread_bundle_(content::TestBrowserThreadBundle::Options::IO_MAINLOOP) {
   }
 
-  ~SafeBrowsingProtocolManagerTest() override {}
+  ~SafeBrowsingProtocolManagerTest() override = default;
 
   void SetUp() override {
     std::string key = google_apis::GetAPIKey();
@@ -354,8 +354,8 @@ namespace {
 
 class MockProtocolDelegate : public SafeBrowsingProtocolManagerDelegate {
  public:
-  MockProtocolDelegate() {}
-  ~MockProtocolDelegate() override {}
+  MockProtocolDelegate() = default;
+  ~MockProtocolDelegate() override = default;
 
   MOCK_METHOD0(UpdateStarted, void());
   MOCK_METHOD1(UpdateFinished, void(bool));

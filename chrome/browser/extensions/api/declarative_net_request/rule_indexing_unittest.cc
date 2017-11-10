@@ -39,7 +39,7 @@ const base::FilePath::CharType kJSONRulesetFilepath[] =
 // extensions.
 class RuleIndexingTest : public DNRTestBase {
  public:
-  RuleIndexingTest() {}
+  RuleIndexingTest() = default;
 
   // DNRTestBase override.
   void SetUp() override {

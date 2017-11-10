@@ -47,8 +47,8 @@ class ChromeJavaScriptAppModalDialogViews
 class ChromeJavaScriptNativeDialogViewsFactory
     : public app_modal::JavaScriptNativeDialogFactory {
  public:
-  ChromeJavaScriptNativeDialogViewsFactory() {}
-  ~ChromeJavaScriptNativeDialogViewsFactory() override {}
+  ChromeJavaScriptNativeDialogViewsFactory() = default;
+  ~ChromeJavaScriptNativeDialogViewsFactory() override = default;
 
  private:
   app_modal::NativeAppModalDialog* CreateNativeJavaScriptDialog(

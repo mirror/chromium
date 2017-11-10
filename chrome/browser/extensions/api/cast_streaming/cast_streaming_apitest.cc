@@ -115,7 +115,7 @@ class TestPatternReceiver : public media::cast::InProcessReceiver {
             WithFakeAesKeyAndIv(media::cast::GetDefaultVideoReceiverConfig())) {
   }
 
-  ~TestPatternReceiver() override {}
+  ~TestPatternReceiver() override = default;
 
   void AddExpectedTone(int tone_frequency) {
     expected_tones_.push_back(tone_frequency);

@@ -99,7 +99,7 @@ class FakeDataUseAggregator : public data_usage::DataUseAggregator {
         on_the_record_rx_bytes_(0),
         off_the_record_tx_bytes_(0),
         off_the_record_rx_bytes_(0) {}
-  ~FakeDataUseAggregator() override {}
+  ~FakeDataUseAggregator() override = default;
 
   void ReportDataUse(net::URLRequest* request,
                      int64_t tx_bytes,

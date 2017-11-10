@@ -33,7 +33,7 @@ namespace extensions {
 
 class DebuggerApiTest : public ExtensionApiTest {
  protected:
-  ~DebuggerApiTest() override {}
+  ~DebuggerApiTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override;
   void SetUpOnMainThread() override;

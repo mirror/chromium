@@ -56,8 +56,7 @@ SafeBrowsingTabObserver::SafeBrowsingTabObserver(
 #endif
 }
 
-SafeBrowsingTabObserver::~SafeBrowsingTabObserver() {
-}
+SafeBrowsingTabObserver::~SafeBrowsingTabObserver() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Internal helpers

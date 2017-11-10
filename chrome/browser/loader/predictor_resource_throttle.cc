@@ -29,7 +29,7 @@ PredictorResourceThrottle::PredictorResourceThrottle(
     chrome_browser_net::Predictor* predictor)
     : request_(request), predictor_(predictor) {}
 
-PredictorResourceThrottle::~PredictorResourceThrottle() {}
+PredictorResourceThrottle::~PredictorResourceThrottle() = default;
 
 // static
 std::unique_ptr<PredictorResourceThrottle>

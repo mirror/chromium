@@ -29,7 +29,7 @@ const base::FilePath::CharType
 
 PolicyToolUIHandler::PolicyToolUIHandler() : callback_weak_ptr_factory_(this) {}
 
-PolicyToolUIHandler::~PolicyToolUIHandler() {}
+PolicyToolUIHandler::~PolicyToolUIHandler() = default;
 
 void PolicyToolUIHandler::RegisterMessages() {
   // Set directory for storing sessions.

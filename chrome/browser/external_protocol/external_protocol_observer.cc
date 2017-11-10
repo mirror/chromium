@@ -14,8 +14,7 @@ ExternalProtocolObserver::ExternalProtocolObserver(WebContents* web_contents)
     : content::WebContentsObserver(web_contents) {
 }
 
-ExternalProtocolObserver::~ExternalProtocolObserver() {
-}
+ExternalProtocolObserver::~ExternalProtocolObserver() = default;
 
 void ExternalProtocolObserver::DidGetUserInteraction(
     const blink::WebInputEvent::Type type) {

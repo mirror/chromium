@@ -167,7 +167,7 @@ class TestBrowserCloseManager : public BrowserCloseManager {
   }
 
  protected:
-  ~TestBrowserCloseManager() override {}
+  ~TestBrowserCloseManager() override = default;
 
   void ConfirmCloseWithPendingDownloads(
       int download_count,
@@ -201,7 +201,7 @@ class TestDownloadManagerDelegate : public ChromeDownloadManagerDelegate {
       : ChromeDownloadManagerDelegate(profile) {
     GetDownloadIdReceiverCallback().Run(content::DownloadItem::kInvalidId + 1);
   }
-  ~TestDownloadManagerDelegate() override {}
+  ~TestDownloadManagerDelegate() override = default;
 
   bool DetermineDownloadTarget(
       content::DownloadItem* item,
@@ -964,8 +964,8 @@ INSTANTIATE_TEST_CASE_P(BrowserCloseManagerBrowserTest,
 class BrowserCloseManagerWithDownloadsBrowserTest :
   public BrowserCloseManagerBrowserTest {
  public:
-  BrowserCloseManagerWithDownloadsBrowserTest() {}
-  virtual ~BrowserCloseManagerWithDownloadsBrowserTest() {}
+  BrowserCloseManagerWithDownloadsBrowserTest() = default;
+  virtual ~BrowserCloseManagerWithDownloadsBrowserTest() = default;
 
   void SetUpOnMainThread() override {
     BrowserCloseManagerBrowserTest::SetUpOnMainThread();
@@ -1262,7 +1262,7 @@ INSTANTIATE_TEST_CASE_P(BrowserCloseManagerWithDownloadsBrowserTest,
 class BrowserCloseManagerWithBackgroundModeBrowserTest
     : public BrowserCloseManagerBrowserTest {
  public:
-  BrowserCloseManagerWithBackgroundModeBrowserTest() {}
+  BrowserCloseManagerWithBackgroundModeBrowserTest() = default;
 
   void SetUpOnMainThread() override {
     BrowserCloseManagerBrowserTest::SetUpOnMainThread();

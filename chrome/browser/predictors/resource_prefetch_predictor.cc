@@ -104,7 +104,7 @@ void GetUrlVisitCountTask::DoneRunOnMainThread() {
   std::move(callback_).Run(visit_count_, *summary_);
 }
 
-GetUrlVisitCountTask::~GetUrlVisitCountTask() {}
+GetUrlVisitCountTask::~GetUrlVisitCountTask() = default;
 
 void InitializeOnDBSequence(
     ResourcePrefetchPredictor::PrefetchDataMap* url_resource_data,
@@ -202,7 +202,7 @@ ResourcePrefetchPredictor::ResourcePrefetchPredictor(
   DCHECK(config_.IsLearningEnabled());
 }
 
-ResourcePrefetchPredictor::~ResourcePrefetchPredictor() {}
+ResourcePrefetchPredictor::~ResourcePrefetchPredictor() = default;
 
 void ResourcePrefetchPredictor::StartInitialization() {
   TRACE_EVENT0("browser", "ResourcePrefetchPredictor::StartInitialization");

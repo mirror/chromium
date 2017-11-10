@@ -73,7 +73,7 @@ namespace {
 class PasswordManagerBrowserTestWarning
     : public PasswordManagerBrowserTestBase {
  public:
-  PasswordManagerBrowserTestWarning() {}
+  PasswordManagerBrowserTestWarning() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     // We need to set the feature state before the render process is created,
@@ -137,7 +137,7 @@ class ObservingAutofillClient
     : public autofill::TestAutofillClient,
       public content::WebContentsUserData<ObservingAutofillClient> {
  public:
-  ~ObservingAutofillClient() override {}
+  ~ObservingAutofillClient() override = default;
 
   // Wait until the autofill popup is shown.
   void WaitForAutofillPopup() {
@@ -3703,7 +3703,7 @@ IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
 class SitePerProcessPasswordManagerBrowserTest
     : public PasswordManagerBrowserTestBase {
  public:
-  SitePerProcessPasswordManagerBrowserTest() {}
+  SitePerProcessPasswordManagerBrowserTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     content::IsolateAllSitesForTesting(command_line);

@@ -64,7 +64,7 @@ PageLoadMetricsObserverTester::PageLoadMetricsObserverTester(
           web_contents,
           base::MakeUnique<TestPageLoadMetricsEmbedderInterface>(this))) {}
 
-PageLoadMetricsObserverTester::~PageLoadMetricsObserverTester() {}
+PageLoadMetricsObserverTester::~PageLoadMetricsObserverTester() = default;
 
 void PageLoadMetricsObserverTester::SimulateTimingUpdate(
     const mojom::PageLoadTiming& timing) {

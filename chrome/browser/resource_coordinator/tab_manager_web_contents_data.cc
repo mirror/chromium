@@ -33,7 +33,7 @@ TabManager::WebContentsData::WebContentsData(content::WebContents* web_contents)
       is_purged_(false),
       ukm_source_id_(0) {}
 
-TabManager::WebContentsData::~WebContentsData() {}
+TabManager::WebContentsData::~WebContentsData() = default;
 
 void TabManager::WebContentsData::DidStartLoading() {
   // Marks the tab as no longer discarded if it has been reloaded from another

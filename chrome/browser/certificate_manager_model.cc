@@ -112,8 +112,7 @@ CertificateManagerModel::CertificateManagerModel(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
-CertificateManagerModel::~CertificateManagerModel() {
-}
+CertificateManagerModel::~CertificateManagerModel() = default;
 
 void CertificateManagerModel::Refresh() {
   DVLOG(1) << "refresh started";

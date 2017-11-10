@@ -87,7 +87,7 @@ namespace {
 class FakeDevToolsClient : public StubDevToolsClient {
  public:
   FakeDevToolsClient() : listener_(NULL), closing_count_(0) {}
-  ~FakeDevToolsClient() override {}
+  ~FakeDevToolsClient() override = default;
 
   void set_closing_count(int closing_count) {
     closing_count_ = closing_count;

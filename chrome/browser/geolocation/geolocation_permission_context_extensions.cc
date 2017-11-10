@@ -42,8 +42,7 @@ GeolocationPermissionContextExtensions::GeolocationPermissionContextExtensions(
 }
 
 GeolocationPermissionContextExtensions::
-~GeolocationPermissionContextExtensions() {
-}
+    ~GeolocationPermissionContextExtensions() = default;
 
 bool GeolocationPermissionContextExtensions::DecidePermission(
     content::WebContents* web_contents,

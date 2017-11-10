@@ -86,8 +86,8 @@ ProfileInvalidationProviderFactory::ProfileInvalidationProviderFactory()
 #endif
 }
 
-ProfileInvalidationProviderFactory::~ProfileInvalidationProviderFactory() {
-}
+ProfileInvalidationProviderFactory::~ProfileInvalidationProviderFactory() =
+    default;
 
 void ProfileInvalidationProviderFactory::RegisterTestingFactory(
     TestingFactoryFunction testing_factory) {

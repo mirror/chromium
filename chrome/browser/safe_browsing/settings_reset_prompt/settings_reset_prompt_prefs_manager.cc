@@ -32,7 +32,7 @@ SettingsResetPromptPrefsManager::SettingsResetPromptPrefsManager(
   }
 }
 
-SettingsResetPromptPrefsManager::~SettingsResetPromptPrefsManager() {}
+SettingsResetPromptPrefsManager::~SettingsResetPromptPrefsManager() = default;
 
 // static
 void SettingsResetPromptPrefsManager::RegisterProfilePrefs(

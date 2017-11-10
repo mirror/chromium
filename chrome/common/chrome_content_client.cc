@@ -447,11 +447,9 @@ std::string GetUserAgent() {
   return content::BuildUserAgentFromProduct(product);
 }
 
-ChromeContentClient::ChromeContentClient() {
-}
+ChromeContentClient::ChromeContentClient() = default;
 
-ChromeContentClient::~ChromeContentClient() {
-}
+ChromeContentClient::~ChromeContentClient() = default;
 
 #if BUILDFLAG(ENABLE_NACL)
 void ChromeContentClient::SetNaClEntryFunctions(

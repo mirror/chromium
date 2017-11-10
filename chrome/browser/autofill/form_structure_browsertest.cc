@@ -126,8 +126,7 @@ FormStructureBrowserTest::FormStructureBrowserTest()
       autofill::kAutofillRationalizeFieldTypePredictions);
 }
 
-FormStructureBrowserTest::~FormStructureBrowserTest() {
-}
+FormStructureBrowserTest::~FormStructureBrowserTest() = default;
 
 void FormStructureBrowserTest::GenerateResults(const std::string& input,
                                                std::string* output) {

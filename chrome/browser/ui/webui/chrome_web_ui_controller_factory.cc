@@ -726,11 +726,9 @@ ChromeWebUIControllerFactory* ChromeWebUIControllerFactory::GetInstance() {
   return base::Singleton<ChromeWebUIControllerFactory>::get();
 }
 
-ChromeWebUIControllerFactory::ChromeWebUIControllerFactory() {
-}
+ChromeWebUIControllerFactory::ChromeWebUIControllerFactory() = default;
 
-ChromeWebUIControllerFactory::~ChromeWebUIControllerFactory() {
-}
+ChromeWebUIControllerFactory::~ChromeWebUIControllerFactory() = default;
 
 base::RefCountedMemory* ChromeWebUIControllerFactory::GetFaviconResourceBytes(
     const GURL& page_url, ui::ScaleFactor scale_factor) const {

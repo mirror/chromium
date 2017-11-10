@@ -62,7 +62,7 @@ class MockTopSites : public history::TopSitesImpl {
   }
 
  private:
-  ~MockTopSites() override {}
+  ~MockTopSites() override = default;
 
   const size_t capacity_;
   std::map<std::string, ThumbnailScore> known_url_map_;

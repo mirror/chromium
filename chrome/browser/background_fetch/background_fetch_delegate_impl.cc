@@ -30,7 +30,7 @@ BackgroundFetchDelegateImpl::BackgroundFetchDelegateImpl(Profile* profile)
   offline_content_aggregator_->RegisterProvider("background_fetch", this);
 }
 
-BackgroundFetchDelegateImpl::~BackgroundFetchDelegateImpl() {}
+BackgroundFetchDelegateImpl::~BackgroundFetchDelegateImpl() = default;
 
 void BackgroundFetchDelegateImpl::Shutdown() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);

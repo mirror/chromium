@@ -44,8 +44,7 @@ ServiceProcessTerminateMonitor::ServiceProcessTerminateMonitor(
     : terminate_task_(terminate_task) {
 }
 
-ServiceProcessTerminateMonitor::~ServiceProcessTerminateMonitor() {
-}
+ServiceProcessTerminateMonitor::~ServiceProcessTerminateMonitor() = default;
 
 void ServiceProcessTerminateMonitor::OnFileCanReadWithoutBlocking(int fd) {
   if (!terminate_task_.is_null()) {

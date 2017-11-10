@@ -64,7 +64,7 @@ class LazyWorkerInstallableManager : public InstallableManager {
   LazyWorkerInstallableManager(content::WebContents* web_contents,
                                base::Closure quit_closure)
       : InstallableManager(web_contents), quit_closure_(quit_closure) {}
-  ~LazyWorkerInstallableManager() override {}
+  ~LazyWorkerInstallableManager() override = default;
 
  protected:
   void OnWaitingForServiceWorker() override {

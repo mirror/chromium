@@ -112,7 +112,7 @@ CastMediaSinkService::CastMediaSinkService(
       task_runner_(task_runner),
       cast_media_sink_service_impl_(std::move(cast_media_sink_service_impl)) {}
 
-CastMediaSinkService::~CastMediaSinkService() {}
+CastMediaSinkService::~CastMediaSinkService() = default;
 
 void CastMediaSinkService::Start() {
   // TODO(crbug.com/749305): Migrate the discovery code to use sequences.

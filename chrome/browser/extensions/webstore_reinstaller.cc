@@ -32,8 +32,7 @@ WebstoreReinstaller::WebstoreReinstaller(
           ->HasDisableReason(extension_id, disable_reason::DISABLE_CORRUPTED));
 }
 
-WebstoreReinstaller::~WebstoreReinstaller() {
-}
+WebstoreReinstaller::~WebstoreReinstaller() = default;
 
 void WebstoreReinstaller::BeginReinstall() {
   WebstoreStandaloneInstaller::BeginInstall();

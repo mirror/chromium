@@ -100,7 +100,7 @@ int ExecuteGuestScriptAndExtractInt(content::WebContents* web_contents,
 
 class WebUIWebViewBrowserTest : public WebUIBrowserTest {
  public:
-  WebUIWebViewBrowserTest() {}
+  WebUIWebViewBrowserTest() = default;
 
   void SetUpOnMainThread() override {
     WebUIBrowserTest::SetUpOnMainThread();

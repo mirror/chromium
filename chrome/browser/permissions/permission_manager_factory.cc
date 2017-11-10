@@ -29,8 +29,7 @@ PermissionManagerFactory::PermissionManagerFactory()
   DependsOn(HostContentSettingsMapFactory::GetInstance());
 }
 
-PermissionManagerFactory::~PermissionManagerFactory() {
-}
+PermissionManagerFactory::~PermissionManagerFactory() = default;
 
 KeyedService* PermissionManagerFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

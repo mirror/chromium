@@ -29,8 +29,7 @@ InspectableViewsFinder::InspectableViewsFinder(Profile* profile)
     : profile_(profile) {
 }
 
-InspectableViewsFinder::~InspectableViewsFinder() {
-}
+InspectableViewsFinder::~InspectableViewsFinder() = default;
 
 // static
 InspectableViewsFinder::View InspectableViewsFinder::ConstructView(

@@ -170,8 +170,7 @@ ProfileSyncServiceFactory::ProfileSyncServiceFactory()
   // DependsOn(FaviconServiceFactory::GetInstance());
 }
 
-ProfileSyncServiceFactory::~ProfileSyncServiceFactory() {
-}
+ProfileSyncServiceFactory::~ProfileSyncServiceFactory() = default;
 
 KeyedService* ProfileSyncServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

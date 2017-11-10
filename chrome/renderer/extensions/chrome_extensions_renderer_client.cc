@@ -112,9 +112,9 @@ bool CrossesExtensionExtents(blink::WebLocalFrame* frame,
 
 }  // namespace
 
-ChromeExtensionsRendererClient::ChromeExtensionsRendererClient() {}
+ChromeExtensionsRendererClient::ChromeExtensionsRendererClient() = default;
 
-ChromeExtensionsRendererClient::~ChromeExtensionsRendererClient() {}
+ChromeExtensionsRendererClient::~ChromeExtensionsRendererClient() = default;
 
 // static
 ChromeExtensionsRendererClient* ChromeExtensionsRendererClient::GetInstance() {

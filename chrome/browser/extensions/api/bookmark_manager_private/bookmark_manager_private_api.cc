@@ -262,7 +262,7 @@ BookmarkManagerPrivateAPI::BookmarkManagerPrivateAPI(
       this, bookmark_manager_private::OnMetaInfoChanged::kEventName);
 }
 
-BookmarkManagerPrivateAPI::~BookmarkManagerPrivateAPI() {}
+BookmarkManagerPrivateAPI::~BookmarkManagerPrivateAPI() = default;
 
 void BookmarkManagerPrivateAPI::Shutdown() {
   EventRouter::Get(browser_context_)->UnregisterObserver(this);

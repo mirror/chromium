@@ -101,7 +101,7 @@ ForcedReauthenticationDialogView::ForcedReauthenticationDialogView(
   browser->window()->Activate();
 }
 
-ForcedReauthenticationDialogView::~ForcedReauthenticationDialogView() {}
+ForcedReauthenticationDialogView::~ForcedReauthenticationDialogView() = default;
 
 // static
 ForcedReauthenticationDialogView* ForcedReauthenticationDialogView::ShowDialog(
@@ -260,7 +260,7 @@ base::TimeDelta ForcedReauthenticationDialogView::GetTimeRemaining() const {
 
 // ForcedReauthenticationDialogImpl
 
-ForcedReauthenticationDialogImpl::ForcedReauthenticationDialogImpl() {}
+ForcedReauthenticationDialogImpl::ForcedReauthenticationDialogImpl() = default;
 ForcedReauthenticationDialogImpl::~ForcedReauthenticationDialogImpl() {
   if (dialog_view_)
     dialog_view_->CloseDialog();

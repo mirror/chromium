@@ -83,7 +83,7 @@ ActiveTabPermissionGranter::ActiveTabPermissionGranter(
   extension_registry_observer_.Add(ExtensionRegistry::Get(profile));
 }
 
-ActiveTabPermissionGranter::~ActiveTabPermissionGranter() {}
+ActiveTabPermissionGranter::~ActiveTabPermissionGranter() = default;
 
 // static
 ActiveTabPermissionGranter::Delegate*

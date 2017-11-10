@@ -117,7 +117,7 @@ PasswordStoreFactory::PasswordStoreFactory()
 #endif
 }
 
-PasswordStoreFactory::~PasswordStoreFactory() {}
+PasswordStoreFactory::~PasswordStoreFactory() = default;
 
 #if defined(USE_X11)
 LocalProfileId PasswordStoreFactory::GetLocalProfileId(

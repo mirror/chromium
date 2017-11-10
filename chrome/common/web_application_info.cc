@@ -7,8 +7,7 @@
 WebApplicationInfo::IconInfo::IconInfo() : width(0), height(0) {
 }
 
-WebApplicationInfo::IconInfo::~IconInfo() {
-}
+WebApplicationInfo::IconInfo::~IconInfo() = default;
 
 WebApplicationInfo::WebApplicationInfo()
     : mobile_capable(MOBILE_CAPABLE_UNSPECIFIED),
@@ -18,5 +17,4 @@ WebApplicationInfo::WebApplicationInfo()
 WebApplicationInfo::WebApplicationInfo(const WebApplicationInfo& other) =
     default;
 
-WebApplicationInfo::~WebApplicationInfo() {
-}
+WebApplicationInfo::~WebApplicationInfo() = default;

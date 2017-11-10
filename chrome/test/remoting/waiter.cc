@@ -13,7 +13,7 @@ TimeoutWaiter::TimeoutWaiter(base::TimeDelta timeout)
   DCHECK(timeout > base::TimeDelta::FromSeconds(0));
 }
 
-TimeoutWaiter::~TimeoutWaiter() {}
+TimeoutWaiter::~TimeoutWaiter() = default;
 
 bool TimeoutWaiter::Wait() {
   DCHECK(!timeout_timer_.IsRunning());
@@ -47,7 +47,7 @@ ConditionalTimeoutWaiter::ConditionalTimeoutWaiter(base::TimeDelta timeout,
   DCHECK(timeout > interval);
 }
 
-ConditionalTimeoutWaiter::~ConditionalTimeoutWaiter() {}
+ConditionalTimeoutWaiter::~ConditionalTimeoutWaiter() = default;
 
 bool ConditionalTimeoutWaiter::Wait() {
   DCHECK(!condition_timer_.IsRunning());

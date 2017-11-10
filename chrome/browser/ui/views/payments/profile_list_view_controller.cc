@@ -68,7 +68,7 @@ class ProfileItem : public PaymentRequestItemList::Item {
         profile_(profile) {
     Init();
   }
-  ~ProfileItem() override {}
+  ~ProfileItem() override = default;
 
  private:
   // PaymentRequestItemList::Item:
@@ -275,7 +275,7 @@ class ContactProfileViewController : public ProfileListViewController {
       : ProfileListViewController(spec, state, dialog) {
     PopulateList();
   }
-  ~ContactProfileViewController() override {}
+  ~ContactProfileViewController() override = default;
 
  protected:
   // ProfileListViewController:
@@ -366,7 +366,7 @@ ProfileListViewController::ProfileListViewController(
     PaymentRequestDialogView* dialog)
     : PaymentRequestSheetController(spec, state, dialog), list_(dialog) {}
 
-ProfileListViewController::~ProfileListViewController() {}
+ProfileListViewController::~ProfileListViewController() = default;
 
 bool ProfileListViewController::IsEnabled(autofill::AutofillProfile* profile) {
   return true;

@@ -49,12 +49,10 @@ void NotifyWebRequestWithheldOnUI(int render_process_id,
 }  // namespace
 
 ChromeExtensionWebRequestEventRouterDelegate::
-    ChromeExtensionWebRequestEventRouterDelegate() {
-}
+    ChromeExtensionWebRequestEventRouterDelegate() = default;
 
 ChromeExtensionWebRequestEventRouterDelegate::
-    ~ChromeExtensionWebRequestEventRouterDelegate() {
-}
+    ~ChromeExtensionWebRequestEventRouterDelegate() = default;
 
 void ChromeExtensionWebRequestEventRouterDelegate::NotifyWebRequestWithheld(
     int render_process_id,

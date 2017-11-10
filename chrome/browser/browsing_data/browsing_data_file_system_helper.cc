@@ -67,8 +67,7 @@ BrowsingDataFileSystemHelperImpl::BrowsingDataFileSystemHelperImpl(
   DCHECK(filesystem_context_.get());
 }
 
-BrowsingDataFileSystemHelperImpl::~BrowsingDataFileSystemHelperImpl() {
-}
+BrowsingDataFileSystemHelperImpl::~BrowsingDataFileSystemHelperImpl() = default;
 
 void BrowsingDataFileSystemHelperImpl::StartFetching(
     const FetchCallback& callback) {
@@ -148,7 +147,7 @@ BrowsingDataFileSystemHelper::FileSystemInfo::FileSystemInfo(
 BrowsingDataFileSystemHelper::FileSystemInfo::FileSystemInfo(
     const FileSystemInfo& other) = default;
 
-BrowsingDataFileSystemHelper::FileSystemInfo::~FileSystemInfo() {}
+BrowsingDataFileSystemHelper::FileSystemInfo::~FileSystemInfo() = default;
 
 // static
 BrowsingDataFileSystemHelper* BrowsingDataFileSystemHelper::Create(
@@ -160,7 +159,8 @@ CannedBrowsingDataFileSystemHelper::CannedBrowsingDataFileSystemHelper(
     Profile* profile) {
 }
 
-CannedBrowsingDataFileSystemHelper::~CannedBrowsingDataFileSystemHelper() {}
+CannedBrowsingDataFileSystemHelper::~CannedBrowsingDataFileSystemHelper() =
+    default;
 
 void CannedBrowsingDataFileSystemHelper::AddFileSystem(
     const GURL& origin,

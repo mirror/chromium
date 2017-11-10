@@ -25,7 +25,7 @@ class MockDialMediaSinkServiceImpl : public DialMediaSinkServiceImpl {
           sink_discovery_callback,
       net::URLRequestContextGetter* request_context)
       : DialMediaSinkServiceImpl(sink_discovery_callback, request_context) {}
-  ~MockDialMediaSinkServiceImpl() override {}
+  ~MockDialMediaSinkServiceImpl() override = default;
 
   MOCK_METHOD0(Start, void());
   MOCK_METHOD0(Stop, void());

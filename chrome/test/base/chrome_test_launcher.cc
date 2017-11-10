@@ -59,8 +59,8 @@
 #include "chrome/install_static/install_util.h"
 #endif
 
-ChromeTestSuiteRunner::ChromeTestSuiteRunner() {}
-ChromeTestSuiteRunner::~ChromeTestSuiteRunner() {}
+ChromeTestSuiteRunner::ChromeTestSuiteRunner() = default;
+ChromeTestSuiteRunner::~ChromeTestSuiteRunner() = default;
 
 int ChromeTestSuiteRunner::RunTestSuite(int argc, char** argv) {
 #if defined(USE_AURA)
@@ -75,7 +75,7 @@ int ChromeTestSuiteRunner::RunTestSuite(int argc, char** argv) {
 ChromeTestLauncherDelegate::ChromeTestLauncherDelegate(
     ChromeTestSuiteRunner* runner)
     : runner_(runner) {}
-ChromeTestLauncherDelegate::~ChromeTestLauncherDelegate() {}
+ChromeTestLauncherDelegate::~ChromeTestLauncherDelegate() = default;
 
 int ChromeTestLauncherDelegate::RunTestSuite(int argc, char** argv) {
   return runner_->RunTestSuite(argc, argv);

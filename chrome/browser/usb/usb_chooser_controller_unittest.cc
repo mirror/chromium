@@ -25,7 +25,7 @@ const char kDefaultTestUrl[] = "https://www.google.com/";
 
 class MockUsbChooserView : public ChooserController::View {
  public:
-  MockUsbChooserView() {}
+  MockUsbChooserView() = default;
 
   // ChooserController::View:
   MOCK_METHOD1(OnOptionAdded, void(size_t index));
@@ -43,7 +43,7 @@ class MockUsbChooserView : public ChooserController::View {
 
 class UsbChooserControllerTest : public ChromeRenderViewHostTestHarness {
  public:
-  UsbChooserControllerTest() {}
+  UsbChooserControllerTest() = default;
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();

@@ -24,7 +24,7 @@ ErrorMessageViewController::ErrorMessageViewController(
     PaymentRequestDialogView* dialog)
     : PaymentRequestSheetController(spec, state, dialog) {}
 
-ErrorMessageViewController::~ErrorMessageViewController() {}
+ErrorMessageViewController::~ErrorMessageViewController() = default;
 
 std::unique_ptr<views::Button>
 ErrorMessageViewController::CreatePrimaryButton() {

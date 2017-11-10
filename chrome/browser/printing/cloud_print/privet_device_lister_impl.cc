@@ -17,8 +17,7 @@ PrivetDeviceListerImpl::PrivetDeviceListerImpl(
       device_lister_(this, service_discovery_client, kPrivetDefaultDeviceType) {
 }
 
-PrivetDeviceListerImpl::~PrivetDeviceListerImpl() {
-}
+PrivetDeviceListerImpl::~PrivetDeviceListerImpl() = default;
 
 void PrivetDeviceListerImpl::Start() {
   device_lister_.Start();

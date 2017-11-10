@@ -35,8 +35,7 @@ bool HasBookmarkAPIPermission(const Extension* extension) {
 //
 
 DeclarativeContentIsBookmarkedPredicate::
-~DeclarativeContentIsBookmarkedPredicate() {
-}
+    ~DeclarativeContentIsBookmarkedPredicate() = default;
 
 bool DeclarativeContentIsBookmarkedPredicate::IsIgnored() const {
   return !HasBookmarkAPIPermission(extension_.get());
@@ -97,8 +96,7 @@ PerWebContentsTracker(
 }
 
 DeclarativeContentIsBookmarkedConditionTracker::PerWebContentsTracker::
-~PerWebContentsTracker() {
-}
+    ~PerWebContentsTracker() = default;
 
 void DeclarativeContentIsBookmarkedConditionTracker::PerWebContentsTracker::
 BookmarkAddedForUrl(const GURL& url) {
@@ -159,8 +157,7 @@ DeclarativeContentIsBookmarkedConditionTracker(content::BrowserContext* context,
 }
 
 DeclarativeContentIsBookmarkedConditionTracker::
-~DeclarativeContentIsBookmarkedConditionTracker() {
-}
+    ~DeclarativeContentIsBookmarkedConditionTracker() = default;
 
 std::string DeclarativeContentIsBookmarkedConditionTracker::
 GetPredicateApiAttributeName() const {

@@ -136,5 +136,4 @@ void TCPDeviceProvider::set_release_callback_for_test(
   release_callback_ = callback;
 }
 
-TCPDeviceProvider::~TCPDeviceProvider() {
-}
+TCPDeviceProvider::~TCPDeviceProvider() = default;

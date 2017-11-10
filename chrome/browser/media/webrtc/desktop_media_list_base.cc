@@ -16,7 +16,7 @@ using content::DesktopMediaID;
 DesktopMediaListBase::DesktopMediaListBase(base::TimeDelta update_period)
     : update_period_(update_period), weak_factory_(this) {}
 
-DesktopMediaListBase::~DesktopMediaListBase() {}
+DesktopMediaListBase::~DesktopMediaListBase() = default;
 
 void DesktopMediaListBase::SetUpdatePeriod(base::TimeDelta period) {
   DCHECK(!observer_);

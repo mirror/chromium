@@ -59,7 +59,7 @@ void SyncTaskToken::UpdateTask(const base::Location& location,
   DVLOG(2) << "Token updated: " << location_.ToString();
 }
 
-SyncTaskToken::~SyncTaskToken() {}
+SyncTaskToken::~SyncTaskToken() = default;
 
 // static
 SyncStatusCallback SyncTaskToken::WrapToCallback(

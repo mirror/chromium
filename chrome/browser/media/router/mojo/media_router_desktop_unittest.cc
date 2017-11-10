@@ -38,7 +38,7 @@ class NullMessageObserver : public RouteMessageObserver {
  public:
   NullMessageObserver(MediaRouter* router, const MediaRoute::Id& route_id)
       : RouteMessageObserver(router, route_id) {}
-  ~NullMessageObserver() final {}
+  ~NullMessageObserver() final = default;
 
   void OnMessagesReceived(
       const std::vector<content::PresentationConnectionMessage>& messages)
@@ -49,8 +49,8 @@ class NullMessageObserver : public RouteMessageObserver {
 
 class MediaRouterDesktopTest : public MediaRouterMojoTest {
  public:
-  MediaRouterDesktopTest() {}
-  ~MediaRouterDesktopTest() override {}
+  MediaRouterDesktopTest() = default;
+  ~MediaRouterDesktopTest() override = default;
 
  protected:
   MediaRouterMojoImpl* SetTestingFactoryAndUse() override {

@@ -60,11 +60,9 @@ class NullContextMenuContentType : public ContextMenuContentType {
 
 }  // namespace
 
-ContextMenuContentTypeFactory::ContextMenuContentTypeFactory() {
-}
+ContextMenuContentTypeFactory::ContextMenuContentTypeFactory() = default;
 
-ContextMenuContentTypeFactory::~ContextMenuContentTypeFactory() {
-}
+ContextMenuContentTypeFactory::~ContextMenuContentTypeFactory() = default;
 
 // static.
 ContextMenuContentType* ContextMenuContentTypeFactory::Create(

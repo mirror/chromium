@@ -137,7 +137,7 @@ class LoginHandlerViews : public LoginHandler, public views::DialogDelegate {
   friend class base::RefCountedThreadSafe<LoginHandlerViews>;
   friend class LoginPrompt;
 
-  ~LoginHandlerViews() override {}
+  ~LoginHandlerViews() override = default;
 
   // The LoginView that contains the user's login information.
   LoginView* login_view_;

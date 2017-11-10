@@ -75,7 +75,7 @@ std::string GenerateSetCallbackErrorCodeScript(int code) {
 // correctly.
 class TranslateScriptBrowserTest : public ChromeRenderViewTest {
  public:
-  TranslateScriptBrowserTest() {}
+  TranslateScriptBrowserTest() = default;
 
  protected:
   void InjectElementLibrary() {

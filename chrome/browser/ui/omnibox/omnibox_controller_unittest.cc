@@ -41,11 +41,9 @@ class OmniboxControllerTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(OmniboxControllerTest);
 };
 
-OmniboxControllerTest::OmniboxControllerTest() {
-}
+OmniboxControllerTest::OmniboxControllerTest() = default;
 
-OmniboxControllerTest::~OmniboxControllerTest() {
-}
+OmniboxControllerTest::~OmniboxControllerTest() = default;
 
 void OmniboxControllerTest::CreateController() {
   DCHECK(omnibox_client_);

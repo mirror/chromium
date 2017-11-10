@@ -76,7 +76,7 @@ class DownloadDangerPromptTest
         test_safe_browsing_factory_(
             base::MakeUnique<TestSafeBrowsingServiceFactory>()) {}
 
-  ~DownloadDangerPromptTest() override {}
+  ~DownloadDangerPromptTest() override = default;
 
   void SetUp() override {
     // TODO(crbug.com/630357): Remove parameterized testing for this class when

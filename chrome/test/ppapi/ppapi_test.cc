@@ -55,8 +55,7 @@ void AddPrivateSwitches(base::CommandLine* command_line) {
 
 }  // namespace
 
-PPAPITestMessageHandler::PPAPITestMessageHandler() {
-}
+PPAPITestMessageHandler::PPAPITestMessageHandler() = default;
 
 TestMessageHandler::MessageResponse PPAPITestMessageHandler::HandleMessage(
     const std::string& json) {
@@ -130,8 +129,7 @@ void PPAPITestBase::InfoBarObserver::VerifyInfoBarState() {
   infobar_service->RemoveInfoBar(infobar);
 }
 
-PPAPITestBase::PPAPITestBase() {
-}
+PPAPITestBase::PPAPITestBase() = default;
 
 void PPAPITestBase::SetUp() {
   EnablePixelOutput();

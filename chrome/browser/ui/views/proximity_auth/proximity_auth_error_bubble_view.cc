@@ -122,7 +122,7 @@ void ProximityAuthErrorBubbleView::Init() {
   layout->AddView(label.release());
 }
 
-ProximityAuthErrorBubbleView::~ProximityAuthErrorBubbleView() {}
+ProximityAuthErrorBubbleView::~ProximityAuthErrorBubbleView() = default;
 
 int ProximityAuthErrorBubbleView::GetDialogButtons() const {
   return ui::DIALOG_BUTTON_NONE;

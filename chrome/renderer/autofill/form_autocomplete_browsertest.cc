@@ -35,7 +35,7 @@ class FakeContentAutofillDriver : public mojom::AutofillDriver {
  public:
   FakeContentAutofillDriver() : did_unfocus_form_(false) {}
 
-  ~FakeContentAutofillDriver() override {}
+  ~FakeContentAutofillDriver() override = default;
 
   void BindRequest(mojom::AutofillDriverRequest request) {
     bindings_.AddBinding(this, std::move(request));
@@ -175,8 +175,8 @@ void SimulateOnFillForm(autofill::AutofillAgent* autofill_agent,
 
 class FormAutocompleteTest : public ChromeRenderViewTest {
  public:
-  FormAutocompleteTest() {}
-  ~FormAutocompleteTest() override {}
+  FormAutocompleteTest() = default;
+  ~FormAutocompleteTest() override = default;
 
  protected:
   void SetUp() override {

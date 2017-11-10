@@ -396,8 +396,7 @@ BookmarksAPI::BookmarksAPI(BrowserContext* context)
   event_router->RegisterObserver(this, bookmarks::OnImportEnded::kEventName);
 }
 
-BookmarksAPI::~BookmarksAPI() {
-}
+BookmarksAPI::~BookmarksAPI() = default;
 
 void BookmarksAPI::Shutdown() {
   EventRouter::Get(browser_context_)->UnregisterObserver(this);
@@ -701,7 +700,7 @@ bool BookmarksUpdateFunction::RunOnReady() {
   return true;
 }
 
-BookmarksIOFunction::BookmarksIOFunction() {}
+BookmarksIOFunction::BookmarksIOFunction() = default;
 
 BookmarksIOFunction::~BookmarksIOFunction() {
   // There may be pending file dialogs, we need to tell them that we've gone

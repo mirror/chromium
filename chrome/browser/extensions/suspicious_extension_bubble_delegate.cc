@@ -35,8 +35,8 @@ SuspiciousExtensionBubbleDelegate::SuspiciousExtensionBubbleDelegate(
   set_acknowledged_flag_pref_name(kWipeoutAcknowledged);
 }
 
-SuspiciousExtensionBubbleDelegate::~SuspiciousExtensionBubbleDelegate() {
-}
+SuspiciousExtensionBubbleDelegate::~SuspiciousExtensionBubbleDelegate() =
+    default;
 
 bool SuspiciousExtensionBubbleDelegate::ShouldIncludeExtension(
     const extensions::Extension* extension) {

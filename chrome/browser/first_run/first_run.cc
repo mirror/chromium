@@ -93,7 +93,7 @@ first_run::internal::FirstRunState g_first_run =
 class ImportEndedObserver : public importer::ImporterProgressObserver {
  public:
   ImportEndedObserver() : ended_(false) {}
-  ~ImportEndedObserver() override {}
+  ~ImportEndedObserver() override = default;
 
   // importer::ImporterProgressObserver:
   void ImportStarted() override {}
@@ -156,7 +156,7 @@ class FirstRunDelayedTasks : public content::NotificationObserver {
 
  private:
   // Private ctor forces it to be created only in the heap.
-  ~FirstRunDelayedTasks() override {}
+  ~FirstRunDelayedTasks() override = default;
 
   void OnExtensionSystemReady(content::BrowserContext* context) {
     // Process the notification and delete this.
@@ -304,7 +304,7 @@ FirstRunBubbleLauncher::FirstRunBubbleLauncher() {
                  content::NotificationService::AllSources());
 }
 
-FirstRunBubbleLauncher::~FirstRunBubbleLauncher() {}
+FirstRunBubbleLauncher::~FirstRunBubbleLauncher() = default;
 
 void FirstRunBubbleLauncher::Observe(
     int type,

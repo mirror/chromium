@@ -24,7 +24,7 @@ ChromeRemoteImpl::ChromeRemoteImpl(
                  std::unique_ptr<PortReservation>(),
                  page_load_strategy) {}
 
-ChromeRemoteImpl::~ChromeRemoteImpl() {}
+ChromeRemoteImpl::~ChromeRemoteImpl() = default;
 
 Status ChromeRemoteImpl::GetAsDesktop(ChromeDesktopImpl** desktop) {
   return Status(kUnknownError,

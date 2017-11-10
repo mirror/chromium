@@ -18,8 +18,7 @@ StorageInfoFetcher::StorageInfoFetcher(Profile* profile) {
       profile)->GetQuotaManager();
 }
 
-StorageInfoFetcher::~StorageInfoFetcher() {
-}
+StorageInfoFetcher::~StorageInfoFetcher() = default;
 
 void StorageInfoFetcher::FetchStorageInfo(const FetchCallback& fetch_callback) {
   // Balanced in OnFetchCompleted.

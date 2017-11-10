@@ -37,8 +37,8 @@ namespace safe_browsing {
 
 class TestChromeContentRendererClient : public ChromeContentRendererClient {
  public:
-  TestChromeContentRendererClient() {}
-  ~TestChromeContentRendererClient() override {}
+  TestChromeContentRendererClient() = default;
+  ~TestChromeContentRendererClient() override = default;
   // Since visited_link_slave_ in ChromeContentRenderClient never get initiated,
   // overrides VisitedLinkedHash() function to prevent crashing.
   unsigned long long VisitedLinkHash(const char* canonical_url,

@@ -50,7 +50,7 @@ class TestTabStatsTracker : public TabStatsTracker {
     EXPECT_TRUE(timer()->IsRunning());
     timer()->Stop();
   }
-  ~TestTabStatsTracker() override {}
+  ~TestTabStatsTracker() override = default;
 
   // Helper functions to update the number of tabs/windows.
 

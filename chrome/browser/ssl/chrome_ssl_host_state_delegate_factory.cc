@@ -52,8 +52,8 @@ ChromeSSLHostStateDelegateFactory::ChromeSSLHostStateDelegateFactory()
           BrowserContextDependencyManager::GetInstance()) {
 }
 
-ChromeSSLHostStateDelegateFactory::~ChromeSSLHostStateDelegateFactory() {
-}
+ChromeSSLHostStateDelegateFactory::~ChromeSSLHostStateDelegateFactory() =
+    default;
 
 KeyedService* ChromeSSLHostStateDelegateFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

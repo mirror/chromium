@@ -24,8 +24,7 @@ BrowsingDataIndexedDBHelper::BrowsingDataIndexedDBHelper(
   DCHECK(indexed_db_context_.get());
 }
 
-BrowsingDataIndexedDBHelper::~BrowsingDataIndexedDBHelper() {
-}
+BrowsingDataIndexedDBHelper::~BrowsingDataIndexedDBHelper() = default;
 
 void BrowsingDataIndexedDBHelper::StartFetching(const FetchCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -74,9 +73,8 @@ PendingIndexedDBInfo::PendingIndexedDBInfo(const GURL& origin,
       name(name) {
 }
 
-CannedBrowsingDataIndexedDBHelper::
-PendingIndexedDBInfo::~PendingIndexedDBInfo() {
-}
+CannedBrowsingDataIndexedDBHelper::PendingIndexedDBInfo::
+    ~PendingIndexedDBInfo() = default;
 
 bool CannedBrowsingDataIndexedDBHelper::PendingIndexedDBInfo::operator<(
     const PendingIndexedDBInfo& other) const {
@@ -88,7 +86,8 @@ CannedBrowsingDataIndexedDBHelper::CannedBrowsingDataIndexedDBHelper(
     : BrowsingDataIndexedDBHelper(context) {
 }
 
-CannedBrowsingDataIndexedDBHelper::~CannedBrowsingDataIndexedDBHelper() {}
+CannedBrowsingDataIndexedDBHelper::~CannedBrowsingDataIndexedDBHelper() =
+    default;
 
 void CannedBrowsingDataIndexedDBHelper::AddIndexedDB(
     const GURL& origin, const base::string16& name) {

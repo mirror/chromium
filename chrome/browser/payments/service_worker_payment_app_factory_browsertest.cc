@@ -47,7 +47,7 @@ class ServiceWorkerPaymentAppFactoryBrowserTest : public InProcessBrowserTest {
         features::kServiceWorkerPaymentApps);
   }
 
-  ~ServiceWorkerPaymentAppFactoryBrowserTest() override {}
+  ~ServiceWorkerPaymentAppFactoryBrowserTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     // HTTPS server only serves a valid cert for localhost, so this is needed to

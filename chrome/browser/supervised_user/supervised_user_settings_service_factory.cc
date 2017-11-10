@@ -28,8 +28,8 @@ SupervisedUserSettingsServiceFactory::SupervisedUserSettingsServiceFactory()
           BrowserContextDependencyManager::GetInstance()) {
 }
 
-SupervisedUserSettingsServiceFactory::
-    ~SupervisedUserSettingsServiceFactory() {}
+SupervisedUserSettingsServiceFactory::~SupervisedUserSettingsServiceFactory() =
+    default;
 
 KeyedService* SupervisedUserSettingsServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

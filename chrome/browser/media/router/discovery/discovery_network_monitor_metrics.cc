@@ -8,7 +8,7 @@
 
 namespace media_router {
 
-DiscoveryNetworkMonitorMetrics::~DiscoveryNetworkMonitorMetrics() {}
+DiscoveryNetworkMonitorMetrics::~DiscoveryNetworkMonitorMetrics() = default;
 
 void DiscoveryNetworkMonitorMetrics::RecordTimeBetweenNetworkChangeEvents(
     base::TimeDelta delta) {

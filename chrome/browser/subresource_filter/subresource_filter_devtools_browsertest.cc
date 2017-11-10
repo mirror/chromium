@@ -24,8 +24,8 @@ namespace {
 
 class TestClient : public content::DevToolsAgentHostClient {
  public:
-  TestClient() {}
-  ~TestClient() override {}
+  TestClient() = default;
+  ~TestClient() override = default;
   void DispatchProtocolMessage(content::DevToolsAgentHost* agent_host,
                                const std::string& message) override {}
   void AgentHostClosed(content::DevToolsAgentHost* agent_host) override {}

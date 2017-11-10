@@ -68,8 +68,7 @@ UpgradeDetector::UpgradeDetector()
       notify_upgrade_(false) {
 }
 
-UpgradeDetector::~UpgradeDetector() {
-}
+UpgradeDetector::~UpgradeDetector() = default;
 
 void UpgradeDetector::NotifyOutdatedInstall() {
   for (auto& observer : observer_list_)

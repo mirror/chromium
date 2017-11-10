@@ -53,8 +53,7 @@ CloudPrintProxyService::CloudPrintProxyService(Profile* profile)
       weak_factory_(this) {
 }
 
-CloudPrintProxyService::~CloudPrintProxyService() {
-}
+CloudPrintProxyService::~CloudPrintProxyService() = default;
 
 void CloudPrintProxyService::Initialize() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

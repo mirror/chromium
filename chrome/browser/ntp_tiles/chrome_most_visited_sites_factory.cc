@@ -60,7 +60,7 @@ SupervisorBridge::SupervisorBridge(Profile* profile)
   register_observer_.Add(SupervisedUserServiceFactory::GetForProfile(profile_));
 }
 
-SupervisorBridge::~SupervisorBridge() {}
+SupervisorBridge::~SupervisorBridge() = default;
 
 void SupervisorBridge::SetObserver(Observer* new_observer) {
   if (new_observer) {

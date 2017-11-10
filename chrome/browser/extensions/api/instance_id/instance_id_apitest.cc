@@ -34,8 +34,7 @@ class InstanceIDApiTest : public ExtensionApiTest {
   DISALLOW_COPY_AND_ASSIGN(InstanceIDApiTest);
 };
 
-InstanceIDApiTest::InstanceIDApiTest() {
-}
+InstanceIDApiTest::InstanceIDApiTest() = default;
 
 void InstanceIDApiTest::SetUpOnMainThread() {
   gcm::GCMProfileServiceFactory::GetInstance()->SetTestingFactory(

@@ -53,7 +53,7 @@ const char kClearKeyCdmPluginId[] = "application_x-ppapi-clearkey-cdm";
 class AwaitCompletionHelper {
  public:
   AwaitCompletionHelper() : start_(false), already_quit_(false) {}
-  virtual ~AwaitCompletionHelper() {}
+  virtual ~AwaitCompletionHelper() = default;
 
   void BlockUntilNotified() {
     if (!already_quit_) {

@@ -235,8 +235,7 @@ ExtensionInfoGenerator::ExtensionInfoGenerator(
       weak_factory_(this) {
 }
 
-ExtensionInfoGenerator::~ExtensionInfoGenerator() {
-}
+ExtensionInfoGenerator::~ExtensionInfoGenerator() = default;
 
 void ExtensionInfoGenerator::CreateExtensionInfo(
     const std::string& id,

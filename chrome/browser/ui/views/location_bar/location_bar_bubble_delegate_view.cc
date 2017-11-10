@@ -25,7 +25,7 @@ LocationBarBubbleDelegateView::WebContentMouseHandler::WebContentMouseHandler(
 }
 
 LocationBarBubbleDelegateView::WebContentMouseHandler::
-    ~WebContentMouseHandler() {}
+    ~WebContentMouseHandler() = default;
 
 void LocationBarBubbleDelegateView::WebContentMouseHandler::OnKeyEvent(
     ui::KeyEvent* event) {
@@ -78,7 +78,7 @@ LocationBarBubbleDelegateView::LocationBarBubbleDelegateView(
     content::WebContents* web_contents)
     : LocationBarBubbleDelegateView(anchor_view, gfx::Point(), web_contents) {}
 
-LocationBarBubbleDelegateView::~LocationBarBubbleDelegateView() {}
+LocationBarBubbleDelegateView::~LocationBarBubbleDelegateView() = default;
 
 void LocationBarBubbleDelegateView::ShowForReason(DisplayReason reason) {
   if (reason == USER_GESTURE) {

@@ -53,7 +53,7 @@ class MockMediaRouterWebUIMessageHandler
  public:
   explicit MockMediaRouterWebUIMessageHandler(MediaRouterUI* media_router_ui)
       : MediaRouterWebUIMessageHandler(media_router_ui) {}
-  ~MockMediaRouterWebUIMessageHandler() override {}
+  ~MockMediaRouterWebUIMessageHandler() override = default;
 
   MOCK_METHOD1(UpdateIssue, void(const Issue& issue));
   MOCK_METHOD1(UpdateMediaRouteStatus, void(const MediaStatus& status));
@@ -66,7 +66,7 @@ class MockMediaRouterWebUIMessageHandler
 class MockMediaRouterFileDialog : public MediaRouterFileDialog {
  public:
   MockMediaRouterFileDialog() : MediaRouterFileDialog(nullptr) {}
-  ~MockMediaRouterFileDialog() override {}
+  ~MockMediaRouterFileDialog() override = default;
 
   MOCK_METHOD0(GetLastSelectedFileUrl, GURL());
   MOCK_METHOD0(GetLastSelectedFileName, base::string16());
@@ -75,7 +75,7 @@ class MockMediaRouterFileDialog : public MediaRouterFileDialog {
 
 class PresentationRequestCallbacks {
  public:
-  PresentationRequestCallbacks() {}
+  PresentationRequestCallbacks() = default;
 
   explicit PresentationRequestCallbacks(
       const content::PresentationError& expected_error)

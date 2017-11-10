@@ -49,7 +49,7 @@ void AddPreviewNavigationCallback(content::BrowserContext* browser_context,
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(PreviewsInfoBarTabHelper);
 
-PreviewsInfoBarTabHelper::~PreviewsInfoBarTabHelper() {}
+PreviewsInfoBarTabHelper::~PreviewsInfoBarTabHelper() = default;
 
 PreviewsInfoBarTabHelper::PreviewsInfoBarTabHelper(
     content::WebContents* web_contents)

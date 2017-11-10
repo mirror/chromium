@@ -47,8 +47,8 @@ SigninSupervisedUserImportHandler::SigninSupervisedUserImportHandler()
     : weak_ptr_factory_(this) {
 }
 
-SigninSupervisedUserImportHandler::~SigninSupervisedUserImportHandler() {
-}
+SigninSupervisedUserImportHandler::~SigninSupervisedUserImportHandler() =
+    default;
 
 void SigninSupervisedUserImportHandler::GetLocalizedValues(
     base::DictionaryValue* localized_strings) {

@@ -210,7 +210,7 @@ class ThreatDetailsWrap : public ThreatDetails {
   size_t done_callback_count() { return done_callback_count_; }
 
  private:
-  ~ThreatDetailsWrap() override {}
+  ~ThreatDetailsWrap() override = default;
 
   base::RunLoop* run_loop_;
   size_t done_callback_count_;
@@ -229,7 +229,7 @@ class MockSafeBrowsingUIManager : public SafeBrowsingUIManager {
   const std::string& GetSerialized() { return serialized_; }
 
  private:
-  ~MockSafeBrowsingUIManager() override {}
+  ~MockSafeBrowsingUIManager() override = default;
 
   std::string serialized_;
   DISALLOW_COPY_AND_ASSIGN(MockSafeBrowsingUIManager);

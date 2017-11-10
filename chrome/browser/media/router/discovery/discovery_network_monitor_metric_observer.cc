@@ -62,7 +62,7 @@ DiscoveryNetworkMonitorMetricObserver::DiscoveryNetworkMonitorMetricObserver(
 }
 
 DiscoveryNetworkMonitorMetricObserver::
-    ~DiscoveryNetworkMonitorMetricObserver() {}
+    ~DiscoveryNetworkMonitorMetricObserver() = default;
 
 void DiscoveryNetworkMonitorMetricObserver::OnNetworksChanged(
     const std::string& network_id) {

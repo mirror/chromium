@@ -21,8 +21,7 @@ TabStripModelStatsRecorder::TabStripModelStatsRecorder()
   browser_tab_strip_tracker_.Init();
 }
 
-TabStripModelStatsRecorder::~TabStripModelStatsRecorder() {
-}
+TabStripModelStatsRecorder::~TabStripModelStatsRecorder() = default;
 
 class TabStripModelStatsRecorder::TabInfo
     : public base::SupportsUserData::Data {
@@ -53,7 +52,7 @@ class TabStripModelStatsRecorder::TabInfo
 
 const char TabStripModelStatsRecorder::TabInfo::kKey[] = "WebContents TabInfo";
 
-TabStripModelStatsRecorder::TabInfo::~TabInfo() {}
+TabStripModelStatsRecorder::TabInfo::~TabInfo() = default;
 
 void TabStripModelStatsRecorder::TabInfo::UpdateState(TabState new_state) {
   if (new_state == current_state_)

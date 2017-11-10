@@ -13,6 +13,6 @@ void TabLifetimeObserver::OnAutoDiscardableStateChange(
     content::WebContents* contents,
     bool is_auto_discardable) {}
 
-TabLifetimeObserver::~TabLifetimeObserver() {}
+TabLifetimeObserver::~TabLifetimeObserver() = default;
 
 }  // namespace resource_coordinator

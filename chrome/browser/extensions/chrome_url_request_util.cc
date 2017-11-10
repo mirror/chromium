@@ -84,7 +84,7 @@ class URLRequestResourceBundleJob : public net::URLRequestSimpleJob {
   }
 
  private:
-  ~URLRequestResourceBundleJob() override {}
+  ~URLRequestResourceBundleJob() override = default;
 
   void OnMimeTypeRead(std::string* out_mime_type,
                       std::string* charset,

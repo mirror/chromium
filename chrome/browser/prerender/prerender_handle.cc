@@ -16,11 +16,9 @@ using content::BrowserThread;
 
 namespace prerender {
 
-PrerenderHandle::Observer::Observer() {
-}
+PrerenderHandle::Observer::Observer() = default;
 
-PrerenderHandle::Observer::~Observer() {
-}
+PrerenderHandle::Observer::~Observer() = default;
 
 PrerenderHandle::~PrerenderHandle() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

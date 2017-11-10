@@ -254,12 +254,10 @@ void OnHttpHeaderReceived(const std::string& header,
 }  // namespace
 
 ChromeContentBrowserClientExtensionsPart::
-    ChromeContentBrowserClientExtensionsPart() {
-}
+    ChromeContentBrowserClientExtensionsPart() = default;
 
 ChromeContentBrowserClientExtensionsPart::
-    ~ChromeContentBrowserClientExtensionsPart() {
-}
+    ~ChromeContentBrowserClientExtensionsPart() = default;
 
 // static
 GURL ChromeContentBrowserClientExtensionsPart::GetEffectiveURL(

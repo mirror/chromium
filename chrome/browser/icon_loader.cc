@@ -39,7 +39,7 @@ IconLoader::IconLoader(const base::FilePath& file_path,
       callback_(callback) {
 }
 
-IconLoader::~IconLoader() {}
+IconLoader::~IconLoader() = default;
 
 void IconLoader::ReadGroup() {
   group_ = GroupForFilepath(file_path_);

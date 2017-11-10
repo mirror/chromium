@@ -144,8 +144,7 @@ TaskManagerInterface::TaskManagerInterface()
       enabled_resources_flags_(0) {
 }
 
-TaskManagerInterface::~TaskManagerInterface() {
-}
+TaskManagerInterface::~TaskManagerInterface() = default;
 
 void TaskManagerInterface::NotifyObserversOnTaskAdded(TaskId id) {
   for (TaskManagerObserver& observer : observers_)

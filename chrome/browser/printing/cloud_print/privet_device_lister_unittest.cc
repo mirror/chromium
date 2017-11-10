@@ -26,7 +26,7 @@ class MockServiceWatcher;
 
 class ServiceDiscoveryMockDelegate {
  public:
-  virtual ~ServiceDiscoveryMockDelegate() {}
+  virtual ~ServiceDiscoveryMockDelegate() = default;
   virtual void ServiceWatcherStarted(const std::string& service_type,
                                      MockServiceWatcher* watcher) = 0;
   virtual void ServiceResolverStarted(const std::string& service_type,
@@ -42,7 +42,7 @@ class MockServiceWatcher : public ServiceWatcher {
         mock_delegate_(mock_delegate) {
   }
 
-  ~MockServiceWatcher() override {}
+  ~MockServiceWatcher() override = default;
 
   virtual void Start() {
     DCHECK(!started_);
@@ -84,7 +84,7 @@ class MockServiceResolver : public ServiceResolver {
         callback_(std::move(callback)),
         mock_delegate_(mock_delegate) {}
 
-  ~MockServiceResolver() override {}
+  ~MockServiceResolver() override = default;
 
   void StartResolving() override {
     started_resolving_ = true;
@@ -113,7 +113,7 @@ class MockServiceDiscoveryClient : public ServiceDiscoveryClient {
       : mock_delegate_(mock_delegate) {
   }
 
-  ~MockServiceDiscoveryClient() override {}
+  ~MockServiceDiscoveryClient() override = default;
 
   // Create a service watcher object listening for DNS-SD service announcements
   // on service type |service_type|.
@@ -156,8 +156,8 @@ class MockServiceDiscoveryMockDelegate : public ServiceDiscoveryMockDelegate {
 
 class MockDeviceListerDelegate : public PrivetDeviceLister::Delegate {
  public:
-  MockDeviceListerDelegate() {}
-  virtual ~MockDeviceListerDelegate() {}
+  MockDeviceListerDelegate() = default;
+  virtual ~MockDeviceListerDelegate() = default;
 
   MOCK_METHOD2(DeviceChanged,
                void(const std::string& name,
@@ -171,7 +171,7 @@ class MockDeviceListerDelegate : public PrivetDeviceLister::Delegate {
 class PrivetDeviceListerTest : public testing::Test {
  public:
   PrivetDeviceListerTest() : mock_client_(&mock_delegate_) {}
-  ~PrivetDeviceListerTest() override {}
+  ~PrivetDeviceListerTest() override = default;
 
   void SetUp() override {
     example_attrs_.push_back("tXtvers=1");

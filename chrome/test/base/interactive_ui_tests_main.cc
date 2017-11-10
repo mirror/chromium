@@ -31,7 +31,7 @@
 class InteractiveUITestSuite : public ChromeTestSuite {
  public:
   InteractiveUITestSuite(int argc, char** argv) : ChromeTestSuite(argc, argv) {}
-  ~InteractiveUITestSuite() override {}
+  ~InteractiveUITestSuite() override = default;
 
  protected:
   // ChromeTestSuite overrides:

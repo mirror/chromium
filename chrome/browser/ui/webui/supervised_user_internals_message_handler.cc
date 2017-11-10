@@ -120,8 +120,7 @@ SupervisedUserInternalsMessageHandler::SupervisedUserInternalsMessageHandler()
     : scoped_observer_(this), weak_factory_(this) {}
 
 SupervisedUserInternalsMessageHandler::
-    ~SupervisedUserInternalsMessageHandler() {
-}
+    ~SupervisedUserInternalsMessageHandler() = default;
 
 void SupervisedUserInternalsMessageHandler::RegisterMessages() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

@@ -34,7 +34,7 @@ namespace extensions {
 
 class MockDeviceInfoTracker : public DeviceInfoTracker {
  public:
-  ~MockDeviceInfoTracker() override {}
+  ~MockDeviceInfoTracker() override = default;
 
   bool IsSyncing() const override { return !devices_.empty(); }
 
@@ -143,7 +143,7 @@ class ProfileSyncServiceMockForExtensionTests
  public:
   explicit ProfileSyncServiceMockForExtensionTests(Profile* p)
       : ProfileSyncServiceMock(CreateProfileSyncServiceParamsForTest(p)) {}
-  ~ProfileSyncServiceMockForExtensionTests() {}
+  ~ProfileSyncServiceMockForExtensionTests() = default;
 
   MOCK_METHOD0(Shutdown, void());
   MOCK_CONST_METHOD0(GetDeviceInfoTracker, DeviceInfoTracker*());

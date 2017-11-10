@@ -12,8 +12,8 @@
 
 class ChromeSerializedNavigationDriverTest : public ::testing::Test {
  public:
-  ChromeSerializedNavigationDriverTest() {}
-  ~ChromeSerializedNavigationDriverTest() override {}
+  ChromeSerializedNavigationDriverTest() = default;
+  ~ChromeSerializedNavigationDriverTest() override = default;
 
   void SetUp() override {
     sessions::ContentSerializedNavigationDriver::SetInstance(

@@ -37,7 +37,7 @@ using testing::_;
 class ManagedBookmarkServiceTest : public testing::Test {
  public:
   ManagedBookmarkServiceTest() : managed_(NULL), model_(NULL) {}
-  ~ManagedBookmarkServiceTest() override {}
+  ~ManagedBookmarkServiceTest() override = default;
 
   void SetUp() override {
     prefs_ = profile_.GetTestingPrefService();

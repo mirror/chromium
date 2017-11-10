@@ -58,8 +58,7 @@ FakeDriveServiceHelper::FakeDriveServiceHelper(
   Initialize();
 }
 
-FakeDriveServiceHelper::~FakeDriveServiceHelper() {
-}
+FakeDriveServiceHelper::~FakeDriveServiceHelper() = default;
 
 DriveApiErrorCode FakeDriveServiceHelper::AddOrphanedFolder(
     const std::string& title,

@@ -22,12 +22,12 @@ namespace extensions {
 
 class MockExternalLoader : public ExternalLoader {
  public:
-  MockExternalLoader() {}
+  MockExternalLoader() = default;
 
   void StartLoading() override {}
 
  private:
-  ~MockExternalLoader() override {}
+  ~MockExternalLoader() override = default;
 };
 
 class DefaultAppsTest : public testing::Test {
@@ -35,7 +35,7 @@ class DefaultAppsTest : public testing::Test {
   DefaultAppsTest()
       : test_browser_thread_bundle_(
             content::TestBrowserThreadBundle::IO_MAINLOOP) {}
-  ~DefaultAppsTest() override {}
+  ~DefaultAppsTest() override = default;
 
  private:
   content::TestBrowserThreadBundle test_browser_thread_bundle_;

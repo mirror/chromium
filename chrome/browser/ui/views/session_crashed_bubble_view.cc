@@ -171,8 +171,7 @@ SessionCrashedBubbleView::SessionCrashedBubbleView(views::View* anchor_view,
   chrome::RecordDialogCreation(chrome::DialogIdentifier::SESSION_CRASHED);
 }
 
-SessionCrashedBubbleView::~SessionCrashedBubbleView() {
-}
+SessionCrashedBubbleView::~SessionCrashedBubbleView() = default;
 
 base::string16 SessionCrashedBubbleView::GetWindowTitle() const {
   return l10n_util::GetStringUTF16(IDS_SESSION_CRASHED_BUBBLE_TITLE);

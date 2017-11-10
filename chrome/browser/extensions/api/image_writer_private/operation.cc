@@ -44,7 +44,7 @@ Operation::Operation(base::WeakPtr<OperationManager> manager,
           base::CreateSequencedTaskRunnerWithTraits(blocking_task_traits())) {
 }
 
-Operation::~Operation() {}
+Operation::~Operation() = default;
 
 void Operation::Cancel() {
   DCHECK(IsRunningInCorrectSequence());

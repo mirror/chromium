@@ -67,7 +67,7 @@ void BrowsingDataAppCacheHelper::DeleteAppCacheGroup(const GURL& manifest_url) {
                      this, manifest_url));
 }
 
-BrowsingDataAppCacheHelper::~BrowsingDataAppCacheHelper() {}
+BrowsingDataAppCacheHelper::~BrowsingDataAppCacheHelper() = default;
 
 void BrowsingDataAppCacheHelper::StartFetchingOnIOThread(
     const FetchCallback& callback) {
@@ -145,4 +145,4 @@ void CannedBrowsingDataAppCacheHelper::DeleteAppCacheGroup(
   BrowsingDataAppCacheHelper::DeleteAppCacheGroup(manifest_url);
 }
 
-CannedBrowsingDataAppCacheHelper::~CannedBrowsingDataAppCacheHelper() {}
+CannedBrowsingDataAppCacheHelper::~CannedBrowsingDataAppCacheHelper() = default;

@@ -138,7 +138,7 @@ WebViewImpl::WebViewImpl(const std::string& id,
       debugger_(new DebuggerTracker(client.get())),
       client_(client.release()) {}
 
-WebViewImpl::~WebViewImpl() {}
+WebViewImpl::~WebViewImpl() = default;
 
 std::string WebViewImpl::GetId() {
   return id_;

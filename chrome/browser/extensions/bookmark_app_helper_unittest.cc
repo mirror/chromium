@@ -66,8 +66,8 @@ const int kIconSizeLargeBetweenMediumAndLarge = 96;
 
 class BookmarkAppHelperTest : public testing::Test {
  public:
-  BookmarkAppHelperTest() {}
-  ~BookmarkAppHelperTest() override {}
+  BookmarkAppHelperTest() = default;
+  ~BookmarkAppHelperTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BookmarkAppHelperTest);
@@ -76,8 +76,8 @@ class BookmarkAppHelperTest : public testing::Test {
 class BookmarkAppHelperExtensionServiceTest
     : public extensions::ExtensionServiceTestBase {
  public:
-  BookmarkAppHelperExtensionServiceTest() {}
-  ~BookmarkAppHelperExtensionServiceTest() override {}
+  BookmarkAppHelperExtensionServiceTest() = default;
+  ~BookmarkAppHelperExtensionServiceTest() override = default;
 
   void SetUp() override {
     extensions::ExtensionServiceTestBase::SetUp();
@@ -286,7 +286,7 @@ class TestBookmarkAppHelper : public BookmarkAppHelper {
       : BookmarkAppHelper(service->profile(), web_app_info, contents),
         bitmap_(CreateSquareBitmapWithColor(32, SK_ColorRED)) {}
 
-  ~TestBookmarkAppHelper() override {}
+  ~TestBookmarkAppHelper() override = default;
 
   void CreationComplete(const extensions::Extension* extension,
                         const WebApplicationInfo& web_app_info) {

@@ -102,7 +102,7 @@ SiteEngagementTopSitesProvider::SiteEngagementTopSitesProvider(
   DCHECK(history_service);
 }
 
-SiteEngagementTopSitesProvider::~SiteEngagementTopSitesProvider() {}
+SiteEngagementTopSitesProvider::~SiteEngagementTopSitesProvider() = default;
 
 void SiteEngagementTopSitesProvider::ProvideTopSites(
     int result_count,

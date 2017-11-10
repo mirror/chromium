@@ -28,8 +28,8 @@ std::string GenerateRandomStreamId() {
 
 }  // namespace
 
-DesktopStreamsRegistry::DesktopStreamsRegistry() {}
-DesktopStreamsRegistry::~DesktopStreamsRegistry() {}
+DesktopStreamsRegistry::DesktopStreamsRegistry() = default;
+DesktopStreamsRegistry::~DesktopStreamsRegistry() = default;
 
 std::string DesktopStreamsRegistry::RegisterStream(
     int render_process_id,

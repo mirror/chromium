@@ -32,7 +32,7 @@ PreviewsServiceFactory::PreviewsServiceFactory()
           "PreviewsService",
           BrowserContextDependencyManager::GetInstance()) {}
 
-PreviewsServiceFactory::~PreviewsServiceFactory() {}
+PreviewsServiceFactory::~PreviewsServiceFactory() = default;
 
 KeyedService* PreviewsServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

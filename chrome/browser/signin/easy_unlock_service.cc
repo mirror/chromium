@@ -246,8 +246,7 @@ EasyUnlockService::EasyUnlockService(Profile* profile)
       weak_ptr_factory_(this) {
 }
 
-EasyUnlockService::~EasyUnlockService() {
-}
+EasyUnlockService::~EasyUnlockService() = default;
 
 // static
 void EasyUnlockService::RegisterProfilePrefs(

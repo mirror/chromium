@@ -33,8 +33,7 @@ namespace thumbnails {
 ThumbnailServiceImpl::ThumbnailServiceImpl(Profile* profile)
     : top_sites_(TopSitesFactory::GetForProfile(profile)) {}
 
-ThumbnailServiceImpl::~ThumbnailServiceImpl() {
-}
+ThumbnailServiceImpl::~ThumbnailServiceImpl() = default;
 
 bool ThumbnailServiceImpl::SetPageThumbnail(const ThumbnailingContext& context,
                                             const gfx::Image& thumbnail) {

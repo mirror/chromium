@@ -118,7 +118,7 @@ void PopulateDirectoryWithTestCases(const base::FilePath& dir,
 
 class NativeMediaFileUtilTest : public testing::Test {
  public:
-  NativeMediaFileUtilTest() {}
+  NativeMediaFileUtilTest() = default;
 
   void SetUp() override {
     ASSERT_TRUE(data_dir_.CreateUniqueTempDir());

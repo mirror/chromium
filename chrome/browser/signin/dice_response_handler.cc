@@ -92,7 +92,7 @@ class DiceResponseHandlerFactory : public BrowserContextKeyedServiceFactory {
     DependsOn(SigninManagerFactory::GetInstance());
   }
 
-  ~DiceResponseHandlerFactory() override {}
+  ~DiceResponseHandlerFactory() override = default;
 
   // BrowserContextKeyedServiceFactory:
   KeyedService* BuildServiceInstanceFor(
@@ -160,7 +160,7 @@ DiceResponseHandler::DiceTokenFetcher::DiceTokenFetcher(
       base::TimeDelta::FromSeconds(kDiceTokenFetchTimeoutSeconds));
 }
 
-DiceResponseHandler::DiceTokenFetcher::~DiceTokenFetcher() {}
+DiceResponseHandler::DiceTokenFetcher::~DiceTokenFetcher() = default;
 
 void DiceResponseHandler::DiceTokenFetcher::OnTimeout() {
   RecordDiceFetchTokenResult(kFetchTimeout);
@@ -217,7 +217,7 @@ DiceResponseHandler::DiceResponseHandler(
   DCHECK(account_reconcilor_);
 }
 
-DiceResponseHandler::~DiceResponseHandler() {}
+DiceResponseHandler::~DiceResponseHandler() = default;
 
 void DiceResponseHandler::ProcessDiceHeader(
     const signin::DiceResponseParams& dice_params,

@@ -37,9 +37,9 @@ base::Version GetVersionForSimulation() {
 
 }  // namespace
 
-ChromeVariationsServiceClient::ChromeVariationsServiceClient() {}
+ChromeVariationsServiceClient::ChromeVariationsServiceClient() = default;
 
-ChromeVariationsServiceClient::~ChromeVariationsServiceClient() {}
+ChromeVariationsServiceClient::~ChromeVariationsServiceClient() = default;
 
 std::string ChromeVariationsServiceClient::GetApplicationLocale() {
   return g_browser_process->GetApplicationLocale();

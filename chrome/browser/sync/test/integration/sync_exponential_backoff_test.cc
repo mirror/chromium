@@ -22,7 +22,7 @@ using syncer::SyncCycleSnapshot;
 class SyncExponentialBackoffTest : public SyncTest {
  public:
   SyncExponentialBackoffTest() : SyncTest(SINGLE_CLIENT) {}
-  ~SyncExponentialBackoffTest() override {}
+  ~SyncExponentialBackoffTest() override = default;
 
   void SetUp() override {
     // This is needed to avoid spurious notifications initiated by the platform.

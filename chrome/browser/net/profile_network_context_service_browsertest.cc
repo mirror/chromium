@@ -51,7 +51,7 @@ class ProfileNetworkContextServiceBrowsertest
     EXPECT_TRUE(embedded_test_server()->Start());
   }
 
-  ~ProfileNetworkContextServiceBrowsertest() override {}
+  ~ProfileNetworkContextServiceBrowsertest() override = default;
 
   void SetUpInProcessBrowserTestFixture() override {
     if (GetParam() == NetworkServiceState::kEnabled)
@@ -136,7 +136,7 @@ class ProfileNetworkContextServiceDiskCacheDirBrowsertest
     EXPECT_TRUE(temp_dir_.CreateUniqueTempDir());
   }
 
-  ~ProfileNetworkContextServiceDiskCacheDirBrowsertest() override {}
+  ~ProfileNetworkContextServiceDiskCacheDirBrowsertest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitchPath(switches::kDiskCacheDir,

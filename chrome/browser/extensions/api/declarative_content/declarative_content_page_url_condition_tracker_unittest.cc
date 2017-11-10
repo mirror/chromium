@@ -31,7 +31,7 @@ class DeclarativeContentPageUrlConditionTrackerTest
  protected:
   class Delegate : public ContentPredicateEvaluator::Delegate {
    public:
-    Delegate() {}
+    Delegate() = default;
 
     std::set<content::WebContents*>& evaluation_requests() {
       return evaluation_requests_;

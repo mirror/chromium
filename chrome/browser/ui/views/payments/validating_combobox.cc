@@ -19,7 +19,7 @@ ValidatingCombobox::ValidatingCombobox(
   SetFocusBehavior(FocusBehavior::ALWAYS);
 }
 
-ValidatingCombobox::~ValidatingCombobox() {}
+ValidatingCombobox::~ValidatingCombobox() = default;
 
 void ValidatingCombobox::OnBlur() {
   Combobox::OnBlur();

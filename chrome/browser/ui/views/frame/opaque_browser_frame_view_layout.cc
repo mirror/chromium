@@ -92,7 +92,7 @@ OpaqueBrowserFrameViewLayout::OpaqueBrowserFrameViewLayout()
                         views::FRAME_BUTTON_MAXIMIZE,
                         views::FRAME_BUTTON_CLOSE} {}
 
-OpaqueBrowserFrameViewLayout::~OpaqueBrowserFrameViewLayout() {}
+OpaqueBrowserFrameViewLayout::~OpaqueBrowserFrameViewLayout() = default;
 
 void OpaqueBrowserFrameViewLayout::SetButtonOrdering(
     const std::vector<views::FrameButton>& leading_buttons,

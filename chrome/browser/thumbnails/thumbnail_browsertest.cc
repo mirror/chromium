@@ -110,7 +110,7 @@ class MockThumbnailService : public ThumbnailService {
 
 class ThumbnailTest : public InProcessBrowserTest {
  public:
-  ThumbnailTest() {}
+  ThumbnailTest() = default;
 
   MockThumbnailService* thumbnail_service() {
     return static_cast<MockThumbnailService*>(

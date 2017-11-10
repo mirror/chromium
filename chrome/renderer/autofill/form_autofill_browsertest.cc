@@ -267,7 +267,7 @@ bool ClickElement(const WebDocument& document,
 class FormAutofillTest : public ChromeRenderViewTest {
  public:
   FormAutofillTest() : ChromeRenderViewTest() {}
-  ~FormAutofillTest() override {}
+  ~FormAutofillTest() override = default;
 
   void ExpectLabels(const char* html,
                     const std::vector<base::string16>& labels,

@@ -17,8 +17,7 @@
 
 namespace policy {
 
-RemoteCommandsInvalidator::RemoteCommandsInvalidator() {
-}
+RemoteCommandsInvalidator::RemoteCommandsInvalidator() = default;
 
 RemoteCommandsInvalidator::~RemoteCommandsInvalidator() {
   DCHECK_EQ(SHUT_DOWN, state_);

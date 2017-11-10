@@ -4,11 +4,11 @@
 
 #include "chrome/browser/ui/app_icon_loader.h"
 
-AppIconLoader::AppIconLoader() {}
+AppIconLoader::AppIconLoader() = default;
 
 AppIconLoader::AppIconLoader(Profile* profile,
                              int icon_size,
                              AppIconLoaderDelegate* delegate)
     : profile_(profile), icon_size_(icon_size), delegate_(delegate) {}
 
-AppIconLoader::~AppIconLoader() {}
+AppIconLoader::~AppIconLoader() = default;

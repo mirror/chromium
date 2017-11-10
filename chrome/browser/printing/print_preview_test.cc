@@ -7,8 +7,8 @@
 #include "chrome/test/base/dialog_test_browser_window.h"
 #include "content/public/browser/plugin_service.h"
 
-PrintPreviewTest::PrintPreviewTest() {}
-PrintPreviewTest::~PrintPreviewTest() {}
+PrintPreviewTest::PrintPreviewTest() = default;
+PrintPreviewTest::~PrintPreviewTest() = default;
 
 void PrintPreviewTest::SetUp() {
   BrowserWithTestWindowTest::SetUp();

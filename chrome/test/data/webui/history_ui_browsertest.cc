@@ -14,7 +14,7 @@
 #include "components/prefs/pref_service.h"
 
 HistoryUIBrowserTest::HistoryUIBrowserTest() : history_(nullptr) {}
-HistoryUIBrowserTest::~HistoryUIBrowserTest() {}
+HistoryUIBrowserTest::~HistoryUIBrowserTest() = default;
 
 void HistoryUIBrowserTest::SetUpOnMainThread() {
   WebUIBrowserTest::SetUpOnMainThread();

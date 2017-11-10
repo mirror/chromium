@@ -42,7 +42,7 @@ BluetoothChooserController::BluetoothChooserController(
                         IDS_BLUETOOTH_DEVICE_CHOOSER_PROMPT_EXTENSION_NAME),
       event_handler_(event_handler) {}
 
-BluetoothChooserController::~BluetoothChooserController() {}
+BluetoothChooserController::~BluetoothChooserController() = default;
 
 bool BluetoothChooserController::ShouldShowIconBeforeText() const {
   return true;

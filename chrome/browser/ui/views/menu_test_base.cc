@@ -19,8 +19,7 @@ MenuTestBase::MenuTestBase()
       last_command_(0) {
 }
 
-MenuTestBase::~MenuTestBase() {
-}
+MenuTestBase::~MenuTestBase() = default;
 
 void MenuTestBase::Click(views::View* view, const base::Closure& next) {
   ui_test_utils::MoveMouseToCenterAndPress(

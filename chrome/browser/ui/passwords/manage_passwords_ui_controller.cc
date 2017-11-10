@@ -70,7 +70,7 @@ ManagePasswordsUIController::ManagePasswordsUIController(
     password_store->AddObserver(this);
 }
 
-ManagePasswordsUIController::~ManagePasswordsUIController() {}
+ManagePasswordsUIController::~ManagePasswordsUIController() = default;
 
 void ManagePasswordsUIController::OnPasswordSubmitted(
     std::unique_ptr<PasswordFormManager> form_manager) {

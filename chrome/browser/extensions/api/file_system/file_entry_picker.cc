@@ -39,7 +39,7 @@ FileEntryPicker::FileEntryPicker(
       base::FilePath::StringType(), owning_window, nullptr);
 }
 
-FileEntryPicker::~FileEntryPicker() {}
+FileEntryPicker::~FileEntryPicker() = default;
 
 void FileEntryPicker::FileSelected(const base::FilePath& path,
                                    int index,

@@ -55,7 +55,7 @@ BrowsingDataLocalStorageHelper::LocalStorageInfo::LocalStorageInfo(
     base::Time last_modified)
     : origin_url(origin_url), size(size), last_modified(last_modified) {}
 
-BrowsingDataLocalStorageHelper::LocalStorageInfo::~LocalStorageInfo() {}
+BrowsingDataLocalStorageHelper::LocalStorageInfo::~LocalStorageInfo() = default;
 
 BrowsingDataLocalStorageHelper::BrowsingDataLocalStorageHelper(Profile* profile)
     : dom_storage_context_(BrowserContext::GetDefaultStoragePartition(profile)
@@ -63,8 +63,7 @@ BrowsingDataLocalStorageHelper::BrowsingDataLocalStorageHelper(Profile* profile)
   DCHECK(dom_storage_context_);
 }
 
-BrowsingDataLocalStorageHelper::~BrowsingDataLocalStorageHelper() {
-}
+BrowsingDataLocalStorageHelper::~BrowsingDataLocalStorageHelper() = default;
 
 void BrowsingDataLocalStorageHelper::StartFetching(
     const FetchCallback& callback) {
@@ -159,4 +158,5 @@ void CannedBrowsingDataLocalStorageHelper::DeleteOrigin(
   pending_origins_to_pending_suborigins_.erase(origin_url);
 }
 
-CannedBrowsingDataLocalStorageHelper::~CannedBrowsingDataLocalStorageHelper() {}
+CannedBrowsingDataLocalStorageHelper::~CannedBrowsingDataLocalStorageHelper() =
+    default;

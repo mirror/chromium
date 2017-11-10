@@ -16,7 +16,7 @@ JavaScriptDialogManager::JavaScriptDialogManager(
   client_->AddListener(this);
 }
 
-JavaScriptDialogManager::~JavaScriptDialogManager() {}
+JavaScriptDialogManager::~JavaScriptDialogManager() = default;
 
 bool JavaScriptDialogManager::IsDialogOpen() const {
   return !unhandled_dialog_queue_.empty();

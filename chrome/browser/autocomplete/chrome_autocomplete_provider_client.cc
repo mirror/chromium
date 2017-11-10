@@ -81,8 +81,7 @@ ChromeAutocompleteProviderClient::ChromeAutocompleteProviderClient(
       search_terms_data_(profile_),
       storage_partition_(nullptr) {}
 
-ChromeAutocompleteProviderClient::~ChromeAutocompleteProviderClient() {
-}
+ChromeAutocompleteProviderClient::~ChromeAutocompleteProviderClient() = default;
 
 net::URLRequestContextGetter*
 ChromeAutocompleteProviderClient::GetRequestContext() {

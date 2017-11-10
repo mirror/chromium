@@ -79,8 +79,7 @@ void AssociateURLFetcherWithWebContents(content::WebContents* web_contents,
 
 }  // namespace
 
-SearchEngineTabHelper::~SearchEngineTabHelper() {
-}
+SearchEngineTabHelper::~SearchEngineTabHelper() = default;
 
 void SearchEngineTabHelper::DidFinishNavigation(
     content::NavigationHandle* handle) {

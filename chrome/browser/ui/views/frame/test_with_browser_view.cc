@@ -62,15 +62,13 @@ std::unique_ptr<KeyedService> CreateAutocompleteClassifier(
 
 }  // namespace
 
-TestWithBrowserView::TestWithBrowserView() {
-}
+TestWithBrowserView::TestWithBrowserView() = default;
 
 TestWithBrowserView::TestWithBrowserView(Browser::Type browser_type,
                                          bool hosted_app)
     : BrowserWithTestWindowTest(browser_type, hosted_app) {}
 
-TestWithBrowserView::~TestWithBrowserView() {
-}
+TestWithBrowserView::~TestWithBrowserView() = default;
 
 void TestWithBrowserView::SetUp() {
   local_state_.reset(

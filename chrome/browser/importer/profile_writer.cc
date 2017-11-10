@@ -354,4 +354,4 @@ void ProfileWriter::AddAutofillFormDataEntries(
     web_data_service->UpdateAutofillEntries(autofill_entries);
 }
 
-ProfileWriter::~ProfileWriter() {}
+ProfileWriter::~ProfileWriter() = default;

@@ -96,7 +96,7 @@ DevToolsAndroidBridge::Factory::Factory()
           BrowserContextDependencyManager::GetInstance()) {
 }
 
-DevToolsAndroidBridge::Factory::~Factory() {}
+DevToolsAndroidBridge::Factory::~Factory() = default;
 
 KeyedService* DevToolsAndroidBridge::Factory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

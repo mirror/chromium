@@ -18,7 +18,7 @@ EndpointResolver::EndpointResolver() {
   service_discovery_client_ = ServiceDiscoverySharedClient::GetInstance();
 }
 
-EndpointResolver::~EndpointResolver() {}
+EndpointResolver::~EndpointResolver() = default;
 
 void EndpointResolver::Start(const std::string& service_name,
                              ResultCallback callback) {

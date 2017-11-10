@@ -11,8 +11,7 @@ RGBAColor::RGBAColor()
       a(0) {
 }
 
-RGBAColor::~RGBAColor() {
-}
+RGBAColor::~RGBAColor() = default;
 
 bool RGBAColor::operator==(const RGBAColor& rhs) const {
   return r == rhs.r &&
@@ -37,8 +36,7 @@ ThemeBackgroundInfo::ThemeBackgroundInfo()
       logo_alternate(false) {
 }
 
-ThemeBackgroundInfo::~ThemeBackgroundInfo() {
-}
+ThemeBackgroundInfo::~ThemeBackgroundInfo() = default;
 
 bool ThemeBackgroundInfo::operator==(const ThemeBackgroundInfo& rhs) const {
   return using_default_theme == rhs.using_default_theme &&
@@ -64,4 +62,4 @@ InstantMostVisitedItem::InstantMostVisitedItem()
 InstantMostVisitedItem::InstantMostVisitedItem(
     const InstantMostVisitedItem& other) = default;
 
-InstantMostVisitedItem::~InstantMostVisitedItem() {}
+InstantMostVisitedItem::~InstantMostVisitedItem() = default;

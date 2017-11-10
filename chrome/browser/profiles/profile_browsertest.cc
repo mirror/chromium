@@ -92,7 +92,7 @@ class TestURLFetcherDelegate : public net::URLFetcherDelegate {
     fetcher_->Start();
   }
 
-  ~TestURLFetcherDelegate() override {}
+  ~TestURLFetcherDelegate() override = default;
 
   void OnURLFetchComplete(const net::URLFetcher* source) override {
     EXPECT_EQ(expected_request_status_.status(), source->GetStatus().status());

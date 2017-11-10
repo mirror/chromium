@@ -14,7 +14,7 @@ MidiSysexPermissionContext::MidiSysexPermissionContext(Profile* profile)
                             CONTENT_SETTINGS_TYPE_MIDI_SYSEX,
                             blink::FeaturePolicyFeature::kMidiFeature) {}
 
-MidiSysexPermissionContext::~MidiSysexPermissionContext() {}
+MidiSysexPermissionContext::~MidiSysexPermissionContext() = default;
 
 void MidiSysexPermissionContext::UpdateTabContext(const PermissionRequestID& id,
                                                   const GURL& requesting_frame,

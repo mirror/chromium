@@ -23,7 +23,7 @@ using bookmarks::TestBookmarkClient;
 class TestComboboxModelObserver : public ui::ComboboxModelObserver {
  public:
   TestComboboxModelObserver() : changed_(false) {}
-  ~TestComboboxModelObserver() override {}
+  ~TestComboboxModelObserver() override = default;
 
   // Returns whether the model changed and clears changed state.
   bool GetAndClearChanged() {

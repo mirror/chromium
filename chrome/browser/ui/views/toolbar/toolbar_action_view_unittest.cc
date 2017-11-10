@@ -27,7 +27,7 @@ class TestToolbarActionViewDelegate : public ToolbarActionView::Delegate {
   TestToolbarActionViewDelegate() : shown_in_menu_(false),
                                     overflow_reference_view_(nullptr),
                                     web_contents_(nullptr) {}
-  ~TestToolbarActionViewDelegate() override {}
+  ~TestToolbarActionViewDelegate() override = default;
 
   // ToolbarActionView::Delegate:
   content::WebContents* GetCurrentWebContents() override {
@@ -99,7 +99,7 @@ class OpenMenuListener : public views::ContextMenuController {
 class ToolbarActionViewUnitTest : public views::ViewsTestBase {
  public:
   ToolbarActionViewUnitTest() : widget_(nullptr) {}
-  ~ToolbarActionViewUnitTest() override {}
+  ~ToolbarActionViewUnitTest() override = default;
 
   void SetUp() override {
     views::ViewsTestBase::SetUp();
@@ -135,7 +135,7 @@ class TestToolbarActionView : public ToolbarActionView {
                         Delegate* delegate)
       : ToolbarActionView(view_controller, delegate) {}
 
-  ~TestToolbarActionView() override {}
+  ~TestToolbarActionView() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestToolbarActionView);

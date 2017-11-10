@@ -58,7 +58,7 @@ class TestPingbackClient
   TestPingbackClient()
       : data_reduction_proxy::DataReductionProxyPingbackClient(nullptr),
         send_pingback_called_(false) {}
-  ~TestPingbackClient() override {}
+  ~TestPingbackClient() override = default;
 
   void SendPingback(
       const data_reduction_proxy::DataReductionProxyData& data,
@@ -111,7 +111,7 @@ class TestDataReductionProxyMetricsObserver
         data_reduction_proxy_used_(data_reduction_proxy_used),
         lofi_used_(lofi_used) {}
 
-  ~TestDataReductionProxyMetricsObserver() override {}
+  ~TestDataReductionProxyMetricsObserver() override = default;
 
   // page_load_metrics::PageLoadMetricsObserver implementation:
   ObservePolicy OnCommit(content::NavigationHandle* navigation_handle,

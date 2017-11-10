@@ -19,7 +19,7 @@ namespace vr {
 VrTabHelper::VrTabHelper(content::WebContents* contents)
     : web_contents_(contents) {}
 
-VrTabHelper::~VrTabHelper() {}
+VrTabHelper::~VrTabHelper() = default;
 
 void VrTabHelper::SetIsInVr(bool is_in_vr) {
   if (is_in_vr_ == is_in_vr)

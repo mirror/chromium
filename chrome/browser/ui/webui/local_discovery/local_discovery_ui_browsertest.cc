@@ -291,8 +291,7 @@ class TestMessageLoopCondition {
                                waiting_(false) {
   }
 
-  ~TestMessageLoopCondition() {
-  }
+  ~TestMessageLoopCondition() = default;
 
   // Signal a waiting method that it can continue executing.
   void Signal() {
@@ -321,11 +320,9 @@ class TestMessageLoopCondition {
 
 class MockableFakeURLFetcherCreator {
  public:
-  MockableFakeURLFetcherCreator() {
-  }
+  MockableFakeURLFetcherCreator() = default;
 
-  ~MockableFakeURLFetcherCreator() {
-  }
+  ~MockableFakeURLFetcherCreator() = default;
 
   MOCK_METHOD1(OnCreateFakeURLFetcher, void(const std::string& url));
 
@@ -352,8 +349,7 @@ class LocalDiscoveryUITest : public WebUIBrowserTest {
       &fetcher_impl_factory_,
       fake_url_fetcher_creator_.callback()) {
   }
-  ~LocalDiscoveryUITest() override {
-  }
+  ~LocalDiscoveryUITest() override = default;
 
   void SetUpOnMainThread() override {
     WebUIBrowserTest::SetUpOnMainThread();

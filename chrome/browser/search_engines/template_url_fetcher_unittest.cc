@@ -37,7 +37,7 @@ class TestTemplateUrlFetcher : public TemplateURLFetcher {
                          const base::Closure& request_completed_callback)
       : TemplateURLFetcher(template_url_service, request_context),
         callback_(request_completed_callback) {}
-  ~TestTemplateUrlFetcher() override {}
+  ~TestTemplateUrlFetcher() override = default;
 
  protected:
   void RequestCompleted(RequestDelegate* request) override {

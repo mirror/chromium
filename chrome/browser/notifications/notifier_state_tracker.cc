@@ -64,8 +64,7 @@ NotifierStateTracker::NotifierStateTracker(Profile* profile)
 #endif
 }
 
-NotifierStateTracker::~NotifierStateTracker() {
-}
+NotifierStateTracker::~NotifierStateTracker() = default;
 
 bool NotifierStateTracker::IsNotifierEnabled(
     const NotifierId& notifier_id) const {

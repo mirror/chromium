@@ -57,7 +57,7 @@ SafeSearchURLReporter::Report::Report(const GURL& url,
       access_token_expired(false),
       url_fetcher_id(url_fetcher_id) {}
 
-SafeSearchURLReporter::Report::~Report() {}
+SafeSearchURLReporter::Report::~Report() = default;
 
 SafeSearchURLReporter::SafeSearchURLReporter(
     OAuth2TokenService* oauth2_token_service,
@@ -69,7 +69,7 @@ SafeSearchURLReporter::SafeSearchURLReporter(
       context_(context),
       url_fetcher_id_(0) {}
 
-SafeSearchURLReporter::~SafeSearchURLReporter() {}
+SafeSearchURLReporter::~SafeSearchURLReporter() = default;
 
 // static
 std::unique_ptr<SafeSearchURLReporter> SafeSearchURLReporter::CreateWithProfile(

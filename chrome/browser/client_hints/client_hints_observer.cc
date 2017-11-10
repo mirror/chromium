@@ -27,7 +27,7 @@
 ClientHintsObserver::ClientHintsObserver(content::WebContents* tab)
     : binding_(tab, this) {}
 
-ClientHintsObserver::~ClientHintsObserver() {}
+ClientHintsObserver::~ClientHintsObserver() = default;
 
 void ClientHintsObserver::PersistClientHints(
     const url::Origin& primary_origin,

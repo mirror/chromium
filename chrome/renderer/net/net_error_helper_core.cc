@@ -465,12 +465,14 @@ struct NetErrorHelperCore::ErrorPageInfo {
   bool auto_reload_triggered;
 };
 
-NetErrorHelperCore::NavigationCorrectionParams::NavigationCorrectionParams() {}
+NetErrorHelperCore::NavigationCorrectionParams::NavigationCorrectionParams() =
+    default;
 
 NetErrorHelperCore::NavigationCorrectionParams::NavigationCorrectionParams(
     const NavigationCorrectionParams& other) = default;
 
-NetErrorHelperCore::NavigationCorrectionParams::~NavigationCorrectionParams() {}
+NetErrorHelperCore::NavigationCorrectionParams::~NavigationCorrectionParams() =
+    default;
 
 bool NetErrorHelperCore::IsReloadableError(
     const NetErrorHelperCore::ErrorPageInfo& info) {

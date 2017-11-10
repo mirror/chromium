@@ -63,7 +63,7 @@ class ManagementSetEnabledFunctionInstallPromptDelegate
         base::MakeUnique<ExtensionInstallPrompt::Prompt>(type),
         ExtensionInstallPrompt::GetDefaultShowDialogCallback());
   }
-  ~ManagementSetEnabledFunctionInstallPromptDelegate() override {}
+  ~ManagementSetEnabledFunctionInstallPromptDelegate() override = default;
 
  private:
   void OnInstallPromptDone(ExtensionInstallPrompt::Result result) {
@@ -109,7 +109,7 @@ class ManagementUninstallFunctionUninstallDialogDelegate
           source);
     }
   }
-  ~ManagementUninstallFunctionUninstallDialogDelegate() override {}
+  ~ManagementUninstallFunctionUninstallDialogDelegate() override = default;
 
   // ExtensionUninstallDialog::Delegate implementation.
   void OnExtensionUninstallDialogClosed(bool did_start_uninstall,
@@ -127,8 +127,8 @@ class ManagementUninstallFunctionUninstallDialogDelegate
 
 class ChromeAppForLinkDelegate : public extensions::AppForLinkDelegate {
  public:
-  ChromeAppForLinkDelegate() {}
-  ~ChromeAppForLinkDelegate() override {}
+  ChromeAppForLinkDelegate() = default;
+  ~ChromeAppForLinkDelegate() override = default;
 
   void OnFaviconForApp(
       extensions::ManagementGenerateAppForLinkFunction* function,
@@ -164,11 +164,9 @@ class ChromeAppForLinkDelegate : public extensions::AppForLinkDelegate {
 
 }  // namespace
 
-ChromeManagementAPIDelegate::ChromeManagementAPIDelegate() {
-}
+ChromeManagementAPIDelegate::ChromeManagementAPIDelegate() = default;
 
-ChromeManagementAPIDelegate::~ChromeManagementAPIDelegate() {
-}
+ChromeManagementAPIDelegate::~ChromeManagementAPIDelegate() = default;
 
 void ChromeManagementAPIDelegate::LaunchAppFunctionDelegate(
     const extensions::Extension* extension,

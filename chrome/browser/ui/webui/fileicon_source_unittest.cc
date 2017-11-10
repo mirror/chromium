@@ -17,7 +17,7 @@ namespace {
 
 class TestFileIconSource : public FileIconSource {
  public:
-  TestFileIconSource() {}
+  TestFileIconSource() = default;
 
   MOCK_METHOD4(FetchFileIcon,
                void(const base::FilePath& path,
@@ -25,7 +25,7 @@ class TestFileIconSource : public FileIconSource {
                     IconLoader::IconSize icon_size,
                     const content::URLDataSource::GotDataCallback& callback));
 
-  virtual ~TestFileIconSource() {}
+  virtual ~TestFileIconSource() = default;
 };
 
 class FileIconSourceTest : public testing::Test {

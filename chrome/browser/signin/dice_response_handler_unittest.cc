@@ -48,7 +48,7 @@ class DiceTestSigninClient : public TestSigninClient, public GaiaAuthConsumer {
   explicit DiceTestSigninClient(PrefService* pref_service)
       : TestSigninClient(pref_service), consumer_(nullptr) {}
 
-  ~DiceTestSigninClient() override {}
+  ~DiceTestSigninClient() override = default;
 
   std::unique_ptr<GaiaAuthFetcher> CreateGaiaAuthFetcher(
       GaiaAuthConsumer* consumer,

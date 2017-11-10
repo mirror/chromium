@@ -22,8 +22,7 @@ SharedUserScriptMaster::SharedUserScriptMaster(Profile* profile)
   extension_registry_observer_.Add(ExtensionRegistry::Get(profile_));
 }
 
-SharedUserScriptMaster::~SharedUserScriptMaster() {
-}
+SharedUserScriptMaster::~SharedUserScriptMaster() = default;
 
 void SharedUserScriptMaster::OnExtensionLoaded(
     content::BrowserContext* browser_context,

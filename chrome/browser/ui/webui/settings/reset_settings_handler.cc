@@ -74,7 +74,7 @@ ResetSettingsHandler::ResetSettingsHandler(Profile* profile)
   google_brand::GetBrand(&brandcode_);
 }
 
-ResetSettingsHandler::~ResetSettingsHandler() {}
+ResetSettingsHandler::~ResetSettingsHandler() = default;
 
 ResetSettingsHandler* ResetSettingsHandler::Create(
     content::WebUIDataSource* html_source, Profile* profile) {

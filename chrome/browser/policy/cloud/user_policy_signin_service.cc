@@ -53,8 +53,7 @@ UserPolicySigninService::UserPolicySigninService(
   oauth2_token_service_->AddObserver(this);
 }
 
-UserPolicySigninService::~UserPolicySigninService() {
-}
+UserPolicySigninService::~UserPolicySigninService() = default;
 
 void UserPolicySigninService::PrepareForUserCloudPolicyManagerShutdown() {
   // Stop any pending registration helper activity. We do this here instead of

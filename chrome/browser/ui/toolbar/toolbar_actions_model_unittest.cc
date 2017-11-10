@@ -121,8 +121,8 @@ ToolbarActionsModelTestObserver::~ToolbarActionsModelTestObserver() {
 class ToolbarActionsModelUnitTest
     : public extensions::ExtensionServiceTestBase {
  public:
-  ToolbarActionsModelUnitTest() {}
-  ~ToolbarActionsModelUnitTest() override {}
+  ToolbarActionsModelUnitTest() = default;
+  ~ToolbarActionsModelUnitTest() override = default;
 
  protected:
   // Initialize the ExtensionService, ToolbarActionsModel, and ExtensionSystem.

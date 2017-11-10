@@ -41,7 +41,7 @@ ExtensionGarbageCollectorFactory::ExtensionGarbageCollectorFactory()
   DependsOn(InstallTrackerFactory::GetInstance());
 }
 
-ExtensionGarbageCollectorFactory::~ExtensionGarbageCollectorFactory() {}
+ExtensionGarbageCollectorFactory::~ExtensionGarbageCollectorFactory() = default;
 
 // static
 std::unique_ptr<KeyedService>

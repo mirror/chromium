@@ -200,10 +200,9 @@ void CreateFallbackSamplingTrialIfNeeded(bool has_seed,
 
 }  // namespace
 
-ChromeBrowserFieldTrials::ChromeBrowserFieldTrials() {}
+ChromeBrowserFieldTrials::ChromeBrowserFieldTrials() = default;
 
-ChromeBrowserFieldTrials::~ChromeBrowserFieldTrials() {
-}
+ChromeBrowserFieldTrials::~ChromeBrowserFieldTrials() = default;
 
 void ChromeBrowserFieldTrials::SetupFieldTrials() {
   // Field trials that are shared by all platforms.

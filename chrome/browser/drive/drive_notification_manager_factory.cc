@@ -54,7 +54,7 @@ DriveNotificationManagerFactory::DriveNotificationManagerFactory()
   DependsOn(invalidation::ProfileInvalidationProviderFactory::GetInstance());
 }
 
-DriveNotificationManagerFactory::~DriveNotificationManagerFactory() {}
+DriveNotificationManagerFactory::~DriveNotificationManagerFactory() = default;
 
 KeyedService* DriveNotificationManagerFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

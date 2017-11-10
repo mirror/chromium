@@ -128,7 +128,7 @@ void InstanceIDResultCallback(base::Closure done_callback,
 class PushMessagingBrowserTest : public InProcessBrowserTest {
  public:
   PushMessagingBrowserTest() : gcm_service_(nullptr), gcm_driver_(nullptr) {}
-  ~PushMessagingBrowserTest() override {}
+  ~PushMessagingBrowserTest() override = default;
 
   // InProcessBrowserTest:
   void SetUp() override {
@@ -2370,7 +2370,7 @@ IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest, EncryptionKeyUniqueness) {
 
 class PushMessagingIncognitoBrowserTest : public PushMessagingBrowserTest {
  public:
-  ~PushMessagingIncognitoBrowserTest() override {}
+  ~PushMessagingIncognitoBrowserTest() override = default;
 
   // PushMessagingBrowserTest:
   void SetUpOnMainThread() override {
@@ -2430,7 +2430,7 @@ IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest,
 class PushMessagingBackgroundModeEnabledBrowserTest
     : public PushMessagingBrowserTest {
  public:
-  ~PushMessagingBackgroundModeEnabledBrowserTest() override {}
+  ~PushMessagingBackgroundModeEnabledBrowserTest() override = default;
 
   // PushMessagingBrowserTest:
   void SetUpCommandLine(base::CommandLine* command_line) override {
@@ -2467,7 +2467,7 @@ IN_PROC_BROWSER_TEST_F(PushMessagingBackgroundModeEnabledBrowserTest,
 class PushMessagingBackgroundModeDisabledBrowserTest
     : public PushMessagingBrowserTest {
  public:
-  ~PushMessagingBackgroundModeDisabledBrowserTest() override {}
+  ~PushMessagingBackgroundModeDisabledBrowserTest() override = default;
 
   // PushMessagingBrowserTest:
   void SetUpCommandLine(base::CommandLine* command_line) override {

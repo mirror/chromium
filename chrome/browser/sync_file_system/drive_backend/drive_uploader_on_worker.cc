@@ -26,7 +26,7 @@ DriveUploaderOnWorker::DriveUploaderOnWorker(
   sequece_checker_.DetachFromSequence();
 }
 
-DriveUploaderOnWorker::~DriveUploaderOnWorker() {}
+DriveUploaderOnWorker::~DriveUploaderOnWorker() = default;
 
 void DriveUploaderOnWorker::StartBatchProcessing() {
 }

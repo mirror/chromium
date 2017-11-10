@@ -34,7 +34,7 @@ SiteDataCountingHelper::SiteDataCountingHelper(
       completion_callback_(completion_callback),
       tasks_(0) {}
 
-SiteDataCountingHelper::~SiteDataCountingHelper() {}
+SiteDataCountingHelper::~SiteDataCountingHelper() = default;
 
 void SiteDataCountingHelper::CountAndDestroySelfWhenFinished() {
   content::StoragePartition* partition =

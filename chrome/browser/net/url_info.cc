@@ -82,7 +82,7 @@ UrlInfo::UrlInfo()
 
 UrlInfo::UrlInfo(const UrlInfo& other) = default;
 
-UrlInfo::~UrlInfo() {}
+UrlInfo::~UrlInfo() = default;
 
 bool UrlInfo::NeedsDnsUpdate() {
   switch (state_) {

@@ -17,8 +17,8 @@ namespace {
 
 class FakeAdb : public Adb {
  public:
-  FakeAdb() {}
-  ~FakeAdb() override {}
+  FakeAdb() = default;
+  ~FakeAdb() override = default;
 
   Status GetDevices(std::vector<std::string>* devices) override {
     devices->push_back("a");

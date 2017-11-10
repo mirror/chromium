@@ -25,7 +25,7 @@ class MediaRouterDialogControllerBrowserTest : public InProcessBrowserTest {
       : dialog_controller_(nullptr),
         initiator_(nullptr),
         media_router_dialog_(nullptr) {}
-  ~MediaRouterDialogControllerBrowserTest() override {}
+  ~MediaRouterDialogControllerBrowserTest() override = default;
 
  protected:
   void SetUpOnMainThread() override {

@@ -38,7 +38,7 @@ RemoteDesktopBrowserTest::RemoteDesktopBrowserTest()
     : remote_test_helper_(nullptr), extension_(nullptr) {
 }
 
-RemoteDesktopBrowserTest::~RemoteDesktopBrowserTest() {}
+RemoteDesktopBrowserTest::~RemoteDesktopBrowserTest() = default;
 
 void RemoteDesktopBrowserTest::SetUp() {
   ParseCommandLine();

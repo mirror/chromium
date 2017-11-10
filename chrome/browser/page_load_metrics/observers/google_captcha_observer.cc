@@ -42,7 +42,7 @@ bool IsGoogleCaptcha(const GURL& url) {
                           base::CompareCase::SENSITIVE);
 }
 
-GoogleCaptchaObserver::GoogleCaptchaObserver() {}
+GoogleCaptchaObserver::GoogleCaptchaObserver() = default;
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 GoogleCaptchaObserver::OnCommit(content::NavigationHandle* navigation_handle,

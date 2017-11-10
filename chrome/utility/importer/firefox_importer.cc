@@ -93,11 +93,9 @@ struct FirefoxImporter::BookmarkItem {
   bool empty_folder;
 };
 
-FirefoxImporter::FirefoxImporter() {
-}
+FirefoxImporter::FirefoxImporter() = default;
 
-FirefoxImporter::~FirefoxImporter() {
-}
+FirefoxImporter::~FirefoxImporter() = default;
 
 void FirefoxImporter::StartImport(const importer::SourceProfile& source_profile,
                                   uint16_t items,

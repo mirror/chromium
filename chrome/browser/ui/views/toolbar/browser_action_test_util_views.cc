@@ -35,7 +35,7 @@ class ContainerParent : public views::View {
       : container_(container) {
     AddChildView(container_);
   }
-  ~ContainerParent() override {}
+  ~ContainerParent() override = default;
 
   void Layout() override {
     container_->SizeToPreferredSize();
@@ -81,8 +81,7 @@ TestToolbarActionsBarHelperViews::TestToolbarActionsBarHelperViews(
   container_parent_.Layout();
 }
 
-TestToolbarActionsBarHelperViews::~TestToolbarActionsBarHelperViews() {
-}
+TestToolbarActionsBarHelperViews::~TestToolbarActionsBarHelperViews() = default;
 
 BrowserActionsContainer* GetContainer(Browser* browser,
                                       TestToolbarActionsBarHelper* helper) {
@@ -107,8 +106,7 @@ BrowserActionTestUtil::BrowserActionTestUtil(Browser* browser,
     test_helper_.reset(new TestToolbarActionsBarHelperViews(browser, nullptr));
 }
 
-BrowserActionTestUtil::~BrowserActionTestUtil() {
-}
+BrowserActionTestUtil::~BrowserActionTestUtil() = default;
 
 int BrowserActionTestUtil::NumberOfBrowserActions() {
   return GetContainer(browser_, test_helper_.get())->num_toolbar_actions();

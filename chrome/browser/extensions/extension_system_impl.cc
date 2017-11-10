@@ -103,8 +103,7 @@ ExtensionSystemImpl::Shared::Shared(Profile* profile)
                  content::NotificationService::AllSources());
 }
 
-ExtensionSystemImpl::Shared::~Shared() {
-}
+ExtensionSystemImpl::Shared::~Shared() = default;
 
 void ExtensionSystemImpl::Shared::InitPrefs() {
   store_factory_ = new ValueStoreFactoryImpl(profile_->GetPath());
@@ -359,8 +358,7 @@ ExtensionSystemImpl::ExtensionSystemImpl(Profile* profile)
   }
 }
 
-ExtensionSystemImpl::~ExtensionSystemImpl() {
-}
+ExtensionSystemImpl::~ExtensionSystemImpl() = default;
 
 void ExtensionSystemImpl::Shutdown() {
 }

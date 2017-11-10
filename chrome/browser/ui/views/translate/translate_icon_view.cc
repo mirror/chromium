@@ -22,7 +22,7 @@ TranslateIconView::TranslateIconView(CommandUpdater* command_updater)
   SetTooltipText(l10n_util::GetStringUTF16(IDS_TOOLTIP_TRANSLATE));
 }
 
-TranslateIconView::~TranslateIconView() {}
+TranslateIconView::~TranslateIconView() = default;
 
 void TranslateIconView::OnExecuting(
     BubbleIconView::ExecuteSource execute_source) {}

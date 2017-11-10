@@ -301,8 +301,8 @@ class HungJob : public net::URLRequestJob {
 
 class FaviconFilter : public net::URLRequestInterceptor {
  public:
-  FaviconFilter() {}
-  ~FaviconFilter() override {}
+  FaviconFilter() = default;
+  ~FaviconFilter() override = default;
 
   // net::URLRequestInterceptor implementation
   net::URLRequestJob* MaybeInterceptRequest(
@@ -320,7 +320,7 @@ class FaviconFilter : public net::URLRequestInterceptor {
 class ChromeContentBrowserClientForMixedContentTest
     : public ChromeContentBrowserClient {
  public:
-  ChromeContentBrowserClientForMixedContentTest() {}
+  ChromeContentBrowserClientForMixedContentTest() = default;
   void OverrideWebkitPrefs(content::RenderViewHost* rvh,
                            content::WebPreferences* web_prefs) override {
     web_prefs->allow_running_insecure_content = allow_running_insecure_content_;
@@ -942,7 +942,7 @@ class SecurityStateWebContentsObserver : public content::WebContentsObserver {
  public:
   explicit SecurityStateWebContentsObserver(content::WebContents* web_contents)
       : content::WebContentsObserver(web_contents) {}
-  ~SecurityStateWebContentsObserver() override {}
+  ~SecurityStateWebContentsObserver() override = default;
 
   void WaitForDidChangeVisibleSecurityState() { run_loop_.Run(); }
 
@@ -960,7 +960,7 @@ class SameDocumentNavigationObserver : public content::WebContentsObserver {
  public:
   explicit SameDocumentNavigationObserver(content::WebContents* web_contents)
       : content::WebContentsObserver(web_contents) {}
-  ~SameDocumentNavigationObserver() override {}
+  ~SameDocumentNavigationObserver() override = default;
 
   void WaitForSameDocumentNavigation() { run_loop_.Run(); }
 
@@ -2776,7 +2776,7 @@ class SSLUIWorkerFetchTest
     }
   }
 
-  ~SSLUIWorkerFetchTest() override {}
+  ~SSLUIWorkerFetchTest() override = default;
 
  protected:
   void WriteFile(const base::FilePath::StringType& filename,
@@ -3786,7 +3786,7 @@ class DelayableNetworkTimeURLRequestJob : public net::URLRequestJob {
         delayed_(delayed),
         weak_factory_(this) {}
 
-  ~DelayableNetworkTimeURLRequestJob() override {}
+  ~DelayableNetworkTimeURLRequestJob() override = default;
 
   base::WeakPtr<DelayableNetworkTimeURLRequestJob> GetWeakPtr() {
     return weak_factory_.GetWeakPtr();
@@ -3864,8 +3864,8 @@ class DelayableNetworkTimeURLRequestJob : public net::URLRequestJob {
 // single request in its lifetime.
 class DelayedNetworkTimeInterceptor : public net::URLRequestInterceptor {
  public:
-  DelayedNetworkTimeInterceptor() {}
-  ~DelayedNetworkTimeInterceptor() override {}
+  DelayedNetworkTimeInterceptor() = default;
+  ~DelayedNetworkTimeInterceptor() override = default;
 
   // Intercepts |request| to use a DelayableNetworkTimeURLRequestJob. If
   // Resume() has been called before MaybeInterceptRequest(), then the
@@ -3941,7 +3941,7 @@ void CleanUpOnIOThread() {
 class SSLNetworkTimeBrowserTest : public SSLUITest {
  public:
   SSLNetworkTimeBrowserTest() : SSLUITest(), interceptor_(nullptr) {}
-  ~SSLNetworkTimeBrowserTest() override {}
+  ~SSLNetworkTimeBrowserTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitchASCII(
@@ -4276,8 +4276,8 @@ namespace {
 // redirects and never hits an HTTP URL.
 class HttpNameMismatchPingInterceptor : public net::URLRequestInterceptor {
  public:
-  HttpNameMismatchPingInterceptor() {}
-  ~HttpNameMismatchPingInterceptor() override {}
+  HttpNameMismatchPingInterceptor() = default;
+  ~HttpNameMismatchPingInterceptor() override = default;
 
   net::URLRequestJob* MaybeInterceptRequest(
       net::URLRequest* request,
@@ -5504,7 +5504,7 @@ class SSLUIMITMSoftwareTest : public CertVerifierBrowserTest {
   SSLUIMITMSoftwareTest()
       : CertVerifierBrowserTest(),
         https_server_(net::EmbeddedTestServer::TYPE_HTTPS) {}
-  ~SSLUIMITMSoftwareTest() override {}
+  ~SSLUIMITMSoftwareTest() override = default;
 
   void SetUpOnMainThread() override {
     CertVerifierBrowserTest::SetUpOnMainThread();
@@ -5642,8 +5642,8 @@ class SSLUIMITMSoftwareTest : public CertVerifierBrowserTest {
 
 class SSLUIMITMSoftwareEnabledTest : public SSLUIMITMSoftwareTest {
  public:
-  SSLUIMITMSoftwareEnabledTest() {}
-  ~SSLUIMITMSoftwareEnabledTest() override {}
+  SSLUIMITMSoftwareEnabledTest() = default;
+  ~SSLUIMITMSoftwareEnabledTest() override = default;
 
   void SetUpOnMainThread() override {
     SSLUIMITMSoftwareTest::SetUpOnMainThread();
@@ -5659,8 +5659,8 @@ class SSLUIMITMSoftwareEnabledTest : public SSLUIMITMSoftwareTest {
 
 class SSLUIMITMSoftwareDisabledTest : public SSLUIMITMSoftwareTest {
  public:
-  SSLUIMITMSoftwareDisabledTest() {}
-  ~SSLUIMITMSoftwareDisabledTest() override {}
+  SSLUIMITMSoftwareDisabledTest() = default;
+  ~SSLUIMITMSoftwareDisabledTest() override = default;
 
   void SetUpOnMainThread() override {
     SSLUIMITMSoftwareTest::SetUpOnMainThread();
@@ -5966,7 +5966,7 @@ class SuperfishSSLUITest : public CertVerifierBrowserTest {
   SuperfishSSLUITest()
       : CertVerifierBrowserTest(),
         https_server_(net::EmbeddedTestServer::TYPE_HTTPS) {}
-  ~SuperfishSSLUITest() override {}
+  ~SuperfishSSLUITest() override = default;
 
   void SetUpOnMainThread() override {
     CertVerifierBrowserTest::SetUpOnMainThread();
@@ -6154,7 +6154,7 @@ IN_PROC_BROWSER_TEST_F(SuperfishSSLUITest, SuperfishInterstitialDisabled) {
 class NoRequireCTDelegate
     : public net::TransportSecurityState::RequireCTDelegate {
  public:
-  NoRequireCTDelegate() {}
+  NoRequireCTDelegate() = default;
   ~NoRequireCTDelegate() override = default;
 
   CTRequirementLevel IsCTRequiredForHost(const std::string& hostname) override {
@@ -6177,7 +6177,7 @@ class SymantecMessageSSLUITest : public CertVerifierBrowserTest {
   SymantecMessageSSLUITest()
       : CertVerifierBrowserTest(),
         https_server_(net::EmbeddedTestServer::TYPE_HTTPS) {}
-  ~SymantecMessageSSLUITest() override {}
+  ~SymantecMessageSSLUITest() override = default;
 
   void SetUpOnMainThread() override {
     CertVerifierBrowserTest::SetUpOnMainThread();

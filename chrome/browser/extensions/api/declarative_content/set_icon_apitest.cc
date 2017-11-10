@@ -38,7 +38,7 @@ class SetIconAPITest : public ExtensionApiTest {
       // to trunk.
       : current_channel_(version_info::Channel::UNKNOWN) {
   }
-  ~SetIconAPITest() override {}
+  ~SetIconAPITest() override = default;
 
   extensions::ScopedCurrentChannel current_channel_;
   TestExtensionDir ext_dir_;

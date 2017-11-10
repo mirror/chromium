@@ -9,8 +9,8 @@ namespace extensions {
 
 class PreferencesPrivateApiTest : public ExtensionApiTest {
  public:
-  PreferencesPrivateApiTest() {}
-  ~PreferencesPrivateApiTest() override {}
+  PreferencesPrivateApiTest() = default;
+  ~PreferencesPrivateApiTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ExtensionApiTest::SetUpCommandLine(command_line);

@@ -33,8 +33,7 @@ ErrorConsoleFactory::ErrorConsoleFactory()
   DependsOn(ExtensionRegistryFactory::GetInstance());
 }
 
-ErrorConsoleFactory::~ErrorConsoleFactory() {
-}
+ErrorConsoleFactory::~ErrorConsoleFactory() = default;
 
 KeyedService* ErrorConsoleFactory::BuildServiceInstanceFor(
     BrowserContext* context) const {

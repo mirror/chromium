@@ -22,8 +22,7 @@ LoginInterstitialDelegate::LoginInterstitialDelegate(
   interstitial_page_->Show();
 }
 
-LoginInterstitialDelegate::~LoginInterstitialDelegate() {
-}
+LoginInterstitialDelegate::~LoginInterstitialDelegate() = default;
 
 void LoginInterstitialDelegate::Proceed() {
   interstitial_page_->Proceed();

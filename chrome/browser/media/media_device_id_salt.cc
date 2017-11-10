@@ -23,8 +23,7 @@ MediaDeviceIDSalt::MediaDeviceIDSalt(PrefService* pref_service) {
   }
 }
 
-MediaDeviceIDSalt::~MediaDeviceIDSalt() {
-}
+MediaDeviceIDSalt::~MediaDeviceIDSalt() = default;
 
 std::string MediaDeviceIDSalt::GetSalt() const {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

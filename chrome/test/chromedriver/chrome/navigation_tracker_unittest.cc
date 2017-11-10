@@ -38,7 +38,7 @@ class DeterminingLoadStateDevToolsClient : public StubDevToolsClient {
         send_event_first_(send_event_first),
         send_event_first_params_(send_event_first_params) {}
 
-  ~DeterminingLoadStateDevToolsClient() override {}
+  ~DeterminingLoadStateDevToolsClient() override = default;
 
   Status SendCommandAndGetResult(
       const std::string& method,
@@ -301,7 +301,7 @@ class FailToEvalScriptDevToolsClient : public StubDevToolsClient {
  public:
   FailToEvalScriptDevToolsClient() : is_dom_getDocument_requested_(false) {}
 
-  ~FailToEvalScriptDevToolsClient() override {}
+  ~FailToEvalScriptDevToolsClient() override = default;
 
   Status SendCommandAndGetResult(
       const std::string& method,

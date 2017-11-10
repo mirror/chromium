@@ -42,7 +42,7 @@ UserPolicySigninServiceFactory::UserPolicySigninServiceFactory()
   DependsOn(UserCloudPolicyManagerFactory::GetInstance());
 }
 
-UserPolicySigninServiceFactory::~UserPolicySigninServiceFactory() {}
+UserPolicySigninServiceFactory::~UserPolicySigninServiceFactory() = default;
 
 // static
 UserPolicySigninService* UserPolicySigninServiceFactory::GetForProfile(

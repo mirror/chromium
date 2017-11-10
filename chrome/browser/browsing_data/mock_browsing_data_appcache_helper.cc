@@ -13,8 +13,7 @@ MockBrowsingDataAppCacheHelper::MockBrowsingDataAppCacheHelper(
       response_(new content::AppCacheInfoCollection) {
 }
 
-MockBrowsingDataAppCacheHelper::~MockBrowsingDataAppCacheHelper() {
-}
+MockBrowsingDataAppCacheHelper::~MockBrowsingDataAppCacheHelper() = default;
 
 void MockBrowsingDataAppCacheHelper::StartFetching(
     const FetchCallback& completion_callback) {

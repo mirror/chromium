@@ -46,7 +46,7 @@ class MockModelLoader : public ModelLoader {
  public:
   explicit MockModelLoader(const std::string& model_name)
       : ModelLoader(base::Closure(), model_name) {}
-  ~MockModelLoader() override {}
+  ~MockModelLoader() override = default;
 
   MOCK_METHOD1(ScheduleFetch, void(int64_t));
   MOCK_METHOD0(CancelFetcher, void());
@@ -59,7 +59,7 @@ class MockClientSideDetectionService : public ClientSideDetectionService {
  public:
   MockClientSideDetectionService() : ClientSideDetectionService(NULL) {}
 
-  ~MockClientSideDetectionService() override {}
+  ~MockClientSideDetectionService() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockClientSideDetectionService);

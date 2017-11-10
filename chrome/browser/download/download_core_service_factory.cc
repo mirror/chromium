@@ -29,7 +29,7 @@ DownloadCoreServiceFactory::DownloadCoreServiceFactory()
   DependsOn(HistoryServiceFactory::GetInstance());
 }
 
-DownloadCoreServiceFactory::~DownloadCoreServiceFactory() {}
+DownloadCoreServiceFactory::~DownloadCoreServiceFactory() = default;
 
 KeyedService* DownloadCoreServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

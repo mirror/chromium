@@ -72,8 +72,7 @@ HistoryServiceFactory::HistoryServiceFactory()
   DependsOn(BookmarkModelFactory::GetInstance());
 }
 
-HistoryServiceFactory::~HistoryServiceFactory() {
-}
+HistoryServiceFactory::~HistoryServiceFactory() = default;
 
 KeyedService* HistoryServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

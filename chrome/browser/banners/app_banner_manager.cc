@@ -61,7 +61,7 @@ void AppBannerManager::SetTotalEngagementToTrigger(double engagement) {
 
 class AppBannerManager::StatusReporter {
  public:
-  virtual ~StatusReporter() {}
+  virtual ~StatusReporter() = default;
 
   // Reports |code| (via a mechanism which depends on the implementation).
   virtual void ReportStatus(InstallableStatusCode code) = 0;
@@ -93,7 +93,7 @@ class TrackingStatusReporter
     : public banners::AppBannerManager::StatusReporter {
  public:
   TrackingStatusReporter() : done_(false) {}
-  ~TrackingStatusReporter() override {}
+  ~TrackingStatusReporter() override = default;
 
   // Records code via an UMA histogram.
   void ReportStatus(InstallableStatusCode code) override {
@@ -204,7 +204,7 @@ AppBannerManager::AppBannerManager(content::WebContents* web_contents)
   AppBannerSettingsHelper::UpdateFromFieldTrial();
 }
 
-AppBannerManager::~AppBannerManager() { }
+AppBannerManager::~AppBannerManager() = default;
 
 std::string AppBannerManager::GetAppIdentifier() {
   DCHECK(!manifest_.IsEmpty());

@@ -35,8 +35,7 @@ AlternateNavInfoBarView::AlternateNavInfoBarView(
       link_(NULL),
       label_2_(NULL) {}
 
-AlternateNavInfoBarView::~AlternateNavInfoBarView() {
-}
+AlternateNavInfoBarView::~AlternateNavInfoBarView() = default;
 
 // static
 void AlternateNavInfoBarView::ElideLabels(Labels* labels, int available_width) {

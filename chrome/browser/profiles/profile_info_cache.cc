@@ -107,8 +107,7 @@ ProfileInfoCache::ProfileInfoCache(PrefService* prefs,
   RemoveDeprecatedStatistics();
 }
 
-ProfileInfoCache::~ProfileInfoCache() {
-}
+ProfileInfoCache::~ProfileInfoCache() = default;
 
 void ProfileInfoCache::AddProfileToCache(
     const base::FilePath& profile_path,

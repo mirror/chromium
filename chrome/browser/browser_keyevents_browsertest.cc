@@ -134,7 +134,7 @@ class TestFinishObserver : public content::NotificationObserver {
 
 class BrowserKeyEventsTest : public InProcessBrowserTest {
  public:
-  BrowserKeyEventsTest() {}
+  BrowserKeyEventsTest() = default;
 
   bool IsViewFocused(ViewID vid) {
     return ui_test_utils::IsViewFocused(browser(), vid);

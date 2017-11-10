@@ -95,8 +95,8 @@ class LoadedIncognitoObserver : public ExtensionRegistryObserver {
 
 class LazyBackgroundPageApiTest : public ExtensionApiTest {
  public:
-  LazyBackgroundPageApiTest() {}
-  ~LazyBackgroundPageApiTest() override {}
+  LazyBackgroundPageApiTest() = default;
+  ~LazyBackgroundPageApiTest() override = default;
 
   void SetUpInProcessBrowserTestFixture() override {
     ExtensionApiTest::SetUpInProcessBrowserTestFixture();

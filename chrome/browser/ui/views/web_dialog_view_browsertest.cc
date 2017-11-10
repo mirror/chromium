@@ -83,7 +83,7 @@ class TestWebDialogView : public views::WebDialogView {
 
 class WebDialogBrowserTest : public InProcessBrowserTest {
  public:
-  WebDialogBrowserTest() {}
+  WebDialogBrowserTest() = default;
 
   // content::BrowserTestBase:
   void SetUpOnMainThread() override;

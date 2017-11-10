@@ -12,7 +12,7 @@
 
 class AskGoogleForSuggestionsDialogTest : public DialogBrowserTest {
  public:
-  AskGoogleForSuggestionsDialogTest() {}
+  AskGoogleForSuggestionsDialogTest() = default;
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {

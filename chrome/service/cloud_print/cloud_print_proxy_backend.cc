@@ -91,7 +91,7 @@ class CloudPrintProxyBackend::Core
  private:
   friend class base::RefCountedThreadSafe<Core>;
 
-  ~Core() override {}
+  ~Core() override = default;
 
   CloudPrintProxyFrontend* frontend() { return backend_->frontend_; }
 

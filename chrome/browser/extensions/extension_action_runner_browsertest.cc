@@ -88,7 +88,7 @@ std::string GetValue(content::WebContents* web_contents) {
 
 class ExtensionActionRunnerBrowserTest : public ExtensionBrowserTest {
  public:
-  ExtensionActionRunnerBrowserTest() {}
+  ExtensionActionRunnerBrowserTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override;
   void TearDownOnMainThread() override;
@@ -229,7 +229,7 @@ ActiveScriptTester::ActiveScriptTester(const std::string& name,
   inject_success_listener_->set_extension_id(extension->id());
 }
 
-ActiveScriptTester::~ActiveScriptTester() {}
+ActiveScriptTester::~ActiveScriptTester() = default;
 
 std::string ActiveScriptTester::name() const {
   return name_;

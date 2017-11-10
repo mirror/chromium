@@ -117,7 +117,7 @@ class SyncProfileDelegate : public Profile::Delegate {
   explicit SyncProfileDelegate(
       const base::Callback<void(Profile*)>& on_profile_created_callback)
       : on_profile_created_callback_(on_profile_created_callback) {}
-  ~SyncProfileDelegate() override {}
+  ~SyncProfileDelegate() override = default;
 
   void OnProfileCreated(Profile* profile,
                         bool success,
@@ -236,7 +236,7 @@ SyncTest::SyncTest(TestType test_type)
   }
 }
 
-SyncTest::~SyncTest() {}
+SyncTest::~SyncTest() = default;
 
 void SyncTest::SetUp() {
   // TODO(crbug.com/781368) remove once feature enabled.

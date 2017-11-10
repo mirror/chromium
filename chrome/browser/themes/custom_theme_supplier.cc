@@ -25,7 +25,7 @@ CustomThemeSupplier::CustomThemeSupplier(ThemeType theme_type)
           CreateTaskRunnerForDeletion()),
       theme_type_(theme_type) {}
 
-CustomThemeSupplier::~CustomThemeSupplier() {}
+CustomThemeSupplier::~CustomThemeSupplier() = default;
 
 void CustomThemeSupplier::StartUsingTheme() {}
 

@@ -22,7 +22,7 @@ void PageInfoInfoBarDelegate::Create(InfoBarService* infobar_service) {
 
 PageInfoInfoBarDelegate::PageInfoInfoBarDelegate() : ConfirmInfoBarDelegate() {}
 
-PageInfoInfoBarDelegate::~PageInfoInfoBarDelegate() {}
+PageInfoInfoBarDelegate::~PageInfoInfoBarDelegate() = default;
 
 infobars::InfoBarDelegate::Type PageInfoInfoBarDelegate::GetInfoBarType()
     const {

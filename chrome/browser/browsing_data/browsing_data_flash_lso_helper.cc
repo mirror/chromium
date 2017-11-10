@@ -36,7 +36,7 @@ class BrowsingDataFlashLSOHelperImpl
 
  private:
   struct DeleteFlashLSOTask {
-    DeleteFlashLSOTask() {}
+    DeleteFlashLSOTask() = default;
     DeleteFlashLSOTask(const std::string& site, const base::Closure& callback)
         : site(site), callback(callback) {}
 
@@ -69,8 +69,7 @@ BrowsingDataFlashLSOHelperImpl::BrowsingDataFlashLSOHelperImpl(
       get_sites_with_data_request_id_(0u) {
 }
 
-BrowsingDataFlashLSOHelperImpl::~BrowsingDataFlashLSOHelperImpl() {
-}
+BrowsingDataFlashLSOHelperImpl::~BrowsingDataFlashLSOHelperImpl() = default;
 
 void BrowsingDataFlashLSOHelperImpl::StartFetching(
     const GetSitesWithFlashDataCallback& callback) {

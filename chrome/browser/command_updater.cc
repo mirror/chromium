@@ -24,8 +24,7 @@ CommandUpdater::CommandUpdater(CommandUpdaterDelegate* delegate)
     : delegate_(delegate) {
 }
 
-CommandUpdater::~CommandUpdater() {
-}
+CommandUpdater::~CommandUpdater() = default;
 
 bool CommandUpdater::SupportsCommand(int id) const {
   return commands_.find(id) != commands_.end();

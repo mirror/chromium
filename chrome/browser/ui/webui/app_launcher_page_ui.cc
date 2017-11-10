@@ -63,8 +63,7 @@ AppLauncherPageUI::AppLauncherPageUI(content::WebUI* web_ui)
   content::URLDataSource::Add(GetProfile(), html_source.release());
 }
 
-AppLauncherPageUI::~AppLauncherPageUI() {
-}
+AppLauncherPageUI::~AppLauncherPageUI() = default;
 
 // static
 base::RefCountedMemory* AppLauncherPageUI::GetFaviconResourceBytes(
@@ -152,4 +151,4 @@ std::string AppLauncherPageUI::HTMLSource::GetContentSecurityPolicyImgSrc()
       "data:;";
 }
 
-AppLauncherPageUI::HTMLSource::~HTMLSource() {}
+AppLauncherPageUI::HTMLSource::~HTMLSource() = default;

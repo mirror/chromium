@@ -33,10 +33,8 @@
 class ServiceProcessControlBrowserTest
     : public InProcessBrowserTest {
  public:
-  ServiceProcessControlBrowserTest() {
-  }
-  virtual ~ServiceProcessControlBrowserTest() {
-  }
+  ServiceProcessControlBrowserTest() = default;
+  virtual ~ServiceProcessControlBrowserTest() = default;
 
   void HistogramsCallback() {
     MockHistogramsCallback();

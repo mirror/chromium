@@ -256,7 +256,7 @@ class FullscreenTestBrowserWindow : public TestBrowserWindow,
         toolbar_showing_(false),
         test_browser_(test_browser) {}
 
-  ~FullscreenTestBrowserWindow() override {}
+  ~FullscreenTestBrowserWindow() override = default;
 
   // TestBrowserWindow overrides:
   bool ShouldHideUIForFullscreen() const override { return fullscreen_; }
@@ -295,8 +295,8 @@ class FullscreenTestBrowserWindow : public TestBrowserWindow,
 class BrowserCommandControllerFullscreenTest
     : public BrowserWithTestWindowTest {
  public:
-  BrowserCommandControllerFullscreenTest() {}
-  ~BrowserCommandControllerFullscreenTest() override {}
+  BrowserCommandControllerFullscreenTest() = default;
+  ~BrowserCommandControllerFullscreenTest() override = default;
 
   Browser* GetBrowser() { return BrowserWithTestWindowTest::browser(); }
 

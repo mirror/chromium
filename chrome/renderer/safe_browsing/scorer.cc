@@ -49,8 +49,8 @@ static double LogOdds2Prob(double log_odds) {
   return odds/(odds+1.0);
 }
 
-Scorer::Scorer() {}
-Scorer::~Scorer() {}
+Scorer::Scorer() = default;
+Scorer::~Scorer() = default;
 
 /* static */
 Scorer* Scorer::Create(const base::StringPiece& model_str) {

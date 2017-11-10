@@ -21,7 +21,7 @@ PageLoadNotificationObserver::PageLoadNotificationObserver(const GURL& target)
       matched_source_(content::NotificationService::AllSources()) {
 }
 
-PageLoadNotificationObserver::~PageLoadNotificationObserver() {}
+PageLoadNotificationObserver::~PageLoadNotificationObserver() = default;
 
 bool PageLoadNotificationObserver::IsTargetLoaded() {
   content::NavigationController* controller =

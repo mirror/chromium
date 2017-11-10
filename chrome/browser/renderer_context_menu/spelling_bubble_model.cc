@@ -25,8 +25,7 @@ SpellingBubbleModel::SpellingBubbleModel(Profile* profile,
                                          WebContents* web_contents)
     : profile_(profile), web_contents_(web_contents) {}
 
-SpellingBubbleModel::~SpellingBubbleModel() {
-}
+SpellingBubbleModel::~SpellingBubbleModel() = default;
 
 base::string16 SpellingBubbleModel::GetTitle() const {
   return l10n_util::GetStringUTF16(IDS_CONTENT_CONTEXT_SPELLING_ASK_GOOGLE);

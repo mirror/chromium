@@ -53,7 +53,7 @@ DomainReliabilityServiceFactory::DomainReliabilityServiceFactory()
           "DomainReliabilityService",
           BrowserContextDependencyManager::GetInstance()) {}
 
-DomainReliabilityServiceFactory::~DomainReliabilityServiceFactory() {}
+DomainReliabilityServiceFactory::~DomainReliabilityServiceFactory() = default;
 
 KeyedService* DomainReliabilityServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

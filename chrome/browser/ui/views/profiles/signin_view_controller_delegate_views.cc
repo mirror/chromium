@@ -55,7 +55,8 @@ SigninViewControllerDelegateViews::SigninViewControllerDelegateViews(
     DisplayModal();
 }
 
-SigninViewControllerDelegateViews::~SigninViewControllerDelegateViews() {}
+SigninViewControllerDelegateViews::~SigninViewControllerDelegateViews() =
+    default;
 
 // views::DialogDelegateView:
 views::View* SigninViewControllerDelegateViews::GetContentsView() {

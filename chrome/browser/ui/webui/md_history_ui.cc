@@ -213,7 +213,7 @@ MdHistoryUI::MdHistoryUI(content::WebUI* web_ui) : WebUIController(web_ui) {
       base::Bind(&MdHistoryUI::HandleMenuPromoShown, base::Unretained(this)));
 }
 
-MdHistoryUI::~MdHistoryUI() {}
+MdHistoryUI::~MdHistoryUI() = default;
 
 void MdHistoryUI::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {

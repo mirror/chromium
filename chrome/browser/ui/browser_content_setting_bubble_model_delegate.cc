@@ -23,8 +23,7 @@ BrowserContentSettingBubbleModelDelegate(Browser* browser) : browser_(browser) {
 }
 
 BrowserContentSettingBubbleModelDelegate::
-~BrowserContentSettingBubbleModelDelegate() {
-}
+    ~BrowserContentSettingBubbleModelDelegate() = default;
 
 void BrowserContentSettingBubbleModelDelegate::ShowCollectedCookiesDialog(
     content::WebContents* web_contents) {

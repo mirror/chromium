@@ -11,7 +11,7 @@
 class SingleClientDictionarySyncTest : public SyncTest {
  public:
   SingleClientDictionarySyncTest() : SyncTest(SINGLE_CLIENT) {}
-  ~SingleClientDictionarySyncTest() override {}
+  ~SingleClientDictionarySyncTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SingleClientDictionarySyncTest);

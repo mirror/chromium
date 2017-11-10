@@ -29,8 +29,7 @@ const int InfoBarContainerDelegate::kMaximumArrowTargetHalfWidth = 14;
 InfoBarContainerDelegate::InfoBarContainerDelegate()
     : top_arrow_target_height_(kDefaultArrowTargetHeight) {}
 
-InfoBarContainerDelegate::~InfoBarContainerDelegate() {
-}
+InfoBarContainerDelegate::~InfoBarContainerDelegate() = default;
 
 void InfoBarContainerDelegate::SetMaxTopArrowHeight(
     int height,

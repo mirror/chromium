@@ -15,7 +15,7 @@ FrameTracker::FrameTracker(DevToolsClient* client) {
   client->AddListener(this);
 }
 
-FrameTracker::~FrameTracker() {}
+FrameTracker::~FrameTracker() = default;
 
 Status FrameTracker::GetContextIdForFrame(
     const std::string& frame_id, int* context_id) {

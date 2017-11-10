@@ -19,7 +19,7 @@ DiskCacheDirPolicyHandler::DiskCacheDirPolicyHandler()
     : TypeCheckingPolicyHandler(key::kDiskCacheDir, base::Value::Type::STRING) {
 }
 
-DiskCacheDirPolicyHandler::~DiskCacheDirPolicyHandler() {}
+DiskCacheDirPolicyHandler::~DiskCacheDirPolicyHandler() = default;
 
 void DiskCacheDirPolicyHandler::ApplyPolicySettings(const PolicyMap& policies,
                                                     PrefValueMap* prefs) {

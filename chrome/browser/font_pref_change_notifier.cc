@@ -10,7 +10,7 @@
 #include "chrome/common/pref_names_util.h"
 #include "components/prefs/pref_service.h"
 
-FontPrefChangeNotifier::Registrar::Registrar() {}
+FontPrefChangeNotifier::Registrar::Registrar() = default;
 FontPrefChangeNotifier::Registrar::~Registrar() {
   if (is_registered())
     Unregister();

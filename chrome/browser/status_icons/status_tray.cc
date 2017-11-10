@@ -6,8 +6,7 @@
 
 #include "chrome/browser/status_icons/status_icon.h"
 
-StatusTray::~StatusTray() {
-}
+StatusTray::~StatusTray() = default;
 
 StatusIcon* StatusTray::CreateStatusIcon(StatusIconType type,
                                          const gfx::ImageSkia& image,
@@ -30,5 +29,4 @@ void StatusTray::RemoveStatusIcon(StatusIcon* icon) {
   NOTREACHED();
 }
 
-StatusTray::StatusTray() {
-}
+StatusTray::StatusTray() = default;

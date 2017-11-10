@@ -47,7 +47,7 @@ class MediaRouterUIBrowserTest : public InProcessBrowserTest {
       : issue_(IssueInfo("title notification",
                          IssueInfo::Action::DISMISS,
                          IssueInfo::Severity::NOTIFICATION)) {}
-  ~MediaRouterUIBrowserTest() override {}
+  ~MediaRouterUIBrowserTest() override = default;
 
   void SetUpOnMainThread() override {
     BrowserActionsContainer* browser_actions_container =

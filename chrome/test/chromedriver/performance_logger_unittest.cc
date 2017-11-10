@@ -31,7 +31,7 @@ struct DevToolsCommand {
       : method(in_method) {
     params.reset(in_params);
   }
-  ~DevToolsCommand() {}
+  ~DevToolsCommand() = default;
 
   std::string method;
   std::unique_ptr<base::DictionaryValue> params;
@@ -41,7 +41,7 @@ class FakeDevToolsClient : public StubDevToolsClient {
  public:
   explicit FakeDevToolsClient(const std::string& id)
       : id_(id), listener_(nullptr), command_index_(0) {}
-  ~FakeDevToolsClient() override {}
+  ~FakeDevToolsClient() override = default;
 
   bool PopSentCommand(DevToolsCommand** out_command) {
     if (sent_commands_.size() > command_index_) {
@@ -263,7 +263,7 @@ class FakeBrowserwideClient : public FakeDevToolsClient {
   FakeBrowserwideClient()
       : FakeDevToolsClient(DevToolsClientImpl::kBrowserwideDevToolsClientId),
         events_handled_(false) {}
-  ~FakeBrowserwideClient() override {}
+  ~FakeBrowserwideClient() override = default;
 
   bool events_handled() const {
     return events_handled_;

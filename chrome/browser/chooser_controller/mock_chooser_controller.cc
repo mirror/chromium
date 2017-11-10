@@ -18,7 +18,7 @@ MockChooserController::MockChooserController()
   set_title_for_testing(base::ASCIIToUTF16("Mock Chooser Dialog"));
 }
 
-MockChooserController::~MockChooserController() {}
+MockChooserController::~MockChooserController() = default;
 
 bool MockChooserController::ShouldShowIconBeforeText() const {
   return true;

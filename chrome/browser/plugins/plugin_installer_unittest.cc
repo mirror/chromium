@@ -27,8 +27,7 @@ class PluginInstallerTest : public ChromeRenderViewHostTestHarness {
   std::unique_ptr<PluginInstaller> installer_;
 };
 
-PluginInstallerTest::PluginInstallerTest() {
-}
+PluginInstallerTest::PluginInstallerTest() = default;
 
 void PluginInstallerTest::SetUp() {
   content::RenderViewHostTestHarness::SetUp();

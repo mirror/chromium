@@ -7,7 +7,7 @@
 #include "components/startup_metric_utils/browser/startup_metric_utils.h"
 #include "ui/compositor/compositor.h"
 
-BrowserWindowHistogramHelper::~BrowserWindowHistogramHelper() {}
+BrowserWindowHistogramHelper::~BrowserWindowHistogramHelper() = default;
 
 // static
 std::unique_ptr<BrowserWindowHistogramHelper>

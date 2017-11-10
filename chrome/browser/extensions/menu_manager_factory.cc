@@ -40,7 +40,7 @@ MenuManagerFactory::MenuManagerFactory()
   DependsOn(ExtensionsBrowserClient::Get()->GetExtensionSystemFactory());
 }
 
-MenuManagerFactory::~MenuManagerFactory() {}
+MenuManagerFactory::~MenuManagerFactory() = default;
 
 KeyedService* MenuManagerFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

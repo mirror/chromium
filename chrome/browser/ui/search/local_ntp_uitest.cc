@@ -25,7 +25,7 @@
 // of the real local_ntp.html) as the NTP URL.
 class LocalNTPUITest : public InProcessBrowserTest, public InstantUITestBase {
  public:
-  LocalNTPUITest() {}
+  LocalNTPUITest() = default;
 
  protected:
   void SetUpInProcessBrowserTestFixture() override {

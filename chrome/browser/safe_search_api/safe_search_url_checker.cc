@@ -110,7 +110,7 @@ SafeSearchURLChecker::Check::Check(const GURL& url,
       callbacks(1, callback),
       start_time(base::TimeTicks::Now()) {}
 
-SafeSearchURLChecker::Check::~Check() {}
+SafeSearchURLChecker::Check::~Check() = default;
 
 SafeSearchURLChecker::CheckResult::CheckResult(Classification classification,
                                                bool uncertain)
@@ -133,7 +133,7 @@ SafeSearchURLChecker::SafeSearchURLChecker(
       cache_timeout_(
           base::TimeDelta::FromSeconds(kDefaultCacheTimeoutSeconds)) {}
 
-SafeSearchURLChecker::~SafeSearchURLChecker() {}
+SafeSearchURLChecker::~SafeSearchURLChecker() = default;
 
 bool SafeSearchURLChecker::CheckURL(const GURL& url,
                                     const CheckCallback& callback) {

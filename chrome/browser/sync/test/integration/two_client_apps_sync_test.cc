@@ -61,7 +61,7 @@ class TwoClientAppsSyncTest : public SyncTest {
     DisableVerifier();
   }
 
-  ~TwoClientAppsSyncTest() override {}
+  ~TwoClientAppsSyncTest() override = default;
 
   bool TestUsesSelfNotifications() override { return false; }
 

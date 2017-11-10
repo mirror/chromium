@@ -20,8 +20,7 @@ StateStoreNotificationObserver::StateStoreNotificationObserver(
                      base::Unretained(this)));
 }
 
-StateStoreNotificationObserver::~StateStoreNotificationObserver() {
-}
+StateStoreNotificationObserver::~StateStoreNotificationObserver() = default;
 
 void StateStoreNotificationObserver::OnSessionRestoreDone(
     int /* num_tabs_restored */) {

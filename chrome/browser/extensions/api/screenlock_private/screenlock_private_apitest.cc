@@ -37,9 +37,9 @@ const char kTestUser[] = "testuser@gmail.com";
 class ScreenlockPrivateApiTest : public ExtensionApiTest,
                                  public content::NotificationObserver {
  public:
-  ScreenlockPrivateApiTest() {}
+  ScreenlockPrivateApiTest() = default;
 
-  ~ScreenlockPrivateApiTest() override {}
+  ~ScreenlockPrivateApiTest() override = default;
 
   // ExtensionApiTest
   void SetUpCommandLine(base::CommandLine* command_line) override {

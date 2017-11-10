@@ -87,7 +87,7 @@ CloudPrintURLFetcherFactory* g_test_factory = nullptr;
 }  // namespace
 
 // virtual
-CloudPrintURLFetcherFactory::~CloudPrintURLFetcherFactory() {}
+CloudPrintURLFetcherFactory::~CloudPrintURLFetcherFactory() = default;
 
 // static
 CloudPrintURLFetcher* CloudPrintURLFetcher::Create(
@@ -312,7 +312,7 @@ void CloudPrintURLFetcher::SetupRequestHeaders() {
   request_->SetExtraRequestHeaders(headers);
 }
 
-CloudPrintURLFetcher::~CloudPrintURLFetcher() {}
+CloudPrintURLFetcher::~CloudPrintURLFetcher() = default;
 
 net::URLRequestContextGetter* CloudPrintURLFetcher::GetRequestContextGetter() {
   ServiceURLRequestContextGetter* getter =

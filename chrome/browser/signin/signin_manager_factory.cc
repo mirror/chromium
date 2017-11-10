@@ -27,8 +27,7 @@ SigninManagerFactory::SigninManagerFactory()
   DependsOn(AccountTrackerServiceFactory::GetInstance());
 }
 
-SigninManagerFactory::~SigninManagerFactory() {
-}
+SigninManagerFactory::~SigninManagerFactory() = default;
 
 #if defined(OS_CHROMEOS)
 // static

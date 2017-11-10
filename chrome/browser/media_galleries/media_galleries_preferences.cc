@@ -377,7 +377,7 @@ MediaGalleryPrefInfo::MediaGalleryPrefInfo()
 MediaGalleryPrefInfo::MediaGalleryPrefInfo(const MediaGalleryPrefInfo& other) =
     default;
 
-MediaGalleryPrefInfo::~MediaGalleryPrefInfo() {}
+MediaGalleryPrefInfo::~MediaGalleryPrefInfo() = default;
 
 base::FilePath MediaGalleryPrefInfo::AbsolutePath() const {
   base::FilePath base_path = MediaStorageUtil::FindDevicePathById(device_id);
@@ -450,7 +450,8 @@ bool MediaGalleryPrefInfo::IsGalleryAvailable() const {
          MediaStorageUtil::IsRemovableStorageAttached(device_id);
 }
 
-MediaGalleriesPreferences::GalleryChangeObserver::~GalleryChangeObserver() {}
+MediaGalleriesPreferences::GalleryChangeObserver::~GalleryChangeObserver() =
+    default;
 
 MediaGalleriesPreferences::MediaGalleriesPreferences(Profile* profile)
     : initialized_(false),

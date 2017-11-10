@@ -65,7 +65,7 @@ class CaptivePortalTabHelperTest : public ChromeRenderViewHostTestHarness {
  public:
   CaptivePortalTabHelperTest()
       : mock_reloader_(new testing::StrictMock<MockCaptivePortalTabReloader>) {}
-  ~CaptivePortalTabHelperTest() override {}
+  ~CaptivePortalTabHelperTest() override = default;
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();

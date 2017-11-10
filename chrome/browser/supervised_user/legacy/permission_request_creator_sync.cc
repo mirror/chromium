@@ -41,7 +41,7 @@ PermissionRequestCreatorSync::PermissionRequestCreatorSync(
       name_(name),
       supervised_user_id_(supervised_user_id) {}
 
-PermissionRequestCreatorSync::~PermissionRequestCreatorSync() {}
+PermissionRequestCreatorSync::~PermissionRequestCreatorSync() = default;
 
 bool PermissionRequestCreatorSync::IsEnabled() const {
   GoogleServiceAuthError::State state = sync_service_->GetAuthError().state();

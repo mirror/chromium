@@ -51,7 +51,7 @@ class OmniboxPopupContentsView::AutocompletePopupWidget
  public:
   explicit AutocompletePopupWidget(views::Widget* role_model)
       : ThemeCopyingWidget(role_model) {}
-  ~AutocompletePopupWidget() override {}
+  ~AutocompletePopupWidget() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(AutocompletePopupWidget);

@@ -32,8 +32,7 @@ SharedModuleService::SharedModuleService(content::BrowserContext* context)
   extension_registry_observer_.Add(ExtensionRegistry::Get(browser_context_));
 }
 
-SharedModuleService::~SharedModuleService() {
-}
+SharedModuleService::~SharedModuleService() = default;
 
 SharedModuleService::ImportStatus SharedModuleService::CheckImports(
     const Extension* extension,

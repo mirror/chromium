@@ -255,7 +255,7 @@ class HotwordNotificationDelegate
   }
 
  private:
-  ~HotwordNotificationDelegate() override {}
+  ~HotwordNotificationDelegate() override = default;
 
   Profile* profile_;
 

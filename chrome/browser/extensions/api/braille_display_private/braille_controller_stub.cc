@@ -14,11 +14,9 @@ namespace extensions {
 namespace api {
 namespace braille_display_private {
 
-BrailleController::BrailleController() {
-}
+BrailleController::BrailleController() = default;
 
-BrailleController::~BrailleController() {
-}
+BrailleController::~BrailleController() = default;
 
 // static
 BrailleController* BrailleController::GetInstance() {

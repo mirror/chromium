@@ -22,18 +22,16 @@ TestPermissionBubbleViewDelegate::TestPermissionBubbleViewDelegate()
     : PermissionPrompt::Delegate() {
 }
 
-TestPermissionBubbleViewDelegate::~TestPermissionBubbleViewDelegate() {}
+TestPermissionBubbleViewDelegate::~TestPermissionBubbleViewDelegate() = default;
 
 const std::vector<PermissionRequest*>&
 TestPermissionBubbleViewDelegate::Requests() {
   return requests_;
 }
 
-PermissionBubbleBrowserTest::PermissionBubbleBrowserTest() {
-}
+PermissionBubbleBrowserTest::PermissionBubbleBrowserTest() = default;
 
-PermissionBubbleBrowserTest::~PermissionBubbleBrowserTest() {
-}
+PermissionBubbleBrowserTest::~PermissionBubbleBrowserTest() = default;
 
 void PermissionBubbleBrowserTest::SetUpOnMainThread() {
   ExtensionBrowserTest::SetUpOnMainThread();
@@ -67,11 +65,9 @@ Browser* PermissionBubbleBrowserTest::OpenExtensionAppWindow() {
   return app_browser;
 }
 
-PermissionBubbleKioskBrowserTest::PermissionBubbleKioskBrowserTest() {
-}
+PermissionBubbleKioskBrowserTest::PermissionBubbleKioskBrowserTest() = default;
 
-PermissionBubbleKioskBrowserTest::~PermissionBubbleKioskBrowserTest() {
-}
+PermissionBubbleKioskBrowserTest::~PermissionBubbleKioskBrowserTest() = default;
 
 void PermissionBubbleKioskBrowserTest::SetUpCommandLine(
     base::CommandLine* command_line) {

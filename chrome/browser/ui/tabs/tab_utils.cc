@@ -65,7 +65,7 @@ const int kIndicatorFadeOutDurationMs = 1000;
 // "in" state.
 class TabRecordingIndicatorAnimation : public gfx::MultiAnimation {
  public:
-  ~TabRecordingIndicatorAnimation() override {}
+  ~TabRecordingIndicatorAnimation() override = default;
 
   // Overridden to provide alternating "towards in" and "towards out" behavior.
   double GetCurrentValue() const override;

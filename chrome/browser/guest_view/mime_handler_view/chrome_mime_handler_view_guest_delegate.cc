@@ -11,11 +11,11 @@
 
 namespace extensions {
 
-ChromeMimeHandlerViewGuestDelegate::ChromeMimeHandlerViewGuestDelegate() {
-}
+ChromeMimeHandlerViewGuestDelegate::ChromeMimeHandlerViewGuestDelegate() =
+    default;
 
-ChromeMimeHandlerViewGuestDelegate::~ChromeMimeHandlerViewGuestDelegate() {
-}
+ChromeMimeHandlerViewGuestDelegate::~ChromeMimeHandlerViewGuestDelegate() =
+    default;
 
 bool ChromeMimeHandlerViewGuestDelegate::HandleContextMenu(
     content::WebContents* web_contents,

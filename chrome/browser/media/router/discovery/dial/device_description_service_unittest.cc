@@ -65,7 +65,7 @@ namespace media_router {
 class TestSafeDialDeviceDescriptionParser
     : public SafeDialDeviceDescriptionParser {
  public:
-  ~TestSafeDialDeviceDescriptionParser() override {}
+  ~TestSafeDialDeviceDescriptionParser() override = default;
 
   MOCK_METHOD2(Start,
                void(const std::string& xml_text,

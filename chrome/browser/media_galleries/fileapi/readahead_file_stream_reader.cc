@@ -29,7 +29,7 @@ ReadaheadFileStreamReader::ReadaheadFileStreamReader(FileStreamReader* source)
       weak_factory_(this) {
 }
 
-ReadaheadFileStreamReader::~ReadaheadFileStreamReader() {}
+ReadaheadFileStreamReader::~ReadaheadFileStreamReader() = default;
 
 int ReadaheadFileStreamReader::Read(
     net::IOBuffer* buf, int buf_len, const net::CompletionCallback& callback) {

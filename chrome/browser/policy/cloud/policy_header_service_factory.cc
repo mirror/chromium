@@ -65,8 +65,7 @@ PolicyHeaderServiceFactory::PolicyHeaderServiceFactory()
 #endif
 }
 
-PolicyHeaderServiceFactory::~PolicyHeaderServiceFactory() {
-}
+PolicyHeaderServiceFactory::~PolicyHeaderServiceFactory() = default;
 
 // static
 PolicyHeaderService* PolicyHeaderServiceFactory::GetForBrowserContext(

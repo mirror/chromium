@@ -19,8 +19,7 @@ MockBrowsingDataIndexedDBHelper::MockBrowsingDataIndexedDBHelper(
             GetIndexedDBContext()) {
 }
 
-MockBrowsingDataIndexedDBHelper::~MockBrowsingDataIndexedDBHelper() {
-}
+MockBrowsingDataIndexedDBHelper::~MockBrowsingDataIndexedDBHelper() = default;
 
 void MockBrowsingDataIndexedDBHelper::StartFetching(
     const FetchCallback& callback) {

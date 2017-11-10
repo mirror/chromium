@@ -12,8 +12,10 @@
 using WebFeature = blink::mojom::WebFeature;
 using Features = page_load_metrics::mojom::PageLoadFeatures;
 
-UseCounterPageLoadMetricsObserver::UseCounterPageLoadMetricsObserver() {}
-UseCounterPageLoadMetricsObserver::~UseCounterPageLoadMetricsObserver() {}
+UseCounterPageLoadMetricsObserver::UseCounterPageLoadMetricsObserver() =
+    default;
+UseCounterPageLoadMetricsObserver::~UseCounterPageLoadMetricsObserver() =
+    default;
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 UseCounterPageLoadMetricsObserver::OnCommit(

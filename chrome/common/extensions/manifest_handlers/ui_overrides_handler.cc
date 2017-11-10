@@ -91,9 +91,9 @@ class UIOverridesHandler::ManifestPermissionImpl : public ManifestPermission {
   bool override_bookmarks_ui_permission_;
 };
 
-UIOverrides::UIOverrides() {}
+UIOverrides::UIOverrides() = default;
 
-UIOverrides::~UIOverrides() {}
+UIOverrides::~UIOverrides() = default;
 
 const UIOverrides* UIOverrides::Get(const Extension* extension) {
   return static_cast<UIOverrides*>(
@@ -121,9 +121,9 @@ bool UIOverrides::RemovesBookmarkOpenPagesShortcut(const Extension* extension) {
       *ui_overrides->bookmarks_ui->remove_bookmark_open_pages_shortcut;
 }
 
-UIOverridesHandler::UIOverridesHandler() {}
+UIOverridesHandler::UIOverridesHandler() = default;
 
-UIOverridesHandler::~UIOverridesHandler() {}
+UIOverridesHandler::~UIOverridesHandler() = default;
 
 bool UIOverridesHandler::Parse(Extension* extension, base::string16* error) {
   const base::Value* dict = NULL;

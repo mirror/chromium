@@ -25,7 +25,7 @@ ResetReportUploaderFactory::ResetReportUploaderFactory()
           "ResetReportUploaderFactory",
           BrowserContextDependencyManager::GetInstance()) {}
 
-ResetReportUploaderFactory::~ResetReportUploaderFactory() {}
+ResetReportUploaderFactory::~ResetReportUploaderFactory() = default;
 
 KeyedService* ResetReportUploaderFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

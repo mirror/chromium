@@ -15,8 +15,8 @@ namespace {
 class ChromeConstrainedWindowViewsClient
     : public constrained_window::ConstrainedWindowViewsClient {
  public:
-  ChromeConstrainedWindowViewsClient() {}
-  ~ChromeConstrainedWindowViewsClient() override {}
+  ChromeConstrainedWindowViewsClient() = default;
+  ~ChromeConstrainedWindowViewsClient() override = default;
 
  private:
   // ConstrainedWindowViewsClient:

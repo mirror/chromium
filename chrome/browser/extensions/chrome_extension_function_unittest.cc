@@ -47,7 +47,7 @@ class ValidationFunction : public UIThreadExtensionFunction {
   bool did_respond() { return did_respond_; }
 
  private:
-  ~ValidationFunction() override {}
+  ~ValidationFunction() override = default;
   bool should_succeed_;
   bool did_respond_;
 };

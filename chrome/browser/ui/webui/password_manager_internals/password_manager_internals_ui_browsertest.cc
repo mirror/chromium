@@ -39,7 +39,7 @@ PasswordManagerInternalsWebUIBrowserTest::
     : controller_(NULL) {}
 
 PasswordManagerInternalsWebUIBrowserTest::
-    ~PasswordManagerInternalsWebUIBrowserTest() {}
+    ~PasswordManagerInternalsWebUIBrowserTest() = default;
 
 void PasswordManagerInternalsWebUIBrowserTest::SetUpOnMainThread() {
   WebUIBrowserTest::SetUpOnMainThread();

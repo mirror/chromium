@@ -93,7 +93,7 @@ ChromeOmniboxNavigationObserver::ChromeOmniboxNavigationObserver(
                  content::NotificationService::AllSources());
 }
 
-ChromeOmniboxNavigationObserver::~ChromeOmniboxNavigationObserver() {}
+ChromeOmniboxNavigationObserver::~ChromeOmniboxNavigationObserver() = default;
 
 void ChromeOmniboxNavigationObserver::OnSuccessfulNavigation() {
   if (shortcuts_backend_.get())

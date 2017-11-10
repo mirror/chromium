@@ -21,7 +21,7 @@ ThemeDataTypeController::ThemeDataTypeController(
                                    base::ThreadTaskRunnerHandle::Get()),
       profile_(profile) {}
 
-ThemeDataTypeController::~ThemeDataTypeController() {}
+ThemeDataTypeController::~ThemeDataTypeController() = default;
 
 bool ThemeDataTypeController::StartModels() {
   DCHECK(CalledOnValidThread());

@@ -61,9 +61,9 @@ std::string GetDefaultPrinterAsync() {
 
 }  // namespace
 
-LocalPrinterHandlerDefault::LocalPrinterHandlerDefault() {}
+LocalPrinterHandlerDefault::LocalPrinterHandlerDefault() = default;
 
-LocalPrinterHandlerDefault::~LocalPrinterHandlerDefault() {}
+LocalPrinterHandlerDefault::~LocalPrinterHandlerDefault() = default;
 
 void LocalPrinterHandlerDefault::Reset() {}
 

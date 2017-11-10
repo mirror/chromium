@@ -13,8 +13,7 @@ MockBrowsingDataDatabaseHelper::MockBrowsingDataDatabaseHelper(
     : BrowsingDataDatabaseHelper(profile) {
 }
 
-MockBrowsingDataDatabaseHelper::~MockBrowsingDataDatabaseHelper() {
-}
+MockBrowsingDataDatabaseHelper::~MockBrowsingDataDatabaseHelper() = default;
 
 void MockBrowsingDataDatabaseHelper::StartFetching(FetchCallback callback) {
   callback_ = std::move(callback);

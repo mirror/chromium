@@ -227,7 +227,7 @@ class Tab::FaviconCrashAnimation : public gfx::LinearAnimation,
   explicit FaviconCrashAnimation(Tab* target)
       : gfx::LinearAnimation(base::TimeDelta::FromSeconds(1), 25, this),
         target_(target) {}
-  ~FaviconCrashAnimation() override {}
+  ~FaviconCrashAnimation() override = default;
 
   // gfx::Animation overrides:
   void AnimateToState(double state) override {
@@ -268,7 +268,7 @@ class Tab::TabCloseButton : public views::ImageButton,
         std::unique_ptr<views::ViewTargeter>(new views::ViewTargeter(this)));
   }
 
-  ~TabCloseButton() override {}
+  ~TabCloseButton() override = default;
 
   // views::View:
   View* GetTooltipHandlerForPoint(const gfx::Point& point) override {
@@ -499,8 +499,7 @@ Tab::Tab(TabController* controller, gfx::AnimationContainer* container)
   hover_controller_.SetAnimationContainer(animation_container_.get());
 }
 
-Tab::~Tab() {
-}
+Tab::~Tab() = default;
 
 bool Tab::IsActive() const {
   return controller_->IsActiveTab(this);

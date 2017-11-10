@@ -19,8 +19,7 @@ TestToolbarActionViewController::TestToolbarActionViewController(
       execute_action_count_(0) {
 }
 
-TestToolbarActionViewController::~TestToolbarActionViewController() {
-}
+TestToolbarActionViewController::~TestToolbarActionViewController() = default;
 
 std::string TestToolbarActionViewController::GetId() const {
   return id_;

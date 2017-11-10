@@ -77,7 +77,7 @@ std::unique_ptr<base::DictionaryValue> MakePackagedAppManifest() {
 // Extra environment state required for ChromeOS.
 class TestExtensionEnvironment::ChromeOSEnv {
  public:
-  ChromeOSEnv() {}
+  ChromeOSEnv() = default;
 
  private:
 #if defined(OS_CHROMEOS)
@@ -118,8 +118,7 @@ void TestExtensionEnvironment::Init() {
 #endif
 }
 
-TestExtensionEnvironment::~TestExtensionEnvironment() {
-}
+TestExtensionEnvironment::~TestExtensionEnvironment() = default;
 
 TestingProfile* TestExtensionEnvironment::profile() const {
   return profile_.get();

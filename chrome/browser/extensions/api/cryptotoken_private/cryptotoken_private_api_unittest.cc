@@ -22,8 +22,8 @@ using namespace api::cryptotoken_private;
 
 class CryptoTokenPrivateApiTest : public extensions::ExtensionApiUnittest {
  public:
-  CryptoTokenPrivateApiTest() {}
-  ~CryptoTokenPrivateApiTest() override {}
+  CryptoTokenPrivateApiTest() = default;
+  ~CryptoTokenPrivateApiTest() override = default;
 
  protected:
   bool GetSingleBooleanResult(

@@ -19,7 +19,7 @@ PepperFlashFullscreenHost::PepperFlashFullscreenHost(
     : ResourceHost(host->GetPpapiHost(), instance, resource),
       renderer_ppapi_host_(host) {}
 
-PepperFlashFullscreenHost::~PepperFlashFullscreenHost() {}
+PepperFlashFullscreenHost::~PepperFlashFullscreenHost() = default;
 
 int32_t PepperFlashFullscreenHost::OnResourceMessageReceived(
     const IPC::Message& msg,

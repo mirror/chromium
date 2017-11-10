@@ -15,8 +15,8 @@
 
 class StartupHelperBrowserTest : public InProcessBrowserTest {
  public:
-  StartupHelperBrowserTest() {}
-  ~StartupHelperBrowserTest() override {}
+  StartupHelperBrowserTest() = default;
+  ~StartupHelperBrowserTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitch(switches::kNoStartupWindow);

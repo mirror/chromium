@@ -77,7 +77,7 @@ void RunClosureOnUIThread(const base::Closure& closure) {
 // stricter ordering of events.
 class DelayingDnsProbeService : public DnsProbeService {
  public:
-  DelayingDnsProbeService() {}
+  DelayingDnsProbeService() = default;
 
   ~DelayingDnsProbeService() override { EXPECT_TRUE(delayed_probes_.empty()); }
 
@@ -124,7 +124,7 @@ class DelayableRequest {
   virtual void Resume() = 0;
 
  protected:
-  virtual ~DelayableRequest() {}
+  virtual ~DelayableRequest() = default;
 };
 
 class DelayableURLRequestFailedJob : public URLRequestFailedJob,

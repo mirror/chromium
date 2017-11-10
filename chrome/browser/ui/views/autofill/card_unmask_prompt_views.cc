@@ -500,8 +500,7 @@ void CardUnmaskPromptViews::ClosePrompt() {
 CardUnmaskPromptViews::FadeOutView::FadeOutView()
     : fade_everything_(false), alpha_(255) {
 }
-CardUnmaskPromptViews::FadeOutView::~FadeOutView() {
-}
+CardUnmaskPromptViews::FadeOutView::~FadeOutView() = default;
 
 void CardUnmaskPromptViews::FadeOutView::PaintChildren(
     const views::PaintInfo& paint_info) {

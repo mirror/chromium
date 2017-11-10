@@ -39,7 +39,7 @@ class MockWebContentsObserver : public content::WebContentsObserver {
  public:
   explicit MockWebContentsObserver(content::WebContents* web_contents)
       : content::WebContentsObserver(web_contents) {}
-  virtual ~MockWebContentsObserver() {}
+  virtual ~MockWebContentsObserver() = default;
 
   // A hook to verify that the OneClickSigninSyncObserver initiated a redirect
   // to the continue URL. Navigations in unit_tests never complete, but a
@@ -54,7 +54,7 @@ class MockWebContentsObserver : public content::WebContentsObserver {
 class OneClickTestProfileSyncService
     : public browser_sync::TestProfileSyncService {
  public:
-  ~OneClickTestProfileSyncService() override {}
+  ~OneClickTestProfileSyncService() override = default;
 
   // Helper routine to be used in conjunction with
   // BrowserContextKeyedServiceFactory::SetTestingFactory().

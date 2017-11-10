@@ -20,8 +20,8 @@ using base::ListValue;
 using base::UserMetricsAction;
 using content::WebContents;
 
-MetricsHandler::MetricsHandler() {}
-MetricsHandler::~MetricsHandler() {}
+MetricsHandler::MetricsHandler() = default;
+MetricsHandler::~MetricsHandler() = default;
 
 void MetricsHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

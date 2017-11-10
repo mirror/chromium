@@ -35,7 +35,7 @@ void IsInstalledGetterCallback(
 AppHooksDelegate::AppHooksDelegate(Dispatcher* dispatcher,
                                    APIRequestHandler* request_handler)
     : app_core_(dispatcher), request_handler_(request_handler) {}
-AppHooksDelegate::~AppHooksDelegate() {}
+AppHooksDelegate::~AppHooksDelegate() = default;
 
 APIBindingHooks::RequestResult AppHooksDelegate::HandleRequest(
     const std::string& method_name,

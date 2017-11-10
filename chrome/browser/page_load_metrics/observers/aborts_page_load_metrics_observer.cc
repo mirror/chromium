@@ -293,7 +293,7 @@ bool ShouldTrackMetrics(const page_load_metrics::PageLoadExtraInfo& extra_info,
 
 }  // namespace
 
-AbortsPageLoadMetricsObserver::AbortsPageLoadMetricsObserver() {}
+AbortsPageLoadMetricsObserver::AbortsPageLoadMetricsObserver() = default;
 
 void AbortsPageLoadMetricsObserver::OnComplete(
     const page_load_metrics::mojom::PageLoadTiming& timing,

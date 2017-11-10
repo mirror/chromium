@@ -136,8 +136,7 @@ SupervisedUserSiteList::SupervisedUserSiteList(
   }
 }
 
-SupervisedUserSiteList::~SupervisedUserSiteList() {
-}
+SupervisedUserSiteList::~SupervisedUserSiteList() = default;
 
 // static
 void SupervisedUserSiteList::OnJsonLoaded(

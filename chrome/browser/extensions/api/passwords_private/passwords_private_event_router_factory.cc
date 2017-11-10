@@ -35,9 +35,8 @@ PasswordsPrivateEventRouterFactory::PasswordsPrivateEventRouterFactory()
   DependsOn(PasswordsPrivateDelegateFactory::GetInstance());
 }
 
-PasswordsPrivateEventRouterFactory::
-    ~PasswordsPrivateEventRouterFactory() {
-}
+PasswordsPrivateEventRouterFactory::~PasswordsPrivateEventRouterFactory() =
+    default;
 
 KeyedService* PasswordsPrivateEventRouterFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

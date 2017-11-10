@@ -82,8 +82,8 @@ void WaitForRenderWidgetHostCount(size_t target_count) {
 
 class SitePerProcessInteractiveBrowserTest : public InProcessBrowserTest {
  public:
-  SitePerProcessInteractiveBrowserTest() {}
-  ~SitePerProcessInteractiveBrowserTest() override {}
+  SitePerProcessInteractiveBrowserTest() = default;
+  ~SitePerProcessInteractiveBrowserTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     content::IsolateAllSitesForTesting(command_line);
@@ -1032,7 +1032,7 @@ class SitePerProcessInteractivePDFTest
     : public SitePerProcessInteractiveBrowserTest {
  public:
   SitePerProcessInteractivePDFTest() : test_guest_view_manager_(nullptr) {}
-  ~SitePerProcessInteractivePDFTest() override {}
+  ~SitePerProcessInteractivePDFTest() override = default;
 
   void SetUpOnMainThread() override {
     SitePerProcessInteractiveBrowserTest::SetUpOnMainThread();
@@ -1161,7 +1161,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessInteractivePDFTest,
 class SitePerProcessAutofillTest : public SitePerProcessInteractiveBrowserTest {
  public:
   SitePerProcessAutofillTest() : SitePerProcessInteractiveBrowserTest() {}
-  ~SitePerProcessAutofillTest() override {}
+  ~SitePerProcessAutofillTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     SitePerProcessInteractiveBrowserTest::SetUpCommandLine(command_line);
@@ -1176,7 +1176,7 @@ class SitePerProcessAutofillTest : public SitePerProcessInteractiveBrowserTest {
   class TestAutofillClient : public autofill::TestAutofillClient {
    public:
     TestAutofillClient() : popup_shown_(false) {}
-    ~TestAutofillClient() override {}
+    ~TestAutofillClient() override = default;
 
     void WaitForNextPopup() {
       if (popup_shown_)
@@ -1245,7 +1245,7 @@ class FocusedEditableNodeChangedObserver : content::NotificationObserver {
     registrar_.Add(this, content::NOTIFICATION_FOCUS_CHANGED_IN_PAGE,
                    content::NotificationService::AllSources());
   }
-  ~FocusedEditableNodeChangedObserver() override {}
+  ~FocusedEditableNodeChangedObserver() override = default;
 
   void WaitForFocusChangeInPage() {
     if (observed_)

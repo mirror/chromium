@@ -80,8 +80,8 @@ class CloseListener : public WebSocketListener {
 
 class WebSocketTest : public testing::Test {
  public:
-  WebSocketTest() {}
-  ~WebSocketTest() override {}
+  WebSocketTest() = default;
+  ~WebSocketTest() override = default;
 
   void SetUp() override { ASSERT_TRUE(server_.Start()); }
 

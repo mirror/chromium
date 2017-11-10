@@ -9,11 +9,9 @@
 #include "build/build_config.h"
 #include "chrome/browser/status_icons/status_icon_observer.h"
 
-StatusIcon::StatusIcon() {
-}
+StatusIcon::StatusIcon() = default;
 
-StatusIcon::~StatusIcon() {
-}
+StatusIcon::~StatusIcon() = default;
 
 void StatusIcon::AddObserver(StatusIconObserver* observer) {
   observers_.AddObserver(observer);

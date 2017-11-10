@@ -13,7 +13,7 @@ class TabContentsSyncedTabDelegateTest
     : public ChromeRenderViewHostTestHarness {
  public:
   TabContentsSyncedTabDelegateTest() : ChromeRenderViewHostTestHarness() {}
-  ~TabContentsSyncedTabDelegateTest() override {}
+  ~TabContentsSyncedTabDelegateTest() override = default;
 
   void SetUp() override {
     content::RenderViewHostTestHarness::SetUp();

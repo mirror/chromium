@@ -26,7 +26,7 @@ HttpsEngagementServiceFactory::HttpsEngagementServiceFactory()
           "HttpEngagementKeyService",
           BrowserContextDependencyManager::GetInstance()) {}
 
-HttpsEngagementServiceFactory::~HttpsEngagementServiceFactory() {}
+HttpsEngagementServiceFactory::~HttpsEngagementServiceFactory() = default;
 
 KeyedService* HttpsEngagementServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

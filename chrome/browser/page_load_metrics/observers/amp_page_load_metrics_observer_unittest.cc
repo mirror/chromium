@@ -22,7 +22,7 @@ using AMPViewType = AMPPageLoadMetricsObserver::AMPViewType;
 class AMPPageLoadMetricsObserverTest
     : public page_load_metrics::PageLoadMetricsObserverTestHarness {
  public:
-  AMPPageLoadMetricsObserverTest() {}
+  AMPPageLoadMetricsObserverTest() = default;
 
   void SetUp() override {
     PageLoadMetricsObserverTestHarness::SetUp();

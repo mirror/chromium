@@ -28,7 +28,6 @@ InstanceIDProfileService::InstanceIDProfileService(Profile* profile) {
       gcm::GCMProfileServiceFactory::GetForProfile(profile)->driver()));
 }
 
-InstanceIDProfileService::~InstanceIDProfileService() {
-}
+InstanceIDProfileService::~InstanceIDProfileService() = default;
 
 }  // namespace instance_id

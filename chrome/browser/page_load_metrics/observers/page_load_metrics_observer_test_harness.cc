@@ -25,7 +25,8 @@ namespace page_load_metrics {
 PageLoadMetricsObserverTestHarness::PageLoadMetricsObserverTestHarness()
     : ChromeRenderViewHostTestHarness() {}
 
-PageLoadMetricsObserverTestHarness::~PageLoadMetricsObserverTestHarness() {}
+PageLoadMetricsObserverTestHarness::~PageLoadMetricsObserverTestHarness() =
+    default;
 
 void PageLoadMetricsObserverTestHarness::SetUp() {
   ChromeRenderViewHostTestHarness::SetUp();

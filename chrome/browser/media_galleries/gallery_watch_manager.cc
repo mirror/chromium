@@ -51,7 +51,7 @@ class ShutdownNotifierFactory
             "GalleryWatchManager") {
     DependsOn(MediaGalleriesPreferencesFactory::GetInstance());
   }
-  ~ShutdownNotifierFactory() override {}
+  ~ShutdownNotifierFactory() override = default;
 
   DISALLOW_COPY_AND_ASSIGN(ShutdownNotifierFactory);
 };
@@ -185,8 +185,7 @@ GalleryWatchManager::NotificationInfo::NotificationInfo()
 GalleryWatchManager::NotificationInfo::NotificationInfo(
     const NotificationInfo& other) = default;
 
-GalleryWatchManager::NotificationInfo::~NotificationInfo() {
-}
+GalleryWatchManager::NotificationInfo::~NotificationInfo() = default;
 
 GalleryWatchManager::GalleryWatchManager()
     : storage_monitor_observed_(false),

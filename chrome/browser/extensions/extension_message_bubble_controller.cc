@@ -46,8 +46,7 @@ ExtensionMessageBubbleController::Delegate::Delegate(Profile* profile)
       registry_(ExtensionRegistry::Get(profile)) {
 }
 
-ExtensionMessageBubbleController::Delegate::~Delegate() {
-}
+ExtensionMessageBubbleController::Delegate::~Delegate() = default;
 
 base::string16 ExtensionMessageBubbleController::Delegate::GetLearnMoreLabel()
     const {

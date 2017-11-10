@@ -53,7 +53,7 @@ class MutablePolicyValueStore : public PolicyValueStore {
             base::MakeRefCounted<SettingsObserverList>(),
             base::MakeUnique<LeveldbValueStore>(kDatabaseUMAClientName, path)) {
   }
-  ~MutablePolicyValueStore() override {}
+  ~MutablePolicyValueStore() override = default;
 
   WriteResult Set(WriteOptions options,
                   const std::string& key,
@@ -94,7 +94,7 @@ INSTANTIATE_TEST_CASE_P(
 class PolicyValueStoreTest : public testing::Test {
  public:
   PolicyValueStoreTest() = default;
-  ~PolicyValueStoreTest() override {}
+  ~PolicyValueStoreTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(scoped_temp_dir_.CreateUniqueTempDir());

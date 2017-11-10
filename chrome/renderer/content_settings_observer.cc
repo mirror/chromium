@@ -145,8 +145,7 @@ ContentSettingsObserver::ContentSettingsObserver(
   }
 }
 
-ContentSettingsObserver::~ContentSettingsObserver() {
-}
+ContentSettingsObserver::~ContentSettingsObserver() = default;
 
 void ContentSettingsObserver::SetContentSettingRules(
     const RendererContentSettingRules* content_setting_rules) {

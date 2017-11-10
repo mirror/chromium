@@ -88,7 +88,7 @@ class TestingPrefStoreWithCustomReadError : public TestingPrefStore {
     read_error_ = read_error;
   }
  private:
-  ~TestingPrefStoreWithCustomReadError() override {}
+  ~TestingPrefStoreWithCustomReadError() override = default;
   PrefReadError read_error_;
 };
 

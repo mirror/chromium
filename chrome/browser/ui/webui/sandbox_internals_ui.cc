@@ -80,4 +80,4 @@ void SandboxInternalsUI::RenderFrameCreated(
 #endif
 }
 
-SandboxInternalsUI::~SandboxInternalsUI() {}
+SandboxInternalsUI::~SandboxInternalsUI() = default;

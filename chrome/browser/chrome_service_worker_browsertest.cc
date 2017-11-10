@@ -60,7 +60,7 @@ class ChromeServiceWorkerTest : public InProcessBrowserTest {
         service_worker_dir_.GetPath().Append(
             FILE_PATH_LITERAL("scope")), nullptr));
   }
-  ~ChromeServiceWorkerTest() override {}
+  ~ChromeServiceWorkerTest() override = default;
 
   void WriteFile(const base::FilePath::StringType& filename,
                  base::StringPiece contents) {
@@ -208,8 +208,8 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerTest,
 
 class ChromeServiceWorkerFetchTest : public ChromeServiceWorkerTest {
  protected:
-  ChromeServiceWorkerFetchTest() {}
-  ~ChromeServiceWorkerFetchTest() override {}
+  ChromeServiceWorkerFetchTest() = default;
+  ~ChromeServiceWorkerFetchTest() override = default;
 
   void SetUpOnMainThread() override {
     WriteServiceWorkerFetchTestFiles();
@@ -337,8 +337,8 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerFetchTest,
 class ChromeServiceWorkerManifestFetchTest
     : public ChromeServiceWorkerFetchTest {
  protected:
-  ChromeServiceWorkerManifestFetchTest() {}
-  ~ChromeServiceWorkerManifestFetchTest() override {}
+  ChromeServiceWorkerManifestFetchTest() = default;
+  ~ChromeServiceWorkerManifestFetchTest() override = default;
 
   std::string ExecuteManifestFetchTest(const std::string& url,
                                        const std::string& cross_origin) {
@@ -424,8 +424,8 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerManifestFetchTest,
 #if BUILDFLAG(ENABLE_NACL)
 class ChromeServiceWorkerFetchPPAPITest : public ChromeServiceWorkerFetchTest {
  protected:
-  ChromeServiceWorkerFetchPPAPITest() {}
-  ~ChromeServiceWorkerFetchPPAPITest() override {}
+  ChromeServiceWorkerFetchPPAPITest() = default;
+  ~ChromeServiceWorkerFetchPPAPITest() override = default;
 
   void SetUpOnMainThread() override {
     base::FilePath document_root;
@@ -550,8 +550,8 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerFetchPPAPITest,
 class ChromeServiceWorkerFetchPPAPIPrivateTest
     : public ChromeServiceWorkerFetchPPAPITest {
  protected:
-  ChromeServiceWorkerFetchPPAPIPrivateTest() {}
-  ~ChromeServiceWorkerFetchPPAPIPrivateTest() override {}
+  ChromeServiceWorkerFetchPPAPIPrivateTest() = default;
+  ~ChromeServiceWorkerFetchPPAPIPrivateTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ChromeServiceWorkerFetchPPAPITest::SetUpCommandLine(command_line);

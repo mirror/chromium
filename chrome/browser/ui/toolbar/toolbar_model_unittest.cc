@@ -87,11 +87,9 @@ class ToolbarModelTest : public BrowserWithTestWindowTest {
   DISALLOW_COPY_AND_ASSIGN(ToolbarModelTest);
 };
 
-ToolbarModelTest::ToolbarModelTest() {
-}
+ToolbarModelTest::ToolbarModelTest() = default;
 
-ToolbarModelTest::~ToolbarModelTest() {
-}
+ToolbarModelTest::~ToolbarModelTest() = default;
 
 void ToolbarModelTest::SetUp() {
   BrowserWithTestWindowTest::SetUp();

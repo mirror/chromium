@@ -23,8 +23,7 @@ PredictorTableBase::PredictorTableBase(
     scoped_refptr<base::SequencedTaskRunner> db_task_runner)
     : db_task_runner_(std::move(db_task_runner)), db_(nullptr) {}
 
-PredictorTableBase::~PredictorTableBase() {
-}
+PredictorTableBase::~PredictorTableBase() = default;
 
 void PredictorTableBase::Initialize(sql::Connection* db) {
   DCHECK(db_task_runner_->RunsTasksInCurrentSequence());

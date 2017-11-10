@@ -123,8 +123,7 @@ ExtensionTabUtil::OpenTabParams::OpenTabParams()
     : create_browser_if_needed(false) {
 }
 
-ExtensionTabUtil::OpenTabParams::~OpenTabParams() {
-}
+ExtensionTabUtil::OpenTabParams::~OpenTabParams() = default;
 
 // Opens a new tab for a given extension. Returns nullptr and sets |error| if an
 // error occurs.

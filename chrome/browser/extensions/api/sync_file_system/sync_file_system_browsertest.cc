@@ -37,7 +37,7 @@ class FakeDriveServiceFactory
   explicit FakeDriveServiceFactory(
       drive::FakeDriveService::ChangeObserver* change_observer)
       : change_observer_(change_observer) {}
-  ~FakeDriveServiceFactory() override {}
+  ~FakeDriveServiceFactory() override = default;
 
   std::unique_ptr<drive::DriveServiceInterface> CreateDriveService(
       OAuth2TokenService* oauth2_token_service,

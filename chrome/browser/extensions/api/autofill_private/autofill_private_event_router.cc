@@ -42,8 +42,7 @@ AutofillPrivateEventRouter::AutofillPrivateEventRouter(
   personal_data_->AddObserver(this);
 }
 
-AutofillPrivateEventRouter::~AutofillPrivateEventRouter() {
-}
+AutofillPrivateEventRouter::~AutofillPrivateEventRouter() = default;
 
 void AutofillPrivateEventRouter::Shutdown() {
   if (personal_data_)

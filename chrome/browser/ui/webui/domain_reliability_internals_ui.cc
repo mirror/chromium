@@ -37,7 +37,7 @@ DomainReliabilityInternalsUI::DomainReliabilityInternalsUI(
   content::WebUIDataSource::Add(profile, html_source);
 }
 
-DomainReliabilityInternalsUI::~DomainReliabilityInternalsUI() {}
+DomainReliabilityInternalsUI::~DomainReliabilityInternalsUI() = default;
 
 void DomainReliabilityInternalsUI::UpdateData(
     const base::ListValue* args) const {

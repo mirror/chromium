@@ -29,7 +29,7 @@ SupervisedUserSyncServiceFactory::SupervisedUserSyncServiceFactory()
   DependsOn(SigninManagerFactory::GetInstance());
 }
 
-SupervisedUserSyncServiceFactory::~SupervisedUserSyncServiceFactory() {}
+SupervisedUserSyncServiceFactory::~SupervisedUserSyncServiceFactory() = default;
 
 KeyedService* SupervisedUserSyncServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

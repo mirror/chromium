@@ -39,4 +39,4 @@ SupervisedUserInternalsUI::SupervisedUserInternalsUI(content::WebUI* web_ui)
       base::MakeUnique<SupervisedUserInternalsMessageHandler>());
 }
 
-SupervisedUserInternalsUI::~SupervisedUserInternalsUI() {}
+SupervisedUserInternalsUI::~SupervisedUserInternalsUI() = default;

@@ -83,8 +83,7 @@ void ExtensionActionAPI::Observer::OnPageActionsUpdated(
 void ExtensionActionAPI::Observer::OnExtensionActionAPIShuttingDown() {
 }
 
-ExtensionActionAPI::Observer::~Observer() {
-}
+ExtensionActionAPI::Observer::~Observer() = default;
 
 //
 // ExtensionActionAPI
@@ -123,8 +122,7 @@ ExtensionActionAPI::ExtensionActionAPI(content::BrowserContext* context)
   registry->RegisterFunction<PageActionGetPopupFunction>();
 }
 
-ExtensionActionAPI::~ExtensionActionAPI() {
-}
+ExtensionActionAPI::~ExtensionActionAPI() = default;
 
 // static
 BrowserContextKeyedAPIFactory<ExtensionActionAPI>*
@@ -307,8 +305,7 @@ ExtensionActionFunction::ExtensionActionFunction()
       extension_action_(NULL) {
 }
 
-ExtensionActionFunction::~ExtensionActionFunction() {
-}
+ExtensionActionFunction::~ExtensionActionFunction() = default;
 
 ExtensionFunction::ResponseAction ExtensionActionFunction::Run() {
   ExtensionActionManager* manager =

@@ -86,7 +86,7 @@ class MockSafeBrowsingDatabaseManager
   }
 
  protected:
-  ~MockSafeBrowsingDatabaseManager() override {}
+  ~MockSafeBrowsingDatabaseManager() override = default;
 
  private:
   bool perform_callback_;
@@ -106,7 +106,7 @@ class TestPermissionContext : public PermissionContextBase {
                               blink::FeaturePolicyFeature::kNotFound),
         tab_context_updated_(false) {}
 
-  ~TestPermissionContext() override {}
+  ~TestPermissionContext() override = default;
 
   const std::vector<ContentSetting>& decisions() const { return decisions_; }
 
@@ -216,8 +216,8 @@ class TestKillSwitchPermissionContext : public TestPermissionContext {
 
 class PermissionContextBaseTests : public ChromeRenderViewHostTestHarness {
  protected:
-  PermissionContextBaseTests() {}
-  ~PermissionContextBaseTests() override {}
+  PermissionContextBaseTests() = default;
+  ~PermissionContextBaseTests() override = default;
 
   // Accept or dismiss the permission prompt.
   void RespondToPermission(TestPermissionContext* context,

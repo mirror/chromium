@@ -113,8 +113,8 @@ class FakeDesktopMediaPicker : public DesktopMediaPicker {
 class FakeDesktopMediaPickerFactory :
     public DesktopCaptureChooseDesktopMediaFunction::PickerFactory {
  public:
-  FakeDesktopMediaPickerFactory() {}
-  ~FakeDesktopMediaPickerFactory() override {}
+  FakeDesktopMediaPickerFactory() = default;
+  ~FakeDesktopMediaPickerFactory() override = default;
 
   void SetTestFlags(TestFlags* test_flags, int tests_count) {
     test_flags_ = test_flags;

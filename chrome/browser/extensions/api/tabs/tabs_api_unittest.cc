@@ -43,8 +43,8 @@ std::unique_ptr<base::ListValue> RunTabsQueryFunction(
 
 class TabsApiUnitTest : public ExtensionServiceTestBase {
  protected:
-  TabsApiUnitTest() {}
-  ~TabsApiUnitTest() override {}
+  TabsApiUnitTest() = default;
+  ~TabsApiUnitTest() override = default;
 
   Browser* browser() { return browser_.get(); }
 

@@ -50,7 +50,7 @@ PasswordsPrivateDelegateImpl::PasswordsPrivateDelegateImpl(Profile* profile)
   password_manager_presenter_->UpdatePasswordLists();
 }
 
-PasswordsPrivateDelegateImpl::~PasswordsPrivateDelegateImpl() {}
+PasswordsPrivateDelegateImpl::~PasswordsPrivateDelegateImpl() = default;
 
 void PasswordsPrivateDelegateImpl::SendSavedPasswordsList() {
   PasswordsPrivateEventRouter* router =

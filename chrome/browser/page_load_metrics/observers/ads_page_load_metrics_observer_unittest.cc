@@ -222,7 +222,7 @@ void TestHistograms(const base::HistogramTester& histograms,
 
 class AdsPageLoadMetricsObserverTest : public SubresourceFilterTestHarness {
  public:
-  AdsPageLoadMetricsObserverTest() {}
+  AdsPageLoadMetricsObserverTest() = default;
 
   void SetUp() override {
     SubresourceFilterTestHarness::SetUp();

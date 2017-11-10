@@ -45,7 +45,7 @@ constexpr char kTabUnderAction[] = "Tab.TabUnderAction";
 class PopupOpenerTabHelperTest : public ChromeRenderViewHostTestHarness {
  public:
   PopupOpenerTabHelperTest() : ChromeRenderViewHostTestHarness() {}
-  ~PopupOpenerTabHelperTest() override {}
+  ~PopupOpenerTabHelperTest() override = default;
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
@@ -313,8 +313,8 @@ TEST_F(PopupOpenerTabHelperTest, SimulateTabUnderNavBeforePopup_LogsMetrics) {
 
 class BlockTabUnderTest : public PopupOpenerTabHelperTest {
  public:
-  BlockTabUnderTest() {}
-  ~BlockTabUnderTest() override {}
+  BlockTabUnderTest() = default;
+  ~BlockTabUnderTest() override = default;
 
   void SetUp() override {
     PopupOpenerTabHelperTest::SetUp();

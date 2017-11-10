@@ -86,7 +86,7 @@ class SafeBrowsingClientImpl
 
  private:
   friend class base::RefCountedThreadSafe<SafeBrowsingClientImpl>;
-  ~SafeBrowsingClientImpl() override {}
+  ~SafeBrowsingClientImpl() override = default;
 
   // Pass |database_manager| as a parameter to avoid touching
   // SafeBrowsingService on the IO thread.
@@ -178,8 +178,7 @@ Blacklist::Blacklist(ExtensionPrefs* prefs) {
   }
 }
 
-Blacklist::~Blacklist() {
-}
+Blacklist::~Blacklist() = default;
 
 // static
 Blacklist* Blacklist::Get(content::BrowserContext* context) {

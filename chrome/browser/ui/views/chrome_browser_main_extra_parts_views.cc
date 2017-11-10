@@ -67,8 +67,7 @@ bool ShouldCreateWMState() {
 
 }  // namespace
 
-ChromeBrowserMainExtraPartsViews::ChromeBrowserMainExtraPartsViews() {
-}
+ChromeBrowserMainExtraPartsViews::ChromeBrowserMainExtraPartsViews() = default;
 
 ChromeBrowserMainExtraPartsViews::~ChromeBrowserMainExtraPartsViews() {
   constrained_window::SetConstrainedWindowViewsClient(nullptr);

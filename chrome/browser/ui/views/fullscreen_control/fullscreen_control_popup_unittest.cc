@@ -19,8 +19,8 @@
 
 class FullscreenControlPopupTest : public views::test::WidgetTest {
  public:
-  FullscreenControlPopupTest() {}
-  ~FullscreenControlPopupTest() override {}
+  FullscreenControlPopupTest() = default;
+  ~FullscreenControlPopupTest() override = default;
 
   // views::test::WidgetTest:
   void SetUp() override {

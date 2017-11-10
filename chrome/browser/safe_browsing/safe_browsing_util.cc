@@ -20,16 +20,14 @@ namespace safe_browsing {
 // convoluted.  Maybe it would make sense to have an overall container class
 // returning references to a nested per-chunk class?
 
-SBChunkData::SBChunkData() {
-}
+SBChunkData::SBChunkData() = default;
 
 SBChunkData::SBChunkData(std::unique_ptr<ChunkData> data)
     : chunk_data_(std::move(data)) {
   DCHECK(chunk_data_.get());
 }
 
-SBChunkData::~SBChunkData() {
-}
+SBChunkData::~SBChunkData() = default;
 
 bool SBChunkData::ParseFrom(const unsigned char* data, size_t length) {
   std::unique_ptr<ChunkData> chunk(new ChunkData());
@@ -132,6 +130,6 @@ SBChunkDelete::SBChunkDelete() : is_sub_del(false) {}
 
 SBChunkDelete::SBChunkDelete(const SBChunkDelete& other) = default;
 
-SBChunkDelete::~SBChunkDelete() {}
+SBChunkDelete::~SBChunkDelete() = default;
 
 }  // namespace safe_browsing

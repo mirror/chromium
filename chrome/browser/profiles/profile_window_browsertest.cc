@@ -58,7 +58,7 @@ namespace {
 // Notifies the main thread after all history backend thread tasks have run.
 class WaitForHistoryTask : public history::HistoryDBTask {
  public:
-  WaitForHistoryTask() {}
+  WaitForHistoryTask() = default;
 
   bool RunOnDBThread(history::HistoryBackend* backend,
                      history::HistoryDatabase* db) override {
@@ -70,7 +70,7 @@ class WaitForHistoryTask : public history::HistoryDBTask {
   }
 
  private:
-  ~WaitForHistoryTask() override {}
+  ~WaitForHistoryTask() override = default;
 
   DISALLOW_COPY_AND_ASSIGN(WaitForHistoryTask);
 };
@@ -112,8 +112,8 @@ base::FilePath CreateTestingProfile(const std::string& name,
 
 class ProfileWindowBrowserTest : public InProcessBrowserTest {
  public:
-  ProfileWindowBrowserTest() {}
-  ~ProfileWindowBrowserTest() override {}
+  ProfileWindowBrowserTest() = default;
+  ~ProfileWindowBrowserTest() override = default;
 
   Browser* OpenGuestBrowser();
   void CloseBrowser(Browser* browser);

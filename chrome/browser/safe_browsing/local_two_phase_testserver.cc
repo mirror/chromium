@@ -18,7 +18,7 @@ LocalTwoPhaseTestServer::LocalTwoPhaseTestServer()
     : net::LocalTestServer(net::SpawnedTestServer::TYPE_HTTP,
                            base::FilePath()) {}
 
-LocalTwoPhaseTestServer::~LocalTwoPhaseTestServer() {}
+LocalTwoPhaseTestServer::~LocalTwoPhaseTestServer() = default;
 
 bool LocalTwoPhaseTestServer::GetTestServerPath(
     base::FilePath* testserver_path) const {

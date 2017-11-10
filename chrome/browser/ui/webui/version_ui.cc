@@ -200,5 +200,4 @@ VersionUI::VersionUI(content::WebUI* web_ui)
   WebUIDataSource::Add(profile, CreateVersionUIDataSource());
 }
 
-VersionUI::~VersionUI() {
-}
+VersionUI::~VersionUI() = default;

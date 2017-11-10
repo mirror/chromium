@@ -56,8 +56,7 @@ PopupBlockerTabHelper::PopupBlockerTabHelper(content::WebContents* web_contents)
       safe_browsing_triggered_popup_blocker_(
           SafeBrowsingTriggeredPopupBlocker::MaybeCreate(web_contents)) {}
 
-PopupBlockerTabHelper::~PopupBlockerTabHelper() {
-}
+PopupBlockerTabHelper::~PopupBlockerTabHelper() = default;
 
 void PopupBlockerTabHelper::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);

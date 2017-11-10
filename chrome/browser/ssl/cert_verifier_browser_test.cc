@@ -11,7 +11,7 @@ CertVerifierBrowserTest::CertVerifierBrowserTest()
     : InProcessBrowserTest(),
       mock_cert_verifier_(new net::MockCertVerifier()) {}
 
-CertVerifierBrowserTest::~CertVerifierBrowserTest() {}
+CertVerifierBrowserTest::~CertVerifierBrowserTest() = default;
 
 void CertVerifierBrowserTest::SetUpInProcessBrowserTestFixture() {
   ProfileIOData::SetCertVerifierForTesting(mock_cert_verifier_.get());

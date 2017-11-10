@@ -26,7 +26,7 @@ SaveCardIconView::SaveCardIconView(CommandUpdater* command_updater,
     browser->tab_strip_model()->AddObserver(this);
 }
 
-SaveCardIconView::~SaveCardIconView() {}
+SaveCardIconView::~SaveCardIconView() = default;
 
 void SaveCardIconView::OnExecuting(
     BubbleIconView::ExecuteSource execute_source) {}

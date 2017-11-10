@@ -34,7 +34,7 @@ DefaultBrowserHandler::DefaultBrowserHandler(content::WebUI* webui)
     : weak_ptr_factory_(this) {
 }
 
-DefaultBrowserHandler::~DefaultBrowserHandler() {}
+DefaultBrowserHandler::~DefaultBrowserHandler() = default;
 
 void DefaultBrowserHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

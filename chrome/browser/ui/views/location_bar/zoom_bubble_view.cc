@@ -82,7 +82,7 @@ class ZoomValue : public views::Label {
         max_width_(GetLabelMaxWidth(web_contents)) {
     SetHorizontalAlignment(gfx::ALIGN_LEFT);
   }
-  ~ZoomValue() override {}
+  ~ZoomValue() override = default;
 
   // views::Label:
   gfx::Size CalculatePreferredSize() const override {
@@ -484,6 +484,6 @@ void ZoomBubbleView::StopTimer() {
   timer_.Stop();
 }
 
-ZoomBubbleView::ZoomBubbleExtensionInfo::ZoomBubbleExtensionInfo() {}
+ZoomBubbleView::ZoomBubbleExtensionInfo::ZoomBubbleExtensionInfo() = default;
 
-ZoomBubbleView::ZoomBubbleExtensionInfo::~ZoomBubbleExtensionInfo() {}
+ZoomBubbleView::ZoomBubbleExtensionInfo::~ZoomBubbleExtensionInfo() = default;

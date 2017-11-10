@@ -41,9 +41,9 @@ struct SortEntry {
 
 class PasswordManagerPresenterTest : public testing::Test {
  protected:
-  PasswordManagerPresenterTest() {}
+  PasswordManagerPresenterTest() = default;
 
-  ~PasswordManagerPresenterTest() override {}
+  ~PasswordManagerPresenterTest() override = default;
   void SetUp() override {
     PasswordStoreFactory::GetInstance()->SetTestingFactory(
         &profile_,

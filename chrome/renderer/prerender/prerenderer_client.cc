@@ -23,8 +23,7 @@ PrerendererClient::PrerendererClient(content::RenderView* render_view)
   render_view->GetWebView()->SetPrerendererClient(this);
 }
 
-PrerendererClient::~PrerendererClient() {
-}
+PrerendererClient::~PrerendererClient() = default;
 
 void PrerendererClient::WillAddPrerender(blink::WebPrerender* prerender) {
   DVLOG(3) << "PrerendererClient::willAddPrerender url = "

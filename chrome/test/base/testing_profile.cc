@@ -153,7 +153,7 @@ const char kTestingProfile[] = "testing_profile";
 
 class QuittingHistoryDBTask : public history::HistoryDBTask {
  public:
-  QuittingHistoryDBTask() {}
+  QuittingHistoryDBTask() = default;
 
   bool RunOnDBThread(history::HistoryBackend* backend,
                      history::HistoryDatabase* db) override {
@@ -165,7 +165,7 @@ class QuittingHistoryDBTask : public history::HistoryDBTask {
   }
 
  private:
-  ~QuittingHistoryDBTask() override {}
+  ~QuittingHistoryDBTask() override = default;
 
   DISALLOW_COPY_AND_ASSIGN(QuittingHistoryDBTask);
 };
@@ -198,7 +198,7 @@ class TestExtensionURLRequestContextGetter
   }
 
  protected:
-  ~TestExtensionURLRequestContextGetter() override {}
+  ~TestExtensionURLRequestContextGetter() override = default;
 
  private:
   std::unique_ptr<net::URLRequestContext> context_;
@@ -1035,8 +1035,7 @@ TestingProfile::Builder::Builder()
       guest_session_(false),
       profile_name_(kTestingProfile) {}
 
-TestingProfile::Builder::~Builder() {
-}
+TestingProfile::Builder::~Builder() = default;
 
 void TestingProfile::Builder::SetPath(const base::FilePath& path) {
   path_ = path;

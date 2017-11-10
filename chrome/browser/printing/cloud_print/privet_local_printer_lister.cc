@@ -38,8 +38,7 @@ PrivetLocalPrinterLister::PrivetLocalPrinterLister(
       request_context);
 }
 
-PrivetLocalPrinterLister::~PrivetLocalPrinterLister() {
-}
+PrivetLocalPrinterLister::~PrivetLocalPrinterLister() = default;
 
 void PrivetLocalPrinterLister::Start() {
   privet_lister_->Start();

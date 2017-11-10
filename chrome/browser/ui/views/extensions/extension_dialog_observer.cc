@@ -4,6 +4,6 @@
 
 #include "chrome/browser/ui/views/extensions/extension_dialog_observer.h"
 
-ExtensionDialogObserver::ExtensionDialogObserver() {}
+ExtensionDialogObserver::ExtensionDialogObserver() = default;
 
-ExtensionDialogObserver::~ExtensionDialogObserver() {}
+ExtensionDialogObserver::~ExtensionDialogObserver() = default;

@@ -110,7 +110,7 @@ class FakeExternalProtocolHandlerDelegate
 
 class ExternalProtocolHandlerTest : public testing::Test {
  protected:
-  ExternalProtocolHandlerTest() {}
+  ExternalProtocolHandlerTest() = default;
 
   void SetUp() override {
     local_state_.reset(new TestingPrefServiceSimple);

@@ -119,7 +119,7 @@ class SafeBrowsingTriggeredPopupBlockerBrowserTest
         {});
   }
 
-  ~SafeBrowsingTriggeredPopupBlockerBrowserTest() override {}
+  ~SafeBrowsingTriggeredPopupBlockerBrowserTest() override = default;
 
   void SetUp() override {
     database_helper_ = CreateTestDatabase();
@@ -192,7 +192,7 @@ class SafeBrowsingTriggeredInterceptingBrowserTest
   SafeBrowsingTriggeredInterceptingBrowserTest()
       : safe_browsing_server_(
             std::make_unique<net::test_server::EmbeddedTestServer>()) {}
-  ~SafeBrowsingTriggeredInterceptingBrowserTest() override {}
+  ~SafeBrowsingTriggeredInterceptingBrowserTest() override = default;
 
   // SafeBrowsingTriggeredPopupBlockerBrowserTest:
   void SetUp() override {

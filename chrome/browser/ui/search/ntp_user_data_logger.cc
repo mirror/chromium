@@ -186,7 +186,7 @@ DEFINE_WEB_CONTENTS_USER_DATA_KEY(NTPUserDataLogger);
                              base::TimeDelta::FromMilliseconds(1), \
                              base::TimeDelta::FromSeconds(60), 100)
 
-NTPUserDataLogger::~NTPUserDataLogger() {}
+NTPUserDataLogger::~NTPUserDataLogger() = default;
 
 // static
 NTPUserDataLogger* NTPUserDataLogger::GetOrCreateFromWebContents(

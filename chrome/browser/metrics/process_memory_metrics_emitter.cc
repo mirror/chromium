@@ -180,7 +180,7 @@ void EmitGpuMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
 
 }  // namespace
 
-ProcessMemoryMetricsEmitter::ProcessMemoryMetricsEmitter() {}
+ProcessMemoryMetricsEmitter::ProcessMemoryMetricsEmitter() = default;
 
 void ProcessMemoryMetricsEmitter::FetchAndEmitProcessMemoryMetrics() {
   MarkServiceRequestsInProgress();
@@ -215,7 +215,7 @@ void ProcessMemoryMetricsEmitter::MarkServiceRequestsInProgress() {
     get_process_urls_in_progress_ = true;
 }
 
-ProcessMemoryMetricsEmitter::~ProcessMemoryMetricsEmitter() {}
+ProcessMemoryMetricsEmitter::~ProcessMemoryMetricsEmitter() = default;
 
 void ProcessMemoryMetricsEmitter::ReceivedMemoryDump(
     bool success,

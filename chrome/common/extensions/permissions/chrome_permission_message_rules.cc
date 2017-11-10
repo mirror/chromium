@@ -22,7 +22,7 @@ class DefaultPermissionMessageFormatter
  public:
   explicit DefaultPermissionMessageFormatter(int message_id)
       : message_id_(message_id) {}
-  ~DefaultPermissionMessageFormatter() override {}
+  ~DefaultPermissionMessageFormatter() override = default;
 
   PermissionMessage GetPermissionMessage(
       const PermissionIDSet& permissions) const override {
@@ -42,7 +42,7 @@ class DefaultPermissionMessageFormatter
 class SingleParameterFormatter : public ChromePermissionMessageFormatter {
  public:
   explicit SingleParameterFormatter(int message_id) : message_id_(message_id) {}
-  ~SingleParameterFormatter() override {}
+  ~SingleParameterFormatter() override = default;
 
   PermissionMessage GetPermissionMessage(
       const PermissionIDSet& permissions) const override {
@@ -67,7 +67,7 @@ class SimpleListFormatter : public ChromePermissionMessageFormatter {
  public:
   explicit SimpleListFormatter(int root_message_id)
       : root_message_id_(root_message_id) {}
-  ~SimpleListFormatter() override {}
+  ~SimpleListFormatter() override = default;
 
   PermissionMessage GetPermissionMessage(
       const PermissionIDSet& permissions) const override {
@@ -94,7 +94,7 @@ class SpaceSeparatedListFormatter : public ChromePermissionMessageFormatter {
                               int message_id_for_multiple_hosts)
       : message_id_for_one_host_(message_id_for_one_host),
         message_id_for_multiple_hosts_(message_id_for_multiple_hosts) {}
-  ~SpaceSeparatedListFormatter() override {}
+  ~SpaceSeparatedListFormatter() override = default;
 
   PermissionMessage GetPermissionMessage(
       const PermissionIDSet& permissions) const override {
@@ -131,7 +131,7 @@ class HostListFormatter : public ChromePermissionMessageFormatter {
         message_id_for_two_hosts_(message_id_for_two_hosts),
         message_id_for_three_hosts_(message_id_for_three_hosts),
         message_id_for_many_hosts_(message_id_for_many_hosts) {}
-  ~HostListFormatter() override {}
+  ~HostListFormatter() override = default;
 
   PermissionMessage GetPermissionMessage(
       const PermissionIDSet& permissions) const override {
@@ -189,8 +189,8 @@ class HostListFormatter : public ChromePermissionMessageFormatter {
 
 class USBDevicesFormatter : public ChromePermissionMessageFormatter {
  public:
-  USBDevicesFormatter() {}
-  ~USBDevicesFormatter() override {}
+  USBDevicesFormatter() = default;
+  ~USBDevicesFormatter() override = default;
 
   PermissionMessage GetPermissionMessage(
       const PermissionIDSet& permissions) const override {
@@ -277,8 +277,7 @@ ChromePermissionMessageRule::ChromePermissionMessageRule(
 ChromePermissionMessageRule::ChromePermissionMessageRule(
     const ChromePermissionMessageRule& other) = default;
 
-ChromePermissionMessageRule::~ChromePermissionMessageRule() {
-}
+ChromePermissionMessageRule::~ChromePermissionMessageRule() = default;
 
 std::set<APIPermission::ID> ChromePermissionMessageRule::required_permissions()
     const {

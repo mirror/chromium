@@ -29,8 +29,8 @@ SSLClientCertificateSelectorTestBase::SSLClientCertificateSelectorTestBase()
                               base::WaitableEvent::InitialState::NOT_SIGNALED) {
 }
 
-SSLClientCertificateSelectorTestBase::~SSLClientCertificateSelectorTestBase() {
-}
+SSLClientCertificateSelectorTestBase::~SSLClientCertificateSelectorTestBase() =
+    default;
 
 void SSLClientCertificateSelectorTestBase::SetUpInProcessBrowserTestFixture() {
   cert_request_info_ = new net::SSLCertRequestInfo;

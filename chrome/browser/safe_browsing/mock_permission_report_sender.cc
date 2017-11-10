@@ -16,8 +16,7 @@ MockPermissionReportSender::MockPermissionReportSender()
   DCHECK(quit_closure_.is_null());
 }
 
-MockPermissionReportSender::~MockPermissionReportSender() {
-}
+MockPermissionReportSender::~MockPermissionReportSender() = default;
 
 void MockPermissionReportSender::Send(
     const GURL& report_uri,

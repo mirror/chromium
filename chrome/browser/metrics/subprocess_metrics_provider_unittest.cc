@@ -23,7 +23,7 @@ const uint32_t TEST_MEMORY_SIZE = 64 << 10;  // 64 KiB
 
 class HistogramFlattenerDeltaRecorder : public base::HistogramFlattener {
  public:
-  HistogramFlattenerDeltaRecorder() {}
+  HistogramFlattenerDeltaRecorder() = default;
 
   void RecordDelta(const base::HistogramBase& histogram,
                    const base::HistogramSamples& snapshot) override {

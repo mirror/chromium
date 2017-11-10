@@ -52,7 +52,7 @@ void ExtensionSyncEventObserver::InitializeForService(
   sync_service_->AddSyncEventObserver(this);
 }
 
-ExtensionSyncEventObserver::~ExtensionSyncEventObserver() {}
+ExtensionSyncEventObserver::~ExtensionSyncEventObserver() = default;
 
 void ExtensionSyncEventObserver::Shutdown() {
   if (sync_service_ != NULL)

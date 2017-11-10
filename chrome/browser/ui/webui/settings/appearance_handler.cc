@@ -23,7 +23,7 @@ AppearanceHandler::AppearanceHandler(content::WebUI* webui)
     : profile_(Profile::FromWebUI(webui)) {
 }
 
-AppearanceHandler::~AppearanceHandler() {}
+AppearanceHandler::~AppearanceHandler() = default;
 
 void AppearanceHandler::OnJavascriptAllowed() {}
 void AppearanceHandler::OnJavascriptDisallowed() {}

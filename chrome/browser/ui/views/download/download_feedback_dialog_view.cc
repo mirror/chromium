@@ -33,7 +33,7 @@ const void* const kDialogStatusKey = &kDialogStatusKey;
 class DialogStatusData : public base::SupportsUserData::Data {
  public:
   DialogStatusData() : currently_shown_(false) {}
-  ~DialogStatusData() override {}
+  ~DialogStatusData() override = default;
   bool currently_shown() const { return currently_shown_; }
   void set_currently_shown(bool shown) { currently_shown_ = shown; }
  private:
@@ -99,7 +99,7 @@ DownloadFeedbackDialogView::DownloadFeedbackDialogView(
       chrome::DialogIdentifier::SAFE_BROWSING_DOWNLOAD_FEEDBACK);
 }
 
-DownloadFeedbackDialogView::~DownloadFeedbackDialogView() {}
+DownloadFeedbackDialogView::~DownloadFeedbackDialogView() = default;
 
 int DownloadFeedbackDialogView::GetDefaultDialogButton() const {
   return ui::DIALOG_BUTTON_CANCEL;

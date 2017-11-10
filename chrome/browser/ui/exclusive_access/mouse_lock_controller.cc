@@ -36,8 +36,7 @@ MouseLockController::MouseLockController(ExclusiveAccessManager* manager)
       bubble_hide_callback_for_test_(),
       weak_ptr_factory_(this) {}
 
-MouseLockController::~MouseLockController() {
-}
+MouseLockController::~MouseLockController() = default;
 
 bool MouseLockController::IsMouseLocked() const {
   return mouse_lock_state_ == MOUSELOCK_LOCKED ||

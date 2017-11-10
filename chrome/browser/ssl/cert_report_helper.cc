@@ -73,8 +73,7 @@ CertReportHelper::CertReportHelper(
       interstitial_time_(interstitial_time),
       metrics_helper_(metrics_helper) {}
 
-CertReportHelper::~CertReportHelper() {
-}
+CertReportHelper::~CertReportHelper() = default;
 
 // static
 void CertReportHelper::SetFakeOfficialBuildForTesting() {

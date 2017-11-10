@@ -16,9 +16,9 @@ ChromeMemoryCoordinatorDelegate::Create() {
   return base::WrapUnique(new ChromeMemoryCoordinatorDelegate);
 }
 
-ChromeMemoryCoordinatorDelegate::ChromeMemoryCoordinatorDelegate() {}
+ChromeMemoryCoordinatorDelegate::ChromeMemoryCoordinatorDelegate() = default;
 
-ChromeMemoryCoordinatorDelegate::~ChromeMemoryCoordinatorDelegate() {}
+ChromeMemoryCoordinatorDelegate::~ChromeMemoryCoordinatorDelegate() = default;
 
 void ChromeMemoryCoordinatorDelegate::DiscardTab(bool skip_unload_handlers) {
 #if !defined(OS_ANDROID)

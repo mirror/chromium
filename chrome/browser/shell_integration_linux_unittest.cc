@@ -37,7 +37,7 @@ namespace {
 // Provides mock environment variables values based on a stored map.
 class MockEnvironment : public base::Environment {
  public:
-  MockEnvironment() {}
+  MockEnvironment() = default;
 
   void Set(base::StringPiece name, const std::string& value) {
     variables_[name.as_string()] = value;

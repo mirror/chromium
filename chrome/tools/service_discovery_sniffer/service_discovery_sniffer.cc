@@ -26,8 +26,7 @@ ServicePrinter::ServicePrinter(ServiceDiscoveryClient* client,
                      base::Unretained(this)));
 }
 
-ServicePrinter::~ServicePrinter() {
-}
+ServicePrinter::~ServicePrinter() = default;
 
 void ServicePrinter::Added() {
   changed_ = false;
@@ -77,8 +76,7 @@ void ServiceTypePrinter::Start() {
   watcher_->DiscoverNewServices();
 }
 
-ServiceTypePrinter::~ServiceTypePrinter() {
-}
+ServiceTypePrinter::~ServiceTypePrinter() = default;
 
 void ServiceTypePrinter::OnServiceUpdated(ServiceWatcher::UpdateType update,
                                           const std::string& service_name) {

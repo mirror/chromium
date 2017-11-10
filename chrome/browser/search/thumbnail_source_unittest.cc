@@ -13,8 +13,8 @@
 
 class ThumbnailSourceTest : public testing::Test {
  protected:
-  ThumbnailSourceTest() {}
-  ~ThumbnailSourceTest() override {}
+  ThumbnailSourceTest() = default;
+  ~ThumbnailSourceTest() override = default;
 
   void SetUp() override {
     profile_manager_.reset(

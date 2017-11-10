@@ -108,7 +108,7 @@ BackoffPolicy::BackoffPolicy() {
   };
 }
 
-BackoffPolicy::~BackoffPolicy() {}
+BackoffPolicy::~BackoffPolicy() = default;
 
 // static
 const net::BackoffEntry::Policy* BackoffPolicy::Get() {
@@ -145,8 +145,7 @@ ChromeRuntimeAPIDelegate::ChromeRuntimeAPIDelegate(
       extensions::ExtensionRegistry::Get(browser_context_));
 }
 
-ChromeRuntimeAPIDelegate::~ChromeRuntimeAPIDelegate() {
-}
+ChromeRuntimeAPIDelegate::~ChromeRuntimeAPIDelegate() = default;
 
 // static
 void ChromeRuntimeAPIDelegate::set_tick_clock_for_tests(

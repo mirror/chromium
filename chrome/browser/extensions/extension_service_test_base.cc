@@ -73,7 +73,7 @@ std::unique_ptr<TestingProfile> BuildTestingProfile(
 }  // namespace
 
 ExtensionServiceTestBase::ExtensionServiceInitParams::
-    ExtensionServiceInitParams() {}
+    ExtensionServiceInitParams() = default;
 
 ExtensionServiceTestBase::ExtensionServiceInitParams::
     ExtensionServiceInitParams(const ExtensionServiceInitParams& other) =

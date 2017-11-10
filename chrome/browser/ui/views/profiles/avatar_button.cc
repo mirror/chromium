@@ -79,8 +79,8 @@ std::unique_ptr<views::Border> CreateThemedBorder(
 // TODO(estade): make this look nice on Windows and use it there as well.
 class AvatarButtonThemedBorder : public views::Border {
  public:
-  AvatarButtonThemedBorder() {}
-  ~AvatarButtonThemedBorder() override {}
+  AvatarButtonThemedBorder() = default;
+  ~AvatarButtonThemedBorder() override = default;
 
   void Paint(const views::View& view, gfx::Canvas* canvas) override {
     // Fill the color/background image from the theme.
@@ -170,7 +170,7 @@ class ShutdownNotifierFactory
             "AvatarButtonShutdownNotifierFactory") {
     DependsOn(SigninManagerFactory::GetInstance());
   }
-  ~ShutdownNotifierFactory() override {}
+  ~ShutdownNotifierFactory() override = default;
 
   DISALLOW_COPY_AND_ASSIGN(ShutdownNotifierFactory);
 };
@@ -267,7 +267,7 @@ AvatarButton::AvatarButton(views::MenuButtonListener* listener,
           base::Bind(&AvatarButton::OnProfileShutdown, base::Unretained(this)));
 }
 
-AvatarButton::~AvatarButton() {}
+AvatarButton::~AvatarButton() = default;
 
 void AvatarButton::SetupThemeColorButton() {
 #if defined(OS_WIN) || defined(OS_MACOSX)

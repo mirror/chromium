@@ -28,11 +28,9 @@ std::unique_ptr<GpuProfileCache> GpuProfileCache::Create() {
   return base::MakeUnique<GLStringManager>();
 }
 
-GLStringManager::GLStringManager() {
-}
+GLStringManager::GLStringManager() = default;
 
-GLStringManager::~GLStringManager() {
-}
+GLStringManager::~GLStringManager() = default;
 
 void GLStringManager::Initialize() {
   // On MacOSX or Windows, preliminary GPUInfo is enough.

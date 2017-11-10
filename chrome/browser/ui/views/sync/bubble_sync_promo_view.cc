@@ -38,7 +38,7 @@ BubbleSyncPromoView::BubbleSyncPromoView(BubbleSyncPromoDelegate* delegate,
     AddStyleRange(after_link_range, promo_style);
 }
 
-BubbleSyncPromoView::~BubbleSyncPromoView() {}
+BubbleSyncPromoView::~BubbleSyncPromoView() = default;
 
 const char* BubbleSyncPromoView::GetClassName() const {
   return "BubbleSyncPromoView";

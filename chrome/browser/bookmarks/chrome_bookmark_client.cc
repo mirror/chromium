@@ -29,8 +29,7 @@ ChromeBookmarkClient::ChromeBookmarkClient(
     bookmarks::ManagedBookmarkService* managed_bookmark_service)
     : profile_(profile), managed_bookmark_service_(managed_bookmark_service) {}
 
-ChromeBookmarkClient::~ChromeBookmarkClient() {
-}
+ChromeBookmarkClient::~ChromeBookmarkClient() = default;
 
 void ChromeBookmarkClient::Init(bookmarks::BookmarkModel* model) {
   if (managed_bookmark_service_)

@@ -94,7 +94,7 @@ PushMessagingNotificationManager::PushMessagingNotificationManager(
     Profile* profile)
     : profile_(profile), weak_factory_(this) {}
 
-PushMessagingNotificationManager::~PushMessagingNotificationManager() {}
+PushMessagingNotificationManager::~PushMessagingNotificationManager() = default;
 
 void PushMessagingNotificationManager::EnforceUserVisibleOnlyRequirements(
     const GURL& origin,

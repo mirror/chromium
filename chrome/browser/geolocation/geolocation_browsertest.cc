@@ -116,8 +116,7 @@ IFrameLoader::IFrameLoader(Browser* browser, int iframe_id, const GURL& url)
   iframe_url_ = GURL(RunScript(web_contents->GetMainFrame(), script));
 }
 
-IFrameLoader::~IFrameLoader() {
-}
+IFrameLoader::~IFrameLoader() = default;
 
 void IFrameLoader::Observe(int type,
                            const content::NotificationSource& source,
@@ -178,7 +177,7 @@ class TestURLFetcherObserver : public net::TestURLFetcher::DelegateForTests {
       : expected_fetcher_id_(expected_fetcher_id) {
     factory_.SetDelegateForTests(this);
   }
-  virtual ~TestURLFetcherObserver() {}
+  virtual ~TestURLFetcherObserver() = default;
 
   void Wait() { loop_.Run(); }
 
@@ -324,11 +323,9 @@ class GeolocationBrowserTest : public InProcessBrowserTest {
   DISALLOW_COPY_AND_ASSIGN(GeolocationBrowserTest);
 };
 
-GeolocationBrowserTest::GeolocationBrowserTest() {
-}
+GeolocationBrowserTest::GeolocationBrowserTest() = default;
 
-GeolocationBrowserTest::~GeolocationBrowserTest() {
-}
+GeolocationBrowserTest::~GeolocationBrowserTest() = default;
 
 void GeolocationBrowserTest::SetUpOnMainThread() {
   ui_test_utils::OverrideGeolocation(fake_latitude_, fake_longitude_);

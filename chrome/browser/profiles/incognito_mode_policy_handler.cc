@@ -17,9 +17,9 @@
 
 namespace policy {
 
-IncognitoModePolicyHandler::IncognitoModePolicyHandler() {}
+IncognitoModePolicyHandler::IncognitoModePolicyHandler() = default;
 
-IncognitoModePolicyHandler::~IncognitoModePolicyHandler() {}
+IncognitoModePolicyHandler::~IncognitoModePolicyHandler() = default;
 
 bool IncognitoModePolicyHandler::CheckPolicySettings(const PolicyMap& policies,
                                                      PolicyErrorMap* errors) {

@@ -54,7 +54,7 @@ CaptivePortalMetricsRecorder::CaptivePortalMetricsRecorder(
                  content::Source<Profile>(profile));
 }
 
-CaptivePortalMetricsRecorder::~CaptivePortalMetricsRecorder() {}
+CaptivePortalMetricsRecorder::~CaptivePortalMetricsRecorder() = default;
 
 void CaptivePortalMetricsRecorder::RecordCaptivePortalUMAStatistics() const {
   RecordCaptivePortalEventStats(CAPTIVE_PORTAL_ALL);

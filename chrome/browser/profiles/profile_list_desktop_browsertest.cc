@@ -38,7 +38,7 @@ void OnUnblockOnProfileCreation(Profile* profile,
 
 class ProfileListDesktopBrowserTest : public InProcessBrowserTest {
  public:
-  ProfileListDesktopBrowserTest() {}
+  ProfileListDesktopBrowserTest() = default;
 
   std::unique_ptr<AvatarMenu> CreateAvatarMenu(
       ProfileAttributesStorage* storage) {

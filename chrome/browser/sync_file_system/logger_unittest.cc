@@ -28,7 +28,7 @@ bool ContainsString(const std::string& contains_string,
 
 class LoggerTest : public testing::Test {
  public:
-  LoggerTest() {}
+  LoggerTest() = default;
 
   void SetUp() override {
     util::ClearLog();

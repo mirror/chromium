@@ -175,7 +175,7 @@ CookieTreeNode::DetailedInfo::DetailedInfo() : node_type(TYPE_NONE) {}
 
 CookieTreeNode::DetailedInfo::DetailedInfo(const DetailedInfo& other) = default;
 
-CookieTreeNode::DetailedInfo::~DetailedInfo() {}
+CookieTreeNode::DetailedInfo::~DetailedInfo() = default;
 
 CookieTreeNode::DetailedInfo& CookieTreeNode::DetailedInfo::Init(
     NodeType type) {
@@ -316,7 +316,7 @@ CookieTreeCookieNode::CookieTreeCookieNode(
       cookie_(cookie) {
 }
 
-CookieTreeCookieNode::~CookieTreeCookieNode() {}
+CookieTreeCookieNode::~CookieTreeCookieNode() = default;
 
 void CookieTreeCookieNode::DeleteStoredObjects() {
   LocalDataContainer* container = GetLocalDataContainerForNode(this);
@@ -339,8 +339,7 @@ CookieTreeAppCacheNode::CookieTreeAppCacheNode(
       appcache_info_(appcache_info) {
 }
 
-CookieTreeAppCacheNode::~CookieTreeAppCacheNode() {
-}
+CookieTreeAppCacheNode::~CookieTreeAppCacheNode() = default;
 
 void CookieTreeAppCacheNode::DeleteStoredObjects() {
   LocalDataContainer* container = GetLocalDataContainerForNode(this);
@@ -368,7 +367,7 @@ CookieTreeDatabaseNode::CookieTreeDatabaseNode(
       database_info_(database_info) {
 }
 
-CookieTreeDatabaseNode::~CookieTreeDatabaseNode() {}
+CookieTreeDatabaseNode::~CookieTreeDatabaseNode() = default;
 
 void CookieTreeDatabaseNode::DeleteStoredObjects() {
   LocalDataContainer* container = GetLocalDataContainerForNode(this);
@@ -394,7 +393,7 @@ CookieTreeLocalStorageNode::CookieTreeLocalStorageNode(
       local_storage_info_(local_storage_info) {
 }
 
-CookieTreeLocalStorageNode::~CookieTreeLocalStorageNode() {}
+CookieTreeLocalStorageNode::~CookieTreeLocalStorageNode() = default;
 
 void CookieTreeLocalStorageNode::DeleteStoredObjects() {
   LocalDataContainer* container = GetLocalDataContainerForNode(this);
@@ -423,7 +422,7 @@ CookieTreeSessionStorageNode::CookieTreeSessionStorageNode(
       session_storage_info_(session_storage_info) {
 }
 
-CookieTreeSessionStorageNode::~CookieTreeSessionStorageNode() {}
+CookieTreeSessionStorageNode::~CookieTreeSessionStorageNode() = default;
 
 void CookieTreeSessionStorageNode::DeleteStoredObjects() {
   LocalDataContainer* container = GetLocalDataContainerForNode(this);
@@ -450,7 +449,7 @@ CookieTreeIndexedDBNode::CookieTreeIndexedDBNode(
     : CookieTreeNode(base::UTF8ToUTF16(indexed_db_info->origin.spec())),
       indexed_db_info_(indexed_db_info) {}
 
-CookieTreeIndexedDBNode::~CookieTreeIndexedDBNode() {}
+CookieTreeIndexedDBNode::~CookieTreeIndexedDBNode() = default;
 
 void CookieTreeIndexedDBNode::DeleteStoredObjects() {
   LocalDataContainer* container = GetLocalDataContainerForNode(this);
@@ -476,7 +475,7 @@ CookieTreeFileSystemNode::CookieTreeFileSystemNode(
       file_system_info_(file_system_info) {
 }
 
-CookieTreeFileSystemNode::~CookieTreeFileSystemNode() {}
+CookieTreeFileSystemNode::~CookieTreeFileSystemNode() = default;
 
 void CookieTreeFileSystemNode::DeleteStoredObjects() {
   LocalDataContainer* container = GetLocalDataContainerForNode(this);
@@ -501,7 +500,7 @@ CookieTreeQuotaNode::CookieTreeQuotaNode(
       quota_info_(quota_info) {
 }
 
-CookieTreeQuotaNode::~CookieTreeQuotaNode() {}
+CookieTreeQuotaNode::~CookieTreeQuotaNode() = default;
 
 void CookieTreeQuotaNode::DeleteStoredObjects() {
   // Calling this function may cause unexpected over-quota state of origin.
@@ -527,7 +526,7 @@ CookieTreeChannelIDNode::CookieTreeChannelIDNode(
       channel_id_(channel_id) {
 }
 
-CookieTreeChannelIDNode::~CookieTreeChannelIDNode() {}
+CookieTreeChannelIDNode::~CookieTreeChannelIDNode() = default;
 
 void CookieTreeChannelIDNode::DeleteStoredObjects() {
   LocalDataContainer* container = GetLocalDataContainerForNode(this);
@@ -553,8 +552,7 @@ CookieTreeServiceWorkerNode::CookieTreeServiceWorkerNode(
       service_worker_info_(service_worker_info) {
 }
 
-CookieTreeServiceWorkerNode::~CookieTreeServiceWorkerNode() {
-}
+CookieTreeServiceWorkerNode::~CookieTreeServiceWorkerNode() = default;
 
 void CookieTreeServiceWorkerNode::DeleteStoredObjects() {
   LocalDataContainer* container = GetLocalDataContainerForNode(this);
@@ -579,7 +577,7 @@ CookieTreeCacheStorageNode::CookieTreeCacheStorageNode(
     : CookieTreeNode(base::UTF8ToUTF16(cache_storage_info->origin.spec())),
       cache_storage_info_(cache_storage_info) {}
 
-CookieTreeCacheStorageNode::~CookieTreeCacheStorageNode() {}
+CookieTreeCacheStorageNode::~CookieTreeCacheStorageNode() = default;
 
 void CookieTreeCacheStorageNode::DeleteStoredObjects() {
   LocalDataContainer* container = GetLocalDataContainerForNode(this);
@@ -605,7 +603,7 @@ CookieTreeMediaLicenseNode::CookieTreeMediaLicenseNode(
     : CookieTreeNode(base::UTF8ToUTF16(media_license_info->origin.spec())),
       media_license_info_(media_license_info) {}
 
-CookieTreeMediaLicenseNode::~CookieTreeMediaLicenseNode() {}
+CookieTreeMediaLicenseNode::~CookieTreeMediaLicenseNode() = default;
 
 void CookieTreeMediaLicenseNode::DeleteStoredObjects() {
   LocalDataContainer* container = GetLocalDataContainerForNode(this);
@@ -629,7 +627,7 @@ CookieTreeRootNode::CookieTreeRootNode(CookiesTreeModel* model)
     : model_(model) {
 }
 
-CookieTreeRootNode::~CookieTreeRootNode() {}
+CookieTreeRootNode::~CookieTreeRootNode() = default;
 
 CookieTreeHostNode* CookieTreeRootNode::GetOrCreateHostNode(const GURL& url) {
   std::unique_ptr<CookieTreeHostNode> host_node =
@@ -673,7 +671,7 @@ CookieTreeHostNode::CookieTreeHostNode(const GURL& url)
       url_(url),
       canonicalized_host_(CanonicalizeHost(url)) {}
 
-CookieTreeHostNode::~CookieTreeHostNode() {}
+CookieTreeHostNode::~CookieTreeHostNode() = default;
 
 std::string CookieTreeHostNode::GetHost() const {
   const std::string file_origin_node_name(
@@ -821,8 +819,7 @@ CookieTreeCookiesNode::CookieTreeCookiesNode()
     : CookieTreeNode(l10n_util::GetStringUTF16(IDS_COOKIES_COOKIES)) {
 }
 
-CookieTreeCookiesNode::~CookieTreeCookiesNode() {
-}
+CookieTreeCookiesNode::~CookieTreeCookiesNode() = default;
 
 CookieTreeNode::DetailedInfo CookieTreeCookiesNode::GetDetailedInfo() const {
   return DetailedInfo().Init(DetailedInfo::TYPE_COOKIES);
@@ -836,7 +833,7 @@ CookieTreeAppCachesNode::CookieTreeAppCachesNode()
                          IDS_COOKIES_APPLICATION_CACHES)) {
 }
 
-CookieTreeAppCachesNode::~CookieTreeAppCachesNode() {}
+CookieTreeAppCachesNode::~CookieTreeAppCachesNode() = default;
 
 CookieTreeNode::DetailedInfo CookieTreeAppCachesNode::GetDetailedInfo() const {
   return DetailedInfo().Init(DetailedInfo::TYPE_APPCACHES);
@@ -849,7 +846,7 @@ CookieTreeDatabasesNode::CookieTreeDatabasesNode()
     : CookieTreeNode(l10n_util::GetStringUTF16(IDS_COOKIES_WEB_DATABASES)) {
 }
 
-CookieTreeDatabasesNode::~CookieTreeDatabasesNode() {}
+CookieTreeDatabasesNode::~CookieTreeDatabasesNode() = default;
 
 CookieTreeNode::DetailedInfo CookieTreeDatabasesNode::GetDetailedInfo() const {
   return DetailedInfo().Init(DetailedInfo::TYPE_DATABASES);
@@ -862,7 +859,7 @@ CookieTreeLocalStoragesNode::CookieTreeLocalStoragesNode()
     : CookieTreeNode(l10n_util::GetStringUTF16(IDS_COOKIES_LOCAL_STORAGE)) {
 }
 
-CookieTreeLocalStoragesNode::~CookieTreeLocalStoragesNode() {}
+CookieTreeLocalStoragesNode::~CookieTreeLocalStoragesNode() = default;
 
 CookieTreeNode::DetailedInfo
 CookieTreeLocalStoragesNode::GetDetailedInfo() const {
@@ -876,7 +873,7 @@ CookieTreeSessionStoragesNode::CookieTreeSessionStoragesNode()
     : CookieTreeNode(l10n_util::GetStringUTF16(IDS_COOKIES_SESSION_STORAGE)) {
 }
 
-CookieTreeSessionStoragesNode::~CookieTreeSessionStoragesNode() {}
+CookieTreeSessionStoragesNode::~CookieTreeSessionStoragesNode() = default;
 
 CookieTreeNode::DetailedInfo
 CookieTreeSessionStoragesNode::GetDetailedInfo() const {
@@ -890,7 +887,7 @@ CookieTreeIndexedDBsNode::CookieTreeIndexedDBsNode()
     : CookieTreeNode(l10n_util::GetStringUTF16(IDS_COOKIES_INDEXED_DBS)) {
 }
 
-CookieTreeIndexedDBsNode::~CookieTreeIndexedDBsNode() {}
+CookieTreeIndexedDBsNode::~CookieTreeIndexedDBsNode() = default;
 
 CookieTreeNode::DetailedInfo
 CookieTreeIndexedDBsNode::GetDetailedInfo() const {
@@ -904,7 +901,7 @@ CookieTreeFileSystemsNode::CookieTreeFileSystemsNode()
     : CookieTreeNode(l10n_util::GetStringUTF16(IDS_COOKIES_FILE_SYSTEMS)) {
 }
 
-CookieTreeFileSystemsNode::~CookieTreeFileSystemsNode() {}
+CookieTreeFileSystemsNode::~CookieTreeFileSystemsNode() = default;
 
 CookieTreeNode::DetailedInfo
 CookieTreeFileSystemsNode::GetDetailedInfo() const {
@@ -919,7 +916,7 @@ CookieTreeChannelIDsNode::CookieTreeChannelIDsNode()
         l10n_util::GetStringUTF16(IDS_COOKIES_CHANNEL_IDS)) {
 }
 
-CookieTreeChannelIDsNode::~CookieTreeChannelIDsNode() {}
+CookieTreeChannelIDsNode::~CookieTreeChannelIDsNode() = default;
 
 CookieTreeNode::DetailedInfo
 CookieTreeChannelIDsNode::GetDetailedInfo() const {
@@ -941,8 +938,7 @@ CookieTreeServiceWorkersNode::CookieTreeServiceWorkersNode()
     : CookieTreeNode(l10n_util::GetStringUTF16(IDS_COOKIES_SERVICE_WORKERS)) {
 }
 
-CookieTreeServiceWorkersNode::~CookieTreeServiceWorkersNode() {
-}
+CookieTreeServiceWorkersNode::~CookieTreeServiceWorkersNode() = default;
 
 CookieTreeNode::DetailedInfo CookieTreeServiceWorkersNode::GetDetailedInfo()
     const {
@@ -955,7 +951,7 @@ CookieTreeNode::DetailedInfo CookieTreeServiceWorkersNode::GetDetailedInfo()
 CookieTreeCacheStoragesNode::CookieTreeCacheStoragesNode()
     : CookieTreeNode(l10n_util::GetStringUTF16(IDS_COOKIES_CACHE_STORAGE)) {}
 
-CookieTreeCacheStoragesNode::~CookieTreeCacheStoragesNode() {}
+CookieTreeCacheStoragesNode::~CookieTreeCacheStoragesNode() = default;
 
 CookieTreeNode::DetailedInfo CookieTreeCacheStoragesNode::GetDetailedInfo()
     const {
@@ -967,7 +963,7 @@ CookieTreeNode::DetailedInfo CookieTreeCacheStoragesNode::GetDetailedInfo()
 CookieTreeFlashLSONode::CookieTreeFlashLSONode(
     const std::string& domain)
     : domain_(domain) {}
-CookieTreeFlashLSONode::~CookieTreeFlashLSONode() {}
+CookieTreeFlashLSONode::~CookieTreeFlashLSONode() = default;
 
 void CookieTreeFlashLSONode::DeleteStoredObjects() {
   // We are one level below the host node.
@@ -988,7 +984,7 @@ CookieTreeNode::DetailedInfo CookieTreeFlashLSONode::GetDetailedInfo() const {
 CookieTreeMediaLicensesNode::CookieTreeMediaLicensesNode()
     : CookieTreeNode(l10n_util::GetStringUTF16(IDS_COOKIES_MEDIA_LICENSES)) {}
 
-CookieTreeMediaLicensesNode::~CookieTreeMediaLicensesNode() {}
+CookieTreeMediaLicensesNode::~CookieTreeMediaLicensesNode() = default;
 
 CookieTreeNode::DetailedInfo CookieTreeMediaLicensesNode::GetDetailedInfo()
     const {
@@ -1036,8 +1032,7 @@ CookiesTreeModel::CookiesTreeModel(
   data_container_->Init(this);
 }
 
-CookiesTreeModel::~CookiesTreeModel() {
-}
+CookiesTreeModel::~CookiesTreeModel() = default;
 
 // static
 int CookiesTreeModel::GetSendForMessageID(const net::CanonicalCookie& cookie) {

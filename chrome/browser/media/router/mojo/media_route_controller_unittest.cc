@@ -30,8 +30,8 @@ constexpr char kRouteId[] = "routeId";
 
 class MediaRouteControllerTest : public ::testing::Test {
  public:
-  MediaRouteControllerTest() {}
-  ~MediaRouteControllerTest() override {}
+  MediaRouteControllerTest() = default;
+  ~MediaRouteControllerTest() override = default;
 
   void SetUp() override {
     SetUpMockObjects();
@@ -88,7 +88,7 @@ class MediaRouteControllerTest : public ::testing::Test {
 
 class HangoutsMediaRouteControllerTest : public MediaRouteControllerTest {
  public:
-  ~HangoutsMediaRouteControllerTest() override {}
+  ~HangoutsMediaRouteControllerTest() override = default;
 
   void SetUp() override {
     MediaRouteControllerTest::SetUp();

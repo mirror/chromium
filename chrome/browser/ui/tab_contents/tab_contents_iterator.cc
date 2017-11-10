@@ -17,8 +17,7 @@ TabContentsIterator::TabContentsIterator()
   Next();
 }
 
-TabContentsIterator::~TabContentsIterator() {
-}
+TabContentsIterator::~TabContentsIterator() = default;
 
 void TabContentsIterator::Next() {
   // The current WebContents should be valid unless we are at the beginning.

@@ -56,8 +56,7 @@ ExtensionDialog::ExtensionDialog(extensions::ExtensionViewHost* host,
   chrome::RecordDialogCreation(chrome::DialogIdentifier::EXTENSION);
 }
 
-ExtensionDialog::~ExtensionDialog() {
-}
+ExtensionDialog::~ExtensionDialog() = default;
 
 // static
 ExtensionDialog* ExtensionDialog::Show(

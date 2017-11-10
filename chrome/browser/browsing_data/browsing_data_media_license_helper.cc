@@ -64,7 +64,8 @@ BrowsingDataMediaLicenseHelperImpl::BrowsingDataMediaLicenseHelperImpl(
   DCHECK(filesystem_context_.get());
 }
 
-BrowsingDataMediaLicenseHelperImpl::~BrowsingDataMediaLicenseHelperImpl() {}
+BrowsingDataMediaLicenseHelperImpl::~BrowsingDataMediaLicenseHelperImpl() =
+    default;
 
 void BrowsingDataMediaLicenseHelperImpl::StartFetching(
     const FetchCallback& callback) {
@@ -139,7 +140,7 @@ BrowsingDataMediaLicenseHelper::MediaLicenseInfo::MediaLicenseInfo(
 BrowsingDataMediaLicenseHelper::MediaLicenseInfo::MediaLicenseInfo(
     const MediaLicenseInfo& other) = default;
 
-BrowsingDataMediaLicenseHelper::MediaLicenseInfo::~MediaLicenseInfo() {}
+BrowsingDataMediaLicenseHelper::MediaLicenseInfo::~MediaLicenseInfo() = default;
 
 // static
 BrowsingDataMediaLicenseHelper* BrowsingDataMediaLicenseHelper::Create(

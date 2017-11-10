@@ -94,7 +94,7 @@ class PermissionRequestManagerBrowserTest : public InProcessBrowserTest {
 class PermissionDialogTest
     : public SupportsTestDialog<PermissionRequestManagerBrowserTest> {
  public:
-  PermissionDialogTest() {}
+  PermissionDialogTest() = default;
 
   // InProcessBrowserTest:
   void SetUpOnMainThread() override {

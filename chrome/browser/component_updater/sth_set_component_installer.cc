@@ -55,7 +55,7 @@ STHSetComponentInstallerPolicy::STHSetComponentInstallerPolicy(
     net::ct::STHObserver* sth_observer)
     : sth_observer_(sth_observer), weak_ptr_factory_(this) {}
 
-STHSetComponentInstallerPolicy::~STHSetComponentInstallerPolicy() {}
+STHSetComponentInstallerPolicy::~STHSetComponentInstallerPolicy() = default;
 
 bool STHSetComponentInstallerPolicy::
     SupportsGroupPolicyEnabledComponentUpdates() const {

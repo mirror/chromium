@@ -8,8 +8,7 @@ DictionaryLoadObserver::DictionaryLoadObserver(const base::Closure& quit_task)
     : quit_task_(quit_task) {
 }
 
-DictionaryLoadObserver::~DictionaryLoadObserver() {
-}
+DictionaryLoadObserver::~DictionaryLoadObserver() = default;
 
 void DictionaryLoadObserver::OnCustomDictionaryLoaded() {
   quit_task_.Run();

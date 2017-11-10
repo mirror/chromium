@@ -23,8 +23,7 @@ DesktopBrowserFrameAuraX11::DesktopBrowserFrameAuraX11(
                  base::Unretained(this)));
 }
 
-DesktopBrowserFrameAuraX11::~DesktopBrowserFrameAuraX11() {
-}
+DesktopBrowserFrameAuraX11::~DesktopBrowserFrameAuraX11() = default;
 
 views::Widget::InitParams DesktopBrowserFrameAuraX11::GetWidgetParams() {
   views::Widget::InitParams params;

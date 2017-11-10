@@ -135,8 +135,8 @@ void AddPattern(URLPatternSet* extent, const std::string& pattern) {
 
 class PermissionsUpdaterTestDelegate : public PermissionsUpdater::Delegate {
  public:
-  PermissionsUpdaterTestDelegate() {}
-  ~PermissionsUpdaterTestDelegate() override {}
+  PermissionsUpdaterTestDelegate() = default;
+  ~PermissionsUpdaterTestDelegate() override = default;
 
   // PermissionsUpdater::Delegate
   void InitializePermissions(

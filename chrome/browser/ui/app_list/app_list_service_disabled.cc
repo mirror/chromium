@@ -41,7 +41,7 @@ class AppListServiceDisabled : public AppListService {
  private:
   friend struct base::DefaultSingletonTraits<AppListServiceDisabled>;
 
-  AppListServiceDisabled() {}
+  AppListServiceDisabled() = default;
 
   // AppListService overrides:
   void SetAppListNextPaintCallback(void (*callback)()) override {}

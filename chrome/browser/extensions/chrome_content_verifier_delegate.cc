@@ -116,8 +116,7 @@ ChromeContentVerifierDelegate::ChromeContentVerifierDelegate(
       policy_extension_reinstaller_(
           base::MakeUnique<PolicyExtensionReinstaller>(context_)) {}
 
-ChromeContentVerifierDelegate::~ChromeContentVerifierDelegate() {
-}
+ChromeContentVerifierDelegate::~ChromeContentVerifierDelegate() = default;
 
 ContentVerifierDelegate::Mode ChromeContentVerifierDelegate::ShouldBeVerified(
     const Extension& extension) {

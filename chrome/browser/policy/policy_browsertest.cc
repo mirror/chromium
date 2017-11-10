@@ -316,8 +316,8 @@ void RedirectHostsToTestData(const char* const urls[], size_t size) {
 // Fails requests using ERR_CONNECTION_RESET.
 class FailedJobInterceptor : public net::URLRequestInterceptor {
  public:
-  FailedJobInterceptor() {}
-  ~FailedJobInterceptor() override {}
+  FailedJobInterceptor() = default;
+  ~FailedJobInterceptor() override = default;
 
   // URLRequestInterceptor implementation:
   net::URLRequestJob* MaybeInterceptRequest(
@@ -552,7 +552,8 @@ WebContentsLoadedOrDestroyedWatcher::WebContentsLoadedOrDestroyedWatcher(
       message_loop_runner_(new content::MessageLoopRunner) {
 }
 
-WebContentsLoadedOrDestroyedWatcher::~WebContentsLoadedOrDestroyedWatcher() {}
+WebContentsLoadedOrDestroyedWatcher::~WebContentsLoadedOrDestroyedWatcher() =
+    default;
 
 void WebContentsLoadedOrDestroyedWatcher::Wait() {
   message_loop_runner_->Run();
@@ -627,8 +628,8 @@ extensions::MessagingDelegate::PolicyPermission IsNativeMessagingHostAllowed(
 
 class PolicyTest : public InProcessBrowserTest {
  protected:
-  PolicyTest() {}
-  ~PolicyTest() override {}
+  PolicyTest() = default;
+  ~PolicyTest() override = default;
 
   void SetUp() override {
     test_extension_cache_.reset(new extensions::ExtensionCacheFake());
@@ -2919,8 +2920,8 @@ class RestoreOnStartupPolicyTest
       public testing::WithParamInterface<
           void (RestoreOnStartupPolicyTest::*)(void)> {
  public:
-  RestoreOnStartupPolicyTest() {}
-  virtual ~RestoreOnStartupPolicyTest() {}
+  RestoreOnStartupPolicyTest() = default;
+  virtual ~RestoreOnStartupPolicyTest() = default;
 
 #if defined(OS_CHROMEOS)
   void SetUpCommandLine(base::CommandLine* command_line) override {
@@ -3047,8 +3048,8 @@ INSTANTIATE_TEST_CASE_P(
 // started.
 class PolicyStatisticsCollectorTest : public PolicyTest {
  public:
-  PolicyStatisticsCollectorTest() {}
-  ~PolicyStatisticsCollectorTest() override {}
+  PolicyStatisticsCollectorTest() = default;
+  ~PolicyStatisticsCollectorTest() override = default;
 
   void SetUpInProcessBrowserTestFixture() override {
     PolicyTest::SetUpInProcessBrowserTestFixture();
@@ -3113,7 +3114,7 @@ class MediaStreamDevicesControllerBrowserTest
       : request_url_allowed_via_whitelist_(false) {
     policy_value_ = GetParam();
   }
-  virtual ~MediaStreamDevicesControllerBrowserTest() {}
+  virtual ~MediaStreamDevicesControllerBrowserTest() = default;
 
   void SetUpOnMainThread() override {
     PolicyTest::SetUpOnMainThread();
@@ -3803,9 +3804,9 @@ class ComponentUpdaterPolicyTest : public PolicyTest {
 const char ComponentUpdaterPolicyTest::component_id_[] =
     "jebgalgnebhfojomionfpkfelancnnkf";
 
-ComponentUpdaterPolicyTest::ComponentUpdaterPolicyTest() {}
+ComponentUpdaterPolicyTest::ComponentUpdaterPolicyTest() = default;
 
-ComponentUpdaterPolicyTest::~ComponentUpdaterPolicyTest() {}
+ComponentUpdaterPolicyTest::~ComponentUpdaterPolicyTest() = default;
 
 void ComponentUpdaterPolicyTest::SetEnableComponentUpdates(
     bool enable_component_updates) {
@@ -3821,7 +3822,7 @@ update_client::CrxComponent ComponentUpdaterPolicyTest::MakeCrxComponent(
     bool supports_group_policy_enable_component_updates) {
   class MockInstaller : public update_client::CrxInstaller {
    public:
-    MockInstaller() {}
+    MockInstaller() = default;
 
     void Install(const base::FilePath& unpack_path,
                  const std::string& public_key,
@@ -3839,7 +3840,7 @@ update_client::CrxComponent ComponentUpdaterPolicyTest::MakeCrxComponent(
     MOCK_METHOD0(Uninstall, bool());
 
    private:
-    ~MockInstaller() override {}
+    ~MockInstaller() override = default;
   };
 
   // component id "jebgalgnebhfojomionfpkfelancnnkf".
@@ -4109,7 +4110,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, NativeMessagingWhitelist) {
 // Sets the hardware acceleration mode policy before the browser is started.
 class HardwareAccelerationModePolicyTest : public PolicyTest {
  public:
-  HardwareAccelerationModePolicyTest() {}
+  HardwareAccelerationModePolicyTest() = default;
 
   void SetUpInProcessBrowserTestFixture() override {
     PolicyTest::SetUpInProcessBrowserTestFixture();
@@ -4324,7 +4325,7 @@ IN_PROC_BROWSER_TEST_F(ArcPolicyTest, ArcLocationServiceEnabled) {
 class NetworkTimePolicyTest : public PolicyTest {
  public:
   NetworkTimePolicyTest() : PolicyTest() {}
-  ~NetworkTimePolicyTest() override {}
+  ~NetworkTimePolicyTest() override = default;
 
   void SetUpOnMainThread() override {
     std::map<std::string, std::string> parameters;

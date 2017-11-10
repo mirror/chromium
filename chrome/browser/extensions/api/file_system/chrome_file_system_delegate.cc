@@ -225,9 +225,9 @@ void DispatchVolumeListChangeEvent(content::BrowserContext* browser_context) {
 }  // namespace file_system_api
 #endif  // defined(OS_CHROMEOS)
 
-ChromeFileSystemDelegate::ChromeFileSystemDelegate() {}
+ChromeFileSystemDelegate::ChromeFileSystemDelegate() = default;
 
-ChromeFileSystemDelegate::~ChromeFileSystemDelegate() {}
+ChromeFileSystemDelegate::~ChromeFileSystemDelegate() = default;
 
 base::FilePath ChromeFileSystemDelegate::GetDefaultDirectory() {
   base::FilePath documents_dir;

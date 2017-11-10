@@ -58,9 +58,9 @@ class InstantUIMessageHandler
   DISALLOW_COPY_AND_ASSIGN(InstantUIMessageHandler);
 };
 
-InstantUIMessageHandler::InstantUIMessageHandler() {}
+InstantUIMessageHandler::InstantUIMessageHandler() = default;
 
-InstantUIMessageHandler::~InstantUIMessageHandler() {}
+InstantUIMessageHandler::~InstantUIMessageHandler() = default;
 
 void InstantUIMessageHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

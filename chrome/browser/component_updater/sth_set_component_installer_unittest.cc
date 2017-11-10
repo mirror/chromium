@@ -38,7 +38,7 @@ class StoringSTHObserver : public net::ct::STHObserver {
 
 class STHSetComponentInstallerTest : public PlatformTest {
  public:
-  STHSetComponentInstallerTest() {}
+  STHSetComponentInstallerTest() = default;
   void SetUp() override {
     PlatformTest::SetUp();
 

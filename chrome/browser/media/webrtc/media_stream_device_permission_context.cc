@@ -35,7 +35,8 @@ MediaStreamDevicePermissionContext::MediaStreamDevicePermissionContext(
          content_settings_type_ == CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA);
 }
 
-MediaStreamDevicePermissionContext::~MediaStreamDevicePermissionContext() {}
+MediaStreamDevicePermissionContext::~MediaStreamDevicePermissionContext() =
+    default;
 
 void MediaStreamDevicePermissionContext::DecidePermission(
     content::WebContents* web_contents,

@@ -115,7 +115,7 @@ SystemNetworkContextManager::SystemNetworkContextManager() {
     value->GetAsBoolean(&is_quic_allowed_);
 }
 
-SystemNetworkContextManager::~SystemNetworkContextManager() {}
+SystemNetworkContextManager::~SystemNetworkContextManager() = default;
 
 void SystemNetworkContextManager::DisableQuic() {
   is_quic_allowed_ = false;

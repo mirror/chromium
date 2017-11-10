@@ -33,9 +33,9 @@ printing::PrintRenderFrameHelper* GetPrintRenderFrameHelper(
 
 }  // namespace
 
-ChromePDFPrintClient::ChromePDFPrintClient() {}
+ChromePDFPrintClient::ChromePDFPrintClient() = default;
 
-ChromePDFPrintClient::~ChromePDFPrintClient() {}
+ChromePDFPrintClient::~ChromePDFPrintClient() = default;
 
 bool ChromePDFPrintClient::IsPrintingEnabled(PP_Instance instance_id) {
   blink::WebElement element = GetWebElement(instance_id);

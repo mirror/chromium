@@ -181,8 +181,7 @@ InProcessBrowserTest::InProcessBrowserTest()
 #endif
 }
 
-InProcessBrowserTest::~InProcessBrowserTest() {
-}
+InProcessBrowserTest::~InProcessBrowserTest() = default;
 
 void InProcessBrowserTest::SetUp() {
   // Browser tests will create their own g_browser_process later.

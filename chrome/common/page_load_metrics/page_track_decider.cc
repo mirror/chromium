@@ -6,8 +6,8 @@
 
 namespace page_load_metrics {
 
-PageTrackDecider::PageTrackDecider() {}
-PageTrackDecider::~PageTrackDecider() {}
+PageTrackDecider::PageTrackDecider() = default;
+PageTrackDecider::~PageTrackDecider() = default;
 
 bool PageTrackDecider::ShouldTrack() {
   // Ignore non-HTTP schemes (e.g. chrome://).

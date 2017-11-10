@@ -123,7 +123,7 @@ class FlagsDOMHandler : public WebUIMessageHandler {
   FlagsDOMHandler() : access_(flags_ui::kGeneralAccessFlagsOnly),
                       experimental_features_requested_(false) {
   }
-  ~FlagsDOMHandler() override {}
+  ~FlagsDOMHandler() override = default;
 
   // Initializes the DOM handler with the provided flags storage and flags
   // access. If there were flags experiments requested from javascript before
@@ -338,8 +338,7 @@ FlagsUI::FlagsUI(content::WebUI* web_ui)
   content::WebUIDataSource::Add(profile, CreateFlagsUIHTMLSource());
 }
 
-FlagsUI::~FlagsUI() {
-}
+FlagsUI::~FlagsUI() = default;
 
 // static
 base::RefCountedMemory* FlagsUI::GetFaviconResourceBytes(

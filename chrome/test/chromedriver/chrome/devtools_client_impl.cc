@@ -72,13 +72,13 @@ Status FakeCloseFrontends() {
 
 namespace internal {
 
-InspectorEvent::InspectorEvent() {}
+InspectorEvent::InspectorEvent() = default;
 
-InspectorEvent::~InspectorEvent() {}
+InspectorEvent::~InspectorEvent() = default;
 
-InspectorCommandResponse::InspectorCommandResponse() {}
+InspectorCommandResponse::InspectorCommandResponse() = default;
 
-InspectorCommandResponse::~InspectorCommandResponse() {}
+InspectorCommandResponse::~InspectorCommandResponse() = default;
 
 }  // namespace internal
 
@@ -128,7 +128,7 @@ DevToolsClientImpl::DevToolsClientImpl(
       next_id_(1),
       stack_count_(0) {}
 
-DevToolsClientImpl::~DevToolsClientImpl() {}
+DevToolsClientImpl::~DevToolsClientImpl() = default;
 
 void DevToolsClientImpl::SetParserFuncForTesting(
     const ParserFunc& parser_func) {
@@ -253,7 +253,7 @@ Status DevToolsClientImpl::HandleEventsUntil(
 DevToolsClientImpl::ResponseInfo::ResponseInfo(const std::string& method)
     : state(kWaiting), method(method) {}
 
-DevToolsClientImpl::ResponseInfo::~ResponseInfo() {}
+DevToolsClientImpl::ResponseInfo::~ResponseInfo() = default;
 
 Status DevToolsClientImpl::SendCommandInternal(
     const std::string& method,

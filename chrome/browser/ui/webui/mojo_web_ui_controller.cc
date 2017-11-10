@@ -14,8 +14,7 @@
 MojoWebUIControllerBase::MojoWebUIControllerBase(content::WebUI* contents)
     : WebUIController(contents) {}
 
-MojoWebUIControllerBase::~MojoWebUIControllerBase() {
-}
+MojoWebUIControllerBase::~MojoWebUIControllerBase() = default;
 
 void MojoWebUIControllerBase::RenderFrameCreated(
     content::RenderFrameHost* render_frame_host) {

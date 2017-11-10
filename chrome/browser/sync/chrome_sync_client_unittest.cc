@@ -27,7 +27,7 @@ class ChromeSyncClientTest : public testing::Test {
   ChromeSyncClientTest()
       : profile_(new TestingProfile()),
         sync_client_(new ChromeSyncClient(profile_.get())) {}
-  ~ChromeSyncClientTest() override {}
+  ~ChromeSyncClientTest() override = default;
 
   ChromeSyncClient* sync_client() { return sync_client_.get(); }
 

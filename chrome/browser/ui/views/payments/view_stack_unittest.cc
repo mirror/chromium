@@ -25,7 +25,7 @@ class TestStackView : public views::View {
     bool view_deleted_;
   };
 
-  TestStackView() {}
+  TestStackView() = default;
   ~TestStackView() override {
     for (auto& observer: observers_) {
       observer.OnViewBeingDeleted();

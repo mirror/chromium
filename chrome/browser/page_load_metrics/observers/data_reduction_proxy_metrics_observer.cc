@@ -122,7 +122,8 @@ DataReductionProxyMetricsObserver::DataReductionProxyMetricsObserver()
       network_bytes_proxied_(0),
       network_bytes_(0) {}
 
-DataReductionProxyMetricsObserver::~DataReductionProxyMetricsObserver() {}
+DataReductionProxyMetricsObserver::~DataReductionProxyMetricsObserver() =
+    default;
 
 // Check if the NavigationData indicates anything about the DataReductionProxy.
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy

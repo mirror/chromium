@@ -375,7 +375,7 @@ ProfileImplIOData::LazyParams::LazyParams()
       session_cookie_mode(
           content::CookieStoreConfig::EPHEMERAL_SESSION_COOKIES) {}
 
-ProfileImplIOData::LazyParams::~LazyParams() {}
+ProfileImplIOData::LazyParams::~LazyParams() = default;
 
 ProfileImplIOData::ProfileImplIOData()
     : ProfileIOData(Profile::REGULAR_PROFILE),

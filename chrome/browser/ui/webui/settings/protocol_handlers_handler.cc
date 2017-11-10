@@ -24,11 +24,9 @@
 
 namespace settings {
 
-ProtocolHandlersHandler::ProtocolHandlersHandler() {
-}
+ProtocolHandlersHandler::ProtocolHandlersHandler() = default;
 
-ProtocolHandlersHandler::~ProtocolHandlersHandler() {
-}
+ProtocolHandlersHandler::~ProtocolHandlersHandler() = default;
 
 void ProtocolHandlersHandler::OnJavascriptAllowed() {
   notification_registrar_.Add(

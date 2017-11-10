@@ -50,7 +50,7 @@ static const char* kExampleHost = "example.com";
 
 class BrowsingDataRemoverBrowserTest : public InProcessBrowserTest {
  public:
-  BrowsingDataRemoverBrowserTest() {}
+  BrowsingDataRemoverBrowserTest() = default;
 
   void SetUpOnMainThread() override {
     base::FilePath path;

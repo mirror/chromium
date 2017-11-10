@@ -26,7 +26,7 @@ PDFIFrameNavigationThrottle::PDFIFrameNavigationThrottle(
     content::NavigationHandle* navigation_handle)
     : content::NavigationThrottle(navigation_handle) {}
 
-PDFIFrameNavigationThrottle::~PDFIFrameNavigationThrottle() {}
+PDFIFrameNavigationThrottle::~PDFIFrameNavigationThrottle() = default;
 
 const char* PDFIFrameNavigationThrottle::GetNameForLogging() {
   return "PDFIFrameNavigationThrottle";

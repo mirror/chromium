@@ -34,7 +34,8 @@ AutocompleteActionPredictorFactory::AutocompleteActionPredictorFactory()
   DependsOn(PredictorDatabaseFactory::GetInstance());
 }
 
-AutocompleteActionPredictorFactory::~AutocompleteActionPredictorFactory() {}
+AutocompleteActionPredictorFactory::~AutocompleteActionPredictorFactory() =
+    default;
 
 content::BrowserContext*
 AutocompleteActionPredictorFactory::GetBrowserContextToUse(

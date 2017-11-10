@@ -40,8 +40,7 @@ ExclusiveAccessBubble::ExclusiveAccessBubble(
   DCHECK_NE(EXCLUSIVE_ACCESS_BUBBLE_TYPE_NONE, bubble_type_);
 }
 
-ExclusiveAccessBubble::~ExclusiveAccessBubble() {
-}
+ExclusiveAccessBubble::~ExclusiveAccessBubble() = default;
 
 void ExclusiveAccessBubble::OnUserInput() {
   if (!ExclusiveAccessManager::IsSimplifiedFullscreenUIEnabled())

@@ -21,7 +21,7 @@ const char ProbeMessage::kEncodingString[] =
     "T\xd3?\xa5h2\x9c\x8en\xf1Q6\xbc{\xc6-4\xfa$f\xb9[\xa6\xcd@6,\xdf\xb3i-\xe6"
     "v\x9eV\x8dXd\xd9kE\xf6=\xbeO";
 
-ProbeMessage::ProbeMessage() {}
+ProbeMessage::ProbeMessage() = default;
 
 bool ProbeMessage::ParseInput(const std::string& input,
                               ProbePacket* probe_packet) const {

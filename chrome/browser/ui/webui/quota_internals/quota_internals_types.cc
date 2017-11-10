@@ -36,7 +36,7 @@ GlobalStorageInfo::GlobalStorageInfo(storage::StorageType type)
     : type_(type), usage_(-1), unlimited_usage_(-1), quota_(-1) {
 }
 
-GlobalStorageInfo::~GlobalStorageInfo() {}
+GlobalStorageInfo::~GlobalStorageInfo() = default;
 
 std::unique_ptr<base::Value> GlobalStorageInfo::NewValue() const {
   // TODO(tzik): Add CreateLongIntegerValue to base/values.h and remove
@@ -57,7 +57,7 @@ PerHostStorageInfo::PerHostStorageInfo(const std::string& host,
     : host_(host), type_(type), usage_(-1), quota_(-1) {
 }
 
-PerHostStorageInfo::~PerHostStorageInfo() {}
+PerHostStorageInfo::~PerHostStorageInfo() = default;
 
 std::unique_ptr<base::Value> PerHostStorageInfo::NewValue() const {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
@@ -83,7 +83,7 @@ PerOriginStorageInfo::PerOriginStorageInfo(const GURL& origin,
 PerOriginStorageInfo::PerOriginStorageInfo(const PerOriginStorageInfo& other) =
     default;
 
-PerOriginStorageInfo::~PerOriginStorageInfo() {}
+PerOriginStorageInfo::~PerOriginStorageInfo() = default;
 
 std::unique_ptr<base::Value> PerOriginStorageInfo::NewValue() const {
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);

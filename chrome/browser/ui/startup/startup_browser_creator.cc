@@ -115,7 +115,7 @@ class ProfileLaunchObserver : public content::NotificationObserver {
     registrar_.Add(this, chrome::NOTIFICATION_BROWSER_WINDOW_READY,
                    content::NotificationService::AllSources());
   }
-  ~ProfileLaunchObserver() override {}
+  ~ProfileLaunchObserver() override = default;
 
   void Observe(int type,
                const content::NotificationSource& source,
@@ -282,7 +282,7 @@ StartupBrowserCreator::StartupBrowserCreator()
     : is_default_browser_dialog_suppressed_(false),
       show_main_browser_window_(true) {}
 
-StartupBrowserCreator::~StartupBrowserCreator() {}
+StartupBrowserCreator::~StartupBrowserCreator() = default;
 
 // static
 bool StartupBrowserCreator::was_restarted_read_ = false;

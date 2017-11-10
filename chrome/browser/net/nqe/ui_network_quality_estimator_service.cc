@@ -37,7 +37,7 @@ class PrefDelegateImpl
       : pref_service_(pref_service), path_(prefs::kNetworkQualities) {
     DCHECK(pref_service_);
   }
-  ~PrefDelegateImpl() override {}
+  ~PrefDelegateImpl() override = default;
 
   void SetDictionaryValue(const base::DictionaryValue& value) override {
     DCHECK(thread_checker_.CalledOnValidThread());

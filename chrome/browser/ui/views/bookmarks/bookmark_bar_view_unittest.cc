@@ -38,7 +38,7 @@ using bookmarks::BookmarkNode;
 
 class BookmarkBarViewTest : public BrowserWithTestWindowTest {
  public:
-  BookmarkBarViewTest() {}
+  BookmarkBarViewTest() = default;
 
   void SetUp() override {
     BrowserWithTestWindowTest::SetUp();

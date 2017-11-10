@@ -40,7 +40,8 @@ security_state::SSLStatusInputEventData* GetOrCreateSSLStatusInputEventData(
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(InsecureSensitiveInputDriverFactory);
 
-InsecureSensitiveInputDriverFactory::~InsecureSensitiveInputDriverFactory() {}
+InsecureSensitiveInputDriverFactory::~InsecureSensitiveInputDriverFactory() =
+    default;
 
 // static
 InsecureSensitiveInputDriverFactory*

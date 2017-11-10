@@ -9,9 +9,11 @@
 #include "chrome/browser/safe_browsing/certificate_reporting_service.h"
 #include "chrome/browser/safe_browsing/certificate_reporting_service_factory.h"
 
-CertificateReportingMetricsProvider::CertificateReportingMetricsProvider() {}
+CertificateReportingMetricsProvider::CertificateReportingMetricsProvider() =
+    default;
 
-CertificateReportingMetricsProvider::~CertificateReportingMetricsProvider() {}
+CertificateReportingMetricsProvider::~CertificateReportingMetricsProvider() =
+    default;
 
 void CertificateReportingMetricsProvider::ProvideCurrentSessionData(
     metrics::ChromeUserMetricsExtension* unused) {

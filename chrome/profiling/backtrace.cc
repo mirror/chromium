@@ -30,7 +30,7 @@ Backtrace::Backtrace(std::vector<Address>&& a)
 
 Backtrace::Backtrace(Backtrace&& other) noexcept = default;
 
-Backtrace::~Backtrace() {}
+Backtrace::~Backtrace() = default;
 
 Backtrace& Backtrace::operator=(Backtrace&& other) = default;
 

@@ -12,7 +12,7 @@ using content::BrowserThread;
 MockBrowsingDataQuotaHelper::MockBrowsingDataQuotaHelper(Profile* profile)
     : BrowsingDataQuotaHelper() {}
 
-MockBrowsingDataQuotaHelper::~MockBrowsingDataQuotaHelper() {}
+MockBrowsingDataQuotaHelper::~MockBrowsingDataQuotaHelper() = default;
 
 void MockBrowsingDataQuotaHelper::StartFetching(
     const FetchResultCallback& callback) {

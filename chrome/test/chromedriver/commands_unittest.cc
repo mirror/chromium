@@ -380,7 +380,7 @@ class FindElementWebView : public StubWebView {
       }
     }
   }
-  ~FindElementWebView() override {}
+  ~FindElementWebView() override = default;
 
   void Verify(const std::string& expected_frame,
               const base::ListValue* expected_args,
@@ -611,7 +611,7 @@ class ErrorCallFunctionWebView : public StubWebView {
  public:
   explicit ErrorCallFunctionWebView(StatusCode code)
       : StubWebView("1"), code_(code) {}
-  ~ErrorCallFunctionWebView() override {}
+  ~ErrorCallFunctionWebView() override = default;
 
   // Overridden from WebView:
   Status CallFunction(const std::string& frame,
@@ -665,7 +665,7 @@ namespace {
 class MockCommandListener : public CommandListener {
  public:
   MockCommandListener() : called_(false) {}
-  ~MockCommandListener() override {}
+  ~MockCommandListener() override = default;
 
   Status BeforeCommand(const std::string& command_name) override {
     called_ = true;
@@ -771,8 +771,8 @@ namespace {
 
 class FailingCommandListener : public CommandListener {
  public:
-  FailingCommandListener() {}
-  ~FailingCommandListener() override {}
+  FailingCommandListener() = default;
+  ~FailingCommandListener() override = default;
 
   Status BeforeCommand(const std::string& command_name) override {
     return Status(kUnknownError);

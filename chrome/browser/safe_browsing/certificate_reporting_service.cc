@@ -53,7 +53,7 @@ CertificateReportingService::BoundedReportList::BoundedReportList(
   DCHECK(thread_checker_.CalledOnValidThread());
 }
 
-CertificateReportingService::BoundedReportList::~BoundedReportList() {}
+CertificateReportingService::BoundedReportList::~BoundedReportList() = default;
 
 void CertificateReportingService::BoundedReportList::Add(const Report& item) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -95,7 +95,7 @@ CertificateReportingService::Reporter::Reporter(
       current_report_id_(0),
       weak_factory_(this) {}
 
-CertificateReportingService::Reporter::~Reporter() {}
+CertificateReportingService::Reporter::~Reporter() = default;
 
 void CertificateReportingService::Reporter::Send(
     const std::string& serialized_report) {

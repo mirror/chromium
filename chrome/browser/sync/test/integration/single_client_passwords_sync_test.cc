@@ -22,7 +22,7 @@ using autofill::PasswordForm;
 class SingleClientPasswordsSyncTest : public SyncTest {
  public:
   SingleClientPasswordsSyncTest() : SyncTest(SINGLE_CLIENT) {}
-  ~SingleClientPasswordsSyncTest() override {}
+  ~SingleClientPasswordsSyncTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SingleClientPasswordsSyncTest);

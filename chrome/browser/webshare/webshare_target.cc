@@ -16,7 +16,7 @@ WebShareTarget::WebShareTarget(GURL manifest_url,
       name_(std::move(name)),
       url_template_(std::move(url_template)) {}
 
-WebShareTarget::~WebShareTarget() {}
+WebShareTarget::~WebShareTarget() = default;
 
 bool WebShareTarget::operator==(const WebShareTarget& other) const {
   return std::tie(manifest_url_, name_, url_template_) ==

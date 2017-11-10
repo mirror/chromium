@@ -20,7 +20,7 @@ SigninGlobalErrorFactory::SigninGlobalErrorFactory()
   DependsOn(GlobalErrorServiceFactory::GetInstance());
 }
 
-SigninGlobalErrorFactory::~SigninGlobalErrorFactory() {}
+SigninGlobalErrorFactory::~SigninGlobalErrorFactory() = default;
 
 // static
 SigninGlobalError* SigninGlobalErrorFactory::GetForProfile(

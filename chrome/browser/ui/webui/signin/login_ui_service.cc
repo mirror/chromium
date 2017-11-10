@@ -24,7 +24,7 @@ LoginUIService::LoginUIService(Profile* profile)
 {
 }
 
-LoginUIService::~LoginUIService() {}
+LoginUIService::~LoginUIService() = default;
 
 void LoginUIService::AddObserver(LoginUIService::Observer* observer) {
   observer_list_.AddObserver(observer);

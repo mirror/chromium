@@ -63,8 +63,7 @@ AutocompleteClassifierFactory::AutocompleteClassifierFactory()
   DependsOn(ContextualSuggestionsServiceFactory::GetInstance());
 }
 
-AutocompleteClassifierFactory::~AutocompleteClassifierFactory() {
-}
+AutocompleteClassifierFactory::~AutocompleteClassifierFactory() = default;
 
 content::BrowserContext* AutocompleteClassifierFactory::GetBrowserContextToUse(
     content::BrowserContext* context) const {

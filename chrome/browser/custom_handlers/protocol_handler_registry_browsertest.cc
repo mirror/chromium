@@ -25,7 +25,7 @@ using content::WebContents;
 
 class RegisterProtocolHandlerBrowserTest : public InProcessBrowserTest {
  public:
-  RegisterProtocolHandlerBrowserTest() { }
+  RegisterProtocolHandlerBrowserTest() = default;
 
   TestRenderViewContextMenu* CreateContextMenu(GURL url) {
     content::ContextMenuParams params;

@@ -151,7 +151,7 @@ std::unique_ptr<views::Label> GetLabelForMissingInformation(
 class PaymentRequestRowBorderPainter : public views::Painter {
  public:
   explicit PaymentRequestRowBorderPainter(SkColor color) : color_(color) {}
-  ~PaymentRequestRowBorderPainter() override {}
+  ~PaymentRequestRowBorderPainter() override = default;
 
   // views::Painter:
   gfx::Size GetMinimumSize() const override {

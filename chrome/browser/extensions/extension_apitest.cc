@@ -153,7 +153,7 @@ ExtensionApiTest::ExtensionApiTest() {
       base::Bind(&HandleSetHeaderRequest));
 }
 
-ExtensionApiTest::~ExtensionApiTest() {}
+ExtensionApiTest::~ExtensionApiTest() = default;
 
 void ExtensionApiTest::SetUpOnMainThread() {
   ExtensionBrowserTest::SetUpOnMainThread();

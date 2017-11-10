@@ -65,7 +65,7 @@ EntryPicker::EntryPicker(EntryPickerClient* client,
                                   nullptr);
 }
 
-EntryPicker::~EntryPicker() {}
+EntryPicker::~EntryPicker() = default;
 
 void EntryPicker::FileSelected(const base::FilePath& path,
                                int index,

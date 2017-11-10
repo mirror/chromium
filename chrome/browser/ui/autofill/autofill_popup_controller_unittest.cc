@@ -45,7 +45,7 @@ class MockAutofillExternalDelegate : public AutofillExternalDelegate {
   MockAutofillExternalDelegate(AutofillManager* autofill_manager,
                                AutofillDriver* autofill_driver)
       : AutofillExternalDelegate(autofill_manager, autofill_driver) {}
-  ~MockAutofillExternalDelegate() override {}
+  ~MockAutofillExternalDelegate() override = default;
 
   void DidSelectSuggestion(const base::string16& value,
                            int identifier) override {}
@@ -61,7 +61,7 @@ class MockAutofillExternalDelegate : public AutofillExternalDelegate {
 class MockAutofillClient : public autofill::TestAutofillClient {
  public:
   MockAutofillClient() : prefs_(autofill::test::PrefServiceForTesting()) {}
-  ~MockAutofillClient() override {}
+  ~MockAutofillClient() override = default;
 
   PrefService* GetPrefs() override { return prefs_.get(); }
 
@@ -73,7 +73,7 @@ class MockAutofillClient : public autofill::TestAutofillClient {
 
 class MockAutofillPopupView : public AutofillPopupView {
  public:
-  MockAutofillPopupView() {}
+  MockAutofillPopupView() = default;
 
   MOCK_METHOD0(Show, void());
   MOCK_METHOD0(Hide, void());
@@ -96,7 +96,7 @@ class TestAutofillPopupController : public AutofillPopupControllerImpl {
                                     NULL,
                                     element_bounds,
                                     base::i18n::UNKNOWN_DIRECTION) {}
-  ~TestAutofillPopupController() override {}
+  ~TestAutofillPopupController() override = default;
 
   // Making protected functions public for testing
   using AutofillPopupControllerImpl::GetLineCount;
@@ -129,7 +129,7 @@ class AutofillPopupControllerUnitTest : public ChromeRenderViewHostTestHarness {
   AutofillPopupControllerUnitTest()
       : autofill_client_(new MockAutofillClient()),
         autofill_popup_controller_(NULL) {}
-  ~AutofillPopupControllerUnitTest() override {}
+  ~AutofillPopupControllerUnitTest() override = default;
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();

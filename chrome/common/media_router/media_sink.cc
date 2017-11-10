@@ -16,9 +16,9 @@ MediaSink::MediaSink(const MediaSink::Id& sink_id,
 
 MediaSink::MediaSink(const MediaSink& other) = default;
 
-MediaSink::MediaSink() {}
+MediaSink::MediaSink() = default;
 
-MediaSink::~MediaSink() {}
+MediaSink::~MediaSink() = default;
 
 bool MediaSink::Equals(const MediaSink& other) const {
   return sink_id_ == other.sink_id_;

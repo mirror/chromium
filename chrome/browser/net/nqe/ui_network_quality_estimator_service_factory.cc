@@ -29,7 +29,7 @@ UINetworkQualityEstimatorServiceFactory::
           BrowserContextDependencyManager::GetInstance()) {}
 
 UINetworkQualityEstimatorServiceFactory::
-    ~UINetworkQualityEstimatorServiceFactory() {}
+    ~UINetworkQualityEstimatorServiceFactory() = default;
 
 bool UINetworkQualityEstimatorServiceFactory::
     ServiceIsCreatedWithBrowserContext() const {

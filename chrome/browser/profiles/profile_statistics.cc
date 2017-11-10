@@ -15,8 +15,7 @@ ProfileStatistics::ProfileStatistics(Profile* profile)
     : profile_(profile), aggregator_(nullptr), weak_ptr_factory_(this) {
 }
 
-ProfileStatistics::~ProfileStatistics() {
-}
+ProfileStatistics::~ProfileStatistics() = default;
 
 void ProfileStatistics::GatherStatistics(
     const profiles::ProfileStatisticsCallback& callback) {

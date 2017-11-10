@@ -154,7 +154,7 @@ class WebstoreInlineInstallerForTest : public WebstoreInlineInstaller {
   }
 
  private:
-  ~WebstoreInlineInstallerForTest() override {}
+  ~WebstoreInlineInstallerForTest() override = default;
 
   friend class base::RefCountedThreadSafe<WebstoreStandaloneInstaller>;
 
@@ -189,7 +189,7 @@ class WebstoreInlineInstallerForTestFactory :
       bool enable_safebrowsing_redirects)
       : last_installer_(nullptr),
         enable_safebrowsing_redirects_(enable_safebrowsing_redirects) {}
-  ~WebstoreInlineInstallerForTestFactory() override {}
+  ~WebstoreInlineInstallerForTestFactory() override = default;
 
   WebstoreInlineInstallerForTest* last_installer() { return last_installer_; }
 
@@ -397,7 +397,7 @@ class WebstoreInlineInstallerRedirectTest
       public ::testing::WithParamInterface<bool> {
  public:
   WebstoreInlineInstallerRedirectTest() : cws_request_received_(false) {}
-  ~WebstoreInlineInstallerRedirectTest() override {}
+  ~WebstoreInlineInstallerRedirectTest() override = default;
 
   void SetUpOnMainThread() override {
     WebstoreInstallerTest::SetUpOnMainThread();
@@ -521,8 +521,8 @@ INSTANTIATE_TEST_CASE_P(SafeBrowsingRedirectTracking,
 
 class WebstoreInlineInstallerListenerTest : public WebstoreInlineInstallerTest {
  public:
-  WebstoreInlineInstallerListenerTest() {}
-  ~WebstoreInlineInstallerListenerTest() override {}
+  WebstoreInlineInstallerListenerTest() = default;
+  ~WebstoreInlineInstallerListenerTest() override = default;
 
  protected:
   void RunTest(const std::string& file_name) {

@@ -259,7 +259,8 @@ DevToolsFileSystemIndexer::FileSystemIndexingJob::FileSystemIndexingJob(
   current_trigrams_.reserve(kTrigramCount);
 }
 
-DevToolsFileSystemIndexer::FileSystemIndexingJob::~FileSystemIndexingJob() {}
+DevToolsFileSystemIndexer::FileSystemIndexingJob::~FileSystemIndexingJob() =
+    default;
 
 void DevToolsFileSystemIndexer::FileSystemIndexingJob::Start() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -409,9 +410,9 @@ void DevToolsFileSystemIndexer::FileSystemIndexingJob::ReportWorked() {
   }
 }
 
-DevToolsFileSystemIndexer::DevToolsFileSystemIndexer() {}
+DevToolsFileSystemIndexer::DevToolsFileSystemIndexer() = default;
 
-DevToolsFileSystemIndexer::~DevToolsFileSystemIndexer() {}
+DevToolsFileSystemIndexer::~DevToolsFileSystemIndexer() = default;
 
 scoped_refptr<DevToolsFileSystemIndexer::FileSystemIndexingJob>
 DevToolsFileSystemIndexer::IndexPath(

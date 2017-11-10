@@ -79,8 +79,8 @@ const base::FilePath::CharType* kTitle1File = FILE_PATH_LITERAL("title1.html");
 
 class TaskManagerBrowserTest : public ExtensionBrowserTest {
  public:
-  TaskManagerBrowserTest() {}
-  ~TaskManagerBrowserTest() override {}
+  TaskManagerBrowserTest() = default;
+  ~TaskManagerBrowserTest() override = default;
 
   task_manager::TaskManagerTester* model() { return model_.get(); }
 
@@ -163,7 +163,7 @@ class TaskManagerBrowserTest : public ExtensionBrowserTest {
 
 class TaskManagerUtilityProcessBrowserTest : public TaskManagerBrowserTest {
  public:
-  TaskManagerUtilityProcessBrowserTest() {}
+  TaskManagerUtilityProcessBrowserTest() = default;
 
  protected:
   void SetUpCommandLine(base::CommandLine* command_line) override {
@@ -186,7 +186,7 @@ class TaskManagerMemoryCoordinatorBrowserTest : public TaskManagerBrowserTest {
     scoped_feature_list_.InitAndEnableFeature(features::kMemoryCoordinator);
   }
 
-  ~TaskManagerMemoryCoordinatorBrowserTest() override {}
+  ~TaskManagerMemoryCoordinatorBrowserTest() override = default;
 
  private:
   base::test::ScopedFeatureList scoped_feature_list_;
@@ -199,7 +199,7 @@ class TaskManagerMemoryCoordinatorBrowserTest : public TaskManagerBrowserTest {
 class TaskManagerOOPIFBrowserTest : public TaskManagerBrowserTest,
                                     public testing::WithParamInterface<bool> {
  public:
-  TaskManagerOOPIFBrowserTest() {}
+  TaskManagerOOPIFBrowserTest() = default;
 
  protected:
   void SetUpCommandLine(base::CommandLine* command_line) override {

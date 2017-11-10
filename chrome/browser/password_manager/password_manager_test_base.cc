@@ -274,8 +274,7 @@ void AddHSTSHostImpl(
 NavigationObserver::NavigationObserver(content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents),
       quit_on_entry_committed_(false) {}
-NavigationObserver::~NavigationObserver() {
-}
+NavigationObserver::~NavigationObserver() = default;
 
 void NavigationObserver::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {

@@ -23,7 +23,7 @@ AccountFetcherServiceFactory::AccountFetcherServiceFactory()
   DependsOn(ProfileOAuth2TokenServiceFactory::GetInstance());
 }
 
-AccountFetcherServiceFactory::~AccountFetcherServiceFactory() {}
+AccountFetcherServiceFactory::~AccountFetcherServiceFactory() = default;
 
 // static
 AccountFetcherService* AccountFetcherServiceFactory::GetForProfile(

@@ -16,7 +16,7 @@ ScopedVisibilityTracker::ScopedVisibilityTracker(base::TickClock* tick_clock,
     OnShown();
 }
 
-ScopedVisibilityTracker::~ScopedVisibilityTracker() {}
+ScopedVisibilityTracker::~ScopedVisibilityTracker() = default;
 
 void ScopedVisibilityTracker::OnShown() {
   Update(true /* in_foreground */);

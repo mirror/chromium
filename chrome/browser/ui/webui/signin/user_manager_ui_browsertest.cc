@@ -32,7 +32,7 @@ using ::testing::_;
 class MockLoginUIService : public LoginUIService {
  public:
   MockLoginUIService() : LoginUIService(nullptr) {}
-  ~MockLoginUIService() override {}
+  ~MockLoginUIService() override = default;
   MOCK_METHOD3(DisplayLoginResult,
                void(Browser* browser,
                     const base::string16& error_message,
@@ -47,7 +47,7 @@ std::unique_ptr<KeyedService> CreateLoginUIService(
 class UserManagerUIBrowserTest : public InProcessBrowserTest,
                                  public testing::WithParamInterface<bool> {
  public:
-  UserManagerUIBrowserTest() {}
+  UserManagerUIBrowserTest() = default;
 };
 
 IN_PROC_BROWSER_TEST_F(UserManagerUIBrowserTest, PageLoads) {

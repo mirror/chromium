@@ -19,7 +19,8 @@ ChromeExtensionApiFrameIdMapHelper::ChromeExtensionApiFrameIdMapHelper(
                  content::NotificationService::AllBrowserContextsAndSources());
 }
 
-ChromeExtensionApiFrameIdMapHelper::~ChromeExtensionApiFrameIdMapHelper() {}
+ChromeExtensionApiFrameIdMapHelper::~ChromeExtensionApiFrameIdMapHelper() =
+    default;
 
 void ChromeExtensionApiFrameIdMapHelper::GetTabAndWindowId(
     content::RenderFrameHost* rfh,

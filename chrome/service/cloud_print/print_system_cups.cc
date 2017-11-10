@@ -129,7 +129,7 @@ class PrintSystemCUPS : public PrintSystem {
   }
 
  private:
-  ~PrintSystemCUPS() override {}
+  ~PrintSystemCUPS() override = default;
 
   // Following functions are wrappers around corresponding CUPS functions.
   // <functions>2()  are called when print server is specified, and plain
@@ -392,7 +392,7 @@ class JobSpoolerCUPS : public PrintSystem::JobSpooler {
   }
 
  protected:
-  ~JobSpoolerCUPS() override {}
+  ~JobSpoolerCUPS() override = default;
 
  private:
   scoped_refptr<PrintSystemCUPS> print_system_;

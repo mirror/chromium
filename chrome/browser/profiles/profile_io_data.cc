@@ -645,7 +645,7 @@ ProfileIOData::ProfileParams::ProfileParams()
       profile(NULL) {
 }
 
-ProfileIOData::ProfileParams::~ProfileParams() {}
+ProfileIOData::ProfileParams::~ProfileParams() = default;
 
 ProfileIOData::ProfileIOData(Profile::ProfileType profile_type)
     : initialized_(false),
@@ -1013,7 +1013,7 @@ ProfileIOData::ResourceContext::ResourceContext(ProfileIOData* io_data)
   DCHECK(io_data);
 }
 
-ProfileIOData::ResourceContext::~ResourceContext() {}
+ProfileIOData::ResourceContext::~ResourceContext() = default;
 
 net::HostResolver* ProfileIOData::ResourceContext::GetHostResolver()  {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);

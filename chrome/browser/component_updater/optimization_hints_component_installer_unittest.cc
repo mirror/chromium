@@ -34,7 +34,7 @@ class TestOptimizationGuideService
   TestOptimizationGuideService(
       const scoped_refptr<base::SingleThreadTaskRunner>& io_thread_task_runner)
       : optimization_guide::OptimizationGuideService(io_thread_task_runner) {}
-  ~TestOptimizationGuideService() override {}
+  ~TestOptimizationGuideService() override = default;
 
   void ProcessHints(
       const optimization_guide::ComponentInfo& component_info) override {
@@ -55,8 +55,8 @@ class TestOptimizationGuideService
 class OptimizationHintsMockComponentUpdateService
     : public component_updater::MockComponentUpdateService {
  public:
-  OptimizationHintsMockComponentUpdateService() {}
-  ~OptimizationHintsMockComponentUpdateService() override {}
+  OptimizationHintsMockComponentUpdateService() = default;
+  ~OptimizationHintsMockComponentUpdateService() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(OptimizationHintsMockComponentUpdateService);
@@ -68,7 +68,7 @@ namespace component_updater {
 
 class OptimizationHintsComponentInstallerTest : public PlatformTest {
  public:
-  OptimizationHintsComponentInstallerTest() {}
+  OptimizationHintsComponentInstallerTest() = default;
 
   void SetUp() override {
     PlatformTest::SetUp();

@@ -71,8 +71,8 @@ void SelectComboboxRowForValue(views::Combobox* combobox,
 
 }  // namespace
 
-PersonalDataLoadedObserverMock::PersonalDataLoadedObserverMock() {}
-PersonalDataLoadedObserverMock::~PersonalDataLoadedObserverMock() {}
+PersonalDataLoadedObserverMock::PersonalDataLoadedObserverMock() = default;
+PersonalDataLoadedObserverMock::~PersonalDataLoadedObserverMock() = default;
 
 PaymentRequestBrowserTestBase::PaymentRequestBrowserTestBase()
     : delegate_(nullptr),
@@ -80,7 +80,7 @@ PaymentRequestBrowserTestBase::PaymentRequestBrowserTestBase()
       is_valid_ssl_(true),
       is_browser_window_active_(true) {}
 
-PaymentRequestBrowserTestBase::~PaymentRequestBrowserTestBase() {}
+PaymentRequestBrowserTestBase::~PaymentRequestBrowserTestBase() = default;
 
 void PaymentRequestBrowserTestBase::SetUpCommandLine(
     base::CommandLine* command_line) {
@@ -736,7 +736,8 @@ const base::string16& PaymentRequestBrowserTestBase::GetErrorLabelForType(
 PaymentRequestBrowserTestBase::DialogEventObserver::DialogEventObserver(
     std::list<PaymentRequestBrowserTestBase::DialogEvent> event_sequence)
     : events_(std::move(event_sequence)) {}
-PaymentRequestBrowserTestBase::DialogEventObserver::~DialogEventObserver() {}
+PaymentRequestBrowserTestBase::DialogEventObserver::~DialogEventObserver() =
+    default;
 
 void PaymentRequestBrowserTestBase::DialogEventObserver::Wait() {
   if (events_.empty())

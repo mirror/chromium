@@ -145,8 +145,7 @@ IncognitoConnectability::IncognitoConnectability(
   CHECK(context->IsOffTheRecord());
 }
 
-IncognitoConnectability::~IncognitoConnectability() {
-}
+IncognitoConnectability::~IncognitoConnectability() = default;
 
 // static
 IncognitoConnectability* IncognitoConnectability::Get(
@@ -221,8 +220,7 @@ IncognitoConnectability::TabContext::TabContext() : infobar(nullptr) {
 IncognitoConnectability::TabContext::TabContext(const TabContext& other) =
     default;
 
-IncognitoConnectability::TabContext::~TabContext() {
-}
+IncognitoConnectability::TabContext::~TabContext() = default;
 
 void IncognitoConnectability::OnInteractiveResponse(
     const std::string& extension_id,

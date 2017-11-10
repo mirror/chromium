@@ -34,11 +34,9 @@ class TestDragView : public views::View {
   DISALLOW_COPY_AND_ASSIGN(TestDragView);
 };
 
-TestDragView::TestDragView() {
-}
+TestDragView::TestDragView() = default;
 
-TestDragView::~TestDragView() {
-}
+TestDragView::~TestDragView() = default;
 
 int TestDragView::GetDragOperations(const gfx::Point& point) {
   return ui::DragDropTypes::DRAG_MOVE;
@@ -99,8 +97,7 @@ void TestTargetView::Init(views::View* parent) {
   second->SetBounds(15, 2, 10, 2);
 }
 
-TestTargetView::~TestTargetView() {
-}
+TestTargetView::~TestTargetView() = default;
 
 bool TestTargetView::GetDropFormats(
     int* formats,
@@ -192,8 +189,7 @@ MenuViewDragAndDropTest::MenuViewDragAndDropTest()
       performed_in_menu_drop_(false) {
 }
 
-MenuViewDragAndDropTest::~MenuViewDragAndDropTest() {
-}
+MenuViewDragAndDropTest::~MenuViewDragAndDropTest() = default;
 
 void MenuViewDragAndDropTest::BuildMenu(views::MenuItemView* menu) {
   // Build a menu item that has a nested view that supports its own drag and
@@ -262,8 +258,8 @@ bool MenuViewDragAndDropTest::ShouldCloseOnDragComplete() {
 
 class MenuViewDragAndDropTestTestInMenuDrag : public MenuViewDragAndDropTest {
  public:
-  MenuViewDragAndDropTestTestInMenuDrag() {}
-  ~MenuViewDragAndDropTestTestInMenuDrag() override {}
+  MenuViewDragAndDropTestTestInMenuDrag() = default;
+  ~MenuViewDragAndDropTestTestInMenuDrag() override = default;
 
  private:
   // MenuViewDragAndDropTest:
@@ -349,8 +345,8 @@ VIEW_TEST(MenuViewDragAndDropTestTestInMenuDrag, DISABLED_TestInMenuDrag)
 
 class MenuViewDragAndDropTestNestedDrag : public MenuViewDragAndDropTest {
  public:
-  MenuViewDragAndDropTestNestedDrag() {}
-  ~MenuViewDragAndDropTestNestedDrag() override {}
+  MenuViewDragAndDropTestNestedDrag() = default;
+  ~MenuViewDragAndDropTestNestedDrag() override = default;
 
  private:
   // MenuViewDragAndDropTest:
@@ -452,8 +448,8 @@ VIEW_TEST(MenuViewDragAndDropTestNestedDrag,
 
 class MenuViewDragAndDropForDropStayOpen : public MenuViewDragAndDropTest {
  public:
-  MenuViewDragAndDropForDropStayOpen() {}
-  ~MenuViewDragAndDropForDropStayOpen() override {}
+  MenuViewDragAndDropForDropStayOpen() = default;
+  ~MenuViewDragAndDropForDropStayOpen() override = default;
 
  private:
   // MenuViewDragAndDropTest:
@@ -485,8 +481,8 @@ VIEW_TEST(MenuViewDragAndDropForDropStayOpen, MenuViewStaysOpenForNestedDrag)
 
 class MenuViewDragAndDropForDropCancel : public MenuViewDragAndDropTest {
  public:
-  MenuViewDragAndDropForDropCancel() {}
-  ~MenuViewDragAndDropForDropCancel() override {}
+  MenuViewDragAndDropForDropCancel() = default;
+  ~MenuViewDragAndDropForDropCancel() override = default;
 
  private:
   // MenuViewDragAndDropTest:

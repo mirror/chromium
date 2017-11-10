@@ -91,8 +91,7 @@ SimpleExtensionLoadPrompt::SimpleExtensionLoadPrompt(
       profile, ui->GetDefaultInstallDialogParent()));
 }
 
-SimpleExtensionLoadPrompt::~SimpleExtensionLoadPrompt() {
-}
+SimpleExtensionLoadPrompt::~SimpleExtensionLoadPrompt() = default;
 
 void SimpleExtensionLoadPrompt::ShowPrompt() {
   // Unretained() is safe because this object manages its own lifetime.
@@ -142,8 +141,7 @@ UnpackedInstaller::UnpackedInstaller(ExtensionService* extension_service)
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
-UnpackedInstaller::~UnpackedInstaller() {
-}
+UnpackedInstaller::~UnpackedInstaller() = default;
 
 void UnpackedInstaller::Load(const base::FilePath& path_in) {
   DCHECK(extension_path_.empty());

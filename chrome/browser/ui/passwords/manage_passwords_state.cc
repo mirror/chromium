@@ -77,7 +77,7 @@ ManagePasswordsState::ManagePasswordsState()
       client_(nullptr) {
 }
 
-ManagePasswordsState::~ManagePasswordsState() {}
+ManagePasswordsState::~ManagePasswordsState() = default;
 
 void ManagePasswordsState::OnPendingPassword(
     std::unique_ptr<password_manager::PasswordFormManager> form_manager) {

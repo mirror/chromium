@@ -16,8 +16,8 @@
 
 class InterstitialUITest : public InProcessBrowserTest {
  public:
-   InterstitialUITest() {}
-   ~InterstitialUITest() override {}
+  InterstitialUITest() = default;
+  ~InterstitialUITest() override = default;
 
  protected:
   void TestInterstitial(GURL url, const std::string& page_title) {

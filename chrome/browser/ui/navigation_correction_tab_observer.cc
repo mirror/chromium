@@ -51,8 +51,7 @@ NavigationCorrectionTabObserver::NavigationCorrectionTabObserver(
   }
 }
 
-NavigationCorrectionTabObserver::~NavigationCorrectionTabObserver() {
-}
+NavigationCorrectionTabObserver::~NavigationCorrectionTabObserver() = default;
 
 // static
 void NavigationCorrectionTabObserver::RegisterProfilePrefs(

@@ -25,11 +25,9 @@
 #include "base/mac/mac_util.h"
 #endif
 
-MemoryGrowthTracker::MemoryGrowthTracker() {
-}
+MemoryGrowthTracker::MemoryGrowthTracker() = default;
 
-MemoryGrowthTracker::~MemoryGrowthTracker() {
-}
+MemoryGrowthTracker::~MemoryGrowthTracker() = default;
 
 bool MemoryGrowthTracker::UpdateSample(base::ProcessId pid,
                                        int sample,
@@ -68,8 +66,7 @@ MetricsMemoryDetails::MetricsMemoryDetails(
       memory_growth_tracker_(memory_growth_tracker),
       generate_histograms_(true) {}
 
-MetricsMemoryDetails::~MetricsMemoryDetails() {
-}
+MetricsMemoryDetails::~MetricsMemoryDetails() = default;
 
 void MetricsMemoryDetails::OnDetailsAvailable() {
   if (generate_histograms_)

@@ -14,7 +14,7 @@ ChromeKeySystemsProvider::ChromeKeySystemsProvider()
       is_update_needed_(true),
       tick_clock_(new base::DefaultTickClock()) {}
 
-ChromeKeySystemsProvider::~ChromeKeySystemsProvider() {}
+ChromeKeySystemsProvider::~ChromeKeySystemsProvider() = default;
 
 void ChromeKeySystemsProvider::AddSupportedKeySystems(
     std::vector<std::unique_ptr<media::KeySystemProperties>>* key_systems) {

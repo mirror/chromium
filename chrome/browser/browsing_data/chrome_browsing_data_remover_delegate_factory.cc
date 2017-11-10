@@ -81,7 +81,7 @@ ChromeBrowsingDataRemoverDelegateFactory::
 }
 
 ChromeBrowsingDataRemoverDelegateFactory::
-    ~ChromeBrowsingDataRemoverDelegateFactory() {}
+    ~ChromeBrowsingDataRemoverDelegateFactory() = default;
 
 content::BrowserContext*
 ChromeBrowsingDataRemoverDelegateFactory::GetBrowserContextToUse(

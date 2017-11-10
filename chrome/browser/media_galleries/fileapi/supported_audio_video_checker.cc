@@ -62,7 +62,7 @@ base::File OpenBlocking(const base::FilePath& path) {
 
 }  // namespace
 
-SupportedAudioVideoChecker::~SupportedAudioVideoChecker() {}
+SupportedAudioVideoChecker::~SupportedAudioVideoChecker() = default;
 
 // static
 bool SupportedAudioVideoChecker::SupportsFileType(const base::FilePath& path) {

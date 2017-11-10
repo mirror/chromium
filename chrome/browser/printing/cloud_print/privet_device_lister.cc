@@ -6,10 +6,8 @@
 
 namespace cloud_print {
 
-PrivetDeviceLister::PrivetDeviceLister() {
-}
+PrivetDeviceLister::PrivetDeviceLister() = default;
 
-PrivetDeviceLister::~PrivetDeviceLister() {
-}
+PrivetDeviceLister::~PrivetDeviceLister() = default;
 
 }  // namespace cloud_print

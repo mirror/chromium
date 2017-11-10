@@ -24,7 +24,7 @@ class MediaRouterBase::InternalMediaRoutesObserver
  public:
   explicit InternalMediaRoutesObserver(MediaRouter* router)
       : MediaRoutesObserver(router), has_route(false) {}
-  ~InternalMediaRoutesObserver() override {}
+  ~InternalMediaRoutesObserver() override = default;
 
   // MediaRoutesObserver
   void OnRoutesUpdated(

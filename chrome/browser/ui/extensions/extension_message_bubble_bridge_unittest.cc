@@ -55,8 +55,8 @@ std::unique_ptr<KeyedService> BuildToolbarModel(
 class ExtensionMessageBubbleBridgeUnitTest
     : public extensions::ExtensionServiceTestWithInstall {
  public:
-  ExtensionMessageBubbleBridgeUnitTest() {}
-  ~ExtensionMessageBubbleBridgeUnitTest() override {}
+  ExtensionMessageBubbleBridgeUnitTest() = default;
+  ~ExtensionMessageBubbleBridgeUnitTest() override = default;
   Browser* browser() { return browser_.get(); }
 
  private:

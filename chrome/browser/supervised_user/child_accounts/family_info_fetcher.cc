@@ -41,19 +41,16 @@ const char kIdDefaultProfileImageUrl[] = "defaultProfileImageUrl";
 const char* const kFamilyMemberRoleStrings[] = {"headOfHousehold", "parent",
                                                 "member", "child"};
 
-FamilyInfoFetcher::FamilyProfile::FamilyProfile() {
-}
+FamilyInfoFetcher::FamilyProfile::FamilyProfile() = default;
 
 FamilyInfoFetcher::FamilyProfile::FamilyProfile(const std::string& id,
                                                 const std::string& name)
     : id(id), name(name) {
 }
 
-FamilyInfoFetcher::FamilyProfile::~FamilyProfile() {
-}
+FamilyInfoFetcher::FamilyProfile::~FamilyProfile() = default;
 
-FamilyInfoFetcher::FamilyMember::FamilyMember() {
-}
+FamilyInfoFetcher::FamilyMember::FamilyMember() = default;
 
 FamilyInfoFetcher::FamilyMember::FamilyMember(
     const std::string& obfuscated_gaia_id,
@@ -73,8 +70,7 @@ FamilyInfoFetcher::FamilyMember::FamilyMember(
 FamilyInfoFetcher::FamilyMember::FamilyMember(const FamilyMember& other) =
     default;
 
-FamilyInfoFetcher::FamilyMember::~FamilyMember() {
-}
+FamilyInfoFetcher::FamilyMember::~FamilyMember() = default;
 
 FamilyInfoFetcher::FamilyInfoFetcher(
     Consumer* consumer,

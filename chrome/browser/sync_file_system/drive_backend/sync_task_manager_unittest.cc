@@ -63,7 +63,7 @@ class TaskManagerClient
     base::RunLoop().RunUntilIdle();
     maybe_schedule_next_task_count_ = 0;
   }
-  ~TaskManagerClient() override {}
+  ~TaskManagerClient() override = default;
 
   // DriveFileSyncManager::Client overrides.
   void MaybeScheduleNextTask() override { ++maybe_schedule_next_task_count_; }
@@ -134,7 +134,7 @@ class MultihopSyncTask : public ExclusiveTask {
     DCHECK(task_completed_);
   }
 
-  ~MultihopSyncTask() override {}
+  ~MultihopSyncTask() override = default;
 
   void RunExclusive(const SyncStatusCallback& callback) override {
     DCHECK(!*task_started_);
@@ -181,7 +181,7 @@ class BackgroundTask : public SyncTask {
         weak_ptr_factory_(this) {
   }
 
-  ~BackgroundTask() override {}
+  ~BackgroundTask() override = default;
 
   void RunPreflight(std::unique_ptr<SyncTaskToken> token) override {
     std::unique_ptr<TaskBlocker> task_blocker(new TaskBlocker);
@@ -236,7 +236,7 @@ class BlockerUpdateTestHelper : public SyncTask {
         weak_ptr_factory_(this) {
   }
 
-  ~BlockerUpdateTestHelper() override {}
+  ~BlockerUpdateTestHelper() override = default;
 
   void RunPreflight(std::unique_ptr<SyncTaskToken> token) override {
     UpdateBlocker(std::move(token));

@@ -48,11 +48,11 @@ JobDetails ConstructJobDetailsFromJson(const base::DictionaryValue& job_data) {
 
 }  // namespace
 
-JobDetails::JobDetails() {}
+JobDetails::JobDetails() = default;
 
 JobDetails::JobDetails(const JobDetails& other) = default;
 
-JobDetails::~JobDetails() {}
+JobDetails::~JobDetails() = default;
 
 void JobDetails::Clear() {
   job_id_.clear();
@@ -80,7 +80,7 @@ PrinterJobQueueHandler::PrinterJobQueueHandler(
 PrinterJobQueueHandler::PrinterJobQueueHandler()
     : time_provider_(new TimeProviderImpl) {}
 
-PrinterJobQueueHandler::~PrinterJobQueueHandler() {}
+PrinterJobQueueHandler::~PrinterJobQueueHandler() = default;
 
 base::TimeDelta PrinterJobQueueHandler::ComputeBackoffTime(
     const std::string& job_id) {

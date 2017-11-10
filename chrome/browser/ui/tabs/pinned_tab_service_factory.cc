@@ -25,8 +25,7 @@ PinnedTabServiceFactory::PinnedTabServiceFactory()
         BrowserContextDependencyManager::GetInstance()) {
 }
 
-PinnedTabServiceFactory::~PinnedTabServiceFactory() {
-}
+PinnedTabServiceFactory::~PinnedTabServiceFactory() = default;
 
 KeyedService* PinnedTabServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

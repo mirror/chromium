@@ -46,7 +46,7 @@ class FlashPermissionBrowserTest : public PermissionsBrowserTest {
  public:
   FlashPermissionBrowserTest()
       : PermissionsBrowserTest("/permissions/flash.html") {}
-  ~FlashPermissionBrowserTest() override {}
+  ~FlashPermissionBrowserTest() override = default;
 
   // PermissionsBrowserTest
   void SetUpCommandLine(base::CommandLine* command_line) override {

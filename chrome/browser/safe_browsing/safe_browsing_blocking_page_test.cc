@@ -103,7 +103,7 @@ const char kUnrelatedUrl[] = "https://www.google.com";
 // URLs.
 class FakeSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
  public:
-  FakeSafeBrowsingDatabaseManager() {}
+  FakeSafeBrowsingDatabaseManager() = default;
 
   // Called on the IO thread to check if the given url is safe or not.  If we
   // can synchronously determine that the url is safe, CheckUrl returns true.
@@ -165,7 +165,7 @@ class FakeSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
   }
 
  private:
-  ~FakeSafeBrowsingDatabaseManager() override {}
+  ~FakeSafeBrowsingDatabaseManager() override = default;
 
   std::map<std::string, SBThreatType> badurls;
   DISALLOW_COPY_AND_ASSIGN(FakeSafeBrowsingDatabaseManager);
@@ -228,7 +228,7 @@ class FakeSafeBrowsingUIManager : public TestSafeBrowsingUIManager {
   }
 
  protected:
-  ~FakeSafeBrowsingUIManager() override {}
+  ~FakeSafeBrowsingUIManager() override = default;
 
  private:
   std::string report_;
@@ -244,7 +244,7 @@ class FakeSafeBrowsingUIManager : public TestSafeBrowsingUIManager {
 class TestThreatDetailsFactory : public ThreatDetailsFactory {
  public:
   TestThreatDetailsFactory() : details_() {}
-  ~TestThreatDetailsFactory() override {}
+  ~TestThreatDetailsFactory() override = default;
 
   ThreatDetails* CreateThreatDetails(
       BaseUIManager* delegate,
@@ -313,8 +313,8 @@ class TestSafeBrowsingBlockingPage : public SafeBrowsingBlockingPage {
 class TestSafeBrowsingBlockingPageFactory
     : public SafeBrowsingBlockingPageFactory {
  public:
-  TestSafeBrowsingBlockingPageFactory() { }
-  ~TestSafeBrowsingBlockingPageFactory() override {}
+  TestSafeBrowsingBlockingPageFactory() = default;
+  ~TestSafeBrowsingBlockingPageFactory() override = default;
 
   SafeBrowsingBlockingPage* CreateSafeBrowsingPage(
       BaseUIManager* delegate,
@@ -363,7 +363,7 @@ class SafeBrowsingBlockingPageBrowserTest
         safe_browsing::kThreatDomDetailsTagAndAttributeFeature, parameters);
   }
 
-  ~SafeBrowsingBlockingPageBrowserTest() override {}
+  ~SafeBrowsingBlockingPageBrowserTest() override = default;
 
   void SetUp() override {
     // Test UI manager and test database manager should be set before

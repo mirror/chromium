@@ -10,9 +10,9 @@
 #include "content/public/browser/web_ui.h"
 #include "ui/base/l10n/l10n_util.h"
 
-PluralStringHandler::PluralStringHandler() {}
+PluralStringHandler::PluralStringHandler() = default;
 
-PluralStringHandler::~PluralStringHandler() {}
+PluralStringHandler::~PluralStringHandler() = default;
 
 void PluralStringHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

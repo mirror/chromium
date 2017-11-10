@@ -27,8 +27,7 @@ void RunCallbackIfNotCanceled(
 
 IconManager::IconManager() : weak_factory_(this) {}
 
-IconManager::~IconManager() {
-}
+IconManager::~IconManager() = default;
 
 gfx::Image* IconManager::LookupIconFromFilepath(const base::FilePath& file_path,
                                                 IconLoader::IconSize size) {

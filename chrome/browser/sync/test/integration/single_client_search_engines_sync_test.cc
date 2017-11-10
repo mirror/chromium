@@ -12,7 +12,7 @@
 class SingleClientSearchEnginesSyncTest : public SyncTest {
  public:
   SingleClientSearchEnginesSyncTest() : SyncTest(SINGLE_CLIENT) {}
-  ~SingleClientSearchEnginesSyncTest() override {}
+  ~SingleClientSearchEnginesSyncTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SingleClientSearchEnginesSyncTest);

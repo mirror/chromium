@@ -368,7 +368,7 @@ class WebViewInteractiveTestBase : public extensions::PlatformAppBrowserTest {
         : initial_widget_count_(0),
           last_render_widget_host_(NULL) {}
 
-    ~PopupCreatedObserver() {}
+    ~PopupCreatedObserver() = default;
 
     void Wait() {
       if (CountWidgets() == initial_widget_count_ + 1 &&
@@ -580,7 +580,7 @@ class WebViewImeInteractiveTest : public WebViewInteractiveTest {
           base::Bind(&CompositionRangeUpdateObserver::OnCompositionRangeUpdated,
                      base::Unretained(this)));
     }
-    ~CompositionRangeUpdateObserver() {}
+    ~CompositionRangeUpdateObserver() = default;
 
     // Wait until a composition range update with a range length equal to
     // |length| is received.

@@ -14,7 +14,7 @@ InsecureSensitiveInputDriver::InsecureSensitiveInputDriver(
     content::RenderFrameHost* render_frame_host)
     : render_frame_host_(render_frame_host) {}
 
-InsecureSensitiveInputDriver::~InsecureSensitiveInputDriver() {}
+InsecureSensitiveInputDriver::~InsecureSensitiveInputDriver() = default;
 
 void InsecureSensitiveInputDriver::BindInsecureInputServiceRequest(
     blink::mojom::InsecureInputServiceRequest request) {

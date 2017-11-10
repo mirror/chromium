@@ -17,8 +17,8 @@ using device::UsbDevice;
 
 class UsbChooserContextTest : public testing::Test {
  public:
-  UsbChooserContextTest() {}
-  ~UsbChooserContextTest() override {}
+  UsbChooserContextTest() = default;
+  ~UsbChooserContextTest() override = default;
 
  protected:
   Profile* profile() { return &profile_; }

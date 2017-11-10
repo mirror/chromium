@@ -32,7 +32,7 @@ PepperBrokerMessageFilter::PepperBrokerMessageFilter(PP_Instance instance,
   host->GetRenderFrameIDsForInstance(instance, &render_process_id_, &unused);
 }
 
-PepperBrokerMessageFilter::~PepperBrokerMessageFilter() {}
+PepperBrokerMessageFilter::~PepperBrokerMessageFilter() = default;
 
 scoped_refptr<base::TaskRunner>
 PepperBrokerMessageFilter::OverrideTaskRunnerForMessage(

@@ -142,8 +142,7 @@ TopSitesFactory::TopSitesFactory()
   DependsOn(SiteEngagementServiceFactory::GetInstance());
 }
 
-TopSitesFactory::~TopSitesFactory() {
-}
+TopSitesFactory::~TopSitesFactory() = default;
 
 scoped_refptr<RefcountedKeyedService> TopSitesFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

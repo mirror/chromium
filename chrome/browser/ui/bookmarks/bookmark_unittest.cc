@@ -47,8 +47,7 @@ TEST_F(BookmarkTest, DetachedBookmarkBarOnCustomNTP) {
 
 class BookmarkInstantExtendedTest : public BrowserWithTestWindowTest {
  public:
-  BookmarkInstantExtendedTest() {
-  }
+  BookmarkInstantExtendedTest() = default;
 
  protected:
   TestingProfile* CreateProfile() override {

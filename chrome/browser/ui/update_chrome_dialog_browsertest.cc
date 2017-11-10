@@ -8,7 +8,7 @@
 
 class UpdateRecommendedDialogTest : public DialogBrowserTest {
  public:
-  UpdateRecommendedDialogTest() {}
+  UpdateRecommendedDialogTest() = default;
 
   // DialogBrowserTest:
   void SetUp() override {

@@ -42,7 +42,7 @@ bool BacktraceStorage::Lock::IsLocked() {
 
 BacktraceStorage::BacktraceStorage() : shards_(kShardCount) {}
 
-BacktraceStorage::~BacktraceStorage() {}
+BacktraceStorage::~BacktraceStorage() = default;
 
 const Backtrace* BacktraceStorage::Insert(std::vector<Address>&& bt) {
   Backtrace backtrace(std::move(bt));

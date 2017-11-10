@@ -22,8 +22,7 @@ ContentsWebView::ContentsWebView(content::BrowserContext* browser_context)
       status_bubble_(nullptr) {
 }
 
-ContentsWebView::~ContentsWebView() {
-}
+ContentsWebView::~ContentsWebView() = default;
 
 void ContentsWebView::SetStatusBubble(StatusBubbleViews* status_bubble) {
   status_bubble_ = status_bubble;

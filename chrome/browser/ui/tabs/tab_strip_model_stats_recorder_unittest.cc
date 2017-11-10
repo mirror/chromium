@@ -23,8 +23,8 @@ class TabStripModelStatsRecorderTest : public ChromeRenderViewHostTestHarness {
 
 class NoUnloadListenerTabStripModelDelegate : public TestTabStripModelDelegate {
  public:
-  NoUnloadListenerTabStripModelDelegate() {}
-  ~NoUnloadListenerTabStripModelDelegate() override {}
+  NoUnloadListenerTabStripModelDelegate() = default;
+  ~NoUnloadListenerTabStripModelDelegate() override = default;
 
   bool RunUnloadListenerBeforeClosing(WebContents* contents) override {
     return false;

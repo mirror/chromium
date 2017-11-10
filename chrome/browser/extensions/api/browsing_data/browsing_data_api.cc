@@ -317,7 +317,7 @@ bool BrowsingDataRemoverFunction::RunAsync() {
   return true;
 }
 
-BrowsingDataRemoverFunction::~BrowsingDataRemoverFunction() {}
+BrowsingDataRemoverFunction::~BrowsingDataRemoverFunction() = default;
 
 void BrowsingDataRemoverFunction::CheckRemovingPluginDataSupported(
     scoped_refptr<PluginPrefs> plugin_prefs) {

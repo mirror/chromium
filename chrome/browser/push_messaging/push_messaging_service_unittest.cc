@@ -65,8 +65,8 @@ const char kTestEncodedP256Key[] =
 // and the Permission Manager, both of which are required for the tests.
 class PushMessagingTestingProfile : public TestingProfile {
  public:
-  PushMessagingTestingProfile() {}
-  ~PushMessagingTestingProfile() override {}
+  PushMessagingTestingProfile() = default;
+  ~PushMessagingTestingProfile() override = default;
 
   PushMessagingServiceImpl* GetPushMessagingService() override {
     return PushMessagingServiceFactory::GetForProfile(this);
@@ -101,7 +101,7 @@ class PushMessagingServiceTest : public ::testing::Test {
         &profile_, &BuildFakeGCMProfileService);
   }
 
-  ~PushMessagingServiceTest() override {}
+  ~PushMessagingServiceTest() override = default;
 
   // Callback to use when the subscription may have been subscribed.
   void DidRegister(std::string* subscription_id_out,

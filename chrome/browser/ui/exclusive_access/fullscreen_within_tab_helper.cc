@@ -10,7 +10,7 @@ FullscreenWithinTabHelper::FullscreenWithinTabHelper(
     content::WebContents* ignored)
     : is_fullscreen_within_tab_(false) {}
 
-FullscreenWithinTabHelper::~FullscreenWithinTabHelper() {}
+FullscreenWithinTabHelper::~FullscreenWithinTabHelper() = default;
 
 // static
 void FullscreenWithinTabHelper::RemoveForWebContents(

@@ -40,8 +40,8 @@ const int kScrollAreaHeight = 192;
 // This container has the right Layout() impl to use within a ScrollView.
 class ScrollableView : public views::View {
  public:
-  ScrollableView() {}
-  ~ScrollableView() override {}
+  ScrollableView() = default;
+  ~ScrollableView() override = default;
 
   void Layout() override;
 

@@ -11,14 +11,11 @@ using content::WebContents;
 using content::WebUI;
 using content::WebUIController;
 
-TestChromeWebUIControllerFactory::WebUIProvider::~WebUIProvider() {
-}
+TestChromeWebUIControllerFactory::WebUIProvider::~WebUIProvider() = default;
 
-TestChromeWebUIControllerFactory::TestChromeWebUIControllerFactory() {
-}
+TestChromeWebUIControllerFactory::TestChromeWebUIControllerFactory() = default;
 
-TestChromeWebUIControllerFactory::~TestChromeWebUIControllerFactory() {
-}
+TestChromeWebUIControllerFactory::~TestChromeWebUIControllerFactory() = default;
 
 void TestChromeWebUIControllerFactory::AddFactoryOverride(
     const std::string& host, WebUIProvider* provider) {

@@ -34,7 +34,7 @@ constexpr char kUrl2[] = "https://apptwo.xyz";
 
 class WebShareTargetPickerViewTest : public views::ViewsTestBase {
  public:
-  WebShareTargetPickerViewTest() {}
+  WebShareTargetPickerViewTest() = default;
 
   void SetUp() override {
     ViewsTestBase::SetUp();

@@ -314,8 +314,7 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui)
 #endif  // defined(OS_WIN)
 }
 
-MdSettingsUI::~MdSettingsUI() {
-}
+MdSettingsUI::~MdSettingsUI() = default;
 
 void MdSettingsUI::AddSettingsPageUIHandler(
     std::unique_ptr<content::WebUIMessageHandler> handler) {

@@ -128,7 +128,7 @@ ExtensionGarbageCollector::ExtensionGarbageCollector(
   InstallTracker::Get(context_)->AddObserver(this);
 }
 
-ExtensionGarbageCollector::~ExtensionGarbageCollector() {}
+ExtensionGarbageCollector::~ExtensionGarbageCollector() = default;
 
 // static
 ExtensionGarbageCollector* ExtensionGarbageCollector::Get(

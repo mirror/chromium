@@ -42,8 +42,7 @@ PrerenderTask::PrerenderTask(content::WebContents* web_contents)
           GetPrerenderIcon(),
           web_contents) {}
 
-PrerenderTask::~PrerenderTask() {
-}
+PrerenderTask::~PrerenderTask() = default;
 
 void PrerenderTask::UpdateTitle() {
   // As long as this task lives we keep prefixing its title with "Prerender:".

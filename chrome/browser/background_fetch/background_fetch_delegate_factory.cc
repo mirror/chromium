@@ -29,7 +29,7 @@ BackgroundFetchDelegateFactory::BackgroundFetchDelegateFactory()
   DependsOn(DownloadServiceFactory::GetInstance());
 }
 
-BackgroundFetchDelegateFactory::~BackgroundFetchDelegateFactory() {}
+BackgroundFetchDelegateFactory::~BackgroundFetchDelegateFactory() = default;
 
 KeyedService* BackgroundFetchDelegateFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

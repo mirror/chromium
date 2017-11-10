@@ -28,7 +28,7 @@ OmniboxUI::OmniboxUI(content::WebUI* web_ui) : MojoWebUIController(web_ui) {
   content::WebUIDataSource::Add(Profile::FromWebUI(web_ui), source);
 }
 
-OmniboxUI::~OmniboxUI() {}
+OmniboxUI::~OmniboxUI() = default;
 
 void OmniboxUI::BindUIHandler(
     mojom::OmniboxPageHandlerRequest request) {

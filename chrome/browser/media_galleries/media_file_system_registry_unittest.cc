@@ -66,7 +66,7 @@ using storage_monitor::TestStorageMonitor;
 class TestMediaFileSystemContext : public MediaFileSystemContext {
  public:
   struct FSInfo {
-    FSInfo() {}
+    FSInfo() = default;
     FSInfo(const std::string& device_id, const base::FilePath& path,
            const std::string& fs_name);
 
@@ -78,7 +78,7 @@ class TestMediaFileSystemContext : public MediaFileSystemContext {
   };
 
   explicit TestMediaFileSystemContext(MediaFileSystemRegistry* registry);
-  ~TestMediaFileSystemContext() override {}
+  ~TestMediaFileSystemContext() override = default;
 
   // MediaFileSystemContext implementation.
   bool RegisterFileSystem(const std::string& device_id,
@@ -193,7 +193,7 @@ void CheckGalleryInfo(const MediaFileSystemInfo& info,
 class MockProfileSharedRenderProcessHostFactory
     : public content::RenderProcessHostFactory {
  public:
-  MockProfileSharedRenderProcessHostFactory() {}
+  MockProfileSharedRenderProcessHostFactory() = default;
   ~MockProfileSharedRenderProcessHostFactory() override;
 
   // RPH created with this factory are owned by it.  If the RPH is destroyed
@@ -399,8 +399,7 @@ bool MediaFileSystemInfoComparator(const MediaFileSystemInfo& a,
 ///////////////////////////////////////////////
 
 MockProfileSharedRenderProcessHostFactory::
-    ~MockProfileSharedRenderProcessHostFactory() {
-}
+    ~MockProfileSharedRenderProcessHostFactory() = default;
 
 content::MockRenderProcessHost*
 MockProfileSharedRenderProcessHostFactory::ReleaseRPH(

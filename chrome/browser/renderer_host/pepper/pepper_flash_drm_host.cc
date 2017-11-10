@@ -109,7 +109,7 @@ class MonitorFinder : public base::RefCountedThreadSafe<MonitorFinder> {
 
  private:
   friend class base::RefCountedThreadSafe<MonitorFinder>;
-  ~MonitorFinder() {}
+  ~MonitorFinder() = default;
 };
 #endif
 
@@ -134,7 +134,7 @@ PepperFlashDRMHost::PepperFlashDRMHost(BrowserPpapiHost* host,
   monitor_finder_->GetMonitor();
 }
 
-PepperFlashDRMHost::~PepperFlashDRMHost() {}
+PepperFlashDRMHost::~PepperFlashDRMHost() = default;
 
 int32_t PepperFlashDRMHost::OnResourceMessageReceived(
     const IPC::Message& msg,

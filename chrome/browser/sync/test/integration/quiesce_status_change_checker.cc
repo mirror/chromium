@@ -105,7 +105,7 @@ ProgressMarkerWatcher::ProgressMarkerWatcher(
   UpdateHasLatestProgressMarkers();
 }
 
-ProgressMarkerWatcher::~ProgressMarkerWatcher() { }
+ProgressMarkerWatcher::~ProgressMarkerWatcher() = default;
 
 void ProgressMarkerWatcher::OnStateChanged(syncer::SyncService* sync) {
   UpdateHasLatestProgressMarkers();
@@ -158,7 +158,7 @@ QuiesceStatusChangeChecker::QuiesceStatusChangeChecker(
   }
 }
 
-QuiesceStatusChangeChecker::~QuiesceStatusChangeChecker() {}
+QuiesceStatusChangeChecker::~QuiesceStatusChangeChecker() = default;
 
 bool QuiesceStatusChangeChecker::IsExitConditionSatisfied() {
   // Check that all progress markers are up to date.

@@ -42,8 +42,7 @@ UpdateRecommendedMessageBox::UpdateRecommendedMessageBox() {
   chrome::RecordDialogCreation(chrome::DialogIdentifier::UPDATE_RECOMMENDED);
 }
 
-UpdateRecommendedMessageBox::~UpdateRecommendedMessageBox() {
-}
+UpdateRecommendedMessageBox::~UpdateRecommendedMessageBox() = default;
 
 bool UpdateRecommendedMessageBox::Accept() {
   chrome::AttemptRelaunch();

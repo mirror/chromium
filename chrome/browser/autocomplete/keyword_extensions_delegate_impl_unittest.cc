@@ -67,8 +67,8 @@ void ScopedExtensionLoadObserver::OnExtensionInstalled(
 
 class KeywordExtensionsDelegateImplTest : public ExtensionServiceTestBase {
  public:
-  KeywordExtensionsDelegateImplTest() {}
-  ~KeywordExtensionsDelegateImplTest() override {}
+  KeywordExtensionsDelegateImplTest() = default;
+  ~KeywordExtensionsDelegateImplTest() override = default;
 
  protected:
   void SetUp() override;

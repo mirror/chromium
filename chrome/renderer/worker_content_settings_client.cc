@@ -31,7 +31,7 @@ WorkerContentSettingsClient::WorkerContentSettingsClient(
                                         ->allow_running_insecure_content();
 }
 
-WorkerContentSettingsClient::~WorkerContentSettingsClient() {}
+WorkerContentSettingsClient::~WorkerContentSettingsClient() = default;
 
 bool WorkerContentSettingsClient::RequestFileSystemAccessSync() {
   if (is_unique_origin_)

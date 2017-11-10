@@ -43,7 +43,7 @@ class UserCloudPolicyManagerFactory::ManagerWrapper : public KeyedService {
       : manager_(manager) {
     DCHECK(manager);
   }
-  ~ManagerWrapper() override {}
+  ~ManagerWrapper() override = default;
 
   void Shutdown() override { manager_->Shutdown(); }
 

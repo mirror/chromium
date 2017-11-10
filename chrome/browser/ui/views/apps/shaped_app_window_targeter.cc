@@ -11,7 +11,7 @@ ShapedAppWindowTargeter::ShapedAppWindowTargeter(
     ChromeNativeAppWindowViews* app_window)
     : app_window_(app_window) {}
 
-ShapedAppWindowTargeter::~ShapedAppWindowTargeter() {}
+ShapedAppWindowTargeter::~ShapedAppWindowTargeter() = default;
 
 std::unique_ptr<aura::WindowTargeter::HitTestRects>
 ShapedAppWindowTargeter::GetExtraHitTestShapeRects(aura::Window* target) const {

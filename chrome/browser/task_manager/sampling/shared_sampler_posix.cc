@@ -11,7 +11,7 @@ namespace task_manager {
 SharedSampler::SharedSampler(
     const scoped_refptr<base::SequencedTaskRunner>& blocking_pool_runner) {}
 
-SharedSampler::~SharedSampler() {}
+SharedSampler::~SharedSampler() = default;
 
 int64_t SharedSampler::GetSupportedFlags() const { return 0; }
 

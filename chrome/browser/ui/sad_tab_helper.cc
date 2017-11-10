@@ -33,8 +33,7 @@ chrome::SadTabKind SadTabKindFromTerminationStatus(
 
 }  // namespace
 
-SadTabHelper::~SadTabHelper() {
-}
+SadTabHelper::~SadTabHelper() = default;
 
 SadTabHelper::SadTabHelper(content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents) {

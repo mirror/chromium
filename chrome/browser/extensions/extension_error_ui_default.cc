@@ -23,8 +23,7 @@ ExtensionErrorUIDefault::ExtensionErrorUIDefault(
       global_error_(new ExtensionGlobalError(this)) {
 }
 
-ExtensionErrorUIDefault::~ExtensionErrorUIDefault() {
-}
+ExtensionErrorUIDefault::~ExtensionErrorUIDefault() = default;
 
 bool ExtensionErrorUIDefault::ShowErrorInBubbleView() {
   Browser* browser = chrome::FindLastActiveWithProfile(profile_);

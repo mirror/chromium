@@ -36,7 +36,7 @@ Gtk3BackgroundPainter::Gtk3BackgroundPainter(const views::Button* button,
                                              ScopedStyleContext context)
     : button_(button), context_(std::move(context)) {}
 
-Gtk3BackgroundPainter::~Gtk3BackgroundPainter() {}
+Gtk3BackgroundPainter::~Gtk3BackgroundPainter() = default;
 
 void Gtk3BackgroundPainter::Paint(gfx::Canvas* canvas,
                                   views::View* view) const {

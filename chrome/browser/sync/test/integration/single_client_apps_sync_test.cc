@@ -16,7 +16,7 @@ class SingleClientAppsSyncTest : public SyncTest {
  public:
   SingleClientAppsSyncTest() : SyncTest(SINGLE_CLIENT) {}
 
-  ~SingleClientAppsSyncTest() override {}
+  ~SingleClientAppsSyncTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SingleClientAppsSyncTest);

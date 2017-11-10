@@ -57,8 +57,8 @@ class PrintPreviewObserver : PrintPreviewUI::TestingDelegate {
 
 class PrintBrowserTest : public InProcessBrowserTest {
  public:
-  PrintBrowserTest() {}
-  ~PrintBrowserTest() override {}
+  PrintBrowserTest() = default;
+  ~PrintBrowserTest() override = default;
 
   void PrintAndWaitUntilPreviewIsReady(bool print_only_selection) {
     PrintPreviewObserver print_preview_observer;

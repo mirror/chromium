@@ -60,7 +60,7 @@ class MockGalleryChangeObserver
   explicit MockGalleryChangeObserver(MediaGalleriesPreferences* pref)
       : pref_(pref),
         notifications_(0) {}
-  ~MockGalleryChangeObserver() override {}
+  ~MockGalleryChangeObserver() override = default;
 
   int notifications() const { return notifications_;}
 
@@ -117,7 +117,7 @@ class MediaGalleriesPreferencesTest : public testing::Test {
         profile_(new TestingProfile()),
         default_galleries_count_(0) {}
 
-  ~MediaGalleriesPreferencesTest() override {}
+  ~MediaGalleriesPreferencesTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(TestStorageMonitor::CreateAndInstall());

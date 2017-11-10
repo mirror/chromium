@@ -8,8 +8,8 @@
 #include "chrome/browser/notifications/platform_notification_service_impl.h"
 #include "chrome/browser/profiles/profile.h"
 
-PersistentNotificationHandler::PersistentNotificationHandler() {}
-PersistentNotificationHandler::~PersistentNotificationHandler() {}
+PersistentNotificationHandler::PersistentNotificationHandler() = default;
+PersistentNotificationHandler::~PersistentNotificationHandler() = default;
 
 void PersistentNotificationHandler::OnShow(Profile* profile,
                                            const std::string& notification_id) {

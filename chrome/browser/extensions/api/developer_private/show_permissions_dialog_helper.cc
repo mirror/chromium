@@ -27,8 +27,7 @@ ShowPermissionsDialogHelper::ShowPermissionsDialogHelper(
       on_complete_(on_complete) {
 }
 
-ShowPermissionsDialogHelper::~ShowPermissionsDialogHelper() {
-}
+ShowPermissionsDialogHelper::~ShowPermissionsDialogHelper() = default;
 
 // static
 void ShowPermissionsDialogHelper::Show(content::BrowserContext* browser_context,

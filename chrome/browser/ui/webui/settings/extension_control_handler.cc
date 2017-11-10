@@ -15,8 +15,8 @@
 
 namespace settings {
 
-ExtensionControlHandler::ExtensionControlHandler() {}
-ExtensionControlHandler::~ExtensionControlHandler() {}
+ExtensionControlHandler::ExtensionControlHandler() = default;
+ExtensionControlHandler::~ExtensionControlHandler() = default;
 
 void ExtensionControlHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback("disableExtension",

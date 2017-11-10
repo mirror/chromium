@@ -13,8 +13,7 @@
 
 namespace cloud_print {
 
-GCDApiFlow::Request::~Request() {
-}
+GCDApiFlow::Request::~Request() = default;
 
 std::unique_ptr<GCDApiFlow> GCDApiFlow::Create(
     net::URLRequestContextGetter* request_context,
@@ -24,17 +23,13 @@ std::unique_ptr<GCDApiFlow> GCDApiFlow::Create(
       new GCDApiFlowImpl(request_context, token_service, account_id));
 }
 
-GCDApiFlow::GCDApiFlow() {
-}
+GCDApiFlow::GCDApiFlow() = default;
 
-GCDApiFlow::~GCDApiFlow() {
-}
+GCDApiFlow::~GCDApiFlow() = default;
 
-CloudPrintApiFlowRequest::CloudPrintApiFlowRequest() {
-}
+CloudPrintApiFlowRequest::CloudPrintApiFlowRequest() = default;
 
-CloudPrintApiFlowRequest::~CloudPrintApiFlowRequest() {
-}
+CloudPrintApiFlowRequest::~CloudPrintApiFlowRequest() = default;
 
 std::string CloudPrintApiFlowRequest::GetOAuthScope() {
   return cloud_devices::kCloudPrintAuthScope;

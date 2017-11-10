@@ -112,7 +112,7 @@ InstallableManager::IconProperty::IconProperty()
 
 InstallableManager::IconProperty::IconProperty(IconProperty&& other) = default;
 
-InstallableManager::IconProperty::~IconProperty() {}
+InstallableManager::IconProperty::~IconProperty() = default;
 
 InstallableManager::IconProperty& InstallableManager::IconProperty::operator=(
     InstallableManager::IconProperty&& other) = default;

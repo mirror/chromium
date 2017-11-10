@@ -53,8 +53,8 @@ struct FeatureSessionTypesTestData {
 
 class TestExtensionAPI : public ExtensionAPI {
  public:
-  TestExtensionAPI() {}
-  ~TestExtensionAPI() override {}
+  TestExtensionAPI() = default;
+  ~TestExtensionAPI() override = default;
 
   void add_fake_schema(const std::string& name) { fake_schemas_.insert(name); }
 

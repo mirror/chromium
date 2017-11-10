@@ -35,7 +35,7 @@ class TemplateURLServiceObserver {
         &TemplateURLServiceObserver::StopLoop, base::Unretained(this)));
     service->Load();
   }
-  ~TemplateURLServiceObserver() {}
+  ~TemplateURLServiceObserver() = default;
 
  private:
   void StopLoop() { runner_->Quit(); }
@@ -61,8 +61,8 @@ testing::AssertionResult VerifyTemplateURLServiceLoad(
 
 class SearchEngineTabHelperBrowserTest : public InProcessBrowserTest {
  public:
-  SearchEngineTabHelperBrowserTest() {}
-  ~SearchEngineTabHelperBrowserTest() override {}
+  SearchEngineTabHelperBrowserTest() = default;
+  ~SearchEngineTabHelperBrowserTest() override = default;
 
  private:
   std::unique_ptr<HttpResponse> HandleRequest(const GURL& osdd_xml_url,

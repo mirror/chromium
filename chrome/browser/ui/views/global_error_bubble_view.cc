@@ -73,7 +73,7 @@ GlobalErrorBubbleView::GlobalErrorBubbleView(
   chrome::RecordDialogCreation(chrome::DialogIdentifier::GLOBAL_ERROR);
 }
 
-GlobalErrorBubbleView::~GlobalErrorBubbleView() {}
+GlobalErrorBubbleView::~GlobalErrorBubbleView() = default;
 
 base::string16 GlobalErrorBubbleView::GetWindowTitle() const {
   if (!error_)

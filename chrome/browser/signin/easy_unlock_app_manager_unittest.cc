@@ -63,7 +63,7 @@ class TestProcessManager : public extensions::ProcessManager {
             context,
             context,
             extensions::ExtensionRegistry::Get(context)) {}
-  ~TestProcessManager() override {}
+  ~TestProcessManager() override = default;
 
   // ProcessManager overrides:
   bool CreateBackgroundHost(const extensions::Extension* extension,
@@ -211,7 +211,7 @@ class EasyUnlockAppEventConsumer
 class EasyUnlockAppManagerTest : public testing::Test {
  public:
   EasyUnlockAppManagerTest() : command_line_(base::CommandLine::NO_PROGRAM) {}
-  ~EasyUnlockAppManagerTest() override {}
+  ~EasyUnlockAppManagerTest() override = default;
 
   void SetUp() override {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(

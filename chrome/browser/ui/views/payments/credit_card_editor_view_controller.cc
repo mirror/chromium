@@ -173,7 +173,7 @@ CreditCardEditorViewController::CreditCardEditorViewController(
     supported_card_networks_ = spec->supported_card_networks_set();
 }
 
-CreditCardEditorViewController::~CreditCardEditorViewController() {}
+CreditCardEditorViewController::~CreditCardEditorViewController() = default;
 
 // Creates the "Cards accepted" view with a row of icons at the top of the
 // credit card editor.
@@ -656,7 +656,7 @@ CreditCardEditorViewController::CreditCardValidationDelegate::
                                  CreditCardEditorViewController* controller)
     : field_(field), controller_(controller) {}
 CreditCardEditorViewController::CreditCardValidationDelegate::
-    ~CreditCardValidationDelegate() {}
+    ~CreditCardValidationDelegate() = default;
 
 bool CreditCardEditorViewController::CreditCardValidationDelegate::
     ShouldFormat() {

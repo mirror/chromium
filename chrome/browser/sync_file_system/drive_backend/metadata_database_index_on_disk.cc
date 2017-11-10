@@ -273,7 +273,7 @@ MetadataDatabaseIndexOnDisk::Create(LevelDBWrapper* db) {
   return index;
 }
 
-MetadataDatabaseIndexOnDisk::~MetadataDatabaseIndexOnDisk() {}
+MetadataDatabaseIndexOnDisk::~MetadataDatabaseIndexOnDisk() = default;
 
 void MetadataDatabaseIndexOnDisk::RemoveUnreachableItems() {
   RemoveUnreachableItemsFromDB(

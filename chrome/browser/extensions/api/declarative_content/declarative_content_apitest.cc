@@ -110,7 +110,7 @@ const char kBackgroundHelpers[] =
 
 class DeclarativeContentApiTest : public ExtensionApiTest {
  public:
-  DeclarativeContentApiTest() {}
+  DeclarativeContentApiTest() = default;
 
  protected:
   enum IncognitoMode { SPANNING, SPLIT };

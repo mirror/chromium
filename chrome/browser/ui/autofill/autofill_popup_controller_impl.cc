@@ -68,7 +68,7 @@ AutofillPopupControllerImpl::AutofillPopupControllerImpl(
   ClearState();
 }
 
-AutofillPopupControllerImpl::~AutofillPopupControllerImpl() {}
+AutofillPopupControllerImpl::~AutofillPopupControllerImpl() = default;
 
 void AutofillPopupControllerImpl::Show(
     const std::vector<autofill::Suggestion>& suggestions) {

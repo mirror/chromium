@@ -238,7 +238,7 @@ ChromeCryptAuthService::ChromeCryptAuthService(
   PerformEnrollmentAndDeviceSync();
 }
 
-ChromeCryptAuthService::~ChromeCryptAuthService() {}
+ChromeCryptAuthService::~ChromeCryptAuthService() = default;
 
 void ChromeCryptAuthService::Shutdown() {
   signin_manager_->RemoveObserver(this);

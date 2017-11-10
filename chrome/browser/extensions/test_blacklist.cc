@@ -26,7 +26,7 @@ void Assign(BlacklistState *out, BlacklistState in) {
 
 BlacklistStateFetcherMock::BlacklistStateFetcherMock() : request_count_(0) {}
 
-BlacklistStateFetcherMock::~BlacklistStateFetcherMock() {}
+BlacklistStateFetcherMock::~BlacklistStateFetcherMock() = default;
 
 void BlacklistStateFetcherMock::Request(const std::string& id,
                                         const RequestCallback& callback) {

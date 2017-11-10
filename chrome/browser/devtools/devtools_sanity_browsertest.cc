@@ -667,7 +667,7 @@ class WorkerDevToolsSanityTest : public InProcessBrowserTest {
 
    private:
     friend class base::RefCountedThreadSafe<WorkerData>;
-    ~WorkerData() {}
+    ~WorkerData() = default;
   };
 
   class WorkerCreationObserver : public WorkerServiceObserver {
@@ -677,7 +677,7 @@ class WorkerDevToolsSanityTest : public InProcessBrowserTest {
         : path_(path), worker_data_(worker_data) {}
 
    private:
-    ~WorkerCreationObserver() override {}
+    ~WorkerCreationObserver() override = default;
 
     void WorkerCreated(const GURL& url,
                        const std::string& name,
@@ -703,7 +703,7 @@ class WorkerDevToolsSanityTest : public InProcessBrowserTest {
     }
 
    private:
-    ~WorkerTerminationObserver() override {}
+    ~WorkerTerminationObserver() override = default;
 
     void WorkerDestroyed(int process_id, int route_id) override {
       ASSERT_EQ(worker_data_->worker_process_id, process_id);
@@ -1701,7 +1701,7 @@ class AutofillManagerTestDelegateDevtoolsImpl
   explicit AutofillManagerTestDelegateDevtoolsImpl(
       WebContents* inspectedContents)
       : inspected_contents_(inspectedContents) {}
-  ~AutofillManagerTestDelegateDevtoolsImpl() override {}
+  ~AutofillManagerTestDelegateDevtoolsImpl() override = default;
 
   void DidPreviewFormData() override {}
 

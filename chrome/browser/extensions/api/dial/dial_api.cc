@@ -214,7 +214,8 @@ bool DialDiscoverNowFunction::Respond() {
 DialFetchDeviceDescriptionFunction::DialFetchDeviceDescriptionFunction()
     : dial_(nullptr) {}
 
-DialFetchDeviceDescriptionFunction::~DialFetchDeviceDescriptionFunction() {}
+DialFetchDeviceDescriptionFunction::~DialFetchDeviceDescriptionFunction() =
+    default;
 
 bool DialFetchDeviceDescriptionFunction::RunAsync() {
   dial_ = DialAPIFactory::GetForBrowserContext(browser_context()).get();

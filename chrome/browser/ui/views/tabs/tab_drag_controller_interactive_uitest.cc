@@ -93,7 +93,7 @@ class TabDragControllerInteractiveUITestUserData
     : public base::SupportsUserData::Data {
  public:
   explicit TabDragControllerInteractiveUITestUserData(int id) : id_(id) {}
-  ~TabDragControllerInteractiveUITestUserData() override {}
+  ~TabDragControllerInteractiveUITestUserData() override = default;
   int id() { return id_; }
 
  private:
@@ -118,7 +118,7 @@ class QuitDraggingObserver : public content::NotificationObserver {
   }
 
  private:
-  ~QuitDraggingObserver() override {}
+  ~QuitDraggingObserver() override = default;
 
   content::NotificationRegistrar registrar_;
 
@@ -175,8 +175,7 @@ using test::GetTabStripForBrowser;
 TabDragControllerTest::TabDragControllerTest()
     : browser_list(BrowserList::GetInstance()) {}
 
-TabDragControllerTest::~TabDragControllerTest() {
-}
+TabDragControllerTest::~TabDragControllerTest() = default;
 
 void TabDragControllerTest::StopAnimating(TabStripImpl* tab_strip) {
   tab_strip->StopAnimating(true);
@@ -283,7 +282,7 @@ class TestDesktopBrowserFrameAura : public DesktopBrowserFrameAura {
       BrowserView* browser_view)
       : DesktopBrowserFrameAura(browser_frame, browser_view),
         release_capture_(false) {}
-  ~TestDesktopBrowserFrameAura() override {}
+  ~TestDesktopBrowserFrameAura() override = default;
 
   void ReleaseCaptureOnNextClear() {
     release_capture_ = true;
@@ -307,8 +306,8 @@ class TestDesktopBrowserFrameAura : public DesktopBrowserFrameAura {
 // Factory for creating a TestDesktopBrowserFrameAura.
 class TestNativeBrowserFrameFactory : public NativeBrowserFrameFactory {
  public:
-  TestNativeBrowserFrameFactory() {}
-  ~TestNativeBrowserFrameFactory() override {}
+  TestNativeBrowserFrameFactory() = default;
+  ~TestNativeBrowserFrameFactory() override = default;
 
   NativeBrowserFrame* Create(BrowserFrame* browser_frame,
                              BrowserView* browser_view) override {
@@ -379,7 +378,7 @@ class DetachToBrowserTabDragControllerTest
     : public TabDragControllerTest,
       public ::testing::WithParamInterface<const char*> {
  public:
-  DetachToBrowserTabDragControllerTest() {}
+  DetachToBrowserTabDragControllerTest() = default;
 
   void SetUpOnMainThread() override {
 #if defined(OS_CHROMEOS)
@@ -583,8 +582,8 @@ namespace {
 // are used in two different pathes. crbug.com/493354.
 class MaskedWindowTargeter : public aura::WindowTargeter {
  public:
-  MaskedWindowTargeter() {}
-  ~MaskedWindowTargeter() override {}
+  MaskedWindowTargeter() = default;
+  ~MaskedWindowTargeter() override = default;
 
   // aura::WindowTargeter:
   bool EventLocationInsideBounds(aura::Window* target,
@@ -714,7 +713,7 @@ class CaptureLoseWindowFinder : public WindowFinder {
  public:
   explicit CaptureLoseWindowFinder(TabStripImpl* tab_strip)
       : tab_strip_(tab_strip) {}
-  ~CaptureLoseWindowFinder() override {}
+  ~CaptureLoseWindowFinder() override = default;
 
   // WindowFinder:
   gfx::NativeWindow GetLocalProcessWindowAtPoint(

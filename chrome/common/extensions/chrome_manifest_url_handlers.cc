@@ -45,11 +45,9 @@ const GURL& GetDevToolsPage(const Extension* extension) {
 }
 }
 
-URLOverrides::URLOverrides() {
-}
+URLOverrides::URLOverrides() = default;
 
-URLOverrides::~URLOverrides() {
-}
+URLOverrides::~URLOverrides() = default;
 
 static base::LazyInstance<URLOverrides::URLOverrideMap>::DestructorAtExit
     g_empty_url_overrides = LAZY_INSTANCE_INITIALIZER;
@@ -63,11 +61,9 @@ const URLOverrides::URLOverrideMap& URLOverrides::GetChromeURLOverrides(
                        : g_empty_url_overrides.Get();
 }
 
-DevToolsPageHandler::DevToolsPageHandler() {
-}
+DevToolsPageHandler::DevToolsPageHandler() = default;
 
-DevToolsPageHandler::~DevToolsPageHandler() {
-}
+DevToolsPageHandler::~DevToolsPageHandler() = default;
 
 bool DevToolsPageHandler::Parse(Extension* extension, base::string16* error) {
   std::unique_ptr<ManifestURL> manifest_url(new ManifestURL);
@@ -86,11 +82,9 @@ const std::vector<std::string> DevToolsPageHandler::Keys() const {
   return SingleKey(keys::kDevToolsPage);
 }
 
-URLOverridesHandler::URLOverridesHandler() {
-}
+URLOverridesHandler::URLOverridesHandler() = default;
 
-URLOverridesHandler::~URLOverridesHandler() {
-}
+URLOverridesHandler::~URLOverridesHandler() = default;
 
 bool URLOverridesHandler::Parse(Extension* extension, base::string16* error) {
   const base::DictionaryValue* overrides = NULL;

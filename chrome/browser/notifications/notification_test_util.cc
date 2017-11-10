@@ -11,9 +11,9 @@
 
 // -----------------------------------------------------------------------------
 
-StubNotificationUIManager::StubNotificationUIManager() {}
+StubNotificationUIManager::StubNotificationUIManager() = default;
 
-StubNotificationUIManager::~StubNotificationUIManager() {}
+StubNotificationUIManager::~StubNotificationUIManager() = default;
 
 unsigned int StubNotificationUIManager::GetNotificationCount() const {
   return notifications_.size();

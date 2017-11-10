@@ -70,7 +70,7 @@ UserManagerProfileDialogDelegate::UserManagerProfileDialogDelegate(
   chrome::RecordDialogCreation(chrome::DialogIdentifier::USER_MANAGER_PROFILE);
 }
 
-UserManagerProfileDialogDelegate::~UserManagerProfileDialogDelegate() {}
+UserManagerProfileDialogDelegate::~UserManagerProfileDialogDelegate() = default;
 
 gfx::Size UserManagerProfileDialogDelegate::CalculatePreferredSize() const {
   return gfx::Size(UserManagerProfileDialog::kDialogWidth,

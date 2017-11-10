@@ -17,7 +17,7 @@ namespace diagnostics {
 DiagnosticsTest::DiagnosticsTest(DiagnosticsTestId id)
     : id_(id), outcome_code_(-1), result_(DiagnosticsModel::TEST_NOT_RUN) {}
 
-DiagnosticsTest::~DiagnosticsTest() {}
+DiagnosticsTest::~DiagnosticsTest() = default;
 
 bool DiagnosticsTest::Execute(DiagnosticsModel::Observer* observer,
                               DiagnosticsModel* model,

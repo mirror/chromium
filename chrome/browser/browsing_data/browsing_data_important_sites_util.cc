@@ -40,7 +40,7 @@ BrowsingDataTaskObserver::BrowsingDataTaskObserver(
   remover_observer_.Add(remover);
 }
 
-BrowsingDataTaskObserver::~BrowsingDataTaskObserver() {}
+BrowsingDataTaskObserver::~BrowsingDataTaskObserver() = default;
 
 void BrowsingDataTaskObserver::OnBrowsingDataRemoverDone() {
   DCHECK(task_count_);

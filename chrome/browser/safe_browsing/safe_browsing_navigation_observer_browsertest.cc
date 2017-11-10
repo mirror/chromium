@@ -174,7 +174,7 @@ class TestNavigationObserverManager
 
 class SBNavigationObserverBrowserTest : public InProcessBrowserTest {
  public:
-  SBNavigationObserverBrowserTest() {}
+  SBNavigationObserverBrowserTest() = default;
 
   void SetUpOnMainThread() override {
     // Disable Safe Browsing service so we can directly control when

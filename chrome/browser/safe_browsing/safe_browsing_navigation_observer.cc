@@ -68,7 +68,7 @@ NavigationEvent& NavigationEvent::operator=(NavigationEvent&& nav_event) {
   return *this;
 }
 
-NavigationEvent::~NavigationEvent() {}
+NavigationEvent::~NavigationEvent() = default;
 
 // SafeBrowsingNavigationObserver --------------------------------------------
 
@@ -107,7 +107,7 @@ SafeBrowsingNavigationObserver::SafeBrowsingNavigationObserver(
       Profile::FromBrowserContext(web_contents()->GetBrowserContext())));
 }
 
-SafeBrowsingNavigationObserver::~SafeBrowsingNavigationObserver() {}
+SafeBrowsingNavigationObserver::~SafeBrowsingNavigationObserver() = default;
 
 // Called when a navigation starts in the WebContents. |navigation_handle|
 // parameter is unique to this navigation, which will appear in the following

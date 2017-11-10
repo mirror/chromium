@@ -15,8 +15,8 @@
 
 class SessionCrashedBubbleViewTest : public DialogBrowserTest {
  public:
-  SessionCrashedBubbleViewTest() {}
-  ~SessionCrashedBubbleViewTest() override {}
+  SessionCrashedBubbleViewTest() = default;
+  ~SessionCrashedBubbleViewTest() override = default;
 
   void ShowDialog(const std::string& name) override {
     views::View* anchor_view = BrowserView::GetBrowserViewForBrowser(browser())

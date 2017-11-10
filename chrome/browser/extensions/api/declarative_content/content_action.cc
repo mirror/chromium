@@ -53,8 +53,8 @@ const char kNoPageOrBrowserAction[] =
 // Action that instructs to show an extension's page action.
 class ShowPageAction : public ContentAction {
  public:
-  ShowPageAction() {}
-  ~ShowPageAction() override {}
+  ShowPageAction() = default;
+  ~ShowPageAction() override = default;
 
   static std::unique_ptr<ContentAction> Create(
       content::BrowserContext* browser_context,
@@ -104,7 +104,7 @@ class SetIcon : public ContentAction {
  public:
   SetIcon(const gfx::Image& icon, ActionInfo::Type action_type)
       : icon_(icon), action_type_(action_type) {}
-  ~SetIcon() override {}
+  ~SetIcon() override = default;
 
   static std::unique_ptr<ContentAction> Create(
       content::BrowserContext* browser_context,
@@ -225,7 +225,7 @@ struct RequestContentScript::ScriptData {
 RequestContentScript::ScriptData::ScriptData()
     : all_frames(false),
       match_about_blank(false) {}
-RequestContentScript::ScriptData::~ScriptData() {}
+RequestContentScript::ScriptData::~ScriptData() = default;
 
 // static
 std::unique_ptr<ContentAction> RequestContentScript::Create(
@@ -418,7 +418,7 @@ std::unique_ptr<ContentAction> SetIcon::Create(
 // ContentAction
 //
 
-ContentAction::~ContentAction() {}
+ContentAction::~ContentAction() = default;
 
 // static
 std::unique_ptr<ContentAction> ContentAction::Create(
@@ -446,6 +446,6 @@ std::unique_ptr<ContentAction> ContentAction::Create(
   return std::unique_ptr<ContentAction>();
 }
 
-ContentAction::ContentAction() {}
+ContentAction::ContentAction() = default;
 
 }  // namespace extensions

@@ -34,8 +34,7 @@ PasswordsPrivateDelegateFactory::PasswordsPrivateDelegateFactory()
           BrowserContextDependencyManager::GetInstance()) {
 }
 
-PasswordsPrivateDelegateFactory::~PasswordsPrivateDelegateFactory() {
-}
+PasswordsPrivateDelegateFactory::~PasswordsPrivateDelegateFactory() = default;
 
 KeyedService* PasswordsPrivateDelegateFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

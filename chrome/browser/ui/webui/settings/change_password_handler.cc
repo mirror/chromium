@@ -22,7 +22,7 @@ ChangePasswordHandler::ChangePasswordHandler(Profile* profile)
       service_(nullptr),
       password_protection_observer_(this) {}
 
-ChangePasswordHandler::~ChangePasswordHandler() {}
+ChangePasswordHandler::~ChangePasswordHandler() = default;
 
 void ChangePasswordHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

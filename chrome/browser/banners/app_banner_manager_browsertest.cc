@@ -57,7 +57,7 @@ class AppBannerManagerTest : public AppBannerManager {
   explicit AppBannerManagerTest(content::WebContents* web_contents)
       : AppBannerManager(web_contents) {}
 
-  ~AppBannerManagerTest() override {}
+  ~AppBannerManagerTest() override = default;
 
   void RequestAppBanner(const GURL& validated_url,
                         bool is_debug_mode) override {

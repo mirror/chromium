@@ -137,7 +137,8 @@ bool IsForwardBackLoad(ui::PageTransition transition) {
 
 }  // namespace
 
-ServiceWorkerPageLoadMetricsObserver::ServiceWorkerPageLoadMetricsObserver() {}
+ServiceWorkerPageLoadMetricsObserver::ServiceWorkerPageLoadMetricsObserver() =
+    default;
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 ServiceWorkerPageLoadMetricsObserver::OnCommit(

@@ -17,11 +17,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // ThemeHandler
 
-ThemeHandler::ThemeHandler() {
-}
+ThemeHandler::ThemeHandler() = default;
 
-ThemeHandler::~ThemeHandler() {
-}
+ThemeHandler::~ThemeHandler() = default;
 
 void ThemeHandler::RegisterMessages() {
   // These are not actual message registrations, but can't be done in the

@@ -13,7 +13,7 @@
 // friend with BackgroundModeOptimizer, can't be in the anonymous namespace.
 class DummyBackgroundModeOptimizer : public BackgroundModeOptimizer {
  public:
-  DummyBackgroundModeOptimizer() {}
+  DummyBackgroundModeOptimizer() = default;
   MOCK_METHOD0(DoRestart, void());
 };
 

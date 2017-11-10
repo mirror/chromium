@@ -14,7 +14,7 @@ AbortHelper::AbortHelper(CallbackTracker* tracker)
     : tracker_(tracker), weak_ptr_factory_(this) {
 }
 
-AbortHelper::~AbortHelper() {}
+AbortHelper::~AbortHelper() = default;
 
 base::WeakPtr<AbortHelper> AbortHelper::AsWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();

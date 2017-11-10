@@ -73,7 +73,7 @@ namespace media_router {
 
 class DialDeviceDescriptionParserImplTest : public testing::Test {
  public:
-  DialDeviceDescriptionParserImplTest() {}
+  DialDeviceDescriptionParserImplTest() = default;
   chrome::mojom::DialDeviceDescriptionPtr Parse(
       const std::string& xml,
       chrome::mojom::DialParsingError expected_error) {

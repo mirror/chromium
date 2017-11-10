@@ -19,9 +19,9 @@
 
 // GlobalError ---------------------------------------------------------------
 
-GlobalError::GlobalError() {}
+GlobalError::GlobalError() = default;
 
-GlobalError::~GlobalError() {}
+GlobalError::~GlobalError() = default;
 
 GlobalError::Severity GlobalError::GetSeverity() { return SEVERITY_MEDIUM; }
 
@@ -40,7 +40,7 @@ gfx::Image GlobalError::MenuItemIcon() {
 GlobalErrorWithStandardBubble::GlobalErrorWithStandardBubble()
     : has_shown_bubble_view_(false), bubble_view_(NULL) {}
 
-GlobalErrorWithStandardBubble::~GlobalErrorWithStandardBubble() {}
+GlobalErrorWithStandardBubble::~GlobalErrorWithStandardBubble() = default;
 
 bool GlobalErrorWithStandardBubble::HasBubbleView() { return true; }
 

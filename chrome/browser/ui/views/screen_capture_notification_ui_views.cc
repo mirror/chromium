@@ -53,7 +53,7 @@ class NotificationBarClientView : public views::ClientView {
   NotificationBarClientView(views::Widget* widget, views::View* view)
       : views::ClientView(widget, view) {
   }
-  ~NotificationBarClientView() override {}
+  ~NotificationBarClientView() override = default;
 
   void set_client_rect(const gfx::Rect& rect) { rect_ = rect; }
 

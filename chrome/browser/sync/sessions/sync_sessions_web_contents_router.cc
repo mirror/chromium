@@ -51,7 +51,7 @@ SyncSessionsWebContentsRouter::SyncSessionsWebContentsRouter(Profile* profile) {
 #endif  // !defined(OS_ANDROID)
 }
 
-SyncSessionsWebContentsRouter::~SyncSessionsWebContentsRouter() {}
+SyncSessionsWebContentsRouter::~SyncSessionsWebContentsRouter() = default;
 
 void SyncSessionsWebContentsRouter::NotifyTabModified(
     content::WebContents* web_contents,

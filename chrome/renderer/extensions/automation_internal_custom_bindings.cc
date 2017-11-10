@@ -145,7 +145,7 @@ class TreeIDWrapper : public base::RefCountedThreadSafe<TreeIDWrapper> {
   }
 
  private:
-  virtual ~TreeIDWrapper() {}
+  virtual ~TreeIDWrapper() = default;
 
   friend class base::RefCountedThreadSafe<TreeIDWrapper>;
 
@@ -191,7 +191,7 @@ class NodeIDWrapper : public base::RefCountedThreadSafe<NodeIDWrapper> {
   }
 
  private:
-  virtual ~NodeIDWrapper() {}
+  virtual ~NodeIDWrapper() = default;
 
   friend class base::RefCountedThreadSafe<NodeIDWrapper>;
 
@@ -242,7 +242,7 @@ class NodeIDPlusAttributeWrapper
   }
 
  private:
-  virtual ~NodeIDPlusAttributeWrapper() {}
+  virtual ~NodeIDPlusAttributeWrapper() = default;
 
   friend class base::RefCountedThreadSafe<NodeIDPlusAttributeWrapper>;
 
@@ -295,7 +295,7 @@ class NodeIDPlusRangeWrapper
   }
 
  private:
-  virtual ~NodeIDPlusRangeWrapper() {}
+  virtual ~NodeIDPlusRangeWrapper() = default;
 
   friend class base::RefCountedThreadSafe<NodeIDPlusRangeWrapper>;
 
@@ -305,8 +305,8 @@ class NodeIDPlusRangeWrapper
 
 }  // namespace
 
-TreeCache::TreeCache() {}
-TreeCache::~TreeCache() {}
+TreeCache::TreeCache() = default;
+TreeCache::~TreeCache() = default;
 
 class AutomationMessageFilter : public IPC::MessageFilter {
  public:
@@ -745,7 +745,7 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
   });
 }
 
-AutomationInternalCustomBindings::~AutomationInternalCustomBindings() {}
+AutomationInternalCustomBindings::~AutomationInternalCustomBindings() = default;
 
 void AutomationInternalCustomBindings::Invalidate() {
   ObjectBackedNativeHandler::Invalidate();

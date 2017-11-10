@@ -94,8 +94,8 @@ const char kTestPolicy2JSON[] = "{\"Another\":\"turn_it_off\"}";
 
 class ComponentCloudPolicyTest : public ExtensionBrowserTest {
  protected:
-  ComponentCloudPolicyTest() {}
-  ~ComponentCloudPolicyTest() override {}
+  ComponentCloudPolicyTest() = default;
+  ~ComponentCloudPolicyTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ExtensionBrowserTest::SetUpCommandLine(command_line);

@@ -16,7 +16,8 @@ SupervisedUserCreationPolicyHandler::SupervisedUserCreationPolicyHandler()
     : TypeCheckingPolicyHandler(key::kSupervisedUserCreationEnabled,
                                 base::Value::Type::BOOLEAN) {}
 
-SupervisedUserCreationPolicyHandler::~SupervisedUserCreationPolicyHandler() {}
+SupervisedUserCreationPolicyHandler::~SupervisedUserCreationPolicyHandler() =
+    default;
 
 void SupervisedUserCreationPolicyHandler::ApplyPolicySettings(
     const PolicyMap& policies,

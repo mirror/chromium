@@ -66,7 +66,7 @@ const char ScopedTestNativeMessagingHost::kBinaryMissingHostName[] =
 const char ScopedTestNativeMessagingHost::kExtensionId[] =
     "knldjmfmopnpolahpmmgbagdohdnhkik";
 
-ScopedTestNativeMessagingHost::ScopedTestNativeMessagingHost() {}
+ScopedTestNativeMessagingHost::ScopedTestNativeMessagingHost() = default;
 
 void ScopedTestNativeMessagingHost::RegisterTestHost(bool user_level) {
   base::ScopedAllowBlockingForTesting allow_blocking;

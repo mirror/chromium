@@ -4,5 +4,5 @@
 
 #include "chrome/browser/ui/views/tabs/window_finder.h"
 
-WindowFinder::WindowFinder() {}
-WindowFinder::~WindowFinder() {}
+WindowFinder::WindowFinder() = default;
+WindowFinder::~WindowFinder() = default;

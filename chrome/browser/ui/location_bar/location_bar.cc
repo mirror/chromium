@@ -60,8 +60,7 @@ LocationBar::LocationBar(Profile* profile) : profile_(profile) {
   }
 }
 
-LocationBar::~LocationBar() {
-}
+LocationBar::~LocationBar() = default;
 
 bool LocationBar::IsBookmarkStarHiddenByExtension() const {
   const extensions::ExtensionSet& extension_set =

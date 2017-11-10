@@ -20,8 +20,7 @@ GeolocationPermissionContext::GeolocationPermissionContext(Profile* profile)
                             blink::FeaturePolicyFeature::kGeolocation),
       extensions_context_(profile) {}
 
-GeolocationPermissionContext::~GeolocationPermissionContext() {
-}
+GeolocationPermissionContext::~GeolocationPermissionContext() = default;
 
 void GeolocationPermissionContext::DecidePermission(
     content::WebContents* web_contents,

@@ -167,7 +167,7 @@ class TestSessionRestoreStatsCollector : public SessionRestoreStatsCollector {
  private:
   friend class base::RefCounted<TestSessionRestoreStatsCollector>;
 
-  ~TestSessionRestoreStatsCollector() override {}
+  ~TestSessionRestoreStatsCollector() override = default;
 
   base::SimpleTestTickClock* test_tick_clock_;
 

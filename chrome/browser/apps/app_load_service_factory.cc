@@ -37,7 +37,7 @@ AppLoadServiceFactory::AppLoadServiceFactory()
       extensions::ExtensionsBrowserClient::Get()->GetExtensionSystemFactory());
 }
 
-AppLoadServiceFactory::~AppLoadServiceFactory() {}
+AppLoadServiceFactory::~AppLoadServiceFactory() = default;
 
 KeyedService* AppLoadServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

@@ -14,8 +14,8 @@
 
 class ProcessesApiTest : public ExtensionApiTest {
  public:
-  ProcessesApiTest() {}
-  ~ProcessesApiTest() override {}
+  ProcessesApiTest() = default;
+  ~ProcessesApiTest() override = default;
 
   int GetListenersCount() {
     return extensions::ProcessesAPI::Get(profile())->

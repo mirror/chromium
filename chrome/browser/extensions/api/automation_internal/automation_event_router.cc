@@ -43,8 +43,7 @@ AutomationEventRouter::AutomationEventRouter()
                  content::NotificationService::AllBrowserContextsAndSources());
 }
 
-AutomationEventRouter::~AutomationEventRouter() {
-}
+AutomationEventRouter::~AutomationEventRouter() = default;
 
 void AutomationEventRouter::RegisterListenerForOneTree(
     const ExtensionId& extension_id,
@@ -142,14 +141,12 @@ void AutomationEventRouter::DispatchActionResult(const ui::AXActionData& data,
       ->DispatchEventToExtension(data.source_extension_id, std::move(event));
 }
 
-AutomationEventRouter::AutomationListener::AutomationListener() {
-}
+AutomationEventRouter::AutomationListener::AutomationListener() = default;
 
 AutomationEventRouter::AutomationListener::AutomationListener(
     const AutomationListener& other) = default;
 
-AutomationEventRouter::AutomationListener::~AutomationListener() {
-}
+AutomationEventRouter::AutomationListener::~AutomationListener() = default;
 
 void AutomationEventRouter::Register(
     const ExtensionId& extension_id,

@@ -32,7 +32,7 @@ class TabIdProviderTest : public testing::Test {
       : task_runner_(base::ThreadTaskRunnerHandle::Get()),
         tab_id_getter_call_count_(0) {}
 
-  ~TabIdProviderTest() override {}
+  ~TabIdProviderTest() override = default;
 
   base::OnceCallback<int32_t(void)> TabIdGetterCallback() {
     return base::BindOnce(&TabIdProviderTest::GetTabInfo,

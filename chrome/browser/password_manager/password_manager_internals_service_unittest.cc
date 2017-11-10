@@ -21,7 +21,7 @@ const char kTestText[] = "abcd1234";
 
 class MockLogReceiver : public password_manager::LogReceiver {
  public:
-  MockLogReceiver() {}
+  MockLogReceiver() = default;
 
   MOCK_METHOD1(LogSavePasswordProgress, void(const std::string&));
 };

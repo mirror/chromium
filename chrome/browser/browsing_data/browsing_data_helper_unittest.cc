@@ -28,8 +28,8 @@ const GURL kOriginDevTools(kTestOriginDevTools);
 
 class BrowsingDataHelperTest : public testing::Test {
  public:
-  BrowsingDataHelperTest() {}
-  ~BrowsingDataHelperTest() override {}
+  BrowsingDataHelperTest() = default;
+  ~BrowsingDataHelperTest() override = default;
 
   bool IsWebScheme(const std::string& scheme) {
     GURL test(scheme + "://example.com");

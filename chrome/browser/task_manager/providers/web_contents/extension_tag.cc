@@ -31,7 +31,6 @@ ExtensionTag::ExtensionTag(content::WebContents* web_contents,
       view_type_(view_type) {
 }
 
-ExtensionTag::~ExtensionTag() {
-}
+ExtensionTag::~ExtensionTag() = default;
 
 }  // namespace task_manager

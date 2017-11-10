@@ -49,7 +49,7 @@ class TestSpellingURLFetcher : public net::TestURLFetcher {
     set_response_code(status);
     SetResponseString(response);
   }
-  ~TestSpellingURLFetcher() override {}
+  ~TestSpellingURLFetcher() override = default;
 
   void SetUploadData(const std::string& upload_content_type,
                      const std::string& upload_content) override {
@@ -127,7 +127,7 @@ class TestingSpellingServiceClient : public SpellingServiceClient {
         success_(false),
         fetcher_(NULL) {
   }
-  ~TestingSpellingServiceClient() override {}
+  ~TestingSpellingServiceClient() override = default;
 
   void SetHTTPRequest(int type,
                       const std::string& sanitized_text,

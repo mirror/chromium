@@ -93,8 +93,7 @@ ServiceProcessStateTest::ServiceProcessStateTest()
     : io_thread_("ServiceProcessStateTestThread") {
 }
 
-ServiceProcessStateTest::~ServiceProcessStateTest() {
-}
+ServiceProcessStateTest::~ServiceProcessStateTest() = default;
 
 void ServiceProcessStateTest::SetUp() {
   base::Thread::Options options(base::MessageLoop::TYPE_IO, 0);

@@ -131,9 +131,9 @@ std::unique_ptr<HttpResponse> HandleRequest(const HttpRequest& request) {
 // should be downloaded by the browser to have MIME type 'text/plain'.
 class StreamsPrivateApiTest : public ExtensionApiTest {
  public:
-  StreamsPrivateApiTest() {}
+  StreamsPrivateApiTest() = default;
 
-  ~StreamsPrivateApiTest() override {}
+  ~StreamsPrivateApiTest() override = default;
 
   void SetUpOnMainThread() override {
     // Init test server.

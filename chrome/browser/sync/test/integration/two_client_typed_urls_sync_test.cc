@@ -40,7 +40,7 @@ const std::string kDummyUrl = "http://dummy-history.google.com/";
 class TwoClientTypedUrlsSyncTest : public SyncTest {
  public:
   TwoClientTypedUrlsSyncTest() : SyncTest(TWO_CLIENT) {}
-  ~TwoClientTypedUrlsSyncTest() override {}
+  ~TwoClientTypedUrlsSyncTest() override = default;
 
   ::testing::AssertionResult CheckClientsEqual() {
     history::URLRows urls = GetTypedUrlsFromClient(0);

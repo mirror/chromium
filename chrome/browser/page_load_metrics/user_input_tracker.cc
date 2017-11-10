@@ -63,7 +63,7 @@ UserInputTracker::UserInputTracker() {
   sorted_event_times_.reserve(kMaxTrackedEvents);
 }
 
-UserInputTracker::~UserInputTracker() {}
+UserInputTracker::~UserInputTracker() = default;
 
 // static
 base::TimeTicks UserInputTracker::GetEventTime(

@@ -54,7 +54,7 @@ SyncFileSystemServiceFactory::SyncFileSystemServiceFactory()
   }
 }
 
-SyncFileSystemServiceFactory::~SyncFileSystemServiceFactory() {}
+SyncFileSystemServiceFactory::~SyncFileSystemServiceFactory() = default;
 
 KeyedService* SyncFileSystemServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

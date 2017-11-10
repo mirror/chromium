@@ -31,9 +31,8 @@ bool UsingCustomTheme(const ThemeService& theme_service) {
 
 class ThemeServiceBrowserTest : public ExtensionBrowserTest {
  public:
-  ThemeServiceBrowserTest() {
-  }
-  ~ThemeServiceBrowserTest() override {}
+  ThemeServiceBrowserTest() = default;
+  ~ThemeServiceBrowserTest() override = default;
 
   void SetUp() override {
     extensions::ComponentLoader::EnableBackgroundExtensionsForTesting();

@@ -20,7 +20,7 @@ SearchIPCRouterPolicyImpl::SearchIPCRouterPolicyImpl(
     is_incognito_ = profile->IsOffTheRecord();
 }
 
-SearchIPCRouterPolicyImpl::~SearchIPCRouterPolicyImpl() {}
+SearchIPCRouterPolicyImpl::~SearchIPCRouterPolicyImpl() = default;
 
 bool SearchIPCRouterPolicyImpl::ShouldProcessFocusOmnibox(bool is_active_tab) {
   return is_active_tab && !is_incognito_ && search::IsInstantNTP(web_contents_);

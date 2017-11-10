@@ -76,4 +76,4 @@ InlineLoginUI::InlineLoginUI(content::WebUI* web_ui)
   SessionTabHelper::CreateForWebContents(contents);
 }
 
-InlineLoginUI::~InlineLoginUI() {}
+InlineLoginUI::~InlineLoginUI() = default;

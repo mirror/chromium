@@ -27,6 +27,6 @@ AddressNormalizerFactory::AddressNormalizerFactory()
                                   g_browser_process->system_request_context())),
                           ValidationRulesStorageFactory::CreateStorage()) {}
 
-AddressNormalizerFactory::~AddressNormalizerFactory() {}
+AddressNormalizerFactory::~AddressNormalizerFactory() = default;
 
 }  // namespace autofill

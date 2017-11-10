@@ -52,7 +52,7 @@ TabContentsSyncedTabDelegate::TabContentsSyncedTabDelegate(
     : web_contents_(web_contents),
       sync_session_id_(sync_sessions::TabNodePool::kInvalidTabNodeID) {}
 
-TabContentsSyncedTabDelegate::~TabContentsSyncedTabDelegate() {}
+TabContentsSyncedTabDelegate::~TabContentsSyncedTabDelegate() = default;
 
 SessionID::id_type TabContentsSyncedTabDelegate::GetWindowId() const {
   return SessionTabHelper::FromWebContents(web_contents_)->window_id().id();

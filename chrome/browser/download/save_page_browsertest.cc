@@ -153,7 +153,7 @@ class DownloadRemovedObserver : public DownloadPersistedObserver {
       : DownloadPersistedObserver(profile, PersistedFilter()),
         removed_(false),
         download_id_(download_id) {}
-  ~DownloadRemovedObserver() override {}
+  ~DownloadRemovedObserver() override = default;
 
   bool WaitForRemoved() {
     if (removed_)
@@ -282,7 +282,7 @@ class DownloadItemCreatedObserver : public DownloadManager::Observer {
 
 class SavePageBrowserTest : public InProcessBrowserTest {
  public:
-  SavePageBrowserTest() {}
+  SavePageBrowserTest() = default;
 
  protected:
   void SetUp() override {
@@ -461,7 +461,7 @@ class DelayingDownloadManagerDelegate : public ChromeDownloadManagerDelegate {
   explicit DelayingDownloadManagerDelegate(Profile* profile)
     : ChromeDownloadManagerDelegate(profile) {
   }
-  ~DelayingDownloadManagerDelegate() override {}
+  ~DelayingDownloadManagerDelegate() override = default;
 
   bool ShouldCompleteDownload(
       content::DownloadItem* item,
@@ -686,7 +686,7 @@ IN_PROC_BROWSER_TEST_F(SavePageBrowserTest, CleanFilenameFromPageTitle) {
 
 class SavePageAsMHTMLBrowserTest : public SavePageBrowserTest {
  public:
-  SavePageAsMHTMLBrowserTest() {}
+  SavePageAsMHTMLBrowserTest() = default;
   ~SavePageAsMHTMLBrowserTest() override;
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitch(switches::kSavePageAsMHTML);
@@ -696,8 +696,7 @@ class SavePageAsMHTMLBrowserTest : public SavePageBrowserTest {
   DISALLOW_COPY_AND_ASSIGN(SavePageAsMHTMLBrowserTest);
 };
 
-SavePageAsMHTMLBrowserTest::~SavePageAsMHTMLBrowserTest() {
-}
+SavePageAsMHTMLBrowserTest::~SavePageAsMHTMLBrowserTest() = default;
 
 IN_PROC_BROWSER_TEST_F(SavePageAsMHTMLBrowserTest, SavePageAsMHTML) {
   static const int64_t kFileSizeMin = 2758;
@@ -848,7 +847,7 @@ IN_PROC_BROWSER_TEST_F(SavePageBrowserTest, SaveUnauthorizedResource) {
 // See http://dev.chromium.org/developers/design-documents/site-isolation.
 class SavePageSitePerProcessBrowserTest : public SavePageBrowserTest {
  public:
-  SavePageSitePerProcessBrowserTest() {}
+  SavePageSitePerProcessBrowserTest() = default;
 
  protected:
   void SetUpCommandLine(base::CommandLine* command_line) override {

@@ -9,6 +9,6 @@ namespace cloud_print {
 CloudPrintProxyInfo::CloudPrintProxyInfo() : enabled(false) {
 }
 
-CloudPrintProxyInfo::~CloudPrintProxyInfo() {}
+CloudPrintProxyInfo::~CloudPrintProxyInfo() = default;
 
 }  // namespace cloud_print

@@ -11,7 +11,7 @@
 
 class FirstRunBubbleBrowserTest : public DialogBrowserTest {
  public:
-  FirstRunBubbleBrowserTest() {}
+  FirstRunBubbleBrowserTest() = default;
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {

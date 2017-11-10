@@ -338,9 +338,9 @@ class ActiveDirectoryPolicyStatusProvider
 };
 #endif
 
-PolicyStatusProvider::PolicyStatusProvider() {}
+PolicyStatusProvider::PolicyStatusProvider() = default;
 
-PolicyStatusProvider::~PolicyStatusProvider() {}
+PolicyStatusProvider::~PolicyStatusProvider() = default;
 
 void PolicyStatusProvider::SetStatusChangeCallback(
     const base::Closure& callback) {
@@ -380,7 +380,7 @@ UserCloudPolicyStatusProvider::UserCloudPolicyStatusProvider(
     policy::CloudPolicyCore* core)
     : CloudPolicyCoreStatusProvider(core) {}
 
-UserCloudPolicyStatusProvider::~UserCloudPolicyStatusProvider() {}
+UserCloudPolicyStatusProvider::~UserCloudPolicyStatusProvider() = default;
 
 void UserCloudPolicyStatusProvider::GetStatus(base::DictionaryValue* dict) {
   if (!core_->store()->is_managed())

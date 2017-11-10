@@ -15,8 +15,8 @@ class TtsControllerTest : public testing::Test {
 // Platform Tts implementation that does nothing.
 class DummyTtsPlatformImpl : public TtsPlatformImpl {
  public:
-  DummyTtsPlatformImpl() {}
-  ~DummyTtsPlatformImpl() override {}
+  DummyTtsPlatformImpl() = default;
+  ~DummyTtsPlatformImpl() override = default;
   bool PlatformImplAvailable() override { return true; }
   bool Speak(int utterance_id,
              const std::string& utterance,
@@ -38,8 +38,8 @@ class DummyTtsPlatformImpl : public TtsPlatformImpl {
 // Subclass of TtsController with a public ctor and dtor.
 class TestableTtsController : public TtsControllerImpl {
  public:
-  TestableTtsController() {}
-  ~TestableTtsController() override {}
+  TestableTtsController() = default;
+  ~TestableTtsController() override = default;
 };
 
 TEST_F(TtsControllerTest, TestTtsControllerShutdown) {

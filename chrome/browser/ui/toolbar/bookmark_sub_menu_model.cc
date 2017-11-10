@@ -18,7 +18,7 @@ BookmarkSubMenuModel::BookmarkSubMenuModel(
   Build(browser);
 }
 
-BookmarkSubMenuModel::~BookmarkSubMenuModel() {}
+BookmarkSubMenuModel::~BookmarkSubMenuModel() = default;
 
 void BookmarkSubMenuModel::Build(Browser* browser) {
   bool is_submenu_visible =

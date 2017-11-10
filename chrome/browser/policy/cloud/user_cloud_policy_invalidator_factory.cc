@@ -37,7 +37,8 @@ UserCloudPolicyInvalidatorFactory::UserCloudPolicyInvalidatorFactory()
 #endif
 }
 
-UserCloudPolicyInvalidatorFactory::~UserCloudPolicyInvalidatorFactory() {}
+UserCloudPolicyInvalidatorFactory::~UserCloudPolicyInvalidatorFactory() =
+    default;
 
 KeyedService* UserCloudPolicyInvalidatorFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

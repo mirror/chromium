@@ -30,8 +30,7 @@ UninstallAppTask::UninstallAppTask(SyncEngineContext* sync_context,
       weak_ptr_factory_(this) {
 }
 
-UninstallAppTask::~UninstallAppTask() {
-}
+UninstallAppTask::~UninstallAppTask() = default;
 
 void UninstallAppTask::RunExclusive(const SyncStatusCallback& callback) {
   if (!IsContextReady()) {

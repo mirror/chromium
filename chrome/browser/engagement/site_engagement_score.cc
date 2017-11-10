@@ -229,7 +229,7 @@ SiteEngagementScore::SiteEngagementScore(
 
 SiteEngagementScore::SiteEngagementScore(SiteEngagementScore&& other) = default;
 
-SiteEngagementScore::~SiteEngagementScore() {}
+SiteEngagementScore::~SiteEngagementScore() = default;
 
 SiteEngagementScore& SiteEngagementScore::operator=(
     SiteEngagementScore&& other) = default;

@@ -7,7 +7,7 @@
 InvestigatorDependencyProvider::InvestigatorDependencyProvider(Profile* profile)
     : profile_(profile) {}
 
-InvestigatorDependencyProvider::~InvestigatorDependencyProvider() {}
+InvestigatorDependencyProvider::~InvestigatorDependencyProvider() = default;
 
 PrefService* InvestigatorDependencyProvider::GetPrefs() {
   return profile_->GetPrefs();

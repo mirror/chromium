@@ -128,9 +128,9 @@ std::unique_ptr<protocol::Value> StringUtil::parseJSON(
   return toProtocolValue(value.get(), 1000);
 }
 
-StringBuilder::StringBuilder() {}
+StringBuilder::StringBuilder() = default;
 
-StringBuilder::~StringBuilder() {}
+StringBuilder::~StringBuilder() = default;
 
 void StringBuilder::append(const std::string& s) {
   string_ += s;

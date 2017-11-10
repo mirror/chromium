@@ -12,7 +12,7 @@ CommandListenerProxy::CommandListenerProxy(
   CHECK(command_listener_);
 }
 
-CommandListenerProxy::~CommandListenerProxy() { }
+CommandListenerProxy::~CommandListenerProxy() = default;
 
 Status CommandListenerProxy::BeforeCommand(const std::string& command_name) {
   return command_listener_->BeforeCommand(command_name);

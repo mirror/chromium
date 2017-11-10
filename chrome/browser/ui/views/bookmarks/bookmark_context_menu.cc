@@ -64,8 +64,7 @@ BookmarkContextMenu::BookmarkContextMenu(
   }
 }
 
-BookmarkContextMenu::~BookmarkContextMenu() {
-}
+BookmarkContextMenu::~BookmarkContextMenu() = default;
 
 void BookmarkContextMenu::RunMenuAt(const gfx::Point& point,
                                     ui::MenuSourceType source_type) {

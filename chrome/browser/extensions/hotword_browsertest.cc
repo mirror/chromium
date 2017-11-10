@@ -26,7 +26,7 @@ static const char kHotwordHelperExtensionId[] =
 class HotwordBrowserTest : public ExtensionBrowserTest {
  public:
   HotwordBrowserTest() : error_console_(NULL) { }
-  ~HotwordBrowserTest() override {}
+  ~HotwordBrowserTest() override = default;
 
  protected:
   void SetUpInProcessBrowserTestFixture() override {

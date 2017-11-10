@@ -7,11 +7,9 @@
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/ui/tab_contents/core_tab_helper.h"
 
-TestTabStripModelDelegate::TestTabStripModelDelegate() {
-}
+TestTabStripModelDelegate::TestTabStripModelDelegate() = default;
 
-TestTabStripModelDelegate::~TestTabStripModelDelegate() {
-}
+TestTabStripModelDelegate::~TestTabStripModelDelegate() = default;
 
 void TestTabStripModelDelegate::AddTabAt(const GURL& url,
                                             int index,

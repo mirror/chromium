@@ -53,8 +53,7 @@ ProfileAvatarDownloader::ProfileAvatarDownloader(
   fetcher_.reset(new chrome::BitmapFetcher(url, this, traffic_annotation));
 }
 
-ProfileAvatarDownloader::~ProfileAvatarDownloader() {
-}
+ProfileAvatarDownloader::~ProfileAvatarDownloader() = default;
 
 void ProfileAvatarDownloader::Start() {
   // In unit tests, the browser process can return a NULL request context.

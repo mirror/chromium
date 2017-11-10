@@ -25,7 +25,7 @@ namespace {
 
 class DialAPITest : public ExtensionApiTest {
  public:
-  DialAPITest() {}
+  DialAPITest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ExtensionApiTest::SetUpCommandLine(command_line);

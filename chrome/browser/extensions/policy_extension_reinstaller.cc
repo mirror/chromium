@@ -50,7 +50,7 @@ PolicyExtensionReinstaller::PolicyExtensionReinstaller(
       backoff_entry_(&kPolicyReinstallBackoffPolicy),
       weak_factory_(this) {}
 
-PolicyExtensionReinstaller::~PolicyExtensionReinstaller() {}
+PolicyExtensionReinstaller::~PolicyExtensionReinstaller() = default;
 
 // static
 void PolicyExtensionReinstaller::set_policy_reinstall_action_for_test(

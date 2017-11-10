@@ -16,7 +16,8 @@ MockComponentToolbarActionsFactory::MockComponentToolbarActionsFactory(
     Profile* profile)
     : ComponentToolbarActionsFactory(profile) {}
 
-MockComponentToolbarActionsFactory::~MockComponentToolbarActionsFactory() {}
+MockComponentToolbarActionsFactory::~MockComponentToolbarActionsFactory() =
+    default;
 
 std::set<std::string>
 MockComponentToolbarActionsFactory::GetInitialComponentIds() {

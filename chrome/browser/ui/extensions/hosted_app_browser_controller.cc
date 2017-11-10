@@ -74,7 +74,7 @@ HostedAppBrowserController::HostedAppBrowserController(Browser* browser)
       extension_id_(
           web_app::GetExtensionIdFromApplicationName(browser->app_name())) {}
 
-HostedAppBrowserController::~HostedAppBrowserController() {}
+HostedAppBrowserController::~HostedAppBrowserController() = default;
 
 bool HostedAppBrowserController::ShouldShowLocationBar() const {
   const Extension* extension =

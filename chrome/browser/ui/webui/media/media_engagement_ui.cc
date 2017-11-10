@@ -31,7 +31,7 @@ class MediaEngagementScoreDetailsProviderImpl
     service_ = MediaEngagementService::Get(profile_);
   }
 
-  ~MediaEngagementScoreDetailsProviderImpl() override {}
+  ~MediaEngagementScoreDetailsProviderImpl() override = default;
 
   // media::mojom::MediaEngagementScoreDetailsProvider overrides:
   void GetMediaEngagementScoreDetails(

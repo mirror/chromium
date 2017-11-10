@@ -11,8 +11,7 @@ BrowserToolbarModelDelegate::BrowserToolbarModelDelegate(Browser* browser)
     : browser_(browser) {
 }
 
-BrowserToolbarModelDelegate::~BrowserToolbarModelDelegate() {
-}
+BrowserToolbarModelDelegate::~BrowserToolbarModelDelegate() = default;
 
 content::WebContents*
 BrowserToolbarModelDelegate::GetActiveWebContents() const {

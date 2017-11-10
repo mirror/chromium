@@ -91,7 +91,7 @@ CvcUnmaskViewController::CvcUnmaskViewController(
       result_delegate, weak_ptr_factory_.GetWeakPtr());
 }
 
-CvcUnmaskViewController::~CvcUnmaskViewController() {}
+CvcUnmaskViewController::~CvcUnmaskViewController() = default;
 
 void CvcUnmaskViewController::OnDidGetRealPan(
     autofill::AutofillClient::PaymentsRpcResult result,

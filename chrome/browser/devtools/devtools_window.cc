@@ -148,8 +148,7 @@ DevToolsToolboxDelegate::DevToolsToolboxDelegate(
       inspected_contents_observer_(web_contents_observer) {
 }
 
-DevToolsToolboxDelegate::~DevToolsToolboxDelegate() {
-}
+DevToolsToolboxDelegate::~DevToolsToolboxDelegate() = default;
 
 content::WebContents* DevToolsToolboxDelegate::OpenURLFromTab(
     content::WebContents* source,
@@ -335,8 +334,7 @@ DevToolsWindow::ObserverWithAccessor::ObserverWithAccessor(
     : WebContentsObserver(web_contents) {
 }
 
-DevToolsWindow::ObserverWithAccessor::~ObserverWithAccessor() {
-}
+DevToolsWindow::ObserverWithAccessor::~ObserverWithAccessor() = default;
 
 // DevToolsWindow -------------------------------------------------------------
 

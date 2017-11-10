@@ -73,11 +73,9 @@ const int64_t kNegligibleUsage = 1024;  // 1KiB
 
 }  // namespace
 
-CookiesTreeModelUtil::CookiesTreeModelUtil() {
-}
+CookiesTreeModelUtil::CookiesTreeModelUtil() = default;
 
-CookiesTreeModelUtil::~CookiesTreeModelUtil() {
-}
+CookiesTreeModelUtil::~CookiesTreeModelUtil() = default;
 
 std::string CookiesTreeModelUtil::GetTreeNodeId(const CookieTreeNode* node) {
   CookieTreeNodeMap::const_iterator iter = node_map_.find(node);

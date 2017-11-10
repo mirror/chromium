@@ -69,7 +69,7 @@ class RevokeButton : public views::ImageButton, public views::ButtonListener {
     SetTooltipText(l10n_util::GetStringFUTF16(
         IDS_APPLICATION_INFO_REVOKE_PERMISSION_ALT_TEXT, permission_message));
   }
-  ~RevokeButton() override {}
+  ~RevokeButton() override = default;
 
  private:
   // Overridden from views::ButtonListener.
@@ -139,7 +139,7 @@ class BulletedPermissionsList : public views::View {
                                  0,
                                  0);
   }
-  ~BulletedPermissionsList() override {}
+  ~BulletedPermissionsList() override = default;
 
   // Given a set of strings for a given permission (|message| for the topmost
   // bullet and a potentially-empty |submessages| for sub-bullets), adds these
@@ -210,8 +210,7 @@ AppInfoPermissionsPanel::AppInfoPermissionsPanel(
   CreatePermissionsList();
 }
 
-AppInfoPermissionsPanel::~AppInfoPermissionsPanel() {
-}
+AppInfoPermissionsPanel::~AppInfoPermissionsPanel() = default;
 
 void AppInfoPermissionsPanel::CreatePermissionsList() {
   views::View* permissions_heading = CreateHeading(

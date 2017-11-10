@@ -32,9 +32,9 @@ struct CaptureAccessHandlerBase::Session {
   bool is_capturing_link_secure;
 };
 
-CaptureAccessHandlerBase::CaptureAccessHandlerBase() {}
+CaptureAccessHandlerBase::CaptureAccessHandlerBase() = default;
 
-CaptureAccessHandlerBase::~CaptureAccessHandlerBase() {}
+CaptureAccessHandlerBase::~CaptureAccessHandlerBase() = default;
 
 void CaptureAccessHandlerBase::AddCaptureSession(int render_process_id,
                                                  int render_frame_id,

@@ -29,7 +29,7 @@ namespace safe_browsing {
 
 class SBNavigationObserverTest : public BrowserWithTestWindowTest {
  public:
-  SBNavigationObserverTest() {}
+  SBNavigationObserverTest() = default;
   void SetUp() override {
     BrowserWithTestWindowTest::SetUp();
     AddTab(browser(), GURL("http://foo/0"));

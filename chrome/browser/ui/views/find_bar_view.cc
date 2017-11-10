@@ -57,8 +57,8 @@ const int kDefaultCharWidth = 30;
 // FindBarView::TargetForRect).
 class MatchCountLabel : public views::Label {
  public:
-  MatchCountLabel() {}
-  ~MatchCountLabel() override {}
+  MatchCountLabel() = default;
+  ~MatchCountLabel() override = default;
 
   // views::Label overrides:
   bool CanProcessEventsWithinSubtree() const override { return true; }
@@ -208,8 +208,7 @@ FindBarView::FindBarView(FindBarHost* host)
   manager->SetFlexForView(find_text_, 1);
 }
 
-FindBarView::~FindBarView() {
-}
+FindBarView::~FindBarView() = default;
 
 void FindBarView::SetFindTextAndSelectedRange(
     const base::string16& find_text,

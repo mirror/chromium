@@ -87,7 +87,7 @@ class HostedAppTest : public ExtensionBrowserTest,
                       public ::testing::WithParamInterface<bool> {
  public:
   HostedAppTest() : app_browser_(nullptr) {}
-  ~HostedAppTest() override {}
+  ~HostedAppTest() override = default;
 
   void SetUp() override {
     if (GetParam()) {
@@ -373,8 +373,8 @@ IN_PROC_BROWSER_TEST_P(HostedAppTest, BookmarkAppThemeColor) {
 
 class HostedAppVsTdiTest : public HostedAppTest {
  public:
-  HostedAppVsTdiTest() {}
-  ~HostedAppVsTdiTest() override {}
+  HostedAppVsTdiTest() = default;
+  ~HostedAppVsTdiTest() override = default;
 
   void SetUpOnMainThread() override {
     scoped_feature_list_.InitAndEnableFeature(features::kTopDocumentIsolation);
@@ -525,8 +525,8 @@ IN_PROC_BROWSER_TEST_P(HostedAppVsTdiTest, ProcessAllocation) {
 
 class HostedAppWithIsolatedOriginsTest : public HostedAppTest {
  public:
-  HostedAppWithIsolatedOriginsTest() {}
-  ~HostedAppWithIsolatedOriginsTest() override {}
+  HostedAppWithIsolatedOriginsTest() = default;
+  ~HostedAppWithIsolatedOriginsTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ASSERT_TRUE(embedded_test_server()->InitializeAndListen());

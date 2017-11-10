@@ -144,8 +144,7 @@ TabsEventRouter::TabsEventRouter(Profile* profile)
   tab_manager_scoped_observer_.Add(g_browser_process->GetTabManager());
 }
 
-TabsEventRouter::~TabsEventRouter() {
-}
+TabsEventRouter::~TabsEventRouter() = default;
 
 bool TabsEventRouter::ShouldTrackBrowser(Browser* browser) {
   return profile_->IsSameProfile(browser->profile()) &&

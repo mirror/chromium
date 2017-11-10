@@ -25,8 +25,7 @@ LazyDomDistillerService::LazyDomDistillerService(
                  content::Source<Profile>(profile));
 }
 
-LazyDomDistillerService::~LazyDomDistillerService() {
-}
+LazyDomDistillerService::~LazyDomDistillerService() = default;
 
 // This will create an object and schedule work the first time it's called
 // and just return an existing object after that.

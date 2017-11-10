@@ -29,7 +29,7 @@ class SupervisedUserPrefMappingServiceTest : public ::testing::Test {
         SupervisedUserPrefMappingServiceFactory::GetForBrowserContext(
             &profile_);
   }
-  ~SupervisedUserPrefMappingServiceTest() override {}
+  ~SupervisedUserPrefMappingServiceTest() override = default;
 
   // testing::Test overrides:
   void SetUp() override { mapping_service_->Init(); }

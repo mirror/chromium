@@ -23,8 +23,7 @@ ProtocolHandler ProtocolHandler::CreateProtocolHandler(
   return ProtocolHandler(lower_protocol, url);
 }
 
-ProtocolHandler::ProtocolHandler() {
-}
+ProtocolHandler::ProtocolHandler() = default;
 
 bool ProtocolHandler::IsValidDict(const base::DictionaryValue* value) {
   // Note that "title" parameter is ignored.

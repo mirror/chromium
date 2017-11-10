@@ -27,7 +27,7 @@ PepperFlashDRMRendererHost::PepperFlashDRMRendererHost(
       renderer_ppapi_host_(host),
       weak_factory_(this) {}
 
-PepperFlashDRMRendererHost::~PepperFlashDRMRendererHost() {}
+PepperFlashDRMRendererHost::~PepperFlashDRMRendererHost() = default;
 
 int32_t PepperFlashDRMRendererHost::OnResourceMessageReceived(
     const IPC::Message& msg,

@@ -239,7 +239,7 @@ DesktopMediaPickerDialogView::DesktopMediaPickerDialogView(
     list_view->StartUpdating(dialog_window_id);
 }
 
-DesktopMediaPickerDialogView::~DesktopMediaPickerDialogView() {}
+DesktopMediaPickerDialogView::~DesktopMediaPickerDialogView() = default;
 
 void DesktopMediaPickerDialogView::TabSelectedAt(int index) {
   OnSourceTypeSwitched(index);

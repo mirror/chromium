@@ -232,8 +232,7 @@ void PopulateNonBinaryDetailsFromRow(
 
 }  // namespace
 
-LastDownloadFinder::~LastDownloadFinder() {
-}
+LastDownloadFinder::~LastDownloadFinder() = default;
 
 // static
 std::unique_ptr<LastDownloadFinder> LastDownloadFinder::Create(

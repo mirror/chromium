@@ -18,7 +18,7 @@
 PermissionsBrowserTest::PermissionsBrowserTest(const std::string& test_url)
     : test_url_(test_url) {}
 
-PermissionsBrowserTest::~PermissionsBrowserTest() {}
+PermissionsBrowserTest::~PermissionsBrowserTest() = default;
 
 void PermissionsBrowserTest::SetUpOnMainThread() {
   PermissionRequestManager* manager = PermissionRequestManager::FromWebContents(

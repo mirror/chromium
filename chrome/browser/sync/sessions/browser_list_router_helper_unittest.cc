@@ -31,7 +31,7 @@ class MockLocalSessionEventHandler : public LocalSessionEventHandler {
 
 class BrowserListRouterHelperTest : public BrowserWithTestWindowTest {
  protected:
-  ~BrowserListRouterHelperTest() override {}
+  ~BrowserListRouterHelperTest() override = default;
 
   MockLocalSessionEventHandler handler_1;
   MockLocalSessionEventHandler handler_2;

@@ -57,7 +57,7 @@ UsbTabHelper* UsbTabHelper::GetOrCreateForWebContents(
   return tab_helper;
 }
 
-UsbTabHelper::~UsbTabHelper() {}
+UsbTabHelper::~UsbTabHelper() = default;
 
 void UsbTabHelper::CreateDeviceManager(
     RenderFrameHost* render_frame_host,

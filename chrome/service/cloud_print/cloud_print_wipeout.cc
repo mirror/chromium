@@ -18,8 +18,7 @@ CloudPrintWipeout::CloudPrintWipeout(
     : client_(client),
       cloud_print_server_url_(cloud_print_server_url),
       partial_traffic_annotation_(partial_traffic_annotation) {}
-CloudPrintWipeout::~CloudPrintWipeout() {
-}
+CloudPrintWipeout::~CloudPrintWipeout() = default;
 
 void CloudPrintWipeout::UnregisterPrinters(
     const std::string& auth_token,

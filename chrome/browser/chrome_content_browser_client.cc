@@ -637,7 +637,7 @@ class CertificateReportingServiceCertReporter : public SSLCertReporter {
   explicit CertificateReportingServiceCertReporter(
       CertificateReportingService* service)
       : service_(service) {}
-  ~CertificateReportingServiceCertReporter() override {}
+  ~CertificateReportingServiceCertReporter() override = default;
 
   // SSLCertReporter implementation
   void ReportInvalidCertificateChain(

@@ -33,8 +33,7 @@ InstallTrackerFactory::InstallTrackerFactory()
   DependsOn(ExtensionPrefsFactory::GetInstance());
 }
 
-InstallTrackerFactory::~InstallTrackerFactory() {
-}
+InstallTrackerFactory::~InstallTrackerFactory() = default;
 
 KeyedService* InstallTrackerFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

@@ -52,8 +52,7 @@ SystemMenuModelBuilder::SystemMenuModelBuilder(
     : menu_delegate_(provider, browser) {
 }
 
-SystemMenuModelBuilder::~SystemMenuModelBuilder() {
-}
+SystemMenuModelBuilder::~SystemMenuModelBuilder() = default;
 
 void SystemMenuModelBuilder::Init() {
   ui::SimpleMenuModel* model = new ui::SimpleMenuModel(&menu_delegate_);

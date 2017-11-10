@@ -30,7 +30,7 @@ TranslateRankerFactory::TranslateRankerFactory()
           "TranslateRanker",
           BrowserContextDependencyManager::GetInstance()) {}
 
-TranslateRankerFactory::~TranslateRankerFactory() {}
+TranslateRankerFactory::~TranslateRankerFactory() = default;
 
 KeyedService* TranslateRankerFactory::BuildServiceInstanceFor(
     content::BrowserContext* browser_context) const {

@@ -154,11 +154,9 @@ ManifestPermission* AutomationManifestPermission::Intersect(
       base::WrapUnique(new const AutomationInfo(desktop, matches, interact)));
 }
 
-AutomationHandler::AutomationHandler() {
-}
+AutomationHandler::AutomationHandler() = default;
 
-AutomationHandler::~AutomationHandler() {
-}
+AutomationHandler::~AutomationHandler() = default;
 
 bool AutomationHandler::Parse(Extension* extension, base::string16* error) {
   const base::Value* automation = NULL;
@@ -307,7 +305,6 @@ AutomationInfo::AutomationInfo(bool desktop,
                                bool interact)
     : desktop(desktop), matches(matches), interact(interact) {}
 
-AutomationInfo::~AutomationInfo() {
-}
+AutomationInfo::~AutomationInfo() = default;
 
 }  // namespace extensions

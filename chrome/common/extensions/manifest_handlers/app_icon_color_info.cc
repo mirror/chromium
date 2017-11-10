@@ -32,8 +32,7 @@ const AppIconColorInfo& GetInfo(const Extension* extension) {
 AppIconColorInfo::AppIconColorInfo() : icon_color_(SK_ColorTRANSPARENT) {
 }
 
-AppIconColorInfo::~AppIconColorInfo() {
-}
+AppIconColorInfo::~AppIconColorInfo() = default;
 
 // static
 SkColor AppIconColorInfo::GetIconColor(const Extension* extension) {
@@ -46,11 +45,9 @@ const std::string& AppIconColorInfo::GetIconColorString(
   return GetInfo(extension).icon_color_string_;
 }
 
-AppIconColorHandler::AppIconColorHandler() {
-}
+AppIconColorHandler::AppIconColorHandler() = default;
 
-AppIconColorHandler::~AppIconColorHandler() {
-}
+AppIconColorHandler::~AppIconColorHandler() = default;
 
 bool AppIconColorHandler::Parse(Extension* extension, base::string16* error) {
   std::unique_ptr<AppIconColorInfo> app_icon_color_info(new AppIconColorInfo);

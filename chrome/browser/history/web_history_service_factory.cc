@@ -64,5 +64,4 @@ WebHistoryServiceFactory::WebHistoryServiceFactory()
   DependsOn(SigninManagerFactory::GetInstance());
 }
 
-WebHistoryServiceFactory::~WebHistoryServiceFactory() {
-}
+WebHistoryServiceFactory::~WebHistoryServiceFactory() = default;

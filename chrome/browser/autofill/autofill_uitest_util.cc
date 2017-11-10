@@ -25,7 +25,7 @@ class PdmChangeWaiter : public PersonalDataManagerObserver {
         AddObserver(this);
   }
 
-  ~PdmChangeWaiter() override {}
+  ~PdmChangeWaiter() override = default;
 
   // PersonalDataManagerObserver:
   void OnPersonalDataChanged() override {

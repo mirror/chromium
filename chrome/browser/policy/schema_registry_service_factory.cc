@@ -86,7 +86,7 @@ SchemaRegistryServiceFactory::SchemaRegistryServiceFactory()
           "SchemaRegistryService",
           BrowserContextDependencyManager::GetInstance()) {}
 
-SchemaRegistryServiceFactory::~SchemaRegistryServiceFactory() {}
+SchemaRegistryServiceFactory::~SchemaRegistryServiceFactory() = default;
 
 SchemaRegistryService* SchemaRegistryServiceFactory::GetForContextInternal(
     content::BrowserContext* context) {

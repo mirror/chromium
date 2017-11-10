@@ -11,8 +11,8 @@
 
 class TestLoginUI : public LoginUIService::LoginUI {
  public:
-  TestLoginUI() { }
-  ~TestLoginUI() override {}
+  TestLoginUI() = default;
+  ~TestLoginUI() override = default;
   void FocusUI() override {}
 
  private:

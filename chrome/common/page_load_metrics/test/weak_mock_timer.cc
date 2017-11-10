@@ -10,8 +10,8 @@ namespace test {
 WeakMockTimer::WeakMockTimer()
     : MockTimer(false /* retain_user_task */, false /* is_repeating */) {}
 
-WeakMockTimerProvider::WeakMockTimerProvider() {}
-WeakMockTimerProvider::~WeakMockTimerProvider() {}
+WeakMockTimerProvider::WeakMockTimerProvider() = default;
+WeakMockTimerProvider::~WeakMockTimerProvider() = default;
 
 base::MockTimer* WeakMockTimerProvider::GetMockTimer() const {
   return timer_.get();

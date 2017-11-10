@@ -81,7 +81,7 @@ class SimpleTestJob : public net::URLRequestTestJob {
                                kTestData,
                                true) {}
  private:
-  ~SimpleTestJob() override {}
+  ~SimpleTestJob() override = default;
 };
 
 // Yoinked from extension_manifest_unittest.cc.
@@ -111,8 +111,8 @@ scoped_refptr<Extension> LoadExtension(const std::string& filename,
 class SimpleTestJobURLRequestInterceptor
     : public net::URLRequestInterceptor {
  public:
-  SimpleTestJobURLRequestInterceptor() {}
-  ~SimpleTestJobURLRequestInterceptor() override {}
+  SimpleTestJobURLRequestInterceptor() = default;
+  ~SimpleTestJobURLRequestInterceptor() override = default;
 
   // net::URLRequestJobFactory::ProtocolHandler
   net::URLRequestJob* MaybeInterceptRequest(

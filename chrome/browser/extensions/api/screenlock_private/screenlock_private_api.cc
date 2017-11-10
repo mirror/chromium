@@ -51,9 +51,11 @@ screenlock::AuthType FromLockHandlerAuthType(
 
 }  // namespace
 
-ScreenlockPrivateGetLockedFunction::ScreenlockPrivateGetLockedFunction() {}
+ScreenlockPrivateGetLockedFunction::ScreenlockPrivateGetLockedFunction() =
+    default;
 
-ScreenlockPrivateGetLockedFunction::~ScreenlockPrivateGetLockedFunction() {}
+ScreenlockPrivateGetLockedFunction::~ScreenlockPrivateGetLockedFunction() =
+    default;
 
 bool ScreenlockPrivateGetLockedFunction::RunAsync() {
   SetResult(base::MakeUnique<base::Value>(
@@ -62,9 +64,11 @@ bool ScreenlockPrivateGetLockedFunction::RunAsync() {
   return true;
 }
 
-ScreenlockPrivateSetLockedFunction::ScreenlockPrivateSetLockedFunction() {}
+ScreenlockPrivateSetLockedFunction::ScreenlockPrivateSetLockedFunction() =
+    default;
 
-ScreenlockPrivateSetLockedFunction::~ScreenlockPrivateSetLockedFunction() {}
+ScreenlockPrivateSetLockedFunction::~ScreenlockPrivateSetLockedFunction() =
+    default;
 
 bool ScreenlockPrivateSetLockedFunction::RunAsync() {
   std::unique_ptr<screenlock::SetLocked::Params> params(
@@ -91,10 +95,10 @@ bool ScreenlockPrivateSetLockedFunction::RunAsync() {
 }
 
 ScreenlockPrivateAcceptAuthAttemptFunction::
-    ScreenlockPrivateAcceptAuthAttemptFunction() {}
+    ScreenlockPrivateAcceptAuthAttemptFunction() = default;
 
 ScreenlockPrivateAcceptAuthAttemptFunction::
-    ~ScreenlockPrivateAcceptAuthAttemptFunction() {}
+    ~ScreenlockPrivateAcceptAuthAttemptFunction() = default;
 
 ExtensionFunction::ResponseAction
 ScreenlockPrivateAcceptAuthAttemptFunction::Run() {
@@ -115,7 +119,7 @@ ScreenlockPrivateEventRouter::ScreenlockPrivateEventRouter(
   proximity_auth::ScreenlockBridge::Get()->AddObserver(this);
 }
 
-ScreenlockPrivateEventRouter::~ScreenlockPrivateEventRouter() {}
+ScreenlockPrivateEventRouter::~ScreenlockPrivateEventRouter() = default;
 
 void ScreenlockPrivateEventRouter::OnScreenDidLock(
     proximity_auth::ScreenlockBridge::LockHandler::ScreenType screen_type) {

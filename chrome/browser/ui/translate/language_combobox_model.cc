@@ -15,8 +15,7 @@ LanguageComboboxModel::LanguageComboboxModel(
   // negative when, for example, the page's language can't be detected.
 }
 
-LanguageComboboxModel::~LanguageComboboxModel() {
-}
+LanguageComboboxModel::~LanguageComboboxModel() = default;
 
 int LanguageComboboxModel::GetItemCount() const {
   return model_->GetNumberOfLanguages();

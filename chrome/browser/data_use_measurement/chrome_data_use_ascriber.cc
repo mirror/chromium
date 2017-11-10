@@ -36,13 +36,13 @@ ChromeDataUseAscriber::DataUseRecorderEntryAsUserData::
     : entry_(entry) {}
 
 ChromeDataUseAscriber::DataUseRecorderEntryAsUserData::
-    ~DataUseRecorderEntryAsUserData() {}
+    ~DataUseRecorderEntryAsUserData() = default;
 
 ChromeDataUseAscriber::MainRenderFrameEntry::MainRenderFrameEntry(
     ChromeDataUseAscriber::DataUseRecorderEntry data_use_recorder)
     : data_use_recorder(data_use_recorder), is_visible(false) {}
 
-ChromeDataUseAscriber::MainRenderFrameEntry::~MainRenderFrameEntry() {}
+ChromeDataUseAscriber::MainRenderFrameEntry::~MainRenderFrameEntry() = default;
 
 ChromeDataUseAscriber::ChromeDataUseAscriber() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);

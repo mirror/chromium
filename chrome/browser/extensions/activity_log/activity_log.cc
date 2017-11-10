@@ -191,7 +191,7 @@ class ApiInfoDatabase {
       api_database_[info->api_name] = info;
     }
   }
-  virtual ~ApiInfoDatabase() {}
+  virtual ~ApiInfoDatabase() = default;
 
   // The map is keyed by API name only, since API names aren't be repeated
   // across multiple action types in kApiInfoTable.  However, the action type
@@ -347,8 +347,8 @@ void ExtractUrls(scoped_refptr<Action> action, Profile* profile) {
 // A global, thread-safe record of activity log state.
 class ActivityLogState {
  public:
-  ActivityLogState() {}
-  ~ActivityLogState() {}
+  ActivityLogState() = default;
+  ~ActivityLogState() = default;
 
   void AddActiveContext(content::BrowserContext* context) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);

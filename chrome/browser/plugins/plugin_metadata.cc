@@ -42,8 +42,7 @@ PluginMetadata::PluginMetadata(const std::string& identifier,
       language_(language) {
 }
 
-PluginMetadata::~PluginMetadata() {
-}
+PluginMetadata::~PluginMetadata() = default;
 
 void PluginMetadata::AddVersion(const base::Version& version,
                                 SecurityStatus status) {

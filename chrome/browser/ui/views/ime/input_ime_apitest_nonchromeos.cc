@@ -21,7 +21,7 @@ namespace extensions {
 
 class InputImeApiTest : public ExtensionApiTest {
  public:
-  InputImeApiTest() {}
+  InputImeApiTest() = default;
 
  protected:
   void SetUpCommandLine(base::CommandLine* command_line) override {

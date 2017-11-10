@@ -11,7 +11,7 @@
 
 class UpgradeMetricsProviderTest : public testing::Test {
  public:
-  UpgradeMetricsProviderTest() {}
+  UpgradeMetricsProviderTest() = default;
 
   void TestHistogramLevel(
       UpgradeDetector::UpgradeNotificationAnnoyanceLevel level) {

@@ -9,8 +9,7 @@
 ImmersiveModeControllerStub::ImmersiveModeControllerStub()
     : ImmersiveModeController(Type::STUB) {}
 
-ImmersiveModeControllerStub::~ImmersiveModeControllerStub() {
-}
+ImmersiveModeControllerStub::~ImmersiveModeControllerStub() = default;
 
 void ImmersiveModeControllerStub::Init(BrowserView* browser_view) {
 }

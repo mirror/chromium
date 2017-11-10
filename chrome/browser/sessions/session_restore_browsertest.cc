@@ -214,7 +214,7 @@ class SessionRestoreTest : public InProcessBrowserTest {
 class SmartSessionRestoreTest : public SessionRestoreTest,
                                       public content::NotificationObserver {
  public:
-  SmartSessionRestoreTest() {}
+  SmartSessionRestoreTest() = default;
   void StartObserving(size_t num_tabs) {
     // Start by clearing everything so it can be reused in the same test.
     web_contents_.clear();

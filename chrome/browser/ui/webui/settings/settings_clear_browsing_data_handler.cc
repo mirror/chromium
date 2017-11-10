@@ -96,8 +96,7 @@ ClearBrowsingDataHandler::ClearBrowsingDataHandler(content::WebUI* webui)
   }
 }
 
-ClearBrowsingDataHandler::~ClearBrowsingDataHandler() {
-}
+ClearBrowsingDataHandler::~ClearBrowsingDataHandler() = default;
 
 void ClearBrowsingDataHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

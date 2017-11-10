@@ -44,7 +44,7 @@ class StringTraceEndpoint
   }
 
  private:
-  ~StringTraceEndpoint() override {}
+  ~StringTraceEndpoint() override = default;
 
   std::string* result_;
   base::Closure completion_callback_;
@@ -58,8 +58,8 @@ class InProcessTraceController {
     return base::Singleton<InProcessTraceController>::get();
   }
 
-  InProcessTraceController() {}
-  virtual ~InProcessTraceController() {}
+  InProcessTraceController() = default;
+  virtual ~InProcessTraceController() = default;
 
   bool BeginTracing(
       const base::trace_event::TraceConfig& trace_config,

@@ -50,7 +50,7 @@ ActivityDatabase::ActivityDatabase(ActivityDatabase::Delegate* delegate)
   }
 }
 
-ActivityDatabase::~ActivityDatabase() {}
+ActivityDatabase::~ActivityDatabase() = default;
 
 void ActivityDatabase::Init(const base::FilePath& db_name) {
   if (did_init_)

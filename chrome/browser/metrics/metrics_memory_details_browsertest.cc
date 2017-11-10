@@ -25,7 +25,7 @@ class TestMemoryDetails : public MetricsMemoryDetails {
   }
 
  private:
-  ~TestMemoryDetails() override {}
+  ~TestMemoryDetails() override = default;
 
   void OnDetailsAvailable() override {
     MetricsMemoryDetails::OnDetailsAvailable();
@@ -40,8 +40,8 @@ class TestMemoryDetails : public MetricsMemoryDetails {
 
 class MetricsMemoryDetailsBrowserTest : public InProcessBrowserTest {
  public:
-  MetricsMemoryDetailsBrowserTest() {}
-  ~MetricsMemoryDetailsBrowserTest() override {}
+  MetricsMemoryDetailsBrowserTest() = default;
+  ~MetricsMemoryDetailsBrowserTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MetricsMemoryDetailsBrowserTest);

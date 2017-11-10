@@ -43,8 +43,7 @@ ThemeSyncableService::ThemeSyncableService(Profile* profile,
   DCHECK(theme_service_);
 }
 
-ThemeSyncableService::~ThemeSyncableService() {
-}
+ThemeSyncableService::~ThemeSyncableService() = default;
 
 void ThemeSyncableService::OnThemeChange() {
   if (sync_processor_.get()) {

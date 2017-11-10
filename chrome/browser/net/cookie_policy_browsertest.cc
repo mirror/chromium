@@ -24,7 +24,7 @@ namespace {
 
 class CookiePolicyBrowserTest : public InProcessBrowserTest {
  protected:
-  CookiePolicyBrowserTest() {}
+  CookiePolicyBrowserTest() = default;
 
   void SetUpOnMainThread() override {
     host_resolver()->AddRule("*", "127.0.0.1");

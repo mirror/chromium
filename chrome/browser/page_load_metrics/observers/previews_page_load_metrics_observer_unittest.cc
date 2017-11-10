@@ -28,7 +28,7 @@ class TestPreviewsPageLoadMetricsObserver
  public:
   explicit TestPreviewsPageLoadMetricsObserver(bool offline_preview)
       : offline_preview_(offline_preview) {}
-  ~TestPreviewsPageLoadMetricsObserver() override {}
+  ~TestPreviewsPageLoadMetricsObserver() override = default;
 
   bool IsOfflinePreview(content::WebContents* web_contents) const override {
     return offline_preview_;

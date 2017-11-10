@@ -22,9 +22,9 @@ const net::UnescapeRule::Type kUnescapeRules =
     net::UnescapeRule::URL_SPECIAL_CHARS_EXCEPT_PATH_SEPARATORS;
 }
 
-CoreAppLauncherHandler::CoreAppLauncherHandler() {}
+CoreAppLauncherHandler::CoreAppLauncherHandler() = default;
 
-CoreAppLauncherHandler::~CoreAppLauncherHandler() {}
+CoreAppLauncherHandler::~CoreAppLauncherHandler() = default;
 
 // static
 void CoreAppLauncherHandler::RegisterProfilePrefs(

@@ -277,7 +277,7 @@ BubbleHeaderView::BubbleHeaderView(
                   GridLayout::LEADING);
 }
 
-BubbleHeaderView::~BubbleHeaderView() {}
+BubbleHeaderView::~BubbleHeaderView() = default;
 
 void BubbleHeaderView::SetDetails(const base::string16& details_text) {
   std::vector<base::string16> subst;
@@ -430,7 +430,7 @@ InternalPageInfoBubbleView::InternalPageInfoBubbleView(
   views::BubbleDialogDelegateView::CreateBubble(this);
 }
 
-InternalPageInfoBubbleView::~InternalPageInfoBubbleView() {}
+InternalPageInfoBubbleView::~InternalPageInfoBubbleView() = default;
 
 void InternalPageInfoBubbleView::OnWidgetDestroying(views::Widget* widget) {
   g_shown_bubble_type = PageInfoBubbleView::BUBBLE_NONE;
@@ -445,7 +445,7 @@ int InternalPageInfoBubbleView::GetDialogButtons() const {
 // PageInfoBubbleView
 ////////////////////////////////////////////////////////////////////////////////
 
-PageInfoBubbleView::~PageInfoBubbleView() {}
+PageInfoBubbleView::~PageInfoBubbleView() = default;
 
 // static
 views::BubbleDialogDelegateView* PageInfoBubbleView::CreatePageInfoBubble(

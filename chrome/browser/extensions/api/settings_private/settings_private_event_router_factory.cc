@@ -33,8 +33,8 @@ SettingsPrivateEventRouterFactory::SettingsPrivateEventRouterFactory()
   DependsOn(SettingsPrivateDelegateFactory::GetInstance());
 }
 
-SettingsPrivateEventRouterFactory::~SettingsPrivateEventRouterFactory() {
-}
+SettingsPrivateEventRouterFactory::~SettingsPrivateEventRouterFactory() =
+    default;
 
 KeyedService* SettingsPrivateEventRouterFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

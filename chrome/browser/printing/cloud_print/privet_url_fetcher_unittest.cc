@@ -37,8 +37,7 @@ class MockPrivetURLFetcherDelegate : public PrivetURLFetcher::Delegate {
   MockPrivetURLFetcherDelegate() : raw_mode_(false) {
   }
 
-  ~MockPrivetURLFetcherDelegate() override {
-  }
+  ~MockPrivetURLFetcherDelegate() override = default;
 
   void OnError(PrivetURLFetcher* fetcher,
                PrivetURLFetcher::ErrorType error) override {
@@ -104,8 +103,7 @@ class PrivetURLFetcherTest : public ::testing::Test {
     PrivetURLFetcher::SetTokenForHost(GURL(kSamplePrivetURL).GetOrigin().spec(),
                                       kSamplePrivetToken);
   }
-  virtual ~PrivetURLFetcherTest() {
-  }
+  virtual ~PrivetURLFetcherTest() = default;
 
   void RunFor(base::TimeDelta time_period) {
     base::CancelableCallback<void()> callback(base::Bind(

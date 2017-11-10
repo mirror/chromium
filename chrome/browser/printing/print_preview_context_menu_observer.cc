@@ -12,8 +12,7 @@ PrintPreviewContextMenuObserver::PrintPreviewContextMenuObserver(
     content::WebContents* contents) : contents_(contents) {
 }
 
-PrintPreviewContextMenuObserver::~PrintPreviewContextMenuObserver() {
-}
+PrintPreviewContextMenuObserver::~PrintPreviewContextMenuObserver() = default;
 
 bool PrintPreviewContextMenuObserver::IsPrintPreviewDialog() {
   printing::PrintPreviewDialogController* controller =

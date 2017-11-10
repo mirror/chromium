@@ -41,7 +41,7 @@ const char* kAllPaths[] = {
 
 class Holder {
  public:
-  virtual ~Holder() {}
+  virtual ~Holder() = default;
   virtual void OnResult(bool, bool) = 0;
 };
 

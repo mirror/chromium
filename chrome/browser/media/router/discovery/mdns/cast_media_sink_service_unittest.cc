@@ -64,7 +64,7 @@ class MockCastMediaSinkServiceImpl : public CastMediaSinkServiceImpl {
                                  network_monitor,
                                  nullptr /* url_request_context_getter */,
                                  task_runner) {}
-  ~MockCastMediaSinkServiceImpl() override {}
+  ~MockCastMediaSinkServiceImpl() override = default;
 
   MOCK_METHOD0(Start, void());
   MOCK_METHOD0(Stop, void());

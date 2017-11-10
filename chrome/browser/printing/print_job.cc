@@ -474,8 +474,7 @@ JobEventDetails::JobEventDetails(Type type,
                                  PrintedPage* page)
     : document_(document), page_(page), type_(type), job_id_(job_id) {}
 
-JobEventDetails::~JobEventDetails() {
-}
+JobEventDetails::~JobEventDetails() = default;
 
 PrintedDocument* JobEventDetails::document() const { return document_.get(); }
 

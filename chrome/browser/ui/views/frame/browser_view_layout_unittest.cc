@@ -19,7 +19,7 @@ class MockBrowserViewLayoutDelegate : public BrowserViewLayoutDelegate {
  public:
   explicit MockBrowserViewLayoutDelegate(views::View* contents_web_view)
       : contents_web_view_(contents_web_view) {}
-  ~MockBrowserViewLayoutDelegate() override {}
+  ~MockBrowserViewLayoutDelegate() override = default;
 
   void set_download_shelf_needs_layout(bool layout) {
     download_shelf_needs_layout_ = layout;
@@ -78,7 +78,7 @@ views::View* CreateFixedSizeView(const gfx::Size& size) {
 class MockImmersiveModeController : public ImmersiveModeController {
  public:
   MockImmersiveModeController() : ImmersiveModeController(Type::STUB) {}
-  ~MockImmersiveModeController() override {}
+  ~MockImmersiveModeController() override = default;
 
   // ImmersiveModeController overrides:
   void Init(BrowserView* browser_view) override {}
@@ -117,7 +117,7 @@ class BrowserViewLayoutTest : public BrowserWithTestWindowTest {
         contents_container_(nullptr),
         contents_web_view_(nullptr),
         devtools_web_view_(nullptr) {}
-  ~BrowserViewLayoutTest() override {}
+  ~BrowserViewLayoutTest() override = default;
 
   BrowserViewLayout* layout() { return layout_.get(); }
   MockBrowserViewLayoutDelegate* delegate() { return delegate_; }

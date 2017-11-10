@@ -105,8 +105,7 @@ FirstRunDialog::FirstRunDialog(Profile* profile)
   chrome::RecordDialogCreation(chrome::DialogIdentifier::FIRST_RUN_DIALOG);
 }
 
-FirstRunDialog::~FirstRunDialog() {
-}
+FirstRunDialog::~FirstRunDialog() = default;
 
 void FirstRunDialog::Done() {
   CHECK(!quit_runloop_.is_null());

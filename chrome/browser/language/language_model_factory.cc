@@ -32,7 +32,7 @@ LanguageModelFactory::LanguageModelFactory()
           "LanguageModel",
           BrowserContextDependencyManager::GetInstance()) {}
 
-LanguageModelFactory::~LanguageModelFactory() {}
+LanguageModelFactory::~LanguageModelFactory() = default;
 
 KeyedService* LanguageModelFactory::BuildServiceInstanceFor(
     content::BrowserContext* const browser_context) const {

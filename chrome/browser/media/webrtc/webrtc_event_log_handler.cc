@@ -44,7 +44,7 @@ WebRtcEventLogHandler::WebRtcEventLogHandler(int render_process_id,
   DCHECK(profile_);
 }
 
-WebRtcEventLogHandler::~WebRtcEventLogHandler() {}
+WebRtcEventLogHandler::~WebRtcEventLogHandler() = default;
 
 void WebRtcEventLogHandler::StartWebRtcEventLogging(
     base::TimeDelta duration,

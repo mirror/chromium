@@ -119,7 +119,7 @@ NativeDesktopMediaList::Worker::Worker(
   capturer_->Start(this);
 }
 
-NativeDesktopMediaList::Worker::~Worker() {}
+NativeDesktopMediaList::Worker::~Worker() = default;
 
 void NativeDesktopMediaList::Worker::Refresh(
     const DesktopMediaID::Id& view_dialog_id) {

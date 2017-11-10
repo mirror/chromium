@@ -43,8 +43,7 @@ SpellcheckAPI::SpellcheckAPI(content::BrowserContext* context)
   extension_registry_observer_.Add(ExtensionRegistry::Get(context));
 }
 
-SpellcheckAPI::~SpellcheckAPI() {
-}
+SpellcheckAPI::~SpellcheckAPI() = default;
 
 static base::LazyInstance<BrowserContextKeyedAPIFactory<SpellcheckAPI>>::
     DestructorAtExit g_spellcheck_api_factory = LAZY_INSTANCE_INITIALIZER;

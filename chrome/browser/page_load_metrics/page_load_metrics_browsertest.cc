@@ -231,7 +231,7 @@ class PageLoadMetricsWaiter
   // Manages a bitset of TimingFields.
   class TimingFieldBitSet {
    public:
-    TimingFieldBitSet() {}
+    TimingFieldBitSet() = default;
 
     // Returns whether this bitset has all bits unset.
     bool Empty() const { return bitmask_ == 0; }
@@ -341,7 +341,7 @@ class PageLoadMetricsBrowserTest : public InProcessBrowserTest {
     scoped_feature_list_.InitAndEnableFeature(ukm::kUkmFeature);
   }
 
-  ~PageLoadMetricsBrowserTest() override {}
+  ~PageLoadMetricsBrowserTest() override = default;
 
  protected:
   void PreRunTestOnMainThread() override {
@@ -1262,7 +1262,7 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, LoadingMetricsFailed) {
 class SessionRestorePageLoadMetricsBrowserTest
     : public PageLoadMetricsBrowserTest {
  public:
-  SessionRestorePageLoadMetricsBrowserTest() {}
+  SessionRestorePageLoadMetricsBrowserTest() = default;
 
   // PageLoadMetricsBrowserTest:
   void SetUpOnMainThread() override {

@@ -50,8 +50,7 @@ PrerenderHelper::PrerenderHelper(content::RenderFrame* sub_frame)
   DCHECK(!render_frame()->IsMainFrame());
 }
 
-PrerenderHelper::~PrerenderHelper() {
-}
+PrerenderHelper::~PrerenderHelper() = default;
 
 // static.
 bool PrerenderHelper::IsPrerendering(const content::RenderFrame* render_frame) {

@@ -56,7 +56,7 @@ FullStreamUIPolicy::FullStreamUIPolicy(Profile* profile)
           profile,
           FilePath(chrome::kExtensionActivityLogFilename)) {}
 
-FullStreamUIPolicy::~FullStreamUIPolicy() {}
+FullStreamUIPolicy::~FullStreamUIPolicy() = default;
 
 bool FullStreamUIPolicy::InitDatabase(sql::Connection* db) {
   // Create the unified activity log entry table.

@@ -148,8 +148,7 @@ ChromeRenderFrameObserver::ChromeRenderFrameObserver(
       extensions::kExtensionScheme);
 }
 
-ChromeRenderFrameObserver::~ChromeRenderFrameObserver() {
-}
+ChromeRenderFrameObserver::~ChromeRenderFrameObserver() = default;
 
 void ChromeRenderFrameObserver::OnInterfaceRequestForFrame(
     const std::string& interface_name,

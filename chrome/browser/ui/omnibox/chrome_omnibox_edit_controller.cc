@@ -84,4 +84,4 @@ ChromeOmniboxEditController::ChromeOmniboxEditController(
     CommandUpdater* command_updater)
     : command_updater_(command_updater) {}
 
-ChromeOmniboxEditController::~ChromeOmniboxEditController() {}
+ChromeOmniboxEditController::~ChromeOmniboxEditController() = default;

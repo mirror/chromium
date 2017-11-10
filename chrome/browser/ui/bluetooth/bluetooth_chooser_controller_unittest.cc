@@ -17,7 +17,7 @@ namespace {
 
 class MockBluetoothChooserView : public ChooserController::View {
  public:
-  MockBluetoothChooserView() {}
+  MockBluetoothChooserView() = default;
 
   // ChooserController::View:
   MOCK_METHOD0(OnOptionsInitialized, void());

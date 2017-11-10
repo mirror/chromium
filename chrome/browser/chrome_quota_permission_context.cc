@@ -86,7 +86,7 @@ QuotaPermissionRequest::QuotaPermissionRequest(
   (void)is_large_quota_request_;
 }
 
-QuotaPermissionRequest::~QuotaPermissionRequest() {}
+QuotaPermissionRequest::~QuotaPermissionRequest() = default;
 
 PermissionRequest::IconId QuotaPermissionRequest::GetIconId() const {
 #if defined(OS_ANDROID)
@@ -151,8 +151,7 @@ PermissionRequestType QuotaPermissionRequest::GetPermissionRequestType() const {
 
 // ChromeQuotaPermissionContext -----------------------------------------------
 
-ChromeQuotaPermissionContext::ChromeQuotaPermissionContext() {
-}
+ChromeQuotaPermissionContext::ChromeQuotaPermissionContext() = default;
 
 void ChromeQuotaPermissionContext::RequestQuotaPermission(
     const content::StorageQuotaParams& params,
@@ -226,4 +225,4 @@ void ChromeQuotaPermissionContext::DispatchCallbackOnIOThread(
   callback.Run(response);
 }
 
-ChromeQuotaPermissionContext::~ChromeQuotaPermissionContext() {}
+ChromeQuotaPermissionContext::~ChromeQuotaPermissionContext() = default;

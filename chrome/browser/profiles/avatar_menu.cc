@@ -83,8 +83,7 @@ AvatarMenu::Item::Item(size_t menu_index, const base::FilePath& profile_path,
 
 AvatarMenu::Item::Item(const Item& other) = default;
 
-AvatarMenu::Item::~Item() {
-}
+AvatarMenu::Item::~Item() = default;
 
 // static
 bool AvatarMenu::ShouldShowAvatarMenu() {

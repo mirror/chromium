@@ -37,7 +37,7 @@ ImportantSitesUsageCounter::ImportantSitesUsageCounter(
     site.usage = 0;
 }
 
-ImportantSitesUsageCounter::~ImportantSitesUsageCounter() {}
+ImportantSitesUsageCounter::~ImportantSitesUsageCounter() = default;
 
 void ImportantSitesUsageCounter::RunAndDestroySelfWhenFinished() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);

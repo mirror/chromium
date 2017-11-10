@@ -73,8 +73,7 @@ SessionServiceFactory::SessionServiceFactory()
         BrowserContextDependencyManager::GetInstance()) {
 }
 
-SessionServiceFactory::~SessionServiceFactory() {
-}
+SessionServiceFactory::~SessionServiceFactory() = default;
 
 KeyedService* SessionServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

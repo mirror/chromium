@@ -33,7 +33,7 @@ namespace {
 // makes sure to only execute the reload if the WebContents still exists.
 class TabReloader : public content::WebContentsUserData<TabReloader> {
  public:
-  ~TabReloader() override {}
+  ~TabReloader() override = default;
 
   static void Reload(content::WebContents* web_contents) {
     TabReloader::CreateForWebContents(web_contents);

@@ -26,8 +26,8 @@ MockTabModalConfirmDialogDelegate::MockTabModalConfirmDialogDelegate(
       delegate_(delegate) {
 }
 
-MockTabModalConfirmDialogDelegate::~MockTabModalConfirmDialogDelegate() {
-}
+MockTabModalConfirmDialogDelegate::~MockTabModalConfirmDialogDelegate() =
+    default;
 
 base::string16 MockTabModalConfirmDialogDelegate::GetTitle() {
   return base::string16();

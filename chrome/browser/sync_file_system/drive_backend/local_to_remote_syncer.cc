@@ -94,8 +94,7 @@ LocalToRemoteSyncer::LocalToRemoteSyncer(SyncEngineContext* sync_context,
       << local_change.DebugString() << " metadata:" << local_metadata.file_type;
 }
 
-LocalToRemoteSyncer::~LocalToRemoteSyncer() {
-}
+LocalToRemoteSyncer::~LocalToRemoteSyncer() = default;
 
 void LocalToRemoteSyncer::RunPreflight(std::unique_ptr<SyncTaskToken> token) {
   token->InitializeTaskLog("Local -> Remote");

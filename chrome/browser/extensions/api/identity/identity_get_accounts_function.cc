@@ -16,11 +16,9 @@
 
 namespace extensions {
 
-IdentityGetAccountsFunction::IdentityGetAccountsFunction() {
-}
+IdentityGetAccountsFunction::IdentityGetAccountsFunction() = default;
 
-IdentityGetAccountsFunction::~IdentityGetAccountsFunction() {
-}
+IdentityGetAccountsFunction::~IdentityGetAccountsFunction() = default;
 
 ExtensionFunction::ResponseAction IdentityGetAccountsFunction::Run() {
   if (GetProfile()->IsOffTheRecord()) {

@@ -43,7 +43,7 @@ ImeWindowFrameView::ImeWindowFrameView(ImeWindowView* ime_window_view,
       close_button_(nullptr),
       title_icon_(nullptr) {}
 
-ImeWindowFrameView::~ImeWindowFrameView() {}
+ImeWindowFrameView::~ImeWindowFrameView() = default;
 
 void ImeWindowFrameView::Init() {
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();

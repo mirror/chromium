@@ -11,7 +11,7 @@
 class ExclusiveAccessBubbleViewsTest : public FullscreenControllerTest,
                                        public views::WidgetObserver {
  public:
-  ExclusiveAccessBubbleViewsTest() {}
+  ExclusiveAccessBubbleViewsTest() = default;
 
   ExclusiveAccessBubbleViews* bubble() {
     BrowserView* browser_view =

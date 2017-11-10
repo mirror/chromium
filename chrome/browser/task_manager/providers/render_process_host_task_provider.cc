@@ -35,7 +35,7 @@ RenderProcessHostTaskProvider::RenderProcessHostTaskProvider()
                  content::NotificationService::AllBrowserContextsAndSources());
 }
 
-RenderProcessHostTaskProvider::~RenderProcessHostTaskProvider() {}
+RenderProcessHostTaskProvider::~RenderProcessHostTaskProvider() = default;
 
 Task* RenderProcessHostTaskProvider::GetTaskOfUrlRequest(int origin_pid,
                                                          int child_id,

@@ -143,8 +143,7 @@ FirefoxProxySettings::FirefoxProxySettings() {
   Reset();
 }
 
-FirefoxProxySettings::~FirefoxProxySettings() {
-}
+FirefoxProxySettings::~FirefoxProxySettings() = default;
 
 void FirefoxProxySettings::Reset() {
   config_type_ = NO_PROXY;

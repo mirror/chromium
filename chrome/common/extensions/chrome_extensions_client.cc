@@ -99,8 +99,7 @@ static base::LazyInstance<ChromeExtensionsClient>::Leaky g_client =
 
 ChromeExtensionsClient::ChromeExtensionsClient() {}
 
-ChromeExtensionsClient::~ChromeExtensionsClient() {
-}
+ChromeExtensionsClient::~ChromeExtensionsClient() = default;
 
 void ChromeExtensionsClient::Initialize() {
   // Registration could already be finalized in unit tests, where the utility

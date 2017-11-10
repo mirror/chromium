@@ -41,7 +41,7 @@ PinnedTabService::PinnedTabService(Profile* profile)
   browser_list_observer_.Add(BrowserList::GetInstance());
 }
 
-PinnedTabService::~PinnedTabService() {}
+PinnedTabService::~PinnedTabService() = default;
 
 void PinnedTabService::Observe(int type,
                                const content::NotificationSource& source,

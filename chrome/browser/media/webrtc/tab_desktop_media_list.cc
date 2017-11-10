@@ -65,7 +65,7 @@ TabDesktopMediaList::TabDesktopMediaList()
       {base::MayBlock(), base::TaskPriority::USER_VISIBLE});
 }
 
-TabDesktopMediaList::~TabDesktopMediaList() {}
+TabDesktopMediaList::~TabDesktopMediaList() = default;
 
 void TabDesktopMediaList::Refresh() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

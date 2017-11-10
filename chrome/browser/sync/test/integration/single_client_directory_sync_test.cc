@@ -45,7 +45,7 @@ bool FolderContainsFiles(const FilePath& folder) {
 class SingleClientDirectorySyncTest : public SyncTest {
  public:
   SingleClientDirectorySyncTest() : SyncTest(SINGLE_CLIENT) {}
-  ~SingleClientDirectorySyncTest() override {}
+  ~SingleClientDirectorySyncTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SingleClientDirectorySyncTest);

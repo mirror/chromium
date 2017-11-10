@@ -17,7 +17,7 @@ DomTracker::DomTracker(DevToolsClient* client) {
   client->AddListener(this);
 }
 
-DomTracker::~DomTracker() {}
+DomTracker::~DomTracker() = default;
 
 Status DomTracker::GetFrameIdForNode(
     int node_id, std::string* frame_id) {

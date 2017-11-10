@@ -29,8 +29,7 @@ WriteFromUrlOperation::WriteFromUrlOperation(
       hash_(hash),
       download_continuation_() {}
 
-WriteFromUrlOperation::~WriteFromUrlOperation() {
-}
+WriteFromUrlOperation::~WriteFromUrlOperation() = default;
 
 void WriteFromUrlOperation::StartImpl() {
   DCHECK(IsRunningInCorrectSequence());

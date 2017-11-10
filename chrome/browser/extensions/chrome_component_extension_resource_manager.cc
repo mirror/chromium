@@ -70,7 +70,7 @@ ChromeComponentExtensionResourceManager() {
 }
 
 ChromeComponentExtensionResourceManager::
-~ChromeComponentExtensionResourceManager() {}
+    ~ChromeComponentExtensionResourceManager() = default;
 
 bool ChromeComponentExtensionResourceManager::IsComponentExtensionResource(
     const base::FilePath& extension_path,

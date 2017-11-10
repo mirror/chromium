@@ -181,7 +181,7 @@ MockPromptProxy::MockPromptProxy(content::WebContents* web_contents)
           ScopedTestDialogAutoConfirm::ACCEPT)) {
 }
 
-MockPromptProxy::~MockPromptProxy() {}
+MockPromptProxy::~MockPromptProxy() = default;
 
 std::unique_ptr<ExtensionInstallPrompt> MockPromptProxy::CreatePrompt() {
   return std::unique_ptr<MockInstallPrompt>(
@@ -196,7 +196,7 @@ std::unique_ptr<MockPromptProxy> CreateMockPromptProxyForBrowser(
 
 class ManagementPolicyMock : public extensions::ManagementPolicy::Provider {
  public:
-  ManagementPolicyMock() {}
+  ManagementPolicyMock() = default;
 
   std::string GetDebugPolicyProviderName() const override {
     return "ManagementPolicyMock";

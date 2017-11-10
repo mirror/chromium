@@ -126,7 +126,7 @@ const char kPrefetchMalwarePage[] = "/safe_browsing/prefetch_malware.html";
 // TODO(ricea): Use net::test_server::HungResponse instead.
 class NeverCompletingHttpResponse : public net::test_server::HttpResponse {
  public:
-  ~NeverCompletingHttpResponse() override {}
+  ~NeverCompletingHttpResponse() override = default;
 
   void SendResponse(
       const net::test_server::SendBytesCallback& send,
@@ -157,7 +157,7 @@ class QuasiWebSocketHttpResponse : public net::test_server::HttpResponse {
         base::SHA1HashString(key + net::websockets::kWebSocketGuid),
         &accept_hash_);
   }
-  ~QuasiWebSocketHttpResponse() override {}
+  ~QuasiWebSocketHttpResponse() override = default;
 
   void SendResponse(
       const net::test_server::SendBytesCallback& send,
@@ -253,15 +253,15 @@ class FakeSafeBrowsingUIManager : public TestSafeBrowsingUIManager {
   safe_browsing::HitReport hit_report_;
 
  private:
-  ~FakeSafeBrowsingUIManager() override {}
+  ~FakeSafeBrowsingUIManager() override = default;
 };
 
 // A SafeBrowingDatabase class that allows us to inject the malicious URLs.
 class TestSafeBrowsingDatabase : public SafeBrowsingDatabase {
  public:
-  TestSafeBrowsingDatabase() {}
+  TestSafeBrowsingDatabase() = default;
 
-  ~TestSafeBrowsingDatabase() override {}
+  ~TestSafeBrowsingDatabase() override = default;
 
   // Initializes the database with the given filename.
   void Init(const base::FilePath& filename) override {}
@@ -441,7 +441,7 @@ class TestSafeBrowsingDatabase : public SafeBrowsingDatabase {
 class TestSafeBrowsingDatabaseFactory : public SafeBrowsingDatabaseFactory {
  public:
   TestSafeBrowsingDatabaseFactory() : db_(nullptr) {}
-  ~TestSafeBrowsingDatabaseFactory() override {}
+  ~TestSafeBrowsingDatabaseFactory() override = default;
 
   std::unique_ptr<SafeBrowsingDatabase> CreateSafeBrowsingDatabase(
       const scoped_refptr<base::SequencedTaskRunner>& db_task_runner,
@@ -515,7 +515,7 @@ int TestProtocolManager::delete_count_ = 0;
 class TestSBProtocolManagerFactory : public SBProtocolManagerFactory {
  public:
   TestSBProtocolManagerFactory() : pm_(nullptr) {}
-  ~TestSBProtocolManagerFactory() override {}
+  ~TestSBProtocolManagerFactory() override = default;
 
   std::unique_ptr<SafeBrowsingProtocolManager> CreateProtocolManager(
       SafeBrowsingProtocolManagerDelegate* delegate,
@@ -534,8 +534,8 @@ class TestSBProtocolManagerFactory : public SBProtocolManagerFactory {
 
 class MockObserver : public SafeBrowsingUIManager::Observer {
  public:
-  MockObserver() {}
-  virtual ~MockObserver() {}
+  MockObserver() = default;
+  virtual ~MockObserver() = default;
   MOCK_METHOD1(OnSafeBrowsingHit,
                void(const security_interstitials::UnsafeResource&));
 };
@@ -560,7 +560,7 @@ class ServiceEnabledHelper : public base::ThreadTestHelper {
   }
 
  private:
-  ~ServiceEnabledHelper() override {}
+  ~ServiceEnabledHelper() override = default;
 
   scoped_refptr<SafeBrowsingService> service_;
   const bool expected_enabled_;
@@ -571,7 +571,7 @@ class ServiceEnabledHelper : public base::ThreadTestHelper {
 // Tests the safe browsing blocking page in a browser.
 class SafeBrowsingServiceTest : public InProcessBrowserTest {
  public:
-  SafeBrowsingServiceTest() {}
+  SafeBrowsingServiceTest() = default;
 
   static void GenUrlFullHashResult(const GURL& url,
                                    int list_id,
@@ -762,7 +762,7 @@ class SafeBrowsingServiceMetadataTest
     : public SafeBrowsingServiceTest,
       public ::testing::WithParamInterface<ThreatPatternType> {
  public:
-  SafeBrowsingServiceMetadataTest() {}
+  SafeBrowsingServiceMetadataTest() = default;
 
   void GenUrlFullHashResultWithMetadata(const GURL& url,
                                         SBFullHashResult* full_hash) {
@@ -1210,7 +1210,7 @@ class TestSBClient : public base::RefCountedThreadSafe<TestSBClient>,
 
  private:
   friend class base::RefCountedThreadSafe<TestSBClient>;
-  ~TestSBClient() override {}
+  ~TestSBClient() override = default;
 
   void CheckDownloadUrlOnIOThread(const std::vector<GURL>& url_chain) {
     bool synchronous_safe_signal =
@@ -1732,7 +1732,7 @@ IN_PROC_BROWSER_TEST_F(SafeBrowsingServiceShutdownTest,
 
 class SafeBrowsingDatabaseManagerCookieTest : public InProcessBrowserTest {
  public:
-  SafeBrowsingDatabaseManagerCookieTest() {}
+  SafeBrowsingDatabaseManagerCookieTest() = default;
 
   void SetUp() override {
     // We need to start the test server to get the host&port in the url.
@@ -2527,7 +2527,7 @@ class V4SafeBrowsingServiceMetadataTest
     : public V4SafeBrowsingServiceTest,
       public ::testing::WithParamInterface<ThreatPatternType> {
  public:
-  V4SafeBrowsingServiceMetadataTest() {}
+  V4SafeBrowsingServiceMetadataTest() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(V4SafeBrowsingServiceMetadataTest);

@@ -90,9 +90,9 @@ class TestTabStripObserver : public TabStripObserver {
 
 class TabStripTest : public views::ViewsTestBase {
  public:
-  TabStripTest() {}
+  TabStripTest() = default;
 
-  ~TabStripTest() override {}
+  ~TabStripTest() override = default;
 
   void SetUp() override {
     views::ViewsTestBase::SetUp();

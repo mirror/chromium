@@ -24,7 +24,7 @@ using views::Widget;
 
 class FakeTabController : public TabController {
  public:
-  FakeTabController() {}
+  FakeTabController() = default;
 
   void set_active_tab(bool value) { active_tab_ = value; }
   void set_paint_throbber_to_layer(bool value) {
@@ -93,8 +93,8 @@ class FakeTabController : public TabController {
 
 class TabTest : public views::ViewsTestBase {
  public:
-  TabTest() {}
-  ~TabTest() override {}
+  TabTest() = default;
+  ~TabTest() override = default;
 
   static views::ImageButton* GetCloseButton(const Tab& tab) {
     return tab.close_button_;

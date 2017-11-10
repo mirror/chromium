@@ -33,7 +33,7 @@ MixedContentSettingsTabHelper::MixedContentSettingsTabHelper(WebContents* tab)
   }
 }
 
-MixedContentSettingsTabHelper::~MixedContentSettingsTabHelper() {}
+MixedContentSettingsTabHelper::~MixedContentSettingsTabHelper() = default;
 
 void MixedContentSettingsTabHelper::AllowRunningOfInsecureContent() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

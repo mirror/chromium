@@ -90,7 +90,7 @@ PaymentRequestDialogView::PaymentRequestDialogView(
   chrome::RecordDialogCreation(chrome::DialogIdentifier::PAYMENT_REQUEST);
 }
 
-PaymentRequestDialogView::~PaymentRequestDialogView() {}
+PaymentRequestDialogView::~PaymentRequestDialogView() = default;
 
 void PaymentRequestDialogView::RequestFocus() {
   view_stack_->RequestFocus();

@@ -27,7 +27,7 @@ class SystemLogsMemoryHandler : public MemoryDetails {
   }
 
  private:
-  ~SystemLogsMemoryHandler() override {}
+  ~SystemLogsMemoryHandler() override = default;
   SysLogsSourceCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(SystemLogsMemoryHandler);
@@ -37,8 +37,7 @@ MemoryDetailsLogSource::MemoryDetailsLogSource()
     : SystemLogsSource("MemoryDetails") {
 }
 
-MemoryDetailsLogSource::~MemoryDetailsLogSource() {
-}
+MemoryDetailsLogSource::~MemoryDetailsLogSource() = default;
 
 void MemoryDetailsLogSource::Fetch(const SysLogsSourceCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);

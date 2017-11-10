@@ -151,7 +151,7 @@ StubNotificationDisplayService::NotificationData::NotificationData(
       notification(other.notification),
       metadata(std::move(other.metadata)) {}
 
-StubNotificationDisplayService::NotificationData::~NotificationData() {}
+StubNotificationDisplayService::NotificationData::~NotificationData() = default;
 
 StubNotificationDisplayService::NotificationData&
 StubNotificationDisplayService::NotificationData::operator=(

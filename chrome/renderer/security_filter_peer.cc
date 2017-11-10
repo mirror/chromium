@@ -21,8 +21,7 @@ SecurityFilterPeer::SecurityFilterPeer(
     std::unique_ptr<content::RequestPeer> peer)
     : original_peer_(std::move(peer)) {}
 
-SecurityFilterPeer::~SecurityFilterPeer() {
-}
+SecurityFilterPeer::~SecurityFilterPeer() = default;
 
 // static
 std::unique_ptr<content::RequestPeer>
@@ -125,8 +124,7 @@ ReplaceContentPeer::ReplaceContentPeer(
     const std::string& data)
     : SecurityFilterPeer(std::move(peer)), mime_type_(mime_type), data_(data) {}
 
-ReplaceContentPeer::~ReplaceContentPeer() {
-}
+ReplaceContentPeer::~ReplaceContentPeer() = default;
 
 void ReplaceContentPeer::OnReceivedResponse(
     const content::ResourceResponseInfo& info) {

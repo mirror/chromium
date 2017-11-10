@@ -14,7 +14,7 @@
 AutomationExtension::AutomationExtension(std::unique_ptr<WebView> web_view)
     : web_view_(std::move(web_view)) {}
 
-AutomationExtension::~AutomationExtension() {}
+AutomationExtension::~AutomationExtension() = default;
 
 Status AutomationExtension::CaptureScreenshot(std::string* screenshot) {
   base::ListValue args;

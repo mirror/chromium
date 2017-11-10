@@ -99,12 +99,12 @@ class WebUIBrowserAsyncTest : public WebUIBrowserTest {
   }
 
  protected:
-  WebUIBrowserAsyncTest() {}
+  WebUIBrowserAsyncTest() = default;
 
   // Class to synchronize asynchronous javascript activity with the tests.
   class AsyncWebUIMessageHandler : public WebUIMessageHandler {
    public:
-    AsyncWebUIMessageHandler() {}
+    AsyncWebUIMessageHandler() = default;
 
     MOCK_METHOD1(HandleTestContinues, void(const base::ListValue*));
     MOCK_METHOD1(HandleTestFails, void(const base::ListValue*));

@@ -43,8 +43,8 @@ class FakeTask : public Task {
 
 class FakeTaskProvider : public TaskProvider {
  public:
-  FakeTaskProvider() {}
-  ~FakeTaskProvider() override {}
+  FakeTaskProvider() = default;
+  ~FakeTaskProvider() override = default;
   Task* GetTaskOfUrlRequest(int origin_pid,
                             int child_id,
                             int route_id) override {
@@ -88,7 +88,7 @@ class FallbackTaskProviderTest : public testing::Test,
             std::move(primary_subprovider), std::move(secondary_subprovider)));
   }
 
-  ~FallbackTaskProviderTest() override {}
+  ~FallbackTaskProviderTest() override = default;
 
   // task_manager::TaskProviderObserver:
   void TaskAdded(Task* task) override {

@@ -19,7 +19,7 @@ WebstoreStartupInstaller::WebstoreStartupInstaller(
   set_show_post_install_ui(false);
 }
 
-WebstoreStartupInstaller::~WebstoreStartupInstaller() {}
+WebstoreStartupInstaller::~WebstoreStartupInstaller() = default;
 
 std::unique_ptr<ExtensionInstallPrompt::Prompt>
 WebstoreStartupInstaller::CreateInstallPrompt() const {

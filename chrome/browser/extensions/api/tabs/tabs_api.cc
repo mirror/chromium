@@ -117,7 +117,7 @@ template <typename T>
 class ApiParameterExtractor {
  public:
   explicit ApiParameterExtractor(T* params) : params_(params) {}
-  ~ApiParameterExtractor() {}
+  ~ApiParameterExtractor() = default;
 
   bool populate_tabs() {
     if (params_->get_info.get() && params_->get_info->populate.get())
@@ -1787,7 +1787,7 @@ ExecuteCodeInTabFunction::ExecuteCodeInTabFunction()
     : chrome_details_(this), execute_tab_id_(-1) {
 }
 
-ExecuteCodeInTabFunction::~ExecuteCodeInTabFunction() {}
+ExecuteCodeInTabFunction::~ExecuteCodeInTabFunction() = default;
 
 bool ExecuteCodeInTabFunction::HasPermission() {
   if (Init() == SUCCESS &&
@@ -2113,7 +2113,7 @@ ExtensionFunction::ResponseAction TabsDiscardFunction::Run() {
           : keys::kCannotFindTabToDiscard));
 }
 
-TabsDiscardFunction::TabsDiscardFunction() {}
-TabsDiscardFunction::~TabsDiscardFunction() {}
+TabsDiscardFunction::TabsDiscardFunction() = default;
+TabsDiscardFunction::~TabsDiscardFunction() = default;
 
 }  // namespace extensions

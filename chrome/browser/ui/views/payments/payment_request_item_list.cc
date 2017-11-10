@@ -57,7 +57,7 @@ PaymentRequestItemList::Item::Item(PaymentRequestSpec* spec,
       selected_(selected),
       show_edit_button_(show_edit_button) {}
 
-PaymentRequestItemList::Item::~Item() {}
+PaymentRequestItemList::Item::~Item() = default;
 
 void PaymentRequestItemList::Item::Init() {
   std::unique_ptr<views::View> content =
@@ -179,7 +179,7 @@ void PaymentRequestItemList::Item::UpdateAccessibleName() {
 PaymentRequestItemList::PaymentRequestItemList(PaymentRequestDialogView* dialog)
     : selected_item_(nullptr), dialog_(dialog) {}
 
-PaymentRequestItemList::~PaymentRequestItemList() {}
+PaymentRequestItemList::~PaymentRequestItemList() = default;
 
 void PaymentRequestItemList::AddItem(
     std::unique_ptr<PaymentRequestItemList::Item> item) {

@@ -53,7 +53,7 @@ class TestLockHandler : public proximity_auth::ScreenlockBridge::LockHandler {
       : account_id_(account_id),
         show_icon_count_(0u),
         auth_type_(proximity_auth::mojom::AuthType::OFFLINE_PASSWORD) {}
-  ~TestLockHandler() override {}
+  ~TestLockHandler() override = default;
 
   // proximity_auth::ScreenlockBridge::LockHandler implementation:
   void ShowBannerMessage(const base::string16& message) override {
@@ -216,8 +216,8 @@ class TestLockHandler : public proximity_auth::ScreenlockBridge::LockHandler {
 
 class EasyUnlockScreenlockStateHandlerTest : public testing::Test {
  public:
-  EasyUnlockScreenlockStateHandlerTest() {}
-  ~EasyUnlockScreenlockStateHandlerTest() override {}
+  EasyUnlockScreenlockStateHandlerTest() = default;
+  ~EasyUnlockScreenlockStateHandlerTest() override = default;
 
   void SetUp() override {
     // Create and inject fake lock handler to the screenlock bridge.

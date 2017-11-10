@@ -56,7 +56,7 @@ class TestInterventionsInternalsPage
       mojom::InterventionsInternalsPageRequest request)
       : binding_(this, std::move(request)), blacklist_ignored_(false) {}
 
-  ~TestInterventionsInternalsPage() override {}
+  ~TestInterventionsInternalsPage() override = default;
 
   // mojom::InterventionsInternalsPage:
   void LogNewMessage(mojom::MessageLogPtr message) override {
@@ -151,7 +151,7 @@ class TestPreviewsUIService : public previews::PreviewsUIService {
                           base::Bind(&MockedPreviewsIsEnabled),
                           std::move(logger)),
         blacklist_ignored_(false) {}
-  ~TestPreviewsUIService() override {}
+  ~TestPreviewsUIService() override = default;
 
   // previews::PreviewsUIService:
   void SetIgnorePreviewsBlacklistDecision(bool ignored) override {
@@ -172,7 +172,7 @@ class InterventionsInternalsPageHandlerTest : public testing::Test {
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::IO) {}
 
-  ~InterventionsInternalsPageHandlerTest() override {}
+  ~InterventionsInternalsPageHandlerTest() override = default;
 
   void SetUp() override {
     scoped_task_environment_.RunUntilIdle();

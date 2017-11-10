@@ -135,9 +135,11 @@ class IdentityInternalsTokenRevoker : public GaiaAuthConsumer {
   DISALLOW_COPY_AND_ASSIGN(IdentityInternalsTokenRevoker);
 };
 
-IdentityInternalsUIMessageHandler::IdentityInternalsUIMessageHandler() {}
+IdentityInternalsUIMessageHandler::IdentityInternalsUIMessageHandler() =
+    default;
 
-IdentityInternalsUIMessageHandler::~IdentityInternalsUIMessageHandler() {}
+IdentityInternalsUIMessageHandler::~IdentityInternalsUIMessageHandler() =
+    default;
 
 void IdentityInternalsUIMessageHandler::OnTokenRevokerDone(
     IdentityInternalsTokenRevoker* token_revoker) {
@@ -282,7 +284,7 @@ IdentityInternalsTokenRevoker::IdentityInternalsTokenRevoker(
   fetcher_.StartRevokeOAuth2Token(access_token);
 }
 
-IdentityInternalsTokenRevoker::~IdentityInternalsTokenRevoker() {}
+IdentityInternalsTokenRevoker::~IdentityInternalsTokenRevoker() = default;
 
 void IdentityInternalsTokenRevoker::OnOAuth2RevokeTokenCompleted() {
   consumer_->OnTokenRevokerDone(this);
@@ -328,4 +330,4 @@ IdentityInternalsUI::IdentityInternalsUI(content::WebUI* web_ui)
       base::MakeUnique<IdentityInternalsUIMessageHandler>());
 }
 
-IdentityInternalsUI::~IdentityInternalsUI() {}
+IdentityInternalsUI::~IdentityInternalsUI() = default;

@@ -90,7 +90,7 @@ MediaRouterContextualMenu::MediaRouterContextualMenu(Browser* browser,
   }
 }
 
-MediaRouterContextualMenu::~MediaRouterContextualMenu() {}
+MediaRouterContextualMenu::~MediaRouterContextualMenu() = default;
 
 bool MediaRouterContextualMenu::GetAlwaysShowActionPref() const {
   return MediaRouterActionController::GetAlwaysShowActionPref(

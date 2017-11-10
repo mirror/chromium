@@ -43,8 +43,7 @@ ChromeProcessManagerDelegate::ChromeProcessManagerDelegate() {
                  content::NotificationService::AllSources());
 }
 
-ChromeProcessManagerDelegate::~ChromeProcessManagerDelegate() {
-}
+ChromeProcessManagerDelegate::~ChromeProcessManagerDelegate() = default;
 
 bool ChromeProcessManagerDelegate::AreBackgroundPagesAllowedForContext(
     content::BrowserContext* context) const {

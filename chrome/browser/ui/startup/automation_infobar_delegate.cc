@@ -17,9 +17,9 @@ void AutomationInfoBarDelegate::Create() {
   GlobalConfirmInfoBar::Show(std::move(delegate));
 }
 
-AutomationInfoBarDelegate::AutomationInfoBarDelegate() {}
+AutomationInfoBarDelegate::AutomationInfoBarDelegate() = default;
 
-AutomationInfoBarDelegate::~AutomationInfoBarDelegate() {}
+AutomationInfoBarDelegate::~AutomationInfoBarDelegate() = default;
 
 infobars::InfoBarDelegate::InfoBarIdentifier
 AutomationInfoBarDelegate::GetIdentifier() const {

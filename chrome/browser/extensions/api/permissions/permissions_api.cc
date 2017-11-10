@@ -139,9 +139,9 @@ void PermissionsRequestFunction::SetIgnoreUserGestureForTests(
   ignore_user_gesture_for_tests = ignore;
 }
 
-PermissionsRequestFunction::PermissionsRequestFunction() {}
+PermissionsRequestFunction::PermissionsRequestFunction() = default;
 
-PermissionsRequestFunction::~PermissionsRequestFunction() {}
+PermissionsRequestFunction::~PermissionsRequestFunction() = default;
 
 bool PermissionsRequestFunction::RunAsync() {
   results_ = Request::Results::Create(false);

@@ -40,7 +40,7 @@ const int kCaptionButtonHeight = 18;
 class TestLayoutDelegate : public OpaqueBrowserFrameViewLayoutDelegate {
  public:
   TestLayoutDelegate() : show_caption_buttons_(true), maximized_(false) {}
-  ~TestLayoutDelegate() override {}
+  ~TestLayoutDelegate() override = default;
 
   void set_window_title(const base::string16& title) { window_title_ = title; }
   void set_show_caption_buttons(bool show_caption_buttons) {
@@ -88,8 +88,8 @@ class TestLayoutDelegate : public OpaqueBrowserFrameViewLayoutDelegate {
 
 class OpaqueBrowserFrameViewLayoutTest : public views::ViewsTestBase {
  public:
-  OpaqueBrowserFrameViewLayoutTest() {}
-  ~OpaqueBrowserFrameViewLayoutTest() override {}
+  OpaqueBrowserFrameViewLayoutTest() = default;
+  ~OpaqueBrowserFrameViewLayoutTest() override = default;
 
   void SetUp() override {
     views::ViewsTestBase::SetUp();

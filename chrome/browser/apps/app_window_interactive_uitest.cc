@@ -481,7 +481,7 @@ IN_PROC_BROWSER_TEST_F(AppWindowInteractiveTest, MAYBE_TestFullscreen) {
 // the window.
 class AppWindowHiddenKeepAliveTest : public extensions::PlatformAppBrowserTest {
  protected:
-  AppWindowHiddenKeepAliveTest() {}
+  AppWindowHiddenKeepAliveTest() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(AppWindowHiddenKeepAliveTest);

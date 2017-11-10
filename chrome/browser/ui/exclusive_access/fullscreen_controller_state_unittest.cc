@@ -43,7 +43,7 @@ class FullscreenControllerTestWindow : public TestBrowserWindow,
   };
 
   FullscreenControllerTestWindow();
-  ~FullscreenControllerTestWindow() override {}
+  ~FullscreenControllerTestWindow() override = default;
 
   // BrowserWindow Interface:
   bool ShouldHideUIForFullscreen() const override;

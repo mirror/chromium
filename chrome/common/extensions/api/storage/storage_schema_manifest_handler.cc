@@ -27,9 +27,9 @@ using extensions::manifest_keys::kStorageManagedSchema;
 
 namespace extensions {
 
-StorageSchemaManifestHandler::StorageSchemaManifestHandler() {}
+StorageSchemaManifestHandler::StorageSchemaManifestHandler() = default;
 
-StorageSchemaManifestHandler::~StorageSchemaManifestHandler() {}
+StorageSchemaManifestHandler::~StorageSchemaManifestHandler() = default;
 
 // static
 policy::Schema StorageSchemaManifestHandler::GetSchema(

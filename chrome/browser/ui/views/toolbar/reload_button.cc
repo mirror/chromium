@@ -50,7 +50,7 @@ ReloadButton::ReloadButton(Profile* profile, CommandUpdater* command_updater)
       testing_mouse_hovered_(false),
       testing_reload_count_(0) {}
 
-ReloadButton::~ReloadButton() {}
+ReloadButton::~ReloadButton() = default;
 
 void ReloadButton::ChangeMode(Mode mode, bool force) {
   intended_mode_ = mode;

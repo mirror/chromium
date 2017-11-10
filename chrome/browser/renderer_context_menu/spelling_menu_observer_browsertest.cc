@@ -72,11 +72,9 @@ class SpellingMenuObserverTest : public InProcessBrowserTest {
   DISALLOW_COPY_AND_ASSIGN(SpellingMenuObserverTest);
 };
 
-SpellingMenuObserverTest::SpellingMenuObserverTest() {
-}
+SpellingMenuObserverTest::SpellingMenuObserverTest() = default;
 
-SpellingMenuObserverTest::~SpellingMenuObserverTest() {
-}
+SpellingMenuObserverTest::~SpellingMenuObserverTest() = default;
 
 }  // namespace
 

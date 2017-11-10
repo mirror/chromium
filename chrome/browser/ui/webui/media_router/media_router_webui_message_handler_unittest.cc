@@ -88,7 +88,7 @@ class MockMediaRouterUI : public MediaRouterUI {
  public:
   explicit MockMediaRouterUI(content::WebUI* web_ui)
       : MediaRouterUI(web_ui) {}
-  ~MockMediaRouterUI() {}
+  ~MockMediaRouterUI() = default;
 
   MOCK_METHOD0(UIInitialized, void());
   MOCK_CONST_METHOD0(UserSelectedTabMirroringForCurrentOrigin, bool());
@@ -141,7 +141,7 @@ class MediaRouterWebUIMessageHandlerTest : public MediaRouterWebUITest {
   MediaRouterWebUIMessageHandlerTest()
       : web_ui_(base::MakeUnique<content::TestWebUI>()),
         provider_extension_id_(kProviderExtensionIdForTesting) {}
-  ~MediaRouterWebUIMessageHandlerTest() override {}
+  ~MediaRouterWebUIMessageHandlerTest() override = default;
 
   // BrowserWithTestWindowTest:
   void SetUp() override {

@@ -28,7 +28,7 @@ UsbInternalsUI::UsbInternalsUI(content::WebUI* web_ui)
   content::WebUIDataSource::Add(Profile::FromWebUI(web_ui), source);
 }
 
-UsbInternalsUI::~UsbInternalsUI() {}
+UsbInternalsUI::~UsbInternalsUI() = default;
 
 void UsbInternalsUI::BindUIHandler(
     mojom::UsbInternalsPageHandlerRequest request) {

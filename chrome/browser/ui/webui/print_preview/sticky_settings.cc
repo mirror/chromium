@@ -19,9 +19,9 @@ const char kSettingAppState[] = "appState";
 
 }  // namespace
 
-StickySettings::StickySettings() {}
+StickySettings::StickySettings() = default;
 
-StickySettings::~StickySettings() {}
+StickySettings::~StickySettings() = default;
 
 const std::string* StickySettings::printer_app_state() const {
   return printer_app_state_ ? &printer_app_state_.value() : nullptr;

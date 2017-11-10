@@ -89,7 +89,7 @@ const char kAppUrl2[] = "https://docs.google.com/";
 
 class ContextMenuBrowserTest : public InProcessBrowserTest {
  public:
-  ContextMenuBrowserTest() {}
+  ContextMenuBrowserTest() = default;
 
  protected:
   std::unique_ptr<TestRenderViewContextMenu> CreateContextMenuMediaTypeNone(
@@ -1043,7 +1043,7 @@ class LoadImageRequestInterceptor : public net::URLRequestInterceptor {
                                   weak_factory_(this) {
   }
 
-  ~LoadImageRequestInterceptor() override {}
+  ~LoadImageRequestInterceptor() override = default;
 
   // net::URLRequestInterceptor implementation
   net::URLRequestJob* MaybeInterceptRequest(

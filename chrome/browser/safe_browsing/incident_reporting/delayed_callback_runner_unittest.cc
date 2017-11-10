@@ -47,7 +47,7 @@ class DelayedCallbackRunnerTest : public testing::Test {
   }
 
  protected:
-  DelayedCallbackRunnerTest() {}
+  DelayedCallbackRunnerTest() = default;
 
   void SetUp() override {
     instance_.reset(new safe_browsing::DelayedCallbackRunner(

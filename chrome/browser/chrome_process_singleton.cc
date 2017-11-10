@@ -15,8 +15,7 @@ ChromeProcessSingleton::ChromeProcessSingleton(
                          modal_dialog_lock_.AsNotificationCallback()) {
 }
 
-ChromeProcessSingleton::~ChromeProcessSingleton() {
-}
+ChromeProcessSingleton::~ChromeProcessSingleton() = default;
 
 ProcessSingleton::NotifyResult
     ChromeProcessSingleton::NotifyOtherProcessOrCreate() {

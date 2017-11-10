@@ -12,7 +12,7 @@ SigninErrorControllerFactory::SigninErrorControllerFactory()
           "SigninErrorController",
           BrowserContextDependencyManager::GetInstance()) {}
 
-SigninErrorControllerFactory::~SigninErrorControllerFactory() {}
+SigninErrorControllerFactory::~SigninErrorControllerFactory() = default;
 
 // static
 SigninErrorController* SigninErrorControllerFactory::GetForProfile(

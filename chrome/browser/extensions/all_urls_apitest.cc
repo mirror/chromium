@@ -25,8 +25,8 @@ const std::string kAllUrlsTarget = "/extensions/api_test/all_urls/index.html";
 
 class AllUrlsApiTest : public ExtensionApiTest {
  protected:
-  AllUrlsApiTest() {}
-  ~AllUrlsApiTest() override {}
+  AllUrlsApiTest() = default;
+  ~AllUrlsApiTest() override = default;
 
   const Extension* content_script() const { return content_script_.get(); }
   const Extension* execute_script() const { return execute_script_.get(); }

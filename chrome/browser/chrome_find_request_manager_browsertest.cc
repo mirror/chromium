@@ -25,7 +25,7 @@ class ChromeFindRequestManagerTest : public InProcessBrowserTest {
   ChromeFindRequestManagerTest()
       : normal_delegate_(nullptr),
         last_request_id_(0) {}
-  ~ChromeFindRequestManagerTest() override {}
+  ~ChromeFindRequestManagerTest() override = default;
 
   void SetUpOnMainThread() override {
     host_resolver()->AddRule("*", "127.0.0.1");

@@ -13,7 +13,7 @@ TabStats::TabStats(const TabStats& other) = default;
 
 TabStats::TabStats(TabStats&& other) noexcept = default;
 
-TabStats::~TabStats() {}
+TabStats::~TabStats() = default;
 
 TabStats& TabStats::operator=(const TabStats& other) = default;
 

@@ -34,7 +34,7 @@ SystemIndicatorManagerFactory::SystemIndicatorManagerFactory()
   DependsOn(ExtensionActionAPI::GetFactoryInstance());
 }
 
-SystemIndicatorManagerFactory::~SystemIndicatorManagerFactory() {}
+SystemIndicatorManagerFactory::~SystemIndicatorManagerFactory() = default;
 
 KeyedService* SystemIndicatorManagerFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

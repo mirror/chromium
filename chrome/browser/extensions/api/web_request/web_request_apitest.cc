@@ -77,7 +77,7 @@ class CancelLoginDialog : public content::NotificationObserver {
                    content::NotificationService::AllSources());
   }
 
-  ~CancelLoginDialog() override {}
+  ~CancelLoginDialog() override = default;
 
   void Observe(int type,
                const content::NotificationSource& source,
@@ -172,7 +172,7 @@ class TestURLFetcherDelegate : public net::URLFetcherDelegate {
     fetcher_->SetRequestContext(context_getter.get());
     fetcher_->Start();
   }
-  ~TestURLFetcherDelegate() override {}
+  ~TestURLFetcherDelegate() override = default;
 
   void SetExpectedResponse(const std::string& expected_response) {
     expected_response_ = expected_response;
@@ -834,7 +834,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
    public:
     explicit TestURLFetcherDelegate(const base::Closure& quit_loop_func)
         : quit_loop_func_(quit_loop_func) {}
-    ~TestURLFetcherDelegate() override {}
+    ~TestURLFetcherDelegate() override = default;
 
     void OnURLFetchComplete(const net::URLFetcher* source) override {
       EXPECT_EQ(net::HTTP_OK, source->GetResponseCode());

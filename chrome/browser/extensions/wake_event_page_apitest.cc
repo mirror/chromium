@@ -61,7 +61,7 @@ const char* kContentScriptJs =
 
 class WakeEventPageTest : public ExtensionBrowserTest {
  public:
-  WakeEventPageTest() {}
+  WakeEventPageTest() = default;
 
   void SetUpOnMainThread() override {
     ExtensionBrowserTest::SetUpOnMainThread();

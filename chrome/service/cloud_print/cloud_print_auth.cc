@@ -221,6 +221,6 @@ std::string CloudPrintAuth::GetAuthHeader() {
   return header;
 }
 
-CloudPrintAuth::~CloudPrintAuth() {}
+CloudPrintAuth::~CloudPrintAuth() = default;
 
 }  // namespace cloud_print

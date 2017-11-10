@@ -61,7 +61,7 @@ RemotingSinkMetadataPtr GetDefaultSinkMetadata() {
 class FakeMediaRouter : public media_router::MockMediaRouter {
  public:
   FakeMediaRouter() : weak_factory_(this) {}
-  ~FakeMediaRouter() final {}
+  ~FakeMediaRouter() final = default;
 
   void RegisterRemotingSource(int32_t tab_id,
                               CastRemotingConnector* remoting_source) final {
@@ -101,7 +101,7 @@ class FakeMediaRouter : public media_router::MockMediaRouter {
 class MockRemotingSource : public media::mojom::RemotingSource {
  public:
   MockRemotingSource() : binding_(this) {}
-  ~MockRemotingSource() final {}
+  ~MockRemotingSource() final = default;
 
   void Bind(RemotingSourceRequest request) {
     binding_.Bind(std::move(request));
@@ -129,7 +129,7 @@ class MockMediaRemoter : public media::mojom::MirrorServiceRemoter {
     media_router->OnMediaRemoterCreated(kRemotingTabId, std::move(remoter),
                                         mojo::MakeRequest(&source_));
   }
-  ~MockMediaRemoter() final {}
+  ~MockMediaRemoter() final = default;
 
   void OnSinkAvailable() { source_->OnSinkAvailable(GetDefaultSinkMetadata()); }
 

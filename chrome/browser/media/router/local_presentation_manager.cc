@@ -15,9 +15,9 @@
 namespace media_router {
 
 // LocalPresentationManager implementation.
-LocalPresentationManager::LocalPresentationManager() {}
+LocalPresentationManager::LocalPresentationManager() = default;
 
-LocalPresentationManager::~LocalPresentationManager() {}
+LocalPresentationManager::~LocalPresentationManager() = default;
 
 LocalPresentationManager::LocalPresentation*
 LocalPresentationManager::GetOrCreateLocalPresentation(
@@ -106,7 +106,7 @@ LocalPresentationManager::LocalPresentation::LocalPresentation(
     const content::PresentationInfo& presentation_info)
     : presentation_info_(presentation_info) {}
 
-LocalPresentationManager::LocalPresentation::~LocalPresentation() {}
+LocalPresentationManager::LocalPresentation::~LocalPresentation() = default;
 
 void LocalPresentationManager::LocalPresentation::RegisterController(
     const RenderFrameHostId& render_frame_host_id,
@@ -158,6 +158,6 @@ LocalPresentationManager::LocalPresentation::ControllerConnection::
       receiver_connection_request(std::move(receiver_connection_request)) {}
 
 LocalPresentationManager::LocalPresentation::ControllerConnection::
-    ~ControllerConnection() {}
+    ~ControllerConnection() = default;
 
 }  // namespace media_router

@@ -21,7 +21,7 @@ static const size_t kMaximumCacheSize = 1000;
 DatabaseStringTable::DatabaseStringTable(const std::string& table)
     : table_(table) {}
 
-DatabaseStringTable::~DatabaseStringTable() {}
+DatabaseStringTable::~DatabaseStringTable() = default;
 
 bool DatabaseStringTable::Initialize(sql::Connection* connection) {
   if (!connection->DoesTableExist(table_.c_str())) {

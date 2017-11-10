@@ -309,7 +309,7 @@ class EncryptedMediaSupportedTypesExternalClearKeyTest
         media::kExternalClearKeyForTesting);
   }
 
-  ~EncryptedMediaSupportedTypesExternalClearKeyTest() override {}
+  ~EncryptedMediaSupportedTypesExternalClearKeyTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     EncryptedMediaSupportedTypesTest::SetUpCommandLine(command_line);
@@ -372,7 +372,7 @@ class EncryptedMediaSupportedTypesClearKeyCDMRegisteredWithWrongPathTest
   }
 
   ~EncryptedMediaSupportedTypesClearKeyCDMRegisteredWithWrongPathTest()
-      override {}
+      override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     EncryptedMediaSupportedTypesTest::SetUpCommandLine(command_line);

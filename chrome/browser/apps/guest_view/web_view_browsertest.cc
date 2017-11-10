@@ -166,7 +166,7 @@ class ContextMenuCallCountObserver {
                        base::Bind(&ContextMenuCallCountObserver::OnMenuShown,
                                   base::Unretained(this))) {
   }
-  ~ContextMenuCallCountObserver() {}
+  ~ContextMenuCallCountObserver() = default;
 
   bool OnMenuShown(const content::NotificationSource& source,
                    const content::NotificationDetails& details) {
@@ -369,7 +369,7 @@ class MockWebContentsDelegate : public content::WebContentsDelegate {
   MockWebContentsDelegate()
       : requested_(false),
         checked_(false) {}
-  ~MockWebContentsDelegate() override {}
+  ~MockWebContentsDelegate() override = default;
 
   void RequestMediaAccessPermission(
       content::WebContents* web_contents,
@@ -422,7 +422,7 @@ class MockDownloadWebContentsDelegate : public content::WebContentsDelegate {
         expect_allow_(false),
         decision_made_(false),
         last_download_allowed_(false) {}
-  ~MockDownloadWebContentsDelegate() override {}
+  ~MockDownloadWebContentsDelegate() override = default;
 
   void CanDownload(const GURL& url,
                    const std::string& request_method,
@@ -827,7 +827,7 @@ class WebViewTestBase : public extensions::PlatformAppBrowserTest {
     GuestViewManager::set_factory_for_testing(&factory_);
   }
 
-  ~WebViewTestBase() override {}
+  ~WebViewTestBase() override = default;
 
  private:
   bool UsesFakeSpeech() {
@@ -851,8 +851,8 @@ class WebViewTestBase : public extensions::PlatformAppBrowserTest {
 class WebViewTest : public WebViewTestBase,
                     public testing::WithParamInterface<bool> {
  public:
-  WebViewTest() {}
-  ~WebViewTest() override {}
+  WebViewTest() = default;
+  ~WebViewTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     WebViewTestBase::SetUpCommandLine(command_line);
@@ -3285,8 +3285,8 @@ IN_PROC_BROWSER_TEST_P(WebViewPluginTest, TestLoadPluginInternalResource) {
 
 class WebViewCaptureTest : public WebViewTest {
  public:
-  WebViewCaptureTest() {}
-  ~WebViewCaptureTest() override {}
+  WebViewCaptureTest() = default;
+  ~WebViewCaptureTest() override = default;
   void SetUp() override {
     EnablePixelOutput();
     WebViewTest::SetUp();
@@ -3741,7 +3741,7 @@ class WebContentsAccessibilityEventWatcher
       : content::WebContentsObserver(web_contents),
         event_(event),
         count_(0) {}
-  ~WebContentsAccessibilityEventWatcher() override {}
+  ~WebContentsAccessibilityEventWatcher() override = default;
 
   void Wait() {
     if (count_ == 0) {
@@ -3809,8 +3809,8 @@ class WebViewGuestScrollTest
     : public WebViewTestBase,
       public testing::WithParamInterface<testing::tuple<bool, bool>> {
  protected:
-  WebViewGuestScrollTest() {}
-  ~WebViewGuestScrollTest() {}
+  WebViewGuestScrollTest() = default;
+  ~WebViewGuestScrollTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     WebViewTestBase::SetUpCommandLine(command_line);
@@ -3848,7 +3848,7 @@ class ScrollWaiter {
  public:
   explicit ScrollWaiter(content::RenderWidgetHostView* host_view)
       : host_view_(host_view) {}
-  ~ScrollWaiter() {}
+  ~ScrollWaiter() = default;
 
   void WaitForScrollChange(gfx::Vector2dF target_offset) {
     while (target_offset != host_view_->GetLastScrollOffset())
@@ -3956,8 +3956,8 @@ IN_PROC_BROWSER_TEST_P(WebViewGuestScrollTest,
 // have landed (crbug.com/533069 and crbug.com/526463).
 class WebViewGuestScrollLatchingTest : public WebViewTestBase {
  protected:
-  WebViewGuestScrollLatchingTest() {}
-  ~WebViewGuestScrollLatchingTest() override {}
+  WebViewGuestScrollLatchingTest() = default;
+  ~WebViewGuestScrollLatchingTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     WebViewTestBase::SetUpCommandLine(command_line);
@@ -3984,7 +3984,7 @@ class InputEventAckWaiter
         ack_type_waiting_for_(ack_type_waiting_for),
         expected_consumed_(expected_consumed),
         desired_ack_type_received_(false) {}
-  ~InputEventAckWaiter() override {}
+  ~InputEventAckWaiter() override = default;
 
   void OnInputEventAck(content::InputEventAckSource,
                        content::InputEventAckState state,
@@ -4106,7 +4106,7 @@ INSTANTIATE_TEST_CASE_P(WebViewScrollBubbling,
 #if defined(USE_AURA)
 class WebViewGuestTouchFocusTest : public WebViewTestBase {
  public:
-  WebViewGuestTouchFocusTest() {}
+  WebViewGuestTouchFocusTest() = default;
   void SetUpCommandLine(base::CommandLine* command_line) override {
     WebViewTestBase::SetUpCommandLine(command_line);
 
@@ -4124,7 +4124,7 @@ class FocusChangeWaiter {
   explicit FocusChangeWaiter(content::WebContents* web_contents,
                              bool expected_focus)
       : web_contents_(web_contents), expected_focus_(expected_focus) {}
-  ~FocusChangeWaiter() {}
+  ~FocusChangeWaiter() = default;
 
   void WaitForFocusChange() {
     while (expected_focus_ !=
@@ -4274,7 +4274,7 @@ IN_PROC_BROWSER_TEST_P(WebViewGuestScrollTouchTest,
 
 class WebViewScrollGuestContentTest : public WebViewTest {
  public:
-  ~WebViewScrollGuestContentTest() override {}
+  ~WebViewScrollGuestContentTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     WebViewTest::SetUpCommandLine(command_line);
@@ -4406,7 +4406,7 @@ IN_PROC_BROWSER_TEST_P(WebViewScrollGuestContentTest,
 // https://crbug.com/503751
 class WebViewFocusTest : public WebViewTest {
  public:
-  ~WebViewFocusTest() override {}
+  ~WebViewFocusTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     WebViewTest::SetUpCommandLine(command_line);
@@ -4505,8 +4505,8 @@ IN_PROC_BROWSER_TEST_P(WebViewFocusTest, TouchFocusesEmbedder) {
 // of accounts.google.com.
 class ChromeSignInWebViewTest : public WebViewTestBase {
  public:
-  ChromeSignInWebViewTest() {}
-  ~ChromeSignInWebViewTest() override {}
+  ChromeSignInWebViewTest() = default;
+  ~ChromeSignInWebViewTest() override = default;
 
  protected:
   void SetUpCommandLine(base::CommandLine* command_line) override {
@@ -4557,8 +4557,8 @@ IN_PROC_BROWSER_TEST_F(ChromeSignInWebViewTest,
 // testing isolated origins inside of a WebView.
 class IsolatedOriginWebViewTest : public WebViewTest {
  public:
-  IsolatedOriginWebViewTest() {}
-  ~IsolatedOriginWebViewTest() override {}
+  IsolatedOriginWebViewTest() = default;
+  ~IsolatedOriginWebViewTest() override = default;
 
  protected:
   void SetUpCommandLine(base::CommandLine* command_line) override {

@@ -82,8 +82,7 @@ VoiceData::VoiceData()
 
 VoiceData::VoiceData(const VoiceData& other) = default;
 
-VoiceData::~VoiceData() {}
-
+VoiceData::~VoiceData() = default;
 
 //
 // Utterance

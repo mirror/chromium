@@ -82,7 +82,7 @@ void PluginUMAReporter::ReportPluginDisabled(
 
 PluginUMAReporter::PluginUMAReporter() : report_sender_(new UMASenderImpl()) {}
 
-PluginUMAReporter::~PluginUMAReporter() {}
+PluginUMAReporter::~PluginUMAReporter() = default;
 
 // static.
 bool PluginUMAReporter::CompareCStrings(const char* first, const char* second) {

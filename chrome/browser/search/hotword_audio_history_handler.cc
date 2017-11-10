@@ -25,8 +25,7 @@ HotwordAudioHistoryHandler::HotwordAudioHistoryHandler(
       weak_ptr_factory_(this) {
 }
 
-HotwordAudioHistoryHandler::~HotwordAudioHistoryHandler() {
-}
+HotwordAudioHistoryHandler::~HotwordAudioHistoryHandler() = default;
 
 history::WebHistoryService* HotwordAudioHistoryHandler::GetWebHistory() {
   return WebHistoryServiceFactory::GetForProfile(profile_);

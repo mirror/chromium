@@ -47,7 +47,7 @@ using bookmarks_helper::IndexedURLTitle;
 class TwoClientAutofillSyncTest : public SyncTest {
  public:
   TwoClientAutofillSyncTest() : SyncTest(TWO_CLIENT) {}
-  ~TwoClientAutofillSyncTest() override {}
+  ~TwoClientAutofillSyncTest() override = default;
 
   bool TestUsesSelfNotifications() override { return false; }
 

@@ -71,7 +71,7 @@ class MenuBuilder {
         browser_(browser),
         menu_manager_(menu_manager),
         cur_id_(0) {}
-  ~MenuBuilder() {}
+  ~MenuBuilder() = default;
 
   std::unique_ptr<ExtensionContextMenuModel> BuildMenu() {
     return base::MakeUnique<ExtensionContextMenuModel>(
@@ -194,7 +194,7 @@ class ExtensionContextMenuModelTest : public ExtensionServiceTestBase {
   DISALLOW_COPY_AND_ASSIGN(ExtensionContextMenuModelTest);
 };
 
-ExtensionContextMenuModelTest::ExtensionContextMenuModelTest() {}
+ExtensionContextMenuModelTest::ExtensionContextMenuModelTest() = default;
 
 const Extension* ExtensionContextMenuModelTest::AddExtension(
     const std::string& name,

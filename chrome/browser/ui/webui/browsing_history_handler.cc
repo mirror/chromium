@@ -233,7 +233,7 @@ std::unique_ptr<base::DictionaryValue> HistoryEntryToValue(
 BrowsingHistoryHandler::BrowsingHistoryHandler()
     : clock_(new base::DefaultClock()), browsing_history_service_(nullptr) {}
 
-BrowsingHistoryHandler::~BrowsingHistoryHandler() {}
+BrowsingHistoryHandler::~BrowsingHistoryHandler() = default;
 
 void BrowsingHistoryHandler::RegisterMessages() {
   Profile* profile = GetProfile();

@@ -72,7 +72,7 @@ void ExpectUniqueSampleGE(const HistogramTester& histogram_tester,
 class SingleClientSessionsSyncTest : public SyncTest {
  public:
   SingleClientSessionsSyncTest() : SyncTest(SINGLE_CLIENT) {}
-  ~SingleClientSessionsSyncTest() override {}
+  ~SingleClientSessionsSyncTest() override = default;
 
   void ExpectNavigationChain(const std::vector<GURL>& urls) {
     ScopedWindowMap windows;

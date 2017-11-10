@@ -95,7 +95,7 @@ class FileWaiter : public base::RefCountedThreadSafe<FileWaiter> {
 
  private:
   friend class base::RefCountedThreadSafe<FileWaiter>;
-  ~FileWaiter() {}
+  ~FileWaiter() = default;
   base::RunLoop run_loop_;
   bool found_;
   base::FilePath path_;

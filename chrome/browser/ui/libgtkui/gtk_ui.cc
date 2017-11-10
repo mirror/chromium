@@ -115,7 +115,7 @@ class GtkButtonImageSource : public gfx::ImageSkiaSource {
     }
   }
 
-  ~GtkButtonImageSource() override {}
+  ~GtkButtonImageSource() override = default;
 
   gfx::ImageSkiaRep GetImageForScale(float scale) override {
     int width = width_ * scale;
@@ -235,7 +235,7 @@ class GtkButtonImageSource : public gfx::ImageSkiaSource {
 class GtkButtonPainter : public views::Painter {
  public:
   explicit GtkButtonPainter(std::string idr) : idr_(idr) {}
-  ~GtkButtonPainter() override {}
+  ~GtkButtonPainter() override = default;
 
   gfx::Size GetMinimumSize() const override { return gfx::Size(); }
   void Paint(gfx::Canvas* canvas, const gfx::Size& size) override {

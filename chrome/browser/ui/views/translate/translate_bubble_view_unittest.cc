@@ -148,7 +148,7 @@ class MockTranslateBubbleModel : public TranslateBubbleModel {
 
 class TranslateBubbleViewTest : public views::ViewsTestBase {
  public:
-  TranslateBubbleViewTest() {}
+  TranslateBubbleViewTest() = default;
 
  protected:
   void SetUp() override {

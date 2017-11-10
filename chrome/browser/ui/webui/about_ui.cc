@@ -537,7 +537,7 @@ class AboutDnsHandler : public base::RefCountedThreadSafe<AboutDnsHandler> {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
   }
 
-  virtual ~AboutDnsHandler() {}
+  virtual ~AboutDnsHandler() = default;
 
   // Calls FinishOnUIThread() on completion.
   void StartOnUIThread() {
@@ -602,7 +602,7 @@ AboutUIHTMLSource::AboutUIHTMLSource(const std::string& source_name,
     : source_name_(source_name),
       profile_(profile) {}
 
-AboutUIHTMLSource::~AboutUIHTMLSource() {}
+AboutUIHTMLSource::~AboutUIHTMLSource() = default;
 
 std::string AboutUIHTMLSource::GetSource() const {
   return source_name_;

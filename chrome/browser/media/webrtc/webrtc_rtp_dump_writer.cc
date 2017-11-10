@@ -352,8 +352,7 @@ WebRtcRtpDumpWriter::EndDumpContext::EndDumpContext(
 WebRtcRtpDumpWriter::EndDumpContext::EndDumpContext(
     const EndDumpContext& other) = default;
 
-WebRtcRtpDumpWriter::EndDumpContext::~EndDumpContext() {
-}
+WebRtcRtpDumpWriter::EndDumpContext::~EndDumpContext() = default;
 
 void WebRtcRtpDumpWriter::FlushBuffer(bool incoming,
                                       bool end_stream,

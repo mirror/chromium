@@ -46,7 +46,7 @@ ChromeOriginTrialPolicy::ChromeOriginTrialPolicy()
   }
 }
 
-ChromeOriginTrialPolicy::~ChromeOriginTrialPolicy() {}
+ChromeOriginTrialPolicy::~ChromeOriginTrialPolicy() = default;
 
 base::StringPiece ChromeOriginTrialPolicy::GetPublicKey() const {
   return base::StringPiece(public_key_);

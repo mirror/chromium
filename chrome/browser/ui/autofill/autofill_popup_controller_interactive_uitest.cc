@@ -32,7 +32,7 @@ class TestAutofillExternalDelegate : public AutofillExternalDelegate {
                                AutofillDriver* autofill_driver)
       : AutofillExternalDelegate(autofill_manager, autofill_driver),
         popup_hidden_(true) {}
-  ~TestAutofillExternalDelegate() override {}
+  ~TestAutofillExternalDelegate() override = default;
 
   void OnPopupShown() override {
     popup_hidden_ = false;
@@ -70,8 +70,8 @@ class AutofillPopupControllerBrowserTest
     : public InProcessBrowserTest,
       public content::WebContentsObserver {
  public:
-  AutofillPopupControllerBrowserTest() {}
-  ~AutofillPopupControllerBrowserTest() override {}
+  AutofillPopupControllerBrowserTest() = default;
+  ~AutofillPopupControllerBrowserTest() override = default;
 
   void SetUpOnMainThread() override {
     content::WebContents* web_contents =

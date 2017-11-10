@@ -46,7 +46,7 @@ std::string CreatePaymentMethodManifestJson(
 class PaymentManifestParserTest : public InProcessBrowserTest {
  public:
   PaymentManifestParserTest() : all_origins_supported_(false) {}
-  ~PaymentManifestParserTest() override {}
+  ~PaymentManifestParserTest() override = default;
 
   // Sends the |content| to the utility process to parse as a web app manifest
   // and waits until the utility process responds.

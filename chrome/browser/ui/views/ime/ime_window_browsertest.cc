@@ -17,7 +17,7 @@ class ImeWindowBrowserTest : public InProcessBrowserTest,
                              public ImeWindowObserver {
  public:
   ImeWindowBrowserTest() : ime_window_(nullptr) {}
-  ~ImeWindowBrowserTest() override {}
+  ~ImeWindowBrowserTest() override = default;
 
   void TearDownOnMainThread() override {
     if (ime_window_) {

@@ -101,8 +101,7 @@ OmniboxState::OmniboxState(const OmniboxEditModel::State& model_state,
       saved_selection_for_focus_change(saved_selection_for_focus_change) {
 }
 
-OmniboxState::~OmniboxState() {
-}
+OmniboxState::~OmniboxState() = default;
 
 }  // namespace
 

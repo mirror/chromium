@@ -37,8 +37,7 @@ ExtensionPopupAura::ExtensionPopupAura(extensions::ExtensionViewHost* host,
   chrome::RecordDialogCreation(chrome::DialogIdentifier::EXTENSION_POPUP_AURA);
 }
 
-ExtensionPopupAura::~ExtensionPopupAura() {
-}
+ExtensionPopupAura::~ExtensionPopupAura() = default;
 
 void ExtensionPopupAura::OnWidgetDestroying(views::Widget* widget) {
   ExtensionPopup::OnWidgetDestroying(widget);

@@ -25,7 +25,7 @@ namespace {
 class SyncTaskAdapter : public ExclusiveTask {
  public:
   explicit SyncTaskAdapter(const SyncTaskManager::Task& task) : task_(task) {}
-  ~SyncTaskAdapter() override {}
+  ~SyncTaskAdapter() override = default;
 
   void RunExclusive(const SyncStatusCallback& callback) override {
     task_.Run(callback);
@@ -39,7 +39,7 @@ class SyncTaskAdapter : public ExclusiveTask {
 
 }  // namespace
 
-SyncTaskManager::PendingTask::PendingTask() {}
+SyncTaskManager::PendingTask::PendingTask() = default;
 
 SyncTaskManager::PendingTask::PendingTask(
     const base::Closure& task, Priority pri, int seq)
@@ -47,7 +47,7 @@ SyncTaskManager::PendingTask::PendingTask(
 
 SyncTaskManager::PendingTask::PendingTask(const PendingTask& other) = default;
 
-SyncTaskManager::PendingTask::~PendingTask() {}
+SyncTaskManager::PendingTask::~PendingTask() = default;
 
 bool SyncTaskManager::PendingTaskComparator::operator()(
     const PendingTask& left,

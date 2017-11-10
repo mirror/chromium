@@ -37,8 +37,7 @@ FindBarHost::FindBarHost(BrowserView* browser_view)
   Init(browser_view->find_bar_host_view(), find_bar_view, find_bar_view);
 }
 
-FindBarHost::~FindBarHost() {
-}
+FindBarHost::~FindBarHost() = default;
 
 bool FindBarHost::MaybeForwardKeyEventToWebpage(
     const ui::KeyEvent& key_event) {

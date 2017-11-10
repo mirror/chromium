@@ -60,7 +60,7 @@ class DownloadShelfUIControllerDelegate
   // |profile| is required to outlive DownloadShelfUIControllerDelegate.
   explicit DownloadShelfUIControllerDelegate(Profile* profile)
       : profile_(profile) {}
-  ~DownloadShelfUIControllerDelegate() override {}
+  ~DownloadShelfUIControllerDelegate() override = default;
 
  private:
   // DownloadUIController::Delegate
@@ -102,8 +102,7 @@ void DownloadShelfUIControllerDelegate::OnNewDownloadReady(
 
 } // namespace
 
-DownloadUIController::Delegate::~Delegate() {
-}
+DownloadUIController::Delegate::~Delegate() = default;
 
 DownloadUIController::DownloadUIController(content::DownloadManager* manager,
                                            std::unique_ptr<Delegate> delegate)
@@ -126,8 +125,7 @@ DownloadUIController::DownloadUIController(content::DownloadManager* manager,
 #endif  // defined(OS_ANDROID)
 }
 
-DownloadUIController::~DownloadUIController() {
-}
+DownloadUIController::~DownloadUIController() = default;
 
 void DownloadUIController::OnDownloadCreated(content::DownloadManager* manager,
                                              content::DownloadItem* item) {

@@ -213,7 +213,7 @@ TEST_F(ChromeOriginTrialPolicyTest, DisableThreeTokens) {
 class ChromeOriginTrialPolicyInitializationTest
     : public ChromeOriginTrialPolicyTest {
  protected:
-  ChromeOriginTrialPolicyInitializationTest() {}
+  ChromeOriginTrialPolicyInitializationTest() = default;
 
   ChromeOriginTrialPolicy* initialized_manager() {
     return initialized_manager_.get();

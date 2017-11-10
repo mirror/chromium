@@ -19,7 +19,7 @@ MediaSource::MediaSource(const MediaSource::Id& source_id) : id_(source_id) {
 MediaSource::MediaSource(const GURL& presentation_url)
     : id_(presentation_url.spec()), url_(presentation_url) {}
 
-MediaSource::~MediaSource() {}
+MediaSource::~MediaSource() = default;
 
 MediaSource::Id MediaSource::id() const {
   return id_;
@@ -37,6 +37,6 @@ std::string MediaSource::ToString() const {
   return "MediaSource[" + id_ + "]";
 }
 
-MediaSource::MediaSource() {}
+MediaSource::MediaSource() = default;
 
 }  // namespace media_router

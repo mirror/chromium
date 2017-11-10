@@ -46,9 +46,9 @@ std::unique_ptr<SettingsResetPromptConfig> SettingsResetPromptConfig::Create() {
   return prompt_config;
 }
 
-SettingsResetPromptConfig::SettingsResetPromptConfig() {}
+SettingsResetPromptConfig::SettingsResetPromptConfig() = default;
 
-SettingsResetPromptConfig::~SettingsResetPromptConfig() {}
+SettingsResetPromptConfig::~SettingsResetPromptConfig() = default;
 
 int SettingsResetPromptConfig::UrlToResetDomainId(const GURL& url) const {
   DCHECK(IsPromptEnabled());

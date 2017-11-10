@@ -178,8 +178,7 @@ TabDragController::TabDragData::TabDragData()
       pinned(false) {
 }
 
-TabDragController::TabDragData::~TabDragData() {
-}
+TabDragController::TabDragData::~TabDragData() = default;
 
 ///////////////////////////////////////////////////////////////////////////////
 // TabDragController, public:

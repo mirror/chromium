@@ -46,7 +46,7 @@ void ShowChooser(const std::string& test_name,
 // extension. See test_browser_dialog.h.
 class UsbChooserBrowserTest : public DialogBrowserTest {
  public:
-  UsbChooserBrowserTest() {}
+  UsbChooserBrowserTest() = default;
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {

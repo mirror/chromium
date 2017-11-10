@@ -35,7 +35,7 @@ const char kDiceResponseHeader[] = "X-Chrome-ID-Consistency-Response";
 // URLRequestInterceptor adding a Dice response header to Gaia responses.
 class TestRequestInterceptor : public net::URLRequestInterceptor {
  public:
-  ~TestRequestInterceptor() override {}
+  ~TestRequestInterceptor() override = default;
 
  private:
   net::URLRequestJob* MaybeInterceptRequest(
@@ -57,7 +57,7 @@ class ChromeSigninHelperTest : public testing::Test {
   ChromeSigninHelperTest()
       : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP) {}
 
-  ~ChromeSigninHelperTest() override {}
+  ~ChromeSigninHelperTest() override = default;
 
   content::TestBrowserThreadBundle thread_bundle_;
   net::TestURLRequestContext url_request_context_;

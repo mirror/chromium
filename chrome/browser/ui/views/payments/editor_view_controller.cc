@@ -84,7 +84,7 @@ EditorViewController::EditorViewController(
       initial_focus_field_view_(nullptr),
       back_navigation_type_(back_navigation_type) {}
 
-EditorViewController::~EditorViewController() {}
+EditorViewController::~EditorViewController() = default;
 
 void EditorViewController::DisplayErrorMessageForField(
     autofill::ServerFieldType type,

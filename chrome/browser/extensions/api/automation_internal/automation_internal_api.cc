@@ -85,7 +85,7 @@ class QuerySelectorHandler : public content::WebContentsObserver {
         rfh->GetRoutingID(), request_id, acc_obj_id, query));
   }
 
-  ~QuerySelectorHandler() override {}
+  ~QuerySelectorHandler() override = default;
 
   bool OnMessageReceived(const IPC::Message& message,
                          content::RenderFrameHost* render_frame_host) override {
@@ -160,7 +160,7 @@ class AutomationWebContentsObserver
     : public content::WebContentsObserver,
       public content::WebContentsUserData<AutomationWebContentsObserver> {
  public:
-  ~AutomationWebContentsObserver() override {}
+  ~AutomationWebContentsObserver() override = default;
 
   // content::WebContentsObserver overrides.
   void AccessibilityEventReceived(

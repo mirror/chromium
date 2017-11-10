@@ -111,7 +111,7 @@ FirstRunBubble::FirstRunBubble(Browser* browser,
   chrome::RecordDialogCreation(chrome::DialogIdentifier::FIRST_RUN);
 }
 
-FirstRunBubble::~FirstRunBubble() {}
+FirstRunBubble::~FirstRunBubble() = default;
 
 void FirstRunBubble::Show(Browser* browser) {
   ShowBubbleImpl(browser, bubble_anchor_util::GetPageInfoAnchorView(browser),
@@ -142,7 +142,7 @@ FirstRunBubble::FirstRunBubbleCloser::FirstRunBubbleCloser(
   event_monitor_ = views::EventMonitor::CreateWindowMonitor(this, parent);
 }
 
-FirstRunBubble::FirstRunBubbleCloser::~FirstRunBubbleCloser() {}
+FirstRunBubble::FirstRunBubbleCloser::~FirstRunBubbleCloser() = default;
 
 void FirstRunBubble::FirstRunBubbleCloser::OnKeyEvent(ui::KeyEvent* event) {
   CloseBubble();

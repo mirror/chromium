@@ -24,8 +24,8 @@
 
 class BrowsingDataCounterUtilsTest : public testing::Test {
  public:
-  BrowsingDataCounterUtilsTest() {}
-  ~BrowsingDataCounterUtilsTest() override {}
+  BrowsingDataCounterUtilsTest() = default;
+  ~BrowsingDataCounterUtilsTest() override = default;
 
   TestingProfile* GetProfile() { return &profile_; }
 

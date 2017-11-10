@@ -35,7 +35,7 @@ void ExternalLoader::OwnerShutdown() {
   owner_ = NULL;
 }
 
-ExternalLoader::~ExternalLoader() {}
+ExternalLoader::~ExternalLoader() = default;
 
 void ExternalLoader::LoadFinished(
     std::unique_ptr<base::DictionaryValue> prefs) {

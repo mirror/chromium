@@ -59,5 +59,4 @@ SyncInternalsUI::SyncInternalsUI(content::WebUI* web_ui)
   web_ui->AddMessageHandler(base::MakeUnique<SyncInternalsMessageHandler>());
 }
 
-SyncInternalsUI::~SyncInternalsUI() {}
-
+SyncInternalsUI::~SyncInternalsUI() = default;

@@ -29,7 +29,7 @@
 
 class ContentSettingBubbleDialogTest : public DialogBrowserTest {
  public:
-  ContentSettingBubbleDialogTest() {}
+  ContentSettingBubbleDialogTest() = default;
 
   void ShowDialogBubble(ContentSettingsType content_type);
 

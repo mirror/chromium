@@ -32,8 +32,7 @@ InstantIOContext::InstantIOContext() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
-InstantIOContext::~InstantIOContext() {
-}
+InstantIOContext::~InstantIOContext() = default;
 
 // static
 void InstantIOContext::SetUserDataOnIO(

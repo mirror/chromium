@@ -268,8 +268,7 @@ DeveloperPrivateEventRouter::DeveloperPrivateEventRouter(Profile* profile)
                  base::Unretained(this)));
 }
 
-DeveloperPrivateEventRouter::~DeveloperPrivateEventRouter() {
-}
+DeveloperPrivateEventRouter::~DeveloperPrivateEventRouter() = default;
 
 void DeveloperPrivateEventRouter::AddExtensionId(
     const std::string& extension_id) {
@@ -477,7 +476,7 @@ void DeveloperPrivateAPI::RegisterNotifications() {
       this, developer::OnItemStateChanged::kEventName);
 }
 
-DeveloperPrivateAPI::~DeveloperPrivateAPI() {}
+DeveloperPrivateAPI::~DeveloperPrivateAPI() = default;
 
 void DeveloperPrivateAPI::Shutdown() {}
 
@@ -503,8 +502,7 @@ void DeveloperPrivateAPI::OnListenerRemoved(
 
 namespace api {
 
-DeveloperPrivateAPIFunction::~DeveloperPrivateAPIFunction() {
-}
+DeveloperPrivateAPIFunction::~DeveloperPrivateAPIFunction() = default;
 
 const Extension* DeveloperPrivateAPIFunction::GetExtensionById(
     const std::string& id) {
@@ -518,7 +516,8 @@ const Extension* DeveloperPrivateAPIFunction::GetEnabledExtensionById(
       GetByID(id);
 }
 
-DeveloperPrivateAutoUpdateFunction::~DeveloperPrivateAutoUpdateFunction() {}
+DeveloperPrivateAutoUpdateFunction::~DeveloperPrivateAutoUpdateFunction() =
+    default;
 
 ExtensionFunction::ResponseAction DeveloperPrivateAutoUpdateFunction::Run() {
   ExtensionUpdater* updater =
@@ -533,12 +532,10 @@ ExtensionFunction::ResponseAction DeveloperPrivateAutoUpdateFunction::Run() {
 }
 
 DeveloperPrivateGetExtensionsInfoFunction::
-DeveloperPrivateGetExtensionsInfoFunction() {
-}
+    DeveloperPrivateGetExtensionsInfoFunction() = default;
 
 DeveloperPrivateGetExtensionsInfoFunction::
-~DeveloperPrivateGetExtensionsInfoFunction() {
-}
+    ~DeveloperPrivateGetExtensionsInfoFunction() = default;
 
 ExtensionFunction::ResponseAction
 DeveloperPrivateGetExtensionsInfoFunction::Run() {
@@ -571,12 +568,10 @@ void DeveloperPrivateGetExtensionsInfoFunction::OnInfosGenerated(
 }
 
 DeveloperPrivateGetExtensionInfoFunction::
-DeveloperPrivateGetExtensionInfoFunction() {
-}
+    DeveloperPrivateGetExtensionInfoFunction() = default;
 
 DeveloperPrivateGetExtensionInfoFunction::
-~DeveloperPrivateGetExtensionInfoFunction() {
-}
+    ~DeveloperPrivateGetExtensionInfoFunction() = default;
 
 ExtensionFunction::ResponseAction
 DeveloperPrivateGetExtensionInfoFunction::Run() {
@@ -600,8 +595,10 @@ void DeveloperPrivateGetExtensionInfoFunction::OnInfosGenerated(
                        : OneArgument(list[0].ToValue()));
 }
 
-DeveloperPrivateGetItemsInfoFunction::DeveloperPrivateGetItemsInfoFunction() {}
-DeveloperPrivateGetItemsInfoFunction::~DeveloperPrivateGetItemsInfoFunction() {}
+DeveloperPrivateGetItemsInfoFunction::DeveloperPrivateGetItemsInfoFunction() =
+    default;
+DeveloperPrivateGetItemsInfoFunction::~DeveloperPrivateGetItemsInfoFunction() =
+    default;
 
 ExtensionFunction::ResponseAction DeveloperPrivateGetItemsInfoFunction::Run() {
   std::unique_ptr<developer::GetItemsInfo::Params> params(
@@ -628,8 +625,7 @@ void DeveloperPrivateGetItemsInfoFunction::OnInfosGenerated(
 }
 
 DeveloperPrivateGetProfileConfigurationFunction::
-~DeveloperPrivateGetProfileConfigurationFunction() {
-}
+    ~DeveloperPrivateGetProfileConfigurationFunction() = default;
 
 ExtensionFunction::ResponseAction
 DeveloperPrivateGetProfileConfigurationFunction::Run() {
@@ -647,8 +643,7 @@ DeveloperPrivateGetProfileConfigurationFunction::Run() {
 }
 
 DeveloperPrivateUpdateProfileConfigurationFunction::
-~DeveloperPrivateUpdateProfileConfigurationFunction() {
-}
+    ~DeveloperPrivateUpdateProfileConfigurationFunction() = default;
 
 ExtensionFunction::ResponseAction
 DeveloperPrivateUpdateProfileConfigurationFunction::Run() {
@@ -669,7 +664,7 @@ DeveloperPrivateUpdateProfileConfigurationFunction::Run() {
 }
 
 DeveloperPrivateUpdateExtensionConfigurationFunction::
-~DeveloperPrivateUpdateExtensionConfigurationFunction() {}
+    ~DeveloperPrivateUpdateExtensionConfigurationFunction() = default;
 
 ExtensionFunction::ResponseAction
 DeveloperPrivateUpdateExtensionConfigurationFunction::Run() {
@@ -724,7 +719,7 @@ DeveloperPrivateUpdateExtensionConfigurationFunction::Run() {
   return RespondNow(NoArguments());
 }
 
-DeveloperPrivateReloadFunction::~DeveloperPrivateReloadFunction() {}
+DeveloperPrivateReloadFunction::~DeveloperPrivateReloadFunction() = default;
 
 ExtensionFunction::ResponseAction DeveloperPrivateReloadFunction::Run() {
   std::unique_ptr<Reload::Params> params(Reload::Params::Create(*args_));
@@ -750,10 +745,10 @@ ExtensionFunction::ResponseAction DeveloperPrivateReloadFunction::Run() {
 }
 
 DeveloperPrivateShowPermissionsDialogFunction::
-DeveloperPrivateShowPermissionsDialogFunction() {}
+    DeveloperPrivateShowPermissionsDialogFunction() = default;
 
 DeveloperPrivateShowPermissionsDialogFunction::
-~DeveloperPrivateShowPermissionsDialogFunction() {}
+    ~DeveloperPrivateShowPermissionsDialogFunction() = default;
 
 ExtensionFunction::ResponseAction
 DeveloperPrivateShowPermissionsDialogFunction::Run() {
@@ -782,7 +777,8 @@ void DeveloperPrivateShowPermissionsDialogFunction::Finish() {
   Respond(NoArguments());
 }
 
-DeveloperPrivateLoadUnpackedFunction::DeveloperPrivateLoadUnpackedFunction() {}
+DeveloperPrivateLoadUnpackedFunction::DeveloperPrivateLoadUnpackedFunction() =
+    default;
 
 ExtensionFunction::ResponseAction DeveloperPrivateLoadUnpackedFunction::Run() {
   std::unique_ptr<developer::LoadUnpacked::Params> params(
@@ -901,7 +897,8 @@ bool DeveloperPrivateChooseEntryFunction::ShowPicker(
   return true;
 }
 
-DeveloperPrivateChooseEntryFunction::~DeveloperPrivateChooseEntryFunction() {}
+DeveloperPrivateChooseEntryFunction::~DeveloperPrivateChooseEntryFunction() =
+    default;
 
 void DeveloperPrivatePackDirectoryFunction::OnPackSuccess(
     const base::FilePath& crx_file,
@@ -975,13 +972,14 @@ ExtensionFunction::ResponseAction DeveloperPrivatePackDirectoryFunction::Run() {
   return RespondLater();
 }
 
-DeveloperPrivatePackDirectoryFunction::DeveloperPrivatePackDirectoryFunction() {
-}
+DeveloperPrivatePackDirectoryFunction::DeveloperPrivatePackDirectoryFunction() =
+    default;
 
 DeveloperPrivatePackDirectoryFunction::
-~DeveloperPrivatePackDirectoryFunction() {}
+    ~DeveloperPrivatePackDirectoryFunction() = default;
 
-DeveloperPrivateLoadUnpackedFunction::~DeveloperPrivateLoadUnpackedFunction() {}
+DeveloperPrivateLoadUnpackedFunction::~DeveloperPrivateLoadUnpackedFunction() =
+    default;
 
 bool DeveloperPrivateLoadDirectoryFunction::RunAsync() {
   // TODO(grv) : add unittests.
@@ -1210,8 +1208,8 @@ void DeveloperPrivateLoadDirectoryFunction::CopyFile(
 DeveloperPrivateLoadDirectoryFunction::DeveloperPrivateLoadDirectoryFunction()
     : pending_copy_operations_count_(0), success_(true) {}
 
-DeveloperPrivateLoadDirectoryFunction::~DeveloperPrivateLoadDirectoryFunction()
-    {}
+DeveloperPrivateLoadDirectoryFunction::
+    ~DeveloperPrivateLoadDirectoryFunction() = default;
 
 ExtensionFunction::ResponseAction DeveloperPrivateChoosePathFunction::Run() {
   std::unique_ptr<developer::ChoosePath::Params> params(
@@ -1267,7 +1265,8 @@ void DeveloperPrivateChoosePathFunction::FileSelectionCanceled() {
   Release();
 }
 
-DeveloperPrivateChoosePathFunction::~DeveloperPrivateChoosePathFunction() {}
+DeveloperPrivateChoosePathFunction::~DeveloperPrivateChoosePathFunction() =
+    default;
 
 ExtensionFunction::ResponseAction
 DeveloperPrivateIsProfileManagedFunction::Run() {
@@ -1276,14 +1275,13 @@ DeveloperPrivateIsProfileManagedFunction::Run() {
 }
 
 DeveloperPrivateIsProfileManagedFunction::
-    ~DeveloperPrivateIsProfileManagedFunction() {
-}
+    ~DeveloperPrivateIsProfileManagedFunction() = default;
 
 DeveloperPrivateRequestFileSourceFunction::
-    DeveloperPrivateRequestFileSourceFunction() {}
+    DeveloperPrivateRequestFileSourceFunction() = default;
 
 DeveloperPrivateRequestFileSourceFunction::
-    ~DeveloperPrivateRequestFileSourceFunction() {}
+    ~DeveloperPrivateRequestFileSourceFunction() = default;
 
 ExtensionFunction::ResponseAction
 DeveloperPrivateRequestFileSourceFunction::Run() {
@@ -1353,8 +1351,10 @@ void DeveloperPrivateRequestFileSourceFunction::Finish(
   Respond(OneArgument(response.ToValue()));
 }
 
-DeveloperPrivateOpenDevToolsFunction::DeveloperPrivateOpenDevToolsFunction() {}
-DeveloperPrivateOpenDevToolsFunction::~DeveloperPrivateOpenDevToolsFunction() {}
+DeveloperPrivateOpenDevToolsFunction::DeveloperPrivateOpenDevToolsFunction() =
+    default;
+DeveloperPrivateOpenDevToolsFunction::~DeveloperPrivateOpenDevToolsFunction() =
+    default;
 
 ExtensionFunction::ResponseAction
 DeveloperPrivateOpenDevToolsFunction::Run() {
@@ -1423,7 +1423,7 @@ DeveloperPrivateOpenDevToolsFunction::Run() {
 }
 
 DeveloperPrivateDeleteExtensionErrorsFunction::
-~DeveloperPrivateDeleteExtensionErrorsFunction() {}
+    ~DeveloperPrivateDeleteExtensionErrorsFunction() = default;
 
 ExtensionFunction::ResponseAction
 DeveloperPrivateDeleteExtensionErrorsFunction::Run() {
@@ -1451,7 +1451,7 @@ DeveloperPrivateDeleteExtensionErrorsFunction::Run() {
 }
 
 DeveloperPrivateRepairExtensionFunction::
-~DeveloperPrivateRepairExtensionFunction() {}
+    ~DeveloperPrivateRepairExtensionFunction() = default;
 
 ExtensionFunction::ResponseAction
 DeveloperPrivateRepairExtensionFunction::Run() {
@@ -1499,7 +1499,8 @@ void DeveloperPrivateRepairExtensionFunction::OnReinstallComplete(
   Respond(success ? NoArguments() : Error(error));
 }
 
-DeveloperPrivateShowOptionsFunction::~DeveloperPrivateShowOptionsFunction() {}
+DeveloperPrivateShowOptionsFunction::~DeveloperPrivateShowOptionsFunction() =
+    default;
 
 ExtensionFunction::ResponseAction DeveloperPrivateShowOptionsFunction::Run() {
   std::unique_ptr<developer::ShowOptions::Params> params(
@@ -1522,7 +1523,7 @@ ExtensionFunction::ResponseAction DeveloperPrivateShowOptionsFunction::Run() {
   return RespondNow(NoArguments());
 }
 
-DeveloperPrivateShowPathFunction::~DeveloperPrivateShowPathFunction() {}
+DeveloperPrivateShowPathFunction::~DeveloperPrivateShowPathFunction() = default;
 
 ExtensionFunction::ResponseAction DeveloperPrivateShowPathFunction::Run() {
   std::unique_ptr<developer::ShowPath::Params> params(
@@ -1540,7 +1541,7 @@ ExtensionFunction::ResponseAction DeveloperPrivateShowPathFunction::Run() {
 }
 
 DeveloperPrivateSetShortcutHandlingSuspendedFunction::
-~DeveloperPrivateSetShortcutHandlingSuspendedFunction() {}
+    ~DeveloperPrivateSetShortcutHandlingSuspendedFunction() = default;
 
 ExtensionFunction::ResponseAction
 DeveloperPrivateSetShortcutHandlingSuspendedFunction::Run() {
@@ -1553,7 +1554,7 @@ DeveloperPrivateSetShortcutHandlingSuspendedFunction::Run() {
 }
 
 DeveloperPrivateUpdateExtensionCommandFunction::
-~DeveloperPrivateUpdateExtensionCommandFunction() {}
+    ~DeveloperPrivateUpdateExtensionCommandFunction() = default;
 
 ExtensionFunction::ResponseAction
 DeveloperPrivateUpdateExtensionCommandFunction::Run() {

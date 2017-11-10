@@ -24,12 +24,12 @@ MockSettingsResetPromptConfig::MockSettingsResetPromptConfig() {
   EXPECT_CALL(*this, UrlToResetDomainId(_)).WillRepeatedly(Return(-1));
 }
 
-MockSettingsResetPromptConfig::~MockSettingsResetPromptConfig() {}
+MockSettingsResetPromptConfig::~MockSettingsResetPromptConfig() = default;
 
 MockProfileResetter::MockProfileResetter(Profile* profile)
     : ProfileResetter(profile) {}
 
-MockProfileResetter::~MockProfileResetter() {}
+MockProfileResetter::~MockProfileResetter() = default;
 
 void MockProfileResetter::Reset(
     ProfileResetter::ResettableFlags resettable_flags,

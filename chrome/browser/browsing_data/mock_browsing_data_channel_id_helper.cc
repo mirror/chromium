@@ -14,8 +14,7 @@
 MockBrowsingDataChannelIDHelper::MockBrowsingDataChannelIDHelper()
     : BrowsingDataChannelIDHelper() {}
 
-MockBrowsingDataChannelIDHelper::
-~MockBrowsingDataChannelIDHelper() {}
+MockBrowsingDataChannelIDHelper::~MockBrowsingDataChannelIDHelper() = default;
 
 void MockBrowsingDataChannelIDHelper::StartFetching(
     const FetchResultCallback& callback) {

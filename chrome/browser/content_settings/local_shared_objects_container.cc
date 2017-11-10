@@ -54,8 +54,7 @@ LocalSharedObjectsContainer::LocalSharedObjectsContainer(Profile* profile)
               ->GetCacheStorageContext())),
       session_storages_(new CannedBrowsingDataLocalStorageHelper(profile)) {}
 
-LocalSharedObjectsContainer::~LocalSharedObjectsContainer() {
-}
+LocalSharedObjectsContainer::~LocalSharedObjectsContainer() = default;
 
 size_t LocalSharedObjectsContainer::GetObjectCount() const {
   size_t count = 0;

@@ -63,7 +63,7 @@ SupervisedUserSettingsService::SupervisedUserSettingsService(Profile* profile)
       local_settings_(new base::DictionaryValue) {
 }
 
-SupervisedUserSettingsService::~SupervisedUserSettingsService() {}
+SupervisedUserSettingsService::~SupervisedUserSettingsService() = default;
 
 void SupervisedUserSettingsService::Init(
     base::FilePath profile_path,

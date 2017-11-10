@@ -51,7 +51,7 @@ class GCDApiFlowTest : public testing::Test {
             base::ThreadTaskRunnerHandle::Get())),
         account_id_(kAccountId) {}
 
-  ~GCDApiFlowTest() override {}
+  ~GCDApiFlowTest() override = default;
 
  protected:
   void SetUp() override {

@@ -91,7 +91,7 @@ class ExternalPrefLoader::PrioritySyncReadyWaiter
         syncable_pref_observer_(this),
         sync_service_observer_(this) {}
 
-  ~PrioritySyncReadyWaiter() override {}
+  ~PrioritySyncReadyWaiter() override = default;
 
   void Start(base::OnceClosure done_closure) {
     if (IsPrioritySyncing()) {
@@ -173,8 +173,7 @@ ExternalPrefLoader::ExternalPrefLoader(int base_path_id,
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
-ExternalPrefLoader::~ExternalPrefLoader() {
-}
+ExternalPrefLoader::~ExternalPrefLoader() = default;
 
 const base::FilePath ExternalPrefLoader::GetBaseCrxFilePath() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

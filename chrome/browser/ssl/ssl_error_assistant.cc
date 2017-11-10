@@ -85,9 +85,9 @@ MITMSoftwareType::MITMSoftwareType(const std::string& name,
       issuer_common_name_regex(issuer_common_name_regex),
       issuer_organization_regex(issuer_organization_regex) {}
 
-SSLErrorAssistant::SSLErrorAssistant() {}
+SSLErrorAssistant::SSLErrorAssistant() = default;
 
-SSLErrorAssistant::~SSLErrorAssistant() {}
+SSLErrorAssistant::~SSLErrorAssistant() = default;
 
 bool SSLErrorAssistant::IsKnownCaptivePortalCertificate(
     const net::SSLInfo& ssl_info) {

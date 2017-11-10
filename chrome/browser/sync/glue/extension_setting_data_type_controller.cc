@@ -29,7 +29,8 @@ ExtensionSettingDataTypeController::ExtensionSettingDataTypeController(
   DCHECK(type == syncer::EXTENSION_SETTINGS || type == syncer::APP_SETTINGS);
 }
 
-ExtensionSettingDataTypeController::~ExtensionSettingDataTypeController() {}
+ExtensionSettingDataTypeController::~ExtensionSettingDataTypeController() =
+    default;
 
 bool ExtensionSettingDataTypeController::StartModels() {
   DCHECK(CalledOnValidThread());

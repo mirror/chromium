@@ -143,8 +143,8 @@ TEST(ExtensionsMetricsProvider, SystemProtoEncoding) {
 class ExtensionMetricsProviderInstallsTest
     : public extensions::ExtensionServiceTestBase {
  public:
-  ExtensionMetricsProviderInstallsTest() {}
-  ~ExtensionMetricsProviderInstallsTest() override {}
+  ExtensionMetricsProviderInstallsTest() = default;
+  ~ExtensionMetricsProviderInstallsTest() override = default;
 
   void SetUp() override {
     ExtensionServiceTestBase::SetUp();

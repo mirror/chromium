@@ -68,7 +68,7 @@ ChromeSubresourceFilterClient::ChromeSubresourceFilterClient(
       CreateForWebContents(web_contents, this);
 }
 
-ChromeSubresourceFilterClient::~ChromeSubresourceFilterClient() {}
+ChromeSubresourceFilterClient::~ChromeSubresourceFilterClient() = default;
 
 void ChromeSubresourceFilterClient::MaybeAppendNavigationThrottles(
     content::NavigationHandle* navigation_handle,

@@ -53,7 +53,7 @@ class ConstrainedWebDialogBrowserTestObserver
       : content::WebContentsObserver(contents),
         contents_destroyed_(false) {
   }
-  ~ConstrainedWebDialogBrowserTestObserver() override {}
+  ~ConstrainedWebDialogBrowserTestObserver() override = default;
 
   bool contents_destroyed() { return contents_destroyed_; }
 
@@ -68,7 +68,7 @@ class AutoResizingTestWebDialogDelegate
  public:
   explicit AutoResizingTestWebDialogDelegate(const GURL& url)
       : TestWebDialogDelegate(url) {}
-  ~AutoResizingTestWebDialogDelegate() override {}
+  ~AutoResizingTestWebDialogDelegate() override = default;
 
   // Dialog delegates for auto-resizing dialogs are expected not to set |size|.
   void GetDialogSize(gfx::Size* size) const override {}
@@ -78,7 +78,7 @@ class AutoResizingTestWebDialogDelegate
 
 class ConstrainedWebDialogBrowserTest : public InProcessBrowserTest {
  public:
-  ConstrainedWebDialogBrowserTest() {}
+  ConstrainedWebDialogBrowserTest() = default;
 
   // Runs the current MessageLoop until |condition| is true or timeout.
   bool RunLoopUntil(const base::Callback<bool()>& condition) {

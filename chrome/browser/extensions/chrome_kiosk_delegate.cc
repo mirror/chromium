@@ -6,9 +6,9 @@
 
 namespace extensions {
 
-ChromeKioskDelegate::ChromeKioskDelegate() {}
+ChromeKioskDelegate::ChromeKioskDelegate() = default;
 
-ChromeKioskDelegate::~ChromeKioskDelegate() {}
+ChromeKioskDelegate::~ChromeKioskDelegate() = default;
 
 bool ChromeKioskDelegate::IsAutoLaunchedKioskApp(const ExtensionId& id) const {
   return false;

@@ -25,8 +25,8 @@ const char kDefaultTestUrl[] = "https://www.google.com";
 class LoFiPageLoadMetricsObserverTest
     : public page_load_metrics::PageLoadMetricsObserverTestHarness {
  public:
-  LoFiPageLoadMetricsObserverTest() {}
-  ~LoFiPageLoadMetricsObserverTest() override {}
+  LoFiPageLoadMetricsObserverTest() = default;
+  ~LoFiPageLoadMetricsObserverTest() override = default;
 
   void ResetTest() {
     page_load_metrics::InitPageLoadTimingForTest(&timing_);

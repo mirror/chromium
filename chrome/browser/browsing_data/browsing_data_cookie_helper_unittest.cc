@@ -19,7 +19,7 @@ namespace {
 // Test expectations for a given cookie.
 class CookieExpectation {
  public:
-  CookieExpectation() {}
+  CookieExpectation() = default;
 
   bool MatchesCookie(const net::CanonicalCookie& cookie) const {
     if (!domain_.empty() && domain_ != cookie.Domain())

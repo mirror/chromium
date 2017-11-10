@@ -88,7 +88,7 @@ ReferrerChainData::ReferrerChainData(
     std::unique_ptr<ReferrerChain> referrer_chain)
     : referrer_chain_(std::move(referrer_chain)) {}
 
-ReferrerChainData::~ReferrerChainData() {}
+ReferrerChainData::~ReferrerChainData() = default;
 
 ReferrerChain* ReferrerChainData::GetReferrerChain() {
   return referrer_chain_.get();
@@ -100,7 +100,7 @@ NavigationEventList::NavigationEventList(std::size_t size_limit)
   DCHECK_GT(size_limit_, 0U);
 }
 
-NavigationEventList::~NavigationEventList() {}
+NavigationEventList::~NavigationEventList() = default;
 
 NavigationEvent* NavigationEventList::FindNavigationEvent(
     const GURL& target_url,
@@ -419,7 +419,7 @@ SafeBrowsingNavigationObserverManager::IdentifyReferrerChainByHostingPage(
 }
 
 SafeBrowsingNavigationObserverManager::
-    ~SafeBrowsingNavigationObserverManager() {}
+    ~SafeBrowsingNavigationObserverManager() = default;
 
 void SafeBrowsingNavigationObserverManager::RecordNewWebContents(
     content::WebContents* source_web_contents,

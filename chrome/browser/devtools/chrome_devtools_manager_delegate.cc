@@ -80,8 +80,8 @@ std::string ToString(std::unique_ptr<base::DictionaryValue> value) {
 
 class ChromeDevToolsManagerDelegate::HostData {
  public:
-  HostData() {}
-  ~HostData() {}
+  HostData() = default;
+  ~HostData() = default;
 
   RemoteLocations& remote_locations() { return remote_locations_; }
 

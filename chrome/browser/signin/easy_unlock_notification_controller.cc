@@ -19,8 +19,8 @@ namespace {
 class EasyUnlockNotificationControllerStub
     : public EasyUnlockNotificationController {
  public:
-  EasyUnlockNotificationControllerStub() {}
-  ~EasyUnlockNotificationControllerStub() override {}
+  EasyUnlockNotificationControllerStub() = default;
+  ~EasyUnlockNotificationControllerStub() override = default;
 
   // EasyUnlockNotificationController:
   void ShowChromebookAddedNotification() override {}

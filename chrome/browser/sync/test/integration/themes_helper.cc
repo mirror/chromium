@@ -92,8 +92,7 @@ ThemePendingInstallChecker::ThemePendingInstallChecker(Profile* profile,
                  content::Source<Profile>(profile_));
 }
 
-ThemePendingInstallChecker::~ThemePendingInstallChecker() {
-}
+ThemePendingInstallChecker::~ThemePendingInstallChecker() = default;
 
 std::string ThemePendingInstallChecker::GetDebugMessage() const {
   return base::StringPrintf("Waiting for pending theme to be '%s'",
@@ -123,8 +122,7 @@ ThemeConditionChecker::ThemeConditionChecker(
                  content::Source<ThemeService>(GetThemeService(profile_)));
 }
 
-ThemeConditionChecker::~ThemeConditionChecker() {
-}
+ThemeConditionChecker::~ThemeConditionChecker() = default;
 
 std::string ThemeConditionChecker::GetDebugMessage() const {
   return debug_message_;

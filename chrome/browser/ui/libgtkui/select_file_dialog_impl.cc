@@ -81,7 +81,7 @@ SelectFileDialogImpl::SelectFileDialogImpl(
   }
 }
 
-SelectFileDialogImpl::~SelectFileDialogImpl() { }
+SelectFileDialogImpl::~SelectFileDialogImpl() = default;
 
 void SelectFileDialogImpl::ListenerDestroyed() {
   listener_ = nullptr;

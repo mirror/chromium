@@ -57,7 +57,7 @@ bool SupervisedUserBlacklist::Hash::operator<(const Hash& rhs) const {
 
 SupervisedUserBlacklist::SupervisedUserBlacklist() : weak_ptr_factory_(this) {}
 
-SupervisedUserBlacklist::~SupervisedUserBlacklist() {}
+SupervisedUserBlacklist::~SupervisedUserBlacklist() = default;
 
 bool SupervisedUserBlacklist::HasURL(const GURL& url) const {
   Hash hash(url.host());

@@ -348,8 +348,7 @@ ExtensionsMetricsProvider::ExtensionsMetricsProvider(
   DCHECK(metrics_state_manager_);
 }
 
-ExtensionsMetricsProvider::~ExtensionsMetricsProvider() {
-}
+ExtensionsMetricsProvider::~ExtensionsMetricsProvider() = default;
 
 // static
 int ExtensionsMetricsProvider::HashExtension(const std::string& extension_id,

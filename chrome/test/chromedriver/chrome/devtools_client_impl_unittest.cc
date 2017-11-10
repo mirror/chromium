@@ -32,7 +32,7 @@ Status CloserFunc() {
 class MockSyncWebSocket : public SyncWebSocket {
  public:
   MockSyncWebSocket() : connected_(false), id_(-1), queued_messages_(1) {}
-  ~MockSyncWebSocket() override {}
+  ~MockSyncWebSocket() override = default;
 
   bool IsConnected() override { return connected_; }
 
@@ -131,8 +131,8 @@ namespace {
 
 class MockSyncWebSocket2 : public SyncWebSocket {
  public:
-  MockSyncWebSocket2() {}
-  ~MockSyncWebSocket2() override {}
+  MockSyncWebSocket2() = default;
+  ~MockSyncWebSocket2() override = default;
 
   bool IsConnected() override { return false; }
 
@@ -168,7 +168,7 @@ namespace {
 class MockSyncWebSocket3 : public SyncWebSocket {
  public:
   MockSyncWebSocket3() : connected_(false) {}
-  ~MockSyncWebSocket3() override {}
+  ~MockSyncWebSocket3() override = default;
 
   bool IsConnected() override { return connected_; }
 
@@ -209,7 +209,7 @@ namespace {
 class MockSyncWebSocket4 : public SyncWebSocket {
  public:
   MockSyncWebSocket4() : connected_(false) {}
-  ~MockSyncWebSocket4() override {}
+  ~MockSyncWebSocket4() override = default;
 
   bool IsConnected() override { return connected_; }
 
@@ -249,7 +249,7 @@ namespace {
 class FakeSyncWebSocket : public SyncWebSocket {
  public:
   FakeSyncWebSocket() : connected_(false) {}
-  ~FakeSyncWebSocket() override {}
+  ~FakeSyncWebSocket() override = default;
 
   bool IsConnected() override { return connected_; }
 
@@ -666,7 +666,7 @@ class OnConnectedListener : public DevToolsEventListener {
         on_event_called_(false) {
     client_->AddListener(this);
   }
-  ~OnConnectedListener() override {}
+  ~OnConnectedListener() override = default;
 
   void VerifyCalled() {
     EXPECT_TRUE(on_connected_called_);
@@ -703,7 +703,7 @@ class OnConnectedListener : public DevToolsEventListener {
 class OnConnectedSyncWebSocket : public SyncWebSocket {
  public:
   OnConnectedSyncWebSocket() : connected_(false) {}
-  ~OnConnectedSyncWebSocket() override {}
+  ~OnConnectedSyncWebSocket() override = default;
 
   bool IsConnected() override { return connected_; }
 
@@ -797,7 +797,7 @@ namespace {
 class MockSyncWebSocket5 : public SyncWebSocket {
  public:
   MockSyncWebSocket5() : request_no_(0) {}
-  ~MockSyncWebSocket5() override {}
+  ~MockSyncWebSocket5() override = default;
 
   bool IsConnected() override { return true; }
 
@@ -827,7 +827,7 @@ class MockSyncWebSocket5 : public SyncWebSocket {
 class OtherEventListener : public DevToolsEventListener {
  public:
   OtherEventListener() : received_event_(false) {}
-  ~OtherEventListener() override {}
+  ~OtherEventListener() override = default;
 
   Status OnConnected(DevToolsClient* client) override { return Status(kOk); }
   Status OnEvent(DevToolsClient* client,
@@ -846,7 +846,7 @@ class OnEventListener : public DevToolsEventListener {
                   OtherEventListener* other_listener)
       : client_(client),
         other_listener_(other_listener) {}
-  ~OnEventListener() override {}
+  ~OnEventListener() override = default;
 
   Status OnConnected(DevToolsClient* client) override {
     EXPECT_EQ(client_, client);
@@ -887,7 +887,7 @@ namespace {
 class DisconnectedSyncWebSocket : public MockSyncWebSocket {
  public:
   DisconnectedSyncWebSocket() : connection_count_(0), command_count_(0) {}
-  ~DisconnectedSyncWebSocket() override {}
+  ~DisconnectedSyncWebSocket() override = default;
 
   bool Connect(const GURL& url) override {
     connection_count_++;
@@ -947,7 +947,7 @@ class MockSyncWebSocket6 : public SyncWebSocket {
  public:
   explicit MockSyncWebSocket6(std::list<std::string>* messages)
       : messages_(messages) {}
-  ~MockSyncWebSocket6() override {}
+  ~MockSyncWebSocket6() override = default;
 
   bool IsConnected() override { return true; }
 
@@ -974,7 +974,7 @@ class MockSyncWebSocket6 : public SyncWebSocket {
 class MockDevToolsEventListener : public DevToolsEventListener {
  public:
   MockDevToolsEventListener() : id_(1) {}
-  ~MockDevToolsEventListener() override {}
+  ~MockDevToolsEventListener() override = default;
 
   Status OnConnected(DevToolsClient* client) override { return Status(kOk); }
 
@@ -1058,8 +1058,8 @@ namespace {
 
 class MockCommandListener : public DevToolsEventListener {
  public:
-  MockCommandListener() {}
-  ~MockCommandListener() override {}
+  MockCommandListener() = default;
+  ~MockCommandListener() override = default;
 
   Status OnEvent(DevToolsClient* client,
                  const std::string& method,
@@ -1112,7 +1112,7 @@ namespace {
 class MockSyncWebSocket7 : public SyncWebSocket {
  public:
   MockSyncWebSocket7() : id_(-1), sent_messages_(0), sent_responses_(0) {}
-  ~MockSyncWebSocket7() override {}
+  ~MockSyncWebSocket7() override = default;
 
   bool IsConnected() override { return true; }
 

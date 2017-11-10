@@ -26,11 +26,9 @@
 #include "chrome/browser/ui/apps/chrome_app_delegate.h"
 #endif
 
-ChromeAppWindowClient::ChromeAppWindowClient() {
-}
+ChromeAppWindowClient::ChromeAppWindowClient() = default;
 
-ChromeAppWindowClient::~ChromeAppWindowClient() {
-}
+ChromeAppWindowClient::~ChromeAppWindowClient() = default;
 
 // static
 ChromeAppWindowClient* ChromeAppWindowClient::GetInstance() {

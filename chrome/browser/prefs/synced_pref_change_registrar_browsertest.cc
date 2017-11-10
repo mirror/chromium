@@ -41,7 +41,7 @@ using testing::_;
 class SyncedPrefChangeRegistrarTest : public InProcessBrowserTest {
  public:
   SyncedPrefChangeRegistrarTest() : next_sync_data_id_(0) {}
-  ~SyncedPrefChangeRegistrarTest() override {}
+  ~SyncedPrefChangeRegistrarTest() override = default;
 
   void UpdateChromePolicy(const policy::PolicyMap& policies) {
     policy_provider_.UpdateChromePolicy(policies);

@@ -34,7 +34,7 @@ BubbleIconView::BubbleIconView(CommandUpdater* command_updater, int command_id)
       active_(false),
       suppress_mouse_released_action_(false) {}
 
-BubbleIconView::~BubbleIconView() {}
+BubbleIconView::~BubbleIconView() = default;
 
 bool BubbleIconView::IsBubbleShowing() const {
   // If the bubble is being destroyed, it's considered showing though it may be

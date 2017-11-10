@@ -98,7 +98,7 @@ class BrowserAddedForProfileObserver : public chrome::BrowserListObserver {
     DCHECK(!callback_.is_null());
     BrowserList::AddObserver(this);
   }
-  ~BrowserAddedForProfileObserver() override {}
+  ~BrowserAddedForProfileObserver() override = default;
 
  private:
   // Overridden from BrowserListObserver:

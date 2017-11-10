@@ -89,7 +89,7 @@ ProfileNetworkContextService::ProfileNetworkContextService(Profile* profile)
   DisableQuicIfNotAllowed();
 }
 
-ProfileNetworkContextService::~ProfileNetworkContextService() {}
+ProfileNetworkContextService::~ProfileNetworkContextService() = default;
 
 content::mojom::NetworkContextPtr
 ProfileNetworkContextService::CreateMainNetworkContext() {

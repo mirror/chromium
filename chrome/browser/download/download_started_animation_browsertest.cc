@@ -11,8 +11,7 @@
 
 class DownloadStartedAnimationTest : public InProcessBrowserTest {
  public:
-  DownloadStartedAnimationTest() {
-  }
+  DownloadStartedAnimationTest() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DownloadStartedAnimationTest);

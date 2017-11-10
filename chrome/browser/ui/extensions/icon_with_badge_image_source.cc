@@ -48,7 +48,7 @@ IconWithBadgeImageSource::Badge::Badge(const std::string& text,
                                        SkColor background_color)
     : text(text), text_color(text_color), background_color(background_color) {}
 
-IconWithBadgeImageSource::Badge::~Badge() {}
+IconWithBadgeImageSource::Badge::~Badge() = default;
 
 IconWithBadgeImageSource::IconWithBadgeImageSource(const gfx::Size& size)
     : gfx::CanvasImageSource(size, false),
@@ -56,7 +56,7 @@ IconWithBadgeImageSource::IconWithBadgeImageSource(const gfx::Size& size)
       paint_page_action_decoration_(false),
       paint_blocked_actions_decoration_(false) {}
 
-IconWithBadgeImageSource::~IconWithBadgeImageSource() {}
+IconWithBadgeImageSource::~IconWithBadgeImageSource() = default;
 
 void IconWithBadgeImageSource::SetIcon(const gfx::Image& icon) {
   icon_ = icon;

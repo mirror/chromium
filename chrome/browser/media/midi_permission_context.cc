@@ -9,8 +9,7 @@ MidiPermissionContext::MidiPermissionContext(Profile* profile)
                             CONTENT_SETTINGS_TYPE_MIDI,
                             blink::FeaturePolicyFeature::kMidiFeature) {}
 
-MidiPermissionContext::~MidiPermissionContext() {
-}
+MidiPermissionContext::~MidiPermissionContext() = default;
 
 ContentSetting MidiPermissionContext::GetPermissionStatusInternal(
     content::RenderFrameHost* render_frame_host,

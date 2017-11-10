@@ -25,8 +25,7 @@ FakeSafeBrowsingDatabaseManager::FakeSafeBrowsingDatabaseManager(bool enabled)
           safe_browsing::SafeBrowsingService::CreateSafeBrowsingService())),
       enabled_(enabled) {}
 
-FakeSafeBrowsingDatabaseManager::~FakeSafeBrowsingDatabaseManager() {
-}
+FakeSafeBrowsingDatabaseManager::~FakeSafeBrowsingDatabaseManager() = default;
 
 FakeSafeBrowsingDatabaseManager& FakeSafeBrowsingDatabaseManager::Enable() {
   enabled_ = true;

@@ -16,8 +16,7 @@ SupervisedUserRegistrationUtilityStub::SupervisedUserRegistrationUtilityStub()
 }
 
 SupervisedUserRegistrationUtilityStub::
-~SupervisedUserRegistrationUtilityStub() {
-}
+    ~SupervisedUserRegistrationUtilityStub() = default;
 
 void SupervisedUserRegistrationUtilityStub::Register(
     const std::string& supervised_user_id,

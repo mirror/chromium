@@ -404,7 +404,7 @@ class PrefWatcherFactory : public BrowserContextKeyedServiceFactory {
       BrowserContextDependencyManager::GetInstance()) {
   }
 
-  ~PrefWatcherFactory() override {}
+  ~PrefWatcherFactory() override = default;
 
   // BrowserContextKeyedServiceFactory:
   KeyedService* BuildServiceInstanceFor(

@@ -74,7 +74,7 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
 MessageCenterDisplayService::MessageCenterDisplayService(Profile* profile)
     : NotificationDisplayService(profile), profile_(profile) {}
 
-MessageCenterDisplayService::~MessageCenterDisplayService() {}
+MessageCenterDisplayService::~MessageCenterDisplayService() = default;
 
 void MessageCenterDisplayService::Display(
     NotificationCommon::Type notification_type,

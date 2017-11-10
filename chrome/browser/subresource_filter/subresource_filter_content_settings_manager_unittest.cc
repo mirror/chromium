@@ -37,7 +37,7 @@ const char kActionsHistogram[] = "SubresourceFilter.Actions";
 
 class SubresourceFilterContentSettingsManagerTest : public testing::Test {
  public:
-  SubresourceFilterContentSettingsManagerTest() {}
+  SubresourceFilterContentSettingsManagerTest() = default;
 
   void SetUp() override {
     scoped_feature_toggle().ResetSubresourceFilterState(

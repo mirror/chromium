@@ -19,7 +19,7 @@ class MediaRouterStructTraitsTest
     : public testing::Test,
       public media_router::mojom::MediaRouterTraitsTestService {
  public:
-  MediaRouterStructTraitsTest() {}
+  MediaRouterStructTraitsTest() = default;
 
  protected:
   mojom::MediaRouterTraitsTestServicePtr GetTraitsTestProxy() {

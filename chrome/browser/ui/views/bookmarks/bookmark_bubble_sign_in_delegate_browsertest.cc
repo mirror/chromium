@@ -33,7 +33,7 @@
 
 class BookmarkBubbleSignInDelegateTest : public InProcessBrowserTest {
  public:
-  BookmarkBubbleSignInDelegateTest() {}
+  BookmarkBubbleSignInDelegateTest() = default;
 
   Profile* profile() { return browser()->profile(); }
 

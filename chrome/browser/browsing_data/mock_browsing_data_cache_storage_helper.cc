@@ -17,7 +17,8 @@ MockBrowsingDataCacheStorageHelper::MockBrowsingDataCacheStorageHelper(
           content::BrowserContext::GetDefaultStoragePartition(profile)
               ->GetCacheStorageContext()) {}
 
-MockBrowsingDataCacheStorageHelper::~MockBrowsingDataCacheStorageHelper() {}
+MockBrowsingDataCacheStorageHelper::~MockBrowsingDataCacheStorageHelper() =
+    default;
 
 void MockBrowsingDataCacheStorageHelper::StartFetching(
     const FetchCallback& callback) {

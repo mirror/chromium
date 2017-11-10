@@ -11,7 +11,7 @@
 
 StatusChangeChecker::StatusChangeChecker() : timed_out_(false) {}
 
-StatusChangeChecker::~StatusChangeChecker() {}
+StatusChangeChecker::~StatusChangeChecker() = default;
 
 bool StatusChangeChecker::Wait() {
   if (IsExitConditionSatisfied()) {

@@ -82,7 +82,7 @@ class TestExtensionMessageBubbleController :
         action_button_callback_count_(0),
         dismiss_button_callback_count_(0),
         link_click_callback_count_(0) {}
-  ~TestExtensionMessageBubbleController() override {}
+  ~TestExtensionMessageBubbleController() override = default;
 
   // ExtensionMessageBubbleController:
   void OnBubbleAction() override {
@@ -181,7 +181,7 @@ class FakeExtensionMessageBubble {
 
 class ExtensionMessageBubbleTest : public BrowserWithTestWindowTest {
  public:
-  ExtensionMessageBubbleTest() {}
+  ExtensionMessageBubbleTest() = default;
 
   testing::AssertionResult LoadGenericExtension(const std::string& index,
                                                 const std::string& id,
@@ -349,7 +349,7 @@ class ExtensionMessageBubbleTest : public BrowserWithTestWindowTest {
         profile(), &BuildToolbarModel);
   }
 
-  ~ExtensionMessageBubbleTest() override {}
+  ~ExtensionMessageBubbleTest() override = default;
 
   void SetUp() override {
     BrowserWithTestWindowTest::SetUp();

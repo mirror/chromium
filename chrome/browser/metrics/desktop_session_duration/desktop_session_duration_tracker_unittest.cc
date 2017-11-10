@@ -21,7 +21,7 @@ const base::TimeDelta kZeroTime = base::TimeDelta::FromSeconds(0);
 class MockDesktopSessionDurationTracker
     : public metrics::DesktopSessionDurationTracker {
  public:
-  MockDesktopSessionDurationTracker() {}
+  MockDesktopSessionDurationTracker() = default;
 
   bool is_timeout() const { return time_out_; }
 
@@ -44,7 +44,7 @@ class MockDesktopSessionDurationTracker
 class MockDesktopSessionObserver
     : public metrics::DesktopSessionDurationTracker::Observer {
  public:
-  MockDesktopSessionObserver() {}
+  MockDesktopSessionObserver() = default;
 
   bool session_started_seen() const { return session_started_seen_; }
   bool session_ended_seen() const { return session_ended_seen_; }

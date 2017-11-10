@@ -23,8 +23,8 @@ using content::WebContentsTester;
 
 class BrowserUnitTest : public BrowserWithTestWindowTest {
  public:
-  BrowserUnitTest() {}
-  ~BrowserUnitTest() override {}
+  BrowserUnitTest() = default;
+  ~BrowserUnitTest() override = default;
 
   // Caller owns the memory.
   WebContents* CreateTestWebContents() {
@@ -151,8 +151,8 @@ TEST_F(BrowserUnitTest, DisableZoomOnCrashedTab) {
 
 class BrowserBookmarkBarTest : public BrowserWithTestWindowTest {
  public:
-  BrowserBookmarkBarTest() {}
-  ~BrowserBookmarkBarTest() override {}
+  BrowserBookmarkBarTest() = default;
+  ~BrowserBookmarkBarTest() override = default;
 
  protected:
   BookmarkBar::State window_bookmark_bar_state() const {
@@ -177,7 +177,7 @@ class BrowserBookmarkBarTest : public BrowserWithTestWindowTest {
     BookmarkBarStateTestBrowserWindow()
         : browser_(NULL),
           bookmark_bar_state_(BookmarkBar::HIDDEN) {}
-    ~BookmarkBarStateTestBrowserWindow() override {}
+    ~BookmarkBarStateTestBrowserWindow() override = default;
 
     void set_browser(Browser* browser) { browser_ = browser; }
 

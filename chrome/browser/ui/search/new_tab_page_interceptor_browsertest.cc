@@ -27,7 +27,7 @@ using content::BrowserThread;
 
 class NewTabPageInterceptorTest : public InProcessBrowserTest {
  public:
-  NewTabPageInterceptorTest() {}
+  NewTabPageInterceptorTest() = default;
 
   void SetUpOnMainThread() override {
     base::FilePath path =

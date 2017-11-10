@@ -72,7 +72,7 @@ MigrationList MakeList(syncer::ModelType type1,
 class MigrationTest : public SyncTest  {
  public:
   explicit MigrationTest(TestType test_type) : SyncTest(test_type) {}
-  ~MigrationTest() override {}
+  ~MigrationTest() override = default;
 
   enum TriggerMethod { MODIFY_PREF, MODIFY_BOOKMARK, TRIGGER_NOTIFICATION };
 
@@ -230,7 +230,7 @@ class MigrationTest : public SyncTest  {
 class MigrationSingleClientTest : public MigrationTest {
  public:
   MigrationSingleClientTest() : MigrationTest(SINGLE_CLIENT_LEGACY) {}
-  ~MigrationSingleClientTest() override {}
+  ~MigrationSingleClientTest() override = default;
 
   void RunSingleClientMigrationTest(const MigrationList& migration_list,
                                     TriggerMethod trigger_method) {
@@ -346,7 +346,7 @@ IN_PROC_BROWSER_TEST_F(MigrationSingleClientTest, AllTypesWithNigoriAtOnce) {
 class MigrationTwoClientTest : public MigrationTest {
  public:
   MigrationTwoClientTest() : MigrationTest(TWO_CLIENT_LEGACY) {}
-  ~MigrationTwoClientTest() override {}
+  ~MigrationTwoClientTest() override = default;
 
   // Helper function that verifies that preferences sync still works.
   void VerifyPrefSync() {
@@ -424,14 +424,14 @@ IN_PROC_BROWSER_TEST_F(MigrationTwoClientTest,
 
 class MigrationReconfigureTest : public MigrationTwoClientTest {
  public:
-  MigrationReconfigureTest() {}
+  MigrationReconfigureTest() = default;
 
   void SetUpCommandLine(base::CommandLine* cl) override {
     AddTestSwitches(cl);
     // Do not add optional datatypes.
   }
 
-  ~MigrationReconfigureTest() override {}
+  ~MigrationReconfigureTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MigrationReconfigureTest);

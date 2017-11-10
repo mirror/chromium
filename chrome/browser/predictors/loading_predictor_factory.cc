@@ -33,7 +33,7 @@ LoadingPredictorFactory::LoadingPredictorFactory()
   DependsOn(PredictorDatabaseFactory::GetInstance());
 }
 
-LoadingPredictorFactory::~LoadingPredictorFactory() {}
+LoadingPredictorFactory::~LoadingPredictorFactory() = default;
 
 KeyedService* LoadingPredictorFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

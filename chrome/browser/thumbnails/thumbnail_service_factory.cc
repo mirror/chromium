@@ -20,8 +20,7 @@ ThumbnailServiceFactory::ThumbnailServiceFactory()
   DependsOn(TopSitesFactory::GetInstance());
 }
 
-ThumbnailServiceFactory::~ThumbnailServiceFactory() {
-}
+ThumbnailServiceFactory::~ThumbnailServiceFactory() = default;
 
 // static
 scoped_refptr<ThumbnailService> ThumbnailServiceFactory::GetForProfile(

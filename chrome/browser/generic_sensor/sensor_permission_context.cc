@@ -14,7 +14,7 @@ SensorPermissionContext::SensorPermissionContext(Profile* profile)
                             CONTENT_SETTINGS_TYPE_SENSORS,
                             blink::FeaturePolicyFeature::kNotFound) {}
 
-SensorPermissionContext::~SensorPermissionContext() {}
+SensorPermissionContext::~SensorPermissionContext() = default;
 
 ContentSetting SensorPermissionContext::GetPermissionStatusInternal(
     content::RenderFrameHost* render_frame_host,

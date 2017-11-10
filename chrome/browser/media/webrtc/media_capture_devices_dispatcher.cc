@@ -120,7 +120,7 @@ MediaCaptureDevicesDispatcher::MediaCaptureDevicesDispatcher()
       base::MakeUnique<PermissionBubbleMediaAccessHandler>());
 }
 
-MediaCaptureDevicesDispatcher::~MediaCaptureDevicesDispatcher() {}
+MediaCaptureDevicesDispatcher::~MediaCaptureDevicesDispatcher() = default;
 
 void MediaCaptureDevicesDispatcher::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {

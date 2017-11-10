@@ -65,8 +65,7 @@ ChromeRenderMessageFilter::ChromeRenderMessageFilter(int render_process_id,
   }
 }
 
-ChromeRenderMessageFilter::~ChromeRenderMessageFilter() {
-}
+ChromeRenderMessageFilter::~ChromeRenderMessageFilter() = default;
 
 bool ChromeRenderMessageFilter::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;

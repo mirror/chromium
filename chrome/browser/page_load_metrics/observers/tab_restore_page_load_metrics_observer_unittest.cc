@@ -30,7 +30,7 @@ class TestTabRestorePageLoadMetricsObserver
  public:
   explicit TestTabRestorePageLoadMetricsObserver(bool is_restore)
       : is_restore_(is_restore) {}
-  ~TestTabRestorePageLoadMetricsObserver() override {}
+  ~TestTabRestorePageLoadMetricsObserver() override = default;
 
  private:
   bool IsTabRestore(content::NavigationHandle* navigation_handle) override {
@@ -47,7 +47,7 @@ class TestTabRestorePageLoadMetricsObserver
 class TabRestorePageLoadMetricsObserverTest
     : public page_load_metrics::PageLoadMetricsObserverTestHarness {
  public:
-  TabRestorePageLoadMetricsObserverTest() {}
+  TabRestorePageLoadMetricsObserverTest() = default;
 
   void ResetTest() {
     page_load_metrics::InitPageLoadTimingForTest(&timing_);

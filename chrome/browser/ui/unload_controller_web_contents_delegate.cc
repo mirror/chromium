@@ -6,8 +6,10 @@
 
 #include "content/public/browser/web_contents.h"
 
-UnloadControllerWebContentsDelegate::UnloadControllerWebContentsDelegate() {}
-UnloadControllerWebContentsDelegate::~UnloadControllerWebContentsDelegate() {}
+UnloadControllerWebContentsDelegate::UnloadControllerWebContentsDelegate() =
+    default;
+UnloadControllerWebContentsDelegate::~UnloadControllerWebContentsDelegate() =
+    default;
 
 bool UnloadControllerWebContentsDelegate::ShouldSuppressDialogs(
     content::WebContents* source) {

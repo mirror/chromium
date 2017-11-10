@@ -384,7 +384,7 @@ class DOMDragEventWaiter {
 // Helper for verifying contents of DOM events associated with drag-and-drop.
 class DOMDragEventVerifier {
  public:
-  DOMDragEventVerifier() {}
+  DOMDragEventVerifier() = default;
 
   void set_expected_client_position(const std::string& value) {
     expected_client_position_ = value;
@@ -515,7 +515,8 @@ const char kTestPagePath[] = "/drag_and_drop/page.html";
 class DragAndDropBrowserTest : public InProcessBrowserTest,
                                public testing::WithParamInterface<bool> {
  public:
-  DragAndDropBrowserTest(){};
+  DragAndDropBrowserTest() = default;
+  ;
 
   struct DragImageBetweenFrames_TestState;
   void DragImageBetweenFrames_Step2(DragImageBetweenFrames_TestState*);

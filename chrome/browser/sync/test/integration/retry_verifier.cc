@@ -77,8 +77,7 @@ RetryVerifier::RetryVerifier() : retry_count_(0),
   memset(&delay_table_, 0, sizeof(delay_table_));
 }
 
-RetryVerifier::~RetryVerifier() {
-}
+RetryVerifier::~RetryVerifier() = default;
 
 // Initializes the state for verification.
 void RetryVerifier::Initialize(const syncer::SyncCycleSnapshot& snap) {

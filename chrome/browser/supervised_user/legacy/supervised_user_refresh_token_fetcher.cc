@@ -130,7 +130,7 @@ SupervisedUserRefreshTokenFetcherImpl::SupervisedUserRefreshTokenFetcherImpl(
       access_token_expired_(false) {}
 
 SupervisedUserRefreshTokenFetcherImpl::
-~SupervisedUserRefreshTokenFetcherImpl() {}
+    ~SupervisedUserRefreshTokenFetcherImpl() = default;
 
 void SupervisedUserRefreshTokenFetcherImpl::Start(
     const std::string& supervised_user_id,
@@ -339,4 +339,5 @@ SupervisedUserRefreshTokenFetcher::Create(
   return fetcher;
 }
 
-SupervisedUserRefreshTokenFetcher::~SupervisedUserRefreshTokenFetcher() {}
+SupervisedUserRefreshTokenFetcher::~SupervisedUserRefreshTokenFetcher() =
+    default;

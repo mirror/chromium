@@ -35,7 +35,7 @@ constexpr int kHarmonyTitleSize = 15;
 
 class LayoutProviderTest : public testing::Test {
  public:
-  LayoutProviderTest() {}
+  LayoutProviderTest() = default;
 
 #if defined(OS_WIN)
  protected:

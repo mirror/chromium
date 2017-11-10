@@ -33,6 +33,6 @@ ValidationRulesStorageFactory::ValidationRulesStorageFactory() {
   json_pref_store_->ReadPrefsAsync(NULL);
 }
 
-ValidationRulesStorageFactory::~ValidationRulesStorageFactory() {}
+ValidationRulesStorageFactory::~ValidationRulesStorageFactory() = default;
 
 }  // namespace autofill

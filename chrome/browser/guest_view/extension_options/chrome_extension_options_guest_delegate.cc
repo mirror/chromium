@@ -19,8 +19,8 @@ ChromeExtensionOptionsGuestDelegate::ChromeExtensionOptionsGuestDelegate(
     : ExtensionOptionsGuestDelegate(guest) {
 }
 
-ChromeExtensionOptionsGuestDelegate::~ChromeExtensionOptionsGuestDelegate() {
-}
+ChromeExtensionOptionsGuestDelegate::~ChromeExtensionOptionsGuestDelegate() =
+    default;
 
 bool ChromeExtensionOptionsGuestDelegate::HandleContextMenu(
     const content::ContextMenuParams& params) {

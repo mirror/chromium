@@ -62,8 +62,8 @@ void AnnotateDataUse(
 
 }  // namespace
 
-TabIdAnnotator::TabIdAnnotator() {}
-TabIdAnnotator::~TabIdAnnotator() {}
+TabIdAnnotator::TabIdAnnotator() = default;
+TabIdAnnotator::~TabIdAnnotator() = default;
 
 void TabIdAnnotator::Annotate(net::URLRequest* request,
                               std::unique_ptr<DataUse> data_use,

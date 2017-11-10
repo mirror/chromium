@@ -17,8 +17,7 @@ MockBrowsingDataCookieHelper::MockBrowsingDataCookieHelper(
     : BrowsingDataCookieHelper(request_context_getter) {
 }
 
-MockBrowsingDataCookieHelper::~MockBrowsingDataCookieHelper() {
-}
+MockBrowsingDataCookieHelper::~MockBrowsingDataCookieHelper() = default;
 
 void MockBrowsingDataCookieHelper::StartFetching(
     const FetchCallback& callback) {

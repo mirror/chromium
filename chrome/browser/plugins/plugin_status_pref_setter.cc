@@ -24,8 +24,7 @@ PluginStatusPrefSetter::PluginStatusPrefSetter()
     : profile_(NULL),
       factory_(this) {}
 
-PluginStatusPrefSetter::~PluginStatusPrefSetter() {
-}
+PluginStatusPrefSetter::~PluginStatusPrefSetter() = default;
 
 void PluginStatusPrefSetter::Init(
     Profile* profile,

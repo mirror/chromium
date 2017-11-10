@@ -130,8 +130,7 @@ class TestChangeProcessor : public syncer::SyncChangeProcessor {
 TestChangeProcessor::TestChangeProcessor() : erroneous_(false) {
 }
 
-TestChangeProcessor::~TestChangeProcessor() {
-}
+TestChangeProcessor::~TestChangeProcessor() = default;
 
 syncer::SyncError TestChangeProcessor::ProcessSyncChanges(
     const base::Location& from_here,
@@ -152,16 +151,15 @@ syncer::SyncError TestChangeProcessor::ProcessSyncChanges(
 
 class TestTemplateURLServiceClient : public TemplateURLServiceClient {
  public:
-   ~TestTemplateURLServiceClient() override {}
+  ~TestTemplateURLServiceClient() override = default;
 
-   void Shutdown() override {}
-   void SetOwner(TemplateURLService* owner) override {}
-   void DeleteAllSearchTermsForKeyword(TemplateURLID id) override {}
-   void SetKeywordSearchTermsForURL(
-       const GURL& url,
-       TemplateURLID id,
-       const base::string16& term) override {}
-   void AddKeywordGeneratedVisit(const GURL& url) override {}
+  void Shutdown() override {}
+  void SetOwner(TemplateURLService* owner) override {}
+  void DeleteAllSearchTermsForKeyword(TemplateURLID id) override {}
+  void SetKeywordSearchTermsForURL(const GURL& url,
+                                   TemplateURLID id,
+                                   const base::string16& term) override {}
+  void AddKeywordGeneratedVisit(const GURL& url) override {}
 };
 
 }  // namespace

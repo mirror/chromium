@@ -58,4 +58,4 @@ SyncFileSystemInternalsUI::SyncFileSystemInternalsUI(content::WebUI* web_ui)
                                 CreateSyncFileSystemInternalsHTMLSource());
 }
 
-SyncFileSystemInternalsUI::~SyncFileSystemInternalsUI() {}
+SyncFileSystemInternalsUI::~SyncFileSystemInternalsUI() = default;

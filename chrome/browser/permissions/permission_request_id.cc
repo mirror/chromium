@@ -24,8 +24,7 @@ PermissionRequestID::PermissionRequestID(int render_process_id,
       request_id_(request_id) {
 }
 
-PermissionRequestID::~PermissionRequestID() {
-}
+PermissionRequestID::~PermissionRequestID() = default;
 
 bool PermissionRequestID::operator==(const PermissionRequestID& other) const {
   return render_process_id_ == other.render_process_id_ &&

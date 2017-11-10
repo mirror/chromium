@@ -61,7 +61,7 @@ DownloadShelf::DownloadShelf()
       weak_ptr_factory_(this) {
 }
 
-DownloadShelf::~DownloadShelf() {}
+DownloadShelf::~DownloadShelf() = default;
 
 // Download progress painting --------------------------------------------------
 

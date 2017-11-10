@@ -40,14 +40,13 @@ BrowsingDataDatabaseHelper::DatabaseInfo::DatabaseInfo(
 BrowsingDataDatabaseHelper::DatabaseInfo::DatabaseInfo(
     const DatabaseInfo& other) = default;
 
-BrowsingDataDatabaseHelper::DatabaseInfo::~DatabaseInfo() {}
+BrowsingDataDatabaseHelper::DatabaseInfo::~DatabaseInfo() = default;
 
 BrowsingDataDatabaseHelper::BrowsingDataDatabaseHelper(Profile* profile)
     : tracker_(BrowserContext::GetDefaultStoragePartition(profile)
                    ->GetDatabaseTracker()) {}
 
-BrowsingDataDatabaseHelper::~BrowsingDataDatabaseHelper() {
-}
+BrowsingDataDatabaseHelper::~BrowsingDataDatabaseHelper() = default;
 
 void BrowsingDataDatabaseHelper::StartFetching(FetchCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -106,7 +105,8 @@ CannedBrowsingDataDatabaseHelper::PendingDatabaseInfo::PendingDatabaseInfo(
       description(description) {
 }
 
-CannedBrowsingDataDatabaseHelper::PendingDatabaseInfo::~PendingDatabaseInfo() {}
+CannedBrowsingDataDatabaseHelper::PendingDatabaseInfo::~PendingDatabaseInfo() =
+    default;
 
 bool CannedBrowsingDataDatabaseHelper::PendingDatabaseInfo::operator<(
     const PendingDatabaseInfo& other) const {
@@ -182,4 +182,4 @@ void CannedBrowsingDataDatabaseHelper::DeleteDatabase(
   BrowsingDataDatabaseHelper::DeleteDatabase(origin_identifier, name);
 }
 
-CannedBrowsingDataDatabaseHelper::~CannedBrowsingDataDatabaseHelper() {}
+CannedBrowsingDataDatabaseHelper::~CannedBrowsingDataDatabaseHelper() = default;

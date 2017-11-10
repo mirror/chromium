@@ -294,8 +294,7 @@ AgentHostDelegate::AgentHostDelegate(
       favicon_url_(GURL(value ? GetStringProperty(value, "faviconUrl") : "")),
       agent_host_(nullptr) {}
 
-AgentHostDelegate::~AgentHostDelegate() {
-}
+AgentHostDelegate::~AgentHostDelegate() = default;
 
 void AgentHostDelegate::Attach(content::DevToolsExternalAgentProxy* proxy) {
   std::unique_ptr<WebSocketProxy> ws_proxy(new WebSocketProxy(proxy));
@@ -519,8 +518,7 @@ DevToolsDeviceDiscovery::RemotePage::RemotePage(
       dict_(dict.DeepCopy()) {
 }
 
-DevToolsDeviceDiscovery::RemotePage::~RemotePage() {
-}
+DevToolsDeviceDiscovery::RemotePage::~RemotePage() = default;
 
 scoped_refptr<content::DevToolsAgentHost>
 DevToolsDeviceDiscovery::RemotePage::CreateTarget() {
@@ -567,8 +565,7 @@ DevToolsDeviceDiscovery::RemoteBrowser::GetParsedVersion() {
   return result;
 }
 
-DevToolsDeviceDiscovery::RemoteBrowser::~RemoteBrowser() {
-}
+DevToolsDeviceDiscovery::RemoteBrowser::~RemoteBrowser() = default;
 
 // DevToolsDeviceDiscovery::RemoteDevice --------------------------------------
 
@@ -587,8 +584,7 @@ DevToolsDeviceDiscovery::RemoteDevice::RemoteDevice(
   }
 }
 
-DevToolsDeviceDiscovery::RemoteDevice::~RemoteDevice() {
-}
+DevToolsDeviceDiscovery::RemoteDevice::~RemoteDevice() = default;
 
 // DevToolsDeviceDiscovery ----------------------------------------------------
 

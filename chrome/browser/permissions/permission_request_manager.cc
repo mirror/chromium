@@ -37,7 +37,7 @@ class CancelledRequest : public PermissionRequest {
         gesture_type_(cancelled->GetGestureType()),
         content_settings_type_(cancelled->GetContentSettingsType()) {
   }
-  ~CancelledRequest() override {}
+  ~CancelledRequest() override = default;
 
   IconId GetIconId() const override { return icon_; }
 #if defined(OS_ANDROID)
@@ -115,8 +115,7 @@ bool ShouldGroupRequests(PermissionRequest* a, PermissionRequest* b) {
 
 // PermissionRequestManager::Observer ------------------------------------------
 
-PermissionRequestManager::Observer::~Observer() {
-}
+PermissionRequestManager::Observer::~Observer() = default;
 
 void PermissionRequestManager::Observer::OnBubbleAdded() {
 }

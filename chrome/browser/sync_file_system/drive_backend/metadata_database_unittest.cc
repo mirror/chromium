@@ -195,7 +195,7 @@ class MetadataDatabaseTest : public testing::TestWithParam<bool> {
         next_file_id_number_(1),
         next_md5_sequence_number_(1) {}
 
-  virtual ~MetadataDatabaseTest() {}
+  virtual ~MetadataDatabaseTest() = default;
 
   void SetUp() override {
     ASSERT_TRUE(database_dir_.CreateUniqueTempDir());

@@ -55,7 +55,7 @@ class MockPrivetHttpFactory : public PrivetHTTPAsynchronousFactory {
                    net::URLRequestContextGetter* request_context)
         : name_(name), request_context_(request_context) {}
 
-    ~MockResolution() override {}
+    ~MockResolution() override = default;
 
     void Start(const net::HostPortPair& address,
                ResultCallback callback) override {
@@ -101,7 +101,7 @@ class PrivetNotificationsListenerTest : public testing::Test {
     description_.description = kExampleDeviceDescription;
   }
 
-  virtual ~PrivetNotificationsListenerTest() {}
+  virtual ~PrivetNotificationsListenerTest() = default;
 
   bool SuccessfulResponseToInfo(const std::string& response) {
     net::TestURLFetcher* fetcher = fetcher_factory_.GetFetcherByID(0);
@@ -196,7 +196,7 @@ class TestPrivetNotificationDelegate : public PrivetNotificationDelegate {
 
  private:
   // Refcounted.
-  ~TestPrivetNotificationDelegate() override {}
+  ~TestPrivetNotificationDelegate() override = default;
 
   // PrivetNotificationDelegate:
   void OpenTab(const GURL& url) override;
@@ -211,7 +211,7 @@ class TestPrivetNotificationService : public PrivetNotificationService {
  public:
   explicit TestPrivetNotificationService(Profile* profile)
       : PrivetNotificationService(profile) {}
-  ~TestPrivetNotificationService() override {}
+  ~TestPrivetNotificationService() override = default;
 
   const GURL& open_tab_url() const { return open_tab_url_; }
   size_t open_tab_count() const { return open_tab_count_; }
@@ -250,8 +250,8 @@ void TestPrivetNotificationDelegate::DisableNotifications() {
 
 class PrivetNotificationsNotificationTest : public testing::Test {
  public:
-  PrivetNotificationsNotificationTest() {}
-  ~PrivetNotificationsNotificationTest() override {}
+  PrivetNotificationsNotificationTest() = default;
+  ~PrivetNotificationsNotificationTest() override = default;
 
   void SetUp() override {
     testing::Test::SetUp();

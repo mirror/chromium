@@ -116,8 +116,8 @@ class UninstallDialogHelper : public ExtensionUninstallDialog::Delegate {
 
  private:
   // This class handles its own lifetime.
-  UninstallDialogHelper() {}
-  ~UninstallDialogHelper() override {}
+  UninstallDialogHelper() = default;
+  ~UninstallDialogHelper() override = default;
 
   void BeginUninstall(Browser* browser, const Extension* extension) {
     uninstall_dialog_.reset(ExtensionUninstallDialog::Create(
@@ -282,7 +282,7 @@ void ExtensionContextMenuModel::ExecuteCommand(int command_id,
   }
 }
 
-ExtensionContextMenuModel::~ExtensionContextMenuModel() {}
+ExtensionContextMenuModel::~ExtensionContextMenuModel() = default;
 
 void ExtensionContextMenuModel::InitMenu(const Extension* extension,
                                          ButtonVisibility button_visibility) {

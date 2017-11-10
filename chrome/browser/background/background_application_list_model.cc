@@ -118,11 +118,9 @@ BackgroundApplicationListModel::Observer::OnApplicationListChanged(
     Profile* profile) {
 }
 
-BackgroundApplicationListModel::Observer::~Observer() {
-}
+BackgroundApplicationListModel::Observer::~Observer() = default;
 
-BackgroundApplicationListModel::Application::~Application() {
-}
+BackgroundApplicationListModel::Application::~Application() = default;
 
 BackgroundApplicationListModel::Application::Application(
     BackgroundApplicationListModel* model,
@@ -147,8 +145,7 @@ void BackgroundApplicationListModel::Application::RequestIcon(
       base::Bind(&Application::OnImageLoaded, AsWeakPtr()));
 }
 
-BackgroundApplicationListModel::~BackgroundApplicationListModel() {
-}
+BackgroundApplicationListModel::~BackgroundApplicationListModel() = default;
 
 BackgroundApplicationListModel::BackgroundApplicationListModel(Profile* profile)
     : profile_(profile),

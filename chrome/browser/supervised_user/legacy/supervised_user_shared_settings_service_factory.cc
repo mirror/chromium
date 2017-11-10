@@ -30,7 +30,7 @@ SupervisedUserSharedSettingsServiceFactory::
           BrowserContextDependencyManager::GetInstance()) {}
 
 SupervisedUserSharedSettingsServiceFactory::
-    ~SupervisedUserSharedSettingsServiceFactory() {}
+    ~SupervisedUserSharedSettingsServiceFactory() = default;
 
 KeyedService*
 SupervisedUserSharedSettingsServiceFactory::BuildServiceInstanceFor(

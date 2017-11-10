@@ -40,8 +40,8 @@ namespace policy {
 
 class ProfilePolicyConnectorTest : public testing::Test {
  protected:
-  ProfilePolicyConnectorTest() {}
-  ~ProfilePolicyConnectorTest() override {}
+  ProfilePolicyConnectorTest() = default;
+  ~ProfilePolicyConnectorTest() override = default;
 
   void SetUp() override {
     // This must be set up before the TestingBrowserProcess is created.

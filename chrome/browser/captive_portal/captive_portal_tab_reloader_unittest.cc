@@ -31,8 +31,7 @@ class TestCaptivePortalTabReloader : public CaptivePortalTabReloader {
                                  base::Callback<void(void)>()) {
   }
 
-  virtual ~TestCaptivePortalTabReloader() {
-  }
+  virtual ~TestCaptivePortalTabReloader() = default;
 
   bool TimerRunning() {
     return slow_ssl_load_timer_.IsRunning();
@@ -74,7 +73,7 @@ class MockInterstitialPageDelegate : public content::InterstitialPageDelegate {
     interstitial_page->Show();
   }
 
-  ~MockInterstitialPageDelegate() override {}
+  ~MockInterstitialPageDelegate() override = default;
 
  private:
   // InterstitialPageDelegate implementation:

@@ -66,7 +66,7 @@ PasswordStoreX::PasswordStoreX(
       migration_checked_(false),
       allow_fallback_(false) {}
 
-PasswordStoreX::~PasswordStoreX() {}
+PasswordStoreX::~PasswordStoreX() = default;
 
 scoped_refptr<base::SequencedTaskRunner>
 PasswordStoreX::CreateBackgroundTaskRunner() const {

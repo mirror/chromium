@@ -72,8 +72,8 @@ PrintPreviewUI::TestingDelegate* g_testing_delegate = nullptr;
 // PrintPreviewUI IDs to most recent print preview request IDs.
 class PrintPreviewRequestIdMapWithLock {
  public:
-  PrintPreviewRequestIdMapWithLock() {}
-  ~PrintPreviewRequestIdMapWithLock() {}
+  PrintPreviewRequestIdMapWithLock() = default;
+  ~PrintPreviewRequestIdMapWithLock() = default;
 
   // Gets the value for |preview_id|.
   // Returns true and sets |out_value| on success.

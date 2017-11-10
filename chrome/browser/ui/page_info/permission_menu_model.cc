@@ -117,7 +117,7 @@ PermissionMenuModel::PermissionMenuModel(Profile* profile,
   AddCheckItem(CONTENT_SETTING_BLOCK, label);
 }
 
-PermissionMenuModel::~PermissionMenuModel() {}
+PermissionMenuModel::~PermissionMenuModel() = default;
 
 bool PermissionMenuModel::IsCommandIdChecked(int command_id) const {
   ContentSetting setting = permission_.setting;

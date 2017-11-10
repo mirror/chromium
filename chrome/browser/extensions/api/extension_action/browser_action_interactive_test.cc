@@ -90,8 +90,8 @@ class ExtensionHostWatcher : public content::NotificationObserver {
 // window be focused/active).
 class BrowserActionInteractiveTest : public ExtensionApiTest {
  public:
-  BrowserActionInteractiveTest() {}
-  ~BrowserActionInteractiveTest() override {}
+  BrowserActionInteractiveTest() = default;
+  ~BrowserActionInteractiveTest() override = default;
 
   // BrowserTestBase:
   void SetUpOnMainThread() override {

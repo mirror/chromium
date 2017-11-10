@@ -78,9 +78,9 @@ GURL GetCanonicalizedSameDocumentUrl(const GURL& url) {
 
 }  // namespace
 
-AMPPageLoadMetricsObserver::AMPPageLoadMetricsObserver() {}
+AMPPageLoadMetricsObserver::AMPPageLoadMetricsObserver() = default;
 
-AMPPageLoadMetricsObserver::~AMPPageLoadMetricsObserver() {}
+AMPPageLoadMetricsObserver::~AMPPageLoadMetricsObserver() = default;
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 AMPPageLoadMetricsObserver::OnCommit(

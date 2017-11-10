@@ -57,8 +57,7 @@ SupervisedProvider::SupervisedProvider(
           base::Unretained(this)));
 }
 
-SupervisedProvider::~SupervisedProvider() {
-}
+SupervisedProvider::~SupervisedProvider() = default;
 
 std::unique_ptr<RuleIterator> SupervisedProvider::GetRuleIterator(
     ContentSettingsType content_type,

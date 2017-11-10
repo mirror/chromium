@@ -26,8 +26,8 @@ using media_router::MediaRouterDialogControllerImpl;
 
 class MockToolbarActionViewDelegate : public ToolbarActionViewDelegate {
  public:
-  MockToolbarActionViewDelegate() {}
-  ~MockToolbarActionViewDelegate() {}
+  MockToolbarActionViewDelegate() = default;
+  ~MockToolbarActionViewDelegate() = default;
 
   MOCK_CONST_METHOD0(GetCurrentWebContents, WebContents*());
   MOCK_METHOD0(UpdateState, void());
@@ -43,7 +43,7 @@ class TestMediaRouterAction : public MediaRouterAction {
       : MediaRouterAction(browser, toolbar_actions_bar),
         controller_(nullptr),
         platform_delegate_(nullptr) {}
-  ~TestMediaRouterAction() override {}
+  ~TestMediaRouterAction() override = default;
 
   // MediaRouterAction:
   void ActiveTabChanged(content::WebContents* old_contents,
@@ -101,7 +101,7 @@ class MediaRouterActionUnitTest : public MediaRouterWebUITest {
         idle_icon_(GetIcon(vector_icons::kMediaRouterIdleIcon)),
         warning_icon_(GetIcon(vector_icons::kMediaRouterWarningIcon)) {}
 
-  ~MediaRouterActionUnitTest() override {}
+  ~MediaRouterActionUnitTest() override = default;
 
   // MediaRouterWebUITest:
   void SetUp() override {

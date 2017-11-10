@@ -29,8 +29,7 @@ SSLClientAuthObserver::SSLClientAuthObserver(
       cert_request_info_(cert_request_info),
       delegate_(std::move(delegate)) {}
 
-SSLClientAuthObserver::~SSLClientAuthObserver() {
-}
+SSLClientAuthObserver::~SSLClientAuthObserver() = default;
 
 void SSLClientAuthObserver::CertificateSelected(
     net::X509Certificate* certificate,

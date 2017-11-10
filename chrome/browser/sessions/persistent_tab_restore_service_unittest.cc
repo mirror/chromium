@@ -56,7 +56,7 @@ class PersistentTabRestoreTimeFactory
  public:
   PersistentTabRestoreTimeFactory() : time_(base::Time::Now()) {}
 
-  ~PersistentTabRestoreTimeFactory() override {}
+  ~PersistentTabRestoreTimeFactory() override = default;
 
   base::Time TimeNow() override { return time_; }
 
@@ -76,7 +76,7 @@ class PersistentTabRestoreServiceTest : public ChromeRenderViewHostTestHarness {
       time_factory_(NULL) {
   }
 
-  ~PersistentTabRestoreServiceTest() override {}
+  ~PersistentTabRestoreServiceTest() override = default;
 
   SessionID tab_id() const { return tab_id_; }
   SessionID window_id() const { return window_id_; }

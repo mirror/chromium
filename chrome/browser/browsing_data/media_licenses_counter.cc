@@ -129,7 +129,7 @@ MediaLicensesCounter::MediaLicenseResult::MediaLicenseResult(
     one_origin_ = origins.begin()->GetOrigin().host();
 }
 
-MediaLicensesCounter::MediaLicenseResult::~MediaLicenseResult() {}
+MediaLicensesCounter::MediaLicenseResult::~MediaLicenseResult() = default;
 
 const std::string& MediaLicensesCounter::MediaLicenseResult::GetOneOrigin()
     const {
@@ -139,7 +139,7 @@ const std::string& MediaLicensesCounter::MediaLicenseResult::GetOneOrigin()
 MediaLicensesCounter::MediaLicensesCounter(Profile* profile)
     : profile_(profile) {}
 
-MediaLicensesCounter::~MediaLicensesCounter() {}
+MediaLicensesCounter::~MediaLicensesCounter() = default;
 
 const char* MediaLicensesCounter::GetPrefName() const {
   return browsing_data::prefs::kDeleteMediaLicenses;

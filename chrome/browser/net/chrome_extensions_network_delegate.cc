@@ -141,7 +141,8 @@ ChromeExtensionsNetworkDelegateImpl::ChromeExtensionsNetworkDelegateImpl(
   event_router_ = event_router;
 }
 
-ChromeExtensionsNetworkDelegateImpl::~ChromeExtensionsNetworkDelegateImpl() {}
+ChromeExtensionsNetworkDelegateImpl::~ChromeExtensionsNetworkDelegateImpl() =
+    default;
 
 void ChromeExtensionsNetworkDelegateImpl::ForwardProxyErrors(
     net::URLRequest* request,
@@ -332,7 +333,7 @@ ChromeExtensionsNetworkDelegate::ChromeExtensionsNetworkDelegate()
     : profile_(NULL) {
 }
 
-ChromeExtensionsNetworkDelegate::~ChromeExtensionsNetworkDelegate() {}
+ChromeExtensionsNetworkDelegate::~ChromeExtensionsNetworkDelegate() = default;
 
 void ChromeExtensionsNetworkDelegate::set_extension_info_map(
     extensions::InfoMap* extension_info_map) {

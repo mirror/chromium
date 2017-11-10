@@ -109,7 +109,7 @@ const std::string AutocompleteSuggestionString(const std::string& suggestion) {
 
 class PagePasswordsAnalyserTest : public ChromeRenderViewTest {
  protected:
-  PagePasswordsAnalyserTest() {}
+  PagePasswordsAnalyserTest() = default;
 
   void TearDown() override {
     page_passwords_analyser.Reset();

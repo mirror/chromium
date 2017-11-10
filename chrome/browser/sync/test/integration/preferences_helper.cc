@@ -222,7 +222,7 @@ PrefMatchChecker::PrefMatchChecker(const char* path) : path_(path) {
   }
 }
 
-PrefMatchChecker::~PrefMatchChecker() {}
+PrefMatchChecker::~PrefMatchChecker() = default;
 
 std::string PrefMatchChecker::GetDebugMessage() const {
   return base::StringPrintf("Waiting for pref '%s' to match", GetPath());

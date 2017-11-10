@@ -135,8 +135,7 @@ HistoryEventRouter::HistoryEventRouter(Profile* profile,
   history_service_observer_.Add(history_service);
 }
 
-HistoryEventRouter::~HistoryEventRouter() {
-}
+HistoryEventRouter::~HistoryEventRouter() = default;
 
 void HistoryEventRouter::OnURLVisited(history::HistoryService* history_service,
                                       ui::PageTransition transition,
@@ -187,8 +186,7 @@ HistoryAPI::HistoryAPI(content::BrowserContext* context)
                                  api::history::OnVisitRemoved::kEventName);
 }
 
-HistoryAPI::~HistoryAPI() {
-}
+HistoryAPI::~HistoryAPI() = default;
 
 void HistoryAPI::Shutdown() {
   history_event_router_.reset();
@@ -253,9 +251,9 @@ Profile* HistoryFunction::GetProfile() const {
   return Profile::FromBrowserContext(browser_context());
 }
 
-HistoryFunctionWithCallback::HistoryFunctionWithCallback() {}
+HistoryFunctionWithCallback::HistoryFunctionWithCallback() = default;
 
-HistoryFunctionWithCallback::~HistoryFunctionWithCallback() {}
+HistoryFunctionWithCallback::~HistoryFunctionWithCallback() = default;
 
 ExtensionFunction::ResponseAction HistoryGetVisitsFunction::Run() {
   std::unique_ptr<GetVisits::Params> params(GetVisits::Params::Create(*args_));

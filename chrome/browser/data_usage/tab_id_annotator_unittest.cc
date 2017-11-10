@@ -46,7 +46,7 @@ class TabIdAnnotatorTest : public ChromeRenderViewHostTestHarness {
       : ChromeRenderViewHostTestHarness(
             content::TestBrowserThreadBundle::REAL_IO_THREAD) {}
 
-  ~TabIdAnnotatorTest() override {}
+  ~TabIdAnnotatorTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TabIdAnnotatorTest);

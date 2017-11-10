@@ -51,14 +51,14 @@ class FakeResourceRequestDetector : public ResourceRequestDetector {
 
 class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
  public:
-  MockSafeBrowsingDatabaseManager() {}
+  MockSafeBrowsingDatabaseManager() = default;
 
   MOCK_METHOD2(CheckResourceUrl, bool(
       const GURL& url,
       SafeBrowsingDatabaseManager::Client* client));
 
  protected:
-  ~MockSafeBrowsingDatabaseManager() override {}
+  ~MockSafeBrowsingDatabaseManager() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockSafeBrowsingDatabaseManager);

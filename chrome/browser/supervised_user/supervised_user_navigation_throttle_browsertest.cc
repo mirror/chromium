@@ -43,8 +43,8 @@ static const char* kIframeHost2 = "www.iframe2.com";
 
 class SupervisedUserNavigationThrottleTest : public InProcessBrowserTest {
  protected:
-  SupervisedUserNavigationThrottleTest() {}
-  ~SupervisedUserNavigationThrottleTest() override {}
+  SupervisedUserNavigationThrottleTest() = default;
+  ~SupervisedUserNavigationThrottleTest() override = default;
 
   void BlockHost(const std::string& host) {
     Profile* profile = browser()->profile();
@@ -141,8 +141,8 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserNavigationThrottleTest,
 class SupervisedUserNavigationThrottleNotSupervisedTest
     : public SupervisedUserNavigationThrottleTest {
  protected:
-  SupervisedUserNavigationThrottleNotSupervisedTest() {}
-  ~SupervisedUserNavigationThrottleNotSupervisedTest() override {}
+  SupervisedUserNavigationThrottleNotSupervisedTest() = default;
+  ~SupervisedUserNavigationThrottleNotSupervisedTest() override = default;
 
  private:
   // Overridden to do nothing, so that the supervised user ID will be empty.

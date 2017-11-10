@@ -45,7 +45,7 @@ namespace {
 // DownloadItem, and the lifetime of the model is shorter than the DownloadItem.
 class DownloadItemModelData : public base::SupportsUserData::Data {
  public:
-  ~DownloadItemModelData() override {}
+  ~DownloadItemModelData() override = default;
 
   // Get the DownloadItemModelData object for |download|. Returns NULL if
   // there's no model data.
@@ -299,7 +299,7 @@ base::string16 InterruptReasonMessage(content::DownloadInterruptReason reason) {
 DownloadItemModel::DownloadItemModel(DownloadItem* download)
     : download_(download) {}
 
-DownloadItemModel::~DownloadItemModel() {}
+DownloadItemModel::~DownloadItemModel() = default;
 
 base::string16 DownloadItemModel::GetInterruptReasonText() const {
   if (download_->GetState() != DownloadItem::INTERRUPTED ||

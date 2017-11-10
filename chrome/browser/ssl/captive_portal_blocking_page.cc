@@ -94,8 +94,7 @@ CaptivePortalBlockingPage::CaptivePortalBlockingPage(
       captive_portal::CaptivePortalMetrics::SHOW_ALL);
 }
 
-CaptivePortalBlockingPage::~CaptivePortalBlockingPage() {
-}
+CaptivePortalBlockingPage::~CaptivePortalBlockingPage() = default;
 
 const void* CaptivePortalBlockingPage::GetTypeForTesting() const {
   return CaptivePortalBlockingPage::kTypeForTesting;

@@ -72,7 +72,7 @@ std::string TestForAuthError::GetDebugMessage() const {
 class SyncAuthTest : public SyncTest {
  public:
   SyncAuthTest() : SyncTest(SINGLE_CLIENT), bookmark_index_(0) {}
-  ~SyncAuthTest() override {}
+  ~SyncAuthTest() override = default;
 
   // Helper function that adds a bookmark and waits for either an auth error, or
   // for the bookmark to be committed.  Returns true if it detects an auth

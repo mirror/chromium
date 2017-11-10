@@ -38,8 +38,7 @@ SafeBrowsingPingManager::SafeBrowsingPingManager(
   }
 }
 
-SafeBrowsingPingManager::~SafeBrowsingPingManager() {
-}
+SafeBrowsingPingManager::~SafeBrowsingPingManager() = default;
 
 void SafeBrowsingPingManager::ReportPermissionAction(
     const PermissionReportInfo& report_info) {

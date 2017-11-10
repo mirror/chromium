@@ -342,9 +342,7 @@ void ServiceProcessControl::Launcher::Run(const base::Closure& task) {
                           base::Bind(&Launcher::DoRun, this));
 }
 
-ServiceProcessControl::Launcher::~Launcher() {
-}
-
+ServiceProcessControl::Launcher::~Launcher() = default;
 
 void ServiceProcessControl::Launcher::Notify() {
   DCHECK(!notify_task_.is_null());

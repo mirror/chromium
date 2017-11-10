@@ -144,7 +144,7 @@ class SecurityStyleTestObserver : public content::WebContentsObserver {
   explicit SecurityStyleTestObserver(content::WebContents* web_contents)
       : content::WebContentsObserver(web_contents),
         latest_security_style_(blink::kWebSecurityStyleUnknown) {}
-  ~SecurityStyleTestObserver() override {}
+  ~SecurityStyleTestObserver() override = default;
 
   void DidChangeVisibleSecurityState() override {
     content::SecurityStyleExplanations explanations;
@@ -1130,8 +1130,8 @@ IN_PROC_BROWSER_TEST_F(PKPModelClientTest, PKPEnforced) {
 // that never stops loading.
 class PendingJobInterceptor : public net::URLRequestInterceptor {
  public:
-  PendingJobInterceptor() {}
-  ~PendingJobInterceptor() override {}
+  PendingJobInterceptor() = default;
+  ~PendingJobInterceptor() override = default;
 
   // URLRequestInterceptor implementation
   net::URLRequestJob* MaybeInterceptRequest(
@@ -1155,7 +1155,7 @@ void InstallLoadingInterceptor(const std::string& host) {
 class SecurityStateLoadingTest : public SecurityStateTabHelperTest {
  public:
   SecurityStateLoadingTest() : SecurityStateTabHelperTest() {}
-  ~SecurityStateLoadingTest() override {}
+  ~SecurityStateLoadingTest() override = default;
 
  protected:
   void SetUpOnMainThread() override {
@@ -1492,7 +1492,7 @@ class ConsoleWebContentsDelegate : public Browser {
  public:
   explicit ConsoleWebContentsDelegate(const Browser::CreateParams& params)
       : Browser(params) {}
-  ~ConsoleWebContentsDelegate() override {}
+  ~ConsoleWebContentsDelegate() override = default;
 
   const std::vector<base::string16>& console_messages() const {
     return console_messages_;
@@ -2278,7 +2278,7 @@ class URLRequestObsoleteTLSJob : public net::URLRequestMockHTTPJob {
   }
 
  protected:
-  ~URLRequestObsoleteTLSJob() override {}
+  ~URLRequestObsoleteTLSJob() override = default;
 
  private:
   const scoped_refptr<net::X509Certificate> cert_;
@@ -2296,7 +2296,7 @@ class URLRequestNonsecureInterceptor : public net::URLRequestInterceptor {
       : base_path_(base_path),
         cert_(std::move(cert)) {}
 
-  ~URLRequestNonsecureInterceptor() override {}
+  ~URLRequestNonsecureInterceptor() override = default;
 
   // net::URLRequestInterceptor:
   net::URLRequestJob* MaybeInterceptRequest(

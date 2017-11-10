@@ -70,7 +70,7 @@ WebNavigationEventRouter::PendingWebContents::PendingWebContents(
       target_url(target_url) {
 }
 
-WebNavigationEventRouter::PendingWebContents::~PendingWebContents() {}
+WebNavigationEventRouter::PendingWebContents::~PendingWebContents() = default;
 
 WebNavigationEventRouter::WebNavigationEventRouter(Profile* profile)
     : profile_(profile), browser_tab_strip_tracker_(this, this, nullptr) {
@@ -85,8 +85,7 @@ WebNavigationEventRouter::WebNavigationEventRouter(Profile* profile)
   browser_tab_strip_tracker_.Init();
 }
 
-WebNavigationEventRouter::~WebNavigationEventRouter() {
-}
+WebNavigationEventRouter::~WebNavigationEventRouter() = default;
 
 bool WebNavigationEventRouter::ShouldTrackBrowser(Browser* browser) {
   return profile_->IsSameProfile(browser->profile());
@@ -214,7 +213,7 @@ WebNavigationTabObserver::WebNavigationTabObserver(
   navigation_state_.FrameHostCreated(web_contents->GetMainFrame());
 }
 
-WebNavigationTabObserver::~WebNavigationTabObserver() {}
+WebNavigationTabObserver::~WebNavigationTabObserver() = default;
 
 // static
 WebNavigationTabObserver* WebNavigationTabObserver::Get(
@@ -569,8 +568,7 @@ WebNavigationAPI::WebNavigationAPI(content::BrowserContext* context)
                                  web_navigation::OnTabReplaced::kEventName);
 }
 
-WebNavigationAPI::~WebNavigationAPI() {
-}
+WebNavigationAPI::~WebNavigationAPI() = default;
 
 void WebNavigationAPI::Shutdown() {
   EventRouter::Get(browser_context_)->UnregisterObserver(this);

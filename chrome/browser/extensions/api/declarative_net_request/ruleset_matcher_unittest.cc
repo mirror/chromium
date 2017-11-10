@@ -31,7 +31,7 @@ const base::FilePath::CharType kJSONRulesetFilepath[] =
 
 class RulesetMatcherTest : public DNRTestBase {
  public:
-  RulesetMatcherTest() {}
+  RulesetMatcherTest() = default;
 
  protected:
   const Extension* extension() const { return extension_.get(); }

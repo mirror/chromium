@@ -46,7 +46,7 @@ FullscreenControlPopup::FullscreenControlPopup(
   animation_->Reset(0);
 }
 
-FullscreenControlPopup::~FullscreenControlPopup() {}
+FullscreenControlPopup::~FullscreenControlPopup() = default;
 
 void FullscreenControlPopup::Show(const gfx::Rect& parent_bounds_in_screen) {
   if (IsVisible())

@@ -35,8 +35,7 @@ ProcessMetricsHistory::ProcessMetricsHistory()
     : last_update_sequence_(0), cpu_usage_(0.0), trace_trigger_handle_(-1) {
 }
 
-ProcessMetricsHistory::~ProcessMetricsHistory() {
-}
+ProcessMetricsHistory::~ProcessMetricsHistory() = default;
 
 void ProcessMetricsHistory::Initialize(
     const ProcessMetricsMetadata& process_data,

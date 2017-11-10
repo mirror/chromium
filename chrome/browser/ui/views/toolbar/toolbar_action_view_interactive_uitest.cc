@@ -143,8 +143,10 @@ class ToolbarActionViewInteractiveUITest : public ExtensionBrowserTest {
   DISALLOW_COPY_AND_ASSIGN(ToolbarActionViewInteractiveUITest);
 };
 
-ToolbarActionViewInteractiveUITest::ToolbarActionViewInteractiveUITest() {}
-ToolbarActionViewInteractiveUITest::~ToolbarActionViewInteractiveUITest() {}
+ToolbarActionViewInteractiveUITest::ToolbarActionViewInteractiveUITest() =
+    default;
+ToolbarActionViewInteractiveUITest::~ToolbarActionViewInteractiveUITest() =
+    default;
 
 void ToolbarActionViewInteractiveUITest::SetUpCommandLine(
     base::CommandLine* command_line) {

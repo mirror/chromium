@@ -16,8 +16,8 @@ namespace {
 
 class FakeDevToolsClient : public StubDevToolsClient {
  public:
-  FakeDevToolsClient() {}
-  ~FakeDevToolsClient() override {}
+  FakeDevToolsClient() = default;
+  ~FakeDevToolsClient() override = default;
 
   std::string PopSentCommand() {
     std::string command;

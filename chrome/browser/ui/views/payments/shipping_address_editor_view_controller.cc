@@ -65,7 +65,8 @@ ShippingAddressEditorViewController::ShippingAddressEditorViewController(
   UpdateEditorFields();
 }
 
-ShippingAddressEditorViewController::~ShippingAddressEditorViewController() {}
+ShippingAddressEditorViewController::~ShippingAddressEditorViewController() =
+    default;
 
 bool ShippingAddressEditorViewController::IsEditingExistingItem() {
   return !!profile_to_edit_;
@@ -256,7 +257,7 @@ ShippingAddressEditorViewController::ShippingAddressValidationDelegate::
     : field_(field), controller_(controller) {}
 
 ShippingAddressEditorViewController::ShippingAddressValidationDelegate::
-    ~ShippingAddressValidationDelegate() {}
+    ~ShippingAddressValidationDelegate() = default;
 
 bool ShippingAddressEditorViewController::ShippingAddressValidationDelegate::
     ShouldFormat() {

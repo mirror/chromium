@@ -31,8 +31,8 @@ constexpr int kDataPipeCapacity = 1024;
 // CastRemotingSender.
 class FakeTransport : public media::cast::CastTransport {
  public:
-  FakeTransport() {}
-  ~FakeTransport() final {}
+  FakeTransport() = default;
+  ~FakeTransport() final = default;
 
   void TakeSentFrames(std::vector<media::cast::EncodedFrame>* frames) {
     frames->swap(sent_frames_);
@@ -138,7 +138,7 @@ class CastRemotingSenderTest : public ::testing::Test {
     RunPendingTasks();
   }
 
-  ~CastRemotingSenderTest() override {}
+  ~CastRemotingSenderTest() override = default;
 
   void TearDown() final {
     remoting_sender_.reset();

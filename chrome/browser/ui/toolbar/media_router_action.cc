@@ -58,8 +58,7 @@ MediaRouterAction::MediaRouterAction(Browser* browser,
   IssuesObserver::Init();
 }
 
-MediaRouterAction::~MediaRouterAction() {
-}
+MediaRouterAction::~MediaRouterAction() = default;
 
 // static
 SkColor MediaRouterAction::GetIconColor(const gfx::VectorIcon& icon_id) {

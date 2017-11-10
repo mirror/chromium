@@ -15,7 +15,7 @@ using preferences_helper::ChangeBooleanPref;
 class SingleClientPreferencesSyncTest : public SyncTest {
  public:
   SingleClientPreferencesSyncTest() : SyncTest(SINGLE_CLIENT) {}
-  ~SingleClientPreferencesSyncTest() override {}
+  ~SingleClientPreferencesSyncTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SingleClientPreferencesSyncTest);

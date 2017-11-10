@@ -141,7 +141,7 @@ class StatefulChangeProcessor : public syncer::FakeSyncChangeProcessor {
                 expected_type == syncer::ModelType::APPS);
   }
 
-  ~StatefulChangeProcessor() override {}
+  ~StatefulChangeProcessor() override = default;
 
   // We let our parent class, FakeSyncChangeProcessor, handle saving the
   // changes for us, but in addition we "apply" these changes by treating
@@ -1962,8 +1962,8 @@ class ExtensionServiceTestSupervised
 
 class MockPermissionRequestCreator : public PermissionRequestCreator {
  public:
-  MockPermissionRequestCreator() {}
-  ~MockPermissionRequestCreator() override {}
+  MockPermissionRequestCreator() = default;
+  ~MockPermissionRequestCreator() override = default;
 
   bool IsEnabled() const override { return true; }
 
@@ -2691,7 +2691,7 @@ TEST_F(ExtensionServiceSyncTest, AppToExtension) {
 
 class BlacklistedExtensionSyncServiceTest : public ExtensionServiceSyncTest {
  public:
-  BlacklistedExtensionSyncServiceTest() {}
+  BlacklistedExtensionSyncServiceTest() = default;
 
   void SetUp() override {
     ExtensionServiceSyncTest::SetUp();

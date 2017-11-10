@@ -28,7 +28,7 @@ AppResourceCacheFactory::AppResourceCacheFactory()
   DependsOn(ThemeServiceFactory::GetInstance());
 }
 
-AppResourceCacheFactory::~AppResourceCacheFactory() {}
+AppResourceCacheFactory::~AppResourceCacheFactory() = default;
 
 KeyedService* AppResourceCacheFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

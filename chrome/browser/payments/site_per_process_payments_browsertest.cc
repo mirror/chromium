@@ -25,8 +25,8 @@ namespace payments {
 
 class SitePerProcessPaymentsBrowserTest : public InProcessBrowserTest {
  public:
-  SitePerProcessPaymentsBrowserTest() {}
-  ~SitePerProcessPaymentsBrowserTest() override {}
+  SitePerProcessPaymentsBrowserTest() = default;
+  ~SitePerProcessPaymentsBrowserTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     // HTTPS server only serves a valid cert for localhost, so this is needed

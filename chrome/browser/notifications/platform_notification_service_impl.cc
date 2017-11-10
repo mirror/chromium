@@ -142,7 +142,7 @@ PlatformNotificationServiceImpl::PlatformNotificationServiceImpl() {
 #endif
 }
 
-PlatformNotificationServiceImpl::~PlatformNotificationServiceImpl() {}
+PlatformNotificationServiceImpl::~PlatformNotificationServiceImpl() = default;
 
 // TODO(miguelg): Move this to PersistentNotificationHandler
 void PlatformNotificationServiceImpl::OnPersistentNotificationClick(

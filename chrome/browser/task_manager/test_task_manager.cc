@@ -13,8 +13,7 @@ TestTaskManager::TestTaskManager()
       std::unique_ptr<base::Timer>(new base::MockTimer(true, true)));
 }
 
-TestTaskManager::~TestTaskManager() {
-}
+TestTaskManager::~TestTaskManager() = default;
 
 void TestTaskManager::ActivateTask(TaskId task_id) {
 }

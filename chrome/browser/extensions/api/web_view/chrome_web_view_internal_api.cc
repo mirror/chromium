@@ -136,12 +136,10 @@ bool ChromeWebViewInternalContextMenusRemoveAllFunction::RunAsync() {
 }
 
 ChromeWebViewInternalShowContextMenuFunction::
-    ChromeWebViewInternalShowContextMenuFunction() {
-}
+    ChromeWebViewInternalShowContextMenuFunction() = default;
 
 ChromeWebViewInternalShowContextMenuFunction::
-    ~ChromeWebViewInternalShowContextMenuFunction() {
-}
+    ~ChromeWebViewInternalShowContextMenuFunction() = default;
 
 ExtensionFunction::ResponseAction
 ChromeWebViewInternalShowContextMenuFunction::Run() {

@@ -33,8 +33,7 @@ ObsoleteSystemInfoBarDelegate::ObsoleteSystemInfoBarDelegate()
     : ConfirmInfoBarDelegate() {
 }
 
-ObsoleteSystemInfoBarDelegate::~ObsoleteSystemInfoBarDelegate() {
-}
+ObsoleteSystemInfoBarDelegate::~ObsoleteSystemInfoBarDelegate() = default;
 
 infobars::InfoBarDelegate::InfoBarIdentifier
 ObsoleteSystemInfoBarDelegate::GetIdentifier() const {

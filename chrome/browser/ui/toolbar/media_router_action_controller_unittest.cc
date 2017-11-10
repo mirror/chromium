@@ -15,8 +15,8 @@
 
 class FakeComponentActionDelegate : public ComponentActionDelegate {
  public:
-  FakeComponentActionDelegate() {}
-  ~FakeComponentActionDelegate() override {}
+  FakeComponentActionDelegate() = default;
+  ~FakeComponentActionDelegate() override = default;
 
   void AddComponentAction(const std::string& action_id) override {
     EXPECT_EQ(action_id, ComponentToolbarActionsFactory::kMediaRouterActionId);
@@ -51,7 +51,7 @@ class MediaRouterActionControllerUnitTest : public MediaRouterWebUITest {
         source1_("fakeSource1"),
         source2_("fakeSource2") {}
 
-  ~MediaRouterActionControllerUnitTest() override {}
+  ~MediaRouterActionControllerUnitTest() override = default;
 
   // MediaRouterWebUITest:
   void SetUp() override {

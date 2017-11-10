@@ -131,8 +131,8 @@ constexpr char kGetChunkUmaResponseMetricName[] =
 // The default SBProtocolManagerFactory.
 class SBProtocolManagerFactoryImpl : public SBProtocolManagerFactory {
  public:
-  SBProtocolManagerFactoryImpl() {}
-  ~SBProtocolManagerFactoryImpl() override {}
+  SBProtocolManagerFactoryImpl() = default;
+  ~SBProtocolManagerFactoryImpl() override = default;
 
   std::unique_ptr<SafeBrowsingProtocolManager> CreateProtocolManager(
       SafeBrowsingProtocolManagerDelegate* delegate,
@@ -229,7 +229,7 @@ base::TimeDelta SafeBrowsingProtocolManager::GetUpdateTimeoutForTesting() {
   return kSbMaxUpdateWait;
 }
 
-SafeBrowsingProtocolManager::~SafeBrowsingProtocolManager() {}
+SafeBrowsingProtocolManager::~SafeBrowsingProtocolManager() = default;
 
 // We can only have one update or chunk request outstanding, but there may be
 // multiple GetHash requests pending since we don't want to serialize them and
@@ -901,8 +901,9 @@ SafeBrowsingProtocolManager::FullHashDetails::FullHashDetails(
 SafeBrowsingProtocolManager::FullHashDetails::FullHashDetails(
     const FullHashDetails& other) = default;
 
-SafeBrowsingProtocolManager::FullHashDetails::~FullHashDetails() {}
+SafeBrowsingProtocolManager::FullHashDetails::~FullHashDetails() = default;
 
-SafeBrowsingProtocolManagerDelegate::~SafeBrowsingProtocolManagerDelegate() {}
+SafeBrowsingProtocolManagerDelegate::~SafeBrowsingProtocolManagerDelegate() =
+    default;
 
 }  // namespace safe_browsing

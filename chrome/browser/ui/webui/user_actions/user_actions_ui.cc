@@ -29,4 +29,4 @@ UserActionsUI::UserActionsUI(content::WebUI* web_ui)
   web_ui->AddMessageHandler(base::MakeUnique<UserActionsUIHandler>());
 }
 
-UserActionsUI::~UserActionsUI() {}
+UserActionsUI::~UserActionsUI() = default;

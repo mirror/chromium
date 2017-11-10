@@ -35,8 +35,7 @@ void NaClInfoBarDelegate::Create(int render_process_id, int render_view_id) {
 NaClInfoBarDelegate::NaClInfoBarDelegate() : ConfirmInfoBarDelegate() {
 }
 
-NaClInfoBarDelegate::~NaClInfoBarDelegate() {
-}
+NaClInfoBarDelegate::~NaClInfoBarDelegate() = default;
 
 infobars::InfoBarDelegate::InfoBarIdentifier
 NaClInfoBarDelegate::GetIdentifier() const {

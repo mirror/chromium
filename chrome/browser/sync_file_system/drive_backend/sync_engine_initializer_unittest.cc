@@ -47,8 +47,8 @@ class SyncEngineInitializerTest : public testing::Test {
     FileTracker tracker;
   };
 
-  SyncEngineInitializerTest() {}
-  ~SyncEngineInitializerTest() override {}
+  SyncEngineInitializerTest() = default;
+  ~SyncEngineInitializerTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(database_dir_.CreateUniqueTempDir());

@@ -87,7 +87,7 @@ class ExtensionActionIconFactoryTest
  public:
   ExtensionActionIconFactoryTest() : quit_in_icon_updated_(false) {}
 
-  ~ExtensionActionIconFactoryTest() override {}
+  ~ExtensionActionIconFactoryTest() override = default;
 
   void WaitForIconUpdate() {
     quit_in_icon_updated_ = true;

@@ -29,11 +29,11 @@
 #include "extensions/common/feature_switch.h"
 #include "extensions/test/extension_test_message_listener.h"
 
-ExtensionMessageBubbleBrowserTest::ExtensionMessageBubbleBrowserTest() {
-}
+ExtensionMessageBubbleBrowserTest::ExtensionMessageBubbleBrowserTest() =
+    default;
 
-ExtensionMessageBubbleBrowserTest::~ExtensionMessageBubbleBrowserTest() {
-}
+ExtensionMessageBubbleBrowserTest::~ExtensionMessageBubbleBrowserTest() =
+    default;
 
 void ExtensionMessageBubbleBrowserTest::SetUpCommandLine(
     base::CommandLine* command_line) {

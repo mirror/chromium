@@ -24,8 +24,7 @@ MockLocalChangeProcessor::MockLocalChangeProcessor() {
                             &MockLocalChangeProcessor::ApplyLocalChangeStub));
 }
 
-MockLocalChangeProcessor::~MockLocalChangeProcessor() {
-}
+MockLocalChangeProcessor::~MockLocalChangeProcessor() = default;
 
 void MockLocalChangeProcessor::ApplyLocalChangeStub(
     const FileChange& change,

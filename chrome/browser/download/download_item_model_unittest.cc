@@ -64,8 +64,7 @@ class DownloadItemModelTest : public testing::Test {
   DownloadItemModelTest()
       : model_(&item_) {}
 
-  virtual ~DownloadItemModelTest() {
-  }
+  virtual ~DownloadItemModelTest() = default;
 
  protected:
   // Sets up defaults for the download item and sets |model_| to a new

@@ -6,7 +6,7 @@
 
 namespace safe_browsing {
 
-FeatureExtractorClock::~FeatureExtractorClock() {}
+FeatureExtractorClock::~FeatureExtractorClock() = default;
 
 base::TimeTicks FeatureExtractorClock::Now() {
   return base::TimeTicks::Now();

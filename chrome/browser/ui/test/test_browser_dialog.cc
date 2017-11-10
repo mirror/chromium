@@ -93,7 +93,7 @@ std::string NameFromTestCase() {
 
 }  // namespace
 
-TestBrowserDialog::TestBrowserDialog() {}
+TestBrowserDialog::TestBrowserDialog() = default;
 
 void TestBrowserDialog::RunDialog() {
 #if defined(OS_MACOSX)

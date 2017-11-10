@@ -51,7 +51,7 @@ RendererUptimeTracker::RendererUptimeTracker() {
                  content::NotificationService::AllBrowserContextsAndSources());
 }
 
-RendererUptimeTracker::~RendererUptimeTracker() {}
+RendererUptimeTracker::~RendererUptimeTracker() = default;
 
 void RendererUptimeTracker::OnRendererStarted(int pid) {
   info_map_[pid] = RendererInfo{base::TimeTicks::Now(), 0};

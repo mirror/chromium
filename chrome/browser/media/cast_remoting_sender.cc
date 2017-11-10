@@ -47,7 +47,7 @@ class CastRemotingSender::RemotingRtcpClient final
   explicit RemotingRtcpClient(base::WeakPtr<CastRemotingSender> remoting_sender)
       : remoting_sender_(remoting_sender) {}
 
-  ~RemotingRtcpClient() final {}
+  ~RemotingRtcpClient() final = default;
 
   void OnReceivedCastMessage(
       const media::cast::RtcpCastMessage& cast_message) final {

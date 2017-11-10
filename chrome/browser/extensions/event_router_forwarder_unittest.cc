@@ -54,7 +54,7 @@ class MockEventRouterForwarder : public EventRouterForwarder {
   }
 
  protected:
-  virtual ~MockEventRouterForwarder() {}
+  virtual ~MockEventRouterForwarder() = default;
 };
 
 static void BroadcastEventToRenderers(EventRouterForwarder* event_router,

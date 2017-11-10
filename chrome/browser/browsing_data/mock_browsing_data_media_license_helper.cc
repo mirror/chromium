@@ -11,7 +11,8 @@
 MockBrowsingDataMediaLicenseHelper::MockBrowsingDataMediaLicenseHelper(
     Profile* profile) {}
 
-MockBrowsingDataMediaLicenseHelper::~MockBrowsingDataMediaLicenseHelper() {}
+MockBrowsingDataMediaLicenseHelper::~MockBrowsingDataMediaLicenseHelper() =
+    default;
 
 void MockBrowsingDataMediaLicenseHelper::StartFetching(
     const FetchCallback& callback) {

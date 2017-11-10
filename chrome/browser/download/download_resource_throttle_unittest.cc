@@ -29,8 +29,8 @@ const char kTestUrl[] = "http://www.example.com/";
 
 class MockWebContentsDelegate : public content::WebContentsDelegate {
  public:
-  MockWebContentsDelegate() {}
-  ~MockWebContentsDelegate() override {}
+  MockWebContentsDelegate() = default;
+  ~MockWebContentsDelegate() override = default;
 };
 
 class MockResourceThrottleDelegate
@@ -56,7 +56,7 @@ class DownloadResourceThrottleTest : public ChromeRenderViewHostTestHarness {
         throttle_(nullptr),
         limiter_(new DownloadRequestLimiter()) {}
 
-  ~DownloadResourceThrottleTest() override {}
+  ~DownloadResourceThrottleTest() override = default;
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();

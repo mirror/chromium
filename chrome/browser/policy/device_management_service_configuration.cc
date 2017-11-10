@@ -24,8 +24,8 @@ DeviceManagementServiceConfiguration::DeviceManagementServiceConfiguration(
     : server_url_(server_url) {
 }
 
-DeviceManagementServiceConfiguration::~DeviceManagementServiceConfiguration() {
-}
+DeviceManagementServiceConfiguration::~DeviceManagementServiceConfiguration() =
+    default;
 
 std::string DeviceManagementServiceConfiguration::GetServerUrl() {
   return server_url_;

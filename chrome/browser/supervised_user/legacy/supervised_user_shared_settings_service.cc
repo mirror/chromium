@@ -98,7 +98,8 @@ SupervisedUserSharedSettingsService::SupervisedUserSharedSettingsService(
     PrefService* prefs)
     : prefs_(prefs) {}
 
-SupervisedUserSharedSettingsService::~SupervisedUserSharedSettingsService() {}
+SupervisedUserSharedSettingsService::~SupervisedUserSharedSettingsService() =
+    default;
 
 void SupervisedUserSharedSettingsService::SetValueInternal(
     const std::string& su_id,

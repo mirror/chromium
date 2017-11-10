@@ -16,8 +16,7 @@ RefreshTokenRevoker::RefreshTokenRevoker()
                     g_browser_process->system_request_context()) {
 }
 
-RefreshTokenRevoker::~RefreshTokenRevoker() {
-}
+RefreshTokenRevoker::~RefreshTokenRevoker() = default;
 
 void RefreshTokenRevoker::Revoke(const std::string& token) {
   DVLOG(1) << "Starting RefreshTokenRevoker for token: " << token;

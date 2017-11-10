@@ -48,7 +48,7 @@ PepperFlashFontFileHost::PepperFlashFontFileHost(
 #endif  // defined(OS_LINUX) || defined(OS_OPENBSD)
 }
 
-PepperFlashFontFileHost::~PepperFlashFontFileHost() {}
+PepperFlashFontFileHost::~PepperFlashFontFileHost() = default;
 
 int32_t PepperFlashFontFileHost::OnResourceMessageReceived(
     const IPC::Message& msg,

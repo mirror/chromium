@@ -35,7 +35,7 @@ CustodianProfileDownloaderServiceFactory()
 }
 
 CustodianProfileDownloaderServiceFactory::
-~CustodianProfileDownloaderServiceFactory() {}
+    ~CustodianProfileDownloaderServiceFactory() = default;
 
 KeyedService* CustodianProfileDownloaderServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

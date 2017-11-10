@@ -92,7 +92,7 @@ SSLClientCertificateSelector::SSLClientCertificateSelector(
       chrome::DialogIdentifier::SSL_CLIENT_CERTIFICATE_SELECTOR);
 }
 
-SSLClientCertificateSelector::~SSLClientCertificateSelector() {}
+SSLClientCertificateSelector::~SSLClientCertificateSelector() = default;
 
 void SSLClientCertificateSelector::Init() {
   auth_observer_impl_->Init(base::BindOnce(

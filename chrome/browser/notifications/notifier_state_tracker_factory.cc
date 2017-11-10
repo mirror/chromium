@@ -30,7 +30,7 @@ NotifierStateTrackerFactory::NotifierStateTrackerFactory()
   DependsOn(PermissionManagerFactory::GetInstance());
 }
 
-NotifierStateTrackerFactory::~NotifierStateTrackerFactory() {}
+NotifierStateTrackerFactory::~NotifierStateTrackerFactory() = default;
 
 KeyedService* NotifierStateTrackerFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

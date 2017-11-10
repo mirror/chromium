@@ -14,7 +14,7 @@ BlacklistCheck::BlacklistCheck(Blacklist* blacklist,
                                scoped_refptr<const Extension> extension)
     : PreloadCheck(extension), blacklist_(blacklist), weak_ptr_factory_(this) {}
 
-BlacklistCheck::~BlacklistCheck() {}
+BlacklistCheck::~BlacklistCheck() = default;
 
 void BlacklistCheck::Start(ResultCallback callback) {
   callback_ = std::move(callback);

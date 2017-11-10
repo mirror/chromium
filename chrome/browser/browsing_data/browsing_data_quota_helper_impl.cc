@@ -56,7 +56,7 @@ BrowsingDataQuotaHelperImpl::BrowsingDataQuotaHelperImpl(
   DCHECK(quota_manager);
 }
 
-BrowsingDataQuotaHelperImpl::~BrowsingDataQuotaHelperImpl() {}
+BrowsingDataQuotaHelperImpl::~BrowsingDataQuotaHelperImpl() = default;
 
 void BrowsingDataQuotaHelperImpl::FetchQuotaInfoOnIOThread(
     const FetchResultCallback& callback) {

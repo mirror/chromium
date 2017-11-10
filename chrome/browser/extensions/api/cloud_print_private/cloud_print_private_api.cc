@@ -43,12 +43,10 @@ CloudPrintTestsDelegate::~CloudPrintTestsDelegate() {
 }
 
 CloudPrintPrivateSetupConnectorFunction::
-    CloudPrintPrivateSetupConnectorFunction() {
-}
+    CloudPrintPrivateSetupConnectorFunction() = default;
 
 CloudPrintPrivateSetupConnectorFunction::
-    ~CloudPrintPrivateSetupConnectorFunction() {
-}
+    ~CloudPrintPrivateSetupConnectorFunction() = default;
 
 bool CloudPrintPrivateSetupConnectorFunction::RunAsync() {
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
@@ -77,11 +75,11 @@ bool CloudPrintPrivateSetupConnectorFunction::RunAsync() {
 #endif
 }
 
-CloudPrintPrivateGetHostNameFunction::CloudPrintPrivateGetHostNameFunction() {
-}
+CloudPrintPrivateGetHostNameFunction::CloudPrintPrivateGetHostNameFunction() =
+    default;
 
-CloudPrintPrivateGetHostNameFunction::~CloudPrintPrivateGetHostNameFunction() {
-}
+CloudPrintPrivateGetHostNameFunction::~CloudPrintPrivateGetHostNameFunction() =
+    default;
 
 bool CloudPrintPrivateGetHostNameFunction::RunAsync() {
   SetResult(base::MakeUnique<base::Value>(
@@ -92,11 +90,11 @@ bool CloudPrintPrivateGetHostNameFunction::RunAsync() {
   return true;
 }
 
-CloudPrintPrivateGetPrintersFunction::CloudPrintPrivateGetPrintersFunction() {
-}
+CloudPrintPrivateGetPrintersFunction::CloudPrintPrivateGetPrintersFunction() =
+    default;
 
-CloudPrintPrivateGetPrintersFunction::~CloudPrintPrivateGetPrintersFunction() {
-}
+CloudPrintPrivateGetPrintersFunction::~CloudPrintPrivateGetPrintersFunction() =
+    default;
 
 void CloudPrintPrivateGetPrintersFunction::SendResults(
     const std::vector<std::string>& printers) {
@@ -124,12 +122,11 @@ bool CloudPrintPrivateGetPrintersFunction::RunAsync() {
 #endif
 }
 
+CloudPrintPrivateGetClientIdFunction::CloudPrintPrivateGetClientIdFunction() =
+    default;
 
-CloudPrintPrivateGetClientIdFunction::CloudPrintPrivateGetClientIdFunction() {
-}
-
-CloudPrintPrivateGetClientIdFunction::~CloudPrintPrivateGetClientIdFunction() {
-}
+CloudPrintPrivateGetClientIdFunction::~CloudPrintPrivateGetClientIdFunction() =
+    default;
 
 bool CloudPrintPrivateGetClientIdFunction::RunAsync() {
   SetResult(base::MakeUnique<base::Value>(

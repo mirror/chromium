@@ -28,8 +28,8 @@ namespace {
 // Tests for the manifest verifier.
 class ManifestVerifierBrowserTest : public InProcessBrowserTest {
  public:
-  ManifestVerifierBrowserTest() {}
-  ~ManifestVerifierBrowserTest() override {}
+  ManifestVerifierBrowserTest() = default;
+  ~ManifestVerifierBrowserTest() override = default;
 
   // Starts the HTTPS test server on localhost.
   void SetUpOnMainThread() override {

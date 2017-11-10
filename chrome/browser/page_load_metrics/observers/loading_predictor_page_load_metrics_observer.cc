@@ -59,7 +59,7 @@ LoadingPredictorPageLoadMetricsObserver::
 }
 
 LoadingPredictorPageLoadMetricsObserver::
-    ~LoadingPredictorPageLoadMetricsObserver() {}
+    ~LoadingPredictorPageLoadMetricsObserver() = default;
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 LoadingPredictorPageLoadMetricsObserver::OnStart(

@@ -175,8 +175,7 @@ DataReductionProxyChromeSettings::DataReductionProxyChromeSettings()
       data_reduction_proxy_enabled_pref_name_(prefs::kDataSaverEnabled) {
 }
 
-DataReductionProxyChromeSettings::~DataReductionProxyChromeSettings() {
-}
+DataReductionProxyChromeSettings::~DataReductionProxyChromeSettings() = default;
 
 void DataReductionProxyChromeSettings::Shutdown() {
   data_reduction_proxy::DataReductionProxyService* service =

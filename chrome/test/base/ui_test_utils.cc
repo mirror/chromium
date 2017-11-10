@@ -106,7 +106,7 @@ Browser* WaitForBrowserNotInSet(std::set<Browser*> excluded_browsers) {
 class AppModalDialogWaiter : public app_modal::AppModalDialogObserver {
  public:
   AppModalDialogWaiter() : dialog_(nullptr) {}
-  ~AppModalDialogWaiter() override {}
+  ~AppModalDialogWaiter() override = default;
 
   app_modal::JavaScriptAppModalDialog* Wait() {
     if (dialog_)
@@ -465,7 +465,7 @@ UrlLoadObserver::UrlLoadObserver(const GURL& url,
       url_(url) {
 }
 
-UrlLoadObserver::~UrlLoadObserver() {}
+UrlLoadObserver::~UrlLoadObserver() = default;
 
 void UrlLoadObserver::Observe(
     int type,
@@ -487,8 +487,7 @@ BrowserAddedObserver::BrowserAddedObserver()
     original_browsers_.insert(browser);
 }
 
-BrowserAddedObserver::~BrowserAddedObserver() {
-}
+BrowserAddedObserver::~BrowserAddedObserver() = default;
 
 Browser* BrowserAddedObserver::WaitForSingleNewBrowser() {
   notification_observer_.Wait();
@@ -523,7 +522,7 @@ HistoryEnumerator::HistoryEnumerator(Profile* profile) {
   message_loop_runner->Run();
 }
 
-HistoryEnumerator::~HistoryEnumerator() {}
+HistoryEnumerator::~HistoryEnumerator() = default;
 
 void HistoryEnumerator::HistoryQueryComplete(
     const base::Closure& quit_task,
@@ -552,8 +551,7 @@ WaitHistoryLoadedObserver::WaitHistoryLoadedObserver(
     : runner_(runner) {
 }
 
-WaitHistoryLoadedObserver::~WaitHistoryLoadedObserver() {
-}
+WaitHistoryLoadedObserver::~WaitHistoryLoadedObserver() = default;
 
 void WaitHistoryLoadedObserver::OnHistoryServiceLoaded(
     history::HistoryService* service) {
@@ -581,7 +579,7 @@ BrowserActivationWaiter::BrowserActivationWaiter(const Browser* browser)
   BrowserList::AddObserver(this);
 }
 
-BrowserActivationWaiter::~BrowserActivationWaiter() {}
+BrowserActivationWaiter::~BrowserActivationWaiter() = default;
 
 void BrowserActivationWaiter::WaitForActivation() {
   if (observed_)

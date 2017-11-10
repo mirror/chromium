@@ -46,8 +46,7 @@ ExtensionSettingsHandler::ExtensionSettingsHandler()
     : extension_service_(nullptr) {
 }
 
-ExtensionSettingsHandler::~ExtensionSettingsHandler() {
-}
+ExtensionSettingsHandler::~ExtensionSettingsHandler() = default;
 
 // static
 void ExtensionSettingsHandler::RegisterProfilePrefs(

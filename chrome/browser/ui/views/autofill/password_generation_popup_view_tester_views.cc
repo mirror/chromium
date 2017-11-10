@@ -21,7 +21,7 @@ PasswordGenerationPopupViewTesterViews::PasswordGenerationPopupViewTesterViews(
     : view_(popup_view) {}
 
 PasswordGenerationPopupViewTesterViews::
-~PasswordGenerationPopupViewTesterViews() {}
+    ~PasswordGenerationPopupViewTesterViews() = default;
 
 void PasswordGenerationPopupViewTesterViews::SimulateMouseMovementAt(
     const gfx::Point& point) {

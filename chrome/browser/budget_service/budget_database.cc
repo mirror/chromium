@@ -38,14 +38,14 @@ constexpr double kMaximumHourlyBudget = 12.0 / 24.0;
 
 }  // namespace
 
-BudgetDatabase::BudgetInfo::BudgetInfo() {}
+BudgetDatabase::BudgetInfo::BudgetInfo() = default;
 
 BudgetDatabase::BudgetInfo::BudgetInfo(const BudgetInfo&& other)
     : last_engagement_award(other.last_engagement_award) {
   chunks = std::move(other.chunks);
 }
 
-BudgetDatabase::BudgetInfo::~BudgetInfo() {}
+BudgetDatabase::BudgetInfo::~BudgetInfo() = default;
 
 BudgetDatabase::BudgetDatabase(Profile* profile,
                                const base::FilePath& database_dir)
@@ -62,7 +62,7 @@ BudgetDatabase::BudgetDatabase(Profile* profile,
                            weak_ptr_factory_.GetWeakPtr()));
 }
 
-BudgetDatabase::~BudgetDatabase() {}
+BudgetDatabase::~BudgetDatabase() = default;
 
 void BudgetDatabase::GetBudgetDetails(const url::Origin& origin,
                                       GetBudgetCallback callback) {

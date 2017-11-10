@@ -38,8 +38,7 @@ ChromeBrowserMainPartsLinux::ChromeBrowserMainPartsLinux(
     : ChromeBrowserMainPartsPosix(parameters) {
 }
 
-ChromeBrowserMainPartsLinux::~ChromeBrowserMainPartsLinux() {
-}
+ChromeBrowserMainPartsLinux::~ChromeBrowserMainPartsLinux() = default;
 
 void ChromeBrowserMainPartsLinux::ToolkitInitialized() {
   // Explicitly initialize Fontconfig early on to prevent races later due to

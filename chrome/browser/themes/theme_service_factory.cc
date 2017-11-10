@@ -52,7 +52,7 @@ ThemeServiceFactory::ThemeServiceFactory()
   DependsOn(extensions::ExtensionRegistryFactory::GetInstance());
 }
 
-ThemeServiceFactory::~ThemeServiceFactory() {}
+ThemeServiceFactory::~ThemeServiceFactory() = default;
 
 KeyedService* ThemeServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

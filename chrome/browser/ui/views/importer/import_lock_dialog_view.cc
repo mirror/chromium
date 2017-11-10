@@ -60,8 +60,7 @@ ImportLockDialogView::ImportLockDialogView(
   chrome::RecordDialogCreation(chrome::DialogIdentifier::IMPORT_LOCK);
 }
 
-ImportLockDialogView::~ImportLockDialogView() {
-}
+ImportLockDialogView::~ImportLockDialogView() = default;
 
 gfx::Size ImportLockDialogView::CalculatePreferredSize() const {
   const int width = ChromeLayoutProvider::Get()->GetDistanceMetric(

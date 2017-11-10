@@ -109,7 +109,7 @@ SettingsResetPromptModel::SettingsResetPromptModel(
   }
 }
 
-SettingsResetPromptModel::~SettingsResetPromptModel() {}
+SettingsResetPromptModel::~SettingsResetPromptModel() = default;
 
 Profile* SettingsResetPromptModel::profile() const {
   return profile_;

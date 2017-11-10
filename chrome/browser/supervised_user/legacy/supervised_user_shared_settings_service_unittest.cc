@@ -55,7 +55,7 @@ class MockSyncErrorFactory : public syncer::SyncErrorFactory {
 MockSyncErrorFactory::MockSyncErrorFactory(syncer::ModelType type)
     : type_(type) {}
 
-MockSyncErrorFactory::~MockSyncErrorFactory() {}
+MockSyncErrorFactory::~MockSyncErrorFactory() = default;
 
 syncer::SyncError MockSyncErrorFactory::CreateAndUploadError(
     const base::Location& location,
@@ -82,7 +82,7 @@ class SupervisedUserSharedSettingsServiceTest : public ::testing::Test {
 
   SupervisedUserSharedSettingsServiceTest()
       : settings_service_(profile_.GetPrefs()) {}
-  ~SupervisedUserSharedSettingsServiceTest() override {}
+  ~SupervisedUserSharedSettingsServiceTest() override = default;
 
   SyncMergeResult StartSyncing(const syncer::SyncDataList& initial_sync_data) {
     sync_processor_.reset(new syncer::FakeSyncChangeProcessor);

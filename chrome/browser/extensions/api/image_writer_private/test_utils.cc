@@ -63,7 +63,7 @@ class ImageWriterFakeImageBurnerClient
 
 MockOperationManager::MockOperationManager(content::BrowserContext* context)
     : OperationManager(context) {}
-MockOperationManager::~MockOperationManager() {}
+MockOperationManager::~MockOperationManager() = default;
 
 #if defined(OS_CHROMEOS)
 FakeDiskMountManager::FakeDiskMountManager() {}
@@ -82,12 +82,12 @@ SimulateProgressInfo::SimulateProgressInfo(
     bool will_succeed)
     : progress_list(progress_list), will_succeed(will_succeed) {}
 
-SimulateProgressInfo::~SimulateProgressInfo() {}
+SimulateProgressInfo::~SimulateProgressInfo() = default;
 SimulateProgressInfo::SimulateProgressInfo(const SimulateProgressInfo&) =
     default;
 
-FakeImageWriterClient::FakeImageWriterClient() {}
-FakeImageWriterClient::~FakeImageWriterClient() {}
+FakeImageWriterClient::FakeImageWriterClient() = default;
+FakeImageWriterClient::~FakeImageWriterClient() = default;
 
 void FakeImageWriterClient::SimulateProgressAndCompletion(
     const SimulateProgressInfo& info) {
@@ -193,8 +193,7 @@ ImageWriterTestUtils::ImageWriterTestUtils()
 #endif
 {
 }
-ImageWriterTestUtils::~ImageWriterTestUtils() {
-}
+ImageWriterTestUtils::~ImageWriterTestUtils() = default;
 
 #if !defined(OS_CHROMEOS)
 void ImageWriterTestUtils::OnUtilityClientCreated(
@@ -309,8 +308,7 @@ ImageWriterUnitTestBase::ImageWriterUnitTestBase()
     : scoped_task_environment_(
           base::test::ScopedTaskEnvironment::MainThreadType::UI),
       thread_bundle_(content::TestBrowserThreadBundle::REAL_IO_THREAD) {}
-ImageWriterUnitTestBase::~ImageWriterUnitTestBase() {
-}
+ImageWriterUnitTestBase::~ImageWriterUnitTestBase() = default;
 
 void ImageWriterUnitTestBase::SetUp() {
   testing::Test::SetUp();

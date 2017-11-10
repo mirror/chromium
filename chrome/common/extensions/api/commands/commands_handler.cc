@@ -26,11 +26,9 @@ namespace {
 const int kMaxCommandsWithKeybindingPerExtension = 4;
 }  // namespace
 
-CommandsInfo::CommandsInfo() {
-}
+CommandsInfo::CommandsInfo() = default;
 
-CommandsInfo::~CommandsInfo() {
-}
+CommandsInfo::~CommandsInfo() = default;
 
 // static
 const Command* CommandsInfo::GetBrowserActionCommand(
@@ -54,11 +52,9 @@ const CommandMap* CommandsInfo::GetNamedCommands(const Extension* extension) {
   return info ? &info->named_commands : NULL;
 }
 
-CommandsHandler::CommandsHandler() {
-}
+CommandsHandler::CommandsHandler() = default;
 
-CommandsHandler::~CommandsHandler() {
-}
+CommandsHandler::~CommandsHandler() = default;
 
 bool CommandsHandler::Parse(Extension* extension, base::string16* error) {
   if (!extension->manifest()->HasKey(keys::kCommands)) {

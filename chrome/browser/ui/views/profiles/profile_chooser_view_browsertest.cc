@@ -122,8 +122,8 @@ Profile* SetupProfilesForLock(Profile* signed_in) {
 class ProfileChooserViewExtensionsTest
     : public SupportsTestDialog<ExtensionBrowserTest> {
  public:
-  ProfileChooserViewExtensionsTest() {}
-  ~ProfileChooserViewExtensionsTest() override {}
+  ProfileChooserViewExtensionsTest() = default;
+  ~ProfileChooserViewExtensionsTest() override = default;
 
   // SupportsTestDialog:
   void ShowDialog(const std::string& name) override {

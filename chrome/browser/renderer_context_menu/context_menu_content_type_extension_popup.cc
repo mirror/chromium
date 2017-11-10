@@ -10,8 +10,8 @@ ContextMenuContentTypeExtensionPopup::ContextMenuContentTypeExtensionPopup(
     : ContextMenuContentType(web_contents, params, false) {
 }
 
-ContextMenuContentTypeExtensionPopup::~ContextMenuContentTypeExtensionPopup() {
-}
+ContextMenuContentTypeExtensionPopup::~ContextMenuContentTypeExtensionPopup() =
+    default;
 
 bool ContextMenuContentTypeExtensionPopup::SupportsGroup(int group) {
   switch (group) {

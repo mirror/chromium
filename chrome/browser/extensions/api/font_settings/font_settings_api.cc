@@ -106,7 +106,7 @@ FontSettingsEventRouter::FontSettingsEventRouter(Profile* profile)
                    fonts::OnMinimumFontSizeChanged::kEventName, kPixelSizeKey);
 }
 
-FontSettingsEventRouter::~FontSettingsEventRouter() {}
+FontSettingsEventRouter::~FontSettingsEventRouter() = default;
 
 void FontSettingsEventRouter::AddPrefToObserve(
     const char* pref_name,
@@ -183,8 +183,7 @@ FontSettingsAPI::FontSettingsAPI(content::BrowserContext* context)
     : font_settings_event_router_(
           new FontSettingsEventRouter(Profile::FromBrowserContext(context))) {}
 
-FontSettingsAPI::~FontSettingsAPI() {
-}
+FontSettingsAPI::~FontSettingsAPI() = default;
 
 static base::LazyInstance<BrowserContextKeyedAPIFactory<FontSettingsAPI>>::
     DestructorAtExit g_font_settings_api_factory = LAZY_INSTANCE_INITIALIZER;

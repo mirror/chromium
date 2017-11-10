@@ -38,7 +38,7 @@ using testing::Eq;
 
 class AppInfoPermissionsPanelTest : public testing::Test {
  protected:
-  AppInfoPermissionsPanelTest() {}
+  AppInfoPermissionsPanelTest() = default;
 
   std::unique_ptr<base::DictionaryValue> ValidAppManifest() {
     return extensions::DictionaryBuilder()

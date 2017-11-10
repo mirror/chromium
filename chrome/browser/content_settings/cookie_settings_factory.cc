@@ -39,8 +39,7 @@ CookieSettingsFactory::CookieSettingsFactory()
   DependsOn(HostContentSettingsMapFactory::GetInstance());
 }
 
-CookieSettingsFactory::~CookieSettingsFactory() {
-}
+CookieSettingsFactory::~CookieSettingsFactory() = default;
 
 void CookieSettingsFactory::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {

@@ -13,8 +13,7 @@ MediaSinkWithCastModes::MediaSinkWithCastModes(const MediaSink& sink)
 MediaSinkWithCastModes::MediaSinkWithCastModes(
     const MediaSinkWithCastModes& other) = default;
 
-MediaSinkWithCastModes::~MediaSinkWithCastModes() {
-}
+MediaSinkWithCastModes::~MediaSinkWithCastModes() = default;
 
 bool MediaSinkWithCastModes::Equals(const MediaSinkWithCastModes& other) const {
   return sink.Equals(other.sink) && cast_modes == other.cast_modes;

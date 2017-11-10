@@ -1118,11 +1118,9 @@ void Predictor::SetPredictorEnabledForTest(bool predictor_enabled) {
   predictor_enabled_ = predictor_enabled;
 }
 
-Predictor::HostNameQueue::HostNameQueue() {
-}
+Predictor::HostNameQueue::HostNameQueue() = default;
 
-Predictor::HostNameQueue::~HostNameQueue() {
-}
+Predictor::HostNameQueue::~HostNameQueue() = default;
 
 void Predictor::HostNameQueue::Push(const GURL& url,
     UrlInfo::ResolutionMotivation motivation) {

@@ -74,7 +74,7 @@ NavButtonLayoutManagerGconf::NavButtonLayoutManagerGconf(GtkUi* delegate)
   }
 }
 
-NavButtonLayoutManagerGconf::~NavButtonLayoutManagerGconf() {}
+NavButtonLayoutManagerGconf::~NavButtonLayoutManagerGconf() = default;
 
 // Private:
 

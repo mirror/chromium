@@ -35,8 +35,8 @@ scoped_refptr<Extension> CreateExtension(const std::string& id) {
 
 class ExtensionMigratorTest : public ExtensionServiceTestBase {
  public:
-  ExtensionMigratorTest() {}
-  ~ExtensionMigratorTest() override {}
+  ExtensionMigratorTest() = default;
+  ~ExtensionMigratorTest() override = default;
 
  protected:
   void InitWithExistingProfile() {

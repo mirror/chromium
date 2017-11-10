@@ -128,7 +128,7 @@ class MockChromePasswordProtectionService
 class ChromePasswordProtectionServiceTest
     : public ChromeRenderViewHostTestHarness {
  public:
-  ChromePasswordProtectionServiceTest() {}
+  ChromePasswordProtectionServiceTest() = default;
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();

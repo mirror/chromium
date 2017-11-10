@@ -20,7 +20,7 @@ AvatarButtonErrorController::AvatarButtonErrorController(
       has_signin_error_(avatar_signin_error_controller_.HasSigninError()),
       has_sync_error_(avatar_sync_error_controller_.HasSyncError()) {}
 
-AvatarButtonErrorController::~AvatarButtonErrorController() {}
+AvatarButtonErrorController::~AvatarButtonErrorController() = default;
 
 void AvatarButtonErrorController::UpdateSigninError(bool has_signin_error) {
   bool had_error = HasAvatarError();

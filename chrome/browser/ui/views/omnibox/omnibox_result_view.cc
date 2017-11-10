@@ -232,8 +232,7 @@ OmniboxResultView::OmniboxResultView(OmniboxPopupContentsView* model,
   keyword_icon_->SizeToPreferredSize();
 }
 
-OmniboxResultView::~OmniboxResultView() {
-}
+OmniboxResultView::~OmniboxResultView() = default;
 
 SkColor OmniboxResultView::GetColor(
     ResultViewState state,

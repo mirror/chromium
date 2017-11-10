@@ -576,8 +576,7 @@ RenderViewContextMenu::RenderViewContextMenu(
       source_web_contents_, params));
 }
 
-RenderViewContextMenu::~RenderViewContextMenu() {
-}
+RenderViewContextMenu::~RenderViewContextMenu() = default;
 
 // Menu construction functions -------------------------------------------------
 

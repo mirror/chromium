@@ -58,9 +58,7 @@ BrowsingDataChannelIDHelperImpl::BrowsingDataChannelIDHelperImpl(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
-BrowsingDataChannelIDHelperImpl::
-~BrowsingDataChannelIDHelperImpl() {
-}
+BrowsingDataChannelIDHelperImpl::~BrowsingDataChannelIDHelperImpl() = default;
 
 void BrowsingDataChannelIDHelperImpl::StartFetching(
     const FetchResultCallback& callback) {
@@ -138,11 +136,11 @@ BrowsingDataChannelIDHelper* BrowsingDataChannelIDHelper::Create(
   return new BrowsingDataChannelIDHelperImpl(request_context);
 }
 
-CannedBrowsingDataChannelIDHelper::
-CannedBrowsingDataChannelIDHelper() {}
+CannedBrowsingDataChannelIDHelper::CannedBrowsingDataChannelIDHelper() =
+    default;
 
-CannedBrowsingDataChannelIDHelper::
-~CannedBrowsingDataChannelIDHelper() {}
+CannedBrowsingDataChannelIDHelper::~CannedBrowsingDataChannelIDHelper() =
+    default;
 
 void CannedBrowsingDataChannelIDHelper::AddChannelID(
     const net::ChannelIDStore::ChannelID& channel_id) {

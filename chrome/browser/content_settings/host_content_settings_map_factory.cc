@@ -48,8 +48,7 @@ HostContentSettingsMapFactory::HostContentSettingsMapFactory()
 #endif
 }
 
-HostContentSettingsMapFactory::~HostContentSettingsMapFactory() {
-}
+HostContentSettingsMapFactory::~HostContentSettingsMapFactory() = default;
 
 // static
 HostContentSettingsMap* HostContentSettingsMapFactory::GetForProfile(

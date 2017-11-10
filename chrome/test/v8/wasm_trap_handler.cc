@@ -28,7 +28,7 @@ constexpr bool kIsTrapHandlerSupported = false;
 
 class WasmTrapHandler : public InProcessBrowserTest {
  public:
-  WasmTrapHandler() {}
+  WasmTrapHandler() = default;
 
  protected:
   void RunJSTest(const std::string& js) const {

@@ -35,7 +35,7 @@ BackgroundProfilingTriggers::BackgroundProfilingTriggers(
   DCHECK(host_);
 }
 
-BackgroundProfilingTriggers::~BackgroundProfilingTriggers() {}
+BackgroundProfilingTriggers::~BackgroundProfilingTriggers() = default;
 
 void BackgroundProfilingTriggers::StartTimer() {
   // Register a repeating timer to check memory usage periodically.

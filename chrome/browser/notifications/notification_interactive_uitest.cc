@@ -60,7 +60,7 @@ class ToggledNotificationBlocker : public message_center::NotificationBlocker {
       : message_center::NotificationBlocker(
             message_center::MessageCenter::Get()),
         notifications_enabled_(true) {}
-  ~ToggledNotificationBlocker() override {}
+  ~ToggledNotificationBlocker() override = default;
 
   void SetNotificationsEnabled(bool enabled) {
     if (notifications_enabled_ != enabled) {

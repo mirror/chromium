@@ -156,7 +156,7 @@ class HttpProxyScriptBrowserTest : public InProcessBrowserTest {
   HttpProxyScriptBrowserTest() {
     http_server_.ServeFilesFromSourceDirectory("chrome/test/data");
   }
-  ~HttpProxyScriptBrowserTest() override {}
+  ~HttpProxyScriptBrowserTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(http_server_.Start());
@@ -182,8 +182,8 @@ IN_PROC_BROWSER_TEST_F(HttpProxyScriptBrowserTest, Verify) {
 // Fetch PAC script via a file:// URL.
 class FileProxyScriptBrowserTest : public InProcessBrowserTest {
  public:
-  FileProxyScriptBrowserTest() {}
-  ~FileProxyScriptBrowserTest() override {}
+  FileProxyScriptBrowserTest() = default;
+  ~FileProxyScriptBrowserTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitchASCII(switches::kProxyPacUrl,
@@ -206,7 +206,7 @@ class FtpProxyScriptBrowserTest : public InProcessBrowserTest {
   FtpProxyScriptBrowserTest()
       : ftp_server_(net::SpawnedTestServer::TYPE_FTP,
                     base::FilePath(FILE_PATH_LITERAL("chrome/test/data"))) {}
-  ~FtpProxyScriptBrowserTest() override {}
+  ~FtpProxyScriptBrowserTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(ftp_server_.Start());
@@ -233,8 +233,8 @@ IN_PROC_BROWSER_TEST_F(FtpProxyScriptBrowserTest, Verify) {
 // Fetch PAC script via a data: URL.
 class DataProxyScriptBrowserTest : public InProcessBrowserTest {
  public:
-  DataProxyScriptBrowserTest() {}
-  ~DataProxyScriptBrowserTest() override {}
+  DataProxyScriptBrowserTest() = default;
+  ~DataProxyScriptBrowserTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     std::string contents;
@@ -258,8 +258,8 @@ IN_PROC_BROWSER_TEST_F(DataProxyScriptBrowserTest, Verify) {
 // Fetch PAC script via a data: URL.
 class OutOfProcessProxyResolverBrowserTest : public InProcessBrowserTest {
  public:
-  OutOfProcessProxyResolverBrowserTest() {}
-  ~OutOfProcessProxyResolverBrowserTest() override {}
+  OutOfProcessProxyResolverBrowserTest() = default;
+  ~OutOfProcessProxyResolverBrowserTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     std::string contents;
@@ -283,8 +283,8 @@ IN_PROC_BROWSER_TEST_F(OutOfProcessProxyResolverBrowserTest, Verify) {
 // Fetch PAC script via a hanging http:// URL.
 class HangingPacRequestProxyScriptBrowserTest : public InProcessBrowserTest {
  public:
-  HangingPacRequestProxyScriptBrowserTest() {}
-  ~HangingPacRequestProxyScriptBrowserTest() override {}
+  HangingPacRequestProxyScriptBrowserTest() = default;
+  ~HangingPacRequestProxyScriptBrowserTest() override = default;
 
   void SetUp() override {
     // Must start listening (And get a port for the proxy) before calling
@@ -326,8 +326,8 @@ class HangingPacRequestProxyScriptBrowserTest : public InProcessBrowserTest {
 // URLFetcherDelegate that expects a request to hang.
 class HangingURLFetcherDelegate : public net::URLFetcherDelegate {
  public:
-  HangingURLFetcherDelegate() {}
-  ~HangingURLFetcherDelegate() override {}
+  HangingURLFetcherDelegate() = default;
+  ~HangingURLFetcherDelegate() override = default;
 
   void OnURLFetchComplete(const net::URLFetcher* source) override {
     ADD_FAILURE() << "This request should never complete.";

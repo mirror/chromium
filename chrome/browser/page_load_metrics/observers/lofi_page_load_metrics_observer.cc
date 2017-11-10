@@ -45,7 +45,7 @@ LoFiPageLoadMetricsObserver::LoFiPageLoadMetricsObserver()
       network_bytes_(0),
       lofi_network_bytes_(0) {}
 
-LoFiPageLoadMetricsObserver::~LoFiPageLoadMetricsObserver() {}
+LoFiPageLoadMetricsObserver::~LoFiPageLoadMetricsObserver() = default;
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 LoFiPageLoadMetricsObserver::OnStart(

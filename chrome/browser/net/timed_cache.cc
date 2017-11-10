@@ -14,7 +14,7 @@ TimedCache::TimedCache(const base::TimeDelta& max_duration)
 }
 
 // Make Clang compilation happy with explicit destructor.
-TimedCache::~TimedCache() {}
+TimedCache::~TimedCache() = default;
 
 bool TimedCache::WasRecentlySeen(const GURL& url) {
   DCHECK_EQ(url.GetWithEmptyPath(), url);

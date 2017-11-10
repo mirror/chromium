@@ -27,7 +27,8 @@ SupervisedUserSharedSettingsUpdate::SupervisedUserSharedSettingsUpdate(
                  base::Unretained(this)));
 }
 
-SupervisedUserSharedSettingsUpdate::~SupervisedUserSharedSettingsUpdate() {}
+SupervisedUserSharedSettingsUpdate::~SupervisedUserSharedSettingsUpdate() =
+    default;
 
 void SupervisedUserSharedSettingsUpdate::OnSettingChanged(
     const std::string& su_id, const std::string& key) {

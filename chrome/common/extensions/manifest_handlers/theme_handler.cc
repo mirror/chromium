@@ -131,11 +131,9 @@ const ThemeInfo* GetInfo(const Extension* extension) {
 
 }  // namespace
 
-ThemeInfo::ThemeInfo() {
-}
+ThemeInfo::ThemeInfo() = default;
 
-ThemeInfo::~ThemeInfo() {
-}
+ThemeInfo::~ThemeInfo() = default;
 
 // static
 const base::DictionaryValue* ThemeInfo::GetImages(const Extension* extension) {
@@ -162,11 +160,9 @@ const base::DictionaryValue* ThemeInfo::GetDisplayProperties(
   return theme_info ? theme_info->theme_display_properties_.get() : NULL;
 }
 
-ThemeHandler::ThemeHandler() {
-}
+ThemeHandler::ThemeHandler() = default;
 
-ThemeHandler::~ThemeHandler() {
-}
+ThemeHandler::~ThemeHandler() = default;
 
 bool ThemeHandler::Parse(Extension* extension, base::string16* error) {
   const base::DictionaryValue* theme_value = NULL;

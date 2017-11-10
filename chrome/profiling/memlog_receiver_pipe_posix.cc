@@ -22,7 +22,7 @@ MemlogReceiverPipe::MemlogReceiverPipe(mojo::edk::ScopedPlatformHandle handle)
       controller_(FROM_HERE),
       read_buffer_(new char[MemlogSenderPipe::kPipeSize]) {}
 
-MemlogReceiverPipe::~MemlogReceiverPipe() {}
+MemlogReceiverPipe::~MemlogReceiverPipe() = default;
 
 void MemlogReceiverPipe::StartReadingOnIOThread() {
   base::MessageLoopForIO::current()->WatchFileDescriptor(

@@ -78,7 +78,7 @@ class DeadlockCheckerObserver {
               base::Unretained(this), base::Unretained(pref)));
     }
   }
-  virtual ~DeadlockCheckerObserver() {}
+  virtual ~DeadlockCheckerObserver() = default;
 
   bool notification_received() const {
     return notification_received_;

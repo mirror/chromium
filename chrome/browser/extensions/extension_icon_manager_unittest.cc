@@ -65,7 +65,7 @@ class ExtensionIconManagerTest : public testing::Test,
  public:
   ExtensionIconManagerTest() : unwaited_image_loads_(0), waiting_(false) {}
 
-  ~ExtensionIconManagerTest() override {}
+  ~ExtensionIconManagerTest() override = default;
 
   void OnImageLoaded(const std::string& extension_id) override {
     unwaited_image_loads_++;

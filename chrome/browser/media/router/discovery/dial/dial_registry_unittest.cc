@@ -26,7 +26,7 @@ namespace media_router {
 
 class MockDialObserver : public DialRegistry::Observer {
  public:
-  ~MockDialObserver() override {}
+  ~MockDialObserver() override = default;
 
   MOCK_METHOD1(OnDialDeviceEvent,
                void(const DialRegistry::DeviceList& devices));
@@ -35,7 +35,7 @@ class MockDialObserver : public DialRegistry::Observer {
 
 class MockDialService : public DialService {
  public:
-  ~MockDialService() override {}
+  ~MockDialService() override = default;
 
   MOCK_METHOD0(Discover, bool());
   MOCK_METHOD1(AddObserver, void(DialService::Observer*));

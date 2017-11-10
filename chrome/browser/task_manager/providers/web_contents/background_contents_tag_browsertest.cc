@@ -21,8 +21,8 @@ namespace task_manager {
 // BackgroundContentsTask.
 class BackgroundContentsTagTest : public ExtensionBrowserTest {
  public:
-  BackgroundContentsTagTest() {}
-  ~BackgroundContentsTagTest() override {}
+  BackgroundContentsTagTest() = default;
+  ~BackgroundContentsTagTest() override = default;
 
   const extensions::Extension* LoadBackgroundExtension() {
     auto* extension = LoadExtension(

@@ -12,10 +12,8 @@ std::unique_ptr<KeyedService> MockMediaRouter::Create(
   return base::MakeUnique<MockMediaRouter>();
 }
 
-MockMediaRouter::MockMediaRouter() {
-}
+MockMediaRouter::MockMediaRouter() = default;
 
-MockMediaRouter::~MockMediaRouter() {
-}
+MockMediaRouter::~MockMediaRouter() = default;
 
 }  // namespace media_router

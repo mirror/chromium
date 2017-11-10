@@ -414,8 +414,8 @@ TEST_F(ActivityLogTest, ArgUrlApiCalls) {
 
 class ActivityLogTestWithoutSwitch : public ActivityLogTest {
  public:
-  ActivityLogTestWithoutSwitch() {}
-  ~ActivityLogTestWithoutSwitch() override {}
+  ActivityLogTestWithoutSwitch() = default;
+  ~ActivityLogTestWithoutSwitch() override = default;
   bool enable_activity_logging_switch() const override { return false; }
 };
 

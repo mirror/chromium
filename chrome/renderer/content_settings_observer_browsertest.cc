@@ -40,7 +40,7 @@ class MockContentSettingsObserver : public ContentSettingsObserver {
  public:
   MockContentSettingsObserver(content::RenderFrame* render_frame,
                               service_manager::BinderRegistry* registry);
-  ~MockContentSettingsObserver() override {}
+  ~MockContentSettingsObserver() override = default;
 
   bool Send(IPC::Message* message) override;
 

@@ -40,8 +40,7 @@ ChromeProximityAuthClient::ChromeProximityAuthClient(Profile* profile)
     : profile_(profile) {
 }
 
-ChromeProximityAuthClient::~ChromeProximityAuthClient() {
-}
+ChromeProximityAuthClient::~ChromeProximityAuthClient() = default;
 
 std::string ChromeProximityAuthClient::GetAuthenticatedUsername() const {
   const SigninManagerBase* signin_manager =

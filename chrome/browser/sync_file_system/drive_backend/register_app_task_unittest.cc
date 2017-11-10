@@ -47,7 +47,7 @@ class RegisterAppTaskTest : public testing::Test {
   RegisterAppTaskTest()
       : next_file_id_(1000),
         next_tracker_id_(10000) {}
-  ~RegisterAppTaskTest() override {}
+  ~RegisterAppTaskTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(database_dir_.CreateUniqueTempDir());

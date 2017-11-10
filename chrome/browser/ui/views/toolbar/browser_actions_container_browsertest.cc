@@ -253,7 +253,7 @@ class BrowserActionsContainerOverflowTest
   BrowserActionsContainerOverflowTest() : main_bar_(nullptr),
                                           overflow_bar_(nullptr) {
   }
-  ~BrowserActionsContainerOverflowTest() override {}
+  ~BrowserActionsContainerOverflowTest() override = default;
 
  protected:
   // Returns true if the order of the ToolbarActionViews in |main_bar_|

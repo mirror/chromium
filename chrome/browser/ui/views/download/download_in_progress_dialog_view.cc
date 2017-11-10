@@ -58,7 +58,7 @@ DownloadInProgressDialogView::DownloadInProgressDialogView(
   chrome::RecordDialogCreation(chrome::DialogIdentifier::DOWNLOAD_IN_PROGRESS);
 }
 
-DownloadInProgressDialogView::~DownloadInProgressDialogView() {}
+DownloadInProgressDialogView::~DownloadInProgressDialogView() = default;
 
 int DownloadInProgressDialogView::GetDefaultDialogButton() const {
   return ui::DIALOG_BUTTON_CANCEL;

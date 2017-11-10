@@ -159,7 +159,7 @@ IN_PROC_BROWSER_TEST_F(ZoomBubbleBrowserTest, NoWebContentsIsSafe) {
 
 class ZoomBubbleDialogTest : public DialogBrowserTest {
  public:
-  ZoomBubbleDialogTest() {}
+  ZoomBubbleDialogTest() = default;
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {

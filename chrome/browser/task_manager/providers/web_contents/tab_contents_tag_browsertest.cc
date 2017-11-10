@@ -126,7 +126,7 @@ class FaviconWaiter : public favicon::FaviconDriverObserver {
 class TabContentsTagTest : public InProcessBrowserTest {
  public:
   TabContentsTagTest() { EXPECT_TRUE(embedded_test_server()->Start()); }
-  ~TabContentsTagTest() override {}
+  ~TabContentsTagTest() override = default;
 
   void AddNewTestTabAt(int index, const char* test_page_file) {
     int tabs_count_before = tabs_count();

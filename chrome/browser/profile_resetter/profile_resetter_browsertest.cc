@@ -57,7 +57,7 @@ RemoveCookieTester::RemoveCookieTester(Profile* profile)
       profile_(profile) {
 }
 
-RemoveCookieTester::~RemoveCookieTester() {}
+RemoveCookieTester::~RemoveCookieTester() = default;
 
 // Returns true, if the given cookie exists in the cookie store.
 std::string RemoveCookieTester::GetCookie(const std::string& host) {

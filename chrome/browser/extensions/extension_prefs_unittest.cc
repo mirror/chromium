@@ -46,8 +46,7 @@ static void AddPattern(URLPatternSet* extent, const std::string& pattern) {
 ExtensionPrefsTest::ExtensionPrefsTest()
     : prefs_(base::ThreadTaskRunnerHandle::Get()) {}
 
-ExtensionPrefsTest::~ExtensionPrefsTest() {
-}
+ExtensionPrefsTest::~ExtensionPrefsTest() = default;
 
 void ExtensionPrefsTest::RegisterPreferences(
     user_prefs::PrefRegistrySyncable* registry) {}
@@ -756,13 +755,12 @@ PrefsPrepopulatedTestBase::PrefsPrepopulatedTestBase()
     installed_[i] = false;
 }
 
-PrefsPrepopulatedTestBase::~PrefsPrepopulatedTestBase() {
-}
+PrefsPrepopulatedTestBase::~PrefsPrepopulatedTestBase() = default;
 
 // Tests that blacklist state can be queried.
 class ExtensionPrefsBlacklistedExtensions : public ExtensionPrefsTest {
  public:
-  ~ExtensionPrefsBlacklistedExtensions() override {}
+  ~ExtensionPrefsBlacklistedExtensions() override = default;
 
   void Initialize() override {
     extension_a_ = prefs_.AddExtension("a");
@@ -842,7 +840,7 @@ TEST_F(ExtensionPrefsBlacklistedExtensions,
 // over new "blacklist_state".
 class ExtensionPrefsBlacklistState : public ExtensionPrefsTest {
  public:
-  ~ExtensionPrefsBlacklistState() override {}
+  ~ExtensionPrefsBlacklistState() override = default;
 
   void Initialize() override { extension_a_ = prefs_.AddExtension("a"); }
 
@@ -885,7 +883,7 @@ TEST_F(ExtensionPrefsBlacklistState, ExtensionPrefsBlacklistState) {}
 // Tests clearing the last launched preference.
 class ExtensionPrefsClearLastLaunched : public ExtensionPrefsTest {
  public:
-  ~ExtensionPrefsClearLastLaunched() override {}
+  ~ExtensionPrefsClearLastLaunched() override = default;
 
   void Initialize() override {
     extension_a_ = prefs_.AddExtension("a");
@@ -919,7 +917,7 @@ TEST_F(ExtensionPrefsClearLastLaunched, ExtensionPrefsClearLastLaunched) {}
 
 class ExtensionPrefsComponentExtension : public ExtensionPrefsTest {
  public:
-  ~ExtensionPrefsComponentExtension() override {}
+  ~ExtensionPrefsComponentExtension() override = default;
   void Initialize() override {
     // Adding a component extension.
     component_extension_ =

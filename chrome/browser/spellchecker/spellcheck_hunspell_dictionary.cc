@@ -79,11 +79,9 @@ bool SaveDictionaryData(std::unique_ptr<std::string> data,
 
 }  // namespace
 
-SpellcheckHunspellDictionary::DictionaryFile::DictionaryFile() {
-}
+SpellcheckHunspellDictionary::DictionaryFile::DictionaryFile() = default;
 
-SpellcheckHunspellDictionary::DictionaryFile::~DictionaryFile() {
-}
+SpellcheckHunspellDictionary::DictionaryFile::~DictionaryFile() = default;
 
 SpellcheckHunspellDictionary::DictionaryFile::DictionaryFile(
     DictionaryFile&& other)

@@ -115,7 +115,7 @@ class TestRecentTabsMenuModelDelegate : public ui::MenuModelDelegate {
 
 class DummyRouter : public sync_sessions::LocalSessionEventRouter {
  public:
-  ~DummyRouter() override {}
+  ~DummyRouter() override = default;
   void StartRoutingTo(
       sync_sessions::LocalSessionEventHandler* handler) override {}
   void Stop() override {}
@@ -123,8 +123,8 @@ class DummyRouter : public sync_sessions::LocalSessionEventRouter {
 
 class FakeSyncServiceObserverList {
  public:
-  FakeSyncServiceObserverList() {}
-  ~FakeSyncServiceObserverList() {}
+  FakeSyncServiceObserverList() = default;
+  ~FakeSyncServiceObserverList() = default;
 
   void AddObserver(syncer::SyncServiceObserver* observer) {
     observers_.AddObserver(observer);
@@ -155,7 +155,7 @@ class FakeSyncServiceObserverList {
 class RecentTabsSubMenuModelTest
     : public BrowserWithTestWindowTest {
  public:
-  RecentTabsSubMenuModelTest() {}
+  RecentTabsSubMenuModelTest() = default;
 
   void SetUp() override {
     // Set up our mock sync service factory before the sync service (and any

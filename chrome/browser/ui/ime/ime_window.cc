@@ -151,7 +151,7 @@ void ImeWindow::OnExtensionIconImageChanged(extensions::IconImage* image) {
     native_window_->UpdateWindowIcon();
 }
 
-ImeWindow::~ImeWindow() {}
+ImeWindow::~ImeWindow() = default;
 
 void ImeWindow::Observe(int type,
                         const content::NotificationSource& source,

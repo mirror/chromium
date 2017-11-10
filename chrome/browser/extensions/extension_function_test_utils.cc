@@ -33,7 +33,7 @@ class TestFunctionDispatcherDelegate
  public:
   explicit TestFunctionDispatcherDelegate(Browser* browser) :
       browser_(browser) {}
-  ~TestFunctionDispatcherDelegate() override {}
+  ~TestFunctionDispatcherDelegate() override = default;
 
  private:
   extensions::WindowController* GetExtensionWindowController() const override {

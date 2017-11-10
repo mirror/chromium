@@ -20,8 +20,7 @@ ExtensionMigrator::ExtensionMigrator(Profile* profile,
                                      const std::string& new_id)
     : profile_(profile), old_id_(old_id), new_id_(new_id) {}
 
-ExtensionMigrator::~ExtensionMigrator() {
-}
+ExtensionMigrator::~ExtensionMigrator() = default;
 
 void ExtensionMigrator::StartLoading() {
   auto prefs = std::make_unique<base::DictionaryValue>();

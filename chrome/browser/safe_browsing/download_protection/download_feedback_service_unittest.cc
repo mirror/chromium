@@ -80,7 +80,7 @@ class FakeDownloadFeedback : public DownloadFeedback {
 
 class FakeDownloadFeedbackFactory : public DownloadFeedbackFactory {
  public:
-  ~FakeDownloadFeedbackFactory() override {}
+  ~FakeDownloadFeedbackFactory() override = default;
 
   std::unique_ptr<DownloadFeedback> CreateDownloadFeedback(
       net::URLRequestContextGetter* request_context_getter,

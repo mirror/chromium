@@ -59,8 +59,7 @@ ExtensionSystemSharedFactory::ExtensionSystemSharedFactory()
   DependsOn(SigninManagerFactory::GetInstance());
 }
 
-ExtensionSystemSharedFactory::~ExtensionSystemSharedFactory() {
-}
+ExtensionSystemSharedFactory::~ExtensionSystemSharedFactory() = default;
 
 KeyedService* ExtensionSystemSharedFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
@@ -95,8 +94,7 @@ ExtensionSystemFactory::ExtensionSystemFactory()
   DependsOn(ExtensionSystemSharedFactory::GetInstance());
 }
 
-ExtensionSystemFactory::~ExtensionSystemFactory() {
-}
+ExtensionSystemFactory::~ExtensionSystemFactory() = default;
 
 KeyedService* ExtensionSystemFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

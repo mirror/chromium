@@ -18,7 +18,7 @@ class TestBackgroundModeManager : public BackgroundModeManager {
       : BackgroundModeManager(command_line, profile_storage),
         showed_background_app_installed_notification_for_test_(false) {}
 
-  ~TestBackgroundModeManager() override {}
+  ~TestBackgroundModeManager() override = default;
 
   void DisplayClientInstalledNotification(const base::string16& name) override {
     showed_background_app_installed_notification_for_test_ = true;

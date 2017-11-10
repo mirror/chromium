@@ -141,8 +141,7 @@ void CookiesViewHandler::Request::Clear() {
 CookiesViewHandler::CookiesViewHandler()
     : batch_update_(false), model_util_(new CookiesTreeModelUtil) {}
 
-CookiesViewHandler::~CookiesViewHandler() {
-}
+CookiesViewHandler::~CookiesViewHandler() = default;
 
 void CookiesViewHandler::OnJavascriptAllowed() {
 }

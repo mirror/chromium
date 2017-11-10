@@ -7,9 +7,9 @@
 #include "base/metrics/histogram_macros.h"
 #include "chrome/browser/upgrade_detector.h"
 
-UpgradeMetricsProvider::UpgradeMetricsProvider() {}
+UpgradeMetricsProvider::UpgradeMetricsProvider() = default;
 
-UpgradeMetricsProvider::~UpgradeMetricsProvider() {}
+UpgradeMetricsProvider::~UpgradeMetricsProvider() = default;
 
 void UpgradeMetricsProvider::ProvideCurrentSessionData(
     metrics::ChromeUserMetricsExtension* uma_proto) {

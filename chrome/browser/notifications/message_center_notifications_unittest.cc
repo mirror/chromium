@@ -30,7 +30,7 @@ namespace message_center {
 
 class MessageCenterNotificationManagerTest : public BrowserWithTestWindowTest {
  public:
-  MessageCenterNotificationManagerTest() {}
+  MessageCenterNotificationManagerTest() = default;
 
  protected:
   void SetUp() override {

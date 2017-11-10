@@ -286,8 +286,7 @@ StartupBrowserCreatorImpl::StartupBrowserCreatorImpl(
       browser_creator_(browser_creator),
       is_first_run_(is_first_run == chrome::startup::IS_FIRST_RUN) {}
 
-StartupBrowserCreatorImpl::~StartupBrowserCreatorImpl() {
-}
+StartupBrowserCreatorImpl::~StartupBrowserCreatorImpl() = default;
 
 bool StartupBrowserCreatorImpl::Launch(Profile* profile,
                                        const std::vector<GURL>& urls_to_open,

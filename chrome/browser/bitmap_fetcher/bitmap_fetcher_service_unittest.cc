@@ -19,7 +19,7 @@ namespace {
 
 class TestNotificationInterface {
  public:
-  virtual ~TestNotificationInterface() {}
+  virtual ~TestNotificationInterface() = default;
   virtual void OnImageChanged() = 0;
   virtual void OnRequestFinished() = 0;
 };
@@ -44,7 +44,7 @@ class TestService : public BitmapFetcherService {
  public:
   explicit TestService(content::BrowserContext* context)
       : BitmapFetcherService(context) {}
-  ~TestService() override {}
+  ~TestService() override = default;
 
   // Create a fetcher, but don't start downloading. That allows side-stepping
   // the decode step, which requires a utility process.

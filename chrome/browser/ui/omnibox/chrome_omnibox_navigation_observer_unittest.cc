@@ -133,8 +133,8 @@ class MockChromeOmniboxNavigationObserver
 
 class ChromeOmniboxNavigationObserverTest : public testing::Test {
  protected:
-  ChromeOmniboxNavigationObserverTest() {}
-  ~ChromeOmniboxNavigationObserverTest() override {}
+  ChromeOmniboxNavigationObserverTest() = default;
+  ~ChromeOmniboxNavigationObserverTest() override = default;
 
   content::NavigationController* navigation_controller() {
     return &(web_contents_->GetController());

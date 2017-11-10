@@ -14,8 +14,8 @@ MockBrowsingDataLocalStorageHelper::MockBrowsingDataLocalStorageHelper(
     : BrowsingDataLocalStorageHelper(profile) {
 }
 
-MockBrowsingDataLocalStorageHelper::~MockBrowsingDataLocalStorageHelper() {
-}
+MockBrowsingDataLocalStorageHelper::~MockBrowsingDataLocalStorageHelper() =
+    default;
 
 void MockBrowsingDataLocalStorageHelper::StartFetching(
     const FetchCallback& callback) {

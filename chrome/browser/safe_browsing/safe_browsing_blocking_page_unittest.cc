@@ -73,8 +73,8 @@ class TestSafeBrowsingBlockingPage : public SafeBrowsingBlockingPage {
 class TestSafeBrowsingBlockingPageFactory
     : public SafeBrowsingBlockingPageFactory {
  public:
-  TestSafeBrowsingBlockingPageFactory() { }
-  ~TestSafeBrowsingBlockingPageFactory() override {}
+  TestSafeBrowsingBlockingPageFactory() = default;
+  ~TestSafeBrowsingBlockingPageFactory() override = default;
 
   SafeBrowsingBlockingPage* CreateSafeBrowsingPage(
       BaseUIManager* manager,
@@ -106,8 +106,8 @@ class TestSafeBrowsingBlockingPageFactory
 
 class MockTestingProfile : public TestingProfile {
  public:
-  MockTestingProfile() {}
-  virtual ~MockTestingProfile() {}
+  MockTestingProfile() = default;
+  virtual ~MockTestingProfile() = default;
 
   MOCK_CONST_METHOD0(IsOffTheRecord, bool());
 };
@@ -156,8 +156,8 @@ class TestSafeBrowsingBlockingPageQuiet : public SafeBrowsingBlockingPage {
 class TestSafeBrowsingBlockingQuietPageFactory
     : public SafeBrowsingBlockingPageFactory {
  public:
-  TestSafeBrowsingBlockingQuietPageFactory() {}
-  ~TestSafeBrowsingBlockingQuietPageFactory() override {}
+  TestSafeBrowsingBlockingQuietPageFactory() = default;
+  ~TestSafeBrowsingBlockingQuietPageFactory() override = default;
 
   SafeBrowsingBlockingPage* CreateSafeBrowsingPage(
       BaseUIManager* manager,

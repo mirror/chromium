@@ -18,7 +18,7 @@ using sync_timing_helper::TimeMutualSyncCycle;
 class DictionarySyncPerfTest : public SyncTest {
  public:
   DictionarySyncPerfTest() : SyncTest(TWO_CLIENT) {}
-  ~DictionarySyncPerfTest() override {}
+  ~DictionarySyncPerfTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DictionarySyncPerfTest);

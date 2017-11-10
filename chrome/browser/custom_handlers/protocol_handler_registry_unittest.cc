@@ -138,7 +138,7 @@ std::unique_ptr<base::DictionaryValue> GetProtocolHandlerValueWithDefault(
 class FakeDelegate : public ProtocolHandlerRegistry::Delegate {
  public:
   FakeDelegate() : force_os_failure_(false) {}
-  ~FakeDelegate() override {}
+  ~FakeDelegate() override = default;
   void RegisterExternalHandler(const std::string& protocol) override {
     ASSERT_TRUE(
         registered_protocols_.find(protocol) == registered_protocols_.end());

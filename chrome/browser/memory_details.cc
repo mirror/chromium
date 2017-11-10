@@ -102,14 +102,14 @@ ProcessMemoryInformation::ProcessMemoryInformation()
 ProcessMemoryInformation::ProcessMemoryInformation(
     const ProcessMemoryInformation& other) = default;
 
-ProcessMemoryInformation::~ProcessMemoryInformation() {}
+ProcessMemoryInformation::~ProcessMemoryInformation() = default;
 
 bool ProcessMemoryInformation::operator<(
     const ProcessMemoryInformation& rhs) const {
   return working_set.priv < rhs.working_set.priv;
 }
 
-ProcessData::ProcessData() {}
+ProcessData::ProcessData() = default;
 
 ProcessData::ProcessData(const ProcessData& rhs)
     : name(rhs.name),
@@ -117,7 +117,7 @@ ProcessData::ProcessData(const ProcessData& rhs)
       processes(rhs.processes) {
 }
 
-ProcessData::~ProcessData() {}
+ProcessData::~ProcessData() = default;
 
 ProcessData& ProcessData::operator=(const ProcessData& rhs) {
   name = rhs.name;
@@ -150,7 +150,7 @@ void MemoryDetails::StartFetch() {
       base::BindOnce(&MemoryDetails::CollectChildInfoOnIOThread, this));
 }
 
-MemoryDetails::~MemoryDetails() {}
+MemoryDetails::~MemoryDetails() = default;
 
 std::string MemoryDetails::ToLogString() {
   std::string log;

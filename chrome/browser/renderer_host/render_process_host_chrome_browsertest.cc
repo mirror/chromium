@@ -94,7 +94,7 @@ base::Process ProcessFromHandle(base::ProcessHandle handle) {
 
 class ChromeRenderProcessHostTest : public ExtensionBrowserTest {
  public:
-  ChromeRenderProcessHostTest() {}
+  ChromeRenderProcessHostTest() = default;
 
   // Show a tab, activating the current one if there is one, and wait for
   // the renderer process to be created or foregrounded, returning the process
@@ -600,7 +600,7 @@ IN_PROC_BROWSER_TEST_F(ChromeRenderProcessHostTest,
 class ChromeRenderProcessHostBackgroundingTest
     : public ChromeRenderProcessHostTest {
  public:
-  ChromeRenderProcessHostBackgroundingTest() {}
+  ChromeRenderProcessHostBackgroundingTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ChromeRenderProcessHostTest::SetUpCommandLine(command_line);

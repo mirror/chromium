@@ -43,8 +43,7 @@ BrowsingDataCookieHelper::BrowsingDataCookieHelper(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
-BrowsingDataCookieHelper::~BrowsingDataCookieHelper() {
-}
+BrowsingDataCookieHelper::~BrowsingDataCookieHelper() = default;
 
 void BrowsingDataCookieHelper::StartFetching(const FetchCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

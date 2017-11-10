@@ -33,7 +33,7 @@ FirstRunBubblePresenter::FirstRunBubblePresenter(
   template_url_service_->Load();
 }
 
-FirstRunBubblePresenter::~FirstRunBubblePresenter() {}
+FirstRunBubblePresenter::~FirstRunBubblePresenter() = default;
 
 void FirstRunBubblePresenter::OnTemplateURLServiceChanged() {
   // Don't actually self-destruct or run the callback until the

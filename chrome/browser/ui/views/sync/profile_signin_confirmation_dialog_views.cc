@@ -56,7 +56,8 @@ ProfileSigninConfirmationDialogViews::ProfileSigninConfirmationDialogViews(
       chrome::DialogIdentifier::PROFILE_SIGNIN_CONFIRMATION);
 }
 
-ProfileSigninConfirmationDialogViews::~ProfileSigninConfirmationDialogViews() {}
+ProfileSigninConfirmationDialogViews::~ProfileSigninConfirmationDialogViews() =
+    default;
 
 // static
 void ProfileSigninConfirmationDialogViews::ShowDialog(

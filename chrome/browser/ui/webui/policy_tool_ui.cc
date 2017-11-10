@@ -64,7 +64,7 @@ PolicyToolUI::PolicyToolUI(content::WebUI* web_ui) : WebUIController(web_ui) {
                                 CreatePolicyToolUIHtmlSource());
 }
 
-PolicyToolUI::~PolicyToolUI() {}
+PolicyToolUI::~PolicyToolUI() = default;
 
 // static
 bool PolicyToolUI::IsEnabled() {

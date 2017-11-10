@@ -36,7 +36,7 @@ class ExtensionInstallPromptShowParams::WebContentsDestructionObserver
         params_(params) {
   }
 
-  ~WebContentsDestructionObserver() override {}
+  ~WebContentsDestructionObserver() override = default;
 
   void WebContentsDestroyed() override { params_->WebContentsDestroyed(); }
 
@@ -72,8 +72,7 @@ ExtensionInstallPromptShowParams::ExtensionInstallPromptShowParams(
     native_window_tracker_ = NativeWindowTracker::Create(parent_window_);
 }
 
-ExtensionInstallPromptShowParams::~ExtensionInstallPromptShowParams() {
-}
+ExtensionInstallPromptShowParams::~ExtensionInstallPromptShowParams() = default;
 
 content::WebContents* ExtensionInstallPromptShowParams::GetParentWebContents() {
   return parent_web_contents_;

@@ -63,8 +63,7 @@ BrowserActionsBarBrowserTest::BrowserActionsBarBrowserTest()
     : toolbar_model_(nullptr) {
 }
 
-BrowserActionsBarBrowserTest::~BrowserActionsBarBrowserTest() {
-}
+BrowserActionsBarBrowserTest::~BrowserActionsBarBrowserTest() = default;
 
 void BrowserActionsBarBrowserTest::SetUpCommandLine(
     base::CommandLine* command_line) {

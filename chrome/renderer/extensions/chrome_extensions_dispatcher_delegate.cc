@@ -59,11 +59,11 @@
 
 using extensions::NativeHandler;
 
-ChromeExtensionsDispatcherDelegate::ChromeExtensionsDispatcherDelegate() {
-}
+ChromeExtensionsDispatcherDelegate::ChromeExtensionsDispatcherDelegate() =
+    default;
 
-ChromeExtensionsDispatcherDelegate::~ChromeExtensionsDispatcherDelegate() {
-}
+ChromeExtensionsDispatcherDelegate::~ChromeExtensionsDispatcherDelegate() =
+    default;
 
 void ChromeExtensionsDispatcherDelegate::InitOriginPermissions(
     const extensions::Extension* extension,

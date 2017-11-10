@@ -23,8 +23,7 @@ DevModeBubbleDelegate::DevModeBubbleDelegate(Profile* profile)
     : ExtensionMessageBubbleController::Delegate(profile) {
 }
 
-DevModeBubbleDelegate::~DevModeBubbleDelegate() {
-}
+DevModeBubbleDelegate::~DevModeBubbleDelegate() = default;
 
 bool DevModeBubbleDelegate::ShouldIncludeExtension(const Extension* extension) {
   return (extension->location() == Manifest::UNPACKED ||

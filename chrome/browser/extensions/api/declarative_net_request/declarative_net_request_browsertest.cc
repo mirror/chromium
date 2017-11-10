@@ -89,7 +89,7 @@ class DeclarativeNetRequestBrowserTest
     : public ExtensionBrowserTest,
       public ::testing::WithParamInterface<ExtensionLoadType> {
  public:
-  DeclarativeNetRequestBrowserTest() {}
+  DeclarativeNetRequestBrowserTest() = default;
 
   // ExtensionBrowserTest override.
   void SetUpOnMainThread() override {

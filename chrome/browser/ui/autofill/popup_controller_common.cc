@@ -14,6 +14,6 @@ PopupControllerCommon::PopupControllerCommon(
       text_direction(text_direction),
       container_view(container_view) {}
 
-PopupControllerCommon::~PopupControllerCommon() {}
+PopupControllerCommon::~PopupControllerCommon() = default;
 
 }  // namespace autofill

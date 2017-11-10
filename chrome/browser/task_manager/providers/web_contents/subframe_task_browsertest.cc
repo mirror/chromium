@@ -54,8 +54,8 @@ base::string16 PrefixExpectedTDIRowTitle(const std::string& title) {
 // SubframeTasks.
 class SubframeTaskBrowserTest : public InProcessBrowserTest {
  public:
-  SubframeTaskBrowserTest() {}
-  ~SubframeTaskBrowserTest() override {}
+  SubframeTaskBrowserTest() = default;
+  ~SubframeTaskBrowserTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     content::IsolateAllSitesForTesting(command_line);
@@ -202,8 +202,8 @@ IN_PROC_BROWSER_TEST_F(SubframeTaskBrowserTest, TaskManagerHungSubframe) {
 // manager as SubframeTasks.
 class SubframeTaskTDIBrowserTest : public InProcessBrowserTest {
  public:
-  SubframeTaskTDIBrowserTest() {}
-  ~SubframeTaskTDIBrowserTest() override {}
+  SubframeTaskTDIBrowserTest() = default;
+  ~SubframeTaskTDIBrowserTest() override = default;
 
   void SetUpOnMainThread() override {
     scoped_feature_list_.InitAndEnableFeature(features::kTopDocumentIsolation);

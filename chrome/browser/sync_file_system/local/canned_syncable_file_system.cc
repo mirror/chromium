@@ -230,7 +230,7 @@ CannedSyncableFileSystem::CannedSyncableFileSystem(
       sync_status_observers_(new ObserverList) {
 }
 
-CannedSyncableFileSystem::~CannedSyncableFileSystem() {}
+CannedSyncableFileSystem::~CannedSyncableFileSystem() = default;
 
 void CannedSyncableFileSystem::SetUp(QuotaMode quota_mode) {
   ASSERT_FALSE(is_filesystem_set_up_);

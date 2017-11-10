@@ -22,8 +22,8 @@ namespace {
 // accesses resources.
 class SpellingOptionsSubMenuObserverTest : public InProcessBrowserTest {
  public:
-  SpellingOptionsSubMenuObserverTest() {}
-  ~SpellingOptionsSubMenuObserverTest() override {}
+  SpellingOptionsSubMenuObserverTest() = default;
+  ~SpellingOptionsSubMenuObserverTest() override = default;
 
   void SetUpOnMainThread() override {
     menu_.reset(new MockRenderViewContextMenu(false));

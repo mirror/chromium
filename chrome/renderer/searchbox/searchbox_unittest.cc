@@ -42,8 +42,7 @@ MockIconURLHelper::MockIconURLHelper() {
   rid_to_url_string_[3] = kUrlString3;
 }
 
-MockIconURLHelper::~MockIconURLHelper() {
-}
+MockIconURLHelper::~MockIconURLHelper() = default;
 
 int MockIconURLHelper::GetViewID() const {
   return 137;

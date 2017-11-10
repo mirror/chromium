@@ -39,7 +39,7 @@ class MockHotwordWebstoreInstaller
   }
 
  private:
-  ~MockHotwordWebstoreInstaller() override {}
+  ~MockHotwordWebstoreInstaller() override = default;
 };
 
 
@@ -82,8 +82,8 @@ namespace extensions {
 
 class HotwordInstallerBrowserTest : public ExtensionBrowserTest {
  public:
-  HotwordInstallerBrowserTest() {}
-  ~HotwordInstallerBrowserTest() override {}
+  HotwordInstallerBrowserTest() = default;
+  ~HotwordInstallerBrowserTest() override = default;
 
  private:
    DISALLOW_COPY_AND_ASSIGN(HotwordInstallerBrowserTest);

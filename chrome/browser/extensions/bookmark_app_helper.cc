@@ -103,7 +103,7 @@ class GeneratedIconImageSource : public gfx::CanvasImageSource {
         letter_(letter),
         color_(color),
         output_size_(output_size) {}
-  ~GeneratedIconImageSource() override {}
+  ~GeneratedIconImageSource() override = default;
 
  private:
   // gfx::CanvasImageSource overrides:
@@ -278,7 +278,7 @@ class BookmarkAppInstaller : public base::RefCounted<BookmarkAppInstaller>,
 
  private:
   friend class base::RefCounted<BookmarkAppInstaller>;
-  ~BookmarkAppInstaller() override {}
+  ~BookmarkAppInstaller() override = default;
 
   void OnIconsDownloaded(bool success,
                          const std::map<GURL, std::vector<SkBitmap>>& bitmaps) {
@@ -523,8 +523,7 @@ void BookmarkAppHelper::UpdateWebAppIconsWithoutChangingLinks(
   }
 }
 
-BookmarkAppHelper::BitmapAndSource::BitmapAndSource() {
-}
+BookmarkAppHelper::BitmapAndSource::BitmapAndSource() = default;
 
 BookmarkAppHelper::BitmapAndSource::BitmapAndSource(const GURL& source_url_p,
                                                     const SkBitmap& bitmap_p)
@@ -532,8 +531,7 @@ BookmarkAppHelper::BitmapAndSource::BitmapAndSource(const GURL& source_url_p,
       bitmap(bitmap_p) {
 }
 
-BookmarkAppHelper::BitmapAndSource::~BitmapAndSource() {
-}
+BookmarkAppHelper::BitmapAndSource::~BitmapAndSource() = default;
 
 BookmarkAppHelper::BookmarkAppHelper(Profile* profile,
                                      WebApplicationInfo web_app_info,
@@ -575,7 +573,7 @@ BookmarkAppHelper::BookmarkAppHelper(Profile* profile,
   crx_installer_->set_error_on_unsupported_requirements(true);
 }
 
-BookmarkAppHelper::~BookmarkAppHelper() {}
+BookmarkAppHelper::~BookmarkAppHelper() = default;
 
 void BookmarkAppHelper::Create(const CreateBookmarkAppCallback& callback) {
   callback_ = callback;

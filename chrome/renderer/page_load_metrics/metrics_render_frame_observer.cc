@@ -38,7 +38,7 @@ class MojoPageTimingSender : public PageTimingSender {
     render_frame->GetRemoteAssociatedInterfaces()->GetInterface(
         &page_load_metrics_);
   }
-  ~MojoPageTimingSender() override {}
+  ~MojoPageTimingSender() override = default;
   void SendTiming(const mojom::PageLoadTimingPtr& timing,
                   const mojom::PageLoadMetadataPtr& metadata,
                   mojom::PageLoadFeaturesPtr new_features) override {
@@ -59,7 +59,7 @@ MetricsRenderFrameObserver::MetricsRenderFrameObserver(
     content::RenderFrame* render_frame)
     : content::RenderFrameObserver(render_frame) {}
 
-MetricsRenderFrameObserver::~MetricsRenderFrameObserver() {}
+MetricsRenderFrameObserver::~MetricsRenderFrameObserver() = default;
 
 void MetricsRenderFrameObserver::DidChangePerformanceTiming() {
   SendMetrics();

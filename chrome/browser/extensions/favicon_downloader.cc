@@ -24,8 +24,7 @@ FaviconDownloader::FaviconDownloader(
     weak_ptr_factory_(this) {
 }
 
-FaviconDownloader::~FaviconDownloader() {
-}
+FaviconDownloader::~FaviconDownloader() = default;
 
 void FaviconDownloader::SkipPageFavicons() {
   need_favicon_urls_ = false;

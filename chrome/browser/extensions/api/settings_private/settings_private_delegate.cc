@@ -29,8 +29,7 @@ SettingsPrivateDelegate::SettingsPrivateDelegate(Profile* profile)
   prefs_util_.reset(new PrefsUtil(profile));
 }
 
-SettingsPrivateDelegate::~SettingsPrivateDelegate() {
-}
+SettingsPrivateDelegate::~SettingsPrivateDelegate() = default;
 
 std::unique_ptr<base::Value> SettingsPrivateDelegate::GetPref(
     const std::string& name) {

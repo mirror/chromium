@@ -22,7 +22,7 @@ class SingleClientSupervisedUserSettingsSyncTest : public SyncTest {
  public:
   SingleClientSupervisedUserSettingsSyncTest() : SyncTest(SINGLE_CLIENT) {}
 
-  ~SingleClientSupervisedUserSettingsSyncTest() override {}
+  ~SingleClientSupervisedUserSettingsSyncTest() override = default;
 
   // SyncTest overrides:
   void SetUpCommandLine(base::CommandLine* command_line) override {

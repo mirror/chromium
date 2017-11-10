@@ -206,7 +206,7 @@ class FakeCryptohomeClient : public chromeos::FakeCryptohomeClient {
 
 class RemoveCookieTester {
  public:
-  RemoveCookieTester() {}
+  RemoveCookieTester() = default;
 
   // Returns true, if the given cookie exists in the cookie store.
   bool ContainsCookie() {
@@ -304,7 +304,7 @@ class RemoveSafeBrowsingCookieTester : public RemoveCookieTester {
 
 class RemoveHistoryTester {
  public:
-  RemoveHistoryTester() {}
+  RemoveHistoryTester() = default;
 
   bool Init(TestingProfile* profile) WARN_UNUSED_RESULT {
     if (!profile->CreateHistoryService(true, false))
@@ -357,7 +357,7 @@ class RemoveHistoryTester {
 
 class RemoveFaviconTester {
  public:
-  RemoveFaviconTester() {}
+  RemoveFaviconTester() = default;
 
   bool Init(TestingProfile* profile) WARN_UNUSED_RESULT {
     // Create the history service if it has not been created yet.
@@ -442,9 +442,9 @@ class RemoveFaviconTester {
 
 class MockDomainReliabilityService : public DomainReliabilityService {
  public:
-  MockDomainReliabilityService() {}
+  MockDomainReliabilityService() = default;
 
-  ~MockDomainReliabilityService() override {}
+  ~MockDomainReliabilityService() override = default;
 
   std::unique_ptr<DomainReliabilityMonitor> CreateMonitor(
       scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
@@ -505,7 +505,7 @@ struct TestingDomainReliabilityServiceFactoryUserData
       : context(context),
         service(service),
         attached(false) {}
-  ~TestingDomainReliabilityServiceFactoryUserData() override {}
+  ~TestingDomainReliabilityServiceFactoryUserData() override = default;
 
   content::BrowserContext* const context;
   MockDomainReliabilityService* const service;
@@ -608,8 +608,8 @@ class RemovePasswordsTester {
 // BrowsingDataRemover.
 class BrowsingDataTestingProfile : public TestingProfile {
  public:
-  BrowsingDataTestingProfile() {}
-  ~BrowsingDataTestingProfile() override {}
+  BrowsingDataTestingProfile() = default;
+  ~BrowsingDataTestingProfile() override = default;
 
   content::SSLHostStateDelegate* GetSSLHostStateDelegate() override {
     return ChromeSSLHostStateDelegateFactory::GetForProfile(this);
@@ -669,7 +669,7 @@ class TestBrowsingDataFlashLSOHelper : public MockBrowsingDataFlashLSOHelper {
   }
 
  private:
-  ~TestBrowsingDataFlashLSOHelper() override {}
+  ~TestBrowsingDataFlashLSOHelper() override = default;
 
   DISALLOW_COPY_AND_ASSIGN(TestBrowsingDataFlashLSOHelper);
 };
@@ -890,11 +890,11 @@ class RemoveAutofillTester : public autofill::PersonalDataManagerObserver {
 
 class MockReportingService : public net::ReportingService {
  public:
-  MockReportingService() {}
+  MockReportingService() = default;
 
   // net::ReportingService implementation:
 
-  ~MockReportingService() override {}
+  ~MockReportingService() override = default;
 
   void QueueReport(const GURL& url,
                    const std::string& group,
@@ -970,8 +970,8 @@ class ClearReportingCacheTester {
 // which is required for the tests.
 class BrowsingDataRemoverTestingProfile : public TestingProfile {
  public:
-  BrowsingDataRemoverTestingProfile() {}
-  ~BrowsingDataRemoverTestingProfile() override {}
+  BrowsingDataRemoverTestingProfile() = default;
+  ~BrowsingDataRemoverTestingProfile() override = default;
 
   content::SSLHostStateDelegate* GetSSLHostStateDelegate() override {
     return ChromeSSLHostStateDelegateFactory::GetForProfile(this);
@@ -1010,7 +1010,7 @@ class ChromeBrowsingDataRemoverDelegateTest : public testing::Test {
     TestingBrowserProcess::GetGlobal()->SetLocalState(nullptr);
   }
 
-  ~ChromeBrowsingDataRemoverDelegateTest() override {}
+  ~ChromeBrowsingDataRemoverDelegateTest() override = default;
 
   void BlockUntilBrowsingDataRemoved(const base::Time& delete_begin,
                                      const base::Time& delete_end,

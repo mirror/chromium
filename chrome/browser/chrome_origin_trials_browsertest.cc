@@ -43,7 +43,7 @@ const DisabledItemsTestData kDisabledTokensTests[] = {
 
 class ChromeOriginTrialsTest : public InProcessBrowserTest {
  protected:
-  ChromeOriginTrialsTest() {}
+  ChromeOriginTrialsTest() = default;
 
   std::string GetCommandLineSwitch(const base::StringPiece& switch_name) {
     base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();

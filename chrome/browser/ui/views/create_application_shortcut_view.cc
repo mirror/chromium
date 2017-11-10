@@ -63,7 +63,8 @@ CreateChromeApplicationShortcutView::CreateChromeApplicationShortcutView(
       chrome::DialogIdentifier::CREATE_CHROME_APPLICATION_SHORTCUT);
 }
 
-CreateChromeApplicationShortcutView::~CreateChromeApplicationShortcutView() {}
+CreateChromeApplicationShortcutView::~CreateChromeApplicationShortcutView() =
+    default;
 
 void CreateChromeApplicationShortcutView::InitControls() {
   views::Label* create_shortcuts_label =

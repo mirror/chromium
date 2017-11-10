@@ -20,7 +20,7 @@ namespace autofill {
 
 class SaveCardBubbleControllerImplTest : public DialogBrowserTest {
  public:
-  SaveCardBubbleControllerImplTest() {}
+  SaveCardBubbleControllerImplTest() = default;
 
   std::unique_ptr<base::DictionaryValue> GetTestLegalMessage() {
     std::unique_ptr<base::Value> value(base::JSONReader::Read(

@@ -50,8 +50,8 @@ const char kSupervisedUserToken[] = "supervisedusertoken";
 
 class MockChangeProcessor : public SyncChangeProcessor {
  public:
-  MockChangeProcessor() {}
-  ~MockChangeProcessor() override {}
+  MockChangeProcessor() = default;
+  ~MockChangeProcessor() override = default;
 
   // SyncChangeProcessor implementation:
   SyncError ProcessSyncChanges(const base::Location& from_here,
@@ -77,8 +77,8 @@ SyncError MockChangeProcessor::ProcessSyncChanges(
 class MockSupervisedUserRefreshTokenFetcher
     : public SupervisedUserRefreshTokenFetcher {
  public:
-  MockSupervisedUserRefreshTokenFetcher() {}
-  ~MockSupervisedUserRefreshTokenFetcher() override {}
+  MockSupervisedUserRefreshTokenFetcher() = default;
+  ~MockSupervisedUserRefreshTokenFetcher() override = default;
 
   // SupervisedUserRefreshTokenFetcher implementation:
   void Start(const std::string& supervised_user_id,

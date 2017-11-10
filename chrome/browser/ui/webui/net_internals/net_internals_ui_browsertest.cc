@@ -365,8 +365,7 @@ NetInternalsTest::NetInternalsTest()
   message_handler_.reset(new MessageHandler(this));
 }
 
-NetInternalsTest::~NetInternalsTest() {
-}
+NetInternalsTest::~NetInternalsTest() = default;
 
 void NetInternalsTest::SetUpOnMainThread() {
   WebUIBrowserTest::SetUpOnMainThread();

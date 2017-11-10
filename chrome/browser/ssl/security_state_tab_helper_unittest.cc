@@ -53,7 +53,7 @@ class SecurityStateTabHelperHistogramTest
       public testing::WithParamInterface<bool> {
  public:
   SecurityStateTabHelperHistogramTest() : helper_(nullptr) {}
-  ~SecurityStateTabHelperHistogramTest() override {}
+  ~SecurityStateTabHelperHistogramTest() override = default;
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();

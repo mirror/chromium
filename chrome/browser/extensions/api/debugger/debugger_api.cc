@@ -121,8 +121,7 @@ ExtensionDevToolsInfoBarDelegate::ExtensionDevToolsInfoBarDelegate(
       client_name_(base::UTF8ToUTF16(client_name)),
       dismissed_callback_(dismissed_callback) {}
 
-ExtensionDevToolsInfoBarDelegate::~ExtensionDevToolsInfoBarDelegate() {
-}
+ExtensionDevToolsInfoBarDelegate::~ExtensionDevToolsInfoBarDelegate() = default;
 
 infobars::InfoBarDelegate::Type
 ExtensionDevToolsInfoBarDelegate::GetInfoBarType() const {
@@ -477,8 +476,7 @@ DebuggerFunction::DebuggerFunction()
     : client_host_(NULL) {
 }
 
-DebuggerFunction::~DebuggerFunction() {
-}
+DebuggerFunction::~DebuggerFunction() = default;
 
 void DebuggerFunction::FormatErrorMessage(const std::string& format) {
   if (debuggee_.tab_id)
@@ -576,11 +574,9 @@ ExtensionDevToolsClientHost* DebuggerFunction::FindClientHost() {
 
 // DebuggerAttachFunction -----------------------------------------------------
 
-DebuggerAttachFunction::DebuggerAttachFunction() {
-}
+DebuggerAttachFunction::DebuggerAttachFunction() = default;
 
-DebuggerAttachFunction::~DebuggerAttachFunction() {
-}
+DebuggerAttachFunction::~DebuggerAttachFunction() = default;
 
 bool DebuggerAttachFunction::RunAsync() {
   std::unique_ptr<Attach::Params> params(Attach::Params::Create(*args_));
@@ -613,11 +609,9 @@ bool DebuggerAttachFunction::RunAsync() {
 
 // DebuggerDetachFunction -----------------------------------------------------
 
-DebuggerDetachFunction::DebuggerDetachFunction() {
-}
+DebuggerDetachFunction::DebuggerDetachFunction() = default;
 
-DebuggerDetachFunction::~DebuggerDetachFunction() {
-}
+DebuggerDetachFunction::~DebuggerDetachFunction() = default;
 
 bool DebuggerDetachFunction::RunAsync() {
   std::unique_ptr<Detach::Params> params(Detach::Params::Create(*args_));
@@ -635,11 +629,9 @@ bool DebuggerDetachFunction::RunAsync() {
 
 // DebuggerSendCommandFunction ------------------------------------------------
 
-DebuggerSendCommandFunction::DebuggerSendCommandFunction() {
-}
+DebuggerSendCommandFunction::DebuggerSendCommandFunction() = default;
 
-DebuggerSendCommandFunction::~DebuggerSendCommandFunction() {
-}
+DebuggerSendCommandFunction::~DebuggerSendCommandFunction() = default;
 
 bool DebuggerSendCommandFunction::RunAsync() {
   std::unique_ptr<SendCommand::Params> params(
@@ -722,11 +714,9 @@ std::unique_ptr<base::DictionaryValue> SerializeTarget(
 
 }  // namespace
 
-DebuggerGetTargetsFunction::DebuggerGetTargetsFunction() {
-}
+DebuggerGetTargetsFunction::DebuggerGetTargetsFunction() = default;
 
-DebuggerGetTargetsFunction::~DebuggerGetTargetsFunction() {
-}
+DebuggerGetTargetsFunction::~DebuggerGetTargetsFunction() = default;
 
 bool DebuggerGetTargetsFunction::RunAsync() {
   content::DevToolsAgentHost::List list = DevToolsAgentHost::GetOrCreateAll();

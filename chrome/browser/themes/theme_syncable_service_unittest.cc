@@ -61,7 +61,7 @@ const base::FilePath::CharType kExtensionFilePath[] = FILE_PATH_LITERAL("/oo");
 
 class FakeThemeService : public ThemeService {
  public:
-  FakeThemeService() {}
+  FakeThemeService() = default;
 
   // ThemeService implementation
   void DoSetTheme(const extensions::Extension* extension,
@@ -157,7 +157,7 @@ class ThemeSyncableServiceTest : public testing::Test {
  protected:
   ThemeSyncableServiceTest() : fake_theme_service_(NULL) {}
 
-  ~ThemeSyncableServiceTest() override {}
+  ~ThemeSyncableServiceTest() override = default;
 
   void SetUp() override {
     // Setting a matching update URL is necessary to make the test theme

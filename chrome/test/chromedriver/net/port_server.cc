@@ -47,7 +47,7 @@ PortServer::PortServer(const std::string& path) : path_(path) {
       << "path must be for Linux abstract namespace";
 }
 
-PortServer::~PortServer() {}
+PortServer::~PortServer() = default;
 
 Status PortServer::ReservePort(uint16_t* port,
                                std::unique_ptr<PortReservation>* reservation) {
@@ -147,7 +147,7 @@ PortManager::PortManager(uint16_t min_port, uint16_t max_port)
   CHECK_GE(max_port_, min_port_);
 }
 
-PortManager::~PortManager() {}
+PortManager::~PortManager() = default;
 
 uint16_t PortManager::FindAvailablePort() const {
   uint16_t start = static_cast<uint16_t>(base::RandInt(min_port_, max_port_));

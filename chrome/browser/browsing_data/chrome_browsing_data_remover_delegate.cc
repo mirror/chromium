@@ -304,7 +304,7 @@ ChromeBrowsingDataRemoverDelegate::SubTask::SubTask(
   DCHECK(!forward_callback_.is_null());
 }
 
-ChromeBrowsingDataRemoverDelegate::SubTask::~SubTask() {}
+ChromeBrowsingDataRemoverDelegate::SubTask::~SubTask() = default;
 
 void ChromeBrowsingDataRemoverDelegate::SubTask::Start() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -366,7 +366,8 @@ ChromeBrowsingDataRemoverDelegate::ChromeBrowsingDataRemoverDelegate(
 #endif
       weak_ptr_factory_(this) {}
 
-ChromeBrowsingDataRemoverDelegate::~ChromeBrowsingDataRemoverDelegate() {}
+ChromeBrowsingDataRemoverDelegate::~ChromeBrowsingDataRemoverDelegate() =
+    default;
 
 void ChromeBrowsingDataRemoverDelegate::Shutdown() {
   history_task_tracker_.TryCancelAll();

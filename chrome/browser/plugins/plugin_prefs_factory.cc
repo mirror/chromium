@@ -39,7 +39,7 @@ PluginPrefsFactory::PluginPrefsFactory()
           "PluginPrefs", BrowserContextDependencyManager::GetInstance()) {
 }
 
-PluginPrefsFactory::~PluginPrefsFactory() {}
+PluginPrefsFactory::~PluginPrefsFactory() = default;
 
 scoped_refptr<RefcountedKeyedService>
 PluginPrefsFactory::BuildServiceInstanceFor(

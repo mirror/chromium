@@ -31,7 +31,7 @@ class ChromePermissionMessageProviderUnittest : public testing::Test {
  public:
   ChromePermissionMessageProviderUnittest()
       : message_provider_(new ChromePermissionMessageProvider()) {}
-  ~ChromePermissionMessageProviderUnittest() override {}
+  ~ChromePermissionMessageProviderUnittest() override = default;
 
  protected:
   PermissionMessages GetMessages(const APIPermissionSet& permissions,

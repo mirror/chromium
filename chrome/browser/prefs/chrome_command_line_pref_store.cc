@@ -104,7 +104,7 @@ ChromeCommandLinePrefStore::ChromeCommandLinePrefStore(
   ApplyBackgroundModeSwitches();
 }
 
-ChromeCommandLinePrefStore::~ChromeCommandLinePrefStore() {}
+ChromeCommandLinePrefStore::~ChromeCommandLinePrefStore() = default;
 
 bool ChromeCommandLinePrefStore::ValidateProxySwitches() {
   if (command_line()->HasSwitch(switches::kNoProxyServer) &&

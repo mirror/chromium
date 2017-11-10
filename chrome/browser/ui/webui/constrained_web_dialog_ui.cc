@@ -42,7 +42,7 @@ class ConstrainedWebDialogDelegateUserData
  public:
   explicit ConstrainedWebDialogDelegateUserData(
       ConstrainedWebDialogDelegate* delegate) : delegate_(delegate) {}
-  ~ConstrainedWebDialogDelegateUserData() override {}
+  ~ConstrainedWebDialogDelegateUserData() override = default;
 
   ConstrainedWebDialogDelegate* delegate() { return delegate_; }
 
@@ -61,8 +61,7 @@ ConstrainedWebDialogUI::ConstrainedWebDialogUI(content::WebUI* web_ui)
 #endif
 }
 
-ConstrainedWebDialogUI::~ConstrainedWebDialogUI() {
-}
+ConstrainedWebDialogUI::~ConstrainedWebDialogUI() = default;
 
 void ConstrainedWebDialogUI::RenderFrameCreated(
     RenderFrameHost* render_frame_host) {

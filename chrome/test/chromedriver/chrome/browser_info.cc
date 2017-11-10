@@ -47,7 +47,7 @@ BrowserInfo::BrowserInfo(std::string android_package,
       is_android(is_android) {
 }
 
-BrowserInfo::~BrowserInfo() {}
+BrowserInfo::~BrowserInfo() = default;
 
 Status ParseBrowserInfo(const std::string& data, BrowserInfo* browser_info) {
   std::unique_ptr<base::Value> value = base::JSONReader::Read(data);

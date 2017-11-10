@@ -7,7 +7,7 @@
 ThemeCopyingWidget::ThemeCopyingWidget(views::Widget* role_model)
     : role_model_(role_model) {}
 
-ThemeCopyingWidget::~ThemeCopyingWidget() {}
+ThemeCopyingWidget::~ThemeCopyingWidget() = default;
 
 const ui::NativeTheme* ThemeCopyingWidget::GetNativeTheme() const {
   return role_model_->GetNativeTheme();

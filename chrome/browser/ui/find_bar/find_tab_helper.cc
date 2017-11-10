@@ -38,8 +38,7 @@ FindTabHelper::FindTabHelper(WebContents* web_contents)
       last_search_result_() {
 }
 
-FindTabHelper::~FindTabHelper() {
-}
+FindTabHelper::~FindTabHelper() = default;
 
 void FindTabHelper::StartFinding(base::string16 search_string,
                                  bool forward_direction,

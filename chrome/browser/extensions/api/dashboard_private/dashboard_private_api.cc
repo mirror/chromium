@@ -47,12 +47,11 @@ api::dashboard_private::Result WebstoreInstallHelperResultToApiResult(
 }  // namespace
 
 DashboardPrivateShowPermissionPromptForDelegatedInstallFunction::
-    DashboardPrivateShowPermissionPromptForDelegatedInstallFunction() {
-}
+    DashboardPrivateShowPermissionPromptForDelegatedInstallFunction() = default;
 
 DashboardPrivateShowPermissionPromptForDelegatedInstallFunction::
-    ~DashboardPrivateShowPermissionPromptForDelegatedInstallFunction() {
-}
+    ~DashboardPrivateShowPermissionPromptForDelegatedInstallFunction() =
+        default;
 
 ExtensionFunction::ResponseAction
 DashboardPrivateShowPermissionPromptForDelegatedInstallFunction::Run() {

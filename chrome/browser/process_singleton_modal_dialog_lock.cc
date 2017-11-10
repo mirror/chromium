@@ -12,7 +12,7 @@ ProcessSingletonModalDialogLock::ProcessSingletonModalDialogLock(
     const ProcessSingleton::NotificationCallback& original_callback)
     : original_callback_(original_callback) {}
 
-ProcessSingletonModalDialogLock::~ProcessSingletonModalDialogLock() {}
+ProcessSingletonModalDialogLock::~ProcessSingletonModalDialogLock() = default;
 
 void ProcessSingletonModalDialogLock::SetModalDialogNotificationHandler(
     base::Closure notification_handler) {

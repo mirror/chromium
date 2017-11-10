@@ -19,8 +19,8 @@ namespace {
 
 class ShareTargetPrefHelperUnittest : public testing::Test {
  protected:
-  ShareTargetPrefHelperUnittest() {}
-  ~ShareTargetPrefHelperUnittest() override {}
+  ShareTargetPrefHelperUnittest() = default;
+  ~ShareTargetPrefHelperUnittest() override = default;
 
   void SetUp() override {
     pref_service_.reset(new TestingPrefServiceSimple());

@@ -21,7 +21,7 @@ namespace extensions {
 TopSitesGetFunction::TopSitesGetFunction()
     : weak_ptr_factory_(this) {}
 
-TopSitesGetFunction::~TopSitesGetFunction() {}
+TopSitesGetFunction::~TopSitesGetFunction() = default;
 
 bool TopSitesGetFunction::RunAsync() {
   scoped_refptr<history::TopSites> ts =

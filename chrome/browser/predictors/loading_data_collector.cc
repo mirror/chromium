@@ -63,7 +63,7 @@ OriginRequestSummary::OriginRequestSummary()
 OriginRequestSummary::OriginRequestSummary(const OriginRequestSummary& other) =
     default;
 
-OriginRequestSummary::~OriginRequestSummary() {}
+OriginRequestSummary::~OriginRequestSummary() = default;
 
 URLRequestSummary::URLRequestSummary()
     : resource_type(content::RESOURCE_TYPE_LAST_TYPE),
@@ -77,7 +77,7 @@ URLRequestSummary::URLRequestSummary()
 
 URLRequestSummary::URLRequestSummary(const URLRequestSummary& other) = default;
 
-URLRequestSummary::~URLRequestSummary() {}
+URLRequestSummary::~URLRequestSummary() = default;
 
 // static
 bool URLRequestSummary::SummarizeResponse(const net::URLRequest& request,
@@ -156,7 +156,7 @@ void PageRequestSummary::UpdateOrAddToOrigins(
   it->second.accessed_network |= request_summary.network_accessed;
 }
 
-PageRequestSummary::~PageRequestSummary() {}
+PageRequestSummary::~PageRequestSummary() = default;
 
 // static
 content::ResourceType LoadingDataCollector::GetResourceTypeFromMimeType(
@@ -313,7 +313,7 @@ LoadingDataCollector::LoadingDataCollector(
       stats_collector_(stats_collector),
       config_(config) {}
 
-LoadingDataCollector::~LoadingDataCollector() {}
+LoadingDataCollector::~LoadingDataCollector() = default;
 
 void LoadingDataCollector::RecordURLRequest(const URLRequestSummary& request) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

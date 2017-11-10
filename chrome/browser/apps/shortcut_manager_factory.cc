@@ -26,8 +26,7 @@ AppShortcutManagerFactory::AppShortcutManagerFactory()
         BrowserContextDependencyManager::GetInstance()) {
 }
 
-AppShortcutManagerFactory::~AppShortcutManagerFactory() {
-}
+AppShortcutManagerFactory::~AppShortcutManagerFactory() = default;
 
 KeyedService* AppShortcutManagerFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

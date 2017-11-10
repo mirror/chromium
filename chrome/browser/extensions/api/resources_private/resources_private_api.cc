@@ -58,9 +58,11 @@ void AddStringsForPdf(base::DictionaryValue* dict) {
 
 namespace get_strings = api::resources_private::GetStrings;
 
-ResourcesPrivateGetStringsFunction::ResourcesPrivateGetStringsFunction() {}
+ResourcesPrivateGetStringsFunction::ResourcesPrivateGetStringsFunction() =
+    default;
 
-ResourcesPrivateGetStringsFunction::~ResourcesPrivateGetStringsFunction() {}
+ResourcesPrivateGetStringsFunction::~ResourcesPrivateGetStringsFunction() =
+    default;
 
 ExtensionFunction::ResponseAction ResourcesPrivateGetStringsFunction::Run() {
   std::unique_ptr<get_strings::Params> params(

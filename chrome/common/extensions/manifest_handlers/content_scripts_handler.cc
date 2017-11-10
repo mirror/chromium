@@ -335,11 +335,9 @@ static base::LazyInstance<EmptyUserScriptList>::DestructorAtExit
 
 }  // namespace
 
-ContentScriptsInfo::ContentScriptsInfo() {
-}
+ContentScriptsInfo::ContentScriptsInfo() = default;
 
-ContentScriptsInfo::~ContentScriptsInfo() {
-}
+ContentScriptsInfo::~ContentScriptsInfo() = default;
 
 // static
 const UserScriptList& ContentScriptsInfo::GetContentScripts(
@@ -373,11 +371,9 @@ URLPatternSet ContentScriptsInfo::GetScriptableHosts(
   return scriptable_hosts;
 }
 
-ContentScriptsHandler::ContentScriptsHandler() {
-}
+ContentScriptsHandler::ContentScriptsHandler() = default;
 
-ContentScriptsHandler::~ContentScriptsHandler() {
-}
+ContentScriptsHandler::~ContentScriptsHandler() = default;
 
 const std::vector<std::string> ContentScriptsHandler::Keys() const {
   static const char* const keys[] = {

@@ -35,7 +35,7 @@ ExtensionSyncServiceFactory::ExtensionSyncServiceFactory()
   DependsOn(extensions::ExtensionSystemFactory::GetInstance());
 }
 
-ExtensionSyncServiceFactory::~ExtensionSyncServiceFactory() {}
+ExtensionSyncServiceFactory::~ExtensionSyncServiceFactory() = default;
 
 KeyedService* ExtensionSyncServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

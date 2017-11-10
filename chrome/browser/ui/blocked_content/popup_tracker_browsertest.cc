@@ -34,8 +34,8 @@ const char kPopupEngagement[] =
 
 class PopupTrackerBrowserTest : public InProcessBrowserTest {
  public:
-  PopupTrackerBrowserTest() {}
-  ~PopupTrackerBrowserTest() override {}
+  PopupTrackerBrowserTest() = default;
+  ~PopupTrackerBrowserTest() override = default;
 
   void SetUpOnMainThread() override {
     ASSERT_TRUE(embedded_test_server()->Start());

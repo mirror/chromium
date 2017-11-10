@@ -46,4 +46,5 @@ ContextualSuggestionsServiceFactory::ContextualSuggestionsServiceFactory()
   DependsOn(ProfileOAuth2TokenServiceFactory::GetInstance());
 }
 
-ContextualSuggestionsServiceFactory::~ContextualSuggestionsServiceFactory() {}
+ContextualSuggestionsServiceFactory::~ContextualSuggestionsServiceFactory() =
+    default;

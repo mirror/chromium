@@ -52,7 +52,7 @@ ProfileInfoHandler::ProfileInfoHandler(Profile* profile)
 #endif
 }
 
-ProfileInfoHandler::~ProfileInfoHandler() {}
+ProfileInfoHandler::~ProfileInfoHandler() = default;
 
 void ProfileInfoHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

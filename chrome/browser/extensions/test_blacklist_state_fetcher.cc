@@ -40,8 +40,7 @@ TestBlacklistStateFetcher::TestBlacklistStateFetcher(
   fetcher_->SetURLRequestContextForTest(context.get());
 }
 
-TestBlacklistStateFetcher::~TestBlacklistStateFetcher() {
-}
+TestBlacklistStateFetcher::~TestBlacklistStateFetcher() = default;
 
 void TestBlacklistStateFetcher::SetBlacklistVerdict(
     const std::string& id, ClientCRXListInfoResponse_Verdict state) {

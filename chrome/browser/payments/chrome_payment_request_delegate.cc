@@ -54,7 +54,7 @@ ChromePaymentRequestDelegate::ChromePaymentRequestDelegate(
     content::WebContents* web_contents)
     : dialog_(nullptr), web_contents_(web_contents) {}
 
-ChromePaymentRequestDelegate::~ChromePaymentRequestDelegate() {}
+ChromePaymentRequestDelegate::~ChromePaymentRequestDelegate() = default;
 
 void ChromePaymentRequestDelegate::ShowDialog(PaymentRequest* request) {
   DCHECK_EQ(nullptr, dialog_);

@@ -20,8 +20,8 @@ namespace media_router {
 // methods with mock methods, so we must override them again.
 class MockMediaRouterBase : public MockMediaRouter {
  public:
-  MockMediaRouterBase() {}
-  ~MockMediaRouterBase() override {}
+  MockMediaRouterBase() = default;
+  ~MockMediaRouterBase() override = default;
 
   std::unique_ptr<PresentationConnectionStateSubscription>
   AddPresentationConnectionStateChangedCallback(

@@ -70,8 +70,7 @@ HungPagesTableModel::HungPagesTableModel(Delegate* delegate)
       delegate_(delegate) {
 }
 
-HungPagesTableModel::~HungPagesTableModel() {
-}
+HungPagesTableModel::~HungPagesTableModel() = default;
 
 content::RenderProcessHost* HungPagesTableModel::GetRenderProcessHost() {
   return tab_observers_.empty()

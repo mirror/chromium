@@ -49,8 +49,7 @@ HistoryTabHelper::HistoryTabHelper(WebContents* web_contents)
       received_page_title_(false) {
 }
 
-HistoryTabHelper::~HistoryTabHelper() {
-}
+HistoryTabHelper::~HistoryTabHelper() = default;
 
 void HistoryTabHelper::UpdateHistoryForNavigation(
     const history::HistoryAddPageArgs& add_page_args) {

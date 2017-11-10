@@ -15,6 +15,6 @@ ArchiveAnalyzerResults::ArchiveAnalyzerResults()
 ArchiveAnalyzerResults::ArchiveAnalyzerResults(
     const ArchiveAnalyzerResults& other) = default;
 
-ArchiveAnalyzerResults::~ArchiveAnalyzerResults() {}
+ArchiveAnalyzerResults::~ArchiveAnalyzerResults() = default;
 
 }  // namespace safe_browsing

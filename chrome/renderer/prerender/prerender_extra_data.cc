@@ -17,8 +17,7 @@ PrerenderExtraData::PrerenderExtraData(
       size_(size) {
 }
 
-PrerenderExtraData::~PrerenderExtraData() {
-}
+PrerenderExtraData::~PrerenderExtraData() = default;
 
 // static
 const PrerenderExtraData& PrerenderExtraData::FromPrerender(

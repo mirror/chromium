@@ -52,7 +52,7 @@ class InstallTrackerTest : public testing::Test {
     tracker_.reset(new InstallTracker(profile_.get(), NULL));
   }
 
-  ~InstallTrackerTest() override {}
+  ~InstallTrackerTest() override = default;
 
  protected:
   Profile* profile() { return profile_.get(); }

@@ -9,11 +9,9 @@
 #include "chrome/browser/policy/chrome_browser_policy_connector.h"
 #include "components/policy/core/browser/browser_policy_connector.h"
 
-BrowserProcessPlatformPartBase::BrowserProcessPlatformPartBase() {
-}
+BrowserProcessPlatformPartBase::BrowserProcessPlatformPartBase() = default;
 
-BrowserProcessPlatformPartBase::~BrowserProcessPlatformPartBase() {
-}
+BrowserProcessPlatformPartBase::~BrowserProcessPlatformPartBase() = default;
 
 void BrowserProcessPlatformPartBase::PlatformSpecificCommandLineProcessing(
     const base::CommandLine& /* command_line */) {

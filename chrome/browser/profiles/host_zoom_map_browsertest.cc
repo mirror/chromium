@@ -84,7 +84,7 @@ class ZoomLevelChangeObserver {
 
 class HostZoomMapBrowserTest : public InProcessBrowserTest {
  public:
-  HostZoomMapBrowserTest() {}
+  HostZoomMapBrowserTest() = default;
 
  protected:
   void SetDefaultZoomLevel(double level) {

@@ -18,7 +18,7 @@ GAIAInfoUpdateServiceFactory::GAIAInfoUpdateServiceFactory()
   DependsOn(SigninManagerFactory::GetInstance());
 }
 
-GAIAInfoUpdateServiceFactory::~GAIAInfoUpdateServiceFactory() {}
+GAIAInfoUpdateServiceFactory::~GAIAInfoUpdateServiceFactory() = default;
 
 // static
 GAIAInfoUpdateService* GAIAInfoUpdateServiceFactory::GetForProfile(

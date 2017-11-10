@@ -39,7 +39,7 @@ class Controller : public CreditCardScannerViewDelegate,
   }
 
  private:
-  ~Controller() override {}
+  ~Controller() override = default;
 
   // CreditCardScannerViewDelegate implementation.
   void ScanCancelled() override {

@@ -19,7 +19,7 @@ PDFPluginPlaceholder::PDFPluginPlaceholder(content::RenderFrame* render_frame,
                                            const std::string& html_data)
     : plugins::PluginPlaceholderBase(render_frame, params, html_data) {}
 
-PDFPluginPlaceholder::~PDFPluginPlaceholder() {}
+PDFPluginPlaceholder::~PDFPluginPlaceholder() = default;
 
 PDFPluginPlaceholder* PDFPluginPlaceholder::CreatePDFPlaceholder(
     content::RenderFrame* render_frame,

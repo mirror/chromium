@@ -31,7 +31,7 @@ ExtensionNotificationDisplayHelperFactory::
           BrowserContextDependencyManager::GetInstance()) {}
 
 ExtensionNotificationDisplayHelperFactory::
-    ~ExtensionNotificationDisplayHelperFactory() {}
+    ~ExtensionNotificationDisplayHelperFactory() = default;
 
 KeyedService*
 ExtensionNotificationDisplayHelperFactory::BuildServiceInstanceFor(

@@ -42,14 +42,12 @@ FaviconSource::IconRequest::IconRequest(
 
 FaviconSource::IconRequest::IconRequest(const IconRequest& other) = default;
 
-FaviconSource::IconRequest::~IconRequest() {
-}
+FaviconSource::IconRequest::~IconRequest() = default;
 
 FaviconSource::FaviconSource(Profile* profile)
     : profile_(profile->GetOriginalProfile()) {}
 
-FaviconSource::~FaviconSource() {
-}
+FaviconSource::~FaviconSource() = default;
 
 std::string FaviconSource::GetSource() const {
   return chrome::kChromeUIFaviconHost;

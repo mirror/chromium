@@ -235,7 +235,7 @@ IN_PROC_BROWSER_TEST_F(ChromeTracingDelegateBrowserTest,
 class ChromeTracingDelegateBrowserTestOnStartup
     : public ChromeTracingDelegateBrowserTest {
  protected:
-  ChromeTracingDelegateBrowserTestOnStartup() {}
+  ChromeTracingDelegateBrowserTestOnStartup() = default;
 
   static void FieldTrialConfigTextFilter(std::string* config_text) {
     ASSERT_TRUE(config_text);

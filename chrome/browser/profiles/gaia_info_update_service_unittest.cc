@@ -44,8 +44,7 @@ class ProfileDownloaderMock : public ProfileDownloader {
       : ProfileDownloader(delegate) {
   }
 
-  virtual ~ProfileDownloaderMock() {
-  }
+  virtual ~ProfileDownloaderMock() = default;
 
   MOCK_CONST_METHOD0(GetProfileFullName, base::string16());
   MOCK_CONST_METHOD0(GetProfileGivenName, base::string16());
@@ -62,8 +61,7 @@ class GAIAInfoUpdateServiceMock : public GAIAInfoUpdateService {
       : GAIAInfoUpdateService(profile) {
   }
 
-  virtual ~GAIAInfoUpdateServiceMock() {
-  }
+  virtual ~GAIAInfoUpdateServiceMock() = default;
 
   MOCK_METHOD0(Update, void());
 };

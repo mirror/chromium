@@ -112,8 +112,7 @@ void TaskGroupSampler::Refresh(int64_t refresh_flags) {
   }
 }
 
-TaskGroupSampler::~TaskGroupSampler() {
-}
+TaskGroupSampler::~TaskGroupSampler() = default;
 
 double TaskGroupSampler::RefreshCpuUsage() {
   DCHECK(worker_pool_sequenced_checker_.CalledOnValidSequence());

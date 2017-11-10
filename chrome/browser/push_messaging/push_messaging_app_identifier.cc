@@ -204,7 +204,7 @@ PushMessagingAppIdentifier::PushMessagingAppIdentifier(
       origin_(origin),
       service_worker_registration_id_(service_worker_registration_id) {}
 
-PushMessagingAppIdentifier::~PushMessagingAppIdentifier() {}
+PushMessagingAppIdentifier::~PushMessagingAppIdentifier() = default;
 
 void PushMessagingAppIdentifier::PersistToPrefs(Profile* profile) const {
   DCheckValid();

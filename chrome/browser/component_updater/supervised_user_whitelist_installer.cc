@@ -253,7 +253,7 @@ class SupervisedUserWhitelistComponentInstallerPolicy
       const std::string& name,
       const RawWhitelistReadyCallback& callback)
       : crx_id_(crx_id), name_(name), callback_(callback) {}
-  ~SupervisedUserWhitelistComponentInstallerPolicy() override {}
+  ~SupervisedUserWhitelistComponentInstallerPolicy() override = default;
 
  private:
   // ComponentInstallerPolicy overrides:
@@ -359,7 +359,7 @@ class SupervisedUserWhitelistInstallerImpl
       ComponentUpdateService* cus,
       ProfileAttributesStorage* profile_attributes_storage,
       PrefService* local_state);
-  ~SupervisedUserWhitelistInstallerImpl() override {}
+  ~SupervisedUserWhitelistInstallerImpl() override = default;
 
  private:
   void RegisterComponent(const std::string& crx_id,

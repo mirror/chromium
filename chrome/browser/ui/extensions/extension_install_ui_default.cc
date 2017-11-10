@@ -104,8 +104,7 @@ ErrorInfoBarDelegate::ErrorInfoBarDelegate(
     : ConfirmInfoBarDelegate(), error_(error) {
 }
 
-ErrorInfoBarDelegate::~ErrorInfoBarDelegate() {
-}
+ErrorInfoBarDelegate::~ErrorInfoBarDelegate() = default;
 
 infobars::InfoBarDelegate::InfoBarIdentifier
 ErrorInfoBarDelegate::GetIdentifier() const {
@@ -138,7 +137,7 @@ ExtensionInstallUIDefault::ExtensionInstallUIDefault(
       skip_post_install_ui_(false),
       use_app_installed_bubble_(false) {}
 
-ExtensionInstallUIDefault::~ExtensionInstallUIDefault() {}
+ExtensionInstallUIDefault::~ExtensionInstallUIDefault() = default;
 
 void ExtensionInstallUIDefault::OnInstallSuccess(const Extension* extension,
                                                  const SkBitmap* icon) {

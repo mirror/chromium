@@ -45,7 +45,7 @@ UserPolicySigninServiceBase::UserPolicySigninServiceBase(
                  content::Source<Profile>(profile));
 }
 
-UserPolicySigninServiceBase::~UserPolicySigninServiceBase() {}
+UserPolicySigninServiceBase::~UserPolicySigninServiceBase() = default;
 
 void UserPolicySigninServiceBase::FetchPolicyForSignedInUser(
     const std::string& username,

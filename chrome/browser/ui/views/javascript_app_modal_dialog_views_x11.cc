@@ -18,8 +18,7 @@ JavaScriptAppModalDialogViewsX11::JavaScriptAppModalDialogViewsX11(
       chrome::DialogIdentifier::JAVA_SCRIPT_APP_MODAL_X11);
 }
 
-JavaScriptAppModalDialogViewsX11::~JavaScriptAppModalDialogViewsX11() {
-}
+JavaScriptAppModalDialogViewsX11::~JavaScriptAppModalDialogViewsX11() = default;
 
 void JavaScriptAppModalDialogViewsX11::ShowAppModalDialog() {
   // BrowserView::CanActivate() ensures that other browser windows cannot be

@@ -106,8 +106,7 @@ bool SupervisedUserPrefStore::IsInitializationComplete() const {
   return !!prefs_;
 }
 
-SupervisedUserPrefStore::~SupervisedUserPrefStore() {
-}
+SupervisedUserPrefStore::~SupervisedUserPrefStore() = default;
 
 void SupervisedUserPrefStore::OnNewSettingsAvailable(
     const base::DictionaryValue* settings) {

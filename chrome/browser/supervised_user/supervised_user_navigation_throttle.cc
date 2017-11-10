@@ -143,7 +143,7 @@ SupervisedUserNavigationThrottle::SupervisedUserNavigationThrottle(
       behavior_(SupervisedUserURLFilter::INVALID),
       weak_ptr_factory_(this) {}
 
-SupervisedUserNavigationThrottle::~SupervisedUserNavigationThrottle() {}
+SupervisedUserNavigationThrottle::~SupervisedUserNavigationThrottle() = default;
 
 content::NavigationThrottle::ThrottleCheckResult
 SupervisedUserNavigationThrottle::CheckURL() {

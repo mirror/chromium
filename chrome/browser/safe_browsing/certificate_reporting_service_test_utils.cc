@@ -80,7 +80,7 @@ namespace certificate_reporting_test_utils {
 RequestObserver::RequestObserver()
     : num_events_to_wait_for_(0u), num_received_events_(0u) {}
 
-RequestObserver::~RequestObserver() {}
+RequestObserver::~RequestObserver() = default;
 
 void RequestObserver::Wait(unsigned int num_events_to_wait_for) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -327,11 +327,11 @@ void CertReportJobInterceptor::RequestDestructed(
                                         expected_report_result);
 }
 
-ReportExpectation::ReportExpectation() {}
+ReportExpectation::ReportExpectation() = default;
 
 ReportExpectation::ReportExpectation(const ReportExpectation& other) = default;
 
-ReportExpectation::~ReportExpectation() {}
+ReportExpectation::~ReportExpectation() = default;
 
 // static
 ReportExpectation ReportExpectation::Successful(
@@ -360,9 +360,11 @@ int ReportExpectation::num_reports() const {
          delayed_reports.size();
 }
 
-CertificateReportingServiceObserver::CertificateReportingServiceObserver() {}
+CertificateReportingServiceObserver::CertificateReportingServiceObserver() =
+    default;
 
-CertificateReportingServiceObserver::~CertificateReportingServiceObserver() {}
+CertificateReportingServiceObserver::~CertificateReportingServiceObserver() =
+    default;
 
 void CertificateReportingServiceObserver::Clear() {
   did_reset_ = false;
@@ -389,7 +391,7 @@ CertificateReportingServiceTestHelper::CertificateReportingServiceTestHelper() {
 }
 
 CertificateReportingServiceTestHelper::
-    ~CertificateReportingServiceTestHelper() {}
+    ~CertificateReportingServiceTestHelper() = default;
 
 void CertificateReportingServiceTestHelper::SetUpInterceptor() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);

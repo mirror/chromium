@@ -62,7 +62,7 @@ AudioDebugRecordingsHandler::AudioDebugRecordingsHandler(
   DCHECK(audio_manager_);
 }
 
-AudioDebugRecordingsHandler::~AudioDebugRecordingsHandler() {}
+AudioDebugRecordingsHandler::~AudioDebugRecordingsHandler() = default;
 
 void AudioDebugRecordingsHandler::StartAudioDebugRecordings(
     content::RenderProcessHost* host,

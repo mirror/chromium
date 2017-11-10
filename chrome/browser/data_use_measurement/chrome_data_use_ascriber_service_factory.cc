@@ -29,7 +29,8 @@ ChromeDataUseAscriberServiceFactory::ChromeDataUseAscriberServiceFactory()
           "ChromeDataUseAscriberService",
           BrowserContextDependencyManager::GetInstance()) {}
 
-ChromeDataUseAscriberServiceFactory::~ChromeDataUseAscriberServiceFactory() {}
+ChromeDataUseAscriberServiceFactory::~ChromeDataUseAscriberServiceFactory() =
+    default;
 
 KeyedService* ChromeDataUseAscriberServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

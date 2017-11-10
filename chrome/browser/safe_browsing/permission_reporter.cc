@@ -204,7 +204,7 @@ PermissionReporter::PermissionReporter(
     : permission_report_sender_(std::move(report_sender)),
       clock_(std::move(clock)) {}
 
-PermissionReporter::~PermissionReporter() {}
+PermissionReporter::~PermissionReporter() = default;
 
 void PermissionReporter::SendReport(const PermissionReportInfo& report_info) {
   if (IsReportThresholdExceeded(report_info.permission, report_info.origin))

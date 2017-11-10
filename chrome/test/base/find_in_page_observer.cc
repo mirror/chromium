@@ -24,7 +24,7 @@ FindInPageNotificationObserver::FindInPageNotificationObserver(
                  content::Source<content::WebContents>(parent_tab));
 }
 
-FindInPageNotificationObserver::~FindInPageNotificationObserver() {}
+FindInPageNotificationObserver::~FindInPageNotificationObserver() = default;
 
 void FindInPageNotificationObserver::Wait() {
   if (seen_)

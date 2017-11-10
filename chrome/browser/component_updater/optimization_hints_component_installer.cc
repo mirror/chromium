@@ -48,7 +48,7 @@ OptimizationHintsComponentInstallerPolicy::
 }
 
 OptimizationHintsComponentInstallerPolicy::
-    ~OptimizationHintsComponentInstallerPolicy() {}
+    ~OptimizationHintsComponentInstallerPolicy() = default;
 
 bool OptimizationHintsComponentInstallerPolicy::
     SupportsGroupPolicyEnabledComponentUpdates() const {

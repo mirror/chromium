@@ -24,7 +24,7 @@ class BrowsingDataChannelIDHelperTest
     : public testing::Test,
       public net::SSLConfigService::Observer {
  public:
-  BrowsingDataChannelIDHelperTest() {}
+  BrowsingDataChannelIDHelperTest() = default;
 
   void SetUp() override {
     testing_profile_.reset(new TestingProfile());

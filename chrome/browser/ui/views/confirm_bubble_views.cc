@@ -47,8 +47,7 @@ ConfirmBubbleViews::ConfirmBubbleViews(
   chrome::RecordDialogCreation(chrome::DialogIdentifier::CONFIRM_BUBBLE);
 }
 
-ConfirmBubbleViews::~ConfirmBubbleViews() {
-}
+ConfirmBubbleViews::~ConfirmBubbleViews() = default;
 
 base::string16 ConfirmBubbleViews::GetDialogButtonLabel(
     ui::DialogButton button) const {

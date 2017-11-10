@@ -390,7 +390,7 @@ class ThemeImageSource: public gfx::ImageSkiaSource {
  public:
   explicit ThemeImageSource(const gfx::ImageSkia& source) : source_(source) {
   }
-  ~ThemeImageSource() override {}
+  ~ThemeImageSource() override = default;
 
   gfx::ImageSkiaRep GetImageForScale(float scale) override {
     if (source_.HasRepresentation(scale))
@@ -419,7 +419,7 @@ class ThemeImagePngSource : public gfx::ImageSkiaSource {
 
   explicit ThemeImagePngSource(const PngMap& png_map) : png_map_(png_map) {}
 
-  ~ThemeImagePngSource() override {}
+  ~ThemeImagePngSource() override = default;
 
  private:
   gfx::ImageSkiaRep GetImageForScale(float scale) override {
@@ -508,7 +508,7 @@ class TabBackgroundImageSource: public gfx::CanvasImageSource {
         vertical_offset_(vertical_offset) {
   }
 
-  ~TabBackgroundImageSource() override {}
+  ~TabBackgroundImageSource() override = default;
 
   // Overridden from CanvasImageSource:
   void Draw(gfx::Canvas* canvas) override {

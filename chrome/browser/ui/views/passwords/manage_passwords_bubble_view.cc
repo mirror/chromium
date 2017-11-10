@@ -112,7 +112,7 @@ class PasswordDropdownModel : public ui::ComboboxModel {
  public:
   explicit PasswordDropdownModel(const std::vector<base::string16>& items)
       : masked_(true), passwords_(items) {}
-  ~PasswordDropdownModel() override {}
+  ~PasswordDropdownModel() override = default;
 
   void SetMasked(bool masked) {
     if (masked_ == masked)
@@ -703,8 +703,7 @@ ManagePasswordsBubbleView::ManageView::ManageView(
   parent_->set_initially_focused_view(done_button_);
 }
 
-ManagePasswordsBubbleView::ManageView::~ManageView() {
-}
+ManagePasswordsBubbleView::ManageView::~ManageView() = default;
 
 void ManagePasswordsBubbleView::ManageView::ButtonPressed(
     views::Button* sender,
@@ -778,8 +777,8 @@ ManagePasswordsBubbleView::SaveConfirmationView::SaveConfirmationView(
   parent_->set_initially_focused_view(ok_button_);
 }
 
-ManagePasswordsBubbleView::SaveConfirmationView::~SaveConfirmationView() {
-}
+ManagePasswordsBubbleView::SaveConfirmationView::~SaveConfirmationView() =
+    default;
 
 void ManagePasswordsBubbleView::SaveConfirmationView::StyledLabelLinkClicked(
     views::StyledLabel* label,
@@ -922,7 +921,7 @@ ManagePasswordsBubbleView::UpdatePendingView::UpdatePendingView(
   parent_->set_initially_focused_view(update_button_);
 }
 
-ManagePasswordsBubbleView::UpdatePendingView::~UpdatePendingView() {}
+ManagePasswordsBubbleView::UpdatePendingView::~UpdatePendingView() = default;
 
 void ManagePasswordsBubbleView::UpdatePendingView::ButtonPressed(
     views::Button* sender,

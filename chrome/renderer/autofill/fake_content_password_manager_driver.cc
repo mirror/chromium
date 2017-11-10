@@ -6,9 +6,9 @@
 
 #include "testing/gtest/include/gtest/gtest.h"
 
-FakeContentPasswordManagerDriver::FakeContentPasswordManagerDriver() {}
+FakeContentPasswordManagerDriver::FakeContentPasswordManagerDriver() = default;
 
-FakeContentPasswordManagerDriver::~FakeContentPasswordManagerDriver() {}
+FakeContentPasswordManagerDriver::~FakeContentPasswordManagerDriver() = default;
 
 void FakeContentPasswordManagerDriver::BindRequest(
     autofill::mojom::PasswordManagerDriverRequest request) {

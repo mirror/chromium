@@ -236,8 +236,7 @@ PluginPrefs::PluginPrefs() : always_open_pdf_externally_(false),
                              prefs_(NULL) {
 }
 
-PluginPrefs::~PluginPrefs() {
-}
+PluginPrefs::~PluginPrefs() = default;
 
 void PluginPrefs::SetAlwaysOpenPdfExternallyForTests(
     bool always_open_pdf_externally) {

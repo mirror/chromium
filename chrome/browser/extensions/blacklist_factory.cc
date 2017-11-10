@@ -31,8 +31,7 @@ BlacklistFactory::BlacklistFactory()
   DependsOn(extensions::ExtensionPrefsFactory::GetInstance());
 }
 
-BlacklistFactory::~BlacklistFactory() {
-}
+BlacklistFactory::~BlacklistFactory() = default;
 
 KeyedService* BlacklistFactory::BuildServiceInstanceFor(
     BrowserContext* context) const {

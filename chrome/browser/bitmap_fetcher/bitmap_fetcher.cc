@@ -17,8 +17,7 @@ BitmapFetcher::BitmapFetcher(
     const net::NetworkTrafficAnnotationTag& traffic_annotation)
     : url_(url), delegate_(delegate), traffic_annotation_(traffic_annotation) {}
 
-BitmapFetcher::~BitmapFetcher() {
-}
+BitmapFetcher::~BitmapFetcher() = default;
 
 void BitmapFetcher::Init(net::URLRequestContextGetter* request_context,
                          const std::string& referrer,

@@ -49,7 +49,7 @@ SpellcheckServiceFactory::SpellcheckServiceFactory()
   // DependsOn(RequestContextFactory::GetInstance());
 }
 
-SpellcheckServiceFactory::~SpellcheckServiceFactory() {}
+SpellcheckServiceFactory::~SpellcheckServiceFactory() = default;
 
 KeyedService* SpellcheckServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

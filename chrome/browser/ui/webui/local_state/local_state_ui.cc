@@ -48,11 +48,9 @@ class LocalStateUIHandler : public content::WebUIMessageHandler {
   DISALLOW_COPY_AND_ASSIGN(LocalStateUIHandler);
 };
 
-LocalStateUIHandler::LocalStateUIHandler() {
-}
+LocalStateUIHandler::LocalStateUIHandler() = default;
 
-LocalStateUIHandler::~LocalStateUIHandler() {
-}
+LocalStateUIHandler::~LocalStateUIHandler() = default;
 
 void LocalStateUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
@@ -122,5 +120,4 @@ LocalStateUI::LocalStateUI(content::WebUI* web_ui) : WebUIController(web_ui) {
   web_ui->AddMessageHandler(base::MakeUnique<LocalStateUIHandler>());
 }
 
-LocalStateUI::~LocalStateUI() {
-}
+LocalStateUI::~LocalStateUI() = default;

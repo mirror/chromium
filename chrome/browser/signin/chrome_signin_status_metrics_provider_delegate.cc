@@ -21,7 +21,7 @@
 #endif
 
 ChromeSigninStatusMetricsProviderDelegate::
-    ChromeSigninStatusMetricsProviderDelegate() {}
+    ChromeSigninStatusMetricsProviderDelegate() = default;
 
 ChromeSigninStatusMetricsProviderDelegate::
     ~ChromeSigninStatusMetricsProviderDelegate() {

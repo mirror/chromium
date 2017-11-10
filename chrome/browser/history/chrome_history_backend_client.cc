@@ -31,8 +31,7 @@ ChromeHistoryBackendClient::ChromeHistoryBackendClient(
     : bookmark_model_(bookmark_model) {
 }
 
-ChromeHistoryBackendClient::~ChromeHistoryBackendClient() {
-}
+ChromeHistoryBackendClient::~ChromeHistoryBackendClient() = default;
 
 bool ChromeHistoryBackendClient::IsBookmarked(const GURL& url) {
   if (!bookmark_model_)

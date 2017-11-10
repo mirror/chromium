@@ -77,7 +77,7 @@ class CountRenderViewHosts : public content::NotificationObserver {
                    content::NOTIFICATION_WEB_CONTENTS_RENDER_VIEW_HOST_CREATED,
                    content::NotificationService::AllSources());
   }
-  ~CountRenderViewHosts() override {}
+  ~CountRenderViewHosts() override = default;
 
   int GetRenderViewHostCreatedCount() const { return count_; }
 
@@ -114,8 +114,8 @@ class CloseObserver : public content::WebContentsObserver {
 
 class PopupBlockerBrowserTest : public InProcessBrowserTest {
  public:
-  PopupBlockerBrowserTest() {}
-  ~PopupBlockerBrowserTest() override {}
+  PopupBlockerBrowserTest() = default;
+  ~PopupBlockerBrowserTest() override = default;
 
   void SetUpOnMainThread() override {
     host_resolver()->AddRule("*", "127.0.0.1");

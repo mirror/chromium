@@ -6,9 +6,9 @@
 
 #include <utility>
 
-SimpleInputMethod::SimpleInputMethod() {}
+SimpleInputMethod::SimpleInputMethod() = default;
 
-SimpleInputMethod::~SimpleInputMethod() {}
+SimpleInputMethod::~SimpleInputMethod() = default;
 
 void SimpleInputMethod::OnTextInputTypeChanged(
     ui::TextInputType text_input_type) {}

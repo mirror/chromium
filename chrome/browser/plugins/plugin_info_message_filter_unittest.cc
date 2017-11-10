@@ -43,8 +43,8 @@ void PluginsLoaded(const base::Closure& callback,
 
 class FakePluginServiceFilter : public content::PluginServiceFilter {
  public:
-  FakePluginServiceFilter() {}
-  ~FakePluginServiceFilter() override {}
+  FakePluginServiceFilter() = default;
+  ~FakePluginServiceFilter() override = default;
 
   bool IsPluginAvailable(int render_process_id,
                          int render_view_id,

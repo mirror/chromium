@@ -31,7 +31,7 @@ using blink::WebPrerender;
 // coverage of this.
 class PrerenderDispatcherTest : public testing::Test {
  public:
-  PrerenderDispatcherTest() {}
+  PrerenderDispatcherTest() = default;
 
   bool IsPrerenderURL(const GURL& url) const {
     return prerender_dispatcher_.IsPrerenderURL(url);

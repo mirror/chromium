@@ -57,8 +57,7 @@ VersionHandler::VersionHandler()
     : weak_ptr_factory_(this) {
 }
 
-VersionHandler::~VersionHandler() {
-}
+VersionHandler::~VersionHandler() = default;
 
 void VersionHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

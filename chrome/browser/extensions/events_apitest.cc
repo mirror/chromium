@@ -109,7 +109,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, WebViewEventRegistration) {
 
 class EventsApiTest : public ExtensionApiTest {
  public:
-  EventsApiTest() {}
+  EventsApiTest() = default;
 
  protected:
   void SetUpOnMainThread() override {

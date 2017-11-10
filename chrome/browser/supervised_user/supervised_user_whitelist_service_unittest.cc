@@ -41,8 +41,8 @@ const char kClientId[] = "client-id";
 class MockSupervisedUserWhitelistInstaller
     : public component_updater::SupervisedUserWhitelistInstaller {
  public:
-  MockSupervisedUserWhitelistInstaller() {}
-  ~MockSupervisedUserWhitelistInstaller() override {}
+  MockSupervisedUserWhitelistInstaller() = default;
+  ~MockSupervisedUserWhitelistInstaller() override = default;
 
   const std::set<std::string>& registered_whitelists() {
     return registered_whitelists_;

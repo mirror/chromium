@@ -84,8 +84,8 @@ class PendingApprovals {
   DISALLOW_COPY_AND_ASSIGN(PendingApprovals);
 };
 
-PendingApprovals::PendingApprovals() {}
-PendingApprovals::~PendingApprovals() {}
+PendingApprovals::PendingApprovals() = default;
+PendingApprovals::~PendingApprovals() = default;
 
 void PendingApprovals::PushApproval(
     std::unique_ptr<WebstoreInstaller::Approval> approval) {
@@ -182,8 +182,7 @@ WebstorePrivateBeginInstallWithManifest3Function::
 }
 
 WebstorePrivateBeginInstallWithManifest3Function::
-    ~WebstorePrivateBeginInstallWithManifest3Function() {
-}
+    ~WebstorePrivateBeginInstallWithManifest3Function() = default;
 
 ExtensionFunction::ResponseAction
 WebstorePrivateBeginInstallWithManifest3Function::Run() {
@@ -412,7 +411,7 @@ WebstorePrivateCompleteInstallFunction::
     WebstorePrivateCompleteInstallFunction() : chrome_details_(this) {}
 
 WebstorePrivateCompleteInstallFunction::
-    ~WebstorePrivateCompleteInstallFunction() {}
+    ~WebstorePrivateCompleteInstallFunction() = default;
 
 ExtensionFunction::ResponseAction
 WebstorePrivateCompleteInstallFunction::Run() {
@@ -491,7 +490,7 @@ WebstorePrivateEnableAppLauncherFunction::
     WebstorePrivateEnableAppLauncherFunction() : chrome_details_(this) {}
 
 WebstorePrivateEnableAppLauncherFunction::
-    ~WebstorePrivateEnableAppLauncherFunction() {}
+    ~WebstorePrivateEnableAppLauncherFunction() = default;
 
 ExtensionFunction::ResponseAction
 WebstorePrivateEnableAppLauncherFunction::Run() {
@@ -505,7 +504,7 @@ WebstorePrivateGetBrowserLoginFunction::
     WebstorePrivateGetBrowserLoginFunction() : chrome_details_(this) {}
 
 WebstorePrivateGetBrowserLoginFunction::
-    ~WebstorePrivateGetBrowserLoginFunction() {}
+    ~WebstorePrivateGetBrowserLoginFunction() = default;
 
 ExtensionFunction::ResponseAction
 WebstorePrivateGetBrowserLoginFunction::Run() {
@@ -520,8 +519,8 @@ WebstorePrivateGetBrowserLoginFunction::Run() {
 WebstorePrivateGetStoreLoginFunction::
     WebstorePrivateGetStoreLoginFunction() : chrome_details_(this) {}
 
-WebstorePrivateGetStoreLoginFunction::
-    ~WebstorePrivateGetStoreLoginFunction() {}
+WebstorePrivateGetStoreLoginFunction::~WebstorePrivateGetStoreLoginFunction() =
+    default;
 
 ExtensionFunction::ResponseAction WebstorePrivateGetStoreLoginFunction::Run() {
   return RespondNow(ArgumentList(GetStoreLogin::Results::Create(
@@ -531,8 +530,8 @@ ExtensionFunction::ResponseAction WebstorePrivateGetStoreLoginFunction::Run() {
 WebstorePrivateSetStoreLoginFunction::
     WebstorePrivateSetStoreLoginFunction() : chrome_details_(this) {}
 
-WebstorePrivateSetStoreLoginFunction::
-    ~WebstorePrivateSetStoreLoginFunction() {}
+WebstorePrivateSetStoreLoginFunction::~WebstorePrivateSetStoreLoginFunction() =
+    default;
 
 ExtensionFunction::ResponseAction WebstorePrivateSetStoreLoginFunction::Run() {
   std::unique_ptr<SetStoreLogin::Params> params(
@@ -549,7 +548,7 @@ WebstorePrivateGetWebGLStatusFunction::WebstorePrivateGetWebGLStatusFunction()
                      base::Unretained(this)))) {}
 
 WebstorePrivateGetWebGLStatusFunction::
-    ~WebstorePrivateGetWebGLStatusFunction() {}
+    ~WebstorePrivateGetWebGLStatusFunction() = default;
 
 ExtensionFunction::ResponseAction WebstorePrivateGetWebGLStatusFunction::Run() {
   feature_checker_->CheckGpuFeatureAvailability();
@@ -564,10 +563,10 @@ void WebstorePrivateGetWebGLStatusFunction::OnFeatureCheck(
 }
 
 WebstorePrivateGetIsLauncherEnabledFunction::
-    WebstorePrivateGetIsLauncherEnabledFunction() {}
+    WebstorePrivateGetIsLauncherEnabledFunction() = default;
 
 WebstorePrivateGetIsLauncherEnabledFunction::
-    ~WebstorePrivateGetIsLauncherEnabledFunction() {}
+    ~WebstorePrivateGetIsLauncherEnabledFunction() = default;
 
 ExtensionFunction::ResponseAction
 WebstorePrivateGetIsLauncherEnabledFunction::Run() {
@@ -579,7 +578,7 @@ WebstorePrivateIsInIncognitoModeFunction::
     WebstorePrivateIsInIncognitoModeFunction() : chrome_details_(this) {}
 
 WebstorePrivateIsInIncognitoModeFunction::
-    ~WebstorePrivateIsInIncognitoModeFunction() {}
+    ~WebstorePrivateIsInIncognitoModeFunction() = default;
 
 ExtensionFunction::ResponseAction
 WebstorePrivateIsInIncognitoModeFunction::Run() {
@@ -592,7 +591,7 @@ WebstorePrivateLaunchEphemeralAppFunction::
     WebstorePrivateLaunchEphemeralAppFunction() : chrome_details_(this) {}
 
 WebstorePrivateLaunchEphemeralAppFunction::
-    ~WebstorePrivateLaunchEphemeralAppFunction() {}
+    ~WebstorePrivateLaunchEphemeralAppFunction() = default;
 
 ExtensionFunction::ResponseAction
 WebstorePrivateLaunchEphemeralAppFunction::Run() {
@@ -601,10 +600,10 @@ WebstorePrivateLaunchEphemeralAppFunction::Run() {
 }
 
 WebstorePrivateGetEphemeralAppsEnabledFunction::
-    WebstorePrivateGetEphemeralAppsEnabledFunction() {}
+    WebstorePrivateGetEphemeralAppsEnabledFunction() = default;
 
 WebstorePrivateGetEphemeralAppsEnabledFunction::
-    ~WebstorePrivateGetEphemeralAppsEnabledFunction() {}
+    ~WebstorePrivateGetEphemeralAppsEnabledFunction() = default;
 
 ExtensionFunction::ResponseAction
 WebstorePrivateGetEphemeralAppsEnabledFunction::Run() {
@@ -617,7 +616,7 @@ WebstorePrivateIsPendingCustodianApprovalFunction::
     : chrome_details_(this) {}
 
 WebstorePrivateIsPendingCustodianApprovalFunction::
-    ~WebstorePrivateIsPendingCustodianApprovalFunction() {}
+    ~WebstorePrivateIsPendingCustodianApprovalFunction() = default;
 
 ExtensionFunction::ResponseAction
 WebstorePrivateIsPendingCustodianApprovalFunction::Run() {

@@ -37,9 +37,9 @@ const char kHistogramOfflinePreviewsParseStart[] =
 
 }  // namespace internal
 
-PreviewsPageLoadMetricsObserver::PreviewsPageLoadMetricsObserver() {}
+PreviewsPageLoadMetricsObserver::PreviewsPageLoadMetricsObserver() = default;
 
-PreviewsPageLoadMetricsObserver::~PreviewsPageLoadMetricsObserver() {}
+PreviewsPageLoadMetricsObserver::~PreviewsPageLoadMetricsObserver() = default;
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 PreviewsPageLoadMetricsObserver::OnCommit(

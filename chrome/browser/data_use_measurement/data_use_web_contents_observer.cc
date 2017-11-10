@@ -52,7 +52,7 @@ DataUseWebContentsObserver::DataUseWebContentsObserver(
   }
 }
 
-DataUseWebContentsObserver::~DataUseWebContentsObserver() {}
+DataUseWebContentsObserver::~DataUseWebContentsObserver() = default;
 
 void DataUseWebContentsObserver::RenderFrameCreated(
     content::RenderFrameHost* render_frame_host) {

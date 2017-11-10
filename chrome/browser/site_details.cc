@@ -83,25 +83,25 @@ content::SiteInstance* DeterminePrimarySiteInstance(
 
 }  // namespace
 
-ScenarioBrowsingInstanceInfo::ScenarioBrowsingInstanceInfo() {}
+ScenarioBrowsingInstanceInfo::ScenarioBrowsingInstanceInfo() = default;
 
 ScenarioBrowsingInstanceInfo::ScenarioBrowsingInstanceInfo(
     const ScenarioBrowsingInstanceInfo& other) = default;
 
-ScenarioBrowsingInstanceInfo::~ScenarioBrowsingInstanceInfo() {}
+ScenarioBrowsingInstanceInfo::~ScenarioBrowsingInstanceInfo() = default;
 
-BrowsingInstanceInfo::BrowsingInstanceInfo() {}
+BrowsingInstanceInfo::BrowsingInstanceInfo() = default;
 
 BrowsingInstanceInfo::BrowsingInstanceInfo(const BrowsingInstanceInfo& other) =
     default;
 
-BrowsingInstanceInfo::~BrowsingInstanceInfo() {}
+BrowsingInstanceInfo::~BrowsingInstanceInfo() = default;
 
-IsolationScenario::IsolationScenario() {}
+IsolationScenario::IsolationScenario() = default;
 
 IsolationScenario::IsolationScenario(const IsolationScenario& other) = default;
 
-IsolationScenario::~IsolationScenario() {}
+IsolationScenario::~IsolationScenario() = default;
 
 SiteData::SiteData() {
   for (int i = 0; i <= ISOLATION_SCENARIO_LAST; i++)
@@ -110,11 +110,11 @@ SiteData::SiteData() {
 
 SiteData::SiteData(const SiteData& other) = default;
 
-SiteData::~SiteData() {}
+SiteData::~SiteData() = default;
 
-SiteDetails::SiteDetails() {}
+SiteDetails::SiteDetails() = default;
 
-SiteDetails::~SiteDetails() {}
+SiteDetails::~SiteDetails() = default;
 
 void SiteDetails::CollectSiteInfo(WebContents* contents,
                                   SiteData* site_data) {

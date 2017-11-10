@@ -19,7 +19,7 @@ namespace {
 
 class TestPredicate : public ContentPredicate {
  public:
-  TestPredicate() {}
+  TestPredicate() = default;
 
   ContentPredicateEvaluator* GetEvaluator() const override {
     return nullptr;
@@ -51,7 +51,7 @@ class TestPredicateFactoryGeneratingError : public ContentPredicateFactory {
 
 class TestPredicateFactoryGeneratingPredicate : public ContentPredicateFactory {
  public:
-  TestPredicateFactoryGeneratingPredicate() {}
+  TestPredicateFactoryGeneratingPredicate() = default;
 
   std::unique_ptr<const ContentPredicate> CreatePredicate(
       const Extension* extension,

@@ -24,7 +24,7 @@ namespace {
 
 class MDnsAPITest : public ExtensionApiTest {
  public:
-  MDnsAPITest() {}
+  MDnsAPITest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ExtensionApiTest::SetUpCommandLine(command_line);

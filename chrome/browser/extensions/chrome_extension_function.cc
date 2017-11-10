@@ -68,13 +68,11 @@ void ChromeUIThreadExtensionFunction::SetResultList(
   results_ = std::move(results);
 }
 
-ChromeUIThreadExtensionFunction::~ChromeUIThreadExtensionFunction() {
-}
+ChromeUIThreadExtensionFunction::~ChromeUIThreadExtensionFunction() = default;
 
-ChromeAsyncExtensionFunction::ChromeAsyncExtensionFunction() {
-}
+ChromeAsyncExtensionFunction::ChromeAsyncExtensionFunction() = default;
 
-ChromeAsyncExtensionFunction::~ChromeAsyncExtensionFunction() {}
+ChromeAsyncExtensionFunction::~ChromeAsyncExtensionFunction() = default;
 
 ExtensionFunction::ResponseAction ChromeAsyncExtensionFunction::Run() {
   if (RunAsync())

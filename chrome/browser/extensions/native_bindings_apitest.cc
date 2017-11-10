@@ -31,8 +31,8 @@ namespace extensions {
 // And end-to-end test for extension APIs using native bindings.
 class NativeBindingsApiTest : public ExtensionApiTest {
  public:
-  NativeBindingsApiTest() {}
-  ~NativeBindingsApiTest() override {}
+  NativeBindingsApiTest() = default;
+  ~NativeBindingsApiTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ExtensionApiTest::SetUpCommandLine(command_line);

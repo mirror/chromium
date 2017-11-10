@@ -33,9 +33,9 @@
 #include "chrome/browser/offline_pages/offline_page_utils.h"
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
-ChromeToolbarModelDelegate::ChromeToolbarModelDelegate() {}
+ChromeToolbarModelDelegate::ChromeToolbarModelDelegate() = default;
 
-ChromeToolbarModelDelegate::~ChromeToolbarModelDelegate() {}
+ChromeToolbarModelDelegate::~ChromeToolbarModelDelegate() = default;
 
 content::NavigationEntry* ChromeToolbarModelDelegate::GetNavigationEntry()
     const {

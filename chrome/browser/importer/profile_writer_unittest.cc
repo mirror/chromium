@@ -32,13 +32,13 @@ class TestProfileWriter : public ProfileWriter {
  public:
   explicit TestProfileWriter(Profile* profile) : ProfileWriter(profile) {}
  protected:
-  ~TestProfileWriter() override {}
+  ~TestProfileWriter() override = default;
 };
 
 class ProfileWriterTest : public testing::Test {
  public:
-  ProfileWriterTest() {}
-  ~ProfileWriterTest() override {}
+  ProfileWriterTest() = default;
+  ~ProfileWriterTest() override = default;
 
   // Create test bookmark entries to be added to ProfileWriter to
   // simulate bookmark importing.

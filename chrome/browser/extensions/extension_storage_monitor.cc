@@ -223,7 +223,7 @@ class ExtensionStorageMonitorIOHelper
   friend struct content::BrowserThread::DeleteOnThread<
       content::BrowserThread::IO>;
 
-  ~ExtensionStorageMonitorIOHelper() {}
+  ~ExtensionStorageMonitorIOHelper() = default;
 
   SingleExtensionStorageObserver* FindObserver(
       const std::string& extension_id) {
@@ -294,7 +294,7 @@ ExtensionStorageMonitor::ExtensionStorageMonitor(
   extension_registry_observer_.Add(ExtensionRegistry::Get(context_));
 }
 
-ExtensionStorageMonitor::~ExtensionStorageMonitor() {}
+ExtensionStorageMonitor::~ExtensionStorageMonitor() = default;
 
 void ExtensionStorageMonitor::Observe(
     int type,

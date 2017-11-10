@@ -30,7 +30,7 @@ ExternalComponentLoader::ExternalComponentLoader(Profile* profile)
     : profile_(profile) {
 }
 
-ExternalComponentLoader::~ExternalComponentLoader() {}
+ExternalComponentLoader::~ExternalComponentLoader() = default;
 
 void ExternalComponentLoader::StartLoading() {
   auto prefs = std::make_unique<base::DictionaryValue>();

@@ -178,7 +178,7 @@ class NavButtonImageSource : public gfx::ImageSkiaSource {
         active_(active),
         button_size_(button_size) {}
 
-  ~NavButtonImageSource() override {}
+  ~NavButtonImageSource() override = default;
 
   gfx::ImageSkiaRep GetImageForScale(float scale) override {
     // gfx::ImageSkia kindly caches the result of this function, so
@@ -250,9 +250,9 @@ class NavButtonImageSource : public gfx::ImageSkiaSource {
 
 }  // namespace
 
-NavButtonProviderGtk3::NavButtonProviderGtk3() {}
+NavButtonProviderGtk3::NavButtonProviderGtk3() = default;
 
-NavButtonProviderGtk3::~NavButtonProviderGtk3() {}
+NavButtonProviderGtk3::~NavButtonProviderGtk3() = default;
 
 void NavButtonProviderGtk3::RedrawImages(int top_area_height,
                                          bool maximized,

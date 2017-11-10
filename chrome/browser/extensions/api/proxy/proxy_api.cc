@@ -30,11 +30,9 @@ ProxyEventRouter* ProxyEventRouter::GetInstance() {
   return base::Singleton<ProxyEventRouter>::get();
 }
 
-ProxyEventRouter::ProxyEventRouter() {
-}
+ProxyEventRouter::ProxyEventRouter() = default;
 
-ProxyEventRouter::~ProxyEventRouter() {
-}
+ProxyEventRouter::~ProxyEventRouter() = default;
 
 void ProxyEventRouter::OnProxyError(
     EventRouterForwarder* event_router,
@@ -90,11 +88,9 @@ void ProxyEventRouter::OnPACScriptError(
   }
 }
 
-ProxyPrefTransformer::ProxyPrefTransformer() {
-}
+ProxyPrefTransformer::ProxyPrefTransformer() = default;
 
-ProxyPrefTransformer::~ProxyPrefTransformer() {
-}
+ProxyPrefTransformer::~ProxyPrefTransformer() = default;
 
 std::unique_ptr<base::Value> ProxyPrefTransformer::ExtensionToBrowserPref(
     const base::Value* extension_pref,

@@ -32,7 +32,7 @@ class VisibilityTimerTabHelper
     : public content::WebContentsObserver,
       public content::WebContentsUserData<VisibilityTimerTabHelper> {
  public:
-  ~VisibilityTimerTabHelper() override {}
+  ~VisibilityTimerTabHelper() override = default;
 
   // Runs |task| after the WebContents has been visible for a consecutive
   // duration of at least |visible_delay|.
@@ -167,7 +167,7 @@ NotificationPermissionContext::NotificationPermissionContext(
          content_settings_type == CONTENT_SETTINGS_TYPE_PUSH_MESSAGING);
 }
 
-NotificationPermissionContext::~NotificationPermissionContext() {}
+NotificationPermissionContext::~NotificationPermissionContext() = default;
 
 ContentSetting NotificationPermissionContext::GetPermissionStatusInternal(
     content::RenderFrameHost* render_frame_host,

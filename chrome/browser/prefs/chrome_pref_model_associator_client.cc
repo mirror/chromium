@@ -15,9 +15,9 @@ ChromePrefModelAssociatorClient::GetInstance() {
   return base::Singleton<ChromePrefModelAssociatorClient>::get();
 }
 
-ChromePrefModelAssociatorClient::ChromePrefModelAssociatorClient() {}
+ChromePrefModelAssociatorClient::ChromePrefModelAssociatorClient() = default;
 
-ChromePrefModelAssociatorClient::~ChromePrefModelAssociatorClient() {}
+ChromePrefModelAssociatorClient::~ChromePrefModelAssociatorClient() = default;
 
 bool ChromePrefModelAssociatorClient::IsMergeableListPreference(
     const std::string& pref_name) const {

@@ -455,7 +455,6 @@ BrowserContextKeyedAPIFactory<AutotestPrivateAPI>::BuildServiceInstanceFor(
 AutotestPrivateAPI::AutotestPrivateAPI() : test_mode_(false) {
 }
 
-AutotestPrivateAPI::~AutotestPrivateAPI() {
-}
+AutotestPrivateAPI::~AutotestPrivateAPI() = default;
 
 }  // namespace extensions

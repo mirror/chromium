@@ -251,7 +251,7 @@ bool DownloadQuery::MatchesQuery(const std::vector<base::string16>& query_terms,
 }
 
 DownloadQuery::DownloadQuery() : limit_(std::numeric_limits<uint32_t>::max()) {}
-DownloadQuery::~DownloadQuery() {}
+DownloadQuery::~DownloadQuery() = default;
 
 // AddFilter() pushes a new FilterCallback to filters_. Most FilterCallbacks are
 // Callbacks to FieldMatches<>(). Search() iterates over given DownloadItems,
@@ -364,7 +364,7 @@ struct DownloadQuery::Sorter {
     : direction(adirection),
       sorter(asorter) {
   }
-  ~Sorter() {}
+  ~Sorter() = default;
 
   DownloadQuery::SortDirection direction;
   SortType sorter;

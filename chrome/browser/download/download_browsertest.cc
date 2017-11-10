@@ -245,7 +245,7 @@ class DownloadTestObserverResumable : public content::DownloadTestObserver {
         transitions_left_(transition_count) {
     Init();
   }
-  ~DownloadTestObserverResumable() override {}
+  ~DownloadTestObserverResumable() override = default;
 
  private:
   bool IsDownloadInFinalState(DownloadItem* download) override {
@@ -337,7 +337,8 @@ DownloadTestObserverNotInProgress::DownloadTestObserverNotInProgress(
   Init();
 }
 
-DownloadTestObserverNotInProgress::~DownloadTestObserverNotInProgress() {}
+DownloadTestObserverNotInProgress::~DownloadTestObserverNotInProgress() =
+    default;
 
 void DownloadTestObserverNotInProgress::StartObserving() {
   started_observing_ = true;
@@ -433,7 +434,7 @@ class DownloadTest : public InProcessBrowserTest {
     content::TestFileErrorInjector::FileErrorInfo error_info;
   };
 
-  DownloadTest() {}
+  DownloadTest() = default;
 
   void SetUpOnMainThread() override {
     BrowserThread::PostTask(
@@ -1129,7 +1130,7 @@ class FakeSafeBrowsingService
   }
 
  protected:
-  ~FakeSafeBrowsingService() override {}
+  ~FakeSafeBrowsingService() override = default;
 
   // ServicesDelegate::ServicesCreator:
   bool CanCreateDownloadProtectionService() override { return true; }
@@ -1159,7 +1160,7 @@ class TestSafeBrowsingServiceFactory
     : public safe_browsing::SafeBrowsingServiceFactory {
  public:
   TestSafeBrowsingServiceFactory() : fake_safe_browsing_service_(nullptr) {}
-  ~TestSafeBrowsingServiceFactory() override {}
+  ~TestSafeBrowsingServiceFactory() override = default;
 
   safe_browsing::SafeBrowsingService* CreateSafeBrowsingService() override {
     DCHECK(!fake_safe_browsing_service_);
@@ -3464,7 +3465,7 @@ class DisableSafeBrowsingOnInProgressDownload
         final_state_seen_(false) {
     Init();
   }
-  ~DisableSafeBrowsingOnInProgressDownload() override {}
+  ~DisableSafeBrowsingOnInProgressDownload() override = default;
 
   bool IsDownloadInFinalState(DownloadItem* download) override {
     if (download->GetState() != DownloadItem::IN_PROGRESS ||

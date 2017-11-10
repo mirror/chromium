@@ -41,8 +41,7 @@ RegisterAppTask::RegisterAppTask(SyncEngineContext* sync_context,
       weak_ptr_factory_(this) {
 }
 
-RegisterAppTask::~RegisterAppTask() {
-}
+RegisterAppTask::~RegisterAppTask() = default;
 
 bool RegisterAppTask::CanFinishImmediately() {
   return metadata_database() &&

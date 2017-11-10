@@ -70,7 +70,7 @@ ChromeBrowserPolicyConnector::ChromeBrowserPolicyConnector()
     SetPlatformPolicyProvider(std::move(platform_provider));
 }
 
-ChromeBrowserPolicyConnector::~ChromeBrowserPolicyConnector() {}
+ChromeBrowserPolicyConnector::~ChromeBrowserPolicyConnector() = default;
 
 void ChromeBrowserPolicyConnector::Init(
     PrefService* local_state,

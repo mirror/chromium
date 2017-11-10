@@ -14,7 +14,6 @@ DevToolsTag::DevToolsTag(content::WebContents* web_contents)
     : WebContentsTag(web_contents) {
 }
 
-DevToolsTag::~DevToolsTag() {
-}
+DevToolsTag::~DevToolsTag() = default;
 
 }  // namespace task_manager

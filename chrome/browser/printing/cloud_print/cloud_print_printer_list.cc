@@ -10,13 +10,12 @@
 
 namespace cloud_print {
 
-CloudPrintPrinterList::Delegate::~Delegate() {}
+CloudPrintPrinterList::Delegate::~Delegate() = default;
 
 CloudPrintPrinterList::CloudPrintPrinterList(Delegate* delegate)
     : delegate_(delegate) {}
 
-CloudPrintPrinterList::~CloudPrintPrinterList() {
-}
+CloudPrintPrinterList::~CloudPrintPrinterList() = default;
 
 void CloudPrintPrinterList::OnGCDApiFlowError(GCDApiFlow::Status status) {
   delegate_->OnDeviceListUnavailable();

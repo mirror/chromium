@@ -58,7 +58,7 @@ ChromeContentGpuClient::ChromeContentGpuClient()
 #endif
 }
 
-ChromeContentGpuClient::~ChromeContentGpuClient() {}
+ChromeContentGpuClient::~ChromeContentGpuClient() = default;
 
 void ChromeContentGpuClient::InitializeRegistry(
     service_manager::BinderRegistry* registry) {

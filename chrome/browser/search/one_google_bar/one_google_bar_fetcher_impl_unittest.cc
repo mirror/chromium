@@ -44,8 +44,8 @@ const char kMinimalValidResponse[] = R"json({"update": { "ogb": {
 // Required to instantiate a GoogleUrlTracker in UNIT_TEST_MODE.
 class GoogleURLTrackerClientStub : public GoogleURLTrackerClient {
  public:
-  GoogleURLTrackerClientStub() {}
-  ~GoogleURLTrackerClientStub() override {}
+  GoogleURLTrackerClientStub() = default;
+  ~GoogleURLTrackerClientStub() override = default;
 
   bool IsBackgroundNetworkingEnabled() override { return true; }
   PrefService* GetPrefs() override { return nullptr; }

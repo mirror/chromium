@@ -31,7 +31,7 @@ WebViewInfo::WebViewInfo(const std::string& id,
 
 WebViewInfo::WebViewInfo(const WebViewInfo& other) = default;
 
-WebViewInfo::~WebViewInfo() {}
+WebViewInfo::~WebViewInfo() = default;
 
 bool WebViewInfo::IsFrontend() const {
   return base::StartsWith(url, "chrome-devtools://",
@@ -42,12 +42,12 @@ bool WebViewInfo::IsInactiveBackgroundPage() const {
   return type == WebViewInfo::kBackgroundPage && debugger_url.empty();
 }
 
-WebViewsInfo::WebViewsInfo() {}
+WebViewsInfo::WebViewsInfo() = default;
 
 WebViewsInfo::WebViewsInfo(const std::vector<WebViewInfo>& info)
     : views_info(info) {}
 
-WebViewsInfo::~WebViewsInfo() {}
+WebViewsInfo::~WebViewsInfo() = default;
 
 const WebViewInfo& WebViewsInfo::Get(int index) const {
   return views_info[index];
@@ -84,7 +84,7 @@ DevToolsHttpClient::DevToolsHttpClient(
   window_types_->insert(WebViewInfo::kApp);
 }
 
-DevToolsHttpClient::~DevToolsHttpClient() {}
+DevToolsHttpClient::~DevToolsHttpClient() = default;
 
 Status DevToolsHttpClient::Init(const base::TimeDelta& timeout) {
   base::TimeTicks deadline = base::TimeTicks::Now() + timeout;

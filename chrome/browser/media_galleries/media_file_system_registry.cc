@@ -74,7 +74,7 @@ class ShutdownNotifierFactory
             "MediaFileSystemRegistry") {
     DependsOn(MediaGalleriesPreferencesFactory::GetInstance());
   }
-  ~ShutdownNotifierFactory() override {}
+  ~ShutdownNotifierFactory() override = default;
 
   DISALLOW_COPY_AND_ASSIGN(ShutdownNotifierFactory);
 };
@@ -269,10 +269,10 @@ MediaFileSystemInfo::MediaFileSystemInfo(const base::string16& fs_name,
       media_device(media_device) {
 }
 
-MediaFileSystemInfo::MediaFileSystemInfo() {}
+MediaFileSystemInfo::MediaFileSystemInfo() = default;
 MediaFileSystemInfo::MediaFileSystemInfo(const MediaFileSystemInfo& other) =
     default;
-MediaFileSystemInfo::~MediaFileSystemInfo() {}
+MediaFileSystemInfo::~MediaFileSystemInfo() = default;
 
 // The main owner of this class is
 // |MediaFileSystemRegistry::extension_hosts_map_|, but a callback may
@@ -655,8 +655,8 @@ void MediaFileSystemRegistry::OnRemovableStorageDetached(
 class MediaFileSystemRegistry::MediaFileSystemContextImpl
     : public MediaFileSystemContext {
  public:
-  MediaFileSystemContextImpl() {}
-  ~MediaFileSystemContextImpl() override {}
+  MediaFileSystemContextImpl() = default;
+  ~MediaFileSystemContextImpl() override = default;
 
   bool RegisterFileSystem(const std::string& device_id,
                           const std::string& fs_name,

@@ -124,7 +124,7 @@ ThemeService::BrowserThemeProvider::BrowserThemeProvider(
     bool incognito)
     : theme_service_(theme_service), incognito_(incognito) {}
 
-ThemeService::BrowserThemeProvider::~BrowserThemeProvider() {}
+ThemeService::BrowserThemeProvider::~BrowserThemeProvider() = default;
 
 gfx::ImageSkia* ThemeService::BrowserThemeProvider::GetImageSkiaNamed(
     int id) const {
@@ -170,8 +170,7 @@ class ThemeService::ThemeObserver
         extensions::ExtensionRegistry::Get(theme_service_->profile_));
   }
 
-  ~ThemeObserver() override {
-  }
+  ~ThemeObserver() override = default;
 
  private:
   // extensions::ExtensionRegistryObserver:

@@ -32,10 +32,9 @@ std::vector<SkBitmap> CreateTestBitmaps(const std::vector<gfx::Size>& sizes) {
 
 class FaviconDownloaderTest : public ChromeRenderViewHostTestHarness {
  protected:
-  FaviconDownloaderTest() {
-  }
+  FaviconDownloaderTest() = default;
 
-  ~FaviconDownloaderTest() override {}
+  ~FaviconDownloaderTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FaviconDownloaderTest);
@@ -54,7 +53,7 @@ class TestFaviconDownloader : public FaviconDownloader {
                        base::Unretained(this))),
         id_counter_(0) {
   }
-  ~TestFaviconDownloader() override {}
+  ~TestFaviconDownloader() override = default;
 
   int DownloadImage(const GURL& url) override { return id_counter_++; }
 

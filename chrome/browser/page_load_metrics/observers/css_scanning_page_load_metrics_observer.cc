@@ -7,9 +7,9 @@
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
 #include "third_party/WebKit/public/platform/WebLoadingBehaviorFlag.h"
 
-CssScanningMetricsObserver::CssScanningMetricsObserver() {}
+CssScanningMetricsObserver::CssScanningMetricsObserver() = default;
 
-CssScanningMetricsObserver::~CssScanningMetricsObserver() {}
+CssScanningMetricsObserver::~CssScanningMetricsObserver() = default;
 
 void CssScanningMetricsObserver::OnLoadingBehaviorObserved(
     const page_load_metrics::PageLoadExtraInfo& info) {

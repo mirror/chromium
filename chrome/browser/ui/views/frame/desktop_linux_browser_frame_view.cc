@@ -23,7 +23,7 @@ DesktopLinuxBrowserFrameView::DesktopLinuxBrowserFrameView(
   }
 }
 
-DesktopLinuxBrowserFrameView::~DesktopLinuxBrowserFrameView() {}
+DesktopLinuxBrowserFrameView::~DesktopLinuxBrowserFrameView() = default;
 
 void DesktopLinuxBrowserFrameView::MaybeRedrawFrameButtons() {
   nav_button_provider_->RedrawImages(GetTopAreaHeight(), IsMaximized(),

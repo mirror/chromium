@@ -31,8 +31,7 @@ ConnectorSettings::ConnectorSettings()
       xmpp_ping_timeout_sec_(kDefaultXmppPingTimeoutSecs) {
 }
 
-ConnectorSettings::~ConnectorSettings() {
-}
+ConnectorSettings::~ConnectorSettings() = default;
 
 void ConnectorSettings::InitFrom(ServiceProcessPrefs* prefs) {
   CopyFrom(ConnectorSettings());

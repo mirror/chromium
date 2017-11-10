@@ -110,7 +110,7 @@ class SupervisedUserURLFilterObserver
       public SupervisedUserURLFilter::Observer {
  public:
   SupervisedUserURLFilterObserver() : scoped_observer_(this) {}
-  ~SupervisedUserURLFilterObserver() {}
+  ~SupervisedUserURLFilterObserver() = default;
 
   void Init(SupervisedUserURLFilter* url_filter) {
     scoped_observer_.Add(url_filter);
@@ -130,8 +130,8 @@ class SupervisedUserURLFilterObserver
 
 class SiteListObserver : public AsyncTestHelper {
  public:
-  SiteListObserver() {}
-  ~SiteListObserver() {}
+  SiteListObserver() = default;
+  ~SiteListObserver() = default;
 
   void Init(SupervisedUserWhitelistService* service) {
     service->AddSiteListsChangedCallback(base::Bind(
@@ -162,7 +162,7 @@ class SiteListObserver : public AsyncTestHelper {
 class AsyncResultHolder {
  public:
   AsyncResultHolder() : result_(false) {}
-  ~AsyncResultHolder() {}
+  ~AsyncResultHolder() = default;
 
   void SetResult(bool result) {
     result_ = result;
@@ -183,7 +183,7 @@ class AsyncResultHolder {
 
 class SupervisedUserServiceTest : public ::testing::Test {
  public:
-  SupervisedUserServiceTest() {}
+  SupervisedUserServiceTest() = default;
 
   void SetUp() override {
     TestingProfile::Builder builder;
@@ -196,7 +196,7 @@ class SupervisedUserServiceTest : public ::testing::Test {
 
   void TearDown() override { profile_.reset(); }
 
-  ~SupervisedUserServiceTest() override {}
+  ~SupervisedUserServiceTest() override = default;
 
  protected:
   void AddURLAccessRequest(const GURL& url, AsyncResultHolder* result_holder) {
@@ -239,7 +239,7 @@ namespace {
 class MockPermissionRequestCreator : public PermissionRequestCreator {
  public:
   MockPermissionRequestCreator() : enabled_(false) {}
-  ~MockPermissionRequestCreator() override {}
+  ~MockPermissionRequestCreator() override = default;
 
   void set_enabled(bool enabled) {
     enabled_ = enabled;
@@ -375,7 +375,7 @@ class SupervisedUserServiceExtensionTestBase
   explicit SupervisedUserServiceExtensionTestBase(bool is_supervised)
       : is_supervised_(is_supervised),
         channel_(version_info::Channel::DEV) {}
-  ~SupervisedUserServiceExtensionTestBase() override {}
+  ~SupervisedUserServiceExtensionTestBase() override = default;
 
   void SetUp() override {
     ExtensionServiceTestBase::SetUp();

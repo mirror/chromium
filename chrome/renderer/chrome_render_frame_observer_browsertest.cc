@@ -25,7 +25,7 @@ class FakeContentTranslateDriver
  public:
   FakeContentTranslateDriver()
       : called_new_page_(false), page_needs_translation_(false) {}
-  ~FakeContentTranslateDriver() override {}
+  ~FakeContentTranslateDriver() override = default;
 
   void BindHandle(mojo::ScopedMessagePipeHandle handle) {
     bindings_.AddBinding(this, translate::mojom::ContentTranslateDriverRequest(

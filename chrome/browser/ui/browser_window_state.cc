@@ -54,7 +54,7 @@ class WindowPlacementPrefUpdate : public DictionaryPrefUpdate {
       : DictionaryPrefUpdate(service, prefs::kAppWindowPlacement),
         window_name_(window_name) {}
 
-  ~WindowPlacementPrefUpdate() override {}
+  ~WindowPlacementPrefUpdate() override = default;
 
   base::DictionaryValue* Get() override {
     base::DictionaryValue* all_apps_dict = DictionaryPrefUpdate::Get();

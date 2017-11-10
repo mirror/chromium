@@ -109,7 +109,7 @@ bool SwitchToFrench() {
 
 class LocalNTPTest : public InProcessBrowserTest {
  public:
-  LocalNTPTest() {}
+  LocalNTPTest() = default;
 
   // Navigates the active tab to chrome://newtab and waits until the NTP is
   // fully loaded. Note that simply waiting for a navigation is not enough,
@@ -427,7 +427,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPTest, FrenchGoogleNTPLoadsWithoutError) {
 
 class LocalNTPRTLTest : public LocalNTPTest {
  public:
-  LocalNTPRTLTest() {}
+  LocalNTPRTLTest() = default;
 
  private:
   void SetUpCommandLine(base::CommandLine* cmdline) override {
@@ -630,7 +630,7 @@ class FakeOneGoogleBarFetcher : public OneGoogleBarFetcher {
 
 class LocalNTPOneGoogleBarSmokeTest : public InProcessBrowserTest {
  public:
-  LocalNTPOneGoogleBarSmokeTest() {}
+  LocalNTPOneGoogleBarSmokeTest() = default;
 
   FakeOneGoogleBarFetcher* one_google_bar_fetcher() {
     return static_cast<FakeOneGoogleBarFetcher*>(
@@ -735,7 +735,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPOneGoogleBarSmokeTest,
 
 class LocalNTPVoiceSearchSmokeTest : public InProcessBrowserTest {
  public:
-  LocalNTPVoiceSearchSmokeTest() {}
+  LocalNTPVoiceSearchSmokeTest() = default;
 
  private:
   void SetUp() override {
@@ -862,7 +862,7 @@ ACTION_P2(ReturnFreshLogo, reason, logo) {
 
 class LocalNTPDoodleTest : public InProcessBrowserTest {
  protected:
-  LocalNTPDoodleTest() {}
+  LocalNTPDoodleTest() = default;
 
   MockLogoService* logo_service() {
     return static_cast<MockLogoService*>(

@@ -33,7 +33,7 @@ class FakeUploader : public TwoPhaseUploader {
                const base::FilePath& file_path,
                const ProgressCallback& progress_callback,
                const FinishCallback& finish_callback);
-  ~FakeUploader() override {}
+  ~FakeUploader() override = default;
 
   void Start() override { start_called_ = true; }
 
@@ -68,7 +68,7 @@ FakeUploader::FakeUploader(
 class FakeUploaderFactory : public TwoPhaseUploaderFactory {
  public:
   FakeUploaderFactory() : uploader_(nullptr) {}
-  ~FakeUploaderFactory() override {}
+  ~FakeUploaderFactory() override = default;
 
   std::unique_ptr<TwoPhaseUploader> CreateTwoPhaseUploader(
       net::URLRequestContextGetter* url_request_context_getter,

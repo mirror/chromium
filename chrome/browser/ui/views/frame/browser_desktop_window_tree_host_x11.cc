@@ -28,8 +28,7 @@ BrowserDesktopWindowTreeHostX11::BrowserDesktopWindowTreeHostX11(
                                       : views::Widget::FRAME_TYPE_FORCE_NATIVE);
 }
 
-BrowserDesktopWindowTreeHostX11::~BrowserDesktopWindowTreeHostX11() {
-}
+BrowserDesktopWindowTreeHostX11::~BrowserDesktopWindowTreeHostX11() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // BrowserDesktopWindowTreeHostX11,

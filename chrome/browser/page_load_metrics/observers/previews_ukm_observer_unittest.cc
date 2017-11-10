@@ -48,7 +48,7 @@ class TestPreviewsUKMObserver : public PreviewsUKMObserver {
         data_reduction_proxy_used_(data_reduction_proxy_used),
         lite_page_received_(lite_page_received) {}
 
-  ~TestPreviewsUKMObserver() override {}
+  ~TestPreviewsUKMObserver() override = default;
 
   // page_load_metrics::PageLoadMetricsObserver implementation:
   ObservePolicy OnCommit(content::NavigationHandle* navigation_handle,
@@ -72,8 +72,8 @@ class TestPreviewsUKMObserver : public PreviewsUKMObserver {
 class PreviewsUKMObserverTest
     : public page_load_metrics::PageLoadMetricsObserverTestHarness {
  public:
-  PreviewsUKMObserverTest() {}
-  ~PreviewsUKMObserverTest() override {}
+  PreviewsUKMObserverTest() = default;
+  ~PreviewsUKMObserverTest() override = default;
 
   void RunTest(bool data_reduction_proxy_used, bool lite_page_received) {
     data_reduction_proxy_used_ = data_reduction_proxy_used;

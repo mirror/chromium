@@ -147,7 +147,7 @@ Browser* CloseBrowserAndOpenNew(Browser* browser, Profile* profile) {
 
 class StartupBrowserCreatorTest : public ExtensionBrowserTest {
  protected:
-  StartupBrowserCreatorTest() {}
+  StartupBrowserCreatorTest() = default;
 
   bool SetUpUserDataDirectory() override {
     return ExtensionBrowserTest::SetUpUserDataDirectory();

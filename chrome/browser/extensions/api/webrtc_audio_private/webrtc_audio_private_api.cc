@@ -47,8 +47,7 @@ WebrtcAudioPrivateEventService::WebrtcAudioPrivateEventService(
     system_monitor->AddDevicesChangedObserver(this);
 }
 
-WebrtcAudioPrivateEventService::~WebrtcAudioPrivateEventService() {
-}
+WebrtcAudioPrivateEventService::~WebrtcAudioPrivateEventService() = default;
 
 void WebrtcAudioPrivateEventService::Shutdown() {
   // In unit tests, the SystemMonitor may not be created.
@@ -101,9 +100,9 @@ void WebrtcAudioPrivateEventService::SignalEvent() {
   }
 }
 
-WebrtcAudioPrivateFunction::WebrtcAudioPrivateFunction() {}
+WebrtcAudioPrivateFunction::WebrtcAudioPrivateFunction() = default;
 
-WebrtcAudioPrivateFunction::~WebrtcAudioPrivateFunction() {}
+WebrtcAudioPrivateFunction::~WebrtcAudioPrivateFunction() = default;
 
 std::string WebrtcAudioPrivateFunction::CalculateHMAC(
     const std::string& raw_id) {
@@ -220,10 +219,10 @@ void WebrtcAudioPrivateGetSinksFunction::DoneOnUIThread(
 }
 
 WebrtcAudioPrivateGetAssociatedSinkFunction::
-    WebrtcAudioPrivateGetAssociatedSinkFunction() {}
+    WebrtcAudioPrivateGetAssociatedSinkFunction() = default;
 
 WebrtcAudioPrivateGetAssociatedSinkFunction::
-    ~WebrtcAudioPrivateGetAssociatedSinkFunction() {}
+    ~WebrtcAudioPrivateGetAssociatedSinkFunction() = default;
 
 bool WebrtcAudioPrivateGetAssociatedSinkFunction::RunAsync() {
   params_ = wap::GetAssociatedSink::Params::Create(*args_);
@@ -303,10 +302,10 @@ void WebrtcAudioPrivateGetAssociatedSinkFunction::ReceiveHMACOnUIThread(
 }
 
 WebrtcAudioPrivateSetAudioExperimentsFunction::
-    WebrtcAudioPrivateSetAudioExperimentsFunction() {}
+    WebrtcAudioPrivateSetAudioExperimentsFunction() = default;
 
 WebrtcAudioPrivateSetAudioExperimentsFunction::
-    ~WebrtcAudioPrivateSetAudioExperimentsFunction() {}
+    ~WebrtcAudioPrivateSetAudioExperimentsFunction() = default;
 
 bool WebrtcAudioPrivateSetAudioExperimentsFunction::RunAsync() {
 #if BUILDFLAG(ENABLE_WEBRTC)

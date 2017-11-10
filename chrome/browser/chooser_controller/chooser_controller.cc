@@ -55,7 +55,7 @@ ChooserController::ChooserController(content::RenderFrameHost* owner,
   }
 }
 
-ChooserController::~ChooserController() {}
+ChooserController::~ChooserController() = default;
 
 base::string16 ChooserController::GetTitle() const {
   return title_;

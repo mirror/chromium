@@ -55,7 +55,7 @@ PhishingClassifierFilter* PhishingClassifierFilter::Create() {
 PhishingClassifierFilter::PhishingClassifierFilter()
     : RenderThreadObserver() {}
 
-PhishingClassifierFilter::~PhishingClassifierFilter() {}
+PhishingClassifierFilter::~PhishingClassifierFilter() = default;
 
 bool PhishingClassifierFilter::OnControlMessageReceived(
     const IPC::Message& message) {

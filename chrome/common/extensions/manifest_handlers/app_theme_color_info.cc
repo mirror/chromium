@@ -18,9 +18,9 @@ namespace extensions {
 namespace keys = manifest_keys;
 namespace errors = manifest_errors;
 
-AppThemeColorInfo::AppThemeColorInfo() {}
+AppThemeColorInfo::AppThemeColorInfo() = default;
 
-AppThemeColorInfo::~AppThemeColorInfo() {}
+AppThemeColorInfo::~AppThemeColorInfo() = default;
 
 // static
 base::Optional<SkColor> AppThemeColorInfo::GetThemeColor(
@@ -30,9 +30,9 @@ base::Optional<SkColor> AppThemeColorInfo::GetThemeColor(
   return info ? info->theme_color : base::Optional<SkColor>();
 }
 
-AppThemeColorHandler::AppThemeColorHandler() {}
+AppThemeColorHandler::AppThemeColorHandler() = default;
 
-AppThemeColorHandler::~AppThemeColorHandler() {}
+AppThemeColorHandler::~AppThemeColorHandler() = default;
 
 bool AppThemeColorHandler::Parse(Extension* extension, base::string16* error) {
   std::string theme_color_string;

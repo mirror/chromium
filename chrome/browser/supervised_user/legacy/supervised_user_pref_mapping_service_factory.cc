@@ -33,7 +33,7 @@ SupervisedUserPrefMappingServiceFactory::
 }
 
 SupervisedUserPrefMappingServiceFactory::
-    ~SupervisedUserPrefMappingServiceFactory() {}
+    ~SupervisedUserPrefMappingServiceFactory() = default;
 
 KeyedService* SupervisedUserPrefMappingServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

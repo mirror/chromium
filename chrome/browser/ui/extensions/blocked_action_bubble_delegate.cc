@@ -14,7 +14,7 @@ BlockedActionBubbleDelegate::BlockedActionBubbleDelegate(
     const std::string& extension_id)
     : callback_(callback), extension_id_(extension_id) {}
 
-BlockedActionBubbleDelegate::~BlockedActionBubbleDelegate() {}
+BlockedActionBubbleDelegate::~BlockedActionBubbleDelegate() = default;
 
 bool BlockedActionBubbleDelegate::ShouldShow() {
   // TODO(devlin): Technically, this could be wrong if the extension no longer

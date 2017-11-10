@@ -35,7 +35,7 @@ namespace safe_browsing {
 class PermissionReporterBrowserTest : public SyncTest {
  public:
   PermissionReporterBrowserTest() : SyncTest(SINGLE_CLIENT) {}
-  ~PermissionReporterBrowserTest() override {}
+  ~PermissionReporterBrowserTest() override = default;
 
  protected:
   void SetUpOnMainThread() override {

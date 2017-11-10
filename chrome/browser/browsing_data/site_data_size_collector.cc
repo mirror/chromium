@@ -48,8 +48,7 @@ SiteDataSizeCollector::SiteDataSizeCollector(
       total_bytes_(0),
       weak_ptr_factory_(this) {}
 
-SiteDataSizeCollector::~SiteDataSizeCollector() {
-}
+SiteDataSizeCollector::~SiteDataSizeCollector() = default;
 
 void SiteDataSizeCollector::Fetch(const FetchCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);

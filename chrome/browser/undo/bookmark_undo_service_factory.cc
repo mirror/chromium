@@ -33,8 +33,7 @@ BookmarkUndoServiceFactory::BookmarkUndoServiceFactory()
         BrowserContextDependencyManager::GetInstance()) {
 }
 
-BookmarkUndoServiceFactory::~BookmarkUndoServiceFactory() {
-}
+BookmarkUndoServiceFactory::~BookmarkUndoServiceFactory() = default;
 
 KeyedService* BookmarkUndoServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

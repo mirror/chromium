@@ -28,7 +28,7 @@ class AdsPageLoadMetricsObserverBrowserTest
       : subresource_filter::SubresourceFilterBrowserTest() {
     scoped_feature_list_.InitAndEnableFeature(features::kAdsFeature);
   }
-  ~AdsPageLoadMetricsObserverBrowserTest() override {}
+  ~AdsPageLoadMetricsObserverBrowserTest() override = default;
 
  private:
   base::test::ScopedFeatureList scoped_feature_list_;

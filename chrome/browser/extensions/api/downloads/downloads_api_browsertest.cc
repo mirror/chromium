@@ -608,7 +608,7 @@ class MockIconExtractorImpl : public DownloadFileIconExtractor {
         expected_icon_size_(icon_size),
         response_(response) {
   }
-  ~MockIconExtractorImpl() override {}
+  ~MockIconExtractorImpl() override = default;
 
   bool ExtractIconURLForPath(const base::FilePath& path,
                              float scale,
@@ -746,7 +746,7 @@ class JustInProgressDownloadObserver
       : content::DownloadTestObserverInProgress(download_manager, wait_count) {
   }
 
-  ~JustInProgressDownloadObserver() override {}
+  ~JustInProgressDownloadObserver() override = default;
 
  private:
   bool IsDownloadInFinalState(DownloadItem* item) override {
@@ -4213,8 +4213,8 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
 
 class DownloadsApiTest : public ExtensionApiTest {
  public:
-  DownloadsApiTest() {}
-  ~DownloadsApiTest() override {}
+  DownloadsApiTest() = default;
+  ~DownloadsApiTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DownloadsApiTest);

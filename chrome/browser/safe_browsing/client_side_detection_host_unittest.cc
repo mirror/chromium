@@ -119,7 +119,7 @@ void EmptyUrlCheckCallback(bool processed) {
 class MockClientSideDetectionService : public ClientSideDetectionService {
  public:
   MockClientSideDetectionService() : ClientSideDetectionService(NULL) {}
-  virtual ~MockClientSideDetectionService() {}
+  virtual ~MockClientSideDetectionService() = default;
 
   MOCK_METHOD3(SendClientReportPhishingRequest,
                void(ClientPhishingRequest*,
@@ -157,7 +157,7 @@ class MockSafeBrowsingUIManager : public SafeBrowsingUIManager {
   }
 
  protected:
-  virtual ~MockSafeBrowsingUIManager() { }
+  virtual ~MockSafeBrowsingUIManager() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockSafeBrowsingUIManager);
@@ -165,7 +165,7 @@ class MockSafeBrowsingUIManager : public SafeBrowsingUIManager {
 
 class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
  public:
-  MockSafeBrowsingDatabaseManager() {}
+  MockSafeBrowsingDatabaseManager() = default;
 
   MOCK_METHOD2(CheckCsdWhitelistUrl,
                AsyncMatch(const GURL&, SafeBrowsingDatabaseManager::Client*));
@@ -173,7 +173,7 @@ class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
   MOCK_METHOD0(IsMalwareKillSwitchOn, bool());
 
  protected:
-  virtual ~MockSafeBrowsingDatabaseManager() {}
+  virtual ~MockSafeBrowsingDatabaseManager() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockSafeBrowsingDatabaseManager);
@@ -181,8 +181,8 @@ class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
 
 class MockTestingProfile : public TestingProfile {
  public:
-  MockTestingProfile() {}
-  virtual ~MockTestingProfile() {}
+  MockTestingProfile() = default;
+  virtual ~MockTestingProfile() = default;
 
   MOCK_CONST_METHOD0(IsOffTheRecord, bool());
 };
@@ -193,7 +193,7 @@ class MockBrowserFeatureExtractor : public BrowserFeatureExtractor {
       WebContents* tab,
       ClientSideDetectionHost* host)
       : BrowserFeatureExtractor(tab, host) {}
-  virtual ~MockBrowserFeatureExtractor() {}
+  virtual ~MockBrowserFeatureExtractor() = default;
 
   MOCK_METHOD3(ExtractFeatures,
                void(const BrowseInfo*,

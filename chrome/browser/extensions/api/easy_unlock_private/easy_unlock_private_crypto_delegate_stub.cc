@@ -15,9 +15,9 @@ namespace {
 class EasyUnlockPrivateCryptoDelegateStub
     : public extensions::EasyUnlockPrivateCryptoDelegate {
  public:
-  EasyUnlockPrivateCryptoDelegateStub() {}
+  EasyUnlockPrivateCryptoDelegateStub() = default;
 
-  ~EasyUnlockPrivateCryptoDelegateStub() override {}
+  ~EasyUnlockPrivateCryptoDelegateStub() override = default;
 
   void GenerateEcP256KeyPair(const KeyPairCallback& callback) override {
     callback.Run("", "");

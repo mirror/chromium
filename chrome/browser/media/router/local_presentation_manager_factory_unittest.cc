@@ -14,8 +14,8 @@ namespace media_router {
 
 class LocalPresentationManagerFactoryTest : public testing::Test {
  protected:
-  LocalPresentationManagerFactoryTest() {}
-  ~LocalPresentationManagerFactoryTest() override {}
+  LocalPresentationManagerFactoryTest() = default;
+  ~LocalPresentationManagerFactoryTest() override = default;
 
   Profile* profile() { return &profile_; }
 

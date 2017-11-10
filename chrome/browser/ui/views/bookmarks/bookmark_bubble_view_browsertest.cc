@@ -20,7 +20,7 @@
 
 class BookmarkBubbleViewBrowserTest : public DialogBrowserTest {
  public:
-  BookmarkBubbleViewBrowserTest() {}
+  BookmarkBubbleViewBrowserTest() = default;
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {

@@ -71,7 +71,7 @@ NewTabUI::NewTabUI(content::WebUI* web_ui) : content::WebUIController(web_ui) {
       base::Bind(&NewTabUI::OnDefaultFontSizeChanged, base::Unretained(this)));
 }
 
-NewTabUI::~NewTabUI() {}
+NewTabUI::~NewTabUI() = default;
 
 void NewTabUI::OnShowBookmarkBarChanged() {
   base::Value attached(
@@ -212,4 +212,4 @@ std::string NewTabUI::NewTabHTMLSource::GetContentSecurityPolicyChildSrc()
   return "child-src chrome-search://most-visited;";
 }
 
-NewTabUI::NewTabHTMLSource::~NewTabHTMLSource() {}
+NewTabUI::NewTabHTMLSource::~NewTabHTMLSource() = default;

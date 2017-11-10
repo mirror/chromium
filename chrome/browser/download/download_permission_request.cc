@@ -22,7 +22,7 @@ DownloadPermissionRequest::DownloadPermissionRequest(
   request_origin_ = web_contents->GetURL().GetOrigin();
 }
 
-DownloadPermissionRequest::~DownloadPermissionRequest() {}
+DownloadPermissionRequest::~DownloadPermissionRequest() = default;
 
 PermissionRequest::IconId DownloadPermissionRequest::GetIconId() const {
 #if defined(OS_ANDROID)

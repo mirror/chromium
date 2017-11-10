@@ -19,8 +19,7 @@ ProfileListDesktop::ProfileListDesktop(
     : profile_storage_(profile_storage) {
 }
 
-ProfileListDesktop::~ProfileListDesktop() {
-}
+ProfileListDesktop::~ProfileListDesktop() = default;
 
 // static
 ProfileList* ProfileList::Create(ProfileAttributesStorage* profile_storage) {

@@ -29,7 +29,7 @@ BrowserFrameMus::BrowserFrameMus(BrowserFrame* browser_frame,
       browser_frame_(browser_frame),
       browser_view_(browser_view) {}
 
-BrowserFrameMus::~BrowserFrameMus() {}
+BrowserFrameMus::~BrowserFrameMus() = default;
 
 views::Widget::InitParams BrowserFrameMus::GetWidgetParams() {
   views::Widget::InitParams params;

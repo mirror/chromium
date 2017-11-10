@@ -36,7 +36,7 @@ FlashPermissionContext::FlashPermissionContext(Profile* profile)
                             CONTENT_SETTINGS_TYPE_PLUGINS,
                             blink::FeaturePolicyFeature::kNotFound) {}
 
-FlashPermissionContext::~FlashPermissionContext() {}
+FlashPermissionContext::~FlashPermissionContext() = default;
 
 ContentSetting FlashPermissionContext::GetPermissionStatusInternal(
     content::RenderFrameHost* render_frame_host,

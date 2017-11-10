@@ -70,7 +70,7 @@ class WebstoreInstallerBrowserTest
             kCrxFilename,
             kAppDomain,
             kNonAppDomain) {}
-  ~WebstoreInstallerBrowserTest() override {}
+  ~WebstoreInstallerBrowserTest() override = default;
 
   void SetDoneClosure(const base::Closure& done_closure) {
     done_closure_ = done_closure;

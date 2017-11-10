@@ -125,8 +125,7 @@ bool ParseProvisionalUsbPrinterId(const std::string& printer_id,
 ExtensionPrinterHandler::ExtensionPrinterHandler(Profile* profile)
     : profile_(profile), weak_ptr_factory_(this) {}
 
-ExtensionPrinterHandler::~ExtensionPrinterHandler() {
-}
+ExtensionPrinterHandler::~ExtensionPrinterHandler() = default;
 
 void ExtensionPrinterHandler::Reset() {
   // TODO(tbarzic): Keep track of pending request ids issued by |this| and

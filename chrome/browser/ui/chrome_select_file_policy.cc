@@ -21,7 +21,7 @@ ChromeSelectFilePolicy::ChromeSelectFilePolicy(
     : source_contents_(source_contents) {
 }
 
-ChromeSelectFilePolicy::~ChromeSelectFilePolicy() {}
+ChromeSelectFilePolicy::~ChromeSelectFilePolicy() = default;
 
 bool ChromeSelectFilePolicy::CanOpenSelectFileDialog() {
   return FileSelectDialogsAllowed();

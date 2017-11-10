@@ -31,7 +31,7 @@ TriggeredProfileResetterFactory::TriggeredProfileResetterFactory()
           "TriggeredProfileResetter",
           BrowserContextDependencyManager::GetInstance()) {}
 
-TriggeredProfileResetterFactory::~TriggeredProfileResetterFactory() {}
+TriggeredProfileResetterFactory::~TriggeredProfileResetterFactory() = default;
 
 KeyedService* TriggeredProfileResetterFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

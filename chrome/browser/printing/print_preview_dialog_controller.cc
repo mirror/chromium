@@ -75,8 +75,7 @@ PrintPreviewDialogDelegate::PrintPreviewDialogDelegate(WebContents* initiator)
     : initiator_(initiator) {
 }
 
-PrintPreviewDialogDelegate::~PrintPreviewDialogDelegate() {
-}
+PrintPreviewDialogDelegate::~PrintPreviewDialogDelegate() = default;
 
 ui::ModalType PrintPreviewDialogDelegate::GetDialogModalType() const {
   // Not used, returning dummy value.
@@ -258,7 +257,7 @@ void PrintPreviewDialogController::EraseInitiatorInfo(
   preview_dialog_map_[preview_dialog] = nullptr;
 }
 
-PrintPreviewDialogController::~PrintPreviewDialogController() {}
+PrintPreviewDialogController::~PrintPreviewDialogController() = default;
 
 void PrintPreviewDialogController::OnRendererProcessClosed(
     content::RenderProcessHost* rph) {

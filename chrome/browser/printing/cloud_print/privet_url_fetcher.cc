@@ -91,8 +91,7 @@ PrivetURLFetcher::PrivetURLFetcher(
       tries_(0),
       weak_factory_(this) {}
 
-PrivetURLFetcher::~PrivetURLFetcher() {
-}
+PrivetURLFetcher::~PrivetURLFetcher() = default;
 
 // static
 void PrivetURLFetcher::SetTokenForHost(const std::string& host,

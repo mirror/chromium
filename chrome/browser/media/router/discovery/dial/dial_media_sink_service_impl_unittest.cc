@@ -20,8 +20,8 @@ namespace media_router {
 
 class TestDialRegistry : public DialRegistry {
  public:
-  TestDialRegistry() {}
-  ~TestDialRegistry() {}
+  TestDialRegistry() = default;
+  ~TestDialRegistry() = default;
 
   MOCK_METHOD1(RegisterObserver, void(DialRegistry::Observer* observer));
   MOCK_METHOD1(UnregisterObserver, void(DialRegistry::Observer* observer));
@@ -32,7 +32,7 @@ class TestDialRegistry : public DialRegistry {
 
 class MockDialMediaSinkServiceObserver : public DialMediaSinkServiceObserver {
  public:
-  MockDialMediaSinkServiceObserver() {}
+  MockDialMediaSinkServiceObserver() = default;
   ~MockDialMediaSinkServiceObserver() = default;
 
   MOCK_METHOD1(OnDialSinkAdded, void(const MediaSinkInternal& sink));
@@ -43,7 +43,7 @@ class MockDeviceDescriptionService : public DeviceDescriptionService {
   MockDeviceDescriptionService(DeviceDescriptionParseSuccessCallback success_cb,
                                DeviceDescriptionParseErrorCallback error_cb)
       : DeviceDescriptionService(success_cb, error_cb) {}
-  ~MockDeviceDescriptionService() override {}
+  ~MockDeviceDescriptionService() override = default;
 
   MOCK_METHOD2(GetDeviceDescriptions,
                void(const std::vector<DialDeviceData>& devices,

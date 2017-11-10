@@ -95,7 +95,7 @@ std::unique_ptr<net::test_server::HttpResponse> HandleTestRequest(
 class TestDispatcherHostDelegate : public ChromeResourceDispatcherHostDelegate {
  public:
   TestDispatcherHostDelegate() : should_add_data_reduction_proxy_data_(false) {}
-  ~TestDispatcherHostDelegate() override {}
+  ~TestDispatcherHostDelegate() override = default;
 
   // ResourceDispatcherHostDelegate implementation:
   void RequestBeginning(net::URLRequest* request,
@@ -182,7 +182,7 @@ class DidFinishNavigationObserver : public content::WebContentsObserver {
                                        bool add_data_reduction_proxy_data)
       : content::WebContentsObserver(web_contents),
         add_data_reduction_proxy_data_(add_data_reduction_proxy_data) {}
-  ~DidFinishNavigationObserver() override {}
+  ~DidFinishNavigationObserver() override = default;
 
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override {
@@ -207,7 +207,7 @@ class DidFinishNavigationObserver : public content::WebContentsObserver {
 class ChromeResourceDispatcherHostDelegateBrowserTest :
     public InProcessBrowserTest {
  public:
-  ChromeResourceDispatcherHostDelegateBrowserTest() {}
+  ChromeResourceDispatcherHostDelegateBrowserTest() = default;
 
   void SetUpOnMainThread() override {
     // Hook navigations with our delegate.
@@ -433,7 +433,7 @@ class HeaderTestDispatcherHostDelegate
  public:
   explicit HeaderTestDispatcherHostDelegate(const GURL& watch_url)
       : watch_url_(watch_url) {}
-  ~HeaderTestDispatcherHostDelegate() override {}
+  ~HeaderTestDispatcherHostDelegate() override = default;
 
   void RequestBeginning(net::URLRequest* request,
                         content::ResourceContext* resource_context,

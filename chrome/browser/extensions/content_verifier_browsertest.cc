@@ -51,7 +51,7 @@ class RegistryObserver : public ExtensionRegistryObserver {
   explicit RegistryObserver(ExtensionRegistry* registry) : observer_(this) {
     observer_.Add(registry);
   }
-  ~RegistryObserver() override {}
+  ~RegistryObserver() override = default;
 
   // Waits until we've seen an unload for extension with |id|, returning true
   // if we saw one or false otherwise (typically because of test timeout).
@@ -125,7 +125,7 @@ class JobDelegate : public ContentVerifyJob::TestDelegate {
         bytes_read_failed_(0),
         done_reading_failed_(0) {}
 
-  ~JobDelegate() override {}
+  ~JobDelegate() override = default;
 
   void set_id(const ExtensionId& id) { id_ = id; }
   void fail_next_read() { fail_next_read_ = true; }
@@ -322,7 +322,7 @@ void VerifierObserver::OnFetchComplete(const std::string& extension_id,
 // substitute a local file as a simulated response.
 class DownloaderTestDelegate : public ExtensionDownloaderTestDelegate {
  public:
-  DownloaderTestDelegate() {}
+  DownloaderTestDelegate() = default;
 
   // This makes it so that update check requests for |extension_id| will return
   // a downloaded file of |crx_path| that is claimed to have version
@@ -383,7 +383,7 @@ class TestExternalProvider : public ExternalProviderInterface {
                        const ExtensionId& extension_id)
       : visitor_(visitor), extension_id_(extension_id) {}
 
-  ~TestExternalProvider() override {}
+  ~TestExternalProvider() override = default;
 
   // ExternalProviderInterface:
   void ServiceShutdown() override {}
@@ -426,7 +426,7 @@ class TestExternalProvider : public ExternalProviderInterface {
 class ForceInstallProvider : public ManagementPolicy::Provider {
  public:
   explicit ForceInstallProvider(const ExtensionId& id) : id_(id) {}
-  ~ForceInstallProvider() override {}
+  ~ForceInstallProvider() override = default;
 
   std::string GetDebugPolicyProviderName() const override {
     return "ForceInstallProvider";
@@ -466,8 +466,8 @@ class ScopedContentVerifyJobDelegateOverride {
 
 class ContentVerifierTest : public ExtensionBrowserTest {
  public:
-  ContentVerifierTest() {}
-  ~ContentVerifierTest() override {}
+  ContentVerifierTest() = default;
+  ~ContentVerifierTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ExtensionBrowserTest::SetUpCommandLine(command_line);

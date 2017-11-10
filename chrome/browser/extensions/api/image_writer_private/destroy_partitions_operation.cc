@@ -24,7 +24,7 @@ DestroyPartitionsOperation::DestroyPartitionsOperation(
     const base::FilePath& download_folder)
     : Operation(manager, extension_id, storage_unit_id, download_folder) {}
 
-DestroyPartitionsOperation::~DestroyPartitionsOperation() {}
+DestroyPartitionsOperation::~DestroyPartitionsOperation() = default;
 
 void DestroyPartitionsOperation::StartImpl() {
   DCHECK(IsRunningInCorrectSequence());

@@ -105,8 +105,8 @@ ArticleEntry CreateEntry(const std::string& entry_id,
 
 class DomDistillerViewerSourceBrowserTest : public InProcessBrowserTest {
  public:
-  DomDistillerViewerSourceBrowserTest() {}
-  ~DomDistillerViewerSourceBrowserTest() override {}
+  DomDistillerViewerSourceBrowserTest() = default;
+  ~DomDistillerViewerSourceBrowserTest() override = default;
 
   void SetUpOnMainThread() override {
     if (!DistillerJavaScriptWorldIdIsSet()) {

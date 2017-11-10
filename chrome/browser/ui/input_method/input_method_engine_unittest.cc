@@ -44,7 +44,7 @@ class KeyEventDoneCallback {
  public:
   explicit KeyEventDoneCallback(bool expected_argument)
       : expected_argument_(expected_argument), is_called_(false) {}
-  ~KeyEventDoneCallback() {}
+  ~KeyEventDoneCallback() = default;
 
   void Run(bool consumed) {
     if (consumed == expected_argument_) {
@@ -68,7 +68,7 @@ class KeyEventDoneCallback {
 class TestObserver : public InputMethodEngineBase::Observer {
  public:
   TestObserver() : calls_bitmap_(NONE) {}
-  ~TestObserver() override {}
+  ~TestObserver() override = default;
 
   // InputMethodEngineBase::Observer:
   void OnActivate(const std::string& engine_id) override {

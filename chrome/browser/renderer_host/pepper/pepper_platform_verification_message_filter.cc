@@ -49,7 +49,7 @@ PepperPlatformVerificationMessageFilter::
 }
 
 PepperPlatformVerificationMessageFilter::
-    ~PepperPlatformVerificationMessageFilter() {}
+    ~PepperPlatformVerificationMessageFilter() = default;
 
 scoped_refptr<base::TaskRunner>
 PepperPlatformVerificationMessageFilter::OverrideTaskRunnerForMessage(

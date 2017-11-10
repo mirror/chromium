@@ -18,7 +18,7 @@ ExtensionMessageBubbleBridge::ExtensionMessageBubbleBridge(
     std::unique_ptr<extensions::ExtensionMessageBubbleController> controller)
     : controller_(std::move(controller)) {}
 
-ExtensionMessageBubbleBridge::~ExtensionMessageBubbleBridge() {}
+ExtensionMessageBubbleBridge::~ExtensionMessageBubbleBridge() = default;
 
 bool ExtensionMessageBubbleBridge::ShouldShow() {
   return controller_->ShouldShow();

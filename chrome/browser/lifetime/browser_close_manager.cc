@@ -44,8 +44,7 @@ void ShowInProgressDownloads(Profile* profile) {
 BrowserCloseManager::BrowserCloseManager() : current_browser_(nullptr) {
 }
 
-BrowserCloseManager::~BrowserCloseManager() {
-}
+BrowserCloseManager::~BrowserCloseManager() = default;
 
 void BrowserCloseManager::StartClosingBrowsers() {
   // If the session is ending, skip straight to closing the browsers. There's no

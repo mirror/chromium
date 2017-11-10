@@ -73,7 +73,7 @@ class FakeChooserService : public device::mojom::UsbChooserService {
   explicit FakeChooserService(RenderFrameHost* render_frame_host)
       : render_frame_host_(render_frame_host) {}
 
-  ~FakeChooserService() override {}
+  ~FakeChooserService() override = default;
 
   // device::mojom::UsbChooserService:
   void GetPermission(

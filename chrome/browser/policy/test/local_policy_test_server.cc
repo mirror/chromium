@@ -85,7 +85,7 @@ LocalPolicyTestServer::LocalPolicyTestServer(const std::string& test_name)
       .AppendASCII(base::StringPrintf("policy_%s.json", test_name.c_str()));
 }
 
-LocalPolicyTestServer::~LocalPolicyTestServer() {}
+LocalPolicyTestServer::~LocalPolicyTestServer() = default;
 
 bool LocalPolicyTestServer::SetSigningKeyAndSignature(
     const crypto::RSAPrivateKey* key, const std::string& signature) {

@@ -34,8 +34,7 @@ FontFamilyCache::FontFamilyCache(Profile* profile)
       base::Bind(&FontFamilyCache::OnPrefsChanged, base::Unretained(this)));
 }
 
-FontFamilyCache::~FontFamilyCache() {
-}
+FontFamilyCache::~FontFamilyCache() = default;
 
 void FontFamilyCache::FillFontFamilyMap(Profile* profile,
                                         const char* map_name,

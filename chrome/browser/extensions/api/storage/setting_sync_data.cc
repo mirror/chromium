@@ -34,7 +34,7 @@ SettingSyncData::SettingSyncData(syncer::SyncChange::SyncChangeType change_type,
       key_(key),
       value_(std::move(value)) {}
 
-SettingSyncData::~SettingSyncData() {}
+SettingSyncData::~SettingSyncData() = default;
 
 std::unique_ptr<base::Value> SettingSyncData::PassValue() {
   DCHECK(value_) << "value has already been Pass()ed";

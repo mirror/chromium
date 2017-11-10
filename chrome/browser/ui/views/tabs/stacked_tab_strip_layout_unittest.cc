@@ -35,7 +35,7 @@ struct CommonTestData {
 
 class StackedTabStripLayoutTest : public testing::Test {
  public:
-  StackedTabStripLayoutTest() {}
+  StackedTabStripLayoutTest() = default;
 
  protected:
   void Reset(StackedTabStripLayout* layout,

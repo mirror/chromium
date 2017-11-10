@@ -84,9 +84,7 @@ ExternalInstallManager::ExternalInstallManager(
   }
 }
 
-ExternalInstallManager::~ExternalInstallManager() {
-}
-
+ExternalInstallManager::~ExternalInstallManager() = default;
 
 bool ExternalInstallManager::IsPromptingEnabled() {
   return FeatureSwitch::prompt_for_external_extensions()->IsEnabled();

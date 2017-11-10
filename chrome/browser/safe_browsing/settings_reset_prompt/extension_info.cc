@@ -18,6 +18,6 @@ ExtensionInfo::ExtensionInfo(const extensions::ExtensionId& id,
                              const std::string& name)
     : id(id), name(name) {}
 
-ExtensionInfo::~ExtensionInfo() {}
+ExtensionInfo::~ExtensionInfo() = default;
 
 }  // namespace safe_browsing

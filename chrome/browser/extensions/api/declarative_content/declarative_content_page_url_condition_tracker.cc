@@ -27,8 +27,8 @@ static url_matcher::URLMatcherConditionSet::ID g_next_id = 0;
 // DeclarativeContentPageUrlPredicate
 //
 
-DeclarativeContentPageUrlPredicate::~DeclarativeContentPageUrlPredicate() {
-}
+DeclarativeContentPageUrlPredicate::~DeclarativeContentPageUrlPredicate() =
+    default;
 
 // static
 std::unique_ptr<DeclarativeContentPageUrlPredicate>
@@ -85,8 +85,7 @@ PerWebContentsTracker(
 }
 
 DeclarativeContentPageUrlConditionTracker::PerWebContentsTracker::
-~PerWebContentsTracker() {
-}
+    ~PerWebContentsTracker() = default;
 
 void DeclarativeContentPageUrlConditionTracker::PerWebContentsTracker::
 UpdateMatchesForCurrentUrl(bool request_evaluation_if_unchanged) {
@@ -112,8 +111,7 @@ DeclarativeContentPageUrlConditionTracker(Delegate* delegate)
 }
 
 DeclarativeContentPageUrlConditionTracker::
-~DeclarativeContentPageUrlConditionTracker() {
-}
+    ~DeclarativeContentPageUrlConditionTracker() = default;
 
 std::string DeclarativeContentPageUrlConditionTracker::
 GetPredicateApiAttributeName() const {

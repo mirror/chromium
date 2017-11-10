@@ -85,7 +85,7 @@ class BaseDialogContainer : public views::DialogDelegateView {
     ui::Accelerator escape(ui::VKEY_ESCAPE, ui::EF_NONE);
     AddAccelerator(escape);
   }
-  ~BaseDialogContainer() override {}
+  ~BaseDialogContainer() override = default;
 
  protected:
   views::View* dialog_body() { return dialog_body_; }
@@ -185,7 +185,7 @@ class FullSizeBubbleFrameView : public views::BubbleFrameView {
  public:
   FullSizeBubbleFrameView()
       : views::BubbleFrameView(gfx::Insets(), gfx::Insets()) {}
-  ~FullSizeBubbleFrameView() override {}
+  ~FullSizeBubbleFrameView() override = default;
 
  private:
   // Overridden from views::ViewTargeterDelegate:
@@ -220,7 +220,7 @@ class NativeDialogContainer : public BaseDialogContainer {
     chrome::RecordDialogCreation(chrome::DialogIdentifier::NATIVE_CONTAINER);
     SetPreferredSize(size);
   }
-  ~NativeDialogContainer() override {}
+  ~NativeDialogContainer() override = default;
 
  private:
   // Overridden from views::WidgetDelegate:

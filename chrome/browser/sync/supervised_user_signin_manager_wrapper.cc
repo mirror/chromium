@@ -18,7 +18,8 @@ SupervisedUserSigninManagerWrapper::SupervisedUserSigninManagerWrapper(
     SigninManagerBase* original)
     : SigninManagerWrapper(original), profile_(profile) {}
 
-SupervisedUserSigninManagerWrapper::~SupervisedUserSigninManagerWrapper() {}
+SupervisedUserSigninManagerWrapper::~SupervisedUserSigninManagerWrapper() =
+    default;
 
 std::string SupervisedUserSigninManagerWrapper::GetEffectiveUsername() const {
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)

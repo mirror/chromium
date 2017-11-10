@@ -60,8 +60,7 @@ FullscreenController::FullscreenController(ExclusiveAccessManager* manager)
       ptr_factory_(this) {
 }
 
-FullscreenController::~FullscreenController() {
-}
+FullscreenController::~FullscreenController() = default;
 
 bool FullscreenController::IsFullscreenForBrowser() const {
   return exclusive_access_manager()->context()->IsFullscreen() &&

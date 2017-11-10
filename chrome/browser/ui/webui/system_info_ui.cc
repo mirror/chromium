@@ -68,7 +68,7 @@ class SystemInfoUIHTMLSource : public content::URLDataSource{
   }
 
  private:
-  ~SystemInfoUIHTMLSource() override {}
+  ~SystemInfoUIHTMLSource() override = default;
 
   void SysInfoComplete(std::unique_ptr<SystemLogsResponse> response);
   void RequestComplete();
@@ -176,11 +176,9 @@ void SystemInfoUIHTMLSource::RequestComplete() {
 // SystemInfoHandler
 //
 ////////////////////////////////////////////////////////////////////////////////
-SystemInfoHandler::SystemInfoHandler() {
-}
+SystemInfoHandler::SystemInfoHandler() = default;
 
-SystemInfoHandler::~SystemInfoHandler() {
-}
+SystemInfoHandler::~SystemInfoHandler() = default;
 
 void SystemInfoHandler::RegisterMessages() {
   // TODO(stevenjb): add message registration, callbacks...

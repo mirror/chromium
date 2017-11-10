@@ -23,7 +23,7 @@ WebNotificationDelegate::WebNotificationDelegate(
       notification_id_(notification_id),
       origin_(origin) {}
 
-WebNotificationDelegate::~WebNotificationDelegate() {}
+WebNotificationDelegate::~WebNotificationDelegate() = default;
 
 void WebNotificationDelegate::SettingsClick() {
 #if defined(OS_CHROMEOS)

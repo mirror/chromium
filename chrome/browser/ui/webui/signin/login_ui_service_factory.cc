@@ -18,7 +18,7 @@ LoginUIServiceFactory::LoginUIServiceFactory()
         BrowserContextDependencyManager::GetInstance()) {
 }
 
-LoginUIServiceFactory::~LoginUIServiceFactory() {}
+LoginUIServiceFactory::~LoginUIServiceFactory() = default;
 
 // static
 LoginUIService* LoginUIServiceFactory::GetForProfile(Profile* profile) {

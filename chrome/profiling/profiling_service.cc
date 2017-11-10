@@ -12,7 +12,7 @@ namespace profiling {
 
 ProfilingService::ProfilingService() : weak_factory_(this) {}
 
-ProfilingService::~ProfilingService() {}
+ProfilingService::~ProfilingService() = default;
 
 std::unique_ptr<service_manager::Service> ProfilingService::CreateService() {
   return base::MakeUnique<ProfilingService>();

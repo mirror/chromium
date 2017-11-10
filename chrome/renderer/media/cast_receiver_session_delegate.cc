@@ -14,7 +14,7 @@
 CastReceiverSessionDelegate::CastReceiverSessionDelegate()
     : weak_factory_(this) {
 }
-CastReceiverSessionDelegate::~CastReceiverSessionDelegate() {}
+CastReceiverSessionDelegate::~CastReceiverSessionDelegate() = default;
 
 void CastReceiverSessionDelegate::Start(
     const media::cast::FrameReceiverConfig& audio_config,

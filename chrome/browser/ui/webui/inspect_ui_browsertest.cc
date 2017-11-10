@@ -25,7 +25,7 @@ const char kSharedWorkerJs[] = "/workers/workers_ui_shared_worker.js";
 
 class InspectUITest : public WebUIBrowserTest {
  public:
-  InspectUITest() {}
+  InspectUITest() = default;
 
   void SetUpOnMainThread() override {
     WebUIBrowserTest::SetUpOnMainThread();

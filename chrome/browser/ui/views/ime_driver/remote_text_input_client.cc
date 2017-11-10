@@ -20,7 +20,7 @@ RemoteTextInputClient::RemoteTextInputClient(
       text_input_flags_(text_input_flags),
       caret_bounds_(caret_bounds) {}
 
-RemoteTextInputClient::~RemoteTextInputClient() {}
+RemoteTextInputClient::~RemoteTextInputClient() = default;
 
 void RemoteTextInputClient::SetTextInputType(
     ui::TextInputType text_input_type) {

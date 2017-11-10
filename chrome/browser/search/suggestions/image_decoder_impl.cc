@@ -19,7 +19,7 @@ class ImageDecoderImpl::DecodeImageRequest
   DecodeImageRequest(ImageDecoderImpl* decoder,
                      const image_fetcher::ImageDecodedCallback& callback)
       : decoder_(decoder), callback_(callback) {}
-  ~DecodeImageRequest() override {}
+  ~DecodeImageRequest() override = default;
 
  private:
   // Runs the callback and remove the request from the internal request queue.
@@ -60,9 +60,9 @@ void ImageDecoderImpl::DecodeImageRequest::RunCallbackAndRemoveRequest(
   decoder_->RemoveDecodeImageRequest(this);
 }
 
-ImageDecoderImpl::ImageDecoderImpl()  {}
+ImageDecoderImpl::ImageDecoderImpl() = default;
 
-ImageDecoderImpl::~ImageDecoderImpl() {}
+ImageDecoderImpl::~ImageDecoderImpl() = default;
 
 void ImageDecoderImpl::DecodeImage(
     const std::string& image_data,

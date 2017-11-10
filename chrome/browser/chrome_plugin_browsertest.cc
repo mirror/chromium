@@ -84,7 +84,7 @@ class CallbackBarrier : public base::RefCountedThreadSafe<CallbackBarrier> {
 
 class ChromePluginTest : public InProcessBrowserTest {
  protected:
-  ChromePluginTest() {}
+  ChromePluginTest() = default;
 
   static GURL GetURL(const char* filename) {
     base::FilePath path;

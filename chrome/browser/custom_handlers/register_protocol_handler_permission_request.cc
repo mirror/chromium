@@ -36,7 +36,7 @@ RegisterProtocolHandlerPermissionRequest
       origin_(url.GetOrigin()) {}
 
 RegisterProtocolHandlerPermissionRequest::
-~RegisterProtocolHandlerPermissionRequest() {}
+    ~RegisterProtocolHandlerPermissionRequest() = default;
 
 PermissionRequest::IconId RegisterProtocolHandlerPermissionRequest::GetIconId()
     const {

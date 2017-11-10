@@ -77,7 +77,7 @@ ScriptingPermissionsModifier::ScriptingPermissionsModifier(
   DCHECK(extension_);
 }
 
-ScriptingPermissionsModifier::~ScriptingPermissionsModifier() {}
+ScriptingPermissionsModifier::~ScriptingPermissionsModifier() = default;
 
 // static
 void ScriptingPermissionsModifier::SetAllowedOnAllUrlsForSync(

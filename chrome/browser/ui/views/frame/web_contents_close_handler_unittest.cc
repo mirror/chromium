@@ -17,7 +17,7 @@ class MockWebContentsCloseHandlerDelegate
             base::test::ScopedTaskEnvironment::MainThreadType::UI),
         got_clone_(false),
         got_destroy_(false) {}
-  ~MockWebContentsCloseHandlerDelegate() override {}
+  ~MockWebContentsCloseHandlerDelegate() override = default;
 
   void Clear() {
     got_clone_ = got_destroy_ = false;
@@ -46,7 +46,7 @@ class MockWebContentsCloseHandlerDelegate
 class WebContentsCloseHandlerTest : public testing::Test {
  public:
   WebContentsCloseHandlerTest() : close_handler_(&close_handler_delegate_) {}
-  ~WebContentsCloseHandlerTest() override {}
+  ~WebContentsCloseHandlerTest() override = default;
 
  protected:
   bool IsTimerRunning() const {

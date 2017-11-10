@@ -16,8 +16,7 @@ AwaitMatchStatusChangeChecker::AwaitMatchStatusChangeChecker(
       debug_message_(debug_message) {
 }
 
-AwaitMatchStatusChangeChecker::~AwaitMatchStatusChangeChecker() {
-}
+AwaitMatchStatusChangeChecker::~AwaitMatchStatusChangeChecker() = default;
 
 bool AwaitMatchStatusChangeChecker::IsExitConditionSatisfied() {
   return condition_.Run();

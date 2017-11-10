@@ -65,7 +65,7 @@ ExtensionStatusesHandler::ExtensionStatusesHandler(Profile* profile)
     : profile_(profile),
       weak_ptr_factory_(this) {}
 
-ExtensionStatusesHandler::~ExtensionStatusesHandler() {}
+ExtensionStatusesHandler::~ExtensionStatusesHandler() = default;
 
 void ExtensionStatusesHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

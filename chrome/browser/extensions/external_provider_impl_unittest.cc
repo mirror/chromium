@@ -57,8 +57,8 @@ const char kAppPath[] = "/app.crx";
 
 class ExternalProviderImplTest : public ExtensionServiceTestBase {
  public:
-  ExternalProviderImplTest() {}
-  ~ExternalProviderImplTest() override {}
+  ExternalProviderImplTest() = default;
+  ~ExternalProviderImplTest() override = default;
 
   void InitServiceWithExternalProviders() {
 #if defined(OS_CHROMEOS)

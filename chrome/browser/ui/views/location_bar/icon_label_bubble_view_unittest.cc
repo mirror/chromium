@@ -131,7 +131,7 @@ class IconLabelBubbleViewTest : public views::ViewsTestBase {
         minimum_size_reached_(false),
         previous_width_(0),
         initial_image_x_(0) {}
-  ~IconLabelBubbleViewTest() override {}
+  ~IconLabelBubbleViewTest() override = default;
 
  protected:
   // views::ViewsTestBase:

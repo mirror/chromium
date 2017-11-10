@@ -41,8 +41,7 @@ InstantServiceFactory::InstantServiceFactory()
   DependsOn(TopSitesFactory::GetInstance());
 }
 
-InstantServiceFactory::~InstantServiceFactory() {
-}
+InstantServiceFactory::~InstantServiceFactory() = default;
 
 content::BrowserContext* InstantServiceFactory::GetBrowserContextToUse(
     content::BrowserContext* context) const {

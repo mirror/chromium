@@ -118,8 +118,8 @@ base::string16 GetRegistryBackupKey() {
 class ChromeMetricsServicesManagerClient::ChromeEnabledStateProvider
     : public metrics::EnabledStateProvider {
  public:
-  ChromeEnabledStateProvider() {}
-  ~ChromeEnabledStateProvider() override {}
+  ChromeEnabledStateProvider() = default;
+  ~ChromeEnabledStateProvider() override = default;
 
   bool IsConsentGiven() override {
     return ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled();
@@ -148,7 +148,8 @@ ChromeMetricsServicesManagerClient::ChromeMetricsServicesManagerClient(
 #endif
 }
 
-ChromeMetricsServicesManagerClient::~ChromeMetricsServicesManagerClient() {}
+ChromeMetricsServicesManagerClient::~ChromeMetricsServicesManagerClient() =
+    default;
 
 // static
 void ChromeMetricsServicesManagerClient::CreateFallbackSamplingTrial(

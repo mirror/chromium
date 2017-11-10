@@ -39,7 +39,7 @@ base::string16 GenerateMessageSection(const ExtensionSet& extensions,
 
 ExtensionErrorUI::ExtensionErrorUI(Delegate* delegate) : delegate_(delegate) {}
 
-ExtensionErrorUI::~ExtensionErrorUI() {}
+ExtensionErrorUI::~ExtensionErrorUI() = default;
 
 std::vector<base::string16> ExtensionErrorUI::GetBubbleViewMessages() {
   if (message_.empty()) {

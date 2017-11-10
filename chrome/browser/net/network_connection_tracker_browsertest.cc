@@ -83,7 +83,7 @@ class NetworkConnectionTrackerBrowserTest
       scoped_feature_list_.InitAndDisableFeature(features::kNetworkService);
     }
   }
-  ~NetworkConnectionTrackerBrowserTest() override {}
+  ~NetworkConnectionTrackerBrowserTest() override = default;
 
   // Simulates a network connection change.
   void SimulateNetworkChange(mojom::ConnectionType type) {

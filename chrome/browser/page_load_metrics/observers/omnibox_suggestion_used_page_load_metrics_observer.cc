@@ -42,7 +42,8 @@ OmniboxSuggestionUsedMetricsObserver::OmniboxSuggestionUsedMetricsObserver(
     bool is_prerender)
     : is_prerender_(is_prerender) {}
 
-OmniboxSuggestionUsedMetricsObserver::~OmniboxSuggestionUsedMetricsObserver() {}
+OmniboxSuggestionUsedMetricsObserver::~OmniboxSuggestionUsedMetricsObserver() =
+    default;
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 OmniboxSuggestionUsedMetricsObserver::OnHidden(

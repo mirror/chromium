@@ -61,7 +61,7 @@ void AddDefaultCard(fake_server::FakeServer* server) {
 class SingleClientWalletSyncTest : public SyncTest {
  public:
   SingleClientWalletSyncTest() : SyncTest(SINGLE_CLIENT) {}
-  ~SingleClientWalletSyncTest() override {}
+  ~SingleClientWalletSyncTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SingleClientWalletSyncTest);
@@ -74,7 +74,7 @@ class WalletEnabledChecker : public SingleClientStatusChangeChecker {
   WalletEnabledChecker()
       : SingleClientStatusChangeChecker(
             sync_datatype_helper::test()->GetSyncService(0)) {}
-  ~WalletEnabledChecker() override {}
+  ~WalletEnabledChecker() override = default;
 
   // SingleClientStatusChangeChecker overrides.
   bool IsExitConditionSatisfied() override {
@@ -92,7 +92,7 @@ class WalletDisabledChecker : public SingleClientStatusChangeChecker {
   WalletDisabledChecker()
       : SingleClientStatusChangeChecker(
             sync_datatype_helper::test()->GetSyncService(0)) {}
-  ~WalletDisabledChecker() override {}
+  ~WalletDisabledChecker() override = default;
 
   // SingleClientStatusChangeChecker overrides.
   bool IsExitConditionSatisfied() override {

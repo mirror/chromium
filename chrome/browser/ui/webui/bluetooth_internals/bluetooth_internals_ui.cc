@@ -62,4 +62,4 @@ BluetoothInternalsUI::BluetoothInternalsUI(content::WebUI* web_ui)
   content::WebUIDataSource::Add(profile, html_source);
 }
 
-BluetoothInternalsUI::~BluetoothInternalsUI() {}
+BluetoothInternalsUI::~BluetoothInternalsUI() = default;

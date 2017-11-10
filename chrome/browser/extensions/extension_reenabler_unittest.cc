@@ -27,8 +27,8 @@ namespace {
 // A simple provider that says all extensions must remain disabled.
 class TestManagementProvider : public ManagementPolicy::Provider {
  public:
-  TestManagementProvider() {}
-  ~TestManagementProvider() override {}
+  TestManagementProvider() = default;
+  ~TestManagementProvider() override = default;
 
  private:
   // MananagementPolicy::Provider:
@@ -46,8 +46,8 @@ class TestManagementProvider : public ManagementPolicy::Provider {
 // extension. This class also helps store the results of the run.
 class CallbackHelper {
  public:
-  CallbackHelper() {}
-  ~CallbackHelper() {}
+  CallbackHelper() = default;
+  ~CallbackHelper() = default;
 
   // Get a callback to run on the completion of the reenable process and reset
   // |result_|.
@@ -101,8 +101,8 @@ class CallbackHelper {
 
 class ExtensionReenablerUnitTest : public ExtensionServiceTestBase {
  public:
-  ExtensionReenablerUnitTest() {}
-  ~ExtensionReenablerUnitTest() override {}
+  ExtensionReenablerUnitTest() = default;
+  ~ExtensionReenablerUnitTest() override = default;
 
  private:
   void SetUp() override;

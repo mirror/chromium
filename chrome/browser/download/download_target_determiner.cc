@@ -82,8 +82,7 @@ bool g_is_adobe_reader_up_to_date_ = false;
 
 }  // namespace
 
-DownloadTargetDeterminerDelegate::~DownloadTargetDeterminerDelegate() {
-}
+DownloadTargetDeterminerDelegate::~DownloadTargetDeterminerDelegate() = default;
 
 DownloadTargetDeterminer::DownloadTargetDeterminer(
     DownloadItem* download,

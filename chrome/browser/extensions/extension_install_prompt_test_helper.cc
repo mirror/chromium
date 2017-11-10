@@ -8,10 +8,10 @@
 #include "base/callback_helpers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-ExtensionInstallPromptTestHelper::ExtensionInstallPromptTestHelper() {}
+ExtensionInstallPromptTestHelper::ExtensionInstallPromptTestHelper() = default;
 ExtensionInstallPromptTestHelper::ExtensionInstallPromptTestHelper(
     const base::Closure& quit_closure) : quit_closure_(quit_closure) {}
-ExtensionInstallPromptTestHelper::~ExtensionInstallPromptTestHelper() {}
+ExtensionInstallPromptTestHelper::~ExtensionInstallPromptTestHelper() = default;
 
 ExtensionInstallPrompt::DoneCallback
 ExtensionInstallPromptTestHelper::GetCallback() {

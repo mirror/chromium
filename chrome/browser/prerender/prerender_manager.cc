@@ -156,7 +156,7 @@ class PrerenderManager::OnCloseWebContentsDeleter
   DISALLOW_COPY_AND_ASSIGN(OnCloseWebContentsDeleter);
 };
 
-PrerenderManagerObserver::~PrerenderManagerObserver() {}
+PrerenderManagerObserver::~PrerenderManagerObserver() = default;
 
 // static
 PrerenderManager::PrerenderManagerMode PrerenderManager::mode_ =
@@ -781,8 +781,7 @@ PrerenderManager::PrerenderData::PrerenderData(
   DCHECK(contents_);
 }
 
-PrerenderManager::PrerenderData::~PrerenderData() {
-}
+PrerenderManager::PrerenderData::~PrerenderData() = default;
 
 void PrerenderManager::PrerenderData::OnHandleCreated(PrerenderHandle* handle) {
   DCHECK(contents_);

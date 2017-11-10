@@ -9,7 +9,7 @@
 
 using content::BrowserThread;
 
-BrowsingDataQuotaHelper::QuotaInfo::QuotaInfo() {}
+BrowsingDataQuotaHelper::QuotaInfo::QuotaInfo() = default;
 
 BrowsingDataQuotaHelper::QuotaInfo::QuotaInfo(const std::string& host)
     : host(host) {}
@@ -23,7 +23,7 @@ BrowsingDataQuotaHelper::QuotaInfo::QuotaInfo(const std::string& host,
       persistent_usage(persistent_usage),
       syncable_usage(syncable_usage) {}
 
-BrowsingDataQuotaHelper::QuotaInfo::~QuotaInfo() {}
+BrowsingDataQuotaHelper::QuotaInfo::~QuotaInfo() = default;
 
 // static
 void BrowsingDataQuotaHelperDeleter::Destruct(
@@ -31,10 +31,9 @@ void BrowsingDataQuotaHelperDeleter::Destruct(
   BrowserThread::DeleteSoon(BrowserThread::IO, FROM_HERE, helper);
 }
 
-BrowsingDataQuotaHelper::BrowsingDataQuotaHelper() {}
+BrowsingDataQuotaHelper::BrowsingDataQuotaHelper() = default;
 
-BrowsingDataQuotaHelper::~BrowsingDataQuotaHelper() {
-}
+BrowsingDataQuotaHelper::~BrowsingDataQuotaHelper() = default;
 
 bool BrowsingDataQuotaHelper::QuotaInfo::operator <(
     const BrowsingDataQuotaHelper::QuotaInfo& rhs) const {

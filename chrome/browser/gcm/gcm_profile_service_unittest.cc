@@ -130,8 +130,7 @@ GCMProfileServiceTest::GCMProfileServiceTest()
       send_result_(GCMClient::UNKNOWN_ERROR) {
 }
 
-GCMProfileServiceTest::~GCMProfileServiceTest() {
-}
+GCMProfileServiceTest::~GCMProfileServiceTest() = default;
 
 FakeGCMClient* GCMProfileServiceTest::GetGCMClient() const {
   return static_cast<FakeGCMClient*>(

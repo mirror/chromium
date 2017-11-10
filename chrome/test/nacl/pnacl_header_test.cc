@@ -45,7 +45,7 @@ void TestDispatcherHostDelegate::RequestBeginning(
 
 PnaclHeaderTest::PnaclHeaderTest() : noncors_loads_(0), cors_loads_(0) {}
 
-PnaclHeaderTest::~PnaclHeaderTest() {}
+PnaclHeaderTest::~PnaclHeaderTest() = default;
 
 void PnaclHeaderTest::StartServer() {
   // For most requests, just serve files, but register a special test handler

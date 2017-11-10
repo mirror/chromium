@@ -35,7 +35,7 @@ class PrintPreviewDialogDestroyedObserver : public WebContentsObserver {
       : WebContentsObserver(dialog),
         dialog_destroyed_(false) {
   }
-  ~PrintPreviewDialogDestroyedObserver() override {}
+  ~PrintPreviewDialogDestroyedObserver() override = default;
 
   bool dialog_destroyed() const { return dialog_destroyed_; }
 

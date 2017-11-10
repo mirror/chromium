@@ -377,7 +377,7 @@ class MockUsbDeviceHandle : public UsbDeviceHandle {
                               IsochronousTransferCallback callback) override {}
 
  protected:
-  virtual ~MockUsbDeviceHandle() {}
+  virtual ~MockUsbDeviceHandle() = default;
 
   struct Query {
     TransferCallback callback;
@@ -444,7 +444,7 @@ class MockUsbDevice : public UsbDevice {
   std::set<int> claimed_interfaces_;
 
  protected:
-  virtual ~MockUsbDevice() {}
+  virtual ~MockUsbDevice() = default;
 };
 
 class MockUsbServiceForCheckingTraits : public MockUsbService {
@@ -485,7 +485,7 @@ class TestDeviceClient : public DeviceClient {
  public:
   explicit TestDeviceClient(std::unique_ptr<UsbService> service)
       : DeviceClient(), usb_service_(std::move(service)) {}
-  ~TestDeviceClient() override {}
+  ~TestDeviceClient() override = default;
 
  private:
   UsbService* GetUsbService() override { return usb_service_.get(); }

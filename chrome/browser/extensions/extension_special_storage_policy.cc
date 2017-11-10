@@ -84,7 +84,7 @@ ExtensionSpecialStoragePolicy::ExtensionSpecialStoragePolicy(
     : cookie_settings_(cookie_settings) {
 }
 
-ExtensionSpecialStoragePolicy::~ExtensionSpecialStoragePolicy() {}
+ExtensionSpecialStoragePolicy::~ExtensionSpecialStoragePolicy() = default;
 
 bool ExtensionSpecialStoragePolicy::IsStorageProtected(const GURL& origin) {
   if (origin.SchemeIs(extensions::kExtensionScheme))
@@ -289,9 +289,10 @@ void ExtensionSpecialStoragePolicy::NotifyCleared() {
 // SpecialCollection helper class
 //-----------------------------------------------------------------------------
 
-ExtensionSpecialStoragePolicy::SpecialCollection::SpecialCollection() {}
+ExtensionSpecialStoragePolicy::SpecialCollection::SpecialCollection() = default;
 
-ExtensionSpecialStoragePolicy::SpecialCollection::~SpecialCollection() {}
+ExtensionSpecialStoragePolicy::SpecialCollection::~SpecialCollection() =
+    default;
 
 bool ExtensionSpecialStoragePolicy::SpecialCollection::Contains(
     const GURL& origin) {

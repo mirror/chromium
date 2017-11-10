@@ -57,7 +57,7 @@ PrefService* GetPrefsForWindow(const views::Widget* window) {
 
 // ChromeViewsDelegate --------------------------------------------------------
 
-ChromeViewsDelegate::ChromeViewsDelegate() {}
+ChromeViewsDelegate::ChromeViewsDelegate() = default;
 
 ChromeViewsDelegate::~ChromeViewsDelegate() {
   DCHECK_EQ(0u, ref_count_);

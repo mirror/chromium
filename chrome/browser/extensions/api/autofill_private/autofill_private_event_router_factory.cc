@@ -33,9 +33,8 @@ AutofillPrivateEventRouterFactory::AutofillPrivateEventRouterFactory()
   DependsOn(ExtensionsBrowserClient::Get()->GetExtensionSystemFactory());
 }
 
-AutofillPrivateEventRouterFactory::
-    ~AutofillPrivateEventRouterFactory() {
-}
+AutofillPrivateEventRouterFactory::~AutofillPrivateEventRouterFactory() =
+    default;
 
 KeyedService* AutofillPrivateEventRouterFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

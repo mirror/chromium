@@ -30,7 +30,7 @@ class SubresourceFilterWebSocketBrowserTest
     : public SubresourceFilterBrowserTest,
       public ::testing::WithParamInterface<WebSocketCreationPolicy> {
  public:
-  SubresourceFilterWebSocketBrowserTest() {}
+  SubresourceFilterWebSocketBrowserTest() = default;
 
   void SetUpOnMainThread() override {
     SubresourceFilterBrowserTest::SetUpOnMainThread();

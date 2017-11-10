@@ -88,7 +88,7 @@ FakeGCMProfileService::CustomFakeGCMDriver::CustomFakeGCMDriver(
       service_(service),
       weak_factory_(this) {}
 
-FakeGCMProfileService::CustomFakeGCMDriver::~CustomFakeGCMDriver() {}
+FakeGCMProfileService::CustomFakeGCMDriver::~CustomFakeGCMDriver() = default;
 
 void FakeGCMProfileService::CustomFakeGCMDriver::RegisterImpl(
     const std::string& app_id,
@@ -208,7 +208,7 @@ std::unique_ptr<KeyedService> FakeGCMProfileService::Build(
 
 FakeGCMProfileService::FakeGCMProfileService(Profile* profile) {}
 
-FakeGCMProfileService::~FakeGCMProfileService() {}
+FakeGCMProfileService::~FakeGCMProfileService() = default;
 
 void FakeGCMProfileService::AddExpectedUnregisterResponse(
     GCMClient::Result result) {

@@ -68,8 +68,7 @@ AppLaunchInfo::AppLaunchInfo()
       launch_height_(0) {
 }
 
-AppLaunchInfo::~AppLaunchInfo() {
-}
+AppLaunchInfo::~AppLaunchInfo() = default;
 
 // static
 const std::string& AppLaunchInfo::GetLaunchLocalPath(
@@ -294,11 +293,9 @@ void AppLaunchInfo::OverrideLaunchURL(Extension* extension,
   extension->AddWebExtentPattern(pattern);
 }
 
-AppLaunchManifestHandler::AppLaunchManifestHandler() {
-}
+AppLaunchManifestHandler::AppLaunchManifestHandler() = default;
 
-AppLaunchManifestHandler::~AppLaunchManifestHandler() {
-}
+AppLaunchManifestHandler::~AppLaunchManifestHandler() = default;
 
 bool AppLaunchManifestHandler::Parse(Extension* extension,
                                      base::string16* error) {

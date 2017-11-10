@@ -33,7 +33,7 @@ class SiteEngagementDetailsProviderImpl
     DCHECK(profile_);
   }
 
-  ~SiteEngagementDetailsProviderImpl() override {}
+  ~SiteEngagementDetailsProviderImpl() override = default;
 
   // mojom::SiteEngagementDetailsProvider overrides:
   void GetSiteEngagementDetails(
@@ -90,7 +90,7 @@ SiteEngagementUI::SiteEngagementUI(content::WebUI* web_ui)
   content::WebUIDataSource::Add(Profile::FromWebUI(web_ui), source.release());
 }
 
-SiteEngagementUI::~SiteEngagementUI() {}
+SiteEngagementUI::~SiteEngagementUI() = default;
 
 void SiteEngagementUI::BindUIHandler(
     mojom::SiteEngagementDetailsProviderRequest request) {

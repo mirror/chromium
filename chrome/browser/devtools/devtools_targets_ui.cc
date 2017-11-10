@@ -96,7 +96,7 @@ class WorkerObserver
     : public content::WorkerServiceObserver,
       public base::RefCountedThreadSafe<WorkerObserver> {
  public:
-  WorkerObserver() {}
+  WorkerObserver() = default;
 
   void Start(base::Closure callback) {
     DCHECK(callback_.is_null());
@@ -113,7 +113,7 @@ class WorkerObserver
 
  private:
   friend class base::RefCountedThreadSafe<WorkerObserver>;
-  ~WorkerObserver() override {}
+  ~WorkerObserver() override = default;
 
   // content::WorkerServiceObserver overrides:
   void WorkerCreated(const GURL& url,
@@ -364,8 +364,7 @@ DevToolsTargetsUIHandler::DevToolsTargetsUIHandler(
       callback_(callback) {
 }
 
-DevToolsTargetsUIHandler::~DevToolsTargetsUIHandler() {
-}
+DevToolsTargetsUIHandler::~DevToolsTargetsUIHandler() = default;
 
 // static
 std::unique_ptr<DevToolsTargetsUIHandler>

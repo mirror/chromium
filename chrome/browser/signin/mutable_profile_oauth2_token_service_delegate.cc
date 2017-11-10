@@ -96,8 +96,7 @@ MutableProfileOAuth2TokenServiceDelegate::RevokeServerRefreshToken::
 }
 
 MutableProfileOAuth2TokenServiceDelegate::RevokeServerRefreshToken::
-    ~RevokeServerRefreshToken() {
-}
+    ~RevokeServerRefreshToken() = default;
 
 void MutableProfileOAuth2TokenServiceDelegate::RevokeServerRefreshToken::
     OnOAuth2RevokeTokenCompleted() {

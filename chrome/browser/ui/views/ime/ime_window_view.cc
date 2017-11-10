@@ -60,7 +60,7 @@ ImeWindowView::ImeWindowView(ImeWindow* ime_window,
   // follow-cursor window.
 }
 
-ImeWindowView::~ImeWindowView() {}
+ImeWindowView::~ImeWindowView() = default;
 
 void ImeWindowView::Show() {
   window_->ShowInactive();

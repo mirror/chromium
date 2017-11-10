@@ -46,8 +46,7 @@ ProfileNameVerifierObserver::ProfileNameVerifierObserver(
   DCHECK(testing_profile_manager_);
 }
 
-ProfileNameVerifierObserver::~ProfileNameVerifierObserver() {
-}
+ProfileNameVerifierObserver::~ProfileNameVerifierObserver() = default;
 
 void ProfileNameVerifierObserver::OnProfileAdded(
     const base::FilePath& profile_path) {
@@ -99,8 +98,7 @@ ProfileInfoCacheTest::ProfileInfoCacheTest()
       user_data_dir_override_(chrome::DIR_USER_DATA) {
 }
 
-ProfileInfoCacheTest::~ProfileInfoCacheTest() {
-}
+ProfileInfoCacheTest::~ProfileInfoCacheTest() = default;
 
 void ProfileInfoCacheTest::SetUp() {
   ASSERT_TRUE(testing_profile_manager_.SetUp());

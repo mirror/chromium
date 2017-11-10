@@ -43,8 +43,8 @@ namespace {
 // Creates a TestingBrowserProcess for each test.
 class ChromeUnitTestSuiteInitializer : public testing::EmptyTestEventListener {
  public:
-  ChromeUnitTestSuiteInitializer() {}
-  virtual ~ChromeUnitTestSuiteInitializer() {}
+  ChromeUnitTestSuiteInitializer() = default;
+  virtual ~ChromeUnitTestSuiteInitializer() = default;
 
   void OnTestStart(const testing::TestInfo& test_info) override {
     content_client_.reset(new ChromeContentClient);
@@ -86,7 +86,7 @@ class ChromeUnitTestSuiteInitializer : public testing::EmptyTestEventListener {
 ChromeUnitTestSuite::ChromeUnitTestSuite(int argc, char** argv)
     : ChromeTestSuite(argc, argv) {}
 
-ChromeUnitTestSuite::~ChromeUnitTestSuite() {}
+ChromeUnitTestSuite::~ChromeUnitTestSuite() = default;
 
 void ChromeUnitTestSuite::Initialize() {
   // Add an additional listener to do the extra initialization for unit tests.

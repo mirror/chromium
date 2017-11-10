@@ -17,7 +17,7 @@
 GlobalErrorService::GlobalErrorService(Profile* profile) : profile_(profile) {
 }
 
-GlobalErrorService::~GlobalErrorService() {}
+GlobalErrorService::~GlobalErrorService() = default;
 
 void GlobalErrorService::AddGlobalError(std::unique_ptr<GlobalError> error) {
   DCHECK(error);

@@ -83,7 +83,7 @@ PermissionRequestCreatorApiary::Request::Request(
       url_fetcher_id(url_fetcher_id) {
 }
 
-PermissionRequestCreatorApiary::Request::~Request() {}
+PermissionRequestCreatorApiary::Request::~Request() = default;
 
 PermissionRequestCreatorApiary::PermissionRequestCreatorApiary(
     OAuth2TokenService* oauth2_token_service,
@@ -96,7 +96,7 @@ PermissionRequestCreatorApiary::PermissionRequestCreatorApiary(
       url_fetcher_id_(0) {
 }
 
-PermissionRequestCreatorApiary::~PermissionRequestCreatorApiary() {}
+PermissionRequestCreatorApiary::~PermissionRequestCreatorApiary() = default;
 
 // static
 std::unique_ptr<PermissionRequestCreator>

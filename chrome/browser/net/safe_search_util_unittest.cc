@@ -15,8 +15,8 @@
 
 class SafeSearchUtilTest : public ::testing::Test {
  protected:
-  SafeSearchUtilTest() {}
-  ~SafeSearchUtilTest() override {}
+  SafeSearchUtilTest() = default;
+  ~SafeSearchUtilTest() override = default;
 
   std::unique_ptr<net::URLRequest> CreateRequest(const std::string& url) {
     return context_.CreateRequest(GURL(url), net::DEFAULT_PRIORITY, NULL,

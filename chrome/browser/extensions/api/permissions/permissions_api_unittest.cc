@@ -43,8 +43,8 @@ scoped_refptr<const Extension> CreateExtensionWithPermissions(
 
 class PermissionsAPIUnitTest : public ExtensionServiceTestWithInstall {
  public:
-  PermissionsAPIUnitTest() {}
-  ~PermissionsAPIUnitTest() override {}
+  PermissionsAPIUnitTest() = default;
+  ~PermissionsAPIUnitTest() override = default;
   Browser* browser() { return browser_.get(); }
 
   // Runs chrome.permissions.contains(|json_query|).

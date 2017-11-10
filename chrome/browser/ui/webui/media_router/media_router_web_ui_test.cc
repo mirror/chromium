@@ -17,7 +17,7 @@ class MockMediaRouterUIService : public media_router::MediaRouterUIService {
   explicit MockMediaRouterUIService(Profile* profile)
       : media_router::MediaRouterUIService(profile),
         action_controller_(profile) {}
-  ~MockMediaRouterUIService() override {}
+  ~MockMediaRouterUIService() override = default;
 
   MediaRouterActionController* action_controller() override {
     return &action_controller_;
@@ -43,7 +43,7 @@ MediaRouterWebUITest::MediaRouterWebUITest() : MediaRouterWebUITest(false) {}
 MediaRouterWebUITest::MediaRouterWebUITest(bool require_mock_ui_service)
     : require_mock_ui_service_(require_mock_ui_service) {}
 
-MediaRouterWebUITest::~MediaRouterWebUITest() {}
+MediaRouterWebUITest::~MediaRouterWebUITest() = default;
 
 TestingProfile* MediaRouterWebUITest::CreateProfile() {
   TestingProfile::Builder builder;

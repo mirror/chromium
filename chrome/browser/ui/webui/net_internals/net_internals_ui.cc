@@ -366,7 +366,7 @@ class NetInternalsMessageHandler::IOThreadImpl
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-NetInternalsMessageHandler::NetInternalsMessageHandler() {}
+NetInternalsMessageHandler::NetInternalsMessageHandler() = default;
 
 NetInternalsMessageHandler::~NetInternalsMessageHandler() {
   if (proxy_) {

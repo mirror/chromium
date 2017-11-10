@@ -18,7 +18,7 @@ DiceTabHelper::DiceTabHelper(content::WebContents* web_contents)
             content::WebContentsObserver::web_contents()->GetVisibleURL());
 }
 
-DiceTabHelper::~DiceTabHelper() {}
+DiceTabHelper::~DiceTabHelper() = default;
 
 void DiceTabHelper::DidStartNavigation(
     content::NavigationHandle* navigation_handle) {

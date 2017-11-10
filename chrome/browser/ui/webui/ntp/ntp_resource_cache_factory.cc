@@ -30,7 +30,7 @@ NTPResourceCacheFactory::NTPResourceCacheFactory()
   DependsOn(ThemeServiceFactory::GetInstance());
 }
 
-NTPResourceCacheFactory::~NTPResourceCacheFactory() {}
+NTPResourceCacheFactory::~NTPResourceCacheFactory() = default;
 
 KeyedService* NTPResourceCacheFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

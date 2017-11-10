@@ -50,7 +50,7 @@ Task::Task(const base::string16& title,
       process_handle_(handle),
       process_id_(DetermineProcessId(handle, process_id)) {}
 
-Task::~Task() {}
+Task::~Task() = default;
 
 // static
 base::string16 Task::GetProfileNameFromProfile(Profile* profile) {

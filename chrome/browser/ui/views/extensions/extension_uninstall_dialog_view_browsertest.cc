@@ -58,7 +58,7 @@ class TestExtensionUninstallDialogDelegate
       const base::Closure& quit_closure)
       : quit_closure_(quit_closure), canceled_(false) {}
 
-  ~TestExtensionUninstallDialogDelegate() override {}
+  ~TestExtensionUninstallDialogDelegate() override = default;
 
   bool canceled() { return canceled_; }
 

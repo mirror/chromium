@@ -89,7 +89,7 @@ class ShutdownNotifierFactory
       : BrowserContextKeyedServiceShutdownNotifierFactory(
           "PluginInfoMessageFilter") {}
 
-  ~ShutdownNotifierFactory() override {}
+  ~ShutdownNotifierFactory() override = default;
 
   DISALLOW_COPY_AND_ASSIGN(ShutdownNotifierFactory);
 };
@@ -178,8 +178,7 @@ PluginInfoMessageFilter::Context::Context(int render_process_id,
           content::BrowserThread::IO));
 }
 
-PluginInfoMessageFilter::Context::~Context() {
-}
+PluginInfoMessageFilter::Context::~Context() = default;
 
 void PluginInfoMessageFilter::Context::ShutdownOnUIThread() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -242,7 +241,7 @@ void PluginInfoMessageFilter::RegisterUserPrefs(
   registry->RegisterBooleanPref(prefs::kRunAllFlashInAllowMode, false);
 }
 
-PluginInfoMessageFilter::~PluginInfoMessageFilter() {}
+PluginInfoMessageFilter::~PluginInfoMessageFilter() = default;
 
 struct PluginInfoMessageFilter::GetPluginInfo_Params {
   int render_frame_id;

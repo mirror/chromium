@@ -288,8 +288,7 @@ ChromeSSLHostStateDelegate::ChromeSSLHostStateDelegate(Profile* profile)
     should_remember_ssl_decisions_ = REMEMBER_SSL_EXCEPTION_DECISIONS_FOR_DELTA;
 }
 
-ChromeSSLHostStateDelegate::~ChromeSSLHostStateDelegate() {
-}
+ChromeSSLHostStateDelegate::~ChromeSSLHostStateDelegate() = default;
 
 void ChromeSSLHostStateDelegate::AllowCert(const std::string& host,
                                            const net::X509Certificate& cert,

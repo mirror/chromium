@@ -87,7 +87,7 @@ ChromeExtensionsBrowserClient::ChromeExtensionsBrowserClient() {
   resource_manager_.reset(new ChromeComponentExtensionResourceManager());
 }
 
-ChromeExtensionsBrowserClient::~ChromeExtensionsBrowserClient() {}
+ChromeExtensionsBrowserClient::~ChromeExtensionsBrowserClient() = default;
 
 bool ChromeExtensionsBrowserClient::IsShuttingDown() {
   return g_browser_process->IsShuttingDown();

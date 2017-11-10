@@ -111,7 +111,7 @@ DesktopSessionDurationTracker::DesktopSessionDurationTracker()
   InitInactivityTimeout();
 }
 
-DesktopSessionDurationTracker::~DesktopSessionDurationTracker() {}
+DesktopSessionDurationTracker::~DesktopSessionDurationTracker() = default;
 
 void DesktopSessionDurationTracker::OnTimerFired() {
   base::TimeDelta remaining =

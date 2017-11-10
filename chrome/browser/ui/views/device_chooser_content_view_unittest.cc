@@ -40,7 +40,7 @@ base::string16 GetPairedText(const std::string& device_name) {
 
 class DeviceChooserContentViewTest : public views::ViewsTestBase {
  public:
-  DeviceChooserContentViewTest() {}
+  DeviceChooserContentViewTest() = default;
 
   // views::ViewsTestBase:
   void SetUp() override {

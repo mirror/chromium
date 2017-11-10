@@ -35,17 +35,13 @@ namespace extensions {
 namespace mkeys = manifest_keys;
 namespace merrors = manifest_errors;
 
-UrlHandlerInfo::UrlHandlerInfo() {
-}
+UrlHandlerInfo::UrlHandlerInfo() = default;
 
-UrlHandlerInfo::~UrlHandlerInfo() {
-}
+UrlHandlerInfo::~UrlHandlerInfo() = default;
 
-UrlHandlers::UrlHandlers() {
-}
+UrlHandlers::UrlHandlers() = default;
 
-UrlHandlers::~UrlHandlers() {
-}
+UrlHandlers::~UrlHandlers() = default;
 
 // static
 const std::vector<UrlHandlerInfo>* UrlHandlers::GetUrlHandlers(
@@ -83,11 +79,9 @@ const UrlHandlerInfo* UrlHandlers::FindMatchingUrlHandler(
   return NULL;
 }
 
-UrlHandlersParser::UrlHandlersParser() {
-}
+UrlHandlersParser::UrlHandlersParser() = default;
 
-UrlHandlersParser::~UrlHandlersParser() {
-}
+UrlHandlersParser::~UrlHandlersParser() = default;
 
 bool ParseUrlHandler(const std::string& handler_id,
                      const base::DictionaryValue& handler_info,

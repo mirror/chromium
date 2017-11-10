@@ -40,7 +40,7 @@ class ExtensionApiTabTest : public ExtensionApiTest {
 
 class ExtensionApiNewTabTest : public ExtensionApiTabTest {
  public:
-  ExtensionApiNewTabTest() {}
+  ExtensionApiNewTabTest() = default;
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ExtensionApiTabTest::SetUpCommandLine(command_line);
     // Override the default which InProcessBrowserTest adds if it doesn't see a
@@ -162,7 +162,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTabTest, DISABLED_TabReload) {
 
 class ExtensionApiCaptureTest : public ExtensionApiTabTest {
  public:
-  ExtensionApiCaptureTest() {}
+  ExtensionApiCaptureTest() = default;
 
   void SetUp() override {
     EnablePixelOutput();

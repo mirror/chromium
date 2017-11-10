@@ -48,8 +48,8 @@ Notification MakeNotification(const std::string& id) {
 
 class WebNotificationTrayTest : public InProcessBrowserTest {
  public:
-  WebNotificationTrayTest() {}
-  ~WebNotificationTrayTest() override {}
+  WebNotificationTrayTest() = default;
+  ~WebNotificationTrayTest() override = default;
 
   void TearDownOnMainThread() override {
     MessageCenter::Get()->RemoveAllNotifications(

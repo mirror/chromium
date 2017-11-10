@@ -159,11 +159,9 @@ bool GetExtensionIdSet(const base::DictionaryValue& dictionary,
 
 namespace extensions {
 
-InstallSignature::InstallSignature() {
-}
+InstallSignature::InstallSignature() = default;
 InstallSignature::InstallSignature(const InstallSignature& other) = default;
-InstallSignature::~InstallSignature() {
-}
+InstallSignature::~InstallSignature() = default;
 
 void InstallSignature::ToValue(base::DictionaryValue* value) const {
   CHECK(value);
@@ -235,8 +233,7 @@ InstallSigner::InstallSigner(net::URLRequestContextGetter* context_getter,
     : ids_(ids), context_getter_(context_getter) {
 }
 
-InstallSigner::~InstallSigner() {
-}
+InstallSigner::~InstallSigner() = default;
 
 // static
 bool InstallSigner::VerifySignature(const InstallSignature& signature) {
@@ -280,7 +277,7 @@ class InstallSigner::FetcherDelegate : public net::URLFetcherDelegate {
       : callback_(callback) {
   }
 
-  ~FetcherDelegate() override {}
+  ~FetcherDelegate() override = default;
 
   void OnURLFetchComplete(const net::URLFetcher* source) override {
     callback_.Run();

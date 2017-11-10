@@ -84,7 +84,7 @@ class MockPasswordProtectionService
                                                  nullptr,
                                                  nullptr) {}
 
-  ~MockPasswordProtectionService() override {}
+  ~MockPasswordProtectionService() override = default;
 
   MOCK_METHOD3(FillReferrerChain,
                void(const GURL&,
@@ -142,7 +142,7 @@ class MockChromePasswordManagerClient : public ChromePasswordManagerClient {
         base::MakeUnique<MockPasswordProtectionService>();
 #endif
   }
-  ~MockChromePasswordManagerClient() override {}
+  ~MockChromePasswordManagerClient() override = default;
 
 #if defined(SAFE_BROWSING_DB_LOCAL)
   safe_browsing::PasswordProtectionService* GetPasswordProtectionService()
@@ -180,7 +180,7 @@ class FakePasswordAutofillAgent
         logging_state_active_(false),
         binding_(this) {}
 
-  ~FakePasswordAutofillAgent() override {}
+  ~FakePasswordAutofillAgent() override = default;
 
   void BindRequest(mojo::ScopedMessagePipeHandle handle) {
     binding_.Bind(

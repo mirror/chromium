@@ -184,4 +184,4 @@ base::string16 ExternalProcessImporterBridge::GetLocalizedString(
   return message;
 }
 
-ExternalProcessImporterBridge::~ExternalProcessImporterBridge() {}
+ExternalProcessImporterBridge::~ExternalProcessImporterBridge() = default;

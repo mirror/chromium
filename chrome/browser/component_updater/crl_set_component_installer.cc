@@ -70,9 +70,9 @@ class CRLSetPolicy : public ComponentInstallerPolicy {
   DISALLOW_COPY_AND_ASSIGN(CRLSetPolicy);
 };
 
-CRLSetPolicy::CRLSetPolicy() {}
+CRLSetPolicy::CRLSetPolicy() = default;
 
-CRLSetPolicy::~CRLSetPolicy() {}
+CRLSetPolicy::~CRLSetPolicy() = default;
 
 bool CRLSetPolicy::SupportsGroupPolicyEnabledComponentUpdates() const {
   return false;

@@ -43,7 +43,7 @@ class SubresourceFilterWorkerFetchBrowserTest
     }
   }
 
-  ~SubresourceFilterWorkerFetchBrowserTest() override {}
+  ~SubresourceFilterWorkerFetchBrowserTest() override = default;
 
  protected:
   void ClearTitle() {

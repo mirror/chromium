@@ -88,7 +88,7 @@ class SafeBrowsingServiceFactoryImpl : public SafeBrowsingServiceFactory {
  private:
   friend struct base::LazyInstanceTraitsBase<SafeBrowsingServiceFactoryImpl>;
 
-  SafeBrowsingServiceFactoryImpl() { }
+  SafeBrowsingServiceFactoryImpl() = default;
 
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingServiceFactoryImpl);
 };

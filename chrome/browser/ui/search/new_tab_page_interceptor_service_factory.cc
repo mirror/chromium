@@ -37,8 +37,8 @@ NewTabPageInterceptorServiceFactory::NewTabPageInterceptorServiceFactory()
   DependsOn(TemplateURLServiceFactory::GetInstance());
 }
 
-NewTabPageInterceptorServiceFactory::~NewTabPageInterceptorServiceFactory() {
-}
+NewTabPageInterceptorServiceFactory::~NewTabPageInterceptorServiceFactory() =
+    default;
 
 KeyedService* NewTabPageInterceptorServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

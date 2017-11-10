@@ -28,7 +28,7 @@ UrlLanguageHistogramFactory::UrlLanguageHistogramFactory()
           "UrlLanguageHistogram",
           BrowserContextDependencyManager::GetInstance()) {}
 
-UrlLanguageHistogramFactory::~UrlLanguageHistogramFactory() {}
+UrlLanguageHistogramFactory::~UrlLanguageHistogramFactory() = default;
 
 KeyedService* UrlLanguageHistogramFactory::BuildServiceInstanceFor(
     content::BrowserContext* const browser_context) const {

@@ -117,7 +117,7 @@ class WebDialogWebContentsDelegateViews
                                          new ChromeWebContentsHandler()),
         initiator_observer_(observer),
         web_view_(web_view) {}
-  ~WebDialogWebContentsDelegateViews() override {}
+  ~WebDialogWebContentsDelegateViews() override = default;
 
   // ui::WebDialogWebContentsDelegate:
   void HandleKeyboardEvent(
@@ -182,7 +182,7 @@ class ConstrainedWebDialogDelegateViews
     chrome::RecordDialogCreation(chrome::DialogIdentifier::CONSTRAINED_WEB);
   }
 
-  ~ConstrainedWebDialogDelegateViews() override {}
+  ~ConstrainedWebDialogDelegateViews() override = default;
 
   // ui::WebDialogWebContentsDelegate:
   void CloseContents(content::WebContents* source) override {
@@ -230,7 +230,7 @@ ConstrainedDialogWebView::ConstrainedDialogWebView(
   if (!max_size_.IsEmpty())
     EnableAutoResize();
 }
-ConstrainedDialogWebView::~ConstrainedDialogWebView() {}
+ConstrainedDialogWebView::~ConstrainedDialogWebView() = default;
 
 void ConstrainedDialogWebView::SetAutoResizeSize(
     const gfx::Size& default_size) {

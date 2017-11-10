@@ -137,7 +137,7 @@ class ChromeSpeechRecognitionManagerDelegate::TabWatcher
           render_process_id_(render_process_id),
           render_view_id_(render_view_id) {}
 
-    ~WebContentsTracker() override {}
+    ~WebContentsTracker() override = default;
 
     int render_process_id() const { return render_process_id_; }
     int render_view_id() const { return render_view_id_; }
@@ -171,8 +171,7 @@ class ChromeSpeechRecognitionManagerDelegate::TabWatcher
 
   friend class base::RefCountedThreadSafe<TabWatcher>;
 
-  ~TabWatcher() {
-  }
+  ~TabWatcher() = default;
 
   // Helper function to find the iterator in |registered_web_contents_| which
   // contains |web_contents|.
@@ -200,13 +199,11 @@ class ChromeSpeechRecognitionManagerDelegate::TabWatcher
   DISALLOW_COPY_AND_ASSIGN(TabWatcher);
 };
 
-ChromeSpeechRecognitionManagerDelegate
-::ChromeSpeechRecognitionManagerDelegate() {
-}
+ChromeSpeechRecognitionManagerDelegate ::
+    ChromeSpeechRecognitionManagerDelegate() = default;
 
-ChromeSpeechRecognitionManagerDelegate
-::~ChromeSpeechRecognitionManagerDelegate() {
-}
+ChromeSpeechRecognitionManagerDelegate ::
+    ~ChromeSpeechRecognitionManagerDelegate() = default;
 
 void ChromeSpeechRecognitionManagerDelegate::TabClosedCallback(
     int render_process_id, int render_view_id) {

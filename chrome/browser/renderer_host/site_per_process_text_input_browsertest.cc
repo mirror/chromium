@@ -64,7 +64,7 @@ class TextInputManagerObserverBase {
       : tester_(new content::TextInputManagerTester(web_contents)),
         success_(false) {}
 
-  virtual ~TextInputManagerObserverBase() {}
+  virtual ~TextInputManagerObserverBase() = default;
 
   // Wait for derived class's definition of success.
   void Wait() {
@@ -333,8 +333,8 @@ class RecordActiveViewsObserver {
 // Main class for all TextInputState and IME related tests.
 class SitePerProcessTextInputManagerTest : public InProcessBrowserTest {
  public:
-  SitePerProcessTextInputManagerTest() {}
-  ~SitePerProcessTextInputManagerTest() override {}
+  SitePerProcessTextInputManagerTest() = default;
+  ~SitePerProcessTextInputManagerTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     content::IsolateAllSitesForTesting(command_line);
@@ -1157,8 +1157,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessTextInputManagerTest,
   // of the line.
   class TextDeleteDelegate : public ui::TextEditKeyBindingsDelegateAuraLinux {
    public:
-    TextDeleteDelegate() {}
-    ~TextDeleteDelegate() override {}
+    TextDeleteDelegate() = default;
+    ~TextDeleteDelegate() override = default;
 
     bool MatchEvent(
         const ui::Event& event,

@@ -8,7 +8,7 @@ WebPoint::WebPoint() : x(0), y(0) {}
 
 WebPoint::WebPoint(int x, int y) : x(x), y(y) {}
 
-WebPoint::~WebPoint() {}
+WebPoint::~WebPoint() = default;
 
 void WebPoint::Offset(int x_, int y_) {
   x += x_;
@@ -19,7 +19,7 @@ WebSize::WebSize() : width(0), height(0) {}
 
 WebSize::WebSize(int width, int height) : width(width), height(height) {}
 
-WebSize::~WebSize() {}
+WebSize::~WebSize() = default;
 
 WebRect::WebRect() : origin(0, 0), size(0, 0) {}
 
@@ -29,7 +29,7 @@ WebRect::WebRect(int x, int y, int width, int height)
 WebRect::WebRect(const WebPoint& origin, const WebSize& size)
     : origin(origin), size(size) {}
 
-WebRect::~WebRect() {}
+WebRect::~WebRect() = default;
 
 int WebRect::X() const { return origin.x; }
 

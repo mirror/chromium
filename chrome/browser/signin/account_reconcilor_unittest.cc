@@ -59,7 +59,7 @@ class MockAccountReconcilor : public testing::StrictMock<AccountReconcilor> {
                         SigninManagerBase* signin_manager,
                         SigninClient* client,
                         GaiaCookieManagerService* cookie_manager_service);
-  ~MockAccountReconcilor() override {}
+  ~MockAccountReconcilor() override = default;
 
   MOCK_METHOD1(PerformMergeAction, void(const std::string& account_id));
   MOCK_METHOD0(PerformLogoutAllAccountsAction, void());

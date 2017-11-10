@@ -67,7 +67,7 @@ class TestSyncService : public browser_sync::ProfileSyncServiceMock {
       : browser_sync::ProfileSyncServiceMock(
             CreateProfileSyncServiceParamsForTest(profile)),
         synced_types_(SyncedTypes::NONE) {}
-  ~TestSyncService() override {}
+  ~TestSyncService() override = default;
 
   // FakeSyncService:
   bool IsFirstSetupComplete() const override { return true; }

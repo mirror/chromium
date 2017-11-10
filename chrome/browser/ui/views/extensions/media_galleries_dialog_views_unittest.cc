@@ -39,8 +39,8 @@ MediaGalleryPrefInfo MakePrefInfoForTesting(MediaGalleryPrefId id) {
 
 class MediaGalleriesDialogTest : public testing::Test {
  public:
-  MediaGalleriesDialogTest() {}
-  ~MediaGalleriesDialogTest() override {}
+  MediaGalleriesDialogTest() = default;
+  ~MediaGalleriesDialogTest() override = default;
   void SetUp() override {
     std::vector<base::string16> headers;
     headers.push_back(base::string16());

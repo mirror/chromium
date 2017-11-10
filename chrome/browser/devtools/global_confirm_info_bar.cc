@@ -49,8 +49,7 @@ GlobalConfirmInfoBar::DelegateProxy::DelegateProxy(
       global_info_bar_(global_info_bar) {
 }
 
-GlobalConfirmInfoBar::DelegateProxy::~DelegateProxy() {
-}
+GlobalConfirmInfoBar::DelegateProxy::~DelegateProxy() = default;
 
 infobars::InfoBarDelegate::InfoBarIdentifier
 GlobalConfirmInfoBar::DelegateProxy::GetIdentifier() const {

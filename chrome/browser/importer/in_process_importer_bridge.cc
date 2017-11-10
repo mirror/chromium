@@ -73,8 +73,8 @@ namespace {
 // the search URL when importing search engines.
 class FirefoxURLParameterFilter : public TemplateURLParser::ParameterFilter {
  public:
-  FirefoxURLParameterFilter() {}
-  ~FirefoxURLParameterFilter() override {}
+  FirefoxURLParameterFilter() = default;
+  ~FirefoxURLParameterFilter() override = default;
 
   // TemplateURLParser::ParameterFilter method.
   bool KeepParameter(const std::string& key,
@@ -264,4 +264,4 @@ base::string16 InProcessImporterBridge::GetLocalizedString(int message_id) {
   return l10n_util::GetStringUTF16(message_id);
 }
 
-InProcessImporterBridge::~InProcessImporterBridge() {}
+InProcessImporterBridge::~InProcessImporterBridge() = default;

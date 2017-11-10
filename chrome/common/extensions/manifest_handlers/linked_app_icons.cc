@@ -30,19 +30,15 @@ const LinkedAppIcons& GetInfo(const Extension* extension) {
 
 }  // namespace
 
-LinkedAppIcons::IconInfo::IconInfo() {
-}
+LinkedAppIcons::IconInfo::IconInfo() = default;
 
-LinkedAppIcons::IconInfo::~IconInfo() {
-}
+LinkedAppIcons::IconInfo::~IconInfo() = default;
 
-LinkedAppIcons::LinkedAppIcons() {
-}
+LinkedAppIcons::LinkedAppIcons() = default;
 
 LinkedAppIcons::LinkedAppIcons(const LinkedAppIcons& other) = default;
 
-LinkedAppIcons::~LinkedAppIcons() {
-}
+LinkedAppIcons::~LinkedAppIcons() = default;
 
 // static
 const LinkedAppIcons& LinkedAppIcons::GetLinkedAppIcons(
@@ -50,11 +46,9 @@ const LinkedAppIcons& LinkedAppIcons::GetLinkedAppIcons(
   return GetInfo(extension);
 }
 
-LinkedAppIconsHandler::LinkedAppIconsHandler() {
-}
+LinkedAppIconsHandler::LinkedAppIconsHandler() = default;
 
-LinkedAppIconsHandler::~LinkedAppIconsHandler() {
-}
+LinkedAppIconsHandler::~LinkedAppIconsHandler() = default;
 
 bool LinkedAppIconsHandler::Parse(Extension* extension, base::string16* error) {
   std::unique_ptr<LinkedAppIcons> linked_app_icons(new LinkedAppIcons);

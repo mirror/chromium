@@ -74,7 +74,7 @@ SSLCertReporterCallback::SSLCertReporterCallback(base::RunLoop* run_loop)
       chrome_channel_(
           certificate_reporting::CertLoggerRequest::CHROME_CHANNEL_NONE) {}
 
-SSLCertReporterCallback::~SSLCertReporterCallback() {}
+SSLCertReporterCallback::~SSLCertReporterCallback() = default;
 
 void SSLCertReporterCallback::ReportSent(
     const std::string& hostname,

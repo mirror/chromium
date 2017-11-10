@@ -32,8 +32,7 @@ FolderCreator::FolderCreator(drive::DriveServiceInterface* drive_service,
       weak_ptr_factory_(this) {
 }
 
-FolderCreator::~FolderCreator() {
-}
+FolderCreator::~FolderCreator() = default;
 
 void FolderCreator::Run(const FileIDCallback& callback) {
   drive::AddNewDirectoryOptions options;

@@ -71,7 +71,7 @@ class TestWebContentsObserver : public content::WebContentsObserver {
                           content::WebContents* other)
       : content::WebContentsObserver(source),
         other_(other) {}
-  ~TestWebContentsObserver() override {}
+  ~TestWebContentsObserver() override = default;
 
   void WebContentsDestroyed() override {
     other_->NotifyNavigationStateChanged(static_cast<content::InvalidateTypes>(

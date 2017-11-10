@@ -17,8 +17,8 @@
 
 class HungRendererNavigationBrowserTest : public InProcessBrowserTest {
  public:
-  HungRendererNavigationBrowserTest() {}
-  ~HungRendererNavigationBrowserTest() override {}
+  HungRendererNavigationBrowserTest() = default;
+  ~HungRendererNavigationBrowserTest() override = default;
 
  protected:
   void SetUpOnMainThread() override {

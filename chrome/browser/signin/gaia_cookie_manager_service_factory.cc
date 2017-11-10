@@ -20,7 +20,7 @@ GaiaCookieManagerServiceFactory::GaiaCookieManagerServiceFactory()
   DependsOn(ProfileOAuth2TokenServiceFactory::GetInstance());
 }
 
-GaiaCookieManagerServiceFactory::~GaiaCookieManagerServiceFactory() {}
+GaiaCookieManagerServiceFactory::~GaiaCookieManagerServiceFactory() = default;
 
 // static
 GaiaCookieManagerService* GaiaCookieManagerServiceFactory::GetForProfile(

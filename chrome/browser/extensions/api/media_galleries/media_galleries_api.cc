@@ -253,7 +253,7 @@ class SelectDirectoryDialog : public ui::SelectFileDialog::Listener,
 
  private:
   friend class base::RefCounted<SelectDirectoryDialog>;
-  ~SelectDirectoryDialog() override {}
+  ~SelectDirectoryDialog() override = default;
 
   scoped_refptr<ui::SelectFileDialog> select_file_dialog_;
   WebContents* web_contents_;
@@ -300,8 +300,7 @@ MediaGalleriesEventRouter::MediaGalleriesEventRouter(
   gallery_watch_manager()->AddObserver(profile_, this);
 }
 
-MediaGalleriesEventRouter::~MediaGalleriesEventRouter() {
-}
+MediaGalleriesEventRouter::~MediaGalleriesEventRouter() = default;
 
 void MediaGalleriesEventRouter::Shutdown() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -387,7 +386,7 @@ void MediaGalleriesEventRouter::OnListenerRemoved(
 //               MediaGalleriesGetMediaFileSystemsFunction                   //
 ///////////////////////////////////////////////////////////////////////////////
 MediaGalleriesGetMediaFileSystemsFunction::
-    ~MediaGalleriesGetMediaFileSystemsFunction() {}
+    ~MediaGalleriesGetMediaFileSystemsFunction() = default;
 
 bool MediaGalleriesGetMediaFileSystemsFunction::RunAsync() {
   media_galleries::UsageCount(media_galleries::GET_MEDIA_FILE_SYSTEMS);
@@ -499,7 +498,7 @@ void MediaGalleriesGetMediaFileSystemsFunction::GetMediaFileSystemsForExtension(
 //               MediaGalleriesAddUserSelectedFolderFunction                 //
 ///////////////////////////////////////////////////////////////////////////////
 MediaGalleriesAddUserSelectedFolderFunction::
-    ~MediaGalleriesAddUserSelectedFolderFunction() {}
+    ~MediaGalleriesAddUserSelectedFolderFunction() = default;
 
 bool MediaGalleriesAddUserSelectedFolderFunction::RunAsync() {
   media_galleries::UsageCount(media_galleries::ADD_USER_SELECTED_FOLDER);
@@ -604,7 +603,8 @@ MediaGalleriesAddUserSelectedFolderFunction::GetMediaFileSystemsForExtension(
 ///////////////////////////////////////////////////////////////////////////////
 //                 MediaGalleriesGetMetadataFunction                         //
 ///////////////////////////////////////////////////////////////////////////////
-MediaGalleriesGetMetadataFunction::~MediaGalleriesGetMetadataFunction() {}
+MediaGalleriesGetMetadataFunction::~MediaGalleriesGetMetadataFunction() =
+    default;
 
 bool MediaGalleriesGetMetadataFunction::RunAsync() {
   media_galleries::UsageCount(media_galleries::GET_METADATA);
@@ -781,8 +781,7 @@ void MediaGalleriesGetMetadataFunction::ConstructNextBlob(
 //              MediaGalleriesAddGalleryWatchFunction                        //
 ///////////////////////////////////////////////////////////////////////////////
 MediaGalleriesAddGalleryWatchFunction::
-    ~MediaGalleriesAddGalleryWatchFunction() {
-}
+    ~MediaGalleriesAddGalleryWatchFunction() = default;
 
 bool MediaGalleriesAddGalleryWatchFunction::RunAsync() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -866,8 +865,7 @@ void MediaGalleriesAddGalleryWatchFunction::HandleResponse(
 ///////////////////////////////////////////////////////////////////////////////
 
 MediaGalleriesRemoveGalleryWatchFunction::
-    ~MediaGalleriesRemoveGalleryWatchFunction() {
-}
+    ~MediaGalleriesRemoveGalleryWatchFunction() = default;
 
 bool MediaGalleriesRemoveGalleryWatchFunction::RunAsync() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);

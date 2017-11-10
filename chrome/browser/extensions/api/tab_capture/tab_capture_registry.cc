@@ -144,7 +144,7 @@ class TabCaptureRegistry::LiveRequest : public content::WebContentsObserver {
     DCHECK(registry_);
   }
 
-  ~LiveRequest() override {}
+  ~LiveRequest() override = default;
 
   // Accessors.
   const std::string& extension_id() const {

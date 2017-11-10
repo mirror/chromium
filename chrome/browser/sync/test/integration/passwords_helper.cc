@@ -44,7 +44,7 @@ void PasswordStoreCallback(base::WaitableEvent* wait_event) {
 class PasswordStoreConsumerHelper
     : public password_manager::PasswordStoreConsumer {
  public:
-  PasswordStoreConsumerHelper() {}
+  PasswordStoreConsumerHelper() = default;
 
   void OnGetPasswordStoreResults(
       std::vector<std::unique_ptr<PasswordForm>> results) override {

@@ -25,8 +25,8 @@ std::unique_ptr<KeyedService> CreateMockMediaRouter(
 
 class MediaRouterFactoryTest : public testing::Test {
  protected:
-  MediaRouterFactoryTest() {}
-  ~MediaRouterFactoryTest() override {}
+  MediaRouterFactoryTest() = default;
+  ~MediaRouterFactoryTest() override = default;
 
   Profile* profile() { return &profile_; }
 

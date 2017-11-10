@@ -26,7 +26,7 @@ ManagePasswordsIconViews::ManagePasswordsIconViews(CommandUpdater* updater)
   UpdateUiForState();
 }
 
-ManagePasswordsIconViews::~ManagePasswordsIconViews() {}
+ManagePasswordsIconViews::~ManagePasswordsIconViews() = default;
 
 void ManagePasswordsIconViews::SetState(password_manager::ui::State state) {
   if (state_ == state)

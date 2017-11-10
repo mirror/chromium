@@ -179,8 +179,8 @@ void GetExpectedTestPolicy(PolicyMap* expected, const char* homepage) {
 class CloudPolicyTest : public InProcessBrowserTest,
                         public PolicyService::Observer {
  protected:
-  CloudPolicyTest() {}
-  ~CloudPolicyTest() override {}
+  CloudPolicyTest() = default;
+  ~CloudPolicyTest() override = default;
 
   void SetUpInProcessBrowserTestFixture() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());

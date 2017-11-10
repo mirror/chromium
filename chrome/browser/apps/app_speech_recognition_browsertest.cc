@@ -11,8 +11,8 @@
 
 class SpeechRecognitionTest : public extensions::PlatformAppBrowserTest {
  public:
-  SpeechRecognitionTest() {}
-  ~SpeechRecognitionTest() override {}
+  SpeechRecognitionTest() = default;
+  ~SpeechRecognitionTest() override = default;
 
  protected:
   void SetUp() override {

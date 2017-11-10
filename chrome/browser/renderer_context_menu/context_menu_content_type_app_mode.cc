@@ -10,8 +10,7 @@ ContextMenuContentTypeAppMode::ContextMenuContentTypeAppMode(
     : ContextMenuContentType(web_contents, params, false) {
 }
 
-ContextMenuContentTypeAppMode::~ContextMenuContentTypeAppMode() {
-}
+ContextMenuContentTypeAppMode::~ContextMenuContentTypeAppMode() = default;
 
 bool ContextMenuContentTypeAppMode::SupportsGroup(int group) {
   switch (group) {

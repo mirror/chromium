@@ -322,8 +322,7 @@ AdbMessage::AdbMessage(uint32_t command,
                        const std::string& body)
     : command(command), arg0(arg0), arg1(arg1), body(body) {}
 
-AdbMessage::~AdbMessage() {
-}
+AdbMessage::~AdbMessage() = default;
 
 // static
 void AndroidUsbDevice::CountDevices(const base::Callback<void(int)>& callback) {

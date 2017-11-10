@@ -76,7 +76,7 @@ class ChromeConfigurator : public update_client::Configurator {
   ConfiguratorImpl configurator_impl_;
   PrefService* pref_service_;  // This member is not owned by this class.
 
-  ~ChromeConfigurator() override {}
+  ~ChromeConfigurator() override = default;
 };
 
 // Allows the component updater to use non-encrypted communication with the

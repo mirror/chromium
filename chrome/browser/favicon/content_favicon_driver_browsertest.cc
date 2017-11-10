@@ -48,7 +48,7 @@ class TestResourceDispatcherHostDelegate
  public:
   explicit TestResourceDispatcherHostDelegate(const GURL& url)
       : url_(url), was_requested_(false), bypassed_cache_(false) {}
-  ~TestResourceDispatcherHostDelegate() override {}
+  ~TestResourceDispatcherHostDelegate() override = default;
 
   void Reset() {
     was_requested_ = false;
@@ -94,7 +94,7 @@ class PendingTaskWaiter : public content::WebContentsObserver {
  public:
   explicit PendingTaskWaiter(content::WebContents* web_contents)
       : WebContentsObserver(web_contents), weak_factory_(this) {}
-  ~PendingTaskWaiter() override {}
+  ~PendingTaskWaiter() override = default;
 
   void AlsoRequireUrl(const GURL& url) { required_url_ = url; }
 
@@ -164,7 +164,7 @@ class PageLoadStopper : public content::WebContentsObserver {
  public:
   explicit PageLoadStopper(content::WebContents* web_contents)
       : WebContentsObserver(web_contents), stop_on_finish_(false) {}
-  ~PageLoadStopper() override {}
+  ~PageLoadStopper() override = default;
 
   void StopOnDidFinishNavigation() { stop_on_finish_ = true; }
 
@@ -199,8 +199,8 @@ class PageLoadStopper : public content::WebContentsObserver {
 
 class ContentFaviconDriverTest : public InProcessBrowserTest {
  public:
-  ContentFaviconDriverTest() {}
-  ~ContentFaviconDriverTest() override {}
+  ContentFaviconDriverTest() = default;
+  ~ContentFaviconDriverTest() override = default;
 
   content::WebContents* web_contents() {
     return browser()->tab_strip_model()->GetActiveWebContents();

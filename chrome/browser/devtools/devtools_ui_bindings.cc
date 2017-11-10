@@ -207,7 +207,7 @@ class DefaultBindingsDelegate : public DevToolsUIBindings::Delegate {
       : web_contents_(web_contents) {}
 
  private:
-  ~DefaultBindingsDelegate() override {}
+  ~DefaultBindingsDelegate() override = default;
 
   void ActivateWindow() override;
   void CloseWindow() override {}
@@ -281,8 +281,7 @@ ResponseWriter::ResponseWriter(base::WeakPtr<DevToolsUIBindings> bindings,
       stream_id_(stream_id) {
 }
 
-ResponseWriter::~ResponseWriter() {
-}
+ResponseWriter::~ResponseWriter() = default;
 
 int ResponseWriter::Initialize(const net::CompletionCallback& callback) {
   return net::OK;
@@ -475,8 +474,7 @@ DevToolsUIBindings::FrontendWebContentsObserver::FrontendWebContentsObserver(
 }
 
 DevToolsUIBindings::FrontendWebContentsObserver::
-    ~FrontendWebContentsObserver() {
-}
+    ~FrontendWebContentsObserver() = default;
 
 // static
 GURL DevToolsUIBindings::SanitizeFrontendURL(const GURL& url) {

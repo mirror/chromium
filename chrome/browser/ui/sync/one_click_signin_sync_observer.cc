@@ -52,7 +52,7 @@ OneClickSigninSyncObserver::OneClickSigninSyncObserver(
   }
 }
 
-OneClickSigninSyncObserver::~OneClickSigninSyncObserver() {}
+OneClickSigninSyncObserver::~OneClickSigninSyncObserver() = default;
 
 void OneClickSigninSyncObserver::WebContentsDestroyed() {
   browser_sync::ProfileSyncService* sync_service =

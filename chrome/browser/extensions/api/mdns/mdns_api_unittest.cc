@@ -99,7 +99,7 @@ class MockEventRouter : public EventRouter {
   explicit MockEventRouter(content::BrowserContext* browser_context,
                            ExtensionPrefs* extension_prefs)
       : EventRouter(browser_context, extension_prefs) {}
-  virtual ~MockEventRouter() {}
+  virtual ~MockEventRouter() = default;
 
   virtual void BroadcastEvent(std::unique_ptr<Event> event) {
     BroadcastEventPtr(event.get());

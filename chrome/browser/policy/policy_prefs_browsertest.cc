@@ -77,7 +77,7 @@ class IndicatorTestCase {
                     const std::string& value,
                     bool readonly)
       : policy_(policy.DeepCopy()), value_(value), readonly_(readonly) {}
-  ~IndicatorTestCase() {}
+  ~IndicatorTestCase() = default;
 
   const base::DictionaryValue& policy() const { return *policy_; }
 
@@ -111,7 +111,7 @@ class PrefMapping {
         indicator_test_url_(indicator_test_url),
         indicator_test_setup_js_(indicator_test_setup_js),
         indicator_selector_(indicator_selector) {}
-  ~PrefMapping() {}
+  ~PrefMapping() = default;
 
   const std::string& pref() const { return pref_; }
 
@@ -164,7 +164,7 @@ class PolicyTestCase {
         is_official_only_(is_official_only),
         can_be_recommended_(can_be_recommended),
         indicator_selector_(indicator_selector) {}
-  ~PolicyTestCase() {}
+  ~PolicyTestCase() = default;
 
   const std::string& name() const { return name_; }
 

@@ -98,8 +98,7 @@ PrivetInfoOperationImpl::PrivetInfoOperationImpl(
     PrivetJSONOperation::ResultCallback callback)
     : privet_client_(privet_client), callback_(std::move(callback)) {}
 
-PrivetInfoOperationImpl::~PrivetInfoOperationImpl() {
-}
+PrivetInfoOperationImpl::~PrivetInfoOperationImpl() = default;
 
 void PrivetInfoOperationImpl::Start() {
   url_fetcher_ = privet_client_->CreateURLFetcher(
@@ -136,8 +135,7 @@ PrivetRegisterOperationImpl::PrivetRegisterOperationImpl(
       ongoing_(false) {
 }
 
-PrivetRegisterOperationImpl::~PrivetRegisterOperationImpl() {
-}
+PrivetRegisterOperationImpl::~PrivetRegisterOperationImpl() = default;
 
 void PrivetRegisterOperationImpl::Start() {
   ongoing_ = true;
@@ -317,8 +315,7 @@ PrivetRegisterOperationImpl::Cancelation::Cancelation(
   url_fetcher_->Start();
 }
 
-PrivetRegisterOperationImpl::Cancelation::~Cancelation() {
-}
+PrivetRegisterOperationImpl::Cancelation::~Cancelation() = default;
 
 void PrivetRegisterOperationImpl::Cancelation::OnError(
     PrivetURLFetcher* fetcher,
@@ -347,8 +344,7 @@ PrivetJSONOperationImpl::PrivetJSONOperationImpl(
       query_params_(query_params),
       callback_(std::move(callback)) {}
 
-PrivetJSONOperationImpl::~PrivetJSONOperationImpl() {
-}
+PrivetJSONOperationImpl::~PrivetJSONOperationImpl() = default;
 
 void PrivetJSONOperationImpl::Start() {
   url_fetcher_ = privet_client_->CreateURLFetcher(
@@ -393,8 +389,7 @@ PrivetLocalPrintOperationImpl::PrivetLocalPrintOperationImpl(
       weak_factory_(this) {
 }
 
-PrivetLocalPrintOperationImpl::~PrivetLocalPrintOperationImpl() {
-}
+PrivetLocalPrintOperationImpl::~PrivetLocalPrintOperationImpl() = default;
 
 void PrivetLocalPrintOperationImpl::Start() {
   DCHECK(!started_);
@@ -689,8 +684,7 @@ PrivetHTTPClientImpl::PrivetHTTPClientImpl(
     const scoped_refptr<net::URLRequestContextGetter>& context_getter)
     : name_(name), context_getter_(context_getter), host_port_(host_port) {}
 
-PrivetHTTPClientImpl::~PrivetHTTPClientImpl() {
-}
+PrivetHTTPClientImpl::~PrivetHTTPClientImpl() = default;
 
 const std::string& PrivetHTTPClientImpl::GetName() {
   return name_;
@@ -777,8 +771,7 @@ PrivetV1HTTPClientImpl::PrivetV1HTTPClientImpl(
     std::unique_ptr<PrivetHTTPClient> info_client)
     : info_client_(std::move(info_client)) {}
 
-PrivetV1HTTPClientImpl::~PrivetV1HTTPClientImpl() {
-}
+PrivetV1HTTPClientImpl::~PrivetV1HTTPClientImpl() = default;
 
 const std::string& PrivetV1HTTPClientImpl::GetName() {
   return info_client()->GetName();

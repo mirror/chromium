@@ -63,7 +63,7 @@ class TestSaveCardBubbleControllerImpl : public SaveCardBubbleControllerImpl {
 
 class SaveCardBubbleControllerImplTest : public BrowserWithTestWindowTest {
  public:
-  SaveCardBubbleControllerImplTest() {}
+  SaveCardBubbleControllerImplTest() = default;
 
   void SetUp() override {
     BrowserWithTestWindowTest::SetUp();

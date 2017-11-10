@@ -39,8 +39,8 @@
 
 class ChromeNavigationBrowserTest : public InProcessBrowserTest {
  public:
-  ChromeNavigationBrowserTest() {}
-  ~ChromeNavigationBrowserTest() override {}
+  ChromeNavigationBrowserTest() = default;
+  ~ChromeNavigationBrowserTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     // Backgrounded renderer processes run at a lower priority, causing the
@@ -76,7 +76,7 @@ class DidStartNavigationObserver : public content::WebContentsObserver {
   explicit DidStartNavigationObserver(content::WebContents* web_contents)
       : content::WebContentsObserver(web_contents),
         message_loop_runner_(new content::MessageLoopRunner) {}
-  ~DidStartNavigationObserver() override {}
+  ~DidStartNavigationObserver() override = default;
 
   // Runs a nested run loop and blocks until the full load has
   // completed.
@@ -328,8 +328,8 @@ IN_PROC_BROWSER_TEST_F(CtrlClickShouldEndUpInNewProcessTest, SubframeTarget) {
 
 class ChromeNavigationPortMappedBrowserTest : public InProcessBrowserTest {
  public:
-  ChromeNavigationPortMappedBrowserTest() {}
-  ~ChromeNavigationPortMappedBrowserTest() override {}
+  ChromeNavigationPortMappedBrowserTest() = default;
+  ~ChromeNavigationPortMappedBrowserTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ASSERT_TRUE(embedded_test_server()->Start());
@@ -574,7 +574,7 @@ class SignInIsolationBrowserTest : public ChromeNavigationBrowserTest {
  public:
   SignInIsolationBrowserTest()
       : https_server_(net::EmbeddedTestServer::TYPE_HTTPS) {}
-  ~SignInIsolationBrowserTest() override {}
+  ~SignInIsolationBrowserTest() override = default;
 
   virtual void InitFeatureList() {
     feature_list_.InitAndEnableFeature(features::kSignInProcessIsolation);
@@ -703,8 +703,8 @@ IN_PROC_BROWSER_TEST_F(SignInIsolationBrowserTest, SyntheticTrial) {
 // ForceEnabled).
 class EnabledSignInIsolationBrowserTest : public SignInIsolationBrowserTest {
  public:
-  EnabledSignInIsolationBrowserTest() {}
-  ~EnabledSignInIsolationBrowserTest() override {}
+  EnabledSignInIsolationBrowserTest() = default;
+  ~EnabledSignInIsolationBrowserTest() override = default;
 
   void InitFeatureList() override {}
 
@@ -754,8 +754,8 @@ IN_PROC_BROWSER_TEST_F(EnabledSignInIsolationBrowserTest, SyntheticTrial) {
 // Disabled group of the synthetic sign-in trial.
 class DisabledSignInIsolationBrowserTest : public SignInIsolationBrowserTest {
  public:
-  DisabledSignInIsolationBrowserTest() {}
-  ~DisabledSignInIsolationBrowserTest() override {}
+  DisabledSignInIsolationBrowserTest() = default;
+  ~DisabledSignInIsolationBrowserTest() override = default;
 
   void InitFeatureList() override {}
 
@@ -800,8 +800,8 @@ IN_PROC_BROWSER_TEST_F(DisabledSignInIsolationBrowserTest, SyntheticTrial) {
 class ForceDisabledSignInIsolationBrowserTest
     : public SignInIsolationBrowserTest {
  public:
-  ForceDisabledSignInIsolationBrowserTest() {}
-  ~ForceDisabledSignInIsolationBrowserTest() override {}
+  ForceDisabledSignInIsolationBrowserTest() = default;
+  ~ForceDisabledSignInIsolationBrowserTest() override = default;
 
   void InitFeatureList() override {
     feature_list_.InitAndDisableFeature(features::kSignInProcessIsolation);
@@ -833,7 +833,7 @@ class WillProcessResponseObserver : public content::WebContentsObserver {
   explicit WillProcessResponseObserver(content::WebContents* web_contents,
                                        const GURL& url)
       : content::WebContentsObserver(web_contents), url_(url) {}
-  ~WillProcessResponseObserver() override {}
+  ~WillProcessResponseObserver() override = default;
 
   bool WillProcessResponseCalled() { return will_process_response_called_; }
 

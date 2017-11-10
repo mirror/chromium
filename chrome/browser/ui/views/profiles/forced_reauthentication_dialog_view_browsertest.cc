@@ -17,7 +17,7 @@
 
 class ForcedReauthenticationDialogViewBrowserTest : public DialogBrowserTest {
  public:
-  ForcedReauthenticationDialogViewBrowserTest() {}
+  ForcedReauthenticationDialogViewBrowserTest() = default;
 
   // override DialogBrowserTest
   void ShowDialog(const std::string& name) override {

@@ -247,7 +247,7 @@ class InMenuButton : public LabelButton {
  public:
   InMenuButton(views::ButtonListener* listener, const base::string16& text)
       : LabelButton(listener, text) {}
-  ~InMenuButton() override {}
+  ~InMenuButton() override = default;
 
   void set_role_is_button(bool role_is_button) {
     role_is_button_ = role_is_button;
@@ -389,7 +389,7 @@ class HoveredImageSource : public gfx::ImageSkiaSource {
       : image_(image),
         color_(color) {
   }
-  ~HoveredImageSource() override {}
+  ~HoveredImageSource() override = default;
 
   gfx::ImageSkiaRep GetImageForScale(float scale) override {
     const gfx::ImageSkiaRep& rep = image_.GetRepresentation(scale);
@@ -538,7 +538,7 @@ class AppMenu::ZoomView : public AppMenuView {
     UpdateZoomControls();
   }
 
-  ~ZoomView() override {}
+  ~ZoomView() override = default;
 
   // Overridden from View.
   gfx::Size CalculatePreferredSize() const override {

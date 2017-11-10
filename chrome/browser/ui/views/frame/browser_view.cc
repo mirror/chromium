@@ -284,7 +284,7 @@ class BrowserViewLayoutDelegateImpl : public BrowserViewLayoutDelegate {
  public:
   explicit BrowserViewLayoutDelegateImpl(BrowserView* browser_view)
       : browser_view_(browser_view) {}
-  ~BrowserViewLayoutDelegateImpl() override {}
+  ~BrowserViewLayoutDelegateImpl() override = default;
 
   // BrowserViewLayoutDelegate overrides:
   views::View* GetContentsWebView() const override {

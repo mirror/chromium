@@ -40,8 +40,7 @@ PersonalDataManagerFactory::PersonalDataManagerFactory()
   DependsOn(WebDataServiceFactory::GetInstance());
 }
 
-PersonalDataManagerFactory::~PersonalDataManagerFactory() {
-}
+PersonalDataManagerFactory::~PersonalDataManagerFactory() = default;
 
 KeyedService* PersonalDataManagerFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

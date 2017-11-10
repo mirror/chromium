@@ -40,7 +40,7 @@ PageLoadExtraInfo::PageLoadExtraInfo(
 
 PageLoadExtraInfo::PageLoadExtraInfo(const PageLoadExtraInfo& other) = default;
 
-PageLoadExtraInfo::~PageLoadExtraInfo() {}
+PageLoadExtraInfo::~PageLoadExtraInfo() = default;
 
 // static
 PageLoadExtraInfo PageLoadExtraInfo::CreateForTesting(
@@ -100,13 +100,13 @@ ExtraRequestCompleteInfo::ExtraRequestCompleteInfo(
                            : base::MakeUnique<net::LoadTimingInfo>(
                                  *other.load_timing_info)) {}
 
-ExtraRequestCompleteInfo::~ExtraRequestCompleteInfo() {}
+ExtraRequestCompleteInfo::~ExtraRequestCompleteInfo() = default;
 
 FailedProvisionalLoadInfo::FailedProvisionalLoadInfo(base::TimeDelta interval,
                                                      net::Error error)
     : time_to_failed_provisional_load(interval), error(error) {}
 
-FailedProvisionalLoadInfo::~FailedProvisionalLoadInfo() {}
+FailedProvisionalLoadInfo::~FailedProvisionalLoadInfo() = default;
 
 PageLoadMetricsObserver::ObservePolicy PageLoadMetricsObserver::OnStart(
     content::NavigationHandle* navigation_handle,

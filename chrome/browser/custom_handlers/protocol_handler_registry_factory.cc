@@ -28,8 +28,7 @@ ProtocolHandlerRegistryFactory::ProtocolHandlerRegistryFactory()
         BrowserContextDependencyManager::GetInstance()) {
 }
 
-ProtocolHandlerRegistryFactory::~ProtocolHandlerRegistryFactory() {
-}
+ProtocolHandlerRegistryFactory::~ProtocolHandlerRegistryFactory() = default;
 
 // Will be created when initializing profile_io_data, so we might
 // as well have the framework create this along with other

@@ -27,7 +27,7 @@ AboutSigninInternalsFactory::AboutSigninInternalsFactory()
   DependsOn(SigninManagerFactory::GetInstance());
 }
 
-AboutSigninInternalsFactory::~AboutSigninInternalsFactory() {}
+AboutSigninInternalsFactory::~AboutSigninInternalsFactory() = default;
 
 // static
 AboutSigninInternals* AboutSigninInternalsFactory::GetForProfile(

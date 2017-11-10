@@ -270,7 +270,7 @@ void SaveCardBubbleViews::ContentsChanged(views::Textfield* sender,
   GetDialogClientView()->UpdateDialogButtons();
 }
 
-SaveCardBubbleViews::~SaveCardBubbleViews() {}
+SaveCardBubbleViews::~SaveCardBubbleViews() = default;
 
 SaveCardBubbleViews::CurrentFlowStep SaveCardBubbleViews::GetCurrentFlowStep()
     const {

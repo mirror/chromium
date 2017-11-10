@@ -73,8 +73,7 @@ ExtensionManagement::ExtensionManagement(PrefService* pref_service,
       base::MakeUnique<PermissionsBasedManagementPolicyProvider>(this));
 }
 
-ExtensionManagement::~ExtensionManagement() {
-}
+ExtensionManagement::~ExtensionManagement() = default;
 
 void ExtensionManagement::Shutdown() {
   pref_change_registrar_.RemoveAll();
@@ -540,8 +539,7 @@ ExtensionManagementFactory::ExtensionManagementFactory()
           BrowserContextDependencyManager::GetInstance()) {
 }
 
-ExtensionManagementFactory::~ExtensionManagementFactory() {
-}
+ExtensionManagementFactory::~ExtensionManagementFactory() = default;
 
 KeyedService* ExtensionManagementFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

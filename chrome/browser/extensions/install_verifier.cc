@@ -186,7 +186,7 @@ InstallVerifier::InstallVerifier(ExtensionPrefs* prefs,
       weak_factory_(this) {
 }
 
-InstallVerifier::~InstallVerifier() {}
+InstallVerifier::~InstallVerifier() = default;
 
 // static
 InstallVerifier* InstallVerifier::Get(
@@ -443,8 +443,7 @@ bool InstallVerifier::MustRemainDisabled(const Extension* extension,
 InstallVerifier::PendingOperation::PendingOperation(OperationType type)
     : type(type) {}
 
-InstallVerifier::PendingOperation::~PendingOperation() {
-}
+InstallVerifier::PendingOperation::~PendingOperation() = default;
 
 ExtensionIdSet InstallVerifier::GetExtensionsToVerify() const {
   ExtensionIdSet result;

@@ -166,7 +166,7 @@ class MediaRouterUI::UIIssuesObserver : public IssuesObserver {
     DCHECK(ui);
   }
 
-  ~UIIssuesObserver() override {}
+  ~UIIssuesObserver() override = default;
 
   // IssuesObserver implementation.
   void OnIssue(const Issue& issue) override { ui_->SetIssue(issue); }
@@ -187,7 +187,7 @@ MediaRouterUI::UIMediaRoutesObserver::UIMediaRoutesObserver(
   DCHECK(!callback_.is_null());
 }
 
-MediaRouterUI::UIMediaRoutesObserver::~UIMediaRoutesObserver() {}
+MediaRouterUI::UIMediaRoutesObserver::~UIMediaRoutesObserver() = default;
 
 void MediaRouterUI::UIMediaRoutesObserver::OnRoutesUpdated(
     const std::vector<MediaRoute>& routes,
@@ -204,7 +204,7 @@ MediaRouterUI::UIMediaRouteControllerObserver::UIMediaRouteControllerObserver(
 }
 
 MediaRouterUI::UIMediaRouteControllerObserver::
-    ~UIMediaRouteControllerObserver() {}
+    ~UIMediaRouteControllerObserver() = default;
 
 void MediaRouterUI::UIMediaRouteControllerObserver::OnMediaStatusUpdated(
     const MediaStatus& status) {

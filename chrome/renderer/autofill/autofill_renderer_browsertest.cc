@@ -48,7 +48,7 @@ namespace {
 class FakeContentAutofillDriver : public mojom::AutofillDriver {
  public:
   FakeContentAutofillDriver() : called_field_change_(false) {}
-  ~FakeContentAutofillDriver() override {}
+  ~FakeContentAutofillDriver() override = default;
 
   void BindRequest(mojom::AutofillDriverRequest request) {
     bindings_.AddBinding(this, std::move(request));
@@ -121,9 +121,9 @@ using AutofillQueryParam =
 
 class AutofillRendererTest : public ChromeRenderViewTest {
  public:
-  AutofillRendererTest() {}
+  AutofillRendererTest() = default;
 
-  ~AutofillRendererTest() override {}
+  ~AutofillRendererTest() override = default;
 
  protected:
   void SetUp() override {

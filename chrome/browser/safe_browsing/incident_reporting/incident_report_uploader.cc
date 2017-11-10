@@ -6,8 +6,7 @@
 
 namespace safe_browsing {
 
-IncidentReportUploader::~IncidentReportUploader() {
-}
+IncidentReportUploader::~IncidentReportUploader() = default;
 
 IncidentReportUploader::IncidentReportUploader(const OnResultCallback& callback)
     : callback_(callback) {

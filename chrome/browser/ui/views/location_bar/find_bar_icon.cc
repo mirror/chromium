@@ -8,7 +8,7 @@
 
 FindBarIcon::FindBarIcon() : BubbleIconView(nullptr, 0) {}
 
-FindBarIcon::~FindBarIcon() {}
+FindBarIcon::~FindBarIcon() = default;
 
 void FindBarIcon::SetActive(bool activate, bool should_animate) {
   if (activate ==

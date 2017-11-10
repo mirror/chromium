@@ -40,8 +40,8 @@ namespace {
 
 class SettingsPrivateApiTest : public ExtensionApiTest {
  public:
-  SettingsPrivateApiTest() {}
-  ~SettingsPrivateApiTest() override {}
+  SettingsPrivateApiTest() = default;
+  ~SettingsPrivateApiTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ExtensionApiTest::SetUpCommandLine(command_line);

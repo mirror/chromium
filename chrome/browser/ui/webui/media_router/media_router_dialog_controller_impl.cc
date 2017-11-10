@@ -58,7 +58,7 @@ class MediaRouterDialogDelegate : public WebDialogDelegate {
   explicit MediaRouterDialogDelegate(
       const base::WeakPtr<MediaRouterDialogControllerImpl>& controller)
       : controller_(controller) {}
-  ~MediaRouterDialogDelegate() override {}
+  ~MediaRouterDialogDelegate() override = default;
 
   // WebDialogDelegate implementation.
   ui::ModalType GetDialogModalType() const override {

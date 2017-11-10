@@ -24,8 +24,7 @@ WebRtcLoggingMessageFilter::WebRtcLoggingMessageFilter(
   }
 }
 
-WebRtcLoggingMessageFilter::~WebRtcLoggingMessageFilter() {
-}
+WebRtcLoggingMessageFilter::~WebRtcLoggingMessageFilter() = default;
 
 bool WebRtcLoggingMessageFilter::OnMessageReceived(
     const IPC::Message& message) {

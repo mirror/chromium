@@ -144,8 +144,7 @@ MediaPathFilter::MediaPathFilter()
   sequence_checker_.DetachFromSequence();
 }
 
-MediaPathFilter::~MediaPathFilter() {
-}
+MediaPathFilter::~MediaPathFilter() = default;
 
 bool MediaPathFilter::Match(const base::FilePath& path) {
   return GetType(path) != MEDIA_GALLERY_FILE_TYPE_UNKNOWN;

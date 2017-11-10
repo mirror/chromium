@@ -33,7 +33,7 @@ class SignInObserver : public SigninTracker::Observer {
         signed_in_(false),
         wait_for_account_cookies_(wait_for_account_cookies) {}
 
-  virtual ~SignInObserver() {}
+  virtual ~SignInObserver() = default;
 
   // Returns whether a GoogleSigninSucceeded event has happened.
   bool DidSignIn() {

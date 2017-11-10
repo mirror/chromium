@@ -187,8 +187,8 @@ namespace certificate_manager {
 
 class CertIdMap {
  public:
-  CertIdMap() {}
-  ~CertIdMap() {}
+  CertIdMap() = default;
+  ~CertIdMap() = default;
 
   std::string CertToId(CERTCertificate* cert);
   CERTCertificate* IdToCert(const std::string& id);
@@ -265,7 +265,7 @@ class FileAccessProvider
 
  private:
   friend class base::RefCountedThreadSafe<FileAccessProvider>;
-  virtual ~FileAccessProvider() {}
+  virtual ~FileAccessProvider() = default;
 
   // Reads file at |path|. |saved_errno| is 0 on success or errno on failure.
   // When success, |data| has file content.
@@ -342,7 +342,7 @@ CertificatesHandler::CertificatesHandler()
       cert_id_map_(new CertIdMap),
       weak_ptr_factory_(this) {}
 
-CertificatesHandler::~CertificatesHandler() {}
+CertificatesHandler::~CertificatesHandler() = default;
 
 void CertificatesHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

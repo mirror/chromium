@@ -18,7 +18,7 @@ CastReceiverAudioValve::CastReceiverAudioValve(
   fifo_.Reset(params.frames_per_buffer());
 }
 
-CastReceiverAudioValve::~CastReceiverAudioValve() {}
+CastReceiverAudioValve::~CastReceiverAudioValve() = default;
 
 void CastReceiverAudioValve::DeliverDecodedAudio(
     const media::AudioBus* audio_bus,

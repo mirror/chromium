@@ -54,7 +54,7 @@ SigninEmailConfirmationUI::SigninEmailConfirmationUI(content::WebUI* web_ui)
   content::WebUIDataSource::Add(profile, source);
 }
 
-SigninEmailConfirmationUI::~SigninEmailConfirmationUI() {}
+SigninEmailConfirmationUI::~SigninEmailConfirmationUI() = default;
 
 void SigninEmailConfirmationUI::Close() {
   ConstrainedWebDialogDelegate* delegate = GetConstrainedDelegate();

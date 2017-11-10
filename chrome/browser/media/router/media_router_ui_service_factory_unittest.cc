@@ -17,8 +17,8 @@ namespace media_router {
 
 class MediaRouterUIServiceFactoryUnitTest : public testing::Test {
  public:
-  MediaRouterUIServiceFactoryUnitTest() {}
-  ~MediaRouterUIServiceFactoryUnitTest() override {}
+  MediaRouterUIServiceFactoryUnitTest() = default;
+  ~MediaRouterUIServiceFactoryUnitTest() override = default;
 
   void SetUp() override {
     TestingProfile::Builder builder;

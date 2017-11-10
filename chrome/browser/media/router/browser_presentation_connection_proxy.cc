@@ -39,7 +39,8 @@ BrowserPresentationConnectionProxy::BrowserPresentationConnectionProxy(
       content::PRESENTATION_CONNECTION_STATE_CONNECTED);
 }
 
-BrowserPresentationConnectionProxy::~BrowserPresentationConnectionProxy() {}
+BrowserPresentationConnectionProxy::~BrowserPresentationConnectionProxy() =
+    default;
 
 void BrowserPresentationConnectionProxy::OnMessage(
     content::PresentationConnectionMessage message,

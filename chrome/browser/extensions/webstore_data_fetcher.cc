@@ -37,7 +37,7 @@ WebstoreDataFetcher::WebstoreDataFetcher(
       max_auto_retries_(0) {
 }
 
-WebstoreDataFetcher::~WebstoreDataFetcher() {}
+WebstoreDataFetcher::~WebstoreDataFetcher() = default;
 
 void WebstoreDataFetcher::SetJsonPostData(const std::string& json) {
   json_post_data_ = json;

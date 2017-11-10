@@ -30,7 +30,7 @@ const double kTestSES = 48.0;
 class BudgetManagerTest : public testing::Test {
  public:
   BudgetManagerTest() : origin_(url::Origin::Create(GURL(kTestOrigin))) {}
-  ~BudgetManagerTest() override {}
+  ~BudgetManagerTest() override = default;
 
   BudgetManager* GetManager(Profile* profile) {
     return BudgetManagerFactory::GetForProfile(profile);

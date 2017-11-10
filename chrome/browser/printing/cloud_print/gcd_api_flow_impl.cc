@@ -86,8 +86,7 @@ GCDApiFlowImpl::GCDApiFlowImpl(net::URLRequestContextGetter* request_context,
       account_id_(account_id) {
 }
 
-GCDApiFlowImpl::~GCDApiFlowImpl() {
-}
+GCDApiFlowImpl::~GCDApiFlowImpl() = default;
 
 void GCDApiFlowImpl::Start(std::unique_ptr<Request> request) {
   request_ = std::move(request);

@@ -62,7 +62,7 @@ const base::FilePath::CharType kDownloadMetadataBasename[] =
 // it is in progress.
 class DownloadItemData : public base::SupportsUserData::Data {
  public:
-  ~DownloadItemData() override {}
+  ~DownloadItemData() override = default;
 
   // Sets the ClientDownloadRequest for a given DownloadItem.
   static void SetRequestForDownload(

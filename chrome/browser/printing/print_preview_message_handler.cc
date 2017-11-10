@@ -77,8 +77,7 @@ PrintPreviewMessageHandler::PrintPreviewMessageHandler(
   DCHECK(web_contents);
 }
 
-PrintPreviewMessageHandler::~PrintPreviewMessageHandler() {
-}
+PrintPreviewMessageHandler::~PrintPreviewMessageHandler() = default;
 
 WebContents* PrintPreviewMessageHandler::GetPrintPreviewDialog() {
   PrintPreviewDialogController* dialog_controller =

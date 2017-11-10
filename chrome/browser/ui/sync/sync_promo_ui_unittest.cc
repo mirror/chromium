@@ -20,7 +20,7 @@
 
 class SyncPromoUITest : public testing::Test {
  public:
-  SyncPromoUITest() {}
+  SyncPromoUITest() = default;
 
   // testing::Test:
   void SetUp() override {

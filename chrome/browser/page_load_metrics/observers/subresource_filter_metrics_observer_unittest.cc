@@ -28,8 +28,8 @@ const char kDefaultTestUrlWithActivationDryRun[] =
 class SubresourceFilterMetricsObserverTest
     : public page_load_metrics::PageLoadMetricsObserverTestHarness {
  public:
-  SubresourceFilterMetricsObserverTest() {}
-  ~SubresourceFilterMetricsObserverTest() override {}
+  SubresourceFilterMetricsObserverTest() = default;
+  ~SubresourceFilterMetricsObserverTest() override = default;
 
   void SetUp() override {
     page_load_metrics::PageLoadMetricsObserverTestHarness::SetUp();

@@ -56,7 +56,7 @@ PrintingHandler::PrintingHandler() {
 #endif
 }
 
-PrintingHandler::~PrintingHandler() {}
+PrintingHandler::~PrintingHandler() = default;
 
 bool PrintingHandler::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;

@@ -124,7 +124,7 @@ CastTransportHostFilter::CastTransportHostFilter(Profile* profile)
       url_request_context_getter_(profile->GetRequestContext()),
       weak_factory_(this) {}
 
-CastTransportHostFilter::~CastTransportHostFilter() {}
+CastTransportHostFilter::~CastTransportHostFilter() = default;
 
 void CastTransportHostFilter::OnStatusChanged(
     int32_t channel_id,

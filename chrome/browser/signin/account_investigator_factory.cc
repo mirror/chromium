@@ -34,7 +34,7 @@ AccountInvestigatorFactory::AccountInvestigatorFactory()
   DependsOn(SigninManagerFactory::GetInstance());
 }
 
-AccountInvestigatorFactory::~AccountInvestigatorFactory() {}
+AccountInvestigatorFactory::~AccountInvestigatorFactory() = default;
 
 KeyedService* AccountInvestigatorFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

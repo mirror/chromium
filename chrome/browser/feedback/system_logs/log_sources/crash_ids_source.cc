@@ -31,7 +31,7 @@ CrashIdsSource::CrashIdsSource()
       crash_upload_list_(CreateCrashUploadList()),
       pending_crash_list_loading_(false) {}
 
-CrashIdsSource::~CrashIdsSource() {}
+CrashIdsSource::~CrashIdsSource() = default;
 
 void CrashIdsSource::Fetch(const SysLogsSourceCallback& callback) {
   // Unretained since we own these callbacks.

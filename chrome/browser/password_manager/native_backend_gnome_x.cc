@@ -503,8 +503,7 @@ NativeBackendGnome::NativeBackendGnome(LocalProfileId id)
           {base::MayBlock(), base::WithBaseSyncPrimitives(),
            base::TaskPriority::USER_VISIBLE})) {}
 
-NativeBackendGnome::~NativeBackendGnome() {
-}
+NativeBackendGnome::~NativeBackendGnome() = default;
 
 bool NativeBackendGnome::Init() {
   return LoadGnomeKeyring() && gnome_keyring_is_available_ptr();

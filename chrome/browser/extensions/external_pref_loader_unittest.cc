@@ -26,7 +26,7 @@ class TestSyncService : public browser_sync::ProfileSyncServiceMock {
       : browser_sync::ProfileSyncServiceMock(
             CreateProfileSyncServiceParamsForTest(profile)),
         synced_types_(SyncedTypes::NONE) {}
-  ~TestSyncService() override {}
+  ~TestSyncService() override = default;
 
   // FakeSyncService:
   bool IsFirstSetupComplete() const override { return true; }
@@ -91,7 +91,7 @@ class TestExternalPrefLoader : public ExternalPrefLoader {
   }
 
  private:
-  ~TestExternalPrefLoader() override {}
+  ~TestExternalPrefLoader() override = default;
   base::OnceClosure load_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(TestExternalPrefLoader);
@@ -99,8 +99,8 @@ class TestExternalPrefLoader : public ExternalPrefLoader {
 
 class ExternalPrefLoaderTest : public testing::Test {
  public:
-  ExternalPrefLoaderTest() {}
-  ~ExternalPrefLoaderTest() override {}
+  ExternalPrefLoaderTest() = default;
+  ~ExternalPrefLoaderTest() override = default;
 
   void SetUp() override { profile_ = std::make_unique<TestingProfile>(); }
 

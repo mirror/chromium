@@ -26,7 +26,7 @@ ExtensionSettingsUIBrowserTest::ExtensionSettingsUIBrowserTest()
   test_data_dir_ = test_data_dir_.AppendASCII("extensions");
 }
 
-ExtensionSettingsUIBrowserTest::~ExtensionSettingsUIBrowserTest() {}
+ExtensionSettingsUIBrowserTest::~ExtensionSettingsUIBrowserTest() = default;
 
 void ExtensionSettingsUIBrowserTest::InstallGoodExtension() {
   EXPECT_TRUE(InstallExtension(test_data_dir_.AppendASCII("good.crx")));

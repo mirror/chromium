@@ -28,8 +28,8 @@ namespace {
 
 class AutofillCounterTest : public InProcessBrowserTest {
  public:
-  AutofillCounterTest() {}
-  ~AutofillCounterTest() override {}
+  AutofillCounterTest() = default;
+  ~AutofillCounterTest() override = default;
 
   void SetUpOnMainThread() override {
     web_data_service_ = WebDataServiceFactory::GetAutofillWebDataForProfile(

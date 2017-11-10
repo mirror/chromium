@@ -15,8 +15,7 @@ MockWebRtcLoggingMessageFilter::MockWebRtcLoggingMessageFilter(
       logging_stopped_(false) {
 }
 
-MockWebRtcLoggingMessageFilter::~MockWebRtcLoggingMessageFilter() {
-}
+MockWebRtcLoggingMessageFilter::~MockWebRtcLoggingMessageFilter() = default;
 
 void MockWebRtcLoggingMessageFilter::AddLogMessages(
     const std::vector<WebRtcLoggingMessageData>& messages) {

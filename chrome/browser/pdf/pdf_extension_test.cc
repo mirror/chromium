@@ -102,7 +102,7 @@ bool GetGuestCallback(WebContents** guest_out, WebContents* guest) {
 class PDFExtensionTest : public ExtensionApiTest,
                          public testing::WithParamInterface<int> {
  public:
-  ~PDFExtensionTest() override {}
+  ~PDFExtensionTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     content::IsolateAllSitesForTesting(command_line);
@@ -325,8 +325,8 @@ IN_PROC_BROWSER_TEST_P(PDFExtensionTest, Load) {
 
 class DisablePluginHelper : public content::DownloadManager::Observer {
  public:
-  DisablePluginHelper() {}
-  ~DisablePluginHelper() override {}
+  DisablePluginHelper() = default;
+  ~DisablePluginHelper() override = default;
 
   void DisablePlugin(Profile* profile) {
     profile->GetPrefs()->SetBoolean(
@@ -831,7 +831,7 @@ IN_PROC_BROWSER_TEST_F(PDFExtensionTest, OpenFromFTP) {
 class PDFExtensionLinkClickTest : public PDFExtensionTest {
  public:
   PDFExtensionLinkClickTest() : guest_contents_(nullptr) {}
-  ~PDFExtensionLinkClickTest() override {}
+  ~PDFExtensionLinkClickTest() override = default;
 
  protected:
   void LoadTestLinkPdfGetGuestContents() {
@@ -1050,7 +1050,7 @@ IN_PROC_BROWSER_TEST_F(PDFExtensionLinkClickTest, OpenPDFWithReplaceState) {
 class PDFExtensionClipboardTest : public PDFExtensionTest {
  public:
   PDFExtensionClipboardTest() : guest_contents_(nullptr) {}
-  ~PDFExtensionClipboardTest() override {}
+  ~PDFExtensionClipboardTest() override = default;
 
   void SetUpOnMainThread() override {
     PDFExtensionTest::SetUpOnMainThread();

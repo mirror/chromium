@@ -59,7 +59,7 @@ class TabCapturePerformanceTest
     : public ExtensionApiTest,
       public testing::WithParamInterface<int> {
  public:
-  TabCapturePerformanceTest() {}
+  TabCapturePerformanceTest() = default;
 
   bool HasFlag(TestFlags flag) const {
     return (GetParam() & flag) == flag;

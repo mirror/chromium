@@ -35,8 +35,8 @@ using extensions::Extension;
 
 class ExtensionInstallUIBrowserTest : public ExtensionBrowserTest {
  public:
-  ExtensionInstallUIBrowserTest() {}
-  ~ExtensionInstallUIBrowserTest() override {}
+  ExtensionInstallUIBrowserTest() = default;
+  ~ExtensionInstallUIBrowserTest() override = default;
 
   // Checks that a theme info bar is currently visible and issues an undo to
   // revert to the previous theme.

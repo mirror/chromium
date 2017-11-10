@@ -18,8 +18,7 @@ CastUdpTransport::CastUdpTransport(
       weak_factory_(this) {
 }
 
-CastUdpTransport::~CastUdpTransport() {
-}
+CastUdpTransport::~CastUdpTransport() = default;
 
 void CastUdpTransport::SetDestination(
     const net::IPEndPoint& remote_address,

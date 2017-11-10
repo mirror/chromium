@@ -80,7 +80,7 @@ PepperFlashBrowserHost::PepperFlashBrowserHost(BrowserPpapiHost* host,
   host->GetRenderFrameIDsForInstance(instance, &render_process_id_, &unused);
 }
 
-PepperFlashBrowserHost::~PepperFlashBrowserHost() {}
+PepperFlashBrowserHost::~PepperFlashBrowserHost() = default;
 
 int32_t PepperFlashBrowserHost::OnResourceMessageReceived(
     const IPC::Message& msg,

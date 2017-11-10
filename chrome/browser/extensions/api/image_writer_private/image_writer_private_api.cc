@@ -16,9 +16,9 @@ namespace image_writer_api = extensions::api::image_writer_private;
 
 namespace extensions {
 
-ImageWriterPrivateBaseFunction::ImageWriterPrivateBaseFunction() {}
+ImageWriterPrivateBaseFunction::ImageWriterPrivateBaseFunction() = default;
 
-ImageWriterPrivateBaseFunction::~ImageWriterPrivateBaseFunction() {}
+ImageWriterPrivateBaseFunction::~ImageWriterPrivateBaseFunction() = default;
 
 void ImageWriterPrivateBaseFunction::OnComplete(bool success,
                                                 const std::string& error) {
@@ -28,12 +28,10 @@ void ImageWriterPrivateBaseFunction::OnComplete(bool success,
 }
 
 ImageWriterPrivateWriteFromUrlFunction::
-    ImageWriterPrivateWriteFromUrlFunction() {
-}
+    ImageWriterPrivateWriteFromUrlFunction() = default;
 
 ImageWriterPrivateWriteFromUrlFunction::
-    ~ImageWriterPrivateWriteFromUrlFunction() {
-}
+    ~ImageWriterPrivateWriteFromUrlFunction() = default;
 
 bool ImageWriterPrivateWriteFromUrlFunction::RunAsync() {
   std::unique_ptr<image_writer_api::WriteFromUrl::Params> params(
@@ -60,12 +58,10 @@ bool ImageWriterPrivateWriteFromUrlFunction::RunAsync() {
 }
 
 ImageWriterPrivateWriteFromFileFunction::
-    ImageWriterPrivateWriteFromFileFunction() {
-}
+    ImageWriterPrivateWriteFromFileFunction() = default;
 
 ImageWriterPrivateWriteFromFileFunction::
-    ~ImageWriterPrivateWriteFromFileFunction() {
-}
+    ~ImageWriterPrivateWriteFromFileFunction() = default;
 
 bool ImageWriterPrivateWriteFromFileFunction::RunAsync() {
   std::string filesystem_name;
@@ -91,12 +87,11 @@ bool ImageWriterPrivateWriteFromFileFunction::RunAsync() {
   return true;
 }
 
-ImageWriterPrivateCancelWriteFunction::ImageWriterPrivateCancelWriteFunction() {
-}
+ImageWriterPrivateCancelWriteFunction::ImageWriterPrivateCancelWriteFunction() =
+    default;
 
 ImageWriterPrivateCancelWriteFunction::
-    ~ImageWriterPrivateCancelWriteFunction() {
-}
+    ~ImageWriterPrivateCancelWriteFunction() = default;
 
 bool ImageWriterPrivateCancelWriteFunction::RunAsync() {
   image_writer::OperationManager::Get(GetProfile())
@@ -108,12 +103,10 @@ bool ImageWriterPrivateCancelWriteFunction::RunAsync() {
 }
 
 ImageWriterPrivateDestroyPartitionsFunction::
-    ImageWriterPrivateDestroyPartitionsFunction() {
-}
+    ImageWriterPrivateDestroyPartitionsFunction() = default;
 
 ImageWriterPrivateDestroyPartitionsFunction::
-    ~ImageWriterPrivateDestroyPartitionsFunction() {
-}
+    ~ImageWriterPrivateDestroyPartitionsFunction() = default;
 
 bool ImageWriterPrivateDestroyPartitionsFunction::RunAsync() {
   std::unique_ptr<image_writer_api::DestroyPartitions::Params> params(
@@ -129,12 +122,10 @@ bool ImageWriterPrivateDestroyPartitionsFunction::RunAsync() {
 }
 
 ImageWriterPrivateListRemovableStorageDevicesFunction::
-  ImageWriterPrivateListRemovableStorageDevicesFunction() {
-}
+    ImageWriterPrivateListRemovableStorageDevicesFunction() = default;
 
 ImageWriterPrivateListRemovableStorageDevicesFunction::
-  ~ImageWriterPrivateListRemovableStorageDevicesFunction() {
-}
+    ~ImageWriterPrivateListRemovableStorageDevicesFunction() = default;
 
 bool ImageWriterPrivateListRemovableStorageDevicesFunction::RunAsync() {
   RemovableStorageProvider::GetAllDevices(base::BindOnce(

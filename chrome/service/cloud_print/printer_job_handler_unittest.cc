@@ -264,7 +264,7 @@ class CloudPrintURLFetcherNoServiceProcess
     return context_getter_.get();
   }
 
-  ~CloudPrintURLFetcherNoServiceProcess() override {}
+  ~CloudPrintURLFetcherNoServiceProcess() override = default;
 
  private:
   scoped_refptr<net::URLRequestContextGetter> context_getter_;
@@ -278,7 +278,7 @@ class CloudPrintURLFetcherNoServiceProcessFactory
     return new CloudPrintURLFetcherNoServiceProcess;
   }
 
-  ~CloudPrintURLFetcherNoServiceProcessFactory() override {}
+  ~CloudPrintURLFetcherNoServiceProcessFactory() override = default;
 };
 
 
@@ -310,7 +310,7 @@ class MockPrinterJobHandlerDelegate
   MOCK_METHOD0(OnAuthError, void());
   MOCK_METHOD1(OnPrinterDeleted, void(const std::string& str));
 
-  virtual ~MockPrinterJobHandlerDelegate() {}
+  virtual ~MockPrinterJobHandlerDelegate() = default;
 };
 
 
@@ -331,7 +331,7 @@ class MockPrintServerWatcher
   friend class scoped_refptr<MockPrintServerWatcher>;
 
  protected:
-  virtual ~MockPrintServerWatcher() {}
+  virtual ~MockPrintServerWatcher() = default;
 
  private:
   PrintSystem::PrintServerWatcher::Delegate* delegate_;
@@ -352,7 +352,7 @@ class MockPrinterWatcher : public PrintSystem::PrinterWatcher {
   friend class scoped_refptr<MockPrinterWatcher>;
 
  protected:
-  virtual ~MockPrinterWatcher() {}
+  virtual ~MockPrinterWatcher() = default;
 
  private:
   PrintSystem::PrinterWatcher::Delegate* delegate_;
@@ -379,7 +379,7 @@ class MockJobSpooler : public PrintSystem::JobSpooler {
   friend class scoped_refptr<MockJobSpooler>;
 
  protected:
-  virtual ~MockJobSpooler() {}
+  virtual ~MockJobSpooler() = default;
 
  private:
   PrintSystem::JobSpooler::Delegate* delegate_;
@@ -439,7 +439,7 @@ class MockPrintSystem : public PrintSystem {
   friend class scoped_refptr<MockPrintSystem>;
 
  protected:
-  virtual ~MockPrintSystem() {}
+  virtual ~MockPrintSystem() = default;
 
  private:
   scoped_refptr<MockJobSpooler> job_spooler_;

@@ -64,8 +64,7 @@ ActivityLogAPI::ActivityLogAPI(content::BrowserContext* context)
   initialized_ = true;
 }
 
-ActivityLogAPI::~ActivityLogAPI() {
-}
+ActivityLogAPI::~ActivityLogAPI() = default;
 
 void ActivityLogAPI::Shutdown() {
   if (!initialized_) {  // Check for testing.

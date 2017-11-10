@@ -21,8 +21,7 @@ FullscreenNotificationBlocker::FullscreenNotificationBlocker(
                  content::NotificationService::AllSources());
 }
 
-FullscreenNotificationBlocker::~FullscreenNotificationBlocker() {
-}
+FullscreenNotificationBlocker::~FullscreenNotificationBlocker() = default;
 
 void FullscreenNotificationBlocker::CheckState() {
   bool was_fullscreen_mode = is_fullscreen_mode_;

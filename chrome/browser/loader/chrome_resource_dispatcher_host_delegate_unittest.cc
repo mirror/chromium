@@ -25,7 +25,7 @@ class ChromeResourceDispatcherHostDelegateTest : public testing::Test {
   ChromeResourceDispatcherHostDelegateTest()
       : profile_manager_(
             new TestingProfileManager(TestingBrowserProcess::GetGlobal())) {}
-  ~ChromeResourceDispatcherHostDelegateTest() override {}
+  ~ChromeResourceDispatcherHostDelegateTest() override = default;
 
   void SetUp() override { ASSERT_TRUE(profile_manager_->SetUp()); }
 

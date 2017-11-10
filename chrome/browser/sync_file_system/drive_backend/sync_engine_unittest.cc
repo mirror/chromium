@@ -33,8 +33,8 @@ class SyncEngineTest : public testing::Test,
  public:
   typedef RemoteFileSyncService::OriginStatusMap RemoteOriginStatusMap;
 
-  SyncEngineTest() {}
-  ~SyncEngineTest() override {}
+  SyncEngineTest() = default;
+  ~SyncEngineTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(profile_dir_.CreateUniqueTempDir());

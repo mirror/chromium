@@ -50,8 +50,7 @@ PrerenderManagerFactory::PrerenderManagerFactory()
   DependsOn(ProfileSyncServiceFactory::GetInstance());
 }
 
-PrerenderManagerFactory::~PrerenderManagerFactory() {
-}
+PrerenderManagerFactory::~PrerenderManagerFactory() = default;
 
 KeyedService* PrerenderManagerFactory::BuildServiceInstanceFor(
     content::BrowserContext* browser_context) const {

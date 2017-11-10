@@ -11,7 +11,7 @@
 
 INIParser::INIParser() : used_(false) {}
 
-INIParser::~INIParser() {}
+INIParser::~INIParser() = default;
 
 void INIParser::Parse(const std::string& content) {
   DCHECK(!used_);
@@ -47,9 +47,9 @@ void INIParser::Parse(const std::string& content) {
   }
 }
 
-DictionaryValueINIParser::DictionaryValueINIParser() {}
+DictionaryValueINIParser::DictionaryValueINIParser() = default;
 
-DictionaryValueINIParser::~DictionaryValueINIParser() {}
+DictionaryValueINIParser::~DictionaryValueINIParser() = default;
 
 void DictionaryValueINIParser::HandleTriplet(const std::string& section,
                                              const std::string& key,

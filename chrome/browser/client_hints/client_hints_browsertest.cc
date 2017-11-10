@@ -59,7 +59,7 @@ class ClientHintsBrowserTest : public InProcessBrowserTest {
         without_accept_ch_without_lifetime_url_.SchemeIsCryptographic());
   }
 
-  ~ClientHintsBrowserTest() override {}
+  ~ClientHintsBrowserTest() override = default;
 
   void SetUpOnMainThread() override {
     content::BrowserThread::PostTask(

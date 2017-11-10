@@ -50,7 +50,7 @@ LocalPresentationManagerFactory::LocalPresentationManagerFactory()
           "LocalPresentationManager",
           BrowserContextDependencyManager::GetInstance()) {}
 
-LocalPresentationManagerFactory::~LocalPresentationManagerFactory() {}
+LocalPresentationManagerFactory::~LocalPresentationManagerFactory() = default;
 
 content::BrowserContext*
 LocalPresentationManagerFactory::GetBrowserContextToUse(

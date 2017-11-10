@@ -24,7 +24,7 @@ namespace media_router {
 class MediaRouterDialogControllerImplTest : public MediaRouterWebUITest {
  public:
   MediaRouterDialogControllerImplTest() : MediaRouterWebUITest(true) {}
-  ~MediaRouterDialogControllerImplTest() override {}
+  ~MediaRouterDialogControllerImplTest() override = default;
 
   void OpenMediaRouterDialog();
 

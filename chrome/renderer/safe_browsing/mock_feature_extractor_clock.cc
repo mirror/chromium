@@ -9,6 +9,6 @@ namespace safe_browsing {
 MockFeatureExtractorClock::MockFeatureExtractorClock()
     : FeatureExtractorClock() {}
 
-MockFeatureExtractorClock::~MockFeatureExtractorClock() {}
+MockFeatureExtractorClock::~MockFeatureExtractorClock() = default;
 
 }  // namespace safe_browsing

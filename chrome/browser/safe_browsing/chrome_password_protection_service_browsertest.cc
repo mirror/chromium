@@ -37,7 +37,7 @@ namespace safe_browsing {
 
 class ChromePasswordProtectionServiceBrowserTest : public InProcessBrowserTest {
  public:
-  ChromePasswordProtectionServiceBrowserTest() {}
+  ChromePasswordProtectionServiceBrowserTest() = default;
 
   void SetUp() override {
     ASSERT_TRUE(embedded_test_server()->Start());

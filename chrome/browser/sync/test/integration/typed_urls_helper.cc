@@ -45,7 +45,7 @@ class FlushHistoryDBQueueTask : public history::HistoryDBTask {
   void DoneRunOnMainThread() override {}
 
  private:
-  ~FlushHistoryDBQueueTask() override {}
+  ~FlushHistoryDBQueueTask() override = default;
 
   base::WaitableEvent* wait_event_;
 };
@@ -66,7 +66,7 @@ class GetTypedUrlsTask : public history::HistoryDBTask {
   void DoneRunOnMainThread() override {}
 
  private:
-  ~GetTypedUrlsTask() override {}
+  ~GetTypedUrlsTask() override = default;
 
   history::URLRows* rows_;
   base::WaitableEvent* wait_event_;
@@ -91,7 +91,7 @@ class GetUrlTask : public history::HistoryDBTask {
   void DoneRunOnMainThread() override {}
 
  private:
-  ~GetUrlTask() override {}
+  ~GetUrlTask() override = default;
 
   GURL url_;
   history::URLRow* row_;
@@ -117,7 +117,7 @@ class GetVisitsTask : public history::HistoryDBTask {
   void DoneRunOnMainThread() override {}
 
  private:
-  ~GetVisitsTask() override {}
+  ~GetVisitsTask() override = default;
 
   history::URLID id_;
   history::VisitVector* visits_;
@@ -141,7 +141,7 @@ class RemoveVisitsTask : public history::HistoryDBTask {
   void DoneRunOnMainThread() override {}
 
  private:
-  ~RemoveVisitsTask() override {}
+  ~RemoveVisitsTask() override = default;
 
   const history::VisitVector& visits_;
   base::WaitableEvent* wait_event_;
@@ -168,7 +168,7 @@ class GetTypedUrlsMetadataTask : public history::HistoryDBTask {
   GetTypedUrlsMetadataTask(syncer::MetadataBatch* metadata_batch,
                            base::WaitableEvent* event)
       : metadata_batch_(metadata_batch), wait_event_(event) {}
-  ~GetTypedUrlsMetadataTask() override {}
+  ~GetTypedUrlsMetadataTask() override = default;
 
   bool RunOnDBThread(history::HistoryBackend* backend,
                      history::HistoryDatabase* db) override {
@@ -489,7 +489,7 @@ TypedURLChecker::TypedURLChecker(int index, const std::string& url)
       index_(index),
       url_(url) {}
 
-TypedURLChecker::~TypedURLChecker() {}
+TypedURLChecker::~TypedURLChecker() = default;
 
 bool TypedURLChecker::IsExitConditionSatisfied() {
   history::URLRows rows = typed_urls_helper::GetTypedUrlsFromClient(index_);

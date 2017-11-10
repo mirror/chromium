@@ -69,14 +69,7 @@ AutocompleteActionPredictorTable::Row::Row(const Row::Id& id,
       number_of_misses(number_of_misses) {
 }
 
-AutocompleteActionPredictorTable::Row::Row(const Row& row)
-    : id(row.id),
-      user_text(row.user_text),
-      url(row.url),
-      number_of_hits(row.number_of_hits),
-      number_of_misses(row.number_of_misses) {
-}
-
+AutocompleteActionPredictorTable::Row::Row(const Row& row) = default;
 
 void AutocompleteActionPredictorTable::GetRow(const Row::Id& id, Row* row) {
   DCHECK(GetTaskRunner()->RunsTasksInCurrentSequence());

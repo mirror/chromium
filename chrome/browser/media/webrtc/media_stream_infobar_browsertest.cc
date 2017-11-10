@@ -33,8 +33,8 @@
 
 class MediaStreamPermissionTest : public WebRtcTestBase {
  public:
-  MediaStreamPermissionTest() {}
-  ~MediaStreamPermissionTest() override {}
+  MediaStreamPermissionTest() = default;
+  ~MediaStreamPermissionTest() override = default;
 
   // InProcessBrowserTest:
   void SetUpCommandLine(base::CommandLine* command_line) override {

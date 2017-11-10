@@ -166,7 +166,7 @@ class TestSelectFileDialog : public ui::SelectFileDialog {
   bool HasMultipleFileTypeChoicesImpl() override { return false; }
 
  private:
-  ~TestSelectFileDialog() override {}
+  ~TestSelectFileDialog() override = default;
 };
 
 // A factory associated with the artificial file picker.
@@ -179,11 +179,9 @@ class TestSelectFileDialogFactory : public ui::SelectFileDialogFactory {
   }
 };
 
-PolicyUITest::PolicyUITest() {
-}
+PolicyUITest::PolicyUITest() = default;
 
-PolicyUITest::~PolicyUITest() {
-}
+PolicyUITest::~PolicyUITest() = default;
 
 void PolicyUITest::SetUpInProcessBrowserTestFixture() {
   EXPECT_CALL(provider_, IsInitializationComplete(_))

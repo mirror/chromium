@@ -12,15 +12,15 @@
 
 using content::WebUIMessageHandler;
 
-ChromeSendWebUITest::ChromeSendWebUITest() {}
+ChromeSendWebUITest::ChromeSendWebUITest() = default;
 
-ChromeSendWebUITest::~ChromeSendWebUITest() {}
-
-ChromeSendWebUITest::ChromeSendWebUIMessageHandler::
-    ChromeSendWebUIMessageHandler() {}
+ChromeSendWebUITest::~ChromeSendWebUITest() = default;
 
 ChromeSendWebUITest::ChromeSendWebUIMessageHandler::
-    ~ChromeSendWebUIMessageHandler() {}
+    ChromeSendWebUIMessageHandler() = default;
+
+ChromeSendWebUITest::ChromeSendWebUIMessageHandler::
+    ~ChromeSendWebUIMessageHandler() = default;
 
 void ChromeSendWebUITest::ChromeSendWebUIMessageHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
@@ -33,9 +33,9 @@ WebUIMessageHandler* ChromeSendWebUITest::GetMockMessageHandler() {
   return &message_handler_;
 }
 
-ChromeSendPassthroughWebUITest::ChromeSendPassthroughWebUITest() {}
+ChromeSendPassthroughWebUITest::ChromeSendPassthroughWebUITest() = default;
 
-ChromeSendPassthroughWebUITest::~ChromeSendPassthroughWebUITest() {}
+ChromeSendPassthroughWebUITest::~ChromeSendPassthroughWebUITest() = default;
 
 void ChromeSendPassthroughWebUITest::SetUpOnMainThread() {
   ChromeSendWebUITest::SetUpOnMainThread();

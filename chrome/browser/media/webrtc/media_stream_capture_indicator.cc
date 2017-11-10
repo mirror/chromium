@@ -244,7 +244,7 @@ void MediaStreamCaptureIndicator::WebContentsDeviceUsage::NotifyStopped() {
   }
 }
 
-MediaStreamCaptureIndicator::MediaStreamCaptureIndicator() {}
+MediaStreamCaptureIndicator::MediaStreamCaptureIndicator() = default;
 
 MediaStreamCaptureIndicator::~MediaStreamCaptureIndicator() {
   // The user is responsible for cleaning up by reporting the closure of any

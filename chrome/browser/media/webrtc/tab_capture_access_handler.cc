@@ -13,11 +13,9 @@
 #include "content/public/browser/web_contents.h"
 #include "extensions/common/permissions/permissions_data.h"
 
-TabCaptureAccessHandler::TabCaptureAccessHandler() {
-}
+TabCaptureAccessHandler::TabCaptureAccessHandler() = default;
 
-TabCaptureAccessHandler::~TabCaptureAccessHandler() {
-}
+TabCaptureAccessHandler::~TabCaptureAccessHandler() = default;
 
 bool TabCaptureAccessHandler::SupportsStreamType(
     content::WebContents* web_contents,

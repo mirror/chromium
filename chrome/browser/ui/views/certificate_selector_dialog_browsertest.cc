@@ -42,7 +42,7 @@ class TestCertificateSelector : public chrome::CertificateSelector {
 
 class CertificateSelectorDialogTest : public DialogBrowserTest {
  public:
-  CertificateSelectorDialogTest() {}
+  CertificateSelectorDialogTest() = default;
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {

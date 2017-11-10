@@ -8,4 +8,4 @@ PermissionResult::PermissionResult(ContentSetting cs,
                                    PermissionStatusSource pss)
     : content_setting(cs), source(pss) {}
 
-PermissionResult::~PermissionResult() {}
+PermissionResult::~PermissionResult() = default;

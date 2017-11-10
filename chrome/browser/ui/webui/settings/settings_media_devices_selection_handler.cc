@@ -33,8 +33,7 @@ MediaDevicesSelectionHandler::MediaDevicesSelectionHandler(Profile* profile)
     : profile_(profile), observer_(this) {
 }
 
-MediaDevicesSelectionHandler::~MediaDevicesSelectionHandler() {
-}
+MediaDevicesSelectionHandler::~MediaDevicesSelectionHandler() = default;
 
 void MediaDevicesSelectionHandler::OnJavascriptAllowed() {
   // Register to the device observer list to get up-to-date device lists.

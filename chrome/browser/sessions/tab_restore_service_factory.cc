@@ -47,8 +47,7 @@ TabRestoreServiceFactory::TabRestoreServiceFactory()
           "sessions::TabRestoreService",
           BrowserContextDependencyManager::GetInstance()) {}
 
-TabRestoreServiceFactory::~TabRestoreServiceFactory() {
-}
+TabRestoreServiceFactory::~TabRestoreServiceFactory() = default;
 
 bool TabRestoreServiceFactory::ServiceIsNULLWhileTesting() const {
   return true;

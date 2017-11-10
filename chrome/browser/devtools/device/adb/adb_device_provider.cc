@@ -65,5 +65,4 @@ void AdbDeviceProvider::OpenSocket(const std::string& serial,
   AdbClientSocket::TransportQuery(kAdbPort, serial, request, callback);
 }
 
-AdbDeviceProvider::~AdbDeviceProvider() {
-}
+AdbDeviceProvider::~AdbDeviceProvider() = default;

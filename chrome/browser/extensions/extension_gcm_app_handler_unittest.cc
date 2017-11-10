@@ -78,8 +78,8 @@ const char kTestExtensionName[] = "FooBar";
 // Helper class for asynchronous waiting.
 class Waiter {
  public:
-  Waiter() {}
-  ~Waiter() {}
+  Waiter() = default;
+  ~Waiter() = default;
 
   // Waits until the asynchronous operation finishes.
   void WaitUntilCompleted() {
@@ -143,7 +143,7 @@ class FakeExtensionGCMAppHandler : public ExtensionGCMAppHandler {
         app_handler_count_drop_to_zero_(false) {
   }
 
-  ~FakeExtensionGCMAppHandler() override {}
+  ~FakeExtensionGCMAppHandler() override = default;
 
   void OnMessage(const std::string& app_id,
                  const gcm::IncomingMessage& message) override {}
@@ -225,7 +225,7 @@ class ExtensionGCMAppHandlerTest : public testing::Test {
         registration_result_(gcm::GCMClient::UNKNOWN_ERROR),
         unregistration_result_(gcm::GCMClient::UNKNOWN_ERROR) {}
 
-  ~ExtensionGCMAppHandlerTest() override {}
+  ~ExtensionGCMAppHandlerTest() override = default;
 
   // Overridden from test::Test:
   void SetUp() override {

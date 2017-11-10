@@ -50,8 +50,8 @@ class PermissionRequestObserver : public PermissionRequestManager::Observer {
 
 class WebRtcFromWebAccessibleResourceTest : public ExtensionApiTest {
  public:
-  WebRtcFromWebAccessibleResourceTest() {}
-  ~WebRtcFromWebAccessibleResourceTest() override {}
+  WebRtcFromWebAccessibleResourceTest() = default;
+  ~WebRtcFromWebAccessibleResourceTest() override = default;
 
   // InProcessBrowserTest:
   void SetUpCommandLine(base::CommandLine* command_line) override {

@@ -70,7 +70,7 @@ class MockSafeBrowsingDatabaseManager
   }
 
  protected:
-  ~MockSafeBrowsingDatabaseManager() override {}
+  ~MockSafeBrowsingDatabaseManager() override = default;
 
  private:
   bool perform_callback_;

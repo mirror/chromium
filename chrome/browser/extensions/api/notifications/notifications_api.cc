@@ -217,11 +217,9 @@ bool NotificationsApiFunction::IsNotificationsApiAvailable() {
   return extension()->is_platform_app() || extension()->is_extension();
 }
 
-NotificationsApiFunction::NotificationsApiFunction() {
-}
+NotificationsApiFunction::NotificationsApiFunction() = default;
 
-NotificationsApiFunction::~NotificationsApiFunction() {
-}
+NotificationsApiFunction::~NotificationsApiFunction() = default;
 
 bool NotificationsApiFunction::CreateNotification(
     const std::string& id,
@@ -581,11 +579,9 @@ NotificationsApiFunction::MapApiTemplateTypeToType(
   }
 }
 
-NotificationsCreateFunction::NotificationsCreateFunction() {
-}
+NotificationsCreateFunction::NotificationsCreateFunction() = default;
 
-NotificationsCreateFunction::~NotificationsCreateFunction() {
-}
+NotificationsCreateFunction::~NotificationsCreateFunction() = default;
 
 bool NotificationsCreateFunction::RunNotificationsApi() {
   params_ = api::notifications::Create::Params::Create(*args_);
@@ -620,11 +616,9 @@ bool NotificationsCreateFunction::RunNotificationsApi() {
   return true;
 }
 
-NotificationsUpdateFunction::NotificationsUpdateFunction() {
-}
+NotificationsUpdateFunction::NotificationsUpdateFunction() = default;
 
-NotificationsUpdateFunction::~NotificationsUpdateFunction() {
-}
+NotificationsUpdateFunction::~NotificationsUpdateFunction() = default;
 
 bool NotificationsUpdateFunction::RunNotificationsApi() {
   params_ = api::notifications::Update::Params::Create(*args_);
@@ -661,11 +655,9 @@ bool NotificationsUpdateFunction::RunNotificationsApi() {
   return true;
 }
 
-NotificationsClearFunction::NotificationsClearFunction() {
-}
+NotificationsClearFunction::NotificationsClearFunction() = default;
 
-NotificationsClearFunction::~NotificationsClearFunction() {
-}
+NotificationsClearFunction::~NotificationsClearFunction() = default;
 
 bool NotificationsClearFunction::RunNotificationsApi() {
   params_ = api::notifications::Clear::Params::Create(*args_);
@@ -680,9 +672,9 @@ bool NotificationsClearFunction::RunNotificationsApi() {
   return true;
 }
 
-NotificationsGetAllFunction::NotificationsGetAllFunction() {}
+NotificationsGetAllFunction::NotificationsGetAllFunction() = default;
 
-NotificationsGetAllFunction::~NotificationsGetAllFunction() {}
+NotificationsGetAllFunction::~NotificationsGetAllFunction() = default;
 
 bool NotificationsGetAllFunction::RunNotificationsApi() {
   std::set<std::string> notification_ids =
@@ -703,10 +695,10 @@ bool NotificationsGetAllFunction::RunNotificationsApi() {
 }
 
 NotificationsGetPermissionLevelFunction::
-NotificationsGetPermissionLevelFunction() {}
+    NotificationsGetPermissionLevelFunction() = default;
 
 NotificationsGetPermissionLevelFunction::
-~NotificationsGetPermissionLevelFunction() {}
+    ~NotificationsGetPermissionLevelFunction() = default;
 
 bool NotificationsGetPermissionLevelFunction::CanRunWhileDisabled() const {
   return true;

@@ -36,18 +36,15 @@ ResourcePrefetcher::PrefetchedRequestStats::PrefetchedRequestStats(
       was_cached(was_cached),
       total_received_bytes(total_received_bytes) {}
 
-ResourcePrefetcher::PrefetchedRequestStats::~PrefetchedRequestStats() {}
+ResourcePrefetcher::PrefetchedRequestStats::~PrefetchedRequestStats() = default;
 
 ResourcePrefetcher::PrefetcherStats::PrefetcherStats(const GURL& url)
     : url(url) {}
 
-ResourcePrefetcher::PrefetcherStats::~PrefetcherStats() {}
+ResourcePrefetcher::PrefetcherStats::~PrefetcherStats() = default;
 
 ResourcePrefetcher::PrefetcherStats::PrefetcherStats(
-    const PrefetcherStats& other)
-    : url(other.url),
-      start_time(other.start_time),
-      requests_stats(other.requests_stats) {}
+    const PrefetcherStats& other) = default;
 
 ResourcePrefetcher::ResourcePrefetcher(
     base::WeakPtr<Delegate> delegate,

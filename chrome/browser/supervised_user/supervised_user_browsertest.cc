@@ -54,7 +54,7 @@ class InterstitialPageObserver : public content::WebContentsObserver {
   InterstitialPageObserver(WebContents* web_contents,
                            const base::Closure& callback)
       : content::WebContentsObserver(web_contents), callback_(callback) {}
-  ~InterstitialPageObserver() override {}
+  ~InterstitialPageObserver() override = default;
 
   void DidAttachInterstitialPage() override {
      callback_.Run();
@@ -74,7 +74,7 @@ class SupervisedUserTest : public InProcessBrowserTest {
   };
 
   SupervisedUserTest() : supervised_user_service_(nullptr) {}
-  ~SupervisedUserTest() override {}
+  ~SupervisedUserTest() override = default;
 
   bool ShownPageIsInterstitial(WebContents* tab) {
     EXPECT_FALSE(tab->IsCrashed());

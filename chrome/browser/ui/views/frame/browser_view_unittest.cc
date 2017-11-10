@@ -208,7 +208,7 @@ TEST_F(BrowserViewTest, BookmarkBarInvisibleOnShutdown) {
 class BrowserViewHostedAppTest : public TestWithBrowserView {
  public:
   BrowserViewHostedAppTest() : TestWithBrowserView(Browser::TYPE_POPUP, true) {}
-  ~BrowserViewHostedAppTest() override {}
+  ~BrowserViewHostedAppTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BrowserViewHostedAppTest);

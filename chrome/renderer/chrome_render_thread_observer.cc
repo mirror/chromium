@@ -142,7 +142,7 @@ class ResourceUsageReporterImpl : public chrome::mojom::ResourceUsageReporter {
   explicit ResourceUsageReporterImpl(
       base::WeakPtr<ChromeRenderThreadObserver> observer)
       : workers_to_go_(0), observer_(observer), weak_factory_(this) {}
-  ~ResourceUsageReporterImpl() override {}
+  ~ResourceUsageReporterImpl() override = default;
 
  private:
   static void CollectOnWorkerThread(
@@ -281,7 +281,7 @@ ChromeRenderThreadObserver::ChromeRenderThreadObserver()
   }
 }
 
-ChromeRenderThreadObserver::~ChromeRenderThreadObserver() {}
+ChromeRenderThreadObserver::~ChromeRenderThreadObserver() = default;
 
 void ChromeRenderThreadObserver::RegisterMojoInterfaces(
     content::AssociatedInterfaceRegistry* associated_interfaces) {

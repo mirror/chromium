@@ -6,7 +6,7 @@
 
 FakePasswordManagerClient::FakePasswordManagerClient() : binding_(this) {}
 
-FakePasswordManagerClient::~FakePasswordManagerClient() {}
+FakePasswordManagerClient::~FakePasswordManagerClient() = default;
 
 void FakePasswordManagerClient::BindRequest(
     autofill::mojom::PasswordManagerClientAssociatedRequest request) {

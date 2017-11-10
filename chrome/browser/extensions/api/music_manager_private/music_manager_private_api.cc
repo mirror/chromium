@@ -20,12 +20,10 @@ namespace extensions {
 namespace api {
 
 MusicManagerPrivateGetDeviceIdFunction::
-    MusicManagerPrivateGetDeviceIdFunction() {
-}
+    MusicManagerPrivateGetDeviceIdFunction() = default;
 
 MusicManagerPrivateGetDeviceIdFunction::
-    ~MusicManagerPrivateGetDeviceIdFunction() {
-}
+    ~MusicManagerPrivateGetDeviceIdFunction() = default;
 
 bool MusicManagerPrivateGetDeviceIdFunction::RunAsync() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

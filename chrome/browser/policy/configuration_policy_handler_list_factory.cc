@@ -722,7 +722,7 @@ class ForceSafeSearchPolicyHandler : public TypeCheckingPolicyHandler {
   ForceSafeSearchPolicyHandler()
       : TypeCheckingPolicyHandler(key::kForceSafeSearch,
                                   base::Value::Type::BOOLEAN) {}
-  ~ForceSafeSearchPolicyHandler() override {}
+  ~ForceSafeSearchPolicyHandler() override = default;
 
   // ConfigurationPolicyHandler implementation:
   void ApplyPolicySettings(const PolicyMap& policies,
@@ -763,7 +763,7 @@ class ForceYouTubeSafetyModePolicyHandler : public TypeCheckingPolicyHandler {
   ForceYouTubeSafetyModePolicyHandler()
       : TypeCheckingPolicyHandler(key::kForceYouTubeSafetyMode,
                                   base::Value::Type::BOOLEAN) {}
-  ~ForceYouTubeSafetyModePolicyHandler() override {}
+  ~ForceYouTubeSafetyModePolicyHandler() override = default;
 
   // ConfigurationPolicyHandler implementation:
   void ApplyPolicySettings(const PolicyMap& policies,
@@ -792,7 +792,7 @@ class BrowsingHistoryPolicyHandler : public TypeCheckingPolicyHandler {
   BrowsingHistoryPolicyHandler()
       : TypeCheckingPolicyHandler(key::kAllowDeletingBrowserHistory,
                                   base::Value::Type::BOOLEAN) {}
-  ~BrowsingHistoryPolicyHandler() override {}
+  ~BrowsingHistoryPolicyHandler() override = default;
 
   void ApplyPolicySettings(const PolicyMap& policies,
                            PrefValueMap* prefs) override {
@@ -833,7 +833,7 @@ class DevToolsExtensionsUIPolicyHandler : public TypeCheckingPolicyHandler {
   DevToolsExtensionsUIPolicyHandler()
       : TypeCheckingPolicyHandler(key::kDeveloperToolsDisabled,
                                   base::Value::Type::BOOLEAN) {}
-  ~DevToolsExtensionsUIPolicyHandler() override {}
+  ~DevToolsExtensionsUIPolicyHandler() override = default;
 
   // ConfigurationPolicyHandler implementation:
   void ApplyPolicySettings(const PolicyMap& policies,

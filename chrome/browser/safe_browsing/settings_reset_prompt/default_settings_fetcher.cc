@@ -51,7 +51,7 @@ void DefaultSettingsFetcher::FetchDefaultSettingsForTesting(
 DefaultSettingsFetcher::DefaultSettingsFetcher(SettingsCallback callback)
     : callback_(std::move(callback)) {}
 
-DefaultSettingsFetcher::~DefaultSettingsFetcher() {}
+DefaultSettingsFetcher::~DefaultSettingsFetcher() = default;
 
 void DefaultSettingsFetcher::Start() {
   DCHECK(!config_fetcher_);

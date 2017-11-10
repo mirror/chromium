@@ -426,8 +426,7 @@ PasswordManagerPresenter::ListPopulater::ListPopulater(
     PasswordManagerPresenter* page) : page_(page) {
 }
 
-PasswordManagerPresenter::ListPopulater::~ListPopulater() {
-}
+PasswordManagerPresenter::ListPopulater::~ListPopulater() = default;
 
 PasswordManagerPresenter::PasswordListPopulater::PasswordListPopulater(
     PasswordManagerPresenter* page) : ListPopulater(page) {

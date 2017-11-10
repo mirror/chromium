@@ -127,7 +127,7 @@ class PrintPreviewObserver : public WebContentsObserver {
         failed_setting_("None"),
         pdf_file_save_path_(pdf_file_save_path) {}
 
-  ~PrintPreviewObserver() override {}
+  ~PrintPreviewObserver() override = default;
 
   // Sets closure for the observer so that it can end the loop.
   void set_quit_closure(const base::Closure &closure) {
@@ -230,7 +230,7 @@ class PrintPreviewObserver : public WebContentsObserver {
     explicit UIDoneLoadingMessageHandler(PrintPreviewObserver* observer)
         : observer_(observer) {}
 
-    ~UIDoneLoadingMessageHandler() override {}
+    ~UIDoneLoadingMessageHandler() override = default;
 
     // When a setting has been set succesfully, this is called and the observer
     // is told to send the next setting to be set.
@@ -306,8 +306,8 @@ class PrintPreviewObserver : public WebContentsObserver {
 
 class PrintPreviewPdfGeneratedBrowserTest : public InProcessBrowserTest {
  public:
-  PrintPreviewPdfGeneratedBrowserTest() {}
-  ~PrintPreviewPdfGeneratedBrowserTest() override {}
+  PrintPreviewPdfGeneratedBrowserTest() = default;
+  ~PrintPreviewPdfGeneratedBrowserTest() override = default;
 
   // Navigates to the given web page, then initiates print preview and waits
   // for all the settings to be set, then save the preview to PDF.

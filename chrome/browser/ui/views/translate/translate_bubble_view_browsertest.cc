@@ -30,8 +30,8 @@
 
 class TranslateBubbleViewBrowserTest : public InProcessBrowserTest {
  public:
-  TranslateBubbleViewBrowserTest() {}
-  ~TranslateBubbleViewBrowserTest() override {}
+  TranslateBubbleViewBrowserTest() = default;
+  ~TranslateBubbleViewBrowserTest() override = default;
 
   void SetUp() override {
     feature_list_.InitAndDisableFeature(translate::kTranslateUI2016Q2);

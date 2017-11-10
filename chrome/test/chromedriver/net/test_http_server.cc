@@ -29,8 +29,7 @@ TestHttpServer::TestHttpServer()
       request_action_(kAccept),
       message_action_(kEchoMessage) {}
 
-TestHttpServer::~TestHttpServer() {
-}
+TestHttpServer::~TestHttpServer() = default;
 
 bool TestHttpServer::Start() {
   base::Thread::Options options(base::MessageLoop::TYPE_IO, 0);

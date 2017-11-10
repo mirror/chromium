@@ -20,7 +20,7 @@ InstantTestBase::InstantTestBase()
   https_test_server_.ServeFilesFromSourceDirectory("chrome/test/data");
 }
 
-InstantTestBase::~InstantTestBase() {}
+InstantTestBase::~InstantTestBase() = default;
 
 void InstantTestBase::SetupInstant(Browser* browser) {
   browser_ = browser;

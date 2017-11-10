@@ -100,7 +100,7 @@ PDFToPWGRasterConverterImpl::PDFToPWGRasterConverterImpl(
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
     : service_ref_(std::move(service_ref)) {}
 
-PDFToPWGRasterConverterImpl::~PDFToPWGRasterConverterImpl() {}
+PDFToPWGRasterConverterImpl::~PDFToPWGRasterConverterImpl() = default;
 
 void PDFToPWGRasterConverterImpl::Convert(
     mojo::ScopedHandle pdf_file_in,

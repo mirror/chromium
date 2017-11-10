@@ -86,12 +86,11 @@ FileIconSource::IconRequestDetails::IconRequestDetails() : scale_factor(1.0f) {
 FileIconSource::IconRequestDetails::IconRequestDetails(
     const IconRequestDetails& other) = default;
 
-FileIconSource::IconRequestDetails::~IconRequestDetails() {
-}
+FileIconSource::IconRequestDetails::~IconRequestDetails() = default;
 
-FileIconSource::FileIconSource() {}
+FileIconSource::FileIconSource() = default;
 
-FileIconSource::~FileIconSource() {}
+FileIconSource::~FileIconSource() = default;
 
 void FileIconSource::FetchFileIcon(
     const base::FilePath& path,

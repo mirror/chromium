@@ -221,8 +221,7 @@ class TemplateURLServiceWithoutFallbackTest : public TemplateURLServiceTest {
   }
 };
 
-TemplateURLServiceTest::TemplateURLServiceTest() {
-}
+TemplateURLServiceTest::TemplateURLServiceTest() = default;
 
 void TemplateURLServiceTest::SetUp() {
   test_util_.reset(new TemplateURLServiceTestUtil);

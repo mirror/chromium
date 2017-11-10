@@ -25,8 +25,7 @@ ChromeExtensionFunctionDetails::ChromeExtensionFunctionDetails(
     : function_(function) {
 }
 
-ChromeExtensionFunctionDetails::~ChromeExtensionFunctionDetails() {
-}
+ChromeExtensionFunctionDetails::~ChromeExtensionFunctionDetails() = default;
 
 Profile* ChromeExtensionFunctionDetails::GetProfile() const {
   return Profile::FromBrowserContext(function_->browser_context());

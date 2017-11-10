@@ -10,8 +10,7 @@ DownloadCompletionBlocker::DownloadCompletionBlocker()
   : is_complete_(false) {
 }
 
-DownloadCompletionBlocker::~DownloadCompletionBlocker() {
-}
+DownloadCompletionBlocker::~DownloadCompletionBlocker() = default;
 
 void DownloadCompletionBlocker::CompleteDownload() {
   // Do not run |callback_| more than once.

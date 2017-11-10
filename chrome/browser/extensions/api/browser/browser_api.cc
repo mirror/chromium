@@ -10,8 +10,7 @@
 namespace extensions {
 namespace api {
 
-BrowserOpenTabFunction::~BrowserOpenTabFunction() {
-}
+BrowserOpenTabFunction::~BrowserOpenTabFunction() = default;
 
 ExtensionFunction::ResponseAction BrowserOpenTabFunction::Run() {
   std::unique_ptr<browser::OpenTab::Params> params(

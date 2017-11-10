@@ -26,9 +26,9 @@ void OnProfileImportRequest(
 
 }  // namespace
 
-ProfileImportService::ProfileImportService() {}
+ProfileImportService::ProfileImportService() = default;
 
-ProfileImportService::~ProfileImportService() {}
+ProfileImportService::~ProfileImportService() = default;
 
 std::unique_ptr<service_manager::Service>
 ProfileImportService::CreateService() {

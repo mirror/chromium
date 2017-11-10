@@ -23,8 +23,7 @@ ZoomView::ZoomView(LocationBarView::Delegate* location_bar_delegate)
   Update(nullptr);
 }
 
-ZoomView::~ZoomView() {
-}
+ZoomView::~ZoomView() = default;
 
 void ZoomView::Update(zoom::ZoomController* zoom_controller) {
   if (!zoom_controller ||

@@ -40,7 +40,7 @@ WebstoreInstallHelper::WebstoreInstallHelper(
       parse_error_(Delegate::UNKNOWN_ERROR) {
 }
 
-WebstoreInstallHelper::~WebstoreInstallHelper() {}
+WebstoreInstallHelper::~WebstoreInstallHelper() = default;
 
 void WebstoreInstallHelper::Start() {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));

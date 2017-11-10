@@ -105,8 +105,7 @@ DomMessageListener::DomMessageListener(content::WebContents* web_contents)
     : observer_(web_contents, this) {
 }
 
-DomMessageListener::~DomMessageListener() {
-}
+DomMessageListener::~DomMessageListener() = default;
 
 void DomMessageListener::Wait() {
   observer_.Run();
@@ -133,8 +132,8 @@ void DomMessageListener::Reset() {
 
 class CommandsApiTest : public ExtensionApiTest {
  public:
-  CommandsApiTest() {}
-  ~CommandsApiTest() override {}
+  CommandsApiTest() = default;
+  ~CommandsApiTest() override = default;
 
  protected:
   bool IsGrantedForTab(const Extension* extension,

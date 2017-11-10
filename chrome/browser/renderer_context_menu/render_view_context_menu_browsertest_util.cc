@@ -22,8 +22,7 @@ ContextMenuNotificationObserver::ContextMenuNotificationObserver(
                  content::NotificationService::AllSources());
 }
 
-ContextMenuNotificationObserver::~ContextMenuNotificationObserver() {
-}
+ContextMenuNotificationObserver::~ContextMenuNotificationObserver() = default;
 
 void ContextMenuNotificationObserver::Observe(
     int type,
@@ -51,8 +50,7 @@ ContextMenuWaiter::ContextMenuWaiter(const content::NotificationSource& source)
                  content::NotificationService::AllSources());
 }
 
-ContextMenuWaiter::~ContextMenuWaiter() {
-}
+ContextMenuWaiter::~ContextMenuWaiter() = default;
 
 void ContextMenuWaiter::Observe(int type,
                                 const content::NotificationSource& source,

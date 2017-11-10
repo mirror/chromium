@@ -27,7 +27,7 @@ RecoveryImprovedInstallerPolicy::RecoveryImprovedInstallerPolicy(
     PrefService* prefs)
     : prefs_(prefs) {}
 
-RecoveryImprovedInstallerPolicy::~RecoveryImprovedInstallerPolicy() {}
+RecoveryImprovedInstallerPolicy::~RecoveryImprovedInstallerPolicy() = default;
 
 bool RecoveryImprovedInstallerPolicy::
     SupportsGroupPolicyEnabledComponentUpdates() const {

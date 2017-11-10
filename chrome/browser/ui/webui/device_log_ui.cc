@@ -26,8 +26,8 @@ namespace {
 
 class DeviceLogMessageHandler : public content::WebUIMessageHandler {
  public:
-  DeviceLogMessageHandler() {}
-  ~DeviceLogMessageHandler() override {}
+  DeviceLogMessageHandler() = default;
+  ~DeviceLogMessageHandler() override = default;
 
   // WebUIMessageHandler implementation.
   void RegisterMessages() override {
@@ -88,7 +88,6 @@ DeviceLogUI::DeviceLogUI(content::WebUI* web_ui)
                                 html);
 }
 
-DeviceLogUI::~DeviceLogUI() {
-}
+DeviceLogUI::~DeviceLogUI() = default;
 
 }  // namespace chromeos

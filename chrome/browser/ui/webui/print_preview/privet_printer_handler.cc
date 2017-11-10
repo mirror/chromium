@@ -48,7 +48,7 @@ void FillPrinterDescription(const std::string& name,
 PrivetPrinterHandler::PrivetPrinterHandler(Profile* profile)
     : profile_(profile), weak_ptr_factory_(this) {}
 
-PrivetPrinterHandler::~PrivetPrinterHandler() {}
+PrivetPrinterHandler::~PrivetPrinterHandler() = default;
 
 void PrivetPrinterHandler::Reset() {
   weak_ptr_factory_.InvalidateWeakPtrs();

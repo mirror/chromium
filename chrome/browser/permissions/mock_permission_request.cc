@@ -60,7 +60,7 @@ MockPermissionRequest::MockPermissionRequest(const std::string& text,
                             PermissionRequestType::PERMISSION_NOTIFICATIONS,
                             PermissionRequestGestureType::UNKNOWN) {}
 
-MockPermissionRequest::~MockPermissionRequest() {}
+MockPermissionRequest::~MockPermissionRequest() = default;
 
 PermissionRequest::IconId MockPermissionRequest::GetIconId() const {
   // Use a valid icon ID to support UI tests.

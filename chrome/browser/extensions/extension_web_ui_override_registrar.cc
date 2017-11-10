@@ -27,8 +27,7 @@ ExtensionWebUIOverrideRegistrar::ExtensionWebUIOverrideRegistrar(
                  context));
 }
 
-ExtensionWebUIOverrideRegistrar::~ExtensionWebUIOverrideRegistrar() {
-}
+ExtensionWebUIOverrideRegistrar::~ExtensionWebUIOverrideRegistrar() = default;
 
 void ExtensionWebUIOverrideRegistrar::OnExtensionLoaded(
     content::BrowserContext* browser_context,

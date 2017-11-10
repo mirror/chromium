@@ -43,7 +43,7 @@ class SigninEmailConfirmationDialog::DialogWebContentsObserver
                             SigninEmailConfirmationDialog* dialog)
       : content::WebContentsObserver(web_contents),
         signin_email_confirmation_dialog_(dialog) {}
-  ~DialogWebContentsObserver() override {}
+  ~DialogWebContentsObserver() override = default;
 
  private:
   void WebContentsDestroyed() override {
@@ -74,7 +74,7 @@ SigninEmailConfirmationDialog::SigninEmailConfirmationDialog(
       chrome::DialogIdentifier::SIGN_IN_EMAIL_CONFIRMATION);
 }
 
-SigninEmailConfirmationDialog::~SigninEmailConfirmationDialog() {}
+SigninEmailConfirmationDialog::~SigninEmailConfirmationDialog() = default;
 
 // static
 void SigninEmailConfirmationDialog::AskForConfirmation(

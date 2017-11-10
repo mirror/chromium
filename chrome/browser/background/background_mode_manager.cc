@@ -106,8 +106,7 @@ BackgroundModeManager::BackgroundModeData::BackgroundModeData(
       command_id_handler_vector_(command_id_handler_vector) {
 }
 
-BackgroundModeManager::BackgroundModeData::~BackgroundModeData() {
-}
+BackgroundModeManager::BackgroundModeData::~BackgroundModeData() = default;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  BackgroundModeManager::BackgroundModeData, StatusIconMenuModel overrides

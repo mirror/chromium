@@ -45,7 +45,7 @@ class ExtensionViewHost::AssociatedWebContentsObserver
   AssociatedWebContentsObserver(ExtensionViewHost* host,
                                 WebContents* web_contents)
       : WebContentsObserver(web_contents), host_(host) {}
-  ~AssociatedWebContentsObserver() override {}
+  ~AssociatedWebContentsObserver() override = default;
 
   // content::WebContentsObserver:
   void WebContentsDestroyed() override {

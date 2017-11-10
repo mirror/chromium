@@ -60,8 +60,7 @@ constexpr net::NetworkTrafficAnnotationTag kTrafficAnnotation =
 // static
 const int IncidentReportUploaderImpl::kTestUrlFetcherId = 47;
 
-IncidentReportUploaderImpl::~IncidentReportUploaderImpl() {
-}
+IncidentReportUploaderImpl::~IncidentReportUploaderImpl() = default;
 
 // static
 std::unique_ptr<IncidentReportUploader>

@@ -98,8 +98,7 @@ SearchProviderForTest::SearchProviderForTest(
     : SearchProvider(client, listener), is_success_(false) {
 }
 
-SearchProviderForTest::~SearchProviderForTest() {
-}
+SearchProviderForTest::~SearchProviderForTest() = default;
 
 void SearchProviderForTest::RecordDeletionResult(bool success) {
   is_success_ = success;

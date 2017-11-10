@@ -137,10 +137,9 @@ ProfileResetterTest::ProfileResetterTest()
       start_menu_override_(base::DIR_START_MENU),
       taskbar_pins_override_(base::DIR_TASKBAR_PINS)
 #endif
-{}
+      = default;
 
-ProfileResetterTest::~ProfileResetterTest() {
-}
+ProfileResetterTest::~ProfileResetterTest() = default;
 
 void ProfileResetterTest::SetUp() {
   extensions::ExtensionServiceTestBase::SetUp();
@@ -190,8 +189,7 @@ URLFetcherRequestListener::URLFetcherRequestListener()
     : real_delegate(NULL) {
 }
 
-URLFetcherRequestListener::~URLFetcherRequestListener() {
-}
+URLFetcherRequestListener::~URLFetcherRequestListener() = default;
 
 void URLFetcherRequestListener::OnURLFetchComplete(
     const net::URLFetcher* source) {
@@ -233,7 +231,7 @@ ConfigParserTest::ConfigParserTest()
                base::Bind(&ConfigParserTest::CreateFakeURLFetcher,
                           base::Unretained(this))) {}
 
-ConfigParserTest::~ConfigParserTest() {}
+ConfigParserTest::~ConfigParserTest() = default;
 
 std::unique_ptr<BrandcodeConfigFetcher> ConfigParserTest::WaitForRequest(
     const GURL& url) {
@@ -332,9 +330,9 @@ void ShortcutHandler::Delete() {
   shortcut_path_.clear();
 }
 #else
-ShortcutHandler::ShortcutHandler() {}
+ShortcutHandler::ShortcutHandler() = default;
 
-ShortcutHandler::~ShortcutHandler() {}
+ShortcutHandler::~ShortcutHandler() = default;
 
 // static
 bool ShortcutHandler::IsSupported() {

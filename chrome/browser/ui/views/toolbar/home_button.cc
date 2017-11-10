@@ -93,8 +93,7 @@ HomePageUndoBubble::HomePageUndoBubble(
   chrome::RecordDialogCreation(chrome::DialogIdentifier::HOME_PAGE_UNDO);
 }
 
-HomePageUndoBubble::~HomePageUndoBubble() {
-}
+HomePageUndoBubble::~HomePageUndoBubble() = default;
 
 int HomePageUndoBubble::GetDialogButtons() const {
   return ui::DIALOG_BUTTON_NONE;
@@ -149,8 +148,7 @@ void HomePageUndoBubble::WindowClosing() {
 HomeButton::HomeButton(views::ButtonListener* listener, Browser* browser)
     : ToolbarButton(browser->profile(), listener, nullptr), browser_(browser) {}
 
-HomeButton::~HomeButton() {
-}
+HomeButton::~HomeButton() = default;
 
 const char* HomeButton::GetClassName() const {
   return "HomeButton";

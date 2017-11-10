@@ -13,7 +13,7 @@ namespace media_router {
 MediaRouterUIService::MediaRouterUIService(Profile* profile)
     : action_controller_(new MediaRouterActionController(profile)) {}
 
-MediaRouterUIService::~MediaRouterUIService() {}
+MediaRouterUIService::~MediaRouterUIService() = default;
 
 void MediaRouterUIService::Shutdown() {
   action_controller_.reset();

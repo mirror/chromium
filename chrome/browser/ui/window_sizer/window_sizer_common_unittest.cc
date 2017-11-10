@@ -121,14 +121,14 @@ class TestScreen : public display::Screen {
 
 class TestTargetDisplayProvider : public WindowSizer::TargetDisplayProvider {
 public:
-  TestTargetDisplayProvider() {}
-  ~TestTargetDisplayProvider() override {}
+ TestTargetDisplayProvider() = default;
+ ~TestTargetDisplayProvider() override = default;
 
-  display::Display GetTargetDisplay(const display::Screen* screen,
-                                    const gfx::Rect& bounds) const override {
-    // On ash, the bounds is used as a indicator to specify
-    // the target display.
-    return screen->GetDisplayMatching(bounds);
+ display::Display GetTargetDisplay(const display::Screen* screen,
+                                   const gfx::Rect& bounds) const override {
+   // On ash, the bounds is used as a indicator to specify
+   // the target display.
+   return screen->GetDisplayMatching(bounds);
   }
 
  private:

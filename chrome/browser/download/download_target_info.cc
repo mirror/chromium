@@ -13,4 +13,4 @@ DownloadTargetInfo::DownloadTargetInfo()
       is_filetype_handled_safely(false),
       result(content::DOWNLOAD_INTERRUPT_REASON_NONE) {}
 
-DownloadTargetInfo::~DownloadTargetInfo() {}
+DownloadTargetInfo::~DownloadTargetInfo() = default;

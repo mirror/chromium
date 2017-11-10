@@ -19,7 +19,7 @@ DesktopSessionDurationObserver::DesktopSessionDurationObserver(
   RegisterInputEventObserver(web_contents->GetRenderViewHost());
 }
 
-DesktopSessionDurationObserver::~DesktopSessionDurationObserver() {}
+DesktopSessionDurationObserver::~DesktopSessionDurationObserver() = default;
 
 // static
 DesktopSessionDurationObserver*

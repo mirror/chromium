@@ -24,8 +24,8 @@ namespace errors = manifest_errors;
 namespace {
 
 struct TtsVoices : public Extension::ManifestData {
-  TtsVoices() {}
-  ~TtsVoices() override {}
+  TtsVoices() = default;
+  ~TtsVoices() override = default;
 
   std::vector<extensions::TtsVoice> voices;
 };
@@ -36,7 +36,7 @@ TtsVoice::TtsVoice() : remote(false) {}
 
 TtsVoice::TtsVoice(const TtsVoice& other) = default;
 
-TtsVoice::~TtsVoice() {}
+TtsVoice::~TtsVoice() = default;
 
 // static
 const std::vector<TtsVoice>* TtsVoice::GetTtsVoices(
@@ -46,11 +46,9 @@ const std::vector<TtsVoice>* TtsVoice::GetTtsVoices(
   return info ? &info->voices : NULL;
 }
 
-TtsEngineManifestHandler::TtsEngineManifestHandler() {
-}
+TtsEngineManifestHandler::TtsEngineManifestHandler() = default;
 
-TtsEngineManifestHandler::~TtsEngineManifestHandler() {
-}
+TtsEngineManifestHandler::~TtsEngineManifestHandler() = default;
 
 bool TtsEngineManifestHandler::Parse(Extension* extension,
                                      base::string16* error) {

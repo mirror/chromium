@@ -97,7 +97,7 @@ class AudioWaitingExtensionTest : public ExtensionApiTest {
 
 class WebrtcAudioPrivateTest : public AudioWaitingExtensionTest {
  public:
-  WebrtcAudioPrivateTest() {}
+  WebrtcAudioPrivateTest() = default;
 
   void SetUpOnMainThread() override {
     AudioWaitingExtensionTest::SetUpOnMainThread();

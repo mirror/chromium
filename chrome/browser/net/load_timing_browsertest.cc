@@ -202,7 +202,7 @@ class MockUrlRequestJobWithTiming : public net::URLRequestFileJob {
 
  private:
   // Parent class is reference counted, so need to have a private destructor.
-  ~MockUrlRequestJobWithTiming() override {}
+  ~MockUrlRequestJobWithTiming() override = default;
 
   void DelayedStart() {
     net::URLRequestFileJob::Start();
@@ -269,10 +269,9 @@ class TestInterceptor : public net::URLRequestInterceptor {
 
 class LoadTimingBrowserTest : public InProcessBrowserTest {
  public:
-  LoadTimingBrowserTest() {
-  }
+  LoadTimingBrowserTest() = default;
 
-  ~LoadTimingBrowserTest() override {}
+  ~LoadTimingBrowserTest() override = default;
 
   // Navigates to |url| and writes the resulting navigation timings to
   // |navigation_deltas|.

@@ -29,11 +29,9 @@ const std::string& OmniboxInfo::GetKeyword(const Extension* extension) {
   return info ? info->keyword : base::EmptyString();
 }
 
-OmniboxHandler::OmniboxHandler() {
-}
+OmniboxHandler::OmniboxHandler() = default;
 
-OmniboxHandler::~OmniboxHandler() {
-}
+OmniboxHandler::~OmniboxHandler() = default;
 
 bool OmniboxHandler::Parse(Extension* extension, base::string16* error) {
   std::unique_ptr<OmniboxInfo> info(new OmniboxInfo);

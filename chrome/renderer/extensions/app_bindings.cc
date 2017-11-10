@@ -27,8 +27,7 @@ AppBindings::AppBindings(Dispatcher* dispatcher, ScriptContext* context)
       base::Bind(&AppBindings::GetRunningState, base::Unretained(this)));
 }
 
-AppBindings::~AppBindings() {
-}
+AppBindings::~AppBindings() = default;
 
 void AppBindings::GetIsInstalled(
     const v8::FunctionCallbackInfo<v8::Value>& args) {

@@ -166,7 +166,7 @@ HangoutsMediaRouteController::HangoutsMediaRouteController(
     content::BrowserContext* context)
     : MediaRouteController(route_id, context) {}
 
-HangoutsMediaRouteController::~HangoutsMediaRouteController() {}
+HangoutsMediaRouteController::~HangoutsMediaRouteController() = default;
 
 RouteControllerType HangoutsMediaRouteController::GetType() const {
   return RouteControllerType::kHangouts;

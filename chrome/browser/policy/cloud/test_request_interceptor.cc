@@ -199,7 +199,7 @@ TestRequestInterceptor::Delegate::Delegate(
     scoped_refptr<base::SequencedTaskRunner> io_task_runner)
     : hostname_(hostname), io_task_runner_(io_task_runner) {}
 
-TestRequestInterceptor::Delegate::~Delegate() {}
+TestRequestInterceptor::Delegate::~Delegate() = default;
 
 net::URLRequestJob* TestRequestInterceptor::Delegate::MaybeInterceptRequest(
     net::URLRequest* request,

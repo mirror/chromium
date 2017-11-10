@@ -54,8 +54,8 @@ namespace constants = extension_management_api_constants;
 // heavy api/browser tests.
 class ManagementApiUnitTest : public ExtensionServiceTestWithInstall {
  protected:
-  ManagementApiUnitTest() {}
-  ~ManagementApiUnitTest() override {}
+  ManagementApiUnitTest() = default;
+  ~ManagementApiUnitTest() override = default;
 
   // A wrapper around extension_function_test_utils::RunFunction that runs with
   // the associated browser, no flags, and can take stack-allocated arguments.

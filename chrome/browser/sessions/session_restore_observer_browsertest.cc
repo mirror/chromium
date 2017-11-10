@@ -103,7 +103,7 @@ class MockSessionRestoreObserver : public SessionRestoreObserver {
 
 class SessionRestoreObserverTest : public InProcessBrowserTest {
  protected:
-  SessionRestoreObserverTest() {}
+  SessionRestoreObserverTest() = default;
 
   void SetUpOnMainThread() override {
     SessionStartupPref pref(SessionStartupPref::LAST);

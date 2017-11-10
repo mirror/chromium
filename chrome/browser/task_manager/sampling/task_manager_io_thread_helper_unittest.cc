@@ -18,7 +18,7 @@ class TaskManagerIoThreadHelperTest : public testing::Test {
                                 base::Unretained(this))) {
     base::RunLoop().RunUntilIdle();
   }
-  ~TaskManagerIoThreadHelperTest() override {}
+  ~TaskManagerIoThreadHelperTest() override = default;
 
   void GotData(BytesTransferredMap params) {
     EXPECT_TRUE(returned_map_.empty()) << "GotData() delivered twice";

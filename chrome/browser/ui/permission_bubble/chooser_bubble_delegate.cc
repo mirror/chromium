@@ -17,7 +17,7 @@ ChooserBubbleDelegate::ChooserBubbleDelegate(
           content::WebContents::FromRenderFrameHost(owner))),
       chooser_controller_(std::move(chooser_controller)) {}
 
-ChooserBubbleDelegate::~ChooserBubbleDelegate() {}
+ChooserBubbleDelegate::~ChooserBubbleDelegate() = default;
 
 std::string ChooserBubbleDelegate::GetName() const {
   return "ChooserBubble";

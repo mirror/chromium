@@ -26,9 +26,7 @@ DialogTestBrowserWindow::DialogTestBrowserWindow() {
 #endif
 }
 
-DialogTestBrowserWindow::~DialogTestBrowserWindow() {
-}
-
+DialogTestBrowserWindow::~DialogTestBrowserWindow() = default;
 
 WebContentsModalDialogHost*
 DialogTestBrowserWindow::GetWebContentsModalDialogHost() {

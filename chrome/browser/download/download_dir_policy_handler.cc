@@ -42,7 +42,7 @@ DownloadDirPolicyHandler::DownloadDirPolicyHandler()
     : TypeCheckingPolicyHandler(policy::key::kDownloadDirectory,
                                 base::Value::Type::STRING) {}
 
-DownloadDirPolicyHandler::~DownloadDirPolicyHandler() {}
+DownloadDirPolicyHandler::~DownloadDirPolicyHandler() = default;
 
 bool DownloadDirPolicyHandler::CheckPolicySettings(
     const policy::PolicyMap& policies,

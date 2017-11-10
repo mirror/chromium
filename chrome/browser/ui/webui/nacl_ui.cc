@@ -147,8 +147,7 @@ NaClDomHandler::NaClDomHandler()
       &NaClDomHandler::OnGotPlugins, weak_ptr_factory_.GetWeakPtr()));
 }
 
-NaClDomHandler::~NaClDomHandler() {
-}
+NaClDomHandler::~NaClDomHandler() = default;
 
 void NaClDomHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

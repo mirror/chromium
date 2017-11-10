@@ -7,11 +7,9 @@
 #include "base/single_thread_task_runner.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-ChromeMockRenderThread::ChromeMockRenderThread() {
-}
+ChromeMockRenderThread::ChromeMockRenderThread() = default;
 
-ChromeMockRenderThread::~ChromeMockRenderThread() {
-}
+ChromeMockRenderThread::~ChromeMockRenderThread() = default;
 
 scoped_refptr<base::SingleThreadTaskRunner>
 ChromeMockRenderThread::GetIOTaskRunner() {

@@ -27,8 +27,7 @@ CaptivePortalServiceFactory::CaptivePortalServiceFactory()
         BrowserContextDependencyManager::GetInstance()) {
 }
 
-CaptivePortalServiceFactory::~CaptivePortalServiceFactory() {
-}
+CaptivePortalServiceFactory::~CaptivePortalServiceFactory() = default;
 
 KeyedService* CaptivePortalServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

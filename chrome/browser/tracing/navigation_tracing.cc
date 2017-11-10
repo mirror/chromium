@@ -109,8 +109,7 @@ NavigationTracingObserver::NavigationTracingObserver(
   }
 }
 
-NavigationTracingObserver::~NavigationTracingObserver() {
-}
+NavigationTracingObserver::~NavigationTracingObserver() = default;
 
 void NavigationTracingObserver::DidStartNavigation(
     content::NavigationHandle* navigation_handle) {

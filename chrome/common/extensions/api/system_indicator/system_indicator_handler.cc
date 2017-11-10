@@ -14,11 +14,9 @@
 
 namespace extensions {
 
-SystemIndicatorHandler::SystemIndicatorHandler() {
-}
+SystemIndicatorHandler::SystemIndicatorHandler() = default;
 
-SystemIndicatorHandler::~SystemIndicatorHandler() {
-}
+SystemIndicatorHandler::~SystemIndicatorHandler() = default;
 
 bool SystemIndicatorHandler::Parse(Extension* extension,
                                    base::string16* error) {

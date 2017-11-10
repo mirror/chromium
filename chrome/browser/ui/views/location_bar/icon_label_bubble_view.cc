@@ -136,8 +136,7 @@ IconLabelBubbleView::IconLabelBubbleView(const gfx::FontList& font_list,
   separator_view_->EnableCanvasFlippingForRTLUI(true);
 }
 
-IconLabelBubbleView::~IconLabelBubbleView() {
-}
+IconLabelBubbleView::~IconLabelBubbleView() = default;
 
 void IconLabelBubbleView::InkDropAnimationStarted() {
   separator_view_->UpdateOpacity();

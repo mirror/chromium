@@ -98,7 +98,7 @@ class CookiesTreeViewDrawingProvider : public views::TreeViewDrawingProvider {
   explicit CookiesTreeViewDrawingProvider(
       const base::string16& invalidated_text)
       : invalidated_text_(invalidated_text) {}
-  ~CookiesTreeViewDrawingProvider() override {}
+  ~CookiesTreeViewDrawingProvider() override = default;
 
   void MarkNodeAsInvalidated(ui::TreeModelNode* node);
 
@@ -145,7 +145,7 @@ class InfobarView : public views::View {
                                                 16, gfx::kChromeIconGrey));
     label_ = new views::Label();
   }
-  ~InfobarView() override {}
+  ~InfobarView() override = default;
 
   // Update the visibility of the infobar. If |is_visible| is true, a rule for
   // |setting| on |domain_name| was created.

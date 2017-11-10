@@ -98,7 +98,7 @@ ExtensionActionRunnerUnitTest::ExtensionActionRunnerUnitTest()
                         FeatureSwitch::OVERRIDE_ENABLED),
       extension_action_runner_(nullptr) {}
 
-ExtensionActionRunnerUnitTest::~ExtensionActionRunnerUnitTest() {}
+ExtensionActionRunnerUnitTest::~ExtensionActionRunnerUnitTest() = default;
 
 const Extension* ExtensionActionRunnerUnitTest::AddExtension() {
   const std::string kId = crx_file::id_util::GenerateId("all_hosts_extension");

@@ -51,7 +51,7 @@ namespace {
 
 class MockSearchIPCRouterDelegate : public SearchIPCRouter::Delegate {
  public:
-  virtual ~MockSearchIPCRouterDelegate() {}
+  virtual ~MockSearchIPCRouterDelegate() = default;
 
   MOCK_METHOD1(FocusOmnibox, void(OmniboxFocusState state));
   MOCK_METHOD1(OnDeleteMostVisitedItem, void(const GURL& url));
@@ -79,7 +79,7 @@ class MockEmbeddedSearchClientFactory
 
 class SearchTabHelperTest : public ChromeRenderViewHostTestHarness {
  public:
-  SearchTabHelperTest() {}
+  SearchTabHelperTest() = default;
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();

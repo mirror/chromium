@@ -45,7 +45,7 @@ NetBenchmarking::NetBenchmarking(Profile* profile,
                                  net::URLRequestContextGetter* request_context)
     : profile_(profile), request_context_(request_context) {}
 
-NetBenchmarking::~NetBenchmarking() {}
+NetBenchmarking::~NetBenchmarking() = default;
 
 // static
 void NetBenchmarking::Create(Profile* profile,

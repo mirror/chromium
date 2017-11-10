@@ -25,8 +25,7 @@ CloudPrintProxyServiceFactory::CloudPrintProxyServiceFactory()
         BrowserContextDependencyManager::GetInstance()) {
 }
 
-CloudPrintProxyServiceFactory::~CloudPrintProxyServiceFactory() {
-}
+CloudPrintProxyServiceFactory::~CloudPrintProxyServiceFactory() = default;
 
 KeyedService* CloudPrintProxyServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

@@ -32,11 +32,11 @@ std::string make_path(const std::string& a, const std::string& b) {
 
 }  // namespace
 
-ExtensionManagementPrefUpdaterBase::ExtensionManagementPrefUpdaterBase() {
-}
+ExtensionManagementPrefUpdaterBase::ExtensionManagementPrefUpdaterBase() =
+    default;
 
-ExtensionManagementPrefUpdaterBase::~ExtensionManagementPrefUpdaterBase() {
-}
+ExtensionManagementPrefUpdaterBase::~ExtensionManagementPrefUpdaterBase() =
+    default;
 
 // Helper functions for per extension settings ---------------------------------
 

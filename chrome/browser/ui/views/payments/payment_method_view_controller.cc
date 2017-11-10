@@ -74,7 +74,7 @@ class PaymentMethodListItem : public PaymentRequestItemList::Item {
         dialog_(dialog) {
     Init();
   }
-  ~PaymentMethodListItem() override {}
+  ~PaymentMethodListItem() override = default;
 
  private:
   void ShowEditor() {
@@ -202,7 +202,7 @@ PaymentMethodViewController::PaymentMethodViewController(
   }
 }
 
-PaymentMethodViewController::~PaymentMethodViewController() {}
+PaymentMethodViewController::~PaymentMethodViewController() = default;
 
 base::string16 PaymentMethodViewController::GetSheetTitle() {
   return l10n_util::GetStringUTF16(

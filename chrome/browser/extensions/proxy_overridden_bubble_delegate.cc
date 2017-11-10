@@ -36,7 +36,7 @@ ProxyOverriddenBubbleDelegate::ProxyOverriddenBubbleDelegate(
   set_acknowledged_flag_pref_name(kProxyBubbleAcknowledged);
 }
 
-ProxyOverriddenBubbleDelegate::~ProxyOverriddenBubbleDelegate() {}
+ProxyOverriddenBubbleDelegate::~ProxyOverriddenBubbleDelegate() = default;
 
 bool ProxyOverriddenBubbleDelegate::ShouldIncludeExtension(
     const Extension* extension) {

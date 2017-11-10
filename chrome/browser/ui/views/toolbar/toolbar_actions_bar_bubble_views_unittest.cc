@@ -41,8 +41,8 @@ class ToolbarActionsBarBubbleViewsTest : public views::ViewsTestBase {
   }
 
  protected:
-  ToolbarActionsBarBubbleViewsTest() {}
-  ~ToolbarActionsBarBubbleViewsTest() override {}
+  ToolbarActionsBarBubbleViewsTest() = default;
+  ~ToolbarActionsBarBubbleViewsTest() override = default;
 
   void SetUp() override {
     views::ViewsTestBase::SetUp();

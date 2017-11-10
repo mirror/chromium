@@ -197,7 +197,7 @@ DownloadPrefs::DownloadPrefs(Profile* profile) : profile_(profile) {
   }
 }
 
-DownloadPrefs::~DownloadPrefs() {}
+DownloadPrefs::~DownloadPrefs() = default;
 
 // static
 void DownloadPrefs::RegisterProfilePrefs(

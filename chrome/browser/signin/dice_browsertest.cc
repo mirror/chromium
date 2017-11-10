@@ -224,7 +224,7 @@ class DiceBrowserTestBase : public InProcessBrowserTest,
                             public OAuth2TokenService::Observer,
                             public AccountReconcilor::Observer {
  protected:
-  ~DiceBrowserTestBase() override {}
+  ~DiceBrowserTestBase() override = default;
 
   explicit DiceBrowserTestBase(
       AccountConsistencyMethod account_consistency_method)

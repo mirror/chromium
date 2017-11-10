@@ -211,7 +211,7 @@ class BackgroundColorHoverButton : public views::LabelButton {
   // be a child view.
   void set_subtitle(views::Label* label) { subtitle_ = label; }
 
-  ~BackgroundColorHoverButton() override {}
+  ~BackgroundColorHoverButton() override = default;
 
  private:
   // views::View:

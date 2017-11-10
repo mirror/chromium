@@ -64,7 +64,7 @@ WebstoreInlineInstaller::WebstoreInlineInstaller(
       host_(host),
       requestor_url_(requestor_url) {}
 
-WebstoreInlineInstaller::~WebstoreInlineInstaller() {}
+WebstoreInlineInstaller::~WebstoreInlineInstaller() = default;
 
 // static
 bool WebstoreInlineInstaller::IsRequestorPermitted(

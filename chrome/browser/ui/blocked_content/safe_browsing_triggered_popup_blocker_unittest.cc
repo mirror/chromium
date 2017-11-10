@@ -34,8 +34,8 @@ const char kNumBlockedHistogram[] =
 class SafeBrowsingTriggeredPopupBlockerTest
     : public ChromeRenderViewHostTestHarness {
  public:
-  SafeBrowsingTriggeredPopupBlockerTest() {}
-  ~SafeBrowsingTriggeredPopupBlockerTest() override {}
+  SafeBrowsingTriggeredPopupBlockerTest() = default;
+  ~SafeBrowsingTriggeredPopupBlockerTest() override = default;
 
   // ChromeRenderViewHostTestHarness:
   void SetUp() override {

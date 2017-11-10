@@ -49,7 +49,7 @@ class MockSyncTask : public ExclusiveTask {
   explicit MockSyncTask(bool used_network) {
     set_used_network(used_network);
   }
-  ~MockSyncTask() override {}
+  ~MockSyncTask() override = default;
 
   void RunExclusive(const SyncStatusCallback& callback) override {
     callback.Run(SYNC_STATUS_OK);
@@ -61,8 +61,8 @@ class MockSyncTask : public ExclusiveTask {
 
 class MockExtensionService : public TestExtensionService {
  public:
-  MockExtensionService() {}
-  ~MockExtensionService() override {}
+  MockExtensionService() = default;
+  ~MockExtensionService() override = default;
 
   void AddExtension(const extensions::Extension* extension) override {
     extensions_.Insert(base::WrapRefCounted(extension));
@@ -100,8 +100,8 @@ class MockExtensionService : public TestExtensionService {
 class SyncWorkerTest : public testing::Test,
                        public base::SupportsWeakPtr<SyncWorkerTest> {
  public:
-  SyncWorkerTest() {}
-  ~SyncWorkerTest() override {}
+  SyncWorkerTest() = default;
+  ~SyncWorkerTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(profile_dir_.CreateUniqueTempDir());

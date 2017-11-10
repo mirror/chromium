@@ -90,7 +90,7 @@ namespace {
 // a given URL.
 class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
  public:
-  MockSafeBrowsingDatabaseManager() {}
+  MockSafeBrowsingDatabaseManager() = default;
 
   MOCK_METHOD1(MatchDownloadWhitelistUrl, bool(const GURL&));
   MOCK_METHOD1(MatchDownloadWhitelistString, bool(const std::string&));
@@ -99,7 +99,7 @@ class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
                     SafeBrowsingDatabaseManager::Client* client));
 
  private:
-  virtual ~MockSafeBrowsingDatabaseManager() {}
+  virtual ~MockSafeBrowsingDatabaseManager() = default;
   DISALLOW_COPY_AND_ASSIGN(MockSafeBrowsingDatabaseManager);
 };
 
@@ -162,7 +162,7 @@ class FakeSafeBrowsingService : public SafeBrowsingService,
 
 class MockBinaryFeatureExtractor : public BinaryFeatureExtractor {
  public:
-  MockBinaryFeatureExtractor() {}
+  MockBinaryFeatureExtractor() = default;
   MOCK_METHOD2(CheckSignature,
                void(const base::FilePath&,
                     ClientDownloadRequest_SignatureInfo*));
@@ -173,7 +173,7 @@ class MockBinaryFeatureExtractor : public BinaryFeatureExtractor {
                     google::protobuf::RepeatedPtrField<std::string>*));
 
  protected:
-  virtual ~MockBinaryFeatureExtractor() {}
+  virtual ~MockBinaryFeatureExtractor() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockBinaryFeatureExtractor);

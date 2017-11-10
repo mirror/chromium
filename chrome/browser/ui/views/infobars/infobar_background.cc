@@ -19,8 +19,7 @@ InfoBarBackground::InfoBarBackground(
   SetNativeControlColor(infobars::InfoBar::GetBackgroundColor(infobar_type));
 }
 
-InfoBarBackground::~InfoBarBackground() {
-}
+InfoBarBackground::~InfoBarBackground() = default;
 
 void InfoBarBackground::Paint(gfx::Canvas* canvas, views::View* view) const {
   InfoBarView* infobar = static_cast<InfoBarView*>(view);

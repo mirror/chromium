@@ -17,12 +17,12 @@
 
 using base::Time;
 
-SessionServiceTestHelper::SessionServiceTestHelper() {}
+SessionServiceTestHelper::SessionServiceTestHelper() = default;
 
 SessionServiceTestHelper::SessionServiceTestHelper(SessionService* service)
     : service_(service) {}
 
-SessionServiceTestHelper::~SessionServiceTestHelper() {}
+SessionServiceTestHelper::~SessionServiceTestHelper() = default;
 
 void SessionServiceTestHelper::PrepareTabInWindow(const SessionID& window_id,
                                                   const SessionID& tab_id,

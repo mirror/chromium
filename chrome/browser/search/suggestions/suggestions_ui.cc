@@ -43,7 +43,7 @@ SuggestionsSourceWrapper::SuggestionsSourceWrapper(
     : suggestions_source_(suggestions_service,
                           chrome::kChromeUISuggestionsURL) {}
 
-SuggestionsSourceWrapper::~SuggestionsSourceWrapper() {}
+SuggestionsSourceWrapper::~SuggestionsSourceWrapper() = default;
 
 std::string SuggestionsSourceWrapper::GetSource() const {
   return chrome::kChromeUISuggestionsHost;
@@ -71,6 +71,6 @@ SuggestionsUI::SuggestionsUI(content::WebUI* web_ui)
                    SuggestionsServiceFactory::GetForProfile(profile)));
 }
 
-SuggestionsUI::~SuggestionsUI() {}
+SuggestionsUI::~SuggestionsUI() = default;
 
 }  // namespace suggestions

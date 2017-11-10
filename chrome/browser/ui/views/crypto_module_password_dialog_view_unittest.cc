@@ -18,8 +18,8 @@ namespace chrome {
 
 class CryptoModulePasswordDialogViewTest : public views::ViewsTestBase {
  public:
-  CryptoModulePasswordDialogViewTest() {}
-  ~CryptoModulePasswordDialogViewTest() override {}
+  CryptoModulePasswordDialogViewTest() = default;
+  ~CryptoModulePasswordDialogViewTest() override = default;
 
   // Overrides from views::ViewsTestBase:
   void SetUp() override {

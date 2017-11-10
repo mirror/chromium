@@ -37,7 +37,7 @@ class AutofillPopupChildView : public views::View {
   }
 
  private:
-  ~AutofillPopupChildView() override {}
+  ~AutofillPopupChildView() override = default;
 
   // views::Views implementation
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
@@ -61,7 +61,7 @@ AutofillPopupViewViews::AutofillPopupViewViews(
   SetFocusBehavior(FocusBehavior::ALWAYS);
 }
 
-AutofillPopupViewViews::~AutofillPopupViewViews() {}
+AutofillPopupViewViews::~AutofillPopupViewViews() = default;
 
 void AutofillPopupViewViews::Show() {
   DoShow();

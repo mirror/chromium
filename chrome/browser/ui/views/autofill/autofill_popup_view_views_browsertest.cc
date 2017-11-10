@@ -88,7 +88,7 @@ class TestAutofillPopupViewViews : public AutofillPopupViewViews {
   TestAutofillPopupViewViews(AutofillPopupController* controller,
                              views::Widget* parent_widget)
       : AutofillPopupViewViews(controller, parent_widget) {}
-  ~TestAutofillPopupViewViews() override {}
+  ~TestAutofillPopupViewViews() override = default;
 
   void DoUpdateBoundsAndRedrawPopup() override {}
 
@@ -100,8 +100,8 @@ class TestAutofillPopupViewViews : public AutofillPopupViewViews {
 
 class AutofillPopupViewViewsTest : public InProcessBrowserTest {
  public:
-  AutofillPopupViewViewsTest() {}
-  ~AutofillPopupViewViewsTest() override {}
+  AutofillPopupViewViewsTest() = default;
+  ~AutofillPopupViewViewsTest() override = default;
 
   void SetUpOnMainThread() override {
     gfx::NativeView native_view =

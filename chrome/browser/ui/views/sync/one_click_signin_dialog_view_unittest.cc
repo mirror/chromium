@@ -25,7 +25,7 @@
 class OneClickSigninDialogViewTest : public ChromeViewsTestBase,
                                      public views::WidgetObserver {
  public:
-  OneClickSigninDialogViewTest() {}
+  OneClickSigninDialogViewTest() = default;
 
   void SetUp() override {
     ChromeViewsTestBase::SetUp();

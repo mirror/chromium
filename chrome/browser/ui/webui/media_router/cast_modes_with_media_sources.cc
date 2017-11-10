@@ -7,10 +7,10 @@
 
 namespace media_router {
 
-CastModesWithMediaSources::CastModesWithMediaSources() {}
+CastModesWithMediaSources::CastModesWithMediaSources() = default;
 CastModesWithMediaSources::CastModesWithMediaSources(
     CastModesWithMediaSources&& other) = default;
-CastModesWithMediaSources::~CastModesWithMediaSources() {}
+CastModesWithMediaSources::~CastModesWithMediaSources() = default;
 
 void CastModesWithMediaSources::AddSource(MediaCastMode cast_mode,
                                           const MediaSource& source) {

@@ -309,9 +309,9 @@ GetLocalhostHistogramNames() {
 }  // namespace internal
 
 LocalNetworkRequestsPageLoadMetricsObserver::
-    LocalNetworkRequestsPageLoadMetricsObserver() {}
+    LocalNetworkRequestsPageLoadMetricsObserver() = default;
 LocalNetworkRequestsPageLoadMetricsObserver::
-    ~LocalNetworkRequestsPageLoadMetricsObserver() {}
+    ~LocalNetworkRequestsPageLoadMetricsObserver() = default;
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 LocalNetworkRequestsPageLoadMetricsObserver::OnCommit(

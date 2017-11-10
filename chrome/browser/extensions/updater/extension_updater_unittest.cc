@@ -306,7 +306,7 @@ class MockService : public TestExtensionService {
         pending_extension_manager_(&profile_),
         downloader_delegate_override_(NULL) {}
 
-  ~MockService() override {}
+  ~MockService() override = default;
 
   PendingExtensionManager* pending_extension_manager() override {
     ADD_FAILURE() << "Subclass should override this if it will "
@@ -451,7 +451,7 @@ class ServiceForManifestTests : public MockService {
         registry_(ExtensionRegistry::Get(profile())) {
   }
 
-  ~ServiceForManifestTests() override {}
+  ~ServiceForManifestTests() override = default;
 
   const Extension* GetExtensionById(const std::string& id,
                                     bool include_disabled) const override {

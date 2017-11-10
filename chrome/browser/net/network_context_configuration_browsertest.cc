@@ -75,7 +75,7 @@ class NetworkContextConfigurationBrowserTest
     EXPECT_TRUE(embedded_test_server()->Start());
   }
 
-  ~NetworkContextConfigurationBrowserTest() override {}
+  ~NetworkContextConfigurationBrowserTest() override = default;
 
   void SetUpInProcessBrowserTestFixture() override {
     if (GetParam().network_service_state == NetworkServiceState::kEnabled)
@@ -325,8 +325,8 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, DiskCache) {
 class NetworkContextConfigurationFixedPortBrowserTest
     : public NetworkContextConfigurationBrowserTest {
  public:
-  NetworkContextConfigurationFixedPortBrowserTest() {}
-  ~NetworkContextConfigurationFixedPortBrowserTest() override {}
+  NetworkContextConfigurationFixedPortBrowserTest() = default;
+  ~NetworkContextConfigurationFixedPortBrowserTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitchASCII(

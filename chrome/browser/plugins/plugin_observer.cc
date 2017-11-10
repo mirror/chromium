@@ -92,7 +92,7 @@ ReloadPluginInfoBarDelegate::ReloadPluginInfoBarDelegate(
     : controller_(controller),
       message_(message) {}
 
-ReloadPluginInfoBarDelegate::~ReloadPluginInfoBarDelegate() {}
+ReloadPluginInfoBarDelegate::~ReloadPluginInfoBarDelegate() = default;
 
 infobars::InfoBarDelegate::InfoBarIdentifier
 ReloadPluginInfoBarDelegate::GetIdentifier() const {
@@ -208,8 +208,7 @@ PluginObserver::PluginObserver(content::WebContents* web_contents)
       plugin_host_bindings_(web_contents, this),
       weak_ptr_factory_(this) {}
 
-PluginObserver::~PluginObserver() {
-}
+PluginObserver::~PluginObserver() = default;
 
 void PluginObserver::PluginCrashed(const base::FilePath& plugin_path,
                                    base::ProcessId plugin_pid) {

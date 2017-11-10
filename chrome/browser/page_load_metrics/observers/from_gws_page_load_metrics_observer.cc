@@ -320,7 +320,7 @@ bool WasAbortedBeforeInteraction(
 
 }  // namespace
 
-FromGWSPageLoadMetricsLogger::FromGWSPageLoadMetricsLogger() {}
+FromGWSPageLoadMetricsLogger::FromGWSPageLoadMetricsLogger() = default;
 
 void FromGWSPageLoadMetricsLogger::SetPreviouslyCommittedUrl(const GURL& url) {
   previously_committed_url_is_search_results_ =
@@ -334,7 +334,7 @@ void FromGWSPageLoadMetricsLogger::SetProvisionalUrl(const GURL& url) {
       page_load_metrics::IsGoogleSearchHostname(url);
 }
 
-FromGWSPageLoadMetricsObserver::FromGWSPageLoadMetricsObserver() {}
+FromGWSPageLoadMetricsObserver::FromGWSPageLoadMetricsObserver() = default;
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 FromGWSPageLoadMetricsObserver::OnStart(

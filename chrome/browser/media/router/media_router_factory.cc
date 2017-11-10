@@ -62,8 +62,7 @@ MediaRouterFactory::MediaRouterFactory()
 #endif
 }
 
-MediaRouterFactory::~MediaRouterFactory() {
-}
+MediaRouterFactory::~MediaRouterFactory() = default;
 
 content::BrowserContext* MediaRouterFactory::GetBrowserContextToUse(
     content::BrowserContext* context) const {

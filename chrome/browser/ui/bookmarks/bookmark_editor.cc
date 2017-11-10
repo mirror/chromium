@@ -126,7 +126,7 @@ BookmarkEditor::EditDetails BookmarkEditor::EditDetails::AddFolder(
 
 BookmarkEditor::EditDetails::EditDetails(const EditDetails& other) = default;
 
-BookmarkEditor::EditDetails::~EditDetails() {}
+BookmarkEditor::EditDetails::~EditDetails() = default;
 
 // static
 const BookmarkNode* BookmarkEditor::ApplyEditsWithNoFolderChange(

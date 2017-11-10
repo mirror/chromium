@@ -8,7 +8,7 @@
 
 #include "base/strings/stringprintf.h"
 
-WebRtcLoggingMessageData::WebRtcLoggingMessageData() {}
+WebRtcLoggingMessageData::WebRtcLoggingMessageData() = default;
 
 WebRtcLoggingMessageData::WebRtcLoggingMessageData(base::Time time,
                                                    const std::string& message)

@@ -21,8 +21,7 @@ PrivetNotificationServiceFactory::PrivetNotificationServiceFactory()
         BrowserContextDependencyManager::GetInstance()) {
 }
 
-PrivetNotificationServiceFactory::~PrivetNotificationServiceFactory() {
-}
+PrivetNotificationServiceFactory::~PrivetNotificationServiceFactory() = default;
 
 KeyedService* PrivetNotificationServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* profile) const {

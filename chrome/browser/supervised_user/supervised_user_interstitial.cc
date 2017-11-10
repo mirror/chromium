@@ -54,7 +54,7 @@ namespace {
 
 class TabCloser : public content::WebContentsUserData<TabCloser> {
  public:
-  ~TabCloser() override {}
+  ~TabCloser() override = default;
 
   static void MaybeClose(WebContents* web_contents) {
     DCHECK(web_contents);

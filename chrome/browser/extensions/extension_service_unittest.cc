@@ -340,7 +340,7 @@ class ExternalTestingLoader : public ExternalLoader {
  private:
   friend class base::RefCountedThreadSafe<ExternalLoader>;
 
-  ~ExternalTestingLoader() override {}
+  ~ExternalTestingLoader() override = default;
 
   base::FilePath fake_base_path_;
   std::unique_ptr<base::DictionaryValue> testing_prefs_;

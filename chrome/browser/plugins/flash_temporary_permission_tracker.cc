@@ -47,7 +47,7 @@ FlashTemporaryPermissionTracker::FlashTemporaryPermissionTracker(
     Profile* profile)
     : profile_(profile) {}
 
-FlashTemporaryPermissionTracker::~FlashTemporaryPermissionTracker() {}
+FlashTemporaryPermissionTracker::~FlashTemporaryPermissionTracker() = default;
 
 bool FlashTemporaryPermissionTracker::IsFlashEnabled(const GURL& url) {
   base::AutoLock lock(granted_origins_lock_);

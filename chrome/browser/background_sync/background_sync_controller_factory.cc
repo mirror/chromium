@@ -27,7 +27,7 @@ BackgroundSyncControllerFactory::BackgroundSyncControllerFactory()
           "BackgroundSyncService",
           BrowserContextDependencyManager::GetInstance()) {}
 
-BackgroundSyncControllerFactory::~BackgroundSyncControllerFactory() {}
+BackgroundSyncControllerFactory::~BackgroundSyncControllerFactory() = default;
 
 KeyedService* BackgroundSyncControllerFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {

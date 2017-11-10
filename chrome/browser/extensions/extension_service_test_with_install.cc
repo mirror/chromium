@@ -49,7 +49,7 @@ ExtensionServiceTestWithInstall::ExtensionServiceTestWithInstall()
           false),
       registry_observer_(this) {}
 
-ExtensionServiceTestWithInstall::~ExtensionServiceTestWithInstall() {}
+ExtensionServiceTestWithInstall::~ExtensionServiceTestWithInstall() = default;
 
 void ExtensionServiceTestWithInstall::InitializeExtensionService(
     const ExtensionServiceInitParams& params) {

@@ -59,7 +59,7 @@ class TestNTPUserDataLogger : public NTPUserDataLogger {
     set_ntp_url_for_testing(ntp_url);
   }
 
-  ~TestNTPUserDataLogger() override {}
+  ~TestNTPUserDataLogger() override = default;
 
   bool DefaultSearchProviderIsGoogle() const override { return is_google_; }
 

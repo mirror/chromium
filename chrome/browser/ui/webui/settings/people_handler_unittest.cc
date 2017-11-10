@@ -519,7 +519,7 @@ TEST_F(PeopleHandlerTest, AcquireSyncBlockerWhenLoadingSyncSettingsSubpage) {
 
 class PeopleHandlerNonCrosTest : public PeopleHandlerTest {
  public:
-  PeopleHandlerNonCrosTest() {}
+  PeopleHandlerNonCrosTest() = default;
 };
 
 TEST_F(PeopleHandlerNonCrosTest, HandleGaiaAuthFailure) {

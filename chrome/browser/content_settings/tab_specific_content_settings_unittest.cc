@@ -32,7 +32,7 @@ class MockSiteDataObserver
       : SiteDataObserver(tab_specific_content_settings) {
   }
 
-  virtual ~MockSiteDataObserver() {}
+  virtual ~MockSiteDataObserver() = default;
 
   MOCK_METHOD0(OnSiteDataAccessed, void());
 

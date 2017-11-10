@@ -33,5 +33,4 @@ InvalidationsUI::InvalidationsUI(content::WebUI* web_ui)
   }
 }
 
-InvalidationsUI::~InvalidationsUI() { }
-
+InvalidationsUI::~InvalidationsUI() = default;

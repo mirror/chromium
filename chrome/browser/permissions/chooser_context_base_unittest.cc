@@ -17,7 +17,7 @@ class TestChooserContext : public ChooserContextBase {
   // This class uses the USB content settings type for testing purposes only.
   explicit TestChooserContext(Profile* profile)
       : ChooserContextBase(profile, CONTENT_SETTINGS_TYPE_USB_CHOOSER_DATA) {}
-  ~TestChooserContext() override {}
+  ~TestChooserContext() override = default;
 
   bool IsValidObject(const base::DictionaryValue& object) override {
     return object.size() == 2 && object.HasKey(kRequiredKey1) &&
@@ -39,7 +39,7 @@ class ChooserContextBaseTest : public testing::Test {
     object2_.SetString(kRequiredKey2, "value4");
   }
 
-  ~ChooserContextBaseTest() override {}
+  ~ChooserContextBaseTest() override = default;
 
  private:
   content::TestBrowserThreadBundle thread_bundle_;

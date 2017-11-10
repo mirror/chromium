@@ -38,8 +38,7 @@ BrowserTabStripModelDelegate::BrowserTabStripModelDelegate(Browser* browser)
       weak_factory_(this) {
 }
 
-BrowserTabStripModelDelegate::~BrowserTabStripModelDelegate() {
-}
+BrowserTabStripModelDelegate::~BrowserTabStripModelDelegate() = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // BrowserTabStripModelDelegate, TabStripModelDelegate implementation:

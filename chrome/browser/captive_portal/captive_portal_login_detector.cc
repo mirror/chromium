@@ -16,8 +16,7 @@ CaptivePortalLoginDetector::CaptivePortalLoginDetector(
       first_login_tab_load_(false) {
 }
 
-CaptivePortalLoginDetector::~CaptivePortalLoginDetector() {
-}
+CaptivePortalLoginDetector::~CaptivePortalLoginDetector() = default;
 
 void CaptivePortalLoginDetector::OnStoppedLoading() {
   // Do nothing if this is not a login tab, or if this is a login tab's first

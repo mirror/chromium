@@ -29,8 +29,8 @@ void PumpCurrentLoop() {
 
 class FakeServiceIPCServerClient : public ServiceIPCServer::Client {
  public:
-  FakeServiceIPCServerClient() {}
-  ~FakeServiceIPCServerClient() override {}
+  FakeServiceIPCServerClient() = default;
+  ~FakeServiceIPCServerClient() override = default;
   void OnShutdown() override;
   void OnUpdateAvailable() override;
   bool OnIPCClientDisconnect() override;
@@ -68,7 +68,7 @@ FakeServiceIPCServerClient::CreateChannelMessagePipe() {
 class ServiceIPCServerTest : public ::testing::Test {
  public:
   ServiceIPCServerTest();
-  ~ServiceIPCServerTest() override {}
+  ~ServiceIPCServerTest() override = default;
   void SetUp() override;
   void TearDown() override;
   void PumpLoops();

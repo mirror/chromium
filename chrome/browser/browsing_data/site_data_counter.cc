@@ -13,7 +13,7 @@ using content::BrowserThread;
 SiteDataCounter::SiteDataCounter(Profile* profile)
     : profile_(profile), weak_ptr_factory_(this) {}
 
-SiteDataCounter::~SiteDataCounter() {}
+SiteDataCounter::~SiteDataCounter() = default;
 
 const char* SiteDataCounter::GetPrefName() const {
   return browsing_data::prefs::kDeleteCookies;

@@ -18,8 +18,7 @@ MobileEmulationOverrideManager::MobileEmulationOverrideManager(
     client_->AddListener(this);
 }
 
-MobileEmulationOverrideManager::~MobileEmulationOverrideManager() {
-}
+MobileEmulationOverrideManager::~MobileEmulationOverrideManager() = default;
 
 Status MobileEmulationOverrideManager::OnConnected(DevToolsClient* client) {
   return ApplyOverrideIfNeeded();

@@ -23,8 +23,7 @@ using content::DownloadItem;
 
 PluginInstaller::PluginInstaller() : strong_observer_count_(0) {}
 
-PluginInstaller::~PluginInstaller() {
-}
+PluginInstaller::~PluginInstaller() = default;
 
 void PluginInstaller::AddObserver(PluginInstallerObserver* observer) {
   strong_observer_count_++;

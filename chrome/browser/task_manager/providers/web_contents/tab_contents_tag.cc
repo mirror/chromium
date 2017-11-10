@@ -14,7 +14,6 @@ TabContentsTag::TabContentsTag(content::WebContents* web_contents)
     : WebContentsTag(web_contents) {
 }
 
-TabContentsTag::~TabContentsTag() {
-}
+TabContentsTag::~TabContentsTag() = default;
 
 }  // namespace task_manager

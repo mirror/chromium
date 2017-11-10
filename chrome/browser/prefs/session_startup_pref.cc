@@ -164,4 +164,4 @@ SessionStartupPref::SessionStartupPref(Type type) : type(type) {}
 SessionStartupPref::SessionStartupPref(const SessionStartupPref& other) =
     default;
 
-SessionStartupPref::~SessionStartupPref() {}
+SessionStartupPref::~SessionStartupPref() = default;

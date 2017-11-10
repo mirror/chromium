@@ -70,7 +70,7 @@ class SessionRestoreObserverTest : public ChromeRenderViewHostTestHarness {
  public:
   using RestoredTab = SessionRestoreDelegate::RestoredTab;
 
-  SessionRestoreObserverTest() {}
+  SessionRestoreObserverTest() = default;
 
   // testing::Test:
   void SetUp() override {

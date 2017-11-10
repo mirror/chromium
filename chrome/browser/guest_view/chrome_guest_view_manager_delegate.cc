@@ -24,8 +24,7 @@ ChromeGuestViewManagerDelegate::ChromeGuestViewManagerDelegate(
     : ExtensionsGuestViewManagerDelegate(context) {
 }
 
-ChromeGuestViewManagerDelegate::~ChromeGuestViewManagerDelegate() {
-}
+ChromeGuestViewManagerDelegate::~ChromeGuestViewManagerDelegate() = default;
 
 void ChromeGuestViewManagerDelegate::OnGuestAdded(
     content::WebContents* guest_web_contents) const {

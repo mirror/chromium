@@ -5,9 +5,9 @@
 #include "chrome/test/chromedriver/chrome/recorder_devtools_client.h"
 #include "chrome/test/chromedriver/chrome/status.h"
 
-RecorderDevToolsClient::RecorderDevToolsClient() {}
+RecorderDevToolsClient::RecorderDevToolsClient() = default;
 
-RecorderDevToolsClient::~RecorderDevToolsClient() {}
+RecorderDevToolsClient::~RecorderDevToolsClient() = default;
 
 Status RecorderDevToolsClient::SendCommandAndGetResult(
     const std::string& method,

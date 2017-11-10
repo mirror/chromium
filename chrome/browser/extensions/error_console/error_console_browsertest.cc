@@ -134,7 +134,7 @@ void CheckManifestError(const ExtensionError* error,
 class ErrorConsoleBrowserTest : public ExtensionBrowserTest {
  public:
   ErrorConsoleBrowserTest() : error_console_(NULL) { }
-  ~ErrorConsoleBrowserTest() override {}
+  ~ErrorConsoleBrowserTest() override = default;
 
  protected:
   // A helper class in order to wait for the proper number of errors to be

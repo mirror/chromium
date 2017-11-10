@@ -38,7 +38,7 @@ class TestEffectiveConnectionTypeObserver
  public:
   TestEffectiveConnectionTypeObserver()
       : effective_connection_type_(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN) {}
-  ~TestEffectiveConnectionTypeObserver() override {}
+  ~TestEffectiveConnectionTypeObserver() override = default;
 
   // net::EffectiveConnectionTypeObserver implementation:
   void OnEffectiveConnectionTypeChanged(
@@ -64,7 +64,7 @@ class TestRTTAndThroughputEstimatesObserver
       : http_rtt_(base::TimeDelta::FromMilliseconds(-1)),
         transport_rtt_(base::TimeDelta::FromMilliseconds(-1)),
         downstream_throughput_kbps_(-1) {}
-  ~TestRTTAndThroughputEstimatesObserver() override {}
+  ~TestRTTAndThroughputEstimatesObserver() override = default;
 
   // net::RTTAndThroughputEstimatesObserver implementation:
   void OnRTTOrThroughputEstimatesComputed(
@@ -93,7 +93,7 @@ class TestRTTAndThroughputEstimatesObserver
 class UINetworkQualityEstimatorServiceBrowserTest
     : public InProcessBrowserTest {
  public:
-  UINetworkQualityEstimatorServiceBrowserTest() {}
+  UINetworkQualityEstimatorServiceBrowserTest() = default;
 
   // Verifies that the network quality prefs are written amd read correctly.
   void VerifyWritingReadingPrefs() {

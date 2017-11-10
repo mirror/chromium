@@ -46,7 +46,7 @@ BrowsingDataServiceWorkerHelper::BrowsingDataServiceWorkerHelper(
   DCHECK(service_worker_context_);
 }
 
-BrowsingDataServiceWorkerHelper::~BrowsingDataServiceWorkerHelper() {}
+BrowsingDataServiceWorkerHelper::~BrowsingDataServiceWorkerHelper() = default;
 
 void BrowsingDataServiceWorkerHelper::StartFetching(
     const FetchCallback& callback) {
@@ -95,8 +95,7 @@ CannedBrowsingDataServiceWorkerHelper::PendingServiceWorkerUsageInfo::
         default;
 
 CannedBrowsingDataServiceWorkerHelper::PendingServiceWorkerUsageInfo::
-    ~PendingServiceWorkerUsageInfo() {
-}
+    ~PendingServiceWorkerUsageInfo() = default;
 
 bool CannedBrowsingDataServiceWorkerHelper::PendingServiceWorkerUsageInfo::
 operator<(const PendingServiceWorkerUsageInfo& other) const {
@@ -109,8 +108,7 @@ CannedBrowsingDataServiceWorkerHelper::CannedBrowsingDataServiceWorkerHelper(
 }
 
 CannedBrowsingDataServiceWorkerHelper::
-    ~CannedBrowsingDataServiceWorkerHelper() {
-}
+    ~CannedBrowsingDataServiceWorkerHelper() = default;
 
 void CannedBrowsingDataServiceWorkerHelper::AddServiceWorker(
     const GURL& origin, const std::vector<GURL>& scopes) {

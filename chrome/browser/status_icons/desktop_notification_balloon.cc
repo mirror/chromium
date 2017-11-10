@@ -53,7 +53,7 @@ class DummyNotificationDelegate : public message_center::NotificationDelegate {
   }
 
  private:
-  ~DummyNotificationDelegate() override {}
+  ~DummyNotificationDelegate() override = default;
 
   std::string id_;
   Profile* profile_;

@@ -49,26 +49,22 @@ BitmapFetcherRequest::BitmapFetcherRequest(
     : request_id_(request_id), observer_(observer) {
 }
 
-BitmapFetcherRequest::~BitmapFetcherRequest() {
-}
+BitmapFetcherRequest::~BitmapFetcherRequest() = default;
 
 void BitmapFetcherRequest::NotifyImageChanged(const SkBitmap* bitmap) {
   if (bitmap && !bitmap->empty())
     observer_->OnImageChanged(request_id_, *bitmap);
 }
 
-BitmapFetcherService::CacheEntry::CacheEntry() {
-}
+BitmapFetcherService::CacheEntry::CacheEntry() = default;
 
-BitmapFetcherService::CacheEntry::~CacheEntry() {
-}
+BitmapFetcherService::CacheEntry::~CacheEntry() = default;
 
 BitmapFetcherService::BitmapFetcherService(content::BrowserContext* context)
     : cache_(kMaxCacheEntries), current_request_id_(1), context_(context) {
 }
 
-BitmapFetcherService::~BitmapFetcherService() {
-}
+BitmapFetcherService::~BitmapFetcherService() = default;
 
 void BitmapFetcherService::CancelRequest(int request_id) {
   for (auto iter = requests_.begin(); iter != requests_.end(); ++iter) {

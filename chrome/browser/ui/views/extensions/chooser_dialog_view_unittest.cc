@@ -24,8 +24,8 @@
 
 class ChooserDialogViewTest : public ChromeViewsTestBase {
  public:
-  ChooserDialogViewTest() {}
-  ~ChooserDialogViewTest() override {}
+  ChooserDialogViewTest() = default;
+  ~ChooserDialogViewTest() override = default;
 
   // ChromeViewsTestBase:
   void SetUp() override {

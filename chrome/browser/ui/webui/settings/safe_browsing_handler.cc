@@ -14,7 +14,7 @@
 namespace settings {
 
 SafeBrowsingHandler::SafeBrowsingHandler(PrefService* prefs) : prefs_(prefs) {}
-SafeBrowsingHandler::~SafeBrowsingHandler() {}
+SafeBrowsingHandler::~SafeBrowsingHandler() = default;
 
 void SafeBrowsingHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(

@@ -56,8 +56,7 @@ ExtensionToolbarMenuView::ExtensionToolbarMenuView(
   ClipHeightTo(0, max_height_);
 }
 
-ExtensionToolbarMenuView::~ExtensionToolbarMenuView() {
-}
+ExtensionToolbarMenuView::~ExtensionToolbarMenuView() = default;
 
 gfx::Size ExtensionToolbarMenuView::CalculatePreferredSize() const {
   gfx::Size s = views::ScrollView::CalculatePreferredSize();

@@ -92,7 +92,7 @@ class TestPreviewsWebContentsObserver
   explicit TestPreviewsWebContentsObserver(content::WebContents* web_contents)
       : content::WebContentsObserver(web_contents),
         last_navigation_reload_type_(content::ReloadType::NONE) {}
-  ~TestPreviewsWebContentsObserver() override {}
+  ~TestPreviewsWebContentsObserver() override = default;
 
   content::ReloadType last_navigation_reload_type() {
     return last_navigation_reload_type_;
@@ -111,7 +111,7 @@ class TestOptOutObserver : public page_load_metrics::PageLoadMetricsObserver {
  public:
   explicit TestOptOutObserver(const base::Callback<void()>& callback)
       : callback_(callback) {}
-  ~TestOptOutObserver() override {}
+  ~TestOptOutObserver() override = default;
 
   void OnEventOccurred(const void* const event_key) override {
     if (PreviewsInfoBarDelegate::OptOutEventKey() == event_key)

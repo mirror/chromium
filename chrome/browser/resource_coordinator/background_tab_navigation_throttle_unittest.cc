@@ -43,7 +43,7 @@ class BackgroundTabNavigationThrottleTest
                      bool,  // has_tab_ui_helper
                      GURL>> {
  public:
-  BackgroundTabNavigationThrottleTest() {}
+  BackgroundTabNavigationThrottleTest() = default;
 
   void SetUp() override {
     std::tie(expected_instantiation_result_, enable_feature_, is_in_main_frame_,

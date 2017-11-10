@@ -51,8 +51,7 @@ RootDeleteHelper::RootDeleteHelper(
   DCHECK(storage::VirtualPath::IsRootPath(url.path()));
 }
 
-RootDeleteHelper::~RootDeleteHelper() {
-}
+RootDeleteHelper::~RootDeleteHelper() = default;
 
 void RootDeleteHelper::Run() {
   util::Log(logging::LOG_VERBOSE, FROM_HERE,

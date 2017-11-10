@@ -61,7 +61,7 @@ void MutateSomeSettings(
 class TwoClientExtensionSettingsAndAppSettingsSyncTest : public SyncTest {
  public:
   TwoClientExtensionSettingsAndAppSettingsSyncTest() : SyncTest(TWO_CLIENT) {}
-  ~TwoClientExtensionSettingsAndAppSettingsSyncTest() override {}
+  ~TwoClientExtensionSettingsAndAppSettingsSyncTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TwoClientExtensionSettingsAndAppSettingsSyncTest);

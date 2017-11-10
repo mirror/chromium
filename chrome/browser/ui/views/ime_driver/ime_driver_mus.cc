@@ -24,7 +24,7 @@ IMEDriver::IMEDriver() {
   ui::IMEBridge::Initialize();
 }
 
-IMEDriver::~IMEDriver() {}
+IMEDriver::~IMEDriver() = default;
 
 // static
 void IMEDriver::Register() {

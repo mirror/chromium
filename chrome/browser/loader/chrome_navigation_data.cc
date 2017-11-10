@@ -13,7 +13,7 @@ const void* const kChromeNavigationDataUserDataKey =
 ChromeNavigationData::ChromeNavigationData()
     : previews_state_(content::PreviewsTypes::PREVIEWS_UNSPECIFIED) {}
 
-ChromeNavigationData::~ChromeNavigationData() {}
+ChromeNavigationData::~ChromeNavigationData() = default;
 
 ChromeNavigationData* ChromeNavigationData::GetDataAndCreateIfNecessary(
     net::URLRequest* request) {

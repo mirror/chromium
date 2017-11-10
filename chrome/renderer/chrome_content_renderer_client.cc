@@ -311,7 +311,7 @@ class MediaLoadDeferrer : public content::RenderFrameObserver {
                     const base::Closure& continue_loading_cb)
       : content::RenderFrameObserver(render_frame),
         continue_loading_cb_(continue_loading_cb) {}
-  ~MediaLoadDeferrer() override {}
+  ~MediaLoadDeferrer() override = default;
 
  private:
   // content::RenderFrameObserver implementation:
@@ -744,7 +744,7 @@ ChromeContentRendererClient::GetPluginInfoHost() {
       RenderThread::Get()->GetChannel()->GetRemoteAssociatedInterface(
           &plugin_info_host);
     }
-    ~PluginInfoHostHolder() {}
+    ~PluginInfoHostHolder() = default;
     chrome::mojom::PluginInfoHostAssociatedPtr plugin_info_host;
   };
   CR_DEFINE_STATIC_LOCAL(PluginInfoHostHolder, holder, ());

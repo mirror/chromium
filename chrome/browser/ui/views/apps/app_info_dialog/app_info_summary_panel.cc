@@ -104,8 +104,7 @@ LaunchOptionsComboboxModel::LaunchOptionsComboboxModel() {
   }
 }
 
-LaunchOptionsComboboxModel::~LaunchOptionsComboboxModel() {
-}
+LaunchOptionsComboboxModel::~LaunchOptionsComboboxModel() = default;
 
 extensions::LaunchType LaunchOptionsComboboxModel::GetLaunchTypeAtIndex(
     int index) const {

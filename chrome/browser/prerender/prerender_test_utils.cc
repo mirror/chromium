@@ -69,7 +69,7 @@ class MockHTTPJob : public net::URLRequestMockHTTPJob {
   }
 
  private:
-  ~MockHTTPJob() override {}
+  ~MockHTTPJob() override = default;
 
   base::Closure start_callback_;
 };
@@ -80,7 +80,7 @@ class CountingInterceptor : public net::URLRequestInterceptor {
   CountingInterceptor(const base::FilePath& file,
                       const base::WeakPtr<RequestCounter>& counter)
       : file_(file), counter_(counter), weak_factory_(this) {}
-  ~CountingInterceptor() override {}
+  ~CountingInterceptor() override = default;
 
   net::URLRequestJob* MaybeInterceptRequest(
       net::URLRequest* request,
@@ -167,7 +167,7 @@ class HangingURLRequestJob : public net::URLRequestJob {
   void Start() override {}
 
  private:
-  ~HangingURLRequestJob() override {}
+  ~HangingURLRequestJob() override = default;
 };
 
 class HangingFirstRequestInterceptor : public net::URLRequestInterceptor {
@@ -176,7 +176,7 @@ class HangingFirstRequestInterceptor : public net::URLRequestInterceptor {
       const base::FilePath& file,
       base::Callback<void(net::URLRequest*)> callback)
       : file_(file), callback_(callback), first_run_(true) {}
-  ~HangingFirstRequestInterceptor() override {}
+  ~HangingFirstRequestInterceptor() override = default;
 
   net::URLRequestJob* MaybeInterceptRequest(
       net::URLRequest* request,
@@ -252,7 +252,7 @@ void CreateHangingFirstRequestInterceptorOnIO(
 
 RequestCounter::RequestCounter() : count_(0), expected_count_(-1) {}
 
-RequestCounter::~RequestCounter() {}
+RequestCounter::~RequestCounter() = default;
 
 void RequestCounter::RequestStarted() {
   count_++;
@@ -274,7 +274,7 @@ void RequestCounter::WaitForCount(int expected_count) {
   EXPECT_EQ(expected_count, count_);
 }
 
-FakeSafeBrowsingDatabaseManager::FakeSafeBrowsingDatabaseManager() {}
+FakeSafeBrowsingDatabaseManager::FakeSafeBrowsingDatabaseManager() = default;
 
 bool FakeSafeBrowsingDatabaseManager::CheckBrowseUrl(
     const GURL& gurl,
@@ -311,7 +311,7 @@ bool FakeSafeBrowsingDatabaseManager::CheckExtensionIDs(
   return true;
 }
 
-FakeSafeBrowsingDatabaseManager::~FakeSafeBrowsingDatabaseManager() {}
+FakeSafeBrowsingDatabaseManager::~FakeSafeBrowsingDatabaseManager() = default;
 
 void FakeSafeBrowsingDatabaseManager::OnCheckBrowseURLDone(const GURL& gurl,
                                                            Client* client) {
@@ -433,7 +433,7 @@ DestructionWaiter::DestructionWaiter(TestPrerenderContents* prerender_contents,
   }
 }
 
-DestructionWaiter::~DestructionWaiter() {}
+DestructionWaiter::~DestructionWaiter() = default;
 
 bool DestructionWaiter::WaitForDestroy() {
   if (!saw_correct_status_) {
@@ -451,7 +451,7 @@ DestructionWaiter::DestructionMarker::DestructionMarker(
     DestructionWaiter* waiter)
     : waiter_(waiter) {}
 
-DestructionWaiter::DestructionMarker::~DestructionMarker() {}
+DestructionWaiter::DestructionMarker::~DestructionMarker() = default;
 
 void DestructionWaiter::DestructionMarker::OnPrerenderStop(
     PrerenderContents* contents) {
@@ -550,7 +550,8 @@ FirstContentfulPaintManagerWaiter* FirstContentfulPaintManagerWaiter::Create(
 FirstContentfulPaintManagerWaiter::FirstContentfulPaintManagerWaiter()
     : saw_fcp_(false) {}
 
-FirstContentfulPaintManagerWaiter::~FirstContentfulPaintManagerWaiter() {}
+FirstContentfulPaintManagerWaiter::~FirstContentfulPaintManagerWaiter() =
+    default;
 
 void FirstContentfulPaintManagerWaiter::OnFirstContentfulPaint() {
   saw_fcp_ = true;
@@ -566,7 +567,7 @@ void FirstContentfulPaintManagerWaiter::Wait() {
   waiter_.reset();
 }
 
-TestPrerenderContentsFactory::TestPrerenderContentsFactory() {}
+TestPrerenderContentsFactory::TestPrerenderContentsFactory() = default;
 
 TestPrerenderContentsFactory::~TestPrerenderContentsFactory() {
   EXPECT_TRUE(expected_contents_queue_.empty());
@@ -610,7 +611,7 @@ TestPrerenderContentsFactory::ExpectedContents::ExpectedContents(
     const base::WeakPtr<TestPrerender>& handle)
     : final_status(final_status), handle(handle) {}
 
-TestPrerenderContentsFactory::ExpectedContents::~ExpectedContents() {}
+TestPrerenderContentsFactory::ExpectedContents::~ExpectedContents() = default;
 
 PrerenderInProcessBrowserTest::PrerenderInProcessBrowserTest()
     : external_protocol_handler_delegate_(
@@ -621,7 +622,7 @@ PrerenderInProcessBrowserTest::PrerenderInProcessBrowserTest()
       explicitly_set_browser_(nullptr),
       autostart_test_server_(true) {}
 
-PrerenderInProcessBrowserTest::~PrerenderInProcessBrowserTest() {}
+PrerenderInProcessBrowserTest::~PrerenderInProcessBrowserTest() = default;
 
 void PrerenderInProcessBrowserTest::SetUpCommandLine(
     base::CommandLine* command_line) {

@@ -47,10 +47,10 @@ const char kBackgroundHistogramMultiTabLoadingLoad[] =
 }  // namespace internal
 
 MultiTabLoadingPageLoadMetricsObserver::
-    MultiTabLoadingPageLoadMetricsObserver() {}
+    MultiTabLoadingPageLoadMetricsObserver() = default;
 
 MultiTabLoadingPageLoadMetricsObserver::
-    ~MultiTabLoadingPageLoadMetricsObserver() {}
+    ~MultiTabLoadingPageLoadMetricsObserver() = default;
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 MultiTabLoadingPageLoadMetricsObserver::OnStart(

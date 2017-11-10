@@ -60,7 +60,7 @@ WebstoreBindings::WebstoreBindings(ScriptContext* context)
         &inline_installer_);
 }
 
-WebstoreBindings::~WebstoreBindings() {}
+WebstoreBindings::~WebstoreBindings() = default;
 
 void WebstoreBindings::InlineInstallResponse(int install_id,
                                              bool success,

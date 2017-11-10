@@ -20,8 +20,7 @@ ChromeHistoryClient::ChromeHistoryClient(
     : bookmark_model_(bookmark_model), is_bookmark_model_observer_(false) {
 }
 
-ChromeHistoryClient::~ChromeHistoryClient() {
-}
+ChromeHistoryClient::~ChromeHistoryClient() = default;
 
 void ChromeHistoryClient::OnHistoryServiceCreated(
     history::HistoryService* history_service) {
