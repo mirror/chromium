@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0629573b_baa67088",
+        "filename": "chrome/browser/accessibility/accessibility_extension_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-10T15:58:51Z",
+      "side": 1,
+      "message": "Is there a reason to not use the generated types and conversion here?",
+      "revId": "af3033c1730d820f666aba6239c1557009ec13fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6b4d7b_5b0f19c0",
+        "filename": "chrome/common/extensions/api/accessibility_private.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-10T15:58:51Z",
+      "side": 1,
+      "message": "these should be descriptive, rather than imperative.  i.e., \"Sets\" instead of \"Set\".",
+      "revId": "af3033c1730d820f666aba6239c1557009ec13fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
