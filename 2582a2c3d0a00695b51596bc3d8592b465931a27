@@ -33,6 +33,24 @@
       "revId": "2582a2c3d0a00695b51596bc3d8592b465931a27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a046650b_8a8d8058",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-10T21:22:17Z",
+      "side": 1,
+      "message": "That makes sense to me. We could just add these new binaries to llvmobjdump, and later perhaps give it another name (e.g. llvm-binutils).",
+      "parentUuid": "8c81154c_f0b1485b",
+      "revId": "2582a2c3d0a00695b51596bc3d8592b465931a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
