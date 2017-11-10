@@ -132,6 +132,8 @@ StreamMixer::StreamMixer()
           std::make_unique<PostProcessingPipelineFactoryImpl>()),
       mixer_thread_(new base::Thread("CMA mixer thread")),
       state_(kStateUninitialized),
+      requested_playout_channels_(kNumInputChannels - kChannelAll),
+      playout_channel_(kChannelAll),
       retry_write_frames_timer_(new base::Timer(false, false)),
       check_close_timeout_(kDefaultCheckCloseTimeoutMs),
       check_close_timer_(new base::Timer(false, false)),
@@ -298,6 +300,7 @@ bool StreamMixer::Start() {
   for (auto&& filter_group : filter_groups_) {
     filter_group->Initialize(output_samples_per_second_);
   }
+  UpdatePlayoutChannel();
 
   state_ = kStateNormalPlayback;
   return true;
@@ -528,10 +531,10 @@ bool StreamMixer::TryWriteFrames() {
   int chunk_size =
       (output_samples_per_second_ * kMaxAudioWriteTimeMilliseconds / 1000) &
       ~(filter_frame_alignment_ - 1);
-  bool is_silence = true;
   for (auto&& filter_group : filter_groups_) {
     filter_group->ClearActiveInputs();
   }
+  bool is_silence = true;
   for (auto&& input : inputs_) {
     int read_size = input->MaxReadSize() & ~(filter_frame_alignment_ - 1);
     if (read_size > 0) {
@@ -730,16 +733,24 @@ void StreamMixer::SetPostProcessorConfig(const std::string& name,
   }
 }
 
-void StreamMixer::UpdatePlayoutChannel(int playout_channel) {
-  RUN_ON_MIXER_THREAD(&StreamMixer::UpdatePlayoutChannel, playout_channel);
-  LOG(INFO) << "Update playout channel: " << playout_channel;
+void StreamMixer::UpdatePlayoutChannel() {
+  DCHECK(mixer_task_runner_->BelongsToCurrentThread());
   DCHECK(mix_filter_);
   DCHECK(linearize_filter_);
 
+  playout_channel_ = kChannelAll;
+  for (size_t i = 0; i < requested_playout_channels_.size(); ++i) {
+    if (requested_playout_channels_[i] > 0) {
+      playout_channel_ = i + kChannelAll;
+      break;
+    }
+  }
+  LOG(INFO) << "Update playout channel: " << playout_channel_;
+
   mix_filter_->SetMixToMono(num_output_channels_ == 1 &&
-                            playout_channel == kChannelAll);
+                            playout_channel_ == kChannelAll);
   for (auto& filter_group : filter_groups_) {
-    filter_group->UpdatePlayoutChannel(playout_channel);
+    filter_group->UpdatePlayoutChannel(playout_channel_);
   }
 }
 
@@ -750,6 +761,29 @@ void StreamMixer::SetFilterFrameAlignmentForTest(int filter_frame_alignment) {
       << "Frame alignment ( " << filter_frame_alignment
       << ") is not a power of two";
   filter_frame_alignment_ = filter_frame_alignment;
+}
+
+void StreamMixer::AddPlayoutChannelRequest(int channel) {
+  RUN_ON_MIXER_THREAD(&StreamMixer::AddPlayoutChannelRequest, channel);
+  DCHECK_GE(channel, kChannelAll);
+  DCHECK_LT(channel - kChannelAll,
+            static_cast<int>(requested_playout_channels_.size()));
+
+  LOG(INFO) << channel - kChannelAll << "++";
+  ++requested_playout_channels_[channel - kChannelAll];
+  UpdatePlayoutChannel();
+}
+
+void StreamMixer::RemovePlayoutChannelRequest(int channel) {
+  RUN_ON_MIXER_THREAD(&StreamMixer::RemovePlayoutChannelRequest, channel);
+  DCHECK_GE(channel, kChannelAll);
+  DCHECK_LT(channel - kChannelAll,
+            static_cast<int>(requested_playout_channels_.size()));
+
+  LOG(INFO) << channel - kChannelAll << "--";
+  --requested_playout_channels_[channel - kChannelAll];
+  DCHECK_GE(requested_playout_channels_[channel - kChannelAll], 0);
+  UpdatePlayoutChannel();
 }
 
 }  // namespace media
