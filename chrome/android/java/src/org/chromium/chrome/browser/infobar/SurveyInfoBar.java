@@ -13,6 +13,7 @@ import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.survey.SurveyController;
+import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.text.NoUnderlineClickableSpan;
@@ -35,6 +36,9 @@ public class SurveyInfoBar extends InfoBar {
     // The delegate to handle what happens when info bar events are triggered.
     private final SurveyInfoBarDelegate mDelegate;
 
+    // The tab that the infobar is attached to.
+    private final Tab mTab;
+
     /**
      * Create and show the {@link SurveyInfoBar}.
      * @param webContents The webcontents to create the {@link InfoBar} around.
@@ -56,15 +60,17 @@ public class SurveyInfoBar extends InfoBar {
      *                         Pass 0 for no logo.
      * @param surveyInfoBarDelegate The delegate to customize what happens when different events in
      *                              SurveyInfoBar are triggered.
+     * @param tab The tab onto which infobar is to be attached.
      */
     private SurveyInfoBar(String siteId, boolean showAsBottomSheet, int displayLogoResId,
-            SurveyInfoBarDelegate surveyInfoBarDelegate) {
+            SurveyInfoBarDelegate surveyInfoBarDelegate, Tab tab) {
         super(displayLogoResId, null, null);
 
         mSiteId = siteId;
         mShowAsBottomSheet = showAsBottomSheet;
         mDisplayLogoResId = displayLogoResId;
         mDelegate = surveyInfoBarDelegate;
+        mTab = tab;
     }
 
     @Override
@@ -74,6 +80,14 @@ public class SurveyInfoBar extends InfoBar {
 
     @Override
     protected void createCompactLayoutContent(InfoBarCompactLayout layout) {
+        mTab.addObserver(new EmptyTabObserver() {
+            @Override
+            public void onHidden(Tab tab) {
+                closeInfoBar();
+                mTab.removeObserver(this);
+            }
+        });
+
         NoUnderlineClickableSpan clickableSpan = new NoUnderlineClickableSpan() {
             @Override
             public void onClick(View widget) {
@@ -97,6 +111,14 @@ public class SurveyInfoBar extends InfoBar {
         layout.addContent(prompt, 1f);
     }
 
+    /**
+     * Closes the infobar without calling the {@link SurveyInfoBarDelegate}'s onSurveyInfoBarClosed.
+     */
+    private void closeInfoBar() {
+        // TODO(mdjones): add a proper close method to programatically close the infobar.
+        super.onCloseButtonClicked();
+    }
+
     @Override
     public void onCloseButtonClicked() {
         mDelegate.onSurveyInfoBarClosed();
@@ -105,9 +127,9 @@ public class SurveyInfoBar extends InfoBar {
 
     @CalledByNative
     private static SurveyInfoBar create(String siteId, boolean showAsBottomSheet,
-            int displayLogoResId, SurveyInfoBarDelegate surveyInfoBarDelegate) {
+            int displayLogoResId, SurveyInfoBarDelegate surveyInfoBarDelegate, Tab tab) {
         return new SurveyInfoBar(
-                siteId, showAsBottomSheet, displayLogoResId, surveyInfoBarDelegate);
+                siteId, showAsBottomSheet, displayLogoResId, surveyInfoBarDelegate, tab);
     }
 
     private static native void nativeCreate(WebContents webContents, String siteId,
