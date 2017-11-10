@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "643be336_a084a58a",
+        "filename": "ash/display/display_configuration_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T18:10:56Z",
+      "side": 1,
+      "message": "s/the above/SetDisplayLayout/ (methods may get moved)",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7464c800_e6e77796",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T18:10:56Z",
+      "side": 1,
+      "message": "s/big/?/ I\u0027m not sure what \"big\" means here. \"combined\"? \"largest\"?",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff39879_e072175e",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T18:10:56Z",
+      "side": 1,
+      "message": "This is also confusing. Is this \"The active list of displays only contains a single unified display entry with id |kUnifiedDisplayId|\" ?",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbec04fc_373a6880",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T18:10:56Z",
+      "side": 1,
+      "message": "nit: Use base::StringPrintf",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f8043c0_c6233108",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T18:10:56Z",
+      "side": 1,
+      "message": "DCHECK(layout-\u003eprimary_id !\u003d kInvalidDisplayId)?",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "637c1b3b_47c1c954",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T18:10:56Z",
+      "side": 1,
+      "message": "Is GetPrimaryMirroringDisplayForUnifiedDesktop() gauranteed to return a valid display? If not we need to handle that, otherwise we should use a local and add a DCHECK to document that.",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a74d33_fa973a70",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T18:10:56Z",
+      "side": 1,
+      "message": "nit: Move this to a helper function.",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db72f4b_07ce430d",
+        "filename": "extensions/browser/api/system_display/system_display_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T18:10:56Z",
+      "side": 1,
+      "message": "Is passing the error details to the JS useful? We are already logging the error details.",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11298ee0_1cb8c0a0",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T18:10:56Z",
+      "side": 1,
+      "message": "It looks like this can just be inlined and named current_matrix() ?",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
