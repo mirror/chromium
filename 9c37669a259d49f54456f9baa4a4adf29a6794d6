@@ -39,6 +39,24 @@
       "revId": "9c37669a259d49f54456f9baa4a4adf29a6794d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03faedd4_2f3f9be4",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-10T16:27:22Z",
+      "side": 1,
+      "message": "Thanks. I\u0027ve already changed this is behavior in my CL. This constant is referenced in some iOS specific unittests as well. It has been (er.. will be, when my CL lands) replaced with the minimum of {min for heuristics, min for query, min for upload}... which will default to 1 (min for upload).",
+      "parentUuid": "c073ccf2_28b73dfc",
+      "revId": "9c37669a259d49f54456f9baa4a4adf29a6794d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
