@@ -83,6 +83,7 @@ import org.chromium.chrome.browser.metrics.LaunchMetrics;
 import org.chromium.chrome.browser.metrics.MainIntentBehaviorMetrics;
 import org.chromium.chrome.browser.metrics.StartupMetrics;
 import org.chromium.chrome.browser.metrics.UmaUtils;
+import org.chromium.chrome.browser.modaldialog.TabModalDialogManager;
 import org.chromium.chrome.browser.multiwindow.MultiInstanceChromeTabbedActivity;
 import org.chromium.chrome.browser.multiwindow.MultiWindowUtils;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
@@ -241,6 +242,8 @@ public class ChromeTabbedActivity
     private UndoBarController mUndoBarPopupController;
 
     private LayoutManagerChrome mLayoutManager;
+
+    private TabModalDialogManager mTabModalDialogManager;
 
     private ViewGroup mContentContainer;
 
@@ -1531,6 +1534,8 @@ public class ChromeTabbedActivity
 
         mUndoBarPopupController = new UndoBarController(this, mTabModelSelectorImpl,
                 getSnackbarManager());
+
+        mTabModalDialogManager = new TabModalDialogManager(this);
     }
 
     @Override
@@ -1861,6 +1866,8 @@ public class ChromeTabbedActivity
         super.onOmniboxFocusChanged(hasFocus);
 
         mMainIntentMetrics.onOmniboxFocused();
+
+        mTabModalDialogManager.onOmniboxFocusChanged(hasFocus);
     }
 
     private void recordBackPressedUma(String logMessage, @BackPressedResult int action) {
@@ -1894,6 +1901,8 @@ public class ChromeTabbedActivity
     public boolean handleBackPressed() {
         if (!mUIInitialized) return false;
         final Tab currentTab = getActivityTab();
+
+        if (mTabModalDialogManager.handleBackPress()) return true;
 
         if (exitFullscreenIfShowing()) {
             recordBackPressedUma("Exited fullscreen", BACK_PRESSED_EXITED_FULLSCREEN);
@@ -2165,6 +2174,14 @@ public class ChromeTabbedActivity
     @VisibleForTesting
     public LayoutManagerChrome getLayoutManager() {
         return (LayoutManagerChrome) getCompositorViewHolder().getLayoutManager();
+    }
+
+    /**
+     * @return The {@link TabModalDialogManager} that manages the display of tab modal dialogs (e.g.
+     * JavaScript dialogs).
+     */
+    public TabModalDialogManager getModalDialogManager() {
+        return mTabModalDialogManager;
     }
 
     @VisibleForTesting
