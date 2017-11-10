@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "90addecc_4dad56f9",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-10T23:38:47Z",
+      "side": 1,
+      "message": "nit: maybe also log the source_id / presentation_id?",
+      "revId": "e7b5c40b68fee77791b31917368953269817376d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7116005a_b578b08b",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-10T23:38:47Z",
+      "side": 1,
+      "message": "It seems we should have a route list (or route to MRP mapping) at the MediaRouterMojoImpl level (until we introduce MRP ID to MediaRoute, in which case we should keep the mapping in MediaRouterBase using its internal MRO). |providers_to_routes_| should be identical for all route queries.",
+      "revId": "e7b5c40b68fee77791b31917368953269817376d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0af479d2_a273ff9a",
         "filename": "chrome/common/media_router/media_route.h",
         "patchSetId": 2
@@ -16,6 +50,29 @@
       "revId": "e7b5c40b68fee77791b31917368953269817376d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "582608e9_96e674cd",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-10T23:38:47Z",
+      "side": 1,
+      "message": "route.presentationId || \u0027\u0027 for backwards compatibility? Also move to bottom with a milestone comment.",
+      "range": {
+        "startLine": 88,
+        "startChar": 46,
+        "endLine": 88,
+        "endChar": 0
+      },
+      "revId": "e7b5c40b68fee77791b31917368953269817376d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
