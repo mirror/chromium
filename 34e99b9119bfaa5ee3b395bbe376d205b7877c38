@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60c5b8b6_020f4564",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:14:38Z",
+      "side": 1,
+      "message": "Avoid using code names. Instead say \"Chrome on iOS\". Or Maybe just\n\n  Enable new bookmarks UI by default on iOS.",
+      "range": {
+        "startLine": 7,
+        "startChar": 44,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "34e99b9119bfaa5ee3b395bbe376d205b7877c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
