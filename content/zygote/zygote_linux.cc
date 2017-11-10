@@ -35,6 +35,7 @@
 #include "content/common/zygote_commands_linux.h"
 #include "content/public/common/common_sandbox_support_linux.h"
 #include "content/public/common/content_descriptors.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/common/mojo_channel_switches.h"
 #include "content/public/common/result_codes.h"
 #include "content/public/common/send_zygote_child_ping_linux.h"
@@ -45,6 +46,7 @@
 #include "services/service_manager/embedder/set_process_title.h"
 #include "services/service_manager/sandbox/linux/sandbox_linux.h"
 #include "services/service_manager/sandbox/sandbox.h"
+#include "third_party/icu/source/i18n/unicode/timezone.h"
 
 // See https://chromium.googlesource.com/chromium/src/+/master/docs/linux_zygote.md
 
@@ -583,6 +585,15 @@ base::ProcessId Zygote::ReadArgsAndFork(base::PickleIterator iter,
     return -1;
   if (numfds != static_cast<int>(fds.size()))
     return -1;
+
+  if (process_type == switches::kRendererProcess) {
+    base::string16 timezone_id;
+    if (!iter.ReadString16(&timezone_id))
+      return -1;
+    std::unique_ptr<icu::TimeZone> timezone(
+        icu::TimeZone::createTimeZone(timezone_id.data()));
+    icu::TimeZone::adoptDefault(timezone.release());
+  }
 
   // First FD is the PID oracle socket.
   if (fds.size() < 1)
