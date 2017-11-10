@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1de2976_342ccc93",
+        "filename": "net/http/http_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-10T16:25:34Z",
+      "side": 1,
+      "message": "Should this only trim off the end?\n\nIf so, should we just call TimeLWS on tokenizer.token_begin() / tokenizer.token_end(), and get rid of other trimming logic?",
+      "range": {
+        "startLine": 111,
+        "startChar": 15,
+        "endLine": 111,
+        "endChar": 32
+      },
+      "revId": "167164647338f850685c386df91db1bf7f7e934d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
