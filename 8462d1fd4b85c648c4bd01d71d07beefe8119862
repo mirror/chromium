@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c766c04c_e614b24d",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-10T17:56:28Z",
+      "side": 1,
+      "message": "I think there are two possibilities:\n1. When the text changes schedule a paint for the entire row.\n2. Change this to always paint the entire row.\n\nI\u0027m inclined to go with 2, it\u0027s safest and easy to understand. I would probably inline the computation of the row bounds right here.",
+      "parentUuid": "3e8ab413_029ed082",
+      "range": {
+        "startLine": 745,
+        "startChar": 22,
+        "endLine": 745,
+        "endChar": 38
+      },
+      "revId": "8462d1fd4b85c648c4bd01d71d07beefe8119862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6256be19_20d95775",
         "filename": "ui/views/controls/tree/tree_view.cc",
         "patchSetId": 1
