@@ -148,10 +148,9 @@ static inline HTMLElement* AncestorToRetainStructureAndAppearance(
 
 static inline HTMLElement*
 AncestorToRetainStructureAndAppearanceWithNoLayoutObject(
-    Node* common_ancestor) {
+    const Node& common_ancestor) {
   HTMLElement* common_ancestor_block = ToHTMLElement(EnclosingNodeOfType(
-      FirstPositionInOrBeforeNodeDeprecated(common_ancestor),
-      IsHTMLBlockElement));
+      FirstPositionInOrBeforeNode(common_ancestor), IsHTMLBlockElement));
   return AncestorToRetainStructureAndAppearanceForBlock(common_ancestor_block);
 }
 
@@ -187,7 +186,8 @@ static HTMLElement* HighestAncestorToWrapMarkup(
     special_common_ancestor =
         AncestorToRetainStructureAndAppearance(common_ancestor);
     if (Node* parent_list_node = EnclosingNodeOfType(
-            FirstPositionInOrBeforeNodeDeprecated(first_node), IsListItem)) {
+            first_node ? FirstPositionInOrBeforeNode(*first_node) : Position(),
+            IsListItem)) {
       EphemeralRangeTemplate<Strategy> markup_range =
           EphemeralRangeTemplate<Strategy>(start_position, end_position);
       EphemeralRangeTemplate<Strategy> node_range = NormalizeRange(
@@ -203,7 +203,8 @@ static HTMLElement* HighestAncestorToWrapMarkup(
     // Retain the Mail quote level by including all ancestor mail block quotes.
     if (HTMLQuoteElement* highest_mail_blockquote =
             ToHTMLQuoteElement(HighestEnclosingNodeOfType(
-                FirstPositionInOrBeforeNodeDeprecated(first_node),
+                first_node ? FirstPositionInOrBeforeNode(*first_node)
+                           : Position(),
                 IsMailHTMLBlockquoteElement, kCanCrossEditingBoundary)))
       special_common_ancestor = highest_mail_blockquote;
   }
@@ -419,7 +420,8 @@ DocumentFragment* CreateFragmentFromMarkupWithContext(
       Position::AfterNode(*node_before_context).ParentAnchoredEquivalent(),
       Position::BeforeNode(*node_after_context).ParentAnchoredEquivalent());
 
-  Node* common_ancestor = range.CommonAncestorContainer();
+  DCHECK(range.CommonAncestorContainer());
+  Node& common_ancestor = *range.CommonAncestorContainer();
   HTMLElement* special_common_ancestor =
       AncestorToRetainStructureAndAppearanceWithNoLayoutObject(common_ancestor);
 
@@ -431,7 +433,7 @@ DocumentFragment* CreateFragmentFromMarkupWithContext(
   if (special_common_ancestor)
     fragment->AppendChild(special_common_ancestor);
   else
-    fragment->ParserTakeAllChildrenFrom(ToContainerNode(*common_ancestor));
+    fragment->ParserTakeAllChildrenFrom(ToContainerNode(common_ancestor));
 
   TrimFragment(fragment, node_before_context, node_after_context);
 
