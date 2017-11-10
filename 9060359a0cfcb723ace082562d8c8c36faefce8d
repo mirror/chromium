@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b95ebfaa_77352c95",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-10T22:42:57Z",
+      "side": 1,
+      "message": "I don\u0027t have a totally clear vision going forward, but would it make sense to move the NOSCRIPT check to outside the IsOptimizationHintsEnabled check since this is checked in both sides of the conditional? Maybe later a DoesPreviewTypeUseOptHints.",
+      "revId": "9060359a0cfcb723ace082562d8c8c36faefce8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
