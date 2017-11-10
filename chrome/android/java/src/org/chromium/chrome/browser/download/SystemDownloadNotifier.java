@@ -261,8 +261,11 @@ public class SystemDownloadNotifier implements DownloadNotifier, Observer {
         startAndBindToServiceIfNeeded();
 
         if (mBoundService == null) {
-            mPendingNotifications.put(
-                    notificationInfo.downloadInfo.getContentId(), notificationInfo);
+            ContentId contentId =
+                    (notificationInfo != null && notificationInfo.downloadInfo != null)
+                    ? notificationInfo.downloadInfo.getContentId()
+                    : null;
+            mPendingNotifications.put(contentId, notificationInfo);
             return;
         }
 
