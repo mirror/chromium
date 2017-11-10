@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9087342d_2692f939",
+        "filename": "content/child/child_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-10T03:08:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure that we always have a non-null scheduler here. Should we try GetScheduler() ? GetScheduler()-\u003eIPCTaskRunner() : base::ThreadTaskRunnerHandle::Get()?",
+      "range": {
+        "startLine": 442,
+        "startChar": 31,
+        "endLine": 442,
+        "endChar": 43
+      },
+      "revId": "11570771db4feb1db7bd4a51a444f9e45b3e7eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19747dcd_8fcc8013",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 2
