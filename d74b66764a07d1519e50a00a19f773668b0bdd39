@@ -141,6 +141,30 @@
       "revId": "d74b66764a07d1519e50a00a19f773668b0bdd39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "086eeb50_a6e836eb",
+        "filename": "chrome/browser/ui/tabs/tab_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-10T18:55:02Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "1837830a_5777fb68",
+      "range": {
+        "startLine": 390,
+        "startChar": 0,
+        "endLine": 397,
+        "endChar": 5
+      },
+      "revId": "d74b66764a07d1519e50a00a19f773668b0bdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
