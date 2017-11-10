@@ -257,6 +257,7 @@ DownloadItemImpl::DownloadItemImpl(
       received_slices_(received_slices),
       net_log_(net_log),
       is_updating_observers_(false),
+      download_ukm_helper_(ukm::UkmRecorder::Get(), site_url),
       weak_ptr_factory_(this) {
   delegate_->Attach();
   DCHECK(state_ == COMPLETE_INTERNAL || state_ == INTERRUPTED_INTERNAL ||
@@ -303,6 +304,7 @@ DownloadItemImpl::DownloadItemImpl(DownloadItemImplDelegate* delegate,
       net_log_(net_log),
       is_updating_observers_(false),
       fetch_error_body_(info.fetch_error_body),
+      download_ukm_helper_(ukm::UkmRecorder::Get(), info.site_url),
       weak_ptr_factory_(this) {
   delegate_->Attach();
   Init(true /* actively downloading */, SRC_ACTIVE_DOWNLOAD);
@@ -337,6 +339,7 @@ DownloadItemImpl::DownloadItemImpl(
       destination_info_(path, path, 0, false, std::string(), base::Time()),
       net_log_(net_log),
       is_updating_observers_(false),
+      download_ukm_helper_(ukm::UkmRecorder::Get(), url),
       weak_ptr_factory_(this) {
   job_ = DownloadJobFactory::CreateJob(this, std::move(request_handle),
                                        DownloadCreateInfo(), true);
@@ -1303,6 +1306,7 @@ void DownloadItemImpl::Start(
     std::unique_ptr<DownloadFile> file,
     std::unique_ptr<DownloadRequestHandleInterface> req_handle,
     const DownloadCreateInfo& new_create_info) {
+  LOG(ERROR) << "joy: DownloadItemImpl::Start";
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!download_file_.get());
   DVLOG(20) << __func__ << "() this=" << DebugString(true);
@@ -1361,18 +1365,23 @@ void DownloadItemImpl::Start(
     return;
   }
 
+  int file_type;
   if (state_ == INITIAL_INTERNAL) {
     RecordDownloadCount(NEW_DOWNLOAD_COUNT);
     if (job_->IsParallelizable()) {
       RecordParallelizableDownloadCount(NEW_DOWNLOAD_COUNT,
                                         IsParallelDownloadEnabled());
     }
-    RecordDownloadMimeType(mime_type_);
+
     if (!GetBrowserContext()->IsOffTheRecord()) {
       RecordDownloadCount(NEW_DOWNLOAD_COUNT_NORMAL_PROFILE);
       RecordDownloadMimeTypeForNormalProfile(mime_type_);
     }
   }
+
+  int num_streams = IsParallelizable() ? 2 : 1;
+  int component = 0;  // TODO(jming): How to figure out the component?
+  download_ukm_helper_.RecordDownloadStarted(file_type, num_streams, component);
 
   // Successful download start.
   DCHECK(download_file_);
@@ -1691,6 +1700,7 @@ void DownloadItemImpl::Completed() {
 
   bool is_parallelizable = job_ && job_->IsParallelizable();
   RecordDownloadCompleted(start_tick_, GetReceivedBytes(), is_parallelizable);
+
   if (!GetBrowserContext()->IsOffTheRecord()) {
     RecordDownloadCount(COMPLETED_COUNT_NORMAL_PROFILE);
   }
@@ -1724,6 +1734,15 @@ void DownloadItemImpl::Completed() {
     auto_opened_ = true;
   }
   UpdateObservers();
+
+  int time_since_start = GetEndTime() - GetStartTime();
+  int status = 0;  // TODO(jming): How to get status for download completion?
+  int bytes_wasted = 0;  // TODO(jming): It doesn't seem like this is being
+                         // tracked on the native level yet?
+  int change_in_file_size = GetReceivedBytes() - GetTotalBytes();
+  download_ukm_helper_.RecordDownloadEnded(time_since_start, status,
+                                           resulting_file_size, bytes_wasted,
+                                           change_in_file_size);
 }
 
 // **** End of Download progression cascade
@@ -1744,6 +1763,8 @@ void DownloadItemImpl::InterruptWithPartialState(
             << " bytes_so_far:" << bytes_so_far
             << " hash_state:" << (hash_state ? "Valid" : "Invalid")
             << " this=" << DebugString(true);
+
+  int time_since_start = base::Time::Now() - GetStartTime();
 
   // Somewhat counter-intuitively, it is possible for us to receive an
   // interrupt after we've already been interrupted.  The generation of
@@ -1867,6 +1888,8 @@ void DownloadItemImpl::InterruptWithPartialState(
   RecordDownloadInterrupted(reason, GetReceivedBytes(), total_bytes_,
                             job_ && job_->IsParallelizable(),
                             IsParallelDownloadEnabled());
+  download_ukm_helper_.RecordDownloadInterrupted(time_since_start, int(reason));
+
   if (reason == DOWNLOAD_INTERRUPT_REASON_SERVER_CONTENT_LENGTH_MISMATCH)
     received_bytes_at_length_mismatch_ = GetReceivedBytes();
 
@@ -2128,6 +2151,9 @@ void DownloadItemImpl::AutoResumeIfValid() {
 void DownloadItemImpl::ResumeInterruptedDownload(
     ResumptionRequestSource source) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  int time_since_start = base::Time::Now() - GetStartTime();
+
   // If we're not interrupted, ignore the request; our caller is drunk.
   if (state_ != INTERRUPTED_INTERNAL)
     return;
@@ -2209,6 +2235,8 @@ void DownloadItemImpl::ResumeInterruptedDownload(
   RecordDownloadSource(source == ResumptionRequestSource::USER
                            ? INITIATED_BY_MANUAL_RESUMPTION
                            : INITIATED_BY_AUTOMATIC_RESUMPTION);
+  download_ukm_helper_.RecordDownloadResumed(time_since_start,
+                                             int(GetResumeMode()));
   delegate_->ResumeInterruptedDownload(std::move(download_params), GetId());
 
   if (job_)
