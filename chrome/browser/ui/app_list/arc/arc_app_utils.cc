@@ -27,6 +27,7 @@
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/arc_util.h"
 #include "components/arc/common/intent_helper.mojom.h"
+#include "components/arc/intent_helper/arc_intent_helper_bridge.h"
 #include "components/crx_file/id_util.h"
 #include "ui/aura/window.h"
 #include "ui/display/display.h"
@@ -58,7 +59,8 @@ namespace {
 // Intent helper strings.
 constexpr char kIntentHelperClassName[] =
     "org.chromium.arc.intent_helper.SettingsReceiver";
-constexpr char kIntentHelperPackageName[] = "org.chromium.arc.intent_helper";
+const std::string kIntentHelperPackageName =
+    ArcIntentHelperBridge::kArcIntentHelperPackageName;
 constexpr char kSetInTouchModeIntent[] =
     "org.chromium.arc.intent_helper.SET_IN_TOUCH_MODE";
 constexpr char kShowTalkbackSettingsIntent[] =
