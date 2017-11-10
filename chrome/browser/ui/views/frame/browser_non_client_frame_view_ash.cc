@@ -175,7 +175,9 @@ gfx::Rect BrowserNonClientFrameViewAsh::GetBoundsForTabStrip(
 }
 
 int BrowserNonClientFrameViewAsh::GetTopInset(bool restored) const {
-  if (!ShouldPaint()) {
+  // When non-immersive fullscreen window in overview mode, we do not paint V1
+  // apps' header. But the inset value is determined afterwards.
+  if (!ShouldPaint() && !in_overview_mode_) {
     // When immersive fullscreen unrevealed, tabstrip is offscreen with normal
     // tapstrip bounds, the top inset should reach this topmost edge.
     const ImmersiveModeController* const immersive_controller =
@@ -375,10 +377,16 @@ void BrowserNonClientFrameViewAsh::OnOverviewModeStarting() {
   frame()->GetNativeWindow()->SetProperty(aura::client::kTopViewColor,
                                           GetFrameColor());
   caption_button_container_->SetVisible(false);
+  in_overview_mode_ = true;
+  // Not paint the header.
+  SchedulePaint();
 }
 
 void BrowserNonClientFrameViewAsh::OnOverviewModeEnded() {
   caption_button_container_->SetVisible(true);
+  in_overview_mode_ = false;
+  // Paint the header.
+  SchedulePaint();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -500,5 +508,9 @@ bool BrowserNonClientFrameViewAsh::ShouldPaint() const {
   if (immersive_mode_controller->IsEnabled())
     return immersive_mode_controller->IsRevealed();
 
-  return !frame()->IsFullscreen();
+  if (frame()->IsFullscreen())
+    return false;
+
+  // We do not paint when V1 apps are in overview mode.
+  return !in_overview_mode_ || browser_view()->IsBrowserTypeNormal();
 }
