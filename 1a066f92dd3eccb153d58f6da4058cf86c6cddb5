@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e2a08b9f_4350fc15",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2145,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T20:40:52Z",
+      "side": 1,
+      "message": "I think the idea is that these might be enabled or continue on independent of WebVR 1.1. I don\u0027t know if that\u0027s still the case. bajones?",
+      "parentUuid": "0d294e8a_835a8f7c",
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30e6d740_80e84e05",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 3
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "That\u0027s primarily due to it\u0027s age. I wouldn\u0027t object to normalizing it with the other VR flags.",
       "parentUuid": "30e6d740_80e84e05",
+      "range": {
+        "startLine": 2152,
+        "startChar": 5,
+        "endLine": 2152,
+        "endChar": 22
+      },
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab1b3995_5aaf24b8",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2152,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T20:40:52Z",
+      "side": 1,
+      "message": "I think doing so might reset the flag for developers and others. Since we want to eliminate this 1.1 flag, we can do the right thing later. I added more notes to the TODO as well.",
+      "parentUuid": "5366a4d4_2c0f9fd1",
       "range": {
         "startLine": 2152,
         "startChar": 5,
@@ -199,6 +241,30 @@
     },
     {
       "key": {
+        "uuid": "447f886a_4d49dfa6",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2168,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T20:40:52Z",
+      "side": 1,
+      "message": "Yes, I changed it locally but didn\u0027t want to bury these comments by uploading.",
+      "parentUuid": "311c924d_241f9bd1",
+      "range": {
+        "startLine": 2168,
+        "startChar": 68,
+        "endLine": 2168,
+        "endChar": 74
+      },
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6c55283_fb5ffa37",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 3
@@ -251,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "5588dc0a_e4938eb8",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2178,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T20:40:52Z",
+      "side": 1,
+      "message": "Thanks. No, I just wanted to make sure I wasn\u0027t missing any places I need to rename.",
+      "parentUuid": "46e65aa4_774ba6cc",
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "322292bd_08cbd43a",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 3
@@ -271,6 +355,30 @@
       "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385143c0_87d6f501",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2180,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T20:40:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "322292bd_08cbd43a",
+      "range": {
+        "startLine": 2180,
+        "startChar": 41,
+        "endLine": 2180,
+        "endChar": 56
+      },
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
