@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62392ead_87d1de2d",
+        "filename": "ui/login/account_picker/md_user_pod_row.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 2678,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T18:20:54Z",
+      "side": 1,
+      "message": "Nit (optional):\n\nreturn this.user.needsSignin \u0026\u0026 this.user.hasLocalCreds ?\n    this.passwordElement : this.nameElement;",
+      "revId": "6bc01bbcb7358cc4889389c249793a9b86e715e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
