@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebae9378_fcafc55a",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-10T16:19:23Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003c\u003e?",
+      "revId": "e7cca2e0b22ba8b1b1c780b4512964377a3baa1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd982f12_27667811",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-10T16:19:23Z",
+      "side": 1,
+      "message": "Maybe it will be less heavyweight to do: `recorded_time_ \u003d base::TimeDelta();`",
+      "revId": "e7cca2e0b22ba8b1b1c780b4512964377a3baa1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c461f2_d3099bdb",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-10T16:19:23Z",
+      "side": 1,
+      "message": "Could this be called in MaybeCommitPendingData() when trigger \u003d\u003d kVisitEnd?\n\nEdit: I see that you moved it out of the function now. Why?",
+      "revId": "e7cca2e0b22ba8b1b1c780b4512964377a3baa1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a834b4c_3a49bc3b",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-10T16:19:23Z",
+      "side": 1,
+      "message": "Is this because `+ 0` is a no-op? Don\u0027t we commit the new score when that happens?",
+      "revId": "e7cca2e0b22ba8b1b1c780b4512964377a3baa1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5b23f2_787abecf",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-10T16:19:23Z",
+      "side": 1,
+      "message": "style: we should name the parameters",
+      "revId": "e7cca2e0b22ba8b1b1c780b4512964377a3baa1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aae88d6_c54a0453",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-10T16:19:23Z",
+      "side": 1,
+      "message": "Why are you switching to std::unique_ptr\u003c\u003e?",
+      "revId": "e7cca2e0b22ba8b1b1c780b4512964377a3baa1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
