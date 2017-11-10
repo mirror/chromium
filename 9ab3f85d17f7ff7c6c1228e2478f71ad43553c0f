@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a658e62_6697eb86",
+        "filename": "net/base/net_error_list.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-10T21:45:17Z",
+      "side": 1,
+      "message": "nit: I find \"under circumstances\" a not very useful documentation phrase.  Instead I\u0027d suggest \"In-memory hints suggest that the on-disk entry will not be useable, and so should not be loaded.\"",
+      "range": {
+        "startLine": 771,
+        "startChar": 18,
+        "endLine": 771,
+        "endChar": 22
+      },
+      "revId": "9ab3f85d17f7ff7c6c1228e2478f71ad43553c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1503b505_f3ad692f",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-10T21:45:17Z",
+      "side": 1,
+      "message": "Why?",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 24
+      },
+      "revId": "9ab3f85d17f7ff7c6c1228e2478f71ad43553c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f612e795_57ad84ea",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-10T21:45:17Z",
+      "side": 1,
+      "message": "Could you also be explicit about the circumstances in which the etag and last_modified values are extracted, to the precision needed by callers?  (I.e. if the callers don\u0027t need them if the result is \"false\" can just say that they\u0027ll always be set if true is returned, and may be set if false is returned.)",
+      "range": {
+        "startLine": 416,
+        "startChar": 24,
+        "endLine": 416,
+        "endChar": 30
+      },
+      "revId": "9ab3f85d17f7ff7c6c1228e2478f71ad43553c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c2e03f_163fadfb",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-10T21:45:17Z",
+      "side": 1,
+      "message": "nit: \"response_headers\" (elide \".\").\n\nAlso, it would be better if \"response_headers\" was a C++ expression that in the context of the transaction reflected the actual headers (there\u0027s no response_headers{,_} member).",
+      "range": {
+        "startLine": 416,
+        "startChar": 57,
+        "endLine": 416,
+        "endChar": 58
+      },
+      "revId": "9ab3f85d17f7ff7c6c1228e2478f71ad43553c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
