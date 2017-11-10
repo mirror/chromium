@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60eb4f91_b6119df7",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-10T15:50:15Z",
+      "side": 1,
+      "message": "is |context_ref_| needed because the releaser service can outlive MojoVideoDecoderService?",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735901ef_4cd75e75",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-10T15:50:15Z",
+      "side": 1,
+      "message": "i\u0027m not a big fan of this part, but i don\u0027t have a better idea.  refcounting would, directly or indirectly, have refs to |this| stored in a map member variable of |this|.  that seems worse.\n\ncan the ~3 checks can be made uniform and moved into MaybeDeleteThis() { if (empty \u0026\u0026 destroying_) delete this; } .  at least it\u0027s all in one place, then.",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
