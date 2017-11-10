@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eb0f747_2734ac2e",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-10T03:24:01Z",
+      "side": 1,
+      "message": "nit: rather than having an explicit visibility bool, could you check that the string is non empty and reset it to the empty string when initiating speech recognition above?",
+      "revId": "3a11b0a95a170122c000ccfed4e8bfd84f0503f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fada6ba_9305e02f",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-10T03:24:01Z",
+      "side": 1,
+      "message": "nit: the 0.5 should probably be a scene constant.",
+      "revId": "3a11b0a95a170122c000ccfed4e8bfd84f0503f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
