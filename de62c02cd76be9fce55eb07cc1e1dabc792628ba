@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aedf2d3f_a8a0d4dd",
+        "filename": "chrome/browser/chrome_service.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-10T20:02:21Z",
+      "side": 1,
+      "message": "Alternatively, connector() could do the work of InitConnector() if connector_ is still null when called.\n\nI think that should be fine and wouldn\u0027t require any use of ChromeBrowserMainExtraParts.",
+      "revId": "de62c02cd76be9fce55eb07cc1e1dabc792628ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe257624_08e1c62a",
+        "filename": "components/spellcheck/renderer/spellcheck_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-10T20:02:21Z",
+      "side": 1,
+      "message": "nit: since you\u0027re changing the code anyway, could you update uses of \u0027new\u0027 to be calls to std::make_unique? and use assignment instead of reset?",
+      "revId": "de62c02cd76be9fce55eb07cc1e1dabc792628ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
