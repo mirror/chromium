@@ -2772,6 +2772,8 @@ split_static_library("browser") {
   } else {  # Non-ChromeOS.
     sources += [
       "fullscreen.h",
+      "lifetime/switch_utils.cc",
+      "lifetime/switch_utils.h",
       "policy/cloud/user_cloud_policy_manager_factory.cc",
       "policy/cloud/user_cloud_policy_manager_factory.h",
       "policy/cloud/user_policy_signin_service_base.cc",
