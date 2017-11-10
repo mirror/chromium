@@ -8,8 +8,10 @@
 #include "core/testing/DummyPageHolder.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
+#include "platform/testing/HistogramTester.h"
 #include "platform/testing/TestingPlatformSupport.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/common/metrics/time_to_interactive_status.h"
 
 namespace blink {
 
@@ -82,6 +84,11 @@ class InteractiveDetectorTest : public ::testing::Test {
   void SimulateFMPDetected(double fmp_time, double detection_time) {
     RunTillTimestamp(detection_time);
     detector_->OnFirstMeaningfulPaintDetected(fmp_time);
+  }
+
+  void SimulateInvalidatingInput(double timestamp) {
+    RunTillTimestamp(timestamp);
+    detector_->OnInvalidatingInputEvent(timestamp);
   }
 
   void RunTillTimestamp(double target_time) {
@@ -370,6 +377,44 @@ TEST_F(InteractiveDetectorTest, IntermittentNetworkBusyBlocksTTI) {
   RunTillTimestamp((t0 + 14.1) + 5.0 + 0.1);
   // TTI reached at long task 2 end.
   EXPECT_EQ(GetInteractiveTime(), t0 + 14.1);
+}
+
+TEST_F(InteractiveDetectorTest, UserInputBeforeInteractiveTime) {
+  HistogramTester histogram_tester;
+  double t0 = MonotonicallyIncreasingTime();
+  SimulateNavigationStart(t0);
+  // Network is forever quiet for this test.
+  SetActiveConnections(1);
+  SimulateDOMContentLoadedEnd(t0 + 2.0);
+  SimulateFMPDetected(/* fmp_time */ t0 + 3.0, /* detection_time */ t0 + 4.0);
+  SimulateInvalidatingInput(t0 + 5.0);
+  SimulateLongTask(t0 + 7.0, t0 + 7.1);  // Long task 1.
+  // Run till 5 seconds after long task 2 end.
+  RunTillTimestamp((t0 + 7.1) + 5.0 + 0.1);
+  // No TTI value available since user input invalidated it.
+  EXPECT_EQ(GetInteractiveTime(), 0.0);
+  histogram_tester.ExpectUniqueSample(
+      blink::kHistogramTimeToInteractiveStatus,
+      blink::TIME_TO_INTERACTIVE_USER_INTERACTION_BEFORE_INTERACTIVE, 1);
+}
+
+TEST_F(InteractiveDetectorTest, UserInputAfterInteractiveTime) {
+  HistogramTester histogram_tester;
+  double t0 = MonotonicallyIncreasingTime();
+  SimulateNavigationStart(t0);
+  // Network is forever quiet for this test.
+  SetActiveConnections(1);
+  SimulateDOMContentLoadedEnd(t0 + 2.0);
+  SimulateFMPDetected(/* fmp_time */ t0 + 3.0, /* detection_time */ t0 + 4.0);
+  SimulateLongTask(t0 + 7.0, t0 + 7.1);  // Long task 1.
+  SimulateInvalidatingInput(t0 + 8.0);
+  // Run till 5 seconds after long task 2 end.
+  RunTillTimestamp((t0 + 7.1) + 5.0 + 0.1);
+  // User input does not invalidate TTI since it is after interactive time.
+  EXPECT_EQ(GetInteractiveTime(), (t0 + 7.1));
+  histogram_tester.ExpectBucketCount(
+      blink::kHistogramTimeToInteractiveStatus,
+      blink::TIME_TO_INTERACTIVE_USER_INTERACTION_BEFORE_INTERACTIVE, 0);
 }
 
 class InteractiveDetectorTestWithDummyPage : public ::testing::Test {

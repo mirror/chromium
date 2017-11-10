@@ -90,6 +90,7 @@
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
 #include "core/loader/FrameLoaderStateMachine.h"
+#include "core/loader/InteractiveDetector.h"
 #include "core/loader/PrerendererClient.h"
 #include "core/page/ChromeClientImpl.h"
 #include "core/page/ContextMenuController.h"
@@ -2026,6 +2027,17 @@ WebInputEventResult WebViewImpl::HandleInputEvent(
     FirstMeaningfulPaintDetector::From(
         *MainFrameImpl()->GetFrame()->GetDocument())
         .NotifyInputEvent();
+  }
+
+  if (input_event.GetType() != WebInputEvent::kMouseMove &&
+      input_event.GetType() != WebInputEvent::kMouseEnter &&
+      input_event.GetType() != WebInputEvent::kMouseLeave) {
+    InteractiveDetector* interactive_detector(
+        InteractiveDetector::From(*MainFrameImpl()->GetFrame()->GetDocument()));
+    if (interactive_detector) {
+      interactive_detector->OnInvalidatingInputEvent(
+          input_event.TimeStampSeconds());
+    }
   }
 
   if (mouse_capture_node_ &&
