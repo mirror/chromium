@@ -16,6 +16,24 @@
       "revId": "ee7d190df44769d44cc4524719a514ed410baf73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7a4666_11426a3e",
+        "filename": "chrome/browser/ui/views/message_center/message_center_ui_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-10T01:29:59Z",
+      "side": 1,
+      "message": "point taken. I\u0027ve improved the docs and renamed to PopupsOnlyUiDelegate. Also noticed that I can delete MessageCenterFrameView since there\u0027s no message center*\n\n*message center is an overloaded term, in this case I mean the widget that holds multiple notification views, not the model that tracks active notifications.",
+      "parentUuid": "02d64f6b_043d49cc",
+      "revId": "ee7d190df44769d44cc4524719a514ed410baf73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
