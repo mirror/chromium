@@ -397,7 +397,7 @@ TEST_F(VideoResourceUpdaterTest, ReuseResource) {
   // Simulate the ResourceProvider releasing the resources back to the video
   // updater.
   for (auto& release_callback : resources.release_callbacks)
-    release_callback.Run(gpu::SyncToken(), false);
+    std::move(release_callback).Run(gpu::SyncToken(), false);
 
   // Allocate resources for the same frame.
   context3d_->ResetUploadCount();
