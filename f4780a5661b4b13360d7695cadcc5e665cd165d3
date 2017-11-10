@@ -16,6 +16,24 @@
       "revId": "f4780a5661b4b13360d7695cadcc5e665cd165d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e6c3dd_811c33ff",
+        "filename": "remoting/android/java/src/org/chromium/chromoting/jni/JniOAuthTokenGetter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-10T02:46:20Z",
+      "side": 1,
+      "message": "Ah that\u0027s a good point. Looks like jstring itself can be null, and the ConvertJavaStringToUTF8 implementation will print a warning and return an empty string if the jstring is null:\n\nhttps://cs.chromium.org/chromium/src/base/android/jni_string.cc?l\u003d29\u0026rcl\u003d033e133a1dad55d88e3a9da74a012003278ebbf6\n\nI\u0027ve changed the ResolveOAuthTokenCallback code in C++ so that a null jstring will be directly translated to empty std::string.",
+      "parentUuid": "2a1acae8_b26aa4b2",
+      "revId": "f4780a5661b4b13360d7695cadcc5e665cd165d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
