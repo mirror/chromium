@@ -33,8 +33,8 @@ bool HasCommandId(ui::MenuModel* menu_model, int command_id) {
 
 class MediaRouterContextualMenuUnitTest : public BrowserWithTestWindowTest {
  public:
-  MediaRouterContextualMenuUnitTest() {}
-  ~MediaRouterContextualMenuUnitTest() override {}
+  MediaRouterContextualMenuUnitTest() = default;
+  ~MediaRouterContextualMenuUnitTest() override = default;
 
   void SetUp() override {
     BrowserWithTestWindowTest::SetUp();
