@@ -260,6 +260,30 @@
       "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f6e234_98b9fcf1",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-10T21:20:33Z",
+      "side": 1,
+      "message": "For CookieMonster (primary implementation of CookieStore) the max cookies in the store is 3300, but that can be exceeded if cookies are less than 30 days old.  UMA shows our median cookie count on Windows as 1000, and our modal/95%l count as around 3400.  Android is similar.  (Histogram name is Cookie.Count, if you want to take a look.)  Sadly, I don\u0027t see any histograms recording the size of the cookies, but the on disk DB size is in Cookie.DBSizeInKB, and is 28KB medium/~2MB 95%l Windows, and 500KB/1.3MB on Android.\n\nCan you say more about why you\u0027re concerned about the number of messages as opposed to total message size in the batch case?  My current gut response is that lots of little messages are better than one big one, if they\u0027re pipelined.  \n\nBased on the stats above, a batch setter is a perfectly reasonable option, but I\u0027m not sure I\u0027m willing to just fail the operation for that rare case that blows up the pipe.  Ken, what\u0027s the error signal if we try and send too large a message?  Is there some way to figure that out ahead of time?",
+      "parentUuid": "c350c7e6_fd4e0486",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
