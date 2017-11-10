@@ -3070,6 +3070,8 @@ split_static_library("ui") {
           "views/frame/opaque_browser_frame_view_platform_specific.h",
           "views/outdated_upgrade_bubble_view.cc",
           "views/outdated_upgrade_bubble_view.h",
+          "views/profiles/badged_profile_photo.cc",
+          "views/profiles/badged_profile_photo.h",
           "views/profiles/forced_reauthentication_dialog_view.cc",
           "views/profiles/forced_reauthentication_dialog_view.h",
           "views/profiles/profile_chooser_view.cc",
