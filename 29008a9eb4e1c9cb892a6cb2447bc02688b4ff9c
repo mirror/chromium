@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ac38649_9de992de",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-10T01:50:16Z",
+      "side": 1,
+      "message": "I guess it\u0027s designed for a fire-and-forget use case like:\n\n* Create a DailyEvent\n* Add a bunch of observers the DailyEvent will trigger\n* Forget about those observers, let DailyEvent delete them on teardown\n\nKinda how RapporServiceImpl::AddDailyObserver uses this class, except that function isn\u0027t called by anyone anywhere..... https://cs.chromium.org/chromium/src/components/rappor/rappor_service_impl.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d68",
+      "parentUuid": "5c402f0f_5f556b57",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83cfec38_d6423ad1",
         "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-10T01:13:00Z",
       "side": 1,
       "message": "CheckInterval (components/metrics/daily_event.cc@73) appears to fire on first-run. i don\u0027t know why, and i also don\u0027t know how to detect this. it\u0027s possible that it\u0027ll make the histograms harder to interpret by reporting 0 values on the first day.",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0553084f_947d0516",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-10T01:50:16Z",
+      "side": 1,
+      "message": "It\u0027s so it can read the pref and fire if necessary, e.g. if Chrome hasn\u0027t been opened in the last day.\n\n\"// The first time we call CheckInterval, we read the time stored in prefs.\"\n\nThe fact that it also fires if the pref doesn\u0027t exist yet seems unfortunate, I guess it makes sense for some cases... maybe parameterize that behavior?\n\nOr maybe the DailyEventIntervalType \"First Run\" type can be used to exclude those events from histogram analysis with Dremel magic?",
+      "parentUuid": "83cfec38_d6423ad1",
       "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "16f916f9_102a0514",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-10T01:50:16Z",
+      "side": 1,
+      "message": "Yeah, 100 times is close to the assumption in Jia\u0027s doc which seems like it\u0027s pretty far on the high end.\n\nMaybe some poorly implemented Keep Awake extension might use screen dimming as a trigger to simulate activity...",
+      "parentUuid": "171ae0c7_3b641672",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71a98d40_1b2ec515",
         "filename": "chrome/browser/chromeos/power/power_metrics_reporter.h",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-10T01:13:00Z",
       "side": 1,
       "message": "opinions about whether i should make this private and friend the test class?",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8317547_fd46f017",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-10T01:50:16Z",
+      "side": 1,
+      "message": "that\u0027s probably best",
+      "parentUuid": "71a98d40_1b2ec515",
       "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -98,6 +170,24 @@
       "writtenOn": "2017-11-10T01:13:00Z",
       "side": 1,
       "message": "i\u0027m not sure what the \"below\" here refers to. :-/",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5644cb_4f6749dd",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-10T01:50:16Z",
+      "side": 1,
+      "message": "I see a \"// *************** LOCAL STATE ***************\" comment in the .cc file. I\u0027d be shocked if people found that comment and followed this guidance but yeah...",
+      "parentUuid": "be373c10_056efe9d",
       "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
