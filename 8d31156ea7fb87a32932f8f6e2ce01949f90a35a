@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d601bdb_bad3e5b5",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-10T02:08:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "321ed0c8_fd40cbe2",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 268,
+        "endChar": 1
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2e7e730_c6fdabf6",
         "filename": "chrome/browser/ssl/ssl_error_handler.h",
         "patchSetId": 29
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2f95a326_00615684",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-10T02:08:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2e7e730_c6fdabf6",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 28
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd59254d_0e737858",
         "filename": "chrome/browser/ssl/ssl_error_handler.h",
         "patchSetId": 29
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-09T21:57:28Z",
       "side": 1,
       "message": "nit: const ref",
+      "range": {
+        "startLine": 155,
+        "startChar": 6,
+        "endLine": 155,
+        "endChar": 31
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5307e74a_cb0e81c9",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-10T02:08:22Z",
+      "side": 1,
+      "message": "This can\u0027t be const, because it\u0027s a OnceCallback – the SSLErrorHandler::Delegate implementation needs to std::move() it to store it and call it. My understanding is that OnceCallback is basically passed like a std::unique_ptr, and existing examples seem to do what I\u0027m doing. In light of that, does the current approach look alright?",
+      "parentUuid": "cd59254d_0e737858",
       "range": {
         "startLine": 155,
         "startChar": 6,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e17ae969_017ad997",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-10T02:08:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed5c25c8_80977173",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 75
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1a3a035_5d88c947",
         "filename": "chrome/browser/ssl/ssl_error_navigation_throttle_unittest.cc",
         "patchSetId": 29
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "550327f4_c1d1f796",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-10T02:08:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1a3a035_5d88c947",
+      "range": {
+        "startLine": 50,
+        "startChar": 1,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c357ecc2_67c0273a",
         "filename": "chrome/browser/ssl/ssl_error_navigation_throttle_unittest.cc",
         "patchSetId": 29
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-09T21:57:28Z",
       "side": 1,
       "message": "is this test subclass necessary? as opposed to just constructing an SSLErrorNavigationThrottle directly",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 36
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45db5f7a_9b22b11c",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-10T02:08:22Z",
+      "side": 1,
+      "message": "As of patch 31, it is needed again, for SSLErrorNavigationThrottleTest.SSLInfoWithCertError.",
+      "parentUuid": "c357ecc2_67c0273a",
       "range": {
         "startLine": 52,
         "startChar": 6,
@@ -186,6 +330,54 @@
     },
     {
       "key": {
+        "uuid": "bf7b9848_7dd4e6dd",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-10T02:08:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4b711fc_ec923c62",
+      "range": {
+        "startLine": 12,
+        "startChar": 72,
+        "endLine": 12,
+        "endChar": 73
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cfd20a3f_e1f20acf",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-10T02:08:22Z",
+      "side": 1,
+      "message": "I\u0027ve moved SSLErrorTabHelper down.\n\nHowever, the existing examples I\u0027ve seen place the constructor with the destructor, usually at the top of the definitions for the class?\n(e.g. SSLErrorHander, NavigationHandleImpl)",
+      "parentUuid": "d2979a5f_b14e2999",
+      "range": {
+        "startLine": 12,
+        "startChar": 19,
+        "endLine": 12,
+        "endChar": 36
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21cb8b7c_f8289235",
         "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
         "patchSetId": 29
@@ -197,6 +389,30 @@
       "writtenOn": "2017-11-09T21:57:28Z",
       "side": 1,
       "message": "I\u0027ve never seen this pattern before... rename these as GetBlockingPagesForNavigationsForTesting() and GetBlockingPageForCurrentlyCommittedNavigationForTesting() instead.\n\n... after looking at the tests, I\u0027m thinking it would be nice to test in a way that doesn\u0027t require inspecting the internal state of the class. Could we structure the tests so that they observe SSLBlockingPages getting cleaned up at the appropriate times, instead of observing the internal state of the tab helper changing? For example, we could have a subclass of SSLBlockingPage that calls a test fixture method when it\u0027s destroyed. Then you could check that the blocking page for the current navigation is destroyed when another navigation commits, etc.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 6
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab1d79e_ba297977",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-10T02:08:22Z",
+      "side": 1,
+      "message": "Classes renamed.\n\nThe destructor observation approach hits a pattern I struggled with for a few classes while writing committed interstitial tests: subclassing a class when you need to call a static helper instead of a constructor. I *think* we discussed this over VC, but here are some concrete examples:\n\nSSLErrorHandler::HandleSSLError()\nNavigationHandle::CreateNavigationHandleForTesting()\nSSLBlockingPage::Create()\n\nIf I e.g. subclass SSLBlockingPage as TestSSLBlockingPage, then TestSSLBlockingPage, then I can\u0027t reuse the static parent implementation and call TestSSLBlockingPage::Create() – that would explicitly construct an SSLBlockingPage instead of a TestSSLBlockingPage in the parent class implementation (unless we templatize the return class to allow it to be a subclass). That means – depending on the details of the class in questions – I need to write a whole new implementation for TestSSLBlockingPage::Create() with potential duplicate code.\n\nIn this case, a copy of TestSSLBlockingPage::Create() is not that large. Do you know of a better approach, though?\n(Maybe override only the destructor and dynamic_cast\u003cTestSSLBlockingPage\u003e(SSLBlockingPage::Create())?)",
+      "parentUuid": "21cb8b7c_f8289235",
       "range": {
         "startLine": 42,
         "startChar": 0,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "2ef1383d_7630c856",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-10T02:08:22Z",
+      "side": 1,
+      "message": "Done (and also added a comment above `blocking_page_for_currently_committed_navigation_`).",
+      "parentUuid": "a2184c5b_439d9954",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 36
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b21cc30_5fde0010",
         "filename": "chrome/browser/ssl/ssl_error_tab_helper_unittest.cc",
         "patchSetId": 29
@@ -252,6 +492,30 @@
       "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459ceb96_7084ee79",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-10T02:08:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b21cc30_5fde0010",
+      "range": {
+        "startLine": 21,
+        "startChar": 1,
+        "endLine": 21,
+        "endChar": 7
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

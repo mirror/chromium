@@ -52,6 +52,24 @@
       "revId": "ca428bd3a35faec3d7ff89eebc276241205231ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f51dfe_d731155b",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-10T02:08:22Z",
+      "side": 1,
+      "message": "Patch 31 uses the approach of overriding CancelDeferredNavigation() in TestSSLErrorNavigationThrottle.",
+      "parentUuid": "fb83d3d6_6f5fd4ca",
+      "revId": "ca428bd3a35faec3d7ff89eebc276241205231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
