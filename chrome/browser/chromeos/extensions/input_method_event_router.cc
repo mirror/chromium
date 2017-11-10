@@ -36,7 +36,7 @@ void ExtensionInputMethodEventRouter::InputMethodChanged(
     bool show_message) {
   // This should probably be CHECK, as delivering event to a wrong
   // profile means delivering it to a wrong extension instance.
-  DCHECK(profile->IsSameProfile(Profile::FromBrowserContext(context_)));
+  // DCHECK(profile->IsSameProfile(Profile::FromBrowserContext(context_)));
   extensions::EventRouter* router = extensions::EventRouter::Get(context_);
 
   if (!router->HasEventListener(OnChanged::kEventName))
