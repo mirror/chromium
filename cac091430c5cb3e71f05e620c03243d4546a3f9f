@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f922fac4_cc9627a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-11-10T01:41:59Z",
+      "side": 1,
+      "message": "I assume the change also applies to / affects regular cellular connectivity (seems like also WiFi)? If so, this tag may be a bit confusing.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "cac091430c5cb3e71f05e620c03243d4546a3f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a85ea45a_d49e8532",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
