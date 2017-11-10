@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_ANDROID_OOM_INTERVENTION_NEAR_OOM_MONITOR_H_
 #define CHROME_BROWSER_ANDROID_OOM_INTERVENTION_NEAR_OOM_MONITOR_H_
 
+#include "base/android/jni_android.h"
 #include "base/callback.h"
 #include "base/callback_list.h"
 #include "base/process/process_metrics.h"
@@ -33,6 +34,9 @@ class NearOomMonitor {
   // situation. The callback will be called on the task runner on which this
   // monitor is running. Destroy the returned Subscription to unregister.
   std::unique_ptr<Subscription> RegisterCallback(base::Closure callback);
+
+  void OnLowMemory(JNIEnv* env,
+                   const base::android::JavaParamRef<jobject>& jcaller);
 
  protected:
   static NearOomMonitor* Create();
@@ -65,6 +69,8 @@ class NearOomMonitor {
   int64_t swapfree_threshold_;
 
   CallbackList callbacks_;
+
+  base::android::ScopedJavaGlobalRef<jobject> j_object_;
 
   DISALLOW_COPY_AND_ASSIGN(NearOomMonitor);
 };
