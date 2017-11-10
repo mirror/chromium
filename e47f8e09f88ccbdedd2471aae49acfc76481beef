@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84ac2d20_43d21c14",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-10T19:17:38Z",
+      "side": 1,
+      "message": "this change was needed because in DownloadViaHTML5FileApiWithUserGesture and DownloadViaHTML5FileApiWithoutUserGesture tests, the object is cancelled in the test suite teardown and then this callback is run after. i.e. specifically:\n\n\u003e\tcontent.dll!content::DownloadItemImpl::InterruptWithPartialState(__int64 bytes_so_far, std::unique_ptr\u003ccrypto::SecureHash,std::default_delete\u003ccrypto::SecureHash\u003e \u003e hash_state, content::DownloadInterruptReason reason) Line 1937\n \tcontent.dll!content::DownloadItemImpl::InterruptAndDiscardPartialState(content::DownloadInterruptReason reason) Line 1807\n \tcontent.dll!content::DownloadItemImpl::Cancel(bool user_cancel) Line 589\n \tbrowser_tests.exe!safe_browsing::SBNavigationObserverBrowserTest::CancelDownloads() Line 232\n \tbrowser_tests.exe!safe_browsing::SBNavigationObserverBrowserTest::TearDownOnMainThread() Line 219",
+      "revId": "e47f8e09f88ccbdedd2471aae49acfc76481beef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
