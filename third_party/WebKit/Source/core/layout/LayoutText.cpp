@@ -231,6 +231,7 @@ void LayoutText::StyleDidChange(StyleDifference diff,
 void LayoutText::RemoveAndDestroyTextBoxes() {
   if (!DocumentBeingDestroyed()) {
     if (FirstTextBox()) {
+      DCHECK(CanUseInlineBox(*this));
       if (IsBR()) {
         RootInlineBox* next = FirstTextBox()->Root().NextRootBox();
         if (next)
@@ -293,6 +294,7 @@ void LayoutText::RemoveTextBox(InlineTextBox* box) {
 
 void LayoutText::DeleteTextBoxes() {
   if (FirstTextBox()) {
+    DCHECK(CanUseInlineBox(*this));
     InlineTextBox* next;
     for (InlineTextBox* curr = FirstTextBox(); curr; curr = next) {
       next = curr->NextTextBox();
@@ -647,6 +649,8 @@ CreatePositionWithAffinityForBoxAfterAdjustingOffsetForBiDi(
 }
 
 PositionWithAffinity LayoutText::PositionForPoint(const LayoutPoint& point) {
+  DCHECK(CanUseInlineBox(*this));
+
   if (!FirstTextBox() || TextLength() == 0)
     return CreatePositionWithAffinity(0);
 
@@ -699,6 +703,7 @@ LayoutRect LayoutText::LocalCaretRect(
     const InlineBox* inline_box,
     int caret_offset,
     LayoutUnit* extra_width_to_end_of_line) const {
+  DCHECK(CanUseInlineBox(*this));
   if (!inline_box)
     return LayoutRect();
 
@@ -1440,6 +1445,7 @@ void LayoutText::SetTextWithOffset(scoped_refptr<StringImpl> text,
                                    unsigned offset,
                                    unsigned len,
                                    bool force) {
+  DCHECK(CanUseInlineBox(*this));
   if (!force && Equal(text_.Impl(), text.get()))
     return;
 
@@ -1687,6 +1693,7 @@ InlineTextBox* LayoutText::CreateInlineTextBox(int start,
 }
 
 void LayoutText::PositionLineBox(InlineBox* box) {
+  DCHECK(CanUseInlineBox(*this));
   InlineTextBox* s = ToInlineTextBox(box);
 
   // FIXME: should not be needed!!!
@@ -2069,6 +2076,7 @@ bool LayoutText::ContainsCaretOffset(int text_offset) const {
 static bool CanNotContinueOnNextLine(const LayoutText& text_layout_object,
                                      InlineBox* box,
                                      unsigned text_offset) {
+  DCHECK(CanUseInlineBox(text_layout_object));
   InlineTextBox* const last_text_box = text_layout_object.LastTextBox();
   if (box == last_text_box)
     return true;
@@ -2082,6 +2090,7 @@ static bool CanNotContinueOnNextLine(const LayoutText& text_layout_object,
 static bool DoesContinueOnNextLine(const LayoutText& text_layout_object,
                                    InlineBox* box,
                                    unsigned text_offset) {
+  DCHECK(CanUseInlineBox(text_layout_object));
   InlineTextBox* const last_text_box = text_layout_object.LastTextBox();
   DCHECK_NE(box, last_text_box);
   for (InlineBox* runner = box->NextLeafChild(); runner;
