@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8ae8d09_4a1f17e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-11-10T22:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "695c88f7_dddbb3b3",
+      "revId": "4f125974df7fdbbb34357d19f7f88902a5d158b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26cf1b56_38292097",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "005f882c_d19de2d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-11-10T22:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26cf1b56_38292097",
+      "revId": "4f125974df7fdbbb34357d19f7f88902a5d158b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07f0a213_b04776be",
         "filename": "tools/clang/scripts/package.py",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-10T21:56:50Z",
       "side": 1,
       "message": "Shouldn\u0027t the symlink be the other way, i.e. llvm-readelf pointing to llvm-readobj?",
+      "revId": "4f125974df7fdbbb34357d19f7f88902a5d158b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8096c009_e0b09f00",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-11-10T22:08:10Z",
+      "side": 1,
+      "message": "Documentation says\n  os.symlink(source, link_name)\nand lines 303-304, 307-308 agrees with this.",
+      "parentUuid": "07f0a213_b04776be",
       "revId": "4f125974df7fdbbb34357d19f7f88902a5d158b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
