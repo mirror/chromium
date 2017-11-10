@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "34533751_3685f8a6",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-10T02:12:31Z",
+      "side": 1,
+      "message": "That\u0027s reasonable. I\u0027m cool with this as well then (whichever you like): \"to improve Chrome FMP\".",
+      "parentUuid": "07301471_09eec656",
+      "revId": "ba98e72a5b20aaaa3148c2e85d0bd14078d0948b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67f88c17_4f3172da",
         "filename": "chrome/browser/resources/md_extensions/item_list.html",
         "patchSetId": 9
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Removed. I initially named this with \"Fn\" suffix to make it more clear that this function returns another function. Not just because it is used in the bindings. Either way, removed the suffix.",
       "parentUuid": "4ea66229_599b42c0",
+      "revId": "ba98e72a5b20aaaa3148c2e85d0bd14078d0948b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7079b98_17fbc238",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-10T02:12:31Z",
+      "side": 1,
+      "message": "If ya like, I\u0027m cool with computeFilterFunction_ (non-abbreviated) equally with computeFilter_.",
+      "parentUuid": "bd9cf106_d5b3f112",
       "revId": "ba98e72a5b20aaaa3148c2e85d0bd14078d0948b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
