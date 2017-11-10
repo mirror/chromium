@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e036ec3_d179e4c4",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/worker/worker-on-message-async-stacks.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-10T19:15:14Z",
+      "side": 1,
+      "message": "I remember seeing this function in some other patch, as well as the half of this test code. Can you move it to a helper class?",
+      "revId": "dd2f82736ca257f7e98abffc87877cfb49558b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
