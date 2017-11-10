@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "af0d53da_0a24a43b",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T20:32:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "835bfae9_e1920f19",
+      "revId": "6372d6679dd97c43d203799c25ea02f5415f985c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6a74d33_fa973a70",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 7
