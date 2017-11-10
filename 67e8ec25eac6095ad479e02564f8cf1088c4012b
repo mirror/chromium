@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "b7eab9d3_dcc7a187",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T21:39:16Z",
+      "side": 1,
+      "message": "Yi points out that none of the subclasses are actually overriding this version of the function, but the other interfaces that has the same function name (e.g. RWHVAndroid is a subclass of RWHVBase and DelegatedFrameHost::Client, both of which have an OnFrameTokenChanged() function with the same signature. The same applies for RWHVAMac, TestRWHV etc. I think this is confusing.\n\nMy suggestion was to rename this to OnFrameTokenChangedForView to make this less confusing.",
+      "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1134c901_8b074faf",
         "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
         "patchSetId": 19
