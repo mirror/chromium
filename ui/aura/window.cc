@@ -1047,6 +1047,10 @@ viz::FrameSinkId Window::GetFrameSinkId() const {
   return port_->GetFrameSinkId();
 }
 
+bool Window::IsEmbeddingClient() const {
+  return embed_frame_sink_id_.is_valid();
+}
+
 void Window::OnPaintLayer(const ui::PaintContext& context) {
   Paint(context);
 }
