@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6164f7d_f8dc0ee6",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-10T21:23:27Z",
+      "side": 1,
+      "message": "Now you can `return it-\u003esecond-\u003eid();\u0027 as in previous patch.",
+      "range": {
+        "startLine": 619,
+        "startChar": 4,
+        "endLine": 621,
+        "endChar": 16
+      },
+      "revId": "e40cfacbb4b7441e15ebbb9c924dd43abd1bf57d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
