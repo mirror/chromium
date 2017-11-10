@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4aaf1dc_a579cb34",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-10T14:55:35Z",
+      "side": 1,
+      "message": "Would rename ExtractFormAndFieldFromForms",
+      "range": {
+        "startLine": 511,
+        "startChar": 2,
+        "endLine": 511,
+        "endChar": 17
+      },
+      "revId": "9c37669a259d49f54456f9baa4a4adf29a6794d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c073ccf2_28b73dfc",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-10T14:55:35Z",
+      "side": 1,
+      "message": "FYI +rogerm@, because he is playing in this code. \n\nForms will not get extracted at all on iOS if they have \u003c3 fields, it seems.",
+      "revId": "9c37669a259d49f54456f9baa4a4adf29a6794d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
