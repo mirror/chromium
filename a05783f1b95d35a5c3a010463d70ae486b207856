@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a219ce85_2ecf1c71",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2262,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-10T17:50:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "002043de_0a979daa",
+      "revId": "a05783f1b95d35a5c3a010463d70ae486b207856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecf66fb9_79b5cfcf",
         "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c7c42d65_5876dea4",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2286,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-10T17:50:06Z",
+      "side": 1,
+      "message": "Done.  Only the \"Verify that |new_contents| can NOT find |old_contents| using window.open/name\" part (lines 2315-2325 in patchset #8) breaks without the extra navigation / without the extra process swap.",
+      "parentUuid": "ecf66fb9_79b5cfcf",
+      "revId": "a05783f1b95d35a5c3a010463d70ae486b207856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d09c44d7_555b8c56",
         "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "a05783f1b95d35a5c3a010463d70ae486b207856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f572f12_9a1c3b62",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2309,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-10T17:50:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d09c44d7_555b8c56",
+      "revId": "a05783f1b95d35a5c3a010463d70ae486b207856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -113,6 +167,48 @@
       "revId": "a05783f1b95d35a5c3a010463d70ae486b207856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e090a51_dafb5c75",
+        "filename": "chrome/common/extensions/api/windows.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-10T17:50:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e09ab585_9b070bd3",
+      "revId": "a05783f1b95d35a5c3a010463d70ae486b207856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4dbaefb0_4f3494bc",
+        "filename": "chrome/common/extensions/api/windows.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-10T17:50:06Z",
+      "side": 1,
+      "message": "\u003e I think a footnote like this would look weird in the actual documentation.  This should support html - let\u0027s try\n\u003e \n\u003e ... will be in the same \u003ca href\u003d\\\"https://www.w3.org/TR/html51/browsers.html#unit-of-related-browsing-contexts\\\"\u003eunit of related browsing contexts\u003c/a\u003e as the caller...\n\u003e \nDone.\n\n\u003e Then, in your local checkout, you can do\n\u003e $ python chrome/common/extensions/docs/server2/preview.py\n\u003e \n\u003e and navigate to localhost:8000/extensions/tabs and check if the documentation looks okay.\n\nYes - it looks okay (at http://localhost:8000/extensions/windows#method-create).\n\nI\u0027ve noticed that other descriptions use \u0027code\u0027 convention and tried to follow it here as well (e.g. \u0027setSelfAsOpener\u0027).\n\nI also stared at the description for a while, decided that it is muddy and I don\u0027t like it and therefore I tried to write it from scratch.",
+      "parentUuid": "60565c4b_218802ec",
+      "range": {
+        "startLine": 228,
+        "startChar": 182,
+        "endLine": 228,
+        "endChar": 185
+      },
+      "revId": "a05783f1b95d35a5c3a010463d70ae486b207856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
