@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14148815_9480e06e",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-10T09:34:42Z",
+      "side": 0,
+      "message": "Since default value of |is_directional| is false, we can remove this line\nin another patch. \n\nCould you make another patch to remove this line to make\nthis patch smaller?",
+      "revId": "cc3a6160dd368e76fefc6919f3f36b7cc6c252cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
