@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bfedb167_5fc38a7f",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-10T18:16:17Z",
+      "side": 1,
+      "message": "add a /* success \u003d */ comment before false so that its meaning is clear.",
+      "range": {
+        "startLine": 248,
+        "startChar": 33,
+        "endLine": 248,
+        "endChar": 34
+      },
+      "revId": "071f078220c3d42cc888392a34f49cc973afd085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be64faf8_8e37e020",
         "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
         "patchSetId": 1
