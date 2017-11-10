@@ -16,6 +16,24 @@
       "revId": "b2ab962fd1044d4ad8f22c5ee3f5be3756432f92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa8662cc_6e1090b7",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7228,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-10T01:36:12Z",
+      "side": 1,
+      "message": "There used to be an optimization where a POB would keep the memory for at least one op on the stack, similar to SkMiniPicture. But I think we removed it because it didn\u0027t show significant saving on rasterize\u0026record. enne@ would remember this better.\n\nFor this case I switches to use a struct for the preamble instead.",
+      "parentUuid": "a1255e41_6e7d4074",
+      "revId": "b2ab962fd1044d4ad8f22c5ee3f5be3756432f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

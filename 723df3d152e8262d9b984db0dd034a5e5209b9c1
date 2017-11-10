@@ -297,6 +297,24 @@
       "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b4c38b_99adc4d6",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 7227,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-10T01:36:12Z",
+      "side": 1,
+      "message": "AxisTransform2d applies the scale before translation, wasn\u0027t sure if I could use it here. But I changed to take all the parameters in a struct and avoid a buffer allocation.",
+      "parentUuid": "ecf345b0_1c68f58d",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
