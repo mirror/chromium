@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "5366a4d4_2c0f9fd1",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2152,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-10T18:56:25Z",
+      "side": 1,
+      "message": "That\u0027s primarily due to it\u0027s age. I wouldn\u0027t object to normalizing it with the other VR flags.",
+      "parentUuid": "30e6d740_80e84e05",
+      "range": {
+        "startLine": 2152,
+        "startChar": 5,
+        "endLine": 2152,
+        "endChar": 22
+      },
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d371a557_a26deffb",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 3
