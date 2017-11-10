@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3774f24_3a339e93",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T01:31:07Z",
+      "side": 1,
+      "message": "I would just replace the entire description with the following:\n\nEnable OpenVR devices behind a runtime flag on Windows",
+      "revId": "58f3b42df8140fc907ae43e8db1deea6125f4420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4667c165_c9a93ddf",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2252,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T01:31:07Z",
+      "side": 1,
+      "message": "Should this be BUILDFLAG(ENABLE_OPENVR)?",
+      "range": {
+        "startLine": 2252,
+        "startChar": 4,
+        "endLine": 2252,
+        "endChar": 19
+      },
+      "revId": "58f3b42df8140fc907ae43e8db1deea6125f4420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24249a5_fefbd197",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T01:31:07Z",
+      "side": 1,
+      "message": "The new flag below is outside this flag, which is technically fine, but it is inconsistent with about_flags.cc.",
+      "revId": "58f3b42df8140fc907ae43e8db1deea6125f4420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2808b1da_755308a5",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T01:31:07Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 19
+      },
+      "revId": "58f3b42df8140fc907ae43e8db1deea6125f4420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
