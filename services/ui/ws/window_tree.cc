@@ -698,9 +698,10 @@ bool WindowTree::Embed(const ClientWindowId& window_id,
     flags = mojom::kEmbedFlagEmbedderInterceptsEvents;
   // When embedding we don't know the user id of where the TreeClient came
   // from. Use an invalid id, which limits what the client is able to do.
-  window_server_->EmbedAtWindow(window, InvalidUserId(),
-                                std::move(window_tree_client), flags,
-                                base::WrapUnique(new DefaultAccessPolicy));
+  WindowTree* embedded_tree = window_server_->EmbedAtWindow(
+      window, InvalidUserId(), std::move(window_tree_client), flags,
+      base::WrapUnique(new DefaultAccessPolicy));
+  window->UpdateFrameSinkId(ClientWindowId(embedded_tree->id(), 0));
   client()->OnFrameSinkIdAllocated(ClientWindowIdToTransportId(window_id),
                                    window->frame_sink_id());
   return true;
@@ -736,7 +737,7 @@ bool WindowTree::IsWaitingForNewTopLevelWindow(uint32_t wm_change_id) {
          waiting_for_top_level_window_info_->wm_change_id == wm_change_id;
 }
 
-void WindowTree::OnWindowManagerCreatedTopLevelWindow(
+viz::FrameSinkId WindowTree::OnWindowManagerCreatedTopLevelWindow(
     uint32_t wm_change_id,
     uint32_t client_change_id,
     const ServerWindow* window) {
@@ -750,7 +751,7 @@ void WindowTree::OnWindowManagerCreatedTopLevelWindow(
       waiting_for_top_level_window_info->client_window_id));
   if (!window) {
     client()->OnChangeCompleted(client_change_id, false);
-    return;
+    return viz::FrameSinkId();
   }
   client_id_to_window_id_map_[waiting_for_top_level_window_info
                                   ->client_window_id] = window->id();
@@ -763,6 +764,7 @@ void WindowTree::OnWindowManagerCreatedTopLevelWindow(
   client()->OnTopLevelCreated(client_change_id, WindowToWindowData(window),
                               display_id, drawn,
                               window->current_local_surface_id());
+  return waiting_for_top_level_window_info->client_window_id;
 }
 
 void WindowTree::AddActivationParent(const ClientWindowId& window_id) {
@@ -1572,8 +1574,8 @@ void WindowTree::NewTopLevelWindow(
 
   display_root->window_manager_state()
       ->window_tree()
-      ->window_manager_internal_->WmCreateTopLevelWindow(wm_change_id, id_,
-                                                         transport_properties);
+      ->window_manager_internal_->WmCreateTopLevelWindow(
+          wm_change_id, client_window_id, transport_properties);
 }
 
 void WindowTree::DeleteWindow(uint32_t change_id, Id transport_window_id) {
@@ -2632,11 +2634,11 @@ void WindowTree::OnWmCreatedTopLevelWindow(uint32_t change_id,
     window_server_->WindowManagerSentBogusMessage();
     window = nullptr;
   }
-  if (window) {
-    client()->OnFrameSinkIdAllocated(transport_window_id,
-                                     window->frame_sink_id());
-  }
-  window_server_->WindowManagerCreatedTopLevelWindow(this, change_id, window);
+  viz::FrameSinkId updated_frame_sink_id =
+      window_server_->WindowManagerCreatedTopLevelWindow(this, change_id,
+                                                         window);
+  if (window)
+    window->UpdateFrameSinkId(updated_frame_sink_id);
 }
 
 void WindowTree::OnAcceleratorAck(uint32_t event_id,

@@ -349,7 +349,7 @@ void WindowServer::WindowManagerChangeCompleted(
   tree->OnChangeCompleted(change.client_change_id, success);
 }
 
-void WindowServer::WindowManagerCreatedTopLevelWindow(
+viz::FrameSinkId WindowServer::WindowManagerCreatedTopLevelWindow(
     WindowTree* wm_tree,
     uint32_t window_manager_change_id,
     const ServerWindow* window) {
@@ -359,7 +359,7 @@ void WindowServer::WindowManagerCreatedTopLevelWindow(
     DVLOG(1) << "WindowManager responded with invalid change id; most "
              << "likely bug in WindowManager processing WmCreateTopLevelWindow "
              << "change_id=" << window_manager_change_id;
-    return;
+    return viz::FrameSinkId();
   }
 
   WindowTree* tree = GetTreeWithId(change.client_id);
@@ -370,7 +370,7 @@ void WindowServer::WindowManagerCreatedTopLevelWindow(
              << "is not waiting for top-level; possible bug in mus, change_id="
              << window_manager_change_id;
     WindowManagerSentBogusMessage();
-    return;
+    return viz::FrameSinkId();
   }
   if (window && (window->id().client_id != wm_tree->id() ||
                  !window->children().empty() || GetTreeWithRoot(window))) {
@@ -380,11 +380,11 @@ void WindowServer::WindowManagerCreatedTopLevelWindow(
         << "created by the WindowManager, window_manager_change_id="
         << window_manager_change_id;
     WindowManagerSentBogusMessage();
-    return;
+    return viz::FrameSinkId();
   }
 
-  tree->OnWindowManagerCreatedTopLevelWindow(window_manager_change_id,
-                                             change.client_change_id, window);
+  return tree->OnWindowManagerCreatedTopLevelWindow(
+      window_manager_change_id, change.client_change_id, window);
 }
 
 void WindowServer::ProcessWindowBoundsChanged(
