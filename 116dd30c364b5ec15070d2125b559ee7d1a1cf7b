@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68253bee_54124351",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-10T22:20:35Z",
+      "side": 1,
+      "message": "merge issue.",
+      "revId": "116dd30c364b5ec15070d2125b559ee7d1a1cf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97cb8a26_8dbe6ada",
+        "filename": "content/gpu/gpu_child_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-10T22:20:35Z",
+      "side": 1,
+      "message": "I note in passing that this code is being executed.",
+      "revId": "116dd30c364b5ec15070d2125b559ee7d1a1cf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd72453_d585c17c",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-10T22:20:35Z",
+      "side": 1,
+      "message": "this is being executed before ozone is getting asked to create a DrmWindow corresponding to accelerated widget 1",
+      "revId": "116dd30c364b5ec15070d2125b559ee7d1a1cf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b48fce2_c95fa92e",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-10T22:20:35Z",
+      "side": 1,
+      "message": "buffer allocation is happening from gpu child thread before we have executed the CreateWindow call.",
+      "revId": "116dd30c364b5ec15070d2125b559ee7d1a1cf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5449015_09c7b83d",
+        "filename": "ui/ozone/platform/drm/host/host_drm_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-10T22:20:35Z",
+      "side": 1,
+      "message": "this is not getting invoked. so something about my plumbing is wrong.",
+      "revId": "116dd30c364b5ec15070d2125b559ee7d1a1cf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e550d75f_9e8806af",
+        "filename": "ui/ozone/platform/drm/host/host_drm_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-10T22:20:35Z",
+      "side": 1,
+      "message": "this should fire a message to the drm thread in the viz process",
+      "revId": "116dd30c364b5ec15070d2125b559ee7d1a1cf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24415305_0d5f81ce",
+        "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-10T22:20:35Z",
+      "side": 1,
+      "message": "it\u0027s getting started",
+      "revId": "116dd30c364b5ec15070d2125b559ee7d1a1cf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
