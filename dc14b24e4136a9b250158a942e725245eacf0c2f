@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b310a44_74e2cabe",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-10T00:14:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fff43630_b4fd53ec",
+      "revId": "dc14b24e4136a9b250158a942e725245eacf0c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7356db3e_93bfcf57",
         "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7169109e_812cc8b6",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-10T00:14:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7356db3e_93bfcf57",
+      "revId": "dc14b24e4136a9b250158a942e725245eacf0c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfe00576_dca20f47",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-09T23:28:49Z",
       "side": 1,
       "message": "probably better to use the same units as previous histograms",
+      "revId": "dc14b24e4136a9b250158a942e725245eacf0c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47f7bb9_d29189f3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3423,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-10T00:14:32Z",
+      "side": 1,
+      "message": "Do you mean to use minutes? I think that is good for the old histograms which measure the time that user stay in laptop or tablet mode. But for measuring the time user stay in tablet portrait or landscape, which maybe better to use smaller granularity. Since the time that user stay in tablet mode may not be very long, let alone to split it to portrait and landscape?",
+      "parentUuid": "bfe00576_dca20f47",
       "revId": "dc14b24e4136a9b250158a942e725245eacf0c2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
