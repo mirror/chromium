@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58f91489_bd5c0bdc",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-10T17:43:33Z",
+      "side": 1,
+      "message": "Wow, this is awful (having to create a ListItem for every byte)\n\nThat said, as you\u0027re changing this, it seems not unreasonable to add between 232 and 233\n\nbyte_array.GetList().reserve(cert_string.size());",
+      "revId": "ffbd8d9bd8041b3e6454122f0f0565031caf0c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
