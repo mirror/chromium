@@ -3060,6 +3060,8 @@ split_static_library("browser") {
 
   if (is_win || is_mac || is_linux) {
     sources += [
+      "content_settings/framebust_block_tab_helper.cc",
+      "content_settings/framebust_block_tab_helper.h",
       "payments/chrome_payment_request_delegate.cc",
       "payments/chrome_payment_request_delegate.h",
       "payments/payment_request_factory.cc",
