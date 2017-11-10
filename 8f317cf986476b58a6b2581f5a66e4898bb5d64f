@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8b9f363_c8c36885",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-10T18:14:04Z",
+      "side": 1,
+      "message": "for (const auto\u0026 it : switches)\n  new_command_line.AppendSwitchNative(it.first, it.second);",
+      "revId": "8f317cf986476b58a6b2581f5a66e4898bb5d64f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
