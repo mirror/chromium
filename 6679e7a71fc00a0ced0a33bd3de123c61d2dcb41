@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "79706d9c_b633e352",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-10T19:33:11Z",
+      "side": 1,
+      "message": "Right. Removed the properties section.",
+      "parentUuid": "a30e550b_f479e46c",
+      "revId": "6679e7a71fc00a0ced0a33bd3de123c61d2dcb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5280ac4d_a0a0c9bd",
         "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.js",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "6679e7a71fc00a0ced0a33bd3de123c61d2dcb41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c710c5ed_48d0451f",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-10T19:33:11Z",
+      "side": 1,
+      "message": "Indeed. Removed the browserProxy_ var and removed the attached function overriding too.",
+      "parentUuid": "5280ac4d_a0a0c9bd",
+      "revId": "6679e7a71fc00a0ced0a33bd3de123c61d2dcb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "720efee3_5b03c92f",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-10T19:33:11Z",
+      "side": 1,
+      "message": "The pref kSafeBrowsingUnhandledSyncPasswordReuses is not a simple boolean pref but a dictionary, it is possible that in the [not-far] future firing UI events depends on the detailed content of this pref, as well as other state (user state, other Safe Browsing preferences, enterprise policies, etc). Therefore, we want a dedicated function ChromePasswordProtectionService::ShouldShowChangePasswordSettingUI() to centralize the decision making on triggering UI events.",
+      "parentUuid": "957842ec_d76a64c8",
+      "revId": "6679e7a71fc00a0ced0a33bd3de123c61d2dcb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3db015e_4686eae0",
         "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "6679e7a71fc00a0ced0a33bd3de123c61d2dcb41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "124a0bd1_df67b8ff",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-10T19:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3db015e_4686eae0",
+      "revId": "6679e7a71fc00a0ced0a33bd3de123c61d2dcb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
