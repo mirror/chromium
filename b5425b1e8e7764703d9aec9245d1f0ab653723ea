@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "817e7303_8c5c3128",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-11-10T07:36:04Z",
+      "side": 1,
+      "message": "Open browsers shouldn’t affect to ‘should_quit_if_last_browser’ boolean flag because it is used only when current browser is last closing browser.\nNumber of open browsers is checked in ShouldStartShutdown() function.",
+      "parentUuid": "a596c28c_ed4ce8a8",
+      "range": {
+        "startLine": 736,
+        "startChar": 41,
+        "endLine": 736,
+        "endChar": 72
+      },
+      "revId": "b5425b1e8e7764703d9aec9245d1f0ab653723ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70d244eb_a0647dfa",
         "filename": "chrome/browser/ui/browser_list.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-09T17:18:48Z",
       "side": 1,
       "message": "There is no guarantee this the close will complete (it may be aborted).",
+      "range": {
+        "startLine": 256,
+        "startChar": 18,
+        "endLine": 256,
+        "endChar": 43
+      },
+      "revId": "b5425b1e8e7764703d9aec9245d1f0ab653723ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce1ba8d5_7733271e",
+        "filename": "chrome/browser/ui/browser_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-11-10T07:36:04Z",
+      "side": 1,
+      "message": "This event is fired only from Browser::OnWindowClosing(). But we cannot cancel browser close when Browser::OnWindowClosing() has been called, because OnWindowClosing() is called only when the beforeunload handlers have finished. See:\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/unload_controller.cc?q\u003dunload_cont\u0026sq\u003dpackage:chromium\u0026l\u003d308\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/fast_unload_controller.cc?q\u003dfast_unlo\u0026sq\u003dpackage:chromium\u0026l\u003d427",
+      "parentUuid": "70d244eb_a0647dfa",
       "range": {
         "startLine": 256,
         "startChar": 18,
@@ -68,6 +116,30 @@
       "revId": "b5425b1e8e7764703d9aec9245d1f0ab653723ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b44fd5b_65cc4c95",
+        "filename": "components/keep_alive_registry/keep_alive_registry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-11-10T07:36:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "410b78b7_372b323c",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 58
+      },
+      "revId": "b5425b1e8e7764703d9aec9245d1f0ab653723ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
