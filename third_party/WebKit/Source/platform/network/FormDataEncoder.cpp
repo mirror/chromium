@@ -164,11 +164,53 @@ void FormDataEncoder::AddFilenameToMultiPartHeader(
     Vector<char>& buffer,
     const WTF::TextEncoding& encoding,
     const String& filename) {
-  // FIXME: This loses data irreversibly if the filename includes characters you
-  // can't encode in the website's character set.
+  // Characters that cannot be encoded using the form's encoding will
+  // be escaped using numeric character references, e.g. &#128514; for
+  // 😂.
+  //
+  // This aspect of multipart file upload (how to replace filename
+  // characters not representable in the form charset) is not
+  // currently specified in HTML, though it may be a good candidate
+  // for future standardization.
+  //
+  // This behavior is intended to match existing Firefox and Edge
+  // behavior, and address a long-standing information-loss FIXME
+  // Blink inherited from WebKit. This is the "html" error handling of
+  // the Encoding Standard. The previous "?" mechanism was never
+  // standardized.
+  //
+  // This behavior also exactly matches the already-standardized
+  // replacement behavior from HTML for entity names and values.
+  //
+  // The HTML standard specifically overrides the RFC in this case, by
+  // specifying that browsers will do fallback character encoding (in
+  // an unspecified manner!) for file names prior to following the
+  // RFC-defined steps for form data encoding:
+  //
+  // > File names included in the generated multipart/form-data
+  // > resource (as part of file fields) must use the character
+  // > encoding selected above, though the precise name may be
+  // > approximated if necessary (e.g. newlines could be removed from
+  // > file names, quotes could be changed to "%22", and characters
+  // > not expressible in the selected character encoding could be
+  // > replaced by other characters).
+  //
+  // That language in HTML standard and a prohibition in RFC 7578 both
+  // disallow the alternative "filename*" mechanism from RFC 5987
+  // which might otherwise solve this problem but faces severe
+  // backwards-incompatibility problems on the web.
+  //
+  // See also:
+  //
+  // https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#multipart-form-data
+  // https://www.chromestatus.com/features/5634575908732928
+  // https://crbug.com/661819
+  // https://encoding.spec.whatwg.org/#concept-encoding-process
+  // https://tools.ietf.org/html/rfc7578#section-4.2
+  // https://tools.ietf.org/html/rfc5987#section-3.2
   Append(buffer, "; filename=\"");
-  AppendQuotedString(
-      buffer, encoding.Encode(filename, WTF::kQuestionMarksForUnencodables));
+  AppendQuotedString(buffer,
+                     encoding.Encode(filename, WTF::kEntitiesForUnencodables));
   Append(buffer, '"');
 }
 
