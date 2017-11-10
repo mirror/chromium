@@ -31,6 +31,7 @@
 #define DocumentLoader_h
 
 #include <memory>
+#include "base/unguessable_token.h"
 #include "bindings/core/v8/SourceLocation.h"
 #include "core/CoreExport.h"
 #include "core/dom/ViewportDescription.h"
@@ -217,6 +218,13 @@ class CORE_EXPORT DocumentLoader
 
   void Trace(blink::Visitor*) override;
 
+  const base::UnguessableToken& GetDevToolsNavigationToken() {
+    return devtools_navigation_token_;
+  }
+  void SetDevToolsNavigationToken(const base::UnguessableToken& token) {
+    devtools_navigation_token_ = token;
+  }
+
  protected:
   DocumentLoader(LocalFrame*,
                  const ResourceRequest&,
@@ -359,6 +367,7 @@ class CORE_EXPORT DocumentLoader
   // Used to protect against reentrancy into dataReceived().
   bool in_data_received_;
   scoped_refptr<SharedBuffer> data_buffer_;
+  base::UnguessableToken devtools_navigation_token_;
 };
 
 DECLARE_WEAK_IDENTIFIER_MAP(DocumentLoader);

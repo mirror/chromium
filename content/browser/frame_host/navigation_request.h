@@ -181,6 +181,10 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
 
   int nav_entry_id() const { return nav_entry_id_; }
 
+  const base::UnguessableToken& devtools_navigation_token() const {
+    return devtools_navigation_token_;
+  }
+
  private:
   // This enum describes the result of a Content Security Policy (CSP) check for
   // the request.
@@ -351,6 +355,13 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // Used in the network service world to pass the subressource loader params
   // to the renderer. Used by AppCache and ServiceWorker.
   base::Optional<SubresourceLoaderParams> subresource_loader_params_;
+
+  // For automation driver-initiated navigations over the devtools protocol,
+  // |devtools_navigation_token_| is used to tag the navigation. This navigation
+  // token is then sent into the renderer and lands on the DocumentLoader. That
+  // way subsequent Blink-level frame lifecycle events can be associated with
+  // the concrete navigation.
+  base::UnguessableToken devtools_navigation_token_;
 
   base::WeakPtrFactory<NavigationRequest> weak_factory_;
 
