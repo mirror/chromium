@@ -70,6 +70,24 @@
       "revId": "e47f8e09f88ccbdedd2471aae49acfc76481beef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d7e1e1_a9a19474",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-10T22:49:10Z",
+      "side": 1,
+      "message": "Ah, i see. interestingly we never hit this case in the past on all bots and builds",
+      "parentUuid": "afe80d07_62c57504",
+      "revId": "e47f8e09f88ccbdedd2471aae49acfc76481beef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
