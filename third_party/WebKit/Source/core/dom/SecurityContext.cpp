@@ -58,17 +58,25 @@ void SecurityContext::SetContentSecurityPolicy(
 }
 
 void SecurityContext::EnforceSandboxFlags(SandboxFlags mask) {
-  ApplySandboxFlags(mask);
+  ApplySandboxFlags(mask, false);
 }
 
-void SecurityContext::ApplySandboxFlags(SandboxFlags mask) {
+bool SecurityContext::ApplySandboxFlags(SandboxFlags mask,
+                                        bool is_potentially_trustworthy) {
   sandbox_flags_ |= mask;
 
   if (IsSandboxed(kSandboxOrigin) && GetSecurityOrigin() &&
       !GetSecurityOrigin()->IsUnique()) {
-    SetSecurityOrigin(SecurityOrigin::CreateUnique());
+    scoped_refptr<SecurityOrigin> security_origin =
+        SecurityOrigin::CreateUnique();
+    security_origin->SetUniqueOriginIsPotentiallyTrustworthy(
+        is_potentially_trustworthy);
+    SetSecurityOrigin(std::move(security_origin));
     DidUpdateSecurityOrigin();
+    return true;
   }
+
+  return false;
 }
 
 String SecurityContext::addressSpaceForBindings() const {

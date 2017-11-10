@@ -104,7 +104,11 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
                                const FeaturePolicy* parent_feature_policy);
   void UpdateFeaturePolicyOrigin();
 
-  void ApplySandboxFlags(SandboxFlags mask);
+  // If and only if a new unique SecurityOrigin is set in ApplySandboxFlags(),
+  // ApplySandboxFlags() returns true, and
+  // its IsPotentiallyTrustworthy() flag is set to |is_potentially_trustworthy|.
+  bool ApplySandboxFlags(SandboxFlags mask,
+                         bool is_potentially_trustworthy = false);
 
  protected:
   SecurityContext();
