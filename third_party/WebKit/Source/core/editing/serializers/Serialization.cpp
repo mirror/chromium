@@ -148,10 +148,9 @@ static inline HTMLElement* AncestorToRetainStructureAndAppearance(
 
 static inline HTMLElement*
 AncestorToRetainStructureAndAppearanceWithNoLayoutObject(
-    Node* common_ancestor) {
+    const Node& common_ancestor) {
   HTMLElement* common_ancestor_block = ToHTMLElement(EnclosingNodeOfType(
-      FirstPositionInOrBeforeNodeDeprecated(common_ancestor),
-      IsHTMLBlockElement));
+      FirstPositionInOrBeforeNode(common_ancestor), IsHTMLBlockElement));
   return AncestorToRetainStructureAndAppearanceForBlock(common_ancestor_block);
 }
 
@@ -419,7 +418,8 @@ DocumentFragment* CreateFragmentFromMarkupWithContext(
       Position::AfterNode(*node_before_context).ParentAnchoredEquivalent(),
       Position::BeforeNode(*node_after_context).ParentAnchoredEquivalent());
 
-  Node* common_ancestor = range.CommonAncestorContainer();
+  DCHECK(range.CommonAncestorContainer());
+  Node& common_ancestor = *range.CommonAncestorContainer();
   HTMLElement* special_common_ancestor =
       AncestorToRetainStructureAndAppearanceWithNoLayoutObject(common_ancestor);
 
@@ -431,7 +431,7 @@ DocumentFragment* CreateFragmentFromMarkupWithContext(
   if (special_common_ancestor)
     fragment->AppendChild(special_common_ancestor);
   else
-    fragment->ParserTakeAllChildrenFrom(ToContainerNode(*common_ancestor));
+    fragment->ParserTakeAllChildrenFrom(ToContainerNode(common_ancestor));
 
   TrimFragment(fragment, node_before_context, node_after_context);
 
