@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//third_party/libaom/options.gni")
+
 source_set("renderers") {
   # Do not expand the visibility here without double-checking with OWNERS, this
   # is a roll-up target which is part of the //media component. Most other DEPs
@@ -37,6 +39,10 @@ source_set("renderers") {
     "//ui/gfx:memory_buffer",
     "//ui/gfx/geometry",
   ]
+
+  if (enable_av1_decoder) {
+    deps += [ "//third_party/libaom:av1_features" ]
+  }
 
   configs += [
     "//media:subcomponent_config",
