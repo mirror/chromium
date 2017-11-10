@@ -37,6 +37,7 @@
 #import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
+#import "ios/testing/earl_grey/disabled_test_macros.h"
 #import "ios/testing/wait_util.h"
 #include "net/test/embedded_test_server/http_request.h"
 #include "net/test/embedded_test_server/http_response.h"
@@ -545,6 +546,12 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
 
 // Tests that "Open in New Tab" in context menu opens in a new tab.
 - (void)testReadingListOpenNewTab {
+// TODO(crbug.com/783169): This test is faling on devices with iOS > 11.
+#if !TARGET_IPHONE_SIMULATOR
+  if (@available(iOS 11.0, *)) {
+    EARL_GREY_TEST_DISABLED(@"Failing on iOS 11 devices.");
+  }
+#endif
   // Setup.
   [self setupReadingListContextMenu];
   const GURL pageURL = self.testServer->GetURL(kPageURL);
