@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3ef87db_5b0e11a1",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-10T23:39:09Z",
+      "side": 1,
+      "message": "Yes, I tried that, and it did cause problems.\n\nKeeping the un-snapped size is only important for LayoutBox, because only LayoutBox has a Location(), and only LayoutBox can have a PaintLayerScrollableArea.",
+      "parentUuid": "2108cc20_7e5586ad",
+      "revId": "612afd36c4fc78b499ef889d22e7303cd3bbe723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cea3f62d_12b20618",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a6709060_1b7f71a4",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-10T23:39:09Z",
+      "side": 1,
+      "message": "The only place that Box().Location() was used for snapping was in PaintLayer::UpdateSize().  Basically, anything that used PaintLayer::Size() would have been using premature snapping.\n\nWe can\u0027t use LayoutPoint() for premature snapping, because it might cause the size to get snapped one pixel too small, which will cause auto scrollbars to be displayed (the bug).\n\nI\u0027m not really sure what you\u0027d like to see in a comment; \"here are the callers of PixelSnappedSize()...\" ?",
+      "parentUuid": "cea3f62d_12b20618",
+      "revId": "612afd36c4fc78b499ef889d22e7303cd3bbe723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3f909ea_267bca57",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-10T22:45:16Z",
       "side": 1,
       "message": "Can we do this instead?\nlayer_bounds \u003d LayoutRect(offset, layer_.Size());",
+      "revId": "612afd36c4fc78b499ef889d22e7303cd3bbe723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c9a6d3_8009dd59",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-10T23:39:09Z",
+      "side": 1,
+      "message": "The problem is that this might cause the clipping rect to be different from the rect that PaintLayerScrollableArea::PositionOverflowControls uses.  That could cause the scrollbar to be clipped by one pixel, or it could leave a one-pixel gutter between the scrollbar and the layer boundary.\n\nUltimately, you\u0027re right, we should be using the paint offset to snap the layer size, and everything should use that size: determining overflow (as long as the overflow rect is also snapped to the paint offset), calculating clip rects, painting overflow controls, and hit testing.\n\nHowever, we don\u0027t have a way to do that at the moment, because the paint offset is not available to the overflow-computing, hit-testing, or overflow-control-positioning code.  It would probably be straightforward to add it to the overflow-control-positioning code, but the other two will take more work (for a later CL).\n\nI filed a bug to track this:\n\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d784003",
+      "parentUuid": "e3f909ea_267bca57",
       "revId": "612afd36c4fc78b499ef889d22e7303cd3bbe723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
