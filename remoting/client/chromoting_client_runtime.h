@@ -40,13 +40,6 @@ class ChromotingClientRuntime {
     // have been stopped.
     virtual void RuntimeDidShutdown() = 0;
 
-    // TODO(yuweih): Remove this once logger is using OAuthTokenGetter.
-    // RequestAuthTokenForLogger is called when the logger is requesting
-    // and auth token and the delegate is set. It is expected that the
-    // delegate will give the logger and auth token on the network thread like:
-    // (network thread): runtime->log_writer()->SetAuthToken(token)
-    virtual void RequestAuthTokenForLogger() = 0;
-
     // For fetching auth token. The implementation must allow being called from
     // multiple threads. Use OAuthTokenGetterProxy when necessary.
     virtual OAuthTokenGetter* token_getter() = 0;
@@ -55,6 +48,10 @@ class ChromotingClientRuntime {
   static ChromotingClientRuntime* GetInstance();
 
   void SetDelegate(ChromotingClientRuntime::Delegate* delegate);
+
+  // Inform components that cache the access token to request a new access
+  // token.
+  void OnOAuthTokenChanged();
 
   scoped_refptr<AutoThreadTaskRunner> network_task_runner() {
     return network_task_runner_;
@@ -88,9 +85,6 @@ class ChromotingClientRuntime {
  private:
   ChromotingClientRuntime();
   virtual ~ChromotingClientRuntime();
-
-  void CreateLogWriter();
-  void RequestAuthTokenForLogger();
 
   // Chromium code's connection to the app message loop. Once created the
   // MessageLoop will live for the life of the program.

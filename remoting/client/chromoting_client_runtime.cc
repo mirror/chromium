@@ -63,15 +63,20 @@ ChromotingClientRuntime::ChromotingClientRuntime() {
   url_requester_ =
       new URLRequestContextGetter(network_task_runner_, file_task_runner_);
 
-  CreateLogWriter();
+  log_writer_.reset(new TelemetryLogWriter(
+      kTelemetryBaseUrl,
+      std::make_unique<ChromiumUrlRequestFactory>(url_requester_)));
 }
 
 ChromotingClientRuntime::~ChromotingClientRuntime() {
+  DCHECK(ui_task_runner()->BelongsToCurrentThread());
   if (delegate_) {
     delegate_->RuntimeWillShutdown();
   } else {
     DLOG(ERROR) << "ClientRuntime Delegate is null.";
   }
+
+  network_task_runner()->DeleteSoon(FROM_HERE, log_writer_.release());
 
   // Block until tasks blocking shutdown have completed their execution.
   base::TaskScheduler::GetInstance()->Shutdown();
@@ -83,30 +88,23 @@ ChromotingClientRuntime::~ChromotingClientRuntime() {
 
 void ChromotingClientRuntime::SetDelegate(
     ChromotingClientRuntime::Delegate* delegate) {
+  DCHECK(ui_task_runner()->BelongsToCurrentThread());
   delegate_ = delegate;
+
+  network_task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&TelemetryLogWriter::SetTokenGetter,
+                     log_writer_->GetWeakPtr(), delegate->token_getter()));
 }
 
-void ChromotingClientRuntime::CreateLogWriter() {
-  if (!network_task_runner()->BelongsToCurrentThread()) {
-    network_task_runner()->PostTask(
-        FROM_HERE, base::Bind(&ChromotingClientRuntime::CreateLogWriter,
-                              base::Unretained(this)));
+void ChromotingClientRuntime::OnOAuthTokenChanged() {
+  if (network_task_runner()->BelongsToCurrentThread()) {
+    log_writer_->RequestNewToken();
     return;
   }
-  log_writer_.reset(new TelemetryLogWriter(
-      kTelemetryBaseUrl,
-      base::MakeUnique<ChromiumUrlRequestFactory>(url_requester())));
-  log_writer_->SetAuthClosure(
-      base::Bind(&ChromotingClientRuntime::RequestAuthTokenForLogger,
-                 base::Unretained(this)));
-}
-
-void ChromotingClientRuntime::RequestAuthTokenForLogger() {
-  if (delegate_) {
-    delegate_->RequestAuthTokenForLogger();
-  } else {
-    DLOG(ERROR) << "ClientRuntime Delegate is null.";
-  }
+  network_task_runner()->PostTask(
+      FROM_HERE, base::BindOnce(&TelemetryLogWriter::RequestNewToken,
+                                log_writer_->GetWeakPtr()));
 }
 
 ChromotingEventLogWriter* ChromotingClientRuntime::log_writer() {

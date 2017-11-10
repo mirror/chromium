@@ -177,12 +177,7 @@ NSString* const kUserInfo = @"kUserInfo";
   if (user) {
     userInfo = [NSDictionary dictionaryWithObject:user forKey:kUserInfo];
     [self requestHostListFetch];
-    [_authentication
-        callbackWithAccessToken:^(RemotingAuthenticationStatus status,
-                                  NSString* userEmail, NSString* accessToken) {
-          _clientRuntimeDelegate->SetAuthToken(
-              base::SysNSStringToUTF8(accessToken));
-        }];
+    self.runtime->OnOAuthTokenChanged();
   } else {
     _hosts = nil;
   }
