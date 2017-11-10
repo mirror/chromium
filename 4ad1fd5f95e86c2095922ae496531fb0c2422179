@@ -105,6 +105,30 @@
       "revId": "4ad1fd5f95e86c2095922ae496531fb0c2422179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "052d5976_88e1f35f",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-10T01:50:04Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "f589c18a_76139e9b",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 28
+      },
+      "revId": "4ad1fd5f95e86c2095922ae496531fb0c2422179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
