@@ -101,6 +101,9 @@ class PowerButtonTestBase : public AshTestBase {
   // Triggers a unlock screen operation.
   void UnlockScreen();
 
+  // Simulates stylus removal event.
+  void RemoveStylus();
+
   // Enables or disables tablet mode based on |enable|.
   void EnableTabletMode(bool enable);
 

@@ -5,6 +5,8 @@
 #ifndef ASH_SYSTEM_POWER_POWER_BUTTON_DISPLAY_CONTROLLER_H_
 #define ASH_SYSTEM_POWER_POWER_BUTTON_DISPLAY_CONTROLLER_H_
 
+#include <memory>
+
 #include "ash/ash_export.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -19,6 +21,8 @@ class TickClock;
 }  // namespace base
 
 namespace ash {
+
+class LockScreenNoteController;
 
 // PowerButtonDisplayController performs display-related tasks (e.g. forcing
 // backlights off or disabling the touchscreen) on behalf of
@@ -68,6 +72,8 @@ class ASH_EXPORT PowerButtonDisplayController
   void OnStylusStateChanged(ui::StylusState state) override;
 
  private:
+  friend class TabletPowerButtonControllerTestApi;
+
   // Sends a request to powerd to get the backlights forced off state so that
   // |backlights_forced_off_| can be initialized.
   void GetInitialBacklightsForcedOff();
@@ -95,6 +101,14 @@ class ASH_EXPORT PowerButtonDisplayController
 
   // Time source for performed action times.
   base::TickClock* tick_clock_;  // Not owned.
+
+  // Controls lock screen note action state interaction with display state.
+  // For example, it will close any active lock screen notes if the display is
+  // forced off, and it will launch a lock screen note if stylus is ejected
+  // while the screen is on, or forced off. If the note is launched as the
+  // display is stopping being forced off, |lock_screen_note_controller_| will
+  // be used to delay changing display state.
+  std::unique_ptr<LockScreenNoteController> lock_screen_note_controller_;
 
   base::WeakPtrFactory<PowerButtonDisplayController> weak_ptr_factory_;
 

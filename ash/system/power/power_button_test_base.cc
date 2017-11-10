@@ -11,6 +11,7 @@
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
 #include "ash/system/power/power_button_controller.h"
+#include "ash/system/power/power_button_display_controller.h"
 #include "ash/system/power/tablet_power_button_controller_test_api.h"
 #include "ash/wm/lock_state_controller.h"
 #include "ash/wm/lock_state_controller_test_api.h"
@@ -21,6 +22,7 @@
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_power_manager_client.h"
 #include "chromeos/dbus/fake_session_manager_client.h"
+#include "ui/events/devices/stylus_state.h"
 #include "ui/events/event.h"
 #include "ui/events/test/event_generator.h"
 
@@ -157,6 +159,11 @@ void PowerButtonTestBase::LockScreen() {
 void PowerButtonTestBase::UnlockScreen() {
   lock_state_controller_->OnLockStateChanged(false);
   GetSessionControllerClient()->UnlockScreen();
+}
+
+void PowerButtonTestBase::RemoveStylus() {
+  power_button_controller_->display_controller_for_test()->OnStylusStateChanged(
+      ui::StylusState::REMOVED);
 }
 
 void PowerButtonTestBase::EnableTabletMode(bool enable) {
