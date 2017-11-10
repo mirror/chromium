@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4c10840_cfbbaae7",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-10T18:19:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "df35af66_d5d093be",
+      "revId": "378caa6672d5e69dcebbd3ff8495e109cca602e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d09db427_61c769fb",
         "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-10T15:02:53Z",
       "side": 1,
       "message": "But here I can\u0027t be sure about contents of |inserted_nodes| and should do an additional check.\nAm I right?",
+      "revId": "378caa6672d5e69dcebbd3ff8495e109cca602e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cdde2f9_b8e3c448",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1457,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-10T18:19:58Z",
+      "side": 1,
+      "message": "Not sure, either. Does the check in L1377 apply here?\n\nAnyway, it\u0027s OK to add a\n\n// TODO(editing-dev): The nullptr checks may be unnecessary. Investigate.",
+      "parentUuid": "d09db427_61c769fb",
       "revId": "378caa6672d5e69dcebbd3ff8495e109cca602e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f65fed6a_a32f313f",
+        "filename": "third_party/WebKit/Source/core/editing/serializers/Serialization.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-10T18:19:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1900e818_8370ac6d",
+      "revId": "378caa6672d5e69dcebbd3ff8495e109cca602e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7a95810_dadd7c2b",
         "filename": "third_party/WebKit/Source/core/editing/serializers/Serialization.cpp",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-10T15:02:53Z",
       "side": 1,
       "message": "This should be |const Node\u0026| but ParserTakeAllChildrenFrom function takes a on-const ref object \u003d(",
+      "revId": "378caa6672d5e69dcebbd3ff8495e109cca602e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e67efc_3d5754be",
+        "filename": "third_party/WebKit/Source/core/editing/serializers/Serialization.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-10T18:19:58Z",
+      "side": 1,
+      "message": "Adding a TODO would help.",
+      "parentUuid": "a7a95810_dadd7c2b",
       "revId": "378caa6672d5e69dcebbd3ff8495e109cca602e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

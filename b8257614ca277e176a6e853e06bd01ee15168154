@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5ba2979_cb9f1fbc",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1491,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-10T18:19:58Z",
+      "side": 1,
+      "message": "Wow, we have a new |next| covering the one defined outside...",
+      "range": {
+        "startLine": 1491,
+        "startChar": 6,
+        "endLine": 1491,
+        "endChar": 46
+      },
+      "revId": "b8257614ca277e176a6e853e06bd01ee15168154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4238307e_6b91cbec",
+        "filename": "third_party/WebKit/Source/core/editing/serializers/Serialization.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-10T18:19:58Z",
+      "side": 1,
+      "message": "|parent_list_node| is always null if |first_node| is null.\n\nCan we make it more straightforward, like:\n\nif (first_node) {\n  if (... parent_list_node \u003d ...(FirstPositionInOrBeforeNode(*first_node), ...)) {\n    ...\n  }\n}",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 0
+      },
+      "revId": "b8257614ca277e176a6e853e06bd01ee15168154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c72783_17c5d250",
+        "filename": "third_party/WebKit/Source/core/editing/serializers/Serialization.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-10T18:19:58Z",
+      "side": 1,
+      "message": "|highest_mail_blockquote| is always null if |first_node| is null.\n\nCan we make it more straightforward, like:\n\nif (first_node) {\n  if (... highest_mail_blockquote \u003d ...(FirstPositionInOrBeforeNode(*first_node), ...))\n    special_common_ancestor \u003d highest_mail_blockquote;\n}",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 56
+      },
+      "revId": "b8257614ca277e176a6e853e06bd01ee15168154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
