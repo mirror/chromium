@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66fbe175_74141ac9",
+        "filename": "build/protoc_java.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-10T14:37:28Z",
+      "side": 1,
+      "message": "Super-nit: 4 space indent for line continuations",
+      "revId": "158187d5cc92ed926f28dc57262926f8cac2a71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
