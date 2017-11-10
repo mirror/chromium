@@ -22,6 +22,30 @@
       "revId": "096c40527e25b5717e3481d926cf7f82205dd772",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57919e5_8b83f445",
+        "filename": "chrome/browser/ui/views/cookie_info_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-10T14:04:12Z",
+      "side": 1,
+      "message": "Apparently he wants specifically 96pt, not right-aligned: \u003chttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d610428#c67\u003e.\n\nI can add a distance metric but I\u0027m not sure if we\u0027d use it anywhere other than this dialog, since it seems like rather a special case for this layout.",
+      "parentUuid": "c0e2e207_93bc4772",
+      "range": {
+        "startLine": 125,
+        "startChar": 16,
+        "endLine": 125,
+        "endChar": 34
+      },
+      "revId": "096c40527e25b5717e3481d926cf7f82205dd772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
