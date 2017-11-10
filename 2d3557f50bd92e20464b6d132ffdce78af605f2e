@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8fb5d948_f39137fe",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-10T01:49:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c8d58c1_67f60669",
+      "revId": "2d3557f50bd92e20464b6d132ffdce78af605f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e37b64ed_1c952373",
         "filename": "net/quic/chromium/quic_http_utils.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "2d3557f50bd92e20464b6d132ffdce78af605f2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d674009_d21c2b82",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-10T01:49:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e37b64ed_1c952373",
+      "revId": "2d3557f50bd92e20464b6d132ffdce78af605f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "34ae54d0_fb73189e",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-10T01:49:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8730a29_80b4dd24",
+      "revId": "2d3557f50bd92e20464b6d132ffdce78af605f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a961dafb_9f395e08",
         "filename": "net/quic/chromium/quic_http_utils.cc",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "70874d7a_a06e512d",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-10T01:49:17Z",
+      "side": 1,
+      "message": "No, the double-for-loop is for finding the common elements between the vectors |quic_alt_svc.version| and |supported_versions|. Moving this to after line 72 would be counting the total number of supported versions in received QUIC advertisements , as opposed to the number of received QUIC advertisements.",
+      "parentUuid": "a961dafb_9f395e08",
+      "revId": "2d3557f50bd92e20464b6d132ffdce78af605f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffe249f2_acefa35c",
         "filename": "net/quic/chromium/quic_http_utils.cc",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "2d3557f50bd92e20464b6d132ffdce78af605f2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c001e161_cb1f7da9",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-10T01:49:17Z",
+      "side": 1,
+      "message": "See previous comment\u0027s explanation",
+      "parentUuid": "ffe249f2_acefa35c",
+      "revId": "2d3557f50bd92e20464b6d132ffdce78af605f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
