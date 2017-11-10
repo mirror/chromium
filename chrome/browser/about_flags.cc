@@ -9,6 +9,7 @@
 #include <set>
 #include <utility>
 
+#include "ash/public/cpp/app_list/app_list_features.h"
 #include "base/base_switches.h"
 #include "base/bind.h"
 #include "base/callback.h"
@@ -109,7 +110,6 @@
 #include "printing/features/features.h"
 #include "services/device/public/cpp/device_features.h"
 #include "services/service_manager/sandbox/switches.h"
-#include "ui/app_list/app_list_features.h"
 #include "ui/base/ui_base_features.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/compositor/compositor_switches.h"

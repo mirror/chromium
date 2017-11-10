@@ -10,6 +10,8 @@
 #include <string>
 #include <utility>
 
+#include "ash/public/cpp/app_list/app_list_item.h"
+#include "ash/public/cpp/app_list/app_list_model.h"
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/macros.h"
@@ -32,8 +34,6 @@
 #include "extensions/browser/extension_system.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
-#include "ui/app_list/app_list_item.h"
-#include "ui/app_list/app_list_model.h"
 #include "ui/app_list/search/tokenized_string.h"
 #include "ui/app_list/search/tokenized_string_match.h"
 

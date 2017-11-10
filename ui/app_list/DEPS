@@ -1,4 +1,6 @@
 include_rules = [
+  # TODO(hejq): Remove this. http://crbug/733662
+  "+ash",
   "+components/keyed_service/core",
   "+components/sync",
   "+components/wallpaper",
