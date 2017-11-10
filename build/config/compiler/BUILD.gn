@@ -1310,6 +1310,9 @@ config("default_warnings") {
 
         # TODO(hans): https://crbug.com/637306
         "-Wno-address-of-packed-member",
+
+        # TODO(hans): http://crbug.com/783204
+        "-Wno-tautological-constant-out-of-range-compare",
       ]
     }
   }
