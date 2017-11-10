@@ -184,6 +184,21 @@ TEST_F(AutofillAddressValidationTest, ValidateAddress_AdminAreaSpecialLetter) {
   EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
 
+TEST_F(AutofillAddressValidationTest, ValidateAddress_AdminAreaNonDefault) {
+  const std::string admin_area = "Nouveau-Brunswick";
+  const std::string postal_code = "E1A 8R5";  // A valid postal code for NB.
+  AutofillProfile profile(autofill::test::GetFullValidProfile());
+  profile.SetRawInfo(ADDRESS_HOME_STATE, base::UTF8ToUTF16(admin_area));
+  profile.SetRawInfo(ADDRESS_HOME_ZIP, base::UTF8ToUTF16(postal_code));
+
+  EXPECT_EQ(AutofillProfile::VALID, ValidateAddressTest(&profile));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_COUNTRY));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_STATE));
+  EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
+}
+
 TEST_F(AutofillAddressValidationTest, ValidateAddress_ValidZipNoSpace) {
   // TODO(crbug/752614): postal codes in lower case letters should also be
   // considered as valid. Now, they are considered as INVALID.
@@ -238,9 +253,6 @@ TEST_F(AutofillAddressValidationTest,
             profile.GetValidityState(ADDRESS_HOME_STATE));
   EXPECT_EQ(AutofillProfile::EMPTY, profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
-
-// TODO(crbug/754727): add tests for a non-default language.
-// Ex: Nouveau-Brunswick for Canada.
 
 // TODO(crbug/754729): Add tests for a country whose default language is a
 // non-Western one, such as China.
