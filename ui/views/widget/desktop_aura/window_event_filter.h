@@ -24,10 +24,14 @@ class VIEWS_EXPORT WindowEventFilter : public ui::EventHandler {
 
   // Overridden from ui::EventHandler:
   void OnMouseEvent(ui::MouseEvent* event) override;
+  void OnTouchEvent(ui::TouchEvent* event) override;
 
  private:
+  // Handles touch and mouse events.
+  void HandleEventInternal(ui::Event* event);
+
   // Called when the user clicked the caption area.
-  void OnClickedCaption(ui::MouseEvent* event, int previous_click_component);
+  void OnClickedCaption(ui::Event* event, int previous_click_component);
 
   // Called when the user clicked the maximize button.
   void OnClickedMaximizeButton(ui::MouseEvent* event);
@@ -38,7 +42,7 @@ class VIEWS_EXPORT WindowEventFilter : public ui::EventHandler {
   // or titlebar drag occurred with left mouse click. In case of X11, a
   // _NET_WM_MOVERESIZE message is sent.
   virtual void MaybeDispatchHostWindowDragMovement(int hittest,
-                                                   ui::MouseEvent* event);
+                                                   ui::Event* event);
 
   // A signal to lower an attached to this filter window to the bottom of the
   // stack.

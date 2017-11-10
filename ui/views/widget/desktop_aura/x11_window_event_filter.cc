@@ -56,8 +56,9 @@ X11WindowEventFilter::~X11WindowEventFilter() {
 
 void X11WindowEventFilter::MaybeDispatchHostWindowDragMovement(
     int hittest,
-    ui::MouseEvent* event) {
-  if (event->IsLeftMouseButton() && event->native_event()) {
+    ui::Event* event) {
+  if (event->native_event() && (event->type() == ui::ET_TOUCH_PRESSED ||
+                                (event->AsMouseEvent()->IsLeftMouseButton()))) {
     // Get the |x_root_window_| location out of the native event.
     const gfx::Point x_root_location =
         ui::EventSystemLocationFromNative(event->native_event());

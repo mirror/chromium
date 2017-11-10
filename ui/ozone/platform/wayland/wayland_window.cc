@@ -185,14 +185,35 @@ bool WaylandWindow::CanDispatchEvent(const PlatformEvent& native_event) {
     return has_pointer_focus_;
   if (event->IsKeyEvent())
     return has_keyboard_focus_;
+  if (event->IsTouchEvent())
+    return has_touch_focus_;
   return false;
 }
 
 uint32_t WaylandWindow::DispatchEvent(const PlatformEvent& native_event) {
+  Event* event = static_cast<Event*>(native_event);
+  if (event->IsLocatedEvent() && !has_pointer_or_touch_focus())
+    ConvertEventLocationToCurrentWindowLocation(event);
+
   DispatchEventFromNativeUiEvent(
       native_event, base::Bind(&PlatformWindowDelegate::DispatchEvent,
                                base::Unretained(delegate_)));
   return POST_DISPATCH_STOP_PROPAGATION;
+}
+
+void WaylandWindow::ConvertEventLocationToCurrentWindowLocation(
+    ui::Event* event) {
+  WaylandWindow* wayland_window = connection_->GetCurrentFocusedWindow();
+  DCHECK_NE(wayland_window, this);
+  if (wayland_window && event->IsLocatedEvent()) {
+    gfx::Vector2d offset =
+        wayland_window->GetBounds().origin() - GetBounds().origin();
+    ui::LocatedEvent* located_event = event->AsLocatedEvent();
+    gfx::PointF location_in_pixel_in_host =
+        located_event->location_f() + gfx::Vector2dF(offset);
+    located_event->set_location_f(location_in_pixel_in_host);
+    located_event->set_root_location_f(location_in_pixel_in_host);
+  }
 }
 
 void WaylandWindow::HandleSurfaceConfigure(int32_t width, int32_t height) {

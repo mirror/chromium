@@ -14,6 +14,7 @@
 #include "ui/ozone/platform/wayland/wayland_object.h"
 #include "ui/ozone/platform/wayland/wayland_output.h"
 #include "ui/ozone/platform/wayland/wayland_pointer.h"
+#include "ui/ozone/platform/wayland/wayland_touch.h"
 
 namespace ui {
 
@@ -38,12 +39,15 @@ class WaylandConnection : public PlatformEventSource,
   zxdg_shell_v6* shell_v6() { return shell_v6_.get(); }
 
   WaylandWindow* GetWindow(gfx::AcceleratedWidget widget);
+  WaylandWindow* GetCurrentFocusedWindow();
   void AddWindow(gfx::AcceleratedWidget widget, WaylandWindow* window);
   void RemoveWindow(gfx::AcceleratedWidget widget);
 
   const std::vector<std::unique_ptr<WaylandOutput>>& GetOutputList() const;
   WaylandOutput* PrimaryOutput() const;
 
+  void set_serial(uint32_t serial) { serial_ = serial; }
+  uint32_t serial() { return serial_; }
  private:
   void Flush();
   void DispatchUiEvent(Event* event);
@@ -85,12 +89,17 @@ class WaylandConnection : public PlatformEventSource,
 
   std::unique_ptr<WaylandPointer> pointer_;
   std::unique_ptr<WaylandKeyboard> keyboard_;
+  std::unique_ptr<WaylandTouch> touch_;
 
   bool scheduled_flush_ = false;
   bool watching_ = false;
   base::MessagePumpLibevent::FileDescriptorWatcher controller_;
 
   std::vector<std::unique_ptr<WaylandOutput>> output_list_;
+
+  // This serial number corresponds to key press, mouse button press or touch
+  // press event. It is used to create new subsurfaces.
+  uint32_t serial_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(WaylandConnection);
 };
