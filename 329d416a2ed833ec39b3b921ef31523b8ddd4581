@@ -16,6 +16,24 @@
       "revId": "329d416a2ed833ec39b3b921ef31523b8ddd4581",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c96bc9_6160c51e",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-10T15:37:21Z",
+      "side": 1,
+      "message": "Oops, I commented to change from \"static const int\u0027 to \u0027const int\u0027...\nLooks \u0027static const\u0027 is used very widely elsewhere, so feel free to get back to\n\u0027static const int\u0027.",
+      "parentUuid": "73409929_e224e9a9",
+      "revId": "329d416a2ed833ec39b3b921ef31523b8ddd4581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
