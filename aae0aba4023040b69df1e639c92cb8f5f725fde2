@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a15df1ea_a83b3179",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T19:01:16Z",
+      "side": 1,
+      "message": "Nit: Can fit in previous line?",
+      "revId": "aae0aba4023040b69df1e639c92cb8f5f725fde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0695649_32854300",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T19:01:16Z",
+      "side": 1,
+      "message": "Nit: Can fit in previous line.",
+      "revId": "aae0aba4023040b69df1e639c92cb8f5f725fde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
