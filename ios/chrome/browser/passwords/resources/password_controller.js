@@ -240,33 +240,6 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
   };
 
   /**
-   * Returns the element with the specified name that is a child of the
-   * specified parent element.
-   * @param {Element} parent The parent of the desired element.
-   * @param {string} name The name of the desired element.
-   * @param {boolen} isPassword Whether the field should be a password field;
-   *     if not supplied, |false| is assumed.
-   * @return {Element} The element if found, otherwise null;
-   */
-  __gCrWeb['getElementByNameWithParent'] = function(
-      parent, name, isPassword) {
-    isPassword = isPassword || false;
-    var parentType = parent.type || "";
-    var isParentPassword = parentType === "password";
-    if (parent.name === name && (isPassword === isParentPassword)) {
-      return parent;
-    }
-    for (var i = 0; i < parent.children.length; i++) {
-      var el = __gCrWeb.getElementByNameWithParent(
-          parent.children[i], name, isPassword);
-      if (el) {
-        return el;
-      }
-    }
-    return null;
-  };
-
-  /**
    * Given a description of a form (origin, action and input fields),
    * finds that form on the page and fills in the specified username
    * and password.
@@ -285,11 +258,10 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
 
     __gCrWeb.findMatchingPasswordForms(formData, doc, opt_normalizedOrigin).
         forEach(function(form) {
-      var usernameInput =
-          __gCrWeb.getElementByNameWithParent(form, formData.fields[0].name);
-      var passwordInput =
-          __gCrWeb.getElementByNameWithParent(
-              form, formData.fields[1].name, true);
+      var usernameInput = __gCrWeb.common.getElementByNameWithParent(
+        form, formData.fields[0].name);
+      var passwordInput = __gCrWeb.common.getElementByNameWithParent(
+        form, formData.fields[1].name, true);
       if (!usernameInput.disabled && !passwordInput.disabled) {
         // If username was provided on a read-only field and it matches the
         // requested username, fill the form.

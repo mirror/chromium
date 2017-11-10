@@ -271,7 +271,7 @@ __gCrWeb.suggestion.getFormElement = function(formName, fieldName) {
   var form = __gCrWeb.common.getFormElementFromIdentifier(formName);
   if (!form)
     return null;
-  return __gCrWeb.getElementByNameWithParent(form, fieldName);
+  return __gCrWeb.common.getElementByNameWithParent(form, fieldName);
 };
 
 /**
