@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b8da7885_1beabad8",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-10T23:45:36Z",
+      "side": 1,
+      "message": "I\u0027m ok with the simpler text, but I disagree with Daniel\u0027s point.\n\nThe scenario I was concerned about is that the browser process tells the renderer one token, and the renderer intentionally uses that token for a different navigation as well.",
+      "parentUuid": "d2bae85e_7b7f4d0d",
+      "range": {
+        "startLine": 191,
+        "startChar": 41,
+        "endLine": 192,
+        "endChar": 35
+      },
+      "revId": "edb47c676ba7a1dd129389a20d44a531cdaeed1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9742b8f9_80cb255f",
         "filename": "content/test/test_render_frame_host.cc",
         "patchSetId": 12

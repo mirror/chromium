@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1b18475_09d18abe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-10T23:45:36Z",
+      "side": 1,
+      "message": "Let\u0027s add BUG\u003d783506, just to connect the work.",
+      "revId": "36fdab974339e1895f06c24b22576e96b692fd74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
