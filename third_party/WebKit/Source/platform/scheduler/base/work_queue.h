@@ -9,9 +9,9 @@
 
 #include <set>
 
+#include "base/task/sequence_manager/enqueue_order.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "platform/scheduler/base/enqueue_order.h"
 #include "platform/scheduler/base/intrusive_heap.h"
 #include "platform/scheduler/base/task_queue_impl.h"
 
