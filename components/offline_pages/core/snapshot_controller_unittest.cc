@@ -7,9 +7,11 @@
 #include "base/bind.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "components/offline_pages/core/offline_page_feature.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace offline_pages {
@@ -80,6 +82,8 @@ void SnapshotControllerTest::FastForwardBy(base::TimeDelta delta) {
 }
 
 TEST_F(SnapshotControllerTest, OnLoad) {
+  // Ensure the feature for resource percentage snapshot collecting is off.
+  EXPECT_FALSE(IsOfflinePagesResourceBasedSnapshotEnabled());
   // Onload should make snapshot after its delay.
   controller()->DocumentOnLoadCompletedInMainFrame();
   PumpLoop();
@@ -191,6 +195,33 @@ TEST_F(SnapshotControllerTest, ClientResetWhileSnapshotting) {
       controller()->GetDelayAfterDocumentAvailableForTest()));
   // No snapshot since session was reset.
   EXPECT_EQ(2, snapshot_count());
+}
+
+TEST_F(SnapshotControllerTest, UpdateLoadingResourceProgress) {
+  // Ensure feature flag for signal collection is on.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitWithFeatures(
+      {kOfflinePagesLoadSignalCollectingFeature,
+       kOfflinePagesResourceBasedSnapshotFeature},
+      {});
+  EXPECT_TRUE(IsOfflinePagesLoadSignalCollectingEnabled());
+  EXPECT_TRUE(IsOfflinePagesResourceBasedSnapshotEnabled());
+
+  // Ensure the low bar is met:
+  EXPECT_GT(controller()->GetDelayAfterDocumentAvailableForTest(), 0LL);
+  // OnDOM should not make a snapshot immediatly.
+  controller()->DocumentAvailableInMainFrame();
+  PumpLoop();
+  EXPECT_EQ(0, snapshot_count());
+  // Even after a delay, OnDOM should not cause a snapshot.
+  FastForwardBy(base::TimeDelta::FromMilliseconds(
+      controller()->GetDelayAfterDocumentOnLoadCompletedForTest()));
+  EXPECT_EQ(0, snapshot_count());
+
+  // Report progress better than our threshold, which should cause a snapshot.
+  controller()->UpdateLoadingResourceProgress(100, 98, 1, 1);
+  PumpLoop();
+  EXPECT_EQ(1, snapshot_count());
 }
 
 }  // namespace offline_pages

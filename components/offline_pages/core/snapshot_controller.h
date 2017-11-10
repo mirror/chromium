@@ -40,6 +40,9 @@ class SnapshotController {
     // could be taken at this stage as later ones are expected to have higher
     // quality.
     FAIR_AND_IMPROVING,
+    // A higher level of quality, but we still might be able to improve.
+    // Typically set after we get the OnLoadCompleteInMainFrame event.
+    GOOD,
     // The page is loaded enough and has attained its peak expected quality.
     // Snapshots taken at this point are not expected to increase in quality
     // after the first one.
@@ -95,6 +98,10 @@ class SnapshotController {
   // Called by Client, for example when it encounters an error loading the page.
   void Stop();
 
+  // If we have an error page, we don't want to snapshot it, mark the quality
+  // as unfit for snapshot.
+  void LoadedErrorPage();
+
   // The way for Client to report that previously started snapshot is
   // now completed (so the next one can be started).
   void PendingSnapshotCompleted();
@@ -113,10 +120,17 @@ class SnapshotController {
   int64_t GetDelayAfterRenovationsCompletedForTest();
 
   PageQuality current_page_quality() const { return current_page_quality_; }
+  State state() const { return state_; }
+
+  void UpdateLoadingResourceProgress(int images_requested,
+                                     int images_comleted,
+                                     int css_requested,
+                                     int css_completed);
 
  private:
-  void MaybeStartSnapshot(PageQuality updated_page_quality);
+  void MaybeStartSnapshot();
   void MaybeStartSnapshotThenStop();
+  bool ProgressIsGoodEnoughForSnapshot();
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   // Client owns this class.
@@ -126,7 +140,13 @@ class SnapshotController {
   int64_t delay_after_document_on_load_completed_ms_;
   int64_t delay_after_renovations_completed_ms_;
   bool document_available_triggers_snapshot_;
+  bool loaded_error_page_;
   bool renovations_enabled_;
+  bool renovations_completed_;
+  int images_requested_;
+  int images_completed_;
+  int css_requested_;
+  int css_completed_;
 
   // The expected quality of a snapshot taken at the moment this value is
   // queried.

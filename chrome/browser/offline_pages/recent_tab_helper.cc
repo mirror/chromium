@@ -243,6 +243,11 @@ void RecentTabHelper::DidFinishNavigation(
   // Always reset so that posted tasks get canceled.
   snapshot_controller_->Reset();
 
+  // If we loaded an error page, mark it as low quality so it does not get
+  // saved.
+  if (navigation_handle->IsErrorPage())
+    snapshot_controller_->LoadedErrorPage();
+
   // Check for conditions that should stop last_n from creating snapshots of
   // this page:
   // - It is an error page.

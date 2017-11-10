@@ -342,6 +342,7 @@ void BackgroundLoaderOffliner::DidFinishNavigation(
   // If there was an error of any kind (certificate, client, DNS, etc),
   // Mark as error page. Resetting here causes RecordNavigationMetrics to crash.
   if (navigation_handle->IsErrorPage()) {
+    snapshot_controller_->LoadedErrorPage();
     RecordErrorCauseUMA(pending_request_->client_id(),
                         static_cast<int>(navigation_handle->GetNetErrorCode()));
     page_load_state_ = RETRIABLE;
@@ -388,6 +389,16 @@ void BackgroundLoaderOffliner::ObserveResourceLoading(
     ++found_stats.requested;
   else
     ++found_stats.completed;
+
+  UpdateLoadingResourceProgress();
+}
+
+void BackgroundLoaderOffliner::UpdateLoadingResourceProgress() {
+  snapshot_controller_->UpdateLoadingResourceProgress(
+      stats_[ResourceDataType::IMAGE].requested,
+      stats_[ResourceDataType::IMAGE].completed,
+      stats_[ResourceDataType::TEXT_CSS].requested,
+      stats_[ResourceDataType::TEXT_CSS].completed);
 }
 
 void BackgroundLoaderOffliner::OnNetworkBytesChanged(int64_t bytes) {
@@ -409,6 +420,7 @@ void BackgroundLoaderOffliner::StartSnapshot() {
   SavePageRequest request(*pending_request_.get());
   // If there was an error navigating to page, return loading failed.
   if (page_load_state_ != SUCCESS) {
+    snapshot_controller_->LoadedErrorPage();
     Offliner::RequestStatus status;
     switch (page_load_state_) {
       case RETRIABLE:
