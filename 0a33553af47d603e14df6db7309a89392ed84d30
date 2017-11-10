@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4feba94_adf52426",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T23:02:32Z",
+      "side": 1,
+      "message": "I don\u0027t know if it works, but could this be annotated with @GuardedBy(\"mNumFaviconsInProgress\")?\n\nI do wonder if we should just have a Object mProgressLock for both of these to make it clear, but no need to rock the boat now.",
+      "revId": "0a33553af47d603e14df6db7309a89392ed84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f98ec0_4826b17d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T23:02:32Z",
+      "side": 1,
+      "message": "private?",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "0a33553af47d603e14df6db7309a89392ed84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5dcec8_907bc671",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T23:02:32Z",
+      "side": 1,
+      "message": "I believe it should be:\n\nconst int kPartnerBookmarksMinimumFaviconSizePx \u003d 16;",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 3
+      },
+      "revId": "0a33553af47d603e14df6db7309a89392ed84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db6b6aaf_47e265bd",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T23:02:32Z",
+      "side": 1,
+      "message": "can this be in the private part of PartnerBookmarksReader?  right now it\u0027s publicly visible right?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 9
+      },
+      "revId": "0a33553af47d603e14df6db7309a89392ed84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
