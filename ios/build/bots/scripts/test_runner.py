@@ -17,6 +17,7 @@ import time
 
 import find_xcode
 import gtest_utils
+import perf_log_processor
 import xctest_utils
 
 
@@ -181,6 +182,7 @@ class TestRunner(object):
     self.env_vars = env_vars or []
     self.logs = collections.OrderedDict()
     self.out_dir = out_dir
+    self.perf_traces = []
     self.retries = retries or 0
     self.test_args = test_args or []
     self.xcode_version = xcode_version
@@ -276,6 +278,7 @@ class TestRunner(object):
     print
 
     result = gtest_utils.GTestResult(cmd)
+    perf_parser = perf_log_processor.PerformanceLogProcessor()
     if self.xctest_path:
       parser = xctest_utils.XCTestLogParser()
     else:
@@ -293,6 +296,7 @@ class TestRunner(object):
       if not line:
         break
       line = line.rstrip()
+      perf_parser.ProcessLine(line)
       parser.ProcessLine(line)
       print line
       sys.stdout.flush()
@@ -300,6 +304,7 @@ class TestRunner(object):
     proc.wait()
     sys.stdout.flush()
 
+    result.perf_traces = perf_parser.GetTracesAsJson()
     for test in parser.FailedTests(include_flaky=True):
       # Test cases are named as <test group>.<test case>. If the test case
       # is prefixed with "FLAKY_", it should be reported as flaked not failed.
@@ -393,6 +398,8 @@ class TestRunner(object):
         self.logs[test] = log_lines
       for test, log_lines in flaked.iteritems():
         self.logs[test] = log_lines
+
+      self.perf_traces = result.perf_traces
 
       return not failed
     finally:
