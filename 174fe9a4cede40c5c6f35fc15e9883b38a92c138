@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ec70f27_e935e070",
+        "filename": "content/test/test_render_frame_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-10T15:45:07Z",
+      "side": 1,
+      "message": "Could you add a TODO(clamy): Have NavigationSimulator make the relevant calls directly and remove this function. ? Thanks!.",
+      "revId": "174fe9a4cede40c5c6f35fc15e9883b38a92c138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
