@@ -1051,7 +1051,9 @@ bool PaintLayerScrollableArea::HasVerticalOverflow() const {
 static bool CanHaveOverflowScrollbars(const LayoutBox& box) {
   return (RuntimeEnabledFeatures::RootLayerScrollingEnabled() ||
           !box.IsLayoutView()) &&
-         box.GetDocument().ViewportDefiningElement() != box.GetNode();
+         box.GetDocument().ViewportDefiningElement() != box.GetNode() &&
+         box.GetFrame() && box.GetFrame()->View() &&
+         box.GetFrame()->View()->CanHaveScrollbars();
 }
 
 void PaintLayerScrollableArea::UpdateAfterStyleChange(

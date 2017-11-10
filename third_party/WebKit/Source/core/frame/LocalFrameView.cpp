@@ -195,7 +195,7 @@ LocalFrameView::LocalFrameView(LocalFrame& frame, IntRect frame_rect)
       frame_rect_(frame_rect),
       is_attached_(false),
       display_mode_(kWebDisplayModeBrowser),
-      can_have_scrollbars_(true),
+      can_have_scrollbars_(false),
       has_pending_layout_(false),
       in_synchronous_post_layout_(false),
       post_layout_tasks_timer_(frame.GetTaskRunner(TaskType::kUnspecedTimer),
