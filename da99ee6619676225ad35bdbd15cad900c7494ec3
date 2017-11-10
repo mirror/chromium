@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d72c326_b9fe64a9",
+        "filename": "components/download/downloader/in_progress/download_entry.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-10T07:09:03Z",
+      "side": 1,
+      "message": "nit: white space before {}",
+      "revId": "da99ee6619676225ad35bdbd15cad900c7494ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
