@@ -617,13 +617,9 @@ public class SingleWebsitePreferences extends PreferenceFragment
 
     private void setUpLocationPreference(Preference preference) {
         ContentSetting permission = mSite.getGeolocationPermission();
-        if (shouldUseDSEGeolocationSetting()) {
-            String origin = mSite.getAddress().getOrigin();
-            mSite.setGeolocationInfo(new GeolocationInfo(origin, origin, false));
-            setUpListPreference(preference, ContentSetting.ALLOW);
+        setUpListPreference(preference, permission);
+        if (arePermissionsControlledByDSE() && permission != null) {
             updateLocationPreferenceForDSESetting(preference);
-        } else {
-            setUpListPreference(preference, permission);
         }
     }
 
@@ -678,8 +674,8 @@ public class SingleWebsitePreferences extends PreferenceFragment
      * current host. This will be the case when the host is the CCTLD (Country Code Top Level
      * Domain) of the DSE, and the DSE supports the X-Geo header.
      */
-    private boolean shouldUseDSEGeolocationSetting() {
-        return WebsitePreferenceBridge.shouldUseDSEGeolocationSetting(
+    private boolean arePermissionsControlledByDSE() {
+        return WebsitePreferenceBridge.arePermissionsControlledByDSE(
                 mSite.getAddress().getOrigin(), false);
     }
 
@@ -695,8 +691,6 @@ public class SingleWebsitePreferences extends PreferenceFragment
                 res.getString(R.string.website_settings_permissions_allow_dse),
                 res.getString(R.string.website_settings_permissions_block_dse),
         });
-        listPreference.setValueIndex(
-                WebsitePreferenceBridge.getDSEGeolocationSetting() ? 0 : 1);
     }
 
     private int getContentSettingsTypeFromPreferenceKey(String preferenceKey) {
@@ -859,6 +853,13 @@ public class SingleWebsitePreferences extends PreferenceFragment
         mSite.setPopupPermission(ContentSetting.DEFAULT);
         mSite.setProtectedMediaIdentifierPermission(ContentSetting.DEFAULT);
         mSite.setSoundPermission(ContentSetting.DEFAULT);
+
+        // When we reset the default search engine permissions, we reset them back to allow rather
+        // than clearing them.
+        if (WebsitePreferenceBridge.arePermissionsControlledByDSE(
+                    mSite.getAddress().getOrigin(), false)) {
+            WebsitePreferenceBridge.resetDSEPermissions();
+        }
 
         for (UsbInfo info : mSite.getUsbInfo()) info.revoke();
 

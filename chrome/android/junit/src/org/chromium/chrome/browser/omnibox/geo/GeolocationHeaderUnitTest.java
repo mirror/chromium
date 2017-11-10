@@ -305,12 +305,7 @@ public class GeolocationHeaderUnitTest {
     @Implements(WebsitePreferenceBridge.class)
     public static class ShadowWebsitePreferenceBridge {
         @Implementation
-        public static boolean shouldUseDSEGeolocationSetting(String origin, boolean isIncognito) {
-            return true;
-        }
-
-        @Implementation
-        public static boolean getDSEGeolocationSetting() {
+        public static boolean arePermissionsControlledByDSE(String origin, boolean isIncognito) {
             return true;
         }
     }
