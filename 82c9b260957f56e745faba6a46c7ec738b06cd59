@@ -70,6 +70,24 @@
       "revId": "82c9b260957f56e745faba6a46c7ec738b06cd59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "100e446e_b9a7c9fe",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 5788,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-10T05:10:56Z",
+      "side": 1,
+      "message": "Ah, it looks I was wrong. Sorry for confusing.\n\nI confirmed that Blink\u0027s String has the following behavior.\n  String null_string;\n  EXPECT_TRUE(null_string.IsNull());\n  EXPECT_TRUE(null_string.IsEmpty());\n\n  String empty_string \u003d \"\";\n  EXPECT_FALSE(empty_string.IsNull());\n  EXPECT_TRUE(empty_string.IsEmpty());\n\n  EXPECT_NE(null_string, empty_string);\n\nString is default initialized to Null, instead of empty string, \"\". My bad...\n\nI don\u0027t have any strong preference here, but how about calling Document::UpdateTitle with empty string, \"\"?\n\nI am not fan of depending on the following *strange* behavior, however, that could an an option.\n  EXPECT_NE(null_string, empty_string);",
+      "parentUuid": "908c34af_0fbc179f",
+      "revId": "82c9b260957f56e745faba6a46c7ec738b06cd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
