@@ -2180,6 +2180,9 @@ void RenderFrameImpl::OnJavaScriptExecuteRequest(
     const base::string16& jscript,
     int id,
     bool notify_result) {
+  DCHECK(CanExecuteJavaScript())
+      << "Not safe to execute script before commit: " << jscript;
+
   TRACE_EVENT_INSTANT0("test_tracing", "OnJavaScriptExecuteRequest",
                        TRACE_EVENT_SCOPE_THREAD);
 
@@ -2195,6 +2198,9 @@ void RenderFrameImpl::OnJavaScriptExecuteRequestForTests(
     int id,
     bool notify_result,
     bool has_user_gesture) {
+  DCHECK(CanExecuteJavaScript())
+      << "Not safe to execute script before commit: " << jscript;
+
   TRACE_EVENT_INSTANT0("test_tracing", "OnJavaScriptExecuteRequestForTests",
                        TRACE_EVENT_SCOPE_THREAD);
 
@@ -2214,6 +2220,9 @@ void RenderFrameImpl::OnJavaScriptExecuteRequestInIsolatedWorld(
     int id,
     bool notify_result,
     int world_id) {
+  DCHECK(CanExecuteJavaScript())
+      << "Not safe to execute script before commit: " << jscript;
+
   TRACE_EVENT_INSTANT0("test_tracing",
                        "OnJavaScriptExecuteRequestInIsolatedWorld",
                        TRACE_EVENT_SCOPE_THREAD);
@@ -3506,12 +3515,6 @@ void RenderFrameImpl::FrameFocused() {
   Send(new FrameHostMsg_FrameFocused(routing_id_));
 }
 
-void RenderFrameImpl::WillCommitProvisionalLoad() {
-  SCOPED_UMA_HISTOGRAM_TIMER("RenderFrameObservers.WillCommitProvisionalLoad");
-  for (auto& observer : observers_)
-    observer.WillCommitProvisionalLoad();
-}
-
 void RenderFrameImpl::DidChangeName(const blink::WebString& name) {
   if (current_history_item_.IsNull()) {
     // Once a navigation has committed, the unique name must no longer change to
@@ -3983,16 +3986,6 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
     }
   }
 
-  for (auto& observer : render_view_->observers_)
-    observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
-  {
-    SCOPED_UMA_HISTOGRAM_TIMER("RenderFrameObservers.DidCommitProvisionalLoad");
-    for (auto& observer : observers_) {
-      observer.DidCommitProvisionalLoad(
-          is_new_navigation, navigation_state->WasWithinSameDocument());
-    }
-  }
-
   // Notify the MediaPermissionDispatcher that its connection will be closed
   // due to a navigation to a different document.
   if (media_permission_dispatcher_ &&
@@ -4016,7 +4009,33 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
   // new navigation.
   navigation_state->set_request_committed(true);
 
+  // Tell observers that we *Will*CommitProvisional load *before* sending the
+  // IPC (and while we still have access to the mojo interfaces associated
+  // with the old document).
+  {
+    SCOPED_UMA_HISTOGRAM_TIMER(
+        "RenderFrameObservers.WillCommitProvisionalLoad");
+    for (auto& observer : observers_) {
+      observer.WillCommitProvisionalLoad(
+          navigation_state->WasWithinSameDocument());
+    }
+  }
+
+  // Swap the mojo interfaces and send the IPC.
+  // TODO: DO NOT SUBMIT: Wait for engedy@'s CL for swapping the mojo
+  // interfaces.
   SendDidCommitProvisionalLoad(frame_, commit_type);
+
+  // Tell observers that we *Did*CommitProvisionalLoad *after* sending the IPC.
+  for (auto& observer : render_view_->observers_)
+    observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
+  {
+    SCOPED_UMA_HISTOGRAM_TIMER("RenderFrameObservers.DidCommitProvisionalLoad");
+    for (auto& observer : observers_) {
+      observer.DidCommitProvisionalLoad(
+          is_new_navigation, navigation_state->WasWithinSameDocument());
+    }
+  }
 
   // Check whether we have new encoding name.
   UpdateEncoding(frame_, frame_->View()->PageEncoding().Utf8());
@@ -4527,6 +4546,29 @@ void RenderFrameImpl::ShowContextMenu(const blink::WebContextMenuData& data) {
 
 void RenderFrameImpl::ShowDeferredContextMenu(const ContextMenuParams& params) {
   Send(new FrameHostMsg_ContextMenu(routing_id_, params));
+}
+
+bool RenderFrameImpl::CanExecuteJavaScript() {
+  // Okay to execute scripts in the initial, empty document
+  // (this is for example done by chromeos::ShowLoginWizard).
+  bool is_initial_empty_document = GetWebFrame()->GetDocument().Url().IsEmpty();
+  if (is_initial_empty_document)
+    return true;
+
+  // Okay to execute scripts once the browser was notified about the origin that
+  // got committed in the frame.
+  DocumentState* document_state =
+      DocumentState::FromDocumentLoader(GetWebFrame()->GetDocumentLoader());
+  NavigationStateImpl* navigation_state =
+      static_cast<NavigationStateImpl*>(document_state->navigation_state());
+  if (navigation_state->request_committed())
+    return true;
+
+  // No javascript should execute before the browser is notified about the
+  // commit via SendDidCommitProvisionalLoad - otherwise, the browser might
+  // think the page is still at the previous origin, and therefore might reject
+  // requests for capabilities (like localStorage) bound to the new origin.
+  return false;
 }
 
 void RenderFrameImpl::SaveImageFromDataURL(const blink::WebString& data_url) {
