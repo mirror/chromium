@@ -1,0 +1,244 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "202ac102_3ba88a0a",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:03:27Z",
+      "side": 1,
+      "message": "If this class really thread-affine or can it instead check that this is run on a correct sequence?\n\nFrom SequenceChecker comment:\n\n  // SequenceChecker is a helper class used to help verify that some methods of a\n  // class are called sequentially (for thread-safety).\n  //\n  // Use the macros below instead of the SequenceChecker directly so that the\n  // unused member doesn\u0027t result in an extra byte (four when padded) per\n  // instance in production.\n  //\n  // This class is much prefered to ThreadChecker for thread-safety checks.\n  // ThreadChecker should only be used for classes that are truly thread-affine\n  // (use thread-local-storage or a third-party API that does).\n\nLooking at the code, I\u0027ve not seen anything that is thread-affine. The code does not use thread local storage, and according to Apple documentation, NSURLSession is thread-safe:\n\n\u003e The URL session API itself is fully thread-safe. You can freely create sessions and tasks in any thread context, and when your delegate methods call the provided completion handlers, the work is automatically scheduled on the correct delegate queue.\n\nhttps://developer.apple.com/documentation/foundation/urlsession",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb927b5_2822a2da",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:03:27Z",
+      "side": 1,
+      "message": "download",
+      "range": {
+        "startLine": 32,
+        "startChar": 19,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "537d0b2c_19124d08",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:03:27Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b330e07e_bed60df2",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:03:27Z",
+      "side": 1,
+      "message": "\"be valid.\"\n\nIt is possible to have a non-null invalid pointer (say static_cast\u003cWebState*\u003e(1) for example).",
+      "range": {
+        "startLine": 45,
+        "startChar": 21,
+        "endLine": 45,
+        "endChar": 32
+      },
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc0ac28_d629f9e6",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:03:27Z",
+      "side": 1,
+      "message": "Can you defined a type for this?\n\n  using CookieCallback \u003d base::Callback\u003cvoid(NSArray\u003cNSHTTPCookie*\u003e*);\n\nThe callback appears to be ran only once, can you use base::OnceCallback\u003c\u003e to enforce this? Any callback is convertible to a OnceCallback, so client code would not have to change.",
+      "range": {
+        "startLine": 80,
+        "startChar": 18,
+        "endLine": 80,
+        "endChar": 63
+      },
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3926cf_ba60bf19",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:03:27Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7ffbcd_c8216712",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:03:27Z",
+      "side": 1,
+      "message": "nit: recommend way with c++11 is \"using\"\n\n  using PropertyBlock \u003d void (^)(NSURLSessionTask*, NSError*);\n  ...",
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc77bf4_c726a0cf",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:03:27Z",
+      "side": 1,
+      "message": "scoped_refptr should be passed by value, not reference, and moved (this is the c++11 way to avoid unnecessary incref/decref). This allow passing all smart pointer by value, making the rule simpler.",
+      "range": {
+        "startLine": 30,
+        "startChar": 26,
+        "endLine": 30,
+        "endChar": 76
+      },
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f91905_c0bbc4b6",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:03:27Z",
+      "side": 1,
+      "message": "nit: use base::MakeRefCounted\n\n  auto buffer \u003d base::MakeRefCounted\u003cnet::IOBufferWithSize\u003e(size);\n  ...",
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b31f9a39_ee1eea51",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:03:27Z",
+      "side": 1,
+      "message": "Should this be clamped if we receive more bytes than expected?",
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f366c738_c29cf997",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:03:27Z",
+      "side": 1,
+      "message": "Why not post this asynchronously on the current thread? This way, the client code will not have to check for the version of iOS:\n\n  base::ThreadTaskRunnerHandler::Get()-\u003ePostTask(FROM_HERE, base::BindBlockArc(^{\n      callback.Run([NSArray array]);\n  });",
+      "range": {
+        "startLine": 277,
+        "startChar": 4,
+        "endLine": 277,
+        "endChar": 33
+      },
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d762f0_4b53d418",
+        "filename": "ios/web/public/download/download_task_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-10T13:03:27Z",
+      "side": 1,
+      "message": "Why the change? Error when rebasing on parent CL or is it not possible to pass a const DownloadTask here?",
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
