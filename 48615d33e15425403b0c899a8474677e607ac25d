@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0c5ba060_9ae9dcad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-10T00:08:52Z",
+      "side": 1,
+      "message": "OK, thank you for looking :)",
+      "parentUuid": "9818a2a2_7275198e",
+      "revId": "48615d33e15425403b0c899a8474677e607ac25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "014ce666_6c29d94c",
         "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
         "patchSetId": 13
