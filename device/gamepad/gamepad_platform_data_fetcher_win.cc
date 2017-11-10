@@ -77,10 +77,11 @@ const UChar* XInputDllFileName() {
 }  // namespace
 
 GamepadPlatformDataFetcherWin::GamepadPlatformDataFetcherWin()
-    : xinput_available_(false) {}
-
-GamepadPlatformDataFetcherWin::~GamepadPlatformDataFetcherWin() {
+    : xinput_available_(false) {
+  std::fill(sequence_ids_, sequence_ids_ + Gamepads::kItemsLengthCap, 0);
 }
+
+GamepadPlatformDataFetcherWin::~GamepadPlatformDataFetcherWin() = default;
 
 GamepadSource GamepadPlatformDataFetcherWin::source() {
   return Factory::static_source();
@@ -100,8 +101,8 @@ void GamepadPlatformDataFetcherWin::EnumerateDevices() {
       // Check to see if the xinput device is connected
       XINPUT_CAPABILITIES caps;
       DWORD res = xinput_get_capabilities_(i, XINPUT_FLAG_GAMEPAD, &caps);
-      xinuput_connected_[i] = (res == ERROR_SUCCESS);
-      if (!xinuput_connected_[i])
+      xinput_connected_[i] = (res == ERROR_SUCCESS);
+      if (!xinput_connected_[i])
         continue;
 
       PadState* state = GetPadState(i);
@@ -114,6 +115,17 @@ void GamepadPlatformDataFetcherWin::EnumerateDevices() {
         // This is the first time we've seen this device, so do some one-time
         // initialization
         pad.connected = true;
+
+        // Check if the gamepad supports force feedback functionality. Currently
+        // only rumble effects are supported through XInput on Windows.
+        // TODO(mattreynolds): This doesn't work, figure out how to actually
+        // detect rumble capability
+        // if (caps.Flags & XINPUT_CAPS_FFB_SUPPORTED) {
+        pad.vibration_actuator.type = GamepadHapticActuatorType::kDualRumble;
+        pad.vibration_actuator.not_null = true;
+        xinput_ffb_supported_[i] = true;
+        //}
+
         swprintf(pad.id, Gamepad::kIdLengthCap,
                  L"Xbox 360 Controller (XInput STANDARD %ls)",
                  GamepadSubTypeName(caps.SubType));
@@ -140,7 +152,7 @@ void GamepadPlatformDataFetcherWin::GetGamepadData(bool devices_changed_hint) {
     EnumerateDevices();
 
   for (size_t i = 0; i < XUSER_MAX_COUNT; ++i) {
-    if (xinuput_connected_[i])
+    if (xinput_connected_[i])
       GetXInputPadData(i);
   }
 }
@@ -207,9 +219,142 @@ void GamepadPlatformDataFetcherWin::GetXInputPadData(int i) {
   }
 }
 
+void GamepadPlatformDataFetcherWin::PlayEffect(
+    int pad_id,
+    mojom::GamepadHapticEffectType type,
+    mojom::GamepadEffectParametersPtr params,
+    mojom::GamepadHapticsManager::PlayVibrationEffectOnceCallback callback) {
+  if (pad_id < 0 || pad_id >= XUSER_MAX_COUNT) {
+    std::move(callback).Run(
+        mojom::GamepadHapticsResult::GamepadHapticsResultError);
+    return;
+  }
+
+  // Only dual-rumble effects are supported on XInput.
+  if (type !=
+      mojom::GamepadHapticEffectType::GamepadHapticEffectTypeDualRumble) {
+    std::move(callback).Run(
+        mojom::GamepadHapticsResult::GamepadHapticsResultNotSupported);
+    return;
+  }
+
+  EnumerateDevices();
+
+  if (!xinput_available_ || !xinput_connected_[pad_id] ||
+      !xinput_ffb_supported_[pad_id]) {
+    std::move(callback).Run(
+        mojom::GamepadHapticsResult::GamepadHapticsResultNotSupported);
+    return;
+  }
+
+  int sequence_id = ++sequence_ids_[pad_id];
+
+  if (pending_callbacks_[pad_id]) {
+    // Stop the playing effect and invoke its callback.
+    if (params->start_delay > 0)
+      SetXInputVibration(pad_id, 0.0, 0.0);
+    std::move(pending_callbacks_[pad_id])
+        .Run(mojom::GamepadHapticsResult::GamepadHapticsResultPreempted);
+  }
+  pending_callbacks_[pad_id] = std::move(callback);
+
+  PlayDualRumbleEffect(sequence_id, pad_id, params->duration,
+                       params->start_delay, params->strong_magnitude,
+                       params->weak_magnitude);
+}
+
+void GamepadPlatformDataFetcherWin::ResetVibration(
+    int pad_id,
+    mojom::GamepadHapticsManager::ResetVibrationActuatorCallback callback) {
+  if (pad_id < 0 || pad_id >= XUSER_MAX_COUNT) {
+    std::move(callback).Run(
+        mojom::GamepadHapticsResult::GamepadHapticsResultError);
+    return;
+  }
+
+  EnumerateDevices();
+
+  if (!xinput_available_ || !xinput_connected_[pad_id]) {
+    std::move(callback).Run(
+        mojom::GamepadHapticsResult::GamepadHapticsResultNotSupported);
+    return;
+  }
+
+  ++sequence_ids_[pad_id];
+  if (pending_callbacks_[pad_id]) {
+    // Stop playing the effect and invoke its callback.
+    SetXInputVibration(pad_id, 0.0, 0.0);
+    std::move(pending_callbacks_[pad_id])
+        .Run(mojom::GamepadHapticsResult::GamepadHapticsResultPreempted);
+  }
+
+  std::move(callback).Run(
+      mojom::GamepadHapticsResult::GamepadHapticsResultComplete);
+}
+
+void GamepadPlatformDataFetcherWin::PlayDualRumbleEffect(
+    int sequence_id,
+    int pad_id,
+    double duration,
+    double start_delay,
+    double strong_magnitude,
+    double weak_magnitude) {
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::BindOnce(&GamepadPlatformDataFetcherWin::StartXInputVibration,
+                     base::Unretained(this), sequence_id, pad_id, duration,
+                     strong_magnitude, weak_magnitude),
+      base::TimeDelta::FromMillisecondsD(start_delay));
+}
+
+void GamepadPlatformDataFetcherWin::StartXInputVibration(
+    int sequence_id,
+    int pad_id,
+    double duration,
+    double strong_magnitude,
+    double weak_magnitude) {
+  if (sequence_id != sequence_ids_[pad_id])
+    return;
+  SetXInputVibration(pad_id, strong_magnitude, weak_magnitude);
+
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::BindOnce(&GamepadPlatformDataFetcherWin::StopXInputVibration,
+                     base::Unretained(this), sequence_id, pad_id),
+      base::TimeDelta::FromMillisecondsD(duration));
+}
+
+void GamepadPlatformDataFetcherWin::StopXInputVibration(int sequence_id,
+                                                        int pad_id) {
+  if (sequence_id != sequence_ids_[pad_id])
+    return;
+  SetXInputVibration(pad_id, 0.0, 0.0);
+
+  std::move(pending_callbacks_[pad_id])
+      .Run(mojom::GamepadHapticsResult::GamepadHapticsResultComplete);
+}
+
+void GamepadPlatformDataFetcherWin::SetXInputVibration(int pad_id,
+                                                       double strong_magnitude,
+                                                       double weak_magnitude) {
+  // Clamp magnitudes to [0,1]
+  strong_magnitude =
+      std::max<double>(0.0, std::min<double>(strong_magnitude, 1.0));
+  weak_magnitude = std::max<double>(0.0, std::min<double>(weak_magnitude, 1.0));
+
+  XINPUT_VIBRATION vibration;
+  vibration.wLeftMotorSpeed = static_cast<long>(strong_magnitude * 65535.0);
+  vibration.wRightMotorSpeed = static_cast<long>(weak_magnitude * 65535.0);
+
+  TRACE_EVENT_BEGIN1("GAMEPAD", "XInputSetState", "id", pad_id);
+  xinput_set_state_(pad_id, &vibration);
+  TRACE_EVENT_END1("GAMEPAD", "XInputSetState", "id", pad_id);
+}
+
 bool GamepadPlatformDataFetcherWin::GetXInputDllFunctions() {
-  xinput_get_capabilities_ = NULL;
-  xinput_get_state_ = NULL;
+  xinput_get_capabilities_ = nullptr;
+  xinput_get_state_ = nullptr;
+  xinput_set_state_ = nullptr;
   XInputEnableFunc xinput_enable = reinterpret_cast<XInputEnableFunc>(
       xinput_dll_.GetFunctionPointer("XInputEnable"));
   xinput_get_capabilities_ = reinterpret_cast<XInputGetCapabilitiesFunc>(
@@ -219,6 +364,10 @@ bool GamepadPlatformDataFetcherWin::GetXInputDllFunctions() {
   xinput_get_state_ = reinterpret_cast<XInputGetStateFunc>(
       xinput_dll_.GetFunctionPointer("XInputGetState"));
   if (!xinput_get_state_)
+    return false;
+  xinput_set_state_ = reinterpret_cast<XInputSetStateFunc>(
+      xinput_dll_.GetFunctionPointer("XInputSetState"));
+  if (!xinput_set_state_)
     return false;
   if (xinput_enable) {
     // XInputEnable is unavailable before Win8 and deprecated in Win10.

@@ -40,7 +40,18 @@ class GamepadPlatformDataFetcherWin : public GamepadDataFetcher {
 
   GamepadSource source() override;
 
+  // GamepadDataFetcher implementation.
   void GetGamepadData(bool devices_changed_hint) override;
+
+  void PlayEffect(
+      int pad_index,
+      mojom::GamepadHapticEffectType,
+      mojom::GamepadEffectParametersPtr,
+      mojom::GamepadHapticsManager::PlayVibrationEffectOnceCallback) override;
+
+  void ResetVibration(
+      int pad_index,
+      mojom::GamepadHapticsManager::ResetVibrationActuatorCallback) override;
 
  private:
   void OnAddedToProvider() override;
@@ -53,6 +64,8 @@ class GamepadPlatformDataFetcherWin : public GamepadDataFetcher {
       XINPUT_CAPABILITIES* pCapabilities);
   typedef DWORD(WINAPI* XInputGetStateFunc)(DWORD dwUserIndex,
                                             XINPUT_STATE* pState);
+  typedef DWORD(WINAPI* XInputSetStateFunc)(DWORD dwUserIndex,
+                                            XINPUT_VIBRATION* pVibration);
 
   // Get functions from dynamically loading the xinput dll.
   // Returns true if loading was successful.
@@ -62,6 +75,22 @@ class GamepadPlatformDataFetcherWin : public GamepadDataFetcher {
   void EnumerateDevices();
   void GetXInputPadData(int i);
 
+  void PlayDualRumbleEffect(int sequence_id,
+                            int pad_index,
+                            double duration,
+                            double start_delay,
+                            double strong_magnitude,
+                            double weak_magnitude);
+  void StartXInputVibration(int sequence_id,
+                            int pad_index,
+                            double duration,
+                            double strong_magnitude,
+                            double weak_magnitude);
+  void StopXInputVibration(int sequence_id, int pad_index);
+  void SetXInputVibration(int pad_index,
+                          double strong_magnitude,
+                          double weak_magnitude);
+
   base::ScopedNativeLibrary xinput_dll_;
   bool xinput_available_;
 
@@ -69,8 +98,13 @@ class GamepadPlatformDataFetcherWin : public GamepadDataFetcher {
   // |GetXinputDllFunctions|.
   XInputGetCapabilitiesFunc xinput_get_capabilities_;
   XInputGetStateFunc xinput_get_state_;
+  XInputSetStateFunc xinput_set_state_;
 
-  bool xinuput_connected_[XUSER_MAX_COUNT];
+  bool xinput_connected_[XUSER_MAX_COUNT];
+  bool xinput_ffb_supported_[XUSER_MAX_COUNT];
+  int sequence_ids_[XUSER_MAX_COUNT];
+  mojom::GamepadHapticsManager::PlayVibrationEffectOnceCallback
+      pending_callbacks_[XUSER_MAX_COUNT];
 
   DISALLOW_COPY_AND_ASSIGN(GamepadPlatformDataFetcherWin);
 };
