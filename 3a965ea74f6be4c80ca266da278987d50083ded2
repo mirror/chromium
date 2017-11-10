@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "adb51ba5_3d2011ab",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-10T22:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3474c15b_5b3f3d03",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af8710c6_b8cce77a",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0aef5d3_80e61212",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-10T22:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af8710c6_b8cce77a",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9ceb9c74_70349bea",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-10T22:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a71551cc_81bb97c2",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e69542f2_8b86c59e",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de9337cb_1db458f1",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-10T22:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e69542f2_8b86c59e",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6cb629e6_21b5d0e3",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-10T22:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3d955bb_c52df952",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6ef5dd6_d7b778c2",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ab6e7a_f27ebe47",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-10T22:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6ef5dd6_d7b778c2",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "3f07fd8f_5f7c949a",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-10T22:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d2b61c9_43e51c73",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0523801_97c34d4a",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
         "patchSetId": 11
@@ -135,6 +261,24 @@
       "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e0ef07e_ffe12896",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-10T22:04:34Z",
+      "side": 1,
+      "message": "Done, CloseBubble() is protected so I moved it there.",
+      "parentUuid": "a0523801_97c34d4a",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "21a63d20_c3fe8fa9",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-10T22:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8e62c13_8993a2ba",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "423a7434_d0cb56a4",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
         "patchSetId": 11
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "d5f52a56_eda5d8f6",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-10T22:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "423a7434_d0cb56a4",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6d1a1b1_0d4a4d2c",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
         "patchSetId": 11
@@ -186,6 +366,24 @@
       "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae6a2b2c_6bbe2e94",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-10T22:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6d1a1b1_0d4a4d2c",
+      "revId": "3a965ea74f6be4c80ca266da278987d50083ded2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

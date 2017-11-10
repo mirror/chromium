@@ -383,6 +383,24 @@
     },
     {
       "key": {
+        "uuid": "838d7689_6e3bdb2b",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-10T22:04:34Z",
+      "side": 1,
+      "message": "Ouch. Done.",
+      "parentUuid": "254be4a5_b9d695d3",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8c0db3c_f5730124",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
         "patchSetId": 10
