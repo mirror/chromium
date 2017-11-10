@@ -18,6 +18,7 @@
 #include "core/css/parser/CSSVariableParser.h"
 #include "core/css/properties/CSSProperty.h"
 #include "core/css/properties/CSSPropertyFontUtils.h"
+#include "core/css/properties/Shorthand.h"
 #include "platform/runtime_enabled_features.h"
 
 namespace blink {
@@ -94,7 +95,7 @@ bool CSSPropertyParser::ParseValueStart(CSSPropertyID unresolved_property,
   if (is_shorthand) {
     // Variable references will fail to parse here and will fall out to the
     // variable ref parser below.
-    if (CSSProperty::Get(property_id)
+    if (ToShorthand(CSSProperty::Get(property_id))
             .ParseShorthand(
                 important, range_, *context_,
                 CSSParserLocalContext(isPropertyAlias(unresolved_property),
