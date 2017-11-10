@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "92f7256d_319cc10f",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-10T13:57:29Z",
+      "side": 1,
+      "message": "Done.\n\nNote also that there\u0027s some test coverage for the UMA metrics, so changing these values would very likely be detected.",
+      "parentUuid": "ad72f7a4_3b4a774f",
+      "revId": "db304f744a6cdd2ab5ae552f9945dc5936caf405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98cf0dfd_8d7da404",
         "filename": "components/favicon_base/favicon_types.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "db304f744a6cdd2ab5ae552f9945dc5936caf405",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bb2883_bf35813a",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-10T13:57:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98cf0dfd_8d7da404",
+      "revId": "db304f744a6cdd2ab5ae552f9945dc5936caf405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cb21912f_9bcef96f",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-10T13:57:29Z",
+      "side": 1,
+      "message": "There\u0027s no clean solution (without casts) because the type-safe functions that we use sometimes require a max ([1]) and some other times a count ([2]). Neither of which uses ints so we can\u0027t simply increment or decrement.\n\n[1] https://cs.chromium.org/chromium/src/ipc/param_traits_macros.h?l\u003d36\u0026rcl\u003d8ff492f3cc22fae666cc114b971c10036e2dcadc\n\n[2] https://cs.chromium.org/chromium/src/base/metrics/histogram_functions.h?l\u003d46\u0026rcl\u003d8ff492f3cc22fae666cc114b971c10036e2dcadc",
+      "parentUuid": "8dc8f001_bebc7a89",
+      "revId": "db304f744a6cdd2ab5ae552f9945dc5936caf405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8b61773_05f6bd93",
         "filename": "ios/web/public/favicon_url.h",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f9cf1afe_9df7a27b",
+        "filename": "ios/web/public/favicon_url.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-10T13:57:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8b61773_05f6bd93",
+      "revId": "db304f744a6cdd2ab5ae552f9945dc5936caf405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdd5c42a_167d738e",
         "filename": "ios/web/public/favicon_url.h",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "db304f744a6cdd2ab5ae552f9945dc5936caf405",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9bbded_d4d50f3e",
+        "filename": "ios/web/public/favicon_url.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-10T13:57:29Z",
+      "side": 1,
+      "message": "That\u0027d require updating a few iOS tests (see patchset 4 trybots failing) so I\u0027m gonna leave unchanged. It\u0027d also introduce a divergence with analogous classes in content/ and favicon/core, where making the non-copyable would involve a minor redesign in FaviconDriver (which currently needs to make copies of the candidates to be able to feed them into two FaviconHandler instances).",
+      "parentUuid": "fdd5c42a_167d738e",
+      "revId": "db304f744a6cdd2ab5ae552f9945dc5936caf405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
