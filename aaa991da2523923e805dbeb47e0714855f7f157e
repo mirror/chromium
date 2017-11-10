@@ -175,6 +175,24 @@
       "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdfb0509_8fe84a85",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRectTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-10T20:37:00Z",
+      "side": 1,
+      "message": "Please ignore my previous comment. I think now I understand your question. Line 86-88 tests if a transform is applied on a \"no clip\". We can also make all infinite clip rect not tight.",
+      "parentUuid": "d95cac9a_d9c303ba",
+      "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
