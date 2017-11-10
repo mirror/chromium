@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a716e911_c1cd145e",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T09:51:26Z",
+      "side": 1,
+      "message": "If a tooltip isn\u0027t required, sets the accessible name instead.",
+      "revId": "0d69f2d66a7dd5d3e2fa054a6c46364fa375052a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880d03d4_4a8e5ab5",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T09:51:26Z",
+      "side": 1,
+      "message": "if it doesn\u0027t break things, it might actually be more robust to call this unconditionally, and before setting the tooltip text. Note that Button::SetTooltipText will only ever set the accessible name once.",
+      "revId": "0d69f2d66a7dd5d3e2fa054a6c46364fa375052a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6032c12_b719316a",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T09:51:26Z",
+      "side": 1,
+      "message": "och - this thing. If it helps, I think you only need to cast one of them to disambiguate the type of the result. Going back to an if is fine too. I don\u0027t really have a neater solution.",
+      "revId": "0d69f2d66a7dd5d3e2fa054a6c46364fa375052a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7917db8a_b4ab4999",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T09:51:26Z",
+      "side": 1,
+      "message": "nit: id -\u003e view_id (also in .h)",
+      "range": {
+        "startLine": 997,
+        "startChar": 56,
+        "endLine": 997,
+        "endChar": 58
+      },
+      "revId": "0d69f2d66a7dd5d3e2fa054a6c46364fa375052a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a144459f_eff7d70d",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T09:51:26Z",
+      "side": 1,
+      "message": "update comment?",
+      "revId": "0d69f2d66a7dd5d3e2fa054a6c46364fa375052a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

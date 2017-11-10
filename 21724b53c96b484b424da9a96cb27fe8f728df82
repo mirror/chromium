@@ -412,6 +412,23 @@
     },
     {
       "key": {
+        "uuid": "4ccedda4_5515cbb4",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T09:51:26Z",
+      "side": 1,
+      "message": "hm - I wrote that comment.. Check whether http://crbug.com/681081 may have regressed.",
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a655be0_66c8e929",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 4
