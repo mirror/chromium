@@ -958,6 +958,8 @@ source_set("browser") {
     "loader/mime_sniffing_resource_handler.h",
     "loader/mojo_async_resource_handler.cc",
     "loader/mojo_async_resource_handler.h",
+    "loader/navigation_mojo_response_url_loader_factory.cc",
+    "loader/navigation_mojo_response_url_loader_factory.h",
     "loader/navigation_resource_handler.cc",
     "loader/navigation_resource_handler.h",
     "loader/navigation_resource_throttle.cc",
