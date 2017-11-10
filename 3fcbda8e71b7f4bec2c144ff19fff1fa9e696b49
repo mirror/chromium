@@ -319,6 +319,24 @@
     },
     {
       "key": {
+        "uuid": "1da862de_f0ea48d5",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-10T14:21:03Z",
+      "side": 1,
+      "message": "Ah good point, I missed that. I modified the code as suggested, and verified that it works. In ASAN builds, we will get the debug URL properly handled, in non-ASAN build we get an error page instead.",
+      "parentUuid": "53b919c7_e3fe70d7",
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef70000a_81282de8",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 6
