@@ -213,7 +213,7 @@ bool LayoutNGBlockFlow::LocalVisualRectFor(const LayoutObject* layout_object,
   DCHECK(layout_object &&
          (layout_object->IsText() || layout_object->IsLayoutInline()));
   DCHECK(visual_rect);
-  LayoutBlockFlow* block_flow = layout_object->EnclosingNGBlockFlow();
+  LayoutBlockFlow* const block_flow = layout_object->EnclosingNGMixin();
   if (!block_flow || !block_flow->HasNGInlineNodeData())
     return false;
   const NGPhysicalBoxFragment* box_fragment = block_flow->CurrentFragment();
