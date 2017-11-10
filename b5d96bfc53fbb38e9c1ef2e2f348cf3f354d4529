@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a05cc69a_fff39960",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-10T17:16:46Z",
+      "side": 1,
+      "message": "Do we want to use bit flags here to allow multiple hints for future?",
+      "revId": "b5d96bfc53fbb38e9c1ef2e2f348cf3f354d4529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e704d0de_33dad9e3",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2968,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-10T17:16:46Z",
+      "side": 1,
+      "message": "The header for this API says \"this interface should not be used to make decisions\nthat affect correctness \". Does this impact this logic in any way?",
+      "revId": "b5d96bfc53fbb38e9c1ef2e2f348cf3f354d4529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fcca1f2_1a457bb8",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2969,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-10T17:16:46Z",
+      "side": 1,
+      "message": "This API sets data \"in memory\" so does that mean that it will only be accessible while the entry is already open ?",
+      "revId": "b5d96bfc53fbb38e9c1ef2e2f348cf3f354d4529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ebe726e_d86f0497",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-10T17:16:46Z",
+      "side": 1,
+      "message": "IsResponseConditionalizable",
+      "range": {
+        "startLine": 417,
+        "startChar": 7,
+        "endLine": 417,
+        "endChar": 32
+      },
+      "revId": "b5d96bfc53fbb38e9c1ef2e2f348cf3f354d4529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
