@@ -265,7 +265,7 @@ class ImageDecodeTaskImpl : public TileTask {
   }
 
  protected:
-  ~ImageDecodeTaskImpl() override {}
+  ~ImageDecodeTaskImpl() override = default;
 
  private:
   GpuImageDecodeCache* cache_;
@@ -309,7 +309,7 @@ class ImageUploadTaskImpl : public TileTask {
   }
 
  protected:
-  ~ImageUploadTaskImpl() override {}
+  ~ImageUploadTaskImpl() override = default;
 
  private:
   GpuImageDecodeCache* cache_;

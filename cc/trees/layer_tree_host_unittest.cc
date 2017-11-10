@@ -488,7 +488,7 @@ class LayerTreeHostContextCacheTest : public LayerTreeHostTest {
  protected:
   class MockContextSupport : public TestContextSupport {
    public:
-    MockContextSupport() {}
+    MockContextSupport() = default;
     MOCK_METHOD1(SetAggressivelyFreeResources,
                  void(bool aggressively_free_resources));
   };
@@ -2408,7 +2408,7 @@ SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestUndrawnLayersDamageLater);
 // its damage is preserved until the next time it is drawn.
 class LayerTreeHostTestDamageWithScale : public LayerTreeHostTest {
  public:
-  LayerTreeHostTestDamageWithScale() {}
+  LayerTreeHostTestDamageWithScale() = default;
 
   void SetupTree() override {
     client_.set_fill_with_nonsolid_color(true);
@@ -2513,7 +2513,7 @@ SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestDamageWithScale);
 // to the impl side.
 class LayerTreeHostTestCommit : public LayerTreeHostTest {
  public:
-  LayerTreeHostTestCommit() {}
+  LayerTreeHostTestCommit() = default;
 
   void BeginTest() override {
     layer_tree_host()->SetViewportSize(gfx::Size(20, 20));
@@ -2662,7 +2662,7 @@ SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestFrameTimeUpdatesAfterDraw);
 // from LayerTreeHost to LayerTreeHostImpl in the MT compositor.
 class LayerTreeHostTestStartPageScaleAnimation : public LayerTreeHostTest {
  public:
-  LayerTreeHostTestStartPageScaleAnimation() {}
+  LayerTreeHostTestStartPageScaleAnimation() = default;
 
   void SetupTree() override {
     LayerTreeHostTest::SetupTree();
@@ -2829,7 +2829,7 @@ MULTI_THREAD_TEST_F(LayerTreeHostTestSetVisible);
 class LayerTreeHostTestDeviceScaleFactorScalesViewportAndLayers
     : public LayerTreeHostTest {
  public:
-  LayerTreeHostTestDeviceScaleFactorScalesViewportAndLayers() {}
+  LayerTreeHostTestDeviceScaleFactorScalesViewportAndLayers() = default;
 
   void BeginTest() override {
     client_.set_fill_with_nonsolid_color(true);
@@ -5090,7 +5090,7 @@ MULTI_THREAD_TEST_F(LayerTreeHostTestBreakSwapPromise);
 
 class LayerTreeHostTestKeepSwapPromise : public LayerTreeHostTest {
  public:
-  LayerTreeHostTestKeepSwapPromise() {}
+  LayerTreeHostTestKeepSwapPromise() = default;
 
   void BeginTest() override {
     layer_ = SolidColorLayer::Create();
@@ -5182,7 +5182,7 @@ SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestKeepSwapPromise);
 
 class LayerTreeHostTestKeepSwapPromiseMFBA : public LayerTreeHostTest {
  public:
-  LayerTreeHostTestKeepSwapPromiseMFBA() {}
+  LayerTreeHostTestKeepSwapPromiseMFBA() = default;
 
   void InitializeSettings(LayerTreeSettings* settings) override {
     settings->main_frame_before_activation_enabled = true;
@@ -5349,7 +5349,7 @@ class SimpleSwapPromiseMonitor : public SwapPromiseMonitor {
             layer_tree_host_impl),
         set_needs_commit_count_(set_needs_commit_count) {}
 
-  ~SimpleSwapPromiseMonitor() override {}
+  ~SimpleSwapPromiseMonitor() override = default;
 
   void OnSetNeedsCommitOnMain() override { (*set_needs_commit_count_)++; }
 
@@ -5367,7 +5367,7 @@ class SimpleSwapPromiseMonitor : public SwapPromiseMonitor {
 
 class LayerTreeHostTestSwapPromiseDuringCommit : public LayerTreeHostTest {
  protected:
-  LayerTreeHostTestSwapPromiseDuringCommit() {}
+  LayerTreeHostTestSwapPromiseDuringCommit() = default;
 
   void WillBeginMainFrame() override {
     if (TestEnded())
@@ -6519,7 +6519,7 @@ MULTI_THREAD_TEST_F(LayerTreeHostTestCrispUpAfterPinchEndsWithOneCopy);
 
 class RasterizeWithGpuRasterizationCreatesResources : public LayerTreeHostTest {
  protected:
-  RasterizeWithGpuRasterizationCreatesResources() {}
+  RasterizeWithGpuRasterizationCreatesResources() = default;
 
   void InitializeSettings(LayerTreeSettings* settings) override {
     settings->gpu_rasterization_forced = true;

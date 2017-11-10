@@ -188,7 +188,7 @@ VideoFrameExternalResources::VideoFrameExternalResources()
 VideoFrameExternalResources::VideoFrameExternalResources(
     const VideoFrameExternalResources& other) = default;
 
-VideoFrameExternalResources::~VideoFrameExternalResources() {}
+VideoFrameExternalResources::~VideoFrameExternalResources() = default;
 
 VideoResourceUpdater::VideoResourceUpdater(
     viz::ContextProvider* context_provider,

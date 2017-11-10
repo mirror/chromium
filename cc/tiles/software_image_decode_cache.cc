@@ -123,7 +123,7 @@ class ImageDecodeTaskImpl : public TileTask {
   }
 
  protected:
-  ~ImageDecodeTaskImpl() override {}
+  ~ImageDecodeTaskImpl() override = default;
 
  private:
   SoftwareImageDecodeCache* cache_;

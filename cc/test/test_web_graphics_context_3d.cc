@@ -788,7 +788,7 @@ TestWebGraphicsContext3D::TextureTargets::TextureTargets() {
   bound_textures_[GL_TEXTURE_RECTANGLE_ARB] = 0;
 }
 
-TestWebGraphicsContext3D::TextureTargets::~TextureTargets() {}
+TestWebGraphicsContext3D::TextureTargets::~TextureTargets() = default;
 
 void TestWebGraphicsContext3D::TextureTargets::BindTexture(
     GLenum target,
@@ -839,10 +839,10 @@ GLuint TestWebGraphicsContext3D::TextureTargets::BoundTexture(
 
 TestWebGraphicsContext3D::Buffer::Buffer() : target(0), size(0) {}
 
-TestWebGraphicsContext3D::Buffer::~Buffer() {}
+TestWebGraphicsContext3D::Buffer::~Buffer() = default;
 
-TestWebGraphicsContext3D::Image::Image() {}
+TestWebGraphicsContext3D::Image::Image() = default;
 
-TestWebGraphicsContext3D::Image::~Image() {}
+TestWebGraphicsContext3D::Image::~Image() = default;
 
 }  // namespace cc
