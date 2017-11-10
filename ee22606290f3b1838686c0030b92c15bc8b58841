@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cf90605_97195f28",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/getusermedia-constraints.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-10T15:47:08Z",
+      "side": 1,
+      "message": "This should be pass too",
+      "range": {
+        "startLine": 60,
+        "startChar": 45,
+        "endLine": 60,
+        "endChar": 50
+      },
+      "revId": "ee22606290f3b1838686c0030b92c15bc8b58841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
