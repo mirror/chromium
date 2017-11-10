@@ -34,6 +34,24 @@
       "revId": "dfe8657c1347d05c2be86310000b6d4472304b98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3914322c_d1f3db79",
+        "filename": "third_party/WebKit/Source/core/html/HTMLObjectElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-10T17:56:01Z",
+      "side": 1,
+      "message": "Hm yeah that\u0027s potentially confusing. My read of the comment is that this is not spec\u0027d and is just for web compat. I\u0027m not sure who would be best to know the historical reasons for this. Maybe dcheng or tkent?\n\nIt seems OK to land this as-is and follow up on a crbug though.",
+      "parentUuid": "c0d27e23_886c90a0",
+      "revId": "dfe8657c1347d05c2be86310000b6d4472304b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
