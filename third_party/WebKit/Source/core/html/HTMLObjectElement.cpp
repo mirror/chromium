@@ -168,12 +168,10 @@ void HTMLObjectElement::ParametersForPlugin(Vector<String>& param_names,
     // function.
     // HTML5 says that an object resource's URL is specified by the object's
     // data attribute, not by a param element. However, for compatibility, allow
-    // the resource's URL to be given by a param named "src", "movie", "code" or
-    // "url" if we know that resource points to a plugin.
-    if (url_.IsEmpty() && (DeprecatedEqualIgnoringCase(name, "src") ||
-                           DeprecatedEqualIgnoringCase(name, "movie") ||
-                           DeprecatedEqualIgnoringCase(name, "code") ||
-                           DeprecatedEqualIgnoringCase(name, "url"))) {
+    // the resource's URL to be given by a param element if we know that
+    // resource points to a plugin.
+    if (url_.IsEmpty() && !DeprecatedEqualIgnoringCase(name, "data") &&
+        HTMLParamElement::IsURLParameter(name)) {
       url_ = StripLeadingAndTrailingHTMLSpaces(p->Value());
     }
     // TODO(schenney): crbug.com/572908 serviceType calculation does not belong
