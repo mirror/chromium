@@ -16,6 +16,24 @@
       "revId": "3e7e81018c1d015243569523466b0e242f690f93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2414a63d_0920d3ca",
+        "filename": "chrome/browser/favicon/content_favicon_driver_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-10T09:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f246ffcc_c201d9cf",
+      "revId": "3e7e81018c1d015243569523466b0e242f690f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
