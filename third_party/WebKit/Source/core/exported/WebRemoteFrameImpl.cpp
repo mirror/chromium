@@ -283,20 +283,6 @@ void WebRemoteFrameImpl::SetReplicatedInsecureRequestPolicy(
   GetFrame()->GetSecurityContext()->SetInsecureRequestPolicy(policy);
 }
 
-void WebRemoteFrameImpl::SetReplicatedPotentiallyTrustworthyUniqueOrigin(
-    bool is_unique_origin_potentially_trustworthy) {
-  DCHECK(GetFrame());
-  // If |isUniqueOriginPotentiallyTrustworthy| is true, then the origin must be
-  // unique.
-  DCHECK(!is_unique_origin_potentially_trustworthy ||
-         GetFrame()->GetSecurityContext()->GetSecurityOrigin()->IsUnique());
-  GetFrame()
-      ->GetSecurityContext()
-      ->GetSecurityOrigin()
-      ->SetUniqueOriginIsPotentiallyTrustworthy(
-          is_unique_origin_potentially_trustworthy);
-}
-
 void WebRemoteFrameImpl::DispatchLoadEventOnFrameOwner() {
   DCHECK(GetFrame()->Owner()->IsLocal());
   GetFrame()->Owner()->DispatchLoad();
