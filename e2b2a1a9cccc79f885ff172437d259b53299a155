@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48016aeb_5acaea96",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-10T14:25:54Z",
+      "side": 1,
+      "message": "Maybe useful to quickly describe the events being logged in here.",
+      "revId": "e2b2a1a9cccc79f885ff172437d259b53299a155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad570aa6_af910270",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-10T14:25:54Z",
+      "side": 1,
+      "message": "I don\u0027t think the comment is very useful here :)",
+      "revId": "e2b2a1a9cccc79f885ff172437d259b53299a155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cba8a66_467525ea",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-10T14:25:54Z",
+      "side": 1,
+      "message": "Maybe worth mentioning that this code is called when a tab tries to play and we ends up here only if a tab tries to play and the sound is blocked. It\u0027s obvious after digging a bit but the comment will help readers to not have to dig :)",
+      "revId": "e2b2a1a9cccc79f885ff172437d259b53299a155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "925a1fa1_f306c8db",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-10T14:25:54Z",
+      "side": 1,
+      "message": "style: leave empty line above this one?",
+      "revId": "e2b2a1a9cccc79f885ff172437d259b53299a155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530d8c14_0f6d2093",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-10T14:25:54Z",
+      "side": 1,
+      "message": "Can you either do an early return if `map` is null or DCHECK?",
+      "revId": "e2b2a1a9cccc79f885ff172437d259b53299a155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
