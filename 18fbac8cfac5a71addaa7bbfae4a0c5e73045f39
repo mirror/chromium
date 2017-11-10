@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f45d76f4_7d7ab9a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareMenuActionHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T18:59:21Z",
+      "side": 1,
+      "message": "Oh, I really want to find a path to support the same level of scheme validation in java that we have in GURL.  Having this require native to test is very said (really, I just want mockito in instrumentation tests as that would save me hundreds of lines of boilerplate).\n\nI would actually like to use Uri.parse and happily will if I can convince security.  It would make this and many other places much clearer IMO.",
+      "parentUuid": "34ef1b8b_dfe58d67",
+      "range": {
+        "startLine": 77,
+        "startChar": 46,
+        "endLine": 77,
+        "endChar": 86
+      },
+      "revId": "18fbac8cfac5a71addaa7bbfae4a0c5e73045f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea0d2322_9ad52e9f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareMenuActionHandler.java",
         "patchSetId": 4
