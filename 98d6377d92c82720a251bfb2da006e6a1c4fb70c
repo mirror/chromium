@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d73897c8_a0b77af3",
+        "filename": "content/shell/browser/layout_test/layout_test_devtools_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-10T22:50:55Z",
+      "side": 1,
+      "message": "make private?",
+      "revId": "98d6377d92c82720a251bfb2da006e6a1c4fb70c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d302ed49_6a8fdd4a",
+        "filename": "content/shell/browser/shell_devtools_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-10T22:50:55Z",
+      "side": 1,
+      "message": "delete",
+      "revId": "98d6377d92c82720a251bfb2da006e6a1c4fb70c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bb92fa_a9601792",
+        "filename": "content/shell/browser/shell_devtools_bindings.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-10T22:50:55Z",
+      "side": 1,
+      "message": "delete",
+      "revId": "98d6377d92c82720a251bfb2da006e6a1c4fb70c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
