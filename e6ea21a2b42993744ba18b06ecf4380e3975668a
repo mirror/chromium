@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd923797_851e5b15",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-10T06:28:31Z",
+      "side": 1,
+      "message": "I think this should be the first line with a bit more detail.",
+      "revId": "e6ea21a2b42993744ba18b06ecf4380e3975668a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
