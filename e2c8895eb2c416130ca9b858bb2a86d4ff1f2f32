@@ -152,6 +152,30 @@
       "revId": "e2c8895eb2c416130ca9b858bb2a86d4ff1f2f32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b610d311_0598714e",
+        "filename": "components/arc/common/backup_settings.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2017-11-10T06:18:59Z",
+      "side": 1,
+      "message": "\u003e to deprecate this method, and introduce a new one instead.\nRight, that I wanted to mean.\n\nDone adding the comment to the mojo file. Good point.",
+      "parentUuid": "be9b1b18_e8befabb",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "e2c8895eb2c416130ca9b858bb2a86d4ff1f2f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
