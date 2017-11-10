@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f0222dfc_abd5e4cb",
+        "filename": "chromeos/printing/ppd_line_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-11-10T21:05:00Z",
+      "side": 1,
+      "message": "Added comments to hopefully clarify.",
+      "parentUuid": "1ebdbc23_9d939a59",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 18
+      },
+      "revId": "78417a023564a5afdda45a41b30ed11d2a0e1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a081579_2e6ab9ba",
         "filename": "chromeos/printing/ppd_line_reader.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fe6e5c89_84d26733",
+        "filename": "chromeos/printing/ppd_line_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-11-10T21:05:00Z",
+      "side": 1,
+      "message": "Restructured in a different way.  It\u0027s slightly less efficient (will return blank lines if we have repeated newlines) but not in a way that\u0027s concerning. \n\nLet me know if this reads better for you.",
+      "parentUuid": "0a081579_2e6ab9ba",
+      "range": {
+        "startLine": 78,
+        "startChar": 6,
+        "endLine": 108,
+        "endChar": 7
+      },
+      "revId": "78417a023564a5afdda45a41b30ed11d2a0e1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f32c3f5_bc5bc1ac",
         "filename": "chromeos/printing/ppd_line_reader.h",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "78417a023564a5afdda45a41b30ed11d2a0e1305",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "352b4749_ef8f21d1",
+        "filename": "chromeos/printing/ppd_line_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-11-10T21:05:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f32c3f5_bc5bc1ac",
+      "range": {
+        "startLine": 18,
+        "startChar": 32,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "78417a023564a5afdda45a41b30ed11d2a0e1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
