@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "6f618fef_9a84a068",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-10T23:13:57Z",
+      "side": 0,
+      "message": "This is the biggest unknown for me, since this gets the source SiteInstance into the FrameNavigationEntry, and that\u0027s plumbed into many other places, like NavigationRequest::source_site_instance_, OnRequestRedirected, or process model decisions in GetSiteInstanceForNavigationRequest, like CanSubframeSwapProcess or DetermineSiteInstanceForURL.  What makes those places still work?\n\nFor example, I\u0027m fuzzy on how history navigations for data/about URLs still work properly without the source SI?  Specifically, looking here: https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_manager.cc?l\u003d1410\u0026rcl\u003d335f836ef38e698833dc5331fe8d79fe2eb959a7\n\nIf foo.com navigates a subframe to a data: URL, then the subframe navigates cross-process to bar.com, then we go back, how does the subframe still end up in foo.com\u0027s SiteInstance without the source_instance being tracked on the FNE?  I think we might\u0027ve talked about this in the past, but I don\u0027t remember the outcome. :)  (Relevant bug: https://crbug.com/606996)\n\nI guess any problems here would have to involve OpenURL but without proxies, since RequestTransferURL() still assigns the source SiteInstance.  Is that possible?",
+      "parentUuid": "17531725_fa3d4edb",
+      "range": {
+        "startLine": 730,
+        "startChar": 41,
+        "endLine": 730,
+        "endChar": 74
+      },
+      "revId": "32fe8d52b93337aa0dde0e0e207d98d4fbed687a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfabe4cd_745f775b",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-10T23:13:57Z",
+      "side": 0,
+      "message": "Similar question here, but for main frames.",
+      "range": {
+        "startLine": 745,
+        "startChar": 0,
+        "endLine": 745,
+        "endChar": 75
+      },
+      "revId": "32fe8d52b93337aa0dde0e0e207d98d4fbed687a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61a51f2d_7e8c0ab5",
         "filename": "content/browser/frame_host/navigator_impl.cc",
         "patchSetId": 5
@@ -36,6 +83,30 @@
       "writtenOn": "2017-11-09T23:15:04Z",
       "side": 0,
       "message": "Note that we still do the ShouldAllowOpenURL check (this is something that Alex asked about).",
+      "range": {
+        "startLine": 737,
+        "startChar": 38,
+        "endLine": 737,
+        "endChar": 56
+      },
+      "revId": "32fe8d52b93337aa0dde0e0e207d98d4fbed687a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b6f6b6d_4b86021a",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-10T23:13:57Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "61a51f2d_7e8c0ab5",
       "range": {
         "startLine": 737,
         "startChar": 38,

@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7c6e499f_c4f6e219",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-10T23:13:57Z",
+      "side": 1,
+      "message": "Just reasoning out loud.  This check comes from my https://codereview.chromium.org/2372323003/diff/140001/chrome/browser/ui/browser_navigator.cc, and it seems to matter only for the chrome.window.create case, more specifically for a multi-URL, cross-profile case like chrome.windows.create({url: [\u0027http://foo.com\u0027,\n\u0027http://bar.com\u0027], incognito: true}) (e.g., used in ExtensionApiTest.TabQuery, queryIncognito() case).  This change corresponds to changing params-\u003eopener here in the prerequisite CL, right? https://chromium-review.googlesource.com/c/chromium/src/+/758801/4/chrome/browser/extensions/api/tabs/tabs_api.cc#579\n\nSo then, I\u0027m curious how does it still work, since that test doesn\u0027t use the setSelfAsOpener, and so shouldn\u0027t have the opener set?  I haven\u0027t looked closely at the prerequisite CL, so I\u0027m probably misunderstanding how it works. :)",
+      "range": {
+        "startLine": 257,
+        "startChar": 6,
+        "endLine": 257,
+        "endChar": 20
+      },
+      "revId": "3854545ced030201dfe345a3c147bae75debde72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29717f4c_547aface",
         "filename": "content/shell/browser/shell.cc",
         "patchSetId": 7
