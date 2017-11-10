@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "022a3bb2_23878011",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-10T16:56:48Z",
+      "side": 1,
+      "message": "Well, with \"received document since navigating\" I mean the document corresponding to that navigation (which can only be received after the navigation finishes). I could rename it to \"..since_navigation_finished_\" if you prefer?\n\nRenamed is_currently_navigating_ to did_navigation_finish_.",
+      "parentUuid": "9cbc81c0_58416752",
+      "range": {
+        "startLine": 173,
+        "startChar": 32,
+        "endLine": 173,
+        "endChar": 42
+      },
+      "revId": "8d30a66713db26a6833bc4f9df1e792788180927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddac69e6_f750eddb",
         "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "8d30a66713db26a6833bc4f9df1e792788180927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e4c4ede_c5e6037f",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-10T16:56:48Z",
+      "side": 1,
+      "message": "Renamed.",
+      "parentUuid": "ddac69e6_f750eddb",
+      "range": {
+        "startLine": 188,
+        "startChar": 22,
+        "endLine": 188,
+        "endChar": 32
+      },
+      "revId": "8d30a66713db26a6833bc4f9df1e792788180927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
