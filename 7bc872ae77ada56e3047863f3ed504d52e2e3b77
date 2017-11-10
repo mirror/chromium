@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a87d0bc4_ae6eded4",
+        "filename": "infra/config/cq.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2017-11-10T09:14:24Z",
+      "side": 1,
+      "message": "Be carefully, update of cq.cfg can block all changes.\nhttps://chromium-review.googlesource.com/748777",
+      "parentUuid": "1466f2d3_c862b00b",
+      "revId": "7bc872ae77ada56e3047863f3ed504d52e2e3b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc5a2518_384daf68",
         "filename": "testing/buildbot/chromium.win.json",
         "patchSetId": 1
