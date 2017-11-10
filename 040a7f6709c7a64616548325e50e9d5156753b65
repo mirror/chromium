@@ -52,6 +52,24 @@
       "revId": "040a7f6709c7a64616548325e50e9d5156753b65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce18d1ca_a564b039",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-10T04:33:53Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "466c4b12_e8e0b578",
+      "revId": "040a7f6709c7a64616548325e50e9d5156753b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
