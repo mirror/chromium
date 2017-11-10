@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afa57b68_3195acc7",
+        "filename": "ash/accessibility/accessibility_highlight_layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-10T00:10:58Z",
+      "side": 1,
+      "message": "nit: use const gfx::Rect\u0026 here, since you don\u0027t modify |rect|",
+      "revId": "fa6e61dbba473541de8416b30526a6ce41a03d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df74642e_9a336a23",
+        "filename": "ash/accessibility/accessibility_highlight_layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-10T00:10:58Z",
+      "side": 1,
+      "message": "Can this one be \"for (gfx::Rect rect : rects_)\"?",
+      "revId": "fa6e61dbba473541de8416b30526a6ce41a03d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
