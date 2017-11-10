@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93a4b1bf_64a9d925",
+        "filename": "net/nqe/network_quality_estimator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-10T18:52:48Z",
+      "side": 1,
+      "message": "nit that I know you won\u0027t do:\njust return a \nstd::pair\u003cbase::Optional\u003cbase::TimeDelta\u003e, size_t\u003e\nand rename it GetRecentTransportRTTAndObservationsCount()",
+      "revId": "cbfed9f0273530df17c02625be7f8eca3e826d47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f86061a_69ce06e0",
+        "filename": "net/nqe/network_quality_estimator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-10T18:52:48Z",
+      "side": 1,
+      "message": "nit: I don\u0027t like out params.",
+      "revId": "cbfed9f0273530df17c02625be7f8eca3e826d47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
