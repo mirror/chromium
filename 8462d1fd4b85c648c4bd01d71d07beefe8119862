@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3e8ab413_029ed082",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-10T14:05:11Z",
+      "side": 1,
+      "message": "But if I don\u0027t do this, the problem described in the commit message as point 3 happens. It sounds like GetBoundsForNode needs to be made to do the right thing on Windows, so if you are willing to take that on, that would be rad :)\n\nI think I know what the issue is:\n\nGetBoundsForNode() always returns the \"visual bounds\" of the node - i.e., it returns the space on the screen the node occupies, which has a width equal to the width of the TreeView. GetForegroundBoundsForNodeImpl, on the other hand, returns the width of the node\u0027s *text*, which might be larger than the width of the TreeView if it\u0027s super long. This isn\u0027t normally a problem, but I think that if we\u0027re using a layer with a clip rect (and so the TreeView is a clipped view of a larger underlying canvas), this can mean we don\u0027t repaint the area that is past the width of the TreeView\u0027s clip rect. So, the fix would be for GetBoundsForNode() to return the larger of:\n\n1) What it computes now, so that if the node is less wide than the TreeView, the entire TreeView width is repainted (important for when the selection background is meant to fill the entire width), or\n2) What GetForegroundBoundsForNode returns, so that if the node is wider than the TreeView, the entire width of the node is repainted, even the parts that are wider than the TreeView\u0027s viewport.\n\nIf you could implement that that would be awesome. I\u0027m also going to look at getting a Windows machine, because I think it would make Views work easier :)",
+      "parentUuid": "891f2ee4_7990eba2",
+      "range": {
+        "startLine": 745,
+        "startChar": 22,
+        "endLine": 745,
+        "endChar": 38
+      },
+      "revId": "8462d1fd4b85c648c4bd01d71d07beefe8119862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6256be19_20d95775",
         "filename": "ui/views/controls/tree/tree_view.cc",
         "patchSetId": 1
