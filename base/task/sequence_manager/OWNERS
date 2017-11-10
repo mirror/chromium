@@ -4,3 +4,4 @@ skyostil@chromium.org
 
 # TEAM: scheduler-dev@chromium.org
 # COMPONENT: Blink>Scheduling
+# TODO: Create SequenceManager component.
