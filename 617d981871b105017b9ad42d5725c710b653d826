@@ -16,6 +16,24 @@
       "revId": "617d981871b105017b9ad42d5725c710b653d826",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35bf247f_9cd13d8b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-11-10T06:31:15Z",
+      "side": 1,
+      "message": "\u003e why this change\nBecause abspos needs to know container blocks writing mode/direction to prioritize conflict resolution according to standard. It was either use ConstraintSpace existing WritingMode/Direction, or add a new field \"container_block_writing_mode/c_b_direction\u0027 to NGConstraintSpace.\nNeither option is great. Mine is non-obvious, the other verbose and burdens all ConstraintSpace users with setting one more variable.\n\n\u003e Also, no new tests pass with this?\n\nOnly in legacy test viewer. In new test viewer, you\u0027ll find 8 new passing tests:\n\nexternal/wpt/css/css-flexbox/percentage-heights-003.html\nexternal/wpt/css/css-writing-modes/abs-pos-non-replaced-vlr-095.xht\nexternal/wpt/css/css-writing-modes/abs-pos-non-replaced-vlr-225.xht\nexternal/wpt/css/css-writing-modes/abs-pos-non-replaced-vlr-229.xht\nexternal/wpt/css/css-writing-modes/abs-pos-non-replaced-vrl-088.xht\nexternal/wpt/css/css-writing-modes/abs-pos-non-replaced-vrl-220.xht\nexternal/wpt/css/css-writing-modes/abs-pos-non-replaced-vrl-224.xht\n\nWith this change, all css-writing-modes/abs* tests pass. Legacy code fails 73 of them.\n\n\u003e I am not super-happy with this approach in general, I think having mismatched constraint space/style writing modes will lead to confusion all over the place\n\nI do not feel it is much more confusing than some other coordinate munging we dp. Abspos in particular is prone to intricate dance between different coordinate systems as fragments propagate up the tree.",
+      "parentUuid": "68bd8a03_14624fac",
+      "revId": "617d981871b105017b9ad42d5725c710b653d826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
