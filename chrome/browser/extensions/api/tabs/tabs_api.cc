@@ -604,12 +604,17 @@ ExtensionFunction::ResponseAction WindowsCreateFunction::Run() {
   }
   chrome::SelectNumberedTab(new_window, 0);
 
-  if (focused)
-    new_window->window()->Show();
-  else
-    new_window->window()->ShowInactive();
-
   WindowController* controller = new_window->extension_window_controller();
+  if (focused) {
+    new_window->window()->Show();
+  } else {
+    new_window->window()->ShowInactive();
+    // |ShowInactive()| sets the newly made window's initial state as
+    // ui::SHOW_STATE_INACTIVE. So from extension side, manipulate it's
+    // initial state as 'inactive' and 'minimized'.
+    if (create_params.initial_show_state == ui::SHOW_STATE_MINIMIZED)
+      controller->window()->Minimize();
+  }
 
   std::unique_ptr<base::Value> result;
   if (new_window->profile()->IsOffTheRecord() &&

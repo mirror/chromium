@@ -1107,6 +1107,18 @@ IN_PROC_BROWSER_TEST_F(ExtensionWindowCreateTest, AcceptState) {
   function = new WindowsCreateFunction();
   function->set_extension(extension.get());
   result.reset(utils::ToDictionary(utils::RunFunctionAndReturnSingleResult(
+      function.get(), "[{\"focused\": false, \"state\": \"minimized\"}]",
+      browser(), utils::INCLUDE_INCOGNITO)));
+  new_window = ExtensionTabUtil::GetBrowserFromWindowID(
+      ChromeExtensionFunctionDetails(function.get()), window_id, &error);
+  EXPECT_TRUE(error.empty());
+#if !defined(OS_LINUX) || defined(OS_CHROMEOS)
+  EXPECT_TRUE(new_window->window()->IsMinimized());
+#endif
+
+  function = new WindowsCreateFunction();
+  function->set_extension(extension.get());
+  result.reset(utils::ToDictionary(utils::RunFunctionAndReturnSingleResult(
       function.get(), "[{\"state\": \"fullscreen\"}]", browser(),
       utils::INCLUDE_INCOGNITO)));
   window_id = GetWindowId(result.get());
