@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ee7a2fc_5ed798c5",
+        "filename": "testing/scripts/test.uploaded.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-10T01:04:39Z",
+      "side": 1,
+      "message": "I had decided to do hashes :)",
+      "parentUuid": "aea8ecf6_ec38f7db",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eab095f7_1610e521",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-09T17:03:32Z",
       "side": 1,
       "message": "sha1?",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceb77605_eaefc697",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-10T01:04:39Z",
+      "side": 1,
+      "message": "I think we want to move to sha256 in the future? But I\u0027m fine starting with sha1 for now. I\u0027ll wait for maruel to comment to switch.",
+      "parentUuid": "eab095f7_1610e521",
       "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +101,24 @@
       "side": 1,
       "message": "This works, but will upload the files one at a time, which will be brutally slow. I think it\u0027s probably better to create a temporary copy of the whole tree in a directory and then upload everything at once.\n\nThen again, maruel@ might know some better way to upload-if-changed programmatically or something.",
       "parentUuid": "f7e9fd19_4f95a421",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02404794_109cc77b",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-10T01:04:39Z",
+      "side": 1,
+      "message": "Theoretically we could do a directory copy, so just `gsutil cp /path/to/local/sha1-ed/root gs://chromium_test_artifacts/sha1/\u0027 or something. That would probably be fairly efficient. We would need a staging directory though.",
+      "parentUuid": "87ab1256_e8705b6e",
       "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -117,6 +171,24 @@
       "side": 1,
       "message": "I think you\u0027ll probably want to take the output path as a command line argument.",
       "parentUuid": "276bb630_80e7afb7",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93560ff6_1378d7a4",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-10T01:04:39Z",
+      "side": 1,
+      "message": "How do I do that for multiple files? Or do I just make this script only modify one file.",
+      "parentUuid": "3ff60057_d0058dc6",
       "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
