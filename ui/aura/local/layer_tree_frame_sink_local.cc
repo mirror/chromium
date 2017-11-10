@@ -161,4 +161,9 @@ void LayerTreeFrameSinkLocal::OnFirstSurfaceActivation(
   surface_changed_callback_.Run(surface_info);
 }
 
+void LayerTreeFrameSinkLocal::OnFrameTokenChanged(uint32_t frame_token) {
+  // TODO(yiyix, fsamuel): Implement frame token propagation for
+  // LayerTreeFrameSinkLocal.
+}
+
 }  // namespace aura
