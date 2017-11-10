@@ -630,15 +630,25 @@ Press any key to continue exploring.
   <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_TOOLTIP_NO_MEDIA" desc="Cloud import no-new-media-found tooltip. Shown after backup is completed and when a search for new files to backup produces no result.">
     All backed up!
   </message>
-  <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_STATUS_INSUFFICIENT_SPACE" desc="Cloud import insufficient space status message.">
-    <ph name="FILE_COUNT">$1<ex>5</ex></ph> new photos found
+  <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_STATUS_INSUFFICIENT_CLOUD_SPACE" desc="Cloud import insufficient cloud space status message.">
+    <ph name="FILE_COUNT">$1<ex>5</ex></ph> new photos found.
     <ph name="LINE_BREAK1">&lt;br&gt;</ph>
-    Not enough space on device.
+    Not enough quota available on Google Drive: <ph name="FILE_SIZE">$2<ex>5 MB</ex></ph> missing.
     <ph name="LINE_BREAK2">&lt;br&gt;</ph>
-    Try selecting a few photos to start.
+    Try selecting fewer photos to start.
   </message>
-  <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_TOOLTIP_INSUFFICIENT_SPACE" desc="Cloud import insufficient space tooltip.">
-    Not enough space on device
+  <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_TOOLTIP_INSUFFICIENT_CLOUD_SPACE" desc="Cloud import insufficient cloud space tooltip.">
+    Not enough drive quota available
+  </message>
+  <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_STATUS_INSUFFICIENT_LOCAL_SPACE" desc="Cloud import insufficient local space status message.">
+    <ph name="FILE_COUNT">$1<ex>5</ex></ph> new photos found.
+    <ph name="LINE_BREAK1">&lt;br&gt;</ph>
+    Not enough space available in local storage: <ph name="FILE_SIZE">$2<ex>5 MB</ex></ph> missing.
+    <ph name="LINE_BREAK2">&lt;br&gt;</ph>
+    Try selecting fewer photos to start.
+  </message>
+  <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_TOOLTIP_INSUFFICIENT_LOCAL_SPACE" desc="Cloud import insufficient local space tooltip.">
+    Not enough free space on device available
   </message>
   <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_STATUS_READY" desc="Cloud import ready status message.">
     <ph name="FILE_COUNT">$1<ex>5</ex></ph> new photos found

@@ -10,7 +10,8 @@ importer.ActivityState = {
   READY: 'ready',
   HIDDEN: 'hidden',
   IMPORTING: 'importing',
-  INSUFFICIENT_SPACE: 'insufficient-space',
+  INSUFFICIENT_CLOUD_SPACE: 'insufficient-cloud-space',
+  INSUFFICIENT_LOCAL_SPACE: 'insufficient-local-space',
   NO_MEDIA: 'no-media',
   SCANNING: 'scanning'
 };
@@ -398,36 +399,63 @@ importer.ImportController.prototype.checkState_ = function(opt_scan) {
   }
 
   // We have a final scan that is either too big, or juuuussttt right.
-  this.fitsInAvailableSpace_(opt_scan).then(
-      (/** @param {boolean} fits */
-      function(fits) {
-          if (!fits) {
-            this.updateUi_(
-                importer.ActivityState.INSUFFICIENT_SPACE,
-                opt_scan);
-            return;
-          }
+  Promise
+      .all([
+        this.environment_.getFreeStorageSpace(
+            VolumeManagerCommon.VolumeType.DOWNLOADS),
+        this.environment_.getFreeStorageSpace(
+            VolumeManagerCommon.VolumeType.DRIVE),
+      ])
+      .then((/** @param {Array<number>} availableSpace in bytes */
+             function(availableSpace) {
+               // TODO(smckay): We might want to disqualify some small amount of
+               // local storage in this calculation on the assumption that we
+               // don't want to completely max out storage...even though synced
+               // files will eventually be evicted from the cache.
+               if (availableSpace[0] < opt_scan.getStatistics().sizeBytes) {
+                 // Doesn't fit in local space.
+                 this.updateUi_(
+                     importer.ActivityState.INSUFFICIENT_LOCAL_SPACE, opt_scan,
+                     availableSpace[0]);
+                 return;
+               }
+               if (availableSpace[1] < opt_scan.getStatistics().sizeBytes) {
+                 // Doesn't fit in cloud space.
+                 this.updateUi_(
+                     importer.ActivityState.INSUFFICIENT_CLOUD_SPACE, opt_scan,
+                     availableSpace[1]);
+                 return;
+               }
 
-        this.updateUi_(
-            importer.ActivityState.READY,  // to import...
-            opt_scan);
-        if (this.isRightAfterPluggingMedia_) {
-          this.isRightAfterPluggingMedia_ = false;
-          this.commandWidget_.setDetailsVisible(true);
-        }
-      }).bind(this))
-      .catch(importer.getLogger().catcher('import-controller-check-state'));
+               // Enough space available!
+               this.updateUi_(
+                   importer.ActivityState.READY,  // to import...
+                   opt_scan);
+               if (this.isRightAfterPluggingMedia_) {
+                 this.isRightAfterPluggingMedia_ = false;
+                 this.commandWidget_.setDetailsVisible(true);
+               }
+             }).bind(this))
+      .catch((function(error) {
+               // If an error occurs, it will appear to scan forever - hide the
+               // cloud backup option in that case.
+               importer.getLogger().catcher('import-controller-check-state')(
+                   error);
+               this.updateUi_(importer.ActivityState.HIDDEN);
+             }).bind(this));
 };
 
 /**
  * @param {importer.ActivityState} activityState
  * @param {importer.ScanResult=} opt_scan
+ * @param {number=} opt_destination_size specifies the destination size in bytes
+ *     in case of space issues.
  * @private
  */
-importer.ImportController.prototype.updateUi_ =
-    function(activityState, opt_scan) {
+importer.ImportController.prototype.updateUi_ = function(
+    activityState, opt_scan, opt_destination_size) {
   this.lastActivityState_ = activityState;
-  this.commandWidget_.update(activityState, opt_scan);
+  this.commandWidget_.update(activityState, opt_scan, opt_destination_size);
 };
 
 /**
@@ -439,25 +467,6 @@ importer.ImportController.prototype.isCurrentDirectoryScannable_ =
   var directory = this.environment_.getCurrentDirectory();
   return !!directory &&
       importer.isMediaDirectory(directory, this.environment_);
-};
-
-/**
- * @param {!importer.ScanResult} scanResult
- * @return {!Promise<boolean>} True if the files in scan will fit
- *     in available local storage space.
- * @private
- */
-importer.ImportController.prototype.fitsInAvailableSpace_ =
-    function(scanResult) {
-  return this.environment_.getFreeStorageSpace().then(
-      /** @param {number} availableSpace In bytes. */
-      function(availableSpace) {
-        // TODO(smckay): We might want to disqualify some small amount
-        // storage in this calculation on the assumption that we
-        // don't want to completely max out storage...even though
-        // synced files will eventually be evicted from the cache.
-        return availableSpace > scanResult.getStatistics().sizeBytes;
-      });
 };
 
 /**
@@ -501,6 +510,8 @@ importer.CommandWidget.prototype.addClickListener;
 /**
  * @param {importer.ActivityState} activityState
  * @param {importer.ScanResult=} opt_scan
+ * @param {number=} opt_destination_size specifies the destination size in bytes
+ *     in case of space issues.
  */
 importer.CommandWidget.prototype.update;
 
@@ -790,8 +801,8 @@ importer.RuntimeCommandWidget.prototype.updateTabindexOfAnchors_ =
 };
 
 /** @override */
-importer.RuntimeCommandWidget.prototype.update =
-    function(activityState, opt_scan) {
+importer.RuntimeCommandWidget.prototype.update = function(
+    activityState, opt_scan, opt_destination_size) {
   switch(activityState) {
     case importer.ActivityState.HIDDEN:
       this.setDetailsVisible(false);
@@ -824,14 +835,27 @@ importer.RuntimeCommandWidget.prototype.update =
 
       break;
 
-    case importer.ActivityState.INSUFFICIENT_SPACE:
+    case importer.ActivityState.INSUFFICIENT_CLOUD_SPACE:
+    case importer.ActivityState.INSUFFICIENT_LOCAL_SPACE:
       console.assert(!!opt_scan, 'Scan not defined, but is required.');
 
-      this.mainButton_.setAttribute('aria-label', strf(
-          'CLOUD_IMPORT_TOOLTIP_INSUFFICIENT_SPACE'));
-      this.statusContent_.innerHTML = strf(
-          'CLOUD_IMPORT_STATUS_INSUFFICIENT_SPACE',
-          opt_scan.getFileEntries().length);
+      {
+        let attrLabel;
+        let messageLabel;
+        if (activityState === importer.ActivityState.INSUFFICIENT_CLOUD_SPACE) {
+          attrLabel = 'CLOUD_IMPORT_TOOLTIP_INSUFFICIENT_CLOUD_SPACE';
+          messageLabel = 'CLOUD_IMPORT_STATUS_INSUFFICIENT_CLOUD_SPACE';
+        } else {
+          // importer.ActivityState.INSUFFICIENT_LOCAL_SPACE.
+          attrLabel = 'CLOUD_IMPORT_TOOLTIP_INSUFFICIENT_LOCAL_SPACE';
+          messageLabel = 'CLOUD_IMPORT_STATUS_INSUFFICIENT_LOCAL_SPACE';
+        }
+        this.mainButton_.setAttribute('aria-label', strf(attrLabel));
+        this.statusContent_.innerHTML = strf(
+            messageLabel, opt_scan.getFileEntries().length,
+            util.bytesToString(
+                opt_scan.getStatistics().sizeBytes - opt_destination_size));
+      }
 
       this.comboButton_.hidden = false;
       this.importButton_.hidden = true;
@@ -1059,6 +1083,7 @@ importer.ControllerEnvironment.prototype.isGoogleDriveMounted;
 
 /**
  * Returns the available space for the local volume in bytes.
+ * @param {!VolumeManagerCommon.VolumeType} volumeType
  * @return {!Promise<number>}
  */
 importer.ControllerEnvironment.prototype.getFreeStorageSpace;
@@ -1176,25 +1201,28 @@ importer.RuntimeControllerEnvironment.prototype.isGoogleDriveMounted =
 };
 
 /** @override */
-importer.RuntimeControllerEnvironment.prototype.getFreeStorageSpace =
-    function() {
-  // Checking DOWNLOADS returns the amount of available local storage space.
-  var localVolumeInfo =
-      this.fileManager_.volumeManager.getCurrentProfileVolumeInfo(
-          VolumeManagerCommon.VolumeType.DOWNLOADS);
-  return new Promise(
-      function(resolve, reject) {
-        chrome.fileManagerPrivate.getSizeStats(
-            localVolumeInfo.volumeId,
-            function(stats) {
-              if (chrome.runtime.lastError) {
-                reject('Failed to ascertain available free space: ' +
-                    chrome.runtime.lastError.message);
-                return;
-              }
-              resolve(assert(stats).remainingSize);
-            });
-      });
+importer.RuntimeControllerEnvironment.prototype.getFreeStorageSpace = function(
+    volumeType) {
+  // VolumeInfo will exist, because if it doesn't, the scan would never have
+  // been initiated (see importer.ImportController.prototype.checkState_)
+  var volumeInfo = assert(
+      this.fileManager_.volumeManager.getCurrentProfileVolumeInfo(volumeType));
+  return new Promise(function(resolve, reject) {
+    chrome.fileManagerPrivate.getSizeStats(
+        volumeInfo.volumeId, function(stats) {
+          if (chrome.runtime.lastError) {
+            reject(
+                'Failed to ascertain available free space: ' +
+                chrome.runtime.lastError.message);
+            return;
+          }
+          if (!stats) {
+            reject('Failed to ascertain available free space.');
+            return;
+          }
+          resolve(stats.remainingSize);
+        });
+  });
 };
 
 /** @override */
