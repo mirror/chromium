@@ -502,7 +502,7 @@ CdmAdapter::CdmAdapter(
 
 CdmAdapter::~CdmAdapter() {
   // Reject any outstanding promises and close all the existing sessions.
-  cdm_promise_adapter_.Clear();
+  cdm_promise_adapter_.TraceAndClear("CdmAdapter::Promise");
 
   if (audio_init_cb_)
     audio_init_cb_.Run(false);
@@ -562,6 +562,8 @@ void CdmAdapter::SetServerCertificate(
   }
 
   uint32_t promise_id = cdm_promise_adapter_.SavePromise(std::move(promise));
+  TRACE_EVENT_ASYNC_BEGIN1("media", "CdmAdapter::Promise", promise_id, "action",
+                           __func__);
   cdm_->SetServerCertificate(promise_id, certificate.data(),
                              certificate.size());
 }
@@ -571,11 +573,13 @@ void CdmAdapter::GetStatusForPolicy(
     std::unique_ptr<KeyStatusCdmPromise> promise) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   uint32_t promise_id = cdm_promise_adapter_.SavePromise(std::move(promise));
+  TRACE_EVENT_ASYNC_BEGIN1("media", "CdmAdapter::Promise", promise_id, "action",
+                           __func__);
   if (!cdm_->GetStatusForPolicy(promise_id,
                                 ToCdmHdcpVersion(min_hdcp_version))) {
-    cdm_promise_adapter_.RejectPromise(
-        promise_id, CdmPromise::Exception::NOT_SUPPORTED_ERROR, 0,
-        "GetStatusForPolicy not supported.");
+    const std::string message = "GetStatusForPolicy not supported.";
+    OnRejectPromise(promise_id, cdm::kExceptionNotSupportedError, 0,
+                    message.data(), message.length());
   }
 }
 
@@ -587,6 +591,8 @@ void CdmAdapter::CreateSessionAndGenerateRequest(
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   uint32_t promise_id = cdm_promise_adapter_.SavePromise(std::move(promise));
+  TRACE_EVENT_ASYNC_BEGIN1("media", "CdmAdapter::Promise", promise_id, "action",
+                           __func__);
   cdm_->CreateSessionAndGenerateRequest(
       promise_id, ToCdmSessionType(session_type),
       ToCdmInitDataType(init_data_type), init_data.data(), init_data.size());
@@ -598,6 +604,8 @@ void CdmAdapter::LoadSession(CdmSessionType session_type,
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   uint32_t promise_id = cdm_promise_adapter_.SavePromise(std::move(promise));
+  TRACE_EVENT_ASYNC_BEGIN1("media", "CdmAdapter::Promise", promise_id, "action",
+                           __func__);
   cdm_->LoadSession(promise_id, ToCdmSessionType(session_type),
                     session_id.data(), session_id.size());
 }
@@ -610,6 +618,8 @@ void CdmAdapter::UpdateSession(const std::string& session_id,
   DCHECK(!response.empty());
 
   uint32_t promise_id = cdm_promise_adapter_.SavePromise(std::move(promise));
+  TRACE_EVENT_ASYNC_BEGIN1("media", "CdmAdapter::Promise", promise_id, "action",
+                           __func__);
   cdm_->UpdateSession(promise_id, session_id.data(), session_id.size(),
                       response.data(), response.size());
 }
@@ -620,6 +630,8 @@ void CdmAdapter::CloseSession(const std::string& session_id,
   DCHECK(!session_id.empty());
 
   uint32_t promise_id = cdm_promise_adapter_.SavePromise(std::move(promise));
+  TRACE_EVENT_ASYNC_BEGIN1("media", "CdmAdapter::Promise", promise_id, "action",
+                           __func__);
   cdm_->CloseSession(promise_id, session_id.data(), session_id.size());
 }
 
@@ -629,6 +641,8 @@ void CdmAdapter::RemoveSession(const std::string& session_id,
   DCHECK(!session_id.empty());
 
   uint32_t promise_id = cdm_promise_adapter_.SavePromise(std::move(promise));
+  TRACE_EVENT_ASYNC_BEGIN1("media", "CdmAdapter::Promise", promise_id, "action",
+                           __func__);
   cdm_->RemoveSession(promise_id, session_id.data(), session_id.size());
 }
 
@@ -876,11 +890,13 @@ void CdmAdapter::OnResolveKeyStatusPromise(uint32_t promise_id,
   DCHECK(task_runner_->BelongsToCurrentThread());
   cdm_promise_adapter_.ResolvePromise(promise_id,
                                       ToCdmKeyInformationKeyStatus(key_status));
+  TRACE_EVENT_ASYNC_END0("media", "CdmAdapter::Promise", promise_id);
 }
 
 void CdmAdapter::OnResolvePromise(uint32_t promise_id) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   cdm_promise_adapter_.ResolvePromise(promise_id);
+  TRACE_EVENT_ASYNC_END0("media", "CdmAdapter::Promise", promise_id);
 }
 
 void CdmAdapter::OnResolveNewSessionPromise(uint32_t promise_id,
@@ -889,6 +905,7 @@ void CdmAdapter::OnResolveNewSessionPromise(uint32_t promise_id,
   DCHECK(task_runner_->BelongsToCurrentThread());
   cdm_promise_adapter_.ResolvePromise(promise_id,
                                       std::string(session_id, session_id_size));
+  TRACE_EVENT_ASYNC_END0("media", "CdmAdapter::Promise", promise_id);
 }
 
 void CdmAdapter::OnRejectPromise(uint32_t promise_id,
@@ -912,6 +929,8 @@ void CdmAdapter::OnRejectPromise(uint32_t promise_id,
   cdm_promise_adapter_.RejectPromise(
       promise_id, ToMediaExceptionType(exception), system_code,
       std::string(error_message, error_message_size));
+  TRACE_EVENT_ASYNC_END2("media", "CdmAdapter::Promise", promise_id, "error",
+                         error_message, "system_code", system_code);
 }
 
 void CdmAdapter::OnRejectPromise(uint32_t promise_id,

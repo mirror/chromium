@@ -6,6 +6,8 @@
 
 #include <utility>
 
+#include "base/trace_event/trace_event.h"
+
 namespace media {
 
 CdmPromiseAdapter::CdmPromiseAdapter() : next_promise_id_(1) {
@@ -60,10 +62,21 @@ void CdmPromiseAdapter::RejectPromise(uint32_t promise_id,
 void CdmPromiseAdapter::Clear() {
   // Reject all outstanding promises.
   DCHECK(thread_checker_.CalledOnValidThread());
-  for (auto& promise : promises_)
+  for (auto& promise : promises_) {
     promise.second->reject(CdmPromise::Exception::INVALID_STATE_ERROR, 0,
                            "Operation aborted.");
+  }
   promises_.clear();
+}
+
+void CdmPromiseAdapter::TraceAndClear(const char* trace_category) {
+  // Reject all outstanding promises after calling TRACE.
+  DCHECK(thread_checker_.CalledOnValidThread());
+  for (auto& promise : promises_) {
+    TRACE_EVENT_ASYNC_END1("media", trace_category, promise.first, "error",
+                           "Operation aborted.");
+  }
+  Clear();
 }
 
 std::unique_ptr<CdmPromise> CdmPromiseAdapter::TakePromise(

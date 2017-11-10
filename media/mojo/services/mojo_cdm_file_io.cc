@@ -67,6 +67,8 @@ void MojoCdmFileIO::Open(const char* file_name, uint32_t file_name_size) {
   std::string file_name_string(file_name, file_name_size);
   DVLOG(3) << __func__ << " file: " << file_name_string;
 
+  TRACE_EVENT1("media", "MojoCdmFileIO::Open", "fileName", file_name_string);
+
   // Open is only allowed if the current state is kUnopened and the file name
   // is valid.
   if (state_ != State::kUnopened) {
@@ -92,6 +94,8 @@ void MojoCdmFileIO::OnFileOpened(StorageStatus status,
                                  base::File file,
                                  mojom::CdmFileAssociatedPtrInfo cdm_file) {
   DVLOG(3) << __func__ << " file: " << file_name_ << ", status: " << status;
+
+  TRACE_EVENT1("media", "MojoCdmFileIO::FileOpened", "fileName", file_name_);
 
   switch (status) {
     case StorageStatus::kSuccess:
@@ -125,6 +129,8 @@ void MojoCdmFileIO::OnFileOpened(StorageStatus status,
 
 void MojoCdmFileIO::Read() {
   DVLOG(3) << __func__ << " file: " << file_name_;
+
+  TRACE_EVENT1("media", "MojoCdmFileIO::Read", "fileName", file_name_);
 
   // If another operation is in progress, fail.
   if (state_ == State::kReading || state_ == State::kWriting) {
@@ -169,7 +175,8 @@ void MojoCdmFileIO::DoRead(int64_t num_bytes) {
   DVLOG(3) << __func__ << " file: " << file_name_;
   DCHECK_EQ(State::kReading, state_);
 
-  TRACE_EVENT1("media", "MojoCdmFileIO::DoRead", "bytes to read", num_bytes);
+  TRACE_EVENT2("media", "MojoCdmFileIO::DoRead", "fileName", file_name_,
+               "bytes to read", num_bytes);
 
   // We know how much data is available, so read the complete contents of the
   // file into a buffer and passing it back to |client_|. As these should be
@@ -208,6 +215,8 @@ void MojoCdmFileIO::DoRead(int64_t num_bytes) {
 void MojoCdmFileIO::Write(const uint8_t* data, uint32_t data_size) {
   DVLOG(3) << __func__ << " file: " << file_name_ << ", bytes: " << data_size;
 
+  TRACE_EVENT1("media", "MojoCdmFileIO::Write", "fileName", file_name_);
+
   // If another operation is in progress, fail.
   if (state_ == State::kReading || state_ == State::kWriting) {
     OnError(ErrorType::kWriteInUse);
@@ -243,8 +252,8 @@ void MojoCdmFileIO::DoWrite(const std::vector<uint8_t>& data,
            << base::File::ErrorToString(temporary_file.error_details());
   DCHECK_EQ(State::kWriting, state_);
 
-  TRACE_EVENT1("media", "MojoCdmFileIO::DoWrite", "bytes to write",
-               data.size());
+  TRACE_EVENT2("media", "MojoCdmFileIO::DoWrite", "fileName", file_name_,
+               "bytes to write", data.size());
 
   if (!temporary_file.IsValid()) {
     // Failed to open temporary file.
@@ -281,6 +290,8 @@ void MojoCdmFileIO::OnWriteCommitted(base::File reopened_file) {
   DVLOG(3) << __func__ << " file: " << file_name_;
   DCHECK_EQ(State::kWriting, state_);
   DCHECK(!file_for_reading_.IsValid()) << "Original file was not closed.";
+
+  TRACE_EVENT1("media", "MojoCdmFileIO::WriteDone", "fileName", file_name_);
 
   if (!reopened_file.IsValid()) {
     // Rename failed, and no file to use.

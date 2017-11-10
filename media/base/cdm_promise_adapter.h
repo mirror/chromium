@@ -43,6 +43,10 @@ class MEDIA_EXPORT CdmPromiseAdapter {
   // Rejects and clears all |promises_|.
   void Clear();
 
+  // Same as Clear(), but also calls TRACE_END with |trace_category| for each
+  // promise id.
+  void TraceAndClear(const char* trace_category);
+
  private:
   // A map between promise IDs and CdmPromises.
   using PromiseMap = std::unordered_map<uint32_t, std::unique_ptr<CdmPromise>>;
