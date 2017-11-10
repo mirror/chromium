@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a36f020_9aa73a50",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-10T22:38:41Z",
+      "side": 1,
+      "message": "Totally optional, but you could use:\n\nSkColor4f.FromColor(color).fA\n\nThat way you\u0027re not making any assumptions here.",
+      "revId": "9f7a8db9aa9d93e2e12cf4d8a048607912f80850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9412bd48_3f8c80f5",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-10T22:38:41Z",
+      "side": 1,
+      "message": "How about: uses |default_opacity| instead.\n\nMake it clear that you\u0027re talking about the default_opacity\nargument, not some other default.",
+      "revId": "9f7a8db9aa9d93e2e12cf4d8a048607912f80850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
