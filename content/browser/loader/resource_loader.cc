@@ -394,6 +394,8 @@ void ResourceLoader::OnAuthRequired(net::URLRequest* unused,
 void ResourceLoader::OnCertificateRequested(
     net::URLRequest* unused,
     net::SSLCertRequestInfo* cert_info) {
+  net::URLRequest::Delegate::OnCertificateRequested(unused, cert_info);
+  /*
   DCHECK_EQ(request_.get(), unused);
 
   if (request_->load_flags() & net::LOAD_PREFETCH) {
@@ -406,6 +408,7 @@ void ResourceLoader::OnCertificateRequested(
   ssl_client_auth_handler_.reset(new SSLClientAuthHandler(
       delegate_->CreateClientCertStore(this), request_.get(), cert_info, this));
   ssl_client_auth_handler_->SelectCertificate();
+  */
 }
 
 void ResourceLoader::OnSSLCertificateError(net::URLRequest* request,
