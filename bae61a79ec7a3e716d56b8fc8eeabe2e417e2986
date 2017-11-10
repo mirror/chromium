@@ -16,6 +16,24 @@
       "revId": "bae61a79ec7a3e716d56b8fc8eeabe2e417e2986",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a5782d_a30debe3",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 11
+      },
+      "lineNbr": 3705,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-10T10:43:45Z",
+      "side": 1,
+      "message": "Oops I forgot to address this one, but I have a follow-up ready to land that removes this TestExpectation.",
+      "parentUuid": "60f65a51_1bfc7b20",
+      "revId": "bae61a79ec7a3e716d56b8fc8eeabe2e417e2986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
