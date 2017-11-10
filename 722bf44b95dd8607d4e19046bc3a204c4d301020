@@ -87,6 +87,24 @@
       "revId": "722bf44b95dd8607d4e19046bc3a204c4d301020",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e6b925b_eaadebf7",
+        "filename": "components/subresource_filter/content/browser/content_activation_list_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-10T17:32:32Z",
+      "side": 1,
+      "message": "Oh sorry, I misread your initial comment (need more coffee...). Abusive ads can be removed as well. Done. Thanks!",
+      "parentUuid": "f3ba0b0c_cf2c2ef5",
+      "revId": "722bf44b95dd8607d4e19046bc3a204c4d301020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
