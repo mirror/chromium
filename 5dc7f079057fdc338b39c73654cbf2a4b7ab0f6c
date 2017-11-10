@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9025a52_14acc39e",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-10T16:24:07Z",
+      "side": 0,
+      "message": "Great. But there are a few other places you need to modify too.\nhttps://cs.chromium.org/search/?q\u003d731725\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "5dc7f079057fdc338b39c73654cbf2a4b7ab0f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
