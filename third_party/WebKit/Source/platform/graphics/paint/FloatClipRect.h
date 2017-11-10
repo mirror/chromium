@@ -39,11 +39,11 @@ class PLATFORM_EXPORT FloatClipRect {
 
   void Intersect(const FloatClipRect& other) {
     if (is_infinite_) {
-      is_infinite_ = other.is_infinite_;
-      rect_ = other.rect_;
-    } else {
-      rect_.Intersect(other.Rect());
+      *this = other;
+      return;
     }
+
+    rect_.Intersect(other.Rect());
     if (other.HasRadius())
       SetHasRadius();
     else if (!other.IsTight())
