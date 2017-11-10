@@ -69,6 +69,13 @@ class PLATFORM_EXPORT V8PerContextData final {
 
   static V8PerContextData* From(v8::Local<v8::Context>);
 
+  static v8::Local<v8::Function> ConstructorForTypeGeneral(
+      const WrapperTypeInfo*,
+      v8::Local<v8::Context>,
+      const DOMWrapperWorld&,
+      v8::Isolate*,
+      V8PerContextData*);
+
   ~V8PerContextData();
 
   v8::Local<v8::Context> GetContext() { return context_.NewLocal(isolate_); }
