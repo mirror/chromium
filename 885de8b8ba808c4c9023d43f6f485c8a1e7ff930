@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e5bf685_3945e7b8",
+        "filename": "components/autofill/core/browser/autofill_wallet_data_type_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-10T19:37:51Z",
+      "side": 1,
+      "message": "Can this be hoisted up to a the parent class as protected? It seems like it could be a handy helper since all three controller\u0027s in this CL implement it.",
+      "revId": "885de8b8ba808c4c9023d43f6f485c8a1e7ff930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae99fbed_136a57b3",
+        "filename": "components/autofill/core/browser/webdata/autofill_data_type_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-10T19:37:51Z",
+      "side": 1,
+      "message": "would SequenceTaskRunnerHandle work, or is the Thread one required? here and below.",
+      "revId": "885de8b8ba808c4c9023d43f6f485c8a1e7ff930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
