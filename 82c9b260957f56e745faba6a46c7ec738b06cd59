@@ -106,6 +106,24 @@
       "revId": "82c9b260957f56e745faba6a46c7ec738b06cd59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f355375_3378dea1",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 5788,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-10T07:35:57Z",
+      "side": 1,
+      "message": "Ah, I should have clarified my intention. I didn\u0027t mean that you shouldn\u0027t update Document::UpdateTitle.\n\nRather, my suggestion is to update Document::UpdateTitle too, if necessary, unless there is a reason we can\u0027t update Document::UpdateTitle.\n\nI prefer that we don\u0027t call frame-\u003eClient()-\u003eDispatchDidReceiveTitle(String()) in more than one places. It would be nice that we call it only in Document::UpdateTitle for easy maintenance.",
+      "parentUuid": "e31a5b3f_64346a03",
+      "revId": "82c9b260957f56e745faba6a46c7ec738b06cd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
