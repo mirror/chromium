@@ -208,7 +208,7 @@ FileTasks.create = function(
   });
 
   var defaultTaskPromise = tasksPromise.then(function(tasks) {
-    return FileTasks.getDefaultTask(tasks);
+    return FileTasks.getDefaultTask(tasks, taskHistory);
   });
 
   return Promise.all([tasksPromise, defaultTaskPromise]).then(function(args) {
@@ -487,18 +487,18 @@ FileTasks.prototype.executeDefaultInternal_ = function(opt_callback) {
   var callback = opt_callback || function(arg1, arg2) {};
 
   if (this.defaultTask_ !== null) {
-    var nonGenericTasks = this.tasks_.filter(t => !t.isGenericFileHandler);
-    if (!this.defaultTask_.isDefault && nonGenericTasks.length >= 2 &&
-        !this.taskHistory_.getLastExecutedTime(this.defaultTask_.taskId)) {
-      this.showTaskPicker(
-          this.ui_.defaultTaskPicker, str('OPEN_WITH_BUTTON_LABEL'),
-          '', function(task) {
-            this.execute(task.taskId);
-          }.bind(this), FileTasks.TaskPickerType.OpenWith);
-      return;
-    }
     this.executeInternal_(this.defaultTask_.taskId);
     callback(true, this.entries_);
+    return;
+  }
+
+  var nonGenericTasks = this.tasks_.filter(t => !t.isGenericFileHandler);
+  if (nonGenericTasks.length) {
+    this.showTaskPicker(
+        this.ui_.defaultTaskPicker, str('OPEN_WITH_BUTTON_LABEL'),
+        '', function(task) {
+          this.execute(task.taskId);
+        }.bind(this), FileTasks.TaskPickerType.OpenWith);
     return;
   }
 
@@ -1001,23 +1001,37 @@ FileTasks.prototype.showTaskPicker = function(
  *
  * @param {!Array<!Object>} tasks The list of tasks from where to choose the
  *     default task.
+ * @param {!TaskHistory} taskHistory
  * @param {!Object=} opt_taskToUseIfNoDefault The task to return in case there
  *     is no default task available in tasks.
  * @return {Object} opt_taskToUseIfNoDefault or null in case
  *     opt_taskToUseIfNoDefault is undefined.
  */
-FileTasks.getDefaultTask = function(tasks, opt_taskToUseIfNoDefault) {
+FileTasks.getDefaultTask = function(
+    tasks, taskHistory, opt_taskToUseIfNoDefault) {
+  // 1. Default app set for MIME or file extension by user, or built-in app.
   for (var i = 0; i < tasks.length; i++) {
     if (tasks[i].isDefault) {
       return tasks[i];
     }
   }
-  // If we haven't picked a default task yet, then just pick the first one
-  // which is not generic file handler.
-  for (var i = 0; i < tasks.length; i++) {
-    if (!tasks[i].isGenericFileHandler) {
-      return tasks[i];
-    }
+  var nonGenericTasks = tasks.filter(t => !t.isGenericFileHandler);
+  // 2. Most recently executed non-generic task.
+  var latest = nonGenericTasks[0];
+  if (latest && taskHistory.getLastExecutedTime(latest.taskId)) {
+    return latest;
   }
+  // 3. Sole non-generic handler.
+  if (nonGenericTasks.length == 1) {
+    return nonGenericTasks[0];
+  }
+  // 4. Task picker, if multiple non-generic task exist.
+  if (nonGenericTasks.length >= 2) {
+    // TODO(yamaguchi): return special value to indiacate task picker,
+    // instead of detecting this case's condition in extcuteDefault() again.
+    return null;
+  }
+
+  // 5. Try to run in browser, show suggested apps dialog, or given default.
   return opt_taskToUseIfNoDefault || null;
 };
