@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1ba4b08_476572a6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/api/VTTCue/lineAlign.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-10T09:38:20Z",
+      "side": 0,
+      "message": "this should be there, now that we support lineAlign, this should work now.",
+      "range": {
+        "startLine": 13,
+        "startChar": 31,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "e85f43e14908f7372bf291d805bf73205a7aafe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838ac8fe_08f30db8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/api/VTTCue/positionAlign.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-10T09:38:20Z",
+      "side": 0,
+      "message": "same here, this is required.",
+      "range": {
+        "startLine": 10,
+        "startChar": 30,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "e85f43e14908f7372bf291d805bf73205a7aafe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
