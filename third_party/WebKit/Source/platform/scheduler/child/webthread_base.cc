@@ -14,7 +14,6 @@
 #include "base/pending_task.h"
 #include "base/threading/platform_thread.h"
 #include "platform/scheduler/child/compositor_worker_scheduler.h"
-#include "platform/scheduler/child/scheduler_tqm_delegate_impl.h"
 #include "platform/scheduler/child/webthread_impl_for_worker_scheduler.h"
 #include "platform/scheduler/utility/webthread_impl_for_utility_thread.h"
 #include "public/platform/WebTraceLocation.h"
