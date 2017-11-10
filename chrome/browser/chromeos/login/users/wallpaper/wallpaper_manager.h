@@ -12,7 +12,6 @@
 #include <string>
 #include <vector>
 
-#include "ash/public/interfaces/wallpaper.mojom.h"
 #include "base/containers/circular_deque.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
@@ -33,7 +32,6 @@
 #include "components/wallpaper/wallpaper_info.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
-#include "mojo/public/cpp/bindings/binding.h"
 #include "ui/aura/window_observer.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/wm/public/activation_change_observer.h"
@@ -96,8 +94,7 @@ extern const int kWallpaperThumbnailHeight;
 // A dictionary pref that maps usernames to wallpaper info.
 extern const char kUsersWallpaperInfo[];
 
-class WallpaperManager : public ash::mojom::WallpaperPicker,
-                         public content::NotificationObserver,
+class WallpaperManager : public content::NotificationObserver,
                          public user_manager::UserManager::Observer,
                          public wm::ActivationChangeObserver,
                          public aura::WindowObserver {
@@ -357,8 +354,8 @@ class WallpaperManager : public ash::mojom::WallpaperPicker,
   // Removes given observer from the list.
   void RemoveObserver(Observer* observer);
 
-  // ash::mojom::WallpaperPicker:
-  void Open() override;
+  // Opens the wallpaper picker window.
+  void OpenWallpaperPicker();
 
   // content::NotificationObserver:
   void Observe(int type,
@@ -655,8 +652,6 @@ class WallpaperManager : public ash::mojom::WallpaperPicker,
       std::unique_ptr<gfx::ImageSkia> small_wallpaper_image,
       const base::FilePath& customized_default_wallpaper_file_large,
       std::unique_ptr<gfx::ImageSkia> large_wallpaper_image);
-
-  mojo::Binding<ash::mojom::WallpaperPicker> binding_;
 
   std::unique_ptr<CrosSettings::ObserverSubscription>
       show_user_name_on_signin_subscription_;
