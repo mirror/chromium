@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4861c960_73bc3bcd",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-11-10T00:40:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4027e3d4_ee87e734",
+      "revId": "4ad1fd5f95e86c2095922ae496531fb0c2422179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506d4fbe_016359b9",
         "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer_unittest.cc",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "4ad1fd5f95e86c2095922ae496531fb0c2422179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4450bd54_cbdef56d",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-11-10T00:40:01Z",
+      "side": 1,
+      "message": "Why? From what I can tell this is the pattern: https://cs.chromium.org/search/?q\u003dnamespace+%7B+file:.*.cc\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "506d4fbe_016359b9",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 28
+      },
+      "revId": "4ad1fd5f95e86c2095922ae496531fb0c2422179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
