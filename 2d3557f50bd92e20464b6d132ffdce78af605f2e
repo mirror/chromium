@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "449e1609_4b1923af",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-10T18:38:21Z",
+      "side": 1,
+      "message": "Ok, makes sense.",
+      "parentUuid": "c288e52f_05b9b8fb",
+      "revId": "2d3557f50bd92e20464b6d132ffdce78af605f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffe249f2_acefa35c",
         "filename": "net/quic/chromium/quic_http_utils.cc",
         "patchSetId": 5
