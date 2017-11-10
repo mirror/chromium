@@ -340,6 +340,7 @@ class HttpStreamFactoryImpl::Job {
   // nothing if |stream_factory_| is for WebSockets.
   int SetSpdyHttpStreamOrBidirectionalStreamImpl(
       base::WeakPtr<SpdySession> session,
+      SpdyStreamId pushed_stream_id,
       bool direct);
 
   // Returns to STATE_INIT_CONNECTION and resets some state.
@@ -490,6 +491,11 @@ class HttpStreamFactoryImpl::Job {
 
   // Initialized when we have an existing SpdySession.
   base::WeakPtr<SpdySession> existing_spdy_session_;
+
+  // Once Job claims a pushed stream, |pushed_stream_id_| is the ID of the
+  // claimed stream, and |existing_spdy_session_| points to the SpdySession.
+  // Otherwise set to kNoPushedStreamFound.
+  SpdyStreamId pushed_stream_id_;
 
   // True if not connecting to an Https proxy for an Http url.
   const bool spdy_session_direct_;
