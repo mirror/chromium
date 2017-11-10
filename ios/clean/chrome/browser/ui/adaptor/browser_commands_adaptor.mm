@@ -12,6 +12,14 @@
 
 @synthesize viewControllerForAlert = _viewControllerForAlert;
 
+- (void)showToolsMenu {
+  [self showAlert:@"showToolsMenu"];
+}
+
+- (void)dismissToolsMenu {
+  [self showAlert:@"dismissToolsMenu"];
+}
+
 - (void)closeCurrentTab {
   [self showAlert:@"closeCurrentTab"];
 }
