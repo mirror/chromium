@@ -192,6 +192,9 @@
     <dimen name="dialog_padding_top">@dimen/abc_dialog_padding_top_material</dimen>
     <dimen name="dialog_padding_sides">@dimen/abc_dialog_padding_material</dimen>
 
+    <!-- ModalDialog dimensions -->
+    <dimen name="tab_modal_scrim_vertical_margin">16dp</dimen>
+
     <!-- Tab Strip Dimensions -->
     <dimen name="tab_strip_height">0dp</dimen>
 
