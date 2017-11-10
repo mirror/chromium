@@ -101,6 +101,30 @@
     },
     {
       "key": {
+        "uuid": "da9385b1_0630ca01",
+        "filename": "ui/ozone/platform/wayland/wayland_cursor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-10T15:54:22Z",
+      "side": 1,
+      "message": "Done. Patchset #4 addresses this.",
+      "parentUuid": "d223ef76_3c761df9",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 8
+      },
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fff8d870_93c276f9",
         "filename": "ui/ozone/platform/wayland/wayland_cursor.h",
         "patchSetId": 2
