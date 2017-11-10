@@ -84,15 +84,11 @@ class CONTENT_EXPORT HostZoomMapImpl : public HostZoomMap {
   // Returns the temporary zoom level that's only valid for the lifetime of
   // the given WebContents (i.e. isn't saved and doesn't affect other
   // WebContentses) if it exists, the default zoom level otherwise.
-  //
-  // This may be called on any thread.
   double GetTemporaryZoomLevel(int render_process_id,
                                int render_view_id) const;
 
   // Returns the zoom level regardless of whether it's temporary, host-keyed or
   // scheme+host-keyed.
-  //
-  // This may be called on any thread.
   double GetZoomLevelForView(const GURL& url,
                              int render_process_id,
                              int render_view_id) const;
