@@ -4,6 +4,9 @@
 
 #include "chrome/browser/extensions/data_deleter.h"
 
+#include "base/memory/ref_counted.h"
+#include "base/memory/scoped_refptr.h"
+#include "base/task_runner.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_special_storage_policy.h"
 #include "chrome/browser/profiles/profile.h"
@@ -19,6 +22,8 @@
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest_handlers/app_isolation_info.h"
+#include "net/cookies/cookie_store.h"
+#include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
 using base::WeakPtr;
@@ -29,6 +34,52 @@ using content::StoragePartition;
 namespace extensions {
 
 namespace {
+
+// Provide a wrapper around a callback that calls the callback on a
+// specific thread when the last reference to the class is released.
+class CallbackWrapper : public base::RefCountedThreadSafe<CallbackWrapper> {
+ public:
+  CallbackWrapper(base::OnceClosure callback,
+                  scoped_refptr<base::TaskRunner> task_runner)
+      : callback_(std::move(callback)), task_runner_(task_runner) {}
+
+  // To be used as callback; only effect is to release a reference.
+  static void NullCallback(scoped_refptr<CallbackWrapper> wrapper) {}
+
+ private:
+  friend base::RefCountedThreadSafe<CallbackWrapper>;
+
+  ~CallbackWrapper() {
+    task_runner_->PostTask(FROM_HERE, std::move(callback_));
+  }
+
+  base::OnceClosure callback_;
+  scoped_refptr<base::TaskRunner> task_runner_;
+
+  DISALLOW_COPY_AND_ASSIGN(CallbackWrapper);
+};
+
+bool DoesCookieMatchHost(const std::string& host,
+                         const net::CanonicalCookie& cookie) {
+  return cookie.IsHostCookie() && cookie.IsDomainMatch(host);
+}
+
+void OnClearedCookies(base::OnceClosure callback, uint32_t /* num_deleted */) {
+  // Execution thread is not relevant, as this is used with the above
+  // callback wrapper, which can handle released references on any thread.
+  std::move(callback).Run();
+}
+
+void ClearCookiesOnIOThread(scoped_refptr<net::URLRequestContextGetter> context,
+                            GURL origin,
+                            base::OnceClosure ui_callback) {
+  net::CookieStore* cookie_store =
+      context->GetURLRequestContext()->cookie_store();
+  cookie_store->DeleteAllCreatedBetweenWithPredicateAsync(
+      base::Time(), base::Time::Max(),
+      base::Bind(&DoesCookieMatchHost, origin.host()),
+      base::BindOnce(&OnClearedCookies, std::move(ui_callback)));
+}
 
 // Helper function that deletes data of a given |storage_origin| in a given
 // |partition|.
@@ -50,12 +101,25 @@ void DeleteOrigin(Profile* profile,
     // preserve this code path without checking for isolation because it's
     // simpler than special casing.  This code should go away once we merge
     // the various URLRequestContexts (http://crbug.com/159193).
+
+    scoped_refptr<CallbackWrapper> callback_wrapper = new CallbackWrapper(
+        callback, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI));
+
     partition->ClearDataForOrigin(
         ~StoragePartition::REMOVE_DATA_MASK_SHADER_CACHE,
-        StoragePartition::QUOTA_MANAGED_STORAGE_MASK_ALL,
-        origin,
-        profile->GetRequestContextForExtensions(),
-        callback);
+        StoragePartition::QUOTA_MANAGED_STORAGE_MASK_ALL, origin,
+        base::Bind(&CallbackWrapper::NullCallback, callback_wrapper));
+
+    // Delete cookies separately from other data so that the request context
+    // for extensions doesn't need to be passed into the StoragePartition.
+    // TODO(rdsmith): Mojoify this call and get rid of the thread hopping.
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(
+            &ClearCookiesOnIOThread,
+            base::WrapRefCounted(profile->GetRequestContextForExtensions()),
+            origin,
+            base::Bind(&CallbackWrapper::NullCallback, callback_wrapper)));
   } else {
     // We don't need to worry about the media request context because that
     // shares the same cookie store as the main request context.
@@ -63,7 +127,6 @@ void DeleteOrigin(Profile* profile,
         ~StoragePartition::REMOVE_DATA_MASK_SHADER_CACHE,
         StoragePartition::QUOTA_MANAGED_STORAGE_MASK_ALL,
         origin,
-        partition->GetURLRequestContext(),
         callback);
   }
 }
