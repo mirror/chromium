@@ -122,8 +122,6 @@ class FormStructureBrowserTest
 
 FormStructureBrowserTest::FormStructureBrowserTest()
     : DataDrivenTest(GetTestDataDir()) {
-  feature_list_.InitAndEnableFeature(
-      autofill::kAutofillRationalizeFieldTypePredictions);
 }
 
 FormStructureBrowserTest::~FormStructureBrowserTest() {

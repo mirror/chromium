@@ -1126,11 +1126,7 @@ bool AutofillManager::IsCreditCardAutofillEnabled() {
 
 bool AutofillManager::ShouldUploadForm(const FormStructure& form) {
   return IsAutofillEnabled() && !driver()->IsIncognito() &&
-         form.ShouldBeParsed() &&
-         (form.active_field_count() >= kRequiredFieldsForUpload ||
-          (form.all_fields_are_passwords() &&
-           form.active_field_count() >=
-               kRequiredFieldsForFormsWithOnlyPasswordFields));
+         form.ShouldBeUploaded();
 }
 
 // Note that |submitted_form| is passed as a pointer rather than as a reference
@@ -1147,7 +1143,7 @@ void AutofillManager::UploadFormDataAsyncCallback(
                                     submission_time,
                                     form_interactions_ukm_logger_.get(),
                                     did_show_suggestions_, observed_submission);
-  if (submitted_form->ShouldBeCrowdsourced())
+  if (submitted_form->ShouldBeUploaded())
     UploadFormData(*submitted_form, observed_submission);
 }
 
@@ -1657,7 +1653,7 @@ void AutofillManager::ParseForms(const std::vector<FormData>& forms) {
     form_types.insert(current_form_types.begin(), current_form_types.end());
     // Set aside forms with method GET or author-specified types, so that they
     // are not included in the query to the server.
-    if (form_structure->ShouldBeCrowdsourced())
+    if (form_structure->ShouldBeQueried())
       queryable_forms.push_back(form_structure);
     else
       non_queryable_forms.push_back(form_structure);
