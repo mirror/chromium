@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "46f6e4d2_029ac5ca",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-10T17:02:21Z",
+      "side": 1,
+      "message": "this is a bit ambiguous what value is \"no scale applied\"",
+      "revId": "3ef9042e9b84dd3598f93cb9bedfd83a5656892d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cddabd02_bb972024",
         "filename": "cc/trees/effect_node.cc",
         "patchSetId": 9
