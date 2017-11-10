@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2c33f33_711914c4",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-11-10T20:15:25Z",
+      "side": 1,
+      "message": "Doh!  Gerrit kept this comment even after I thought I\u0027d cancelled it (after realizing exactly what the CL means).  iOS doesn\u0027t execute this code so there\u0027s no point in having it.",
+      "parentUuid": "ab2059fe_99bfa73c",
+      "range": {
+        "startLine": 150,
+        "startChar": 12,
+        "endLine": 150,
+        "endChar": 22
+      },
+      "revId": "43b1f52a37b9101f217344833945a549e808988b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03ae81c8_1d155742",
         "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
         "patchSetId": 1
