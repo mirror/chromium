@@ -600,6 +600,7 @@ static_library("sync") {
     "//components/signin/core/browser",
     "//components/strings",
     "//components/sync/engine_impl/attachments/proto",
+    "//components/variations",
     "//components/version_info",
     "//crypto",
     "//google_apis",

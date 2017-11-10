@@ -15,11 +15,32 @@
 #include "components/sync/user_events/user_event_sync_bridge.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using base::FieldTrialList;
 using sync_pb::UserEventSpecifics;
 
 namespace syncer {
 
 namespace {
+
+const char kTrial1[] = "TrialNameOne";
+const char kTrial2[] = "TrialNameTwo";
+const char kTrial3[] = "TrialNameThree";
+const char kGroup[] = "GroupName";
+
+std::unique_ptr<UserEventSpecifics> TestEvent() {
+  auto specifics = std::make_unique<UserEventSpecifics>();
+  specifics->mutable_test_event();
+  return specifics;
+}
+
+void CreateAndFinalizeTrial(const std::string& trial,
+                            const std::string& group) {
+  // Must actually query for the group to finalize the field trial.
+  EXPECT_EQ(group,
+            FieldTrialList::CreateFieldTrial(trial, group)->group_name());
+  // Notification is posted, which we need the service to pick up.
+  base::RunLoop().RunUntilIdle();
+}
 
 class TestSyncService : public FakeSyncService {
  public:
@@ -53,7 +74,8 @@ class TestGlobalIdMapper : public GlobalIdMapper {
 class UserEventServiceImplTest : public testing::Test {
  protected:
   UserEventServiceImplTest()
-      : sync_service_(true, false, {HISTORY_DELETE_DIRECTIVES}) {}
+      : sync_service_(true, false, {HISTORY_DELETE_DIRECTIVES}),
+        field_trial_list_(nullptr) {}
 
   std::unique_ptr<UserEventSyncBridge> MakeBridge() {
     return std::make_unique<UserEventSyncBridge>(
@@ -70,6 +92,7 @@ class UserEventServiceImplTest : public testing::Test {
   RecordingModelTypeChangeProcessor* processor_;
   TestGlobalIdMapper mapper_;
   base::MessageLoop message_loop_;
+  FieldTrialList field_trial_list_;
 };
 
 TEST_F(UserEventServiceImplTest, MightRecordEventsFeatureEnabled) {
@@ -133,6 +156,110 @@ TEST_F(UserEventServiceImplTest, SessionIdIsDifferent) {
   int64_t session_id2 = put2->second->specifics.user_event().session_id();
 
   EXPECT_NE(session_id1, session_id2);
+}
+
+TEST_F(UserEventServiceImplTest, FieldTrialOnGroupFinalization) {
+  UserEventServiceImpl service(sync_service(), MakeBridge());
+  service.RegisterDependentFieldTrial(kTrial1, UserEventSpecifics::kTestEvent);
+  service.RecordUserEvent(TestEvent());
+  EXPECT_EQ(1u, processor().put_multimap().size());
+
+  CreateAndFinalizeTrial(kTrial1, kGroup);
+  EXPECT_EQ(2u, processor().put_multimap().size());
+
+  // Being re-notified of the same finalization should not trigger re-emission.
+  service.OnFieldTrialGroupFinalized(kTrial1, kGroup);
+}
+
+TEST_F(UserEventServiceImplTest, FieldTrialOnRecordUserEvent) {
+  CreateAndFinalizeTrial(kTrial1, kGroup);
+  UserEventServiceImpl service(sync_service(), MakeBridge());
+  service.RegisterDependentFieldTrial(kTrial1, UserEventSpecifics::kTestEvent);
+  EXPECT_EQ(0u, processor().put_multimap().size());
+
+  service.RecordUserEvent(TestEvent());
+  EXPECT_EQ(2u, processor().put_multimap().size());
+
+  // Subsequent records should only record themselves.
+  service.RecordUserEvent(TestEvent());
+  EXPECT_EQ(3u, processor().put_multimap().size());
+}
+
+TEST_F(UserEventServiceImplTest, FieldTrialOnRegisterDependent) {
+  CreateAndFinalizeTrial(kTrial1, kGroup);
+  UserEventServiceImpl service(sync_service(), MakeBridge());
+  service.RecordUserEvent(TestEvent());
+  EXPECT_EQ(1u, processor().put_multimap().size());
+
+  service.RegisterDependentFieldTrial(kTrial1, UserEventSpecifics::kTestEvent);
+  EXPECT_EQ(2u, processor().put_multimap().size());
+
+  // Re-registering the same dependency shouldn't trigger a re-emission.
+  service.RegisterDependentFieldTrial(kTrial1, UserEventSpecifics::kTestEvent);
+  EXPECT_EQ(2u, processor().put_multimap().size());
+
+  // Neither should a different dependency that would emit the same trial.
+  service.RegisterDependentFieldTrial(kTrial1,
+                                      UserEventSpecifics::kFieldTrialEvent);
+  EXPECT_EQ(2u, processor().put_multimap().size());
+}
+
+TEST_F(UserEventServiceImplTest, FieldTrialChecksDontFinalize) {
+  // We avoid asking for the group, which would finalize. The service should be
+  // careful to do the same.
+  EXPECT_TRUE(FieldTrialList::CreateFieldTrial(kTrial1, kGroup));
+
+  UserEventServiceImpl service(sync_service(), MakeBridge());
+  service.RegisterDependentFieldTrial(kTrial1, UserEventSpecifics::kTestEvent);
+
+  service.RecordUserEvent(TestEvent());
+  EXPECT_EQ(1u, processor().put_multimap().size());
+
+  // Active and finalized are synonymous from our perspective.
+  EXPECT_FALSE(FieldTrialList::IsTrialActive(kTrial1));
+}
+
+TEST_F(UserEventServiceImplTest, MultipleFieldTrials) {
+  UserEventServiceImpl service(sync_service(), MakeBridge());
+  service.RecordUserEvent(TestEvent());
+  auto detectionEvent = std::make_unique<UserEventSpecifics>();
+  detectionEvent->mutable_language_detection_event();
+  service.RecordUserEvent(std::move(detectionEvent));
+  EXPECT_EQ(2u, processor().put_multimap().size());
+
+  // Both of these will be satisfied, should emit.
+  service.RegisterDependentFieldTrial(kTrial1, UserEventSpecifics::kTestEvent);
+  service.RegisterDependentFieldTrial(
+      kTrial1, UserEventSpecifics::kLanguageDetectionEvent);
+  CreateAndFinalizeTrial(kTrial1, kGroup);
+  EXPECT_EQ(3u, processor().put_multimap().size());
+
+  // One of these will be satisfied, should emit.
+  service.RegisterDependentFieldTrial(kTrial2, UserEventSpecifics::kTestEvent);
+  service.RegisterDependentFieldTrial(kTrial2,
+                                      UserEventSpecifics::kTranslationEvent);
+  CreateAndFinalizeTrial(kTrial2, kGroup);
+  EXPECT_EQ(4u, processor().put_multimap().size());
+
+  // Neither will be satisfied, should not emit.
+  service.RegisterDependentFieldTrial(kTrial3,
+                                      UserEventSpecifics::kTranslationEvent);
+  service.RegisterDependentFieldTrial(
+      kTrial3, UserEventSpecifics::kGaiaPasswordReuseEvent);
+  EXPECT_EQ(4u, processor().put_multimap().size());
+  CreateAndFinalizeTrial(kTrial3, kGroup);
+}
+
+TEST_F(UserEventServiceImplTest, FieldTrialFeatureDisabled) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(
+      switches::kSyncUserFieldTrialEvents);
+
+  EXPECT_TRUE(FieldTrialList::CreateFieldTrial(kTrial1, kGroup));
+  UserEventServiceImpl service(sync_service(), MakeBridge());
+  service.RegisterDependentFieldTrial(kTrial1, UserEventSpecifics::kTestEvent);
+  service.RecordUserEvent(TestEvent());
+  EXPECT_EQ(1u, processor().put_multimap().size());
 }
 
 }  // namespace
