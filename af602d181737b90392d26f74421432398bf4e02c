@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "480339d4_791d8ece",
+        "filename": "net/http/http_proxy_client_socket_wrapper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-10T15:01:19Z",
+      "side": 1,
+      "message": "You could be right. But I guess that in the case of a vanilla HTTP proxy we must already be passing in the proxy host:port and the server host:port. Can\u0027t we use those instead of passing in a new quic-specific host:port?",
+      "parentUuid": "c6fd158a_a4535e59",
+      "range": {
+        "startLine": 67,
+        "startChar": 44,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "af602d181737b90392d26f74421432398bf4e02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d324d13_a6a4f726",
         "filename": "net/http/http_proxy_client_socket_wrapper.h",
         "patchSetId": 4
