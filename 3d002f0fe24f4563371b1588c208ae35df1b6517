@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5672c83_c7cce06b",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 2136,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T00:49:55Z",
+      "side": 1,
+      "message": "I\u0027d recommend using FEATURE_VALUE_TYPE here - it\u0027s the shiny new hotness (and gives you an optional server-side control)",
+      "range": {
+        "startLine": 2136,
+        "startChar": 5,
+        "endLine": 2136,
+        "endChar": 30
+      },
+      "revId": "3d002f0fe24f4563371b1588c208ae35df1b6517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b23446_a8e25054",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T00:49:55Z",
+      "side": 1,
+      "message": "to reduce confusion, I think this can be moved to \n\n@interface AvatarBaseController ()\n\nin the .mm file.\n\n(i.e. just before updateAvatarButtonAndLayoutParent:)",
+      "revId": "3d002f0fe24f4563371b1588c208ae35df1b6517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66923e01_a3e1f75f",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T00:49:55Z",
+      "side": 1,
+      "message": "nit: blank line before",
+      "revId": "3d002f0fe24f4563371b1588c208ae35df1b6517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27345c1c_5a08bfab",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T00:49:55Z",
+      "side": 1,
+      "message": "with base::Feature, this becomes\n\n  return base::FeatureList::IsEnabled(features::kViewsProfileChooser);",
+      "revId": "3d002f0fe24f4563371b1588c208ae35df1b6517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d4b3ea4_44a505c7",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T00:49:55Z",
+      "side": 1,
+      "message": "did you want the default to start true? Flipping in a follow-up is fine too.",
+      "revId": "3d002f0fe24f4563371b1588c208ae35df1b6517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5807ec8_67fa036a",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T00:49:55Z",
+      "side": 1,
+      "message": "nit: blank line before\n\n(note `const` has implicit internal linkage, which is why it was fine for these not to be in the anon namespace before. Most files do put it in the anon namespace as you\u0027ve done though).",
+      "revId": "3d002f0fe24f4563371b1588c208ae35df1b6517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9738fca4_ade419b3",
+        "filename": "chrome/common/chrome_switches.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-10T00:49:55Z",
+      "side": 1,
+      "message": "The equivalent in chrome_features.cc would be something like\n\n// Use toolkit-views for profile chooser menu.\nconst base::Feature kViewsTaskManager{\"ViewsProfileChooser\",\n                                      base::FEATURE_ENABLED_BY_DEFAULT};\n\n(or base::FEATURE_DISABLED_BY_DEFAULT)\n\nyou wouldn\u0027t need a separate kEnableFoo",
+      "revId": "3d002f0fe24f4563371b1588c208ae35df1b6517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
