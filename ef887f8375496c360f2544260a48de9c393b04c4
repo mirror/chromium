@@ -22,6 +22,30 @@
       "revId": "ef887f8375496c360f2544260a48de9c393b04c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598e6e2e_b4827333",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-10T18:54:43Z",
+      "side": 1,
+      "message": "Good idea. Will do in a follow-up.",
+      "parentUuid": "dfd08bd9_eb0121a6",
+      "range": {
+        "startLine": 71,
+        "startChar": 17,
+        "endLine": 71,
+        "endChar": 41
+      },
+      "revId": "ef887f8375496c360f2544260a48de9c393b04c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
