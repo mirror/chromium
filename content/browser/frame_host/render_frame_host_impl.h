@@ -677,6 +677,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
     return frame_host_associated_binding_;
   }
 
+  bool pending_commit_for_testing() { return pending_commit_; }
+
  protected:
   friend class RenderFrameHostFactory;
 
@@ -1146,8 +1148,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   bool is_loading_;
 
   // PlzNavigate
-  // Used to track whether a commit is expected in this frame. Only used in
-  // tests.
+  // Used to track whether a commit is expected in this frame.
   bool pending_commit_;
 
   // The unique ID of the latest NavigationEntry that this RenderFrameHost is

@@ -1503,6 +1503,7 @@ void RenderFrameHostImpl::OnDidFailProvisionalLoadWithError(
         static_cast<net::Error>(params.error_code));
   }
 
+  pending_commit_ = false;
   frame_tree_node_->navigator()->DidFailProvisionalLoadWithError(this, params);
 }
 
@@ -1634,13 +1635,18 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
       is_loading_ = true;
       frame_tree_node()->DidStartLoading(true, was_loading);
     }
-    pending_commit_ = false;
   }
 
   // Find the appropriate NavigationHandle for this navigation.
   std::unique_ptr<NavigationHandleImpl> navigation_handle =
       TakeNavigationHandleForCommit(*validated_params);
   DCHECK(navigation_handle);
+
+  // |navigation_handle_| can be still not null, but we can't be sure that the
+  // renderer is going to commit a matching navigation soon. The navigation that
+  // committed earlier (and resulted in the current DidCommitProvisionalLoad
+  // message) can cause the subsequent one(s) to be ignored.
+  pending_commit_ = false;
 
   // Update the site url if the navigation was successful and the page is not an
   // interstitial.
@@ -2704,6 +2710,11 @@ void RenderFrameHostImpl::OnDidStopLoading() {
     return;
   }
 
+  if (pending_commit_) {
+    DCHECK(navigation_handle_);
+    return;
+  }
+
   is_loading_ = false;
   navigation_handle_.reset();
 
@@ -3758,6 +3769,7 @@ RenderFrameHostImpl::GetFrameResourceCoordinator() {
 
 void RenderFrameHostImpl::ResetLoadingState() {
   if (is_loading()) {
+    pending_commit_ = false;
     // When pending deletion, just set the loading state to not loading.
     // Otherwise, OnDidStopLoading will take care of that, as well as sending
     // notification to the FrameTreeNode about the change in loading state.
