@@ -131,7 +131,6 @@ EventQueue* WorkerOrWorkletGlobalScope::GetEventQueue() const {
 
 void WorkerOrWorkletGlobalScope::Dispose() {
   DCHECK(script_controller_);
-
   // Event listeners would keep DOMWrapperWorld objects alive for too long.
   // Also, they have references to JS objects, which become dangling once Heap
   // is destroyed.
@@ -168,9 +167,11 @@ void WorkerOrWorkletGlobalScope::RegisterEventListener(
 
 void WorkerOrWorkletGlobalScope::DeregisterEventListener(
     V8AbstractEventListener* event_listener) {
+  CHECK(IsClosing());
   auto it = event_listeners_.find(event_listener);
-  CHECK(it != event_listeners_.end() || IsClosing());
-  event_listeners_.erase(it);
+  // CHECK(it != event_listeners_.end());
+  if (it != event_listeners_.end())
+    event_listeners_.erase(it);
 }
 
 scoped_refptr<WebTaskRunner> WorkerOrWorkletGlobalScope::GetTaskRunner(
