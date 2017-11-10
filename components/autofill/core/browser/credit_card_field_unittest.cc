@@ -84,6 +84,7 @@ TEST_F(CreditCardFieldTest, NonParse) {
 
 TEST_F(CreditCardFieldTest, ParseCreditCardNoNumber) {
   FormFieldData field;
+  field.is_focusable = true;
   field.form_control_type = "text";
 
   field.label = ASCIIToUTF16("Exp Month");
@@ -102,6 +103,7 @@ TEST_F(CreditCardFieldTest, ParseCreditCardNoNumber) {
 
 TEST_F(CreditCardFieldTest, ParseCreditCardNoDate) {
   FormFieldData field;
+  field.is_focusable = true;
   field.form_control_type = "text";
 
   field.label = ASCIIToUTF16("Card Number");
@@ -115,6 +117,7 @@ TEST_F(CreditCardFieldTest, ParseCreditCardNoDate) {
 
 TEST_F(CreditCardFieldTest, ParseMiniumCreditCard) {
   FormFieldData field;
+  field.is_focusable = true;
   field.form_control_type = "text";
 
   field.label = ASCIIToUTF16("Card Number");
@@ -149,8 +152,53 @@ TEST_F(CreditCardFieldTest, ParseMiniumCreditCard) {
             field_candidates_map_[ASCIIToUTF16("year3")].BestHeuristicType());
 }
 
+TEST_F(CreditCardFieldTest, ParseMiniumCreditCardWithUnfocusableFields) {
+  FormFieldData field;
+  field.is_focusable = true;
+  field.form_control_type = "text";
+
+  field.label = ASCIIToUTF16("Card Number");
+  field.name = ASCIIToUTF16("card_number");
+  list_.push_back(
+      std::make_unique<AutofillField>(field, ASCIIToUTF16("number1")));
+
+  field.label = ASCIIToUTF16("Some hidden field");
+  field.name = ASCIIToUTF16("hidden_field");
+  field.is_focusable = false;
+  list_.push_back(
+      std::make_unique<AutofillField>(field, ASCIIToUTF16("hidden")));
+
+  field.label = ASCIIToUTF16("Exp Month");
+  field.name = ASCIIToUTF16("ccmonth");
+  field.is_focusable = true;
+  list_.push_back(
+      std::make_unique<AutofillField>(field, ASCIIToUTF16("month2")));
+
+  field.label = ASCIIToUTF16("Exp Year");
+  field.name = ASCIIToUTF16("ccyear");
+  list_.push_back(
+      std::make_unique<AutofillField>(field, ASCIIToUTF16("year3")));
+
+  Parse();
+  ASSERT_NE(nullptr, field_.get());
+  AddClassifications();
+  ASSERT_TRUE(field_candidates_map_.find(ASCIIToUTF16("number1")) !=
+              field_candidates_map_.end());
+  EXPECT_EQ(CREDIT_CARD_NUMBER,
+            field_candidates_map_[ASCIIToUTF16("number1")].BestHeuristicType());
+  ASSERT_TRUE(field_candidates_map_.find(ASCIIToUTF16("month2")) !=
+              field_candidates_map_.end());
+  EXPECT_EQ(CREDIT_CARD_EXP_MONTH,
+            field_candidates_map_[ASCIIToUTF16("month2")].BestHeuristicType());
+  ASSERT_TRUE(field_candidates_map_.find(ASCIIToUTF16("year3")) !=
+              field_candidates_map_.end());
+  EXPECT_EQ(CREDIT_CARD_EXP_4_DIGIT_YEAR,
+            field_candidates_map_[ASCIIToUTF16("year3")].BestHeuristicType());
+}
+
 TEST_F(CreditCardFieldTest, ParseFullCreditCard) {
   FormFieldData field;
+  field.is_focusable = true;
   field.form_control_type = "text";
 
   field.label = ASCIIToUTF16("Name on Card");
@@ -213,6 +261,7 @@ TEST_F(CreditCardFieldTest, ParseFullCreditCard) {
 
 TEST_F(CreditCardFieldTest, ParseExpMonthYear) {
   FormFieldData field;
+  field.is_focusable = true;
   field.form_control_type = "text";
 
   field.label = ASCIIToUTF16("Name on Card");
@@ -258,6 +307,7 @@ TEST_F(CreditCardFieldTest, ParseExpMonthYear) {
 
 TEST_F(CreditCardFieldTest, ParseExpMonthYear2) {
   FormFieldData field;
+  field.is_focusable = true;
   field.form_control_type = "text";
 
   field.label = ASCIIToUTF16("Name on Card");
@@ -320,6 +370,7 @@ TEST_P(ParseExpFieldTest, ParseExpField) {
   field_candidates_map_.clear();
 
   FormFieldData field;
+  field.is_focusable = true;
   field.form_control_type = "text";
 
   field.label = ASCIIToUTF16("Name on Card");
@@ -515,6 +566,7 @@ INSTANTIATE_TEST_CASE_P(
 
 TEST_F(CreditCardFieldTest, ParseCreditCardHolderNameWithCCFullName) {
   FormFieldData field;
+  field.is_focusable = true;
   field.form_control_type = "text";
 
   field.label = ASCIIToUTF16("Name");
@@ -534,8 +586,9 @@ TEST_F(CreditCardFieldTest, ParseCreditCardHolderNameWithCCFullName) {
 // Verifies that <input type="month"> controls are able to be parsed correctly.
 TEST_F(CreditCardFieldTest, ParseMonthControl) {
   FormFieldData field;
-
+  field.is_focusable = true;
   field.form_control_type = "text";
+
   field.label = ASCIIToUTF16("Card number:");
   field.name = ASCIIToUTF16("ccnumber");
   list_.push_back(
@@ -565,6 +618,7 @@ TEST_F(CreditCardFieldTest, ParseMonthControl) {
 TEST_F(CreditCardFieldTest, ParseCreditCardExpYear_2DigitMaxLength) {
   FormFieldData field;
   field.form_control_type = "text";
+  field.is_focusable = true;
 
   field.label = ASCIIToUTF16("Card Number");
   field.name = ASCIIToUTF16("card_number");
@@ -600,6 +654,7 @@ TEST_F(CreditCardFieldTest, ParseCreditCardExpYear_2DigitMaxLength) {
 TEST_F(CreditCardFieldTest, ParseCreditCardNumberWithSplit) {
   FormFieldData field;
   field.form_control_type = "text";
+  field.is_focusable = true;
 
   field.label = ASCIIToUTF16("Card Number");
   field.name = ASCIIToUTF16("card_number_q1");
@@ -679,6 +734,7 @@ TEST_F(CreditCardFieldTest, ParseCreditCardNumberWithSplit) {
 TEST_F(CreditCardFieldTest, ParseMultipleCreditCardNumbers) {
   FormFieldData field;
   field.form_control_type = "text";
+  field.is_focusable = true;
 
   field.label = ASCIIToUTF16("Name on Card");
   field.name = ASCIIToUTF16("name_on_card");
@@ -734,6 +790,7 @@ TEST_F(CreditCardFieldTest, ParseMultipleCreditCardNumbers) {
 TEST_F(CreditCardFieldTest, ParseFirstAndLastNames) {
   FormFieldData field;
   field.form_control_type = "text";
+  field.is_focusable = true;
 
   field.label = ASCIIToUTF16("First Name on Card");
   field.name = ASCIIToUTF16("cc-fname");
@@ -788,6 +845,7 @@ TEST_F(CreditCardFieldTest, ParseFirstAndLastNames) {
 
 TEST_F(CreditCardFieldTest, ParseConsecutiveCvc) {
   FormFieldData field;
+  field.is_focusable = true;
   field.form_control_type = "text";
 
   field.label = ASCIIToUTF16("Name on Card");
@@ -847,6 +905,7 @@ TEST_F(CreditCardFieldTest, ParseConsecutiveCvc) {
 TEST_F(CreditCardFieldTest, ParseNonConsecutiveCvc) {
   FormFieldData field;
   field.form_control_type = "text";
+  field.is_focusable = true;
 
   field.label = ASCIIToUTF16("Name on Card");
   field.name = ASCIIToUTF16("name_on_card");
