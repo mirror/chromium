@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f48f4e5_d99c1bf3",
+        "filename": "chrome/installer/setup/uninstall.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-10T08:46:46Z",
+      "side": 1,
+      "message": "how about adding something like this to setup_util.{cc,h) so that you don\u0027t need to duplicate code:\n\nbase::string16 GetToastActivatorRegistryPath() {\n  constexpr int kGuidLength \u003d 38;\n  base::string16 path(kGuidLength + 1, 0);  // Include space for the terminator.\n  if (::StringFromGUID2(install_static::GetToastActivatorClsid(), \u0026path[0],\n                        path.length()) !\u003d path.length()) {\n    return base::string16();\n  }\n  path.resize(kGuidLength); // Trim off the trailing terminator.\n  return L\"Software\\\\Classes\\\\CLSID\\\\\" + path;\n}",
+      "range": {
+        "startLine": 649,
+        "startChar": 8,
+        "endLine": 649,
+        "endChar": 23
+      },
+      "revId": "da50765982c76855ae5aac9d8230b25f38759c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
