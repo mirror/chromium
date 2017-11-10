@@ -22,6 +22,30 @@
       "revId": "6b432cfa6320ad875095dbea3eccbc8919972ad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75862c1d_b61e2d1d",
+        "filename": "chrome/browser/profiles/profile_window_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-10T21:42:50Z",
+      "side": 1,
+      "message": "Done. I ended up merging 2 is_chromeos blocks.",
+      "parentUuid": "17b1d49e_d53d3b5c",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "6b432cfa6320ad875095dbea3eccbc8919972ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
