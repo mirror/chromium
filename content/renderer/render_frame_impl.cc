@@ -3546,9 +3546,11 @@ void RenderFrameImpl::DidChangeFramePolicy(
       {flags, container_policy}));
 }
 
-void RenderFrameImpl::DidSetFeaturePolicyHeader(
+void RenderFrameImpl::DidSetFramePolicyHeaders(
+    blink::WebSandboxFlags flags,
     const blink::ParsedFeaturePolicy& parsed_header) {
-  Send(new FrameHostMsg_DidSetFeaturePolicyHeader(routing_id_, parsed_header));
+  Send(new FrameHostMsg_DidSetFramePolicyHeaders(routing_id_, flags,
+                                                 parsed_header));
 }
 
 void RenderFrameImpl::DidAddContentSecurityPolicies(

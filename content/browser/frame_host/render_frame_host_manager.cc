@@ -542,9 +542,12 @@ void RenderFrameHostManager::CommitPendingFramePolicy() {
   // policy.
   if (!frame_tree_node_->CommitPendingFramePolicy())
     return;
-
-  // Policy updates can only happen when the frame has a parent.
-  CHECK(frame_tree_node_->parent());
+  // Return early if there is no parent
+  if (!frame_tree_node_->parent())
+    return;
+  // There should be no children of this frame; any policy changes should only
+  // happen on navigation commit.
+  DCHECK(!frame_tree_node_->child_count());
 
   // Notify all of the frame's proxies about updated policies, excluding
   // the parent process since it already knows the latest state.
@@ -556,6 +559,13 @@ void RenderFrameHostManager::CommitPendingFramePolicy() {
           pair.second->GetRoutingID(),
           frame_tree_node_->current_replication_state().frame_policy));
     }
+  }
+}
+
+void RenderFrameHostManager::OnDidSetActiveSandboxFlags() {
+  for (const auto& pair : proxy_hosts_) {
+    pair.second->Send(new FrameMsg_DidSetActiveSandboxFlags(
+        pair.second->GetRoutingID(), frame_tree_node_->active_sandbox_flags()));
   }
 }
 
