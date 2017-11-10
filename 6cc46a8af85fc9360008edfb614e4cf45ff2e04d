@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "766d7b7a_79683079",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-10T08:43:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b2b587ac_f7f2c901",
+      "revId": "6cc46a8af85fc9360008edfb614e4cf45ff2e04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "959a0a20_7b81cfbd",
         "filename": "chrome/browser/resources/welcome/dice_welcome/welcome.css",
         "patchSetId": 8
