@@ -111,6 +111,7 @@ def _CheckForForbiddenChromiumCode(input_api, output_api):
         "base::make_span",
         "base::span",
         "base::SingleThreadTaskRunner",
+        "base::UnguessableToken",
         "gfx::ColorSpace",
         "gfx::CubicBezier",
         "gfx::ICCProfile",
