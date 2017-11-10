@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b80c2368_2543d1eb",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-10T00:45:42Z",
+      "side": 1,
+      "message": "suggest: \"to improve FMP time\" --\u003e \"to improve initial render time\".\nBased on Googling FMP not coming up with First Meaningful Paint, I\u0027m thinking that it\u0027s not a common acronym. (your call, just making a suggestion).",
+      "revId": "ba98e72a5b20aaaa3148c2e85d0bd14078d0948b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f88c17_4f3172da",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-10T00:45:42Z",
+      "side": 1,
+      "message": "To be sure I understand this correctly, shownExtensionsCount_ will be updated when a dom-change occurs (by way of this [1] binding)\n\n[1] https://www.polymer-project.org/1.0/docs/devguide/data-binding#two-way-native",
+      "revId": "ba98e72a5b20aaaa3148c2e85d0bd14078d0948b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0139ea_e11a31a7",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-10T00:45:42Z",
+      "side": 1,
+      "message": "nit: space between . and A",
+      "revId": "ba98e72a5b20aaaa3148c2e85d0bd14078d0948b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ea66229_599b42c0",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-10T00:45:42Z",
+      "side": 1,
+      "message": "nit: remove Fn (unless we desire to use it everywhere we bind functions)",
+      "revId": "ba98e72a5b20aaaa3148c2e85d0bd14078d0948b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
