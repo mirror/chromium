@@ -1,0 +1,579 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ca6a49d_53eac004",
+        "filename": "media/base/decode_capabilities.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "Should be conditioned on the build flag. But otherwise, I think this makes sense.",
+      "range": {
+        "startLine": 167,
+        "startChar": 25,
+        "endLine": 167,
+        "endChar": 64
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "140566af_10a90eb4",
+        "filename": "media/base/video_codecs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "Do you mean they are the same, but with some new prefix?",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 70
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ad6d5b_28fc192d",
+        "filename": "media/ffmpeg/ffmpeg_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "TODO(me) - make ffmpeg better. You shouldnt need an h264 decoder to read the profile info out of the appropriate mp4 box",
+      "range": {
+        "startLine": 474,
+        "startChar": 7,
+        "endLine": 474,
+        "endChar": 38
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e417b475_0bd46c4b",
+        "filename": "media/ffmpeg/ffmpeg_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "Yet another missing profile. Help me push av1 folks to actually get this done. MediaCapabilities needs these",
+      "range": {
+        "startLine": 491,
+        "startChar": 6,
+        "endLine": 491,
+        "endChar": 65
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f07749d_5e59e278",
+        "filename": "media/ffmpeg/ffmpeg_common_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "first time seeing these. whats the context for why these changed?",
+      "range": {
+        "startLine": 269,
+        "startChar": 11,
+        "endLine": 269,
+        "endChar": 48
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a9fa13_57226598",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to match whats below.",
+      "range": {
+        "startLine": 28,
+        "startChar": 21,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e6cf4d_bfa6ba7f",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "I guess the number of tiles increments by powers of 2 in this fashion? i.e. you wouldn\u0027t want width \u003d 2047 \u003d\u003e 7 threads?",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3909f5_13f9b51e",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "This seems wrong. Should be PIXEL_FORMAT_I420. LibVPX is probably wrong too. \n\nAOM has AOM_IMG_FMT_YV12 which should map to our YV12. Not sure if you want to include that here?",
+      "range": {
+        "startLine": 66,
+        "startChar": 13,
+        "endLine": 66,
+        "endChar": 30
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b2db00_ca774a91",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "Also wrong. AOM version is UV. YV16 is VU",
+      "range": {
+        "startLine": 68,
+        "startChar": 13,
+        "endLine": 68,
+        "endChar": 30
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648aad49_0e195398",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "Weirdly, this one seems right. At least, our comments describe this one as UV, which is what AOM I444 is. \n\nThis one isn\u0027t mentioned in the fourcc.org/yuv.php page, so I\u0027m not sure how to vet our description.",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 30
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9015f31_0524b9bd",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "I\u0027m unfamiliar with these P* formats. What does the P* represent? Can you document these in our video_types.h?",
+      "range": {
+        "startLine": 81,
+        "startChar": 17,
+        "endLine": 81,
+        "endChar": 39
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6ca1ce_6fda7a78",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "I would merge this into the switch on l.151",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 40
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd96d7ae_44a26094",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "Would put this first since it bails early. I guess this isn\u0027t a codec where they would change the color space on a per-frame basis?",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 55
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64595742_c2345b47",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "Maybe choose 709 as default? I know watk@ decided on that as a default for other codecs (maybe within certain resolution limits... fuzzy memory). Some context here (and in the associated bug)\n\nhttps://codereview.chromium.org/1221903003/",
+      "range": {
+        "startLine": 192,
+        "startChar": 2,
+        "endLine": 192,
+        "endChar": 67
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1c9a9a_dfc8bb19",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "Where do we assert that the frame has allocated sufficient memory to do the copy below?",
+      "range": {
+        "startLine": 203,
+        "startChar": 12,
+        "endLine": 203,
+        "endChar": 21
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e29a680c_8a2e9552",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "Do we need to detach? I think it happens on the media thread like the other methods.",
+      "range": {
+        "startLine": 222,
+        "startChar": 2,
+        "endLine": 222,
+        "endChar": 20
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a331a3c_ecfeec6d",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "More media logs in this class might help folks wanting to play with AV1 on Chrome",
+      "range": {
+        "startLine": 263,
+        "startChar": 4,
+        "endLine": 263,
+        "endChar": 8
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b262616_f5d2fddc",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "When does this occur? My intuition is it should not be reached",
+      "range": {
+        "startLine": 291,
+        "startChar": 2,
+        "endLine": 294,
+        "endChar": 3
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87fb034b_45897bc0",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "I expected we would need to do something like avcodec_flush_buffers(codec_context_.get()); ?",
+      "range": {
+        "startLine": 315,
+        "startChar": 22,
+        "endLine": 315,
+        "endChar": 27
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "443f6656_4f1c40f5",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "reset_cb ;)",
+      "range": {
+        "startLine": 315,
+        "startChar": 49,
+        "endLine": 315,
+        "endChar": 56
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296551cc_ca56bbd7",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "Ditto on pixel UV order",
+      "range": {
+        "startLine": 375,
+        "startChar": 19,
+        "endLine": 375,
+        "endChar": 36
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22e5e74_ef50b5fa",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "Does AOM not allow rectangular pixels / aspect ratio scaling?",
+      "range": {
+        "startLine": 383,
+        "startChar": 5,
+        "endLine": 385,
+        "endChar": 24
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de06f091_4e77ce89",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "I don\u0027t follow why it was previously true",
+      "range": {
+        "startLine": 393,
+        "startChar": 0,
+        "endLine": 393,
+        "endChar": 52
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e35612_65b37785",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "header wants this to be coded size?",
+      "range": {
+        "startLine": 397,
+        "startChar": 53,
+        "endLine": 397,
+        "endChar": 65
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40286255_9e7748af",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T02:25:57Z",
+      "side": 1,
+      "message": "Do we need to copy in the event that we don\u0027t need packing? Can we instead use VideoFrame::WrapExternalStorage(...)?",
+      "range": {
+        "startLine": 409,
+        "startChar": 4,
+        "endLine": 409,
+        "endChar": 10
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
