@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f73f9da_2b74bf27",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-11T01:27:47Z",
+      "side": 1,
+      "message": "Nit: seconds since epoch?",
+      "range": {
+        "startLine": 104,
+        "startChar": 22,
+        "endLine": 104,
+        "endChar": 29
+      },
+      "revId": "dda96e630873a1f3378bcc5fc00e77dbbdf183ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc76e64_22e017cd",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-11T01:27:47Z",
+      "side": 1,
+      "message": "Nit: Would this be better named as \"date_released_string_value\"?",
+      "range": {
+        "startLine": 105,
+        "startChar": 20,
+        "endLine": 105,
+        "endChar": 45
+      },
+      "revId": "dda96e630873a1f3378bcc5fc00e77dbbdf183ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
