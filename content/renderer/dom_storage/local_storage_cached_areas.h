@@ -33,6 +33,10 @@ class CONTENT_EXPORT LocalStorageCachedAreas {
   scoped_refptr<LocalStorageCachedArea>
       GetCachedArea(const url::Origin& origin);
 
+  scoped_refptr<LocalStorageCachedArea> GetSessionStorageArea(
+      int64_t namespace_id,
+      const url::Origin& origin);
+
   size_t TotalCacheSize() const;
 
   void set_cache_limit_for_testing(size_t limit) { total_cache_limit_ = limit; }
@@ -44,7 +48,8 @@ class CONTENT_EXPORT LocalStorageCachedAreas {
 
   // Maps from an origin to its LocalStorageCachedArea object. When this map is
   // the only reference to the object, it can be deleted by the cache.
-  std::map<url::Origin, scoped_refptr<LocalStorageCachedArea>> cached_areas_;
+  using AreaKey = std::pair<int64_t, url::Origin>;
+  std::map<AreaKey, scoped_refptr<LocalStorageCachedArea>> cached_areas_;
   size_t total_cache_limit_;
 
   DISALLOW_COPY_AND_ASSIGN(LocalStorageCachedAreas);

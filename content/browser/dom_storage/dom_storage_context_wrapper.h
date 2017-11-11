@@ -34,6 +34,7 @@ namespace content {
 
 class DOMStorageContextImpl;
 class LocalStorageContextMojo;
+class SessionStorageContextMojo;
 
 // This is owned by Storage Partition and encapsulates all its dom storage
 // state.
@@ -76,6 +77,9 @@ class CONTENT_EXPORT DOMStorageContextWrapper
   // See mojom::StoragePartitionService interface.
   void OpenLocalStorage(const url::Origin& origin,
                         mojom::LevelDBWrapperRequest request);
+  void OpenSessionStorage(int64_t namespace_id,
+                          const url::Origin& origin,
+                          mojom::LevelDBWrapperRequest request);
 
   void SetLocalStorageDatabaseForTesting(
       leveldb::mojom::LevelDBDatabaseAssociatedPtr database);
@@ -103,6 +107,7 @@ class CONTENT_EXPORT DOMStorageContextWrapper
   // asynchronously on the |mojo_task_runner_|.
   LocalStorageContextMojo* mojo_state_ = nullptr;
   scoped_refptr<base::SingleThreadTaskRunner> mojo_task_runner_;
+  std::unique_ptr<SessionStorageContextMojo> mojo_session_state_;
 
   // To receive memory pressure signals.
   std::unique_ptr<base::MemoryPressureListener> memory_pressure_listener_;

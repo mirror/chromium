@@ -6,6 +6,7 @@
 
 #include "base/metrics/histogram_macros.h"
 #include "base/sys_info.h"
+#include "content/common/dom_storage/dom_storage_types.h"
 #include "content/renderer/dom_storage/local_storage_cached_area.h"
 
 namespace content {
@@ -25,6 +26,7 @@ LocalStorageCachedAreas::~LocalStorageCachedAreas() {}
 
 scoped_refptr<LocalStorageCachedArea> LocalStorageCachedAreas::GetCachedArea(
     const url::Origin& origin) {
+  AreaKey key(kLocalStorageNamespaceId, origin);
   // These values are persisted to logs. Entries should not be renumbered and
   // numeric values should never be reused.
   enum class CacheMetrics {
@@ -34,7 +36,7 @@ scoped_refptr<LocalStorageCachedArea> LocalStorageCachedAreas::GetCachedArea(
     kMaxValue
   };
 
-  auto it = cached_areas_.find(origin);
+  auto it = cached_areas_.find(key);
   if (it != cached_areas_.end()) {
     if (it->second->HasOneRef()) {
       UMA_HISTOGRAM_ENUMERATION("LocalStorage.RendererAreaCacheHit",
@@ -51,11 +53,24 @@ scoped_refptr<LocalStorageCachedArea> LocalStorageCachedAreas::GetCachedArea(
   if (it == cached_areas_.end()) {
     ClearAreasIfNeeded();
     it = cached_areas_
-             .emplace(origin, new LocalStorageCachedArea(
-                                  origin, storage_partition_service_, this))
+             .emplace(key, new LocalStorageCachedArea(
+                               origin, storage_partition_service_, this))
              .first;
   }
   return it->second;
+}
+
+scoped_refptr<LocalStorageCachedArea>
+LocalStorageCachedAreas::GetSessionStorageArea(int64_t namespace_id,
+                                               const url::Origin& origin) {
+  DCHECK_NE(kLocalStorageNamespaceId, kInvalidSessionStorageNamespaceId);
+  AreaKey key(namespace_id, origin);
+  if (cached_areas_.find(key) == cached_areas_.end()) {
+    cached_areas_[key] = new LocalStorageCachedArea(
+        namespace_id, origin, storage_partition_service_, this);
+  }
+
+  return cached_areas_[key];
 }
 
 size_t LocalStorageCachedAreas::TotalCacheSize() const {

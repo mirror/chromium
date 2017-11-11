@@ -706,6 +706,14 @@ void StoragePartitionImpl::OpenLocalStorage(
   dom_storage_context_->OpenLocalStorage(origin, std::move(request));
 }
 
+void StoragePartitionImpl::OpenSessionStorage(
+    int64_t namespace_id,
+    const url::Origin& origin,
+    mojo::InterfaceRequest<mojom::LevelDBWrapper> request) {
+  dom_storage_context_->OpenSessionStorage(namespace_id, origin,
+                                           std::move(request));
+}
+
 void StoragePartitionImpl::ClearDataImpl(
     uint32_t remove_mask,
     uint32_t quota_storage_remove_mask,
