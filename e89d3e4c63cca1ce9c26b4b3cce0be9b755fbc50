@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d4f3032_33c014a0",
+        "filename": "chrome/browser/policy/site_per_process_policy_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-11T00:20:31Z",
+      "side": 1,
+      "message": "Is it better to use the switch or the base::Feature (features::kSitePerProcess)?",
+      "revId": "e89d3e4c63cca1ce9c26b4b3cce0be9b755fbc50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c475b424_dd6971fa",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10614,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-11T00:20:31Z",
+      "side": 1,
+      "message": "What does this imply?  site-per-process is not something that can be changed at runtime; it requires a restart.",
+      "revId": "e89d3e4c63cca1ce9c26b4b3cce0be9b755fbc50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bae6252_5a8d754b",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10619,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-11T00:20:31Z",
+      "side": 1,
+      "message": "Is there somewhere that we document these more fully?  There\u0027s a lot of known issues for turning this on, so I wouldn\u0027t want people to do it without realizing that.\n\nOn that note, is there a way to mark it as experimental until more of the issues are resolved?",
+      "revId": "e89d3e4c63cca1ce9c26b4b3cce0be9b755fbc50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
