@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3bd41aa6_1712d266",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T01:27:32Z",
+      "side": 1,
+      "message": "Would it be better to land cleanups separately from making API async? This CL is already risky and can potentially break many things.",
+      "parentUuid": "22ef7061_e7aa2c8a",
+      "range": {
+        "startLine": 617,
+        "startChar": 16,
+        "endLine": 617,
+        "endChar": 24
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7915a83e_f0a918e0",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 19
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "I don\u0027t think we need to allow null. There\u0027s no current use that requires passing in null.",
       "parentUuid": "7915a83e_f0a918e0",
+      "range": {
+        "startLine": 619,
+        "startChar": 8,
+        "endLine": 619,
+        "endChar": 25
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec38c30_0fa94a16",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T01:27:32Z",
+      "side": 1,
+      "message": "So how about we replace |if (completionHandler)| with |DCHECK(completionHandler)| ?",
+      "parentUuid": "6466d0b3_f073032c",
       "range": {
         "startLine": 619,
         "startChar": 8,

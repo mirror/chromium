@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9868aad6_df5cb4a3",
+        "filename": "ios/chrome/browser/open_url_util.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T01:27:32Z",
+      "side": 1,
+      "message": "Sorry, missed in the previous round. Should we drop iOS10 comment to make sure that this comment does not rot?",
+      "range": {
+        "startLine": 11,
+        "startChar": 32,
+        "endLine": 11,
+        "endChar": 37
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea73ad45_adc5b6e9",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T01:27:32Z",
+      "side": 1,
+      "message": "Tab can outlive webState, which will lead to the crash.",
+      "range": {
+        "startLine": 630,
+        "startChar": 25,
+        "endLine": 630,
+        "endChar": 42
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb8d11d_05f8e83d",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T01:27:32Z",
+      "side": 1,
+      "message": "Do we need this check? Can WebController pass nil here?",
+      "range": {
+        "startLine": 642,
+        "startChar": 8,
+        "endLine": 642,
+        "endChar": 25
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a061e4a_36a33cdd",
+        "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T01:27:32Z",
+      "side": 1,
+      "message": "Can we wait for condition to be true, instead of spinning the runloop and hoping that condition will be true?",
+      "range": {
+        "startLine": 353,
+        "startChar": 25,
+        "endLine": 353,
+        "endChar": 41
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260279e1_ded566ad",
+        "filename": "ios/chrome/browser/web/external_app_launcher.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T01:27:32Z",
+      "side": 1,
+      "message": "Do you want to add nullability annotation?",
+      "range": {
+        "startLine": 28,
+        "startChar": 35,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855c86c8_8a3133b0",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T01:27:32Z",
+      "side": 1,
+      "message": "nit: completion_block\n\nOriginal naming style (URL) was incorrect.",
+      "range": {
+        "startLine": 73,
+        "startChar": 32,
+        "endLine": 73,
+        "endChar": 47
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7cce74f_b62a254b",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T01:27:32Z",
+      "side": 1,
+      "message": "nit: completionHandler ?",
+      "range": {
+        "startLine": 103,
+        "startChar": 20,
+        "endLine": 103,
+        "endChar": 30
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733b360e_7a1e412e",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T01:27:32Z",
+      "side": 1,
+      "message": "Can we call this asynchronously to have predictable API contract?",
+      "range": {
+        "startLine": 221,
+        "startChar": 4,
+        "endLine": 221,
+        "endChar": 21
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0585ca35_8364dbe4",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T01:27:32Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 230,
+        "startChar": 6,
+        "endLine": 230,
+        "endChar": 23
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f783649_68cc85d7",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T01:27:32Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 273,
+        "startChar": 28,
+        "endLine": 273,
+        "endChar": 45
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e715176_9277c651",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T01:27:32Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 290,
+        "startChar": 4,
+        "endLine": 290,
+        "endChar": 21
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0992a5f7_a31c8f09",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 2851,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T01:27:32Z",
+      "side": 1,
+      "message": "nit: Can we use Chromium threading API? Sorry, I missed this in the previous round in other place.\n\nweb::WebThread::PostTask(web::WebThread::UI, FROM_HERE, base::BindBlockArc(^{\n  completionHandler(NO);\n});",
+      "range": {
+        "startLine": 2851,
+        "startChar": 19,
+        "endLine": 2851,
+        "endChar": 42
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbb9fdd_d4463118",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 2904,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T01:27:32Z",
+      "side": 1,
+      "message": "No need for this DCHECK, the next like will crash anyway.",
+      "range": {
+        "startLine": 2904,
+        "startChar": 17,
+        "endLine": 2904,
+        "endChar": 29
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
