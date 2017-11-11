@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "content/browser/isolated_origin_util.h"
 #include "content/browser/site_instance_impl.h"
 #include "content/common/site_isolation_policy.h"
 #include "content/public/browser/browser_context.h"
@@ -101,6 +102,35 @@ void BrowsingInstance::UnregisterSiteInstance(SiteInstanceImpl* site_instance) {
   }
   if (default_subframe_site_instance_ == site_instance)
     default_subframe_site_instance_ = nullptr;
+}
+
+// TODO(alexmos): Consider merging with the CPSP list.
+void BrowsingInstance::AddIsolatedOrigin(const url::Origin& origin) {
+  CHECK(IsolatedOriginUtil::IsValidIsolatedOrigin(origin))
+      << "Invalid isolated origin: " << origin.Serialize();
+
+  CHECK(!isolated_origins_.count(origin))
+      << "Duplicate isolated origin: " << origin.Serialize();
+
+  // Currently, BrowsingInstanced-scoped isolated origins have to be specified
+  // as an eTLD+1, since cookie enforcement for isolated origins requires
+  // resolving GetSiteForURL() on the IO thread, where the isolated origin list
+  // from BrowsingInstances can't be consulted.  Forcing |origin| to align with
+  // site effectively ensures that GetSiteForURL on the IO thread will always
+  // match the origin lock for |origin|.
+  CHECK_EQ(origin.GetURL(),
+           SiteInstance::GetSiteForURL(browser_context(), origin.GetURL()));
+
+  isolated_origins_.insert(origin);
+}
+
+bool BrowsingInstance::IsIsolatedOrigin(const url::Origin& origin) {
+  for (auto isolated_origin : isolated_origins_) {
+    if (IsolatedOriginUtil::DoesOriginMatchIsolatedOrigin(origin,
+                                                          isolated_origin))
+      return true;
+  }
+  return false;
 }
 
 BrowsingInstance::~BrowsingInstance() {
