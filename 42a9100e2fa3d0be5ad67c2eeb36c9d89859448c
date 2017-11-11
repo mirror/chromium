@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "921aa228_1464570e",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-11T07:36:31Z",
+      "side": 1,
+      "message": "It\u0027s not so much about determining whether to launch the app or not.\nThe problem this is trying to solve is keeping the display off until the app is shown (when the stylus gets ejected), and POwerButtonDisplayController handling of stylus removal event conflicts with that.",
+      "parentUuid": "00f036b1_6eb611ea",
+      "revId": "42a9100e2fa3d0be5ad67c2eeb36c9d89859448c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97b516bc_91ad8bb6",
         "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
         "patchSetId": 5
