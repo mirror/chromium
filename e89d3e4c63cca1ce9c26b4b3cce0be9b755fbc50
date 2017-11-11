@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "938794dc_c2b6e535",
+        "filename": "chrome/browser/policy/site_per_process_policy_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-11T00:49:29Z",
+      "side": 1,
+      "message": "depending on how you count users in your experiment groups, this might also mess with your stats... i.e. users who self-select into site-per-process via flags or via enterprise policy need to be counted as correctly being in that experiment (or excluded entirely from the experiments, which might be easier) you are carrying out, otherwise they will skew your data.\n\nThis is usually done using forcing flags in finch config - see https://g3doc.corp.google.com/analysis/uma/g3doc/finch/finch-and-flags.md?cl\u003dhead but I\u0027m not sure how that interacts here (it\u0027s possible it would all just \u0027work\u0027 if the switch is added as it\u0027s done here.",
+      "parentUuid": "6241bfa0_e935cc76",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "e89d3e4c63cca1ce9c26b4b3cce0be9b755fbc50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c475b424_dd6971fa",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
