@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7a8ddbf1_fd4381c7",
+        "filename": "chrome/browser/policy/site_per_process_policy_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-11T00:53:44Z",
+      "side": 1,
+      "message": "I\u0027m not sure yet. Waiting for the resolution of the discussion from people who know this area more (see Will and Łukasz below).",
+      "parentUuid": "9d4f3032_33c014a0",
+      "revId": "e89d3e4c63cca1ce9c26b4b3cce0be9b755fbc50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c475b424_dd6971fa",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -106,6 +124,48 @@
     },
     {
       "key": {
+        "uuid": "60e89d4a_5bbaf54a",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10614,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-11T00:53:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c475b424_dd6971fa",
+      "revId": "e89d3e4c63cca1ce9c26b4b3cce0be9b755fbc50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7243958e_7063312a",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10614,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-11T00:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7121af7f_40b45eb5",
+      "range": {
+        "startLine": 10614,
+        "startChar": 27,
+        "endLine": 10614,
+        "endChar": 31
+      },
+      "revId": "e89d3e4c63cca1ce9c26b4b3cce0be9b755fbc50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bae6252_5a8d754b",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -140,6 +200,48 @@
         "endLine": 10619,
         "endChar": 72
       },
+      "revId": "e89d3e4c63cca1ce9c26b4b3cce0be9b755fbc50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6a1d65_58d312c5",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10619,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-11T00:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d6779ba_7d639744",
+      "range": {
+        "startLine": 10619,
+        "startChar": 64,
+        "endLine": 10619,
+        "endChar": 72
+      },
+      "revId": "e89d3e4c63cca1ce9c26b4b3cce0be9b755fbc50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b623632_7e5346ce",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10619,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-11T00:53:44Z",
+      "side": 1,
+      "message": "I added a comment to that effect in the \u0027caption\u0027.",
+      "parentUuid": "6bae6252_5a8d754b",
       "revId": "e89d3e4c63cca1ce9c26b4b3cce0be9b755fbc50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
