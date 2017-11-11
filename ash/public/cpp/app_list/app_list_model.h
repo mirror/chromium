@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_APP_LIST_APP_LIST_MODEL_H_
-#define UI_APP_LIST_APP_LIST_MODEL_H_
+#ifndef ASH_PUBLIC_CPP_APP_LIST_APP_LIST_MODEL_H_
+#define ASH_PUBLIC_CPP_APP_LIST_APP_LIST_MODEL_H_
 
 #include <stddef.h>
 
@@ -11,11 +11,11 @@
 #include <string>
 #include <vector>
 
+#include "ash/public/cpp/app_list/app_list_item_list.h"
+#include "ash/public/cpp/app_list/app_list_item_list_observer.h"
+#include "ash/public/cpp/ash_public_export.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
-#include "ui/app_list/app_list_export.h"
-#include "ui/app_list/app_list_item_list.h"
-#include "ui/app_list/app_list_item_list_observer.h"
 #include "ui/app_list/search_result.h"
 #include "ui/app_list/views/app_list_view.h"
 #include "ui/base/models/list_model.h"
@@ -35,7 +35,7 @@ class SearchBoxModel;
 // NOTE: Currently this class observes |top_level_item_list_|. The View code may
 // move entries in the item list directly (but can not add or remove them) and
 // the model needs to notify its observers when this occurs.
-class APP_LIST_EXPORT AppListModel : public AppListItemListObserver {
+class ASH_PUBLIC_EXPORT AppListModel : public AppListItemListObserver {
  public:
   enum Status {
     STATUS_NORMAL,
@@ -256,4 +256,4 @@ class APP_LIST_EXPORT AppListModel : public AppListItemListObserver {
 
 }  // namespace app_list
 
-#endif  // UI_APP_LIST_APP_LIST_MODEL_H_
+#endif  // ASH_PUBLIC_CPP_APP_LIST_APP_LIST_MODEL_H_
