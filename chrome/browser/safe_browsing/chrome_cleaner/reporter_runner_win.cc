@@ -19,11 +19,13 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/singleton.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/process/launch.h"
 #include "base/process/process.h"
+#include "base/sequence_checker.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -562,53 +564,171 @@ base::Time Now() {
 // browser is available when none is on first try.
 class ReporterRunner {
  public:
-  // Registers |invocations| to run next time |TryToRun| is scheduled. (And if
-  // it's not already scheduled, call it now.)
-  static void ScheduleInvocations(const SwReporterQueue& invocations,
-                                  const base::Version& version) {
-    if (!instance_) {
-      instance_ = new ReporterRunner;
-      ANNOTATE_LEAKING_OBJECT_PTR(instance_);
-    }
+  // Returns the global reporter runner object. This must be called on the UI
+  // thread.
+  static ReporterRunner* GetInstance() {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return base::Singleton<ReporterRunner,
+                           base::LeakySingletonTraits<ReporterRunner>>::get();
+  }
 
-    // There's nothing to do if the invocation parameters and version of the
-    // reporter have not changed, we just keep running the tasks that are
-    // running now.
-    if (std::equal(instance_->pending_invocations_.begin(),
-                   instance_->pending_invocations_.end(), invocations.begin(),
-                   invocations.end()) &&
-        instance_->version_.IsValid() && instance_->version_ == version)
+  // Tries to run |invocations| now. Will invoke |on_sequence_done| when
+  // finished.
+  void ScheduleInvocations(const SwReporterQueue& invocations,
+                           const base::Version& version,
+                           base::OnceClosure on_sequence_done) {
+    DCHECK_CALLED_ON_VALID_SEQUENCE(my_sequence_checker_);
+
+    // Ensures |on_sequence_done| will be called if |invocations| does not run.
+    base::ScopedClosureRunner scoped_runner(base::BindOnce(
+        [](bool* is_currently_running, base::OnceClosure on_sequence_done) {
+          if (is_currently_running)
+            *is_currently_running = false;
+          if (on_sequence_done)
+            std::move(on_sequence_done).Run();
+        },
+        is_currently_running_ ? &is_currently_running_ : nullptr,
+        std::move(on_sequence_done)));
+
+    // Ignore if currently running.
+    if (is_currently_running_)
       return;
 
-    instance_->pending_invocations_ = invocations;
-    instance_->version_ = version;
-    if (instance_->first_run_) {
-      instance_->first_run_ = false;
-      instance_->TryToRun();
-    }
+    PrefService* local_state = g_browser_process->local_state();
+    if (!version.IsValid() || !local_state)
+      return;
+
+    ReporterRunTimeInfo time_info(local_state);
+
+    // Only run a queue of reporters if none have been triggered in the last
+    // |kDaysBetweenSuccessfulSwReporterRuns| days.
+    if (!time_info.ShouldRun())
+      return;
+
+    // Pass along the closure that will invoke |on_sequence_done| so that
+    // it's called once all reporter invocations complete.
+    ScheduleNextInvocation(
+        ReporterRunState(version, invocations, std::move(time_info)),
+        scoped_runner.Release());
   }
 
  private:
+  friend struct base::DefaultSingletonTraits<ReporterRunner>;
+
+  // Keeps track of last and upcoming reporter runs and logs uploading.
+  class ReporterRunTimeInfo {
+   public:
+    explicit ReporterRunTimeInfo(PrefService* local_state)
+        : local_state_(local_state) {
+      DCHECK(local_state);
+
+      now_ = Now();
+      if (local_state_->HasPrefPath(prefs::kSwReporterLastTimeTriggered)) {
+        last_time_triggered_ =
+            base::Time() +
+            base::TimeDelta::FromMicroseconds(
+                local_state->GetInt64(prefs::kSwReporterLastTimeTriggered));
+        next_trigger_ =
+            last_time_triggered_ +
+            base::TimeDelta::FromDays(kDaysBetweenSuccessfulSwReporterRuns);
+      } else {
+        next_trigger_ = now_;
+      }
+
+      if (local_state_->HasPrefPath(prefs::kSwReporterLastTimeSentReport)) {
+        last_time_sent_logs_ =
+            base::Time() +
+            base::TimeDelta::FromMicroseconds(
+                local_state_->GetInt64(prefs::kSwReporterLastTimeSentReport));
+        next_time_send_logs_ =
+            last_time_sent_logs_ +
+            base::TimeDelta::FromDays(kDaysBetweenReporterLogsSent);
+      } else {
+        next_time_send_logs_ = now_;
+      }
+    }
+
+    // Periodic runs are allowed to start if the last time the reporter ran was
+    // more than |kDaysBetweenSuccessfulSwReporterRuns| days ago. As a safety
+    // measure for failure recovery, also allow to run if last_time_triggered_
+    // is set in the future. This is to prevent from no longer running the
+    // reporter if a time in the future is accidentally written.
+    bool ShouldRun() const {
+      return next_trigger_ <= now_ || last_time_triggered_ > now_;
+    }
+
+    base::TimeDelta UpcomingReporterRun() const { return next_trigger_ - now_; }
+
+    // Allow logs uploading if logs have never been uploaded for this user,
+    // or if logs have been sent at least |kSwReporterLastTimeSentReport| days
+    // ago. As a safety measure for failure recovery, also allow sending logs if
+    // the last upload time in local state is incorrectly set to the future.
+    bool InLogsUploadPeriod() const {
+      return next_time_send_logs_ <= now_ || last_time_sent_logs_ > now_;
+    }
+
+    PrefService* local_state_ = nullptr;
+    base::Time now_;
+    base::Time last_time_triggered_;
+    base::Time next_trigger_;
+    base::Time last_time_sent_logs_;
+    base::Time next_time_send_logs_;
+  };
+
+  class ReporterRunState {
+   public:
+    ReporterRunState(const base::Version& version,
+                     const SwReporterQueue& invocations,
+                     ReporterRunTimeInfo&& time_info)
+        : version_(version),
+          invocations_(invocations),
+          time_info_(std::move(time_info)) {}
+    ~ReporterRunState() = default;
+
+    const ReporterRunTimeInfo& time_info() const { return time_info_; }
+    const base::Version& version() const { return version_; }
+
+    SwReporterInvocation pop_next_invocation() {
+      DCHECK(!invocations_.empty());
+      SwReporterInvocation invocation = invocations_.front();
+      invocations_.pop();
+      return invocation;
+    }
+
+    bool done() const { return invocations_.empty(); }
+
+   private:
+    // The version of the current run.
+    base::Version version_;
+
+    // The queue of invocations that are currently running.
+    SwReporterQueue invocations_;
+
+    // Last and upcoming reporter runs and logs uploading.
+    ReporterRunTimeInfo time_info_;
+  };
+
   ReporterRunner() {}
   virtual ~ReporterRunner() {}
 
   // Launches the command line at the head of the queue.
-  void ScheduleNextInvocation() {
-    DCHECK(!current_invocations_.empty());
-    auto next_invocation = current_invocations_.front();
-    current_invocations_.pop_front();
+  void ScheduleNextInvocation(ReporterRunState&& state,
+                              base::OnceClosure on_sequence_done) {
+    DCHECK_CALLED_ON_VALID_SEQUENCE(my_sequence_checker_);
 
-    AppendInvocationSpecificSwitches(&next_invocation);
+    DCHECK(!state.done());
+    auto next_invocation = state.pop_next_invocation();
+
+    AppendInvocationSpecificSwitches(state.time_info(), &next_invocation);
 
     base::TaskRunner* task_runner =
         g_testing_delegate_ ? g_testing_delegate_->BlockingTaskRunner()
                             : blocking_task_runner_.get();
     auto launch_and_wait =
         base::Bind(&LaunchAndWaitForExitOnBackgroundThread, next_invocation);
-    auto reporter_done =
-        base::Bind(&ReporterRunner::ReporterDone, base::Unretained(this), Now(),
-                   version_, next_invocation);
+    auto reporter_done = base::Bind(
+        &ReporterRunner::ReporterDone, base::Unretained(this), Now(),
+        next_invocation, base::Passed(&state), base::Passed(&on_sequence_done));
     base::PostTaskAndReplyWithResult(task_runner, FROM_HERE,
                                      std::move(launch_and_wait),
                                      std::move(reporter_done));
@@ -618,37 +738,32 @@ class ReporterRunner {
   // has completed. This is run as a task posted from an interruptible worker
   // thread so should be resilient to unexpected shutdown.
   void ReporterDone(const base::Time& reporter_start_time,
-                    const base::Version& version,
                     const SwReporterInvocation& finished_invocation,
+                    ReporterRunState&& state,
+                    base::OnceClosure on_sequence_done,
                     int exit_code) {
-    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    DCHECK_CALLED_ON_VALID_SEQUENCE(my_sequence_checker_);
+
+    // Ensures on_sequence_done is invoked in case of an early return that
+    // doesn't schedule another invocation.
+    base::ScopedClosureRunner scoped_runner(std::move(on_sequence_done));
 
     base::Time now = Now();
     base::TimeDelta reporter_running_time = now - reporter_start_time;
 
     // Don't continue the current queue of reporters if one failed to launch.
-    if (exit_code == kReporterNotLaunchedExitCode)
-      current_invocations_ = SwReporterQueue();
-
-    // As soon as we're not running this queue, schedule the next overall queue
-    // run after the regular delay. (If there was a failure it's not worth
-    // retrying earlier, risking running too often if it always fails, since
-    // not many users fail here.)
-    if (current_invocations_.empty()) {
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-          FROM_HERE,
-          base::Bind(&ReporterRunner::TryToRun, base::Unretained(this)),
-          base::TimeDelta::FromDays(kDaysBetweenSuccessfulSwReporterRuns));
-    } else {
-      ScheduleNextInvocation();
-    }
-
     // If the reporter failed to launch, do not process the results. (The exit
     // code itself doesn't need to be logged in this case because
     // SW_REPORTER_FAILED_TO_START is logged in
     // |LaunchAndWaitForExitOnBackgroundThread|.)
     if (exit_code == kReporterNotLaunchedExitCode)
       return;
+
+    const base::Version version = state.version();
+
+    // Tries to run the next invocation in the queue.
+    if (!state.done())
+      ScheduleNextInvocation(std::move(state), scoped_runner.Release());
 
     UMAHistogramReporter uma(finished_invocation.suffix);
     uma.ReportVersion(version);
@@ -697,67 +812,17 @@ class ReporterRunner {
     MaybeScanAndPrompt(finished_invocation);
   }
 
-  void TryToRun() {
-    DCHECK_CURRENTLY_ON(BrowserThread::UI);
-    PrefService* local_state = g_browser_process->local_state();
-
-    if (!version_.IsValid() || !local_state) {
-      // TODO(b/641081): This doesn't look right. Even on first run, |version_|
-      // should be valid (and this is already checked in RunSwReporters). We
-      // should abort if local_state is missing, but this has nothing to do
-      // with |first_run_|.
-      DCHECK(first_run_);
-      return;
-    }
-
-    // Run a queue of reporters if none have been triggered in the last
-    // |kDaysBetweenSuccessfulSwReporterRuns| days.
-    const base::Time now = Now();
-    const base::Time last_time_triggered = base::Time::FromInternalValue(
-        local_state->GetInt64(prefs::kSwReporterLastTimeTriggered));
-    const base::Time next_trigger(
-        last_time_triggered +
-        base::TimeDelta::FromDays(kDaysBetweenSuccessfulSwReporterRuns));
-    if (!pending_invocations_.empty() &&
-        (next_trigger <= now ||
-         // Also make sure the kSwReporterLastTimeTriggered value is not set in
-         // the future.
-         last_time_triggered > now)) {
-      const base::Time last_time_sent_logs = base::Time::FromInternalValue(
-          local_state->GetInt64(prefs::kSwReporterLastTimeSentReport));
-      const base::Time next_time_send_logs =
-          last_time_sent_logs +
-          base::TimeDelta::FromDays(kDaysBetweenReporterLogsSent);
-      // Send the logs for this whole queue of invocations if the last send is
-      // in the future or if logs have been sent at least
-      // |kSwReporterLastTimeSentReport| days ago. The former is intended as a
-      // measure for failure recovery, in case the time in local state is
-      // incorrectly set to the future.
-      in_logs_upload_period_ =
-          last_time_sent_logs > now || next_time_send_logs <= now;
-
-      DCHECK(current_invocations_.empty());
-      current_invocations_ = pending_invocations_;
-      ScheduleNextInvocation();
-    } else {
-      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-          FROM_HERE,
-          base::Bind(&ReporterRunner::TryToRun, base::Unretained(this)),
-          next_trigger - now);
-    }
-  }
-
   // Returns true if the experiment to send reporter logs is enabled, the user
   // opted into Safe Browsing extended reporting, and this queue of invocations
   // started during the logs upload interval.
   bool ShouldSendReporterLogs(const std::string& suffix,
-                              const PrefService& local_state) {
+                              const ReporterRunTimeInfo& time_info) {
     UMAHistogramReporter uma(suffix);
     if (!SafeBrowsingExtendedReportingEnabled()) {
       uma.RecordLogsUploadEnabled(REPORTER_LOGS_UPLOADS_SBER_DISABLED);
       return false;
     }
-    if (!in_logs_upload_period_) {
+    if (!time_info.InLogsUploadPeriod()) {
       uma.RecordLogsUploadEnabled(REPORTER_LOGS_UPLOADS_RECENTLY_SENT_LOGS);
       return false;
     }
@@ -772,13 +837,14 @@ class ReporterRunner {
   // between this and the next run for this ReporterRunner object. For example,
   // the ReporterDone() callback schedules the next run for a few days later,
   // and the user might have changed settings in the meantime.
-  void AppendInvocationSpecificSwitches(SwReporterInvocation* next_invocation) {
+  void AppendInvocationSpecificSwitches(const ReporterRunTimeInfo& time_info,
+                                        SwReporterInvocation* next_invocation) {
     // Add switches for users who opted into extended Safe Browsing reporting.
     PrefService* local_state = g_browser_process->local_state();
     if (next_invocation->BehaviourIsSupported(
             SwReporterInvocation::BEHAVIOUR_ALLOW_SEND_REPORTER_LOGS) &&
         local_state &&
-        ShouldSendReporterLogs(next_invocation->suffix, *local_state)) {
+        ShouldSendReporterLogs(next_invocation->suffix, time_info)) {
       next_invocation->logs_upload_enabled = true;
       AddSwitchesForExtendedReportingUser(next_invocation);
       // Set the local state value before the first attempt to run the
@@ -814,15 +880,8 @@ class ReporterRunner {
         base::IntToString16(ChannelAsInt()));
   }
 
-  bool first_run_ = true;
-
-  // The queue of invocations that are currently running.
-  SwReporterQueue current_invocations_;
-
-  // The invocations to run next time the SwReporter is run.
-  SwReporterQueue pending_invocations_;
-
-  base::Version version_;
+  // Indicates if an invocation sequence is currently running for this object.
+  bool is_currently_running_ = false;
 
   scoped_refptr<base::TaskRunner> blocking_task_runner_ =
       base::CreateTaskRunnerWithTraits(
@@ -832,17 +891,10 @@ class ReporterRunner {
            base::TaskPriority::BACKGROUND,
            base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
 
-  // This will be true if the current queue of invocations started at a time
-  // when logs should be uploaded.
-  bool in_logs_upload_period_ = false;
-
-  // A single leaky instance.
-  static ReporterRunner* instance_;
+  SEQUENCE_CHECKER(my_sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(ReporterRunner);
 };
-
-ReporterRunner* ReporterRunner::instance_ = nullptr;
 
 SwReporterInvocation::SwReporterInvocation()
     : command_line(base::CommandLine::NO_PROGRAM) {}
@@ -874,10 +926,14 @@ bool SwReporterInvocation::BehaviourIsSupported(
 }
 
 void RunSwReporters(const SwReporterQueue& invocations,
-                    const base::Version& version) {
+                    const base::Version& version,
+                    base::OnceClosure on_sequence_done) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
   DCHECK(!invocations.empty());
   DCHECK(version.IsValid());
-  ReporterRunner::ScheduleInvocations(invocations, version);
+  ReporterRunner::GetInstance()->ScheduleInvocations(
+      invocations, version, std::move(on_sequence_done));
 }
 
 bool ReporterFoundUws() {
