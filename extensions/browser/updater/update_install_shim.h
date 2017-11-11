@@ -15,11 +15,15 @@
 
 namespace extensions {
 
+using UpdateClientCallback = update_client::CrxInstaller::Callback;
+
 // A callback to implement the install of a new version of the extension.
-// Takes ownership of the directory at |temp_dir|.
+// Takes ownership of the directory at |unpacked_dir|.
 using UpdateInstallShimCallback =
     base::OnceCallback<void(const std::string& extension_id,
-                            const base::FilePath& temp_dir)>;
+                            const std::string& public_key,
+                            const base::FilePath& unpacked_dir,
+                            UpdateClientCallback update_client_callback)>;
 
 // This class is used as a shim between the components::update_client and
 // extensions code, to help the generic update_client code prepare and then
@@ -34,7 +38,7 @@ class UpdateInstallShim : public update_client::CrxInstaller {
   // of it to install.
   UpdateInstallShim(std::string extension_id,
                     const base::FilePath& extension_root,
-                    UpdateInstallShimCallback callback);
+                    UpdateInstallShimCallback update_install_callback);
 
   // Called when an update attempt failed.
   void OnUpdateError(int error) override;
@@ -42,9 +46,11 @@ class UpdateInstallShim : public update_client::CrxInstaller {
   // This is called when a new version of an extension is unpacked at
   // |unpack_path| and is ready for install. |public_key| contains the
   // CRX public_key in PEM format, without the header and the footer.
+  // |update_client_callback| is the callback that MUST be called
+  // with the update result after the update finishes.
   void Install(const base::FilePath& unpack_path,
                const std::string& public_key,
-               Callback callback) override;
+               UpdateClientCallback update_client_callback) override;
 
   // This is called by the generic differential update code in the
   // update_client to provide the path to an existing file in the current
@@ -61,12 +67,15 @@ class UpdateInstallShim : public update_client::CrxInstaller {
   friend class base::RefCountedThreadSafe<UpdateInstallShim>;
   ~UpdateInstallShim() override;
 
-  // Takes ownership of the directory at path |temp_dir|.
-  void RunCallbackOnUIThread(const base::FilePath& temp_dir);
+  // Takes ownership of the directory at path |unpacked_dir|.
+  void RunInstallCallbackOnUIThread(
+      const base::FilePath& unpacked_dir,
+      const std::string& public_key,
+      UpdateClientCallback update_client_callback);
 
   std::string extension_id_;
   base::FilePath extension_root_;
-  UpdateInstallShimCallback callback_;
+  UpdateInstallShimCallback update_install_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(UpdateInstallShim);
 };
