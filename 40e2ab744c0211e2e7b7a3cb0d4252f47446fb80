@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce46850c_02bf49ba",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-11T00:45:21Z",
+      "side": 1,
+      "message": "This violates https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables unfortunately.",
+      "revId": "40e2ab744c0211e2e7b7a3cb0d4252f47446fb80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
