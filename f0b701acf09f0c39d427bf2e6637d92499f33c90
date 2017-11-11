@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "799efb1a_c7fac339",
+        "filename": "chrome/browser/resources/welcome/welcome_win10.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-11T15:30:18Z",
+      "side": 1,
+      "message": "Nit: Only translucent color values are specified in rgba() form; opaque colors are specified in hex, i.e. #xxx (if possible) or #xxxxxx.",
+      "range": {
+        "startLine": 240,
+        "startChar": 17,
+        "endLine": 240,
+        "endChar": 33
+      },
+      "revId": "f0b701acf09f0c39d427bf2e6637d92499f33c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f58a785_e9cd8847",
+        "filename": "chrome/browser/resources/welcome/welcome_win10.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-11T15:30:18Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 7
+      },
+      "revId": "f0b701acf09f0c39d427bf2e6637d92499f33c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14006868_882425f8",
+        "filename": "chrome/browser/resources/welcome/welcome_win10.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-11T15:30:18Z",
+      "side": 1,
+      "message": "Should this be SHOUTING_CASE instead, as it\u0027s really a constant?",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 19
+      },
+      "revId": "f0b701acf09f0c39d427bf2e6637d92499f33c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d28c5ac_f7079ee9",
+        "filename": "chrome/browser/resources/welcome/welcome_win10.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-11T15:30:18Z",
+      "side": 1,
+      "message": "Maybe at least log an error if the flow type is something unexpected?",
+      "range": {
+        "startLine": 41,
+        "startChar": 36,
+        "endLine": 41,
+        "endChar": 75
+      },
+      "revId": "f0b701acf09f0c39d427bf2e6637d92499f33c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "393bc496_535b4274",
+        "filename": "chrome/browser/resources/welcome/welcome_win10.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-11T15:30:18Z",
+      "side": 1,
+      "message": "Nit: \"Adjust\"",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 14
+      },
+      "revId": "f0b701acf09f0c39d427bf2e6637d92499f33c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
