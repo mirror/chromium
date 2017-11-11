@@ -16,6 +16,24 @@
       "revId": "40e2ab744c0211e2e7b7a3cb0d4252f47446fb80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae50f47a_5b08ba8e",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-11T01:15:50Z",
+      "side": 1,
+      "message": "after chatting offline, done, thanks",
+      "parentUuid": "ce46850c_02bf49ba",
+      "revId": "40e2ab744c0211e2e7b7a3cb0d4252f47446fb80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
