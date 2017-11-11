@@ -4,6 +4,17 @@
 
 import("//mojo/public/tools/bindings/mojom.gni")
 
+source_set("common") {
+  sources = [
+    "url_utils.cc",
+    "url_utils.h",
+  ]
+
+  public_deps = [
+    "//url",
+  ]
+}
+
 static_library("ipc_traits") {
   sources = [
     "autofill_message_generator.cc",

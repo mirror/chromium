@@ -122,6 +122,10 @@ class ContentPasswordManagerDriver
   void OnFocusedPasswordFormFound(const autofill::PasswordForm& password_form);
 
  private:
+  // Returns canonical (auth and params stripped) url for the document hosted
+  // by the |render_frame()| being wrapped.
+  GURL GetCanonicalOriginForDocument();
+
   bool CheckChildProcessSecurityPolicy(const GURL& url,
                                        BadMessageReason reason);
 

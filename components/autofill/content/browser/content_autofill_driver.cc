@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "components/autofill/content/browser/content_autofill_driver_factory.h"
+#include "components/autofill/content/common/url_utils.h"
 #include "components/autofill/core/browser/autofill_client.h"
 #include "components/autofill/core/browser/autofill_external_delegate.h"
 #include "components/autofill/core/browser/autofill_handler_proxy.h"
@@ -185,32 +186,49 @@ void ContentAutofillDriver::DidInteractWithCreditCardForm() {
   autofill_manager_->client()->DidInteractWithNonsecureCreditCardInput();
 }
 
-void ContentAutofillDriver::FormsSeen(const std::vector<FormData>& forms,
-                                      base::TimeTicks timestamp) {
+void ContentAutofillDriver::FormsSeen(
+    const std::vector<FormData>& untrusted_forms,
+    base::TimeTicks timestamp) {
+  std::vector<FormData> forms(untrusted_forms);
+  for (auto& form : forms)
+    form.origin = GetCanonicalOriginForDocument();
+
   autofill_handler_->OnFormsSeen(forms, timestamp);
 }
 
-void ContentAutofillDriver::WillSubmitForm(const FormData& form,
+void ContentAutofillDriver::WillSubmitForm(const FormData& untrusted_form,
                                            base::TimeTicks timestamp) {
+  FormData form(untrusted_form);
+  form.origin = GetCanonicalOriginForDocument();
+
   autofill_handler_->OnWillSubmitForm(form, timestamp);
 }
 
-void ContentAutofillDriver::FormSubmitted(const FormData& form) {
+void ContentAutofillDriver::FormSubmitted(const FormData& untrusted_form) {
+  FormData form(untrusted_form);
+  form.origin = GetCanonicalOriginForDocument();
+
   autofill_handler_->OnFormSubmitted(form);
 }
 
-void ContentAutofillDriver::TextFieldDidChange(const FormData& form,
+void ContentAutofillDriver::TextFieldDidChange(const FormData& untrusted_form,
                                                const FormFieldData& field,
                                                const gfx::RectF& bounding_box,
                                                base::TimeTicks timestamp) {
+  FormData form(untrusted_form);
+  form.origin = GetCanonicalOriginForDocument();
+
   autofill_handler_->OnTextFieldDidChange(form, field, bounding_box, timestamp);
 }
 
 void ContentAutofillDriver::QueryFormFieldAutofill(
     int32_t id,
-    const FormData& form,
+    const FormData& untrusted_form,
     const FormFieldData& field,
     const gfx::RectF& bounding_box) {
+  FormData form(untrusted_form);
+  form.origin = GetCanonicalOriginForDocument();
+
   autofill_handler_->OnQueryFormFieldAutofill(id, form, field, bounding_box);
 }
 
@@ -222,14 +240,21 @@ void ContentAutofillDriver::FocusNoLongerOnForm() {
   autofill_handler_->OnFocusNoLongerOnForm();
 }
 
-void ContentAutofillDriver::FocusOnFormField(const FormData& form,
+void ContentAutofillDriver::FocusOnFormField(const FormData& untrusted_form,
                                              const FormFieldData& field,
                                              const gfx::RectF& bounding_box) {
+  FormData form(untrusted_form);
+  form.origin = GetCanonicalOriginForDocument();
+
   autofill_handler_->OnFocusOnFormField(form, field, bounding_box);
 }
 
-void ContentAutofillDriver::DidFillAutofillFormData(const FormData& form,
-                                                    base::TimeTicks timestamp) {
+void ContentAutofillDriver::DidFillAutofillFormData(
+    const FormData& untrusted_form,
+    base::TimeTicks timestamp) {
+  FormData form(untrusted_form);
+  form.origin = GetCanonicalOriginForDocument();
+
   autofill_handler_->OnDidFillAutofillFormData(form, timestamp);
 }
 
@@ -296,6 +321,11 @@ void ContentAutofillDriver::RemoveHandler(
   if (!view)
     return;
   view->GetRenderWidgetHost()->RemoveKeyPressEventCallback(handler);
+}
+
+GURL ContentAutofillDriver::GetCanonicalOriginForDocument() {
+  GURL document_url = render_frame_host_->GetLastCommittedURL();
+  return StripAuthAndParams(document_url);
 }
 
 }  // namespace autofill

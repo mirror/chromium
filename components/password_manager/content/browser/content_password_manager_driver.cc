@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "components/autofill/content/browser/content_autofill_driver.h"
+#include "components/autofill/content/common/url_utils.h"
 #include "components/autofill/core/common/form_data.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/content/browser/bad_message.h"
@@ -141,11 +142,10 @@ void ContentPasswordManagerDriver::ForceSavePassword() {
 }
 
 void ContentPasswordManagerDriver::ShowManualFallbackForSaving(
-    const autofill::PasswordForm& password_form) {
-  if (!CheckChildProcessSecurityPolicy(
-          password_form.origin,
-          BadMessageReason::CPMD_BAD_ORIGIN_SHOW_FALLBACK_FOR_SAVING))
-    return;
+    const autofill::PasswordForm& untrusted_password_form) {
+  autofill::PasswordForm password_form(untrusted_password_form);
+  password_form.form_data.origin = GetCanonicalOriginForDocument();
+
   GetPasswordManager()->ShowManualFallbackForSaving(this, password_form);
 }
 
@@ -194,11 +194,10 @@ ContentPasswordManagerDriver::GetPasswordAutofillManager() {
 }
 
 void ContentPasswordManagerDriver::PasswordFormsParsed(
-    const std::vector<autofill::PasswordForm>& forms) {
-  for (const auto& form : forms)
-    if (!CheckChildProcessSecurityPolicy(
-            form.origin, BadMessageReason::CPMD_BAD_ORIGIN_FORMS_PARSED))
-      return;
+    const std::vector<autofill::PasswordForm>& untrusted_forms) {
+  std::vector<autofill::PasswordForm> forms(untrusted_forms);
+  for (auto& form : forms)
+    form.form_data.origin = GetCanonicalOriginForDocument();
 
   OnPasswordFormsParsedNoRenderCheck(forms);
 }
@@ -210,31 +209,29 @@ void ContentPasswordManagerDriver::OnPasswordFormsParsedNoRenderCheck(
 }
 
 void ContentPasswordManagerDriver::PasswordFormsRendered(
-    const std::vector<autofill::PasswordForm>& visible_forms,
+    const std::vector<autofill::PasswordForm>& untrusted_visible_forms,
     bool did_stop_loading) {
-  for (const auto& form : visible_forms)
-    if (!CheckChildProcessSecurityPolicy(
-            form.origin, BadMessageReason::CPMD_BAD_ORIGIN_FORMS_RENDERED))
-      return;
+  std::vector<autofill::PasswordForm> visible_forms(untrusted_visible_forms);
+  for (auto& form : visible_forms)
+    form.form_data.origin = GetCanonicalOriginForDocument();
+
   GetPasswordManager()->OnPasswordFormsRendered(this, visible_forms,
                                                 did_stop_loading);
 }
 
 void ContentPasswordManagerDriver::PasswordFormSubmitted(
-    const autofill::PasswordForm& password_form) {
-  if (!CheckChildProcessSecurityPolicy(
-          password_form.origin,
-          BadMessageReason::CPMD_BAD_ORIGIN_FORM_SUBMITTED))
-    return;
+    const autofill::PasswordForm& untrusted_password_form) {
+  autofill::PasswordForm password_form(untrusted_password_form);
+  password_form.form_data.origin = GetCanonicalOriginForDocument();
+
   GetPasswordManager()->OnPasswordFormSubmitted(this, password_form);
 }
 
 void ContentPasswordManagerDriver::OnFocusedPasswordFormFound(
-    const autofill::PasswordForm& password_form) {
-  if (!CheckChildProcessSecurityPolicy(
-          password_form.origin,
-          BadMessageReason::CPMD_BAD_ORIGIN_FOCUSED_PASSWORD_FORM_FOUND))
-    return;
+    const autofill::PasswordForm& untrusted_password_form) {
+  autofill::PasswordForm password_form(untrusted_password_form);
+  password_form.form_data.origin = GetCanonicalOriginForDocument();
+
   GetPasswordManager()->OnPasswordFormForceSaveRequested(this, password_form);
 }
 
@@ -249,40 +246,35 @@ void ContentPasswordManagerDriver::DidNavigateFrame(
 }
 
 void ContentPasswordManagerDriver::InPageNavigation(
-    const autofill::PasswordForm& password_form) {
-  if (!CheckChildProcessSecurityPolicy(
-          password_form.origin,
-          BadMessageReason::CPMD_BAD_ORIGIN_IN_PAGE_NAVIGATION))
-    return;
+    const autofill::PasswordForm& untrusted_password_form) {
+  autofill::PasswordForm password_form(untrusted_password_form);
+  password_form.form_data.origin = GetCanonicalOriginForDocument();
+
   GetPasswordManager()->OnInPageNavigation(this, password_form);
 }
 
 void ContentPasswordManagerDriver::PresaveGeneratedPassword(
-    const autofill::PasswordForm& password_form) {
-  if (!CheckChildProcessSecurityPolicy(
-          password_form.origin,
-          BadMessageReason::CPMD_BAD_ORIGIN_PRESAVE_GENERATED_PASSWORD))
-    return;
+    const autofill::PasswordForm& untrusted_password_form) {
+  autofill::PasswordForm password_form(untrusted_password_form);
+  password_form.form_data.origin = GetCanonicalOriginForDocument();
+
   GetPasswordManager()->OnPresaveGeneratedPassword(password_form);
 }
 
 void ContentPasswordManagerDriver::PasswordNoLongerGenerated(
-    const autofill::PasswordForm& password_form) {
-  if (!CheckChildProcessSecurityPolicy(
-          password_form.origin,
-          BadMessageReason::CPMD_BAD_ORIGIN_PASSWORD_NO_LONGER_GENERATED))
-    return;
+    const autofill::PasswordForm& untrusted_password_form) {
+  autofill::PasswordForm password_form(untrusted_password_form);
+  password_form.form_data.origin = GetCanonicalOriginForDocument();
+
   GetPasswordManager()->OnPasswordNoLongerGenerated(password_form);
 }
 
 void ContentPasswordManagerDriver::SaveGenerationFieldDetectedByClassifier(
-    const autofill::PasswordForm& password_form,
+    const autofill::PasswordForm& untrusted_password_form,
     const base::string16& generation_field) {
-  if (!CheckChildProcessSecurityPolicy(
-          password_form.origin,
-          BadMessageReason::
-              CPMD_BAD_ORIGIN_SAVE_GENERATION_FIELD_DETECTED_BY_CLASSIFIER))
-    return;
+  autofill::PasswordForm password_form(untrusted_password_form);
+  password_form.form_data.origin = GetCanonicalOriginForDocument();
+
   GetPasswordManager()->SaveGenerationFieldDetectedByClassifier(
       password_form, generation_field);
 }
@@ -327,6 +319,11 @@ void ContentPasswordManagerDriver::RecordSavePasswordProgress(
 
 void ContentPasswordManagerDriver::UserModifiedPasswordField() {
   client_->GetMetricsRecorder().RecordUserModifiedPasswordField();
+}
+
+GURL ContentPasswordManagerDriver::GetCanonicalOriginForDocument() {
+  GURL document_url = render_frame_host_->GetLastCommittedURL();
+  return autofill::StripAuthAndParams(document_url);
 }
 
 bool ContentPasswordManagerDriver::CheckChildProcessSecurityPolicy(

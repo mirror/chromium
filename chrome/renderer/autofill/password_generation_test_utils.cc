@@ -6,6 +6,7 @@
 
 #include <base/strings/utf_string_conversions.h>
 #include "base/strings/stringprintf.h"
+#include "components/autofill/content/common/url_utils.h"
 #include "components/autofill/content/renderer/form_autofill_util.h"
 #include "components/autofill/content/renderer/test_password_generation_agent.h"
 #include "components/autofill/core/common/password_form_generation_data.h"
@@ -26,7 +27,7 @@ const char* const kEvents[] = {"focus",  "keydown", "input",
 void SetNotBlacklistedMessage(TestPasswordGenerationAgent* generation_agent,
                               const char* form_str) {
   autofill::PasswordForm form;
-  form.origin = form_util::StripAuthAndParams(
+  form.origin = StripAuthAndParams(
       GURL(base::StringPrintf("data:text/html;charset=utf-8,%s", form_str)));
   generation_agent->FormNotBlacklisted(form);
 }

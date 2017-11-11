@@ -31,6 +31,7 @@
 #include "chrome/common/url_constants.h"
 #include "components/autofill/content/browser/content_autofill_driver.h"
 #include "components/autofill/content/browser/content_autofill_driver_factory.h"
+#include "components/autofill/content/common/url_utils.h"
 #include "components/autofill/core/browser/password_generator.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/browser_sync/profile_sync_service.h"
@@ -654,8 +655,11 @@ void ChromePasswordManagerClient::ShowPasswordGenerationPopup(
     int max_length,
     const base::string16& generation_element,
     bool is_manually_triggered,
-    const autofill::PasswordForm& form) {
-  // TODO(gcasto): Validate data in PasswordForm.
+    const autofill::PasswordForm& untrusted_form) {
+  // TODO(gcasto, lukasza): https://crbug.com/781922: Validate other data in
+  // PasswordForm.
+  autofill::PasswordForm form(untrusted_form);
+  form.form_data.origin = GetCanonicalOriginForMainFrameDocument();
 
   auto* driver = driver_factory_->GetDriverForFrame(
       password_manager_client_bindings_.GetCurrentTargetFrame());
@@ -674,7 +678,10 @@ void ChromePasswordManagerClient::ShowPasswordGenerationPopup(
 
 void ChromePasswordManagerClient::ShowPasswordEditingPopup(
     const gfx::RectF& bounds,
-    const autofill::PasswordForm& form) {
+    const autofill::PasswordForm& untrusted_form) {
+  autofill::PasswordForm form(untrusted_form);
+  form.form_data.origin = GetCanonicalOriginForMainFrameDocument();
+
   auto* driver = driver_factory_->GetDriverForFrame(
       password_manager_client_bindings_.GetCurrentTargetFrame());
   DCHECK(driver);
@@ -688,9 +695,11 @@ void ChromePasswordManagerClient::ShowPasswordEditingPopup(
   popup_controller_->Show(false /* display_password */);
 }
 
-
 void ChromePasswordManagerClient::GenerationAvailableForForm(
-    const autofill::PasswordForm& form) {
+    const autofill::PasswordForm& untrusted_form) {
+  autofill::PasswordForm form(untrusted_form);
+  form.form_data.origin = GetCanonicalOriginForMainFrameDocument();
+
   password_manager_.GenerationAvailableForForm(form);
 }
 
@@ -817,4 +826,9 @@ void ChromePasswordManagerClient::PromptUserToEnableAutosignin() {
 password_manager::PasswordManager*
 ChromePasswordManagerClient::GetPasswordManager() {
   return &password_manager_;
+}
+
+GURL ChromePasswordManagerClient::GetCanonicalOriginForMainFrameDocument() {
+  GURL document_url = web_contents()->GetMainFrame()->GetLastCommittedURL();
+  return autofill::StripAuthAndParams(document_url);
 }

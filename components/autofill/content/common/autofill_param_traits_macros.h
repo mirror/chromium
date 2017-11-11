@@ -48,7 +48,6 @@ IPC_ENUM_TRAITS_MAX_VALUE(autofill::PasswordForm::Type,
 
 IPC_STRUCT_TRAITS_BEGIN(autofill::FormData)
   IPC_STRUCT_TRAITS_MEMBER(name)
-  IPC_STRUCT_TRAITS_MEMBER(origin)
   IPC_STRUCT_TRAITS_MEMBER(action)
   IPC_STRUCT_TRAITS_MEMBER(is_form_tag)
   IPC_STRUCT_TRAITS_MEMBER(is_formless_checkout)

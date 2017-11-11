@@ -193,6 +193,10 @@ class ChromePasswordManagerClient
   void PromptUserToEnableAutosignin() override;
   password_manager::PasswordManager* GetPasswordManager() override;
 
+  // Returns canonical (auth and params stripped) url for the document hosted
+  // by the main frame of the |web_contents()| being wrapped.
+  GURL GetCanonicalOriginForMainFrameDocument();
+
   Profile* const profile_;
 
   password_manager::PasswordManager password_manager_;

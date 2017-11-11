@@ -26,6 +26,7 @@ static_library("browser") {
   deps = [
     "//base",
     "//base:i18n",
+    "//components/autofill/content/common:common",
     "//components/os_crypt",
     "//components/prefs",
     "//components/resources",

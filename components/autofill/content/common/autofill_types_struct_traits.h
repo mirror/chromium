@@ -5,7 +5,10 @@
 #ifndef COMPONENTS_AUTOFILL_CONTENT_COMMON_AUTOFILL_TYPES_STRUCT_TRAITS_H_
 #define COMPONENTS_AUTOFILL_CONTENT_COMMON_AUTOFILL_TYPES_STRUCT_TRAITS_H_
 
+#include <map>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/i18n/rtl.h"
 #include "base/strings/string16.h"
@@ -187,8 +190,6 @@ struct StructTraits<autofill::mojom::FormDataDataView, autofill::FormData> {
     return r.name;
   }
 
-  static const GURL& origin(const autofill::FormData& r) { return r.origin; }
-
   static const GURL& action(const autofill::FormData& r) { return r.action; }
 
   static bool is_form_tag(const autofill::FormData& r) { return r.is_form_tag; }
@@ -282,7 +283,6 @@ struct StructTraits<autofill::mojom::PasswordAndRealmDataView,
 template <>
 struct StructTraits<autofill::mojom::PasswordFormFillDataDataView,
                     autofill::PasswordFormFillData> {
-
   static const base::string16& name(const autofill::PasswordFormFillData& r) {
     return r.name;
   }

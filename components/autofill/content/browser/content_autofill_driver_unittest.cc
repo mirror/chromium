@@ -346,6 +346,12 @@ TEST_F(ContentAutofillDriverTest, FormDataSentToRenderer_FillForm) {
                                                          &output_form_data));
   EXPECT_TRUE(fake_agent_.GetAutofillFillFormMessage(&output_page_id,
                                                      &output_form_data));
+
+  // The origin is not sent over "ipc" and is not set by FakeAutofillAgent
+  // (it would be set by the real AutofillAgent::FillForm).  Tests need
+  // to compensate for this below.
+  output_form_data.origin = input_form_data.origin;
+
   EXPECT_EQ(input_page_id, output_page_id);
   EXPECT_TRUE(input_form_data.SameFormAs(output_form_data));
 }
@@ -367,6 +373,12 @@ TEST_F(ContentAutofillDriverTest, FormDataSentToRenderer_PreviewForm) {
                                                       &output_form_data));
   EXPECT_TRUE(fake_agent_.GetAutofillPreviewFormMessage(&output_page_id,
                                                         &output_form_data));
+
+  // The origin is not sent over "ipc" and is not set by FakeAutofillAgent
+  // (it would be set by the real AutofillAgent::FillForm).  Tests need
+  // to compensate for this below.
+  output_form_data.origin = input_form_data.origin;
+
   EXPECT_EQ(input_page_id, output_page_id);
   EXPECT_TRUE(input_form_data.SameFormAs(output_form_data));
 }
@@ -390,6 +402,16 @@ TEST_F(ContentAutofillDriverTest, TypePredictionsSentToRendererWhenEnabled) {
   std::vector<FormDataPredictions> output_type_predictions;
   EXPECT_TRUE(
       fake_agent_.GetFieldTypePredictionsAvailable(&output_type_predictions));
+
+  // The origin is not sent over "ipc" and is not set by FakeAutofillAgent
+  // (it would be set by the real AutofillAgent::FillForm).  Tests need
+  // to compensate for this below.
+  EXPECT_EQ(expected_type_predictions.size(), output_type_predictions.size());
+  for (size_t i = 0; i < expected_type_predictions.size(); i++) {
+    output_type_predictions[i].data.origin =
+        expected_type_predictions[i].data.origin;
+  }
+
   EXPECT_EQ(expected_type_predictions, output_type_predictions);
 }
 

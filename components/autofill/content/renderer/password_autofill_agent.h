@@ -317,6 +317,10 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   void OnSameDocumentNavigationCompleted(
       PasswordForm::SubmissionIndicatorEvent event);
 
+  // Returns canonical (auth and params stripped) url for the document hosted
+  // by the |render_frame()| being wrapped.
+  GURL GetCanonicalOriginForDocument() const;
+
   const mojom::AutofillDriverPtr& GetAutofillDriver();
 
   // The logins we have filled so far with their associated info.
