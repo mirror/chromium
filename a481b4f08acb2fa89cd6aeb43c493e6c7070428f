@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "845c132e_e943c84a",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-11T02:08:50Z",
+      "side": 1,
+      "message": "oshima@, please verify if I missed anything:\nChanged the code and comment a bit. The code was wrong when immersive not revealed and should be fixed in next patch.\n\n1. The main change in this cl is that: in overview mode, do not pain the header, but do not change the top view inset value. So in the if(!ShouldPaint()) branch, we cannot early out by return 0.\n\n2. overview mode use the top view inset to determine if we should clip the header and align with the fake header. Although we remove the code of clipping the header by hiding the header in this cl, the top view inset area is transparent now and we still need the inset value to align the fake header, so the inset cannot be 0.\n\n3. The only change in ShouldPaint() is that, when non-fullscreen V1 app is in overview mode, we will hide the header. So here I need to exclude this case when (!ShouldPaint() \u0026\u0026 V1 \u0026\u0026 in_overview_mode_) to calculate the V1 app inset in the branch of if (!browser_view()-\u003eIsTabStripVisible()) below. The previous falling through was still correct. But I refactor it a bit to make it more clear.",
+      "parentUuid": "7f38ea0a_fd7f23ac",
+      "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4e4d655_5b32c8e6",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b894b48_99e702a4",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-11T02:08:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4e4d655_5b32c8e6",
+      "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "90bac906_2541d11b",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-11T02:08:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13e899e5_59819f6d",
+      "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dd72028_9f9c5053",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167c8974_9718b941",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-11T02:08:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dd72028_9f9c5053",
+      "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "deebaa64_fa08934c",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-11T02:08:50Z",
+      "side": 1,
+      "message": "Thanks to point this out.\nMy impression was that V1 apps include hosted apps/popup windows. From the code here [1,2], let me guess any apps without tab strip, we should hide the header?\n\"Settings\" is a popup windows, we should not show the header in overview mode as well. So I think the old code was correct browser_view()-\u003eIsBrowserTypeNormal() \u003d\u003d browser_view()-\u003ebrowser()-\u003eis_type_tabbed().\nI might need to change this cl\u0027s description if I was wrong about the V1 app and popup windows.\n\nBut now there is new case when testing your popup windows: the icon is not hide. I will fix it in the next patch. Thank you!\n\n1. where we set the kTopViewInset: https://cs.chromium.org/chromium/src/chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc?l\u003d329\u0026rcl\u003dfa39c3323b4cf29ce81ff0b91618e200abd50614\n2. where we get the kTopViewInset in overview mode. If the inset \u003e 0, then clip the header:\nhttps://cs.chromium.org/chromium/src/ash/wm/overview/scoped_transform_overview_window.cc?l\u003d418\u0026rcl\u003dda2acb8c30a722b25ee5266f40ad70f1a098bd52",
+      "parentUuid": "8626408a_4ef79e8c",
+      "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc5287c4_51485790",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e7d6e61_856f6237",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-11T02:08:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc5287c4_51485790",
+      "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
