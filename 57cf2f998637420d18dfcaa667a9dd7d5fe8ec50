@@ -227,6 +227,24 @@
       "revId": "57cf2f998637420d18dfcaa667a9dd7d5fe8ec50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6abfe333_977cb597",
+        "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-11T17:03:30Z",
+      "side": 1,
+      "message": "Closed there and re-filed at https://github.com/whatwg/html/issues/3223",
+      "parentUuid": "4f969e8a_35b86820",
+      "revId": "57cf2f998637420d18dfcaa667a9dd7d5fe8ec50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
