@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "264c6c5b_efaee185",
+        "filename": "media/capabilities/metadata_bucketter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-11T18:13:55Z",
+      "side": 1,
+      "message": "Comment seems off as it starts at 50p?",
+      "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c954a5c1_090319ba",
+        "filename": "media/capabilities/metadata_bucketter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-11T18:13:55Z",
+      "side": 1,
+      "message": "Would it make sense to have this as private methods in VideoDecodeStatsDB?",
+      "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1f431d_77f41fc0",
+        "filename": "media/capabilities/video_decode_stats_db.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-11T18:13:55Z",
+      "side": 1,
+      "message": "nit: I would call this `Create` as the bucketting is an implementation detail, really",
+      "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
