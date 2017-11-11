@@ -33,6 +33,7 @@
 #include "base/memory/shared_memory.h"
 #include "base/memory/shared_memory_handle.h"
 #include "base/message_loop/message_loop.h"
+#include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/persistent_histogram_allocator.h"
 #include "base/metrics/persistent_memory_allocator.h"
@@ -3851,16 +3852,18 @@ void RenderProcessHostImpl::OnProcessLaunched() {
         child_process_launcher_->GetProcess().IsProcessBackgrounded();
 #endif  // defined(OS_MACOSX)
 
-    // Disable updating process priority on startup on desktop platforms for now
-    // as it incorrectly results in backgrounding foreground navigations until
-    // their first commit is made. A better long term solution would be to be
-    // aware of the tab's visibility at this point. https://crbug.com/560446.
-    // This is still needed on Android which uses
-    // |priority_.boost_for_pending_views| and requires RenderProcessHostImpl to
-    // propagate priority changes immediately to ChildProcessLauncher.
-#if defined(OS_ANDROID)
-    UpdateProcessPriority();
+    bool update_process_priority = true;
+#if !defined(OS_ANDROID)
+    base::FieldTrial* trial =
+        base::FieldTrialList::Find("BackgroundRendererProcessesOnLaunch");
+    if (!trial || !base::StartsWith(trial->group_name(), "Disallow",
+                                    base::CompareCase::SENSITIVE)) {
+      update_process_priority = false;
+    }
 #endif
+
+    if (update_process_priority)
+      UpdateProcessPriority();
 
     // Share histograms between the renderer and this process.
     CreateSharedRendererHistogramAllocator();

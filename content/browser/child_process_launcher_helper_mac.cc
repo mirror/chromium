@@ -152,8 +152,9 @@ void ChildProcessLauncherHelper::SetProcessPriorityOnLauncherThread(
     base::Process process,
     const ChildProcessLauncherPriority& priority) {
   if (process.CanBackgroundProcesses()) {
-    process.SetProcessBackgrounded(MachBroker::GetInstance(),
-                                   priority.background);
+    process.SetProcessBackgrounded(
+        MachBroker::GetInstance(),
+        priority.background && !priority.boost_for_pending_views);
   }
 }
 

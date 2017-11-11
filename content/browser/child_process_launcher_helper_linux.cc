@@ -135,8 +135,10 @@ void ChildProcessLauncherHelper::SetProcessPriorityOnLauncherThread(
     base::Process process,
     const ChildProcessLauncherPriority& priority) {
   DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
-  if (process.CanBackgroundProcesses())
-    process.SetProcessBackgrounded(priority.background);
+  if (process.CanBackgroundProcesses()) {
+    process.SetProcessBackgrounded(priority.background &&
+                                   !priority.boost_for_pending_views);
+  }
 }
 
 // static
