@@ -16,6 +16,24 @@
       "revId": "100bc9a7833055ce407e355021084059b501203f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d561c6f_47c71368",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-11T00:53:23Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "1989a577_e7bfaf94",
+      "revId": "100bc9a7833055ce407e355021084059b501203f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
