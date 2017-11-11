@@ -332,6 +332,30 @@
       "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "608ec542_73d211fd",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-11T00:26:01Z",
+      "side": 1,
+      "message": "I was more worried you were generate a TON of messages that would effect other things. It doesn\u0027t seem that as is the case, so I\u0027m ok with a bunch of messages.",
+      "parentUuid": "f6f6e234_98b9fcf1",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
