@@ -127,7 +127,7 @@ inline float ParentTextZoomFactor(LocalFrame* frame) {
 
 }  // namespace
 
-template class CORE_TEMPLATE_EXPORT Supplement<LocalFrame>;
+template class EXPORT_TEMPLATE_DEFINE(CORE_EXPORT) Supplement<LocalFrame>;
 
 // static
 LocalFrame* LocalFrame::Create(LocalFrameClient* client,

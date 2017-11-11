@@ -1,5 +1,6 @@
 include_rules = [
     "+base/atomic_sequence_num.h",
+    "+base/export_template.h",
     "+base/memory/scoped_refptr.h",
     "+bindings/core",
     "-bindings/modules",

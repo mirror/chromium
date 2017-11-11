@@ -30,6 +30,7 @@
 #define LocalFrame_h
 
 #include <memory>
+#include "base/export_template.h"
 #include "core/CoreExport.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/dom/WeakIdentifierMap.h"
@@ -82,7 +83,8 @@ class WebFrameScheduler;
 class WebPluginContainerImpl;
 class WebURLLoaderFactory;
 
-extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<LocalFrame>;
+extern template class EXPORT_TEMPLATE_DECLARE(CORE_EXPORT)
+    Supplement<LocalFrame>;
 
 class CORE_EXPORT LocalFrame final : public Frame,
                                      public Supplementable<LocalFrame> {
