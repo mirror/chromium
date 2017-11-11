@@ -12,6 +12,7 @@
 #include "base/command_line.h"
 #include "base/feature_list.h"
 #include "base/json/json_reader.h"
+#include "base/json/json_string_value_serializer.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -186,6 +187,16 @@ class BuiltinManifestProvider : public catalog::ManifestProvider {
       ChildProcessLauncher::SetRegisteredFilesForService(
           name.as_string(), std::move(*required_files));
     }
+
+    LOG(ERROR) << "----------------------------------------";
+    LOG(ERROR) << "Added manifest for: " << name << "\n\n";
+    std::string s_contents;
+    JSONStringValueSerializer serializer(&s_contents);
+    serializer.set_pretty_print(true);
+    serializer.Serialize(*manifest_value);
+
+    LOG(ERROR) << s_contents;
+    LOG(ERROR) << "----------------------------------------";
 
     auto result = manifests_.insert(
         std::make_pair(name.as_string(), std::move(manifest_value)));
