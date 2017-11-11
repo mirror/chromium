@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "061ee9f4_777359cb",
+        "filename": "testing/scripts/test.uploaded.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-11T00:36:25Z",
+      "side": 1,
+      "message": "(resolving)",
+      "parentUuid": "9ee7a2fc_5ed798c5",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c313c0a6_18972a5f",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 4
@@ -51,6 +69,24 @@
       "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f99b8d4_5b243195",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-11T00:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c313c0a6_18972a5f",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "ca26dba5_997ea75b",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-11T00:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e0e582b_97ab1be5",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6593836c_a167d8d7",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 4
@@ -124,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "bebe06f8_751d0354",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-11T00:36:25Z",
+      "side": 1,
+      "message": "I tested this locally with different chunk sizes, didn\u0027t see any real performance differences on a 1 GB file. Am I testing something incorrectly? Is it different on different OSes?",
+      "parentUuid": "6593836c_a167d8d7",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70befb8c_7fcbc217",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 4
@@ -135,6 +207,24 @@
       "writtenOn": "2017-11-10T20:29:28Z",
       "side": 1,
       "message": "this is a bit confusing, because key can either be a str or a tuple(str). It works in both cases as expected?",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc249df_bd326a61",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-11T00:36:25Z",
+      "side": 1,
+      "message": "get_tests always returns a dictionary with a tuple as the key. So it\u0027s always a tuple + tuple, which is always a tuple.",
+      "parentUuid": "70befb8c_7fcbc217",
       "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -194,6 +284,24 @@
     },
     {
       "key": {
+        "uuid": "157095b4_924bd6a4",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-11T00:36:25Z",
+      "side": 1,
+      "message": "I ended up doing this, and wrote some simple tests. Ends up being pretty fast for a fair number of files.",
+      "parentUuid": "02404794_109cc77b",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd1fc2fe_df52ebd2",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 4
@@ -229,6 +337,24 @@
     },
     {
       "key": {
+        "uuid": "33d5a4d2_c07c934a",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-11T00:36:25Z",
+      "side": 1,
+      "message": "Ok. Will keep this.",
+      "parentUuid": "d2a12989_d6f68f86",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f93e6c1_22182216",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 4
@@ -246,6 +372,24 @@
     },
     {
       "key": {
+        "uuid": "eb637ece_ed2be378",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-11T00:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f93e6c1_22182216",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "875bc45f_55fc154c",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 4
@@ -257,6 +401,24 @@
       "writtenOn": "2017-11-10T20:29:28Z",
       "side": 1,
       "message": "What\u0027s the value of trying to be smart here?",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf66ad4_674bab85",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-11T00:36:25Z",
+      "side": 1,
+      "message": "It was mostly for my testing. I\u0027ve removed the smartness here. Just rewrites the existing file.",
+      "parentUuid": "875bc45f_55fc154c",
       "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -333,6 +495,24 @@
     },
     {
       "key": {
+        "uuid": "d35da95c_abc3efd0",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-11T00:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d65bda4_4ca80c28",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "721ecc91_10c35d69",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 4
@@ -347,6 +527,24 @@
       "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf8acbd6_877f1cd8",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-11T00:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "721ecc91_10c35d69",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
