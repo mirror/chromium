@@ -56,6 +56,11 @@ const Entry* Instance::Resolve(const std::string& service_name) {
     return nullptr;
   }
 
+  LOG(ERROR) << ":::::::: DESERIALIZED: " << new_entry->name();
+  for (const auto& child : new_entry->children()) {
+    LOG(ERROR) << "::::::::     +-- CHILD: " << child->name();
+  }
+
   cached_entry = const_cast<const Entry*>(new_entry.get());
   bool added = system_cache_->AddRootEntry(std::move(new_entry));
   DCHECK(added);

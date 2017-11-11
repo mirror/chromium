@@ -27,21 +27,22 @@
 #include "services/catalog/constants.h"
 #include "services/catalog/entry_cache.h"
 #include "services/catalog/instance.h"
+#include "services/catalog/manifest_provider.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service_context.h"
 
 namespace catalog {
 
 namespace {
-
+/*
 const char kCatalogServicesKey[] = "services";
 const char kCatalogServiceEmbeddedKey[] = "embedded";
 const char kCatalogServiceExecutableKey[] = "executable";
 const char kCatalogServiceManifestKey[] = "manifest";
-
+*/
 base::LazyInstance<std::unique_ptr<base::Value>>::DestructorAtExit
     g_default_static_manifest = LAZY_INSTANCE_INITIALIZER;
-
+/*
 void LoadCatalogManifestIntoCache(const base::Value* root, EntryCache* cache) {
   DCHECK(root);
   const base::DictionaryValue* catalog = nullptr;
@@ -112,6 +113,7 @@ void LoadCatalogManifestIntoCache(const base::Value* root, EntryCache* cache) {
     }
   }
 }
+*/
 
 }  // namespace
 
@@ -177,12 +179,20 @@ Catalog::Catalog(std::unique_ptr<base::Value> static_manifest,
           mojo::MakeRequest(&service_))),
       service_manifest_provider_(service_manifest_provider),
       weak_factory_(this) {
+  auto manifests = service_manifest_provider->GetManifests();
+  for (auto& manifest : manifests) {
+    auto entry = Entry::Deserialize(*manifest);
+    system_cache_.AddRootEntry(std::move(entry));
+  }
+
+  /*
   if (static_manifest) {
     LoadCatalogManifestIntoCache(static_manifest.get(), &system_cache_);
   } else if (g_default_static_manifest.Get()) {
     LoadCatalogManifestIntoCache(
         g_default_static_manifest.Get().get(), &system_cache_);
   }
+  */
 }
 
 Catalog::~Catalog() {}

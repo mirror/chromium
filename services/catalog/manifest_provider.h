@@ -19,6 +19,8 @@ class ManifestProvider {
  public:
   virtual ~ManifestProvider() {}
 
+  virtual std::vector<std::unique_ptr<base::Value>> GetManifests() = 0;
+
   // Retrieves the raw contents of the manifest for application named |name|.
   // Returns true if |name| is known and |*manifest_contents| is populated.
   // returns false otherwise.
