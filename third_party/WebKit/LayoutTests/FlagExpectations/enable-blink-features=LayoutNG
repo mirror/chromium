@@ -6542,7 +6542,6 @@ crbug.com/591099 http/tests/devtools/layers/layer-sticky-position-constraint-get
 crbug.com/591099 http/tests/devtools/network/network-columns-visible.js [ Crash Failure Pass Timeout ]
 crbug.com/591099 http/tests/devtools/network/network-datareceived.js [ Failure Pass Timeout ]
 crbug.com/591099 http/tests/devtools/network/network-disable-cache-preloads.php [ Crash Failure Pass ]
-crbug.com/591099 http/tests/devtools/network/network-filters.html [ Crash Failure Timeout ]
 crbug.com/591099 http/tests/devtools/network/network-initiator.html [ Crash Failure Pass Timeout ]
 crbug.com/591099 http/tests/devtools/network/network-memory-cached-resource.html [ Crash Failure Pass ]
 crbug.com/591099 http/tests/devtools/network/network-xhr-same-url-as-main-resource.html [ Crash Failure Pass Timeout ]
