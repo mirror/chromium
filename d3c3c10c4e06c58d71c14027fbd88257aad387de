@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bb83dc8_282f6ab7",
+        "filename": "ui/gl/init/create_gr_gl_interface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-11T01:14:42Z",
+      "side": 1,
+      "message": "Add GL_EXPORT from #include \"ui/gl/gl_export\"? That should fix your linking issues.",
+      "revId": "d3c3c10c4e06c58d71c14027fbd88257aad387de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
