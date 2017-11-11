@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6c1009b_a0217c0e",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-11T01:16:06Z",
+      "side": 1,
+      "message": "It seems like we might be able to do something like this in GetClientNameForMetrics:\n\n#if defined(TEST)\n// default init client name\n#endif\n\nnot sure if we have a TEST define for test targets?\n\nanyway, not necessary this CL :D",
+      "range": {
+        "startLine": 506,
+        "startChar": 6,
+        "endLine": 506,
+        "endChar": 29
+      },
+      "revId": "21f469786bd86594f52028b5c41e16ada98bd1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
