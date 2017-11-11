@@ -55,6 +55,7 @@ using testing::UnorderedElementsAre;
 using testing::Unused;
 using testing::SaveArg;
 using testing::Sequence;
+using testing::SizeIs;
 using testing::WithArg;
 
 namespace media_router {
@@ -132,10 +133,9 @@ class TestMediaRouterMojoImpl : public MediaRouterMojoImpl {
   ~TestMediaRouterMojoImpl() override {}
 
  protected:
-  mojom::MediaRouteProvider* GetProviderForPresentation(
+  base::Optional<mojom::MediaRouteProvider::Id> GetProviderIdForPresentation(
       const std::string& presentation_id) override {
-    return media_route_providers_[mojom::MediaRouteProvider::Id::EXTENSION]
-        .get();
+    return mojom::MediaRouteProvider::Id::EXTENSION;
   }
 };
 
@@ -172,6 +172,16 @@ class MediaRouterMojoImplTest : public MediaRouterMojoTest {
 TEST_F(MediaRouterMojoImplTest, CreateRoute) {
   TestCreateRoute();
   ExpectResultBucketCount("CreateRoute", RouteRequestResult::OK, 1);
+}
+
+// Tests that MediaRouter is aware when a route is created, even if
+// MediaRouteProvider doesn't call OnRoutesUpdated().
+TEST_F(MediaRouterMojoImplTest, RouteRecognizedAfterCreation) {
+  MockMediaRoutesObserver routes_observer(router());
+
+  EXPECT_CALL(routes_observer, OnRoutesUpdated(SizeIs(1), _));
+  TestCreateRoute();
+  base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(MediaRouterMojoImplTest, CreateIncognitoRoute) {
