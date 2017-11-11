@@ -50,6 +50,35 @@ class GPU_EXPORT Scheduler {
 
   virtual ~Scheduler();
 
+  enum DebugType {
+    AddWaitFence,
+    RemoveWaitFence,
+    AddClientWait,
+    RemoveClientWait,
+    AddWaitingPriority,
+    RemoveWaitingPriority,
+    PriorityChanged,
+    ChangeWaitingPriority,
+    Destroyed
+  };
+
+  struct DebugTrace {
+    DebugTrace(DebugType type, int stream_id, int p0 = 0, int p1 = 0)
+     : type(type),
+       stream_id(stream_id),
+       p0(p0),
+       p1(p1) {}
+
+    DebugType type;
+    int stream_id;
+    int p0;
+    int p1;
+  };
+
+  std::vector<DebugTrace> debug_traces_;
+
+  void DumpDebugTraces();
+
   // Create a sequence with given priority. Returns an identifier for the
   // sequence that can be used with SyncPonintManager for creating sync point
   // release clients. Sequences start off as enabled (see |EnableSequence|).
