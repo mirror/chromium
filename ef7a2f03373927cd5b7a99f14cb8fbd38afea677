@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16759ba9_e529f145",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-11T17:46:36Z",
+      "side": 1,
+      "message": "doh. done",
+      "parentUuid": "45713f43_afcf3931",
+      "revId": "ef7a2f03373927cd5b7a99f14cb8fbd38afea677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "561e1098_5c166a32",
         "filename": "storage/browser/blob/blob_transport_strategy.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "ef7a2f03373927cd5b7a99f14cb8fbd38afea677",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753c6db1_dedbddb2",
+        "filename": "storage/browser/blob/blob_transport_strategy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-11T17:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "561e1098_5c166a32",
+      "revId": "ef7a2f03373927cd5b7a99f14cb8fbd38afea677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
