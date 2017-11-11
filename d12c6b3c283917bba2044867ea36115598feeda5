@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f530399_a038f1cc",
+        "filename": "chrome/common/switch_utils_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-11T13:38:23Z",
+      "side": 1,
+      "message": "I feel the removal of linebreaks is a net loss for readability and out of sync with the rest of this file (e.g. line 38 above). I would probably revert that back to how it was.",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 23
+      },
+      "revId": "d12c6b3c283917bba2044867ea36115598feeda5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
