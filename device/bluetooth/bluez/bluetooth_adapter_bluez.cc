@@ -67,6 +67,8 @@ namespace {
 const char kAgentPath[] = "/org/chromium/bluetooth_agent";
 const char kGattApplicationObjectPath[] = "/gatt_application";
 
+const int kMaximumDevicesCached = 50;
+
 void OnUnregisterAgentError(const std::string& error_name,
                             const std::string& error_message) {
   // It's okay if the agent didn't exist, it means we never saw an adapter.
@@ -608,11 +610,29 @@ void BluetoothAdapterBlueZ::DeviceAdded(const dbus::ObjectPath& object_path) {
     return;
   DCHECK(IsPresent());
 
+  // ChromeOS UI shows limited number of devices to avoid running out of memory.
+  if (devices_by_adding_order_.size() == kMaximumDevicesCached) {
+    std::string device_to_remove = devices_by_adding_order_.front();
+    auto iter = devices_.find(device_to_remove);
+    DCHECK(iter != devices_.end());
+
+    std::unique_ptr<BluetoothDevice> scoped_device = std::move(iter->second);
+    devices_.erase(iter);
+    devices_by_adding_order_.pop_front();
+
+    BluetoothDeviceBlueZ* removed_device =
+        static_cast<BluetoothDeviceBlueZ*>(scoped_device.get());
+    for (auto& observer : observers_)
+      observer.DeviceRemoved(this, removed_device);
+  }
+
   BluetoothDeviceBlueZ* device_bluez = new BluetoothDeviceBlueZ(
       this, object_path, ui_task_runner_, socket_thread_);
-  DCHECK(devices_.find(device_bluez->GetAddress()) == devices_.end());
+  std::string device_address = device_bluez->GetAddress();
 
-  devices_[device_bluez->GetAddress()] = base::WrapUnique(device_bluez);
+  DCHECK(devices_.find(device_address) == devices_.end());
+  devices_[device_address] = base::WrapUnique(device_bluez);
+  devices_by_adding_order_.push_back(device_address);
 
   for (auto& observer : observers_)
     observer.DeviceAdded(this, device_bluez);
