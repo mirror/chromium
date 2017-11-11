@@ -21,6 +21,7 @@
 #include "chrome/browser/policy/javascript_policy_handler.h"
 #include "chrome/browser/policy/managed_bookmarks_policy_handler.h"
 #include "chrome/browser/policy/network_prediction_policy_handler.h"
+#include "chrome/browser/policy/site_per_process_policy_handler.h"
 #include "chrome/browser/profiles/guest_mode_policy_handler.h"
 #include "chrome/browser/profiles/incognito_mode_policy_handler.h"
 #include "chrome/browser/sessions/restore_on_startup_policy_handler.h"
@@ -58,6 +59,7 @@
 #include "components/sync/driver/sync_policy_handler.h"
 #include "components/translate/core/browser/translate_pref_names.h"
 #include "components/variations/pref_names.h"
+#include "content/public/common/content_switches.h"
 #include "extensions/features/features.h"
 #include "media/media_features.h"
 #include "ppapi/features/features.h"
@@ -909,6 +911,7 @@ std::unique_ptr<ConfigurationPolicyHandlerList> BuildHandlerList(
 #endif
 
   handlers->AddHandler(base::MakeUnique<FileSelectionDialogsPolicyHandler>());
+  handlers->AddHandler(base::MakeUnique<SitePerProcessPolicyHandler>());
   handlers->AddHandler(base::MakeUnique<JavascriptPolicyHandler>());
   handlers->AddHandler(base::MakeUnique<NetworkPredictionPolicyHandler>());
   handlers->AddHandler(base::MakeUnique<RestoreOnStartupPolicyHandler>());

@@ -506,6 +506,7 @@ extern const char kSaveFileType[];
 extern const char kTrustedDownloadSources[];
 
 extern const char kAllowFileSelectionDialogs[];
+extern const char kSitePerProcess[];
 extern const char kDefaultTasksByMimeType[];
 extern const char kDefaultTasksBySuffix[];
 
