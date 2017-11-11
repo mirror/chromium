@@ -624,7 +624,7 @@ void RenderViewImpl::Initialize(
       RenderFrameImpl::ResolveOpener(params->opener_frame_route_id);
 
   if (params->main_frame_routing_id != MSG_ROUTING_NONE) {
-    CHECK(params->main_frame_interface_provider.is_bound());
+    CHECK(params->main_frame_interface_provider.is_valid());
     main_render_frame_ = RenderFrameImpl::CreateMainFrame(
         this, params->main_frame_routing_id,
         std::move(params->main_frame_interface_provider),

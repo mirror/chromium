@@ -100,8 +100,10 @@ class SampleFactoryImpl : public sample::Factory {
     sample::ResponsePtr response(sample::Response::New(2, std::move(pipe0)));
     callback.Run(std::move(response), text1);
 
-    if (request->obj)
-      request->obj->DoSomething();
+    if (request->obj) {
+      imported::ImportedInterfacePtr proxy(std::move(request->obj));
+      proxy->DoSomething();
+    }
   }
 
   void DoStuff2(ScopedDataPipeConsumerHandle pipe,

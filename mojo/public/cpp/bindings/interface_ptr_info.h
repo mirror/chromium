@@ -51,6 +51,9 @@ class InterfacePtrInfo {
   uint32_t version() const { return version_; }
   void set_version(uint32_t version) { version_ = version; }
 
+  // Allow InterfacePtrInfo<> to be used in boolean expressions.
+  explicit operator bool() const { return handle_.is_valid(); }
+
  private:
   ScopedMessagePipeHandle handle_;
   uint32_t version_;
