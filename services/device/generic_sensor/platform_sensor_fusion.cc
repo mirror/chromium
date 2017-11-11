@@ -40,6 +40,7 @@ class PlatformSensorFusion::Factory : public base::RefCounted<Factory> {
     // Make sure there are no dups.
     DCHECK(std::adjacent_find(types.begin(), types.end()) == types.end());
     DCHECK(result_callback_);
+    DCHECK(mapping_);
     DCHECK(provider_);
   }
 
@@ -69,8 +70,8 @@ class PlatformSensorFusion::Factory : public base::RefCounted<Factory> {
       std::move(result_callback_).Run(nullptr);
       return;
     }
-
-    sources_map_[sensor->GetType()] = std::move(sensor);
+    mojom::SensorType type = sensor->GetType();
+    sources_map_[type] = sensor;
     if (sources_map_.size() == fusion_algorithm_->source_types().size()) {
       scoped_refptr<PlatformSensor> fusion_sensor(new PlatformSensorFusion(
           std::move(mapping_), provider_, std::move(fusion_algorithm_),
@@ -142,9 +143,13 @@ PlatformSensorConfiguration PlatformSensorFusion::GetDefaultConfiguration() {
 
 bool PlatformSensorFusion::StartSensor(
     const PlatformSensorConfiguration& configuration) {
+  // Remove all the previously added source configs.
+  StopSensor();
   for (const auto& pair : source_sensors_) {
-    if (!pair.second->StartListening(this, configuration))
+    if (!pair.second->StartListening(this, configuration)) {
+      StopSensor();
       return false;
+    }
   }
 
   fusion_algorithm_->SetFrequency(configuration.frequency());
