@@ -56,6 +56,14 @@ class ModelTypeController : public DataTypeController {
 
   SyncClient* sync_client() const { return sync_client_; }
 
+  // Bridge accessor that can be overridden. This will be called on the UI
+  // thread, but the callback will only be run on the model thread.
+  virtual BridgeProvider GetBridgeProvider();
+
+  // This function need to be run on the model thread.
+  static void RunBridgeTask(const BridgeProvider& bridge_provider,
+                            const BridgeTask& task);
+
  private:
   void RecordStartFailure(ConfigureResult result) const;
 
@@ -69,10 +77,6 @@ class ModelTypeController : public DataTypeController {
   // is called on the UI thread.
   void OnProcessorStarted(
       std::unique_ptr<ActivationContext> activation_context);
-
-  // Bridge accessor that can be overridden. This will be called on the UI
-  // thread, but the callback will only be run on the model thread.
-  virtual BridgeProvider GetBridgeProvider();
 
   // Post the given task that requires the bridge object to run to the model
   // thread, where the bridge lives.
