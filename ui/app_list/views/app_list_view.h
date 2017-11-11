@@ -7,11 +7,11 @@
 
 #include <memory>
 
+#include "ash/public/cpp/app_list/app_list_constants.h"
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/scoped_observer.h"
 #include "build/build_config.h"
-#include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_export.h"
 #include "ui/app_list/app_list_view_delegate_observer.h"
 #include "ui/app_list/speech_ui_model_observer.h"

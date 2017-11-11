@@ -6,7 +6,7 @@
 
 #include <utility>
 
-#include "ui/app_list/search_result.h"
+#include "ash/public/cpp/app_list/search_result.h"
 
 namespace app_list {
 
