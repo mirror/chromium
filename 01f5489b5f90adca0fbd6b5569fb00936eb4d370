@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d3a411f_3220f952",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-11T06:39:14Z",
+      "side": 1,
+      "message": "no {} needed",
+      "revId": "01f5489b5f90adca0fbd6b5569fb00936eb4d370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f2f677_684120b1",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-11T06:39:14Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "01f5489b5f90adca0fbd6b5569fb00936eb4d370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1657bb5_34746c20",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-11T06:39:14Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "01f5489b5f90adca0fbd6b5569fb00936eb4d370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577414d6_a6ed0c44",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-11T06:39:14Z",
+      "side": 1,
+      "message": "Is there any guarantee that ReadEntriesFromFile() has finished at this moment as it runs on another task_runner?",
+      "revId": "01f5489b5f90adca0fbd6b5569fb00936eb4d370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c5b7f5a_347b2060",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-11T06:39:14Z",
+      "side": 1,
+      "message": "same here, if ReadEntriesFromFile() hasn\u0027t finished and we call this function immediately after constructing InProgressCacheImpl, there will be issues",
+      "revId": "01f5489b5f90adca0fbd6b5569fb00936eb4d370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
