@@ -790,7 +790,7 @@ TEST_F(SiteInstanceTest, NoProcessPerSiteForEmptySite) {
   host.reset(instance->GetProcess());
 
   EXPECT_FALSE(RenderProcessHostImpl::GetProcessHostForSite(
-      browser_context.get(), GURL()));
+      instance->browsing_instance(), GURL()));
 
   DrainMessageLoop();
 }

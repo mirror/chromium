@@ -109,6 +109,8 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
   void SetSite(const GURL& url);
   bool HasSite() const;
 
+  BrowsingInstance* browsing_instance() { return browsing_instance_.get(); }
+
   // Returns whether there is currently a related SiteInstance (registered with
   // BrowsingInstance) for the site of the given url.  If so, we should try to
   // avoid dedicating an unused SiteInstance to it (e.g., in a new tab).
@@ -159,8 +161,13 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
   // renderer process isolated from other sites. If --site-per-process is on the
   // command line, this is true for all sites. In other site isolation modes,
   // only a subset of sites will require dedicated processes.
-  static bool DoesSiteRequireDedicatedProcess(BrowserContext* browser_context,
-                                              const GURL& url);
+  //
+  // Certain sites require a dedicated process only within a particular
+  // BrowsingInstance, so this function also consults the list of isolated
+  // origins stored in |browsing_instance|.
+  static bool DoesSiteRequireDedicatedProcess(
+      BrowsingInstance* browsing_instance,
+      const GURL& url);
 
   // Returns true if a process |host| can be locked to a site |site_url|.
   // Returning true here also implies that |site_url| requires a dedicated
@@ -172,7 +179,7 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
   // allowed to be reused for different extensions.  Most of these special
   // cases should eventually be removed, and this function should become
   // equivalent to DoesSiteRequireDedicatedProcess().
-  static bool ShouldLockToOrigin(BrowserContext* browser_context,
+  static bool ShouldLockToOrigin(BrowsingInstance* browsing_instance,
                                  RenderProcessHost* host,
                                  GURL site_url);
 
