@@ -2,28 +2,31 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef ASH_SYSTEM_POWER_POWER_BUTTON_DISPLAY_CONTROLLER_H_
-#define ASH_SYSTEM_POWER_POWER_BUTTON_DISPLAY_CONTROLLER_H_
+#ifndef ASH_SYSTEM_POWER_DISPLAY_POWER_CONTROLLER_H_
+#define ASH_SYSTEM_POWER_DISPLAY_POWER_CONTROLLER_H_
+
+#include <memory>
+#include <set>
 
 #include "ash/ash_export.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/observer_list.h"
 #include "base/optional.h"
 #include "base/time/time.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "ui/events/devices/input_device_event_observer.h"
 #include "ui/events/event_handler.h"
 
-namespace base {
-class TickClock;
-}  // namespace base
-
 namespace ash {
 
-// PowerButtonDisplayController performs display-related tasks (e.g. forcing
+class DisplayPowerControllerObserver;
+class ScopedDisplayForcedOff;
+
+// DisplayPowerController performs display-related tasks (e.g. forcing
 // backlights off or disabling the touchscreen) on behalf of
 // PowerButtonController and TabletPowerButtonController.
-class ASH_EXPORT PowerButtonDisplayController
+class ASH_EXPORT DisplayPowerController
     : public chromeos::PowerManagerClient::Observer,
       public ui::EventHandler,
       public ui::InputDeviceEventObserver {
@@ -40,18 +43,20 @@ class ASH_EXPORT PowerButtonDisplayController
     OFF_AUTO,
   };
 
-  explicit PowerButtonDisplayController(base::TickClock* tick_clock);
-  ~PowerButtonDisplayController() override;
+  DisplayPowerController();
+  ~DisplayPowerController() override;
+
+  void AddObserver(DisplayPowerControllerObserver* observer);
+  void RemoveObserver(DisplayPowerControllerObserver* observer);
 
   ScreenState screen_state() const { return screen_state_; }
-  base::TimeTicks screen_state_last_changed() const {
-    return screen_state_last_changed_;
-  }
+
+  bool backlights_forced_off() const { return backlights_forced_off_; }
 
   // Updates the power manager's backlights-forced-off state and enables or
   // disables the touchscreen. No-op if |backlights_forced_off_| already equals
   // |forced_off|.
-  void SetDisplayForcedOff(bool forced_off);
+  std::unique_ptr<ScopedDisplayForcedOff> ForceDisplayOff();
 
   // Overridden from chromeos::PowerManagerClient::Observer:
   void PowerManagerRestarted() override;
@@ -67,7 +72,12 @@ class ASH_EXPORT PowerButtonDisplayController
   // Overridden from ui::InputDeviceObserver:
   void OnStylusStateChanged(ui::StylusState state) override;
 
+  // Called from PowerButtonController when the power button event is detected.
+  void OnPowerButtonEvent(bool down, const base::TimeTicks& time_stamp);
+
  private:
+  friend class TabletPowerButtonControllerTestApi;
+
   // Sends a request to powerd to get the backlights forced off state so that
   // |backlights_forced_off_| can be initialized.
   void GetInitialBacklightsForcedOff();
@@ -80,27 +90,30 @@ class ASH_EXPORT PowerButtonDisplayController
   // or |screen_state_| is OFF_AUTO.
   void UpdateTouchscreenStatus();
 
+  void UnregisterDisplayForcedOff(
+      ScopedDisplayForcedOff* scoped_display_forced_off);
+  void CancelDisplayForcedOffForUserAction();
+  void SetDisplayForcedOff(bool forced_off);
+
   // Current screen state.
   ScreenState screen_state_ = ScreenState::ON;
 
   // Current forced-off state of backlights.
   bool backlights_forced_off_ = false;
 
-  // Saves the most recent timestamp that screen state changed.
-  base::TimeTicks screen_state_last_changed_;
-
   // Controls whether the touchscreen is disabled when the screen is turned off
   // due to user inactivity.
   bool disable_touchscreen_while_screen_off_ = true;
 
-  // Time source for performed action times.
-  base::TickClock* tick_clock_;  // Not owned.
+  std::set<ScopedDisplayForcedOff*> active_display_forced_offs_;
 
-  base::WeakPtrFactory<PowerButtonDisplayController> weak_ptr_factory_;
+  base::ObserverList<DisplayPowerControllerObserver> observers_;
 
-  DISALLOW_COPY_AND_ASSIGN(PowerButtonDisplayController);
+  base::WeakPtrFactory<DisplayPowerController> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(DisplayPowerController);
 };
 
 }  // namespace ash
 
-#endif  // ASH_SYSTEM_POWER_POWER_BUTTON_DISPLAY_CONTROLLER_H_
+#endif  // ASH_SYSTEM_POWER_DISPLAY_POWER_CONTROLLER_H_

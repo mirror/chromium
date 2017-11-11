@@ -95,6 +95,7 @@ class CastConfigController;
 class DisplayColorManager;
 class DisplayConfigurationController;
 class DisplayErrorObserver;
+class DisplayPowerController;
 class DragDropController;
 class EventClientImpl;
 class EventTransformationHandler;
@@ -334,6 +335,10 @@ class ASH_EXPORT Shell : public SessionObserver,
   }
   DisplayErrorObserver* display_error_observer() {
     return display_error_observer_.get();
+  }
+
+  DisplayPowerController* display_power_controller() {
+    return display_power_controller_.get();
   }
 
   ::wm::CompoundEventFilter* env_filter() { return env_filter_.get(); }
@@ -746,6 +751,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<display::DisplayConfigurator> display_configurator_;
   std::unique_ptr<DisplayColorManager> display_color_manager_;
   std::unique_ptr<DisplayErrorObserver> display_error_observer_;
+  std::unique_ptr<DisplayPowerController> display_power_controller_;
   std::unique_ptr<ProjectingObserver> projecting_observer_;
 
   // Listens for output changes and updates the display manager.

@@ -10,7 +10,8 @@
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
 #include "ash/shutdown_reason.h"
-#include "ash/system/power/power_button_display_controller.h"
+#include "ash/system/power/display_power_controller.h"
+#include "ash/system/power/scoped_display_forced_off.h"
 #include "ash/wm/lock_state_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/logging.h"
@@ -51,14 +52,16 @@ constexpr base::TimeDelta
     TabletPowerButtonController::kIgnoreRepeatedButtonUpDelay;
 
 TabletPowerButtonController::TabletPowerButtonController(
-    PowerButtonDisplayController* display_controller,
+    DisplayPowerController* display_controller,
     base::TickClock* tick_clock)
     : lock_state_controller_(Shell::Get()->lock_state_controller()),
       display_controller_(display_controller),
-      tick_clock_(tick_clock) {
+      tick_clock_(tick_clock),
+      display_observer_(this) {
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
       this);
   Shell::Get()->tablet_mode_controller()->AddObserver(this);
+  display_observer_.Add(display_controller);
 }
 
 TabletPowerButtonController::~TabletPowerButtonController() {
@@ -86,15 +89,15 @@ void TabletPowerButtonController::OnPowerButtonEvent(
     // Chrome to turn it on. If the user presses the power button again during
     // this time, they probably intend to turn the display on. Avoid forcing off
     // in this case.
-    if (timestamp - display_controller_->screen_state_last_changed() <=
-        kScreenStateChangeDelay) {
+    if (timestamp - screen_state_last_changed_ <= kScreenStateChangeDelay)
       force_off_on_button_up_ = false;
-    }
 
     screen_off_when_power_button_down_ =
         display_controller_->screen_state() !=
-        PowerButtonDisplayController::ScreenState::ON;
-    display_controller_->SetDisplayForcedOff(false);
+        DisplayPowerController::ScreenState::ON;
+
+    display_forced_off_.reset();
+    display_controller_->OnPowerButtonEvent(down, timestamp);
     StartShutdownTimer();
   } else {
     const base::TimeTicks previous_up_time = last_button_up_time_;
@@ -114,11 +117,15 @@ void TabletPowerButtonController::OnPowerButtonEvent(
     if (shutdown_timer_.IsRunning()) {
       shutdown_timer_.Stop();
       if (!screen_off_when_power_button_down_ && force_off_on_button_up_) {
-        display_controller_->SetDisplayForcedOff(true);
+        display_forced_off_ = display_controller_->ForceDisplayOff();
         LockScreenIfRequired();
       }
     }
   }
+}
+
+void TabletPowerButtonController::OnScreenStateChanged() {
+  screen_state_last_changed_ = tick_clock_->NowTicks();
 }
 
 void TabletPowerButtonController::SuspendDone(

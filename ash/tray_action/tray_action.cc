@@ -6,6 +6,8 @@
 
 #include <utility>
 
+#include "ash/lock_screen_action/lock_screen_note_display_handler.h"
+#include "ash/shell.h"
 #include "ash/tray_action/tray_action_observer.h"
 #include "base/bind.h"
 #include "base/callback.h"
@@ -53,6 +55,8 @@ void TrayAction::SetClient(mojom::TrayActionClientPtr tray_action_client,
     lock_screen_note_state_ = lock_screen_note_state;
   }
 
+  UpdateLockScreenNoteDisplayHandler();
+
   // Setting action handler value can change effective state - notify observers
   // if that was the case.
   if (GetLockScreenNoteState() != old_lock_screen_note_state)
@@ -64,6 +68,8 @@ void TrayAction::UpdateLockScreenNoteState(mojom::TrayActionState state) {
     return;
 
   lock_screen_note_state_ = state;
+
+  UpdateLockScreenNoteDisplayHandler();
 
   // If the client is not set, the effective state has not changed, so no need
   // to notify observers of a state change.
@@ -93,6 +99,21 @@ void TrayAction::FlushMojoForTesting() {
 void TrayAction::NotifyLockScreenNoteStateChanged() {
   for (auto& observer : observers_)
     observer.OnLockScreenNoteStateChanged(GetLockScreenNoteState());
+}
+
+void TrayAction::UpdateLockScreenNoteDisplayHandler() {
+  bool enabled =
+      GetLockScreenNoteState() != mojom::TrayActionState::kNotAvailable;
+  if (enabled == !!lock_screen_note_display_handler_)
+    return;
+
+  if (enabled) {
+    lock_screen_note_display_handler_ =
+        std::make_unique<LockScreenNoteDisplayHandler>(
+            Shell::Get()->display_power_controller());
+  } else {
+    lock_screen_note_display_handler_.reset();
+  }
 }
 
 }  // namespace ash

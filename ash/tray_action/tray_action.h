@@ -13,6 +13,7 @@
 
 namespace ash {
 
+class LockScreenNoteDisplayHandler;
 class TrayActionObserver;
 
 // Controller that ash can use to request a predefined set of actions to be
@@ -56,14 +57,23 @@ class ASH_EXPORT TrayAction : public mojom::TrayAction {
 
   void FlushMojoForTesting();
 
+  LockScreenNoteDisplayHandler* lock_screen_note_display_handler_for_test() {
+    return lock_screen_note_display_handler_.get();
+  }
+
  private:
   // Notifies the observers that state for the lock screen note action has been
   // updated.
   void NotifyLockScreenNoteStateChanged();
 
+  void UpdateLockScreenNoteDisplayHandler();
+
   // Last known state for lock screen note action.
   mojom::TrayActionState lock_screen_note_state_ =
       mojom::TrayActionState::kNotAvailable;
+
+  std::unique_ptr<LockScreenNoteDisplayHandler>
+      lock_screen_note_display_handler_;
 
   base::ObserverList<TrayActionObserver> observers_;
 

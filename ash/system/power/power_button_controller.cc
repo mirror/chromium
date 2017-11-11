@@ -10,8 +10,9 @@
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/shutdown_reason.h"
-#include "ash/system/power/power_button_display_controller.h"
+#include "ash/system/power/display_power_controller.h"
 #include "ash/system/power/power_button_screenshot_controller.h"
+#include "ash/system/power/scoped_display_forced_off.h"
 #include "ash/system/power/tablet_power_button_controller.h"
 #include "ash/wm/lock_state_controller.h"
 #include "ash/wm/session_state_animator.h"
@@ -31,12 +32,12 @@ constexpr base::TimeDelta kDisplayOffAfterLockDelay =
 
 }  // namespace
 
-PowerButtonController::PowerButtonController()
+PowerButtonController::PowerButtonController(
+    DisplayPowerController* display_controller)
     : lock_state_controller_(Shell::Get()->lock_state_controller()),
-      tick_clock_(new base::DefaultTickClock) {
+      tick_clock_(new base::DefaultTickClock),
+      display_controller_(display_controller) {
   ProcessCommandLine();
-  display_controller_ =
-      std::make_unique<PowerButtonDisplayController>(tick_clock_.get());
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
       this);
   chromeos::AccelerometerReader::GetInstance()->AddObserver(this);
@@ -182,11 +183,11 @@ void PowerButtonController::PowerButtonEventReceived(
   if (lock_state_controller_->ShutdownRequested())
     return;
 
-  // PowerButtonDisplayController ignores power button events, so tell it to
-  // stop forcing the display off if TabletPowerButtonController isn't being
-  // used.
-  if (down && force_clamshell_power_button_)
-    display_controller_->SetDisplayForcedOff(false);
+  // DisplayPowerController ignores power button key events - notify it about
+  // the power button event so it can stop forcing the display off if
+  // TabletPowerButtonController isn't being used.
+  if (force_clamshell_power_button_)
+    display_controller_->OnPowerButtonEvent(down, timestamp);
 
   // Handle tablet mode power button screenshot accelerator.
   if (screenshot_controller_ &&
@@ -213,7 +214,7 @@ void PowerButtonController::OnAccelerometerUpdated(
     return;
   if (!force_clamshell_power_button_ && !tablet_controller_) {
     tablet_controller_ = std::make_unique<TabletPowerButtonController>(
-        display_controller_.get(), tick_clock_.get());
+        display_controller_, tick_clock_.get());
   }
 
   if (!screenshot_controller_) {
@@ -228,8 +229,16 @@ void PowerButtonController::SetTickClockForTesting(
   DCHECK(tick_clock);
   tick_clock_ = std::move(tick_clock);
 
-  display_controller_ =
-      std::make_unique<PowerButtonDisplayController>(tick_clock_.get());
+  if (tablet_controller_) {
+    tablet_controller_ = std::make_unique<TabletPowerButtonController>(
+        display_controller_, tick_clock_.get());
+  }
+
+  if (screenshot_controller_) {
+    screenshot_controller_ = std::make_unique<PowerButtonScreenshotController>(
+        tablet_controller_.get(), tick_clock_.get(),
+        force_clamshell_power_button_);
+  }
 }
 
 bool PowerButtonController::TriggerDisplayOffTimerForTesting() {
@@ -253,7 +262,7 @@ void PowerButtonController::ProcessCommandLine() {
 }
 
 void PowerButtonController::ForceDisplayOffAfterLock() {
-  display_controller_->SetDisplayForcedOff(true);
+  display_forced_off_ = display_controller_->ForceDisplayOff();
 }
 
 }  // namespace ash

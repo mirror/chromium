@@ -4,7 +4,7 @@
 
 #include "ash/system/power/tablet_power_button_controller_test_api.h"
 
-#include "ash/system/power/power_button_display_controller.h"
+#include "ash/system/power/display_power_controller.h"
 #include "ash/system/power/tablet_power_button_controller.h"
 
 namespace ash {

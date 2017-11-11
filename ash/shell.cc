@@ -82,6 +82,7 @@
 #include "ash/system/night_light/night_light_controller.h"
 #include "ash/system/palette/palette_tray.h"
 #include "ash/system/palette/palette_welcome_bubble.h"
+#include "ash/system/power/display_power_controller.h"
 #include "ash/system/power/peripheral_battery_notifier.h"
 #include "ash/system/power/power_button_controller.h"
 #include "ash/system/power/power_event_observer.h"
@@ -737,6 +738,7 @@ Shell::~Shell() {
 
   power_button_controller_.reset();
   lock_state_controller_.reset();
+  display_power_controller_.reset();
 
   screen_pinning_controller_.reset();
 
@@ -1021,9 +1023,11 @@ void Shell::Init(const ShellInitParams& init_params) {
   sticky_keys_controller_.reset(new StickyKeysController);
   screen_pinning_controller_ = std::make_unique<ScreenPinningController>();
 
+  display_power_controller_ = std::make_unique<DisplayPowerController>();
   lock_state_controller_ =
       std::make_unique<LockStateController>(shutdown_controller_.get());
-  power_button_controller_ = std::make_unique<PowerButtonController>();
+  power_button_controller_ =
+      std::make_unique<PowerButtonController>(display_power_controller_.get());
   // Pass the initial display state to PowerButtonController.
   power_button_controller_->OnDisplayModeChanged(
       display_configurator_->cached_displays());

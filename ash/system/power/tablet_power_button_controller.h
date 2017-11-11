@@ -9,6 +9,7 @@
 #include <utility>
 
 #include "ash/ash_export.h"
+#include "ash/system/power/display_power_controller_observer.h"
 #include "ash/wm/tablet_mode/tablet_mode_observer.h"
 #include "base/macros.h"
 #include "base/scoped_observer.h"
@@ -26,12 +27,14 @@ class TickClock;
 namespace ash {
 
 class LockStateController;
-class PowerButtonDisplayController;
+class DisplayPowerController;
+class ScopedDisplayForcedOff;
 
 // Handles power button events on convertible/tablet device. This class is
 // instantiated and used in PowerButtonController.
 class ASH_EXPORT TabletPowerButtonController
     : public chromeos::PowerManagerClient::Observer,
+      public DisplayPowerControllerObserver,
       public TabletModeObserver {
  public:
   // Public for tests.
@@ -48,12 +51,15 @@ class ASH_EXPORT TabletPowerButtonController
   static constexpr base::TimeDelta kIgnoreRepeatedButtonUpDelay =
       base::TimeDelta::FromMilliseconds(500);
 
-  TabletPowerButtonController(PowerButtonDisplayController* display_controller,
+  TabletPowerButtonController(DisplayPowerController* display_controller,
                               base::TickClock* tick_clock);
   ~TabletPowerButtonController() override;
 
   // Handles a power button event.
   void OnPowerButtonEvent(bool down, const base::TimeTicks& timestamp);
+
+  // Overriden from DisplayPowerController::Observer:
+  void OnScreenStateChanged() override;
 
   // Overridden from chromeos::PowerManagerClient::Observer:
   void SuspendDone(const base::TimeDelta& sleep_duration) override;
@@ -89,6 +95,9 @@ class ASH_EXPORT TabletPowerButtonController
   // Saves the most recent timestamp that power button is released.
   base::TimeTicks last_button_up_time_;
 
+  // Saves the most recent timestamp that screen state changed.
+  base::TimeTicks screen_state_last_changed_;
+
   // True if power button released should force off display.
   bool force_off_on_button_up_ = true;
 
@@ -99,10 +108,15 @@ class ASH_EXPORT TabletPowerButtonController
   LockStateController* lock_state_controller_;  // Not owned.
 
   // Used to interact with the display.
-  PowerButtonDisplayController* display_controller_;  // Not owned.
+  DisplayPowerController* display_controller_;  // Not owned.
 
   // Time source for performed action times.
   base::TickClock* tick_clock_;  // Not owned.
+
+  std::unique_ptr<ScopedDisplayForcedOff> display_forced_off_;
+
+  ScopedObserver<DisplayPowerController, DisplayPowerControllerObserver>
+      display_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(TabletPowerButtonController);
 };

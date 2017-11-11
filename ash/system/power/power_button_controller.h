@@ -23,8 +23,9 @@ class TimeTicks;
 namespace ash {
 
 class LockStateController;
-class PowerButtonDisplayController;
+class DisplayPowerController;
 class PowerButtonScreenshotController;
+class ScopedDisplayForcedOff;
 class TabletPowerButtonController;
 
 // Handles power button and lock button events. For convertible/tablet devices,
@@ -48,7 +49,7 @@ class ASH_EXPORT PowerButtonController
     LEGACY,
   };
 
-  PowerButtonController();
+  explicit PowerButtonController(DisplayPowerController* display_controller);
   ~PowerButtonController() override;
 
   // Handles clamshell power button behavior.
@@ -84,6 +85,10 @@ class ASH_EXPORT PowerButtonController
 
   PowerButtonScreenshotController* screenshot_controller_for_test() {
     return screenshot_controller_.get();
+  }
+
+  DisplayPowerController* display_controller_for_test() {
+    return display_controller_;
   }
 
   TabletPowerButtonController* tablet_power_button_controller_for_test() {
@@ -136,13 +141,15 @@ class ASH_EXPORT PowerButtonController
   std::unique_ptr<base::TickClock> tick_clock_;
 
   // Used to interact with the display.
-  std::unique_ptr<PowerButtonDisplayController> display_controller_;
+  DisplayPowerController* display_controller_;  // Not owned.
 
   // Handles events for power button screenshot.
   std::unique_ptr<PowerButtonScreenshotController> screenshot_controller_;
 
   // Handles events for convertible/tablet devices.
   std::unique_ptr<TabletPowerButtonController> tablet_controller_;
+
+  std::unique_ptr<ScopedDisplayForcedOff> display_forced_off_;
 
   // Used to run ForceDisplayOffAfterLock() shortly after the screen is locked.
   // Only started when |force_clamshell_power_button_| is true.
