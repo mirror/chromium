@@ -27,6 +27,11 @@ template <typename FunctionType>
 leveldb::Status ForEachWithPrefix(leveldb::DB* db,
                                   const leveldb::Slice& key_prefix,
                                   FunctionType function) {
+  leveldb::ReadOptions read_options;
+  // Disable filling the cache for bulk scans. Either this is for deletion
+  // (where caching those blocks doesn't make sense) or a mass-read, which the
+  // user "should" be caching / only needing once.
+  read_options.fill_cache = false;
   std::unique_ptr<leveldb::Iterator> it(
       db->NewIterator(leveldb::ReadOptions()));
   it->Seek(key_prefix);
