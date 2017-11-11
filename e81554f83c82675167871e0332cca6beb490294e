@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "935ea056_bdf38607",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-11T00:48:13Z",
+      "side": 1,
+      "message": "Ah I meant not loaded from disk yet.  You can punt this to when you add the persistence layer in a future patch, just add a TODO?",
+      "range": {
+        "startLine": 506,
+        "startChar": 2,
+        "endLine": 507,
+        "endChar": 40
+      },
+      "revId": "e81554f83c82675167871e0332cca6beb490294e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

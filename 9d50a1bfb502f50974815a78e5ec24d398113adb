@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "d57c5e35_7e6eb71d",
+        "filename": "components/download/downloader/in_progress/download_entry.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-11T00:48:13Z",
+      "side": 1,
+      "message": "Ah ok nvm!",
+      "parentUuid": "20d19a2b_a521ac84",
+      "range": {
+        "startLine": 15,
+        "startChar": 48,
+        "endLine": 15,
+        "endChar": 49
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e870ad0_6276489c",
         "filename": "components/download/downloader/in_progress/download_entry.h",
         "patchSetId": 14
@@ -449,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "fdffa38a_f0510958",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-11T00:48:13Z",
+      "side": 1,
+      "message": "We need a plan to figure out what to do with the metadata for failed downloads then.  For now let\u0027s just remove the entry for INTERRUPTED (it\u0027ll break on resume, but that\u0027s better than having the cache blow up if we have a lot of failed downloads).  Then add a TODO to properly handle fail/resume/retry/etc. for these?",
+      "parentUuid": "c066a1bc_0a4d211d",
+      "range": {
+        "startLine": 304,
+        "startChar": 4,
+        "endLine": 304,
+        "endChar": 50
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50c2f86b_58ecbf70",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 14
@@ -484,6 +532,30 @@
       "side": 1,
       "message": "** pause \u0026 resume a download, see what happens -- need this piece of code in that place too **",
       "parentUuid": "50c2f86b_58ecbf70",
+      "range": {
+        "startLine": 508,
+        "startChar": 2,
+        "endLine": 508,
+        "endChar": 18
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f81c145_00f3aaea",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-11T00:48:13Z",
+      "side": 1,
+      "message": "Still check IMO",
+      "parentUuid": "ded05942_42eb3e84",
       "range": {
         "startLine": 508,
         "startChar": 2,
