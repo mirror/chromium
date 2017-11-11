@@ -16,6 +16,24 @@
       "revId": "e595b444b8a32a2f20362f1bd007ec4f7c32fc59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c14a257_29c32c1c",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRect.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-11T01:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17eae721_93f3a77b",
+      "revId": "e595b444b8a32a2f20362f1bd007ec4f7c32fc59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

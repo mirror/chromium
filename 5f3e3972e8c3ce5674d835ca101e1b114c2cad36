@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f4d1a50_14130a14",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-11T01:49:20Z",
+      "side": 1,
+      "message": "This ensures the clip rect covers all clipped contents. That is, applying the clip in ancestor state won\u0027t clip out anything that should not be clip out.\n\nBecause of this new path, I have to change the return type from \"const FloatClipRect\u0026\" to \"FloatClipRect\". I\u0027m not sure how this will affect performance, but in GeometryMapper::LocalToAncestorClipRectInternal() we actually avoid one cache lookup (old line 310).",
+      "revId": "5f3e3972e8c3ce5674d835ca101e1b114c2cad36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
