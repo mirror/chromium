@@ -122,6 +122,18 @@ void TestDataReductionProxyConfig::SetShouldAddDefaultProxyBypassRules(
   add_default_proxy_bypass_rules_ = add_default_proxy_bypass_rules;
 }
 
+base::TimeDelta TestDataReductionProxyConfig::GetWarmupURFetchAttemptDelay()
+    const {
+  if (warmup_url_fetch_attempt_delay_)
+    return warmup_url_fetch_attempt_delay_.value();
+  return DataReductionProxyConfig::GetWarmupURFetchAttemptDelay();
+}
+
+void TestDataReductionProxyConfig::SetWarmupURFetchAttemptDelay(
+    base::TimeDelta delay) {
+  warmup_url_fetch_attempt_delay_ = delay;
+}
+
 MockDataReductionProxyConfig::MockDataReductionProxyConfig(
     std::unique_ptr<DataReductionProxyConfigValues> config_values,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,

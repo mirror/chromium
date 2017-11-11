@@ -56,6 +56,11 @@ using base::FieldTrialList;
 
 namespace {
 
+constexpr size_t kMaxWarmupURLFetchAttempts = 3;
+
+constexpr base::TimeDelta kWarmupURFetchAttemptDelay =
+    base::TimeDelta::FromSeconds(15);
+
 // Values of the UMA DataReductionProxy.Protocol.NotAcceptingTransform histogram
 // defined in metrics/histograms/histograms.xml. This enum must remain
 // synchronized with DataReductionProxyProtocolNotAcceptingTransformReason in
@@ -135,6 +140,7 @@ DataReductionProxyConfig::DataReductionProxyConfig(
       configurator_(configurator),
       event_creator_(event_creator),
       connection_type_(net::NetworkChangeNotifier::GetConnectionType()),
+      failed_warmup_url_fetch_counts_(0u),
       weak_factory_(this) {
   DCHECK(io_task_runner_);
   DCHECK(configurator);
@@ -157,7 +163,10 @@ void DataReductionProxyConfig::InitializeOnIOThread(
 
   secure_proxy_checker_.reset(
       new SecureProxyChecker(basic_url_request_context_getter));
-  warmup_url_fetcher_.reset(new WarmupURLFetcher(url_request_context_getter));
+  warmup_url_fetcher_.reset(new WarmupURLFetcher(
+      url_request_context_getter,
+      base::Bind(&DataReductionProxyConfig::HandleWarmupFetcherResponse,
+                 base::Unretained(this))));
 
   if (ShouldAddDefaultProxyBypassRules())
     AddDefaultProxyBypassRules();
@@ -168,6 +177,11 @@ void DataReductionProxyConfig::InitializeOnIOThread(
 bool DataReductionProxyConfig::ShouldAddDefaultProxyBypassRules() const {
   DCHECK(thread_checker_.CalledOnValidThread());
   return true;
+}
+
+void DataReductionProxyConfig::OnNewClientConfigFetched() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  ReloadConfig();
 }
 
 void DataReductionProxyConfig::ReloadConfig() {
@@ -393,6 +407,67 @@ void DataReductionProxyConfig::UpdateConfigForTesting(
       false, !insecure_proxies_allowed);
 }
 
+void DataReductionProxyConfig::HandleWarmupFetcherResponse(
+    const net::ProxyServer& proxy_server,
+    bool success_response) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  // Check the proxy server used, or disable all data saver proxies?
+  if (!IsDataReductionProxy(proxy_server, nullptr)) {
+    // No need to do anything here.
+    return;
+  }
+
+  bool is_secure_drp_proxy = proxy_server.is_https() || proxy_server.is_quic();
+  if (is_secure_drp_proxy) {
+    UMA_HISTOGRAM_BOOLEAN(
+        "DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch."
+        "SecureProxy",
+        success_response);
+  } else {
+    UMA_HISTOGRAM_BOOLEAN(
+        "DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch."
+        "InsecureProxy",
+        success_response);
+  }
+
+  bool warmup_url_failed_past =
+      network_properties_manager_.HasWarmupURLProbeFailed(is_secure_drp_proxy);
+
+  network_properties_manager_.SetHasWarmupURLProbeFailed(is_secure_drp_proxy,
+                                                         !success_response);
+
+  if (warmup_url_failed_past !=
+      network_properties_manager_.HasWarmupURLProbeFailed(
+          is_secure_drp_proxy)) {
+    ReloadConfig();
+  }
+
+  if (network_properties_manager_.HasWarmupURLProbeFailed(false) ||
+      network_properties_manager_.HasWarmupURLProbeFailed(true)) {
+    ++failed_warmup_url_fetch_counts_;
+
+    if (failed_warmup_url_fetch_counts_ <= kMaxWarmupURLFetchAttempts) {
+      // Refetch the warmup URL when it has failed.
+      io_task_runner_->PostDelayedTask(
+          FROM_HERE,
+          base::Bind(&DataReductionProxyConfig::FetchWarmupURL,
+                     base::Unretained(this)),
+          GetWarmupURFetchAttemptDelay());
+    }
+  } else {
+    UMA_HISTOGRAM_EXACT_LINEAR(
+        "DataReductionProxy.WarmupURLFetcherCallback."
+        "AttemptsBeforeSuccess",
+        failed_warmup_url_fetch_counts_, kMaxWarmupURLFetchAttempts + 1);
+  }
+}
+
+base::TimeDelta DataReductionProxyConfig::GetWarmupURFetchAttemptDelay() const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  return failed_warmup_url_fetch_counts_ * kWarmupURFetchAttemptDelay;
+}
+
 void DataReductionProxyConfig::HandleSecureProxyCheckResponse(
     const std::string& response,
     const net::URLRequestStatus& status,
@@ -447,6 +522,8 @@ void DataReductionProxyConfig::HandleSecureProxyCheckResponse(
 void DataReductionProxyConfig::OnNetworkChanged(
     net::NetworkChangeNotifier::ConnectionType type) {
   DCHECK(thread_checker_.CalledOnValidThread());
+
+  failed_warmup_url_fetch_counts_ = 0;
 
   connection_type_ = type;
   RecordNetworkChangeEvent(NETWORK_CHANGED);

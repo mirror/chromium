@@ -21,7 +21,6 @@ class TickClock;
 }
 
 namespace net {
-class NetworkQualityEstimator;
 class NetLog;
 class ProxyServer;
 }
@@ -103,8 +102,13 @@ class TestDataReductionProxyConfig : public DataReductionProxyConfig {
 
   void SetShouldAddDefaultProxyBypassRules(bool add_default_proxy_bypass_rules);
 
+  base::TimeDelta GetWarmupURFetchAttemptDelay() const override;
+
+  void SetWarmupURFetchAttemptDelay(base::TimeDelta delay);
+
   using DataReductionProxyConfig::UpdateConfigForTesting;
   using DataReductionProxyConfig::OnInsecureProxyWarmupURLProbeStatusChange;
+  using DataReductionProxyConfig::HandleWarmupFetcherResponse;
 
  private:
   bool GetIsCaptivePortal() const override;
@@ -121,6 +125,8 @@ class TestDataReductionProxyConfig : public DataReductionProxyConfig {
   // True if the default bypass rules should be added. Should be set to false
   // when fetching resources from an embedded test server running on localhost.
   bool add_default_proxy_bypass_rules_;
+
+  base::Optional<base::TimeDelta> warmup_url_fetch_attempt_delay_;
 
   DISALLOW_COPY_AND_ASSIGN(TestDataReductionProxyConfig);
 };
@@ -156,9 +162,6 @@ class MockDataReductionProxyConfig : public TestDataReductionProxyConfig {
                           base::TimeDelta* min_retry_delay));
   MOCK_METHOD1(SecureProxyCheck,
                void(SecureProxyCheckerCallback fetcher_callback));
-  MOCK_METHOD1(
-      IsNetworkQualityProhibitivelySlow,
-      bool(const net::NetworkQualityEstimator* network_quality_estimator));
 
   using DataReductionProxyConfig::UpdateConfigForTesting;
 
