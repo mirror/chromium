@@ -540,7 +540,7 @@ class Generator(generator.Generator):
               kind.value_kind,
               add_same_module_namespaces=add_same_module_namespaces))
     if mojom.IsInterfaceKind(kind):
-      return "%sPtr" % self._GetNameForKind(
+      return "%sPtrInfo" % self._GetNameForKind(
           kind, add_same_module_namespaces=add_same_module_namespaces)
     if mojom.IsInterfaceRequestKind(kind):
       return "%sRequest" % self._GetNameForKind(
@@ -598,6 +598,12 @@ class Generator(generator.Generator):
         self._IsCopyablePassByValue(kind))
 
   def _GetCppWrapperParamType(self, kind):
+    # TODO: We should consider whether or not to pass interface parameters as
+    # PtrInfo as well. It is probably technically better to do, but would
+    # require lots of code churn unless we also allow implicit conversion from
+    # Ptr to PtrInfo.
+    if mojom.IsInterfaceKind(kind):
+      return "%sPtr" % self._GetNameForKind(kind)
     cpp_wrapper_type = self._GetCppWrapperType(kind)
     return (cpp_wrapper_type if self._ShouldPassParamByValue(kind)
                              else "const %s&" % cpp_wrapper_type)
@@ -660,11 +666,10 @@ class Generator(generator.Generator):
     return self._GetCppWrapperType(kind, add_same_module_namespaces=True)
 
   def _MethodSupportsLazySerialization(self, method):
-    # TODO(crbug.com/753431,crbug.com/753433): Support lazy serialization for
-    # methods which pass associated handles and InterfacePtrs.
+    # TODO(crbug.com/753433): Support lazy serialization for methods which pass
+    # associated handles.
     return self.support_lazy_serialization and (
-        not mojom.MethodPassesAssociatedKinds(method) and
-        not mojom.MethodPassesInterfaces(method))
+        not mojom.MethodPassesAssociatedKinds(method))
 
   def _TranslateConstants(self, token, kind):
     if isinstance(token, mojom.NamedValue):

@@ -407,8 +407,10 @@ void ServiceWorkerSubresourceLoader::StartResponse(
   if (!response.blob_uuid.empty()) {
     GURL blob_url =
         GURL("blob:" + controller_origin_.spec() + "/" + response.blob_uuid);
+    blink::mojom::BlobURLHandlePtrInfo blob_url_handle_info;
     blob_registry_->data->RegisterURL(std::move(body_as_blob), blob_url,
-                                      &blob_url_handle_);
+                                      &blob_url_handle_info);
+    blob_url_handle_.Bind(std::move(blob_url_handle_info));
     resource_request_.url = blob_url;
 
     mojom::URLLoaderClientPtr blob_loader_client;
