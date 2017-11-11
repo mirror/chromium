@@ -1,21 +1,22 @@
-<html>
-<head>
-<script src="../../inspector/inspector-test.js"></script>
-<script src="../../inspector/console-test.js"></script>
-<script>
-function populateConsoleWithMessages(count)
-{
-    for (var i = 0; i < count - 1; ++i)
-        console.log("Multiline\nMessage #" + i);
-    console.log("hello %cworld", "color: blue");
-}
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-//# sourceURL=console-viewport-selection.html
-</script>
+(async function() {
+  TestRunner.addResult(`Verifies viewport stick-to-bottom behavior.\n`);
+  await TestRunner.loadModule('console_test_runner');
+  await TestRunner.showPanel('console');
+  await TestRunner.evaluateInPagePromise(`
+      function populateConsoleWithMessages(count)
+      {
+          for (var i = 0; i < count - 1; ++i)
+              console.log("Multiline\\nMessage #" + i);
+          console.log("hello %cworld", "color: blue");
+      }
 
-<script>
+      //# sourceURL=console-viewport-selection.js
+    `);
 
-function test() {
   var viewportHeight = 200;
   ConsoleTestRunner.fixConsoleViewportDimensions(600, viewportHeight);
   var consoleView = Console.ConsoleView.instance();
@@ -162,12 +163,4 @@ function test() {
     ConsoleTestRunner.addConsoleSniffer(messageAdded, false);
     TestRunner.evaluateInPage(String.sprintf('populateConsoleWithMessages(%d)', count));
   }
-}
-</script>
-</head>
-<body onload="runTest()">
-<p>
-    Verifies viewport stick-to-bottom behavior.
-</p>
-</body>
-</html>
+})();
