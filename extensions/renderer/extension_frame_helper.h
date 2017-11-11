@@ -5,6 +5,7 @@
 #ifndef EXTENSIONS_RENDERER_EXTENSION_FRAME_HELPER_H_
 #define EXTENSIONS_RENDERER_EXTENSION_FRAME_HELPER_H_
 
+#include <string>
 #include <vector>
 
 #include "base/callback_forward.h"
@@ -51,6 +52,11 @@ class ExtensionFrameHelper
   // isn't one in this process.
   static content::RenderFrame* GetBackgroundPageFrame(
       const std::string& extension_id);
+
+  // Finds a frame with the given |name|.
+  static content::RenderFrame* FindFrame(
+      content::RenderFrame* relative_to_frame,
+      const std::string& name);
 
   // Returns true if the given |context| is for any frame in the extension's
   // event page.
