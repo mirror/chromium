@@ -88,9 +88,12 @@ class WebEncryptedMediaClientImpl::Reporter {
 WebEncryptedMediaClientImpl::WebEncryptedMediaClientImpl(
     CdmFactory* cdm_factory,
     MediaPermission* media_permission,
+    bool is_encrypted_media_enabled,
     MediaLog* media_log)
     : cdm_factory_(cdm_factory),
-      key_system_config_selector_(KeySystems::GetInstance(), media_permission),
+      key_system_config_selector_(KeySystems::GetInstance(),
+                                  media_permission,
+                                  is_encrypted_media_enabled),
       media_log_(media_log),
       weak_factory_(this) {
   DCHECK(cdm_factory_);

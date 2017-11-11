@@ -34,9 +34,9 @@ class MediaPermission;
 
 class MEDIA_BLINK_EXPORT KeySystemConfigSelector {
  public:
-  KeySystemConfigSelector(
-      const KeySystems* key_systems,
-      MediaPermission* media_permission);
+  KeySystemConfigSelector(const KeySystems* key_systems,
+                          MediaPermission* media_permission,
+                          bool is_encrypted_media_enabled);
 
   ~KeySystemConfigSelector();
 
@@ -87,6 +87,7 @@ class MEDIA_BLINK_EXPORT KeySystemConfigSelector {
 
   const KeySystems* key_systems_;
   MediaPermission* media_permission_;
+  bool is_encrypted_media_enabled_;
   base::WeakPtrFactory<KeySystemConfigSelector> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(KeySystemConfigSelector);

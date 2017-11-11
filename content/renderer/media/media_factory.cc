@@ -323,6 +323,7 @@ blink::WebEncryptedMediaClient* MediaFactory::EncryptedMediaClient() {
   if (!web_encrypted_media_client_) {
     web_encrypted_media_client_.reset(new media::WebEncryptedMediaClientImpl(
         GetCdmFactory(), render_frame_->GetMediaPermission(),
+        render_frame_->GetRendererPreferences().enable_encrypted_media,
         new RenderMediaLog(
             url::Origin(render_frame_->GetWebFrame()->GetSecurityOrigin())
                 .GetURL())));
