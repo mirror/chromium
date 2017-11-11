@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "1fdb716e_75666a9b",
+        "filename": "mojo/public/tools/bindings/generators/mojom_cpp_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-11T18:19:32Z",
+      "side": 1,
+      "message": "Ah, I see. That is because ptr argument will be implicitly converted to ptr info.",
+      "parentUuid": "93cb0375_caa95073",
+      "revId": "ef7a2f03373927cd5b7a99f14cb8fbd38afea677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45713f43_afcf3931",
         "filename": "storage/browser/blob/blob_registry_impl.cc",
         "patchSetId": 2
