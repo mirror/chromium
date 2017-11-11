@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c54409d_268e3cee",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-11T20:06:19Z",
+      "side": 1,
+      "message": "TODO(msramek) ... crbug.com/... plz",
+      "revId": "321ef3239237a01b3eee7a3f618b327a7c14dd02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
