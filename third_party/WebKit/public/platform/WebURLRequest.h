@@ -36,6 +36,7 @@
 #include "WebHTTPBody.h"
 #include "WebReferrerPolicy.h"
 #include "WebSecurityOrigin.h"
+#include "base/optional.h"
 #include "services/network/public/interfaces/fetch_api.mojom-shared.h"
 
 namespace blink {
@@ -353,6 +354,8 @@ class WebURLRequest {
   // should be dropped if a different document was loaded in the frame
   // in-between.
   BLINK_PLATFORM_EXPORT void SetIsSameDocumentNavigation(bool);
+
+  BLINK_PLATFORM_EXPORT base::Optional<WebString> GetDownloadFilename() const;
 
 #if INSIDE_BLINK
   BLINK_PLATFORM_EXPORT ResourceRequest& ToMutableResourceRequest();

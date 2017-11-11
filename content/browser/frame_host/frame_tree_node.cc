@@ -496,8 +496,8 @@ void FrameTreeNode::ResetNavigationRequest(bool keep_state,
 
   // The RenderFrameHostManager should clean up any speculative RenderFrameHost
   // it created for the navigation. Also register that the load stopped.
-  DidStopLoading();
   render_manager_.CleanUpNavigation();
+  DidStopLoading();
 
   // When reusing the same SiteInstance, a pending WebUI may have been created
   // on behalf of the navigation in the current RenderFrameHost. Clear it.
