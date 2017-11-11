@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09765432_4a74a9b3",
+        "filename": "tools/gn/setup.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-11T01:03:29Z",
+      "side": 1,
+      "message": "nit:typo",
+      "range": {
+        "startLine": 382,
+        "startChar": 12,
+        "endLine": 382,
+        "endChar": 19
+      },
+      "revId": "699867504dbe7fcb944deede544901334f725655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
