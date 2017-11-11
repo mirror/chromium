@@ -1837,7 +1837,7 @@ config("afdo") {
 config("symbols") {
   if (is_win) {
     if (use_goma) {
-      # Note that this requires is_win_fastlink, enforced elsewhere.
+      # Note that this with VC++ requires is_win_fastlink, enforced elsewhere.
       cflags = [ "/Z7" ]  # Debug information in the .obj files.
     } else {
       cflags = [ "/Zi" ]  # Produce PDB file, no edit and continue.
@@ -1855,11 +1855,9 @@ config("symbols") {
     if (is_clang) {
       # /DEBUG:FASTLINK requires every object file to have standalone debug
       # information.
-      if (is_win_fastlink) {
-        cflags += [ "-fstandalone-debug" ]
-      } else {
-        cflags += [ "-fno-standalone-debug" ]
-      }
+      # How important is changing this based on is_win_fastlink? This means that
+      # changing a *linker* option requires recompiling the world.
+      cflags += [ "-fstandalone-debug" ]
     }
   } else {
     if (is_mac || is_ios) {
