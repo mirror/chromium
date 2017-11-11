@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "00f036b1_6eb611ea",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-11T06:49:07Z",
+      "side": 1,
+      "message": "sorry, but i don\u0027t think that renaming PowerButtonDisplayController is the right approach here either. this is a helper class used by the power button classes; they use it to force the display off, and it handles turning the display back on in response to various events.\n\nDisplayPowerController isn\u0027t an appropriate name for it since there\u0027s other unrelated code related to displays\u0027 power states (see e.g. https://cs.chromium.org/chromium/src/ui/display/manager/chromeos/display_configurator.h?q\u003dSetDisplayPower\u0026sq\u003dpackage:chromium\u0026l\u003d229). please keep the current name for this class.\n\nwhy can\u0027t a lock-screen-note-taking-specific class observe stylus eject events directly and handle launching the app itself? is the problem that you need additional information about the display state to determine whether you should launch the app? if you explain more about what you need, we can try to figure out a cleaner way of getting the information to the right place.\n\n(feel free to move this discussion to the bug, which seems like it might be a better place to nail down the design of this.)",
+      "parentUuid": "7dcbfc08_6455229b",
+      "revId": "42a9100e2fa3d0be5ad67c2eeb36c9d89859448c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97b516bc_91ad8bb6",
         "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
         "patchSetId": 5
