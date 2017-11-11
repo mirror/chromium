@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f8230833_ff8615a2",
+        "filename": "chromeos/printing/ppd_line_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-11-11T00:11:31Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s worth logging -- it\u0027s not something we\u0027re going to really be inspecting logs for, and I don\u0027t want to log it just for the sake of logging.",
+      "parentUuid": "286538e7_f34909b9",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 18
+      },
+      "revId": "78417a023564a5afdda45a41b30ed11d2a0e1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a081579_2e6ab9ba",
         "filename": "chromeos/printing/ppd_line_reader.cc",
         "patchSetId": 2
