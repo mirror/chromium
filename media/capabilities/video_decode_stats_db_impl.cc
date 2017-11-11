@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/mojo/services/video_decode_stats_db_impl.h"
+#include "media/capabilities/video_decode_stats_db_impl.h"
 
 #include <memory>
 #include <tuple>
@@ -13,7 +13,8 @@
 #include "base/strings/stringprintf.h"
 #include "base/task_scheduler/post_task.h"
 #include "components/leveldb_proto/proto_database_impl.h"
-#include "media/mojo/services/video_decode_stats.pb.h"
+#include "media/capabilities/metadata_bucketter.h"
+#include "media/capabilities/video_decode_stats.pb.h"
 
 namespace media {
 
@@ -133,6 +134,8 @@ void VideoDecodeStatsDBImpl::GetDecodeStats(const VideoDescKey& key,
                                             GetDecodeStatsCB get_stats_cb) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(IsInitialized());
+
+  DVLOG(3) << __func__ << " " << KeyToString(key);
 
   db_->GetEntry(
       SerializeKey(key),

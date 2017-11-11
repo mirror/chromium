@@ -10,6 +10,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "media/base/video_codecs.h"
+#include "media/capabilities/metadata_bucketter.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
 namespace media {
@@ -90,7 +91,9 @@ void VideoDecodePerfHistory::GetPerfInfo(VideoCodecProfile profile,
     return;
   }
 
-  VideoDecodeStatsDB::VideoDescKey video_key(profile, natural_size, frame_rate);
+  VideoDecodeStatsDB::VideoDescKey video_key =
+      VideoDecodeStatsDB::VideoDescKey::MakeBuckettedKey(profile, natural_size,
+                                                         frame_rate);
 
   db_->GetDecodeStats(
       video_key, base::BindOnce(&VideoDecodePerfHistory::OnGotStatsForRequest,
@@ -182,7 +185,9 @@ void VideoDecodePerfHistory::SavePerfRecord(
     return;
   }
 
-  VideoDecodeStatsDB::VideoDescKey video_key(profile, natural_size, frame_rate);
+  VideoDecodeStatsDB::VideoDescKey video_key =
+      VideoDecodeStatsDB::VideoDescKey::MakeBuckettedKey(profile, natural_size,
+                                                         frame_rate);
   VideoDecodeStatsDB::DecodeStatsEntry new_stats(
       frames_decoded, frames_dropped, frames_decoded_power_efficient);
 
