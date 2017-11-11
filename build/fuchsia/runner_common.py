@@ -19,6 +19,8 @@ import sys
 import time
 import uuid
 
+import elf_info
+
 
 DIR_SOURCE_ROOT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
@@ -137,9 +139,11 @@ def _StripBinary(dry_run, bin_path):
   """Creates a stripped copy of the executable at |bin_path| and returns the
   path to the stripped copy."""
   strip_path = bin_path + '.bootfs_stripped'
-  _RunAndCheck(dry_run, ['/usr/bin/strip', bin_path, '-o', strip_path])
-  if not dry_run and not os.path.exists(strip_path):
-    raise Exception('strip did not create output file')
+  if dry_run:
+    print "Strip", bin_path, " to ", strip_path
+  else:
+    info = elf_info.get_elf_info(bin_path)
+    info.strip(strip_path)
   return strip_path
 
 
@@ -150,13 +154,9 @@ def _StripBinaries(dry_run, file_mapping, target_cpu):
   symbolization."""
   symbols_mapping = {}
   for target, source in file_mapping.iteritems():
-    with open(source, 'rb') as f:
-      file_tag = f.read(4)
-    if file_tag == '\x7fELF':
+    if elf_info.is_elf(source):
       symbols_mapping[target] = source
-      # TODO(wez): Strip ARM64 binaries as well. See crbug.com/773444.
-      if target_cpu == 'x64':
-        file_mapping[target] = _StripBinary(dry_run, source)
+      file_mapping[target] = _StripBinary(dry_run, source)
   return symbols_mapping
 
 
