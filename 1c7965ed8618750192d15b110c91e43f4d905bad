@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "28f1c25b_0a305b8a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-11T00:03:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fb74371_806bb238",
+      "range": {
+        "startLine": 52,
+        "startChar": 62,
+        "endLine": 52,
+        "endChar": 67
+      },
+      "revId": "1c7965ed8618750192d15b110c91e43f4d905bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd164cf4_09c6b79d",
         "filename": "content/public/renderer/render_frame_observer.h",
         "patchSetId": 26
@@ -39,6 +63,24 @@
       "revId": "1c7965ed8618750192d15b110c91e43f4d905bad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b933d56a_1fd03790",
+        "filename": "content/public/renderer/render_frame_observer.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-11T00:03:52Z",
+      "side": 1,
+      "message": "Ooops - thanks for catching this.  Done - I\u0027ve changed the comments for WillCommit... and for DidCommit... + moved these 2 methods higher (so they are no longer gathered under \"These match the Blink API notifications\" comment).",
+      "parentUuid": "cd164cf4_09c6b79d",
+      "revId": "1c7965ed8618750192d15b110c91e43f4d905bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

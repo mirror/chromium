@@ -208,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "7d6ce27d_eabd8d53",
+        "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-11T00:03:52Z",
+      "side": 1,
+      "message": "\u003e \u003e Good catch.  I\u0027ve added checking that the document URL didn\u0027t change.\n\u003e \u003e \n\u003e \u003e I also wondered whether I should also call |weak_factory_.InvalidateWeakPtrs()| somewhere (at the beginning of RFO::DidClearWindowObject?  in a new override of RFO::DidFinishLoad?).  I didn\u0027t do this, because 1) it seemed ad-hoc (unless |weak_factory_| is renamed to something navigation/script-specific) and therefore fragile and 2) it seemed unnecessary given the URL checking.  WDYT (for here and for the other PostTask;  this is [for now] assuming that we might still end up pursuing the PostTask approach)?\n\u003e \n\u003e Is there another PostTask?  I only see the one here in DidClearWindowObject.\n\nNo - the only PostTask is the one being added in this CL into DidClearWindowObject.  Apparently I forgot to update my saved Gerrit drafts above after switching to the WillCommit... approach (after removing the other PostTask).\n\nSo - what do you think about calling |weak_factory_.InvalidateWeakPtrs()| as outlined above?  Not needed?  Too ad-hoc?\n \n\u003e \u003e WDYT?  Is the PostTask good enough here?\n\u003e \n\u003e This is probably ok for now, though it\u0027s not perfect.  Ideally we\u0027d invalidate the task if the document changed, even with the same URL.  (There\u0027s a risk we could run the same task twice on a document if we load the URL twice in succession.)\n\u003e \n\nAck.  Maybe |weak_factory_.InvalidateWeakPtrs()| described above would help for this, but I am not a huge fan I think...\n\n\u003e I think that\u0027s something that might be solvable with a sort of document ID (as is being discussed for https://crbug.com/783506).\n\u003e \n\u003e \u003e \n\u003e \u003e \n\u003e \u003e FWIW, I see that the script execution here happens only for DevTools windows (via DevToolsFrontendHostImpl::DevToolsFrontendHostImpl which executes contents of third_party/WebKit/Source/devtools/front_end/devtools_compatibility.js OR via DevToolsFrontendHost::SetupExtensionsAPI which I think can execute arbitrary scripts requested by DevTools extensions - see \u0026Delegate::RegisterExtensionsAPI).\n\u003e \n\u003e Yeah, that seems to limit it further, so I\u0027m ok with it for now (though we should get a sanity check from someone from DevTools, perhaps?).\n\nAck - I\u0027ll loop in pfeldman@.",
+      "parentUuid": "9bac7a53_eae67d43",
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae495d99_ede9aa5c",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 15
