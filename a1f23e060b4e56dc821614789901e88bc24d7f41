@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "061435ab_f929f452",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T23:16:25Z",
+      "side": 1,
+      "message": "Document why this is all in the wallpaper interface, rather than something session related. I suspect it is because ash doesn\u0027t know about users until they sign in, and wallpaper has to work at the login screen before sign in, but I\u0027m not sure.",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b668aceb_a3a9191c",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T23:16:25Z",
+      "side": 1,
+      "message": "Document all arguments.",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ce4d86_68b16549",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T23:16:25Z",
+      "side": 1,
+      "message": "Is this a path? If so, use mojo/common/file_path.mojom. You also might want to leave a comment for  your security reviewer (or chat with them in advance). Passing paths around between processes might make them nervous. As long as this interface is between two trusted processes, then this is OK, and if the path is only for reading, that\u0027s reassuring too.",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5783a41e_c57cc49a",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T23:16:25Z",
+      "side": 1,
+      "message": "update |account_id| part",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a97ffc3d_3b36c25f",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T23:16:25Z",
+      "side": 1,
+      "message": "Document what it does, not where it is called from.",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42fada4_ba41765e",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T23:16:25Z",
+      "side": 1,
+      "message": "ditto re account_id",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0a4405_fbfdac93",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T23:16:25Z",
+      "side": 1,
+      "message": "nit: Create a FlushForTesting (or FlushMojoForTesting) method on WallpaperController and call that instead of a generic message loop spin.",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92accdce_09325fc2",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T23:16:25Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e982fb80_24b12925",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T23:16:25Z",
+      "side": 1,
+      "message": "nit: base/macros.h",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03336d23_e1a890d5",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T23:16:25Z",
+      "side": 1,
+      "message": "forward declare these too",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
