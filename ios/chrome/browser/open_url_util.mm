@@ -13,17 +13,19 @@
 #endif
 
 void OpenUrlWithCompletionHandler(NSURL* url,
-                                  void (^completion_handler)(BOOL success)) {
+                                  void (^completion_handler)(BOOL)) {
   if (@available(iOS 10, *)) {
     [[UIApplication sharedApplication] openURL:url
                                        options:@{}
                              completionHandler:completion_handler];
-  } else {
-    BOOL result = [[UIApplication sharedApplication] openURL:url];
-    if (!completion_handler)
-      return;
-    dispatch_async(dispatch_get_main_queue(), ^{
-      completion_handler(result);
-    });
+    return;
   }
+#if !defined(__IPHONE_10_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_10_0
+  BOOL result = [[UIApplication sharedApplication] openURL:url];
+  if (!completion_handler)
+    return;
+  dispatch_async(dispatch_get_main_queue(), ^{
+    completion_handler(result);
+  });
+#endif
 }
