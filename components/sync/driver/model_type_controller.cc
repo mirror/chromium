@@ -52,13 +52,6 @@ base::WeakPtr<ModelTypeSyncBridge> ReturnCapturedBridge(
   return arg;
 }
 
-void RunBridgeTask(const BridgeProvider& bridge_provider,
-                   const BridgeTask& task) {
-  if (base::WeakPtr<ModelTypeSyncBridge> bridge = bridge_provider.Run()) {
-    task.Run(bridge.get());
-  }
-}
-
 }  // namespace
 
 ModelTypeController::ModelTypeController(
@@ -242,6 +235,21 @@ void ModelTypeController::ReportModelError(const ModelError& error) {
                            error.message(), type()));
 }
 
+BridgeProvider ModelTypeController::GetBridgeProvider() {
+  // Get the bridge eagerly, and capture the weak pointer.
+  base::WeakPtr<ModelTypeSyncBridge> bridge =
+      sync_client_->GetSyncBridgeForModelType(type());
+  return base::Bind(&ReturnCapturedBridge, bridge);
+}
+
+// static
+void ModelTypeController::RunBridgeTask(const BridgeProvider& bridge_provider,
+                                        const BridgeTask& task) {
+  if (base::WeakPtr<ModelTypeSyncBridge> bridge = bridge_provider.Run()) {
+    task.Run(bridge.get());
+  }
+}
+
 void ModelTypeController::RecordStartFailure(ConfigureResult result) const {
   DCHECK(CalledOnValidThread());
   // TODO(wychen): enum uma should be strongly typed. crbug.com/661401
@@ -253,13 +261,6 @@ void ModelTypeController::RecordStartFailure(ConfigureResult result) const {
                             MAX_CONFIGURE_RESULT);
   SYNC_DATA_TYPE_HISTOGRAM(type());
 #undef PER_DATA_TYPE_MACRO
-}
-
-BridgeProvider ModelTypeController::GetBridgeProvider() {
-  // Get the bridge eagerly, and capture the weak pointer.
-  base::WeakPtr<ModelTypeSyncBridge> bridge =
-      sync_client_->GetSyncBridgeForModelType(type());
-  return base::Bind(&ReturnCapturedBridge, bridge);
 }
 
 void ModelTypeController::PostBridgeTask(const base::Location& location,
