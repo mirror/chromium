@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "83d302dc_f2b4b734",
+        "filename": "ash/accessibility/accessibility_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T22:43:06Z",
+      "side": 1,
+      "message": "Since there can only be a single client, just use Binding instead of BindingSet.",
+      "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c058f7e7_ca337944",
+        "filename": "ash/accessibility/test_accessibility_controller_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T22:43:06Z",
+      "side": 1,
+      "message": "Just binding, not set",
+      "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d2814ae_aa34bdc9",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T22:43:06Z",
+      "side": 1,
+      "message": "nit: document the values. (For example, I don\u0027t know what \"window needed\" means.)",
+      "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab5d7c67_e9674230",
         "filename": "ash/system/tray_caps_lock.cc",
         "patchSetId": 3
@@ -13,6 +64,58 @@
       "writtenOn": "2017-11-11T01:44:50Z",
       "side": 1,
       "message": "I also tried to add tests for this. However, there is an shelf animation related issue when doing FlushMojoForTest, which needs investigation.",
+      "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b7f5ef_35dac61b",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T22:43:06Z",
+      "side": 1,
+      "message": "Hmm. Does ShelfViewTestAPI::RunMessageLoopUntilAnimationsDone() help? I think AshTestHelper already sets a ui::ScopedAnimationDurationScaleMode::ZERO_DURATION.",
+      "parentUuid": "ab5d7c67_e9674230",
+      "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bcfac7e_d442da11",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T22:43:06Z",
+      "side": 1,
+      "message": "Can you add a trivial test for this class? It doesn\u0027t need to do much, just demonstrate how to access it. For example, it could be a browser test that calls TriggerAccessibilityAlert and verifies that the automation manager is turned on and off for screen changes.",
+      "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1eee718_7bb8b8c8",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-11T22:43:06Z",
+      "side": 1,
+      "message": "nit: docs",
       "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
