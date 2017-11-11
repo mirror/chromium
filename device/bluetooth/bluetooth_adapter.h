@@ -641,6 +641,9 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapter
   // instance.
   DevicesMap devices_;
 
+  // A list of bluetooth device addresses by the their adding order.
+  std::list<std::string> devices_by_adding_order_;
+
   // Default pairing delegates registered with the adapter.
   std::list<PairingDelegatePair> pairing_delegates_;
 
