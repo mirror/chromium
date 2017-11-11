@@ -34,6 +34,24 @@
       "revId": "09e95e0c9f989cee3f4ad12272dd34753d0491af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494cb033_eb542b95",
+        "filename": "components/subresource_filter/core/browser/ruleset_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-11T00:59:09Z",
+      "side": 1,
+      "message": "I guess I was not explaining this the best way. Let me try again.\n\nWith a normal scoper like a unique_ptr, when one calls release(), which is the equivalent to ScopedTempFile::Take(), normally one receives the return result from release(), and do whatever with the raw pointer.\n\nIn the existing code, the Take() call is a bit magical, as the caller does not save the returned FilePath. So it is a bit tricker to figure out what happened to the directory. This CL is the unique_ptr equivalent of taking:\n\nstd::unique_ptr\u003cFoo\u003e foo \u003d std::make_unique\u003cFoo\u003e();\n...\nif (!MaybeTakeOwnershipOfRawPointer(foo.get())\n  return;  // |foo| deletes its pointer.\nfoo.release();  // |foo| calls release(), nobody takes the result, what happened?\n\nand transforming it to:\n\nstd::unique_ptr\u003cFoo\u003e foo \u003d std::make_unique\u003cFoo\u003e();\n...\nFoo* foo_ptr \u003d foo.release();\nif (!MaybeTakeOwnershipOfRawPointer(foo_ptr) {\n  delete foo_ptr;\n  return;\n}",
+      "parentUuid": "cb34118a_d7772a27",
+      "revId": "09e95e0c9f989cee3f4ad12272dd34753d0491af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
