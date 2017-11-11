@@ -807,9 +807,21 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
   // Surface bounds are in DIPs, but |damage_rect| and |output_rect| are in
   // pixels, so we need to scale by the |device_scale_factor|.
   gfx::Rect damage_rect = gfx::SkIRectToRect(damage_.getBounds());
-  damage_rect.Offset(origin.x(), origin.y());
-  render_pass->damage_rect.Union(
-      gfx::ConvertRectToPixel(device_scale_factor, damage_rect));
+
+  if (!damage_rect.IsEmpty()) {
+    damage_rect.Offset(origin.x(), origin.y());
+    // Damage is in surface coordinate space and client might not be aware
+    // of the |device_scale_factor| and the scaling/filtering it requires.
+    // Outset damage to prevent this from causing rendering artifacts.
+    if (device_scale_factor > 1.0f) {
+      float damage_outset = std::ceil(device_scale_factor - 1.0f);
+      damage_rect.Inset(-damage_outset, -damage_outset);
+    }
+    damage_rect.Intersect(output_rect);
+    render_pass->damage_rect.Union(
+        gfx::ConvertRectToPixel(device_scale_factor, damage_rect));
+  }
+
   render_pass->output_rect.Union(
       gfx::ConvertRectToPixel(device_scale_factor, output_rect));
 
