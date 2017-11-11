@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5ab3bfd_faa937f0",
+        "filename": "chrome/browser/ui/autofill/autofill_popup_layout_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-11T00:05:05Z",
+      "side": 1,
+      "message": "put this below\n\nalso mac is not aura? and what does happen on android?",
+      "revId": "765ed582e78bab2229e9a7315c9f600f0898a4f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cecb931_3eccf91b",
+        "filename": "chrome/browser/ui/autofill/popup_view_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-11T00:05:05Z",
+      "side": 1,
+      "message": "Hmm, I can\u0027t tell if this is correct. There\u0027s a whole bunch of interaction with Display, which certainly are in physical pixels already, so seeing the scale *after* all of that manipulation seems wrong.\n\nAlso should IsUseZoomForDSFEnabled, since that checks a whole bunch of other things. You can move it from content_switches_internal to content_switches\n\nalso speaking of which.. I think that java check in the last CL is wrong?",
+      "range": {
+        "startLine": 132,
+        "startChar": 40,
+        "endLine": 132,
+        "endChar": 60
+      },
+      "revId": "765ed582e78bab2229e9a7315c9f600f0898a4f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38dd6cb_6617ef9e",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1817,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-11T00:05:05Z",
+      "side": 1,
+      "message": "update the documentation in the header explaining what are the units of the return value",
+      "range": {
+        "startLine": 1817,
+        "startChar": 27,
+        "endLine": 1817,
+        "endChar": 48
+      },
+      "revId": "765ed582e78bab2229e9a7315c9f600f0898a4f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
