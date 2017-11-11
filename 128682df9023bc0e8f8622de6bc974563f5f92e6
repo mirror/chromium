@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "12e4bcfd_c963cc23",
+        "filename": "ios/chrome/browser/ui/main_content/main_content_ui_forwarder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-11T01:51:19Z",
+      "side": 1,
+      "message": "I\u0027ve moved starting/stopping the broadcast into util functions that are called from the coordinator layer.  Now, MainContentUI exposes a state object that has the main UI broadcast properties.  I chose to do it this way instead of just adding the properties directly to the protocol because this allows us to have better control over how those properties are set (i.e. through the updater object rather than directly setting via the protocol).",
+      "parentUuid": "e57de515_25c5b0c0",
+      "range": {
+        "startLine": 22,
+        "startChar": 46,
+        "endLine": 22,
+        "endChar": 57
+      },
+      "revId": "128682df9023bc0e8f8622de6bc974563f5f92e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8114de4_edaeef8b",
         "filename": "ios/chrome/browser/ui/main_content/main_content_ui_forwarder.h",
         "patchSetId": 7
