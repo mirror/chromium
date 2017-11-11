@@ -480,6 +480,10 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         // non-content displaying things such as the OSK.
         mInsetObserverView = InsetObserverView.create(this);
         rootView.addView(mInsetObserverView, 0);
+
+        int visibility = rootView.getSystemUiVisibility();
+        visibility |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+        rootView.setSystemUiVisibility(visibility);
     }
 
     @Override

@@ -49,6 +49,7 @@
 
     <style name="TabbedModeTheme" parent="MainTheme">
         <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
     </style>
 
     <style name="FirstRunTheme" parent="DialogWhenLarge">
