@@ -9,12 +9,12 @@
 #include <string>
 #include <vector>
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/files/important_file_writer.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "ui/app_list/app_list_export.h"
 
 namespace base {
 class DictionaryValue;

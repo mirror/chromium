@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_APP_LIST_APP_LIST_EXPORT_H_
-#define UI_APP_LIST_APP_LIST_EXPORT_H_
+#ifndef ASH_PUBLIC_CPP_APP_LIST_APP_LIST_EXPORT_H_
+#define ASH_PUBLIC_CPP_APP_LIST_APP_LIST_EXPORT_H_
 
 // Defines APP_LIST_EXPORT so that functionality implemented by the app_list
 // module can be exported to consumers.
@@ -29,5 +29,4 @@
 #define APP_LIST_EXPORT
 #endif
 
-#endif  // UI_APP_LIST_APP_LIST_EXPORT_H_
-
+#endif  // ASH_PUBLIC_CPP_APP_LIST_APP_LIST_EXPORT_H_

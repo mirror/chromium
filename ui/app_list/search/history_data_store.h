@@ -9,10 +9,10 @@
 #include <string>
 #include <vector>
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "ui/app_list/app_list_export.h"
 #include "ui/app_list/search/dictionary_data_store.h"
 #include "ui/app_list/search/history_data.h"
 

@@ -5,7 +5,7 @@
 #ifndef UI_APP_LIST_VIEWS_APPS_GRID_VIEW_FOLDER_DELEGATE_H_
 #define UI_APP_LIST_VIEWS_APPS_GRID_VIEW_FOLDER_DELEGATE_H_
 
-#include "ui/app_list/app_list_export.h"
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "ui/app_list/views/apps_grid_view.h"
 
 namespace gfx {

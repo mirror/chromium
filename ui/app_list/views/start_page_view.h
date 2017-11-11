@@ -9,8 +9,8 @@
 
 #include <vector>
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "base/macros.h"
-#include "ui/app_list/app_list_export.h"
 #include "ui/app_list/views/app_list_page.h"
 
 namespace app_list {

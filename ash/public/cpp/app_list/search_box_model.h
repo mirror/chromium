@@ -2,13 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_APP_LIST_SEARCH_BOX_MODEL_H_
-#define UI_APP_LIST_SEARCH_BOX_MODEL_H_
+#ifndef ASH_PUBLIC_CPP_APP_LIST_SEARCH_BOX_MODEL_H_
+#define ASH_PUBLIC_CPP_APP_LIST_SEARCH_BOX_MODEL_H_
 
+#include "ash/public/cpp/app_list/app_list_export.h"
+#include "ash/public/cpp/ash_public_export.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/strings/string16.h"
-#include "ui/app_list/app_list_export.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/selection_model.h"
 
@@ -21,7 +22,7 @@ class SearchBoxModelObserver;
 // is used as query edit control's placeholder text and displayed when there is
 // no user text in the control. The selection model and the text represents the
 // text, cursor position and selected text in edit control.
-class APP_LIST_EXPORT SearchBoxModel {
+class ASH_PUBLIC_EXPORT APP_LIST_EXPORT SearchBoxModel {
  public:
   // The properties of the speech button.
   struct APP_LIST_EXPORT SpeechButtonProperty {
@@ -104,4 +105,4 @@ class APP_LIST_EXPORT SearchBoxModel {
 
 }  // namespace app_list
 
-#endif  // UI_APP_LIST_SEARCH_BOX_MODEL_H_
+#endif  // ASH_PUBLIC_CPP_APP_LIST_SEARCH_BOX_MODEL_H_
