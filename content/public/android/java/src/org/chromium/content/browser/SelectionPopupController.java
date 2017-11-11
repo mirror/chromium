@@ -262,11 +262,9 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
     @VisibleForTesting
     @CalledByNative
-    public void showSelectionMenu(int left, int top, int right, int bottom, boolean isEditable,
-            boolean isPasswordType, String selectionText, int selectionStartOffset,
-            boolean canSelectAll, boolean canRichlyEdit, boolean shouldSuggest,
-            @MenuSourceType int sourceType) {
-        mSelectionRect.set(left, top, right, bottom);
+    public void showSelectionMenu(boolean isEditable, boolean isPasswordType, String selectionText,
+            int selectionStartOffset, boolean canSelectAll, boolean canRichlyEdit,
+            boolean shouldSuggest, @MenuSourceType int sourceType) {
         mEditable = isEditable;
         mLastSelectedText = selectionText;
         mLastSelectionOffset = selectionStartOffset;
@@ -857,6 +855,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      */
     @VisibleForTesting
     void selectAll() {
+        hideActionMode(true);
         mWebContents.selectAll();
         mClassificationResult = null;
         // Even though the above statement logged a SelectAll user action, we want to
@@ -1060,8 +1059,6 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         if (top == bottom) ++bottom;
         switch (eventType) {
             case SelectionEventType.SELECTION_HANDLES_SHOWN:
-                break;
-
             case SelectionEventType.SELECTION_HANDLES_MOVED:
                 mSelectionRect.set(left, top, right, bottom);
                 invalidateContentRect();

@@ -4489,6 +4489,41 @@ bool RenderFrameImpl::RunFileChooser(
   return ScheduleFileChooser(ipc_params, chooser_completion);
 }
 
+class ContextMenuSwapPromise : public cc::SwapPromise {
+ public:
+  explicit ContextMenuSwapPromise(
+      const ContextMenuParams& params,
+      scoped_refptr<IPC::SyncMessageFilter> message_sender,
+      int routing_id)
+      : params_(params),
+        message_sender_(message_sender),
+        routing_id_(routing_id) {}
+
+  ~ContextMenuSwapPromise() override = default;
+
+  void DidActivate() override {}
+
+  void WillSwap(viz::CompositorFrameMetadata* metadata) override {}
+
+  void DidSwap() override {
+    message_sender_->Send(new FrameHostMsg_ContextMenu(routing_id_, params_));
+  }
+
+  DidNotSwapAction DidNotSwap(DidNotSwapReason reason) override {
+    message_sender_->Send(new FrameHostMsg_ContextMenu(routing_id_, params_));
+    return DidNotSwapAction::BREAK_PROMISE;
+  }
+
+  void OnCommit() override {}
+
+  int64_t TraceId() const override { return 0; }
+
+ private:
+  ContextMenuParams params_;
+  scoped_refptr<IPC::SyncMessageFilter> message_sender_;
+  int routing_id_;
+};
+
 void RenderFrameImpl::ShowContextMenu(const blink::WebContextMenuData& data) {
   ContextMenuParams params = ContextMenuParamsBuilder::Build(data);
   blink::WebRect position_in_window(params.x, params.y, 0, 0);
@@ -4509,24 +4544,17 @@ void RenderFrameImpl::ShowContextMenu(const blink::WebContextMenuData& data) {
   if (params.src_url.spec().size() > url::kMaxURLChars)
     params.src_url = GURL();
 
-  blink::WebRect selection_in_window(data.selection_rect);
-  GetRenderWidget()->ConvertViewportToWindow(&selection_in_window);
-  params.selection_rect = selection_in_window;
-
 #if defined(OS_ANDROID)
-  // The Samsung Email app relies on the context menu being shown after the
-  // javascript onselectionchanged is triggered.
-  // See crbug.com/729488
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&RenderFrameImpl::ShowDeferredContextMenu,
-                            weak_factory_.GetWeakPtr(), params));
+  // Android context menu relies on selection position that is sent to the
+  // browser via CompositorFrameMetadata which means we must ensure that the
+  // metadata reaches the browser before the context menu event.
+  GetRenderWidget()->compositor()->QueueSwapPromise(
+      std::unique_ptr<cc::SwapPromise>(new ContextMenuSwapPromise(
+          params, RenderThreadImpl::current()->sync_message_filter(),
+          routing_id_)));
 #else
-  ShowDeferredContextMenu(params);
-#endif
-}
-
-void RenderFrameImpl::ShowDeferredContextMenu(const ContextMenuParams& params) {
   Send(new FrameHostMsg_ContextMenu(routing_id_, params));
+#endif
 }
 
 void RenderFrameImpl::SaveImageFromDataURL(const blink::WebString& data_url) {
