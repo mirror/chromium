@@ -66,6 +66,7 @@
 #include "core/layout/LayoutCounter.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutEmbeddedObject.h"
+#include "core/layout/LayoutFullScreen.h"
 #include "core/layout/LayoutScrollbar.h"
 #include "core/layout/LayoutScrollbarPart.h"
 #include "core/layout/LayoutView.h"
@@ -2944,10 +2945,16 @@ Color LocalFrameView::DocumentBackgroundColor() const {
   // background color of the LocalFrameView. This should match the color drawn
   // by ViewPainter::paintBoxDecorationBackground.
   Color result = BaseBackgroundColor();
-  LayoutItem document_layout_object = GetLayoutViewItem();
-  if (!document_layout_object.IsNull()) {
-    result = result.Blend(
-        document_layout_object.ResolveColor(CSSPropertyBackgroundColor));
+
+  LayoutObject* layout_object = nullptr;
+  Document* document = GetFrame().GetDocument();
+  if (Fullscreen* fullscreen = Fullscreen::FromIfExists(*document))
+    layout_object = fullscreen->FullScreenLayoutObject();
+  if (!layout_object)
+    layout_object = GetFrame().ContentLayoutObject();
+  if (layout_object) {
+    result =
+        result.Blend(layout_object->ResolveColor(CSSPropertyBackgroundColor));
   }
   return result;
 }

@@ -222,7 +222,6 @@ bool CARendererLayerTree::RootLayer::CommitFullscreenLowPowerLayer(
     ContentLayer* old_low_power_layer,
     float scale_factor) {
   ContentLayer* video_layer = nullptr;
-  CGRect clip_rect;
   CGRect frame_rect;
   for (auto& clip_layer : clip_and_sorting_layers) {
     for (auto& transform_layer : clip_layer.transform_layers) {
@@ -238,7 +237,6 @@ bool CARendererLayerTree::RootLayer::CommitFullscreenLowPowerLayer(
             return false;
           if (content_layer.opacity != 1)
             return false;
-          clip_rect = clip_layer.clip_rect.ToCGRect();
           gfx::RectF frame_rect_f(video_layer->rect);
           transform_layer.transform.TransformRect(&frame_rect_f);
           frame_rect_f.Scale(1 / scale_factor);
@@ -262,10 +260,6 @@ bool CARendererLayerTree::RootLayer::CommitFullscreenLowPowerLayer(
   low_power_layer = video_layer;
 
   low_power_layer->CommitToCA(ca_layer, old_low_power_layer, scale_factor);
-  if (![ca_layer backgroundColor])
-    [ca_layer setBackgroundColor:CGColorGetConstantColor(kCGColorBlack)];
-  if (!CGRectEqualToRect([ca_layer frame], clip_rect))
-    [ca_layer setFrame:clip_rect];
   if (!CGRectEqualToRect([low_power_layer->ca_layer frame], frame_rect))
     [low_power_layer->ca_layer setFrame:frame_rect];
   return true;
@@ -535,11 +529,8 @@ void CARendererLayerTree::RootLayer::CommitToCA(CALayer* superlayer,
   if (CommitFullscreenLowPowerLayer(old_low_power_layer, scale_factor)) {
     return;
   } else if (old_low_power_layer) {
-    // Transitioning out of fullscreen low power mode, so:
-    // 1. Reset the root CALayer's background color and frame.
-    [ca_layer setBackgroundColor:nil];
-    [ca_layer setFrame:CGRectZero];
-    // 2. Reset old_layer so that the CALayer tree is rebuilt from scratch.
+    // Transitioning out of fullscreen low power mode, reset old_layer so that
+    // the CALayer tree is rebuilt from scratch.
     old_layer = nullptr;
   }
 
