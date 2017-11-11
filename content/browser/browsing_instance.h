@@ -15,6 +15,7 @@
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/browser_context.h"
+#include "url/origin.h"
 
 class GURL;
 
@@ -59,6 +60,26 @@ class CONTENT_EXPORT BrowsingInstance final
  public:
   // Get the BrowserContext to which this BrowsingInstance belongs.
   BrowserContext* browser_context() const { return browser_context_; }
+
+  // Adds an origin that should receive a dedicated process when used within
+  // this BrowsingInstance, but not in other BrowsingInstances.
+  //
+  // Important note: |origin| *has* to be specified at site granularity, i.e.,
+  // as an eTLD+1. For example, https://foo.com/ is a valid |origin|, but
+  // https://www.foo.com/ is not.
+  // TODO(alexmos): Remove this restriction once cookie enforcement is
+  // refactored to no longer rely on knowing GetSiteForURL() on the IO thread.
+  //
+  // TODO(alexmos): Should this be called AddIsolatedSite given the above?
+  void AddIsolatedOrigin(const url::Origin& origin);
+
+  // Check whether an origin requires a dedicated process when used within this
+  // BrowsingInstance.  This will return true for all origins added via
+  // AddIsolatedOrigin above, as well as for subdomains of those origins. For
+  // example, if https://foo.com/ was added as an isolated origin, this
+  // function will return true for https://foo.com as well as
+  // https://bar.foo.com/ and https://baz.bar.foo.com/.
+  bool IsIsolatedOrigin(const url::Origin& origin);
 
  private:
   friend class base::RefCounted<BrowsingInstance>;
@@ -126,6 +147,8 @@ class CONTENT_EXPORT BrowsingInstance final
   size_t active_contents_count_;
 
   SiteInstanceImpl* default_subframe_site_instance_ = nullptr;
+
+  std::set<url::Origin> isolated_origins_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowsingInstance);
 };

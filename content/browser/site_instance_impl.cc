@@ -420,10 +420,17 @@ bool SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
   BrowserContext* browser_context =
       browsing_instance ? browsing_instance->browser_context() : nullptr;
 
-  // Always require a dedicated process for isolated origins.
+  // Require a dedicated process for the global list of isolated origins.
   GURL site_url = GetSiteForURL(browser_context, url);
+  url::Origin origin(url::Origin::Create(site_url));
   auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
-  if (policy->IsIsolatedOrigin(url::Origin::Create(site_url)))
+  if (policy->IsIsolatedOrigin(origin))
+    return true;
+
+  // Also require a dedicated process for any isolated origins scoped to the
+  // particular BrowsingInstance in which |url| will be hosted.
+  // |browsing_instance| might be null in tests.
+  if (browsing_instance && browsing_instance->IsIsolatedOrigin(origin))
     return true;
 
   // Let the content embedder enable site isolation for specific URLs. Use the

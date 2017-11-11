@@ -932,4 +932,90 @@ IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, LocalStorageOriginEnforcement) {
   crash_observer.Wait();
 }
 
+// Check that isolated origins added for a particular BrowsingInstance receive
+// process isolation only within that BrowsingInstance.
+IN_PROC_BROWSER_TEST_F(IsolatedOriginTest,
+                       IsolatedSiteScopedToBrowsingInstance) {
+  GURL foo_url(
+      embedded_test_server()->GetURL("foo.com", "/page_with_iframe.html"));
+  GURL bar_url(embedded_test_server()->GetURL("bar.com", "/title1.html"));
+
+  // Open a new, unrelated tab, which will be in a separate BrowsingInstance.
+  Shell* new_shell = CreateBrowser();
+
+  EXPECT_TRUE(NavigateToURL(shell(), foo_url));
+  EXPECT_TRUE(NavigateToURL(new_shell, foo_url));
+
+  // Add bar.com to the list of isolated sites for the first tab's
+  // BrowsingInstance.
+  scoped_refptr<SiteInstanceImpl> foo_instance1 =
+      web_contents()->GetSiteInstance();
+  GURL isolated_site_url(SiteInstanceImpl::GetSiteForURL(
+      foo_instance1->GetBrowserContext(), bar_url));
+  foo_instance1->browsing_instance()->AddIsolatedOrigin(
+      url::Origin::Create(isolated_site_url));
+
+  WebContentsImpl* new_contents =
+      static_cast<WebContentsImpl*>(new_shell->web_contents());
+  scoped_refptr<SiteInstanceImpl> foo_instance2 =
+      new_contents->GetSiteInstance();
+  EXPECT_FALSE(foo_instance1->IsRelatedSiteInstance(foo_instance2.get()));
+
+  // Navigating the subframe to bar.com should swap processes in the first tab
+  // (where bar.com is isolated), but not in the second tab (unless
+  // --site-per-process is used).
+  NavigateIframeToURL(web_contents(), "test_iframe", bar_url);
+  NavigateIframeToURL(new_contents, "test_iframe", bar_url);
+  FrameTreeNode* subframe1 =
+      web_contents()->GetFrameTree()->root()->child_at(0);
+  FrameTreeNode* subframe2 = new_contents->GetFrameTree()->root()->child_at(0);
+  EXPECT_TRUE(subframe1->current_frame_host()->IsCrossProcessSubframe());
+  if (AreAllSitesIsolatedForTesting())
+    EXPECT_TRUE(subframe2->current_frame_host()->IsCrossProcessSubframe());
+  else
+    EXPECT_FALSE(subframe2->current_frame_host()->IsCrossProcessSubframe());
+
+  // Check that first tab's subframe process has been properly locked, and that
+  // the second tab's subframe process has not been locked.
+  auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
+  RenderProcessHost* subframe1_process =
+      subframe1->current_frame_host()->GetProcess();
+  EXPECT_EQ(
+      ChildProcessSecurityPolicyImpl::CheckOriginLockResult::HAS_EQUAL_LOCK,
+      policy->CheckOriginLock(subframe1_process->GetID(), isolated_site_url));
+
+  RenderProcessHost* subframe2_process =
+      subframe2->current_frame_host()->GetProcess();
+  if (!AreAllSitesIsolatedForTesting()) {
+    EXPECT_EQ(
+        ChildProcessSecurityPolicyImpl::CheckOriginLockResult::NO_LOCK,
+        policy->CheckOriginLock(subframe2_process->GetID(), isolated_site_url));
+  } else {
+    EXPECT_EQ(
+        ChildProcessSecurityPolicyImpl::CheckOriginLockResult::HAS_EQUAL_LOCK,
+        policy->CheckOriginLock(subframe2_process->GetID(), isolated_site_url));
+  }
+
+  // Renderer-initiated main frame navigation should swap processes in the
+  // first tab, but not in the second tab (again, with the exception for
+  // --site-per-process).
+  {
+    TestNavigationObserver observer(web_contents());
+    EXPECT_TRUE(ExecuteScript(web_contents(),
+                              "location.href = '" + bar_url.spec() + "'"));
+    observer.Wait();
+  }
+  {
+    TestNavigationObserver observer(new_contents);
+    EXPECT_TRUE(ExecuteScript(new_contents,
+                              "location.href = '" + bar_url.spec() + "'"));
+    observer.Wait();
+  }
+  EXPECT_NE(foo_instance1, web_contents()->GetSiteInstance());
+  if (AreAllSitesIsolatedForTesting())
+    EXPECT_NE(foo_instance2, new_contents->GetSiteInstance());
+  else
+    EXPECT_EQ(foo_instance2, new_contents->GetSiteInstance());
+}
+
 }  // namespace content
