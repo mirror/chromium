@@ -1,0 +1,9 @@
+{
+    "archives": {
+        "https://s3.amazonaws.com/mozilla-games/ZenGarden/EpicZenGarden.html": {
+            "DEFAULT": "wasm_realworld_perf_000.wprgo"
+        }
+    },
+    "description": "Describes the Web Page Replay archives for a story set. Don't edit by hand! Use record_wpr for updating.",
+    "platform_specific": true
+}
