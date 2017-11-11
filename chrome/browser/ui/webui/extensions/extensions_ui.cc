@@ -281,6 +281,8 @@ content::WebUIDataSource* CreateMdExtensionsSource() {
   source->AddLocalizedString("toolbarPack", IDS_MD_EXTENSIONS_TOOLBAR_PACK);
   source->AddLocalizedString("toolbarUpdateNow",
                              IDS_MD_EXTENSIONS_TOOLBAR_UPDATE_NOW);
+  source->AddLocalizedString("toolbarUpdateNowA11y",
+                             IDS_MD_EXTENSIONS_TOOLBAR_UPDATE_NOW_A11Y);
   source->AddLocalizedString(
       "updateRequiredByPolicy",
       IDS_MD_EXTENSIONS_DISABLED_UPDATE_REQUIRED_BY_POLICY);
