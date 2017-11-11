@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49a5b564_89487381",
+        "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-11T12:50:08Z",
+      "side": 1,
+      "message": "I find this to be a strange change. DidClearWindowObject was _the_ place to execute JS after commit, and now every client should be aware enough to do a PostTask? Perhaps it makes sense to fire DidClearWindowObject later?\n\nAlso note, that this code is moving: https://chromium-review.googlesource.com/c/chromium/src/+/739746/4/third_party/WebKit/Source/controller/DevToolsFrontendImpl.cpp#96. Could you please wait a bit (that change has almost landed)? This also suggests that blink might have similar places which execute JS early - you might want to cover them as well.",
+      "revId": "b2c4889fc025aa732ddf0fc069b7a4f83e161b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
