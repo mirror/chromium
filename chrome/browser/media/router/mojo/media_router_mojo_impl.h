@@ -125,13 +125,13 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // object. They return a nullptr when such a provider is not found. The
   // returned pointer should not be stored or passed to another object, as the
   // Mojo connection may be terminated at any later time.
-  mojom::MediaRouteProvider* GetProviderForRoute(
+  base::Optional<mojom::MediaRouteProvider::Id> GetProviderIdForRoute(
       const MediaRoute::Id& route_id);
-  mojom::MediaRouteProvider* GetProviderForSink(
+  base::Optional<mojom::MediaRouteProvider::Id> GetProviderIdForSink(
       const MediaSink::Id& sink_id,
       const MediaSource::Id& source_id);
-  virtual mojom::MediaRouteProvider* GetProviderForPresentation(
-      const std::string& presentation_id);
+  virtual base::Optional<mojom::MediaRouteProvider::Id>
+  GetProviderIdForPresentation(const std::string& presentation_id);
 
   content::BrowserContext* context() const { return context_; }
 
@@ -257,6 +257,13 @@ class MediaRouterMojoImpl : public MediaRouterBase,
         const std::vector<MediaRoute>& routes,
         const std::vector<MediaRoute::Id>& joinable_route_ids);
 
+    // Adds |route| to the list of routes managed by the provider, if it hasn't
+    // been added already.
+    void AddRouteForProvider(mojom::MediaRouteProvider::Id provider_id,
+                             const MediaRoute& route);
+
+    void UpdateCachedRouteList();
+
     void AddObserver(MediaRoutesObserver* observer);
     void RemoveObserver(MediaRoutesObserver* observer);
     void NotifyObservers();
@@ -365,9 +372,13 @@ class MediaRouterMojoImpl : public MediaRouterBase,
                               const base::Optional<std::string>& error_text,
                               RouteRequestResult::ResultCode result_code);
 
+  void OnRouteAdded(mojom::MediaRouteProvider::Id provider_id,
+                    const MediaRoute& route);
+
   // Converts the callback result of calling Mojo CreateRoute()/JoinRoute()
   // into a local callback.
   void RouteResponseReceived(const std::string& presentation_id,
+                             mojom::MediaRouteProvider::Id provider_id,
                              bool is_incognito,
                              std::vector<MediaRouteResponseCallback> callbacks,
                              bool is_join,
