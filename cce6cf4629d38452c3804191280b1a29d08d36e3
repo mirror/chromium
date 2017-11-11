@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c455a56_a6aec5ab",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-11T20:03:55Z",
+      "side": 1,
+      "message": "what about an enum? I could imagine that in the future we want more reasons, like network connection dropped or something (also, even for a bool it\u0027s more readable)",
+      "revId": "cce6cf4629d38452c3804191280b1a29d08d36e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
