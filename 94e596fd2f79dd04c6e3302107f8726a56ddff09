@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19e5f87e_89e881bd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-11T02:06:06Z",
+      "side": 1,
+      "message": "DSF -\u003e device scale factor. is not 1.0 -\u003e greater than 1.0",
+      "revId": "94e596fd2f79dd04c6e3302107f8726a56ddff09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dcee37f_4af2364b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-11T02:06:06Z",
+      "side": 1,
+      "message": "You could specify that those artifacts might be caused by texture filtering.",
+      "revId": "94e596fd2f79dd04c6e3302107f8726a56ddff09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5fa135d_eae50776",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-11T02:06:06Z",
+      "side": 1,
+      "message": "Rewrite this as discussed offline.",
+      "revId": "94e596fd2f79dd04c6e3302107f8726a56ddff09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
