@@ -2,11 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_APP_LIST_APP_LIST_MODEL_OBSERVER_H_
-#define UI_APP_LIST_APP_LIST_MODEL_OBSERVER_H_
+#ifndef ASH_PUBLIC_CPP_APP_LIST_APP_LIST_MODEL_OBSERVER_H_
+#define ASH_PUBLIC_CPP_APP_LIST_APP_LIST_MODEL_OBSERVER_H_
 
-#include "ui/app_list/app_list_export.h"
-#include "ui/app_list/app_list_model.h"
+#include "ash/public/cpp/app_list/app_list_export.h"
+#include "ash/public/cpp/app_list/app_list_model.h"
 
 namespace app_list {
 
@@ -45,4 +45,4 @@ class APP_LIST_EXPORT AppListModelObserver {
 
 }  // namespace app_list
 
-#endif  // UI_APP_LIST_APP_LIST_MODEL_OBSERVER_H_
+#endif  // ASH_PUBLIC_CPP_APP_LIST_APP_LIST_MODEL_OBSERVER_H_

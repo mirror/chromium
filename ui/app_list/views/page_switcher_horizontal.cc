@@ -6,9 +6,9 @@
 
 #include <algorithm>
 
+#include "ash/public/cpp/app_list/app_list_constants.h"
 #include "base/macros.h"
 #include "third_party/skia/include/core/SkPath.h"
-#include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/pagination_model.h"
 #include "ui/gfx/animation/throb_animation.h"
 #include "ui/gfx/canvas.h"

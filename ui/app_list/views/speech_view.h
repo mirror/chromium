@@ -7,8 +7,8 @@
 
 #include <stdint.h>
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "base/macros.h"
-#include "ui/app_list/app_list_export.h"
 #include "ui/app_list/speech_ui_model_observer.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/view.h"

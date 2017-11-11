@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_APP_LIST_SEARCH_BOX_MODEL_H_
-#define UI_APP_LIST_SEARCH_BOX_MODEL_H_
+#ifndef ASH_PUBLIC_CPP_APP_LIST_SEARCH_BOX_MODEL_H_
+#define ASH_PUBLIC_CPP_APP_LIST_SEARCH_BOX_MODEL_H_
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/strings/string16.h"
-#include "ui/app_list/app_list_export.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/selection_model.h"
 
@@ -104,4 +104,4 @@ class APP_LIST_EXPORT SearchBoxModel {
 
 }  // namespace app_list
 
-#endif  // UI_APP_LIST_SEARCH_BOX_MODEL_H_
+#endif  // ASH_PUBLIC_CPP_APP_LIST_SEARCH_BOX_MODEL_H_

@@ -5,8 +5,8 @@
 #ifndef UI_APP_LIST_VIEWS_IMAGE_SHADOW_ANIMATOR_H_
 #define UI_APP_LIST_VIEWS_IMAGE_SHADOW_ANIMATOR_H_
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "base/macros.h"
-#include "ui/app_list/app_list_export.h"
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/animation/slide_animation.h"
 #include "ui/gfx/image/image_skia.h"

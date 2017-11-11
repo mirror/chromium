@@ -6,6 +6,7 @@
 
 #include "ash/app_list/app_list_presenter_delegate.h"
 #include "ash/app_list/app_list_presenter_delegate_factory.h"
+#include "ash/public/cpp/app_list/app_list_features.h"
 #include "ash/shell.h"
 #include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
@@ -20,7 +21,6 @@
 #include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/browser/ui/ash/session_util.h"
-#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_switches.h"
 #include "ui/app_list/presenter/app_list_presenter_delegate_factory.h"
 #include "ui/app_list/presenter/app_list_presenter_impl.h"

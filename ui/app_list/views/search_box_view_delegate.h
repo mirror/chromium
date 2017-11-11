@@ -5,7 +5,7 @@
 #ifndef UI_APP_LIST_VIEWS_SEARCH_BOX_VIEW_DELEGATE_H_
 #define UI_APP_LIST_VIEWS_SEARCH_BOX_VIEW_DELEGATE_H_
 
-#include "ui/app_list/app_list_export.h"
+#include "ash/public/cpp/app_list/app_list_export.h"
 
 namespace app_list {
 

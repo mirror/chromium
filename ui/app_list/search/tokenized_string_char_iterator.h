@@ -10,8 +10,8 @@
 
 #include <memory>
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "base/macros.h"
-#include "ui/app_list/app_list_export.h"
 #include "ui/app_list/search/tokenized_string.h"
 
 namespace base {

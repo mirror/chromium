@@ -8,10 +8,10 @@
 #include <memory>
 #include <vector>
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
-#include "ui/app_list/app_list_export.h"
 
 namespace app_list {
 

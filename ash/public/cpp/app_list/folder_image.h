@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_APP_LIST_FOLDER_IMAGE_H_
-#define UI_APP_LIST_FOLDER_IMAGE_H_
+#ifndef ASH_PUBLIC_CPP_APP_LIST_FOLDER_IMAGE_H_
+#define ASH_PUBLIC_CPP_APP_LIST_FOLDER_IMAGE_H_
 
 #include <stddef.h>
 
 #include <vector>
 
+#include "ash/public/cpp/app_list/app_list_export.h"
+#include "ash/public/cpp/app_list/app_list_item_list_observer.h"
+#include "ash/public/cpp/app_list/app_list_item_observer.h"
 #include "base/observer_list.h"
-#include "ui/app_list/app_list_export.h"
-#include "ui/app_list/app_list_item_list_observer.h"
-#include "ui/app_list/app_list_item_observer.h"
 #include "ui/gfx/image/image_skia.h"
 
 namespace gfx {
@@ -100,4 +100,4 @@ class APP_LIST_EXPORT FolderImage : public AppListItemListObserver,
 
 }  // namespace app_list
 
-#endif  // UI_APP_LIST_FOLDER_IMAGE_H_
+#endif  // ASH_PUBLIC_CPP_APP_LIST_FOLDER_IMAGE_H_

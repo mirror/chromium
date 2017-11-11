@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_APP_LIST_APP_LIST_CONSTANTS_H_
-#define UI_APP_LIST_APP_LIST_CONSTANTS_H_
+#ifndef ASH_PUBLIC_CPP_APP_LIST_APP_LIST_CONSTANTS_H_
+#define ASH_PUBLIC_CPP_APP_LIST_APP_LIST_CONSTANTS_H_
 
 #include <stddef.h>
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "build/build_config.h"
 #include "third_party/skia/include/core/SkColor.h"
-#include "ui/app_list/app_list_export.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/animation/tween.h"
 #include "ui/gfx/shadow_value.h"
@@ -219,4 +219,4 @@ APP_LIST_EXPORT const gfx::FontList& AppListAppTitleFont();
 
 }  // namespace app_list
 
-#endif  // UI_APP_LIST_APP_LIST_CONSTANTS_H_
+#endif  // ASH_PUBLIC_CPP_APP_LIST_APP_LIST_CONSTANTS_H_

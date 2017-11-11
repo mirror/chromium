@@ -10,10 +10,10 @@
 #include <string>
 #include <vector>
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/strings/string16.h"
-#include "ui/app_list/app_list_export.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/range/range.h"
 

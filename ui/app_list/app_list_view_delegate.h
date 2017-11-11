@@ -7,9 +7,9 @@
 
 #include <vector>
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "base/time/time.h"
 #include "third_party/skia/include/core/SkColor.h"
-#include "ui/app_list/app_list_export.h"
 
 namespace gfx {
 class Size;
