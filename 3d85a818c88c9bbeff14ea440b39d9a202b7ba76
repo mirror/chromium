@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55addac1_71ade2b4",
+        "filename": "ash/system/bluetooth/tray_bluetooth.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-11-11T05:14:30Z",
+      "side": 1,
+      "message": "This is way too slow. Can this be 50ms or so instead?",
+      "revId": "3d85a818c88c9bbeff14ea440b39d9a202b7ba76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
