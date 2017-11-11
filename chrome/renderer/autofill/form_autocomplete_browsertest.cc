@@ -222,7 +222,7 @@ TEST_F(FormAutocompleteTest, NormalFormSubmit) {
 
 // Tests that submitting a form that prevents the submit event from propagating
 // will only send the WillSubmitForm message.
-TEST_F(FormAutocompleteTest, SubmitEventPrevented) {
+TEST_F(FormAutocompleteTest, DISABLED_SubmitEventPrevented) {
   // Load a form.
   LoadHTML(
       "<html><form id='myForm'><input name='fname' value='Rick'/>"
@@ -422,7 +422,7 @@ TEST_F(FormAutocompleteTest, AjaxSucceeded_NoFormInteractionInvisible) {
 // Tests that completing an Ajax request after having autofilled a form,
 // with the form disappearing, will trigger submission from Autofill's
 // point of view.
-TEST_F(FormAutocompleteTest, AjaxSucceeded_FilledFormIsInvisible) {
+TEST_F(FormAutocompleteTest, AjaxSucceeded_DISABLED_FilledFormIsInvisible) {
   // Load a form.
   LoadHTML(
       "<html><form id='myForm' action='http://example.com/blade.php'>"
