@@ -18,6 +18,7 @@
 #include "modules/EventTargetModules.h"
 #include "modules/presentation/PresentationAvailability.h"
 #include "modules/presentation/PresentationAvailabilityCallbacks.h"
+#include "modules/presentation/PresentationAvailabilityState.h"
 #include "modules/presentation/PresentationConnection.h"
 #include "modules/presentation/PresentationConnectionCallbacks.h"
 #include "modules/presentation/PresentationController.h"
@@ -199,9 +200,9 @@ ScriptPromise PresentationRequest::reconnect(ScriptState* script_state,
 }
 
 ScriptPromise PresentationRequest::getAvailability(ScriptState* script_state) {
-  WebPresentationClient* client =
-      PresentationController::ClientFromContext(GetExecutionContext());
-  if (!client)
+  PresentationController* controller =
+      PresentationController::FromContext(GetExecutionContext());
+  if (!controller)
     return ScriptPromise::RejectWithDOMException(
         script_state,
         DOMException::Create(
@@ -213,9 +214,9 @@ ScriptPromise PresentationRequest::getAvailability(ScriptState* script_state) {
         ExecutionContext::From(script_state), this,
         PresentationAvailabilityProperty::kReady);
 
-    client->GetAvailability(urls_,
-                            WTF::MakeUnique<PresentationAvailabilityCallbacks>(
-                                availability_property_, urls_));
+    controller->GetAvailabilityState()->RequestAvailability(
+        urls_, std::make_unique<PresentationAvailabilityCallbacksImpl>(
+                   availability_property_, urls_));
   }
   return availability_property_->Promise(script_state->World());
 }
