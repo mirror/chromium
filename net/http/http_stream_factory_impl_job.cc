@@ -1148,8 +1148,10 @@ int HttpStreamFactoryImpl::Job::SetSpdyHttpStreamOrBidirectionalStreamImpl(
     bool direct) {
   // TODO(ricea): Restore the code for WebSockets over SPDY once it's
   // implemented.
-  if (delegate_->for_websockets())
+  if (delegate_->for_websockets()) {
+    NOTREACHED();
     return ERR_NOT_IMPLEMENTED;
+  }
   if (stream_type_ == HttpStreamRequest::BIDIRECTIONAL_STREAM) {
     bidirectional_stream_impl_ = std::make_unique<BidirectionalStreamSpdyImpl>(
         session, net_log_.source());

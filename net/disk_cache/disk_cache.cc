@@ -275,6 +275,7 @@ void FlushCacheThreadForTesting() {
 int Backend::CalculateSizeOfEntriesBetween(base::Time initial_time,
                                            base::Time end_time,
                                            const CompletionCallback& callback) {
+  NOTREACHED();
   return net::ERR_NOT_IMPLEMENTED;
 }
 

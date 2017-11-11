@@ -235,6 +235,7 @@ void ProxyScriptFetcherImpl::OnAuthRequired(URLRequest* request,
   // TODO(eroman): http://crbug.com/77366
   LOG(WARNING) << "Auth required to fetch PAC script, aborting.";
   result_code_ = ERR_NOT_IMPLEMENTED;
+  NOTREACHED();
   request->CancelAuth();
 }
 
