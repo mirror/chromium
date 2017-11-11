@@ -52,6 +52,24 @@
       "revId": "c0dd0f49f92ae5183405dee44b6abe123c9c0b77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efeed37_3dc50b8d",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-11T00:00:42Z",
+      "side": 1,
+      "message": "Ah, I understand now. I tested with all 4 orientations now. I also change it a bit, so that the user can still visually see the drags happening, but the drags will not update the phantom window or snap until the threshold is passed.",
+      "parentUuid": "3eb9a24f_e44db8fa",
+      "revId": "c0dd0f49f92ae5183405dee44b6abe123c9c0b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
