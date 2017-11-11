@@ -114,6 +114,30 @@
       "revId": "79f1c98da86e9cff4e1ad1c13c8579943e2af5e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a65c981_50ecaaa4",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-11T17:06:57Z",
+      "side": 1,
+      "message": "FWIW, I think you\u0027re right, Tommy :) I would recommend clamping to 0 and duration().",
+      "parentUuid": "21ceb6f3_bf683b2a",
+      "range": {
+        "startLine": 119,
+        "startChar": 60,
+        "endLine": 119,
+        "endChar": 0
+      },
+      "revId": "79f1c98da86e9cff4e1ad1c13c8579943e2af5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
