@@ -16,6 +16,24 @@
       "revId": "252ed7b9a3fb4308b2a0998fb0b8b813312ed318",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb056b54_71eb90ba",
+        "filename": "build/linux/sysroot_scripts/sysroot-creator.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-11T00:12:51Z",
+      "side": 1,
+      "message": "Not that I know of, but that sounds like another good idea for a followup (for all comments like this in the repo)",
+      "parentUuid": "4d213794_0f5a8766",
+      "revId": "252ed7b9a3fb4308b2a0998fb0b8b813312ed318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
