@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecb955f6_83d24743",
+        "filename": "base/memory/protected_memory_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-11T01:31:08Z",
+      "side": 1,
+      "message": "I think this file would usually just be named protected_memory.cc - i.e. without the impl (but base owners might know better).",
+      "revId": "23ca313c303d1b5818ef0a1681c5ffa556b3cf79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98588290_cba17715",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-11T01:31:08Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand these static all over the place, if these are internal should they be in the anonymous namespace (perhaps this was addressed in previous review). If an external API then should they be exposed and documented via the .h file?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 6
+      },
+      "revId": "23ca313c303d1b5818ef0a1681c5ffa556b3cf79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa982f30_f43b4dfc",
+        "filename": "base/memory/protected_memory_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-11T01:31:08Z",
+      "side": 1,
+      "message": "cl-format was okay with this ordering? usually we have to add a CRLF between these",
+      "revId": "23ca313c303d1b5818ef0a1681c5ffa556b3cf79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02a2eea_26f89bc2",
+        "filename": "base/memory/protected_memory_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-11T01:31:08Z",
+      "side": 1,
+      "message": "base::GetPageSize() can be used on all platforms to get the page size.",
+      "range": {
+        "startLine": 18,
+        "startChar": 46,
+        "endLine": 18,
+        "endChar": 57
+      },
+      "revId": "23ca313c303d1b5818ef0a1681c5ffa556b3cf79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efda7c9d_862c65c4",
+        "filename": "base/memory/protected_memory_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-11T01:31:08Z",
+      "side": 1,
+      "message": "maybe add some DCHECKs here to validate the ranges look valid",
+      "revId": "23ca313c303d1b5818ef0a1681c5ffa556b3cf79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
