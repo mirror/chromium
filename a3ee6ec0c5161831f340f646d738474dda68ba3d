@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e69eda58_7179ccd9",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityStateTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-11T01:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bddb0b76_ef4bc91a",
+      "revId": "a3ee6ec0c5161831f340f646d738474dda68ba3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c4920f2_10982f73",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityStateTest.cpp",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "a3ee6ec0c5161831f340f646d738474dda68ba3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855d0e22_f6c81ff7",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityStateTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-11T01:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c4920f2_10982f73",
+      "revId": "a3ee6ec0c5161831f340f646d738474dda68ba3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "db360e8a_3e2d750b",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityStateTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-11T01:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17efa6d0_af3e189d",
+      "revId": "a3ee6ec0c5161831f340f646d738474dda68ba3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "884ab807_b4e84cef",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityStateTest.cpp",
         "patchSetId": 17
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-01T20:51:51Z",
       "side": 1,
       "message": "Does this duplicate L125?",
+      "revId": "a3ee6ec0c5161831f340f646d738474dda68ba3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f28ac1f_ea971195",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityStateTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-11T01:40:10Z",
+      "side": 1,
+      "message": "No, AddObserver will cause re-listening.",
+      "parentUuid": "884ab807_b4e84cef",
       "revId": "a3ee6ec0c5161831f340f646d738474dda68ba3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1c29e693_7eebb483",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityStateTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-11T01:40:10Z",
+      "side": 1,
+      "message": "SOURCE_NOT_SUPPORTED is now tested in its own test case.",
+      "parentUuid": "2b9c9915_ed9b6ab1",
+      "revId": "a3ee6ec0c5161831f340f646d738474dda68ba3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7671d0d_88f72d6d",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityStateTest.cpp",
         "patchSetId": 17
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-01T20:51:51Z",
       "side": 1,
       "message": "Can you test that a state change is propagated to all observers?",
+      "revId": "a3ee6ec0c5161831f340f646d738474dda68ba3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46dca6ce_4ebaadd5",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityStateTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-11T01:40:10Z",
+      "side": 1,
+      "message": "I think this is already tested in UpdateAvailabilityInvokesMultipleAvailabilityChanged.",
+      "parentUuid": "d7671d0d_88f72d6d",
       "revId": "a3ee6ec0c5161831f340f646d738474dda68ba3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "da099da5_76e29ad1",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityStateTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-11T01:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35c1a4a5_07f12946",
+      "revId": "a3ee6ec0c5161831f340f646d738474dda68ba3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56d3b747_94ca5882",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityStateTest.cpp",
         "patchSetId": 17
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "6cca7241_d9654ddd",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityStateTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-11T01:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56d3b747_94ca5882",
+      "revId": "a3ee6ec0c5161831f340f646d738474dda68ba3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1fa9ee8_eb1fa8bb",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityStateTest.cpp",
         "patchSetId": 17
@@ -152,6 +296,24 @@
       "revId": "a3ee6ec0c5161831f340f646d738474dda68ba3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0554ee3a_ac94578c",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityStateTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-11T01:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1fa9ee8_eb1fa8bb",
+      "revId": "a3ee6ec0c5161831f340f646d738474dda68ba3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
