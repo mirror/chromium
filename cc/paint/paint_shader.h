@@ -126,6 +126,12 @@ class CC_PAINT_EXPORT PaintShader : public SkRefCnt {
   // shader is correct is hard.
   bool IsValid() const;
 
+  const SkSize* raster_scale() const {
+    if (!raster_scale_)
+      return nullptr;
+    return &*raster_scale_;
+  }
+
  private:
   friend class PaintFlags;
   friend class PaintOpReader;
@@ -137,8 +143,7 @@ class CC_PAINT_EXPORT PaintShader : public SkRefCnt {
   explicit PaintShader(Type type);
 
   sk_sp<SkShader> GetSkShader() const;
-  void CreateSkShader(ImageProvider* = nullptr,
-                      const SkMatrix* raster_matrix = nullptr);
+  void CreateSkShader(ImageProvider* = nullptr);
 
   sk_sp<PaintShader> CreateDecodedPaintRecord(
       const SkMatrix& ctm,
@@ -177,6 +182,10 @@ class CC_PAINT_EXPORT PaintShader : public SkRefCnt {
 
   std::vector<SkColor> colors_;
   std::vector<SkScalar> positions_;
+
+  // This is set only during raster or serialization, when the scale at which
+  // the record will finally be rasterized has been fixed.
+  mutable base::Optional<SkSize> raster_scale_;
 
   // The |cached_shader_| can be derived/creates from other inputs present in
   // the PaintShader but we always construct it at creation time to ensure that
