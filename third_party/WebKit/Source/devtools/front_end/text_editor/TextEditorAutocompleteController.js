@@ -376,6 +376,7 @@ TextEditor.TextEditorAutocompleteController = class {
   acceptSuggestion() {
     var selections = this._codeMirror.listSelections().slice();
     var queryLength = this._queryRange.endColumn - this._queryRange.startColumn;
+
     for (var i = selections.length - 1; i >= 0; --i) {
       var start = selections[i].head;
       var end = new CodeMirror.Pos(start.line, start.ch - queryLength);
