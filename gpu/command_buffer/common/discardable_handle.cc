@@ -50,6 +50,10 @@ bool DiscardableHandleBase::IsDeletedForTesting() const {
   return kHandleDeleted == base::subtle::NoBarrier_Load(AsAtomic());
 }
 
+scoped_refptr<Buffer> DiscardableHandleBase::BufferForTesting() const {
+  return buffer_;
+}
+
 volatile base::subtle::Atomic32* DiscardableHandleBase::AsAtomic() const {
   return reinterpret_cast<volatile base::subtle::Atomic32*>(
       buffer_->GetDataAddress(byte_offset_, sizeof(base::subtle::Atomic32)));
