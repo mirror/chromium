@@ -39,6 +39,28 @@ extern char __start_protected_memory __asm(
 extern char __stop_protected_memory __asm(
     "section$end$PROTECTED_MEMORY$protected_memory");
 
+#elif defined(OS_WIN)
+// Define a read-write prot section. The $a, $mem, and $z 'sub-sections' are
+// merged alphabetically so $a and $z are used to define the start and end of
+// the protected memory section, and $mem holds protected variables.
+#pragma section("prot$a", read, write)
+#pragma section("prot$mem", read, write)
+#pragma section("prot$z", read, write)
+
+// We want the protected memory section to be read-only, not read-write so we
+// instruct the linker to strip the writable permission at link time. We do this
+// at link time instead of compile time, because defining the prot section
+// read-only would cause mis-compiles due to optimizations assuming that the
+// section contents are constant.
+#pragma comment(linker, "/SECTION:prot,!W")
+
+__declspec(allocate("prot$a")) __declspec(selectany)
+char __start_protected_memory;
+__declspec(allocate("prot$z")) __declspec(selectany)
+char __stop_protected_memory;
+
+#define PROTECTED_MEMORY_SECTION __declspec(allocate("prot$mem"))
+
 #else
 #undef PROTECTED_MEMORY_ENABLED
 #define PROTECTED_MEMORY_ENABLED 0

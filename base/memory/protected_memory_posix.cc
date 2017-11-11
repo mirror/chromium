@@ -23,13 +23,6 @@
 
 namespace base {
 
-#if !defined(COMPONENT_BUILD)
-PROTECTED_MEMORY_SECTION int AutoWritableMemory::writers = 0;
-#endif  // !defined(COMPONENT_BUILD)
-
-base::LazyInstance<Lock>::Leaky AutoWritableMemory::writers_lock =
-    LAZY_INSTANCE_INITIALIZER;
-
 static uintptr_t page_mask() {
   return ~(static_cast<uintptr_t>(getpagesize()) - 1);
 }
