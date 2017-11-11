@@ -11905,6 +11905,7 @@ Called by update_net_error_codes.py.-->
   <int value="393" label="NtlmV2Enabled"/>
   <int value="394" label="MinimumRequiredChromeVersion"/>
   <int value="395" label="PromptForDownloadLocation"/>
+  <int value="396" label="SitePerProcess"/>
 </enum>
 
 <enum name="EnterprisePolicyInvalidations">

@@ -10605,6 +10605,25 @@
       If the policy is not configured, the user will be able to change this setting.
       '''
     },
+    {
+      'name': 'SitePerProcess',
+      'type': 'main',
+      'schema': { 'type': 'boolean' },
+      'supported_on': ['chrome.*:64-', 'chrome_os:64-'],
+      'features': {
+        'dynamic_refresh': True,
+        'per_profile': False,
+      },
+      'example_value': True,
+      'id': 396,
+      'caption': '''Enable the --site-per-process flag for Site Isoltion''',
+      'tags': [],
+      'desc': '''
+      If the policy is enabled, each site will run in its own process.
+      If the policy is disabled, the pre-Site Isolation process management policy will take effect.
+      If the policy is not configured, the user will be able to change this setting.
+      ''',
+    },
   ],
   'messages': {
     # Messages that are not associated to any policies.
