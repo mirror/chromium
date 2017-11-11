@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner_helpers.h"
+#include "chrome/browser/media/router/media_sinks_observer.h"
 #include "chrome/common/media_router/discovery/media_sink_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -65,6 +66,10 @@ class DialMediaSinkServiceProxy
   void SetDialMediaSinkServiceForTest(
       std::unique_ptr<DialMediaSinkServiceImpl> dial_media_sink_service);
 
+  bool RegisterMediaSinksObserver(MediaSinksObserver* observer);
+
+  void UnregisterMediaSinksObserver(MediaSinksObserver* observer);
+
  private:
   friend class DialMediaSinkServiceProxyTest;
   friend class base::DeleteHelper<DialMediaSinkServiceProxy>;
@@ -84,10 +89,25 @@ class DialMediaSinkServiceProxy
   // to UI thread and invoke |sink_discovery_callback_|.
   void OnSinksDiscoveredOnIOThread(std::vector<MediaSinkInternal> sinks);
 
+  // Callback passed to |dial_media_sink_service_| ctor. When invoked, post task
+  // to UI thread and invoke |OnAvailableSinksUpdated|.
+  void OnAvailableSinksUpdatedOnIOThread(
+      const std::string& app_name,
+      const std::vector<MediaSink>& available_sinks);
+
+  // Notifies media sink observers of |app_name|, when available sinks for
+  // |app_name| change.
+  void OnAvailableSinksUpdated(const std::string& app_name,
+                               const std::vector<MediaSink>& available_sinks);
+
  private:
   std::unique_ptr<DialMediaSinkServiceImpl> dial_media_sink_service_;
 
   DialMediaSinkServiceObserver* observer_;
+
+  // Map of media sink observers keyed by app name.
+  std::map<std::string, base::ObserverList<MediaSinksObserver>>
+      app_name_sink_observers_map_;
 
   scoped_refptr<net::URLRequestContextGetter> request_context_;
 

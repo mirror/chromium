@@ -5,9 +5,28 @@
 #include "chrome/browser/media/router/discovery/dial/dial_media_sink_service_proxy.h"
 
 #include "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h"
+#include "chrome/common/media_router/media_source_helper.h"
 #include "content/public/browser/browser_context.h"
+#include "url/origin.h"
 
 using content::BrowserThread;
+
+namespace {
+
+std::map<std::string, std::vector<std::string>> kAppOriginWhitelist = {
+    {"YouTube",
+     {"https://tv.youtube.com", "https://tv-green-qa.youtube.com",
+      "https://tv-release-qa.youtube.com", "https://web-green-qa.youtube.com",
+      "https://web-release-qa.youtube.com", "https://www.youtube.com"}},
+    {"Netflix", {"https://www.netflix.com"}},
+    {"Pandora", {"https://www.pandora.com"}},
+    {"Radio", {"https://www.pandora.com"}},
+    {"Hulu", {"https://www.hulu.com"}},
+    {"Vimeo", {"https://www.vimeo.com"}},
+    {"Dailymotion", {"https://www.dailymotion.com"}},
+    {"com.dailymotion", {"https://www.dailymotion.com"}}};
+
+}  // namespace
 
 namespace media_router {
 
@@ -79,6 +98,53 @@ void DialMediaSinkServiceProxy::SetDialMediaSinkServiceForTest(
   dial_media_sink_service_ = std::move(dial_media_sink_service);
 }
 
+bool DialMediaSinkServiceProxy::RegisterMediaSinksObserver(
+    MediaSinksObserver* observer) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(observer);
+
+  std::string app_name = AppNameFromMediaSource(observer->source());
+  if (app_name.empty()) {
+    DVLOG(1) << "Fail to get app name from DIAL source: "
+             << observer->source().id();
+    return false;
+  }
+
+  auto& observers = app_name_sink_observers_map_[app_name];
+  if (!observers.HasObserver(observer))
+    observers.AddObserver(observer);
+
+  if (!dial_media_sink_service_)
+    return true;
+
+  content::BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::BindOnce(
+          &DialMediaSinkServiceImpl::StartMonitoringAvailableSinksForApp,
+          dial_media_sink_service_->AsWeakPtr(), app_name));
+  return true;
+}
+
+void DialMediaSinkServiceProxy::UnregisterMediaSinksObserver(
+    MediaSinksObserver* observer) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(observer);
+
+  std::string app_name = AppNameFromMediaSource(observer->source());
+  auto it = app_name_sink_observers_map_.find(app_name);
+  if (it != app_name_sink_observers_map_.end())
+    it->second.RemoveObserver(observer);
+
+  if (!dial_media_sink_service_)
+    return;
+
+  content::BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::BindOnce(
+          &DialMediaSinkServiceImpl::StopMonitoringAvailableSinksForApp,
+          dial_media_sink_service_->AsWeakPtr(), app_name));
+}
+
 void DialMediaSinkServiceProxy::StartOnIOThread() {
   if (!dial_media_sink_service_) {
     // Need to explicitly delete |dial_media_sink_service_| outside dtor to
@@ -86,11 +152,18 @@ void DialMediaSinkServiceProxy::StartOnIOThread() {
     dial_media_sink_service_ = base::MakeUnique<DialMediaSinkServiceImpl>(
         base::Bind(&DialMediaSinkServiceProxy::OnSinksDiscoveredOnIOThread,
                    this),
+        base::Bind(
+            &DialMediaSinkServiceProxy::OnAvailableSinksUpdatedOnIOThread,
+            this),
         request_context_.get());
     dial_media_sink_service_->SetObserver(observer_);
   }
 
   dial_media_sink_service_->Start();
+  for (const auto& app_name_it : app_name_sink_observers_map_) {
+    dial_media_sink_service_->StartMonitoringAvailableSinksForApp(
+        app_name_it.first);
+  }
 }
 
 void DialMediaSinkServiceProxy::StopOnIOThread() {
@@ -108,6 +181,40 @@ void DialMediaSinkServiceProxy::OnSinksDiscoveredOnIOThread(
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
       base::BindOnce(sink_discovery_callback_, std::move(sinks)));
+}
+
+void DialMediaSinkServiceProxy::OnAvailableSinksUpdatedOnIOThread(
+    const std::string& app_name,
+    const std::vector<MediaSink>& available_sinks) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&DialMediaSinkServiceProxy::OnAvailableSinksUpdated, this,
+                     app_name, available_sinks));
+}
+
+void DialMediaSinkServiceProxy::OnAvailableSinksUpdated(
+    const std::string& app_name,
+    const std::vector<MediaSink>& available_sinks) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DVLOG(2) << "OnAvailableSinksUpdated [app name]: " << app_name
+           << " [size]: " << available_sinks.size();
+
+  const auto& sink_observers_it = app_name_sink_observers_map_.find(app_name);
+  if (sink_observers_it == app_name_sink_observers_map_.end())
+    return;
+
+  std::vector<url::Origin> origins;
+  const auto& origins_it = kAppOriginWhitelist.find(app_name);
+  if (origins_it != kAppOriginWhitelist.end()) {
+    for (const auto& origin : origins_it->second) {
+      origins.push_back(url::Origin::Create(GURL(origin)));
+    }
+  }
+
+  for (auto& sink_observer : sink_observers_it->second) {
+    sink_observer.OnSinksUpdated(available_sinks, origins);
+  }
 }
 
 }  // namespace media_router

@@ -120,4 +120,13 @@ bool IsAutoJoinPresentationId(const std::string& presentation_id) {
   return presentation_id == kAutoJoinPresentationId;
 }
 
+bool IsDialMediaSource(const MediaSource& source) {
+  return source.url().SchemeIs(kCastDialPresentationUrlScheme) ||
+         source.url().SchemeIs(kDialPresentationUrlScheme);
+}
+
+std::string AppNameFromMediaSource(const MediaSource& source) {
+  return IsDialMediaSource(source) ? source.url().path() : "";
+}
+
 }  // namespace media_router

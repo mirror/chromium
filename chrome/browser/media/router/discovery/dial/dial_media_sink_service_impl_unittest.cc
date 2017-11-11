@@ -16,6 +16,17 @@
 using ::testing::_;
 using ::testing::Return;
 
+namespace {
+
+GURL CreateAppURL(const net::IPAddress& ip_address,
+                  const std::string& app_name) {
+  std::string str_app_url = base::StringPrintf(
+      "http://%s/apps/%s", ip_address.ToString().c_str(), app_name.c_str());
+  return GURL(str_app_url);
+}
+
+}  // namespace
+
 namespace media_router {
 
 class TestDialRegistry : public DialRegistry {
@@ -50,12 +61,25 @@ class MockDeviceDescriptionService : public DeviceDescriptionService {
                     net::URLRequestContextGetter* request_context));
 };
 
+class MockDialAppDiscoveryService : public DialAppDiscoveryService {
+ public:
+  MockDialAppDiscoveryService(const DialAppInfoParseSuccessCallback& success_cb,
+                              const DialAppInfoParseErrorCallback& error_cb)
+      : DialAppDiscoveryService(success_cb, error_cb) {}
+  ~MockDialAppDiscoveryService() override {}
+
+  MOCK_METHOD2(FetchDialAppInfo,
+               void(const GURL& app_url,
+                    net::URLRequestContextGetter* request_context));
+};
+
 class DialMediaSinkServiceImplTest : public ::testing::Test {
  public:
   DialMediaSinkServiceImplTest()
       : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP),
         media_sink_service_(
             new DialMediaSinkServiceImpl(mock_sink_discovered_cb_.Get(),
+                                         mock_available_sinks_updated_cb_.Get(),
                                          profile_.GetRequestContext())) {}
 
   void SetUp() override {
@@ -67,9 +91,20 @@ class DialMediaSinkServiceImplTest : public ::testing::Test {
     mock_description_service_ = mock_description_service.get();
     media_sink_service_->SetDescriptionServiceForTest(
         std::move(mock_description_service));
+
     mock_timer_ =
         new base::MockTimer(true /*retain_user_task*/, false /*is_repeating*/);
     media_sink_service_->SetTimerForTest(base::WrapUnique(mock_timer_));
+
+    auto mock_app_discovery_service =
+        base::MakeUnique<MockDialAppDiscoveryService>(
+            base::Bind(&DialMediaSinkServiceImpl::OnAppInfoAvailable,
+                       base::Unretained(media_sink_service_.get())),
+            base::Bind(&DialMediaSinkServiceImpl::OnAppInfoError,
+                       base::Unretained(media_sink_service_.get())));
+    mock_app_discovery_service_ = mock_app_discovery_service.get();
+    media_sink_service_->SetAppDiscoveryServiceForTest(
+        std::move(mock_app_discovery_service));
   }
 
   void TearDown() override {
@@ -81,6 +116,8 @@ class DialMediaSinkServiceImplTest : public ::testing::Test {
 
   base::MockCallback<MediaSinkService::OnSinksDiscoveredCallback>
       mock_sink_discovered_cb_;
+  base::MockCallback<DialMediaSinkServiceImpl::OnAvailableSinksUpdatedCallback>
+      mock_available_sinks_updated_cb_;
   base::MockCallback<
       MockDeviceDescriptionService::DeviceDescriptionParseSuccessCallback>
       mock_success_cb_;
@@ -90,6 +127,7 @@ class DialMediaSinkServiceImplTest : public ::testing::Test {
 
   TestDialRegistry test_dial_registry_;
   MockDeviceDescriptionService* mock_description_service_;
+  MockDialAppDiscoveryService* mock_app_discovery_service_;
   base::MockTimer* mock_timer_;
 
   std::unique_ptr<DialMediaSinkServiceImpl> media_sink_service_;
@@ -211,6 +249,112 @@ TEST_F(DialMediaSinkServiceImplTest, DialMediaSinkServiceObserver) {
   media_sink_service_->OnUserGesture();
 
   media_sink_service_->ClearObserver();
+}
+
+TEST_F(DialMediaSinkServiceImplTest,
+       TestStartStopMonitoringAvailableSinksForApp) {
+  MediaSinkInternal dial_sink = CreateDialSink(1);
+  EXPECT_CALL(*mock_app_discovery_service_,
+              FetchDialAppInfo(GURL("http://192.168.0.101/apps/YouTube"), _))
+      .Times(1);
+  media_sink_service_->current_sinks_.insert(dial_sink);
+  media_sink_service_->StartMonitoringAvailableSinksForApp("YouTube");
+  media_sink_service_->StartMonitoringAvailableSinksForApp("YouTube");
+  EXPECT_EQ(1u, media_sink_service_->app_name_sink_id_map_.size());
+
+  media_sink_service_->StopMonitoringAvailableSinksForApp("YouTube");
+  EXPECT_TRUE(media_sink_service_->app_name_sink_id_map_.empty());
+}
+
+TEST_F(DialMediaSinkServiceImplTest,
+       TestOnDialAppInfoAvailableNoStartMonitoring) {
+  MediaSinkInternal dial_sink = CreateDialSink(1);
+  GURL app_url("http://192.168.0.101/apps/YouTube");
+  ParsedDialAppInfo parsed_app_info{"YouTube", DialAppStatus::AVAILABLE};
+
+  EXPECT_CALL(mock_available_sinks_updated_cb_, Run(_, _)).Times(0);
+  media_sink_service_->current_sinks_.insert(dial_sink);
+  media_sink_service_->OnAppInfoAvailable(app_url, parsed_app_info);
+}
+
+TEST_F(DialMediaSinkServiceImplTest, TestOnDialAppInfoAvailableNoSink) {
+  GURL app_url("http://192.168.0.101/apps/YouTube");
+  ParsedDialAppInfo parsed_app_info{"YouTube", DialAppStatus::AVAILABLE};
+
+  EXPECT_CALL(mock_available_sinks_updated_cb_, Run("YouTube", _)).Times(0);
+  media_sink_service_->StartMonitoringAvailableSinksForApp("YouTube");
+  media_sink_service_->OnAppInfoAvailable(app_url, parsed_app_info);
+}
+
+TEST_F(DialMediaSinkServiceImplTest, TestOnDialAppInfoAvailableSinksAdded) {
+  MediaSinkInternal dial_sink1 = CreateDialSink(1);
+  MediaSinkInternal dial_sink2 = CreateDialSink(2);
+
+  media_sink_service_->current_sinks_.insert(dial_sink1);
+  media_sink_service_->current_sinks_.insert(dial_sink2);
+
+  GURL app_url1 = CreateAppURL(dial_sink1.dial_data().ip_address, "YouTube");
+  GURL app_url2 = CreateAppURL(dial_sink1.dial_data().ip_address, "Netflix");
+  GURL app_url3 = CreateAppURL(dial_sink2.dial_data().ip_address, "YouTube");
+  GURL app_url4 = CreateAppURL(dial_sink2.dial_data().ip_address, "Netflix");
+
+  ParsedDialAppInfo app_info_youtube{"YouTube", DialAppStatus::AVAILABLE};
+  ParsedDialAppInfo app_info_netflix{"Netflix", DialAppStatus::AVAILABLE};
+
+  EXPECT_CALL(*mock_app_discovery_service_, FetchDialAppInfo(_, _)).Times(4);
+  media_sink_service_->StartMonitoringAvailableSinksForApp("YouTube");
+  media_sink_service_->StartMonitoringAvailableSinksForApp("Netflix");
+
+  std::vector<MediaSink> expected_sinks = {dial_sink1.sink()};
+  EXPECT_CALL(mock_available_sinks_updated_cb_, Run("YouTube", expected_sinks));
+  media_sink_service_->OnAppInfoAvailable(app_url1, app_info_youtube);
+
+  expected_sinks = {dial_sink1.sink(), dial_sink2.sink()};
+  EXPECT_CALL(mock_available_sinks_updated_cb_, Run("YouTube", expected_sinks));
+  media_sink_service_->OnAppInfoAvailable(app_url3, app_info_youtube);
+
+  expected_sinks = {dial_sink2.sink()};
+  EXPECT_CALL(mock_available_sinks_updated_cb_, Run("Netflix", expected_sinks));
+  media_sink_service_->OnAppInfoAvailable(app_url4, app_info_netflix);
+}
+
+TEST_F(DialMediaSinkServiceImplTest, TestOnDialAppInfoAvailableSinksRemoved) {
+  MediaSinkInternal dial_sink1 = CreateDialSink(1);
+  GURL app_url1 = CreateAppURL(dial_sink1.dial_data().ip_address, "YouTube");
+  ParsedDialAppInfo parsed_app_info{"YouTube", DialAppStatus::AVAILABLE};
+
+  EXPECT_CALL(*mock_app_discovery_service_, FetchDialAppInfo(_, _));
+  media_sink_service_->current_sinks_.insert(dial_sink1);
+  media_sink_service_->StartMonitoringAvailableSinksForApp("YouTube");
+
+  std::vector<MediaSink> expected_sinks = {dial_sink1.sink()};
+  EXPECT_CALL(mock_available_sinks_updated_cb_, Run("YouTube", expected_sinks));
+  media_sink_service_->OnAppInfoAvailable(app_url1, parsed_app_info);
+
+  EXPECT_CALL(mock_available_sinks_updated_cb_,
+              Run("YouTube", std::vector<MediaSink>()));
+  media_sink_service_->OnAppInfoError(app_url1, "");
+
+  parsed_app_info.app_status = DialAppStatus::UNAVAILABLE;
+  EXPECT_CALL(mock_available_sinks_updated_cb_, Run(_, _)).Times(0);
+  media_sink_service_->OnAppInfoAvailable(app_url1, parsed_app_info);
+}
+
+TEST_F(DialMediaSinkServiceImplTest,
+       TestOnDialAppInfoAvailableWithAlreadyAvailableSinks) {
+  MediaSinkInternal dial_sink1 = CreateDialSink(1);
+  GURL app_url1 = CreateAppURL(dial_sink1.dial_data().ip_address, "YouTube");
+  ParsedDialAppInfo parsed_app_info{"YouTube", DialAppStatus::AVAILABLE};
+
+  EXPECT_CALL(*mock_app_discovery_service_, FetchDialAppInfo(_, _));
+  media_sink_service_->current_sinks_.insert(dial_sink1);
+  media_sink_service_->StartMonitoringAvailableSinksForApp("YouTube");
+
+  std::vector<MediaSink> expected_sinks = {dial_sink1.sink()};
+  EXPECT_CALL(mock_available_sinks_updated_cb_, Run("YouTube", expected_sinks))
+      .Times(1);
+  media_sink_service_->OnAppInfoAvailable(app_url1, parsed_app_info);
+  media_sink_service_->OnAppInfoAvailable(app_url1, parsed_app_info);
 }
 
 }  // namespace media_router

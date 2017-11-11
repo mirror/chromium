@@ -82,6 +82,8 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   void RegisterMediaRouteProvider(
       mojom::MediaRouteProviderPtr media_route_provider_ptr,
       mojom::MediaRouter::RegisterMediaRouteProviderCallback callback) override;
+  bool RegisterMediaSinksObserver(MediaSinksObserver* observer) override;
+  void UnregisterMediaSinksObserver(MediaSinksObserver* observer) override;
 
   // Binds |this| to a Mojo interface request, so that clients can acquire a
   // handle to a MediaRouter instance via the Mojo service connector.

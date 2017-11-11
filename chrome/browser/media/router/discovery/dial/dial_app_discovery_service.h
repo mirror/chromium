@@ -82,8 +82,8 @@ class DialAppDiscoveryService {
   // pending request.
   // |app_url|:  app URL, used to issue HTTP GET request and get app info XML.
   // |request_context|: Used by the background URLFetchers.
-  void FetchDialAppInfo(const GURL& app_url,
-                        net::URLRequestContextGetter* request_context);
+  virtual void FetchDialAppInfo(const GURL& app_url,
+                                net::URLRequestContextGetter* request_context);
 
   // Used by unit test.
   void SetClockForTest(std::unique_ptr<base::Clock> clock);

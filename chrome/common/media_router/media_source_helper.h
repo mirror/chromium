@@ -54,6 +54,13 @@ bool IsValidPresentationUrl(const GURL& url);
 // Returns true if |presentation_id| is an ID used by auto-join requests.
 bool IsAutoJoinPresentationId(const std::string& presentation_id);
 
+// Returns true if |source| outputs its content via DIAL.
+bool IsDialMediaSource(const MediaSource& source);
+
+// Returns empty string if |source| is not DIAL media source, or is not a valid
+// DIAL media source.
+std::string AppNameFromMediaSource(const MediaSource& source);
+
 }  // namespace media_router
 
 #endif  // CHROME_COMMON_MEDIA_ROUTER_MEDIA_SOURCE_HELPER_H_
