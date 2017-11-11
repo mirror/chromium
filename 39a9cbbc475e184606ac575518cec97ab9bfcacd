@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ed6da6f2_667018a5",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-11T01:34:12Z",
+      "side": 1,
+      "message": "optional nit: this looks like a magic number. I guess -1 can also be pass to actual ukm class.",
+      "range": {
+        "startLine": 1367,
+        "startChar": 17,
+        "endLine": 1367,
+        "endChar": 20
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98867820_003b6381",
         "filename": "content/browser/download/download_item_impl.cc",
         "patchSetId": 6
@@ -13,6 +36,190 @@
       "writtenOn": "2017-11-10T07:02:33Z",
       "side": 1,
       "message": "parallizable doesn\u0027t mean we are using 2 streams, parallel download could use more than 2 streams. And I don\u0027t think you can get the number of streams on start, as there could be delays and some streams are actually not working if server doesn\u0027t support parallel download.",
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708e449d_ce7200c7",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-11T01:34:12Z",
+      "side": 1,
+      "message": "This can be -1 for most of the downloads, in this case, change_in_file_size will always be (actual file size + 1 byte) , I guess that\u0027s not preferred.",
+      "range": {
+        "startLine": 1741,
+        "startChar": 49,
+        "endLine": 1741,
+        "endChar": 62
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb92be9_3e070d8f",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1766,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-11T01:34:12Z",
+      "side": 1,
+      "message": "It seems this line is pretty far away from the code that actually uses it, will GetStartTime() change in the middle?",
+      "range": {
+        "startLine": 1766,
+        "startChar": 2,
+        "endLine": 1766,
+        "endChar": 60
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3933c8_ed8be19f",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2154,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-11T01:34:12Z",
+      "side": 1,
+      "message": "Same as here, will GetStartTime() change in the middle?",
+      "range": {
+        "startLine": 2154,
+        "startChar": 2,
+        "endLine": 2154,
+        "endChar": 60
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69063866_88f78a57",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-11T01:34:12Z",
+      "side": 1,
+      "message": "nit: Maybe static_cast\u003cint\u003e() instead of c style cast, rarely saw c style cast in Chrome.",
+      "range": {
+        "startLine": 725,
+        "startChar": 9,
+        "endLine": 725,
+        "endChar": 12
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a3a2a26_ebdac28f",
+        "filename": "content/browser/download/download_ukm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-11T01:34:12Z",
+      "side": 1,
+      "message": "This probably doesn\u0027t compile, probably remove ukm::SourceId.\n\nIf it does compile, I guess DownloadUkmHelper::source_id_ may always be random number.",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 26
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5104024d_971a2e55",
+        "filename": "content/browser/download/download_ukm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-11T01:34:12Z",
+      "side": 1,
+      "message": "nit: Can this url be invalid?",
+      "range": {
+        "startLine": 77,
+        "startChar": 45,
+        "endLine": 77,
+        "endChar": 49
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ff48a5_e651900a",
+        "filename": "content/browser/download/download_ukm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-11T01:34:12Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 80,
+        "startChar": 32,
+        "endLine": 80,
+        "endChar": 33
+      },
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be84bc78_1156e499",
+        "filename": "content/browser/download/download_ukm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-11T01:34:12Z",
+      "side": 1,
+      "message": "nit: Maybe \n\nbool CanLog() const;",
+      "range": {
+        "startLine": 36,
+        "startChar": 15,
+        "endLine": 36,
+        "endChar": 16
+      },
       "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
