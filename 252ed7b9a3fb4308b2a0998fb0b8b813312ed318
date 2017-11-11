@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d213794_0f5a8766",
+        "filename": "build/linux/sysroot_scripts/sysroot-creator.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-11T00:00:20Z",
+      "side": 1,
+      "message": "(Neverending comments) Do we have a bug filed for this? It may be $years in the future, but if we add TODO(crbug.com/NNN) to all these places, finding them in $years will a bit be a easier.",
+      "revId": "252ed7b9a3fb4308b2a0998fb0b8b813312ed318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
