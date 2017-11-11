@@ -7,29 +7,12 @@ import("//testing/test.gni")
 
 component("app_list") {
   sources = [
-    "app_list_constants.cc",
-    "app_list_constants.h",
     "app_list_export.h",
-    "app_list_features.cc",
-    "app_list_features.h",
-    "app_list_folder_item.cc",
-    "app_list_folder_item.h",
-    "app_list_item.cc",
-    "app_list_item.h",
-    "app_list_item_list.cc",
-    "app_list_item_list.h",
-    "app_list_item_list_observer.h",
-    "app_list_item_observer.h",
-    "app_list_model.cc",
-    "app_list_model.h",
-    "app_list_model_observer.h",
     "app_list_switches.cc",
     "app_list_switches.h",
     "app_list_util.cc",
     "app_list_util.h",
     "app_list_view_delegate.h",
-    "folder_image.cc",
-    "folder_image.h",
     "pagination_controller.cc",
     "pagination_controller.h",
     "pagination_model.cc",
@@ -55,15 +38,10 @@ component("app_list") {
     "search/tokenized_string_char_iterator.h",
     "search/tokenized_string_match.cc",
     "search/tokenized_string_match.h",
-    "search_box_model.cc",
-    "search_box_model.h",
-    "search_box_model_observer.h",
     "search_controller.cc",
     "search_controller.h",
     "search_provider.cc",
     "search_provider.h",
-    "search_result.cc",
-    "search_result.h",
     "search_result_observer.h",
     "speech_ui_model.cc",
     "speech_ui_model.h",
@@ -139,6 +117,7 @@ component("app_list") {
   defines = [ "APP_LIST_IMPLEMENTATION" ]
 
   deps = [
+    "//ash/public/cpp:ash_public_cpp",  # TODO(hejq): Remove. http://crbug/733662
     "//base",
     "//base:i18n",
     "//base/third_party/dynamic_annotations",
@@ -184,6 +163,7 @@ static_library("test_support") {
 
   deps = [
     ":app_list",
+    "//ash/public/cpp:ash_public_cpp",  # TODO(hejq): Remove. http://crbug/733662
     "//base",
     "//ui/events",
     "//ui/gfx",
@@ -249,6 +229,7 @@ test("app_list_unittests") {
   deps = [
     ":app_list",
     ":test_support",
+    "//ash/public/cpp:ash_public_cpp",  # TODO(hejq): Remove. http://crbug/733662
     "//base",
     "//base/test:test_support",
     "//mojo/edk/system",

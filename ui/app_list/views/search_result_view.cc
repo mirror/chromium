@@ -6,11 +6,11 @@
 
 #include <algorithm>
 
+#include "ash/public/cpp/app_list/app_list_constants.h"
+#include "ash/public/cpp/app_list/app_list_features.h"
+#include "ash/public/cpp/app_list/search_result.h"
 #include "base/strings/utf_string_conversions.h"
-#include "ui/app_list/app_list_constants.h"
-#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_switches.h"
-#include "ui/app_list/search_result.h"
 #include "ui/app_list/views/search_result_actions_view.h"
 #include "ui/app_list/views/search_result_list_view.h"
 #include "ui/gfx/canvas.h"

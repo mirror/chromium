@@ -41,6 +41,7 @@ component("presenter") {
 
   public_deps = [
     ":mojom",
+    "//ash/public/cpp:ash_public_cpp",  # TODO(hejq): Remove. http://crbug/733662
     "//base",
     "//mojo/public/cpp/bindings",
     "//ui/app_list",

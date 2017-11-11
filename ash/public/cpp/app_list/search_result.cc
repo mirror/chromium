@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/app_list/search_result.h"
+#include "ash/public/cpp/app_list/search_result.h"
 
 #include <map>
 
-#include "ui/app_list/app_list_constants.h"
-#include "ui/app_list/app_list_features.h"
+#include "ash/public/cpp/app_list/app_list_constants.h"
+#include "ash/public/cpp/app_list/app_list_features.h"
 #include "ui/app_list/search/tokenized_string.h"
 #include "ui/app_list/search/tokenized_string_match.h"
 #include "ui/app_list/search_result_observer.h"

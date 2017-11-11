@@ -2,18 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_APP_LIST_SEARCH_RESULT_H_
-#define UI_APP_LIST_SEARCH_RESULT_H_
+#ifndef ASH_PUBLIC_CPP_APP_LIST_SEARCH_RESULT_H_
+#define ASH_PUBLIC_CPP_APP_LIST_SEARCH_RESULT_H_
 
 #include <stddef.h>
 
 #include <string>
 #include <vector>
 
+#include "ash/public/cpp/ash_public_export.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/strings/string16.h"
-#include "ui/app_list/app_list_export.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/range/range.h"
 
@@ -34,7 +34,7 @@ class TokenizedStringMatch;
 // SearchResult consists of an icon, title text and details text. Title and
 // details text can have tagged ranges that are displayed differently from
 // default style.
-class APP_LIST_EXPORT SearchResult {
+class ASH_PUBLIC_EXPORT SearchResult {
  public:
   // How the result should be displayed. Do not change the order of these as
   // they are used for metrics.
@@ -60,7 +60,7 @@ class APP_LIST_EXPORT SearchResult {
   };
 
   // A tagged range in search result text.
-  struct APP_LIST_EXPORT Tag {
+  struct ASH_PUBLIC_EXPORT Tag {
     // Similar to ACMatchClassification::Style, the style values are not
     // mutually exclusive.
     enum Style {
@@ -83,7 +83,7 @@ class APP_LIST_EXPORT SearchResult {
   // An action could be represented as an icon set or as a blue button with
   // a label. Icon set is chosen if label text is empty. Otherwise, a blue
   // button with the label text will be used.
-  struct APP_LIST_EXPORT Action {
+  struct ASH_PUBLIC_EXPORT Action {
     Action(const gfx::ImageSkia& base_image,
            const gfx::ImageSkia& hover_image,
            const gfx::ImageSkia& pressed_image,
@@ -263,4 +263,4 @@ class APP_LIST_EXPORT SearchResult {
 
 }  // namespace app_list
 
-#endif  // UI_APP_LIST_SEARCH_RESULT_H_
+#endif  // ASH_PUBLIC_CPP_APP_LIST_SEARCH_RESULT_H_
