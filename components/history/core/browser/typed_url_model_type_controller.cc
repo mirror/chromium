@@ -74,6 +74,13 @@ void TypedURLModelTypeController::PostBridgeTask(const base::Location& location,
   }
 
   TypedURLSyncBridge* bridge = history->GetTypedURLSyncBridge();
+
+  if (!bridge) {
+    LOG(WARNING)
+        << "TypedURLSyncBridge is not initialed by history backend yet.";
+    return;
+  }
+
   PostTaskOnHistoryThread(base::Bind(task, bridge));
 }
 
