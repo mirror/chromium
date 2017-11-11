@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "408eaa11_81627402",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/UIUtils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-11T01:48:17Z",
+      "side": 1,
+      "message": "Since there are other editable inputs (e.g. type\u003dsearch, number), maybe we want to just blacklist checkbox/radio instead?",
+      "range": {
+        "startLine": 263,
+        "startChar": 105,
+        "endLine": 263,
+        "endChar": 109
+      },
+      "revId": "22c87b409c6b56dc589d37e8ef4a6582cd7bde0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
