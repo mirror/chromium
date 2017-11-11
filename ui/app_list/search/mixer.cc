@@ -10,9 +10,9 @@
 #include <string>
 #include <vector>
 
+#include "ash/public/cpp/app_list/app_list_features.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/search_provider.h"
 #include "ui/app_list/search_result.h"
 

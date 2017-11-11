@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "ash/app_list/test_app_list_presenter_impl.h"
+#include "ash/public/cpp/app_list/app_list_features.h"
 #include "ash/public/cpp/shelf_item_delegate.h"
 #include "ash/public/cpp/shelf_model.h"
 #include "ash/public/cpp/shelf_prefs.h"
@@ -52,7 +53,6 @@
 #include "base/test/user_action_tester.h"
 #include "base/time/time.h"
 #include "testing/gmock/include/gmock/gmock.h"
-#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/presenter/app_list.h"
 #include "ui/app_list/presenter/test/test_app_list_presenter.h"
 #include "ui/app_list/views/app_list_view.h"

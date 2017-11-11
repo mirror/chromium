@@ -8,6 +8,26 @@ import("//mojo/public/tools/bindings/mojom.gni")
 component("ash_public_cpp") {
   sources = [
     "accessibility_types.h",
+    "app_list/app_list_constants.cc",
+    "app_list/app_list_constants.h",
+    "app_list/app_list_features.cc",
+    "app_list/app_list_features.h",
+    "app_list/app_list_folder_item.cc",
+    "app_list/app_list_folder_item.h",
+    "app_list/app_list_item.cc",
+    "app_list/app_list_item.h",
+    "app_list/app_list_item_list.cc",
+    "app_list/app_list_item_list.h",
+    "app_list/app_list_item_list_observer.h",
+    "app_list/app_list_item_observer.h",
+    "app_list/app_list_model.cc",
+    "app_list/app_list_model.h",
+    "app_list/app_list_model_observer.h",
+    "app_list/folder_image.cc",
+    "app_list/folder_image.h",
+    "app_list/search_box_model.cc",
+    "app_list/search_box_model.h",
+    "app_list/search_box_model_observer.h",
     "app_types.h",
     "ash_pref_names.cc",
     "ash_pref_names.h",
@@ -63,7 +83,9 @@ component("ash_public_cpp") {
   defines = [ "ASH_PUBLIC_IMPLEMENTATION" ]
 
   deps = [
+    "//cc/paint",
     "//components/prefs",
+    "//components/sync",
     "//mojo/common:common_custom_types",
     "//skia/public/interfaces",
     "//ui/aura",

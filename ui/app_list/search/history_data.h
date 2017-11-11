@@ -11,12 +11,12 @@
 #include <memory>
 #include <string>
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "base/time/time.h"
-#include "ui/app_list/app_list_export.h"
 #include "ui/app_list/search/history_types.h"
 
 namespace app_list {
