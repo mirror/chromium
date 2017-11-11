@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6122bab_0423fdd6",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-11T07:16:47Z",
+      "side": 1,
+      "message": "mind making this instead return bool and pass the layout back via an out-param? it feels a bit wrong to add an \"invalid layout\" value to the enum, given that it seems to only be intended as a way for this function to report failure.",
+      "revId": "6fd2b6766a80e1290933412d7373787f39d8f087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
