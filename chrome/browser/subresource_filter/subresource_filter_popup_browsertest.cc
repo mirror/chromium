@@ -14,6 +14,7 @@
 #include "chrome/browser/safe_browsing/test_safe_browsing_database_helper.h"
 #include "chrome/browser/subresource_filter/chrome_subresource_filter_client.h"
 #include "chrome/browser/subresource_filter/subresource_filter_browser_test_harness.h"
+#include "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/test/base/in_process_browser_test.h"
@@ -216,7 +217,7 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
 IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
                        BlockCreatingNewWindows_LogsToConsole) {
   content::ConsoleObserverDelegate console_observer(web_contents(),
-                                                    kDisallowNewWindowMessage);
+                                                    kAbusiveEnforceMessage);
   web_contents()->SetDelegate(&console_observer);
   const char kWindowOpenPath[] = "/subresource_filter/window_open.html";
   GURL a_url(embedded_test_server()->GetURL("a.com", kWindowOpenPath));
@@ -231,7 +232,7 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
       web_contents(), "openWindow()", &opened_window));
   EXPECT_FALSE(opened_window);
   console_observer.Wait();
-  EXPECT_EQ(kDisallowNewWindowMessage, console_observer.message());
+  EXPECT_EQ(kAbusiveEnforceMessage, console_observer.message());
 
   EXPECT_TRUE(AreDisallowedRequestsBlocked());
 }
@@ -253,8 +254,8 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
       browser()->tab_strip_model()->GetActiveWebContents();
 
   log_observer.RoundTripAndVerifyLogMessages(
-      web_contents,
-      {kActivationWarningConsoleMessage, kDisallowNewWindowWarningMessage}, {});
+      web_contents, {kActivationWarningConsoleMessage, kAbusiveWarnMessage},
+      {});
 
   bool opened_window = false;
   EXPECT_TRUE(content::ExecuteScriptAndExtractBool(web_contents, "openWindow()",
@@ -290,8 +291,8 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
   EXPECT_FALSE(AreDisallowedRequestsBlocked());
 
   log_observer.RoundTripAndVerifyLogMessages(
-      web_contents(),
-      {kDisallowNewWindowWarningMessage, kActivationWarningConsoleMessage}, {});
+      web_contents(), {kAbusiveWarnMessage, kActivationWarningConsoleMessage},
+      {});
 }
 
 // Whitelisted sites should not have console logging.
@@ -325,7 +326,7 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
   EXPECT_FALSE(AreDisallowedRequestsBlocked());
 
   log_observer.RoundTripAndVerifyLogMessages(
-      web_contents(), {kActivationConsoleMessage}, {kDisallowNewWindowMessage});
+      web_contents(), {kActivationConsoleMessage}, {kAbusiveEnforceMessage});
 }
 
 IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest, BlockOpenURLFromTab) {
