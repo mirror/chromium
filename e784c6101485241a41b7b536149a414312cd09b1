@@ -52,6 +52,24 @@
       "revId": "e784c6101485241a41b7b536149a414312cd09b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82bb5875_5154a5cb",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1229425
+      },
+      "writtenOn": "2017-11-11T13:25:00Z",
+      "side": 1,
+      "message": "Ok, I removed package_output_dir so we only have one include dir. As long as base_output_dir is the same as in generate_jni I can make it work in WebRTC.",
+      "parentUuid": "f5214037_31b284c9",
+      "revId": "e784c6101485241a41b7b536149a414312cd09b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
