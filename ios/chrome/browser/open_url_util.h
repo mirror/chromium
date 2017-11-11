@@ -7,9 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
-// Wrapper method for UIApplication openURL() that uses
-// the non-deprecated method when it is available (iOS10+).
-void OpenUrlWithCompletionHandler(NSURL* url,
-                                  void (^completion_handler)(BOOL success));
+// Launch another app to handle |url|. |completion_handler| will be called on
+// the main thread with the status of whether another app was launched.
+void OpenUrlWithCompletionHandler(NSURL* url, void (^completion_handler)(BOOL));
 
 #endif  // IOS_CHROME_BROWSER_OPEN_URL_UTIL_H_
