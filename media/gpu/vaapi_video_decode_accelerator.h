@@ -26,6 +26,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/condition_variable.h"
 #include "base/synchronization/lock.h"
+#include "base/task/cancelable_task_tracker.h"
 #include "base/threading/thread.h"
 #include "media/base/bitstream_buffer.h"
 #include "media/gpu/gpu_video_decode_accelerator_helpers.h"
@@ -95,28 +96,21 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   // Notify the client that an error has occurred and decoding cannot continue.
   void NotifyError(Error error);
 
-  // Queue a input buffer for decode.
-  void QueueInputBuffer(const BitstreamBuffer& bitstream_buffer);
+  // Queue a BitstreamBuffer for decode.
+  void EnqueueBitstreamBuffer(const BitstreamBuffer& bitstream_buffer);
 
-  // Get a new input buffer from the queue and set it up in decoder. This will
-  // sleep if no input buffers are available. Return true if a new buffer has
-  // been set up, false if an early exit has been requested (due to initiated
-  // reset/flush/destroy).
-  bool GetInputBuffer_Locked();
+  void EnqueueInputBufferOnTaskRunner(std::unique_ptr<InputBuffer> buffer);
 
   // Signal the client that the current buffer has been read and can be
   // returned. Will also release the mapping.
-  void ReturnCurrInputBuffer_Locked();
+  void ReturnCurrentInputBuffer();
 
   // Wait for more surfaces to become available. Return true once they do or
   // false if an early exit has been requested (due to an initiated
   // reset/flush/destroy).
   bool WaitForSurfaces_Locked();
 
-  // Continue decoding given input buffers and sleep waiting for input/output
-  // as needed. Will exit if a new set of surfaces or reset/flush/destroy
-  // is requested.
-  void DecodeTask();
+  void DecodeOnTaskRunner();
 
   // Scheduled after receiving a flush request and executed after the current
   // decoding task finishes decoding pending inputs. Makes the decoder return
@@ -212,15 +206,15 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   State state_;
   Config::OutputMode output_mode_;
 
-  // Queue of available InputBuffers (picture_buffer_ids).
-  base::queue<linked_ptr<InputBuffer>> input_buffers_;
-  // Number of !IsFlush() InputBuffers in |input_buffers_| for tracing.
-  int num_stream_bufs_at_decoder_;
-  // Signalled when input buffers are queued onto |input_buffers_| queue.
-  base::ConditionVariable input_ready_;
-
-  // Current input buffer at decoder.
-  linked_ptr<InputBuffer> curr_input_buffer_;
+  // InputBuffers are sent in a CancelableTaskTracker to
+  // |decoder_thread_task_runner_|, where they are enqueued in |input_buffers_|.
+  // The one being currently decoded is kept separated in
+  // |current_input_buffer_|.
+  base::CancelableTaskTracker input_tasks_;
+  base::queue<std::unique_ptr<InputBuffer>> input_buffers_;
+  std::unique_ptr<InputBuffer> current_input_buffer_;
+  // Number of !IsFlushRequest() InputBuffers in |input_buffers_| for tracing.
+  int num_input_buffers_enqueued_;
 
   // Queue for incoming output buffers (texture ids).
   using OutputBuffers = base::queue<int32_t>;
