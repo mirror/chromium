@@ -1,0 +1,314 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d118698_5f7814c4",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 1,
+      "message": "nit: s/lineleft/line_left -\u003e new variable naming convention",
+      "range": {
+        "startLine": 105,
+        "startChar": 9,
+        "endLine": 105,
+        "endChar": 17
+      },
+      "revId": "ce9509a1086439478aa6a0bbba938592d9247c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c357b61b_c97efa5b",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 1,
+      "message": "s/lineright/line_right",
+      "range": {
+        "startLine": 110,
+        "startChar": 9,
+        "endLine": 110,
+        "endChar": 18
+      },
+      "revId": "ce9509a1086439478aa6a0bbba938592d9247c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5cb3f4f_dc245a64",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 1,
+      "message": "it should be https://w3c.github.io/webvtt/#dom-vttcue-position",
+      "range": {
+        "startLine": 382,
+        "startChar": 27,
+        "endLine": 382,
+        "endChar": 33
+      },
+      "revId": "ce9509a1086439478aa6a0bbba938592d9247c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2953a822_ce4912be",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 1,
+      "message": "it should be https://w3c.github.io/webvtt/#dom-vttcue-size\nAlso please modify the below text according to the spec.",
+      "range": {
+        "startLine": 444,
+        "startChar": 17,
+        "endLine": 444,
+        "endChar": 23
+      },
+      "revId": "ce9509a1086439478aa6a0bbba938592d9247c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6cbb36a_92724ac3",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 1,
+      "message": "this block should be removed. The algorithm here is just 4 steps.",
+      "range": {
+        "startLine": 657,
+        "startChar": 16,
+        "endLine": 657,
+        "endChar": 17
+      },
+      "revId": "ce9509a1086439478aa6a0bbba938592d9247c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6bc89e9_1ee9303e",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 1,
+      "message": "same as above. this should be removed.",
+      "range": {
+        "startLine": 699,
+        "startChar": 2,
+        "endLine": 699,
+        "endChar": 15
+      },
+      "revId": "ce9509a1086439478aa6a0bbba938592d9247c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83791d3_5ff187a0",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 1,
+      "message": "nit: old comment is good enough.",
+      "range": {
+        "startLine": 756,
+        "startChar": 19,
+        "endLine": 756,
+        "endChar": 27
+      },
+      "revId": "ce9509a1086439478aa6a0bbba938592d9247c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a9bea9_ab1a42a1",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 1,
+      "message": "no need to use the direction here.",
+      "range": {
+        "startLine": 758,
+        "startChar": 41,
+        "endLine": 758,
+        "endChar": 59
+      },
+      "revId": "ce9509a1086439478aa6a0bbba938592d9247c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a971e47b_b0f41ffa",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 1,
+      "message": "remove direction parameter here.",
+      "revId": "ce9509a1086439478aa6a0bbba938592d9247c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f42564_bfffaaca",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 1,
+      "message": "nit: s/m_writingDirection/writing_direction_",
+      "range": {
+        "startLine": 807,
+        "startChar": 17,
+        "endLine": 807,
+        "endChar": 35
+      },
+      "revId": "ce9509a1086439478aa6a0bbba938592d9247c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038c9f35_f1484a05",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 1,
+      "message": "add comment \"handled below\" similar to the above case",
+      "range": {
+        "startLine": 1169,
+        "startChar": 31,
+        "endLine": 1169,
+        "endChar": 0
+      },
+      "revId": "ce9509a1086439478aa6a0bbba938592d9247c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa9939e3_b64a0267",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutVTTCue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 1,
+      "message": "this should be https://w3c.github.io/webvtt/#apply-webvtt-cue-settings",
+      "revId": "ce9509a1086439478aa6a0bbba938592d9247c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a1e729c_4d74ccf2",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutVTTCue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 1,
+      "message": "this should be https://w3c.github.io/webvtt/#apply-webvtt-cue-settings",
+      "range": {
+        "startLine": 289,
+        "startChar": 13,
+        "endLine": 289,
+        "endChar": 16
+      },
+      "revId": "ce9509a1086439478aa6a0bbba938592d9247c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a522b5_4cbe2506",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutVTTCue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 1,
+      "message": "this also should be https://w3c.github.io/webvtt/#apply-webvtt-cue-settings",
+      "range": {
+        "startLine": 382,
+        "startChar": 35,
+        "endLine": 382,
+        "endChar": 45
+      },
+      "revId": "ce9509a1086439478aa6a0bbba938592d9247c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

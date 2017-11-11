@@ -45,6 +45,52 @@
       "revId": "e85f43e14908f7372bf291d805bf73205a7aafe0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b29fde_2e6bf639",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/settings-position.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 0,
+      "message": "Please delete settings-position-expected.txt, not this file.",
+      "range": {
+        "startLine": 1,
+        "startChar": 9,
+        "endLine": 1,
+        "endChar": 10
+      },
+      "revId": "e85f43e14908f7372bf291d805bf73205a7aafe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dac21379_c8e2a25a",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-cue-rendering-position-auto-rtl-expected.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-11T10:08:45Z",
+      "side": 0,
+      "message": "i am not sure if we have to modify this expected test. We are not using positionAlign or lineAlign in this test. Hopefully addressing my comments should resolve this. lets see.",
+      "range": {
+        "startLine": 21,
+        "startChar": 10,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "e85f43e14908f7372bf291d805bf73205a7aafe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
