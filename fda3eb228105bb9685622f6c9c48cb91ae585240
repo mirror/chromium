@@ -16,6 +16,24 @@
       "revId": "fda3eb228105bb9685622f6c9c48cb91ae585240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1082cd5_e6387fca",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1128941
+      },
+      "writtenOn": "2017-11-11T01:52:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25be4415_9a66f07b",
+      "revId": "fda3eb228105bb9685622f6c9c48cb91ae585240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
