@@ -1311,7 +1311,8 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
     // thus use the correct process.
     bool use_process_per_site =
         RenderProcessHost::ShouldUseProcessPerSite(browser_context, dest_url) &&
-        RenderProcessHostImpl::GetProcessHostForSite(browser_context, dest_url);
+        RenderProcessHostImpl::GetProcessHostForSite(
+            current_instance_impl->browsing_instance(), dest_url);
     if (current_instance_impl->HasRelatedSiteInstance(dest_url) ||
         use_process_per_site) {
       return SiteInstanceDescriptor(browser_context, dest_url,
@@ -1433,8 +1434,8 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
 
   if (!frame_tree_node_->IsMainFrame() &&
       SiteIsolationPolicy::IsTopDocumentIsolationEnabled() &&
-      !SiteInstanceImpl::DoesSiteRequireDedicatedProcess(browser_context,
-                                                         dest_url)) {
+      !SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
+          current_instance_impl->browsing_instance(), dest_url)) {
     if (GetContentClient()
             ->browser()
             ->ShouldFrameShareParentSiteInstanceDespiteTopDocumentIsolation(
@@ -1458,8 +1459,8 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
     RenderFrameHostImpl* parent =
         frame_tree_node_->parent()->current_frame_host();
     bool dest_url_requires_dedicated_process =
-        SiteInstanceImpl::DoesSiteRequireDedicatedProcess(browser_context,
-                                                          dest_url);
+        SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
+            current_instance_impl->browsing_instance(), dest_url);
     if (!parent->GetSiteInstance()->RequiresDedicatedProcess() &&
         !dest_url_requires_dedicated_process) {
       return SiteInstanceDescriptor(parent->GetSiteInstance());
@@ -1495,7 +1496,6 @@ bool RenderFrameHostManager::IsRendererTransferNeededForNavigation(
   if (rfh->GetSiteInstance()->GetSiteURL().SchemeIs(kGuestScheme))
     return false;
 
-  BrowserContext* context = rfh->GetSiteInstance()->GetBrowserContext();
   // TODO(nasko, nick): These following --site-per-process checks are
   // overly simplistic. Update them to match all the cases
   // considered by DetermineSiteInstanceForURL.
@@ -1508,8 +1508,8 @@ bool RenderFrameHostManager::IsRendererTransferNeededForNavigation(
   // The sites differ. If either one requires a dedicated process,
   // then a transfer is needed.
   if (rfh->GetSiteInstance()->RequiresDedicatedProcess() ||
-      SiteInstanceImpl::DoesSiteRequireDedicatedProcess(context,
-                                                        dest_url)) {
+      SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
+          rfh->GetSiteInstance()->browsing_instance(), dest_url)) {
     return true;
   }
 

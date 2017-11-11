@@ -828,7 +828,7 @@ void NavigationRequest::OnResponseStarted(
     SiteInstanceImpl* instance = render_frame_host->GetSiteInstance();
     if (!instance->HasSite() &&
         SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
-            instance->GetBrowserContext(), common_params_.url)) {
+            instance->browsing_instance(), common_params_.url)) {
       instance->SetSite(common_params_.url);
     }
   }

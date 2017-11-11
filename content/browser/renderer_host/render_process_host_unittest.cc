@@ -39,13 +39,15 @@ TEST_F(RenderProcessHostUnitTest, GuestsAreNotSuitableHosts) {
   MockRenderProcessHost guest_host(browser_context());
   guest_host.set_is_for_guests_only(true);
 
+  scoped_refptr<SiteInstanceImpl> site_instance =
+      SiteInstanceImpl::CreateForURL(browser_context(), test_url);
+  BrowsingInstance* browsing_instance = site_instance->browsing_instance();
   EXPECT_FALSE(RenderProcessHostImpl::IsSuitableHost(
-      &guest_host, browser_context(), test_url));
+      &guest_host, browsing_instance, test_url));
   EXPECT_TRUE(RenderProcessHostImpl::IsSuitableHost(
-      process(), browser_context(), test_url));
-  EXPECT_EQ(
-      process(),
-      RenderProcessHost::GetExistingProcessHost(browser_context(), test_url));
+      process(), browsing_instance, test_url));
+  EXPECT_EQ(process(), RenderProcessHostImpl::GetExistingProcessHost(
+                           browsing_instance, test_url));
 }
 
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
