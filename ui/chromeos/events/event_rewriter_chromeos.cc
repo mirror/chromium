@@ -351,12 +351,12 @@ EventRewriterChromeOS::GetKeyboardTopRowLayout(
     const base::FilePath& device_path) {
   device::ScopedUdevPtr udev(device::udev_new());
   if (!udev.get())
-    return EventRewriterChromeOS::kKbdTopRowLayoutDefault;
+    return EventRewriterChromeOS::kKbdTopRowInvalidLayout;
 
   device::ScopedUdevDevicePtr device(device::udev_device_new_from_syspath(
       udev.get(), device_path.value().c_str()));
   if (!device.get())
-    return EventRewriterChromeOS::kKbdTopRowLayoutDefault;
+    return EventRewriterChromeOS::kKbdTopRowInvalidLayout;
 
   const char kLayoutProperty[] = "CROS_KEYBOARD_TOP_ROW_LAYOUT";
   std::string layout =
@@ -368,12 +368,12 @@ EventRewriterChromeOS::GetKeyboardTopRowLayout(
   if (!base::StringToInt(layout, &layout_id)) {
     LOG(WARNING) << "Failed to parse " << kLayoutProperty << " value '"
                  << layout << "'";
-    return EventRewriterChromeOS::kKbdTopRowLayoutDefault;
+    return EventRewriterChromeOS::kKbdTopRowInvalidLayout;
   }
   if (layout_id < EventRewriterChromeOS::kKbdTopRowLayoutMin ||
       layout_id > EventRewriterChromeOS::kKbdTopRowLayoutMax) {
     LOG(WARNING) << "Invalid " << kLayoutProperty << " '" << layout << "'";
-    return EventRewriterChromeOS::kKbdTopRowLayoutDefault;
+    return EventRewriterChromeOS::kKbdTopRowInvalidLayout;
   }
   return static_cast<EventRewriterChromeOS::KeyboardTopRowLayout>(layout_id);
 }
@@ -1187,9 +1187,15 @@ EventRewriterChromeOS::KeyboardDeviceAddedInternal(
             << "id=" << device_id;
   }
 
-  // Always overwrite the existing device_id since the X server may reuse a
-  // device id for an unattached device.
-  device_id_to_info_[device_id] = {type, layout};
+  // Don't store a device info when the layout is invalid (which means an error
+  // occurred while reading from udev). This gives a chance to reattempt reading
+  // from udev on subsequent key events, rather than being stuck in a bad state
+  // until next reboot. crbug.com/783166.
+  if (layout != kKbdTopRowInvalidLayout) {
+    // Always overwrite the existing device_id since the X server may reuse a
+    // device id for an unattached device.
+    device_id_to_info_[device_id] = {type, layout};
+  }
   return type;
 }
 
