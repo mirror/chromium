@@ -16,6 +16,24 @@
       "revId": "13d097f46d53ef5f1e708869f7fb05f6141f50bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0311ff_fb79995c",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-11T01:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85d3292b_a3976e05",
+      "revId": "13d097f46d53ef5f1e708869f7fb05f6141f50bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
