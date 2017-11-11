@@ -78,6 +78,8 @@ class LockScreenNoteTakingTest : public ExtensionBrowserTest {
     cmd_line->AppendSwitchASCII(extensions::switches::kWhitelistedExtensionID,
                                 kTestAppId);
     cmd_line->AppendSwitch(ash::switches::kAshForceEnableStylusTools);
+    // TODO(tbarzic): Fix tests for views-based lock. See crbug.com/784011.
+    cmd_line->AppendSwitch(ash::switches::kShowWebUiLock);
 
     ExtensionBrowserTest::SetUpCommandLine(cmd_line);
   }
