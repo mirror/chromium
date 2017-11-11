@@ -69,6 +69,24 @@
       "revId": "6a8a9b5dfc29bda786f460e04423fbb11b9c53ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4373d2_8e24b187",
+        "filename": "media/mojo/interfaces/video_decode_stats_recorder.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-11T00:07:45Z",
+      "side": 1,
+      "message": "Both have well defined mojo types. I only needed it for UKM, so just used the type that matched their API.",
+      "parentUuid": "f01124f3_35f25e71",
+      "revId": "6a8a9b5dfc29bda786f460e04423fbb11b9c53ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
