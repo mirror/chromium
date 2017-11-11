@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf208788_2aad5a90",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptCompilerPlugin.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-11T01:02:04Z",
+      "side": 1,
+      "message": "JSdoc for message and timeout?",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "078f43a2f1ef1082765b820d96d9509fc4eb2bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5a5632_49dfe4ec",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptCompilerPlugin.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-11T01:02:04Z",
+      "side": 1,
+      "message": "Unrelated to this patch, but should this go above the early return `if (!result)`?",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 19
+      },
+      "revId": "078f43a2f1ef1082765b820d96d9509fc4eb2bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6190f6a_f8af41fd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptCompilerPlugin.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-11T01:02:04Z",
+      "side": 1,
+      "message": "Should we move this up before the `if (!result.exceptionDetails)` check?  I think the message should go away if there\u0027s no more exception.",
+      "range": {
+        "startLine": 87,
+        "startChar": 25,
+        "endLine": 87,
+        "endChar": 38
+      },
+      "revId": "078f43a2f1ef1082765b820d96d9509fc4eb2bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf59d67b_4d1c457e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptCompilerPlugin.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-11T01:02:04Z",
+      "side": 1,
+      "message": "Is there ever a case when the textEditor/uiSC are reused across dispose()?  If so, we may need to cancel the currently running _compile() from here, to avoid a race.  If the async runtimeModel.compileScript() finishes after we dispose, it might try to add a message to the old uiSC when it shouldn\u0027t.",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 9
+      },
+      "revId": "078f43a2f1ef1082765b820d96d9509fc4eb2bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ae26d0_f3eb6612",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/UISourceCodeFrame.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-11T01:02:04Z",
+      "side": 1,
+      "message": "Brief explanation of why these 2 lines change?  I\u0027m not very familiar with Persistence/bindings, so I\u0027ll defer to lushnikov@ here.",
+      "range": {
+        "startLine": 257,
+        "startChar": 8,
+        "endLine": 257,
+        "endChar": 26
+      },
+      "revId": "078f43a2f1ef1082765b820d96d9509fc4eb2bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
