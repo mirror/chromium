@@ -587,9 +587,15 @@ class TaskSchedulerSingleThreadTaskRunnerManagerStartTest
 
 }  // namespace
 
+// TODO(crbug.com/784051): Reenable when no longer flaky.
+#if TARGET_IPHONE_SIMULATOR
+#define MAYBE_PostTaskBeforeStart PostTaskBeforeStart
+#else
+#define MAYBE_PostTaskBeforeStart FLAKY_PostTaskBeforeStart
+#endif
 // Verify that a task posted before Start() doesn't run until Start() is called.
 TEST_F(TaskSchedulerSingleThreadTaskRunnerManagerStartTest,
-       PostTaskBeforeStart) {
+       MAYBE_PostTaskBeforeStart) {
   AtomicFlag manager_started;
   WaitableEvent task_running(WaitableEvent::ResetPolicy::MANUAL,
                              WaitableEvent::InitialState::NOT_SIGNALED);
