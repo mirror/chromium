@@ -126,14 +126,6 @@ int SpdyHttpStream::ReadResponseHeaders(const CompletionCallback& callback) {
 
 int SpdyHttpStream::ReadResponseBody(
     IOBuffer* buf, int buf_len, const CompletionCallback& callback) {
-  // Invalidate HttpRequestInfo pointer. This is to allow the stream to be
-  // shared across multiple transactions which might require this
-  // stream to outlive the request_'s owner.
-  // Only allowed when Reading of response body starts. It is safe to reset it
-  // at this point since request_->upload_data_stream is also not needed
-  // anymore.
-  request_info_ = nullptr;
-
   if (stream_)
     CHECK(!stream_->IsIdle());
 
@@ -335,6 +327,14 @@ void SpdyHttpStream::OnHeadersReceived(
       HttpResponseInfo::ConnectionInfoToString(response_info_->connection_info);
   response_info_->vary_data
       .Init(*request_info_, *response_info_->headers.get());
+
+  // Invalidate HttpRequestInfo pointer. This is to allow the stream to be
+  // shared across multiple transactions which might require this
+  // stream to outlive the request_'s owner.
+  // Only allowed when Reading of response body starts. It is safe to reset it
+  // at this point since request_->upload_data_stream is also not needed
+  // anymore.
+  request_info_ = nullptr;
 
   if (!response_callback_.is_null()) {
     DoResponseCallback(OK);
