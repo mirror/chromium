@@ -103,7 +103,9 @@ class CORE_EXPORT WebViewImpl final
       public WebScheduler::InterventionReporter,
       public WebViewScheduler::WebViewSchedulerDelegate {
  public:
-  static WebViewImpl* Create(WebViewClient*, WebPageVisibilityState);
+  static WebViewImpl* Create(WebViewClient*,
+                             WebPageVisibilityState,
+                             WebViewImpl* opener);
   static HashSet<WebViewImpl*>& AllInstances();
   static const WebInputEvent* CurrentInputEvent();
   // Returns true if popup menus should be rendered by the browser, false if
@@ -512,7 +514,9 @@ class CORE_EXPORT WebViewImpl final
   friend class WebViewFrameWidget;
   friend class WTF::RefCounted<WebViewImpl>;
 
-  explicit WebViewImpl(WebViewClient*, WebPageVisibilityState);
+  explicit WebViewImpl(WebViewClient*,
+                       WebPageVisibilityState,
+                       WebViewImpl* opener);
   ~WebViewImpl() override;
 
   void HideSelectPopup();

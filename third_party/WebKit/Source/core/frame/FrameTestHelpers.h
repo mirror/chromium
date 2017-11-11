@@ -305,7 +305,7 @@ class WebViewHelper {
   void SetViewportSize(const WebSize&);
 
  private:
-  void InitializeWebView(TestWebViewClient*);
+  void InitializeWebView(TestWebViewClient*, class WebView* opener);
 
   WebViewImpl* web_view_;
   UseMockScrollbarSettings mock_scrollbar_settings_;

@@ -30,7 +30,9 @@
 
 #include "core/exported/WebViewImpl.h"
 
+#include <algorithm>
 #include <memory>
+#include <utility>
 
 #include "build/build_config.h"
 #include "core/CSSValueKeywords.h"
@@ -295,14 +297,18 @@ class ColorOverlay final : public PageOverlay::Delegate {
 // WebView ----------------------------------------------------------------
 
 WebView* WebView::Create(WebViewClient* client,
-                         WebPageVisibilityState visibility_state) {
-  return WebViewImpl::Create(client, visibility_state);
+                         WebPageVisibilityState visibility_state,
+                         WebView* opener) {
+  return WebViewImpl::Create(client, visibility_state,
+                             static_cast<WebViewImpl*>(opener));
 }
 
 WebViewImpl* WebViewImpl::Create(WebViewClient* client,
-                                 WebPageVisibilityState visibility_state) {
+                                 WebPageVisibilityState visibility_state,
+                                 WebViewImpl* opener) {
   // Pass the WebViewImpl's self-reference to the caller.
-  auto web_view = base::AdoptRef(new WebViewImpl(client, visibility_state));
+  auto web_view =
+      base::AdoptRef(new WebViewImpl(client, visibility_state, opener));
   web_view->AddRef();
   return web_view.get();
 }
@@ -330,7 +336,8 @@ void WebViewImpl::SetPrerendererClient(
 }
 
 WebViewImpl::WebViewImpl(WebViewClient* client,
-                         WebPageVisibilityState visibility_state)
+                         WebPageVisibilityState visibility_state,
+                         WebViewImpl* opener)
     : client_(client),
       chrome_client_(ChromeClientImpl::Create(this)),
       context_menu_client_(*this),
@@ -382,7 +389,8 @@ WebViewImpl::WebViewImpl(WebViewClient* client,
   page_clients.editor_client = &editor_client_;
   page_clients.spell_checker_client = &spell_checker_client_impl_;
 
-  page_ = Page::CreateOrdinary(page_clients);
+  page_ =
+      Page::CreateOrdinary(page_clients, opener ? opener->GetPage() : nullptr);
   CoreInitializer::GetInstance().ProvideModulesToPage(*page_, client_);
   page_->SetValidationMessageClient(ValidationMessageClientImpl::Create(*this));
   SetVisibilityState(visibility_state, true);
