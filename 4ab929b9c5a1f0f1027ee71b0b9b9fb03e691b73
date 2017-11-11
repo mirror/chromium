@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "63401314_dc785b8b",
+        "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureElements.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-11T17:48:33Z",
+      "side": 1,
+      "message": "This is because WebKit was using `Create` methods instead of ctor for reasons I do not know. An example how to create an HTMLDivElement is available here:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementsHelper.cpp?q\u003df:media+f:control+f:helper\u0026sq\u003dpackage:chromium\u0026l\u003d111",
+      "parentUuid": "a3b19462_84ca1ed5",
+      "revId": "4ab929b9c5a1f0f1027ee71b0b9b9fb03e691b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1182123_310285af",
         "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureInterstitial.h",
         "patchSetId": 6
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "This doesn\u0027t override anything, just used when tracing the dom.",
       "parentUuid": "a1182123_310285af",
+      "revId": "4ab929b9c5a1f0f1027ee71b0b9b9fb03e691b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb796fb_ce1d9bb5",
+        "filename": "third_party/WebKit/Source/core/html/media/PictureInPictureInterstitial.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-11T17:48:33Z",
+      "side": 1,
+      "message": "Doesn\u0027t `Element` (which is a parent of HTMLDivElement) declares `Trace()`?",
+      "parentUuid": "35754cb7_e3ef78fb",
       "revId": "4ab929b9c5a1f0f1027ee71b0b9b9fb03e691b73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
