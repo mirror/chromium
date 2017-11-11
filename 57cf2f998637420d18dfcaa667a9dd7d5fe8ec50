@@ -36,6 +36,58 @@
     },
     {
       "key": {
+        "uuid": "14cc2de0_1f4bc5b6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-11T00:52:25Z",
+      "side": 1,
+      "message": "I agree with Josh\u0027s comment above.\n\nI am guessing that you moved the test case data here because the test string is shared. How about naming it kUtf8TourDeForce / kUtf8StressTest, leaving the definition and explanation comment here, and referencing it from the 2 HTML files that use this test.",
+      "parentUuid": "8fb126d4_df88e348",
+      "revId": "57cf2f998637420d18dfcaa667a9dd7d5fe8ec50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc0a68f_061db0a9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-11T00:52:25Z",
+      "side": 1,
+      "message": "nit: formTarget / formTargetIframe?\n\n(target is very generic and I have to look down to understand what it means)",
+      "revId": "57cf2f998637420d18dfcaa667a9dd7d5fe8ec50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1504b928_13fdbd72",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-11T00:52:25Z",
+      "side": 1,
+      "message": "nit: It\u0027s odd that the DOM insertion for \"form\" is not immediately after its creation. That\u0027s the pattern you\u0027re following for the other DOM elements (target, fileInput).",
+      "revId": "57cf2f998637420d18dfcaa667a9dd7d5fe8ec50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd028afe_e0c22ab9",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 22
