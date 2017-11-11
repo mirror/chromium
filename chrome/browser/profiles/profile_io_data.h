@@ -42,6 +42,7 @@ class ChromeHttpUserAgentSettings;
 class ChromeNetworkDelegate;
 class ChromeURLRequestContextGetter;
 class ChromeExpectCTReporter;
+class CrossThreadNetworkContextParams;
 class ExtensionCookieNotifier;
 class HostContentSettingsMap;
 class ProtocolHandlerRegistry;
@@ -82,7 +83,6 @@ class ChannelIDService;
 class ClientCertStore;
 class CookieStore;
 class HttpTransactionFactory;
-class ProxyConfigService;
 class ReportingService;
 class ReportSender;
 class SSLConfigService;
@@ -312,7 +312,8 @@ class ProfileIOData {
     // Used to configure the main URLRequestContext through the IOThread's
     // in-process network service.
     content::mojom::NetworkContextRequest main_network_context_request;
-    content::mojom::NetworkContextParamsPtr main_network_context_params;
+    std::unique_ptr<CrossThreadNetworkContextParams>
+        main_network_context_params;
 
     scoped_refptr<content_settings::CookieSettings> cookie_settings;
     scoped_refptr<HostContentSettingsMap> host_content_settings_map;
@@ -334,11 +335,6 @@ class ProfileIOData {
     // Holds the URLRequestInterceptor pointer that is created on the UI thread
     // and then passed to the list of request_interceptors on the IO thread.
     std::unique_ptr<net::URLRequestInterceptor> new_tab_page_interceptor;
-
-    // We need to initialize the ProxyConfigService from the UI thread
-    // because on linux it relies on initializing things through gconf,
-    // and needs to be on the main thread.
-    std::unique_ptr<net::ProxyConfigService> proxy_config_service;
 
 #if defined(OS_CHROMEOS)
     std::unique_ptr<policy::PolicyCertVerifier> policy_cert_verifier;
