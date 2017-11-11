@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56bf91ba_9936f26b",
+        "filename": "third_party/WebKit/Source/platform/Supplementable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-11T08:46:07Z",
+      "side": 1,
+      "message": "How does this work?\n\nSince ProvideTo is a static method, it cannot call GetSupplementable()...?",
+      "revId": "a536abfe7b424c1d6cd4228d4dd172494d590860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
