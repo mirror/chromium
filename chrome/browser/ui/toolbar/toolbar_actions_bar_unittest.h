@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "chrome/browser/extensions/browser_action_test_util.h"
+#include "chrome/browser/extensions/extension_error_reporter.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
 #include "extensions/common/extension_builder.h"
 #include "ui/base/material_design/material_design_controller.h"
@@ -19,6 +20,7 @@ class ExtensionAction;
 class ScopedTestingLocalState;
 class ToolbarActionsBar;
 class ToolbarActionsModel;
+class ToolbarActionErrorTestObserver;
 
 namespace content {
 class WebContents;
@@ -86,6 +88,9 @@ class ToolbarActionsBarUnitTest :
   BrowserActionTestUtil* overflow_browser_action_test_util() {
     return overflow_browser_action_test_util_.get();
   }
+  ToolbarActionErrorTestObserver* extension_error_observer() {
+    return toolbar_action_error_test_observer_.get();
+  }
 
  private:
   // The associated ToolbarActionsModel (owned by the keyed service setup).
@@ -104,7 +109,60 @@ class ToolbarActionsBarUnitTest :
   // Local state for the browser process.
   std::unique_ptr<ScopedTestingLocalState> local_state_;
 
+  // Note that the ExtensionErrorReporter::Observer backing this object is
+  // registered after the corresponding observer on ToolbarActionModel is
+  // registered. This registration ordering is important because the
+  // ToolbarActionModel OnLoadFailure() should execute before the one defined in
+  // this test.
+  std::unique_ptr<ToolbarActionErrorTestObserver>
+      toolbar_action_error_test_observer_;
+
   DISALLOW_COPY_AND_ASSIGN(ToolbarActionsBarUnitTest);
+};
+
+// The ToolbarActionErrorTestObserver is used to notify when an extension
+// failed to load.
+class ToolbarActionErrorTestObserver : public ExtensionErrorReporter::Observer {
+ public:
+  ToolbarActionErrorTestObserver();
+  ~ToolbarActionErrorTestObserver() override;
+
+  void WaitForOnLoadFailure();
+
+ private:
+  class Waiter {
+   public:
+    Waiter() : observed_(false) {}
+
+    void Wait() {
+      if (!observed_)
+        run_loop_.Run();
+    }
+
+    void OnObserved() {
+      observed_ = true;
+      run_loop_.Quit();
+    }
+
+   private:
+    bool observed_;
+    base::RunLoop run_loop_;
+
+    DISALLOW_COPY_AND_ASSIGN(Waiter);
+  };
+
+  // ExtensionErrorReporter::Observer:
+  void OnLoadFailure(content::BrowserContext* browser_context,
+                     const base::FilePath& extension_path,
+                     const extensions::ExtensionId& extension_id,
+                     const std::string& error) override;
+
+  std::unique_ptr<Waiter> loaded_failed_waiter_;
+
+  ScopedObserver<ExtensionErrorReporter, ExtensionErrorReporter::Observer>
+      extension_error_reporter_observer_;
+
+  DISALLOW_COPY_AND_ASSIGN(ToolbarActionErrorTestObserver);
 };
 
 #endif  // CHROME_BROWSER_UI_TOOLBAR_TOOLBAR_ACTIONS_BAR_UNITTEST_H_

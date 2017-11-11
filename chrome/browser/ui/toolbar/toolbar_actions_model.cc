@@ -72,6 +72,10 @@ ToolbarActionsModel::ToolbarActionsModel(
     pref_change_registrar_.Add(extensions::pref_names::kToolbar,
                                pref_change_callback_);
   }
+
+  ExtensionErrorReporter::Init(true);
+  toolbar_action_error_observer_ =
+      std::make_unique<ToolbarActionErrorObserver>(this);
 }
 
 ToolbarActionsModel::~ToolbarActionsModel() {}
@@ -824,4 +828,26 @@ bool ToolbarActionsModel::IsActionVisible(const std::string& action_id) const {
          toolbar_items()[index].id != action_id)
     ++index;
   return index < visible_icon_count();
+}
+
+ToolbarActionsModel::ToolbarActionErrorObserver::ToolbarActionErrorObserver(
+    ToolbarActionsModel* toolbar_actions_model)
+    : toolbar_actions_model_(toolbar_actions_model),
+      extension_error_reporter_observer_(this) {
+  extension_error_reporter_observer_.Add(ExtensionErrorReporter::GetInstance());
+}
+
+ToolbarActionsModel::ToolbarActionErrorObserver::~ToolbarActionErrorObserver() {
+}
+
+void ToolbarActionsModel::ToolbarActionErrorObserver::OnLoadFailure(
+    content::BrowserContext* browser_context,
+    const base::FilePath& extension_path,
+    const extensions::ExtensionId& extension_id,
+    const std::string& error) {
+  ToolbarActionsModel::ToolbarItem item =
+      ToolbarActionsModel::ToolbarItem(extension_id, EXTENSION_ACTION);
+  for (ToolbarActionsModel::Observer& observer :
+       toolbar_actions_model_->GetObservers())
+    observer.OnToolbarActionLoadFailed(item.id);
 }

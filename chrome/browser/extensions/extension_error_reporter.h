@@ -12,6 +12,7 @@
 #include "base/observer_list.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string16.h"
+#include "extensions/common/extension_id.h"
 
 namespace base {
 class FilePath;
@@ -38,6 +39,7 @@ class ExtensionErrorReporter {
     // Called when an unpacked extension fails to load.
     virtual void OnLoadFailure(content::BrowserContext* browser_context,
                                const base::FilePath& extension_path,
+                               const extensions::ExtensionId& extension_id,
                                const std::string& error) = 0;
   };
 

@@ -61,7 +61,8 @@ void ExtensionErrorReporter::ReportLoadError(
       error.c_str()));
   ReportError(message, be_noisy);
   for (auto& observer : observers_)
-    observer.OnLoadFailure(browser_context, extension_path, error);
+    observer.OnLoadFailure(browser_context, extension_path, std::string(""),
+                           error);
 }
 
 void ExtensionErrorReporter::ReportError(const base::string16& message,
