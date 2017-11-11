@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bdabba88_81c1ed33",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-11-11T01:44:12Z",
+      "side": 1,
+      "message": "Yep looks like it.",
+      "parentUuid": "f7356006_c51530a5",
+      "revId": "b5393959fd4fb7ad811ae340b212aa9e789e0f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b95db78_c02c86f2",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-08T22:03:30Z",
       "side": 1,
       "message": "this is an undesired behavior change on android. pending_views_ \u003d\u003d 0 is the second parameter to ChildProcessLauncherPriority, it\u0027s just not used by anything other than android at the moment. Can other platforms just make use of that in their ChildProcessLauncherHelper variants?",
+      "range": {
+        "startLine": 3769,
+        "startChar": 57,
+        "endLine": 3769,
+        "endChar": 76
+      },
+      "revId": "b5393959fd4fb7ad811ae340b212aa9e789e0f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7b3a5f_1d714bdb",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3769,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-11-11T01:44:12Z",
+      "side": 1,
+      "message": "Ahh I made the wrong assumption that the boost_for_pending_views thing would override the background flag; made the change you suggested now.",
+      "parentUuid": "4b95db78_c02c86f2",
       "range": {
         "startLine": 3769,
         "startChar": 57,
