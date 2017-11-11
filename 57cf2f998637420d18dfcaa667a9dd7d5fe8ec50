@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54f2d143_d3aeee07",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-11T02:40:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f95fdaca_315bd76a",
+      "revId": "57cf2f998637420d18dfcaa667a9dd7d5fe8ec50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fb126d4_df88e348",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 22
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "bbc4ad29_8ae0e7be",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-11T02:40:24Z",
+      "side": 1,
+      "message": "Switched it back, but kept the test char sequence, ISO-2022-JP bytestream with fallbacks, and explanation here. Used slightly different constant names than those you proposed in an attempt to accurately convey their meanings.",
+      "parentUuid": "8fb126d4_df88e348",
+      "revId": "57cf2f998637420d18dfcaa667a9dd7d5fe8ec50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acc0a68f_061db0a9",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 22
@@ -68,6 +104,24 @@
       "revId": "57cf2f998637420d18dfcaa667a9dd7d5fe8ec50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2faaca_a179aa2a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-11T02:40:24Z",
+      "side": 1,
+      "message": "Used formTargetFrame",
+      "parentUuid": "acc0a68f_061db0a9",
+      "revId": "57cf2f998637420d18dfcaa667a9dd7d5fe8ec50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "fcdb0723_e79034b5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-11T02:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1504b928_13fdbd72",
+      "revId": "57cf2f998637420d18dfcaa667a9dd7d5fe8ec50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd028afe_e0c22ab9",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 22
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "ff595a81_83dc97fb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-11T02:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd028afe_e0c22ab9",
+      "revId": "57cf2f998637420d18dfcaa667a9dd7d5fe8ec50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2e5bec2_a9a6fe62",
         "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
         "patchSetId": 22
@@ -119,6 +209,24 @@
       "revId": "57cf2f998637420d18dfcaa667a9dd7d5fe8ec50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f969e8a_35b86820",
+        "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-11T02:40:24Z",
+      "side": 1,
+      "message": "https://github.com/w3c/html/issues/1077",
+      "parentUuid": "e2e5bec2_a9a6fe62",
+      "revId": "57cf2f998637420d18dfcaa667a9dd7d5fe8ec50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
