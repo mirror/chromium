@@ -59,14 +59,20 @@ class CONTENT_EXPORT RenderFrameObserver : public IPC::Listener,
   // Called when associated widget is about to close.
   virtual void WidgetWillClose() {}
 
+  // Called when a provisional load is committing in a frame. This is
+  // dispatched just before sending the DidCommitProvisionalLoad IPC back
+  // to the browser.
+  virtual void WillCommitProvisionalLoad(bool is_same_document_navigation) {}
+
+  // Called when a provisional load has committed in a frame. This is
+  // dispatched right after sending the DidCommitProvisionalLoad IPC back
+  // to the browser.
+  virtual void DidCommitProvisionalLoad(bool is_new_navigation,
+                                        bool is_same_document_navigation) {}
+
   // These match the Blink API notifications
   virtual void DidCreateNewDocument() {}
   virtual void DidCreateDocumentElement() {}
-  // Called when a provisional load is about to commit in a frame. This is
-  // dispatched just before the Javascript unload event.
-  virtual void WillCommitProvisionalLoad() {}
-  virtual void DidCommitProvisionalLoad(bool is_new_navigation,
-                                        bool is_same_document_navigation) {}
   virtual void DidStartProvisionalLoad(
       blink::WebDocumentLoader* document_loader) {}
   virtual void DidFailProvisionalLoad(const blink::WebURLError& error) {}

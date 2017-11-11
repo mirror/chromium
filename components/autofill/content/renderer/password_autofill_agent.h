@@ -219,7 +219,7 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   void FrameDetached() override;
   void DidStartProvisionalLoad(
       blink::WebDocumentLoader* document_loader) override;
-  void WillCommitProvisionalLoad() override;
+  void WillCommitProvisionalLoad(bool is_same_document_navigation) override;
   void DidCommitProvisionalLoad(bool is_new_navigation,
                                 bool is_same_document_navigation) override;
   void WillSendSubmitEvent(const blink::WebFormElement& form) override;

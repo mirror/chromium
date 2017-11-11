@@ -1931,9 +1931,11 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
       "/navigation_controller/simple_page_2.html"));
   TestNavigationManager subframe_delayer(shell()->web_contents(), slow_url);
   {
-    std::string script = "var iframe = document.createElement('iframe');"
-                         "iframe.src = '" + slow_url.spec() + "';"
-                         "document.body.appendChild(iframe);";
+    std::string script = base::StringPrintf(
+        R"( var iframe = document.createElement('iframe');
+            iframe.src = '%s';
+            document.body.appendChild(iframe); )",
+        slow_url.spec().c_str());
     EXPECT_TRUE(ExecuteScript(root, script));
   }
   EXPECT_TRUE(subframe_delayer.WaitForRequestStart());
@@ -1946,10 +1948,12 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   GURL foo_url(embedded_test_server()->GetURL(
       "foo.com", "/navigation_controller/simple_page_1.html"));
   {
-    std::string script = "var iframe = document.createElement('iframe');"
-                         "iframe.src = '" + foo_url.spec() + "';"
-                         "document.body.appendChild(iframe);";
-    EXPECT_TRUE(ExecuteScript(root->child_at(0), script));
+    std::string script = base::StringPrintf(
+        R"( var iframe = document.createElement('iframe');
+            iframe.src = '%s';
+            frames[0].document.body.appendChild(iframe); )",
+        foo_url.spec().c_str());
+    EXPECT_TRUE(ExecuteScript(root, script));
     WaitForLoadStopWithoutSuccessCheck(shell()->web_contents());
   }
 
