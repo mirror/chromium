@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "454a46a5_3226ea69",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:25:29Z",
+      "side": 1,
+      "message": "id1 -\u003e id",
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b11dd68_6fd2b7bb",
+        "filename": "content/browser/background_fetch/storage/get_developer_ids_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:25:29Z",
+      "side": 1,
+      "message": "const auto\u0026, you\u0027re making a copy",
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6bce5c_d6c994cb",
+        "filename": "content/browser/background_fetch/storage/get_developer_ids_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:25:29Z",
+      "side": 1,
+      "message": "ids.push_back(pair.first.substr(kActiveRegistrationUniqueIdKeyPrefix));",
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d10359_535275ed",
+        "filename": "content/browser/background_fetch/storage/get_developer_ids_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:25:29Z",
+      "side": 1,
+      "message": "Is \"active\" the right word here? What about pending ones?",
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0972fea_2e5ea4bb",
+        "filename": "content/browser/service_worker/service_worker_database.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:25:29Z",
+      "side": 1,
+      "message": "++docs",
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e8edd9_f4b986ac",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:25:29Z",
+      "side": 1,
+      "message": "I wonder if a std::map\u003c\u003e could work? You want to maintain insertion order, but since LevelDB stores entries in alphabetical order that should be matched by std::map\u003c\u003es sorting method.",
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
