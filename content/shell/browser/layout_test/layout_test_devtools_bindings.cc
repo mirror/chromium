@@ -50,6 +50,11 @@ class LayoutTestDevToolsBindings::SecondaryObserver
     bindings_ = nullptr;
   }
 
+  // WebContentsObserver implementation.
+  void RenderFrameCreated(RenderFrameHost* render_frame_host) override {
+    BlinkTestController::Get()->HandleNewRenderFrameHost(render_frame_host);
+  }
+
  private:
   LayoutTestDevToolsBindings* bindings_;
   DISALLOW_COPY_AND_ASSIGN(SecondaryObserver);
