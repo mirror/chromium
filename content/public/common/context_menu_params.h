@@ -150,9 +150,6 @@ struct CONTENT_EXPORT ContextMenuParams {
 
   // If this node is an input field, the type of that field.
   blink::WebContextMenuData::InputFieldType input_field_type;
-
-  // Rect representing the coordinates in the document space of the selection.
-  gfx::Rect selection_rect;
 };
 
 }  // namespace content

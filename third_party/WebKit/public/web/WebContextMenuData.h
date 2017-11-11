@@ -193,9 +193,6 @@ struct WebContextMenuData {
   // Custom context menu items provided by the WebCore internals.
   WebVector<WebMenuItemInfo> custom_items;
 
-  // Selection in viewport coordinates.
-  WebRect selection_rect;
-
   WebMenuSourceType source_type;
 
   WebContextMenuData()
