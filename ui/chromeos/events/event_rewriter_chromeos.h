@@ -46,6 +46,11 @@ class EventRewriterChromeOS : public ui::EventRewriter {
   };
 
   enum KeyboardTopRowLayout {
+    // Indicates an error in reading the layout property of the keyboard device
+    // from udev. In this case we will fall back to the default Layout1 value,
+    // it signals the need to retry reading from udev again on subsequent key
+    // events.
+    kKbdTopRowInvalidLayout = 0,
     // The original Chrome OS Layout:
     // Browser Back, Browser Forward, Refresh, Full Screen, Overview,
     // Brightness Down, Brightness Up, Mute, Volume Down, Volume Up.
