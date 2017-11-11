@@ -19,6 +19,7 @@ namespace blink {
 class BLINK_PLATFORM_EXPORT WebSurfaceLayerBridgeObserver {
  public:
   virtual void OnWebLayerUpdated() = 0;
+  virtual void SetContentsLayer() = 0;
 };
 
 // Maintains and exposes the SurfaceLayer.

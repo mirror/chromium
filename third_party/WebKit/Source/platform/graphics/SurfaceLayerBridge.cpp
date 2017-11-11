@@ -124,7 +124,7 @@ void SurfaceLayerBridge::OnFirstSurfaceActivation(
     web_layer_ =
         Platform::Current()->CompositorSupport()->CreateLayerFromCCLayer(
             cc_layer_.get());
-    GraphicsLayer::RegisterContentsLayer(web_layer_.get());
+    observer_->SetContentsLayer();
   } else if (current_surface_id_ != surface_info.id()) {
     // A different SurfaceId is received, prompting change to existing
     // SurfaceLayer

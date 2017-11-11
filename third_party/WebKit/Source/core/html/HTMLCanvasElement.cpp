@@ -1526,6 +1526,10 @@ void HTMLCanvasElement::OnWebLayerUpdated() {
   SetNeedsCompositingUpdate();
 }
 
+void HTMLCanvasElement::SetContentsLayer() {
+  GraphicsLayer::RegisterContentsLayer(surface_layer_bridge_->GetWebLayer());
+}
+
 FontSelector* HTMLCanvasElement::GetFontSelector() {
   return GetDocument().GetStyleEngine().GetFontSelector();
 }

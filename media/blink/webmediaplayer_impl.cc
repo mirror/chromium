@@ -370,6 +370,8 @@ void WebMediaPlayerImpl::OnWebLayerUpdated() {
   client_->SetWebLayer(bridge_->GetWebLayer());
 }
 
+void WebMediaPlayerImpl::SetContentsLayer() {}
+
 bool WebMediaPlayerImpl::SupportsOverlayFullscreenVideo() {
 #if defined(OS_ANDROID)
   return !using_media_player_renderer_ &&
