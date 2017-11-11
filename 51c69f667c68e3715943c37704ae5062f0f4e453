@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13d9055b_60ae55d0",
+        "filename": "content/browser/network_service_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-11T00:52:56Z",
+      "side": 1,
+      "message": "We already have one class for tests that does this: https://cs.chromium.org/chromium/src/content/public/test/browser_test_utils.h?l\u003d537\u0026gs\u003dcpp%253Acontent%253A%253Aclass-RenderProcessHostWatcher%2540chromium%252F..%252F..%252Fcontent%252Fpublic%252Ftest%252Fbrowser_test_utils.h%257Cdef\u0026gsn\u003dRenderProcessHostWatcher\u0026ct\u003dxref_usages",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "51c69f667c68e3715943c37704ae5062f0f4e453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
