@@ -119,7 +119,6 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void DispatchDidNavigateWithinPage(HistoryItem*,
                                              HistoryCommitType,
                                              bool content_initiated) {}
-  virtual void DispatchWillCommitProvisionalLoad() = 0;
   virtual void DispatchDidStartProvisionalLoad(DocumentLoader*,
                                                ResourceRequest&) = 0;
   virtual void DispatchDidReceiveTitle(const String&) = 0;

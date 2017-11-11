@@ -81,8 +81,7 @@ void MetricsRenderFrameObserver::FrameDetached() {
   page_timing_metrics_sender_.reset();
 }
 
-void MetricsRenderFrameObserver::DidCommitProvisionalLoad(
-    bool is_new_navigation,
+void MetricsRenderFrameObserver::WillCommitProvisionalLoad(
     bool is_same_document_navigation) {
   // Same-document navigations (e.g. a navigation from a fragment link) aren't
   // full page loads, since they don't go to network to load the main HTML

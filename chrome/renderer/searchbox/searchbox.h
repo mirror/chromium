@@ -123,8 +123,7 @@ class SearchBox : public content::RenderFrameObserver,
 
  private:
   // Overridden from content::RenderFrameObserver:
-  void DidCommitProvisionalLoad(bool is_new_navigation,
-                                bool is_same_document_navigation) override;
+  void WillCommitProvisionalLoad(bool is_same_document_navigation) override;
   void OnDestruct() override;
 
   // Overridden from chrome::mojom::EmbeddedSearchClient:

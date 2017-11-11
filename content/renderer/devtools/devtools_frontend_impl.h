@@ -11,10 +11,13 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "content/common/devtools.mojom.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "third_party/WebKit/public/web/WebDevToolsFrontendClient.h"
+
+class GURL;
 
 namespace blink {
 class WebDevToolsFrontend;
@@ -52,10 +55,17 @@ class DevToolsFrontendImpl : public RenderFrameObserver,
       mojom::DevToolsFrontendHostAssociatedPtrInfo host) override;
   void SetupDevToolsExtensionAPI(const std::string& extension_api) override;
 
+  // Executes |api_script| in the current frame if the document's URL matches
+  // |expected_url|.
+  void ExecuteApiScript(const GURL& expected_url,
+                        const std::string& api_script);
+
   std::unique_ptr<blink::WebDevToolsFrontend> web_devtools_frontend_;
   std::string api_script_;
   mojom::DevToolsFrontendHostAssociatedPtr host_;
   mojo::AssociatedBinding<mojom::DevToolsFrontend> binding_;
+
+  base::WeakPtrFactory<DevToolsFrontendImpl> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DevToolsFrontendImpl);
 };

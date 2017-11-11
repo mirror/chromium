@@ -37,7 +37,7 @@ interface ChromeRenderFrame {
   // For WebUI testing, this message requests JavaScript to be executed at a
   // time which is late enough to not be thrown out, and early enough to be
   // before onload events are fired.
-  ExecuteWebUIJavaScript(mojo.common.mojom.String16 javascript);
+  ExecuteWebUIJavaScriptForTesting(mojo.common.mojom.String16 javascript);
 
   // Sent when the profile changes the kSafeBrowsingEnabled preference.
   SetClientSidePhishingDetection(bool enable_phishing_detection);
