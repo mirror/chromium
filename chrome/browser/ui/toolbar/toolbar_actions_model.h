@@ -13,6 +13,7 @@
 #include "base/scoped_observer.h"
 #include "chrome/browser/extensions/api/extension_action/extension_action_api.h"
 #include "chrome/browser/extensions/extension_action.h"
+#include "chrome/browser/extensions/extension_error_reporter.h"
 #include "chrome/browser/ui/toolbar/component_action_delegate.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/prefs/pref_change_registrar.h"
@@ -92,6 +93,8 @@ class ToolbarActionsModel : public extensions::ExtensionActionAPI::Observer,
     // |index| is the desired *final* index of the action (that is, in the
     // adjusted order, action should be at |index|).
     virtual void OnToolbarActionMoved(const std::string& id, int index) = 0;
+
+    virtual void OnToolbarActionLoadFailed(const std::string& id) = 0;
 
     // Signals that the browser action with |id| has been updated.
     virtual void OnToolbarActionUpdated(const std::string& id) = 0;
@@ -205,6 +208,33 @@ class ToolbarActionsModel : public extensions::ExtensionActionAPI::Observer,
   // Sets the component action factory for this object. Used in tests.
   void SetMockActionsFactoryForTest(
       std::unique_ptr<ComponentToolbarActionsFactory> mock_factory);
+
+  class ToolbarActionErrorObserver : public ExtensionErrorReporter::Observer {
+   public:
+    explicit ToolbarActionErrorObserver(
+        ToolbarActionsModel* toolbar_actions_model);
+    ~ToolbarActionErrorObserver() override;
+
+   private:
+    // ExtensionErrorReporter::Observer:
+    void OnLoadFailure(content::BrowserContext* browser_context,
+                       const base::FilePath& extension_path,
+                       const extensions::ExtensionId& extension_id,
+                       const std::string& error) override;
+
+    // Note this object owns the ToolbarActionErrorObserver instance.
+    ToolbarActionsModel* toolbar_actions_model_;
+
+    ScopedObserver<ExtensionErrorReporter, ExtensionErrorReporter::Observer>
+        extension_error_reporter_observer_;
+
+    DISALLOW_COPY_AND_ASSIGN(ToolbarActionErrorObserver);
+  };
+
+ protected:
+  const base::ObserverList<Observer>& GetObservers() const {
+    return observers_;
+  }
 
  private:
   // Callback when actions are ready.
@@ -322,6 +352,8 @@ class ToolbarActionsModel : public extensions::ExtensionActionAPI::Observer,
   // Whether or not there is an active ExtensionMessageBubbleController
   // associated with the profile. There should only be one at a time.
   bool has_active_bubble_;
+
+  std::unique_ptr<ToolbarActionErrorObserver> toolbar_action_error_observer_;
 
   ScopedObserver<extensions::ExtensionActionAPI,
                  extensions::ExtensionActionAPI::Observer>

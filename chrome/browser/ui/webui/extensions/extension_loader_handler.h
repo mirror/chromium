@@ -74,6 +74,7 @@ class ExtensionLoaderHandler : public content::WebUIMessageHandler,
   // ExtensionErrorReporter::Observer:
   void OnLoadFailure(content::BrowserContext* browser_context,
                      const base::FilePath& file_path,
+                     const extensions::ExtensionId& extension_id,
                      const std::string& error) override;
 
   // content::WebContentsObserver:
