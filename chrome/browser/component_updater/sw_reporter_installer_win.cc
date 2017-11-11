@@ -16,6 +16,7 @@
 #include "base/base64.h"
 #include "base/base_paths.h"
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/feature_list.h"
 #include "base/files/file_path.h"
@@ -128,9 +129,11 @@ void ReportExperimentError(SwReporterExperimentError error) {
 void RunSwReportersAfterStartup(
     const safe_browsing::SwReporterQueue& invocations,
     const base::Version& version) {
+  base::OnceClosure on_sequence_done = base::BindOnce(&base::DoNothing);
   content::BrowserThread::PostAfterStartupTask(
       FROM_HERE, base::ThreadTaskRunnerHandle::Get(),
-      base::Bind(&safe_browsing::RunSwReporters, invocations, version));
+      base::Bind(&safe_browsing::RunSwReporters, invocations, version,
+                 base::Passed(&on_sequence_done)));
 }
 
 // Ensures |str| contains only alphanumeric characters and characters from
@@ -276,7 +279,7 @@ void RunExperimentalSwReporter(const base::FilePath& exe_path,
     auto invocation = SwReporterInvocation::FromCommandLine(command_line);
     invocation.suffix = suffix;
     invocation.supported_behaviours = supported_behaviours;
-    invocations.push_back(invocation);
+    invocations.push(invocation);
   }
 
   DCHECK(!invocations.empty());
@@ -333,9 +336,7 @@ void SwReporterInstallerPolicy::ComponentReady(
         SwReporterInvocation::BEHAVIOUR_TRIGGER_PROMPT |
         SwReporterInvocation::BEHAVIOUR_ALLOW_SEND_REPORTER_LOGS;
 
-    safe_browsing::SwReporterQueue invocations;
-    invocations.push_back(invocation);
-    reporter_runner_.Run(invocations, version);
+    reporter_runner_.Run(safe_browsing::SwReporterQueue({invocation}), version);
   }
 }
 
