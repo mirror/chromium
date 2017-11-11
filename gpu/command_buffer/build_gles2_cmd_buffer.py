@@ -4607,6 +4607,30 @@ _FUNCTION_INFO = {
     'extension': 'CHROMIUM_raster_transport',
     'extension_flag': 'chromium_raster_transport',
   },
+  "CreateTransferCacheEntryCHROMIUM": {
+    'type': 'Custom',
+    'cmd_args': 'uint64_t handle_id, uint32_t handle_shm_id, '
+                'uint32_t handle_shm_offset, uint32_t type, '
+                'uint32_t data_shm_id, uint32_t data_shm_offset, '
+                'uint32_t data_size',
+    'impl_func': False,
+    'client_test': False,
+    'extension': True,
+  },
+  "DeleteTransferCacheEntryCHROMIUM": {
+    'type': 'Custom',
+    'cmd_args': 'uint64_t handle_id',
+    'impl_func': False,
+    'client_test': False,
+    'extension': True,
+  },
+  "UnlockTransferCacheEntryCHROMIUM": {
+    'type': 'Custom',
+    'cmd_args': 'uint64_t handle_id',
+    'impl_func': False,
+    'client_test': False,
+    'extension': True,
+  },
   'TexStorage2DImageCHROMIUM': {
     'decoder_func': 'DoTexStorage2DImageCHROMIUM',
     'unit_test': False,
@@ -4620,7 +4644,7 @@ _FUNCTION_INFO = {
     'cmd_args': 'GLuint texture_id, GLuint shm_id, GLuint shm_offset, '
                 'GLsizei color_space_size',
     'extension': 'CHROMIUM_color_space_metadata',
-  },
+  }
 }
 
 

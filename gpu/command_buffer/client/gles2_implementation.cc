@@ -30,6 +30,7 @@
 #include "base/trace_event/process_memory_dump.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
+#include "cc/paint/transfer_cache_entry.h"
 #include "gpu/command_buffer/client/buffer_tracker.h"
 #include "gpu/command_buffer/client/gles2_cmd_helper.h"
 #include "gpu/command_buffer/client/gpu_control.h"
@@ -7107,6 +7108,32 @@ bool GLES2Implementation::LockDiscardableTextureCHROMIUM(GLuint texture_id) {
   }
   helper_->LockDiscardableTextureCHROMIUM(texture_id);
   return true;
+}
+
+void GLES2Implementation::CreateTransferCacheEntryCHROMIUM(
+    uint64_t handle_id,
+    uint32_t handle_shm_id,
+    uint32_t handle_shm_offset,
+    const cc::ClientTransferCacheEntry& entry) {
+  ScopedMappedMemoryPtr mapped_alloc(entry.SerializedSize(), helper_,
+                                     mapped_memory_.get());
+  DCHECK(mapped_alloc.valid());
+  bool succeeded = entry.Serialize(
+      mapped_alloc.size(), reinterpret_cast<uint8_t*>(mapped_alloc.address()));
+  DCHECK(succeeded);
+
+  helper_->CreateTransferCacheEntryCHROMIUM(
+      handle_id, handle_shm_id, handle_shm_offset,
+      static_cast<uint32_t>(entry.Type()), mapped_alloc.shm_id(),
+      mapped_alloc.offset(), mapped_alloc.size());
+}
+
+void GLES2Implementation::DeleteTransferCacheEntryCHROMIUM(uint64_t handle_id) {
+  helper_->DeleteTransferCacheEntryCHROMIUM(handle_id);
+}
+
+void GLES2Implementation::UnlockTransferCacheEntryCHROMIUM(uint64_t handle_id) {
+  helper_->UnlockTransferCacheEntryCHROMIUM(handle_id);
 }
 
 void GLES2Implementation::UpdateCachedExtensionsIfNeeded() {
