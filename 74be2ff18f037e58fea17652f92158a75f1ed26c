@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54b23713_eae4ed9c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-retain-autocomplete-on-typing.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-11T00:42:54Z",
+      "side": 1,
+      "message": "Without this check, the test may still fail.  After the success path calls next(), we flushResults(), causing all nodes to be removed from the document, triggering a blur handler that calls this failure path.",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 27
+      },
+      "revId": "74be2ff18f037e58fea17652f92158a75f1ed26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

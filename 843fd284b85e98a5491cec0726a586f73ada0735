@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aabf36fb_0cf016be",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-retain-autocomplete-on-typing.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-11T00:42:54Z",
+      "side": 1,
+      "message": "I think this should be safe, but perhaps einbinder@ could confirm.",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 27
+      },
+      "revId": "843fd284b85e98a5491cec0726a586f73ada0735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
