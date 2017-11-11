@@ -157,7 +157,10 @@ void DataReductionProxyConfig::InitializeOnIOThread(
 
   secure_proxy_checker_.reset(
       new SecureProxyChecker(basic_url_request_context_getter));
-  warmup_url_fetcher_.reset(new WarmupURLFetcher(url_request_context_getter));
+  warmup_url_fetcher_.reset(new WarmupURLFetcher(
+      url_request_context_getter,
+      base::Bind(&DataReductionProxyConfig::HandleWarmupFetcherResponse,
+                 base::Unretained(this))));
 
   if (ShouldAddDefaultProxyBypassRules())
     AddDefaultProxyBypassRules();
@@ -168,6 +171,11 @@ void DataReductionProxyConfig::InitializeOnIOThread(
 bool DataReductionProxyConfig::ShouldAddDefaultProxyBypassRules() const {
   DCHECK(thread_checker_.CalledOnValidThread());
   return true;
+}
+
+void DataReductionProxyConfig::OnNewClientConfigFetched() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  ReloadConfig();
 }
 
 void DataReductionProxyConfig::ReloadConfig() {
@@ -391,6 +399,44 @@ void DataReductionProxyConfig::UpdateConfigForTesting(
       !secure_proxies_allowed);
   network_properties_manager_.SetHasWarmupURLProbeFailed(
       false, !insecure_proxies_allowed);
+}
+
+void DataReductionProxyConfig::HandleWarmupFetcherResponse(
+    const net::ProxyServer& proxy_server,
+    bool success_response) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  // Check the proxy server used, or disable all data saver proxies?
+  if (!IsDataReductionProxy(proxy_server, nullptr)) {
+    // No need to do anything here.
+    return;
+  }
+
+  bool is_secure_drp_proxy = proxy_server.is_https() || proxy_server.is_quic();
+  if (is_secure_drp_proxy) {
+    UMA_HISTOGRAM_BOOLEAN(
+        "DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch."
+        "SecureProxy",
+        success_response);
+  } else {
+    UMA_HISTOGRAM_BOOLEAN(
+        "DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch."
+        "InsecureProxy",
+        success_response);
+  }
+
+  bool warmup_url_failed_past =
+      network_properties_manager_.HasWarmupURLProbeFailed(is_secure_drp_proxy);
+
+  network_properties_manager_.SetHasWarmupURLProbeFailed(is_secure_drp_proxy,
+                                                         !success_response);
+
+  // may be refetch if this was a failure.
+  if (warmup_url_failed_past !=
+      network_properties_manager_.HasWarmupURLProbeFailed(
+          is_secure_drp_proxy)) {
+    ReloadConfig();
+  }
 }
 
 void DataReductionProxyConfig::HandleSecureProxyCheckResponse(
