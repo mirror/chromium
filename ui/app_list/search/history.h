@@ -9,10 +9,10 @@
 #include <memory>
 #include <string>
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "components/keyed_service/core/keyed_service.h"
-#include "ui/app_list/app_list_export.h"
 #include "ui/app_list/search/history_data_observer.h"
 #include "ui/app_list/search/history_types.h"
 

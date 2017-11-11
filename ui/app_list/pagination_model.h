@@ -7,11 +7,11 @@
 
 #include <memory>
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/time/time.h"
-#include "ui/app_list/app_list_export.h"
 #include "ui/gfx/animation/animation_delegate.h"
 
 namespace gfx {

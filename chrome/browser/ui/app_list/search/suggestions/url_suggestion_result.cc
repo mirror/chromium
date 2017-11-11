@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/app_list/search/suggestions/url_suggestion_result.h"
 
+#include "ash/public/cpp/app_list/app_list_constants.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/app_list_controller_delegate.h"
@@ -13,7 +14,6 @@
 #include "components/favicon_base/favicon_types.h"
 #include "components/suggestions/suggestions_service.h"
 #include "third_party/skia/include/core/SkBitmap.h"
-#include "ui/app_list/app_list_constants.h"
 #include "ui/base/page_transition_types.h"
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/image/image_skia.h"

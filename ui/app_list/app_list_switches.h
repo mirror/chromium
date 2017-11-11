@@ -5,8 +5,8 @@
 #ifndef UI_APP_LIST_APP_LIST_SWITCHES_H_
 #define UI_APP_LIST_APP_LIST_SWITCHES_H_
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "build/build_config.h"
-#include "ui/app_list/app_list_export.h"
 
 namespace app_list {
 namespace switches {

@@ -5,8 +5,8 @@
 #ifndef UI_APP_LIST_VIEWS_EXPAND_ARROW_VIEW_H_
 #define UI_APP_LIST_VIEWS_EXPAND_ARROW_VIEW_H_
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "base/memory/weak_ptr.h"
-#include "ui/app_list/app_list_export.h"
 #include "ui/views/controls/button/button.h"
 
 namespace gfx {

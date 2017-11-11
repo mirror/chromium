@@ -5,7 +5,7 @@
 #ifndef UI_APP_LIST_PAGINATION_CONTROLLER_H_
 #define UI_APP_LIST_PAGINATION_CONTROLLER_H_
 
-#include "ui/app_list/app_list_export.h"
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "ui/events/event_constants.h"
 
 namespace gfx {

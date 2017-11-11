@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_APP_LIST_APP_LIST_ITEM_H_
-#define UI_APP_LIST_APP_LIST_ITEM_H_
+#ifndef ASH_PUBLIC_CPP_APP_LIST_APP_LIST_ITEM_H_
+#define ASH_PUBLIC_CPP_APP_LIST_APP_LIST_ITEM_H_
 
 #include <stddef.h>
 
 #include <string>
 
+#include "ash/public/cpp/app_list/app_list_export.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "components/sync/model/string_ordinal.h"
-#include "ui/app_list/app_list_export.h"
 #include "ui/gfx/image/image_skia.h"
 
 class FastShowPickler;
@@ -136,4 +136,4 @@ class APP_LIST_EXPORT AppListItem {
 
 }  // namespace app_list
 
-#endif  // UI_APP_LIST_APP_LIST_ITEM_H_
+#endif  // ASH_PUBLIC_CPP_APP_LIST_APP_LIST_ITEM_H_

@@ -5,7 +5,7 @@
 #ifndef UI_APP_LIST_SEARCH_HISTORY_DATA_OBSERVER_H_
 #define UI_APP_LIST_SEARCH_HISTORY_DATA_OBSERVER_H_
 
-#include "ui/app_list/app_list_export.h"
+#include "ash/public/cpp/app_list/app_list_export.h"
 
 namespace app_list {
 
