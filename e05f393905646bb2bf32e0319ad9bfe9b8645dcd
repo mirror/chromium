@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceb9cb6d_9cf71f46",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-11T00:49:44Z",
+      "side": 1,
+      "message": "can you generate this using the constant then?",
+      "revId": "e05f393905646bb2bf32e0319ad9bfe9b8645dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a5f4b1_a068a3e3",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-11T00:49:44Z",
+      "side": 1,
+      "message": "same",
+      "revId": "e05f393905646bb2bf32e0319ad9bfe9b8645dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ecc54bc_63b6aa8b",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-11T00:49:44Z",
+      "side": 1,
+      "message": "same",
+      "revId": "e05f393905646bb2bf32e0319ad9bfe9b8645dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58523524_ff66e863",
+        "filename": "chrome/browser/chromeos/arc/user_session/arc_user_session_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-11T00:49:44Z",
+      "side": 1,
+      "message": "same",
+      "revId": "e05f393905646bb2bf32e0319ad9bfe9b8645dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7947816_36f2aba0",
+        "filename": "chrome/browser/chromeos/arc/user_session/arc_user_session_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-11T00:49:44Z",
+      "side": 1,
+      "message": "same",
+      "revId": "e05f393905646bb2bf32e0319ad9bfe9b8645dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20275f0f_78576907",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-11T00:49:44Z",
+      "side": 1,
+      "message": "non-pod object cannot be global: https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables",
+      "revId": "e05f393905646bb2bf32e0319ad9bfe9b8645dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
