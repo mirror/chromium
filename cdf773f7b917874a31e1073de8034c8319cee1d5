@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4321e8ec_dae07a6f",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:50:25Z",
+      "side": 1,
+      "message": "nit: please document how we ended up with this number. (The value SGTM)",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5113aa7_df47aff1",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:50:25Z",
+      "side": 1,
+      "message": "qq: We\u0027ll probably want one big enum-based UMA in the long term to track all these failures?",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601b399c_6b61d6ad",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:50:25Z",
+      "side": 1,
+      "message": "++docs about safety here too",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296e1289_542f3952",
+        "filename": "chrome/browser/notifications/notification_image_retainer.h",
+        "patchSetId": 49
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:50:25Z",
+      "side": 1,
+      "message": "Can you either document what the overridden time could be, or enable the caller to pass in a base::TimeDelta?",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4099b2f6_7f9dd1f3",
+        "filename": "chrome/browser/notifications/notification_image_retainer_unittest.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:50:25Z",
+      "side": 1,
+      "message": "Please add a private function to NotificationImageRetainer that does the hashing, and use that from here (w/ a friend declaration)",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "484adb33_47c649f8",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:50:25Z",
+      "side": 1,
+      "message": "Surely you mean UI? With this annotation, the class is created on the UI thread, used on the task runner thread and destroyed on the IO thread.",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187c4bb2_2ac66297",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:50:25Z",
+      "side": 1,
+      "message": "nit: std::move (only here, not on line 156)",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ffc0efd_b495b3dc",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:50:25Z",
+      "side": 1,
+      "message": "std::make_unique\u003c\u003e",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae9bbe7_8f954c46",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 49
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:50:25Z",
+      "side": 1,
+      "message": "nit: since the API takes const std::string\u0026, we may as well use that type and (implicitly) convert it as part of this call.",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e88501a3_aaa1d1ec",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-11T14:50:25Z",
+      "side": 1,
+      "message": "nit: only include the mock one",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
