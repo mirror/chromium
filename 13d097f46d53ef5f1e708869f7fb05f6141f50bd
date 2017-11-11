@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85d3292b_a3976e05",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-11T01:19:10Z",
+      "side": 1,
+      "message": "How about testing an empty vector too?\n\nEXPECT_FALSE(IsChromeAnAppCandidateForTesting(std::vector\u003cmojom::IntentHandlerInfoPtr\u003e()));",
+      "revId": "13d097f46d53ef5f1e708869f7fb05f6141f50bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
