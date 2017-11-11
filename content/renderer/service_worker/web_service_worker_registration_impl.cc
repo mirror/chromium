@@ -225,6 +225,8 @@ void WebServiceWorkerRegistrationImpl::BindRequest(
 
 void WebServiceWorkerRegistrationImpl::OnConnectionError() {
   if (!creation_task_runner_->RunsTasksInCurrentSequence()) {
+    // Mojo binding must be closed on the task sequence it is bound.
+    binding_.Close();
     creation_task_runner_->PostTask(
         FROM_HERE,
         base::BindOnce(&WebServiceWorkerRegistrationImpl::OnConnectionError,
