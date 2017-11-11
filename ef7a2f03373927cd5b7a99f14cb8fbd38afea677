@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45713f43_afcf3931",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-11T03:45:02Z",
+      "side": 1,
+      "message": "since you made this a non-static method, there isn\u0027t really a reason to still pass in elements as opposed to just accessing elements_ directly",
+      "revId": "ef7a2f03373927cd5b7a99f14cb8fbd38afea677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561e1098_5c166a32",
+        "filename": "storage/browser/blob/blob_transport_strategy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-11T03:45:02Z",
+      "side": 1,
+      "message": "this isn\u0027t quite accurate. The fact that |bytes| has |embedded_data| has no influence on wether |data| needs to be a valid BytesProvider or not (even if the renderer might have included embedded_data it might still be the case that the browser process doesn\u0027t use embedded_data). Maybe a better comment would explain that rather than getting the bytes provider from the DataElementBytes, this possibly uses |data| to acquire the byte data asynchronously.",
+      "revId": "ef7a2f03373927cd5b7a99f14cb8fbd38afea677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
