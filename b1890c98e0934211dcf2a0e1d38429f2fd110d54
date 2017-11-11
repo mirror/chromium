@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c64da5dd_df17020f",
+        "filename": "ios/web/download/download_controller_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T00:22:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2201872_66b4572c",
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "755ab5e4_4cf4d479",
         "filename": "ios/web/download/download_controller_impl.mm",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a9c4a7_08cfa024",
+        "filename": "ios/web/download/download_controller_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T00:22:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "755ab5e4_4cf4d479",
+      "range": {
+        "startLine": 31,
+        "startChar": 31,
+        "endLine": 31,
+        "endChar": 47
+      },
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "2bf85897_da055d8f",
+        "filename": "ios/web/download/download_controller_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T00:22:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02cec00d_f39504f6",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 37
+      },
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25434a25_5c33e203",
         "filename": "ios/web/download/download_controller_impl.mm",
         "patchSetId": 2
@@ -85,6 +151,30 @@
       "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc18ad8_f6e74b17",
+        "filename": "ios/web/download/download_controller_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T00:22:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25434a25_5c33e203",
+      "range": {
+        "startLine": 59,
+        "startChar": 41,
+        "endLine": 59,
+        "endChar": 57
+      },
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "b700efb1_bddc8446",
+        "filename": "ios/web/download/download_controller_impl_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T00:22:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76b6dc34_f9ac33a4",
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5c9204e_a4057c5a",
         "filename": "ios/web/download/download_controller_impl_unittest.mm",
         "patchSetId": 2
@@ -134,6 +242,24 @@
       "writtenOn": "2017-11-10T01:47:31Z",
       "side": 1,
       "message": "Is it worth validating that OnDownloadControllerDestroyed is called when the DownloadController is destroyed?",
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c28b0e_3ea000d3",
+        "filename": "ios/web/download/download_controller_impl_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T00:22:43Z",
+      "side": 1,
+      "message": "FakeDownloadControllerDelegate::OnDownloadControllerDestroyed sets DownloadController\u0027s delegate to null. So if OnDownloadControllerDestroyed will not be called because of bug, then the test will DCHECK inside DownloadControllerImpl. Generally I prefer not to test interactions where testing the state is possible. In this case testing \"the state of not DCHECKing\" was possible. Please let me know if you disagree.",
+      "parentUuid": "c5c9204e_a4057c5a",
       "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -163,6 +289,30 @@
     },
     {
       "key": {
+        "uuid": "9141085a_f5a7193c",
+        "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T00:22:43Z",
+      "side": 1,
+      "message": "Done In this case typedef really makes code more readable.",
+      "parentUuid": "bc7cda0a_ddaab76f",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 78
+      },
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d13ec4a0_136ef54e",
         "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.h",
         "patchSetId": 2
@@ -186,6 +336,30 @@
     },
     {
       "key": {
+        "uuid": "033d0591_ac9f30a8",
+        "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T00:22:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d13ec4a0_136ef54e",
+      "range": {
+        "startLine": 31,
+        "startChar": 35,
+        "endLine": 31,
+        "endChar": 41
+      },
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99400f42_7cfc181e",
         "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.h",
         "patchSetId": 2
@@ -203,6 +377,24 @@
     },
     {
       "key": {
+        "uuid": "e34ec1ce_94014ff4",
+        "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T00:22:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99400f42_7cfc181e",
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "873ca86f_6b075ae7",
         "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.mm",
         "patchSetId": 2
@@ -214,6 +406,24 @@
       "writtenOn": "2017-11-10T13:11:43Z",
       "side": 1,
       "message": "nit: you can use std::find_if here\n\n  auto iterator \u003d std::find_if(\n      alive_download_tasks_.begin(),\n      alive_download_tasks_.end(),\n      [\u003d](const std::pair\u003cconst WebState*, std::unique_ptr\u003cDownloadTask\u003e\u003e\u0026 pair) {\n          return pair.second \u003d\u003d task;\n      });\n  DCHECK(iterator !\u003d alive_download_tasks_.end());\n  alive_download_tasks_.erase(iterator);",
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc8d9e0_f536253f",
+        "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-11T00:22:43Z",
+      "side": 1,
+      "message": "I used it initially. Spend tons of time to write everything correctly and found it more ugly than a for loop. Do you think it worth using lambda here?\n\nLambda looks ugly w/o typedef and after \"git cl format\":\n  auto iterator \u003d std::find_if(\n      alive_download_tasks_.begin(), alive_download_tasks_.end(),\n      [\u003d](const std::pair\u003cconst WebState*, std::unique_ptr\u003cDownloadTask\u003e\u003e\u0026\n              pair) { return pair.second \u003d\u003d task; });\n  DCHECK(iterator !\u003d alive_download_tasks_.end());\n  alive_download_tasks_.erase(iterator);\n\nAnd I don\u0027t really like typedefs, because they make code less clear. WDYT?",
+      "parentUuid": "873ca86f_6b075ae7",
       "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
