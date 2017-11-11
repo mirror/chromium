@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eb2ff5a_cbda0172",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-11T00:24:11Z",
+      "side": 1,
+      "message": "Waiting on a destructor sounds bad. What about using \nDeleteSoon(), passing |decoder_| into it? E.g.\nhttps://cs.chromium.org/chromium/src/content/renderer/media_recorder/video_track_recorder.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d190",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "8c4f7739302435821f1b73da7c267a826240541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
