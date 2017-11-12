@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3540819d_00915344",
+        "filename": "content/browser/service_worker/service_worker_blob_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-12T21:26:44Z",
+      "side": 1,
+      "message": "This TODO should probably say \"check |net_error|\" now?",
+      "revId": "4fe06282753c3024cacd0df64abd3a4706590c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
