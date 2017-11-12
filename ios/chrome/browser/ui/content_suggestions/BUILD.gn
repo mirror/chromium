@@ -95,6 +95,7 @@ source_set("unit_tests") {
     "//ios/chrome/browser/ui/collection_view",
     "//ios/chrome/browser/ui/content_suggestions/cells:cells_ui",
     "//ios/chrome/browser/ui/content_suggestions/identifier",
+    "//ios/chrome/browser/ui/ntp:modal_ntp",
     "//ios/chrome/test/base",
     "//testing/gtest",
     "//third_party/ocmock",
