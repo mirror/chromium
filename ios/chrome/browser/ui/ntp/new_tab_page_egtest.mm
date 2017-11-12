@@ -13,6 +13,7 @@
 #include "ios/chrome/browser/chrome_switches.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
+#import "ios/chrome/browser/ui/ntp/modal_ntp.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -240,7 +241,9 @@ void AssertNTPScrolledToTop(bool scrolledToTop) {
 
   NSString* omniboxLabel = l10n_util::GetNSString(IDS_OMNIBOX_EMPTY_HINT);
   NSString* cancelLabel = l10n_util::GetNSString(IDS_CANCEL);
-  if (IsIPadIdiom()) {
+  // TODO(crbug.com/753599): When old bookmark is removed, NTP panel will always
+  // be shown modally.  Clean up the non-modal code below.
+  if (!PresentNTPPanelModally()) {
     SelectNewTabPagePanel(ntp_home::HOME_PANEL);
   }
 
