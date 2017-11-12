@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "b1b9b0a9_09a12262",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-12T07:30:04Z",
+      "side": 1,
+      "message": "if the app isn\u0027t able to appear immediately, is it possible to fix this by making the app (or some other layer) initially appear as a solid black window that can be drawn immediately? that seems like it\u0027ll have the same effect while also keeping all of the complexity in one place instead of introducing new dependencies between different parts of ash.",
+      "parentUuid": "921aa228_1464570e",
+      "revId": "42a9100e2fa3d0be5ad67c2eeb36c9d89859448c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97b516bc_91ad8bb6",
         "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
         "patchSetId": 5
