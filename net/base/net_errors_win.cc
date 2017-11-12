@@ -89,7 +89,7 @@ Error MapSystemError(logging::SystemErrorCode os_error) {
     case ERROR_DISK_FULL:  // There is not enough space on the disk.
       return ERR_FILE_NO_SPACE;
     case ERROR_CALL_NOT_IMPLEMENTED:  // This function is not supported on
-      return ERR_NOT_IMPLEMENTED;     // this system.
+      return ERR_NOT_IMPLEMENTED_DONT_CARE;     // this system.
     case ERROR_INVALID_NAME:        // The filename, directory name, or volume
       return ERR_INVALID_ARGUMENT;  // label syntax is incorrect.
     case ERROR_DIR_NOT_EMPTY:  // The directory is not empty.

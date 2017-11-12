@@ -246,7 +246,7 @@ void LoopbackServer::HandleCommand(
         break;
       default:
         *server_status = HttpResponse::SYNC_SERVER_ERROR;
-        *response_code = net::ERR_NOT_IMPLEMENTED;
+        *response_code = net::ERR_NOT_IMPLEMENTED20;
         *response = string();
         return;
     }

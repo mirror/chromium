@@ -146,7 +146,7 @@ void ConditionalCacheCountingHelper::DoCountCache(int rv) {
                 begin_time_, end_time_,
                 base::Bind(&ConditionalCacheCountingHelper::DoCountCache,
                            base::Unretained(this)));
-            if (rv == net::ERR_NOT_IMPLEMENTED) {
+            if (rv == net::ERR_NOT_IMPLEMENTED_DONT_CARE) {
               is_upper_limit_ = true;
               rv = cache_->CalculateSizeOfAllEntries(
                   base::Bind(&ConditionalCacheCountingHelper::DoCountCache,
