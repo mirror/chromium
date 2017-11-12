@@ -1,5 +1,5 @@
 rootWebArea
-++comboBox vertical
+++comboBox
 ++comboBox horizontal
 ++comboBox vertical
 ++listBox vertical
