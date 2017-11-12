@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4efb9ab_e6a64b5c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/IndexedDB/wasm-module-value.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-11-12T18:26:17Z",
+      "side": 1,
+      "message": "We have a js library for building this, just haven\u0027t copied it here - have a look here:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/fast/wasm/wasm-limits-test.html\n\nyou need wasm-constants.js and wasm-module-builder.js\n\nexamples of its use may also be found in v8/test/mjsunit/wasm\n\nIt\u0027d be great if you copied those to wpt/wasm and used it - we\u0027ll need it anyway, when we port more tests.",
+      "revId": "6a1209b3ffa8b9874086ae33acc2e981e30c12a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
