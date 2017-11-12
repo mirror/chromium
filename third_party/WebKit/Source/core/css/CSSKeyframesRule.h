@@ -41,7 +41,7 @@ class StyleRuleKeyframes final : public StyleRuleBase {
  public:
   static StyleRuleKeyframes* Create() { return new StyleRuleKeyframes(); }
 
-  ~StyleRuleKeyframes();
+  ~StyleRuleKeyframes() override;
 
   const HeapVector<Member<StyleRuleKeyframe>>& Keyframes() const {
     return keyframes_;
@@ -59,9 +59,12 @@ class StyleRuleKeyframes final : public StyleRuleBase {
 
   int FindKeyframeIndex(const String& key) const;
 
-  StyleRuleKeyframes* Copy() const { return new StyleRuleKeyframes(*this); }
+  StyleRuleKeyframes* Copy() const override {
+    return new StyleRuleKeyframes(*this);
+  }
 
-  void TraceAfterDispatch(blink::Visitor*);
+  bool IsKeyframesRule() const override { return true; }
+  void Trace(blink::Visitor*) override;
 
   void StyleChanged() { version_++; }
   unsigned Version() const { return version_; }
@@ -69,6 +72,9 @@ class StyleRuleKeyframes final : public StyleRuleBase {
  private:
   StyleRuleKeyframes();
   explicit StyleRuleKeyframes(const StyleRuleKeyframes&);
+
+  CSSRule* CreateCSSOMWrapperInternal(
+      CSSStyleSheet* parent_sheet) const override;
 
   HeapVector<Member<StyleRuleKeyframe>> keyframes_;
   AtomicString name_;

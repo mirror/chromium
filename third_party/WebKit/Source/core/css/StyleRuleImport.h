@@ -39,7 +39,7 @@ class StyleRuleImport : public StyleRuleBase {
   static StyleRuleImport* Create(const String& href,
                                  scoped_refptr<MediaQuerySet>);
 
-  ~StyleRuleImport();
+  ~StyleRuleImport() override;
 
   StyleSheetContents* ParentStyleSheet() const { return parent_style_sheet_; }
   void SetParentStyleSheet(StyleSheetContents* sheet) {
@@ -56,7 +56,8 @@ class StyleRuleImport : public StyleRuleBase {
 
   void RequestStyleSheet();
 
-  void TraceAfterDispatch(blink::Visitor*);
+  bool IsImportRule() const override { return true; }
+  void Trace(blink::Visitor*) override;
 
  private:
   // FIXME: inherit from StyleSheetResourceClient directly to eliminate back
@@ -100,6 +101,8 @@ class StyleRuleImport : public StyleRuleBase {
   StyleRuleImport(const String& href, scoped_refptr<MediaQuerySet>);
 
   void Dispose();
+  CSSRule* CreateCSSOMWrapperInternal(
+      CSSStyleSheet* parent_sheet) const override;
 
   Member<StyleSheetContents> parent_style_sheet_;
 

@@ -32,7 +32,8 @@ class StyleRuleKeyframe final : public StyleRuleBase {
 
   String CssText() const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  bool IsKeyframeRule() const override { return true; }
+  void Trace(blink::Visitor*) override;
 
  private:
   StyleRuleKeyframe(std::unique_ptr<Vector<double>>, CSSPropertyValueSet*);
