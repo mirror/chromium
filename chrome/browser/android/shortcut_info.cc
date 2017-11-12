@@ -79,7 +79,7 @@ void ShortcutInfo::UpdateFromManifest(const content::Manifest& manifest) {
     icon_urls.push_back(icon.src.spec());
 
   if (manifest.share_target)
-    share_target_url_template = manifest.share_target->url_template.string();
+    share_url_templates.push_back(manifest.share_target->url_template.string());
 }
 
 void ShortcutInfo::UpdateSource(const Source new_source) {

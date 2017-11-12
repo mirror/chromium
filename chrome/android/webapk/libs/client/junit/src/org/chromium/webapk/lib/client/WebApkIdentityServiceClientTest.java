@@ -155,7 +155,7 @@ public class WebApkIdentityServiceClientTest {
         Bundle bundle = new Bundle();
         bundle.putString(WebApkMetaDataKeys.RUNTIME_HOST, runtimeHost);
         bundle.putInt(WebApkMetaDataKeys.SHELL_APK_VERSION, shellApkVersion);
-        WebApkTestHelper.registerWebApkWithMetaData(WEBAPK_PACKAGE_NAME, bundle);
+        WebApkTestHelper.registerWebApkWithMetaData(WEBAPK_PACKAGE_NAME, bundle, null);
     }
 
     /** Checks whether the browser backs the WebAPK. */

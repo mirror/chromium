@@ -337,6 +337,8 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
             return WebApkUpdateReason.ORIENTATION_DIFFERS;
         } else if (oldInfo.displayMode() != fetchedInfo.displayMode()) {
             return WebApkUpdateReason.DISPLAY_MODE_DIFFERS;
+        } else if (!oldInfo.shareUrlTemplates().equals(fetchedInfo.shareUrlTemplates())) {
+            return WebApkUpdateReason.SHARE_TARGETS_DIFFER;
         }
         return WebApkUpdateReason.NONE;
     }
@@ -374,8 +376,8 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
                 info.scopeUri().toString(), info.name(), info.shortName(), primaryIconUrl,
                 info.icon(), badgeIconUrl, info.badgeIcon(), iconUrls, iconHashes,
                 info.displayMode(), info.orientation(), info.themeColor(), info.backgroundColor(),
-                info.manifestUrl(), info.apkPackageName(), versionCode, isManifestStale,
-                updateReason, callback);
+                info.shareUrlTemplates().toArray(new String[0]), info.manifestUrl(),
+                info.apkPackageName(), versionCode, isManifestStale, updateReason, callback);
     }
 
     protected void updateWebApkFromFile(String updateRequestPath, WebApkUpdateCallback callback) {
@@ -386,9 +388,9 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
             String startUrl, String scope, String name, String shortName, String primaryIconUrl,
             Bitmap primaryIcon, String badgeIconUrl, Bitmap badgeIcon, String[] iconUrls,
             String[] iconHashes, @WebDisplayMode int displayMode, int orientation, long themeColor,
-            long backgroundColor, String manifestUrl, String webApkPackage, int webApkVersion,
-            boolean isManifestStale, @WebApkUpdateReason int updateReason,
-            Callback<Boolean> callback);
+            long backgroundColor, String[] shareUrlTemplates, String manifestUrl,
+            String webApkPackage, int webApkVersion, boolean isManifestStale,
+            @WebApkUpdateReason int updateReason, Callback<Boolean> callback);
     private static native void nativeUpdateWebApkFromFile(
             String updateRequestPath, WebApkUpdateCallback callback);
 }

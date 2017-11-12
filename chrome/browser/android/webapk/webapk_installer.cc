@@ -112,6 +112,8 @@ webapk::WebApk_UpdateReason ConvertUpdateReasonToProtoEnum(
       return webapk::WebApk::ORIENTATION_DIFFERS;
     case WebApkUpdateReason::DISPLAY_MODE_DIFFERS:
       return webapk::WebApk::DISPLAY_MODE_DIFFERS;
+    case WebApkUpdateReason::SHARE_TARGETS_DIFFER:
+      return webapk::WebApk::SHARE_TARGETS_DIFFER;
   }
 }
 
@@ -180,10 +182,10 @@ std::unique_ptr<std::string> BuildProtoInBackground(
   std::string* scope = web_app_manifest->add_scopes();
   scope->assign(GetScope(shortcut_info).spec());
 
-  if (!shortcut_info.share_target_url_template.empty()) {
+  for (const base::string16& share_url_template :
+       shortcut_info.share_url_templates) {
     webapk::ShareTarget* share_target = web_app_manifest->add_share_targets();
-    share_target->set_url_template(
-        base::UTF16ToUTF8(shortcut_info.share_target_url_template));
+    share_target->set_url_template(base::UTF16ToUTF8(share_url_template));
   }
 
   if (shortcut_info.best_primary_icon_url.is_empty()) {

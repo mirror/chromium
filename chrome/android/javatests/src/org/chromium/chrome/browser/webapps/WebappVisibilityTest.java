@@ -19,6 +19,8 @@ import org.chromium.blink_public.platform.WebDisplayMode;
 import org.chromium.components.security_state.ConnectionSecurityLevel;
 import org.chromium.content.browser.test.NativeLibraryTestRule;
 
+import java.util.HashSet;
+
 /**
  * Tests for {@link WebappDelegateFactory}.
  */
@@ -131,7 +133,7 @@ public class WebappVisibilityTest {
                           displayMode, 0, 0, 0, 0, null, false /* isIconGenerated */,
                           false /* forceNavigation */)
                 : WebApkInfo.create("", "", webappStartUrlOrScopeUrl, null, null, null, null,
-                          displayMode, 0, 0, 0, 0, "", 0, null, "", null,
+                          displayMode, 0, 0, 0, 0, new HashSet<String>(), "", 0, null, "", null,
                           false /* forceNavigation */);
     }
 }

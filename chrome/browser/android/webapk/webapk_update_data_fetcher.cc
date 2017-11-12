@@ -211,11 +211,13 @@ void WebApkUpdateDataFetcher::OnDataAvailable(
       java_badge_icon = gfx::ConvertToJavaBitmap(&badge_icon_);
   ScopedJavaLocalRef<jobjectArray> java_icon_urls =
       base::android::ToJavaArrayOfStrings(env, info_.icon_urls);
+  ScopedJavaLocalRef<jobjectArray> java_share_url_templates =
+      base::android::ToJavaArrayOfStrings(env, info_.share_url_templates);
 
   Java_WebApkUpdateDataFetcher_onDataAvailable(
       env, java_ref_, java_url, java_scope, java_name, java_short_name,
-      java_primary_icon_url, java_primary_icon_murmur2_hash,
-      java_primary_icon, java_badge_icon_url, java_badge_icon_murmur2_hash,
-      java_badge_icon, java_icon_urls, info_.display, info_.orientation,
-      info_.theme_color, info_.background_color);
+      java_primary_icon_url, java_primary_icon_murmur2_hash, java_primary_icon,
+      java_badge_icon_url, java_badge_icon_murmur2_hash, java_badge_icon,
+      java_icon_urls, info_.display, info_.orientation, info_.theme_color,
+      info_.background_color, java_share_url_templates);
 }

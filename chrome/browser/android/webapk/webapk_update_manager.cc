@@ -69,6 +69,7 @@ static void StoreWebApkUpdateRequestToFile(
     jint java_orientation,
     jlong java_theme_color,
     jlong java_background_color,
+    const JavaParamRef<jobjectArray>& java_share_url_templates,
     const JavaParamRef<jstring>& java_web_manifest_url,
     const JavaParamRef<jstring>& java_webapk_package,
     jint java_webapk_version,
@@ -118,6 +119,9 @@ static void StoreWebApkUpdateRequestToFile(
     gfx::CreateSkBitmapFromJavaBitmap(java_badge_icon_bitmap_lock);
     badge_icon.setImmutable();
   }
+
+  base::android::AppendJavaStringArrayToStringVector(
+      env, java_share_url_templates, &info.share_url_templates);
 
   std::string webapk_package;
   ConvertJavaStringToUTF8(env, java_webapk_package, &webapk_package);

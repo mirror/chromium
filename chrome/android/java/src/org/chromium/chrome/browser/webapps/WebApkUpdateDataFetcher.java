@@ -13,7 +13,10 @@ import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.content_public.browser.WebContents;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Downloads the Web Manifest if the web site still uses the {@link manifestUrl} passed to the
@@ -99,7 +102,7 @@ public class WebApkUpdateDataFetcher extends EmptyTabObserver {
             String shortName, String primaryIconUrl, String primaryIconMurmur2Hash,
             Bitmap primaryIconBitmap, String badgeIconUrl, String badgeIconMurmur2Hash,
             Bitmap badgeIconBitmap, String[] iconUrls, @WebDisplayMode int displayMode,
-            int orientation, long themeColor, long backgroundColor) {
+            int orientation, long themeColor, long backgroundColor, String[] shareUrlTemplates) {
         HashMap<String, String> iconUrlToMurmur2HashMap = new HashMap<String, String>();
         for (String iconUrl : iconUrls) {
             String murmur2Hash = null;
@@ -111,11 +114,15 @@ public class WebApkUpdateDataFetcher extends EmptyTabObserver {
             iconUrlToMurmur2HashMap.put(iconUrl, murmur2Hash);
         }
 
+        Set<String> shareUrlTemplatesSet = new HashSet<String>();
+        Collections.addAll(shareUrlTemplatesSet, shareUrlTemplates);
+
         WebApkInfo info = WebApkInfo.create(mOldInfo.id(), mOldInfo.uri().toString(), scopeUrl,
                 new WebApkInfo.Icon(primaryIconBitmap), new WebApkInfo.Icon(badgeIconBitmap), name,
                 shortName, displayMode, orientation, mOldInfo.source(), themeColor, backgroundColor,
-                mOldInfo.apkPackageName(), mOldInfo.shellApkVersion(), mOldInfo.manifestUrl(),
-                manifestStartUrl, iconUrlToMurmur2HashMap, mOldInfo.shouldForceNavigation());
+                shareUrlTemplatesSet, mOldInfo.apkPackageName(), mOldInfo.shellApkVersion(),
+                mOldInfo.manifestUrl(), manifestStartUrl, iconUrlToMurmur2HashMap,
+                mOldInfo.shouldForceNavigation());
         mObserver.onGotManifestData(info, primaryIconUrl, badgeIconUrl);
     }
 

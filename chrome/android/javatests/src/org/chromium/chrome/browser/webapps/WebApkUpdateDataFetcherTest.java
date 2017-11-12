@@ -26,6 +26,7 @@ import org.chromium.chrome.test.util.browser.WebappTestPage;
 import org.chromium.net.test.EmbeddedTestServerRule;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Tests the WebApkUpdateDataFetcher.
@@ -108,8 +109,8 @@ public class WebApkUpdateDataFetcherTest {
             @Override
             public void run() {
                 WebApkInfo oldInfo = WebApkInfo.create("", "", scopeUrl, null, null, null, null, -1,
-                        -1, -1, -1, -1, "random.package", -1, manifestUrl, "",
-                        new HashMap<String, String>(), false /* forceNavigation */);
+                        -1, -1, -1, -1, new HashSet<String>(), "random.package", -1, manifestUrl,
+                        "", new HashMap<String, String>(), false /* forceNavigation */);
                 fetcher.start(mTab, oldInfo, observer);
             }
         });

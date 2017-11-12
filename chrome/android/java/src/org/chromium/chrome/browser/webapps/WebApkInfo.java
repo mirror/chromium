@@ -5,7 +5,8 @@
 package org.chromium.chrome.browser.webapps;
 
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -23,7 +24,9 @@ import org.chromium.webapk.lib.common.WebApkConstants;
 import org.chromium.webapk.lib.common.WebApkMetaDataKeys;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Stores info for WebAPK.
@@ -36,6 +39,7 @@ public class WebApkInfo extends WebappInfo {
     private static final String TAG = "WebApkInfo";
 
     private Icon mBadgeIcon;
+    private Set<String> mShareUrlTemplates;
     private String mApkPackageName;
     private int mShellApkVersion;
     private String mManifestUrl;
@@ -87,16 +91,17 @@ public class WebApkInfo extends WebappInfo {
         // package name and the ShortcutSource from the launch intent and extract the remaining data
         // from the <meta-data> in the WebAPK's Android manifest.
 
-        Bundle bundle = extractWebApkMetaData(webApkPackageName);
-        if (bundle == null) {
-            return null;
-        }
+        PackageManager packageManager = ContextUtils.getApplicationContext().getPackageManager();
 
+        Bundle bundle = null;
+        ActivityInfo[] activityInfos = null;
         Resources res = null;
         try {
-            res = ContextUtils.getApplicationContext()
-                          .getPackageManager()
-                          .getResourcesForApplication(webApkPackageName);
+            PackageInfo packageInfo = packageManager.getPackageInfo(webApkPackageName,
+                    PackageManager.GET_META_DATA | PackageManager.GET_ACTIVITIES);
+            bundle = packageInfo.applicationInfo.metaData;
+            activityInfos = packageInfo.activities;
+            res = packageManager.getResourcesForApplication(webApkPackageName);
         } catch (PackageManager.NameNotFoundException e) {
             return null;
         }
@@ -135,11 +140,22 @@ public class WebApkInfo extends WebappInfo {
         int badgeIconId = IntentUtils.safeGetInt(bundle, WebApkMetaDataKeys.BADGE_ICON_ID, 0);
         Bitmap badgeIcon = decodeImageResource(res, badgeIconId);
 
+        HashSet<String> shareUrlTemplates = new HashSet<String>();
+        for (ActivityInfo activityInfo : activityInfos) {
+            if (activityInfo.metaData == null) continue;
+
+            String shareTemplate = IntentUtils.safeGetString(
+                    activityInfo.metaData, WebApkMetaDataKeys.SHARE_TEMPLATE);
+            if (shareTemplate == null) continue;
+
+            shareUrlTemplates.add(shareTemplate);
+        }
+
         return create(WebApkConstants.WEBAPK_ID_PREFIX + webApkPackageName, url, scope,
                 new Icon(primaryIcon), new Icon(badgeIcon), name, shortName, displayMode,
-                orientation, source, themeColor, backgroundColor, webApkPackageName,
-                shellApkVersion, manifestUrl, manifestStartUrl, iconUrlToMurmur2HashMap,
-                forceNavigation);
+                orientation, source, themeColor, backgroundColor, shareUrlTemplates,
+                webApkPackageName, shellApkVersion, manifestUrl, manifestStartUrl,
+                iconUrlToMurmur2HashMap, forceNavigation);
     }
 
     /**
@@ -157,6 +173,9 @@ public class WebApkInfo extends WebappInfo {
      * @param source                  Source that the WebAPK was launched from.
      * @param themeColor              The theme color of the WebAPK.
      * @param backgroundColor         The background color of the WebAPK.
+     * @param shareUrlTemplates       Set of URL templates that contain placeholders to be replaced
+     *                                with shared data. Each url template corresponds to a different
+     *                                share target.
      * @param webApkPackageName       The package of the WebAPK.
      * @param shellApkVersion         Version of the code in //chrome/android/webapk/shell_apk.
      * @param manifestUrl             URL of the Web Manifest.
@@ -171,9 +190,9 @@ public class WebApkInfo extends WebappInfo {
     public static WebApkInfo create(String id, String url, String scope, Icon primaryIcon,
             Icon badgeIcon, String name, String shortName, @WebDisplayMode int displayMode,
             int orientation, int source, long themeColor, long backgroundColor,
-            String webApkPackageName, int shellApkVersion, String manifestUrl,
-            String manifestStartUrl, Map<String, String> iconUrlToMurmur2HashMap,
-            boolean forceNavigation) {
+            Set<String> shareUrlTemplates, String webApkPackageName, int shellApkVersion,
+            String manifestUrl, String manifestStartUrl,
+            Map<String, String> iconUrlToMurmur2HashMap, boolean forceNavigation) {
         if (id == null || url == null || manifestStartUrl == null || webApkPackageName == null) {
             Log.e(TAG,
                     "Incomplete data provided: " + id + ", " + url + ", " + manifestStartUrl + ", "
@@ -189,20 +208,22 @@ public class WebApkInfo extends WebappInfo {
         }
 
         return new WebApkInfo(id, url, scope, primaryIcon, badgeIcon, name, shortName, displayMode,
-                orientation, source, themeColor, backgroundColor, webApkPackageName,
-                shellApkVersion, manifestUrl, manifestStartUrl, iconUrlToMurmur2HashMap,
-                forceNavigation);
+                orientation, source, themeColor, backgroundColor, shareUrlTemplates,
+                webApkPackageName, shellApkVersion, manifestUrl, manifestStartUrl,
+                iconUrlToMurmur2HashMap, forceNavigation);
     }
 
     protected WebApkInfo(String id, String url, String scope, Icon primaryIcon, Icon badgeIcon,
             String name, String shortName, @WebDisplayMode int displayMode, int orientation,
-            int source, long themeColor, long backgroundColor, String webApkPackageName,
-            int shellApkVersion, String manifestUrl, String manifestStartUrl,
-            Map<String, String> iconUrlToMurmur2HashMap, boolean forceNavigation) {
+            int source, long themeColor, long backgroundColor, Set<String> shareUrlTemplates,
+            String webApkPackageName, int shellApkVersion, String manifestUrl,
+            String manifestStartUrl, Map<String, String> iconUrlToMurmur2HashMap,
+            boolean forceNavigation) {
         super(id, url, scope, primaryIcon, name, shortName, displayMode, orientation, source,
                 themeColor, backgroundColor, null /* splash_screen_url */,
                 false /* isIconGenerated */, forceNavigation);
         mBadgeIcon = badgeIcon;
+        mShareUrlTemplates = shareUrlTemplates;
         mApkPackageName = webApkPackageName;
         mShellApkVersion = shellApkVersion;
         mManifestUrl = manifestUrl;
@@ -217,6 +238,10 @@ public class WebApkInfo extends WebappInfo {
      */
     public Bitmap badgeIcon() {
         return (mBadgeIcon == null) ? null : mBadgeIcon.decoded();
+    }
+
+    public Set<String> shareUrlTemplates() {
+        return mShareUrlTemplates;
     }
 
     @Override
@@ -248,22 +273,6 @@ public class WebApkInfo extends WebappInfo {
         intent.putExtra(ShortcutHelper.EXTRA_SOURCE, source());
         intent.putExtra(WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME, apkPackageName());
         intent.putExtra(ShortcutHelper.EXTRA_FORCE_NAVIGATION, shouldForceNavigation());
-    }
-
-    /**
-     * Extracts meta data from a WebAPK's Android Manifest.
-     * @param webApkPackageName WebAPK's package name.
-     * @return Bundle with the extracted meta data.
-     */
-    private static Bundle extractWebApkMetaData(String webApkPackageName) {
-        PackageManager packageManager = ContextUtils.getApplicationContext().getPackageManager();
-        try {
-            ApplicationInfo appInfo = packageManager.getApplicationInfo(
-                    webApkPackageName, PackageManager.GET_META_DATA);
-            return appInfo.metaData;
-        } catch (PackageManager.NameNotFoundException e) {
-            return null;
-        }
     }
 
     /**

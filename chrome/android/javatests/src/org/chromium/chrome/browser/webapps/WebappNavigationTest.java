@@ -46,6 +46,8 @@ import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.ui.base.PageTransition;
 
+import java.util.HashSet;
+
 /**
  * Tests web navigations originating from a WebappActivity.
  */
@@ -324,8 +326,8 @@ public class WebappNavigationTest {
         // This test is poking at WebappInterceptNavigationDelegate directly,
         // as it's hard to test WebAPKs as well as to stub responses to POST requests.
         WebApkInfo info = WebApkInfo.create("", "https://somewebapp.com", "https://somewebapp.com",
-                null, null, null, null, WebDisplayMode.STANDALONE, 0, 0, 0, 0, "", 0, null, "",
-                null, false /* forceNavigation */);
+                null, null, null, null, WebDisplayMode.STANDALONE, 0, 0, 0, 0,
+                new HashSet<String>(), "", 0, null, "", null, false /* forceNavigation */);
 
         // Note that isPost is the only field being different between the two calls.
         Assert.assertFalse(WebappInterceptNavigationDelegate.shouldOpenInCustomTab(
