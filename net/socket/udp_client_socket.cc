@@ -29,7 +29,7 @@ int UDPClientSocket::ConnectUsingNetwork(
     NetworkChangeNotifier::NetworkHandle network,
     const IPEndPoint& address) {
   if (!NetworkChangeNotifier::AreNetworkHandlesSupported())
-    return ERR_NOT_IMPLEMENTED;
+    return ERR_NOT_IMPLEMENTED5;
   int rv = socket_.Open(address.GetFamily());
   if (rv != OK)
     return rv;
@@ -42,7 +42,7 @@ int UDPClientSocket::ConnectUsingNetwork(
 
 int UDPClientSocket::ConnectUsingDefaultNetwork(const IPEndPoint& address) {
   if (!NetworkChangeNotifier::AreNetworkHandlesSupported())
-    return ERR_NOT_IMPLEMENTED;
+    return ERR_NOT_IMPLEMENTED6;
   int rv;
   rv = socket_.Open(address.GetFamily());
   if (rv != OK)

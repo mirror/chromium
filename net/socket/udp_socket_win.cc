@@ -503,7 +503,7 @@ int UDPSocketWin::Bind(const IPEndPoint& address) {
 
 int UDPSocketWin::BindToNetwork(NetworkChangeNotifier::NetworkHandle network) {
   NOTIMPLEMENTED();
-  return ERR_NOT_IMPLEMENTED;
+  return ERR_NOT_IMPLEMENTED19;
 }
 
 int UDPSocketWin::SetReceiveBufferSize(int32_t size) {

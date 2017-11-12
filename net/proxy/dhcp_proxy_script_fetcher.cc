@@ -22,7 +22,7 @@ DoNothingDhcpProxyScriptFetcher::~DoNothingDhcpProxyScriptFetcher() {}
 
 int DoNothingDhcpProxyScriptFetcher::Fetch(
     base::string16* utf16_text, const CompletionCallback& callback) {
-  return ERR_NOT_IMPLEMENTED;
+  return ERR_NOT_IMPLEMENTED11;
 }
 
 void DoNothingDhcpProxyScriptFetcher::Cancel() {}

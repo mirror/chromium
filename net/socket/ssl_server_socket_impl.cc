@@ -266,7 +266,7 @@ int SSLServerContextImpl::SocketImpl::SetSendBufferSize(int32_t size) {
 int SSLServerContextImpl::SocketImpl::Connect(
     const CompletionCallback& callback) {
   NOTIMPLEMENTED();
-  return ERR_NOT_IMPLEMENTED;
+  return ERR_NOT_IMPLEMENTED7;
 }
 
 void SSLServerContextImpl::SocketImpl::Disconnect() {
