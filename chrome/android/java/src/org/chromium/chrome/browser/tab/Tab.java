@@ -90,6 +90,7 @@ import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabReparentingParams;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
+import org.chromium.chrome.browser.webapps.WebappInfo;
 import org.chromium.chrome.browser.widget.PulseDrawable;
 import org.chromium.chrome.browser.widget.textbubble.TextBubble;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
@@ -407,6 +408,9 @@ public class Tab
 
     /** Whether or not the tab closing the tab can send the user back to the app that opened it. */
     private boolean mIsAllowedToReturnToExternalApp;
+
+    /** WebappInfo of the Webapp that opens the tab, null if not opened by Webapp. */
+    private WebappInfo mWebappInfo;
 
     private GestureStateListener createGestureStateListener() {
         return new GestureStateListener() {
@@ -3287,6 +3291,21 @@ public class Tab
      */
     public void setWebappManifestScope(String scope) {
         nativeSetWebappManifestScope(mNativeTabAndroid, scope);
+    }
+
+    /**
+     * Set the WebappInfo associated with this tab, this should be called only when tab is opened by
+     * Webapp.
+     */
+    public void setWebappInfo(WebappInfo webappInfo) {
+        mWebappInfo = webappInfo;
+    }
+
+    /**
+     * Get the WebappInfo associated with this tab, null if the tab is not opened by Webapp.
+     */
+    public WebappInfo getWebappInfo() {
+        return mWebappInfo;
     }
 
     /**

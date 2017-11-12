@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.externalnav;
 
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabRedirectHandler;
+import org.chromium.chrome.browser.webapps.WebappInfo;
 
 /**
  * A container object for passing navigation parameters to {@link ExternalNavigationHandler}.
@@ -57,6 +58,9 @@ public class ExternalNavigationParams {
      * intent launched.
      */
     private final boolean mShouldCloseContentsOnOverrideUrlLoadingAndLaunchIntent;
+
+    /** WebappInfo of the navigation, null if the navigation does not come from Webapp. */
+    private WebappInfo mWebappInfo;
 
     private ExternalNavigationParams(String url, boolean isIncognito, String referrerUrl,
             int pageTransition, boolean isRedirect, boolean appMustBeInForeground,
@@ -150,6 +154,22 @@ public class ExternalNavigationParams {
     /** @return Whether this navigation is launched by user gesture. */
     public boolean hasUserGesture() {
         return mHasUserGesture;
+    }
+
+    /**
+     * Set the WebappInfo associated with the navigation, this should be called only when navigation
+     * comes from Webapp.
+     */
+    public void setWebappInfo(WebappInfo webappInfo) {
+        mWebappInfo = webappInfo;
+    }
+
+    /**
+     * Get the WebappInfo associated with the navigation, null if the navigation does not come from
+     * Webapp.
+     */
+    public WebappInfo getWebappInfo() {
+        return mWebappInfo;
     }
 
     /**
