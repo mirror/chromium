@@ -14,9 +14,18 @@ argument:
 json is written to that file in the format produced by
 common.parse_common_test_results.
 
+Optional argument:
+
+  --isolated-script-test-filter-file=[FILENAME]
+
+points to a file containing newline-separated test names, to run just
+that subset of tests. This list is parsed by this harness and sent
+down via the --test-filter argument.
+
 This script is intended to be the base command invoked by the isolate,
 followed by a subsequent Python script. It could be generalized to
 invoke an arbitrary executable.
+
 """
 
 import argparse
@@ -28,6 +37,7 @@ import tempfile
 import traceback
 
 import common
+import isolated_script_test_helpers
 
 # Add src/testing/ into sys.path for importing xvfb.
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -44,6 +54,9 @@ def main():
   parser.add_argument(
       '--isolated-script-test-output', type=str,
       required=True)
+  parser.add_argument(
+      '--isolated-script-test-filter-file', type=str,
+      required=False)
   parser.add_argument('--xvfb', help='Start xvfb.', action='store_true')
   args, rest_args = parser.parse_known_args()
   # Remove the chartjson extra arg until this script cares about chartjson
@@ -55,6 +68,14 @@ def main():
       rest_args.pop(index)
       break
     index += 1
+  if args.isolated_script_test_filter_file:
+    # This test harness doesn't yet support reading the test list from
+    # a file.
+    filter_list = isolated_script_test_helpers.load_filter_list(
+        args.isolated_script_test_filter_file)
+    # Need to convert this to a valid regex.
+    filter_regex = '(' + '|'.join(filter_list) + ')'
+    rest_args.append('--test-filter=' + filter_regex)
 
   xvfb_proc = None
   openbox_proc = None
