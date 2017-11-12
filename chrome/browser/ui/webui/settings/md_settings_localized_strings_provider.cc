@@ -72,6 +72,12 @@ namespace {
 // the following name. These names must be kept in sync.
 constexpr char kLocalizedStringsFile[] = "strings.js";
 
+#if defined(OS_WIN) && defined(GOOGLE_CHROME_BUILD)
+const wchar_t kUnwantedSoftwareProtectionWhitePaperUrl[] =
+    L"https://www.google.ca/chrome/browser/privacy/"
+    "whitepaper.html#unwantedsoftware";
+#endif
+
 struct LocalizedString {
   const char* name;
   int id;
@@ -722,10 +728,31 @@ void AddDownloadsStrings(content::WebUIDataSource* html_source) {
 #if defined(OS_WIN) && defined(GOOGLE_CHROME_BUILD)
 void AddChromeCleanupStrings(content::WebUIDataSource* html_source) {
   LocalizedString localized_strings[] = {
-      {"chromeCleanupExplanation",
-       IDS_SETTINGS_RESET_CLEANUP_EXPLANATION_REMOVE},
+      {"chromeCleanupPageTitle",
+       IDS_SETTINGS_RESET_CLEAN_UP_COMPUTER_PAGE_TITLE},
+      {"chromeCleanupDetailsExplanation",
+       IDS_SETTINGS_RESET_CLEANUP_DETAILS_FILES_AND_PROGRAMS},
+      {"chromeCleanupDetailsItemsToBeRemove",
+       IDS_SETTINGS_RESET_CLEANUP_DETAILS_ITEMS_TO_BE_REMOVED},
+      {"chromeCleanupDetailsRegistryEntries",
+       IDS_SETTINGS_RESET_CLEANUP_DETAILS_REGISTRY_ENTRIES},
+      {"chromeCleanupDetailsMore", IDS_SETTINGS_RESET_CLEANUP_DETAILS_MORE},
       {"chromeCleanupDoneButtonLabel",
        IDS_SETTINGS_RESET_CLEANUP_DONE_BUTTON_LABEL},
+      {"chromeCleanupExplanation",
+       IDS_SETTINGS_RESET_CLEANUP_EXPLANATION_REMOVE},
+      {"chromeCleanupExplanationCleanupError",
+       IDS_SETTINGS_RESET_CLEANUP_EXPLANATION_CLEANUP_ERROR},
+      {"chromeCleanupExplanationFindAndRemove",
+       IDS_SETTINGS_RESET_CLEANUP_EXPLANATION_FIND_AND_REMOVE},
+      {"chromeCleanupExplanationNoInternet",
+       IDS_SETTINGS_RESET_CLEANUP_EXPLANATION_NO_INTERNET_CONNECTION},
+      {"chromeCleanupExplanationPermissionsNeeded",
+       IDS_SETTINGS_RESET_CLEANUP_EXPLANATION_PERMISSIONS_NEEDED},
+      {"chromeCleanupExplanationScanError",
+       IDS_SETTINGS_RESET_CLEANUP_EXPLANATION_SCAN_ERROR},
+      {"chromeCleanupFindButtonLable",
+       IDS_SETTINGS_RESET_CLEANUP_FIND_BUTTON_LABEL},
       {"chromeCleanupLinkShowFiles",
        IDS_SETTINGS_RESET_CLEANUP_LINK_SHOW_FILES},
       {"chromeCleanupLogsUploadPermission", IDS_CHROME_CLEANUP_LOGS_PERMISSION},
@@ -733,13 +760,30 @@ void AddChromeCleanupStrings(content::WebUIDataSource* html_source) {
        IDS_SETTINGS_RESET_CLEANUP_REMOVE_BUTTON_LABEL},
       {"chromeCleanupRestartButtonLabel",
        IDS_SETTINGS_RESET_CLEANUP_RESTART_BUTTON_LABEL},
+      {"chromeCleanupTitleDone", IDS_SETTINGS_RESET_CLEANUP_TITLE_DONE},
       {"chromeCleanupTitleErrorCantRemove",
        IDS_SETTINGS_RESET_CLEANUP_TITLE_ERROR_CANT_REMOVE},
+      {"chromeCleanupTitleErrorPermissions",
+       IDS_SETTINGS_RESET_CLEANUP_TITLE_ERROR_PERMISSIONS_NEEDED},
+      {"chromeCleanupTitleFindAndRemove",
+       IDS_SETTINGS_RESET_CLEANUP_TITLE_FIND_AND_REMOVE},
+      {"chromeCleanupTitleNoInternet",
+       IDS_SETTINGS_RESET_CLEANUP_TITLE_NO_INTERNET_CONNECTION},
+      {"chromeCleanupTitleNothingFound",
+       IDS_SETTINGS_RESET_CLEANUP_TITLE_NOTHING_FOUND},
       {"chromeCleanupTitleRemove", IDS_SETTINGS_RESET_CLEANUP_TITLE_REMOVE},
       {"chromeCleanupTitleRemoved", IDS_SETTINGS_RESET_CLEANUP_TITLE_REMOVED},
       {"chromeCleanupTitleRemoving", IDS_SETTINGS_RESET_CLEANUP_TITLE_REMOVING},
       {"chromeCleanupTitleRestart", IDS_SETTINGS_RESET_CLEANUP_TITLE_RESTART},
+      {"chromeCleanupTitleScanning", IDS_SETTINGS_RESET_CLEANUP_TITLE_SCANNING},
+      {"chromeCleanupTitleScanningFailed",
+       IDS_SETTINGS_RESET_CLEANUP_TITLE_ERROR_SCANNING_FAILED},
+      {"chromeCleanupTitleTryAgainButtonLabel",
+       IDS_SETTINGS_RESET_CLEANUP_TRY_AGAIN_BUTTON_LABEL},
+      {"chromeCleanupTitleLogsPermissionExplanation",
+       IDS_SETTINGS_RESET_CLEANUP_LOGS_PERMISSION_EXPLANATION},
   };
+
   AddLocalizedStringsBulk(html_source, localized_strings,
                           arraysize(localized_strings));
   const std::string cleanup_learn_more_url =
@@ -749,15 +793,16 @@ void AddChromeCleanupStrings(content::WebUIDataSource* html_source) {
           .spec();
   html_source->AddString("chromeCleanupLearnMoreUrl", cleanup_learn_more_url);
 
-  // TODO(crbug.com/776538): Localize these strings.
-  html_source->AddString("chromeCleanupPageTitle", "Clean up computer");
-  html_source->AddString("chromeCleanupPageTriggerDescription",
-                         "Find and remove harmful software");
-
-  base::string16 powered_by_html =
+  const base::string16 powered_by_html =
       l10n_util::GetStringFUTF16(IDS_SETTINGS_RESET_CLEANUP_FOOTER_POWERED_BY,
                                  L"<span id='powered-by-logo'></span>");
   html_source->AddString("chromeCleanupPoweredByHtml", powered_by_html);
+
+  const base::string16 cleanup_details_explanation =
+      l10n_util::GetStringFUTF16(IDS_SETTINGS_RESET_CLEANUP_DETAILS_EXPLANATION,
+                                 kUnwantedSoftwareProtectionWhitePaperUrl);
+  html_source->AddString("chromeCleanupDetailsFilesAndPrograms",
+                         cleanup_details_explanation);
 }
 #endif  // defined(OS_WIN) && defined(GOOGLE_CHROME_BUILD)
 
@@ -782,6 +827,14 @@ void AddResetStrings(content::WebUIDataSource* html_source) {
     {"resetAutomatedDialogTitle", IDS_SETTINGS_RESET_AUTOMATED_DIALOG_TITLE},
     {"resetProfileBannerButton", IDS_SETTINGS_RESET_BANNER_RESET_BUTTON_TEXT},
     {"resetProfileBannerDescription", IDS_SETTINGS_RESET_BANNER_TEXT},
+#if defined(OS_WIN) && defined(GOOGLE_CHROME_BUILD)
+    // The page title to be used if user initiated cleanups are enabled.
+    {"resetAndCleanupPageTitle", IDS_SETTINGS_RESET_AND_CLEANUP},
+    {"resetCleanupComputerTrigger",
+     IDS_SETTINGS_RESET_CLEAN_UP_COMPUTER_TRIGGER},
+    {"resetCleanupComputerTriggerDescription",
+     IDS_SETTINGS_RESET_CLEAN_UP_COMPUTER_TRIGGER_DESCRIPTION},
+#endif
   };
   AddLocalizedStringsBulk(html_source, localized_strings,
                           arraysize(localized_strings));
