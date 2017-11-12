@@ -8,6 +8,7 @@
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/common/child_process_host_impl.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_process_host.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl_shared_memory.h"
@@ -61,6 +62,13 @@ void GpuClient::OnCreateGpuMemoryBuffer(
   callback.Run(handle);
 }
 
+void GpuClient::ShutdownRender() {
+  auto* host = RenderProcessHost::FromID(render_process_id_);
+  if (host)
+    host->ShutdownForBadMessage(
+        RenderProcessHost::CrashReportMode::NO_CRASH_DUMP);
+}
+
 void GpuClient::EstablishGpuChannel(
     const EstablishGpuChannelCallback& callback) {
   GpuProcessHost* host = GpuProcessHost::Get();
@@ -82,6 +90,21 @@ void GpuClient::EstablishGpuChannel(
       preempts, allow_view_command_buffers, allow_real_time_streams,
       base::Bind(&GpuClient::OnEstablishGpuChannel, weak_factory_.GetWeakPtr(),
                  callback));
+}
+
+void GpuClient::CreateArcVideoDecodeAccelerator(
+    arc::mojom::VideoDecodeAcceleratorRequest vda_request) {
+  ShutdownRender();
+}
+
+void GpuClient::CreateArcVideoEncodeAccelerator(
+    arc::mojom::VideoEncodeAcceleratorRequest vea_request) {
+  ShutdownRender();
+}
+
+void GpuClient::CreateArcProtectedBufferManager(
+    arc::mojom::ProtectedBufferManagerRequest pbm_request) {
+  ShutdownRender();
 }
 
 void GpuClient::CreateJpegDecodeAccelerator(
