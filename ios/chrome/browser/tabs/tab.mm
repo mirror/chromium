@@ -582,9 +582,11 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   self.navigationManager->GoToIndex(index);
 }
 
-- (BOOL)openExternalURL:(const GURL&)url
+- (void)openExternalURL:(const GURL&)url
               sourceURL:(const GURL&)sourceURL
-            linkClicked:(BOOL)linkClicked {
+            linkClicked:(BOOL)linkClicked
+             completion:(void (^)(BOOL))completionHandler {
+  DCHECK(completionHandler);
   if (!_externalAppLauncher)
     _externalAppLauncher = [[ExternalAppLauncher alloc] init];
 
@@ -593,13 +595,21 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
   // Check if it's a direct FIDO U2F x-callback call. If so, do not open it, to
   // prevent pages from spoofing requests with different origins.
-  if (finalURL.SchemeIs("u2f-x-callback"))
-    return NO;
+  if (finalURL.SchemeIs("u2f-x-callback")) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      completionHandler(NO);
+    });
+    return;
+  }
 
   // Block attempts to open this application's settings in the native system
   // settings application.
-  if (finalURL.SchemeIs("app-settings"))
-    return NO;
+  if (finalURL.SchemeIs("app-settings")) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      completionHandler(NO);
+    });
+    return;
+  }
 
   // Check if it's a FIDO U2F call.
   if (finalURL.SchemeIs("u2f")) {
@@ -618,31 +628,44 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
                          tabURL:self.webState->GetLastCommittedURL()
                           tabID:self.tabId];
 
-    if (!finalURL.is_valid())
-      return NO;
-  }
-
-  if ([_externalAppLauncher requestToOpenURL:finalURL
-                               sourcePageURL:sourceURL
-                                 linkClicked:linkClicked]) {
-    // Clears pending navigation history after successfully launching the
-    // external app.
-    DCHECK([self navigationManager]);
-    [self navigationManager]->DiscardNonCommittedItems();
-    // Ensure the UI reflects the current entry, not the just-discarded pending
-    // entry.
-    [_parentTabModel notifyTabChanged:self];
-
-    if (sourceURL.is_valid()) {
-      ReadingListModel* model =
-          ReadingListModelFactory::GetForBrowserState(_browserState);
-      if (model && model->loaded())
-        model->SetReadStatus(sourceURL, true);
+    if (!finalURL.is_valid()) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        completionHandler(NO);
+      });
+      return;
     }
-
-    return YES;
   }
-  return NO;
+
+  __weak Tab* weakSelf = self;
+  void (^callback)(BOOL) = ^(BOOL success) {
+    Tab* strongSelf = weakSelf;
+    if (success && strongSelf) {
+      // Since tab can out-live web state, account for possibility of
+      // navigation manager being null. If navigation manager is still alive,
+      // clears pending navigation history after successfully launching the
+      // external app.
+      web::NavigationManager* navManager = [strongSelf navigationManager];
+      if (navManager)
+        navManager->DiscardNonCommittedItems();
+      // Ensures that the UI reflects the current entry, not the
+      // just-discarded pending entry.
+      [strongSelf->_parentTabModel notifyTabChanged:strongSelf];
+      if (sourceURL.is_valid()) {
+        ReadingListModel* model = ReadingListModelFactory::GetForBrowserState(
+            strongSelf->_browserState);
+        if (model && model->loaded())
+          model->SetReadStatus(sourceURL, true);
+      }
+    }
+    // This completionHandler will be executed on the main thread because
+    // -requestToOpenURL:sourcePageURL:linkClick:completionHandler:'s
+    // contract mandates that.
+    completionHandler(success);
+  };
+  [_externalAppLauncher requestToOpenURL:finalURL
+                           sourcePageURL:sourceURL
+                             linkClicked:linkClicked
+                       completionHandler:callback];
 }
 
 - (void)webState:(web::WebState*)webState

@@ -154,6 +154,7 @@ source_set("unit_tests") {
     ":tabs",
     ":tabs_internal",
     "//base",
+    "//base/test:test_support",
     "//components/bookmarks/test",
     "//components/history/core/browser",
     "//components/keyed_service/core",
