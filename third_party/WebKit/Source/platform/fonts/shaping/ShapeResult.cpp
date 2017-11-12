@@ -42,7 +42,7 @@
 namespace blink {
 
 unsigned ShapeResult::RunInfo::NextSafeToBreakOffset(unsigned offset) const {
-  DCHECK_LT(offset, num_characters_);
+  DCHECK_LE(offset, num_characters_);
   for (unsigned i = 0; i < safe_break_offsets_.size(); i++) {
     if (safe_break_offsets_[i] >= offset)
       return safe_break_offsets_[i];
@@ -245,46 +245,52 @@ scoped_refptr<ShapeResult> ShapeResult::MutableUnique() const {
   return ShapeResult::Create(*this);
 }
 
-unsigned ShapeResult::NextSafeToBreakOffset(unsigned absolute_offset) const {
-  if (!absolute_offset)
-    return StartIndexForResult();
-
-  // The absolute_offset argument represents the offset for the entire
-  // ShapeResult while offset is continuously updated to be relative to the
-  // current run.
-  unsigned offset = absolute_offset;
-  unsigned run_offset = 0;
-  for (const auto& run : runs_) {
+unsigned ShapeResult::NextSafeToBreakOffset(unsigned index) const {
+  for (auto it = runs_.begin(); it != runs_.end(); ++it) {
+    const auto& run = *it;
     if (!run)
       continue;
 
-    unsigned num_characters = run->num_characters_;
-    if (offset < num_characters)
-      return run->NextSafeToBreakOffset(offset) + run_offset;
-
-    offset -= num_characters;
-    run_offset += num_characters;
+    unsigned run_start = run->start_index_;
+    if (index >= run_start) {
+      unsigned offset = index - run_start;
+      if (offset <= run->num_characters_) {
+        return run->NextSafeToBreakOffset(offset) + run_start;
+      }
+      if (Rtl()) {
+        if (it != runs_.begin())
+          --it;
+        const auto& previous_run = *it;
+        return previous_run->start_index_;
+      }
+    } else if (!Rtl()) {
+      return run_start;
+    }
   }
 
   return EndIndexForResult();
 }
 
-unsigned ShapeResult::PreviousSafeToBreakOffset(
-    unsigned absolute_offset) const {
-  if (absolute_offset >= NumCharacters())
-    return NumCharacters();
-
-  for (unsigned i = runs_.size(); i > 0; i--) {
-    const auto& run = runs_[i - 1];
+unsigned ShapeResult::PreviousSafeToBreakOffset(unsigned index) const {
+  for (auto it = runs_.rbegin(); it != runs_.rend(); ++it) {
+    const auto& run = *it;
     if (!run)
       continue;
 
     unsigned run_start = run->start_index_;
-    unsigned run_end = run_start + run->num_characters_;
-    if (absolute_offset >= run_start && absolute_offset < run_end) {
-      unsigned start =
-          absolute_offset > run_start ? absolute_offset - run_start : 0;
-      return run->PreviousSafeToBreakOffset(start) + run_start;
+    if (index >= run_start) {
+      unsigned offset = index - run_start;
+      if (offset <= run->num_characters_) {
+        return run->PreviousSafeToBreakOffset(offset) + run_start;
+      }
+      if (!Rtl()) {
+        return run_start + run->num_characters_;
+      }
+    } else if (Rtl()) {
+      if (it != runs_.rbegin())
+        --it;
+      const auto& previous_run = *it;
+      return previous_run->start_index_ + run->num_characters_;
     }
   }
 
