@@ -16,6 +16,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
+#include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_export.h"
 #include "ui/app_list/app_list_model.h"
 #include "ui/app_list/app_list_model_observer.h"
@@ -149,7 +150,7 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
 
   // Updates the visibility of app list items according to |app_list_state| and
   // |is_in_drag|.
-  void UpdateControlVisibility(AppListView::AppListState app_list_state,
+  void UpdateControlVisibility(AppListViewState app_list_state,
                                bool is_in_drag);
 
   // Overridden from ui::EventHandler:

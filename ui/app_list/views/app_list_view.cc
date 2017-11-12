@@ -421,8 +421,8 @@ class AppListView::FullscreenWidgetObserver : views::WidgetObserver {
 
   // Overridden from WidgetObserver:
   void OnWidgetClosing(views::Widget* widget) override {
-    if (view_->app_list_state() != AppListView::CLOSED)
-      view_->SetState(AppListView::CLOSED);
+    if (view_->app_list_state() != AppListViewState::CLOSED)
+      view_->SetState(AppListViewState::CLOSED);
     widget_observer_.Remove(view_->GetWidget());
   }
 
@@ -766,7 +766,8 @@ void AppListView::EndDrag(const gfx::Point& location) {
   initial_drag_point_ = gfx::Point();
 }
 
-void AppListView::SetChildViewsForStateTransition(AppListState target_state) {
+void AppListView::SetChildViewsForStateTransition(
+    AppListViewState target_state) {
   if (target_state != PEEKING && target_state != FULLSCREEN_ALL_APPS)
     return;
 
@@ -795,7 +796,7 @@ void AppListView::SetChildViewsForStateTransition(AppListState target_state) {
 }
 
 void AppListView::ConvertAppListStateToFullscreenEquivalent(
-    AppListState* target_state) {
+    AppListViewState* target_state) {
   if (!(is_side_shelf_ || is_tablet_mode_))
     return;
 
@@ -811,7 +812,7 @@ void AppListView::ConvertAppListStateToFullscreenEquivalent(
   }
 }
 
-void AppListView::RecordStateTransitionForUma(AppListState new_state) {
+void AppListView::RecordStateTransitionForUma(AppListViewState new_state) {
   if (!is_fullscreen_app_list_enabled_)
     return;
 
@@ -826,7 +827,7 @@ void AppListView::RecordStateTransitionForUma(AppListState new_state) {
                             kMaxAppListStateTransition);
 }
 
-void AppListView::MaybeCreateAccessibilityEvent(AppListState new_state) {
+void AppListView::MaybeCreateAccessibilityEvent(AppListViewState new_state) {
   if (new_state != PEEKING && new_state != FULLSCREEN_ALL_APPS)
     return;
 
@@ -854,7 +855,7 @@ AppsGridView* AppListView::GetAppsGridView() const {
 }
 
 AppListStateTransitionSource AppListView::GetAppListStateTransitionSource(
-    AppListState target_state) const {
+    AppListViewState target_state) const {
   switch (app_list_state_) {
     case CLOSED:
       // CLOSED->X transitions are not useful for UMA.
@@ -1191,12 +1192,12 @@ bool AppListView::ShouldIgnoreScrollEvents() {
              base::TimeDelta::FromMilliseconds(kScrollIgnoreTimeMs);
 }
 
-void AppListView::SetState(AppListState new_state) {
+void AppListView::SetState(AppListViewState new_state) {
   // Do not allow the state to be changed once it has been set to CLOSED.
   if (app_list_state_ == CLOSED)
     return;
 
-  AppListState new_state_override = new_state;
+  AppListViewState new_state_override = new_state;
   ConvertAppListStateToFullscreenEquivalent(&new_state_override);
   MaybeCreateAccessibilityEvent(new_state_override);
   SetChildViewsForStateTransition(new_state_override);
@@ -1222,7 +1223,7 @@ void AppListView::SetState(AppListState new_state) {
       ->UpdateControlVisibility(app_list_state_, is_in_drag_);
 }
 
-void AppListView::StartAnimationForState(AppListState target_state) {
+void AppListView::StartAnimationForState(AppListViewState target_state) {
   if (is_side_shelf_)
     return;
 
