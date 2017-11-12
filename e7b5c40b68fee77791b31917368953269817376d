@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "b12de136_812de25b",
+        "filename": "chrome/common/media_router/mojo/media_router_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-12T14:34:42Z",
+      "side": 1,
+      "message": "Nit: const ref here (all these functions should be returning a const ref where possible: line 393 really ought to be changed to avoid requiring a copy of the string as well (the more extensive changes are fine in a followup)\n\nSee https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#StructTraits-getters-should-be-simple",
+      "revId": "e7b5c40b68fee77791b31917368953269817376d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "582608e9_96e674cd",
         "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
         "patchSetId": 2
