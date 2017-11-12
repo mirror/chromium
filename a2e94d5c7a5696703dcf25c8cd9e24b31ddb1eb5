@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62f33f5f_b6551921",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8ElementCustom.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-12T05:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf85cbaa_a4d0990b",
+      "revId": "a2e94d5c7a5696703dcf25c8cd9e24b31ddb1eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fe1dafe_7ee7814d",
         "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8ElementCustom.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "a2e94d5c7a5696703dcf25c8cd9e24b31ddb1eb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23cc6f43_70fdbeb7",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8ElementCustom.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-12T05:04:49Z",
+      "side": 1,
+      "message": "Unfortunately, that only works for methods, not attributes.",
+      "parentUuid": "6fe1dafe_7ee7814d",
+      "revId": "a2e94d5c7a5696703dcf25c8cd9e24b31ddb1eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
