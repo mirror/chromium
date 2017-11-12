@@ -24,15 +24,22 @@ class CORE_EXPORT CSSNumericValueType {
     kResolution,
     kFlex,
     kPercent,
+    // Used to represent null percent hint, since a percent hint can't be a
+    // percent.
+    kNullPercentHint = kPercent,
     kNumBaseTypes
   };
 
   static constexpr unsigned kNumBaseTypes =
       static_cast<unsigned>(BaseType::kNumBaseTypes);
 
-  explicit CSSNumericValueType(CSSPrimitiveValue::UnitType);
+  explicit CSSNumericValueType(
+      CSSPrimitiveValue::UnitType = CSSPrimitiveValue::UnitType::kNumber);
 
   static CSSNumericValueType NegateEntries(CSSNumericValueType);
+  static CSSNumericValueType Add(CSSNumericValueType,
+                                 CSSNumericValueType,
+                                 bool& error);
 
   int GetEntry(BaseType type) const {
     DCHECK_LT(type, BaseType::kNumBaseTypes);
@@ -44,13 +51,13 @@ class CORE_EXPORT CSSNumericValueType {
     entries_[static_cast<unsigned>(type)] = value;
   }
 
-  bool HasPercentHint() const {
-    // TODO(crbug.com/776173): Implement this
-    return false;
-  }
+  bool HasPercentHint() const { return percent_hint_ != BaseType::kPercent; }
+  BaseType PercentHint() const { return percent_hint_; }
+  void ApplyPercentHint(BaseType hint);
 
  private:
   std::array<int, kNumBaseTypes> entries_{};  // zero-initialize
+  BaseType percent_hint_ = BaseType::kNullPercentHint;
 };
 
 }  // namespace blink
