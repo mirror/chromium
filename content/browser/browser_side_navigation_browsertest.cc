@@ -452,7 +452,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserDisableWebSecurityTest,
       file_url,  // base_url_for_data_url
       GURL(), PREVIEWS_UNSPECIFIED, base::TimeTicks::Now(), "GET", nullptr,
       base::Optional<SourceLocation>(), CSPDisposition::CHECK,
-      false /* started_from_context_menu */, false /* has_user_gesture */);
+      false /* started_from_context_menu */, false /* has_user_gesture */,
+      base::Optional<std::string>() /* suggested_filename */);
   BeginNavigationParams begin_params(
       std::string(), net::LOAD_NORMAL, false, REQUEST_CONTEXT_TYPE_LOCATION,
       blink::WebMixedContentContextType::kBlockable, false,
