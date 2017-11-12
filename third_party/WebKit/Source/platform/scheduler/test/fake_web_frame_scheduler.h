@@ -64,7 +64,7 @@ class FakeWebFrameScheduler : public WebFrameScheduler {
   scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType) override {
     return nullptr;
   }
-  WebViewScheduler* GetWebViewScheduler() override { return nullptr; }
+  WebViewScheduler* GetWebViewScheduler() const override { return nullptr; }
   ScopedVirtualTimePauser CreateScopedVirtualTimePauser() {
     return ScopedVirtualTimePauser();
   }
@@ -76,7 +76,7 @@ class FakeWebFrameScheduler : public WebFrameScheduler {
   std::unique_ptr<ActiveConnectionHandle> OnActiveConnectionCreated() override {
     return nullptr;
   }
-  bool IsExemptFromThrottling() const override {
+  bool IsExemptFromBudgetBasedThrottling() const override {
     return is_exempt_from_throttling_;
   }
 
