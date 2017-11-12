@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ade049e5_734c79c0",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-12T15:53:50Z",
+      "side": 1,
+      "message": "nit: Looks a little odd having 2 continue. Maybe || ?",
+      "range": {
+        "startLine": 62,
+        "startChar": 30,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "45a1c6a45e5abc4bb27bf0d61c6efeb54fd98bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
