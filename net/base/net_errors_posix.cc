@@ -95,11 +95,11 @@ Error MapSystemError(logging::SystemErrorCode os_error) {
     case ENOSPC:  // No space left on device.
       return ERR_FILE_NO_SPACE;
     case ENOSYS:  // Function not implemented.
-      return ERR_NOT_IMPLEMENTED;
+      return ERR_NOT_IMPLEMENTED28;
     case ENOTDIR:  // Not a directory.
       return ERR_FILE_NOT_FOUND;
     case ENOTSUP:  // Operation not supported.
-      return ERR_NOT_IMPLEMENTED;
+      return ERR_NOT_IMPLEMENTED29;
     case EPERM:  // Operation not permitted.
       return ERR_ACCESS_DENIED;
     case EROFS:  // Read-only file system.

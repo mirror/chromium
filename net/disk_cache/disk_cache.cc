@@ -275,7 +275,8 @@ void FlushCacheThreadForTesting() {
 int Backend::CalculateSizeOfEntriesBetween(base::Time initial_time,
                                            base::Time end_time,
                                            const CompletionCallback& callback) {
-  return net::ERR_NOT_IMPLEMENTED;
+  NOTREACHED();
+  return net::ERR_NOT_IMPLEMENTED9;
 }
 
 uint8_t Backend::GetEntryInMemoryData(const std::string& key) {

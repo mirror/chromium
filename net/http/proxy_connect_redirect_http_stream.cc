@@ -112,7 +112,7 @@ Error ProxyConnectRedirectHttpStream::GetTokenBindingSignature(
     TokenBindingType tb_type,
     std::vector<uint8_t>* out) {
   NOTREACHED();
-  return ERR_NOT_IMPLEMENTED;
+  return ERR_NOT_IMPLEMENTED2;
 }
 
 void ProxyConnectRedirectHttpStream::Drain(HttpNetworkSession* session) {

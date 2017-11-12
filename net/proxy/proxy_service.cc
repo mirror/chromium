@@ -188,7 +188,8 @@ class ProxyResolverNull : public ProxyResolver {
                      const CompletionCallback& callback,
                      std::unique_ptr<Request>* request,
                      const NetLogWithSource& net_log) override {
-    return ERR_NOT_IMPLEMENTED;
+    NOTREACHED();
+    return ERR_NOT_IMPLEMENTED13;
   }
 
 };
