@@ -38,13 +38,34 @@ MapEntriesToMetadataForClients(const std::set<DownloadClient>& clients,
 
 Criteria GetSchedulingCriteria(const Model::EntryList& entries) {
   Criteria criteria;
+
+  // The scheduling criteria can only become less strict, from requiring battery
+  // charging to not requiring charging, from requiring unmetered network to
+  // any network. Optimal battery level can only decrease.
   for (auto* const entry : entries) {
     DCHECK(entry);
     const SchedulingParams& scheduling_params = entry->scheduling_params;
-    if (scheduling_params.battery_requirements ==
-        SchedulingParams::BatteryRequirements::BATTERY_INSENSITIVE) {
-      criteria.requires_battery_charging = false;
+    switch (scheduling_params.battery_requirements) {
+      case SchedulingParams::BatteryRequirements::BATTERY_INSENSITIVE:
+        criteria.requires_battery_charging = false;
+        if (criteria.optimal_battery_percentage >
+            DeviceStatus::kBatteryPercentageAlwaysDownload)
+          criteria.optimal_battery_percentage =
+              DeviceStatus::kBatteryPercentageAlwaysDownload;
+        break;
+      case SchedulingParams::BatteryRequirements::BATTERY_SENSITIVE:
+        criteria.requires_battery_charging = false;
+        if (criteria.optimal_battery_percentage >
+            DeviceStatus::kOptimalSchedulingBatteryPercentage)
+          criteria.optimal_battery_percentage =
+              DeviceStatus::kOptimalSchedulingBatteryPercentage;
+        break;
+      case SchedulingParams::BatteryRequirements::BATTERY_CHARGING:
+        break;
+      default:
+        NOTREACHED();
     }
+
     if (scheduling_params.network_requirements ==
         SchedulingParams::NetworkRequirements::NONE) {
       criteria.requires_unmetered_network = false;

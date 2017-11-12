@@ -1065,6 +1065,7 @@ void ControllerImpl::ScheduleCleanupTask() {
       << "GCM requires start time to be less than end time";
 
   task_scheduler_->ScheduleTask(DownloadTaskType::CLEANUP_TASK, false, false,
+                                DeviceStatus::kBatteryPercentageAlwaysDownload,
                                 std::ceil(start_time.InSecondsF()),
                                 std::ceil(end_time.InSecondsF()));
 }

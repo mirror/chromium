@@ -6,6 +6,10 @@
 
 namespace download {
 
+const int DeviceStatus::kOptimalSchedulingBatteryPercentage = 50;
+const int DeviceStatus::kOptimalDownloadBatteryPercentage = 45;
+const int DeviceStatus::kBatteryPercentageAlwaysDownload = 0;
+
 DeviceStatus::Result::Result()
     : meets_battery_requirement(false), meets_network_requirement(false) {}
 
@@ -15,14 +19,23 @@ bool DeviceStatus::Result::MeetsRequirements() const {
 
 DeviceStatus::DeviceStatus()
     : battery_status(BatteryStatus::NOT_CHARGING),
+      battery_percentage(0),
       network_status(NetworkStatus::DISCONNECTED) {}
 
 DeviceStatus::DeviceStatus(BatteryStatus battery, NetworkStatus network)
-    : battery_status(battery), network_status(network) {}
+    : DeviceStatus(battery, 0, network) {}
+
+DeviceStatus::DeviceStatus(BatteryStatus battery,
+                           int battery_percentage,
+                           NetworkStatus network)
+    : battery_status(battery),
+      battery_percentage(battery_percentage),
+      network_status(network) {}
 
 bool DeviceStatus::operator==(const DeviceStatus& rhs) const {
   return network_status == rhs.network_status &&
-         battery_status == rhs.battery_status;
+         battery_status == rhs.battery_status &&
+         battery_percentage == rhs.battery_percentage;
 }
 
 bool DeviceStatus::operator!=(const DeviceStatus& rhs) const {
@@ -35,9 +48,17 @@ DeviceStatus::Result DeviceStatus::MeetsCondition(
 
   switch (params.battery_requirements) {
     case SchedulingParams::BatteryRequirements::BATTERY_INSENSITIVE:
+      // Any battery level.
       result.meets_battery_requirement = true;
       break;
     case SchedulingParams::BatteryRequirements::BATTERY_SENSITIVE:
+      // Device is charging or in high battery percentage.
+      result.meets_battery_requirement =
+          battery_status == BatteryStatus::CHARGING ||
+          battery_percentage >= kOptimalDownloadBatteryPercentage;
+      break;
+    case SchedulingParams::BatteryRequirements::BATTERY_CHARGING:
+      // Device must be charging.
       result.meets_battery_requirement =
           battery_status == BatteryStatus::CHARGING;
       break;
@@ -61,16 +82,25 @@ DeviceStatus::Result DeviceStatus::MeetsCondition(
 }
 
 Criteria::Criteria()
-    : requires_battery_charging(true), requires_unmetered_network(true) {}
+    : Criteria(true, true, DeviceStatus::kOptimalSchedulingBatteryPercentage) {}
 
 Criteria::Criteria(bool requires_battery_charging,
                    bool requires_unmetered_network)
+    : Criteria(requires_battery_charging,
+               requires_unmetered_network,
+               DeviceStatus::kOptimalSchedulingBatteryPercentage) {}
+
+Criteria::Criteria(bool requires_battery_charging,
+                   bool requires_unmetered_network,
+                   int optimal_battery_percentage)
     : requires_battery_charging(requires_battery_charging),
-      requires_unmetered_network(requires_unmetered_network) {}
+      requires_unmetered_network(requires_unmetered_network),
+      optimal_battery_percentage(optimal_battery_percentage) {}
 
 bool Criteria::operator==(const Criteria& other) const {
   return requires_battery_charging == other.requires_battery_charging &&
-         requires_unmetered_network == other.requires_unmetered_network;
+         requires_unmetered_network == other.requires_unmetered_network &&
+         optimal_battery_percentage == other.optimal_battery_percentage;
 }
 
 }  // namespace download
