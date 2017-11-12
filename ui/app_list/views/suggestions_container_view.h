@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "ui/app_list/pagination_model.h"
 #include "ui/app_list/views/search_result_container_view.h"
 
 namespace app_list {
