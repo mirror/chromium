@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Upload UTF-8-named file in Windows-1252 form</title>
+<link rel="help"
+      href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#multipart-form-data">
+<link rel="author" title="Benjamin C. Wiley Sittler"
+      href="mailto:bsittler@chromium.org">
+<script src="../../../../resources/testharness.js"></script>
+<script src="../../../../resources/testharnessreport.js"></script>
+<script src="resources/send-dragged-file-form-helper.js"></script>
+<script>
+'use strict';
+
+formPostFileUploadTest({
+  fileNameEncoding: 'UTF-8',
+  fileBaseName: `file-for-drag-to-send3-${kTestChars}.txt`,
+  formEncoding: 'Windows-1252',
+  expectedEncodedBaseName: `file-for-drag-to-send3-${
+      kTestFallbackWindows1252
+  }.txt`,
+});
+
+</script>
