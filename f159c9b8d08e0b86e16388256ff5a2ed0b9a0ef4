@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd8f2765_944e631f",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-12T21:22:55Z",
+      "side": 1,
+      "message": "Prefer a longer comment (if my understanding is correct): If this registration impl is for a service worker execution context, |this| lives on the worker thread but |binding_| is bound on the IO thread due to limitations of channel-associated interfaces. Close |binding_| here since this is the thread it was bound on, then hop to the worker thread to handle lifetime of |this|. In the case of a service worker client, both |this| and |binding_| live on the IO thread, so the binding can be closed normally during destruction.",
+      "revId": "f159c9b8d08e0b86e16388256ff5a2ed0b9a0ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
