@@ -29,6 +29,9 @@ import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabRedirectHandler;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.browser.util.UrlUtilities;
+import org.chromium.chrome.browser.webapps.WebApkInfo;
+import org.chromium.chrome.browser.webapps.WebappActivity;
+import org.chromium.chrome.browser.webapps.WebappLauncherActivity;
 import org.chromium.content_public.common.ContentUrlConstants;
 import org.chromium.ui.base.PageTransition;
 
@@ -536,6 +539,16 @@ public class ExternalNavigationHandler {
                 return OverrideUrlLoadingResult.NO_OVERRIDE;
             }
 
+            if (params.getWebappInfo() != null) {
+                if (UrlUtilities.isUrlWithinScope(
+                            params.getUrl(), params.getWebappInfo().scopeUri().toString())) {
+                    WebappActivity.addWebappInfo(
+                            params.getWebappInfo().id(), params.getWebappInfo());
+                    Intent launchIntent = WebappLauncherActivity.createWebappLaunchIntent(
+                            params.getWebappInfo(), params.getWebappInfo() instanceof WebApkInfo);
+                    mDelegate.startActivity(launchIntent, false);
+                }
+            }
             if (targetWebApkPackageName != null
                     && mDelegate.countSpecializedHandlers(resolvingInfos) == 1) {
                 intent.setPackage(targetWebApkPackageName);

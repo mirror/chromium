@@ -126,6 +126,9 @@ public class InterceptNavigationDelegateImpl implements InterceptNavigationDeleg
         ExternalNavigationParams params = buildExternalNavigationParams(navigationParams,
                 tabRedirectHandler,
                 shouldCloseTab).build();
+        if (mTab.getWebappInfo() != null) {
+            params.setWebappInfo(mTab.getWebappInfo());
+        }
         OverrideUrlLoadingResult result = mExternalNavHandler.shouldOverrideUrlLoading(params);
         mLastOverrideUrlLoadingResult = result;
 
