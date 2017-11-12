@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0804929_ca5627cf",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-12T22:10:58Z",
+      "side": 1,
+      "message": "The comment and the implementation are doing different things?",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3094be76_5ecb61ce",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-12T22:10:58Z",
+      "side": 1,
+      "message": "Should we add this code to the other CL (the CL that implements the callback interface)?",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd19c51f_90c4fbe4",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.h.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-12T22:10:58Z",
+      "side": 1,
+      "message": "call \u003d\u003e Call",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c023ee_53bfb281",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.h.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-12T22:10:58Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a38b0c_53aeb7bd",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-12T22:10:58Z",
+      "side": 1,
+      "message": "Remove the comment.",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831893fc_787c0452",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-12T22:10:58Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7f9c33_f9eb86fc",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-12T22:10:58Z",
+      "side": 1,
+      "message": "Remove the comment.",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee24bcbd_2fd99596",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-12T22:10:58Z",
+      "side": 1,
+      "message": "// The incumbent Realm when the callback function object is created.",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
