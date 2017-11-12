@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b33501a_ccb69dd0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/text-level-semantics/the-a-element/a-download-click-404-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-12T17:45:47Z",
+      "side": 1,
+      "message": "matches Firefox\u0027 behavior: https://wpt.fyi/html/semantics/text-level-semantics/the-a-element/a-download-click-404.html?sha\u003dlatest",
+      "revId": "2baa5da9f7fc7fffe06c9eaa4f8f1f842033c00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
