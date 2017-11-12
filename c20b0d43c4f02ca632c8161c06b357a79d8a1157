@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90801d02_8344d89f",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_test.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-12T23:45:05Z",
+      "side": 1,
+      "message": "It\u0027s subtle that this only calls OnPasswordAutofilled() for password_form_ and not federated_form_ - is that intentional? (perhaps comment here).",
+      "revId": "c20b0d43c4f02ca632c8161c06b357a79d8a1157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b34ecc6_6b9bfc59",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-12T23:45:05Z",
+      "side": 1,
+      "message": "I\u0027d probably use push_back here. emplace_back is useful if you want to invoke a constructor other than the move/copy constructor, but that\u0027s not the case here.",
+      "revId": "c20b0d43c4f02ca632c8161c06b357a79d8a1157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a98443_6de73eb4",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-12T23:45:05Z",
+      "side": 1,
+      "message": "nit: comment?",
+      "revId": "c20b0d43c4f02ca632c8161c06b357a79d8a1157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e81ea86f_d06832e6",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-12T23:45:05Z",
+      "side": 1,
+      "message": "nit: blank line before",
+      "revId": "c20b0d43c4f02ca632c8161c06b357a79d8a1157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318e6d44_da7cd208",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_delegate_view_base.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-12T23:45:05Z",
+      "side": 1,
+      "message": "// Shows an appropriate bubble on the toolkit-views Browser window containing |web_contents|.",
+      "revId": "c20b0d43c4f02ca632c8161c06b357a79d8a1157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d20d6a_b9d68634",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_delegate_view_base.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-12T23:45:05Z",
+      "side": 1,
+      "message": "Comment - something like\n\n// Creates and returns the passwords manager bubble UI appropriate for the current password_manager::ui::State value for the provided |web_contents|.",
+      "revId": "c20b0d43c4f02ca632c8161c06b357a79d8a1157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1352108_951d0024",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-12T23:45:05Z",
+      "side": 1,
+      "message": "is this still needed?",
+      "revId": "c20b0d43c4f02ca632c8161c06b357a79d8a1157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e891ba_319ea489",
+        "filename": "chrome/browser/ui/views/tab_dialogs_views.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-12T23:45:05Z",
+      "side": 1,
+      "message": "this comment seems out of place. I think it can just be deleted. It\u0027s likely the |web_contents_| above will be shared between multiple things.",
+      "revId": "c20b0d43c4f02ca632c8161c06b357a79d8a1157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
