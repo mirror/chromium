@@ -193,7 +193,8 @@ class AsyncResourceHandlerTest : public ::testing::Test,
         true,                                   // is_async
         PREVIEWS_OFF,                           // previews_state
         nullptr,                                // body
-        false);                                 // initiated_in_secure_context
+        false,                                  // initiated_in_secure_context
+        base::Optional<std::string>());         // suggested_filename
     info->AssociateWithRequest(request.get());
     std::unique_ptr<AsyncResourceHandler> handler =
         std::make_unique<AsyncResourceHandler>(request.get(), &rdh_);
