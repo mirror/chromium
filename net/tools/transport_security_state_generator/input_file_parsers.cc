@@ -167,6 +167,7 @@ enum class CertificateParserState {
 
 // Valid JSON keys.
 static const char kNameJSONKey[] = "name";
+static const char kPolicyJSONKey[] = "policy";
 static const char kIncludeSubdomainsJSONKey[] = "include_subdomains";
 static const char kIncludeSubdomainsForPinningJSONKey[] =
     "include_subdomains_for_pinning";
@@ -295,6 +296,7 @@ bool ParseJSON(base::StringPiece json,
                TransportSecurityStateEntries* entries,
                Pinsets* pinsets) {
   std::set<std::string> valid_keys = {kNameJSONKey,
+                                      kPolicyJSONKey,
                                       kIncludeSubdomainsJSONKey,
                                       kIncludeSubdomainsForPinningJSONKey,
                                       kModeJSONKey,
