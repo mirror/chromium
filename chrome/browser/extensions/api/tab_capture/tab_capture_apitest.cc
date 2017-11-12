@@ -146,7 +146,8 @@ TEST(TabCaptureCaptureOffscreenTabTest, DetermineInitialSize) {
 }
 
 // Flaky on Mac. See https://crbug.com/764464.
-#if defined(OS_MACOSX)
+// Fails on Linux MSAN bot. See https://crbug.com/784192
+#if defined(OS_MACOSX) || (defined(OS_LINUX) && defined(MEMORY_SANITIZER))
 #define MAYBE_ApiTests DISABLED_ApiTests
 #else
 #define MAYBE_ApiTests ApiTests
