@@ -52,8 +52,8 @@
 #include "platform/scheduler/base/real_time_domain.h"
 #include "platform/scheduler/base/task_queue_manager.h"
 #include "platform/scheduler/base/test_time_source.h"
-#include "platform/scheduler/child/scheduler_tqm_delegate_for_test.h"
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
+#include "platform/scheduler/test/create_task_queue_manager_for_test.h"
 #include "platform/wtf/CryptographicallyRandomNumber.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/WTF.h"
@@ -225,9 +225,10 @@ TestingPlatformSupportWithMockScheduler::
       clock_(new base::SimpleTestTickClock()),
       mock_task_runner_(new cc::OrderedSimpleTaskRunner(clock_.get(), true)),
       scheduler_(new scheduler::RendererSchedulerImpl(
-          scheduler::SchedulerTqmDelegateForTest::Create(
+          scheduler::CreateTaskQueueManagerWithTestTimeForTest(
+              nullptr,
               mock_task_runner_,
-              base::WrapUnique(new scheduler::TestTimeSource(clock_.get()))))),
+              clock_.get()))),
       thread_(scheduler_->CreateMainThread()) {
   // Set the work batch size to one so RunPendingTasks behaves as expected.
   scheduler_->GetSchedulerHelperForTesting()->SetWorkBatchSizeForTesting(1);
