@@ -4,27 +4,25 @@
 /**
  * @unrestricted
  */
-Sources.AddSourceMapURLDialog = class extends UI.HBox {
+Sources.AddSourceMapURLDialog = class extends UI.Widget {
   /**
    * @param {function(string)} callback
    */
   constructor(callback) {
     super(true);
-    this.registerRequiredCSS('sources/dialog.css');
-    this.contentElement.createChild('label').textContent = Common.UIString('Source map URL: ');
-
     this._input = UI.createInput();
     this.contentElement.appendChild(this._input);
     this._input.setAttribute('type', 'text');
     this._input.addEventListener('keydown', this._onKeyDown.bind(this), false);
+    this._input.placeholder = Common.UIString('Source map URL');
+    this._input.style.margin = '10px 5px 10px 10px';
 
-    var addButton = this.contentElement.createChild('button');
-    addButton.textContent = Common.UIString('Add');
-    addButton.addEventListener('click', this._apply.bind(this), false);
+    var addButton = UI.createTextButton(Common.UIString('Add'), this._apply.bind(this), '', true);
+    addButton.style.marginRight = '5px';
+    this.contentElement.appendChild(addButton);
 
     this.setDefaultFocusedElement(this._input);
     this._callback = callback;
-    this.contentElement.tabIndex = 0;
   }
 
   /**
@@ -36,6 +34,7 @@ Sources.AddSourceMapURLDialog = class extends UI.HBox {
     addSourceMapURLDialog.show(dialog.contentElement);
     dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.MeasureContent);
     dialog.show();
+    addSourceMapURLDialog.focus();
 
     /**
      * @param {string} value

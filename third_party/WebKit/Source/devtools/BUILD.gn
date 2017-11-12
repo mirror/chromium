@@ -611,7 +611,6 @@ all_devtools_files = [
   "front_end/sources/callStackSidebarPane.css",
   "front_end/sources/CallStackSidebarPane.js",
   "front_end/sources/CSSPlugin.js",
-  "front_end/sources/dialog.css",
   "front_end/sources/EditingLocationHistoryManager.js",
   "front_end/sources/eventListenerBreakpoints.css",
   "front_end/sources/EventListenerBreakpointsSidebarPane.js",
