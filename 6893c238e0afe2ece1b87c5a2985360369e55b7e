@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "032397ce_424f7f72",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-12T18:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ddfd1c8_3977e5cb",
+      "revId": "6893c238e0afe2ece1b87c5a2985360369e55b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4645662d_563aa295",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 6
@@ -56,6 +74,24 @@
       "revId": "6893c238e0afe2ece1b87c5a2985360369e55b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "607fe810_60739686",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-12T18:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4645662d_563aa295",
+      "revId": "6893c238e0afe2ece1b87c5a2985360369e55b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "84b3a7fd_0bbb2ceb",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-12T18:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c3c45c4_c46adc76",
+      "range": {
+        "startLine": 713,
+        "startChar": 9,
+        "endLine": 713,
+        "endChar": 24
+      },
+      "revId": "6893c238e0afe2ece1b87c5a2985360369e55b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3161dac_b52cc091",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 6
@@ -102,6 +162,30 @@
       "revId": "6893c238e0afe2ece1b87c5a2985360369e55b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66695922_7c83354d",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-12T18:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3161dac_b52cc091",
+      "range": {
+        "startLine": 725,
+        "startChar": 23,
+        "endLine": 725,
+        "endChar": 37
+      },
+      "revId": "6893c238e0afe2ece1b87c5a2985360369e55b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "8cf7123b_cbd01f98",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-12T18:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b06f7bd8_bc80c8ab",
+      "range": {
+        "startLine": 731,
+        "startChar": 24,
+        "endLine": 731,
+        "endChar": 46
+      },
+      "revId": "6893c238e0afe2ece1b87c5a2985360369e55b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5da7efbb_3e7e7e23",
         "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
         "patchSetId": 6
@@ -142,6 +250,24 @@
       "revId": "6893c238e0afe2ece1b87c5a2985360369e55b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1486f08_fbca7609",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-12T18:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5da7efbb_3e7e7e23",
+      "revId": "6893c238e0afe2ece1b87c5a2985360369e55b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +291,30 @@
       "revId": "6893c238e0afe2ece1b87c5a2985360369e55b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de13146_56ff81ec",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-12T18:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9f314d4_a4881f42",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 16
+      },
+      "revId": "6893c238e0afe2ece1b87c5a2985360369e55b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
