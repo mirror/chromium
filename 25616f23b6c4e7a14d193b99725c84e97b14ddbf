@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a007784_14406206",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-12T21:52:14Z",
+      "side": 1,
+      "message": "Just to confirm: This works even after the incumbent context is detached, right?",
+      "revId": "25616f23b6c4e7a14d193b99725c84e97b14ddbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdc4505_ad6eb2f7",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-12T21:52:14Z",
+      "side": 1,
+      "message": "I\u0027m confused.\n\nDoes IsCallbackObjectCallable() mean \"!IsCallable(O) is true\"? It looks like IsCallbackObjectCallable() means\"IsCallable(O) is true\".",
+      "revId": "25616f23b6c4e7a14d193b99725c84e97b14ddbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b654d407_7624f18b",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-12T21:52:14Z",
+      "side": 1,
+      "message": "Ditto. Does !value-\u003eIsFunction() mean \"!IsCallable(X) is false\"? It looks like !value-\u003eIsFunction() means \"!IsCallable(X) is true\".",
+      "revId": "25616f23b6c4e7a14d193b99725c84e97b14ddbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004b9060_6d96db40",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-12T21:52:14Z",
+      "side": 1,
+      "message": "Should we move the if block out of the else statement of line 48?\n\nif (...) {\n  // step 9.1\n} else {\n  // step 9.2\n}\nif (!value-\u003eIsFunction()) {\n  // step 10\n}",
+      "revId": "25616f23b6c4e7a14d193b99725c84e97b14ddbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a38161_aa266b75",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-12T21:52:14Z",
+      "side": 1,
+      "message": "Ditto. I\u0027m confused about \"!IsCallable(O) is false\".",
+      "revId": "25616f23b6c4e7a14d193b99725c84e97b14ddbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a142e0a_04fcf0fb",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-12T21:52:14Z",
+      "side": 1,
+      "message": "Shall we add a check that the IDL compiler supports only bool and void at the moment?",
+      "revId": "25616f23b6c4e7a14d193b99725c84e97b14ddbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
