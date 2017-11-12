@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "8ecd005b_6adec7c2",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-12T23:35:22Z",
+      "side": 1,
+      "message": "Thanks Colin for the catch :)\n\nHi Andrew, I do have a concern: if client\u0027s requesting a timestamp that\u0027s newer than the current value, they may never get a network change or it may happen after a long time (should we give them a timeout error?) maybe we can be more clear in the comments?",
+      "parentUuid": "cfd11c77_e9762287",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc4aa95d_f1b4108c",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
         "patchSetId": 4

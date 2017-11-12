@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bfa0eead_152767e9",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-12T23:35:22Z",
+      "side": 1,
+      "message": "adding invalidation logic at line 53 and adding a DCHECK as well. :)",
+      "parentUuid": "12c03f59_be64c847",
+      "revId": "02f60591287a663923ba0bb036ea8bd426233fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8a48a20_6703b5ab",
         "filename": "services/device/geolocation/public_ip_address_location_notifier_unittest.cc",
         "patchSetId": 5
@@ -51,6 +69,24 @@
       "revId": "02f60591287a663923ba0bb036ea8bd426233fa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d913dc2c_d15ff14a",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-12T23:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8a48a20_6703b5ab",
+      "revId": "02f60591287a663923ba0bb036ea8bd426233fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
