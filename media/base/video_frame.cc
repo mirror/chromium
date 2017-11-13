@@ -1207,6 +1207,7 @@ void VideoFrame::AllocateMemory(bool zero_initialize_memory) {
   // Tightly pack if it is single planar.
   if (NumPlanes(format_) == 1) {
     data_size = AllocationSize(format_, coded_size_);
+    strides_[0] = row_bytes(0);
     offset[0] = 0;
   } else {
     for (size_t plane = 0; plane < NumPlanes(format_); ++plane) {
