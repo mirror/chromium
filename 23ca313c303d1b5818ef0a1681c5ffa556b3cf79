@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "2a415ba5_c50f3925",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-11-13T18:15:36Z",
+      "side": 1,
+      "message": "Old C habits die hard, it should be in an anonymous namespace.",
+      "parentUuid": "98588290_cba17715",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 6
+      },
+      "revId": "23ca313c303d1b5818ef0a1681c5ffa556b3cf79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa982f30_f43b4dfc",
         "filename": "base/memory/protected_memory_win.cc",
         "patchSetId": 2
@@ -53,6 +77,24 @@
       "writtenOn": "2017-11-11T01:31:08Z",
       "side": 1,
       "message": "cl-format was okay with this ordering? usually we have to add a CRLF between these",
+      "revId": "23ca313c303d1b5818ef0a1681c5ffa556b3cf79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9050ba31_2efadeb5",
+        "filename": "base/memory/protected_memory_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-11-13T18:15:36Z",
+      "side": 1,
+      "message": "It didn\u0027t complain, but I\u0027ve updated it.",
+      "parentUuid": "fa982f30_f43b4dfc",
       "revId": "23ca313c303d1b5818ef0a1681c5ffa556b3cf79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +135,24 @@
       "writtenOn": "2017-11-11T01:31:08Z",
       "side": 1,
       "message": "maybe add some DCHECKs here to validate the ranges look valid",
+      "revId": "23ca313c303d1b5818ef0a1681c5ffa556b3cf79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e413ed_939d2148",
+        "filename": "base/memory/protected_memory_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-11-13T18:15:36Z",
+      "side": 1,
+      "message": "I added check for end\u003estart and the callers in AutoWritableMemory already check that the start/end pointers are within the bounds of the protected memory section",
+      "parentUuid": "efda7c9d_862c65c4",
       "revId": "23ca313c303d1b5818ef0a1681c5ffa556b3cf79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
