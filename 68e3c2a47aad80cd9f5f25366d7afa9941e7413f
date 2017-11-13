@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a72aa461_fec5ec04",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-13T17:23:05Z",
+      "side": 1,
+      "message": "s/ARC++/ARC/ please. In Chromium, we call it ARC.",
+      "revId": "68e3c2a47aad80cd9f5f25366d7afa9941e7413f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc56af02_b926e548",
+        "filename": "components/arc/common/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-13T17:23:05Z",
+      "side": 1,
+      "message": "Can you document (as a code comment) what should be included in \"media\" and why?",
+      "revId": "68e3c2a47aad80cd9f5f25366d7afa9941e7413f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183b0f2c_f570cfce",
+        "filename": "components/arc/common/volume_mounter.typemap",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-13T17:23:05Z",
+      "side": 1,
+      "message": "just curious, why did you change this?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "68e3c2a47aad80cd9f5f25366d7afa9941e7413f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
