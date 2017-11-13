@@ -1,0 +1,226 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44f74bf9_7eb52714",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-13T14:52:26Z",
+      "side": 1,
+      "message": "nit: no {}\u0027s, but leave a blank line before the for().",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55611bd1_077a316e",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-13T14:52:26Z",
+      "side": 1,
+      "message": "Invert and early exit.",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75149c9a_46e8ae09",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1306,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-13T14:52:26Z",
+      "side": 1,
+      "message": "nit: no {}\u0027s on single line if.",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e016f4_a43d2d2d",
+        "filename": "pdf/pdf_engine.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-13T14:52:26Z",
+      "side": 1,
+      "message": "(c) isn\u0027t needed on copyrights anymore.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4127094b_0c8ee48d",
+        "filename": "pdf/pdf_engine.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-13T14:52:26Z",
+      "side": 1,
+      "message": "nit: space before {}\u0027s (and below)",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a03f551_4387d916",
+        "filename": "pdf/pdf_engine.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-13T14:52:26Z",
+      "side": 1,
+      "message": "PDFEngine::PageFeatures::PageFeatures(const PageFeature\u0026 other) : index(other.index), annotation_types(other.annotation_types) {}",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be666fd3_329ab85e",
+        "filename": "pdf/pdf_engine.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-13T14:52:26Z",
+      "side": 1,
+      "message": "\u003c 0 when uninitialized to match the \u003e\u003d 0 check for initialized.",
+      "range": {
+        "startLine": 97,
+        "startChar": 42,
+        "endLine": 97,
+        "endChar": 64
+      },
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef7d2a4_91549a68",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3105,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-13T14:52:26Z",
+      "side": 1,
+      "message": "std::vector\u003cint\u003e formerly_visible_pages;\nstd::swap(visible_pages_, formerly_visible_pages);\n\nI think is a bit clearer then the move?",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71170cba_68b6106b",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3118,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-13T14:52:26Z",
+      "side": 1,
+      "message": "I think I\u0027d break this apart to make more readable.\n\nif (CheckPageAvailable(i, \u0026pending_pages_)) {\n  auto it \u003d std::find(...);\n  if (it \u003d\u003d formerly_visible_pages.end())\n    ...\n  }\n}",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b837cec_8a0efb13",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-13T14:52:26Z",
+      "side": 1,
+      "message": "This should be a const ref, or a pointer.",
+      "range": {
+        "startLine": 569,
+        "startChar": 0,
+        "endLine": 570,
+        "endChar": 24
+      },
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38196c2_6bec5d66",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-13T14:52:26Z",
+      "side": 1,
+      "message": "if (page_features_.IsInitialized())\n  return page_features_;",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d37722_2bbf4ac9",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-13T14:52:26Z",
+      "side": 1,
+      "message": "if (!page)\n  return page_features_;\n\nWhat does this actually mean? If we fail to get the page, we won\u0027t have page features, so what does the caller do? If this returns a pointer, we can make this nullptr and have callers handle.",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
