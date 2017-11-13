@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f1328f09_75839a44",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-13T19:31:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f827f558_ffb000cf",
+      "range": {
+        "startLine": 135,
+        "startChar": 10,
+        "endLine": 135,
+        "endChar": 21
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94e0a82b_5c3f3f20",
         "filename": "components/cronet/ios/Cronet.mm",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-13T18:19:10Z",
       "side": 1,
       "message": "I think if this callback gets the task, then they can come from the task.",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 31
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788cc42d_1824b119",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-13T19:31:31Z",
+      "side": 1,
+      "message": "I found a short-term solution to giving to passing in the request, but this sounds like a better one.  I still don\u0027t know where to get the tast from in order to pass it through the callback.",
+      "parentUuid": "94e0a82b_5c3f3f20",
       "range": {
         "startLine": 149,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f1edff09_85833583",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-13T19:31:31Z",
+      "side": 1,
+      "message": "I\u0027m not really sure what the difference between this and requestStartDate (see line 182 below) is.  The documentation has unfortunately not been very clear.\n\nAdditionally, the difference between LoadTimingInfo::request_start and LoadTimingInfo::send_start is not obvious to me, either.",
+      "parentUuid": "428cc96a_1b46f3c8",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 32
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2ef1419_f22d3a36",
         "filename": "components/cronet/ios/Cronet.mm",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "083de752_e7235ba2",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-13T19:31:31Z",
+      "side": 1,
+      "message": "Done.\n\nI added HttpResponseInfo as an argument to populate the related members, though, let me know if it looks like I populated things reasonably/set the right members with the right values.",
+      "parentUuid": "a2ef1419_f22d3a36",
+      "range": {
+        "startLine": 187,
+        "startChar": 44,
+        "endLine": 187,
+        "endChar": 45
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5ca4874_63c1b6af",
         "filename": "components/cronet/ios/Cronet.mm",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-13T18:19:10Z",
       "side": 1,
       "message": "Now?",
+      "range": {
+        "startLine": 188,
+        "startChar": 42,
+        "endLine": 188,
+        "endChar": 43
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87cf3ae7_8b04af36",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-13T19:31:31Z",
+      "side": 1,
+      "message": "Or maybe HttpResponseInfo::response_time?  PTAL and let me know if this is reasonable.",
+      "parentUuid": "c5ca4874_63c1b6af",
       "range": {
         "startLine": 188,
         "startChar": 42,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "9483a37c_c9702a42",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-13T19:31:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "781dce66_2423a1bb",
+      "range": {
+        "startLine": 190,
+        "startChar": 15,
+        "endLine": 190,
+        "endChar": 37
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cda6628_373da621",
         "filename": "components/cronet/ios/Cronet.mm",
         "patchSetId": 4
@@ -160,6 +304,30 @@
       "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "393fe8fc_3c5ea7c4",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-13T19:31:31Z",
+      "side": 1,
+      "message": "GetProxy appears to be android-exclusive.  It\u0027s trivial enough that I can reimplement it here, but I think it should go somewhere shared.",
+      "parentUuid": "7cda6628_373da621",
+      "range": {
+        "startLine": 191,
+        "startChar": 15,
+        "endLine": 191,
+        "endChar": 33
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
