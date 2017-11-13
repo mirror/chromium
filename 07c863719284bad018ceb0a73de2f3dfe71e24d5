@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0452b1cf_78407a7c",
+        "filename": "chrome/browser/vr/elements/controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-13T14:03:30Z",
+      "side": 1,
+      "message": "In this change, I\u0027ve declared the element-specific renderers in the headers so that the UiElementRenderer can refer to their types. If you\u0027d prefer, I\u0027ve thought of two ways to avoid\nthis:\n 1. Have the UiElementRenderer hold only BaseRenderer pointers (except for maybe the generic quad renderers), and the elements would have to static cast them into their true forms in their Render functions. This felt a bit weird though, so another option might be\n 2. Rather than pass a UiElementRenderer to the Render function, we instead pass a QuadRenderer (which wraps up the generic rendering routines) and the elements could delegate to renderers defined and declared in their cc files. This will cause a bit of trouble, though, when we have to handle a context-loss. Since these renderers are singletons, when we have a context loss we\u0027ll have to somehow get access to all these renderer instances to let them know to recreate their GL state. This is doable, but it felt like too major a change to squeeze into an already big refactor.",
+      "revId": "07c863719284bad018ceb0a73de2f3dfe71e24d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
