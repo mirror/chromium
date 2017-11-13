@@ -4,17 +4,20 @@
 
 module viz.mojom;
 
+import "services/viz/privileged/interfaces/arc/arc_service.mojom";
 import "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom";
 import "services/viz/privileged/interfaces/gl/gpu_host.mojom";
 import "services/viz/privileged/interfaces/gl/gpu_service.mojom";
 
 // This is the primordial interface used to (re)start the viz services.
 interface VizMain {
-  CreateFrameSinkManager(
-    viz.mojom.FrameSinkManager& frame_sink_manager,
-    viz.mojom.FrameSinkManagerClient frame_sink_manager_client);
+  CreateArcService(ArcService& arc_service);
 
-  CreateGpuService(viz.mojom.GpuService& gpu_service,
-                   viz.mojom.GpuHost gpu_host,
+  CreateFrameSinkManager(
+    FrameSinkManager& frame_sink_manager,
+    FrameSinkManagerClient frame_sink_manager_client);
+
+  CreateGpuService(GpuService& gpu_service,
+                   GpuHost gpu_host,
                    handle<shared_buffer>? activity_flags);
 };

@@ -11,6 +11,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "build/build_config.h"
+#include "components/viz/service/arc/arc_service_impl.h"
 #include "components/viz/service/display_embedder/gpu_display_provider.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "components/viz/service/gl/gpu_service_impl.h"
@@ -21,6 +22,14 @@
 #include "gpu/ipc/gpu_in_process_thread_service.h"
 #include "gpu/ipc/service/gpu_memory_buffer_factory.h"
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
+#include "media/gpu/features.h"
+
+#if defined(OS_CHROMEOS)
+#include "components/viz/service/arc/arc_service_impl.h"
+#if BUILDFLAG(USE_VAAPI)
+#include "media/gpu/vaapi_wrapper.h"
+#endif  // BUILDFLAG(USE_VAAPI)
+#endif  // defined(OS_CHROMEOS)
 
 namespace {
 
@@ -90,6 +99,14 @@ VizMainImpl::VizMainImpl(Delegate* delegate,
       bool success = gpu::SwitchValueToGpuPreferences(value, &gpu_preferences);
       CHECK(success);
     }
+#if defined(OS_CHROMEOS) && BUILDFLAG(USE_VAAPI)
+    // Initialize media codec. The UI service is running in a priviliged
+    // process. We don't need care when to initialize media codec. When we have
+    // a separate GPU (or VIZ) service process, we should initialize them
+    // before sandboxing
+    media::VaapiWrapper::PreSandboxInitialization();
+#endif  // defined(OS_CHROMEOS) && BUILDFLAG(USE_VAAPI)
+
     // Initialize GpuInit before starting the IO or compositor threads.
     gpu_init_ = std::make_unique<gpu::GpuInit>();
     gpu_init_->set_sandbox_helper(this);
@@ -110,6 +127,9 @@ VizMainImpl::VizMainImpl(Delegate* delegate,
       io_thread_ ? io_thread_->task_runner()
                  : dependencies_.io_thread_task_runner,
       gpu_init_->gpu_feature_info(), gpu_init_->gpu_preferences());
+#if defined(OS_CHROMEOS)
+  arc_service_ = std::make_unique<ArcServiceImpl>(gpu_service_.get());
+#endif  // defined(OS_CHROMEOS)
 }
 
 VizMainImpl::~VizMainImpl() {
@@ -205,6 +225,13 @@ void VizMainImpl::CreateFrameSinkManager(
     return;
   }
   CreateFrameSinkManagerInternal(std::move(request), client.PassInterface());
+}
+
+void VizMainImpl::CreateArcService(mojom::ArcServiceRequest request) {
+#if defined(OS_CHROMEOS)
+  DCHECK(gpu_thread_task_runner_->BelongsToCurrentThread());
+  arc_service_->Bind(std::move(request));
+#endif  // defined(OS_CHROMEOS)
 }
 
 void VizMainImpl::CreateFrameSinkManagerInternal(

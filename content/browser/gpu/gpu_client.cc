@@ -8,6 +8,7 @@
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/common/child_process_host_impl.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_process_host.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl_shared_memory.h"
