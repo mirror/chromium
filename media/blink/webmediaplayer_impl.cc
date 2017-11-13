@@ -361,12 +361,18 @@ void WebMediaPlayerImpl::Load(LoadType load_type,
   DoLoad(load_type, url, cors_mode);
 }
 
-void WebMediaPlayerImpl::OnWebLayerUpdated() {
+void WebMediaPlayerImpl::OnWebLayerUpdated() {}
+
+void WebMediaPlayerImpl::SetContentsLayer() {
   DCHECK(bridge_);
   bridge_->GetWebLayer()->CcLayer()->SetContentsOpaque(opaque_);
   bridge_->GetWebLayer()->SetContentsOpaqueIsFixed(true);
   // TODO(lethalantidote): Figure out how to pass along rotation information.
   // https://crbug/750313.
+  client_->SetWebLayer(bridge_->GetWebLayer());
+}
+
+void WebMediaPlayerImpl::UnsetContentsLayer() {
   client_->SetWebLayer(bridge_->GetWebLayer());
 }
 
