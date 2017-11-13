@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b1feef2_5506014c",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-11-13T23:31:31Z",
+      "side": 1,
+      "message": "What is the preferred way of doing this?\nShould I add AdaptCallbackForRepeating or is it better to change how LazyInitialize works?",
+      "revId": "eeef58e93632ff223600b2646e76c468d837f21d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
