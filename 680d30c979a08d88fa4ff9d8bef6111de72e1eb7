@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9622d30_dd27134d",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T05:21:22Z",
+      "side": 1,
+      "message": "Would be interested if any other reviewers have a recommendation for a better way to manufacture an id for TRACE_EVENT.",
+      "revId": "680d30c979a08d88fa4ff9d8bef6111de72e1eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45410de5_75a4500c",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T05:21:22Z",
+      "side": 1,
+      "message": "observer -\u003e listener?",
+      "revId": "680d30c979a08d88fa4ff9d8bef6111de72e1eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dcdc3e3_74cddfd9",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T05:21:22Z",
+      "side": 1,
+      "message": "We usually don\u0027t do these kinds of abbreviations in function names.",
+      "revId": "680d30c979a08d88fa4ff9d8bef6111de72e1eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa6683fd_041c18da",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T05:21:22Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "680d30c979a08d88fa4ff9d8bef6111de72e1eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea386338_7f3e9886",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T05:21:22Z",
+      "side": 1,
+      "message": "Need documentation for this.\n\nIt\u0027s a bit unfortunate this method keeps getting growing params... I guess moving them all to EWStartParams may improve things.",
+      "revId": "680d30c979a08d88fa4ff9d8bef6111de72e1eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b848085d_3843d62f",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T05:21:22Z",
+      "side": 1,
+      "message": "nit: don\u0027t need to mention the impl detail SWVersion in this mojom interface comment.",
+      "revId": "680d30c979a08d88fa4ff9d8bef6111de72e1eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f710e7_dc49767b",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T05:21:22Z",
+      "side": 1,
+      "message": "This is pretty abstract. What kind of metadata is this?",
+      "revId": "680d30c979a08d88fa4ff9d8bef6111de72e1eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
