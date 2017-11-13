@@ -729,8 +729,14 @@ void WindowServer::CreateFrameSinkManager() {
   viz::mojom::FrameSinkManagerClientPtr frame_sink_manager_client;
   viz::mojom::FrameSinkManagerClientRequest frame_sink_manager_client_request =
       mojo::MakeRequest(&frame_sink_manager_client);
-  gpu_host_->CreateFrameSinkManager(std::move(frame_sink_manager_request),
-                                    std::move(frame_sink_manager_client));
+
+  viz::mojom::FrameSinkManagerParamsPtr params =
+      viz::mojom::FrameSinkManagerParams::New();
+  params->process_restart_id = process_restart_id_++;
+  params->frame_sink_manager = std::move(frame_sink_manager_request);
+  params->frame_sink_manager_client = std::move(frame_sink_manager_client);
+  gpu_host_->CreateFrameSinkManager(std::move(params));
+
   host_frame_sink_manager_->BindAndSetManager(
       std::move(frame_sink_manager_client_request), nullptr /* task_runner */,
       std::move(frame_sink_manager));

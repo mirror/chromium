@@ -409,6 +409,7 @@ class WindowServer : public ServerWindowDelegate,
   WindowManagerWindowTreeFactorySet window_manager_window_tree_factory_set_;
 
   viz::SurfaceId root_surface_id_;
+  uint16_t process_restart_id_ = 0;
 
   // Provides interfaces to create and manage FrameSinks.
   std::unique_ptr<viz::HostFrameSinkManager> host_frame_sink_manager_;

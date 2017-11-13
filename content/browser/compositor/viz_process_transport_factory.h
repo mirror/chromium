@@ -128,6 +128,8 @@ class VizProcessTransportFactory : public ui::ContextFactory,
 
   gpu::GpuChannelEstablishFactory* const gpu_channel_establish_factory_;
 
+  uint16_t viz_process_restart_id_ = 0;
+
   scoped_refptr<base::SingleThreadTaskRunner> resize_task_runner_;
 
   base::flat_map<ui::Compositor*, CompositorData> compositor_data_map_;
