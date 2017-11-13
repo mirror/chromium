@@ -74,6 +74,9 @@ class TestFileHelper : public FileHelper {
     *out = GURL("file://" + path.AsUTF8Unsafe());
     return true;
   }
+  bool ConvertFileSystemUrlForContainer(const GURL& url, GURL* out) override {
+    return false;
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestFileHelper);

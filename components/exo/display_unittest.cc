@@ -229,6 +229,9 @@ class TestFileHelper : public FileHelper {
   bool ConvertPathToUrl(const base::FilePath& path, GURL* out) override {
     return true;
   }
+  bool ConvertFileSystemUrlForContainer(const GURL& url, GURL* out) override {
+    return false;
+  }
 };
 
 TEST_F(DisplayTest, CreateDataDevice) {

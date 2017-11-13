@@ -97,6 +97,9 @@ class TestFileHelper : public FileHelper {
   bool ConvertPathToUrl(const base::FilePath& path, GURL* out) override {
     return true;
   }
+  bool ConvertFileSystemUrlForContainer(const GURL& url, GURL* out) override {
+    return false;
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestFileHelper);

@@ -40,6 +40,9 @@ class ChromeFileHelper : public exo::FileHelper {
   bool ConvertPathToUrl(const base::FilePath& path, GURL* out) override {
     return file_manager::util::ConvertPathToArcUrl(path, out);
   }
+  bool ConvertFileSystemUrlForContainer(const GURL& url, GURL* out) override {
+    return false;
+  }
 };
 
 }  // namespace
