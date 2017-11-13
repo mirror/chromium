@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8645922d_cb8278b6",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-13T22:21:19Z",
+      "side": 1,
+      "message": "They are currently both required, but it\u0027s kinda dumb to require \u0027expected\u0027; it should just default to \u0027PASS\u0027. I would actually like to change both to be lists of strings, but we can leave as-is for now.\n\nI don\u0027t really want us to try and recover from invalid output; erroring out should be fine.",
+      "parentUuid": "6f3e6064_df763a7f",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cd842a4_001e4e7b",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 7
