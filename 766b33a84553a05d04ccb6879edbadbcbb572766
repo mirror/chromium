@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "fb1aa5a5_14e3df04",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2280,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-13T13:56:38Z",
+      "side": 1,
+      "message": "As far as I can read the code from RFH |error_occured| would be true on a navigation that never commits in a RFH whose previous document load failed. You need to reset the state in RFH when calling CommitNavigation and CommitErrorPage as well to avoid this issue.\n\nAlso, a pushState/popState in a failed document would reset the state. Is that WAI? And pushState/popState do send DidStopLoading messages. If not desirable, the state in RFH shouldn\u0027t be reset when the navigation is same-document (not: this likely applies to CommitNavigation for browser-initiated same-document navigations as well in that case).",
+      "parentUuid": "423c457f_98d605c1",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44bed07c_ab2a105c",
         "filename": "content/browser/frame_host/navigation_controller_impl.h",
         "patchSetId": 6
