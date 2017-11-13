@@ -133,3 +133,6 @@
 -WorkerFetchTest.SharedWorkerHttpAuth/1
 -WorkerFetchTest.WorkerHttpAuth/0
 -WorkerFetchTest.WorkerHttpAuth/1
+
+# Untriaged.
+-RenderFrameHostImplBrowserTest.CookieSameSiteStrictOpenNewNamedWindowTwice

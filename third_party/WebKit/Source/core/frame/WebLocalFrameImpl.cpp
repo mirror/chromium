@@ -863,6 +863,8 @@ void WebLocalFrameImpl::ReloadWithOverrideURL(const WebURL& override_url,
   WebURLRequest request = RequestForReload(load_type, override_url);
   if (request.IsNull())
     return;
+  request.SetRequestorOrigin(
+      SecurityOrigin::Create(GetFrame()->GetDocument()->Url()));
   Load(request, load_type, WebHistoryItem(), kWebHistoryDifferentDocumentLoad,
        false);
 }
