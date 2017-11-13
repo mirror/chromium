@@ -52,6 +52,24 @@
       "revId": "6a1209b3ffa8b9874086ae33acc2e981e30c12a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deea9955_9b41e9ba",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/IndexedDB/wasm-module-value.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-11-13T22:07:19Z",
+      "side": 1,
+      "message": "(after chatting offline) - I get now the motivation for inlining the bytes here, please add a comment to explain it to others, to avoid surprised readers that are familiar with the builder.",
+      "parentUuid": "2e9b2ba4_285e9a28",
+      "revId": "6a1209b3ffa8b9874086ae33acc2e981e30c12a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
