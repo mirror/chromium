@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c09f9e9_a989000a",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-13T19:12:25Z",
+      "side": 1,
+      "message": "As discussed offline, this will create some non-negligible amount of extra work for Björn and for me. Better would be to wait and land these two CLs together.",
+      "parentUuid": "25df74af_1ef3ce76",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b409866_0054c552",
         "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-13T09:57:41Z",
       "side": 1,
       "message": "nit: Prefer a name like render_process_host or host over acronyms",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a2e2e9_b47b6619",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-13T19:12:25Z",
+      "side": 1,
+      "message": "This would be inconsistent with other places in this file. Defer this to a separate CL?",
+      "parentUuid": "9b409866_0054c552",
       "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fe2d2945_2ea9b556",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-13T19:12:25Z",
+      "side": 1,
+      "message": "Same answer. :-)",
+      "parentUuid": "f0180049_c7441810",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c102cdce_fdc670cd",
         "filename": "content/renderer/media/peer_connection_tracker.h",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-13T09:57:41Z",
       "side": 1,
       "message": "A new way of writing, not just a different implementation for writing? How was the \"write\" operation performed before this CL?",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee91c70_fd07f87f",
+        "filename": "content/renderer/media/peer_connection_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-13T19:12:25Z",
+      "side": 1,
+      "message": "Before, WebRTC was writing to the file itself. With the help of this CL, an object called WebRtcEventLogManager, introduced in the next CL, will get these log fragments instead. It can then either upload them, write them to a file, or both. Typically, we expect to be writing them to a temporary file (upcoming CL; not yet written), and upload that file to a remote location specified by JS-triggered configuration after the call is finished.",
+      "parentUuid": "c102cdce_fdc670cd",
       "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "49f3eb69_381c84ea",
+        "filename": "content/renderer/media/rtc_event_log_output_sink_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-13T19:12:25Z",
+      "side": 1,
+      "message": "It\u0027s the RtcEventLogOutput that\u0027s either active or inactive. There are multiple subclasses, of which this is one.\n1. RtcEventLogOutputFile becomes inactive if the file\u0027s size limit is reached, or if an error occurs when we try to write,etc.\n2. RtcEventLogOutputSinkProxy does not really expect to ever become inactive, but needs implement the superclass\u0027s interface in full. (However, I *might* end up using this to communicate back to WebRTC that no further output is desired by Chrome. Or not. Still thinking about this.)",
+      "parentUuid": "a3aac8ee_b501bbde",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b809caa2_68227c14",
         "filename": "content/renderer/media/rtc_event_log_output_sink_proxy.h",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-13T09:57:41Z",
       "side": 1,
       "message": "What does being active mean? Can we go from active to inactive while an RtcEventLogOutput is being used?",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34133190_8ae12dbd",
+        "filename": "content/renderer/media/rtc_event_log_output_sink_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-13T19:12:25Z",
+      "side": 1,
+      "message": "Please see the documentation in the superclass (webrtc::RtcEventLogOutput). Briefly - RtcEventLogOutput objects can start out either active or not. If active, they remain active until the first (and only) time Write() returns false. Then, they remain inactive until destroyed. The change to inactivity can only happen in response to calling Write().\n\nThe reason it was done this way is not very interesting, but you could look at RtcEventLogOutputFile if you\u0027re curious; or I could explain more in depth, if you want.\n\n(Björn and I have discussed the possibility of removing this earlier today, btw.)",
+      "parentUuid": "b809caa2_68227c14",
       "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
