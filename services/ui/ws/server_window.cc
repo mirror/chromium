@@ -484,6 +484,10 @@ void ServerWindow::OnFirstSurfaceActivation(
   delegate_->OnFirstSurfaceActivation(surface_info, this);
 }
 
+void ServerWindow::OnFrameTokenChanged(uint32_t frame_token) {
+  // TODO(yiyix, fsamuel): Implement frame token propagation for Mus.
+}
+
 void ServerWindow::RemoveImpl(ServerWindow* window) {
   window->parent_ = nullptr;
   children_.erase(std::find(children_.begin(), children_.end(), window));
