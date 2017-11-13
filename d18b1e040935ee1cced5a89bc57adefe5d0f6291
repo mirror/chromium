@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39d6e845_2c14e78b",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-11-13T20:55:19Z",
+      "side": 1,
+      "message": "Another way would be pass in SurfaceDrawQuad* instead of list of rects. WDYT?",
+      "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6185fe26_bfaa5aa4",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-11-13T20:55:19Z",
+      "side": 1,
+      "message": "Is this always source_sqs-\u003equad_to_target_transform? Could we just get that without passing this in?",
+      "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33191ca3_9ce4a6ea",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-11-13T20:55:19Z",
+      "side": 1,
+      "message": "Prefer calculating values as close to their usage as possible. I think only the scaled_quad_to_target_transform is needed early, the rest of the rects should only be needed when we are copying quads and not merging them at the end.",
+      "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c52e18a_29af4d63",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-11-13T20:55:19Z",
+      "side": 1,
+      "message": "Don\u0027t think we need scaled version here. Scaling shouldn\u0027t change whether visible rect is in damage rect.",
+      "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd37350_98adead9",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-11-13T20:55:19Z",
+      "side": 1,
+      "message": "Clip shouldn\u0027t be affected by scale.",
+      "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb45547_fb0ee966",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-11-13T20:55:19Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need new clip data.",
+      "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff68661_a729fd9d",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-11-13T20:55:19Z",
+      "side": 1,
+      "message": "A CopyAndScaledSQS helper function might be useful here. WDYT?",
+      "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
