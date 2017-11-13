@@ -38,6 +38,7 @@ class TestAppListControllerDelegate : public AppListControllerDelegate {
                  AppListSource source,
                  int event_flags,
                  int64_t display_id) override;
+  void GetAppListModel() override;
 
   const GURL& last_opened_url() const { return last_opened_url_; }
 

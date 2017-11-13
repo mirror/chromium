@@ -223,6 +223,11 @@ const char kAppListPeekingToFullscreenHistogram[] =
 // The UMA histogram that logs how the app list is shown.
 const char kAppListToggleMethodHistogram[] = "Apps.AppListShowSource";
 
+// The UMA histogram that logs the time it takes for a user to finish a user
+// journey.
+APP_LIST_EXPORT extern const char kAppListUserJourneyTimeHistogram[] =
+    "Apps.AppListUserJourneyTime";
+
 // The UMA histogram that logs which page gets opened by the user.
 const char kPageOpenedHistogram[] = "Apps.AppListPageOpened";
 

@@ -846,13 +846,34 @@ TEST_P(AppsGridViewTest, SelectionUpFromFirstAppSelectsNothing) {
   EXPECT_TRUE(CheckNoSelection());
 }
 
+// Tests that the User Journey UMA is properly recorded.
+TEST_F(AppsGridViewTest, UserJourneyUMATest) {
+  base::HistogramTester histogram_tester;
+  model_->PopulateApps(5);
+
+  // Select the first suggested app and launch it.
+  contents_view_->app_list_main_view()->ActivateApp(GetItemViewAt(0)->item(),
+                                                    0);
+
+  const base::TimeDelta expected_user_journey_time =
+      base::TimeDelta::FromMilliseconds(500);
+  const base::Time start_time = base::Time::Now();
+  const base::Time end_time = start_time + expected_user_journey_time;
+  model_->SetUserJourneyStartAndEndTimeForTest(start_time, end_time);
+  app_list_view_->SetState(AppListView::CLOSED);
+
+  histogram_tester.ExpectTimeBucketCount(kAppListUserJourneyTimeHistogram,
+                                         expected_user_journey_time, 1);
+}
+
 // Tests that UMA is properly collected when either a suggested or normal app is
 // launched.
 TEST_F(AppsGridViewTest, UMATestForLaunchingApps) {
   base::HistogramTester histogram_tester;
   model_->PopulateApps(5);
 
-  // Select the first suggested app and launch it.
+  // Select the first suggested app and launch it. This record the current time
+  // for the user journey completion and also record that an app launched.
   contents_view_->app_list_main_view()->ActivateApp(GetItemViewAt(0)->item(),
                                                     0);
 

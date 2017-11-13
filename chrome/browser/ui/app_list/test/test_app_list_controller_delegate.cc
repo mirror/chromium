@@ -75,4 +75,6 @@ void TestAppListControllerDelegate::LaunchApp(
     int64_t display_id) {
 }
 
+void TestAppListControllerDelegate::GetAppListModel() {}
+
 }  // namespace test

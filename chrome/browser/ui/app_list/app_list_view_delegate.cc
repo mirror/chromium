@@ -233,6 +233,7 @@ void AppListViewDelegate::OpenSearchResult(app_list::SearchResult* result,
   if (auto_launch)
     base::RecordAction(base::UserMetricsAction("AppList_AutoLaunched"));
 
+  GetModel()->RecordUserJourneyEndTime();
   // Record the search metric if the SearchResult is not a suggested app.
   if (result->display_type() != app_list::SearchResult::DISPLAY_RECOMMENDATION)
     RecordHistogram(model_->tablet_mode(), model_->state_fullscreen());
