@@ -104,6 +104,30 @@
       "revId": "1c7965ed8618750192d15b110c91e43f4d905bad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "856aa77d_9daeea8a",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 4014,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T18:42:50Z",
+      "side": 1,
+      "message": "Yes, that makes sense to me, thanks for the heads-up!\n\nDo you think we could add a RenderViewTest to document and enforce the order in which all these RenderFrameObserver notifications are fired, and check the invariants that hold at the time of dispatch, e.g.:\n -- Does GetDocument return the old or new document at this time?\n -- Which is last committed history entry?\n -- Is the window object replaced/cleared already?\n\nThe ordering is becoming really non-obvious to me, at least.",
+      "parentUuid": "ce2b4702_da08ae40",
+      "range": {
+        "startLine": 4012,
+        "startChar": 0,
+        "endLine": 4014,
+        "endChar": 56
+      },
+      "revId": "1c7965ed8618750192d15b110c91e43f4d905bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

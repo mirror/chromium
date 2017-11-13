@@ -34,6 +34,24 @@
       "revId": "b2c4889fc025aa732ddf0fc069b7a4f83e161b4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0470313_93d8427c",
+        "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T18:42:50Z",
+      "side": 1,
+      "message": "Hang on, wasn\u0027t this already broken before?\n\nI\u0027m possibly missing something, but it looks like even before this CL, Blink ended up invoking DidClearWindowObject after DidCommitProvisionalLoad for normal navigations, but before DidCommitProvisionalLoad for cross-site navigations (when a frame is swapped (back) in).\n\nLukasz, can you please double check?",
+      "parentUuid": "9fc26d72_12c28309",
+      "revId": "b2c4889fc025aa732ddf0fc069b7a4f83e161b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
