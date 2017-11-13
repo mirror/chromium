@@ -67,9 +67,10 @@ typedef void (*ResolveWrapperReachabilityFunction)(
     v8::Isolate*,
     ScriptWrappable*,
     const v8::Persistent<v8::Object>&);
-typedef void (*PreparePrototypeAndInterfaceObjectFunction)(
+typedef void (*InstallConditionalFeaturesOnObjectFunction)(
     v8::Local<v8::Context>,
     const DOMWrapperWorld&,
+    v8::Local<v8::Object>,
     v8::Local<v8::Object>,
     v8::Local<v8::Function>,
     v8::Local<v8::FunctionTemplate>);
@@ -151,15 +152,16 @@ struct WrapperTypeInfo {
     return trace_wrappers_function(visitor, script_wrappable);
   }
 
-  void PreparePrototypeAndInterfaceObject(
+  void InstallConditionalFeaturesOnObject(
       v8::Local<v8::Context> context,
       const DOMWrapperWorld& world,
+      v8::Local<v8::Object> instance_object,
       v8::Local<v8::Object> prototype_object,
       v8::Local<v8::Function> interface_object,
       v8::Local<v8::FunctionTemplate> interface_template) const {
-    if (prepare_prototype_and_interface_object_function) {
-      prepare_prototype_and_interface_object_function(
-          context, world, prototype_object, interface_object,
+    if (install_conditional_features_on_object_function) {
+      install_conditional_features_on_object_function(
+          context, world, instance_object, prototype_object, interface_object,
           interface_template);
     }
   }
@@ -176,8 +178,8 @@ struct WrapperTypeInfo {
   DomTemplateFunction dom_template_function;
   const TraceFunction trace_function;
   const TraceWrappersFunction trace_wrappers_function;
-  PreparePrototypeAndInterfaceObjectFunction
-      prepare_prototype_and_interface_object_function;
+  InstallConditionalFeaturesOnObjectFunction
+      install_conditional_features_on_object_function;
   const char* const interface_name;
   const WrapperTypeInfo* parent_class;
   const unsigned wrapper_type_prototype : 2;  // WrapperTypePrototype

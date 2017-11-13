@@ -293,6 +293,13 @@ void LocalWindowProxy::SetupWindowPrototypeChain() {
   V8DOMWrapper::SetNativeInfo(GetIsolate(), window_properties,
                               wrapper_type_info, window);
 
+  // Install context dependent properties on window wrapper.
+  const DOMWrapperWorld& world = script_state_->World();
+  wrapper_type_info->InstallConditionalFeaturesOnObject(
+      context, world, window_wrapper, v8::Local<v8::Object>(),
+      v8::Local<v8::Function>(),
+      wrapper_type_info->domTemplate(GetIsolate(), world));
+
   // TODO(keishi): Remove installPagePopupController and implement
   // PagePopupController in another way.
   V8PagePopupControllerBinding::InstallPagePopupController(context,
