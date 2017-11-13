@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a22f5a25_79edc5ff",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-13T21:55:43Z",
+      "side": 1,
+      "message": "Per our offline discussion, we don\u0027t need this extra string, we should be able to use the display name in all cases since it seems that the name of the internal display \"Internal Display\" is translated already.",
+      "range": {
+        "startLine": 321,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 58
+      },
+      "revId": "f52f613bd7deb1ee38d5029dfd29260c9549fe24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
