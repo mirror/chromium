@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "a980239e_7aab84de",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "No, this will still be used for non-PWA apps.",
+      "parentUuid": "9b317e68_c701dd91",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e73b43e1_658cb378",
         "filename": "chrome/browser/ui/browser_dialogs.h",
         "patchSetId": 9
@@ -64,6 +82,24 @@
       "writtenOn": "2017-11-09T03:07:19Z",
       "side": 1,
       "message": "Nothing seems to call this - is that easy to add in this CL as well?",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0770294e_e128e109",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "I\u0027ve added a call in bookmark_app_helper.cc.",
+      "parentUuid": "e73b43e1_658cb378",
       "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "4cbaa8ff_90ee6f50",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "I\u0027ve added a comment, but also changed this to a DCHECK, as I think that open_as_window should actually be set by the calling code.",
+      "parentUuid": "8d85f415_22eb62ea",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80e2ad2d_03381eb4",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
@@ -101,6 +155,24 @@
       "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7e60fc_443b4145",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80e2ad2d_03381eb4",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "71575801_379651fe",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "It\u0027s not intentional: I just forked this class from BookmarkAppConfirmationView, and it uses MODAL_TYPE_WINDOW. However, reading the comments in the ModalType enum, I would have guessed that MODAL_TYPE_WINDOW is the correct choice (I interpreted \"transient parent\" as meaning the tab.)\n\nSwitched to CHILD now, also in BookmarkAppConfirmationView.",
+      "parentUuid": "da34774c_cc297571",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "670aecb7_c9e3b565",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
@@ -132,6 +222,30 @@
       "writtenOn": "2017-11-09T03:07:19Z",
       "side": 1,
       "message": "is IDS_CANCEL different to IDS_APP_CANCEL  that the default DialogDelegate provides? We tend to call super::GetDialogButtonLabel(..) if that gives the right result for one (or both) of the strings.",
+      "range": {
+        "startLine": 74,
+        "startChar": 68,
+        "endLine": 74,
+        "endChar": 78
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5904d7f7_242b1d41",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "I don\u0027t know. These are the IDS that BookmarkAppConfirmationView uses. I don\u0027t know where these IDS are generated, because the generated code is undocumented AFAICT.",
+      "parentUuid": "670aecb7_c9e3b565",
       "range": {
         "startLine": 74,
         "startChar": 68,
@@ -167,6 +281,30 @@
     },
     {
       "key": {
+        "uuid": "c6b82ae2_20da89e9",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0656a824_eefa37b7",
+      "range": {
+        "startLine": 80,
+        "startChar": 34,
+        "endLine": 80,
+        "endChar": 42
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c274283_2de3acfa",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
@@ -181,6 +319,24 @@
       "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc582a6_bf3b235a",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "No, it\u0027s not needed. This came from the BookmarkAppConfirmationView.\n\nFixed.",
+      "parentUuid": "8c274283_2de3acfa",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +357,24 @@
     },
     {
       "key": {
+        "uuid": "cae4a8ea_b08a7582",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0103fad_4533fce5",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d702e6e_25677ebd",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
@@ -212,6 +386,24 @@
       "writtenOn": "2017-11-09T03:07:19Z",
       "side": 1,
       "message": "Using gfx::ElideText can cause the text to get out of sync with the View width. If some translation gives you dialog button text that add up to 500px across, the view needs to size up to accomodate that.\n\nThere is Label::SetElideBehaviour, but I think ELIDE_TAIL is default. Does simply setting the label width do the right thing?",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a52b1438_090427cd",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "How do I set the label width?  (SizeToFit() and SetMaximumWidth() CHECK that the label is multiline.)",
+      "parentUuid": "0d702e6e_25677ebd",
       "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -258,6 +450,30 @@
     },
     {
       "key": {
+        "uuid": "facdb165_648952fd",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecab1086_22fc404a",
+      "range": {
+        "startLine": 114,
+        "startChar": 30,
+        "endLine": 114,
+        "endChar": 41
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c20b2f14_9d27626e",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
@@ -281,6 +497,30 @@
     },
     {
       "key": {
+        "uuid": "9b8b1c8a_38650282",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c20b2f14_9d27626e",
+      "range": {
+        "startLine": 119,
+        "startChar": 6,
+        "endLine": 119,
+        "endChar": 25
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ef1fc66_84feff9e",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
@@ -298,6 +538,24 @@
     },
     {
       "key": {
+        "uuid": "9c1468f9_fb741eb1",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "The documentation for GetDialogInsetsForContentType is unclear to me:\n\n\"|leading| is the type (text or control) of the first\n element in the content  and |trailing| is the type of the final element.\"\n\nand the documentation for DialogContentType is: \n\"TEXT should be used for Labels or other elements that only show text. Otherwise CONTROL should be used.\"\n\nI would have thought that the icon was the first element, which is not text, hence \"CONTROL\". Perhaps CONTROL implies an interactive element; I\u0027m not sure.\n\nAs for the final element, I wasn\u0027t sure.  Is it the final element horizontally, or vertically? Are the dialog buttons the final elements, or are they excluded?\n\nI\u0027ve added a link to the mocks in the bug, so you can see the spacing.",
+      "parentUuid": "4ef1fc66_84feff9e",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad9e93cc_f49a73c7",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
@@ -309,6 +567,24 @@
       "writtenOn": "2017-11-09T03:07:19Z",
       "side": 1,
       "message": "Can this icon be part of the FrameView instead? (i.e. via WidgetDelegate::GetWindowIcon()?) Then you don\u0027t have to worry about the layout so much.",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80679445_04bf68b0",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Should that show the icon in the dialog? I tried implementing GetWindowIcon, but it doesn\u0027t look like the icon shows up anywhere.",
+      "parentUuid": "ad9e93cc_f49a73c7",
       "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -383,6 +659,24 @@
     },
     {
       "key": {
+        "uuid": "2b780edc_a5a64847",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e612e1fc_cab2f08d",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "057adcc5_6ab3dee5",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.h",
         "patchSetId": 9
@@ -406,6 +700,30 @@
     },
     {
       "key": {
+        "uuid": "013db95c_97efc7cf",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "057adcc5_6ab3dee5",
+      "range": {
+        "startLine": 21,
+        "startChar": 21,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a36dc15b_9830d8c6",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.h",
         "patchSetId": 9
@@ -420,6 +738,24 @@
       "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de85d93_f79e9e3f",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a36dc15b_9830d8c6",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -469,6 +805,30 @@
     },
     {
       "key": {
+        "uuid": "943e8542_fcfc014f",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Done. I now wonder why it\u0027s called \"title\" in WebApplicationInfo in the first place, since it\u0027s \"name\" in the manifest spec.",
+      "parentUuid": "f6da89b0_d4f672a1",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4db0fee_ed1d5de0",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
         "patchSetId": 9
@@ -486,6 +846,24 @@
     },
     {
       "key": {
+        "uuid": "8f342563_aa00e98a",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4db0fee_ed1d5de0",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c97cdae2_3286df99",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
         "patchSetId": 9
@@ -500,6 +878,24 @@
       "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c97409_1ac3f0a9",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "I\u0027ve added a test to that file, but retained this file because it provides a way to launch the dialog with a long url.",
+      "parentUuid": "c97cdae2_3286df99",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -526,6 +922,30 @@
     },
     {
       "key": {
+        "uuid": "fc99bbfa_bf339ce2",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d51e61fb_79a5dfe2",
+      "range": {
+        "startLine": 27,
+        "startChar": 33,
+        "endLine": 27,
+        "endChar": 40
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be20f2b1_1734638d",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
         "patchSetId": 9
@@ -546,6 +966,30 @@
       "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643fd35e_74c0a0a7",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be20f2b1_1734638d",
+      "range": {
+        "startLine": 32,
+        "startChar": 23,
+        "endLine": 32,
+        "endChar": 26
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -572,6 +1016,30 @@
     },
     {
       "key": {
+        "uuid": "4a95e6ad_45beacd2",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62d0e2b0_147bb2eb",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 35
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34b7c2aa_fe66ff3b",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
         "patchSetId": 9
@@ -595,6 +1063,30 @@
     },
     {
       "key": {
+        "uuid": "88283aac_d893ca7f",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "bare nullptr does not compile. I\u0027ve replaced with chrome::AppInstallationAcceptanceCallback().",
+      "parentUuid": "34b7c2aa_fe66ff3b",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 67
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7d94a4f_aba1b0b4",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
         "patchSetId": 9
@@ -612,6 +1104,24 @@
     },
     {
       "key": {
+        "uuid": "3a166472_2127b7fc",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7d94a4f_aba1b0b4",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fab6bd6_ef63d383",
         "filename": "chrome/browser/ui/views/extensions/web_app_info_image_source.h",
         "patchSetId": 9
@@ -626,6 +1136,24 @@
       "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80670c46_3e28f9f4",
+        "filename": "chrome/browser/ui/views/extensions/web_app_info_image_source.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-13T01:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fab6bd6_ef63d383",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
