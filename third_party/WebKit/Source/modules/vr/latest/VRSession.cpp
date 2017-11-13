@@ -177,6 +177,16 @@ void VRSession::ForceEnd() {
   DispatchEvent(VRSessionEvent::Create(EventTypeNames::end, this));
 }
 
+double VRSession::IdealFramebufferWidth() const {
+  return device_->vrDisplayInfoPtr()->leftEye->renderWidth +
+         device_->vrDisplayInfoPtr()->rightEye->renderWidth;
+}
+
+double VRSession::IdealFramebufferHeight() const {
+  return std::max(device_->vrDisplayInfoPtr()->leftEye->renderHeight,
+                  device_->vrDisplayInfoPtr()->rightEye->renderHeight);
+}
+
 void VRSession::OnFocus() {
   if (!blurred_)
     return;
