@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b8752774_478e8d50",
+        "filename": "components/subresource_filter/core/browser/ruleset_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T12:54:17Z",
+      "side": 1,
+      "message": "nit: How about scratch_dir_with_[new_]indexed_ruleset? The term `new_indexed_ruleset_version_dir` is already used very specifically around this code to denote the ultimate directory where the ruleset will be stored.",
+      "revId": "09e95e0c9f989cee3f4ad12272dd34753d0491af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0359007d_5d81c192",
         "filename": "components/subresource_filter/core/browser/ruleset_service.cc",
         "patchSetId": 1
@@ -52,6 +69,24 @@
       "revId": "09e95e0c9f989cee3f4ad12272dd34753d0491af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc618b25_58bdeae8",
+        "filename": "components/subresource_filter/core/browser/ruleset_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T12:54:17Z",
+      "side": 1,
+      "message": "Ah, sorry, I misread my own code -- now that I read it correctly, this change obviously makes sense. Thank you, and sorry for the noise!",
+      "parentUuid": "494cb033_eb542b95",
+      "revId": "09e95e0c9f989cee3f4ad12272dd34753d0491af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
