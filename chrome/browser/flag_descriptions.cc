@@ -1285,11 +1285,6 @@ const char kSingleClickAutofillName[] = "Single-click autofill";
 const char kSingleClickAutofillDescription[] =
     "Make autofill suggestions on initial mouse click on a form element.";
 
-const char kSiteDetails[] = "Site Details";
-const char kSiteDetailsDescription[] =
-    "Adds UI in MD Settings to view all content settings for a specific "
-    "origin.";
-
 const char kSitePerProcessName[] = "Strict site isolation";
 const char kSitePerProcessDescription[] =
     "Highly experimental security mode that ensures each renderer process "
