@@ -5984,16 +5984,19 @@ void Document::SetFeaturePolicy(const String& feature_policy_header) {
 }
 
 ukm::UkmRecorder* Document::UkmRecorder() {
-  // UKM must only be recorded using the main frame.
-  DCHECK(IsInMainFrame());
-
   if (ukm_recorder_)
     return ukm_recorder_.get();
 
   ukm_recorder_ =
       ukm::MojoUkmRecorder::Create(Platform::Current()->GetConnector());
   ukm_source_id_ = ukm_recorder_->GetNewSourceID();
-  ukm_recorder_->UpdateSourceURL(ukm_source_id_, url_);
+
+  // Only record URLs of main frames with HTTP or HTTPs Schema.
+  // TODO(crbug/780930): Move responsibility for recording these URLs to
+  // somewhere like components/ukm/content/source_url_recorder or use a shared
+  // SourceId.
+  if (IsInMainFrame() && url_.ProtocolIsInHTTPFamily())
+    ukm_recorder_->UpdateSourceURL(ukm_source_id_, url_);
   return ukm_recorder_.get();
 }
 
