@@ -16,6 +16,24 @@
       "revId": "2e523910aead12ecf12ca3da37cfb3a0c73fc914",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a09f6bdb_8427a8f7",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T04:37:30Z",
+      "side": 1,
+      "message": "Do you mean moving these to service_worker_consts.h? I thought we should keep these private to this .cc file.\n\nMaybe a bit weird but we could also call it `namespace service_worker_database_constants` and then immediately do `namespace swdb_consts \u003d the_long_name`.... would that be better?",
+      "parentUuid": "c982fb37_e224f147",
+      "revId": "2e523910aead12ecf12ca3da37cfb3a0c73fc914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
