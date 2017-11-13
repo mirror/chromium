@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f250d07a_57e84be4",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-13T15:26:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e407407c_37cf8465",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04da3c60_593f68cf",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 22
@@ -36,6 +54,41 @@
     },
     {
       "key": {
+        "uuid": "71a3f3cb_1e61e756",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-13T15:26:43Z",
+      "side": 1,
+      "message": "I think it would be better. It is going to be stored as a unique_ptr anyway, so let\u0027s make one from the start. We also require a specific clone method so that we can make a copy of it, so making it move-only should work.",
+      "parentUuid": "04da3c60_593f68cf",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8186bf6b_35b1ae37",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 2057,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-13T15:26:43Z",
+      "side": 1,
+      "message": "This and the call below correspond to history navigations. You should not have a navigation_ui_data in that case. Can you make the calls with nullptr, and DCHECK(!navigation_ui_data) before?",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19ddcb78_a715c4e2",
         "filename": "content/browser/frame_host/navigation_handle_impl.cc",
         "patchSetId": 22
@@ -47,6 +100,92 @@
       "writtenOn": "2017-11-13T07:54:40Z",
       "side": 1,
       "message": "Curious as to why started_from_context_menu is in NavigationEntry. It seems very similar to disposition and was introduced for a very similar reason i.e. a NavigationThrottle needed it[1]. You mentioned before that NavigationEntry is not appropriate for disposition since it\u0027s for information that should be kept even after the navigation ends, so it seems started_from_context_menu is also not appropriate for NavigationEntry. It seems to fit better in NavigationUIData.\n\n[1] https://crrev.com/2304783002",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae60caf0_abc15a77",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-13T15:26:43Z",
+      "side": 1,
+      "message": "Good point. I agree that they should be treated similarly, and I wouldn\u0027t have plumbed the way it was plumbed. I\u0027d suggest adding a TODO to move it to NavigationUIData.",
+      "parentUuid": "19ddcb78_a715c4e2",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198f950f_5c86267e",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-13T15:26:43Z",
+      "side": 1,
+      "message": "nit: Maybe add a comment, e.g.:\nIf the content/ embedder did not pass the NavigationUIData at the beginning of the navigation, ask for it now.",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a40b06_32fd8c50",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-13T15:26:43Z",
+      "side": 1,
+      "message": "Add a comment for this member. Suggestion:\nStores the NavigationUIData for this navigation until the NavigationHandle is created.",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e89d6ab7_75bee29c",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-13T15:26:43Z",
+      "side": 1,
+      "message": "nit: out-of-date comment?",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c392ec3_a9c83847",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-13T15:26:43Z",
+      "side": 1,
+      "message": "Let\u0027s make this a const NavigationUIData*. A copy of NavigationUIData is sent to the IO thread at one point during the navigation. Having the data on the UI thread be mutable could lead to bugs where people expect the changes to be propagated to the IO thread except they don\u0027t because the clone has already been sent.",
       "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
