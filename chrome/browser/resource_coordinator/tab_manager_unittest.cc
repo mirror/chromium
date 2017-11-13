@@ -116,6 +116,30 @@ class MockTabStripModelObserver : public TabStripModelObserver {
   DISALLOW_COPY_AND_ASSIGN(MockTabStripModelObserver);
 };
 
+class FakeBrowserIterator : public BrowserIterator {
+ public:
+  FakeBrowserIterator() = default;
+  ~FakeBrowserIterator() override = default;
+
+  void AddBrowserInfo(BrowserInfo&& browser_info) {
+    browser_info_list_.emplace_back(browser_info);
+  }
+
+  // BrowserIterator:
+  std::vector<BrowserInfo> GetBrowserInfoList() const override {
+    return browser_info_list_;
+  }
+
+  base::Optional<BrowserInfo> GetActiveBrowserInfo() const override {
+    if (browser_info_list_.empty())
+      return base::nullopt;
+    return browser_info_list_[0];
+  }
+
+ private:
+  std::vector<BrowserInfo> browser_info_list_;
+};
+
 enum TestIndicies {
   kAutoDiscardable,
   kPinned,
@@ -231,11 +255,17 @@ class TabManagerTest : public ChromeRenderViewHostTestHarness {
     }
   }
 
- private:
-  scoped_refptr<base::SingleThreadTaskRunner> original_task_runner_ =
-      base::ThreadTaskRunnerHandle::Get();
-
  protected:
+  // Creates and returns a FakeBrowserIterator for TabManager.
+  FakeBrowserIterator* CreateBrowserIterator(TabManager* tab_manager) {
+    std::unique_ptr<FakeBrowserIterator> browser_iterator =
+        std::make_unique<FakeBrowserIterator>();
+    FakeBrowserIterator* fake_browser_iterator = browser_iterator.get();
+
+    tab_manager->SetBrowserIteratorForTest(std::move(browser_iterator));
+    return fake_browser_iterator;
+  }
+
   std::unique_ptr<NavigationHandle> CreateTabAndNavigation(const char* url) {
     content::TestWebContents* web_contents =
         content::TestWebContents::Create(profile(), nullptr);
@@ -258,6 +288,10 @@ class TabManagerTest : public ChromeRenderViewHostTestHarness {
   std::unique_ptr<WebContents> contents1_;
   std::unique_ptr<WebContents> contents2_;
   std::unique_ptr<WebContents> contents3_;
+
+ private:
+  scoped_refptr<base::SingleThreadTaskRunner> original_task_runner_ =
+      base::ThreadTaskRunnerHandle::Get();
 };
 
 class TabManagerWithExperimentDisabledTest : public TabManagerTest {
@@ -406,6 +440,7 @@ TEST_F(TabManagerTest, IsInternalPage) {
 // Ensures discarding tabs leaves TabStripModel in a good state.
 TEST_F(TabManagerTest, DiscardWebContentsAt) {
   TabManager tab_manager;
+  FakeBrowserIterator* browser_iterator = CreateBrowserIterator(&tab_manager);
 
   // Create a tab strip in a visible and active window.
   TabStripDummyDelegate delegate;
@@ -416,7 +451,7 @@ TEST_F(TabManagerTest, DiscardWebContentsAt) {
   browser_info.tab_strip_model = &tabstrip;
   browser_info.window_is_minimized = false;
   browser_info.browser_is_app = false;
-  tab_manager.test_browser_info_list_.push_back(browser_info);
+  browser_iterator->AddBrowserInfo(std::move(browser_info));
 
   // Fill it with some tabs.
   WebContents* contents1 = CreateWebContents();
@@ -631,11 +666,13 @@ TEST_F(TabManagerTest, ActivateTabResetPurgeState) {
   TabStripModelImpl tabstrip(&delegate, profile());
   tabstrip.AddObserver(&tab_manager);
 
+  FakeBrowserIterator* browser_iterator = CreateBrowserIterator(&tab_manager);
+
   BrowserInfo browser_info;
   browser_info.tab_strip_model = &tabstrip;
   browser_info.window_is_minimized = false;
   browser_info.browser_is_app = false;
-  tab_manager.test_browser_info_list_.push_back(browser_info);
+  browser_iterator->AddBrowserInfo(std::move(browser_info));
 
   WebContents* tab1 = CreateWebContents();
   WebContents* tab2 = CreateWebContents();
@@ -686,6 +723,8 @@ TEST_F(TabManagerTest, GetUnsortedTabStatsIsInVisibleWindow) {
   tab_strip2.AppendWebContents(web_contents2a, true);
   tab_strip2.AppendWebContents(web_contents2b, false);
 
+  FakeBrowserIterator* browser_iterator = CreateBrowserIterator(&tab_manager);
+
   // Add the 2 TabStripModels to the TabManager.
   // The window for |tab_strip1| is visible while the window for |tab_strip2| is
   // minimized.
@@ -693,13 +732,13 @@ TEST_F(TabManagerTest, GetUnsortedTabStatsIsInVisibleWindow) {
   browser_info1.tab_strip_model = &tab_strip1;
   browser_info1.window_is_minimized = false;
   browser_info1.browser_is_app = false;
-  tab_manager.test_browser_info_list_.push_back(browser_info1);
+  browser_iterator->AddBrowserInfo(std::move(browser_info1));
 
   BrowserInfo browser_info2;
   browser_info2.tab_strip_model = &tab_strip2;
   browser_info2.window_is_minimized = true;
   browser_info2.browser_is_app = false;
-  tab_manager.test_browser_info_list_.push_back(browser_info2);
+  browser_iterator->AddBrowserInfo(std::move(browser_info2));
 
   // Get TabStats and verify the the |is_in_visible_window| field of each
   // TabStats is set correctly.
@@ -743,6 +782,8 @@ TEST_F(TabManagerTest, DiscardTabWithNonVisibleTabs) {
   tab_strip2.AppendWebContents(CreateWebContents(), true);
   tab_strip2.AppendWebContents(CreateWebContents(), false);
 
+  FakeBrowserIterator* browser_iterator = CreateBrowserIterator(&tab_manager);
+
   // Add the 2 TabStripModels to the TabManager.
   // The window for |tab_strip1| is visible while the window for |tab_strip2|
   // is minimized.
@@ -750,13 +791,13 @@ TEST_F(TabManagerTest, DiscardTabWithNonVisibleTabs) {
   browser_info1.tab_strip_model = &tab_strip1;
   browser_info1.window_is_minimized = false;
   browser_info1.browser_is_app = false;
-  tab_manager.test_browser_info_list_.push_back(browser_info1);
+  browser_iterator->AddBrowserInfo(std::move(browser_info1));
 
   BrowserInfo browser_info2;
   browser_info2.tab_strip_model = &tab_strip2;
   browser_info2.window_is_minimized = true;
   browser_info2.browser_is_app = false;
-  tab_manager.test_browser_info_list_.push_back(browser_info2);
+  browser_iterator->AddBrowserInfo(std::move(browser_info2));
 
   for (int i = 0; i < 4; ++i)
     tab_manager.DiscardTab(TabManager::kProactiveShutdown);
