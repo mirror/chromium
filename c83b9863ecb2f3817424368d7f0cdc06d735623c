@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5fdcdeb_fac26422",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Replaced by utility functions in anonymous namespace.",
+      "parentUuid": "8cb2e57d_7fd98419",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b94df626_d79282e8",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4bc2f350_a410c1dd",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b94df626_d79282e8",
+      "range": {
+        "startLine": 76,
+        "startChar": 10,
+        "endLine": 76,
+        "endChar": 19
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a508aa1_4bd59b71",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc9f6163_4449f26a",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a508aa1_4bd59b71",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "0c0d032e_67c49001",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "887fcd86_612816e2",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1565b3e1_580c4d4c",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 1
@@ -87,6 +165,24 @@
       "writtenOn": "2017-11-09T22:32:14Z",
       "side": 1,
       "message": "Hang on, can we just not use |bit_shift| at all, but shift |int_data| by 8 bytes every time we append the new lowermost byte?",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6090187_f06caaac",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Then, we would have to deal with an edge case when we are only using 1 extra byte to encode the length. For example, \n\nuint_data \u003d 0 \nuint_data |\u003d 0xff;\nuint_data \u003c\u003c 8;\n\nwould result in uint_data being 0xff00 instead of 0xff.",
+      "parentUuid": "1565b3e1_580c4d4c",
       "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +203,24 @@
       "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32042184_fe4c089a",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "28473a64_d3d61afc",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "13f6aaf1_c3210f5c",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f342f51_eefccea2",
+      "range": {
+        "startLine": 130,
+        "startChar": 9,
+        "endLine": 130,
+        "endChar": 27
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "337437d9_b7ee71d9",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 1
@@ -153,6 +291,30 @@
       "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e7fcd4_bf5ceed4",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "337437d9_b7ee71d9",
+      "range": {
+        "startLine": 139,
+        "startChar": 40,
+        "endLine": 139,
+        "endChar": 49
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "aa1863cf_e42a24dc",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99a914eb_fcd6e378",
+      "range": {
+        "startLine": 151,
+        "startChar": 38,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e4d5816_6dc844ce",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 1
@@ -202,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "4b280bdd_9d52c746",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e4d5816_6dc844ce",
+      "range": {
+        "startLine": 155,
+        "startChar": 30,
+        "endLine": 155,
+        "endChar": 33
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48e19822_de9dcb4d",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 1
@@ -213,6 +423,24 @@
       "writtenOn": "2017-11-09T22:32:14Z",
       "side": 1,
       "message": "Technically, this class can\u0027t read non-canonical maps, because only one value will be retained per key.",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ffd6ac8_7609a5e4",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Yes. However, if the strict_mode is set to true, input with non canonical maps will return null optional with an error code. If not, the returned value will not be canonical (or the last value in the CBOR formatted byte the corresponding key will returned. In that sense, this class doesn\u0027t read non canonical maps, but can \"accept\" non canonical maps as an input.",
+      "parentUuid": "48e19822_de9dcb4d",
       "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -242,6 +470,30 @@
     },
     {
       "key": {
+        "uuid": "b873257b_e27dc367",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d1c1cba_a2d7b1fb",
+      "range": {
+        "startLine": 171,
+        "startChar": 17,
+        "endLine": 171,
+        "endChar": 27
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb053205_220e7398",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 1
@@ -256,6 +508,24 @@
       "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cecc9a5a_fba1a374",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Deleted the inner class and created 2 utility functions in cbor_reader.cc file.",
+      "parentUuid": "eb053205_220e7398",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -282,6 +552,30 @@
     },
     {
       "key": {
+        "uuid": "6de97d2e_3bb295e6",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c65ebd9_da37e8d3",
+      "range": {
+        "startLine": 98,
+        "startChar": 5,
+        "endLine": 98,
+        "endChar": 69
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3336e48_0144eaef",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 1
@@ -293,6 +587,24 @@
       "writtenOn": "2017-11-09T22:32:14Z",
       "side": 1,
       "message": "nit: Is \u0027strict mode\u0027 a term defined by the CBOR spec? Otherwise, let\u0027s use consistent terminology and just say |require_canonical_format| or something along these lines.",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af50aded_4858ad26",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Yes! RFC 7049 defines strict mode for decoder. However, in our case, we do not support tags, the restrictions for strict mode is equivalent to that of canonical CBOR. Below is first few paragraphs from RPC section 3.10. Please let me know which one would be more consistent. :) \n\n A decoder in strict mode will reliably reject any data that could be\n interpreted by other decoders in different ways.  It will reliably\n reject data items with syntax errors (Section 3.3).  It will also\n expend the effort to reliably detect other decoding errors\n (Section 3.4).  In particular, a strict decoder needs to have an API\n that reports an error (and does not return data) for a CBOR data item\n that contains any of the following:\n\n   o  a map (major type 5) that has more than one entry with the same\n      key\n\n   o  a tag that is used on a data item of the incorrect type\n\n   o  a data item that is incorrectly formatted for the type given to\n      it, such as invalid UTF-8 or data that cannot be interpreted with\n      the specific tag that it has been tagged with",
+      "parentUuid": "c3336e48_0144eaef",
       "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -316,6 +628,24 @@
     },
     {
       "key": {
+        "uuid": "1b0ea79c_e45394ed",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f2065b0_38c40fd6",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6573139_6aa9ac11",
         "filename": "content/browser/webauth/cbor/cbor_values.cc",
         "patchSetId": 1
@@ -330,6 +660,24 @@
       "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b241c6e8_d7197956",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6573139_6aa9ac11",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -350,6 +698,24 @@
     },
     {
       "key": {
+        "uuid": "3960b0b9_b49481c4",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0c99a2a_bfc349c4",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de76871a_87ee77e8",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 1
@@ -367,6 +733,24 @@
     },
     {
       "key": {
+        "uuid": "4824cb14_94fb46e5",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de76871a_87ee77e8",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cda11bc0_f763db78",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 1
@@ -381,6 +765,24 @@
       "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d54450_bc62206f",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cda11bc0_f763db78",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -404,6 +806,30 @@
       "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d31d9d_57997ce7",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T08:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66b44cf1_f77707f1",
+      "range": {
+        "startLine": 40,
+        "startChar": 33,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
