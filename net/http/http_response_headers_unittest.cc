@@ -772,11 +772,11 @@ const ContentTypeTestData mimetype_tests[] = {
     "text/html", true,
     "utf-8,text/plain", true,
     "text/html ; charset=\"utf-8,text/plain\" ;" },
-  // Charset with leading spaces.
+  // Charset with leading spaces: whitespace should not be trimmed.
   { "HTTP/1.1 200 OK\n"
     "Content-type: text/html ; charset= \"utf-8\" ;\n",
     "text/html", true,
-    "utf-8", true,
+    " \"utf-8\"", true,
     "text/html ; charset= \"utf-8\" ;" },
   // Media type comments in mime-type.
   { "HTTP/1.1 200 OK\n"
