@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9271f9d1_98dd11ec",
+        "filename": "base/task/sequence_manager/enqueue_order.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-13T08:47:01Z",
+      "side": 1,
+      "message": "It\u0027s kind of too bad we don\u0027t have 64 bit atomics on all platforms.  Still we\u0027ve never noticed this lock causing performance issues.",
+      "range": {
+        "startLine": 48,
+        "startChar": 13,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "a86dc5092423a77a578b08ed897bb3605e4b414c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
