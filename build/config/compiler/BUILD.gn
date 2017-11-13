@@ -1837,7 +1837,7 @@ config("afdo") {
 config("symbols") {
   if (is_win) {
     if (use_goma) {
-      # Note that this requires is_win_fastlink, enforced elsewhere.
+      # Note that this with VC++ requires is_win_fastlink, enforced elsewhere.
       cflags = [ "/Z7" ]  # Debug information in the .obj files.
     } else {
       cflags = [ "/Zi" ]  # Produce PDB file, no edit and continue.
