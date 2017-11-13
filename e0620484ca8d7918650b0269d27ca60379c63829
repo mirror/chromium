@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b60cc8af_cf3db744",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3387,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-13T09:34:55Z",
+      "side": 1,
+      "message": "Please add \n  \u003cowner\u003edullweber@chromium.org\u003c/owner\u003e\n  \u003cowner\u003emsramek@chromium.org\u003c/owner\u003e\nto this metric.",
+      "revId": "e0620484ca8d7918650b0269d27ca60379c63829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e954a9da_449a91f1",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3460,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-13T09:34:55Z",
+      "side": 1,
+      "message": "same here. I think new actions shouldn\u0027t be created without owner.",
+      "revId": "e0620484ca8d7918650b0269d27ca60379c63829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
