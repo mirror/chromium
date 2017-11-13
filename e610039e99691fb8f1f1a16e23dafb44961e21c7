@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa299ed7_3317f447",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/stylevalue-normalization/normalize-ident.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-13T00:49:32Z",
+      "side": 1,
+      "message": "is it possible to add another test to ensure it is not normalized to a type you don\u0027t expect?",
+      "revId": "e610039e99691fb8f1f1a16e23dafb44961e21c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
