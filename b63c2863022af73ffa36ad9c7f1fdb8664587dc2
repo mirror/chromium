@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f23f6d5_6f698658",
+        "filename": "testing/libfuzzer/fuzzers/v8_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-11-13T20:42:30Z",
+      "side": 1,
+      "message": "nit:newline before this line.",
+      "revId": "b63c2863022af73ffa36ad9c7f1fdb8664587dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccefd361_e18456e8",
+        "filename": "testing/libfuzzer/fuzzers/v8_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-11-13T20:42:30Z",
+      "side": 1,
+      "message": "platform and create_params can be local and don\u0027t need to be struct members, i don\u0027t see their usage below ?",
+      "revId": "b63c2863022af73ffa36ad9c7f1fdb8664587dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1d7daf_047035b6",
+        "filename": "testing/libfuzzer/fuzzers/v8_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-11-13T20:42:30Z",
+      "side": 1,
+      "message": "nit: source_string is better name than src_str",
+      "revId": "b63c2863022af73ffa36ad9c7f1fdb8664587dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3f9ebe_30ca6b64",
+        "filename": "testing/libfuzzer/fuzzers/v8_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-11-13T20:42:30Z",
+      "side": 1,
+      "message": "nit: source_v8_string is better name than maybe_local_src_v8_str",
+      "revId": "b63c2863022af73ffa36ad9c7f1fdb8664587dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3382724_c8afb165",
+        "filename": "testing/libfuzzer/fuzzers/v8_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-11-13T20:42:30Z",
+      "side": 1,
+      "message": "all these maybe_ can be stripped.",
+      "revId": "b63c2863022af73ffa36ad9c7f1fdb8664587dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388b7dcd_99892e6c",
+        "filename": "testing/libfuzzer/fuzzers/v8_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-11-13T20:42:30Z",
+      "side": 1,
+      "message": "nit: newline before this line.",
+      "revId": "b63c2863022af73ffa36ad9c7f1fdb8664587dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3339896b_c302af86",
+        "filename": "testing/libfuzzer/fuzzers/v8_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-11-13T20:42:30Z",
+      "side": 1,
+      "message": "Should this 57-59 be nested context { }",
+      "revId": "b63c2863022af73ffa36ad9c7f1fdb8664587dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8fa7bd8_9a1c2775",
+        "filename": "testing/libfuzzer/fuzzers/v8_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-11-13T20:42:30Z",
+      "side": 1,
+      "message": "Is 58-59 and storing result in maybe_local_result even needed, since we return 0 in both cases.",
+      "revId": "b63c2863022af73ffa36ad9c7f1fdb8664587dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
