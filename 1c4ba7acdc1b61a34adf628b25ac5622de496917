@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67b0943f_42ce8781",
+        "filename": "components/variations/android/java/src/org/chromium/components/variations/firstrun/VariationsSeedFetcher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-13T21:15:43Z",
+      "side": 1,
+      "message": "Fix comment - this line and the one below.",
+      "range": {
+        "startLine": 190,
+        "startChar": 37,
+        "endLine": 190,
+        "endChar": 41
+      },
+      "revId": "1c4ba7acdc1b61a34adf628b25ac5622de496917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e45c2af_da0845d7",
+        "filename": "components/variations/android/junit/src/org/chromium/components/variations/firstrun/VariationsSeedFetcherTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-13T21:15:43Z",
+      "side": 1,
+      "message": "Can you also check the param values are as expected?\n\n(Just for this first block - the other ones below are fine as-is.)",
+      "range": {
+        "startLine": 153,
+        "startChar": 50,
+        "endLine": 153,
+        "endChar": 0
+      },
+      "revId": "1c4ba7acdc1b61a34adf628b25ac5622de496917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef33ec2b_04727bba",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-13T21:15:43Z",
+      "side": 1,
+      "message": "Nit: add . at the end, same for line 356",
+      "range": {
+        "startLine": 349,
+        "startChar": 35,
+        "endLine": 349,
+        "endChar": 0
+      },
+      "revId": "1c4ba7acdc1b61a34adf628b25ac5622de496917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302ab51e_fed7f009",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-13T21:15:43Z",
+      "side": 1,
+      "message": "len() isn\u0027t a thing in C++. Also, add {}\u0027s for two-line if body.",
+      "range": {
+        "startLine": 360,
+        "startChar": 6,
+        "endLine": 360,
+        "endChar": 9
+      },
+      "revId": "1c4ba7acdc1b61a34adf628b25ac5622de496917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
