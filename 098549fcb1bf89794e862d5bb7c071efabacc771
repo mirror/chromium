@@ -16,6 +16,24 @@
       "revId": "098549fcb1bf89794e862d5bb7c071efabacc771",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c53efae_ac287996",
+        "filename": "content/browser/download/resource_downloader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-13T23:33:35Z",
+      "side": 1,
+      "message": "There is a case that render_frame_id and origin_pid should be used, sorry I shouldn\u0027t remove that logic, will fix it soon and run the mojo linux bot.\n\nThe broken code path is RenderFrameMessageFilter::DownloadUrl. This path still uses render_frame_id.\n\nAlso origin_pid seems to be always \u003e\u003d 0. Since the new code path always needs the request_handle, we probably can remove this check.",
+      "parentUuid": "8ff21e73_d59c0247",
+      "revId": "098549fcb1bf89794e862d5bb7c071efabacc771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
