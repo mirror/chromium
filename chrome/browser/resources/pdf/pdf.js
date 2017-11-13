@@ -247,8 +247,6 @@ function PDFViewer(browserApi) {
 
   // Setup the keyboard event listener.
   document.addEventListener('keydown', this.handleKeyEvent_.bind(this));
-  document.addEventListener('mousemove', this.handleMouseEvent_.bind(this));
-  document.addEventListener('mouseout', this.handleMouseEvent_.bind(this));
   document.addEventListener(
       'contextmenu', this.handleContextMenuEvent_.bind(this));
 
@@ -278,8 +276,6 @@ PDFViewer.prototype = {
     if (shouldIgnoreKeyEvents(document.activeElement) || e.defaultPrevented)
       return;
 
-    this.toolbarManager_.hideToolbarsAfterTimeout(e);
-
     var pageUpHandler = () => {
       // Go to the previous page if we are fit-to-page.
       if (this.viewport_.fittingType == Viewport.FittingType.FIT_TO_PAGE) {
@@ -304,9 +300,6 @@ PDFViewer.prototype = {
     };
 
     switch (e.keyCode) {
-      case 9:  // Tab key.
-        this.toolbarManager_.showToolbarsForKeyboardNavigation();
-        return;
       case 27:  // Escape key.
         if (!this.isPrintPreview_) {
           this.toolbarManager_.hideSingleToolbarLayer();
@@ -376,7 +369,6 @@ PDFViewer.prototype = {
         return;
       case 71:  // 'g' key.
         if (this.toolbar_ && (e.ctrlKey || e.metaKey) && e.altKey) {
-          this.toolbarManager_.showToolbars();
           this.toolbar_.selectPageNumber();
         }
         return;
@@ -398,18 +390,7 @@ PDFViewer.prototype = {
     if (!fromScriptingAPI && this.isPrintPreview_) {
       this.sendScriptingMessage_(
           {type: 'sendKeyEvent', keyEvent: SerializeKeyEvent(e)});
-    } else {
-      // Show toolbars as a fallback.
-      if (!(e.shiftKey || e.ctrlKey || e.altKey))
-        this.toolbarManager_.showToolbars();
     }
-  },
-
-  handleMouseEvent_: function(e) {
-    if (e.type == 'mousemove')
-      this.toolbarManager_.handleMouseMove(e);
-    else if (e.type == 'mouseout')
-      this.toolbarManager_.hideToolbarsForMouseOut();
   },
 
   handleContextMenuEvent_: function(e) {
@@ -445,7 +426,6 @@ PDFViewer.prototype = {
    */
   fitToPage_: function() {
     this.viewport_.fitToPage();
-    this.toolbarManager_.forceHideTopToolbar();
   },
 
   /**
@@ -540,8 +520,6 @@ PDFViewer.prototype = {
       this.sendDocumentLoadedMessage_();
       while (this.delayedScriptingMessages_.length > 0)
         this.handleScriptingMessage(this.delayedScriptingMessages_.shift());
-
-      this.toolbarManager_.hideToolbarsAfterTimeout();
     }
   },
 

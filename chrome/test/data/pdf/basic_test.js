@@ -80,12 +80,6 @@ var tests = [
     MockInteractions.pressAndReleaseKeyOn(document, ESC_KEY);
     chrome.test.assertFalse(dropdown.dropdownOpen,
         "Escape key closes dropdown");
-    chrome.test.assertTrue(toolbar.opened,
-        "First escape key does not close toolbar");
-
-    MockInteractions.pressAndReleaseKeyOn(document, ESC_KEY);
-    chrome.test.assertFalse(toolbar.opened,
-        "Second escape key closes toolbar");
 
     chrome.test.succeed();
   },
