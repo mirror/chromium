@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "68b3f692_45030ba1",
+        "filename": "chrome/browser/previews/previews_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-11-13T21:16:04Z",
+      "side": 1,
+      "message": "Do you want to discuss ownership and lifetime of |optimization_guide_service| here?",
+      "revId": "d504a7b3b79c6a181f89a8894ce815d7a84213d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4518b5e3_1c539cf7",
         "filename": "chrome/browser/profiles/profile_impl_io_data.cc",
         "patchSetId": 8
@@ -46,6 +63,57 @@
       "revId": "d504a7b3b79c6a181f89a8894ce815d7a84213d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8089f649_a189edd5",
+        "filename": "components/previews/content/previews_io_data_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-11-13T21:16:04Z",
+      "side": 1,
+      "message": "Are you sure that this does not leak?",
+      "revId": "d504a7b3b79c6a181f89a8894ce815d7a84213d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0d63d1_fbe6a116",
+        "filename": "components/previews/content/previews_optimization_guide.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-11-13T21:16:04Z",
+      "side": 1,
+      "message": "Have you checked how many hints you expect here? If this is a large number, components/url_pattern_index may be better because it does not need to be created every time the browser is started.",
+      "revId": "d504a7b3b79c6a181f89a8894ce815d7a84213d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f35b61_6b3944fc",
+        "filename": "components/previews/content/previews_optimization_guide.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-11-13T21:16:04Z",
+      "side": 1,
+      "message": "nit: here and below no {} needed.",
+      "revId": "d504a7b3b79c6a181f89a8894ce815d7a84213d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
