@@ -163,7 +163,7 @@ std::unique_ptr<views::InkDropRipple> HoverButton::CreateInkDropRipple() const {
   if (ui::MaterialDesignController::IsSecondaryUiMaterial())
     return LabelButton::CreateInkDropRipple();
   // Don't show the ripple on non-MD.
-  return nullptr;
+  return CreateDefaultInkDropRipple(gfx::Point(), gfx::Size());
 }
 
 std::unique_ptr<views::InkDropHighlight> HoverButton::CreateInkDropHighlight()
