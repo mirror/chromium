@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d6322f5_5a9048ce",
+        "filename": ".vpython",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-11-13T21:50:56Z",
+      "side": 1,
+      "message": "copy-pasted from https://chromium.googlesource.com/chromium/tools/depot_tools/+/master/gsutil.vpython#14 so presumably these wheels already exist wherever vpython expects them to.",
+      "revId": "6ac7a4c0606319af8be30f17a3f0cc0d53c9839c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
