@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25df74af_1ef3ce76",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T09:57:41Z",
+      "side": 1,
+      "message": "This CL introduces a new code path that isn\u0027t used, even in unittests.\n\nIs it possible to land the CL that implements PeerConnectionTrackerHost::OnRtcEventLogWrite first and land this CL afterwards, removing the need for kRtcEventLoggingFromHostApplication (doing the \u003d true case)?",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b409866_0054c552",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T09:57:41Z",
+      "side": 1,
+      "message": "nit: Prefer a name like render_process_host or host over acronyms",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0180049_c7441810",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T09:57:41Z",
+      "side": 1,
+      "message": "nit: Same here.",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c102cdce_fdc670cd",
+        "filename": "content/renderer/media/peer_connection_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T09:57:41Z",
+      "side": 1,
+      "message": "A new way of writing, not just a different implementation for writing? How was the \"write\" operation performed before this CL?",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3aac8ee_b501bbde",
+        "filename": "content/renderer/media/rtc_event_log_output_sink_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T09:57:41Z",
+      "side": 1,
+      "message": "We\u0027re active even if we aren\u0027t being used? Even if a log file isn\u0027t open?",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b809caa2_68227c14",
+        "filename": "content/renderer/media/rtc_event_log_output_sink_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T09:57:41Z",
+      "side": 1,
+      "message": "What does being active mean? Can we go from active to inactive while an RtcEventLogOutput is being used?",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
