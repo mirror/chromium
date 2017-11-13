@@ -977,6 +977,7 @@ static_library("extensions") {
     deps += [
       "//ash",
       "//ash/public/cpp:ash_public_cpp",
+      "//chrome/browser/resources/test_system_app",
       "//components/arc",
       "//components/chrome_apps",
       "//components/constrained_window",

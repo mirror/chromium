@@ -95,6 +95,9 @@ const char kChromeVoxExtensionId[] =
     "kgejglhpjiefppelpmljglcjbhoiplfn";
 #endif
 
+const char kTestSystemAppId[] = "dbflaidjkfgkbbalgpdjecjcchebichj";
+const char kTestSystemAppPath[] = "test_system_app";
+
 const char kAppStateNotInstalled[] = "not_installed";
 const char kAppStateInstalled[] = "installed";
 const char kAppStateDisabled[] = "disabled";
