@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5d98af8_6566126a",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T22:31:15Z",
+      "side": 1,
+      "message": "Is there a reason to prevent more than one IFaceDetector from being initialized simultaneously? If so please document it here.\n\nIt\u0027s important to note that by pausing method call processing if the pipe attached to |binding_| is closed before OnFaceDetectorCreated() is called that event won\u0027t be handled until method call processing is resumed so this will not allow us to cancel the operation early (not that AsyncOperation appears to support canceling the operation destruction anyways) if the result is not needed.\n\nAlternatively, given how this interface is used by actual clients, it is reasonable to simply fail any FaceDetectionRequest if the creation of an instance is in progress. In geolocation we actually treat this as a violation of the Mojo interface contract since there\u0027s no good reason for a renderer to do it.",
+      "revId": "a9539f59075d20de6a71f44995592270aff61318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
