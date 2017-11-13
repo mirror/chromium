@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4381ab6d_c27a4754",
+        "filename": "net/cert/cert_verify_proc_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-11-13T22:05:04Z",
+      "side": 1,
+      "message": "Just a mistake, I thought \u0027using\u0027 was just for class members but turns out I\u0027m wrong.",
+      "parentUuid": "63dbbb7f_115df3d0",
+      "revId": "5f8acf1fb5d84e40643a764ccc6af9cfe8cca793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1805268_4aee84cb",
         "filename": "net/cert/cert_verify_proc_nss.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "5f8acf1fb5d84e40643a764ccc6af9cfe8cca793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306fea6d_962d53b3",
+        "filename": "net/cert/cert_verify_proc_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-11-13T22:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1805268_4aee84cb",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 21
+      },
+      "revId": "5f8acf1fb5d84e40643a764ccc6af9cfe8cca793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "9b2900d5_da19dddd",
+        "filename": "net/cert/cert_verify_proc_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-11-13T22:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f3c57b9_f583166c",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 49
+      },
+      "revId": "5f8acf1fb5d84e40643a764ccc6af9cfe8cca793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9436e90_782b43f5",
         "filename": "net/cert/cert_verify_proc_nss.cc",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "5f8acf1fb5d84e40643a764ccc6af9cfe8cca793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56eed328_c228fd63",
+        "filename": "net/cert/cert_verify_proc_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-11-13T22:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9436e90_782b43f5",
+      "revId": "5f8acf1fb5d84e40643a764ccc6af9cfe8cca793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
