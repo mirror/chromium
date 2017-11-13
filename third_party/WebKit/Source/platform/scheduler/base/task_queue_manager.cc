@@ -179,6 +179,17 @@ void TaskQueueManager::OnBeginNestedRunLoop() {
   delegate_->PostTask(FROM_HERE, immediate_do_work_closure_);
 }
 
+void TaskQueueManager::OnExitNestedRunLoop() {
+  const bool is_still_nested = base::RunLoop::IsNestedOnCurrentThread();
+  {
+    base::AutoLock lock(any_thread_lock_);
+    DCHECK(any_thread().is_nested);
+    any_thread().is_nested = is_still_nested;
+  }
+  if (observer_)
+    observer_->OnExitNestedRunLoop();
+}
+
 void TaskQueueManager::OnQueueHasIncomingImmediateWork(
     internal::TaskQueueImpl* queue,
     internal::EnqueueOrder enqueue_order,
@@ -283,7 +294,6 @@ void TaskQueueManager::DoWork(bool delayed) {
   for (int i = 0; i < work_batch_size_; i++) {
     IncomingImmediateWorkMap queues_to_reload;
 
-    bool was_nested = false;
     {
       base::AutoLock lock(any_thread_lock_);
       if (i == 0) {
@@ -293,20 +303,10 @@ void TaskQueueManager::DoWork(bool delayed) {
           any_thread().immediate_do_work_posted_count--;
           DCHECK_GE(any_thread().immediate_do_work_posted_count, 0);
         }
-      } else {
-        // Ideally we'd have an OnNestedMessageloopExit observer, but in it's
-        // absence we may need to clear this flag after running a task (which
-        // ran a nested messageloop).
-        if (any_thread().is_nested && !is_nested)
-          was_nested = true;
-        any_thread().is_nested = is_nested;
       }
       DCHECK_EQ(any_thread().is_nested, delegate_->IsNested());
       std::swap(queues_to_reload, any_thread().has_incoming_immediate_work);
     }
-
-    if (observer_ && was_nested)
-      observer_->OnExitNestedRunLoop();
 
     // It's important we call ReloadEmptyWorkQueues out side of the lock to
     // avoid a lock order inversion.
@@ -347,7 +347,6 @@ void TaskQueueManager::DoWork(bool delayed) {
   // when there's no more work left to be done, rather than posting a
   // continuation task.
 
-  bool was_nested = false;
   {
     MoveableAutoLock lock(any_thread_lock_);
     base::Optional<NextTaskDelay> next_delay =
@@ -356,16 +355,10 @@ void TaskQueueManager::DoWork(bool delayed) {
     any_thread().do_work_running_count--;
     DCHECK_GE(any_thread().do_work_running_count, 0);
 
-    if (any_thread().is_nested && !is_nested)
-      was_nested = true;
-    any_thread().is_nested = is_nested;
     DCHECK_EQ(any_thread().is_nested, delegate_->IsNested());
 
     PostDoWorkContinuationLocked(next_delay, &lazy_now, std::move(lock));
   }
-
-  if (observer_ && was_nested)
-    observer_->OnExitNestedRunLoop();
 }
 
 void TaskQueueManager::PostDoWorkContinuationLocked(

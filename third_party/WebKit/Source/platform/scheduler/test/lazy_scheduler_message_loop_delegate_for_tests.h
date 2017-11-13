@@ -63,8 +63,6 @@ class LazySchedulerMessageLoopDelegateForTests : public SchedulerTqmDelegate {
   mutable scoped_refptr<base::SingleThreadTaskRunner> original_task_runner_;
   std::unique_ptr<base::TickClock> time_source_;
 
-  base::RunLoop::NestingObserver* pending_observer_;
-
   DISALLOW_COPY_AND_ASSIGN(LazySchedulerMessageLoopDelegateForTests);
 };
 

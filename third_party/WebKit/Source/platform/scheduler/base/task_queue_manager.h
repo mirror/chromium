@@ -252,6 +252,7 @@ class PLATFORM_EXPORT TaskQueueManager
 
   // base::RunLoop::NestingObserver implementation:
   void OnBeginNestedRunLoop() override;
+  void OnExitNestedRunLoop() override;
 
   // Called by the task queue to register a new pending task.
   void DidQueueTask(const internal::TaskQueueImpl::Task& pending_task);
