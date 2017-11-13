@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e3c82d1_07c13c3b",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIterator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-13T18:47:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c7869ab_38ac68b1",
+      "range": {
+        "startLine": 349,
+        "startChar": 0,
+        "endLine": 366,
+        "endChar": 9
+      },
+      "revId": "22ccaa9a40cb9395e95eb7c2719f01c097181a7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eacef569_5873b006",
         "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorBehavior.h",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "22ccaa9a40cb9395e95eb7c2719f01c097181a7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f0bc26_759f0281",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorBehavior.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-13T18:47:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eacef569_5873b006",
+      "revId": "22ccaa9a40cb9395e95eb7c2719f01c097181a7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
