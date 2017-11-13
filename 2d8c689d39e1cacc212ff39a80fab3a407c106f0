@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56dd5d25_5d52f5be",
+        "filename": "net/proxy/proxy_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-13T16:19:58Z",
+      "side": 1,
+      "message": "Can we check the contents of the map?  Seems like we should have at least some net/ test that makes sure it\u0027s set.",
+      "range": {
+        "startLine": 420,
+        "startChar": 2,
+        "endLine": 420,
+        "endChar": 13
+      },
+      "revId": "2d8c689d39e1cacc212ff39a80fab3a407c106f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
