@@ -234,6 +234,10 @@ GLContext* GLContext::GetRealCurrent() {
   return current_real_context_.Pointer()->Get();
 }
 
+GLContext* GLContext::GetRealCurrentForDebugging() {
+  return GetRealCurrent();
+}
+
 std::unique_ptr<gl::GLVersionInfo> GLContext::GenerateGLVersionInfo() {
   return std::make_unique<GLVersionInfo>(
       GetGLVersion().c_str(), GetGLRenderer().c_str(), GetExtensions());
@@ -271,6 +275,7 @@ void GLContext::SetGLStateRestorer(GLStateRestorer* state_restorer) {
 }
 
 void GLContext::SetSwapInterval(int interval) {
+  CHECK(false);
   if (swap_interval_ == interval)
     return;
   swap_interval_ = interval;
