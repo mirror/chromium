@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeebca1e_a13c127d",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/Document/document-open-01.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T12:36:02Z",
+      "side": 1,
+      "message": "Would you mind to write tests without alert()?\n\nYou can use testharness.js and testharnessreport.js and then you don\u0027t need any expectation file.\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/fast/dom/content-element-select-null.html\nis a small example.\n\nYou can use assert_unreached, and other family.",
+      "revId": "2346e6750791042cd08986234e814b56625e8d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38057848_a3933d02",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/Document/document-open-01.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T12:36:02Z",
+      "side": 1,
+      "message": "We should check that the return value of frame.contentDocument.open is neither of null nor undefined, and it is an object (i.e. assert_equals(typeof(opened_window), \u0027object\u0027, \"...description...\"); ).",
+      "revId": "2346e6750791042cd08986234e814b56625e8d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab136986_72afb76f",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/Document/document-open-01.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T12:36:02Z",
+      "side": 1,
+      "message": "This is not necessary nor important for this test.",
+      "revId": "2346e6750791042cd08986234e814b56625e8d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
