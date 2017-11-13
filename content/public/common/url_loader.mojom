@@ -19,6 +19,11 @@ struct URLRequestRedirectInfo;
 [Native]
 struct URLLoaderStatus;
 
+struct URLLoaderNavigationData {
+  bool is_stream;
+  bool is_download;
+};
+
 // This enum corresponds to net::RequestPriority. See its comments for details.
 enum RequestPriority {
   kThrottled = 0,
@@ -64,9 +69,11 @@ interface URLLoaderClient {
   // |downloaded_file| is non-null in the 'download_to_file' case.
   // |ssl_info| is non-null if kSendSSLInfo was specified to
   // CreateLoaderAndStart.
+  // TODO(arthursonzogni): Put a comment here.
   OnReceiveResponse(URLResponseHead head,
                     SSLInfo? ssl_info,
-                    DownloadedTempFile? downloaded_file);
+                    DownloadedTempFile? downloaded_file,
+                    URLLoaderNavigationData? navigation_data);
 
   // Called when the request has been redirected. The receiver is expected to
   // call FollowRedirect or cancel the request.
@@ -107,4 +114,3 @@ interface URLLoaderClient {
   // this client after this message arrives.
   OnComplete(URLLoaderStatus completion_status);
 };
-

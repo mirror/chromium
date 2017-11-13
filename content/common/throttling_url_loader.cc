@@ -317,7 +317,8 @@ void ThrottlingURLLoader::StopDeferringForThrottle(
 void ThrottlingURLLoader::OnReceiveResponse(
     const ResourceResponseHead& response_head,
     const base::Optional<net::SSLInfo>& ssl_info,
-    mojom::DownloadedTempFilePtr downloaded_file) {
+    mojom::DownloadedTempFilePtr downloaded_file,
+    mojom::URLLoaderNavigationDataPtr navigation_data) {
   DCHECK_EQ(DEFERRED_NONE, deferred_stage_);
   DCHECK(!loader_cancelled_);
   DCHECK(deferring_throttles_.empty());
@@ -337,13 +338,15 @@ void ThrottlingURLLoader::OnReceiveResponse(
       deferred_stage_ = DEFERRED_RESPONSE;
       response_info_ = std::make_unique<ResponseInfo>(
           response_head, ssl_info, std::move(downloaded_file));
+      navigation_data_ = std::move(navigation_data);
       client_binding_.PauseIncomingMethodCallProcessing();
       return;
     }
   }
 
   forwarding_client_->OnReceiveResponse(response_head, ssl_info,
-                                        std::move(downloaded_file));
+                                        std::move(downloaded_file),
+                                        std::move(navigation_data));
 }
 
 void ThrottlingURLLoader::OnReceiveRedirect(
@@ -482,7 +485,8 @@ void ThrottlingURLLoader::Resume() {
       client_binding_.ResumeIncomingMethodCallProcessing();
       forwarding_client_->OnReceiveResponse(
           response_info_->response_head, response_info_->ssl_info,
-          std::move(response_info_->downloaded_file));
+          std::move(response_info_->downloaded_file),
+          std::move(navigation_data_));
       break;
     }
     default:
