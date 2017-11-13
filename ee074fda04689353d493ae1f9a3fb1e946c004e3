@@ -22,6 +22,30 @@
       "revId": "ee074fda04689353d493ae1f9a3fb1e946c004e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305d5bb0_fd14e381",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/NearOomMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-13T23:18:11Z",
+      "side": 1,
+      "message": "Unfortunately it\u0027s difficult to use MemoryPressureListener for this OOM intervention. We only want to handle onLowMemory() but MemoryPressureListener converts onLowMemory()/onTrimMemory() to MemoryPressureLevel in a following way:\n\n- When browser is foreground:\n  TRIM_MEMORY_RUNNING_CRITICAL -\u003e MODERATE\n- When browser is background:\n  TRIM_MEMORY_COMPLETE -\u003e CRITICAL\n  TRIM_MEMORY_{BACKGROUND,MODERATE} -\u003e MODERATE\n- onLowMemory() -\u003e MODERATE\n\nWe can\u0027t distinguish whether MODERATE is converted from TRIM_MEMORY_RUNNING_CRITICAL or onLowMemory().",
+      "parentUuid": "a3d31eaf_048fac1b",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "ee074fda04689353d493ae1f9a3fb1e946c004e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
