@@ -272,7 +272,7 @@ void SearchProviderTest::SetUp() {
   TemplateURLServiceFactory::GetInstance()->SetTestingFactoryAndUse(
       &profile_, &TemplateURLServiceFactory::BuildInstanceFor);
 
-  client_.reset(new ChromeAutocompleteProviderClient(&profile_));
+  client_.reset(new ChromeAutocompleteProviderClient(&profile_, nullptr));
 
   TemplateURLService* turl_model =
       TemplateURLServiceFactory::GetForProfile(&profile_);
@@ -1000,7 +1000,8 @@ TEST_F(SearchProviderTest, KeywordOrderingAndDescriptions) {
   profile_.BlockUntilHistoryProcessesPendingRequests();
 
   AutocompleteController controller(
-      base::WrapUnique(new ChromeAutocompleteProviderClient(&profile_)),
+      base::WrapUnique(
+          new ChromeAutocompleteProviderClient(&profile_, nullptr)),
       nullptr, AutocompleteProvider::TYPE_SEARCH);
   AutocompleteInput input(ASCIIToUTF16("k t"),
                           metrics::OmniboxEventProto::OTHER,
@@ -3222,7 +3223,7 @@ TEST_F(SearchProviderTest, CanSendURL) {
   template_url_data.id = SEARCH_ENGINE_GOOGLE;
   TemplateURL google_template_url(template_url_data);
 
-  ChromeAutocompleteProviderClient client(&profile_);
+  ChromeAutocompleteProviderClient client(&profile_, nullptr);
 
   // Not signed in.
   EXPECT_FALSE(SearchProvider::CanSendURL(
@@ -3318,7 +3319,7 @@ TEST_F(SearchProviderTest, CanSendURL) {
 
   // Incognito.
   ChromeAutocompleteProviderClient client_incognito(
-      profile_.GetOffTheRecordProfile());
+      profile_.GetOffTheRecordProfile(), nullptr);
   EXPECT_FALSE(SearchProvider::CanSendURL(
       GURL("http://www.google.com/search"),
       GURL("https://www.google.com/complete/search"), &google_template_url,

@@ -20,8 +20,8 @@ class ChromeAutocompleteProviderClientTest : public testing::Test {
  public:
   void SetUp() override {
     profile_ = base::MakeUnique<TestingProfile>();
-    client_ =
-        base::MakeUnique<ChromeAutocompleteProviderClient>(profile_.get());
+    client_ = base::MakeUnique<ChromeAutocompleteProviderClient>(profile_.get(),
+                                                                 nullptr);
     storage_partition_.set_service_worker_context(&service_worker_context_);
     client_->set_storage_partition(&storage_partition_);
   }
@@ -31,7 +31,7 @@ class ChromeAutocompleteProviderClientTest : public testing::Test {
   // |client_| will be off the record.
   void GoOffTheRecord() {
     client_ = base::MakeUnique<ChromeAutocompleteProviderClient>(
-        profile_->GetOffTheRecordProfile());
+        profile_->GetOffTheRecordProfile(), nullptr);
   }
 
  protected:
