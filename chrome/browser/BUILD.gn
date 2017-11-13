@@ -4196,6 +4196,7 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/net/qualityprovider/ExternalEstimateProviderAndroid.java",
       "../android/java/src/org/chromium/chrome/browser/net/spdyproxy/DataReductionProxySettings.java",
       "../android/java/src/org/chromium/chrome/browser/notifications/ActionInfo.java",
+      "../android/java/src/org/chromium/chrome/browser/notifications/NotificationPermissionContext.java",
       "../android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
       "../android/java/src/org/chromium/chrome/browser/notifications/NotificationSettingsBridge.java",
       "../android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotifier.java",

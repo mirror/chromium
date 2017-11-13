@@ -29,7 +29,21 @@
 #include "third_party/WebKit/public/platform/modules/permissions/permission_status.mojom.h"
 #include "url/gurl.h"
 
+#if defined(OS_ANDROID)
+#include "base/android/jni_android.h"
+#include "jni/NotificationPermissionContext_jni.h"
+#endif
+
 namespace {
+
+#if defined(OS_ANDROID)
+// Makes Java pretend that the next app-level notification status check returns
+// that the app-level permission has been disabled.
+void DisableAppLevelNotificationStatusForNextCheck() {
+  Java_NotificationPermissionContext_disableAppLevelNotificationStatusForNextCheckForTesting(
+      base::android::AttachCurrentThread());
+}
+#endif  // defined(OS_ANDROID)
 
 void DoNothing(ContentSetting content_setting) {}
 
@@ -442,3 +456,28 @@ TEST_F(NotificationPermissionContextTest, TestParallelDenyInIncognito) {
   EXPECT_EQ(CONTENT_SETTING_BLOCK,
             permission_context.GetContentSettingFromMap(url, url));
 }
+
+#if defined(OS_ANDROID)
+// Tests that permission requests will be automatically denied when the
+// notification permission has been denied for the entire Android app.
+TEST_F(NotificationPermissionContextTest, AppLevelNotificationsBlocked) {
+  NotificationPermissionContext notification_context(
+      profile(), CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
+
+  GURL origin("https://example.com");
+
+  PermissionRequestID fake_id(0 /* render_process_id */,
+                              0 /* render_frame_id */, 0 /* request_id */);
+
+  // Permission requests while the app-level notification status is disabled
+  // should be automatically rejected.
+  DisableAppLevelNotificationStatusForNextCheck();
+
+  ContentSetting result = CONTENT_SETTING_DEFAULT;
+  context.DecidePermission(web_contents(), fake_id, origin, origin,
+                           true /* user_gesture */,
+                           base::Bind(&StoreContentSetting, &result));
+
+  ASSERT_EQ(result, CONTENT_SETTING_BLOCK);
+}
+#endif  // defined(OS_ANDROID)

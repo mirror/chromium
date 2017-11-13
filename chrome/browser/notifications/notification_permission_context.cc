@@ -23,6 +23,11 @@
 #include "content/public/browser/web_contents_user_data.h"
 #include "url/gurl.h"
 
+#if defined(OS_ANDROID)
+#include "base/android/jni_android.h"
+#include "jni/NotificationPermissionContext_jni.h"
+#endif
+
 namespace {
 
 // At most one of these is attached to each WebContents. It allows posting
@@ -216,6 +221,17 @@ void NotificationPermissionContext::DecidePermission(
     callback.Run(CONTENT_SETTING_BLOCK);
     return;
   }
+
+#if defined(OS_ANDROID)
+  // Users have the ability to revoke notification permission for the entire app
+  // on Android. There is no point in creating a permission request when this
+  // is the case, so automatically reject the request.
+  if (Java_NotificationPermissionContext_areAppLevelNotificationsBlocked(
+          base::android::AttachCurrentThread())) {
+    callback.Run(CONTENT_SETTING_BLOCK);
+    return;
+  }
+#endif  // defined(OS_ANDROID)
 
   // Notifications permission is always denied in incognito. To prevent sites
   // from using that to detect whether incognito mode is active, we deny after a
