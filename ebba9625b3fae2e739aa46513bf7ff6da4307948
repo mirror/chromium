@@ -22,6 +22,30 @@
       "revId": "ebba9625b3fae2e739aa46513bf7ff6da4307948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d574b13_ed88858c",
+        "filename": "base/observer_list.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-11-13T22:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22d18965_8af90d21",
+      "range": {
+        "startLine": 268,
+        "startChar": 9,
+        "endLine": 268,
+        "endChar": 14
+      },
+      "revId": "ebba9625b3fae2e739aa46513bf7ff6da4307948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
