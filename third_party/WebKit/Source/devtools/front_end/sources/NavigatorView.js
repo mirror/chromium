@@ -722,6 +722,12 @@ Sources.NavigatorView = class extends UI.VBox {
     if (project.type() !== Workspace.projectTypes.FileSystem)
       return;
 
+    var fullPath = node._project.fileSystemPath() + '/' + (path || '');
+    if (fullPath.startsWith('file://')) {
+      var folderPath = fullPath.substr(7);
+      contextMenu.saveSection().appendItem(
+          Common.UIString('Open folder'), () => InspectorFrontendHost.showItemInFolder(folderPath));
+    }
     contextMenu.defaultSection().appendItem(
         Common.UIString('New file'), this._handleContextMenuCreate.bind(this, project, path));
     contextMenu.defaultSection().appendItem(
