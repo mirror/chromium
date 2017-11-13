@@ -70,6 +70,30 @@
       "revId": "6871e121336ff1854382f923c307d31f25cf4e50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97da282f_0e9b2d61",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1191450
+      },
+      "writtenOn": "2017-11-13T18:24:31Z",
+      "side": 1,
+      "message": "Thank you for the reply",
+      "parentUuid": "5aee6b49_77ae0be5",
+      "range": {
+        "startLine": 733,
+        "startChar": 21,
+        "endLine": 733,
+        "endChar": 44
+      },
+      "revId": "6871e121336ff1854382f923c307d31f25cf4e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
