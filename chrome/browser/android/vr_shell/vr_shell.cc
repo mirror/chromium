@@ -907,7 +907,7 @@ void VrShell::OnVoiceResults(const base::string16& result) {
 // Native JNI methods
 // ----------------------------------------------------------------------------
 
-jlong Init(JNIEnv* env,
+jlong VrShellImpl__Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
            const JavaParamRef<jobject>& delegate,
            jlong window_android,

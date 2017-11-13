@@ -117,7 +117,7 @@ ntp_snippets::RemoteSuggestionsScheduler* GetRemoteSuggestionsScheduler() {
 
 }  // namespace
 
-static jlong Init(JNIEnv* env,
+static jlong SnippetsBridge__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& j_bridge,
                   const JavaParamRef<jobject>& j_profile) {
   NTPSnippetsBridge* snippets_bridge =

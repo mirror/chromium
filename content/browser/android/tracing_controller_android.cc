@@ -19,7 +19,7 @@ using base::android::ScopedJavaLocalRef;
 
 namespace content {
 
-static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+static jlong TracingControllerAndroid__Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   TracingControllerAndroid* profiler = new TracingControllerAndroid(env, obj);
   return reinterpret_cast<intptr_t>(profiler);
 }

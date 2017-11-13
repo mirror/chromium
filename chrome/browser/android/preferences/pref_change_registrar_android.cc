@@ -47,6 +47,6 @@ void PrefChangeRegistrarAndroid::OnPreferenceChange(const int pref_index) {
       env, pref_change_registrar_jobject_, pref_index);
 }
 
-jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+jlong PrefChangeRegistrar__Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   return reinterpret_cast<intptr_t>(new PrefChangeRegistrarAndroid(env, obj));
 }

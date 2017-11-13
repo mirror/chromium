@@ -61,7 +61,7 @@ jfloat DistilledPagePrefsAndroid::GetFontScaling(
   return distilled_page_prefs_->GetFontScaling();
 }
 
-jlong Init(JNIEnv* env,
+jlong DistilledPagePrefs__Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
            jlong distilled_page_prefs_ptr) {
   DistilledPagePrefs* distilled_page_prefs =
