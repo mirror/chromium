@@ -13,6 +13,7 @@ import android.os.Message;
 import android.os.Parcel;
 import android.os.ParcelUuid;
 import android.os.Parcelable;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.util.Pair;
 
@@ -38,6 +39,7 @@ import org.chromium.content_public.browser.SmartClipCallback;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsInternals;
 import org.chromium.content_public.browser.WebContentsObserver;
+import org.chromium.device.gamepad.GamepadList;
 import org.chromium.ui.OverscrollRefreshHandler;
 import org.chromium.ui.base.EventForwarder;
 import org.chromium.ui.base.WindowAndroid;
@@ -63,6 +65,10 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
     private static final long PARCELABLE_VERSION_ID = 0;
     // Non-final for testing purposes, so resetting of the UUID can happen.
     private static UUID sParcelableUUID = UUID.randomUUID();
+
+    // Used to avoid enabling zooming in / out if resulting zooming will
+    // produce little visible difference.
+    private static final float ZOOM_CONTROLS_EPSILON = 0.007f;
 
     /**
      * Used to reset the internal tracking for whether or not a serialized {@link WebContents}
@@ -355,6 +361,76 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
     @Override
     public void onShow() {
         nativeOnShow(mNativeWebContentsAndroid);
+    }
+
+    @Override
+    public boolean zoomIn() {
+        // This method uses the term 'zoom' for legacy reasons, but relates
+        // to what chrome calls the 'page scale factor'.
+        return canZoomIn() ? pinchByDelta(1.25f) : false;
+    }
+
+    @Override
+    public boolean zoomOut() {
+        // This method uses the term 'zoom' for legacy reasons, but relates
+        // to what chrome calls the 'page scale factor'.
+        return canZoomOut() ? pinchByDelta(0.8f) : false;
+    }
+
+    @Override
+    public boolean zoomReset() {
+        // The page scale factor is initialized to mNativeMinimumScale when
+        // the page finishes loading. Thus sets it back to mNativeMinimumScale.
+        if (!canZoomOut()) return false;
+        return pinchByDelta(mRenderCoordinates.getMinPageScaleFactor()
+                / mRenderCoordinates.getPageScaleFactor());
+    }
+
+    /**
+     * Checks whether the ContentViewCore can be zoomed in.
+     *
+     * @return True if the ContentViewCore can be zoomed in.
+     */
+    // This method uses the term 'zoom' for legacy reasons, but relates
+    // to what chrome calls the 'page scale factor'.
+    private boolean canZoomIn() {
+        final float zoomInExtent = mRenderCoordinates.getMaxPageScaleFactor()
+                - mRenderCoordinates.getPageScaleFactor();
+        return zoomInExtent > ZOOM_CONTROLS_EPSILON;
+    }
+
+    /**
+     * Checks whether the ContentViewCore can be zoomed out.
+     *
+     * @return True if the ContentViewCore can be zoomed out.
+     */
+    // This method uses the term 'zoom' for legacy reasons, but relates
+    // to what chrome calls the 'page scale factor'.
+    private boolean canZoomOut() {
+        final float zoomOutExtent = mRenderCoordinates.getPageScaleFactor()
+                - mRenderCoordinates.getMinPageScaleFactor();
+        return zoomOutExtent > ZOOM_CONTROLS_EPSILON;
+    }
+
+    /**
+     * Simulate a pinch zoom gesture.
+     *
+     * @param delta the factor by which the current page scale should be multiplied by.
+     * @return whether the gesture was sent.
+     */
+    private boolean pinchByDelta(float delta) {
+        if (mNativeWebContentsAndroid == 0) return false;
+
+        long timeMs = SystemClock.uptimeMillis();
+        nativePinchBegin(mNativeWebContentsAndroid, timeMs);
+        nativePinchBy(mNativeWebContentsAndroid, timeMs, delta);
+        nativePinchEnd(mNativeWebContentsAndroid, timeMs);
+        return true;
+    }
+
+    @Override
+    public boolean isGamepadAPIActive() {
+        return GamepadList.isGamepadAPIActive();
     }
 
     @Override
@@ -827,4 +903,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
     private native void nativeAddJavascriptInterface(
             long nativeWebContentsAndroid, Object object, String name, Class requiredAnnotation);
     private native void nativeRemoveJavascriptInterface(long nativeWebContentsAndroid, String name);
+    private native void nativePinchBegin(long nativeWebContentsAndroid, long timeMs);
+    private native void nativePinchEnd(long nativeWebContentsAndroid, long timeMs);
+    private native void nativePinchBy(long nativeWebContentsAndroid, long timeMs, float deltaScale);
 }

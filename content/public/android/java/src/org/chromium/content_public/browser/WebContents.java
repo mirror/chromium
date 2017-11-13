@@ -180,6 +180,34 @@ public interface WebContents extends Parcelable {
     void onShow();
 
     /**
+     * Zooms in the ContentViewCore by 25% (or less if that would result in
+     * zooming in more than possible).
+     *
+     * @return True if there was a zoom change, false otherwise.
+     */
+    boolean zoomIn();
+
+    /**
+     * Zooms out the ContentViewCore by 20% (or less if that would result in
+     * zooming out more than possible).
+     *
+     * @return True if there was a zoom change, false otherwise.
+     */
+    boolean zoomOut();
+
+    /**
+     * Resets the zoom factor of the ContentViewCore.
+     *
+     * @return True if there was a zoom change, false otherwise.
+     */
+    boolean zoomReset();
+
+    /**
+     * @return Whether the HTML5 gamepad API is active.
+     */
+    boolean isGamepadAPIActive();
+
+    /**
      * ChildProcessImportance on Android allows controls of the renderer process bindings
      * independent of visibility.
      */

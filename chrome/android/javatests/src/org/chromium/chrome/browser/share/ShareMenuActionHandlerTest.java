@@ -243,6 +243,26 @@ public class ShareMenuActionHandlerTest {
         public void onShow() {}
 
         @Override
+        public boolean zoomIn() {
+            return false;
+        }
+
+        @Override
+        public boolean zoomOut() {
+            return false;
+        }
+
+        @Override
+        public boolean zoomReset() {
+            return false;
+        }
+
+        @Override
+        public boolean isGamepadAPIActive() {
+            return false;
+        }
+
+        @Override
         public void setImportance(int importance) {}
 
         @Override
