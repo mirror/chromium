@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eff880a4_6bf44aa6",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-13T23:56:59Z",
+      "side": 0,
+      "message": "Let\u0027s keep this as a separate API so that any use of topVC is very intentional and only when we need it.",
+      "revId": "f75e20be6158587e4c4cc03b7d1683a5dba50881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

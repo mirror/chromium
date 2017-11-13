@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92ba426f_dd02fb6e",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-13T23:56:59Z",
+      "side": 1,
+      "message": "Let\u0027s rename this to something like dismissAllVCs so that it is clear that all VCs above presenting are dismissed.",
+      "revId": "2b5c9ec23a0a180820477c7a967191742c6289d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
