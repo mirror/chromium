@@ -576,19 +576,12 @@ ApplyUpdateResult V4Store::MergeUpdate(const HashPrefixMap& old_prefixes_map,
   int total_picked_from_old = 0;
   const int* removals_iter = raw_removals ? raw_removals->begin() : nullptr;
   while (old_has_unmerged || additions_has_unmerged) {
-    // If the same hash prefix appears in the existing store and the additions
-    // list, something is clearly wrong. Discard the update.
-    if (old_has_unmerged && additions_has_unmerged &&
-        next_smallest_prefix_old == next_smallest_prefix_additions) {
-      return ADDITIONS_HAS_EXISTING_PREFIX_FAILURE;
-    }
-
     // Select which map to pick the next hash prefix from to keep the result in
     // lexographically sorted order.
     bool pick_from_old =
         old_has_unmerged &&
         (!additions_has_unmerged ||
-         (next_smallest_prefix_old < next_smallest_prefix_additions));
+         (next_smallest_prefix_old <= next_smallest_prefix_additions));
 
     PrefixSize next_smallest_prefix_size;
     if (pick_from_old) {
@@ -600,6 +593,13 @@ ApplyUpdateResult V4Store::MergeUpdate(const HashPrefixMap& old_prefixes_map,
 
       if (!raw_removals || removals_iter == raw_removals->end() ||
           *removals_iter != total_picked_from_old) {
+        // If the same hash prefix appears in the existing store and the
+        // additions list, something is clearly wrong,
+        // and this prefix will not remove. Discard the update.
+        if (old_has_unmerged && additions_has_unmerged &&
+            next_smallest_prefix_old == next_smallest_prefix_additions) {
+          return ADDITIONS_HAS_EXISTING_PREFIX_FAILURE;
+        }
         // Append the smallest hash to the appropriate list.
         hash_prefix_map_[next_smallest_prefix_size] += next_smallest_prefix_old;
 
