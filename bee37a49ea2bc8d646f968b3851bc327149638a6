@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50454570_082c3118",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-13T15:19:32Z",
+      "side": 1,
+      "message": "I am not sure this is the right directory for those file.\nFor now I am putting everything in it, once we start using it with the rest of the application, we will see how the target splitting goes.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 61
+      },
+      "revId": "bee37a49ea2bc8d646f968b3851bc327149638a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
