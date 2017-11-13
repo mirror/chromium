@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9df1a1b1_4c3cc927",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T09:14:37Z",
+      "side": 1,
+      "message": "Removed the comment.  The spec seems written as |thisArg| be an ECMAScript value, so there is no good correspondence here.  Thus removed.",
+      "parentUuid": "e0804929_ca5627cf",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3094be76_5ecb61ce",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e92de144_461753fa",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T09:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3094be76_5ecb61ce",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd19c51f_90c4fbe4",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_function.h.tmpl",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-12T22:10:58Z",
       "side": 1,
       "message": "call \u003d\u003e Call",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a760ec59_9ddfe8ec",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.h.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T09:14:37Z",
+      "side": 1,
+      "message": "If you\u0027re okay, I\u0027d prefer changing the name in a separate patch, especially in a patch that changes the return type, because we\u0027ll need to rewrite all the call sites.",
+      "parentUuid": "fd19c51f_90c4fbe4",
       "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "fab39a45_a0198d85",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.h.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T09:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88c023ee_53bfb281",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0a38b0c_53aeb7bd",
         "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50795a6d_da2bfb36",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T09:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0a38b0c_53aeb7bd",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f86edf8a_0e6a1e6f",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T09:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "831893fc_787c0452",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad7f9c33_f9eb86fc",
         "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
         "patchSetId": 5
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6ce315d0_538845d1",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T09:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad7f9c33_f9eb86fc",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee24bcbd_2fd99596",
         "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6705a78_e5f10fe7",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T09:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee24bcbd_2fd99596",
+      "revId": "f15cfaa37e797768d588c3275189be7ad0a6ed9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
