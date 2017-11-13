@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "654f70cb_e08934c2",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-13T19:07:15Z",
+      "side": 1,
+      "message": "Fixes for IWYU issues discovered by |git cl lint| (e.g. for std::unique_ptr used by ScopedTargetContentsOwner::target_contents_owner_).",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "0e199c86b57058d17c354db37e44264a35cdf9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
