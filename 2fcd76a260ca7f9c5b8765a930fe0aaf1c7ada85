@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19b45dc5_bd7a4879",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-13T20:55:40Z",
+      "side": 1,
+      "message": "Good point. I somewhat prefer the environment variable approach so I\u0027ll go with this for now. There aren\u0027t enough proto fuzzers yet that switching will be painful, so if we decide to go with something else, adopting that won\u0027t be too hard I don\u0027t think.",
+      "parentUuid": "c903c3a5_ecaebe7f",
+      "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04c359de_a15714fc",
         "filename": "testing/libfuzzer/libprotobuf-mutator.md",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ef2695_5a69f795",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-13T20:55:40Z",
+      "side": 1,
+      "message": "I think I will leave it as is for now. \nI like the idea of devs using the text format since it is much nicer to deal with, so i\u0027ll change it to either be binary on clusterfuzz or text everywhere, in a later CL.",
+      "parentUuid": "04c359de_a15714fc",
+      "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6995e44b_473f00c2",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-13T20:55:40Z",
+      "side": 1,
+      "message": "Do you mean change this to: \n`LPM_DUMP_NATIVE_INPUT`\n?",
+      "parentUuid": "e6cf695f_4388289d",
+      "range": {
+        "startLine": 123,
+        "startChar": 56,
+        "endLine": 123,
+        "endChar": 77
+      },
+      "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2a7a9a7_0dcf4631",
         "filename": "testing/libfuzzer/libprotobuf-mutator.md",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a78b68f3_07fa429a",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-13T20:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2a7a9a7_0dcf4631",
+      "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "859935b2_bd7ca944",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-13T20:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb567018_47c20de1",
+      "range": {
+        "startLine": 176,
+        "startChar": 9,
+        "endLine": 176,
+        "endChar": 10
+      },
+      "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50329c11_2455c432",
         "filename": "testing/libfuzzer/libprotobuf-mutator.md",
         "patchSetId": 3
@@ -142,6 +244,30 @@
       "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "644f056d_3428d0b8",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-13T20:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50329c11_2455c432",
+      "range": {
+        "startLine": 181,
+        "startChar": 3,
+        "endLine": 181,
+        "endChar": 25
+      },
+      "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
