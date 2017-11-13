@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55eb588e_a1a54e9d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-13T21:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f487da0a_f622ccba",
+      "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "193ff671_f2865b04",
         "filename": "ash/wm/overview/overview_window_drag_controller.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "49bb2ccd_5bd7ec3e",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-13T21:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "193ff671_f2865b04",
+      "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe51efce_43db4006",
         "filename": "ash/wm/overview/overview_window_drag_controller.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-13T19:11:58Z",
       "side": 1,
       "message": "In this case can we just reset initial_event_location_ \u003d gfx::Point(-1, -1); and early return true if initial_event_location_ has been reset?",
+      "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1359553_99c81abe",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-13T21:47:31Z",
+      "side": 1,
+      "message": "Done. But i prefer std::optional over -1, is that ok?",
+      "parentUuid": "fe51efce_43db4006",
       "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "55105f33_65d9ff3b",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-13T21:47:31Z",
+      "side": 1,
+      "message": "Sorry, thats what i meant to have. im not sure what happened here. Done.",
+      "parentUuid": "de820567_b1f89a9e",
+      "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7c76642_eb2c3f47",
         "filename": "ash/wm/overview/overview_window_drag_controller.cc",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-13T19:11:58Z",
       "side": 1,
       "message": "Just curious: Why don\u0027t compare distance_scalar with OverviewWindowDragController::kMinimumDragOffsetAlreadyInSnapRegionDp directly?",
+      "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddadc9e6_4004bc18",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-13T21:47:31Z",
+      "side": 1,
+      "message": "OverviewWindowDragController::kMinimumDragOffsetAlreadyInSnapRegionDp is long and ugly :-P. This way is two lines of less codes.",
+      "parentUuid": "f7c76642_eb2c3f47",
       "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "40f307b4_0f11e045",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-13T21:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "690c0b25_5c70a139",
+      "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25a3accd_b9cd3586",
         "filename": "ash/wm/overview/window_selector_unittest.cc",
         "patchSetId": 3
@@ -115,6 +223,24 @@
       "writtenOn": "2017-11-13T19:11:58Z",
       "side": 1,
       "message": "line 1983 is redundant?",
+      "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f03e8a33_6fa5f03d",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1983,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-13T21:47:31Z",
+      "side": 1,
+      "message": "Done. Oops.",
+      "parentUuid": "25a3accd_b9cd3586",
       "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
