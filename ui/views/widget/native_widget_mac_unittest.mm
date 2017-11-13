@@ -40,6 +40,7 @@
 #include "ui/views/test/widget_test.h"
 #include "ui/views/widget/native_widget_mac.h"
 #include "ui/views/widget/native_widget_private.h"
+#include "ui/views/window/dialog_client_view.h"
 #include "ui/views/window/dialog_delegate.h"
 
 // Donates an implementation of -[NSAnimation stopAnimation] which calls the
@@ -947,16 +948,17 @@ class ModalDialogDelegate : public DialogDelegateView {
       : modal_type_(modal_type) {}
 
   void set_can_close(bool value) { can_close_ = value; }
+  void set_buttons(int buttons) { buttons_ = buttons; }
 
-  // WidgetDelegate:
+  // DialogDelegateView:
+  int GetDialogButtons() const override { return buttons_; }
   ui::ModalType GetModalType() const override { return modal_type_; }
-
-  // DialogDelegate:
   bool Close() override { return can_close_; }
 
  private:
   const ui::ModalType modal_type_;
   bool can_close_ = true;
+  int buttons_ = ui::DIALOG_BUTTON_OK | ui::DIALOG_BUTTON_CANCEL;
 
   DISALLOW_COPY_AND_ASSIGN(ModalDialogDelegate);
 };
@@ -2055,6 +2057,70 @@ TEST_F(NativeWidgetMacTest, CanClose) {
   delegate->set_can_close(true);
   EXPECT_TRUE([[window delegate] windowShouldClose:window]);
   widget->CloseNow();
+}
+
+// Test TouchBar integration.
+TEST_F(NativeWidgetMacTest, TouchBar) {
+  ModalDialogDelegate* delegate = new ModalDialogDelegate(ui::MODAL_TYPE_NONE);
+  views::DialogDelegate::CreateDialogWidget(delegate, nullptr, nullptr);
+  DialogClientView* client_view = delegate->GetDialogClientView();
+  NSView* content = [delegate->GetWidget()->GetNativeWindow() contentView];
+
+  NSString* principal = nil;
+  NSObject* old_touch_bar = nil;
+
+  // Constants from bridged_content_view_touch_bar.mm. These will also be
+  // packed into |principal|, but there is no public API to extract them again.
+  NSString* const kTouchBarOKId = @"com.google.chrome-OK";
+  NSString* const kTouchBarCancelId = @"com.google.chrome-CANCEL";
+
+  EXPECT_TRUE(content);
+  EXPECT_TRUE(client_view->ok_button());
+  EXPECT_TRUE(client_view->cancel_button());
+
+  if (@available(macOS 10.12.2, *)) {
+    NSTouchBar* touch_bar = [content touchBar];
+    EXPECT_TRUE([touch_bar delegate]);
+    EXPECT_TRUE([[touch_bar delegate] touchBar:touch_bar
+                         makeItemForIdentifier:kTouchBarOKId]);
+    EXPECT_TRUE([[touch_bar delegate] touchBar:touch_bar
+                         makeItemForIdentifier:kTouchBarCancelId]);
+
+    principal = [touch_bar principalItemIdentifier];
+    EXPECT_NSEQ(@"com.google.chrome-DIALOG-BUTTONS-GROUP", principal);
+
+    NSGroupTouchBarItem* group = base::mac::ObjCCastStrict<NSGroupTouchBarItem>(
+        [[touch_bar delegate] touchBar:touch_bar
+                 makeItemForIdentifier:principal]);
+    EXPECT_TRUE(group);
+
+    // Sadly, here, we run out of public APIs to inspect further. But we can
+    // ensure the touchBar is recreated by comparing pointers.
+    old_touch_bar = touch_bar;
+    EXPECT_NSEQ(old_touch_bar, [content touchBar]);
+  }
+
+  // Remove the cancel button.
+  delegate->set_buttons(ui::DIALOG_BUTTON_OK);
+  delegate->DialogModelChanged();
+  EXPECT_TRUE(client_view->ok_button());
+  EXPECT_FALSE(client_view->cancel_button());
+
+  if (@available(macOS 10.12.2, *)) {
+    NSTouchBar* touch_bar = [content touchBar];
+    EXPECT_NSNE(old_touch_bar, touch_bar);
+    EXPECT_TRUE([touch_bar delegate]);
+    EXPECT_TRUE([[touch_bar delegate] touchBar:touch_bar
+                         makeItemForIdentifier:kTouchBarOKId]);
+
+    // Although we can't inspect |group| (to verify that kTouchBarCancelId is no
+    // longer in it), we can verify that BridgedContentView returns nil, even
+    // though Cocoa should never request it.
+    EXPECT_FALSE([[touch_bar delegate] touchBar:touch_bar
+                          makeItemForIdentifier:kTouchBarCancelId]);
+  }
+
+  delegate->GetWidget()->CloseNow();
 }
 
 }  // namespace test
