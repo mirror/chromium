@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bee8fc97_9b848002",
+        "filename": "testing/buildbot/filters/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-13T04:58:59Z",
+      "side": 1,
+      "message": "nit: For both, 2017",
+      "revId": "051ddd269e82e89b9554138d0604ebeb83382a87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ee6579_80b3fe86",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-13T04:58:59Z",
+      "side": 1,
+      "message": "nit: I think you want a blank line between the copyright header and the doc string? Can\u0027t imagine what else would cause the presubmit presubmit to choke on this.",
+      "revId": "051ddd269e82e89b9554138d0604ebeb83382a87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
