@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81229032_a2bfa831",
+        "filename": "chrome/browser/previews/previews_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T21:55:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68b3f692_45030ba1",
+      "revId": "d504a7b3b79c6a181f89a8894ce815d7a84213d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4518b5e3_1c539cf7",
         "filename": "chrome/browser/profiles/profile_impl_io_data.cc",
         "patchSetId": 8
@@ -83,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "72dfcbf7_9b366249",
+        "filename": "components/previews/content/previews_io_data_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T21:55:07Z",
+      "side": 1,
+      "message": "should be fixed now.",
+      "parentUuid": "8089f649_a189edd5",
+      "revId": "d504a7b3b79c6a181f89a8894ce815d7a84213d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba0d63d1_fbe6a116",
         "filename": "components/previews/content/previews_optimization_guide.cc",
         "patchSetId": 8
@@ -100,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "99bffc1e_bba454ae",
+        "filename": "components/previews/content/previews_optimization_guide.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T21:55:07Z",
+      "side": 1,
+      "message": "yea addressed in another comment but we are probably looking at ~100 hints at most. from my understanding, url_pattern_index requires us to be using that same proto to send our hints down, which is currently incompatible and also requires a bit of work to make it so.",
+      "parentUuid": "ba0d63d1_fbe6a116",
+      "revId": "d504a7b3b79c6a181f89a8894ce815d7a84213d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79f35b61_6b3944fc",
         "filename": "components/previews/content/previews_optimization_guide.cc",
         "patchSetId": 8
@@ -114,6 +168,24 @@
       "revId": "d504a7b3b79c6a181f89a8894ce815d7a84213d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0899e210_dc8dda8e",
+        "filename": "components/previews/content/previews_optimization_guide.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T21:55:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79f35b61_6b3944fc",
+      "revId": "d504a7b3b79c6a181f89a8894ce815d7a84213d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
