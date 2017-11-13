@@ -57,16 +57,13 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
     const FrameSinkId& frame_sink_id,
     gpu::SurfaceHandle surface_handle,
     const RendererSettings& renderer_settings,
-    std::unique_ptr<BeginFrameSource>* begin_frame_source) {
-  auto synthetic_begin_frame_source =
-      base::MakeUnique<DelayBasedBeginFrameSource>(
-          base::MakeUnique<DelayBasedTimeSource>(task_runner_.get()));
+    std::unique_ptr<SyntheticBeginFrameSource>* synthetic_begin_frame_source) {
+  *synthetic_begin_frame_source = base::MakeUnique<DelayBasedBeginFrameSource>(
+      base::MakeUnique<DelayBasedTimeSource>(task_runner_.get()));
 
-  scoped_refptr<InProcessContextProvider> context_provider =
-      new InProcessContextProvider(gpu_service_, surface_handle,
-                                   gpu_memory_buffer_manager_.get(),
-                                   image_factory_, gpu::SharedMemoryLimits(),
-                                   nullptr /* shared_context */);
+  auto context_provider = base::MakeRefCounted<InProcessContextProvider>(
+      gpu_service_, surface_handle, gpu_memory_buffer_manager_.get(),
+      image_factory_, gpu::SharedMemoryLimits(), nullptr /* shared_context */);
 
   // TODO(rjkroege): If there is something better to do than CHECK, add it.
   // TODO(danakj): Should retry if the result is kTransientFailure.
@@ -78,14 +75,14 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
 #if defined(USE_OZONE)
     display_output_surface = base::MakeUnique<DisplayOutputSurfaceOzone>(
         std::move(context_provider), surface_handle,
-        synthetic_begin_frame_source.get(), gpu_memory_buffer_manager_.get(),
+        (*synthetic_begin_frame_source).get(), gpu_memory_buffer_manager_.get(),
         GL_TEXTURE_2D, GL_RGB);
 #else
     NOTREACHED();
 #endif
   } else {
     display_output_surface = base::MakeUnique<DisplayOutputSurface>(
-        std::move(context_provider), synthetic_begin_frame_source.get());
+        std::move(context_provider), (*synthetic_begin_frame_source).get());
   }
 
   int max_frames_pending =
@@ -93,11 +90,8 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
   DCHECK_GT(max_frames_pending, 0);
 
   auto scheduler = base::MakeUnique<DisplayScheduler>(
-      synthetic_begin_frame_source.get(), task_runner_.get(),
+      (*synthetic_begin_frame_source).get(), task_runner_.get(),
       max_frames_pending);
-
-  // The ownership of the BeginFrameSource is transfered to the caller.
-  *begin_frame_source = std::move(synthetic_begin_frame_source);
 
   return base::MakeUnique<Display>(
       ServerSharedBitmapManager::current(), gpu_memory_buffer_manager_.get(),
