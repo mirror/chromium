@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5094f6e7_7fcdd2a7",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1502,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-13T22:27:13Z",
+      "side": 1,
+      "message": "It\u0027s contained into namespace arc already so we should be fine removing it.",
+      "parentUuid": "a4eeeaca_6b0b7733",
+      "range": {
+        "startLine": 1498,
+        "startChar": 0,
+        "endLine": 1502,
+        "endChar": 31
+      },
+      "revId": "333d4fe274a60583487e3b5c9a28fb90e4b34716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb51ee43_2ae98c59",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "efa72e39_b4cd0ece",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-13T22:27:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb51ee43_2ae98c59",
+      "range": {
+        "startLine": 688,
+        "startChar": 14,
+        "endLine": 688,
+        "endChar": 19
+      },
+      "revId": "333d4fe274a60583487e3b5c9a28fb90e4b34716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e386ec4_177b9881",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "333d4fe274a60583487e3b5c9a28fb90e4b34716",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab437c0c_7b7edd16",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-13T22:27:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e386ec4_177b9881",
+      "revId": "333d4fe274a60583487e3b5c9a28fb90e4b34716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "333d4fe274a60583487e3b5c9a28fb90e4b34716",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8769b67e_e9d962b4",
+        "filename": "chrome/browser/chromeos/arc/user_session/arc_user_session_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-13T22:27:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7874d218_d6b88951",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 11
+      },
+      "revId": "333d4fe274a60583487e3b5c9a28fb90e4b34716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "357f1c1b_49c37a38",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-13T22:27:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48ae8df4_7c97d158",
+      "revId": "333d4fe274a60583487e3b5c9a28fb90e4b34716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38d9e446_3da53e56",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
         "patchSetId": 3
@@ -136,6 +244,24 @@
       "revId": "333d4fe274a60583487e3b5c9a28fb90e4b34716",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575610cf_ce3f72c6",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-13T22:27:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38d9e446_3da53e56",
+      "revId": "333d4fe274a60583487e3b5c9a28fb90e4b34716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
