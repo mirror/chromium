@@ -5,6 +5,9 @@
 #ifndef CHROMEOS_DBUS_UPSTART_CLIENT_H_
 #define CHROMEOS_DBUS_UPSTART_CLIENT_H_
 
+#include <string>
+#include <vector>
+
 #include "base/callback.h"
 #include "base/macros.h"
 #include "chromeos/chromeos_export.h"
@@ -30,14 +33,22 @@ class CHROMEOS_EXPORT UpstartClient : public DBusClient {
   // Restarts authpolicyd.
   virtual void RestartAuthPolicyService() = 0;
 
-  // Starts the media analytics process.
-  virtual void StartMediaAnalytics(const UpstartCallback& callback) = 0;
+  // Starts the media analytics process. Optionally add Upstart environment
+  // variables by providing a vector of strings.
+  virtual void StartMediaAnalytics(
+      const UpstartCallback& callback,
+      const std::vector<std::string>& upstart_env = std::vector<std::string>()
+      ) = 0;
 
   // Restarts the media analytics process.
   virtual void RestartMediaAnalytics(const UpstartCallback& callback) = 0;
 
   // Stops the media analytics process.
   virtual void StopMediaAnalytics() = 0;
+
+  // Provides an interface for stopping the media analytics process and getting
+  // a callback on completion.
+  virtual void StopMediaAnalytics(const UpstartCallback& callback) = 0;
 
  protected:
   // Create() should be used instead.

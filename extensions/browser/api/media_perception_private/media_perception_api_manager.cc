@@ -99,13 +99,25 @@ void MediaPerceptionAPIManager::SetState(const media_perception::State& state,
   mri::State state_proto = StateIdlToProto(state);
   DCHECK(state_proto.status() == mri::State::RUNNING ||
          state_proto.status() == mri::State::SUSPENDED ||
-         state_proto.status() == mri::State::RESTARTING)
+         state_proto.status() == mri::State::RESTARTING ||
+         state_proto.status() == mri::State::STOPPED)
       << "Cannot set state to something other than RUNNING, SUSPENDED "
-         "or RESTARTING.";
+         "RESTARTING, or STOPPED.";
 
   if (analytics_process_state_ == AnalyticsProcessState::LAUNCHING) {
     callback.Run(GetStateForServiceError(
         media_perception::SERVICE_ERROR_SERVICE_BUSY_LAUNCHING));
+    return;
+  }
+
+  // If the media analytics process is running or not and stop is requested,
+  // then send stop upstart command.
+  if (state_proto.status() == mri::State::STOPPED) {
+    chromeos::UpstartClient* dbus_client =
+        chromeos::DBusThreadManager::Get()->GetUpstartClient();
+    dbus_client->StopMediaAnalytics(
+        base::Bind(&MediaPerceptionAPIManager::UpstartStopCallback,
+                   weak_ptr_factory_.GetWeakPtr(), callback));
     return;
   }
 
@@ -172,6 +184,21 @@ void MediaPerceptionAPIManager::UpstartStartCallback(
   }
   analytics_process_state_ = AnalyticsProcessState::RUNNING;
   SetStateInternal(callback, state);
+}
+
+void MediaPerceptionAPIManager::UpstartStopCallback(
+    const APIStateCallback& callback,
+    bool succeeded) {
+  if (!succeeded) {
+    callback.Run(GetStateForServiceError(
+        media_perception::SERVICE_ERROR_SERVICE_UNREACHABLE));
+    return;
+  }
+  analytics_process_state_ = AnalyticsProcessState::IDLE;
+  // Stopping the process succeeded so fire a callback with status STOPPED.
+  media_perception::State state_stopped;
+  state_stopped.status = media_perception::STATUS_STOPPED;
+  callback.Run(std::move(state_stopped));
 }
 
 void MediaPerceptionAPIManager::UpstartRestartCallback(

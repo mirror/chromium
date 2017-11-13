@@ -14,6 +14,10 @@ namespace extensions {
 
 class MediaPerceptionAPIManager : public BrowserContextKeyedAPI {
  public:
+  using APISetAnalyticsComponentCallback = base::Callback<void(
+      extensions::api::media_perception_private::ComponentState
+          component_state)>;
+
   using APIStateCallback = base::Callback<void(
       extensions::api::media_perception_private::State state)>;
 
@@ -32,6 +36,9 @@ class MediaPerceptionAPIManager : public BrowserContextKeyedAPI {
   GetFactoryInstance();
 
   // Public functions for MediaPerceptionPrivateAPI implementation.
+  void SetAnalyticsComponent(
+      const extensions::api::media_perception_private::Component component,
+      const APISetAnalyticsComponentCallback& callback);
   void GetState(const APIStateCallback& callback);
   void SetState(const extensions::api::media_perception_private::State& state,
                 const APIStateCallback& callback);
@@ -80,6 +87,9 @@ class MediaPerceptionAPIManager : public BrowserContextKeyedAPI {
 
   // Callback for Upstart command to restart media analytics process.
   void UpstartRestartCallback(const APIStateCallback& callback, bool succeeded);
+
+  // Callback for Upstart command to stop media analytics process.
+  void UpstartStopCallback(const APIStateCallback& callback, bool succeeded);
 
   content::BrowserContext* const browser_context_;
 
