@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76892fe6_12aed127",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-13T14:06:20Z",
+      "side": 1,
+      "message": "for (auto\u0026 mirror : mirrors)",
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df4130bc_4be0416d",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-13T14:06:20Z",
+      "side": 1,
+      "message": "Are these better as DCHECKs? Should it be possible the WM sends any of these cases?",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 5
+      },
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8becd03e_a11e7ae8",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-13T14:06:20Z",
+      "side": 1,
+      "message": "Unrelated to your CL but I don\u0027t think this condition is right. If you close the lid then the internal display should turn off. I think the AshWindowTreeHost/ui::PlatformWindow/gfx::AcceleratedWidget should be deleted then? Does cash delete those objects?",
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4caba3_9ebfc4d5",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-13T14:06:20Z",
+      "side": 1,
+      "message": "If I understand this correctly then |viewport_metrics| has entries for everything in |displays| and then |mirrors|?",
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c1d245d_f4117ad2",
+        "filename": "ui/display/manager/chromeos/display_configurator_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-13T14:06:20Z",
+      "side": 1,
+      "message": "Do you need to create these things after the command line change? The check for chromeos::IsRunningAsSystemCompositor() only happens when running display configuration I think.",
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
