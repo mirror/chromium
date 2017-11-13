@@ -19,6 +19,7 @@ import org.chromium.base.BaseSwitches;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
 import org.chromium.base.annotations.SuppressFBWarnings;
@@ -144,6 +145,7 @@ public class ChildProcessServiceImpl {
 
     // The ClassLoader for the host context.
     private ClassLoader mHostClassLoader;
+    private Context mHostContext;
 
     /**
      * Loads Chrome's native libraries and initializes a ChildProcessServiceImpl.
@@ -153,6 +155,7 @@ public class ChildProcessServiceImpl {
     @SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD") // For sCreateCalled check.
     public void create(final Context context, final Context hostContext) {
         mHostClassLoader = hostContext.getClassLoader();
+        mHostContext = hostContext;
         Log.i(TAG, "Creating new ChildProcessService pid=%d", Process.myPid());
         if (sCreateCalled) {
             throw new RuntimeException("Illegal child process reuse.");
@@ -281,6 +284,13 @@ public class ChildProcessServiceImpl {
                 intent.getBooleanExtra(ChildProcessConstants.EXTRA_BIND_TO_CALLER, false);
         mServiceBound = true;
         mDelegate.onServiceBound(intent);
+        // Schedule all follow-up work to happen outside of the call.
+        ThreadUtils.postOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mDelegate.preloadNativeLibrary(mHostContext);
+            }
+        });
         return mBinder;
     }
 
