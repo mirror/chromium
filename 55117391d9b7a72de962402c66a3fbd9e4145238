@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9fb8d9c_9325f99a",
+        "filename": "chrome/browser/permissions/permission_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-13T13:59:38Z",
+      "side": 1,
+      "message": "Please don\u0027t remove the entry, as this will mess up UMA. (See the enum-level comment.)\n\ninstead, just rename this to UNUSED_PERMISSION_PUSH_MESSAGING or something.",
+      "revId": "55117391d9b7a72de962402c66a3fbd9e4145238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2258250b_c9a61664",
+        "filename": "content/public/browser/permission_type.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-13T13:59:38Z",
+      "side": 1,
+      "message": "dito, please don\u0027t remove entries",
+      "revId": "55117391d9b7a72de962402c66a3fbd9e4145238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98282d67_26311179",
+        "filename": "headless/lib/browser/headless_permission_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-13T13:59:38Z",
+      "side": 1,
+      "message": "nit: would you mind removing \"push\" from this sentence? It no longer carries significance, so we can generalise.",
+      "revId": "55117391d9b7a72de962402c66a3fbd9e4145238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
