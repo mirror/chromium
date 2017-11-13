@@ -58,7 +58,8 @@ SessionState GetDefaultSessionState() {
 }  // namespace
 
 SessionController::SessionController(service_manager::Connector* connector)
-    : state_(GetDefaultSessionState()),
+    : binding_(this),
+      state_(GetDefaultSessionState()),
       connector_(connector),
       weak_ptr_factory_(this) {}
 
@@ -69,7 +70,7 @@ SessionController::~SessionController() {
 }
 
 void SessionController::BindRequest(mojom::SessionControllerRequest request) {
-  bindings_.AddBinding(this, std::move(request));
+  binding_.Bind(std::move(request));
 }
 
 int SessionController::NumberOfLoggedInUsers() const {

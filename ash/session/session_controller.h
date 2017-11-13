@@ -18,7 +18,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "base/time/time.h"
-#include "mojo/public/cpp/bindings/binding_set.h"
+#include "mojo/public/cpp/bindings/binding.h"
 
 class AccountId;
 class PrefService;
@@ -220,8 +220,8 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
       const AccountId& account_id,
       std::unique_ptr<PrefService> pref_service);
 
-  // Bindings for mojom::SessionController interface.
-  mojo::BindingSet<mojom::SessionController> bindings_;
+  // Binding for mojom::SessionController interface.
+  mojo::Binding<mojom::SessionController> binding_;
 
   // Client interface to session manager code (chrome).
   mojom::SessionControllerClientPtr client_;
