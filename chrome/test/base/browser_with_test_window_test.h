@@ -51,6 +51,8 @@ namespace content {
 class NavigationController;
 }
 
+class TestingProfileManager;
+
 // Base class for browser based unit tests. BrowserWithTestWindowTest creates a
 // Browser with a TestingProfile and TestBrowserWindow. To add a tab use
 // AddTab. For example, the following adds a tab and navigates to
@@ -179,6 +181,8 @@ class BrowserWithTestWindowTest : public testing::Test {
   // |DestroyProfile()| function - which can be overwritten by derived testing
   // frameworks.
   TestingProfile* profile_;
+
+  std::unique_ptr<TestingProfileManager> profile_manager_;
   std::unique_ptr<BrowserWindow> window_;  // Usually a TestBrowserWindow.
   std::unique_ptr<Browser> browser_;
 
