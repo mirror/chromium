@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8307ec04_32dcc1d7",
+        "filename": "ui/app_list/app_list_view_state.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-13T22:39:40Z",
+      "side": 1,
+      "message": "unused now?",
+      "revId": "4f4b48ebdd6c12d3414c7885c810191d59cbd081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
