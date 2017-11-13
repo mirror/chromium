@@ -25,6 +25,7 @@
  */
 
 #ifndef ResourceError_h
+
 #define ResourceError_h
 
 // TODO(toyoshim): Move net/base inclusion from header file.
