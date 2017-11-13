@@ -555,8 +555,19 @@ int OmniboxFieldTrial::MaxNumHQPUrlsIndexedAtStartup() {
   int num_urls;
   if (base::StringToInt(param_value, &num_urls))
     return num_urls;
+
+#if defined(OS_ANDROID)
+  // Limits on Android are chosen based on experiment results. See
+  // crbug.com/715852#c18.
+  const int kMaxNumHQPUrlsIndexedAtStartupOnLowEndDevices = 100;
+  const int kMaxNumHQPUrlsIndexedAtStartupOnNonLowEndDevices = 1000;
+  if (base::SysInfo::IsLowEndDevice())
+    return kMaxNumHQPUrlsIndexedAtStartupOnLowEndDevices;
+  return kMaxNumHQPUrlsIndexedAtStartupOnNonLowEndDevices;
+#else
   // Default value is set to -1 for unlimited number of urls.
   return -1;
+#endif  // defined(OS_ANDROID)
 }
 
 size_t OmniboxFieldTrial::HQPMaxVisitsToScore() {
