@@ -49,6 +49,7 @@
 #include "mojo/public/cpp/bindings/associated_binding_set.h"
 #include "mojo/public/cpp/bindings/interface_ptr.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/interfaces/service.mojom.h"
 #include "services/ui/public/interfaces/gpu.mojom.h"
 #include "services/viz/public/interfaces/compositing/compositing_mode_watcher.mojom.h"
@@ -92,6 +93,17 @@ class StoragePartitionImpl;
 
 typedef base::Thread* (*RendererMainThreadFactoryFunction)(
     const InProcessChildThreadParams& params);
+
+// Forwards service requests to Service Manager since the renderer cannot launch
+// out-of-process services on is own.
+template <typename Interface>
+void ForwardRequest(const char* service_name,
+                    mojo::InterfaceRequest<Interface> request) {
+  // TODO(beng): This should really be using the per-profile connector.
+  service_manager::Connector* connector =
+      ServiceManagerConnection::GetForProcess()->GetConnector();
+  connector->BindInterface(service_name, std::move(request));
+}
 
 // Implements a concrete RenderProcessHost for the browser process for talking
 // to actual renderer processes (as opposed to mocks).
