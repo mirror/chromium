@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63dbbb7f_115df3d0",
+        "filename": "net/cert/cert_verify_proc_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-13T20:22:57Z",
+      "side": 1,
+      "message": "Why the switch from \"using\" to \"typedef\"? I believe \"using\" is the preferred keyword now",
+      "revId": "5f8acf1fb5d84e40643a764ccc6af9cfe8cca793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1805268_4aee84cb",
+        "filename": "net/cert/cert_verify_proc_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-13T20:22:57Z",
+      "side": 1,
+      "message": "Please use the google C++ style for naming (global) variables: cache_ocsp_response, or g_cache_ocsp_response.",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 21
+      },
+      "revId": "5f8acf1fb5d84e40643a764ccc6af9cfe8cca793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f3c57b9_f583166c",
+        "filename": "net/cert/cert_verify_proc_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-13T20:22:57Z",
+      "side": 1,
+      "message": "Can this return a const reference? It shouldn\u0027t be necessary for the function pointer to be mutable.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 49
+      },
+      "revId": "5f8acf1fb5d84e40643a764ccc6af9cfe8cca793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
