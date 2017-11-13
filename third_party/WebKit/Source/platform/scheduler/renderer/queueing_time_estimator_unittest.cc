@@ -953,8 +953,9 @@ TEST_F(QueueingTimeEstimatorTest, SplitEQTByFrameType) {
   // Beginning of window 1.
   time += base::TimeDelta::FromMilliseconds(500);
   // Scheduler with frame type: MAIN_FRAME_BACKGROUND.
-  FakeWebFrameScheduler scheduler1(
-      false, false, WebFrameScheduler::FrameType::kMainFrame, false, false);
+  FakeWebFrameScheduler scheduler1(nullptr, false, false,
+                                   WebFrameScheduler::FrameType::kMainFrame,
+                                   false, false);
   queue1->SetFrameScheduler(&scheduler1);
   estimator.OnTopLevelTaskStarted(time, queue1.get());
   time += base::TimeDelta::FromMilliseconds(3000);
@@ -963,8 +964,9 @@ TEST_F(QueueingTimeEstimatorTest, SplitEQTByFrameType) {
   time += base::TimeDelta::FromMilliseconds(1500);
   // Beginning of window 2.
   // Scheduler with frame type: MAIN_FRAME_VISIBLE.
-  FakeWebFrameScheduler scheduler2(
-      true, true, WebFrameScheduler::FrameType::kMainFrame, false, false);
+  FakeWebFrameScheduler scheduler2(nullptr, true, true,
+                                   WebFrameScheduler::FrameType::kMainFrame,
+                                   false, false);
   queue1->SetFrameScheduler(&scheduler2);
   estimator.OnTopLevelTaskStarted(time, queue1.get());
   time += base::TimeDelta::FromMilliseconds(2000);
@@ -980,16 +982,18 @@ TEST_F(QueueingTimeEstimatorTest, SplitEQTByFrameType) {
 
   // Beginning of window 3.
   // Scheduler with frame type: MAIN_FRAME_VISIBLE.
-  FakeWebFrameScheduler scheduler3(
-      true, true, WebFrameScheduler::FrameType::kMainFrame, false, true);
+  FakeWebFrameScheduler scheduler3(nullptr, true, true,
+                                   WebFrameScheduler::FrameType::kMainFrame,
+                                   false, true);
   queue1->SetFrameScheduler(&scheduler3);
   estimator.OnTopLevelTaskStarted(time, queue1.get());
   time += base::TimeDelta::FromMilliseconds(3000);
   estimator.OnTopLevelTaskCompleted(time);
 
   // Scheduler with frame type: MAIN_FRAME_BACKGROUND.
-  FakeWebFrameScheduler scheduler4(
-      false, true, WebFrameScheduler::FrameType::kMainFrame, false, false);
+  FakeWebFrameScheduler scheduler4(nullptr, false, true,
+                                   WebFrameScheduler::FrameType::kMainFrame,
+                                   false, false);
   queue1->SetFrameScheduler(&scheduler4);
   estimator.OnTopLevelTaskStarted(time, queue1.get());
   time += base::TimeDelta::FromMilliseconds(3000);
@@ -998,14 +1002,17 @@ TEST_F(QueueingTimeEstimatorTest, SplitEQTByFrameType) {
 
   time += base::TimeDelta::FromMilliseconds(1000);
   // Scheduler with frame type: SAME_ORIGIN_VISIBLE.
-  FakeWebFrameScheduler scheduler5(
-      true, true, WebFrameScheduler::FrameType::kSubframe, false, false);
+  FakeWebFrameScheduler scheduler5(nullptr, true, true,
+                                   WebFrameScheduler::FrameType::kSubframe,
+                                   false, false);
   // Scheduler with frame type: SAME_ORIGIN_HIDDEN.
-  FakeWebFrameScheduler scheduler6(
-      true, false, WebFrameScheduler::FrameType::kSubframe, false, false);
+  FakeWebFrameScheduler scheduler6(nullptr, true, false,
+                                   WebFrameScheduler::FrameType::kSubframe,
+                                   false, false);
   // Scheduler with frame type: CROSS_ORIGIN_VISIBLE.
-  FakeWebFrameScheduler scheduler7(
-      true, true, WebFrameScheduler::FrameType::kSubframe, true, false);
+  FakeWebFrameScheduler scheduler7(nullptr, true, true,
+                                   WebFrameScheduler::FrameType::kSubframe,
+                                   true, false);
   FakeWebFrameScheduler* schedulers_for_thousand[] = {&scheduler5, &scheduler6,
                                                       &scheduler7};
   for (auto scheduler : schedulers_for_thousand) {
@@ -1017,17 +1024,21 @@ TEST_F(QueueingTimeEstimatorTest, SplitEQTByFrameType) {
 
   // Beginning of window 5.
   // Scheduler with frame type: MAIN_FRAME_HIDDEN.
-  FakeWebFrameScheduler scheduler8(
-      true, false, WebFrameScheduler::FrameType::kMainFrame, false, false);
+  FakeWebFrameScheduler scheduler8(nullptr, true, false,
+                                   WebFrameScheduler::FrameType::kMainFrame,
+                                   false, false);
   // Scheduler with frame type: SAME_ORIGIN_BACKGROUND.
-  FakeWebFrameScheduler scheduler9(
-      false, false, WebFrameScheduler::FrameType::kSubframe, false, false);
+  FakeWebFrameScheduler scheduler9(nullptr, false, false,
+                                   WebFrameScheduler::FrameType::kSubframe,
+                                   false, false);
   // Scheduler with frame type: CROSS_ORIGIN_HIDDEN.
-  FakeWebFrameScheduler scheduler10(
-      true, false, WebFrameScheduler::FrameType::kSubframe, true, false);
+  FakeWebFrameScheduler scheduler10(nullptr, true, false,
+                                    WebFrameScheduler::FrameType::kSubframe,
+                                    true, false);
   // Scheduler with frame type: CROSS_ORIGIN_BACKGROUND.
-  FakeWebFrameScheduler scheduler11(
-      false, false, WebFrameScheduler::FrameType::kSubframe, true, false);
+  FakeWebFrameScheduler scheduler11(nullptr, false, false,
+                                    WebFrameScheduler::FrameType::kSubframe,
+                                    true, false);
   // One scheduler per supported frame type, excluding "Other".
   FakeWebFrameScheduler* schedulers_for_four_hundred[] = {
       &scheduler2, &scheduler1, &scheduler8,  &scheduler5, &scheduler6,
