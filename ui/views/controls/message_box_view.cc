@@ -233,7 +233,7 @@ void MessageBoxView::ResetLayoutManager() {
                           GridLayout::USE_PREF, 0, 0);
   }
 
-  const int kMaxScrollViewHeight = 400;
+  constexpr int kMaxScrollViewHeight = 160;
   views::View* message_contents = new views::View();
   message_contents->SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kVertical));
