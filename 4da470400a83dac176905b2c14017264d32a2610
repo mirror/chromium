@@ -46,6 +46,30 @@
       "revId": "4da470400a83dac176905b2c14017264d32a2610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2e0c90_0ad96b55",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLOptionElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-13T09:47:52Z",
+      "side": 1,
+      "message": "I don\u0027t think it is, such a test would have to first get the text node child, then set .text, and then check that the same text node has had its value changed and is still in the document, as opposed to having been replaced by a new text node with the new value.",
+      "parentUuid": "2ae2c47d_8a05b16d",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 16
+      },
+      "revId": "4da470400a83dac176905b2c14017264d32a2610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
