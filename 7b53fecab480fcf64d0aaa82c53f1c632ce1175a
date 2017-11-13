@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "196b3c46_b5f0e7f4",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-11-13T18:49:02Z",
+      "side": 1,
+      "message": "As I understand the issue was that if HistoryBackend is not initialized yet then bridge would be nullptr and would cause crash when called in OnSyncStartingHelper.\n\nAfter your change GetBridgeProvider essentially does the same thing:\n- HistoryServiceFactory::GetForProfile\n- HistoryService::GetTypedURLSyncBridge\n\nThe only difference is that returned pointer is wrapped in WeakPtr.\n\nWhile this CL fixes the crash (ModelTypeController::RunBridgeTask now only calls the bridge if it is valid), it doesn\u0027t address the issue of not waiting for bridge to initialize.\n\nActually I think by the time RunBridgeTask gets run on history thread the bridge is already initialized. It\u0027s just RunBridgeTask doesn\u0027t know about it.\n\nWhat do you think?",
+      "revId": "7b53fecab480fcf64d0aaa82c53f1c632ce1175a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
