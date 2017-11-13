@@ -74,7 +74,8 @@ class GIN_EXPORT V8Initializer {
 
   // Get address and size information for currently loaded V8 context snapshot.
   // If no snapshot is loaded, the return values are nullptr and 0.
-  static void GetV8ContextSnapshotData(v8::StartupData* snapshot);
+  static IsolateHolder::SnapshotType GetV8ContextSnapshotData(
+      v8::StartupData* snapshot);
 };
 
 }  // namespace gin
