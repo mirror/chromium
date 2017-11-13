@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "30a709a2_e20c6c9b",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-13T14:23:39Z",
+      "side": 1,
+      "message": "Wow, that is a good point. We should not rely on AD policy update. E.g. device could be offline. I changed it to take last time from the policy.",
+      "parentUuid": "5b520dc1_2e7326b0",
+      "revId": "71bfd126966d462537d9df32b0649957d3f0f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26356873_77f1d4a4",
         "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e1f133d6_f56b0053",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-13T14:23:39Z",
+      "side": 1,
+      "message": "I don\u0027t use it anymore. Should I change PolicyScheduler to use base::Time?",
+      "parentUuid": "26356873_77f1d4a4",
+      "revId": "71bfd126966d462537d9df32b0649957d3f0f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da8fd5a5_0ed77013",
         "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "71bfd126966d462537d9df32b0649957d3f0f21a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d0cdbb_06b4c52f",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-13T14:23:39Z",
+      "side": 1,
+      "message": "Yeah, done",
+      "parentUuid": "da8fd5a5_0ed77013",
+      "revId": "71bfd126966d462537d9df32b0649957d3f0f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "c029bffd_4fb11fda",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-13T14:23:39Z",
+      "side": 1,
+      "message": "It comes from the policy. It should be empty, but if it ever gets set - we\u0027ll handle it correctly.",
+      "parentUuid": "9fb34360_5bc5244f",
+      "range": {
+        "startLine": 601,
+        "startChar": 37,
+        "endLine": 601,
+        "endChar": 76
+      },
+      "revId": "71bfd126966d462537d9df32b0649957d3f0f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c96c902_72fe595c",
         "filename": "components/policy/core/common/policy_scheduler.h",
         "patchSetId": 10
@@ -96,6 +174,30 @@
       "revId": "71bfd126966d462537d9df32b0649957d3f0f21a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01998690_0028df8b",
+        "filename": "components/policy/core/common/policy_scheduler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-13T14:23:39Z",
+      "side": 1,
+      "message": "Done\nRemoved the function",
+      "parentUuid": "8c96c902_72fe595c",
+      "range": {
+        "startLine": 55,
+        "startChar": 18,
+        "endLine": 55,
+        "endChar": 32
+      },
+      "revId": "71bfd126966d462537d9df32b0649957d3f0f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
