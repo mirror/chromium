@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.util;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import org.chromium.base.CollectionUtil;
