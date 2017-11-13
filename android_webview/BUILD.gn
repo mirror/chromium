@@ -831,6 +831,7 @@ android_library("android_webview_java") {
     "java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
     "java/src/org/chromium/android_webview/ResourcesContextWrapperFactory.java",
     "java/src/org/chromium/android_webview/ScrollAccessibilityHelper.java",
+    "java/src/org/chromium/android_webview/SharedWebViewProviderState.java",
     "java/src/org/chromium/android_webview/SslUtil.java",
     "java/src/org/chromium/android_webview/permission/AwGeolocationCallback.java",
     "java/src/org/chromium/android_webview/permission/AwPermissionRequest.java",

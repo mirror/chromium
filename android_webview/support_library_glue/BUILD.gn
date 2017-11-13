@@ -1,0 +1,51 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/config/android/config.gni")
+import("//build/config/android/rules.gni")
+
+webview_public_framework_ijar = "frameworks.public.interface.jar"
+
+generate_interface_jar("public_framework_ijar") {
+  input_jar = webview_public_framework_jar
+  output_jar = "$target_out_dir/$webview_public_framework_ijar"
+}
+
+android_library("support_lib_glue_java") {
+  java_files = [
+    "java/src/org/chromium/android_webview_glue/GlueFactoryProviderFetcher.java",
+    "java/src/org/chromium/android_webview_glue/GlueWebSettingsAdapter.java",
+    "java/src/org/chromium/android_webview_glue/GlueWebViewChromiumProvider.java",
+    "java/src/org/chromium/android_webview_glue/GlueWebViewChromiumProviderFactory.java",
+  ]
+
+  alternative_android_sdk_ijar_dep = ":public_framework_ijar"
+  _ijar = webview_public_framework_ijar
+  _ijar_dir = get_label_info(alternative_android_sdk_ijar_dep, "target_out_dir")
+  alternative_android_sdk_ijar = "$_ijar_dir/$_ijar"
+  alternative_android_sdk_jar = webview_public_framework_jar
+
+  deps = [
+    ":boundary_interface_java",
+    "//android_webview:android_webview_commandline_java",
+    "//android_webview:android_webview_java",
+    "//base:base_java",
+    "//components/autofill/android:provider_java",
+    "//content/public/android:content_java",
+    "//net/android:net_java",
+    "//ui/android:ui_java",
+  ]
+}
+
+android_library("boundary_interface_java") {
+  java_files = [
+    "boundary_interface/java/src/org/chromium/sup_lib_boundary/VisualStateCallbackInterface.java",
+    "boundary_interface/java/src/org/chromium/sup_lib_boundary/WebSettingsInterface.java",
+    "boundary_interface/java/src/org/chromium/sup_lib_boundary/WebViewProvider.java",
+    "boundary_interface/java/src/org/chromium/sup_lib_boundary/WebViewProviderFactory.java",
+  ]
+
+  # TODO we can't use any deps here!
+  deps = []
+}

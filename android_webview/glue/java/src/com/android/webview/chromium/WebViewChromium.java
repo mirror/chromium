@@ -58,6 +58,7 @@ import org.chromium.android_webview.AwContentsStatics;
 import org.chromium.android_webview.AwPrintDocumentAdapter;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.ResourcesContextWrapperFactory;
+import org.chromium.android_webview.SharedWebViewProviderState;
 import org.chromium.android_webview.renderer_priority.RendererPriority;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.SuppressFBWarnings;
@@ -81,9 +82,9 @@ import java.util.concurrent.Callable;
  * and a small set of no-op deprecated APIs.
  */
 @SuppressWarnings("deprecation")
-class WebViewChromium implements WebViewProvider, WebViewProvider.ScrollDelegate,
-                                 WebViewProvider.ViewDelegate, SmartClipProvider {
-
+class WebViewChromium
+        implements WebViewProvider, WebViewProvider.ScrollDelegate, WebViewProvider.ViewDelegate,
+                   SmartClipProvider, SharedWebViewProviderState {
     private static final String TAG = WebViewChromium.class.getSimpleName();
 
     // The WebView that this WebViewChromium is the provider for.
@@ -2361,5 +2362,17 @@ class WebViewChromium implements WebViewProvider, WebViewProvider.ScrollDelegate
     public void setSmartClipResultHandler(final Handler resultHandler) {
         checkThread();
         mAwContents.setSmartClipResultHandler(resultHandler);
+    }
+
+    // SharedWebViewProviderState overrides
+
+    @Override
+    public AwContents getAwContents() {
+        return mAwContents;
+    }
+
+    @Override
+    public AwSettings getAwSettings() {
+        return mWebSettings.getAwSettings();
     }
 }
