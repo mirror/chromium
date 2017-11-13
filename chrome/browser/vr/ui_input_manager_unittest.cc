@@ -67,8 +67,8 @@ class UiInputManagerTest : public testing::Test {
     return p_element;
   }
 
-  void HandleInput(const gfx::Vector3dF& laser_direction,
-                   UiInputManager::ButtonState button_state) {
+  ReticleModel HandleInput(const gfx::Vector3dF& laser_direction,
+                           UiInputManager::ButtonState button_state) {
     ControllerModel controller_model;
     controller_model.laser_direction = laser_direction;
     controller_model.laser_origin = {0, 0, 0};
@@ -77,6 +77,7 @@ class UiInputManagerTest : public testing::Test {
     GestureList gesture_list;
     input_manager_->HandleInput(MsToTicks(1), controller_model, &reticle_model,
                                 &gesture_list);
+    return reticle_model;
   }
 
  protected:
@@ -202,6 +203,25 @@ TEST_F(UiInputManagerTest, ReleaseButtonOnAnotherElement) {
   HandleInput(kBackwardVector, kUp);
 }
 
+TEST_F(UiInputManagerTest, ReleaseButtonOnAnotherElement2) {
+  StrictMock<MockRect>* p_front_element = CreateMockElement(-5.f);
+  StrictMock<MockRect>* p_back_element = CreateMockElement(5.f);
+
+  // Press on an element, move away, then release.
+  EXPECT_CALL(*p_front_element, OnHoverEnter(_));
+  EXPECT_CALL(*p_front_element, OnButtonDown(_));
+  EXPECT_CALL(*p_front_element, OnMove(_));
+  EXPECT_CALL(*p_front_element, OnMove(_));
+  EXPECT_CALL(*p_front_element, OnButtonUp(_));
+  EXPECT_CALL(*p_front_element, OnHoverLeave());
+  EXPECT_CALL(*p_back_element, OnHoverEnter(_));
+  ReticleModel m = HandleInput(kForwardVector, kDown);
+  LOG(ERROR) << "lolk reticle model: " << m.target_local_point.ToString();
+  HandleInput(kBackwardVector, kDown);
+  LOG(ERROR) << "lolk reticle model: " << m.target_local_point.ToString();
+  HandleInput(kBackwardVector, kUp);
+}
+
 // Test that input is tolerant of disappearing elements.
 TEST_F(UiInputManagerTest, ElementDeletion) {
   StrictMock<MockRect>* p_element = CreateMockElement(-5.f);
@@ -287,6 +307,35 @@ TEST_F(UiInputManagerContentTest, ExitPromptHitTesting) {
   // We should have hit the exit prompt if our math was correct.
   ASSERT_NE(0, reticle_model.target_element_id);
   EXPECT_EQ(exit_prompt->id(), reticle_model.target_element_id);
+}
+
+TEST_F(UiInputManagerContentTest, ExitPromptHitTesting2) {
+  manager_->SetExitVrPromptEnabled(true, UiUnsupportedMode::kUnhandledPageInfo);
+  EXPECT_TRUE(AnimateBy(MsToDelta(500)));
+
+  UiElement* exit_prompt =
+      scene_->GetUiElementByName(UiElementName::kExitPrompt);
+  gfx::Point3F exit_prompt_center;
+  exit_prompt->world_space_transform().TransformPoint(&exit_prompt_center);
+  gfx::Point3F origin;
+
+  LOG(ERROR) << "lolk exit prompt center: " << exit_prompt_center.ToString();
+
+  ControllerModel controller_model;
+  controller_model.laser_direction = exit_prompt_center - origin;
+  controller_model.laser_origin = origin;
+  controller_model.touchpad_button_state = UiInputManager::ButtonState::DOWN;
+  ReticleModel reticle_model;
+  GestureList gesture_list;
+  input_manager_->HandleInput(MsToTicks(1), controller_model, &reticle_model,
+                              &gesture_list);
+
+  // We should have hit the exit prompt if our math was correct.
+  ASSERT_NE(0, reticle_model.target_element_id);
+  EXPECT_EQ(exit_prompt->id(), reticle_model.target_element_id);
+
+  LOG(ERROR) << "lolk reticle local: "
+             << reticle_model.target_local_point.ToString();
 }
 
 }  // namespace vr
