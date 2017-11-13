@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62962100_5fd536d0",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-13T17:05:59Z",
+      "side": 1,
+      "message": "nit: Please rename the argument here too.",
+      "range": {
+        "startLine": 349,
+        "startChar": 25,
+        "endLine": 349,
+        "endChar": 53
+      },
+      "revId": "01ef659b461a3a61ab72406fd5f8630c610d42e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3d64d3_1a67ac2d",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-13T17:05:59Z",
+      "side": 1,
+      "message": "Normally we use base::Time::FromJavaTime() for the conversion from the policy proto timestamps. And FromTimeT() has even a different meaning - it\u0027s accepting seconds as an argument, while FromJavaTime() accepts milliseconds - so no sure why FromTimeT() worked for you.",
+      "range": {
+        "startLine": 493,
+        "startChar": 24,
+        "endLine": 493,
+        "endChar": 33
+      },
+      "revId": "01ef659b461a3a61ab72406fd5f8630c610d42e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

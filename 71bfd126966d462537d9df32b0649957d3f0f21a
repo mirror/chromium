@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ab17cea9_13beb708",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-13T17:05:59Z",
+      "side": 1,
+      "message": "OK. No, for the internal usage of PolicyScheduler it\u0027s probably fine (although ideally that class should probably use both clocks, similarly to what CloudPolicyRefreshScheduler does).",
+      "parentUuid": "e1f133d6_f56b0053",
+      "revId": "71bfd126966d462537d9df32b0649957d3f0f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da8fd5a5_0ed77013",
         "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
         "patchSetId": 10
