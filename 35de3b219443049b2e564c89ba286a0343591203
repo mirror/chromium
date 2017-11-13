@@ -22,6 +22,30 @@
       "revId": "35de3b219443049b2e564c89ba286a0343591203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfcd85d0_290b6d9e",
+        "filename": "ios/web/web_state/navigation_callbacks_inttest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-13T22:57:03Z",
+      "side": 1,
+      "message": "Ah good catch. I was hoping to not have to do this as a prerequisite for slim NM experiment...\n\nI documented all options I can think of here: https://docs.google.com/document/d/1xa0LYij6kVyJLpEHQMuMBVm_HIa9lJZcwFqzYLabOEU/edit#\n\nThe two options for preserving current DidStartLoading behavior both seem very brittle... and the 3rd option of changing the metric before slim NM experiment doesn\u0027t seem as complex as I originally thought. So maybe (3) is the least effort and \"right\" way. What do you think? Is there a lower effort way?",
+      "parentUuid": "cded8163_43976465",
+      "range": {
+        "startLine": 788,
+        "startChar": 27,
+        "endLine": 788,
+        "endChar": 57
+      },
+      "revId": "35de3b219443049b2e564c89ba286a0343591203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
