@@ -81,6 +81,7 @@ const char kLandingReferrerURLWithQuery[] =
 const char kPageBeforeLandingReferrerURL[] =
     "/safe_browsing/download_protection/navigation_observer/"
     "page_before_landing_referrer.html";
+const char kTestExeURL[] = "/temporary/test.exe";
 
 class DownloadItemCreatedObserver : public DownloadManager::Observer {
  public:
@@ -292,9 +293,7 @@ class SBNavigationObserverBrowserTest : public InProcessBrowserTest {
     ASSERT_TRUE(
         content::ExecuteScript(current_web_contents, "downloadViaFileApi()"));
     manager->GetAllDownloads(&items);
-    if (items.size() == 0U) {
-      DownloadItemCreatedObserver(manager).WaitForDownloadItem(&items);
-    }
+    ASSERT_EQ(0U, items.size());
   }
 
   void VerifyNavigationEvent(const GURL& expected_source_url,
@@ -2017,6 +2016,8 @@ IN_PROC_BROWSER_TEST_F(SBNavigationObserverBrowserTest,
   // Trigger download by user gesture.
   TriggerDownloadViaHtml5FileApi(true /* has_user_gesture */);
   std::string test_server_ip(embedded_test_server()->host_port_pair().host());
+  GURL filesystem_url(std::string(url::kFileSystemScheme) + ":" +
+                      embedded_test_server()->GetURL(kTestExeURL).spec());
   auto* nav_list = navigation_event_list();
   ASSERT_TRUE(nav_list);
   ASSERT_EQ(1U, nav_list->Size());
@@ -2031,17 +2032,27 @@ IN_PROC_BROWSER_TEST_F(SBNavigationObserverBrowserTest,
   VerifyHostToIpMap();
   ReferrerChain referrer_chain;
   IdentifyReferrerChainForDownload(GetDownload(), &referrer_chain);
-  ASSERT_EQ(1, referrer_chain.size());
+  ASSERT_EQ(2, referrer_chain.size());
 
-  VerifyReferrerChainEntry(hosting_url,                       // url
-                           GURL(),                            // main_frame_url
-                           ReferrerChainEntry::LANDING_PAGE,  // type
-                           test_server_ip,                    // ip_address
-                           GURL(),                            // referrer_url
+  VerifyReferrerChainEntry(filesystem_url,                 // url
+                           GURL(),                         // main_frame_url
+                           ReferrerChainEntry::EVENT_URL,  // type
+                           std::string(),                  // ip_address
+                           hosting_url,                    // referrer_url
                            GURL(),               // referrer_main_frame_url
                            false,                // is_retargeting
                            std::vector<GURL>(),  // server redirects
                            referrer_chain.Get(0));
+
+  VerifyReferrerChainEntry(hosting_url,  // url
+                           GURL(),       // main_frame_url
+                           ReferrerChainEntry::CLIENT_REDIRECT,  // type
+                           test_server_ip,                       // ip_address
+                           GURL(),                               // referrer_url
+                           GURL(),               // referrer_main_frame_url
+                           false,                // is_retargeting
+                           std::vector<GURL>(),  // server redirects
+                           referrer_chain.Get(1));
 }
 
 // Download via html5 file API without user gesture.
@@ -2053,6 +2064,8 @@ IN_PROC_BROWSER_TEST_F(SBNavigationObserverBrowserTest,
   // Trigger download without user gesture.
   TriggerDownloadViaHtml5FileApi(false /* has_user_gesture */);
   std::string test_server_ip(embedded_test_server()->host_port_pair().host());
+  GURL filesystem_url(std::string(url::kFileSystemScheme) + ":" +
+                      embedded_test_server()->GetURL(kTestExeURL).spec());
   auto* nav_list = navigation_event_list();
   ASSERT_TRUE(nav_list);
   ASSERT_EQ(1U, nav_list->Size());
@@ -2067,7 +2080,17 @@ IN_PROC_BROWSER_TEST_F(SBNavigationObserverBrowserTest,
   VerifyHostToIpMap();
   ReferrerChain referrer_chain;
   IdentifyReferrerChainForDownload(GetDownload(), &referrer_chain);
-  ASSERT_EQ(1, referrer_chain.size());
+  ASSERT_EQ(2, referrer_chain.size());
+
+  VerifyReferrerChainEntry(filesystem_url,                 // url
+                           GURL(),                         // main_frame_url
+                           ReferrerChainEntry::EVENT_URL,  // type
+                           std::string(),                  // ip_address
+                           hosting_url,                    // referrer_url
+                           GURL(),               // referrer_main_frame_url
+                           false,                // is_retargeting
+                           std::vector<GURL>(),  // server redirects
+                           referrer_chain.Get(0));
 
   VerifyReferrerChainEntry(hosting_url,  // url
                            GURL(),       // main_frame_url
@@ -2077,7 +2100,7 @@ IN_PROC_BROWSER_TEST_F(SBNavigationObserverBrowserTest,
                            GURL(),               // referrer_main_frame_url
                            false,                // is_retargeting
                            std::vector<GURL>(),  // server redirects
-                           referrer_chain.Get(0));
+                           referrer_chain.Get(1));
 }
 
 // Verify referrer chain when there are URL fragments.
