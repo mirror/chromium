@@ -15,6 +15,8 @@ class WaylandKeyboard {
   WaylandKeyboard(wl_keyboard* keyboard, const EventDispatchCallback& callback);
   virtual ~WaylandKeyboard();
 
+  int modifiers();
+
  private:
   // wl_keyboard_listener
   static void Keymap(void* data,
@@ -51,7 +53,7 @@ class WaylandKeyboard {
 
   wl::Object<wl_keyboard> obj_;
   EventDispatchCallback callback_;
-  uint8_t modifiers_ = 0;
+  int modifiers_ = 0;
 };
 
 }  // namespace ui

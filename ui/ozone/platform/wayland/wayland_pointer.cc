@@ -8,11 +8,21 @@
 #include <wayland-client.h>
 
 #include "ui/events/event.h"
+#include "ui/ozone/platform/wayland/wayland_connection.h"
 #include "ui/ozone/platform/wayland/wayland_window.h"
 
 // TODO(forney): Handle version 5 of wl_pointer.
 
 namespace ui {
+
+namespace {
+
+bool VerifyFlagsAfterMasking(int flags, int original_flags, int modifiers) {
+  flags &= ~modifiers;
+  return flags == original_flags;
+}
+
+}  // namespace
 
 WaylandPointer::WaylandPointer(wl_pointer* pointer,
                                const EventDispatchCallback& callback)
@@ -61,7 +71,7 @@ void WaylandPointer::Motion(void* data,
                               wl_fixed_to_double(surface_y));
   MouseEvent event(ET_MOUSE_MOVED, gfx::Point(), gfx::Point(),
                    base::TimeTicks() + base::TimeDelta::FromMilliseconds(time),
-                   pointer->flags_, 0);
+                   pointer->GetFlagsWithKeyboardModifiers(), 0);
   event.set_location_f(pointer->location_);
   event.set_root_location_f(pointer->location_);
   pointer->callback_.Run(&event);
@@ -95,7 +105,7 @@ void WaylandPointer::Button(void* data,
     default:
       return;
   }
-  int flags = pointer->flags_ | flag;
+
   EventType type;
   if (state == WL_POINTER_BUTTON_STATE_PRESSED) {
     type = ET_MOUSE_PRESSED;
@@ -104,6 +114,8 @@ void WaylandPointer::Button(void* data,
     type = ET_MOUSE_RELEASED;
     pointer->flags_ &= ~flag;
   }
+
+  int flags = pointer->GetFlagsWithKeyboardModifiers() | flag;
   MouseEvent event(type, gfx::Point(), gfx::Point(),
                    base::TimeTicks() + base::TimeDelta::FromMilliseconds(time),
                    flags, flag);
@@ -137,10 +149,21 @@ void WaylandPointer::Axis(void* data,
   MouseWheelEvent event(
       offset, gfx::Point(), gfx::Point(),
       base::TimeTicks() + base::TimeDelta::FromMilliseconds(time),
-      pointer->flags_, 0);
+      pointer->GetFlagsWithKeyboardModifiers(), 0);
   event.set_location_f(pointer->location_);
   event.set_root_location_f(pointer->location_);
   pointer->callback_.Run(&event);
+}
+
+int WaylandPointer::GetFlagsWithKeyboardModifiers() {
+  // Remove old modifiers from flags and then update them with new modifiers.
+  flags_ &= ~modifiers_;
+  modifiers_ = connection_->GetKeyboardModifiers();
+
+  int old_flags = flags_;
+  flags_ |= modifiers_;
+  DCHECK(VerifyFlagsAfterMasking(flags_, old_flags, modifiers_));
+  return flags_;
 }
 
 }  // namespace ui

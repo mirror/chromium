@@ -116,6 +116,13 @@ WaylandOutput* WaylandConnection::PrimaryOutput() const {
   return output_list_.front().get();
 }
 
+int WaylandConnection::GetKeyboardModifiers() {
+  int modifiers = 0;
+  if (keyboard_)
+    modifiers = keyboard_->modifiers();
+  return modifiers;
+}
+
 void WaylandConnection::OnDispatcherListChanged() {
   StartProcessingEvents();
 }
@@ -239,6 +246,7 @@ void WaylandConnection::Capabilities(void* data,
       connection->pointer_ = std::make_unique<WaylandPointer>(
           pointer, base::Bind(&WaylandConnection::DispatchUiEvent,
                               base::Unretained(connection)));
+      connection->pointer_->set_connection(connection);
     }
   } else if (connection->pointer_) {
     connection->pointer_.reset();

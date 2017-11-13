@@ -44,6 +44,8 @@ class WaylandConnection : public PlatformEventSource,
   const std::vector<std::unique_ptr<WaylandOutput>>& GetOutputList() const;
   WaylandOutput* PrimaryOutput() const;
 
+  int GetKeyboardModifiers();
+
  private:
   void Flush();
   void DispatchUiEvent(Event* event);

@@ -11,10 +11,16 @@
 
 namespace ui {
 
+class WaylandConnection;
+
 class WaylandPointer {
  public:
   WaylandPointer(wl_pointer* pointer, const EventDispatchCallback& callback);
   virtual ~WaylandPointer();
+
+  void set_connection(WaylandConnection* connection) {
+    connection_ = connection;
+  }
 
  private:
   // wl_pointer_listener
@@ -45,6 +51,7 @@ class WaylandPointer {
                    uint32_t axis,
                    wl_fixed_t value);
 
+  WaylandConnection* connection_ = nullptr;
   wl::Object<wl_pointer> obj_;
   EventDispatchCallback callback_;
   gfx::PointF location_;
