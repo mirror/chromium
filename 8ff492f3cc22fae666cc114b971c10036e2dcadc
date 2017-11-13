@@ -16,6 +16,24 @@
       "revId": "8ff492f3cc22fae666cc114b971c10036e2dcadc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea773f7_f9f7e9bb",
+        "filename": "docs/adding_to_third_party.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-11-13T11:44:18Z",
+      "side": 0,
+      "message": "This is a belated update to this doc, since we\u0027re no longer enforcing checklicenses.py .\n\nPlease see https://groups.google.com/a/chromium.org/d/msg/chromium-dev/pwyjF_jAf6I/5MeKCBG8BQAJ for context.",
+      "parentUuid": "d046ee5a_1e180bd8",
+      "revId": "8ff492f3cc22fae666cc114b971c10036e2dcadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
