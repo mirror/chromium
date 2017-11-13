@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a09e78d_875dd02d",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-13T21:42:33Z",
+      "side": 1,
+      "message": "btw, is there a convention for method impls to be in same order as declarations?\nThat is, should this move lower now or keep here?",
+      "range": {
+        "startLine": 178,
+        "startChar": 31,
+        "endLine": 178,
+        "endChar": 43
+      },
+      "revId": "fac74dab5a33f874d338c9a1101de93aac18e9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
