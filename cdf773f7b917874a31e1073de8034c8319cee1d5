@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0019aacf_0e24a252",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-13T13:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4321e8ec_dae07a6f",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5113aa7_df47aff1",
         "filename": "chrome/browser/notifications/notification_image_retainer.cc",
         "patchSetId": 49
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-11T14:50:25Z",
       "side": 1,
       "message": "qq: We\u0027ll probably want one big enum-based UMA in the long term to track all these failures?",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5eb304_0efcf977",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-13T13:29:07Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "e5113aa7_df47aff1",
       "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "270afc9f_0376a9bf",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-13T13:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "601b399c_6b61d6ad",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "296e1289_542f3952",
         "filename": "chrome/browser/notifications/notification_image_retainer.h",
         "patchSetId": 49
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e40033fd_8f1dd7f0",
+        "filename": "chrome/browser/notifications/notification_image_retainer.h",
+        "patchSetId": 49
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-13T13:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "296e1289_542f3952",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4099b2f6_7f9dd1f3",
         "filename": "chrome/browser/notifications/notification_image_retainer_unittest.cc",
         "patchSetId": 49
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-11T14:50:25Z",
       "side": 1,
       "message": "Please add a private function to NotificationImageRetainer that does the hashing, and use that from here (w/ a friend declaration)",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82939e4_0180fb75",
+        "filename": "chrome/browser/notifications/notification_image_retainer_unittest.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-13T13:29:07Z",
+      "side": 1,
+      "message": "I\u0027ve added a utility function here (not in NotificationImageRetainer) because I kind of want the test to be explicit and fail if someone decides to remove e.g. the profile from the hashing. If we share that in a function in NotificationImageRetainer then changing the hashing in such a way will not be caught by the test. \n\nBut, I\u0027m open to being convinced otherwise, e.g. in a followup CL.",
+      "parentUuid": "4099b2f6_7f9dd1f3",
       "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "82b7717e_83e45a8d",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-13T13:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "484adb33_47c649f8",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "187c4bb2_2ac66297",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 49
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "005926e4_ec12a20b",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-13T13:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "187c4bb2_2ac66297",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ffc0efd_b495b3dc",
         "filename": "chrome/browser/notifications/notification_template_builder.cc",
         "patchSetId": 49
@@ -132,6 +258,24 @@
       "writtenOn": "2017-11-11T14:50:25Z",
       "side": 1,
       "message": "std::make_unique\u003c\u003e",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc3e51a6_4cd88d5c",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-13T13:29:07Z",
+      "side": 1,
+      "message": "This class has a private constructor and tricks to get make_unique to work around that, such as [1] all seem more complex and less readable than the current code.\n\n[1] http://seanmiddleditch.com/enabling-make_unique-with-private-constructors/",
+      "parentUuid": "6ffc0efd_b495b3dc",
       "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "95ed6a00_07b24b51",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 49
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-13T13:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ae9bbe7_8f954c46",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e88501a3_aaa1d1ec",
         "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
         "patchSetId": 49
@@ -169,6 +331,24 @@
       "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780ed2a5_1bab5410",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-13T13:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e88501a3_aaa1d1ec",
+      "revId": "cdf773f7b917874a31e1073de8034c8319cee1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
