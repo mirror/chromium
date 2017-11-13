@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abb33922_e3ffec6b",
+        "filename": "chrome/browser/extensions/bookmark_app_helper_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T02:43:26Z",
+      "side": 1,
+      "message": "If you give the test case a different name (like InvokeDialog_create -\u003e InvokeDialog_CreateWindowedPWA) you can just check |name| in BookmarkAppHelperTest::ShowDialog() and set the URL as required. e.g. something like\n\nconst GURL url \u003d (name \u003d\u003d \"CreateWindowedPWA\")\n    ? GURL(\"/banners/manifest_test_page.html\")\n    : GURL(\"/favicon/page_with_favicon.html\");\nAddTabAtIndex(1, url, ui::PAGE_TRANSITION_LINK);",
+      "revId": "6a383c9fb1e1525395782822ed6a07048e1d2ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422fb6f9_8874cc95",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T02:43:26Z",
+      "side": 1,
+      "message": "perhaps move to .cc?  (it\u0027s ok to repeat constants declarations like this in the test file if necessary, but I think in this case you may even get better code coverage if it\u0027s different)",
+      "revId": "6a383c9fb1e1525395782822ed6a07048e1d2ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
