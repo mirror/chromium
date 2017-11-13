@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "606f009f_8026bbf7",
+        "filename": "components/content_settings/core/browser/content_settings_pref_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-13T10:48:23Z",
+      "side": 1,
+      "message": "The preferences below have to be cleared, because they could contain URLs, which are considered PII.\n\nHowever, this preference is just an enum which basically says \"was this profile used with a version of Chrome where the migration happened\", which amounts to \"has this profile been used in a particular range of Chrome versions\", which is essentially zero information.\n\nNo harm in removing it if you want to keep the code cleaner (or adding a TODO to remove it later if you want to keep both profiles and the code cleaner).",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 65
+      },
+      "revId": "34fa47bff74c75ed4ad1d328c7576a6911abcea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
