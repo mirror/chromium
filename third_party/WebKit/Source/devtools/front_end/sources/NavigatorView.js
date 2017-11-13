@@ -759,7 +759,7 @@ Sources.NavigatorView = class extends UI.VBox {
       if (!committed)
         uiSourceCode.remove();
       else
-        this._sourceSelected(uiSourceCode, true);
+        Sources.SourcesPanel.instance().showUISourceCode(uiSourceCode);
     }
   }
 
