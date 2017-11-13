@@ -229,6 +229,8 @@ void LayoutText::StyleDidChange(StyleDifference diff,
 }
 
 void LayoutText::RemoveAndDestroyTextBoxes() {
+  if (!CanUseInlineBox(*this))
+    return;
   if (!DocumentBeingDestroyed()) {
     if (FirstTextBox()) {
       if (IsBR()) {
@@ -292,6 +294,7 @@ void LayoutText::RemoveTextBox(InlineTextBox* box) {
 }
 
 void LayoutText::DeleteTextBoxes() {
+  DCHECK(CanUseInlineBox(*this));
   if (FirstTextBox()) {
     InlineTextBox* next;
     for (InlineTextBox* curr = FirstTextBox(); curr; curr = next) {
@@ -647,6 +650,8 @@ CreatePositionWithAffinityForBoxAfterAdjustingOffsetForBiDi(
 }
 
 PositionWithAffinity LayoutText::PositionForPoint(const LayoutPoint& point) {
+  DCHECK(CanUseInlineBox(*this));
+
   if (!FirstTextBox() || TextLength() == 0)
     return CreatePositionWithAffinity(0);
 
@@ -699,6 +704,7 @@ LayoutRect LayoutText::LocalCaretRect(
     const InlineBox* inline_box,
     int caret_offset,
     LayoutUnit* extra_width_to_end_of_line) const {
+  DCHECK(CanUseInlineBox(*this));
   if (!inline_box)
     return LayoutRect();
 
@@ -1440,6 +1446,7 @@ void LayoutText::SetTextWithOffset(scoped_refptr<StringImpl> text,
                                    unsigned offset,
                                    unsigned len,
                                    bool force) {
+  DCHECK(CanUseInlineBox(*this));
   if (!force && Equal(text_.Impl(), text.get()))
     return;
 
@@ -1656,14 +1663,17 @@ void LayoutText::SetText(scoped_refptr<StringImpl> text, bool force) {
 }
 
 void LayoutText::DirtyOrDeleteLineBoxesIfNeeded(bool full_layout) {
-  if (full_layout)
-    DeleteTextBoxes();
-  else if (!lines_dirty_)
-    DirtyLineBoxes();
+  if (CanUseInlineBox(*this)) {
+    if (full_layout)
+      DeleteTextBoxes();
+    else if (!lines_dirty_)
+      DirtyLineBoxes();
+  }
   lines_dirty_ = false;
 }
 
 void LayoutText::DirtyLineBoxes() {
+  DCHECK(CanUseInlineBox(*this));
   for (InlineTextBox* box : InlineTextBoxesOf(*this))
     box->DirtyLineBoxes();
   lines_dirty_ = false;
@@ -1687,6 +1697,7 @@ InlineTextBox* LayoutText::CreateInlineTextBox(int start,
 }
 
 void LayoutText::PositionLineBox(InlineBox* box) {
+  DCHECK(CanUseInlineBox(*this));
   InlineTextBox* s = ToInlineTextBox(box);
 
   // FIXME: should not be needed!!!
@@ -2069,6 +2080,7 @@ bool LayoutText::ContainsCaretOffset(int text_offset) const {
 static bool CanNotContinueOnNextLine(const LayoutText& text_layout_object,
                                      InlineBox* box,
                                      unsigned text_offset) {
+  DCHECK(CanUseInlineBox(text_layout_object));
   InlineTextBox* const last_text_box = text_layout_object.LastTextBox();
   if (box == last_text_box)
     return true;
@@ -2082,6 +2094,7 @@ static bool CanNotContinueOnNextLine(const LayoutText& text_layout_object,
 static bool DoesContinueOnNextLine(const LayoutText& text_layout_object,
                                    InlineBox* box,
                                    unsigned text_offset) {
+  DCHECK(CanUseInlineBox(text_layout_object));
   InlineTextBox* const last_text_box = text_layout_object.LastTextBox();
   DCHECK_NE(box, last_text_box);
   for (InlineBox* runner = box->NextLeafChild(); runner;

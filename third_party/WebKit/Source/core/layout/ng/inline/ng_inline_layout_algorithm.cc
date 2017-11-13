@@ -33,6 +33,11 @@ namespace {
 inline bool ShouldCreateBoxFragment(const NGInlineItem& item,
                                     const NGInlineItemResult& item_result) {
   DCHECK(item.Style());
+  // TODO(layout-dev): We want to find the condition not to create box
+  // fragments.
+  // Note: We should have a box fragment for SPAN in DIV, e.g.
+  //    <div><span>foo</span></div>
+  return true;
   const ComputedStyle& style = *item.Style();
   // TODO(kojii): We might need more conditions to create box fragments.
   return style.HasBoxDecorationBackground() || style.HasOutline() ||
