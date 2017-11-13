@@ -56,7 +56,7 @@ function runInlineStylePropertyMapTests(config) {
   let validObject = validObjects.length ?
       validObjects[0] : new CSSKeywordValue(validKeywords[0]);
 
-  let styleMap = element.styleMap;
+  let styleMap = element.attributeStyleMap;
   runSetterTests(
       config.property, validKeywords, validObjects, invalidObjects, element);
   runGetterTests(config.property, validKeywords, validObjects,
@@ -224,7 +224,7 @@ function runGetAllTests(
     propertyName, validObject, element, supportsMultiple) {
   test(function() {
     element.style = '';
-    assert_array_equals(element.styleMap.getAll(propertyName), []);
+    assert_array_equals(element.attributeStyleMap.getAll(propertyName), []);
 
     element.style[propertyName] = validObject.toString();
     let result = element.styleMap.getAll(propertyName);
@@ -256,7 +256,7 @@ function runDeletionTests(propertyName, validObject, element) {
   test(function() {
     element.style[propertyName] = validObject.toString();
 
-    assert_not_equals(element.styleMap.get(propertyName), null);
+    assert_not_equals(element.attributeStyleMap.get(propertyName), null);
 
     element.styleMap.delete(propertyName);
     assert_equals(element.style[propertyName], '');
