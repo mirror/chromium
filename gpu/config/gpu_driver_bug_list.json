@@ -2681,6 +2681,16 @@
       "features": [
         "flush_on_framebuffer_change"
       ]
+    },
+    {
+      "id": 246,
+      "description": "Code produced by initializing variables using loops often triggers crashes on some Android drivers.",
+      "os": {
+        "type": "android"
+      },
+      "features": [
+        "dont_use_loops_to_initialize_variables"
+      ]
     }
   ]
 }
