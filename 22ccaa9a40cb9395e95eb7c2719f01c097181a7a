@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c7869ab_38ac68b1",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIterator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-13T00:21:55Z",
+      "side": 1,
+      "message": "The correct fix seems to be wrapping these lines with a NodeIsSelectable() check.",
+      "range": {
+        "startLine": 349,
+        "startChar": 0,
+        "endLine": 366,
+        "endChar": 9
+      },
+      "revId": "22ccaa9a40cb9395e95eb7c2719f01c097181a7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eacef569_5873b006",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorBehavior.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-13T00:21:55Z",
+      "side": 1,
+      "message": "nit: |RespectsUserSelect| seems good enough.",
+      "revId": "22ccaa9a40cb9395e95eb7c2719f01c097181a7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631ba84a_378f988a",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorBehavior.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-13T00:21:55Z",
+      "side": 1,
+      "message": "nit: |respects_user_select| seems good enough.",
+      "range": {
+        "startLine": 95,
+        "startChar": 11,
+        "endLine": 95,
+        "endChar": 43
+      },
+      "revId": "22ccaa9a40cb9395e95eb7c2719f01c097181a7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df7a6df_4a074b75",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorBehavior.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-13T00:21:55Z",
+      "side": 1,
+      "message": "nit: |SetRespectsUserSelect| seems good enough.",
+      "revId": "22ccaa9a40cb9395e95eb7c2719f01c097181a7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
