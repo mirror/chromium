@@ -431,6 +431,10 @@ gfx::Size ViewAndroid::GetPhysicalBackingSize() {
   return physical_size_;
 }
 
+gfx::Size ViewAndroid::GetSize() const {
+  return view_rect_.size();
+}
+
 bool ViewAndroid::OnDragEvent(const DragEventAndroid& event) {
   return HitTest(base::Bind(&ViewAndroid::SendDragEventToClient), event,
                  event.location_f());

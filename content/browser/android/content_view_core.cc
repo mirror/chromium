@@ -780,37 +780,6 @@ void ContentViewCore::DoubleTap(JNIEnv* env,
   SendGestureEvent(event);
 }
 
-void ContentViewCore::PinchBegin(JNIEnv* env,
-                                 const JavaParamRef<jobject>& obj,
-                                 jlong time_ms,
-                                 jfloat x,
-                                 jfloat y) {
-  WebGestureEvent event =
-      MakeGestureEvent(WebInputEvent::kGesturePinchBegin, time_ms, x, y);
-  SendGestureEvent(event);
-}
-
-void ContentViewCore::PinchEnd(JNIEnv* env,
-                               const JavaParamRef<jobject>& obj,
-                               jlong time_ms) {
-  WebGestureEvent event =
-      MakeGestureEvent(WebInputEvent::kGesturePinchEnd, time_ms, 0, 0);
-  SendGestureEvent(event);
-}
-
-void ContentViewCore::PinchBy(JNIEnv* env,
-                              const JavaParamRef<jobject>& obj,
-                              jlong time_ms,
-                              jfloat anchor_x,
-                              jfloat anchor_y,
-                              jfloat delta) {
-  WebGestureEvent event = MakeGestureEvent(WebInputEvent::kGesturePinchUpdate,
-                                           time_ms, anchor_x, anchor_y);
-  event.data.pinch_update.scale = delta;
-
-  SendGestureEvent(event);
-}
-
 void ContentViewCore::SetTextHandlesTemporarilyHidden(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,

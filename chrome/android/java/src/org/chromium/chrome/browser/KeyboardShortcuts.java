@@ -16,7 +16,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModelUtils;
-import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content_public.browser.WebContents;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +39,8 @@ public class KeyboardShortcuts {
     }
 
     private static boolean isGamepadAPIActive(ChromeActivity activity) {
-        ContentViewCore cvc = activity.getCurrentContentViewCore();
-        return (cvc != null) ? cvc.isGamepadAPIActive() : false;
+        WebContents webContents = getCurrentWebContents(activity);
+        return (webContents != null) ? webContents.isGamepadAPIActive() : false;
     }
 
     /**
@@ -304,17 +304,17 @@ public class KeyboardShortcuts {
                 case CTRL | SHIFT | KeyEvent.KEYCODE_PLUS:
                 case CTRL | SHIFT | KeyEvent.KEYCODE_EQUALS:
                 case KeyEvent.KEYCODE_ZOOM_IN:
-                    ContentViewCore cvc = activity.getCurrentContentViewCore();
-                    if (cvc != null) cvc.zoomIn();
+                    WebContents webContents = getCurrentWebContents(activity);
+                    if (webContents != null) webContents.zoomIn();
                     return true;
                 case CTRL | KeyEvent.KEYCODE_MINUS:
                 case KeyEvent.KEYCODE_ZOOM_OUT:
-                    cvc = activity.getCurrentContentViewCore();
-                    if (cvc != null) cvc.zoomOut();
+                    webContents = getCurrentWebContents(activity);
+                    if (webContents != null) webContents.zoomOut();
                     return true;
                 case CTRL | KeyEvent.KEYCODE_0:
-                    cvc = activity.getCurrentContentViewCore();
-                    if (cvc != null) cvc.zoomReset();
+                    webContents = getCurrentWebContents(activity);
+                    if (webContents != null) webContents.zoomReset();
                     return true;
                 case SHIFT | CTRL | KeyEvent.KEYCODE_R:
                 case CTRL | KeyEvent.KEYCODE_R:
@@ -354,5 +354,9 @@ public class KeyboardShortcuts {
         }
 
         return false;
+    }
+
+    private static WebContents getCurrentWebContents(ChromeActivity activity) {
+        return activity.getActivityTab().getWebContents();
     }
 }
