@@ -2024,10 +2024,16 @@ const int kExternalFilesCleanupDelaySeconds = 60;
       [[SignedInAccountsViewController alloc]
           initWithBrowserState:browserState
                     dispatcher:self.mainBVC.dispatcher];
-  [[self topPresentedViewController]
-      presentViewController:accountsViewController
-                   animated:YES
-                 completion:nil];
+
+  if (_tabSwitcherIsActive) {
+    [self.tabSwitcherController presentViewController:accountsViewController
+                                             animated:YES
+                                           completion:nil];
+  } else {
+    [self.currentBVC presentTopViewController:accountsViewController
+                                     animated:YES
+                                   completion:nil];
+  }
 }
 
 - (void)showSettingsFromViewController:(UIViewController*)baseViewController {
