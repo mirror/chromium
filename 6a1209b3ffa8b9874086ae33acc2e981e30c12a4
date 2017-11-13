@@ -16,6 +16,24 @@
       "revId": "6a1209b3ffa8b9874086ae33acc2e981e30c12a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493dd899_6d656d6f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/IndexedDB/wasm-module-value.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-13T19:39:03Z",
+      "side": 1,
+      "message": "I have a slight preference towards writing out the bytes explicitly for IDB tests. If something goes wrong, knowing what the wire bytes look like can help debugging.\n\nDo you think this argument has enough merits to bypass the library? If not, I\u0027ll bring it in.",
+      "parentUuid": "c4efb9ab_e6a64b5c",
+      "revId": "6a1209b3ffa8b9874086ae33acc2e981e30c12a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
