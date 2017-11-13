@@ -8,17 +8,59 @@ Devices.DevicesView = class extends UI.VBox {
     this.registerRequiredCSS('devices/devicesView.css');
     this.contentElement.classList.add('devices-view');
 
-    var hbox = this.contentElement.createChild('div', 'hbox devices-container');
-    var sidebar = hbox.createChild('div', 'devices-sidebar');
-    sidebar.createChild('div', 'devices-view-title').createTextChild(Common.UIString('Devices'));
-    this._sidebarList = sidebar.createChild('div', 'devices-sidebar-list');
+    this._template = html`
+      <style>
+        .devices-sidebar-item {
+          color: #222 !important;
+          padding: 6px 6px 6px 16px;
+          flex: auto;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          font-size: 14px;
+        }
+
+        .devices-sidebar-item.selected {
+          border-left: 6px solid #666 !important;
+          padding-left: 10px;
+        }
+
+        .devices-sidebar-item-status:before {
+          content: "\\25cf";
+          font-size: 16px;
+          color: red;
+          position: relative;
+          top: 1px;
+          margin-right: 2px;
+        }
+
+        .devices-sidebar-item.device-connected .devices-sidebar-item-status:before {
+          color: green;
+        }
+      </style>
+      <div class='hbox' style='overflow: hidden; flex: auto'}>
+        <div class='vbox' style='align-items: stretch; flex: 0 0 150px; padding-top: 15px;'}>
+          <div style='margin: 0 0 15px 15px; padding-top: 1px; font-size: 16px;'>${s`Devices`}</div>
+          <div class='vbox' style='align-items:stretch; flex: none;'>
+            <div ${{sidebarListSpacer: 0}} style='flex: none;'></div>
+            <div ${{discoveryListItem: 0,
+                 click: event => this._selectSidebarListItem(event.target, this._discoveryView)}}
+                 class='devices-sidebar-item'>${s`Settings`}</div>
+          </div>
+        </div>
+
+        <div ${{viewContainer: 0}} class='vbox' style='flex: auto;'></div>
+      </div>
+
+      <div style='flex: none; overlfow: hidden; border-top: 1px solid #cdcdcd; background-color: #f3f3f3; padding: 3px 10px; white-space: pre;'
+        >${{deviceCount: ''}} ${s`Read`} ${
+          UI.createExternalLink('https://developers.google.com/chrome-developer-tools/docs/remote-debugging',
+          s`remote debugging documentation`)} ${s`for more information`}</div
+      >
+    `;
+    this.contentElement.appendChild(this._template.element);
 
     this._discoveryView = new Devices.DevicesView.DiscoveryView();
-    this._sidebarListSpacer = this._sidebarList.createChild('div', 'devices-sidebar-spacer');
-    this._discoveryListItem = this._sidebarList.createChild('div', 'devices-sidebar-item');
-    this._discoveryListItem.textContent = Common.UIString('Settings');
-    this._discoveryListItem.addEventListener(
-        'click', this._selectSidebarListItem.bind(this, this._discoveryListItem, this._discoveryView));
 
     /** @type {!Map<string, !Devices.DevicesView.DeviceView>} */
     this._viewById = new Map();
@@ -31,17 +73,8 @@ Devices.DevicesView = class extends UI.VBox {
     /** @type {?UI.Widget} */
     this._visibleView = null;
 
-    this._viewContainer = hbox.createChild('div', 'flex-auto vbox');
-
-    var discoveryFooter = this.contentElement.createChild('div', 'devices-footer');
-    this._deviceCountSpan = discoveryFooter.createChild('span');
-    discoveryFooter.createChild('span').textContent = Common.UIString(' Read ');
-    discoveryFooter.appendChild(UI.createExternalLink(
-        'https://developers.google.com/chrome-developer-tools/docs/remote-debugging',
-        Common.UIString('remote debugging documentation')));
-    discoveryFooter.createChild('span').textContent = Common.UIString(' for more information.');
     this._updateFooter();
-    this._selectSidebarListItem(this._discoveryListItem, this._discoveryView);
+    this._selectSidebarListItem(this._template.discoveryListItem, this._discoveryView);
 
     InspectorFrontendHost.events.addEventListener(
         InspectorFrontendHostAPI.Events.DevicesUpdated, this._devicesUpdated, this);
@@ -79,7 +112,7 @@ Devices.DevicesView = class extends UI.VBox {
 
     this._visibleView = view;
     this._selectedListItem = listItem;
-    this._visibleView.show(this._viewContainer);
+    this._visibleView.show(this._template.viewContainer);
     this._selectedListItem.classList.add('selected');
   }
 
@@ -103,11 +136,11 @@ Devices.DevicesView = class extends UI.VBox {
     var selectedRemoved = false;
     for (var deviceId of this._viewById.keys()) {
       if (!ids.has(deviceId)) {
-        var listItem = /** @type {!Element} */ (this._listItemById.get(deviceId));
+        var listItem = /** @type {!UI.Template} */ (this._listItemById.get(deviceId));
         this._listItemById.remove(deviceId);
         this._viewById.remove(deviceId);
-        listItem.remove();
-        if (listItem === this._selectedListItem)
+        listItem.element.remove();
+        if (listItem.element === this._selectedListItem)
           selectedRemoved = true;
       }
     }
@@ -121,32 +154,41 @@ Devices.DevicesView = class extends UI.VBox {
         this._viewById.set(device.id, view);
         listItem = this._createSidebarListItem(view);
         this._listItemById.set(device.id, listItem);
-        this._sidebarList.insertBefore(listItem, this._sidebarListSpacer);
+        this._template.sidebarListSpacer.parentNode.insertBefore(listItem, this._template.sidebarListSpacer);
       }
 
-      listItem._title.textContent = device.adbModel;
-      listItem._status.textContent =
-          device.adbConnected ? Common.UIString('Connected') : Common.UIString('Pending Authorization');
-      listItem.classList.toggle('device-connected', device.adbConnected);
+      listItem.title = device.adbModel;
+      listItem.status = device.adbConnected ? s`Connected` : s`Pending Authorization`;
+      listItem.element.classList.toggle('device-connected', device.adbConnected);
       view.update(device);
     }
 
     if (selectedRemoved)
-      this._selectSidebarListItem(this._discoveryListItem, this._discoveryView);
+      this._selectSidebarListItem(this._template.discoveryListItem, this._discoveryView);
 
     this._updateFooter();
   }
 
   /**
    * @param {!UI.Widget} view
-   * @return {!Element}
+   * @return {!UI.Template}
    */
   _createSidebarListItem(view) {
-    var listItem = createElementWithClass('div', 'devices-sidebar-item');
-    listItem.addEventListener('click', this._selectSidebarListItem.bind(this, listItem, view));
-    listItem._title = listItem.createChild('div', 'devices-sidebar-item-title');
-    listItem._status = listItem.createChild('div', 'devices-sidebar-item-status');
-    return listItem;
+    return html`
+      <div class='devices-sidebar-item' ${{
+      click: event => this._selectSidebarListItem(event.target, view)
+    }
+    }>
+        <div class='devices-sidebar-item-title'>${{
+      title: ''
+    }
+    }</div>
+        <div class='devices-sidebar-item-status'>${{
+      status: ''
+    }
+    }</div>
+      </div>
+    `;
   }
 
   /**
@@ -175,10 +217,9 @@ Devices.DevicesView = class extends UI.VBox {
   }
 
   _updateFooter() {
-    this._deviceCountSpan.textContent = !this._devices.length ?
-        Common.UIString('No devices detected.') :
-        this._devices.length === 1 ? Common.UIString('1 device detected.') :
-                                     Common.UIString('%d devices detected.', this._devices.length);
+    this._template.deviceCount = !this._devices.length ?
+        s`No devices detected.` :
+        this._devices.length === 1 ? s`1 device detected.` : s`${this._devices.length} devices detected.`;
   }
 
   /**
