@@ -7,8 +7,10 @@
 
 #include "base/strings/sys_string_conversions.h"
 #include "base/test/scoped_command_line.h"
+#include "base/test/scoped_feature_list.h"
 #include "components/reading_list/core/reading_list_model.h"
 #include "ios/chrome/browser/application_context.h"
+#include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_switches.h"
 #include "ios/chrome/browser/experimental_flags.h"
@@ -21,6 +23,7 @@
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_provider_test_singleton.h"
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_test_utils.h"
+#import "ios/chrome/browser/ui/ntp/modal_ntp.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -83,8 +86,10 @@ std::unique_ptr<net::test_server::HttpResponse> StandardResponse(
 
 + (void)setUp {
   [super setUp];
-  if (IsIPadIdiom()) {
-    // Make sure we are on the Home panel on iPad.
+  // TODO(crbug.com/753599): When old bookmark is removed, NTP panel will always
+  // be shown modally.  Clean up the non-modal code below.
+  if (!PresentNTPPanelModally()) {
+    // Make sure we are on the Home panel on iPad when NTP is shown modally.
     chrome_test_util::OpenNewTab();
     [[EarlGrey selectElementWithMatcher:chrome_test_util::Omnibox()]
         performAction:grey_typeText(@"chrome://newtab/#most_visited\n")];
@@ -390,6 +395,11 @@ std::unique_ptr<net::test_server::HttpResponse> StandardResponse(
 
 // Tests that tapping the fake omnibox focuses the real omnibox.
 - (void)testTapFakeOmnibox {
+  // TODO(crbug.com/782551): This egtest could crash on iPad iOS 11 when the new
+  // bookmark feature flag is enabled.  Fix this later.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
+
   // Setup the server.
   self.testServer->RegisterRequestHandler(base::Bind(&StandardResponse));
   GREYAssertTrue(self.testServer->Start(), @"Test server failed to start.");
