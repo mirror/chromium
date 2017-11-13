@@ -19,6 +19,7 @@
 #include "base/optional.h"
 #include "base/strings/string16.h"
 #include "chrome/browser/notifications/notification_common.h"
+#include "chrome/browser/notifications/notification_metrics_logger.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/features.h"
 #include "content/public/browser/platform_notification_service.h"
@@ -148,6 +149,8 @@ class PlatformNotificationServiceImpl
   // Tracks the id of persistent notifications that have been closed
   // programmatically to avoid dispatching close events for them.
   std::unordered_set<std::string> closed_notifications_;
+
+  std::unique_ptr<NotificationMetricsLogger> logger_;
 
   DISALLOW_COPY_AND_ASSIGN(PlatformNotificationServiceImpl);
 };
