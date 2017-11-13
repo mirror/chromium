@@ -698,17 +698,6 @@ void CreateProcessResourceCoordinator(
       std::move(request));
 }
 
-// Forwards service requests to Service Manager since the renderer cannot launch
-// out-of-process services on is own.
-template <typename Interface>
-void ForwardRequest(const char* service_name,
-                    mojo::InterfaceRequest<Interface> request) {
-  // TODO(beng): This should really be using the per-profile connector.
-  service_manager::Connector* connector =
-      ServiceManagerConnection::GetForProcess()->GetConnector();
-  connector->BindInterface(service_name, std::move(request));
-}
-
 class RenderProcessHostIsReadyObserver : public RenderProcessHostObserver {
  public:
   RenderProcessHostIsReadyObserver(RenderProcessHost* render_process_host,
