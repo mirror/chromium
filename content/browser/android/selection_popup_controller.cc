@@ -119,8 +119,7 @@ void SelectionPopupController::OnSelectionChanged(const std::string& text) {
 }
 
 bool SelectionPopupController::ShowSelectionMenu(
-    const ContextMenuParams& params,
-    int handle_height) {
+    const ContextMenuParams& params) {
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jobject> obj = java_obj_.get(env);
   if (obj.is_null())
@@ -156,11 +155,9 @@ bool SelectionPopupController::ShowSelectionMenu(
                               params.source_type == ui::MENU_SOURCE_LONG_PRESS;
 
   Java_SelectionPopupController_showSelectionMenu(
-      env, obj, params.selection_rect.x(), params.selection_rect.y(),
-      params.selection_rect.right(),
-      params.selection_rect.bottom() + handle_height, params.is_editable,
-      is_password_type, jselected_text, params.selection_start_offset,
-      can_select_all, can_edit_richly, should_suggest, params.source_type);
+      env, obj, params.is_editable, is_password_type, jselected_text,
+      params.selection_start_offset, can_select_all, can_edit_richly,
+      should_suggest, params.source_type);
   return true;
 }
 

@@ -4509,9 +4509,9 @@ void RenderFrameImpl::ShowContextMenu(const blink::WebContextMenuData& data) {
   if (params.src_url.spec().size() > url::kMaxURLChars)
     params.src_url = GURL();
 
-  blink::WebRect selection_in_window(data.selection_rect);
-  GetRenderWidget()->ConvertViewportToWindow(&selection_in_window);
-  params.selection_rect = selection_in_window;
+  // blink::WebRect selection_in_window(data.selection_rect);
+  // GetRenderWidget()->ConvertViewportToWindow(&selection_in_window);
+  // params.selection_rect = selection_in_window;
 
 #if defined(OS_ANDROID)
   // The Samsung Email app relies on the context menu being shown after the
