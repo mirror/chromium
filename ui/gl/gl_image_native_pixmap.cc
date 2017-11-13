@@ -7,6 +7,8 @@
 #include <vector>
 
 #include "ui/gfx/buffer_format_util.h"
+#include "ui/gl/egl_util.h"
+#include "ui/gl/gl_context.h"
 #include "ui/gl/gl_surface_egl.h"
 
 #define FOURCC(a, b, c, d)                                        \
@@ -130,7 +132,9 @@ GLImageNativePixmap::GLImageNativePixmap(const gfx::Size& size,
     : GLImageEGL(size),
       internalformat_(internalformat),
       has_image_flush_external_(
-          gl::GLSurfaceEGL::HasEGLExtension("EGL_EXT_image_flush_external")) {}
+          gl::GLSurfaceEGL::HasEGLExtension("EGL_EXT_image_flush_external")),
+      has_image_dma_buf_export_(
+          gl::GLSurfaceEGL::HasEGLExtension("EGL_MESA_image_dma_buf_export")) {}
 
 GLImageNativePixmap::~GLImageNativePixmap() {}
 
@@ -139,8 +143,17 @@ bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
   DCHECK(!pixmap_);
   if (pixmap->GetEGLClientBuffer()) {
     EGLint attrs[] = {EGL_IMAGE_PRESERVED_KHR, EGL_TRUE, EGL_NONE};
-    if (!GLImageEGL::Initialize(EGL_NATIVE_PIXMAP_KHR,
-                                pixmap->GetEGLClientBuffer(), attrs)) {
+    EGLContext context = EGL_NO_CONTEXT;
+    GLenum target = EGL_NATIVE_PIXMAP_KHR;
+
+    if (GLContext::GetCurrent()) {
+      context =
+          reinterpret_cast<EGLContext>(GLContext::GetCurrent()->GetHandle());
+      target = EGL_GL_TEXTURE_2D_KHR;
+    }
+
+    if (!GLImageEGL::Initialize(context, target, pixmap->GetEGLClientBuffer(),
+                                attrs)) {
       return false;
     }
   } else if (pixmap->AreDmaBufFdsValid()) {
@@ -196,7 +209,7 @@ bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
     }
     attrs.push_back(EGL_NONE);
 
-    if (!GLImageEGL::Initialize(EGL_LINUX_DMA_BUF_EXT,
+    if (!GLImageEGL::Initialize(EGL_NO_CONTEXT, EGL_LINUX_DMA_BUF_EXT,
                                 static_cast<EGLClientBuffer>(nullptr),
                                 &attrs[0])) {
       return false;
@@ -205,6 +218,51 @@ bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
 
   pixmap_ = pixmap;
   return true;
+}
+
+gfx::NativePixmapHandle GLImageNativePixmap::ExportHandle() {
+  if (!has_image_dma_buf_export_) {
+    LOG(ERROR) << "Error no extension EGL_MESA_image_dma_buf_export";
+    return gfx::NativePixmapHandle();
+  }
+
+  int fourcc = 0;
+  int num_planes = 0;
+  EGLuint64KHR modifiers = 0;
+
+  if (!eglExportDMABUFImageQueryMESA(GLSurfaceEGL::GetHardwareDisplay(),
+                                     egl_image_, &fourcc, &num_planes,
+                                     &modifiers)) {
+    LOG(ERROR) << "Error querying EGLImage: " << ui::GetLastEGLErrorString();
+    return gfx::NativePixmapHandle();
+  }
+
+  std::vector<int> fds(num_planes);
+  std::vector<EGLint> strides(num_planes);
+  std::vector<EGLint> offsets(num_planes);
+
+  if (!eglExportDMABUFImageMESA(GLSurfaceEGL::GetHardwareDisplay(), egl_image_,
+                                &fds[0], &strides[0], &offsets[0])) {
+    LOG(ERROR) << "Error exporting EGLImage: " << ui::GetLastEGLErrorString();
+    return gfx::NativePixmapHandle();
+  }
+
+  gfx::NativePixmapHandle handle;
+
+  for (int i = 0; i < num_planes; ++i) {
+    base::ScopedFD scoped_fd(fds[i]);
+    if (!scoped_fd.is_valid()) {
+      LOG(ERROR) << "Invalid dmabuf";
+      return gfx::NativePixmapHandle();
+    }
+    handle.fds.emplace_back(
+        base::FileDescriptor(scoped_fd.release(), true /* auto_close */));
+
+    handle.planes.emplace_back(strides[i], offsets[i], 0 /* size opaque */,
+                               modifiers);
+  }
+
+  return handle;
 }
 
 unsigned GLImageNativePixmap::GetInternalFormat() {
