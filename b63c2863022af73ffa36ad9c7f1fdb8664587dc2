@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f0d67624_da3a4e61",
+        "filename": "testing/libfuzzer/fuzzers/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T20:47:01Z",
+      "side": 1,
+      "message": "I think it\u0027s fine to keep V8 fuzzers here while we are experimenting with different things, but sometime later we\u0027ll have to move them to the V8 repo",
+      "range": {
+        "startLine": 511,
+        "startChar": 5,
+        "endLine": 511,
+        "endChar": 17
+      },
+      "revId": "b63c2863022af73ffa36ad9c7f1fdb8664587dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f23f6d5_6f698658",
         "filename": "testing/libfuzzer/fuzzers/v8_fuzzer.cc",
         "patchSetId": 1
