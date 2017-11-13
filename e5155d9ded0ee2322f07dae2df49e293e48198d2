@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90e9236d_39a0de42",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-11-13T14:49:24Z",
+      "side": 1,
+      "message": "My intention of this code is to set the zoom level without refreshing the page whenever Settings-\u003eAdvanced-\u003eAccessibility-\u003e\"Text scaling\" is changed.\n\nI cannot understand what you mean by \"go through the WebView to set the accessibility setting instead\" .. Do you mean I must create a separate member function of WebView to update the accessibility setting and apply it to zoom factor? I will do, please check if it is right.",
+      "parentUuid": "1d64b13e_f6e5f9a1",
+      "revId": "e5155d9ded0ee2322f07dae2df49e293e48198d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2157b20b_5438488f",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "e5155d9ded0ee2322f07dae2df49e293e48198d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aadc7ae_4ff5d663",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2742,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-11-13T14:49:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2157b20b_5438488f",
+      "range": {
+        "startLine": 2742,
+        "startChar": 43,
+        "endLine": 2742,
+        "endChar": 74
+      },
+      "revId": "e5155d9ded0ee2322f07dae2df49e293e48198d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24592a81_aaeec430",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3152,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-11-13T14:49:24Z",
+      "side": 0,
+      "message": "I removed this to apply the zoom level change (by accessibility font scale) to the navigated page (i.e., the secondly visited page) in Android.",
+      "range": {
+        "startLine": 3152,
+        "startChar": 13,
+        "endLine": 3152,
+        "endChar": 23
+      },
+      "revId": "e8a59fbd5d1ec44f6f814647f3a923269edbac6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
