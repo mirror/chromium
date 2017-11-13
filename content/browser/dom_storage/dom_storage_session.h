@@ -16,6 +16,7 @@
 namespace content {
 
 class DOMStorageContextImpl;
+class SessionStorageContextMojo;
 
 // This refcounted class determines the lifetime of a session
 // storage namespace and provides an interface to Clone() an
@@ -25,11 +26,13 @@ class CONTENT_EXPORT DOMStorageSession
     : public base::RefCountedThreadSafe<DOMStorageSession> {
  public:
   // Constructs a |DOMStorageSession| and allocates new IDs for it.
-  explicit DOMStorageSession(DOMStorageContextImpl* context);
+  explicit DOMStorageSession(DOMStorageContextImpl* context,
+                             SessionStorageContextMojo* mojo_context);
 
   // Constructs a |DOMStorageSession| and assigns |persistent_namespace_id|
   // to it. Allocates a new non-persistent ID.
   DOMStorageSession(DOMStorageContextImpl* context,
+                    SessionStorageContextMojo* mojo_context,
                     const std::string& persistent_namespace_id);
 
   int64_t namespace_id() const { return namespace_id_; }
@@ -44,17 +47,20 @@ class CONTENT_EXPORT DOMStorageSession
   // Constructs a |DOMStorageSession| by cloning
   // |namespace_id_to_clone|. Allocates new IDs for it.
   static DOMStorageSession* CloneFrom(DOMStorageContextImpl* context,
+                                      SessionStorageContextMojo* mojo_context,
                                       int64_t namepace_id_to_clone);
 
  private:
   friend class base::RefCountedThreadSafe<DOMStorageSession>;
 
   DOMStorageSession(DOMStorageContextImpl* context,
+                    SessionStorageContextMojo* mojo_context,
                     int64_t namespace_id,
                     const std::string& persistent_namespace_id);
   ~DOMStorageSession();
 
   scoped_refptr<DOMStorageContextImpl> context_;
+  SessionStorageContextMojo* mojo_context_;
   int64_t namespace_id_;
   std::string persistent_namespace_id_;
   bool should_persist_;
