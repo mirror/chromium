@@ -21,7 +21,7 @@ from grit.node import message
 from grit.node import structure
 
 
-PACK_FILE_VERSION = 5
+PACK_FILE_VERSION = 6
 BINARY, UTF8, UTF16 = range(3)
 
 
@@ -70,14 +70,16 @@ def ReadDataPackFromString(data):
   elif version == 5:
     encoding, resource_count, alias_count = struct.unpack('<BxxxHH', data[4:12])
     data = data[12:]
+  elif version == 6:
+    return ReadDataPackFromString_V6(data)
   else:
     raise WrongFileVersion('Found version: ' + str(version))
 
   resources = {}
-  kIndexEntrySize = 2 + 4  # Each entry is a uint16 and a uint32.
   def entry_at_index(idx):
-    offset = idx * kIndexEntrySize
-    return struct.unpack('<HI', data[offset:offset + kIndexEntrySize])
+    size = 2 + 4  # Each entry is a uint16 and a uint32.
+    offset = idx * size
+    return struct.unpack('<HI', data[offset:offset + size]) #return id, offset
 
   prev_resource_id, prev_offset = entry_at_index(0)
   for i in xrange(1, resource_count + 1):
@@ -86,6 +88,7 @@ def ReadDataPackFromString(data):
     prev_resource_id, prev_offset = resource_id, offset
 
   # Read the alias table.
+  kIndexEntrySize = 6
   alias_data = data[(resource_count + 1) * kIndexEntrySize:]
   kAliasEntrySize = 2 + 2  # uint16, uint16
   def alias_at_index(idx):
@@ -99,8 +102,160 @@ def ReadDataPackFromString(data):
 
   return DataPackContents(resources, encoding)
 
+def ReadDataPackFromString_V6(data):
+  resources = {}
+
+  encoding, resource_count, alias_count, \
+      id_entries_count, resource_count_64_1, resource_count_64_2, \
+      resource_count_64_3 = struct.unpack('<BxxxHHHHHH', data[4:20])
+  data = data[20:]
+
+  if resource_count == 0:
+    return DataPackContents(resources, encoding)
+
+  kIdSize = 2 + 2
+  kShortOffsetSize = 2
+  kLongOffsetSize = 4
+  kAliasEntrySize = 2 + 2
+  k64K = 64 * 1024
+
+  short_offset_count = resource_count_64_1 + resource_count_64_2 \
+      + resource_count_64_3
+  long_offset_count = resource_count - short_offset_count
+  # Start address of the offset tables after counts
+  base_offset_tables = kIdSize * id_entries_count \
+      + kAliasEntrySize * alias_count
+  # start address of packed data
+  base_data = base_offset_tables + short_offset_count * kShortOffsetSize \
+      + long_offset_count * kLongOffsetSize
+  packed_data = data[base_data:]
+
+  # Read the alias table.
+  alias_data = data[(id_entries_count) * kIdSize:]
+  aliases = {}
+  def alias_at_index(idx):
+    offset = idx * kAliasEntrySize
+    return struct.unpack('<HH', alias_data[offset:offset + kAliasEntrySize])
+
+  for i in xrange(alias_count):
+    resource_id, index = alias_at_index(i)
+    aliases[resource_id] = index
+
+
+  def gen_resources():
+    prev_resource_id, prev_idx = struct.unpack('<HH', data[0:kIdSize])
+    for e in xrange(1, id_entries_count):
+      next_resource_id, next_idx = struct.unpack('<HH', data[e*kIdSize:(e+1)*kIdSize])
+      size = next_idx - prev_idx
+      for i in xrange(size):
+        idx = prev_idx + i
+        resource_id = prev_resource_id + i
+        if idx < short_offset_count:
+          entry_offset = base_offset_tables + idx * kShortOffsetSize
+          resource_offset = struct.unpack('<H', data[entry_offset:entry_offset+kShortOffsetSize])[0]
+          if idx >= resource_count_64_1:
+            resource_offset += k64K
+          if idx >= resource_count_64_1 + resource_count_64_2:
+            resource_offset += k64K
+        else:
+          entry_offset = base_offset_tables + short_offset_count * kShortOffsetSize + (idx-short_offset_count) * kLongOffsetSize
+          resource_offset = struct.unpack('<I', data[entry_offset:entry_offset+kLongOffsetSize])[0] + 3 * k64K
+        yield idx, resource_id, resource_offset
+      prev_resource_id, prev_idx = next_resource_id, next_idx
+
+  resource_generator = gen_resources()
+  prev_idx, prev_resource_id, prev_offset = next(resource_generator)
+  resource_id_by_index = [prev_resource_id]
+  for idx, resource_id, offset in resource_generator:
+    resource_id_by_index.append(resource_id)
+    if resource_id in aliases:
+      continue
+    resources[prev_resource_id] = packed_data[prev_offset:offset]
+    prev_resource_id, prev_offset = resource_id, offset
+  resources[prev_resource_id] = packed_data[prev_offset:]
+
+  for alias, index in aliases.iteritems():
+    original_id = resource_id_by_index[index]
+    resources[alias] = resources[original_id]
+
+  return DataPackContents(resources, encoding)
 
 def WriteDataPackToString(resources, encoding):
+  """Returns a string with a map of id=>data in the data pack format."""
+  ret = []
+
+  # Compute alias map.
+  resource_ids = sorted(resources)
+  # Use reversed() so that for duplicates lower IDs clobber higher ones.
+  id_by_data = {resources[k]: k for k in reversed(resource_ids)}
+  # Map of resource_id -> resource_id, where value < key.
+  alias_map = {k: id_by_data[v] for k, v in resources.iteritems()
+               if id_by_data[v] != k}
+
+  offset_table_1 = []
+  offset_table_2 = []
+  offset_table_3 = []
+  offset_table_4 = []
+
+  def add_to_offset_table(data_offset):
+    k64K = 64 * 1024
+    if data_offset < k64K:
+      offset_table_1.append(data_offset)
+    elif data_offset < k64K * 2:
+      offset_table_2.append(data_offset % k64K)
+    elif data_offset < k64K * 3:
+      offset_table_3.append(data_offset % k64K)
+    else:
+      offset_table_4.append(data_offset - 3 * k64K)
+
+  index_by_id = {}
+  deduped_data = []
+  index = 0
+  data_offset = 0
+  id_table = []
+  prev_resource_id = -1
+  for resource_id in resource_ids:
+    data = resources[resource_id]
+    index_by_id[resource_id] = index
+    if resource_id - prev_resource_id > 1:
+      id_table.append(struct.pack('<HH', resource_id, index))
+    add_to_offset_table(data_offset)
+    if resource_id not in alias_map:
+      data_offset += len(data)
+      deduped_data.append(data)
+    index += 1
+    prev_resource_id = resource_id
+
+  id_table.append(struct.pack('<HH', 0, index))
+
+  # Write file header.
+  resource_count = len(resources)
+  # Padding bytes added for alignment.
+  ret.append(struct.pack('<IBxxxHHHHHH', PACK_FILE_VERSION, encoding,
+      resource_count, len(alias_map), len(id_table), len(offset_table_1),
+      len(offset_table_2), len(offset_table_3)))
+
+  # Write id table
+  ret.extend(id_table)
+
+  assert index == resource_count
+
+  # Write alias table.
+  for resource_id in sorted(alias_map):
+    index = index_by_id[alias_map[resource_id]]
+    ret.append(struct.pack('<HH', resource_id, index))
+
+  # Write offset tables
+  for offset in offset_table_1 + offset_table_2 + offset_table_3:
+    ret.append(struct.pack('<H', offset))
+  for offset in offset_table_4:
+    ret.append(struct.pack('<I', offset))
+
+  # Write data.
+  ret.extend(deduped_data)
+  return ''.join(ret)
+
+def WriteDataPackToString_old(resources, encoding):
   """Returns a string with a map of id=>data in the data pack format."""
   ret = []
 

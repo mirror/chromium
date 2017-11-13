@@ -39,23 +39,37 @@ class FormatDataPackUnittest(unittest.TestCase):
     loaded = data_pack.ReadDataPackFromString(expected_data)
     self.assertEquals(loaded, expected_data_pack)
 
-  def testReadWriteDataPackV5(self):
+
+  def testReadWriteDataPackV6(self):
     expected_data = (
-        '\x05\x00\x00\x00'                  # version
-        '\x01\x00\x00\x00'                  # encoding & padding
-        '\x03\x00'                          # resource_count
-        '\x01\x00'                          # alias_count
-        '\x01\x00\x28\x00\x00\x00'          # index entry 1
-        '\x04\x00\x28\x00\x00\x00'          # index entry 4
-        '\x06\x00\x34\x00\x00\x00'          # index entry 6
-        '\x00\x00\x40\x00\x00\x00'          # extra entry for the size of last
-        '\x0a\x00\x01\x00'                  # alias table
-        'this is id 4this is id 6')         # data
+      '\x06\x00\x00\x00'                # version
+      '\x01\x00\x00\x00'                # encoding and padding
+      '\x06\x00'                        # resource_count
+      '\x02\x00'                        # alias_count
+      '\x04\x00'                        # id_entries
+      '\x06\x00'                        # num_resources_64k_1
+      '\x00\x00'                        # num_resources_64k_2
+      '\x00\x00'                        # num_resources_64k_3
+      '\x01\x00\x00\x00'                # id entry 1
+      '\x04\x00\x02\x00'                # id entry 4
+      '\x0a\x00\x04\x00'                # id entry 10
+      '\x00\x00\x06\x00'                # dumb entry
+      '\x0a\x00\x02\x00'                # alias table
+      '\x0b\x00\x00\x00'                # alias table
+      '\x00\x00'                        # offset for id 1
+      '\x00\x00'                        # offset for id 2
+      '\x0c\x00'                        # offset for id 4
+      '\x18\x00'                        # offset for id 5
+      '\x24\x00'                        # offset for id 10
+      '\x24\x00'                        # offset for id 11
+      'this is id 2this is id 4this is id 5')
     expected_resources = {
         1: '',
+        2: 'this is id 2',
         4: 'this is id 4',
-        6: 'this is id 6',
+        5: 'this is id 5',
         10: 'this is id 4',
+        11: '',
     }
     data = data_pack.WriteDataPackToString(expected_resources, data_pack.UTF8)
     self.assertEquals(data, expected_data)
@@ -63,6 +77,47 @@ class FormatDataPackUnittest(unittest.TestCase):
     expected_data_pack = data_pack.DataPackContents(
         expected_resources, data_pack.UTF8)
     loaded = data_pack.ReadDataPackFromString(expected_data)
+    self.assertEquals(loaded, expected_data_pack)
+
+  def testReadWriteEmptyDataPack(self):
+    expected_data = (
+      '\x06\x00\x00\x00'                # version
+      '\x01\x00\x00\x00'                # encoding and padding
+      '\x00\x00'                        # resource_count
+      '\x00\x00'                        # alias_count
+      '\x01\x00'                        # id_entries_count
+      '\x00\x00'                        # num_resources_64k_1
+      '\x00\x00'                        # num_resources_64k_2
+      '\x00\x00'                        # num_resources_64k_3
+      '\x00\x00\x00\x00'                # dumb id entry
+    )
+    expected_resources = {}
+    data = data_pack.WriteDataPackToString(expected_resources, data_pack.UTF8)
+    self.assertEquals(data, expected_data)
+
+    expected_data_pack = data_pack.DataPackContents(
+        expected_resources, data_pack.UTF8)
+    loaded = data_pack.ReadDataPackFromString(expected_data)
+    self.assertEquals(loaded, expected_data_pack)
+
+  def testReadWrittenDataPack(self):
+    k32K = '1' * 32 * 1024
+    expected_resources = {
+        1: '',
+        4: 'this is id 4',
+        5: k32K,
+        10: 'this is id 4',
+        11: k32K + k32K,
+        100: k32K * 4,
+        101: k32K * 5,
+        102: k32K * 2,
+        103: k32K * 2,
+    }
+    data = data_pack.WriteDataPackToString(expected_resources, data_pack.UTF8)
+
+    expected_data_pack = data_pack.DataPackContents(
+        expected_resources, data_pack.UTF8)
+    loaded = data_pack.ReadDataPackFromString(data)
     self.assertEquals(loaded, expected_data_pack)
 
   def testRePackUnittest(self):

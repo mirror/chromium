@@ -606,7 +606,6 @@ def PrintPakAnalysis(apk_filename, min_pak_resource_size, out_dir):
   # Output the overall resource summary.
   total_resource_size = sum(resource_size_map.values())
   total_resource_count = len(resource_count_map)
-  assert total_resource_size <= total_file_size
   print 'Total pak resources: %s' % total_resource_count
   print 'Total uncompressed resource size: %s' % _FormatBytes(
       total_resource_size)
