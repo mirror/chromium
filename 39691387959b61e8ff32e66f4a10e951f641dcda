@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "04c69357_2b66fc17",
+        "filename": "components/os_crypt/key_storage_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-13T10:13:36Z",
+      "side": 1,
+      "message": "Thanks for checking, Christos!\n\nScopedAllowBaseSyncPrimitives has a private constructor and is highly discouraged. In short, I suggest describing our issues and proposed priorities to jam@chromium.org, who may suggest a better way or approve an exception (in form of a friend declaration in ScopedAllowBaseSyncPrimitives definition).\n\nFor this to be efficient, we\u0027ll need to do some homework, though. A design doc describing the \"proper\" solution, and the ScopedAllowBaseSyncPrimitives-based temporary fix, together with their advantages, disadvantages and costs will greatly help the discussion with jam@, but even better, will allow us to double-check the proposal beforehand (happy to help out with that). The design doc does not need the full detail, but it should make it possible for Chrome experts without knowledge of the concrete situation in os_crypt to understand the issue and proposal. I also suggest roping in thestig@, as the other os_crypt owner.\n\nI know that you are rather busy with the password export / import feature as well. My suggestion is to keep the export part as the highest priority, and throttle this and perhaps importing to avoid overloading yourself. I suggest talking the priorities over with battre@ and updating bugs related to the os_crypt concurrency issues with the outcome as you see fit.",
+      "parentUuid": "33dd7e0b_fb8c67dd",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 21
+      },
+      "revId": "39691387959b61e8ff32e66f4a10e951f641dcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c735977_9cfccebb",
         "filename": "components/os_crypt/key_storage_linux.h",
         "patchSetId": 4
