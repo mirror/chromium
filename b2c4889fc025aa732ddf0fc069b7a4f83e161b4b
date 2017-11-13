@@ -16,6 +16,24 @@
       "revId": "b2c4889fc025aa732ddf0fc069b7a4f83e161b4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc26d72_12c28309",
+        "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-13T18:23:20Z",
+      "side": 1,
+      "message": "\u003e I find this to be a strange change. DidClearWindowObject was _the_ place to execute JS after commit, and now every client should be aware enough to do a PostTask? Perhaps it makes sense to fire DidClearWindowObject later?\n\nThis is a very good question - thanks for raising it.\n\n1. I brought this question up in a related CL from Balazs: https://crrev.com/c/735686\n2. I think we may need to fire DidClearWindowObject later.  I don\u0027t know how to do this yet - I\u0027ll try to look into this later this week (and then I\u0027ll get back to this CR so we can discuss whether PostTask is really needed or not).\n\n\u003e Also note, that this code is moving: https://chromium-review.googlesource.com/c/chromium/src/+/739746/4/third_party/WebKit/Source/controller/DevToolsFrontendImpl.cpp#96. Could you please wait a bit (that change has almost landed)?\n\nSure - I\u0027ll wait.\n\n\u003e This also suggests that blink might have similar places which execute JS early - you might want to cover them as well.\n\nGood point - I\u0027ll try to look into adding (or rather moving) the no-scripts-before-commit-DCHECK into blink::ScriptController::ExecuteScriptInMainWorld.  I may try to do this in a separate CL though.",
+      "parentUuid": "49a5b564_89487381",
+      "revId": "b2c4889fc025aa732ddf0fc069b7a4f83e161b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
