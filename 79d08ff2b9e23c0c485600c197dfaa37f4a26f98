@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "eca603bd_3861c8cc",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-13T17:18:35Z",
+      "side": 1,
+      "message": "It is a good point. We haven\u0027t defined the format yet to have prioritized ordering (instead, we define more specific match to have priority). But maybe using order in the format is easiest way to manage policy (if we do the work on the server to do that ordering).",
+      "parentUuid": "28526a2c_198ba568",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "070e0c32_c7030725",
         "filename": "components/previews/content/previews_optimization_guide_impl.cc",
         "patchSetId": 6
@@ -115,6 +133,24 @@
       "writtenOn": "2017-11-10T23:59:20Z",
       "side": 1,
       "message": "Is there any reason in particular that you went with a interface + impl split for this? It seems like it shouldn\u0027t be necessary.",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f2f40a_54f3ad4d",
+        "filename": "components/previews/content/previews_optimization_guide_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-13T17:18:35Z",
+      "side": 1,
+      "message": "Fyi, I had landed the interface already with a test impl.",
+      "parentUuid": "f8bb52f1_3fe335cd",
       "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
