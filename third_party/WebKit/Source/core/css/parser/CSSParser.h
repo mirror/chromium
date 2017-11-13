@@ -110,6 +110,10 @@ class CORE_EXPORT CSSParser {
       const String&,
       bool important,
       const CSSParserContext*);
+  static const CSSValue* ParseSingleValueUsingTokenizer(
+      CSSPropertyID,
+      const String&,
+      const CSSParserContext*);
 };
 
 }  // namespace blink

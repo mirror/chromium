@@ -173,6 +173,15 @@ const CSSValue* CSSParser::ParseSingleValue(CSSPropertyID property_id,
   if (CSSValue* value = CSSParserFastPaths::MaybeParseValue(property_id, string,
                                                             context->Mode()))
     return value;
+  return ParseSingleValueUsingTokenizer(property_id, string, context);
+}
+
+const CSSValue* CSSParser::ParseSingleValueUsingTokenizer(
+    CSSPropertyID property_id,
+    const String& string,
+    const CSSParserContext* context) {
+  if (string.IsEmpty())
+    return nullptr;
   CSSTokenizer tokenizer(string);
   const auto tokens = tokenizer.TokenizeToEOF();
   return CSSPropertyParser::ParseSingleValue(
@@ -220,11 +229,12 @@ bool CSSParser::ParseColor(Color& color, const String& string, bool strict) {
 
   const CSSValue* value = CSSParserFastPaths::ParseColor(
       string, strict ? kHTMLStandardMode : kHTMLQuirksMode);
-  // TODO(timloh): Why is this always strict mode?
-  if (!value)
-    value =
-        ParseSingleValue(CSSPropertyColor, string, StrictCSSParserContext());
-
+  if (!value) {
+    value = ParseSingleValueUsingTokenizer(
+        CSSPropertyColor, string,
+        strict ? StrictCSSParserContext()
+               : CSSParserContext::Create(kHTMLQuirksMode));
+  }
   if (!value || !value->IsColorValue())
     return false;
   color = ToCSSColorValue(*value).Value();
