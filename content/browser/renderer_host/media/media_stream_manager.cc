@@ -45,6 +45,7 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents_media_capture_id.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "crypto/hmac.h"
 #include "media/audio/audio_device_description.h"
@@ -54,7 +55,6 @@
 #include "media/base/media_switches.h"
 #include "media/capture/video/video_capture_device_factory.h"
 #include "media/capture/video/video_capture_system_impl.h"
-#include "services/video_capture/public/cpp/constants.h"
 #include "services/video_capture/public/uma/video_capture_service_event.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -437,7 +437,8 @@ MediaStreamManager::MediaStreamManager(
     CHECK(video_capture_thread_.Start());
     device_task_runner = video_capture_thread_.task_runner();
 #endif
-    if (base::FeatureList::IsEnabled(video_capture::kMojoVideoCapture)) {
+    if (base::FeatureList::IsEnabled(features::kMojoVideoCapture)) {
+      DVLOG(INFO) << "VideoCaptureService is enabled";
       video_capture_provider = std::make_unique<VideoCaptureProviderSwitcher>(
           std::make_unique<ServiceVideoCaptureProvider>(
               base::BindRepeating(&SendVideoCaptureLogMessage)),
@@ -445,6 +446,7 @@ MediaStreamManager::MediaStreamManager(
               std::move(device_task_runner),
               base::BindRepeating(&SendVideoCaptureLogMessage)));
     } else {
+      DVLOG(INFO) << "VideoCaptureService is not enabled";
       video_capture::uma::LogVideoCaptureServiceEvent(
           video_capture::uma::BROWSER_USING_LEGACY_CAPTURE);
       video_capture_provider = InProcessVideoCaptureProvider::CreateInstance(
