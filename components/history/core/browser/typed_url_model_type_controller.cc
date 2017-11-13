@@ -64,17 +64,18 @@ bool TypedURLModelTypeController::ReadyForStart() const {
       history_disabled_pref_name_);
 }
 
+syncer::ModelTypeController::BridgeProvider
+TypedURLModelTypeController::GetBridgeProvider() {
+  // As opposed to the default implementation, get the bridge on demand, the
+  // history service requires us to get typed URL bridge on the model thread.
+  history::HistoryService* history = sync_client()->GetHistoryService();
+  return base::Bind(&TypedURLSyncBridge::FromHistoryService, history);
+}
+
 void TypedURLModelTypeController::PostBridgeTask(const base::Location& location,
                                                  const BridgeTask& task) {
-  history::HistoryService* history = sync_client()->GetHistoryService();
-  if (!history) {
-    // History must be disabled - don't start.
-    LOG(WARNING) << "Cannot access history service.";
-    return;
-  }
-
-  TypedURLSyncBridge* bridge = history->GetTypedURLSyncBridge();
-  PostTaskOnHistoryThread(base::Bind(task, bridge));
+  PostTaskOnHistoryThread(
+      base::Bind(&RunBridgeTask, GetBridgeProvider(), task));
 }
 
 void TypedURLModelTypeController::OnSavingBrowserHistoryDisabledChanged() {

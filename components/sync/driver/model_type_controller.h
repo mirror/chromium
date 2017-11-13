@@ -56,6 +56,10 @@ class ModelTypeController : public DataTypeController {
 
   SyncClient* sync_client() const { return sync_client_; }
 
+  // This function need to be run on the model thread.
+  static void RunBridgeTask(const BridgeProvider& bridge_provider,
+                            const BridgeTask& task);
+
  private:
   void RecordStartFailure(ConfigureResult result) const;
 

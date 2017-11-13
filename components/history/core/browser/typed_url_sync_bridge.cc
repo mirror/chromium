@@ -10,6 +10,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/history/core/browser/history_backend.h"
+#include "components/history/core/browser/history_service.h"
 #include "components/sync/model/mutable_data_batch.h"
 #include "components/sync/model_impl/sync_metadata_store_change_list.h"
 #include "net/base/url_util.h"
@@ -532,6 +533,14 @@ bool TypedURLSyncBridge::WriteToTypedUrlSpecifics(
   CHECK_EQ(typed_url->visits_size(), typed_url->visit_transitions_size());
 
   return true;
+}
+
+// static
+base::WeakPtr<syncer::ModelTypeSyncBridge>
+TypedURLSyncBridge::FromHistoryService(HistoryService* history_service) {
+  if (!history_service)
+    return base::WeakPtr<syncer::ModelTypeSyncBridge>();
+  return history_service->GetTypedURLSyncBridge()->AsWeakPtr();
 }
 
 // static

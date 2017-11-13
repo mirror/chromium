@@ -52,13 +52,6 @@ base::WeakPtr<ModelTypeSyncBridge> ReturnCapturedBridge(
   return arg;
 }
 
-void RunBridgeTask(const BridgeProvider& bridge_provider,
-                   const BridgeTask& task) {
-  if (base::WeakPtr<ModelTypeSyncBridge> bridge = bridge_provider.Run()) {
-    task.Run(bridge.get());
-  }
-}
-
 }  // namespace
 
 ModelTypeController::ModelTypeController(
@@ -240,6 +233,14 @@ void ModelTypeController::ReportModelError(const ModelError& error) {
   LoadModelsDone(UNRECOVERABLE_ERROR,
                  SyncError(error.location(), SyncError::DATATYPE_ERROR,
                            error.message(), type()));
+}
+
+// static
+void ModelTypeController::RunBridgeTask(const BridgeProvider& bridge_provider,
+                                        const BridgeTask& task) {
+  if (base::WeakPtr<ModelTypeSyncBridge> bridge = bridge_provider.Run()) {
+    task.Run(bridge.get());
+  }
 }
 
 void ModelTypeController::RecordStartFailure(ConfigureResult result) const {

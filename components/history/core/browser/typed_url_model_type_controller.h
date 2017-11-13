@@ -23,6 +23,7 @@ class TypedURLModelTypeController : public syncer::ModelTypeController {
 
  private:
   // syncer::ModelTypeController implementation.
+  syncer::ModelTypeController::BridgeProvider GetBridgeProvider() override;
   void PostBridgeTask(const base::Location& location,
                       const BridgeTask& task) override;
 

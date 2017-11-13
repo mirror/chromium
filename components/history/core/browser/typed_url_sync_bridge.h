@@ -14,6 +14,8 @@
 
 namespace history {
 
+class HistoryService;
+
 class TypedURLSyncBridge : public syncer::ModelTypeSyncBridge,
                            public history::HistoryBackendObserver {
  public:
@@ -65,6 +67,10 @@ class TypedURLSyncBridge : public syncer::ModelTypeSyncBridge,
                                        const VisitVector& visits,
                                        sync_pb::TypedUrlSpecifics* specifics)
       WARN_UNUSED_RESULT;
+
+  // Return TypedURLSyncBridge from |history_service|.
+  static base::WeakPtr<ModelTypeSyncBridge> FromHistoryService(
+      HistoryService* history_service);
 
  private:
   friend class TypedURLSyncBridgeTest;
