@@ -70,6 +70,7 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/ReferrerPolicy.h"
 #include "platform/wtf/HashSet.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/RefPtr.h"
 #include "public/platform/WebFocusType.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
@@ -1777,6 +1778,8 @@ class CORE_EXPORT Document : public ContainerNode,
   // the document to recorde UKM.
   std::unique_ptr<ukm::UkmRecorder> ukm_recorder_;
   int64_t ukm_source_id_;
+
+  mutable WTF::Optional<bool> is_secure_context_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;

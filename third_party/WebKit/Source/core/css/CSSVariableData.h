@@ -22,19 +22,24 @@ class CORE_EXPORT CSSVariableData : public RefCounted<CSSVariableData> {
   USING_FAST_MALLOC(CSSVariableData);
 
  public:
-  static scoped_refptr<CSSVariableData> Create(const CSSParserTokenRange& range,
-                                               bool is_animation_tainted,
-                                               bool needs_variable_resolution) {
+  static scoped_refptr<CSSVariableData> Create(
+      const CSSParserTokenRange& range,
+      bool is_animation_tainted,
+      bool needs_variable_resolution,
+      SecureContextMode secure_context_mode) {
     return base::AdoptRef(new CSSVariableData(range, is_animation_tainted,
-                                              needs_variable_resolution));
+                                              needs_variable_resolution,
+                                              secure_context_mode));
   }
 
   static scoped_refptr<CSSVariableData> CreateResolved(
       const Vector<CSSParserToken>& resolved_tokens,
       Vector<String> backing_strings,
-      bool is_animation_tainted) {
-    return base::AdoptRef(new CSSVariableData(
-        resolved_tokens, std::move(backing_strings), is_animation_tainted));
+      bool is_animation_tainted,
+      SecureContextMode secure_context_mode) {
+    return base::AdoptRef(
+        new CSSVariableData(resolved_tokens, std::move(backing_strings),
+                            is_animation_tainted, secure_context_mode));
   }
 
   CSSParserTokenRange TokenRange() const { return tokens_; }
@@ -48,22 +53,26 @@ class CORE_EXPORT CSSVariableData : public RefCounted<CSSVariableData> {
 
   bool NeedsVariableResolution() const { return needs_variable_resolution_; }
 
-  const CSSValue* ParseForSyntax(const CSSSyntaxDescriptor&) const;
+  const CSSValue* ParseForSyntax(const CSSSyntaxDescriptor&,
+                                 SecureContextMode) const;
 
   CSSPropertyValueSet* PropertySet();
 
  private:
   CSSVariableData(const CSSParserTokenRange&,
                   bool is_animation_tainted,
-                  bool needs_variable_resolution);
+                  bool needs_variable_resolution,
+                  SecureContextMode);
 
   CSSVariableData(const Vector<CSSParserToken>& resolved_tokens,
                   Vector<String> backing_strings,
-                  bool is_animation_tainted)
+                  bool is_animation_tainted,
+                  SecureContextMode secure_context_mode)
       : backing_strings_(std::move(backing_strings)),
         tokens_(resolved_tokens),
         is_animation_tainted_(is_animation_tainted),
         needs_variable_resolution_(false),
+        secure_context_mode_(secure_context_mode),
         cached_property_set_(false) {}
 
   void ConsumeAndUpdateTokens(const CSSParserTokenRange&);
@@ -75,6 +84,7 @@ class CORE_EXPORT CSSVariableData : public RefCounted<CSSVariableData> {
   Vector<CSSParserToken> tokens_;
   const bool is_animation_tainted_;
   const bool needs_variable_resolution_;
+  const SecureContextMode secure_context_mode_;
 
   // Parsed representation for @apply
   bool cached_property_set_;

@@ -134,7 +134,8 @@ bool CSSVariableParser::ContainsValidVariableReferences(
 CSSCustomPropertyDeclaration* CSSVariableParser::ParseDeclarationValue(
     const AtomicString& variable_name,
     CSSParserTokenRange range,
-    bool is_animation_tainted) {
+    bool is_animation_tainted,
+    SecureContextMode secure_context_mode) {
   if (range.AtEnd())
     return nullptr;
 
@@ -149,7 +150,8 @@ CSSCustomPropertyDeclaration* CSSVariableParser::ParseDeclarationValue(
     return CSSCustomPropertyDeclaration::Create(
         variable_name,
         CSSVariableData::Create(range, is_animation_tainted,
-                                has_references || has_at_apply_rule));
+                                has_references || has_at_apply_rule,
+                                secure_context_mode));
   }
   return CSSCustomPropertyDeclaration::Create(variable_name, type);
 }
@@ -173,7 +175,8 @@ CSSVariableReferenceValue* CSSVariableParser::ParseRegisteredPropertyValue(
     return nullptr;
   // TODO(timloh): Should this be hasReferences || hasAtApplyRule?
   return CSSVariableReferenceValue::Create(
-      CSSVariableData::Create(range, is_animation_tainted, has_references),
+      CSSVariableData::Create(range, is_animation_tainted, has_references,
+                              context.GetSecureContextMode()),
       context);
 }
 
