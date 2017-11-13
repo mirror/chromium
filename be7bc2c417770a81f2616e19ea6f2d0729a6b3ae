@@ -22,6 +22,30 @@
       "revId": "be7bc2c417770a81f2616e19ea6f2d0729a6b3ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8c5417_1d026019",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-13T21:14:23Z",
+      "side": 1,
+      "message": "SGTM!",
+      "parentUuid": "4ee17be1_7666cf37",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 38
+      },
+      "revId": "be7bc2c417770a81f2616e19ea6f2d0729a6b3ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

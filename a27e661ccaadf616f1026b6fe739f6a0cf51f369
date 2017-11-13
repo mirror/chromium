@@ -417,6 +417,24 @@
     },
     {
       "key": {
+        "uuid": "d56d7c78_f5fd0c5b",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-13T21:14:23Z",
+      "side": 1,
+      "message": "Yep that makes sense.\n\nSo, instead of vector\u003cOnceClosure\u003e:\n\nWe can have CallbackList\u003cvoid()\u003e as an instance of notifier:\n  base::CallbackList\u003cvoid()\u003e on_destruction_callbacks_;\n\nAnd the client (i.e. the Geolocator class) can have a subscription token as an instance:\n  base::CallbackList\u003cvoid()\u003e::Subscription destruction_callback_subscription_;\n\nThen in its constructor the clients (Geolocator) would do:\n  // base::Unretained(this) is safe because destruction of |destruction_callback_subscription_|\n  // cancels this callback.\n  destruction_callback_subscription_ \u003d\n    notifier-\u003eAddDestructionCallback(base::Bind(\u0026client::foo, base::Unretained(this));\n\nThen both classes can get rid of their WeakPtr methods and the client can store a raw pointer to the notifier instead of a weak ptr.\n\nRenjie do want to try it out?",
+      "parentUuid": "e1290a74_347a2bd1",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fec87fa_692a4567",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
         "patchSetId": 4
