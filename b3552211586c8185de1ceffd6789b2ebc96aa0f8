@@ -22,6 +22,30 @@
       "revId": "b3552211586c8185de1ceffd6789b2ebc96aa0f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f6ee4c_0b832cff",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-13T17:44:59Z",
+      "side": 1,
+      "message": "Absolutely!  There are quite a few things wrong with the way BVC does it\u0027s initial view creation and layout.  This is tweak to get things working instead of a refactor.  I assume this can get reworked as part of Bijou/Clean/Whatever",
+      "parentUuid": "d1c1faeb_bbd680cd",
+      "range": {
+        "startLine": 691,
+        "startChar": 8,
+        "endLine": 691,
+        "endChar": 23
+      },
+      "revId": "b3552211586c8185de1ceffd6789b2ebc96aa0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
