@@ -229,6 +229,10 @@ class TabManager : public TabStripModelObserver,
   // Returns the number of tabs open in all browser instances.
   int GetTabCount() const;
 
+  // Returns the number for restored tabs during session restore. This is
+  // non-zero only during session restore.
+  int GetRestoredTabCount() const;
+
  private:
   friend class TabManagerStatsCollectorTest;
 
@@ -530,6 +534,7 @@ class TabManager : public TabStripModelObserver,
   base::ObserverList<TabLifetimeObserver> observers_;
 
   bool is_session_restore_loading_tabs_;
+  size_t num_of_restored_tabs_;
 
   class TabManagerSessionRestoreObserver;
   std::unique_ptr<TabManagerSessionRestoreObserver> session_restore_observer_;
