@@ -60,6 +60,9 @@ const int kIOBufferMaxSize = 16 * kIOBufferMinSize;  // 1MB
 // Global instance of the HTTPProtocolHandlerDelegate.
 net::HTTPProtocolHandlerDelegate* g_protocol_handler_delegate = nullptr;
 
+// Global instance of the MetricsDelegate.
+net::MetricsDelegate* g_metrics_delegate = nullptr;
+
 // Empty callback.
 void DoNothing(bool flag) {}
 
@@ -87,6 +90,11 @@ namespace net {
 void HTTPProtocolHandlerDelegate::SetInstance(
     HTTPProtocolHandlerDelegate* delegate) {
   g_protocol_handler_delegate = delegate;
+}
+
+// static
+void MetricsDelegate::SetInstance(MetricsDelegate* delegate) {
+  g_metrics_delegate = delegate;
 }
 
 // The HttpProtocolHandlerCore class is the bridge between the URLRequest
@@ -724,6 +732,14 @@ void HttpProtocolHandlerCore::StopNetRequest() {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (tracker_)
     tracker_->StopRequest(net_request_);
+
+  if (g_metrics_delegate) {
+    LoadTimingInfo load_timing_info;
+    net_request_->GetLoadTimingInfo(&load_timing_info);
+    g_metrics_delegate->didFinishCollectingMetrics(
+        request_.get(), load_timing_info, net_request_->response_info());
+  }
+
   delete net_request_;
   net_request_ = nullptr;
   if (stream_delegate_.get())
