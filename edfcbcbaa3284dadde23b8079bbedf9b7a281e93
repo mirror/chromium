@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0159357_a9ebd1cd",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 5793,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-13T04:41:51Z",
+      "side": 1,
+      "message": "LGTM on this part. The comment here is really helpful to understand the intention. Thank you for working on this!",
+      "revId": "edfcbcbaa3284dadde23b8079bbedf9b7a281e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
