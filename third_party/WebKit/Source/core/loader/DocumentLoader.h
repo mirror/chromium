@@ -198,7 +198,7 @@ class CORE_EXPORT DocumentLoader
   void DispatchLinkHeaderPreloads(ViewportDescriptionWrapper*,
                                   LinkLoader::MediaPreloadPolicy);
 
-  Resource* StartPreload(Resource::Type, FetchParameters&);
+  Resource* StartPreload(Resource::Type, FetchParameters&, ResourceClient*);
 
   void SetServiceWorkerNetworkProvider(
       std::unique_ptr<WebServiceWorkerNetworkProvider>);
@@ -256,7 +256,6 @@ class CORE_EXPORT DocumentLoader
   LocalFrameClient& GetLocalFrameClient() const;
 
   void CommitData(const char* bytes, size_t length);
-  void ClearMainResourceHandle();
 
   bool MaybeCreateArchive();
 
@@ -293,10 +292,11 @@ class CORE_EXPORT DocumentLoader
 
   bool ShouldContinueForResponse() const;
 
+  RawResource* GetMainResource() const { return ToRawResource(GetResource()); }
+
   Member<LocalFrame> frame_;
   Member<ResourceFetcher> fetcher_;
 
-  Member<RawResource> main_resource_;
   Member<HistoryItem> history_item_;
 
   // The parser that was created when the current Document was installed.

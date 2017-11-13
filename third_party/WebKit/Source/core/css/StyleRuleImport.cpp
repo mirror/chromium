@@ -43,8 +43,7 @@ StyleRuleImport::StyleRuleImport(const String& href,
       parent_style_sheet_(nullptr),
       style_sheet_client_(new ImportedStyleSheetClient(this)),
       str_href_(href),
-      media_queries_(media),
-      loading_(false) {
+      media_queries_(media) {
   if (!media_queries_)
     media_queries_ = MediaQuerySet::Create(String());
 }
@@ -52,16 +51,13 @@ StyleRuleImport::StyleRuleImport(const String& href,
 StyleRuleImport::~StyleRuleImport() {}
 
 void StyleRuleImport::Dispose() {
-  if (resource_)
-    resource_->RemoveClient(style_sheet_client_);
-  resource_ = nullptr;
+  style_sheet_client_->Dispose();
 }
 
 void StyleRuleImport::TraceAfterDispatch(blink::Visitor* visitor) {
   visitor->Trace(style_sheet_client_);
   visitor->Trace(parent_style_sheet_);
   visitor->Trace(style_sheet_);
-  visitor->Trace(resource_);
   StyleRuleBase::TraceAfterDispatch(visitor);
 }
 
@@ -88,8 +84,6 @@ void StyleRuleImport::SetCSSStyleSheet(
   style_sheet_->ParseAuthorStyleSheet(
       cached_style_sheet, document ? document->GetSecurityOrigin() : nullptr);
 
-  loading_ = false;
-
   if (parent_style_sheet_) {
     parent_style_sheet_->NotifyLoadedSheet(cached_style_sheet);
     parent_style_sheet_->CheckLoaded();
@@ -97,7 +91,9 @@ void StyleRuleImport::SetCSSStyleSheet(
 }
 
 bool StyleRuleImport::IsLoading() const {
-  return loading_ || (style_sheet_ && style_sheet_->IsLoading());
+  return (style_sheet_client_->GetResource() &&
+          style_sheet_client_->GetResource()->IsLoading()) ||
+         (style_sheet_ && style_sheet_->IsLoading());
 }
 
 void StyleRuleImport::RequestStyleSheet() {
@@ -135,16 +131,13 @@ void StyleRuleImport::RequestStyleSheet() {
   options.initiator_info.name = FetchInitiatorTypeNames::css;
   FetchParameters params(ResourceRequest(abs_url), options);
   params.SetCharset(parent_style_sheet_->Charset());
-  resource_ = CSSStyleSheetResource::Fetch(params, fetcher);
-  if (resource_) {
+  if (CSSStyleSheetResource::Fetch(params, fetcher, style_sheet_client_)) {
     // if the import rule is issued dynamically, the sheet may be
     // removed from the pending sheet count, so let the doc know
     // the sheet being imported is pending.
     if (parent_style_sheet_ && parent_style_sheet_->LoadCompleted() &&
         root_sheet == parent_style_sheet_)
       parent_style_sheet_->StartLoadingDynamicSheet();
-    loading_ = true;
-    resource_->AddClient(style_sheet_client_);
   }
 }
 

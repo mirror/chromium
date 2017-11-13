@@ -28,7 +28,6 @@
 
 #include "core/css/CSSValue.h"
 #include "core/loader/resource/FontResource.h"
-#include "platform/loader/fetch/ResourceOwner.h"
 #include "platform/weborigin/Referrer.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/text/WTFString.h"
@@ -103,21 +102,22 @@ class CORE_EXPORT CSSFontFaceSrcValue : public CSSValue {
 
   class FontResourceHelper
       : public GarbageCollectedFinalized<FontResourceHelper>,
-        public ResourceOwner<FontResource> {
+        public FontResourceClient {
     USING_GARBAGE_COLLECTED_MIXIN(FontResourceHelper);
 
    public:
-    static FontResourceHelper* Create(FontResource* resource) {
-      return new FontResourceHelper(resource);
+    static FontResourceHelper* Create(FetchParameters& params,
+                                      ResourceFetcher* fetcher) {
+      FontResourceHelper* helper = new FontResourceHelper;
+      FontResource* resource = FontResource::Fetch(params, fetcher, helper);
+      return resource ? helper : nullptr;
     }
 
     virtual void Trace(blink::Visitor* visitor) {
-      ResourceOwner<FontResource>::Trace(visitor);
+      FontResourceClient::Trace(visitor);
     }
 
    private:
-    FontResourceHelper(FontResource* resource) { SetResource(resource); }
-
     String DebugName() const override {
       return "CSSFontFaceSrcValue::FontResourceHelper";
     }

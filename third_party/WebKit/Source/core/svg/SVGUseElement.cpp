@@ -215,8 +215,8 @@ void SVGUseElement::UpdateTargetReference() {
   ResourceLoaderOptions options;
   options.initiator_info.name = localName();
   FetchParameters params(ResourceRequest(element_url_), options);
-  SetDocumentResource(
-      DocumentResource::FetchSVGDocument(params, GetDocument().Fetcher()));
+  SetDocumentResource(DocumentResource::FetchSVGDocument(
+      params, GetDocument().Fetcher(), this));
 }
 
 void SVGUseElement::SvgAttributeChanged(const QualifiedName& attr_name) {
@@ -754,10 +754,7 @@ void SVGUseElement::SetDocumentResource(DocumentResource* resource) {
 
   if (resource_)
     resource_->RemoveClient(this);
-
   resource_ = resource;
-  if (resource_)
-    resource_->AddClient(this);
 }
 
 }  // namespace blink

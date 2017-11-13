@@ -44,14 +44,25 @@ class PLATFORM_EXPORT RawResource final : public Resource {
   using ClientType = RawResourceClient;
 
   static RawResource* FetchSynchronously(FetchParameters&, ResourceFetcher*);
-  static RawResource* Fetch(FetchParameters&, ResourceFetcher*);
+  static RawResource* Fetch(FetchParameters&,
+                            ResourceFetcher*,
+                            ResourceClient*);
   static RawResource* FetchMainResource(FetchParameters&,
                                         ResourceFetcher*,
+                                        ResourceClient*,
                                         const SubstituteData&);
-  static RawResource* FetchImport(FetchParameters&, ResourceFetcher*);
-  static RawResource* FetchMedia(FetchParameters&, ResourceFetcher*);
-  static RawResource* FetchTextTrack(FetchParameters&, ResourceFetcher*);
-  static RawResource* FetchManifest(FetchParameters&, ResourceFetcher*);
+  static RawResource* FetchImport(FetchParameters&,
+                                  ResourceFetcher*,
+                                  ResourceClient*);
+  static RawResource* FetchMedia(FetchParameters&,
+                                 ResourceFetcher*,
+                                 ResourceClient*);
+  static RawResource* FetchTextTrack(FetchParameters&,
+                                     ResourceFetcher*,
+                                     ResourceClient*);
+  static RawResource* FetchManifest(FetchParameters&,
+                                    ResourceFetcher*,
+                                    ResourceClient*);
 
   // Exposed for testing
   static RawResource* CreateForTest(ResourceRequest request, Type type) {
@@ -170,42 +181,6 @@ class PLATFORM_EXPORT RawResourceClient : public ResourceClient {
   virtual void RedirectBlocked() {}
   virtual void DataDownloaded(Resource*, int) {}
   virtual void DidReceiveResourceTiming(Resource*, const ResourceTimingInfo&) {}
-};
-
-// Checks the sequence of callbacks of RawResourceClient. This can be used only
-// when a RawResourceClient is added as a client to at most one RawResource.
-class PLATFORM_EXPORT RawResourceClientStateChecker final {
- public:
-  RawResourceClientStateChecker();
-  ~RawResourceClientStateChecker();
-
-  // Call before addClient()/removeClient() is called.
-  void WillAddClient();
-  void WillRemoveClient();
-
-  // Call RawResourceClientStateChecker::f() at the beginning of
-  // RawResourceClient::f().
-  void RedirectReceived();
-  void RedirectBlocked();
-  void DataSent();
-  void ResponseReceived();
-  void SetSerializedCachedMetadata();
-  void DataReceived();
-  void DataDownloaded();
-  void NotifyFinished(Resource*);
-
- private:
-  enum State {
-    kNotAddedAsClient,
-    kStarted,
-    kRedirectBlocked,
-    kResponseReceived,
-    kSetSerializedCachedMetadata,
-    kDataReceived,
-    kDataDownloaded,
-    kNotifyFinished
-  };
-  State state_;
 };
 
 }  // namespace blink
