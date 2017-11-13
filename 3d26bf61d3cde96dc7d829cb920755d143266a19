@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81b6309c_4e6f9504",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-13T13:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "454a46a5_3226ea69",
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b11dd68_6fd2b7bb",
         "filename": "content/browser/background_fetch/storage/get_developer_ids_task.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58f2cde_d0c1da50",
+        "filename": "content/browser/background_fetch/storage/get_developer_ids_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-13T13:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b11dd68_6fd2b7bb",
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c30f7cfc_89c24efc",
+        "filename": "content/browser/background_fetch/storage/get_developer_ids_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-13T13:28:17Z",
+      "side": 1,
+      "message": "I\u0027ve updated the API to not need this.\n\n(Is there a strlen missing from your comment or did you mean a different function?)",
+      "parentUuid": "5a6bce5c_d6c994cb",
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7d10359_535275ed",
         "filename": "content/browser/background_fetch/storage/get_developer_ids_task.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73fa65c4_dd23cd47",
+        "filename": "content/browser/background_fetch/storage/get_developer_ids_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-13T13:28:17Z",
+      "side": 1,
+      "message": "Active here means not completed. A registration with only pending fetches (because it hasn\u0027t yet launched one or because the DownloadService told it to back off) is still active to my mind, but I\u0027ll clarify.",
+      "parentUuid": "e7d10359_535275ed",
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +179,24 @@
       "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a84cc44_4d803eed",
+        "filename": "content/browser/service_worker/service_worker_database.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-13T13:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0972fea_2e5ea4bb",
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +296,24 @@
       "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f41ff6_945ce2f7",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-13T13:28:17Z",
+      "side": 1,
+      "message": "I\u0027ve changed it to base::flat_map which should be even better. Using insert with a hint should always insert at the end, so it should be as efficient as vector for end-insertion and there will never be any insertion anywhere else as we pass it as const.\n\nSadly we can\u0027t use its reserve() since we can\u0027t find how many keys there are ahead of time, but we\u0027ll have far fewer allocations than std::map.",
+      "parentUuid": "08e8edd9_f4b986ac",
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
