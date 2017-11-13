@@ -16907,6 +16907,7 @@ Called by update_net_error_codes.py.-->
   <int value="2223" label="V8ErrorPrepareStackTrace"/>
   <int value="2224" label="V8ErrorStackTraceLimit"/>
   <int value="2225" label="PaintWorklet"/>
+  <int value="2226" label="RespondToSameOriginRequestWithCrossOriginResponse"/>
 </enum>
 
 <enum name="FeedbackSource">
