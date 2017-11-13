@@ -125,8 +125,8 @@ class ObserverListBase
   };
 
   using Iterator = Iter<ObserverListBase<ObserverType>>;
+  using iterator = Iterator;
 
-  using iterator = Iter<ObserverListBase<ObserverType>>;
   iterator begin() {
     // An optimization: do not involve weak pointers for empty list.
     // Note: can't use ?: operator here due to some MSVC bug (unit tests fail)
@@ -134,30 +134,38 @@ class ObserverListBase
       return iterator();
     return iterator(this);
   }
+
   iterator end() { return iterator(); }
 
   using const_iterator = Iter<const ObserverListBase<ObserverType>>;
+
   const_iterator begin() const {
     if (observers_.empty())
       return const_iterator();
     return const_iterator(this);
   }
+
   const_iterator end() const { return const_iterator(); }
 
   ObserverListBase() : notify_depth_(0), type_(NOTIFY_ALL) {}
   explicit ObserverListBase(NotificationType type)
       : notify_depth_(0), type_(type) {}
 
-  // Add an observer to the list.  An observer should not be added to
-  // the same list more than once.
+  // Add an observer to this list. An observer should not be added to the same
+  // list more than once.
+  //
+  // Precondition: obs != nullptr
+  // Precondition: !HasObserver(obs)
   void AddObserver(ObserverType* obs);
 
-  // Remove an observer from the list if it is in the list.
+  // Removes the given observer from this list. Does nothing if this observer is
+  // not in this list.
   void RemoveObserver(ObserverType* obs);
 
   // Determine whether a particular observer is in the list.
-  bool HasObserver(const ObserverType* observer) const;
+  bool HasObserver(const ObserverType* obs) const;
 
+  // Removes all the observers from this list.
   void Clear();
 
  protected:
@@ -192,15 +200,19 @@ ObserverListBase<ObserverType>::Iter<ContainerType>::Iter(ContainerType* list)
       index_(0),
       max_index_(list->type_ == NOTIFY_ALL ? std::numeric_limits<size_t>::max()
                                            : list->observers_.size()) {
-  EnsureValidIndex();
   DCHECK(list_);
+  EnsureValidIndex();
   ++list_->notify_depth_;
 }
 
 template <class ObserverType>
 template <class ContainerType>
 ObserverListBase<ObserverType>::Iter<ContainerType>::~Iter() {
-  if (list_ && --list_->notify_depth_ == 0)
+  if (!list_)
+    return;
+
+  DCHECK_GT(list_->notify_depth_, 0);
+  if (--list_->notify_depth_ == 0)
     list_->Compact();
 }
 
@@ -261,10 +273,8 @@ ObserverType* ObserverListBase<ObserverType>::Iter<ContainerType>::GetCurrent()
 template <class ObserverType>
 template <class ContainerType>
 void ObserverListBase<ObserverType>::Iter<ContainerType>::EnsureValidIndex() {
-  if (!list_)
-    return;
-
-  size_t max_index = clamped_max_index();
+  DCHECK(list_);
+  const size_t max_index = clamped_max_index();
   while (index_ < max_index && !list_->observers_[index_])
     ++index_;
 }
@@ -282,34 +292,28 @@ void ObserverListBase<ObserverType>::AddObserver(ObserverType* obs) {
 template <class ObserverType>
 void ObserverListBase<ObserverType>::RemoveObserver(ObserverType* obs) {
   DCHECK(obs);
-  typename ListType::iterator it =
-    std::find(observers_.begin(), observers_.end(), obs);
-  if (it != observers_.end()) {
-    if (notify_depth_) {
-      *it = nullptr;
-    } else {
-      observers_.erase(it);
-    }
+  const typename ListType::iterator it =
+      std::find(observers_.begin(), observers_.end(), obs);
+  if (it == observers_.end())
+    return;
+
+  if (notify_depth_) {
+    *it = nullptr;
+  } else {
+    observers_.erase(it);
   }
 }
 
 template <class ObserverType>
 bool ObserverListBase<ObserverType>::HasObserver(
-    const ObserverType* observer) const {
-  for (size_t i = 0; i < observers_.size(); ++i) {
-    if (observers_[i] == observer)
-      return true;
-  }
-  return false;
+    const ObserverType* obs) const {
+  return ContainsValue(observers_, obs);
 }
 
 template <class ObserverType>
 void ObserverListBase<ObserverType>::Clear() {
   if (notify_depth_) {
-    for (typename ListType::iterator it = observers_.begin();
-      it != observers_.end(); ++it) {
-      *it = nullptr;
-    }
+    std::fill(observers_.begin(), observers_.end(), nullptr);
   } else {
     observers_.clear();
   }
