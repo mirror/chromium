@@ -189,9 +189,7 @@ base::string16 KeywordProvider::GetKeywordForText(
     return base::string16();
 
   // Don't provide a keyword for inactive/disabled extension keywords.
-  if ((template_url->type() == TemplateURL::OMNIBOX_API_EXTENSION) &&
-      extensions_delegate_ &&
-      !extensions_delegate_->IsEnabledExtension(template_url->GetExtensionId()))
+  if (!IsKeywordEnabled(template_url))
     return base::string16();
 
   return keyword;
@@ -206,6 +204,31 @@ AutocompleteMatch KeywordProvider::CreateVerbatimMatch(
       GetTemplateURLService()->GetTemplateURLForKeyword(keyword),
       keyword.length(), input, keyword.length(),
       SplitReplacementStringFromInput(text, true), true, 0, false);
+}
+
+void KeywordProvider::OnKeywordEntered() {
+  base::string16 keyword, remaining_input;
+  if (!KeywordProvider::ExtractKeywordFromInput(keyword_input_, model_,
+                                                &keyword, &remaining_input))
+    return;
+
+  const TemplateURL* const template_url =
+      GetTemplateURLService()->GetTemplateURLForKeyword(keyword);
+
+  // ExtractKeywordFromInput does not check if a keyword exists. If |keyword| is
+  // not a known keyword, then |template_url| can be null.
+  if (!template_url &&
+      (template_url->type() != TemplateURL::OMNIBOX_API_EXTENSION)) {
+    return;
+  }
+
+  if (extensions_delegate_) {
+    extensions_delegate_->Start(keyword_input_, false, template_url,
+                                remaining_input);
+  }
+
+  if (IsKeywordEnabled(template_url))
+    extensions_delegate_->OnKeywordEntered(template_url);
 }
 
 void KeywordProvider::DeleteMatch(const AutocompleteMatch& match) {
@@ -225,9 +248,7 @@ void KeywordProvider::DeleteMatch(const AutocompleteMatch& match) {
       GetTemplateURLService()->GetTemplateURLForKeyword(keyword);
 
   if ((template_url->type() == TemplateURL::OMNIBOX_API_EXTENSION) &&
-      extensions_delegate_ &&
-      extensions_delegate_->IsEnabledExtension(
-          template_url->GetExtensionId())) {
+      IsKeywordEnabled(template_url)) {
     extensions_delegate_->DeleteSuggestion(template_url, suggestion_text);
   }
 }
@@ -292,10 +313,8 @@ void KeywordProvider::Start(const AutocompleteInput& input,
 
     // Prune any extension keywords that are disallowed in incognito mode (if
     // we're incognito), or disabled.
-    if (template_url->type() == TemplateURL::OMNIBOX_API_EXTENSION &&
-        extensions_delegate_ &&
-        !extensions_delegate_->IsEnabledExtension(
-            template_url->GetExtensionId())) {
+    if ((template_url->type() == TemplateURL::OMNIBOX_API_EXTENSION) &&
+        !IsKeywordEnabled(template_url)) {
       i = matches.erase(i);
       continue;
     }
@@ -573,4 +592,10 @@ base::string16 KeywordProvider::CleanUserInputKeyword(
   if (!result.empty() && result.back() == '/')
     result.pop_back();
   return result;
+}
+
+bool KeywordProvider::IsKeywordEnabled(const TemplateURL* template_url) const {
+  return (template_url->type() != TemplateURL::OMNIBOX_API_EXTENSION) ||
+         (extensions_delegate_ && extensions_delegate_->IsEnabledExtension(
+                                      template_url->GetExtensionId()));
 }

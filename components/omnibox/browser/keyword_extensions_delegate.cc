@@ -26,9 +26,11 @@ bool KeywordExtensionsDelegate::Start(const AutocompleteInput& input,
   return false;
 }
 
-void KeywordExtensionsDelegate::EnterExtensionKeywordMode(
-    const std::string& extension_id) {
-}
+void KeywordExtensionsDelegate::OnKeywordEntered(
+    const TemplateURL* template_url) {}
+
+void KeywordExtensionsDelegate::OnInputStarted(
+    const std::string& extension_id) {}
 
 void KeywordExtensionsDelegate::MaybeEndExtensionKeywordMode() {
 }

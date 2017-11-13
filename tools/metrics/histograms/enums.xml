@@ -12719,6 +12719,7 @@ Called by update_net_error_codes.py.-->
   <int value="412" label="AUTOMATION_INTERNAL_ON_ACTION_RESULT"/>
   <int value="413" label="OMNIBOX_ON_DELETE_SUGGESTION"/>
   <int value="414" label="VIRTUAL_KEYBOARD_PRIVATE_ON_KEYBOARD_CONFIG_CHANGED"/>
+  <int value="415" label="OMNIBOX_ON_KEYWORD_ENTERED"/>
 </enum>
 
 <enum name="ExtensionFileWriteResult">
@@ -13964,8 +13965,6 @@ Called by update_net_error_codes.py.-->
   <int value="1193" label="NETWORKINGPRIVATE_SELECTCELLULARMOBILENETWORK"/>
   <int value="1194" label="PASSWORDSPRIVATE_IMPORTPASSWORDS"/>
   <int value="1195" label="PASSWORDSPRIVATE_EXPORTPASSWORDS"/>
-  <int value="1196"
-      label="PASSWORDSPRIVATE_UNDOREMOVESAVEDPASSWORDOREXCEPTION"/>
   <int value="1197"
       label="ACCESSIBILITY_PRIVATE_SETNATIVECHROMEVOXARCSUPPORTFORCURRENTAPP"/>
   <int value="1198"

@@ -724,6 +724,13 @@ void OmniboxEditModel::OpenMatch(AutocompleteMatch match,
     client_->OnBookmarkLaunched();
 }
 
+void OmniboxEditModel::HandleOnKeywordEntered() {
+  KeywordProvider* kp =
+      omnibox_controller_->autocomplete_controller()->keyword_provider();
+  if (kp)
+    kp->OnKeywordEntered();
+}
+
 bool OmniboxEditModel::AcceptKeyword(
       KeywordModeEntryMethod entry_method) {
   DCHECK(is_keyword_hint_ && !keyword_.empty());
@@ -738,6 +745,8 @@ bool OmniboxEditModel::AcceptKeyword(
     popup_model()->SetSelectedLineState(OmniboxPopupModel::KEYWORD);
   else
     StartAutocomplete(false, true);
+
+  HandleOnKeywordEntered();
 
   // When entering keyword mode via tab, the new text to show is whatever the
   // newly-selected match in the dropdown is.  When entering via space, however,

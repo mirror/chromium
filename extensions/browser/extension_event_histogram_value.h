@@ -430,6 +430,7 @@ enum HistogramValue {
   AUTOMATION_INTERNAL_ON_ACTION_RESULT,
   OMNIBOX_ON_DELETE_SUGGESTION,
   VIRTUAL_KEYBOARD_PRIVATE_ON_KEYBOARD_CONFIG_CHANGED,
+  OMNIBOX_ON_KEYWORD_ENTERED,
   // Last entry: Add new entries above, then run:
   // python tools/metrics/histograms/update_extension_histograms.py
   ENUM_BOUNDARY

@@ -236,6 +236,10 @@ class OmniboxEditModel {
     return !is_keyword_hint_ && !keyword_.empty();
   }
 
+  // When the user activates the extension keyword via a space or tab key, this
+  // calls into the keyword provider to handle the entered keyword event.
+  void HandleOnKeywordEntered();
+
   // Accepts the current keyword hint as a keyword. It always returns true for
   // caller convenience. |entered_method| indicates how the user entered
   // keyword mode.
@@ -315,7 +319,7 @@ class OmniboxEditModel {
   //   |destination_for_temporary_text_change| is NULL (if temporary text should
   //     not change) or the pre-change destination URL (if temporary text should
   //     change) so we can save it off to restore later.
-  //   |keyword| is the keyword to show a hint for if |is_keyword_hint| is true,
+  //   |keyword| is the keyword tshow a hint for if |is_keyword_hint| is true,
   //     or the currently selected keyword if |is_keyword_hint| is false (see
   //     comments on keyword_ and is_keyword_hint_).
   void OnPopupDataChanged(
