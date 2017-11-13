@@ -19,6 +19,110 @@
     },
     {
       "key": {
+        "uuid": "30aa1fee_bd63add3",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T17:32:14Z",
+      "side": 1,
+      "message": "At least only the UsbDeviceInfo struct.",
+      "parentUuid": "70309120_c2dd2bb1",
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ab48e0_0d423609",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T17:32:14Z",
+      "side": 1,
+      "message": "Overall nit: can you reorder the methods in this file so they match the order in which they were declared in the .h?",
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4bcbb98_611e0cc1",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T17:32:14Z",
+      "side": 1,
+      "message": "Maybe\n\n if (!fd.is_valid()) {\n   LOG(ERROR) \u003c\u003c \"Invalid fd\";\n   std::move(callback).Run(mojo::ScopedHandle());\n   return;\n }",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 24
+      },
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f92e3eb_42974364",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T17:32:14Z",
+      "side": 1,
+      "message": "Can you make this a RepeatingCallback? You do need to invoke it multiple times (in the loop in L84).",
+      "range": {
+        "startLine": 75,
+        "startChar": 10,
+        "endLine": 75,
+        "endChar": 22
+      },
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0246fc6b_19a2535c",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T17:32:14Z",
+      "side": 1,
+      "message": "nit: observers are removed in reverse order in which they were added: move this to after L116.",
+      "range": {
+        "startLine": 112,
+        "startChar": 1,
+        "endLine": 112,
+        "endChar": 56
+      },
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca350ef9_83cca6f0",
         "filename": "components/arc/usb/usb_host_bridge.cc",
         "patchSetId": 10
@@ -47,6 +151,29 @@
       "writtenOn": "2017-11-10T17:27:05Z",
       "side": 1,
       "message": "The idea of this method is that instead of calling GetUsbService() in all your methods you can cache the pointer you added this observer to and you know it\u0027s valid until this method is called.",
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14fd6fe_ab44cd48",
+        "filename": "components/arc/usb/usb_host_bridge.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T17:32:14Z",
+      "side": 1,
+      "message": "nit: members go below methods.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 34
+      },
       "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
