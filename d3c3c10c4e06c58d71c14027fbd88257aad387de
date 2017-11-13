@@ -16,6 +16,24 @@
       "revId": "d3c3c10c4e06c58d71c14027fbd88257aad387de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe11662_38daff5e",
+        "filename": "ui/gl/init/create_gr_gl_interface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-13T16:22:07Z",
+      "side": 1,
+      "message": "It was GL_INIT_EXPORT. But that was the right idea!",
+      "parentUuid": "6bb83dc8_282f6ab7",
+      "revId": "d3c3c10c4e06c58d71c14027fbd88257aad387de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
