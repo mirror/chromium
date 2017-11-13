@@ -207,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "ddd193b1_df79b98e",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T22:42:12Z",
+      "side": 1,
+      "message": "That approach completely slipped my mind.. Thanks for the catch! :)",
+      "parentUuid": "c9727f39_27b733d0",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28473a64_d3d61afc",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 1
@@ -483,6 +501,24 @@
     },
     {
       "key": {
+        "uuid": "544dcc21_b4a8a3be",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T22:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "703435d5_c113f7c0",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d1c1cba_a2d7b1fb",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 1
@@ -662,6 +698,24 @@
       "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a49c62e_a1e70e8c",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T22:42:12Z",
+      "side": 1,
+      "message": "Changed parameter name to \"require_canonical_format\".",
+      "parentUuid": "ce52512b_13f0a0bd",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
