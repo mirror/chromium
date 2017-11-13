@@ -9,8 +9,6 @@
 #include "media/base/video_frame.h"
 #include "media/gpu/gpu_video_accelerator_util.h"
 #include "media/mojo/common/mojo_shared_buffer_video_frame.h"
-#include "media/mojo/interfaces/video_encode_accelerator.mojom.h"
-#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 
 namespace media {
@@ -115,14 +113,15 @@ bool MojoVideoEncodeAccelerator::Initialize(VideoPixelFormat input_format,
 
   // Get a mojom::VideoEncodeAcceleratorClient bound to a local implementation
   // (VideoEncodeAcceleratorClient) and send the pointer remotely.
-  mojom::VideoEncodeAcceleratorClientPtr vea_client;
-  mojo::MakeStrongBinding(
-      base::MakeUnique<VideoEncodeAcceleratorClient>(client),
-      mojo::MakeRequest(&vea_client));
+  mojom::VideoEncodeAcceleratorClientPtr vea_client_ptr;
+  vea_client_ = base::MakeUnique<VideoEncodeAcceleratorClient>(client);
+  vea_client_binding_ =
+      base::MakeUnique<mojo::Binding<mojom::VideoEncodeAcceleratorClient>>(
+          vea_client_.get(), mojo::MakeRequest(&vea_client_ptr));
 
   bool result = false;
   vea_->Initialize(input_format, input_visible_size, output_profile,
-                   initial_bitrate, std::move(vea_client), &result);
+                   initial_bitrate, std::move(vea_client_ptr), &result);
   return result;
 }
 
@@ -193,6 +192,9 @@ void MojoVideoEncodeAccelerator::RequestEncodingParametersChange(
 void MojoVideoEncodeAccelerator::Destroy() {
   DVLOG(1) << __func__;
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  if (vea_client_binding_ && vea_client_binding_->is_bound())
+    vea_client_binding_->Close();
+  vea_client_.reset();
   vea_.reset();
   // See media::VideoEncodeAccelerator for more info on this peculiar pattern.
   delete this;
