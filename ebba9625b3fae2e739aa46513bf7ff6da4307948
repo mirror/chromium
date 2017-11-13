@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22d18965_8af90d21",
+        "filename": "base/observer_list.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-11-13T05:28:45Z",
+      "side": 1,
+      "message": "I think the original one was more readable.",
+      "range": {
+        "startLine": 268,
+        "startChar": 9,
+        "endLine": 268,
+        "endChar": 14
+      },
+      "revId": "ebba9625b3fae2e739aa46513bf7ff6da4307948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
