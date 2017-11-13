@@ -50,6 +50,10 @@ bool DiscardableHandleBase::IsDeletedForTesting() const {
   return kHandleDeleted == base::subtle::NoBarrier_Load(AsAtomic());
 }
 
+scoped_refptr<Buffer> DiscardableHandleBase::BufferForTesting() const {
+  return buffer_;
+}
+
 volatile base::subtle::Atomic32* DiscardableHandleBase::AsAtomic() const {
   return reinterpret_cast<volatile base::subtle::Atomic32*>(
       buffer_->GetDataAddress(byte_offset_, sizeof(base::subtle::Atomic32)));
@@ -125,7 +129,12 @@ void ServiceDiscardableHandle::Unlock() {
   // No barrier is needed as all GPU process access happens on a single thread,
   // and communication of dependent data between the GPU process and the
   // renderer process happens across the command buffer and includes barriers.
-  base::subtle::NoBarrier_AtomicIncrement(AsAtomic(), -1);
+
+  // Because all calls to unlock / delete come from a single thread on the
+  // gpu service side, it's safe to do a GE comparison here, as even if this
+  // value is modified before we actually decrement, it can only go up.
+  if (kHandleLockedStart <= base::subtle::NoBarrier_Load(AsAtomic()))
+    base::subtle::NoBarrier_AtomicIncrement(AsAtomic(), -1);
 }
 
 bool ServiceDiscardableHandle::Delete() {
