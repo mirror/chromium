@@ -175,7 +175,7 @@ class LogoBridge::AnimatedLogoFetcher : public net::URLFetcherDelegate {
   DISALLOW_COPY_AND_ASSIGN(AnimatedLogoFetcher);
 };
 
-static jlong Init(JNIEnv* env,
+static jlong LogoBridge__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   const JavaParamRef<jobject>& j_profile) {
   LogoBridge* logo_bridge = new LogoBridge(j_profile);

@@ -552,7 +552,7 @@ void ClipboardAndroid::WriteData(const Clipboard::FormatType& format,
 }
 
 // Returns a pointer to the current ClipboardAndroid object.
-static jlong Init(JNIEnv* env,
+static jlong Clipboard__Init(JNIEnv* env,
                   const base::android::JavaParamRef<jobject>& obj) {
   return reinterpret_cast<intptr_t>(Clipboard::GetForCurrentThread());
 }

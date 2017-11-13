@@ -135,7 +135,7 @@ void CopySessionToJava(
 
 }  // namespace
 
-static jlong Init(JNIEnv* env,
+static jlong ForeignSessionHelper__Init(JNIEnv* env,
                   const JavaParamRef<jclass>& clazz,
                   const JavaParamRef<jobject>& profile) {
   ForeignSessionHelper* foreign_session_helper = new ForeignSessionHelper(

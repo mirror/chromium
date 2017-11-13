@@ -210,7 +210,7 @@ TabModelJniBridge::~TabModelJniBridge() {
   TabModelList::RemoveTabModel(this);
 }
 
-static jlong Init(JNIEnv* env,
+static jlong TabModelJniBridge__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   jboolean is_incognito,
                   jboolean is_tabbed_activity) {

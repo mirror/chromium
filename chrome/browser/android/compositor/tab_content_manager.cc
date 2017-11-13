@@ -333,7 +333,7 @@ void TabContentManager::PutThumbnailIntoCache(int tab_id,
 // Native JNI methods
 // ----------------------------------------------------------------------------
 
-jlong Init(JNIEnv* env,
+jlong TabContentManager__Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
            jint default_cache_size,
            jint approximation_cache_size,
