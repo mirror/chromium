@@ -337,7 +337,8 @@ bool OneTimeMessageHandler::DisconnectOpener(ScriptContext* script_context,
   DCHECK_NE(-1, port.request_id);
 
   bindings_system_->api_system()->request_handler()->CompleteRequest(
-      port.request_id, std::vector<v8::Local<v8::Value>>(), error_message);
+      port.request_id, std::vector<v8::Local<v8::Value>>(),
+      error_message.empty() ? "The message port closed before a response was received." : error_message);
 
   data->openers.erase(iter);
   return handled;

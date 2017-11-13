@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "extensions/renderer/bindings/api_binding_hooks_delegate.h"
+#include "extensions/renderer/bindings/api_binding_types.h"
 #include "v8/include/v8.h"
 
 namespace extensions {
@@ -18,8 +19,8 @@ class ScriptContext;
 // The custom hooks for the runtime API.
 class RuntimeHooksDelegate : public APIBindingHooksDelegate {
  public:
-  explicit RuntimeHooksDelegate(
-      NativeRendererMessagingService* messaging_service);
+  RuntimeHooksDelegate(NativeRendererMessagingService* messaging_service,
+                       const binding::RunJSFunctionSync& run_js_sync);
   ~RuntimeHooksDelegate() override;
 
   // APIBindingHooksDelegate:
@@ -53,10 +54,18 @@ class RuntimeHooksDelegate : public APIBindingHooksDelegate {
   APIBindingHooks::RequestResult HandleConnectNative(
       ScriptContext* script_context,
       const std::vector<v8::Local<v8::Value>>& arguments);
+  APIBindingHooks::RequestResult HandleGetBackgroundPage(
+      ScriptContext* script_context,
+      const std::vector<v8::Local<v8::Value>>& arguments);
+  APIBindingHooks::RequestResult HandleGetPackageDirectoryEntryCallback(
+      ScriptContext* script_context,
+      const std::vector<v8::Local<v8::Value>>& arguments);
 
   // The messaging service to handle connect() and sendMessage() calls.
   // Guaranteed to outlive this object.
   NativeRendererMessagingService* const messaging_service_;
+
+  binding::RunJSFunctionSync run_js_sync_;
 
   DISALLOW_COPY_AND_ASSIGN(RuntimeHooksDelegate);
 };
