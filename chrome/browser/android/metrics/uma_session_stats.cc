@@ -225,7 +225,7 @@ static void RecordPageLoadedWithKeyboard(JNIEnv*, const JavaParamRef<jclass>&) {
   base::RecordAction(UserMetricsAction("MobilePageLoadedWithKeyboard"));
 }
 
-static jlong Init(JNIEnv* env, const JavaParamRef<jclass>& obj) {
+static jlong UmaSessionStats__Init(JNIEnv* env, const JavaParamRef<jclass>& obj) {
   // We should have only one UmaSessionStats instance.
   DCHECK(!g_uma_session_stats);
   g_uma_session_stats = new UmaSessionStats();

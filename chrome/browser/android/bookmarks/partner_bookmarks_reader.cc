@@ -335,7 +335,7 @@ static void DisablePartnerBookmarksEditing(JNIEnv* env,
 
 // ----------------------------------------------------------------
 
-static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+static jlong PartnerBookmarksReader__Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   Profile* profile = ProfileManager::GetActiveUserProfile();
   PartnerBookmarksShim* partner_bookmarks_shim =
       PartnerBookmarksShim::BuildForBrowserContext(profile);

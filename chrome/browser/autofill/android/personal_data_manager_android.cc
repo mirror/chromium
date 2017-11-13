@@ -892,7 +892,7 @@ static ScopedJavaLocalRef<jstring> ToCountryCode(
                base::android::ConvertJavaStringToUTF16(env, jcountry_name)));
 }
 
-static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+static jlong PersonalDataManager__Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   PersonalDataManagerAndroid* personal_data_manager_android =
       new PersonalDataManagerAndroid(env, obj);
   return reinterpret_cast<intptr_t>(personal_data_manager_android);

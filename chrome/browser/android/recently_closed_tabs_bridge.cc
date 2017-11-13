@@ -172,7 +172,7 @@ void RecentlyClosedTabsBridge::EnsureTabRestoreService() {
   }
 }
 
-static jlong Init(JNIEnv* env,
+static jlong RecentlyClosedBridge__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& jbridge,
                   const JavaParamRef<jobject>& jprofile) {
   RecentlyClosedTabsBridge* bridge = new RecentlyClosedTabsBridge(

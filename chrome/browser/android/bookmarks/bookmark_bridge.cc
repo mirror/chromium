@@ -134,7 +134,7 @@ void BookmarkBridge::Destroy(JNIEnv*, const JavaParamRef<jobject>&) {
   delete this;
 }
 
-static jlong Init(JNIEnv* env,
+static jlong BookmarkBridge__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   const JavaParamRef<jobject>& j_profile) {
   BookmarkBridge* delegate = new BookmarkBridge(env, obj, j_profile);

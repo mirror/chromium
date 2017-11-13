@@ -35,7 +35,7 @@ class UserData : public base::SupportsUserData::Data {
 };
 }
 
-jlong Init(JNIEnv* env,
+jlong SmartSelectionClient__Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
            const JavaParamRef<jobject>& jweb_contents) {
   WebContents* web_contents = WebContents::FromJavaWebContents(jweb_contents);

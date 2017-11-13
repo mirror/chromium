@@ -945,7 +945,7 @@ void ContentViewCore::WebContentsDestroyed() {
 }
 
 // This is called for each ContentView.
-jlong Init(JNIEnv* env,
+jlong ContentViewCore__Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
            const JavaParamRef<jobject>& jweb_contents,
            const JavaParamRef<jobject>& jview_android_delegate,
