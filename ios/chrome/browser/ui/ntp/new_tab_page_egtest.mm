@@ -13,6 +13,7 @@
 #include "ios/chrome/browser/chrome_switches.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
+#import "ios/chrome/browser/ui/ntp/modal_ntp.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -134,9 +135,8 @@ void AssertNTPScrolledToTop(bool scrolledToTop) {
 }
 
 // Tests that all items are accessible on the bookmarks page.
-// TODO(crbug.com/695749): Check if we need to rewrite this test for the new
-// Bookmarks UI.
 - (void)testAccessibilityOnBookmarks {
+  // TODO(crbug.com/782551): Rewrite this test for the new Bookmarks UI.
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
 
@@ -234,13 +234,20 @@ void AssertNTPScrolledToTop(bool scrolledToTop) {
 
 // Tests focusing and defocusing the NTP's omnibox.
 - (void)testOmnibox {
+  // TODO(crbug.com/782551): This egtest could crash on iPad iOS 11 when the new
+  // bookmark feature flag is enabled.  Fix this later.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
+
   // Empty the pasteboard: if it contains a link the Google Landing will not be
   // interactable.
   [UIPasteboard generalPasteboard].string = @"";
 
   NSString* omniboxLabel = l10n_util::GetNSString(IDS_OMNIBOX_EMPTY_HINT);
   NSString* cancelLabel = l10n_util::GetNSString(IDS_CANCEL);
-  if (IsIPadIdiom()) {
+  // TODO(crbug.com/753599): When old bookmark is removed, NTP panel will always
+  // be shown modally.  Clean up the non-modal code below.
+  if (!PresentNTPPanelModally()) {
     SelectNewTabPagePanel(ntp_home::HOME_PANEL);
   }
 

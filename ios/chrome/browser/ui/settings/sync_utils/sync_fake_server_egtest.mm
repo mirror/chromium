@@ -6,12 +6,14 @@
 #import <XCTest/XCTest.h>
 
 #include "base/strings/sys_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/browser/titled_url_match.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/sync/base/model_type.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
+#include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #include "ios/chrome/browser/bookmarks/bookmarks_utils.h"
 #include "ios/chrome/browser/signin/authentication_service.h"
 #include "ios/chrome/browser/signin/authentication_service_factory.h"
@@ -181,6 +183,11 @@ void AssertNumberOfEntitiesWithName(int entity_count,
 
 // Tests that the local cache guid does not change when sync is restarted.
 - (void)testSyncCheckSameCacheGuid_SyncRestarted {
+  // TODO(crbug.com/782551): This egtest could crash on iPad iOS 11 when the new
+  // bookmark feature flag is enabled.  Fix this later.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
+
   // Sign in the fake identity.
   ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
@@ -203,6 +210,11 @@ void AssertNumberOfEntitiesWithName(int entity_count,
 // Tests that the local cache guid changes when the user signs out and then
 // signs back in with the same account.
 - (void)testSyncCheckDifferentCacheGuid_SignOutAndSignIn {
+  // TODO(crbug.com/782551): This egtest could crash on iPad iOS 11 when the new
+  // bookmark feature flag is enabled.  Fix this later.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
+
   // Sign in a fake identity, and store the initial sync guid.
   ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
@@ -233,6 +245,11 @@ void AssertNumberOfEntitiesWithName(int entity_count,
 // a user previously signed out and back in.
 // Test for http://crbug.com/413611 .
 - (void)testSyncCheckSameCacheGuid_SyncRestartedAfterSignOutAndSignIn {
+  // TODO(crbug.com/782551): This egtest could crash on iPad iOS 11 when the new
+  // bookmark feature flag is enabled.  Fix this later.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
+
   // Sign in a fake idenitty.
   ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
@@ -337,6 +354,11 @@ void AssertNumberOfEntitiesWithName(int entity_count,
 // Test that autofill profile deleted from FakeServer gets deleted from client
 // as well.
 - (void)testSyncDeleteAutofillProfile {
+  // TODO(crbug.com/782551): This egtest could crash on iPad iOS 11 when the new
+  // bookmark feature flag is enabled.  Fix this later.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
+
   const std::string kGuid = "2340E83B-5BEE-4560-8F95-5914EF7F539E";
   const std::string kFullName = "Peter Pan";
   GREYAssertFalse(chrome_test_util::IsAutofillProfilePresent(kGuid, kFullName),
@@ -405,6 +427,11 @@ void AssertNumberOfEntitiesWithName(int entity_count,
 // Tests that a typed URL (after Sync is enabled) is uploaded to the Sync
 // server.
 - (void)testSyncTypedURLUpload {
+  // TODO(crbug.com/782551): This egtest could crash on iPad iOS 11 when the new
+  // bookmark feature flag is enabled.  Fix this later.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
+
   const GURL mockURL("http://not-a-real-site/");
 
   chrome_test_util::ClearBrowsingHistory();
@@ -442,6 +469,11 @@ void AssertNumberOfEntitiesWithName(int entity_count,
 
 // Tests that typed url is downloaded from sync server.
 - (void)testSyncTypedUrlDownload {
+  // TODO(crbug.com/782551): This egtest could crash on iPad iOS 11 when the new
+  // bookmark feature flag is enabled.  Fix this later.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
+
   const GURL mockURL("http://not-a-real-site/");
 
   chrome_test_util::ClearBrowsingHistory();
@@ -477,6 +509,11 @@ void AssertNumberOfEntitiesWithName(int entity_count,
 // Tests that when typed url is deleted on the client, sync the change gets
 // propagated to server.
 - (void)testSyncTypedURLDeleteFromClient {
+  // TODO(crbug.com/782551): This egtest could crash on iPad iOS 11 when the new
+  // bookmark feature flag is enabled.  Fix this later.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
+
   const GURL mockURL("http://not-a-real-site/");
 
   chrome_test_util::ClearBrowsingHistory();
@@ -523,6 +560,11 @@ void AssertNumberOfEntitiesWithName(int entity_count,
 // Test that typed url is deleted from client after server sends tombstone for
 // that typed url.
 - (void)testSyncTypedURLDeleteFromServer {
+  // TODO(crbug.com/782551): This egtest could crash on iPad iOS 11 when the new
+  // bookmark feature flag is enabled.  Fix this later.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
+
   const GURL mockURL("http://not-a-real-site/");
 
   chrome_test_util::ClearBrowsingHistory();
