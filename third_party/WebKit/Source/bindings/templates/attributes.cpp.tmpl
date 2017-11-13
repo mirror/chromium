@@ -580,9 +580,8 @@ const v8::FunctionCallbackInfo<v8::Value>& info
 
 
 {##############################################################################}
-{# This macro installs attributes on prototype object and interface object. #}
-{% macro install_conditionally_enabled_attributes_on_prototype_or_interface(secure_context_test_result) %}
-{% for exposed_test, exposed_attribute_list in conditionally_enabled_attributes.on_prototype_or_interface | groupby('exposed_test') %}
+{% macro install_conditional_attributes_on_objects(secure_context_test_result) %}
+{% for exposed_test, exposed_attribute_list in conditional_attributes.on_objects | groupby('exposed_test') %}
 {% filter exposed(exposed_test) %}
 {% for secure_context_test, secure_context_attribute_list in exposed_attribute_list | groupby('secure_context_test') %}
 {% filter secure_context(secure_context_test, secure_context_test_result) %}
@@ -594,7 +593,7 @@ static const V8DOMConfiguration::AccessorConfiguration accessor_configurations[]
     {% endfor %}
 };
 V8DOMConfiguration::InstallAccessors(
-    isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject,
+    isolate, world, instanceObject, prototypeObject, interfaceObject,
     signature, accessor_configurations,
     WTF_ARRAY_LENGTH(accessor_configurations));
 {% endfilter %}{# runtime_enabled #}
@@ -607,8 +606,8 @@ V8DOMConfiguration::InstallAccessors(
 
 
 {##############################################################################}
-{% macro install_conditionally_enabled_constructors(secure_context_test_result) %}
-{% for exposed_test, exposed_attribute_list in conditionally_enabled_attributes.constructor_type | groupby('exposed_test') %}
+{% macro install_conditional_constructors(secure_context_test_result) %}
+{% for exposed_test, exposed_attribute_list in conditional_attributes.constructor_type | groupby('exposed_test') %}
 {% filter exposed(exposed_test) %}
 {% for secure_context_test, secure_context_attribute_list in exposed_attribute_list | groupby('secure_context_test') %}
 {% filter secure_context(secure_context_test, secure_context_test_result) %}
