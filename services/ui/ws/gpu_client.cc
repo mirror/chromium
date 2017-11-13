@@ -68,6 +68,24 @@ void GpuClient::EstablishGpuChannel(
                  weak_factory_.GetWeakPtr()));
 }
 
+void GpuClient::CreateArcVideoDecodeAccelerator(
+    arc::mojom::VideoDecodeAcceleratorRequest vda_request) {
+  // TODO: only allow ARC++ to use it.
+  gpu_service_->CreateArcVideoDecodeAccelerator(std::move(vda_request));
+}
+
+void GpuClient::CreateArcVideoEncodeAccelerator(
+    arc::mojom::VideoEncodeAcceleratorRequest vea_request) {
+  // TODO: only allow ARC++ to use it.
+  gpu_service_->CreateArcVideoEncodeAccelerator(std::move(vea_request));
+}
+
+void GpuClient::CreateArcProtectedBufferManager(
+    arc::mojom::ProtectedBufferManagerRequest pbm_request) {
+  // TODO: only allow ARC++ to use it.
+  gpu_service_->CreateArcProtectedBufferManager(std::move(pbm_request));
+}
+
 void GpuClient::CreateJpegDecodeAccelerator(
     media::mojom::GpuJpegDecodeAcceleratorRequest jda_request) {
   gpu_service_->CreateJpegDecodeAccelerator(std::move(jda_request));
