@@ -199,10 +199,7 @@ void WidgetInputHandlerManager::SetWhiteListedTouchAction(
 void WidgetInputHandlerManager::ProcessTouchAction(
     cc::TouchAction touch_action) {
   DCHECK(host_);
-  // Cancel the touch timeout on TouchActionNone since it is a good hint
-  // that author doesn't want scrolling.
-  if (touch_action == cc::TouchAction::kTouchActionNone)
-    (*host_)->CancelTouchTimeout();
+  (*host_)->SetTouchActionFromMain(touch_action);
 }
 
 const WidgetInputHandlerManager::WidgetInputHandlerHost&

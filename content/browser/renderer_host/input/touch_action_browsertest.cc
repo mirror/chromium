@@ -52,9 +52,11 @@ const char kTouchActionDataURL[] =
     "}"
     ".spacer { height: 10000px; }"
     ".ta-none { touch-action: none; }"
+    ".ta-pany { touch-action: pan-y; }"
     "</style>"
     "<div class=box></div>"
     "<div class='box ta-none'></div>"
+    "<div class='box ta-pany'></div>"
     "<div class=spacer></div>"
     "<script>"
     "  window.eventCounts = "
@@ -110,9 +112,6 @@ class TouchActionBrowserTest : public ContentBrowserTest {
   void SetUpCommandLine(base::CommandLine* cmd) override {
     cmd->AppendSwitchASCII(switches::kTouchEventFeatureDetection,
                            switches::kTouchEventFeatureDetectionEnabled);
-    // TODO(rbyers): Remove this switch once touch-action ships.
-    // http://crbug.com/241964
-    cmd->AppendSwitch(switches::kEnableExperimentalWebPlatformFeatures);
   }
 
   int ExecuteScriptAndExtractInt(const std::string& script) {
@@ -136,7 +135,7 @@ class TouchActionBrowserTest : public ContentBrowserTest {
 
     int scrollHeight = ExecuteScriptAndExtractInt(
         "document.documentElement.scrollHeight");
-    EXPECT_EQ(10200, scrollHeight);
+    EXPECT_EQ(10300, scrollHeight);
 
     FrameWatcher frame_watcher(shell()->web_contents());
 
@@ -220,6 +219,32 @@ IN_PROC_BROWSER_TEST_F(TouchActionBrowserTest, MAYBE_TouchActionNone) {
   EXPECT_GE(ExecuteScriptAndExtractInt("eventCounts.touchmove"), 1);
   EXPECT_EQ(1, ExecuteScriptAndExtractInt("eventCounts.touchend"));
   EXPECT_EQ(0, ExecuteScriptAndExtractInt("eventCounts.touchcancel"));
+}
+
+#if defined(OS_MACOSX)
+#define MAYBE_PanYAllowed DISABLED_PanYAllowed
+#else
+#define MAYBE_PanYAllowed PanYAllowed
+#endif
+IN_PROC_BROWSER_TEST_F(TouchActionBrowserTest, MAYBE_PanYAllowed) {
+  LoadURL();
+
+  bool scrolled_y =
+      DoTouchScroll(gfx::Point(50, 250), gfx::Vector2d(0, 45), false);
+  EXPECT_TRUE(scrolled_y);
+}
+
+#if defined(OS_MACOSX)
+#define MAYBE_PanXNotAllowed DISABLED_PanXNotAllowed
+#else
+#define MAYBE_PanXNotAllowed PanXNotAllowed
+#endif
+IN_PROC_BROWSER_TEST_F(TouchActionBrowserTest, MAYBE_PanXNotAllowed) {
+  LoadURL();
+
+  bool scrolled_x =
+      DoTouchScroll(gfx::Point(50, 250), gfx::Vector2d(45, 0), false);
+  EXPECT_FALSE(scrolled_x);
 }
 
 }  // namespace content

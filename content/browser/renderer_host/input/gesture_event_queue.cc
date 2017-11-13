@@ -172,7 +172,8 @@ void GestureEventQueue::ProcessGestureAck(InputEventAckSource ack_source,
   TRACE_EVENT0("input", "GestureEventQueue::ProcessGestureAck");
 
   if (coalesced_gesture_events_.empty()) {
-    DLOG(ERROR) << "Received unexpected ACK for event type " << type;
+    DLOG(ERROR) << "Received unexpected ACK for event type " << type << " "
+                << ack_result;
     return;
   }
 

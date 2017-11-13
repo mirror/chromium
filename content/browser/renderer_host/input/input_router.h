@@ -58,8 +58,9 @@ class InputRouter : public IPC::Listener {
   // input event latencies to relate events to their target frames.
   virtual void SetFrameTreeNodeId(int frameTreeNodeId) = 0;
 
-  // Return the currently allowed touch-action.
-  virtual cc::TouchAction AllowedTouchAction() = 0;
+  // Return the currently allowed touch-action. The value is set when we receive
+  // the computed touch action from Blink.
+  virtual base::Optional<cc::TouchAction> AllowedTouchAction() = 0;
 
   virtual void SetForceEnableZoom(bool enabled) = 0;
 

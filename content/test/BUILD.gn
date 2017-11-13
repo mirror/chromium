@@ -802,6 +802,7 @@ test("content_browsertests") {
     "../renderer/screen_orientation/screen_orientation_dispatcher_browsertest.cc",
     "../renderer/visual_state_browsertest.cc",
     "../renderer/webclipboard_impl_browsertest.cc",
+    "../renderer/whitelisted_touch_action_browsertest.cc",
     "../test/browser_test_utils_browsertest.cc",
     "../test/content_browser_test_test.cc",
     "../test/webui_resource_browsertest.cc",
