@@ -92,6 +92,14 @@ Polymer({
     },
 
     /** @private */
+    multiMirroringAvailable_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('multiMirroringAvailable');
+      }
+    },
+
+    /** @private */
     nightLightFeatureEnabled_: {
       type: Boolean,
       value: function() {
@@ -304,16 +312,6 @@ Polymer({
   },
 
   /**
-   * Returns the i18n string for the text to be used for mirroring settings.
-   * @param {!Array<!chrome.system.display.DisplayUnitInfo>} displays
-   * @return {string} i18n string for mirroring settings text.
-   * @private
-   */
-  getDisplayMirrorText_: function(displays) {
-    return this.i18n(this.isMirrored_(displays) ? 'toggleOn' : 'toggleOff');
-  },
-
-  /**
    * @param {boolean} unifiedDesktopAvailable
    * @param {boolean} unifiedDesktopMode
    * @param {!Array<!chrome.system.display.DisplayUnitInfo>} displays
@@ -344,7 +342,9 @@ Polymer({
    */
   showMirror_: function(unifiedDesktopMode, displays) {
     return this.isMirrored_(displays) ||
-        (!unifiedDesktopMode && displays.length == 2);
+        (!unifiedDesktopMode &&
+         ((this.multiMirroringAvailable_ && displays.length > 1) ||
+          displays.length == 2));
   },
 
   /**
