@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "47da0010_15c46569",
+        "filename": "chrome/browser/ui/find_bar/find_bar_controller_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-13T22:02:17Z",
+      "side": 1,
+      "message": "some of these are not needed",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "1b4794bc1ce5b1ffcb00b9194adb92f29c787e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d40d1b3_58756d6f",
         "filename": "chrome/browser/ui/find_bar/find_bar_controller_browsertest.cc",
         "patchSetId": 5
@@ -18,6 +41,29 @@
         "startChar": 0,
         "endLine": 20,
         "endChar": 59
+      },
+      "revId": "1b4794bc1ce5b1ffcb00b9194adb92f29c787e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153dc3bc_83ba7fc8",
+        "filename": "chrome/browser/ui/find_bar/find_bar_controller_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-13T22:02:17Z",
+      "side": 1,
+      "message": "nit:\nusing FindBarControllerTest \u003d InProcessBrowserTest;",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 27
       },
       "revId": "1b4794bc1ce5b1ffcb00b9194adb92f29c787e9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
