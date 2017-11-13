@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5e30938_8aefa875",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-13T05:28:36Z",
+      "side": 1,
+      "message": "nit: IIUC, this is for short term?\nIf so, how about adding TODO to remove this after your work is done?",
+      "revId": "6e04d0beb4b50eb84ecf0c853f031847d2b54676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

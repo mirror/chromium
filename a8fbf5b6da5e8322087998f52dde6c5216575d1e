@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "30a0f0f6_128bab1c",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-13T05:28:36Z",
+      "side": 1,
+      "message": "Thank you for explanation. Please let me ask two more questions just for clarification.\n\n1) Unlike the name represents, OOBE does NOT only used for OOBE, but also the wizard for assistance UI, too. (It was named OOBE, and not yet renamed just for historical reason :\u0027-(). At that timing, mini-contaienr is not running. What we should do then?\n\n2) As for latter case, my main point was; ARC is not managed, and user accepts TOS, then for some reason, stops it before AUTH is completed successfully (like shutdown), then re-enables it.\nIs managed check is fast for non-managed users, too?",
+      "parentUuid": "44b32e79_0aa088b7",
+      "revId": "a8fbf5b6da5e8322087998f52dde6c5216575d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2a8f65b_33b3b5aa",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 1
