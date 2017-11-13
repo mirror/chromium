@@ -14,9 +14,9 @@ StatusChangeChecker::~StatusChangeChecker() {}
 
 bool StatusChangeChecker::Wait() {
   if (IsExitConditionSatisfied()) {
-    DVLOG(1) << "Already satisfied: " << GetDebugMessage();
+    LOG(INFO) << "Already satisfied: " << GetDebugMessage();
   } else {
-    DVLOG(1) << "Blocking: " << GetDebugMessage();
+    LOG(INFO) << "Blocking: " << GetDebugMessage();
     StartBlockingWait();
   }
   return !TimedOut();
@@ -37,22 +37,26 @@ void StatusChangeChecker::StartBlockingWait() {
               base::Bind(&StatusChangeChecker::OnTimeout,
                          base::Unretained(this)));
 
+  LOG(INFO) << "StatusChangeChecker::StartBlockingWait() Start";
   base::RunLoop(base::RunLoop::Type::kNestableTasksAllowed).Run();
+  LOG(INFO) << "StatusChangeChecker::StartBlockingWait() End";
 }
 
 void StatusChangeChecker::StopWaiting() {
+  LOG(INFO) << "QuitCurrent() due to StatusChangeChecker::StopWaiting()";
   base::RunLoop::QuitCurrentWhenIdleDeprecated();
 }
 
 void StatusChangeChecker::CheckExitCondition() {
-  DVLOG(1) << "Await -> Checking Condition: " << GetDebugMessage();
+  LOG(INFO) << "Await -> Checking Condition: " << GetDebugMessage();
   if (IsExitConditionSatisfied()) {
-    DVLOG(1) << "Await -> Condition met: " << GetDebugMessage();
+    LOG(INFO) << "Await -> Condition met: " << GetDebugMessage();
     StopWaiting();
   }
 }
 
 void StatusChangeChecker::OnTimeout() {
+  LOG(INFO) << "StatusChangeChecker::OnTimeout()";
   DVLOG(1) << "Await -> Timed out: " << GetDebugMessage();
   timed_out_ = true;
   StopWaiting();

@@ -50,6 +50,7 @@ class PasswordStoreConsumerHelper
       std::vector<std::unique_ptr<PasswordForm>> results) override {
     result_.swap(results);
     // Quit the message loop to wake up passwords_helper::GetLogins.
+    LOG(INFO) << "QuitCurrent() due to passwords";
     base::RunLoop::QuitCurrentWhenIdleDeprecated();
   }
 
