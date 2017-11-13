@@ -75,6 +75,11 @@
     "linearGradient",
     "marker",
     "mask",
+    {
+      name: "meshGradient",
+      interfaceName: "SVGMeshGradientElement",
+      runtimeEnabled: "SVGMeshGradient",
+    },
     "metadata",
     {
       name: "mpath",

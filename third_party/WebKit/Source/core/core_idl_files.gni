@@ -365,6 +365,7 @@ core_idl_files =
                     "svg/SVGMarkerElement.idl",
                     "svg/SVGMaskElement.idl",
                     "svg/SVGMatrix.idl",
+                    "svg/SVGMeshGradientElement.idl",
                     "svg/SVGMetadataElement.idl",
                     "svg/SVGNumber.idl",
                     "svg/SVGNumberList.idl",
