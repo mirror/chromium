@@ -31,6 +31,7 @@
 #include "media/gpu/gpu_video_decode_accelerator_helpers.h"
 #include "media/gpu/media_gpu_export.h"
 #include "media/gpu/shared_memory_region.h"
+#include "media/gpu/vaapi/vaapi_picture_factory.h"
 #include "media/gpu/vaapi_wrapper.h"
 #include "media/video/picture.h"
 #include "media/video/video_decode_accelerator.h"
@@ -226,6 +227,8 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   // Queue for incoming output buffers (texture ids).
   using OutputBuffers = base::queue<int32_t>;
   OutputBuffers output_buffers_;
+
+  VaapiPictureFactory vaapi_picture_factory_;
 
   scoped_refptr<VaapiWrapper> vaapi_wrapper_;
 
