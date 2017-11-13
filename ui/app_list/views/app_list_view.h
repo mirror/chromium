@@ -215,6 +215,8 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
     return fullscreen_widget_;
   }
 
+  AppListModel* GetAppListModel() const { return model_; }
+
   AppListState app_list_state() const { return app_list_state_; }
 
   views::Widget* search_box_widget() const { return search_box_widget_; }

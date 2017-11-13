@@ -12,6 +12,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "extensions/browser/app_sorting.h"
 #include "ui/app_list/app_list_constants.h"
+#include "ui/app_list/app_list_model.h"
 #include "ui/gfx/image/image_skia.h"
 
 // static
@@ -50,7 +51,7 @@ void ArcAppItem::Activate(int event_flags) {
                       GetController()->GetAppListDisplayId())) {
     return;
   }
-
+  GetController()->GetAppListModel()->RecordUserJourneyEndTime();
   // Manually close app_list view because focus is not changed on ARC app start,
   // and current view remains active.
   GetController()->DismissView();
