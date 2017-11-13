@@ -25,12 +25,13 @@ class {{exported}}{{v8_class}} final
   ~{{v8_class}}() override = default;
 
 {% for method in methods %}
-  {# TODO(yukishiino): Implement "call a user object's operation". #}
   {# TODO(yukishiino): Add |ScriptWrappable* callback_this_value| as the first
      argument of the IDL operations. The callsites must pass callback_this_value
      explicitly. #}
   {# TODO(yukishiino): Change the return type to v8::Maybe<T> so that the
      function returns a return value or throws an exception. #}
+  // Performs "call a user object's operation".
+  // https://heycam.github.io/webidl/#call-a-user-objects-operation
   {{method.cpp_type}} {{method.name}}({{method.argument_declarations | join(', ')}}) override;
 
 {% endfor %}
