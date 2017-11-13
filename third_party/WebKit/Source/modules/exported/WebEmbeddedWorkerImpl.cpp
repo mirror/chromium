@@ -150,6 +150,9 @@ void WebEmbeddedWorkerImpl::StartWorkerContext(
   settings->SetStrictMixedContentChecking(true);
   settings->SetAllowRunningOfInsecureContent(false);
 
+  settings->SetServiceWorkerCodeCacheInstall(
+      worker_start_data_.code_cache_install_options);
+
   // If we were asked to wait for debugger then now is a good time to do that.
   worker_context_client_->WorkerReadyForInspection();
   if (worker_start_data_.wait_for_debugger_mode ==

@@ -356,6 +356,16 @@
     "args": ["--enable-features=AsmJsToWebAssembly"]
   },
   {
+    "prefix": "service-worker-code-cache-install-full",
+    "base": "http/tests/devtools/service-workers/",
+    "args": ["--service-worker-code-cache-install=full"]
+  },
+  {
+    "prefix": "service-worker-code-cache-install-normal",
+    "base": "http/tests/devtools/service-workers/",
+    "args": ["--service-worker-code-cache-install=normal"]
+  },
+  {
     "prefix": "service-worker-script-streaming",
     "base": "external/wpt/service-workers",
     "args": ["--enable-features=ServiceWorkerScriptStreaming"]

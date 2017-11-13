@@ -834,6 +834,16 @@ const FeatureEntry::Choice kForceEffectiveConnectionTypeChoices[] = {
      switches::kForceEffectiveConnectionType, net::kEffectiveConnectionType4G},
 };
 
+const FeatureEntry::Choice kServiceWorkerCodeCacheInstallChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {flags_ui::kGenericExperimentChoiceDisabled,
+     switches::kServiceWorkerCodeCacheInstall, "none"},
+    {flag_descriptions::kServiceWorkerCodeCacheInstallNormal,
+     switches::kServiceWorkerCodeCacheInstall, "normal"},
+    {flag_descriptions::kServiceWorkerCodeCacheInstallFull,
+     switches::kServiceWorkerCodeCacheInstall, "full"},
+};
+
 // Ensure that all effective connection types returned by Network Quality
 // Estimator (NQE) are also exposed via flags.
 static_assert(net::EFFECTIVE_CONNECTION_TYPE_LAST + 1 ==
@@ -1687,6 +1697,10 @@ const FeatureEntry kFeatureEntries[] = {
     {"trace-upload-url", flag_descriptions::kTraceUploadUrlName,
      flag_descriptions::kTraceUploadUrlDescription, kOsAll,
      MULTI_VALUE_TYPE(kTraceUploadURL)},
+    {"service-worker-code-cache-install",
+     flag_descriptions::kServiceWorkerCodeCacheInstallName,
+     flag_descriptions::kServiceWorkerCodeCacheInstallDescription, kOsAll,
+     MULTI_VALUE_TYPE(kServiceWorkerCodeCacheInstallChoices)},
     {"enable-service-worker-script-streaming",
      flag_descriptions::kServiceWorkerScriptStreamingName,
      flag_descriptions::kServiceWorkerScriptStreamingDescription, kOsAll,

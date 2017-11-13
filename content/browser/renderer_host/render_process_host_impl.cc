@@ -2640,6 +2640,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kRegisterPepperPlugins,
     switches::kRendererStartupDialog,
     switches::kRootLayerScrolls,
+    switches::kServiceWorkerCodeCacheInstall,
     switches::kShowPaintRects,
     switches::kSitePerProcess,
     switches::kStatsCollectionController,

@@ -147,6 +147,7 @@ bindings_core_v8_files =
                     "core/v8/V8ContextSnapshot.cpp",
                     "core/v8/V8ContextSnapshot.h",
                     "core/v8/V8StringResource.h",
+                    "core/v8/V8ServiceWorkerCodeCacheInstallOptions.h",
                     "core/v8/V8V0CustomElementLifecycleCallbacks.cpp",
                     "core/v8/V8V0CustomElementLifecycleCallbacks.h",
                     "core/v8/V8WorkerGlobalScopeEventListener.cpp",

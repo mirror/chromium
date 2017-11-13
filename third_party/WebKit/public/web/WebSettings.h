@@ -87,6 +87,12 @@ class WebSettings {
     kUntilOnLoad
   };
 
+  enum class ServiceWorkerCodeCacheInstallOptions {
+    kNone,
+    kNormal,
+    kFull,
+  };
+
   // Selection strategy defines how the selection granularity changes when the
   // selection extent is moved.
   enum class SelectionStrategyType {
@@ -295,6 +301,8 @@ class WebSettings {
   virtual void SetV8CacheOptions(V8CacheOptions) = 0;
   virtual void SetV8CacheStrategiesForCacheStorage(
       V8CacheStrategiesForCacheStorage) = 0;
+  virtual void SetServiceWorkerCodeCacheInstall(
+      ServiceWorkerCodeCacheInstallOptions) = 0;
   virtual void SetValidationMessageTimerMagnification(int) = 0;
   virtual void SetViewportEnabled(bool) = 0;
   virtual void SetViewportMetaEnabled(bool) = 0;

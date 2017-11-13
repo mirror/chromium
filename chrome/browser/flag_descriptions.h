@@ -724,6 +724,11 @@ extern const char kScrollPredictionDescription[];
 extern const char kSecondaryUiMd[];
 extern const char kSecondaryUiMdDescription[];
 
+extern const char kServiceWorkerCodeCacheInstallName[];
+extern const char kServiceWorkerCodeCacheInstallDescription[];
+extern const char kServiceWorkerCodeCacheInstallNormal[];
+extern const char kServiceWorkerCodeCacheInstallFull[];
+
 extern const char kServiceWorkerNavigationPreloadName[];
 extern const char kServiceWorkerNavigationPreloadDescription[];
 

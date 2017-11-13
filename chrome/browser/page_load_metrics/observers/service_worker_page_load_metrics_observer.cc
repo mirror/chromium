@@ -238,6 +238,8 @@ void ServiceWorkerPageLoadMetricsObserver::
             timing.parse_timing->parse_start.value());
     return;
   }
+  LOG(ERROR) << "FirstMeaningfulPaint: "
+             << timing.paint_timing->first_meaningful_paint.value();
   PAGE_LOAD_HISTOGRAM(internal::kHistogramServiceWorkerFirstMeaningfulPaint,
                       timing.paint_timing->first_meaningful_paint.value());
   PAGE_LOAD_HISTOGRAM(

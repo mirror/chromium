@@ -60,11 +60,15 @@ struct WebEmbeddedWorkerStartData {
 
   WebAddressSpace address_space;
 
+  WebSettings::ServiceWorkerCodeCacheInstallOptions code_cache_install_options;
+
   WebEmbeddedWorkerStartData()
       : pause_after_download_mode(kDontPauseAfterDownload),
         wait_for_debugger_mode(kDontWaitForDebugger),
         v8_cache_options(WebSettings::kV8CacheOptionsDefault),
-        data_saver_enabled(false) {}
+        data_saver_enabled(false),
+        code_cache_install_options(
+            WebSettings::ServiceWorkerCodeCacheInstallOptions::kNone) {}
 };
 
 }  // namespace blink

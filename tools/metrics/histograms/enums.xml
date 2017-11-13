@@ -24935,6 +24935,7 @@ from previous Chrome versions.
   <int value="646252875" label="ReadItLaterInMenu:enabled"/>
   <int value="646738320" label="disable-gesture-editing"/>
   <int value="649111851" label="MidiManagerCros:enabled"/>
+  <int value="649198276" label="service-worker-code-cache-install"/>
   <int value="651421878" label="VideoRotateToFullscreen:enabled"/>
   <int value="651844675" label="EasyUnlockPromotions:enabled"/>
   <int value="652561231" label="CustomContextMenu:enabled"/>

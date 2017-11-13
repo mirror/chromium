@@ -30,6 +30,11 @@ class CORE_EXPORT WorkerSettings {
     return generic_font_family_settings_;
   }
 
+  V8ServiceWorkerCodeCacheInstallOptions
+  GetServiceWorkerCodeCacheInstallOptions() const {
+    return service_worker_code_cache_install_options_;
+  }
+
   void MakeGenericFontFamilySettingsAtomic() {
     generic_font_family_settings_.MakeAtomic();
   }
@@ -45,6 +50,9 @@ class CORE_EXPORT WorkerSettings {
   bool strict_mixed_content_checking_ = false;
   bool allow_running_of_insecure_content_ = false;
   bool strictly_block_blockable_mixed_content_ = false;
+  V8ServiceWorkerCodeCacheInstallOptions
+      service_worker_code_cache_install_options_ =
+          V8ServiceWorkerCodeCacheInstallOptions::kNone;
 
   GenericFontFamilySettings generic_font_family_settings_;
 };

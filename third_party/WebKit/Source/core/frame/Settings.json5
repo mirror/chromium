@@ -652,6 +652,13 @@
       type: "V8CacheStrategiesForCacheStorage",
     },
 
+    // Generate V8 code cache for CacheStorage while installing service worker (none, normal and full).
+    {
+      name: "serviceWorkerCodeCacheInstall",
+      initial: "V8ServiceWorkerCodeCacheInstallOptions::kNone",
+      type: "V8ServiceWorkerCodeCacheInstallOptions",
+    },
+
     // These values are bit fields for the properties of available pointing devices
     // and may take on multiple values (e.g. laptop with touchpad and touchscreen
     // has pointerType coarse *and* fine).
