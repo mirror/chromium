@@ -34,6 +34,24 @@
       "revId": "3cc0d8429125f366703ec2e6f9d6c28f59c1a865",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a6a12ef_a671a929",
+        "filename": "tools/gn/command_args.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-13T19:42:48Z",
+      "side": 1,
+      "message": "I think your change is correct, I was just surprised by it since it didn\u0027t have anything to do w/ the rest of the change.\n\nApart from that, does lint complain if it was\n\n  cur--;\n  if (Tokenizer::IsNewline(data, --cur))\n\n? I\u0027m not a big fan of putting expressions with side effects in function calls these days.",
+      "parentUuid": "c8811155_3c300988",
+      "revId": "3cc0d8429125f366703ec2e6f9d6c28f59c1a865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
