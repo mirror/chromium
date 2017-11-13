@@ -15,7 +15,8 @@ namespace blink {
 CSSPropertyValueSet* CSSVariableData::PropertySet() {
   DCHECK(!needs_variable_resolution_);
   if (!cached_property_set_) {
-    property_set_ = CSSParser::ParseCustomPropertySet(tokens_);
+    property_set_ =
+        CSSParser::ParseCustomPropertySet(tokens_, secure_context_mode_);
     cached_property_set_ = true;
   }
   return property_set_.Get();
@@ -66,20 +67,23 @@ void CSSVariableData::ConsumeAndUpdateTokens(const CSSParserTokenRange& range) {
 
 CSSVariableData::CSSVariableData(const CSSParserTokenRange& range,
                                  bool is_animation_tainted,
-                                 bool needs_variable_resolution)
+                                 bool needs_variable_resolution,
+                                 SecureContextMode secure_context_mode)
     : is_animation_tainted_(is_animation_tainted),
       needs_variable_resolution_(needs_variable_resolution),
+      secure_context_mode_(secure_context_mode),
       cached_property_set_(false) {
   DCHECK(!range.AtEnd());
   ConsumeAndUpdateTokens(range);
 }
 
 const CSSValue* CSSVariableData::ParseForSyntax(
-    const CSSSyntaxDescriptor& syntax) const {
+    const CSSSyntaxDescriptor& syntax,
+    SecureContextMode secure_context_mode) const {
   DCHECK(!NeedsVariableResolution());
   // TODO(timloh): This probably needs a proper parser context for
   // relative URL resolution.
-  return syntax.Parse(TokenRange(), StrictCSSParserContext(),
+  return syntax.Parse(TokenRange(), StrictCSSParserContext(secure_context_mode),
                       is_animation_tainted_);
 }
 

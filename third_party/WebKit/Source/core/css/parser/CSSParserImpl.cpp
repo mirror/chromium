@@ -323,7 +323,8 @@ CSSSelectorList CSSParserImpl::ParsePageSelector(
 }
 
 ImmutableCSSPropertyValueSet* CSSParserImpl::ParseCustomPropertySet(
-    CSSParserTokenRange range) {
+    CSSParserTokenRange range,
+    SecureContextMode secure_context_mode) {
   range.ConsumeWhitespace();
   if (range.Peek().GetType() != kLeftBraceToken)
     return nullptr;
@@ -331,7 +332,8 @@ ImmutableCSSPropertyValueSet* CSSParserImpl::ParseCustomPropertySet(
   range.ConsumeWhitespace();
   if (!range.AtEnd())
     return nullptr;
-  CSSParserImpl parser(StrictCSSParserContext());
+
+  CSSParserImpl parser(StrictCSSParserContext(secure_context_mode));
   parser.ConsumeDeclarationListForAtApply(block);
 
   return CreateCSSPropertyValueSet(parser.parsed_properties_,
@@ -1032,8 +1034,9 @@ void CSSParserImpl::ConsumeVariableValue(CSSParserTokenRange range,
                                          bool important,
                                          bool is_animation_tainted) {
   if (CSSCustomPropertyDeclaration* value =
-          CSSVariableParser::ParseDeclarationValue(variable_name, range,
-                                                   is_animation_tainted)) {
+          CSSVariableParser::ParseDeclarationValue(
+              variable_name, range, is_animation_tainted,
+              context_->GetSecureContextMode())) {
     parsed_properties_.push_back(
         CSSPropertyValue(CSSPropertyVariable, *value, important));
     context_->Count(context_->Mode(), CSSPropertyVariable);

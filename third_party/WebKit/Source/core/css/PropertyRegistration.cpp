@@ -135,7 +135,8 @@ void PropertyRegistration::registerProperty(
     initial =
         &StyleBuilderConverter::ConvertRegisteredPropertyInitialValue(*initial);
     initial_variable_data = CSSVariableData::Create(
-        CSSParserTokenRange(tokens), is_animation_tainted, false);
+        CSSParserTokenRange(tokens), is_animation_tainted, false,
+        execution_context->SecureContextMode());
   } else {
     if (!syntax_descriptor.IsTokenStream()) {
       exception_state.ThrowDOMException(

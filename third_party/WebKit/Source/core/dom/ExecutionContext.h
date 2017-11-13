@@ -33,6 +33,7 @@
 #include "core/CoreExport.h"
 #include "core/dom/ContextLifecycleNotifier.h"
 #include "core/dom/ContextLifecycleObserver.h"
+#include "core/dom/SecureContextMode.h"
 #include "core/dom/SecurityContext.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
@@ -173,6 +174,10 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
   // https://w3c.github.io/webappsec/specs/powerfulfeatures/#settings-privileged.
   virtual bool IsSecureContext(String& error_message) const = 0;
   virtual bool IsSecureContext() const;
+
+  SecureContextMode SecureContextMode() const {
+    return IsSecureContext() ? kSecureContext : kInsecureContext;
+  }
 
   virtual String OutgoingReferrer() const;
   // Parses a comma-separated list of referrer policy tokens, and sets

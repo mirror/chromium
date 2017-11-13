@@ -103,7 +103,8 @@ class CSSParserImpl {
                                            StyleSheetContents*);
 
   static ImmutableCSSPropertyValueSet* ParseCustomPropertySet(
-      CSSParserTokenRange);
+      CSSParserTokenRange,
+      SecureContextMode);
   // TODO(shend): Remove this when crbug.com/661854 is fixed. We need to use a
   // stream for parsing @apply blocks so we can correctly store custom
   // property values.
