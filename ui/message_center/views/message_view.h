@@ -54,6 +54,9 @@ class MESSAGE_CENTER_EXPORT MessageView
   virtual void SetExpanded(bool expanded);
   virtual bool IsExpanded() const;
 
+  virtual void OnContainerAnimationStarted();
+  virtual void OnContainerAnimationEnded();
+
   void OnCloseButtonPressed();
   void OnSettingsButtonPressed();
 
