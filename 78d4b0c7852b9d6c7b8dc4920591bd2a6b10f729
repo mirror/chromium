@@ -45,6 +45,30 @@
       "revId": "78d4b0c7852b9d6c7b8dc4920591bd2a6b10f729",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad61996c_ac092829",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrWebGLLayer_opaque_framebuffer.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-13T23:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "097c3b35_856e0f9d",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 13
+      },
+      "revId": "78d4b0c7852b9d6c7b8dc4920591bd2a6b10f729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
