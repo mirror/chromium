@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6c4ee30e_eeab1428",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-13T23:34:46Z",
+      "side": 1,
+      "message": "This explanation is quite helpful, thank you. I guess I\u0027m still ignorant about why the overview mode can\u0027t just actually clip the top header height given this inset value; ie. why must this code (1) not paint the header and (2) still supply the header\u0027s height to be \u0027clipped\u0027? I\u0027m guessing that nothing is actually clipped, but the header size needs to be retained but left unpainted to appear \u0027clipped\u0027. That\u0027s unfortunate, but it seems like the bug discussed a number of options and this came out on top.",
+      "parentUuid": "845c132e_e943c84a",
+      "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4e4d655_5b32c8e6",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 6

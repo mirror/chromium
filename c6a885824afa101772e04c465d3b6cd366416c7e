@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cac1efd_ed16a658",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-13T23:34:46Z",
+      "side": 1,
+      "message": "Hmm, I\u0027d still like to see this code revised for clarity, what do you think about this:\n\nint BrowserNonClientFrameViewAsh::GetTopInset(bool restored) const {\n  if (!ShouldPaint()) {\n    // When immersive fullscreen unrevealed, tabstrip is offscreen with normal\n    // tapstrip bounds, the top inset should reach this topmost edge.\n    const ImmersiveModeController* const immersive_controller \u003d\n        browser_view()-\u003eimmersive_mode_controller();\n    if (immersive_controller-\u003eIsEnabled() \u0026\u0026\n        !immersive_controller-\u003eIsRevealed()) {\n      return (-1) * browser_view()-\u003eGetTabStripHeight();\n    }\n    // The header isn\u0027t painted for restored popup/app windows in overview mode,\n    // but the inset is still calculated below, so the overview code can align\n    // the window content with a fake header.\n    if (!in_overview_mode_ || frame()-\u003eIsFullscreen() ||\n        browser_view()-\u003eIsTabStripVisible()) {  // ***See [1] below.***\n      return 0;\n    }\n  }\n\n  if (!browser_view()-\u003eIsTabStripVisible()) {\n    return (UsePackagedAppHeaderStyle())\n        ? header_painter_-\u003eGetHeaderHeight()\n        : caption_button_container_-\u003ebounds().bottom();\n  }\n\n  const int header_height \u003d restored\n      ? GetAshLayoutSize(\n            AshLayoutSize::BROWSER_RESTORED_CAPTION_BUTTON).height()\n      : header_painter_-\u003eGetHeaderHeight();\n  return header_height - browser_view()-\u003eGetTabStripHeight();\n}\n\n[1] If this non-zero inset logic should only apply to app windows, and not popup windows, then maybe the conditional should be: if (!in_overview_mode_ || frame()-\u003eIsFullscreen() || !browser_view()-\u003ebrowser()-\u003eis_app()). (And if so, please make sure that tabbed browser windows showing a V1 app in a tab does not return true for |is_app()|.",
+      "revId": "c6a885824afa101772e04c465d3b6cd366416c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26460d72_3b54ee1f",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-13T23:34:46Z",
+      "side": 1,
+      "message": "Hmm, now that there\u0027s more code here, you can optionally restore your helper like:\nvoid BrowserNonClientFrameViewAsh::OnOverviewModeChanged(bool in_overview) {\n  in_overview_mode_ \u003d in_overview;\n  caption_button_container_-\u003eSetVisible(!in_overview);\n  if (window_icon_)\n    window_icon_-\u003eSetVisible(!in_overview);\n  if (back_button_)\n    back_button_-\u003eSetVisible(!in_overview);\n  // Schedule a paint to show or hide the header.\n  SchedulePaint();\n}\n\nSorry for the back and forth...",
+      "revId": "c6a885824afa101772e04c465d3b6cd366416c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
