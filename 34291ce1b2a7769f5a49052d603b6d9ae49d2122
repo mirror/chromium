@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "649f4bb1_c18c7e28",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-13T20:29:43Z",
+      "side": 1,
+      "message": "Assuming this refers to the code in extension_custom_bindings.js, it doesn\u0027t seem precisely equivalent: this defines accessors which forward the access each time, whereas the original version seems to just copy the properties once. This means that the first bullet point here is a behaviour change; is that intentional?\n\nI have to admit to not being a big fan of this, but I guess I can live with it. :/",
+      "revId": "34291ce1b2a7769f5a49052d603b6d9ae49d2122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2936ab46_2d7b5f37",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-13T20:29:43Z",
+      "side": 1,
+      "message": "This list seems to be missing \"Port\". Intentional?",
+      "revId": "34291ce1b2a7769f5a49052d603b6d9ae49d2122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
