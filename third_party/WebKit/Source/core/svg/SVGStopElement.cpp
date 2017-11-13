@@ -21,6 +21,7 @@
 #include "core/svg/SVGStopElement.h"
 
 #include "core/layout/svg/LayoutSVGGradientStop.h"
+#include "core/layout/svg/LayoutSVGResourceContainer.h"
 
 namespace blink {
 
@@ -30,6 +31,7 @@ inline SVGStopElement::SVGStopElement(Document& document)
                                         SVGNames::offsetAttr,
                                         SVGNumberAcceptPercentage::Create())) {
   AddToPropertyMap(offset_);
+  SetHasCustomStyleCallbacks();
 }
 
 void SVGStopElement::Trace(blink::Visitor* visitor) {
@@ -39,29 +41,51 @@ void SVGStopElement::Trace(blink::Visitor* visitor) {
 
 DEFINE_NODE_FACTORY(SVGStopElement)
 
+namespace {
+
+void InvalidateInstancesAndAncestorResources(SVGStopElement* stop_element) {
+  SVGElement::InvalidationGuard invalidation_guard(stop_element);
+
+  for (auto* e = stop_element->parentElement(); e; e = e->parentElement()) {
+    auto* layout_object = e->GetLayoutObject();
+    if (!layout_object || !layout_object->IsSVGResourceContainer())
+      continue;
+
+    ToLayoutSVGResourceContainer(layout_object)->RemoveAllClientsFromCache();
+    LayoutSVGResourceContainer::MarkForLayoutAndParentResourceInvalidation(
+        layout_object);
+  }
+}
+
+}  // namespace
+
 void SVGStopElement::SvgAttributeChanged(const QualifiedName& attr_name) {
   if (attr_name == SVGNames::offsetAttr) {
-    SVGElement::InvalidationGuard invalidation_guard(this);
-
-    if (GetLayoutObject())
-      MarkForLayoutAndParentResourceInvalidation(GetLayoutObject());
+    InvalidateInstancesAndAncestorResources(this);
     return;
   }
 
   SVGElement::SvgAttributeChanged(attr_name);
 }
 
+void SVGStopElement::DidRecalcStyle() {
+  SVGElement::DidRecalcStyle();
+
+  InvalidateInstancesAndAncestorResources(this);
+}
+
 LayoutObject* SVGStopElement::CreateLayoutObject(const ComputedStyle&) {
+  return nullptr;
   return new LayoutSVGGradientStop(this);
 }
 
 bool SVGStopElement::LayoutObjectIsNeeded(const ComputedStyle&) {
+  return false;
   return IsValid() && HasSVGParent();
 }
 
 Color SVGStopElement::StopColorIncludingOpacity() const {
-  const ComputedStyle* style =
-      GetLayoutObject() ? GetLayoutObject()->Style() : nullptr;
+  const ComputedStyle* style = NonLayoutObjectComputedStyle();
   // FIXME: This check for null style exists to address Bug WK 90814, a rare
   // crash condition in which the layoutObject or style is null. This entire
   // class is scheduled for removal (Bug WK 86941) and we will tolerate this
