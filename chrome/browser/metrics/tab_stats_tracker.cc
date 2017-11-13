@@ -104,7 +104,8 @@ TabStatsTracker* TabStatsTracker::GetInstance() {
   return g_instance;
 }
 
-void TabStatsTracker::TabStatsDailyObserver::OnDailyEvent() {
+void TabStatsTracker::TabStatsDailyObserver::OnDailyEvent(
+    DailyEvent::IntervalType type) {
   reporting_delegate_->ReportDailyMetrics(data_store_->tab_stats());
   data_store_->ResetMaximumsToCurrentState();
 }
