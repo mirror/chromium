@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e48ea3a1_bb47e5c3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-13T09:02:56Z",
+      "side": 1,
+      "message": "I guess you should do the same in ng_page_layout_algoirithm.cc",
+      "revId": "60151ed76427a341128d6e834b0a015020094880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57f3935_0b65b2c3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-13T09:02:56Z",
+      "side": 1,
+      "message": "Good to have that documented. Would be even better to make this method inaccessible when it\u0027s not appropriate to call it.",
+      "revId": "60151ed76427a341128d6e834b0a015020094880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
