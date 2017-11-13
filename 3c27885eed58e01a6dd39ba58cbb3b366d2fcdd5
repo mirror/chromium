@@ -16,6 +16,24 @@
       "revId": "3c27885eed58e01a6dd39ba58cbb3b366d2fcdd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec102b2e_2a36dd8b",
+        "filename": "extensions/common/image_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-13T17:50:48Z",
+      "side": 1,
+      "message": "Cool, done.",
+      "parentUuid": "3ca642fd_b7aaf3d0",
+      "revId": "3c27885eed58e01a6dd39ba58cbb3b366d2fcdd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
