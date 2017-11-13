@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "384c8687_63472144",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 12
+      },
+      "lineNbr": 3016,
+      "author": {
+        "id": 1230334
+      },
+      "writtenOn": "2017-11-13T13:04:58Z",
+      "side": 0,
+      "message": "Generated automatically by rebaseline.",
+      "revId": "cd130094846ffcd54af53967196f939c4ce917de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

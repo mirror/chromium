@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65a30abf_ca7a6d90",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListItem.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1230334
+      },
+      "writtenOn": "2017-11-13T13:04:58Z",
+      "side": 1,
+      "message": "We still need to return curr here. Otherwise the design won\u0027t be applied to overflow with block children. E.g.: block textarea.",
+      "revId": "266d21c4c9bdac712b681cfe7c6dbffaed773ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064b5778_416d2476",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListItem.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1230334
+      },
+      "writtenOn": "2017-11-13T13:04:58Z",
+      "side": 1,
+      "message": "Make grid, table, flex and writingModeRoot applying the new design.",
+      "revId": "266d21c4c9bdac712b681cfe7c6dbffaed773ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
