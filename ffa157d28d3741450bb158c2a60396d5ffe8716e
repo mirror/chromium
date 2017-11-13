@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0bdcec1_a746ff62",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptPromiseResolver.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-13T21:44:06Z",
+      "side": 1,
+      "message": "What about this one?",
+      "revId": "ffa157d28d3741450bb158c2a60396d5ffe8716e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
