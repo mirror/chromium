@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fbcc48f0_91bc718f",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-11-13T21:37:18Z",
+      "side": 1,
+      "message": "Yes. This should be the native bounds of the display the touch device is being associated with.\n\nThis is to compensate for the change that happens here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/749969/9/ui/display/manager/chromeos/touch_transform_controller.cc#220\n\nThis is to ensure that the legacy data format is supported since the legacy data includes the bounds_in_native offset into its calculations.",
+      "parentUuid": "ba3d3fa8_2c3a98f2",
+      "revId": "f19031a4cc996da51b4cd112b9c8811c428547a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dea60551_67afaa86",
         "filename": "ash/display/touch_calibrator_controller_unittest.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-08T03:05:33Z",
       "side": 1,
       "message": "shouldn\u0027t we do this in AshTestBase::TearDown()?",
+      "revId": "f19031a4cc996da51b4cd112b9c8811c428547a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e58867_3a67002b",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-11-13T21:37:18Z",
+      "side": 1,
+      "message": "You mean https://cs.chromium.org/chromium/src/ash/test/ash_test_base.cc?dr\u003dCSs\u0026l\u003d175 ?\nIts only being used in places where we are testing touch devices and touch events. So far this is the only location that is using it. Does it qualify to be moved to the base class?",
+      "parentUuid": "dea60551_67afaa86",
       "revId": "f19031a4cc996da51b4cd112b9c8811c428547a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b52c2fa7_d20e1d98",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-11-13T21:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8baaec7_75780c9f",
+      "revId": "f19031a4cc996da51b4cd112b9c8811c428547a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b764528c_a1957aa9",
         "filename": "ash/display/touch_calibrator_controller_unittest.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "f19031a4cc996da51b4cd112b9c8811c428547a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb6301f_fb9995f1",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-11-13T21:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b764528c_a1957aa9",
+      "revId": "f19031a4cc996da51b4cd112b9c8811c428547a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
