@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3f574b9e_b480da78",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_editor_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T10:53:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bee463d1_51bd5ad3",
+      "revId": "ca56c6b7d17e63c5610823aa33f24639cb568fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcc6101b_60a769e5",
         "filename": "ui/views/bubble/bubble_dialog_delegate_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "ca56c6b7d17e63c5610823aa33f24639cb568fc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489f6fc2_b80a0baa",
+        "filename": "ui/views/bubble/bubble_dialog_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T10:53:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcc6101b_60a769e5",
+      "revId": "ca56c6b7d17e63c5610823aa33f24639cb568fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "905c6155_56af8505",
+        "filename": "ui/views/cocoa/bridged_native_widget.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T10:53:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3ae12f8_edae29b4",
+      "revId": "ca56c6b7d17e63c5610823aa33f24639cb568fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fa1c051_4977b4b4",
         "filename": "ui/views/widget/native_widget_mac_unittest.mm",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-10T17:30:01Z",
       "side": 1,
       "message": "Can we have a test to see what buttons are inside group?",
+      "revId": "ca56c6b7d17e63c5610823aa33f24639cb568fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8695f2f_988a2591",
+        "filename": "ui/views/widget/native_widget_mac_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2086,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T10:53:04Z",
+      "side": 1,
+      "message": "\u003e Can we have a test to see what buttons are inside group?\n\nYeah - it\u0027s tricky! There\u0027s no public API to inspect a NSGroupTouchBarItem. However, our touch bar delegate happens to return nil should Cocoa ask for a button that isnt there - I\u0027ve added checks for that and some comments.",
+      "parentUuid": "8fa1c051_4977b4b4",
       "revId": "ca56c6b7d17e63c5610823aa33f24639cb568fc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "ca56c6b7d17e63c5610823aa33f24639cb568fc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a947d79_68e15895",
+        "filename": "ui/views/window/dialog_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T10:53:04Z",
+      "side": 1,
+      "message": "Done -\u003e \n\n  // Invoked when a dialog signals a model change. E.g., the enabled buttons, or\n  // the button titles.",
+      "parentUuid": "f561085c_594e18d0",
+      "revId": "ca56c6b7d17e63c5610823aa33f24639cb568fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
