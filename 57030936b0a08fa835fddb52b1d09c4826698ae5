@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c12d21c5_5374943e",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-13T21:28:54Z",
+      "side": 1,
+      "message": "I thought we talked about modifying task_ to be of type BridgeTask, and having this line look something like:\n\ntask_.Run(backend-\u003eGetTypedURLSyncBridge());",
+      "revId": "57030936b0a08fa835fddb52b1d09c4826698ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74fc8d7_bd5497d8",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-13T21:28:54Z",
+      "side": 1,
+      "message": "This doesn\u0027t work, the HistoryService* shouldn\u0027t be accessed on non-UI threads.",
+      "revId": "57030936b0a08fa835fddb52b1d09c4826698ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
