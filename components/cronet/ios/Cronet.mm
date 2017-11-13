@@ -16,6 +16,7 @@
 #include "base/synchronization/lock.h"
 #include "components/cronet/ios/accept_languages_table.h"
 #include "components/cronet/ios/cronet_environment.h"
+#include "components/cronet/ios/cronet_metrics.h"
 #include "components/cronet/url_request_context_config.h"
 #include "ios/net/crn_http_protocol_handler.h"
 #include "ios/net/empty_nsurlcache.h"
@@ -34,6 +35,7 @@ NSString* const CRNInvalidArgumentKey = @"CRNInvalidArgumentKey";
 namespace {
 
 class CronetHttpProtocolHandlerDelegate;
+class CronetMetricsDelegateAdapter;
 
 using QuicHintVector =
     std::vector<std::unique_ptr<cronet::URLRequestContextConfig::QuicHint>>;
@@ -45,6 +47,9 @@ base::LazyInstance<std::unique_ptr<cronet::CronetEnvironment>>::Leaky
 
 base::LazyInstance<std::unique_ptr<CronetHttpProtocolHandlerDelegate>>::Leaky
     gHttpProtocolHandlerDelegate = LAZY_INSTANCE_INITIALIZER;
+
+base::LazyInstance<std::unique_ptr<CronetMetricsDelegateAdapter>>::Leaky
+    gMetricsDelegateAdapter = LAZY_INSTANCE_INITIALIZER;
 
 // See [Cronet initialize] method to set the default values of the global
 // variables.
@@ -122,6 +127,77 @@ class CronetHttpProtocolHandlerDelegate
   scoped_refptr<net::URLRequestContextGetter> getter_;
   base::mac::ScopedBlock<RequestFilterBlock> filter_;
   base::Lock lock_;
+};
+
+// net::MetricsDelegate for Cronet.
+class CronetMetricsDelegateAdapter : public net::MetricsDelegate {
+ private:
+  NSDate* ticksToDate(const net::LoadTimingInfo& reference,
+                      base::TimeTicks ticks) {
+    return [NSDate
+        dateWithTimeIntervalSince1970:(reference.request_start_time +
+                                       (ticks - reference.request_start))
+                                          .ToDoubleT()];
+  }
+
+ public:
+  void didFinishCollectingMetrics(NSURLRequest* request,
+                                  const net::LoadTimingInfo& load_timing_info) {
+    if (@available(iOS 10, *)) {
+      CronetMetrics* metrics = [[CronetMetrics alloc] init];
+
+      // where do these come from?
+      [metrics setRequest:request];
+      [metrics setResponse:nil];
+
+      // base::Time start_date = load_timing_info.request_start_time;
+      // base::TimeTicks start_ticks = load_timing_info.request_start;
+
+      [metrics setFetchStartDate:nil];  // ???
+
+      [metrics
+          setDomainLookupStartDate:ticksToDate(load_timing_info,
+                                               load_timing_info.connect_timing
+                                                   .dns_start)];
+      [metrics
+          setDomainLookupEndDate:ticksToDate(
+                                     load_timing_info,
+                                     load_timing_info.connect_timing.dns_end)];
+
+      [metrics setConnectStartDate:ticksToDate(load_timing_info,
+                                               load_timing_info.connect_timing
+                                                   .connect_start)];
+      [metrics setSecureConnectionStartDate:ticksToDate(
+                                                load_timing_info,
+                                                load_timing_info.connect_timing
+                                                    .ssl_start)];
+      [metrics
+          setSecureConnectionEndDate:ticksToDate(load_timing_info,
+                                                 load_timing_info.connect_timing
+                                                     .ssl_end)];
+      [metrics
+          setConnectEndDate:ticksToDate(
+                                load_timing_info,
+                                load_timing_info.connect_timing.connect_end)];
+
+      [metrics
+          setRequestStartDate:[NSDate dateWithTimeIntervalSince1970:
+                                          load_timing_info.request_start_time
+                                              .ToDoubleT()]];
+      [metrics setRequestEndDate:nil];     // ???
+      [metrics setResponseStartDate:nil];  // ???
+      [metrics setResponseEndDate:nil];    // ???
+
+      [metrics setNetworkProtocolName:nil];  // ???
+      [metrics setProxyConnection:nil];      // ???
+      //[metrics setReusedConnection:nil]; // ???
+      //[metrics setResourceFetchType:nil]; // ???
+
+      for (id<CronetMetricsDelegate> delegate in gMetricsDelegates) {
+        [delegate URLSession:nil task:nil didFinishCollectingMetrics:nil];
+      }
+    }
+  }
 };
 
 }  // namespace
@@ -331,8 +407,10 @@ class CronetHttpProtocolHandlerDelegate
   gHttpProtocolHandlerDelegate.Get().reset(
       new CronetHttpProtocolHandlerDelegate(
           gChromeNet.Get()->GetURLRequestContextGetter(), gRequestFilterBlock));
+  gMetricsDelegateAdapter.Get().reset(new CronetMetricsDelegateAdapter());
   net::HTTPProtocolHandlerDelegate::SetInstance(
       gHttpProtocolHandlerDelegate.Get().get());
+  net::MetricsDelegate::SetInstance(gMetricsDelegateAdapter.Get().get());
   gRequestFilterBlock = nil;
 }
 
@@ -506,6 +584,7 @@ class CronetHttpProtocolHandlerDelegate
   gPkpList.clear();
   gRequestFilterBlock = nil;
   gHttpProtocolHandlerDelegate.Get().reset(nullptr);
+  gMetricsDelegateAdapter.Get().reset(nullptr);
   gPreservedSharedURLCache = nil;
   gEnableTestCertVerifierForTesting = NO;
   gMockCertVerifier.reset(nullptr);
