@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4d0303b_bd7bb427",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-13T14:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6665b4a_ceae918f",
+      "revId": "1e8c6a2779ce73673c43587c408320f970790650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d59d14b_d82e5bef",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3b820bbc_81dc24d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-13T14:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d59d14b_d82e5bef",
+      "revId": "1e8c6a2779ce73673c43587c408320f970790650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15e2947c_4d4b5861",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "1e8c6a2779ce73673c43587c408320f970790650",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d6d3e5_b83389bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-13T14:47:15Z",
+      "side": 1,
+      "message": "Ok! done",
+      "parentUuid": "15e2947c_4d4b5861",
+      "revId": "1e8c6a2779ce73673c43587c408320f970790650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -98,6 +152,24 @@
       "writtenOn": "2017-11-07T16:40:55Z",
       "side": 1,
       "message": "It seems sort of heavy-weight to use an observer pattern to update an int. You could just call \"GetModifier\"?  :-)",
+      "revId": "1e8c6a2779ce73673c43587c408320f970790650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee828536_ec069996",
+        "filename": "ui/ozone/platform/wayland/wayland_pointer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-13T14:47:15Z",
+      "side": 1,
+      "message": "Ok. Let\u0027s use simple getters then.",
+      "parentUuid": "4bc8873a_bcc9af6d",
       "revId": "1e8c6a2779ce73673c43587c408320f970790650",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
