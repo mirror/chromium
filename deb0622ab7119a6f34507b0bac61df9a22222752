@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76eba4fd_0d538b58",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-13T18:46:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b844fec_0b119fa8",
+      "range": {
+        "startLine": 193,
+        "startChar": 7,
+        "endLine": 193,
+        "endChar": 32
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70bd53de_1b76e493",
         "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-13T09:56:10Z",
       "side": 1,
       "message": "Is this intended to be moved into the EventLogManager?",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 60
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d965720f_f8123582",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-13T18:46:39Z",
+      "side": 1,
+      "message": "I\u0027m not sure yet. The RtcEventLogManager is a singleton, while PeerConnectionTracker is associated with a given renderer, so we might prefer to keep it as-is. I think this is for upcoming CLs to explore.",
+      "parentUuid": "70bd53de_1b76e493",
       "range": {
         "startLine": 132,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "34a775ac_879cb4da",
+        "filename": "content/browser/webrtc/webrtc_internals.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-13T18:46:39Z",
+      "side": 1,
+      "message": "I\u0027d prefer to keep comments and names consistent. Wdys?",
+      "parentUuid": "3e847939_53f60ae2",
+      "range": {
+        "startLine": 156,
+        "startChar": 19,
+        "endLine": 156,
+        "endChar": 22
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b8d963a_60913843",
         "filename": "content/browser/webrtc/webrtc_rtc_event_log_manager.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-13T09:56:10Z",
       "side": 1,
       "message": "If we are neither logging to file nor uploading, the RtcEventLog shouldn\u0027t have an output object, should it? Isn\u0027t this satisfied automatically?",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cc9523_38658a99",
+        "filename": "content/browser/webrtc/webrtc_rtc_event_log_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-13T18:46:39Z",
+      "side": 1,
+      "message": "Files sometimes fail to be opened, or reach their maximum size.\nI\u0027ll add that to the TODO, to make it clearer that this is what I had meant.",
+      "parentUuid": "5b8d963a_60913843",
       "range": {
         "startLine": 94,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cc9ac0b8_576f3ea7",
+        "filename": "content/browser/webrtc/webrtc_rtc_event_log_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-13T18:46:39Z",
+      "side": 1,
+      "message": "Discussed offline.",
+      "parentUuid": "efb6e6c4_9836cc98",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 75
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a638b21_8edf7a41",
         "filename": "content/browser/webrtc/webrtc_rtc_event_log_manager.cc",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-13T09:56:10Z",
       "side": 1,
       "message": "double std::move?",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 74
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a65c118_6ed21269",
+        "filename": "content/browser/webrtc/webrtc_rtc_event_log_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-13T18:46:39Z",
+      "side": 1,
+      "message": "Oops :-)",
+      "parentUuid": "5a638b21_8edf7a41",
       "range": {
         "startLine": 131,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "bbba8819_17c46254",
+        "filename": "content/browser/webrtc/webrtc_rtc_event_log_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-13T18:46:39Z",
+      "side": 1,
+      "message": "Leftover from an earlier (local) revision, where |log_file.file_size| was also int, which is also why I have the now-useless cast of kUnlimitedFileSize to int.\nThanks for catching.",
+      "parentUuid": "3227aeea_e8d83d5d",
+      "range": {
+        "startLine": 169,
+        "startChar": 29,
+        "endLine": 169,
+        "endChar": 39
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1092597_4f629177",
         "filename": "content/browser/webrtc/webrtc_rtc_event_log_manager.h",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03362260_87fe4f61",
+        "filename": "content/browser/webrtc/webrtc_rtc_event_log_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-13T18:46:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1092597_4f629177",
+      "range": {
+        "startLine": 28,
+        "startChar": 21,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
