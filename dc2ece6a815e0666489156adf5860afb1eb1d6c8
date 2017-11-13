@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "49ecd1f3_d06995cf",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-13T23:03:16Z",
+      "side": 1,
+      "message": "\u0027?\u0027 are removed now. I believe the bitmap should never be null (even if ImageSkia.isNull() is true). And we don\u0027t need to use null to indicate clearing/removing wallpaper because we have dedicated methods to do that.\n\nIt was added earlier because I saw this CL https://codereview.chromium.org/2375313002. \u0027?\u0027 is still kept there to avoid crash.. anyways the SetWallpaper() method will be deleted soon.",
+      "parentUuid": "b5af8bfe_89a45959",
+      "revId": "dc2ece6a815e0666489156adf5860afb1eb1d6c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ea81d09_0215daed",
         "filename": "ash/public/interfaces/wallpaper.mojom",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c542b5b0_038178f3",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-13T23:03:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ea81d09_0215daed",
+      "revId": "dc2ece6a815e0666489156adf5860afb1eb1d6c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d851ab05_625ce07e",
         "filename": "chrome/browser/ui/ash/test_wallpaper_controller.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "dc2ece6a815e0666489156adf5860afb1eb1d6c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14fa9914_1f324241",
+        "filename": "chrome/browser/ui/ash/test_wallpaper_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-13T23:03:16Z",
+      "side": 1,
+      "message": "Done. Thanks for review!",
+      "parentUuid": "d851ab05_625ce07e",
+      "revId": "dc2ece6a815e0666489156adf5860afb1eb1d6c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
