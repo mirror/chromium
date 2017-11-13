@@ -22,7 +22,6 @@ ScriptPromiseResolver::ScriptPromiseResolver(ScriptState* script_state)
     state_ = kDetached;
     resolver_.Clear();
   }
-  probe::AsyncTaskScheduled(GetExecutionContext(), "Promise", this);
 }
 
 void ScriptPromiseResolver::Pause() {
@@ -42,7 +41,6 @@ void ScriptPromiseResolver::Detach() {
   resolver_.Clear();
   value_.Clear();
   keep_alive_.Clear();
-  probe::AsyncTaskCanceled(GetExecutionContext(), this);
 }
 
 void ScriptPromiseResolver::KeepAliveWhilePending() {
