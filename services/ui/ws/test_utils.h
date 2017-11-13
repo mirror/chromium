@@ -588,7 +588,7 @@ class TestWindowTreeBinding : public WindowTreeBinding {
  public:
   TestWindowTreeBinding(WindowTree* tree,
                         std::unique_ptr<TestWindowTreeClient> client =
-                            base::MakeUnique<TestWindowTreeClient>());
+                            std::make_unique<TestWindowTreeClient>());
   ~TestWindowTreeBinding() override;
 
   std::unique_ptr<TestWindowTreeClient> ReleaseClient() {

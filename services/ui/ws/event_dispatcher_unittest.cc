@@ -27,7 +27,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/events/event.h"
 
-using base::MakeUnique;
+using std::make_unique;
 
 namespace ui {
 namespace ws {
@@ -437,17 +437,17 @@ void EventDispatcherTest::SetUp() {
   testing::TestWithParam<bool>::SetUp();
 
   window_delegate_ =
-      base::MakeUnique<TestServerWindowDelegate>(host_frame_sink_manager());
+      std::make_unique<TestServerWindowDelegate>(host_frame_sink_manager());
   root_window_ =
-      base::MakeUnique<ServerWindow>(window_delegate_.get(), WindowId(1, 2));
+      std::make_unique<ServerWindow>(window_delegate_.get(), WindowId(1, 2));
   root_window_->set_is_activation_parent(true);
   window_delegate_->set_root_window(root_window_.get());
   root_window_->SetVisible(true);
 
   test_event_dispatcher_delegate_ =
-      base::MakeUnique<TestEventDispatcherDelegate>(this);
+      std::make_unique<TestEventDispatcherDelegate>(this);
   event_dispatcher_ =
-      base::MakeUnique<EventDispatcher>(test_event_dispatcher_delegate_.get());
+      std::make_unique<EventDispatcher>(test_event_dispatcher_delegate_.get());
   test_event_dispatcher_delegate_->set_root(root_window_.get());
 }
 
@@ -523,17 +523,17 @@ void EventDispatcherVizTargeterTest::SetUp() {
   testing::Test::SetUp();
 
   window_delegate_ =
-      base::MakeUnique<TestServerWindowDelegate>(host_frame_sink_manager());
+      std::make_unique<TestServerWindowDelegate>(host_frame_sink_manager());
   root_window_ =
-      base::MakeUnique<ServerWindow>(window_delegate_.get(), WindowId(1, 2));
+      std::make_unique<ServerWindow>(window_delegate_.get(), WindowId(1, 2));
   root_window_->set_is_activation_parent(true);
   window_delegate_->set_root_window(root_window_.get());
   root_window_->SetVisible(true);
 
   test_event_dispatcher_delegate_ =
-      base::MakeUnique<TestEventDispatcherDelegate>(this);
+      std::make_unique<TestEventDispatcherDelegate>(this);
   event_dispatcher_ =
-      base::MakeUnique<EventDispatcher>(test_event_dispatcher_delegate_.get());
+      std::make_unique<EventDispatcher>(test_event_dispatcher_delegate_.get());
   test_event_dispatcher_delegate_->set_root(root_window_.get());
 
   uint32_t handle_size = 100;
