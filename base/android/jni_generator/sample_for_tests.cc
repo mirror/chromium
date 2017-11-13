@@ -72,7 +72,7 @@ ScopedJavaLocalRef<jstring> CPPClass::ReturnAString(
 }
 
 // Static free functions declared and called directly from java.
-static jlong Init(JNIEnv* env,
+static jlong SampleForTests__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& caller,
                   const JavaParamRef<jstring>& param) {
   return 0;

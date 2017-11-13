@@ -306,7 +306,7 @@ void StartDownload(JNIEnv* env,
       base::Bind(&DuplicateCheckDone, url, original_url, j_tab_ref, origin));
 }
 
-static jlong Init(JNIEnv* env,
+static jlong OfflinePageDownloadBridge__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   const JavaParamRef<jobject>& j_profile) {
   content::BrowserContext* browser_context =

@@ -125,7 +125,7 @@ AndroidUiGestureTarget* AndroidUiGestureTarget::FromJavaObject(
       Java_AndroidUiGestureTarget_getNativeObject(env, obj));
 }
 
-static jlong Init(JNIEnv* env,
+static jlong AndroidUiGestureTarget__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   jfloat scale_factor,
                   jfloat scroll_ratio) {

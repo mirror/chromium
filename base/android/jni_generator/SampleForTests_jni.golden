@@ -101,16 +101,16 @@ namespace android {
 
 // Step 2: method stubs.
 
-static jlong Init(JNIEnv* env, const base::android::JavaParamRef<jobject>&
-    jcaller,
+static jlong SampleForTests__Init(JNIEnv* env, const
+    base::android::JavaParamRef<jobject>& jcaller,
     const base::android::JavaParamRef<jstring>& param);
 
 JNI_GENERATOR_EXPORT jlong
     Java_org_chromium_example_jni_1generator_SampleForTests_nativeInit(JNIEnv*
     env, jobject jcaller,
     jstring param) {
-  return Init(env, base::android::JavaParamRef<jobject>(env, jcaller),
-      base::android::JavaParamRef<jstring>(env, param));
+  return SampleForTests__Init(env, base::android::JavaParamRef<jobject>(env,
+      jcaller), base::android::JavaParamRef<jstring>(env, param));
 }
 
 JNI_GENERATOR_EXPORT void
