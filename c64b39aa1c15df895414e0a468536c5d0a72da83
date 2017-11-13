@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6c8f612_8c4414a6",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 2493,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-13T23:21:52Z",
+      "side": 1,
+      "message": "Does \"experimental_config \u003d\u003d stable_config\" work? I think it should since these are simple dictionaries. If it works, please use it. Thanks.",
+      "range": {
+        "startLine": 2493,
+        "startChar": 2,
+        "endLine": 2493,
+        "endChar": 8
+      },
+      "revId": "c64b39aa1c15df895414e0a468536c5d0a72da83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
