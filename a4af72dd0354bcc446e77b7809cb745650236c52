@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac16581d_a18cffe1",
+        "filename": "chrome/browser/ui/extensions/extension_enable_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-13T20:33:28Z",
+      "side": 1,
+      "message": "optional nit: Maybe combine the 3 if clauses with something like:\n\nbool abort_extension_enable_flow \u003d !extension || system-\u003e.... || extensions::util::...;\nif (abort_extension_enable_flow) {\n    delegate_-\u003eExtensionEnableFlowAborted(false);  // |delegate_| may delete us.\n    return;\n}",
+      "range": {
+        "startLine": 95,
+        "startChar": 14,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "a4af72dd0354bcc446e77b7809cb745650236c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a418c1_9324c244",
+        "filename": "chrome/browser/ui/extensions/extension_enable_flow_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-13T20:33:28Z",
+      "side": 1,
+      "message": "So without this change, the result would have been FINISHED, correct?",
+      "range": {
+        "startLine": 112,
+        "startChar": 28,
+        "endLine": 112,
+        "endChar": 35
+      },
+      "revId": "a4af72dd0354bcc446e77b7809cb745650236c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
