@@ -34,7 +34,7 @@ const WrapperTypeInfo V8TestInterfaceSecureContext::wrapperTypeInfo = {
     V8TestInterfaceSecureContext::domTemplate,
     V8TestInterfaceSecureContext::Trace,
     V8TestInterfaceSecureContext::TraceWrappers,
-    V8TestInterfaceSecureContext::preparePrototypeAndInterfaceObject,
+    V8TestInterfaceSecureContext::InstallConditionalFeaturesOnObject,
     "TestInterfaceSecureContext",
     nullptr,
     WrapperTypeInfo::kWrapperTypeObjectPrototype,
@@ -473,7 +473,12 @@ TestInterfaceSecureContext* NativeValueTraits<TestInterfaceSecureContext>::Nativ
   return nativeValue;
 }
 
-void V8TestInterfaceSecureContext::preparePrototypeAndInterfaceObject(v8::Local<v8::Context> context, const DOMWrapperWorld& world, v8::Local<v8::Object> prototypeObject, v8::Local<v8::Function> interfaceObject, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+void V8TestInterfaceSecureContext::InstallConditionalFeaturesOnObject(
+    v8::Local<v8::Context> context,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::Object> prototypeObject,
+    v8::Local<v8::Function> interfaceObject,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   v8::Isolate* isolate = context->GetIsolate();
   v8::Local<v8::Signature> signature = v8::Signature::New(isolate, interfaceTemplate);
   ExecutionContext* executionContext = ToExecutionContext(context);

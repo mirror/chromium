@@ -128,7 +128,7 @@ v8::Local<v8::Function> V8PerContextData::ConstructorForTypeSlowCase(
       prototype_object->SetAlignedPointerInInternalField(
           kV8PrototypeTypeIndex, const_cast<WrapperTypeInfo*>(type));
     }
-    type->PreparePrototypeAndInterfaceObject(current_context, world,
+    type->InstallConditionalFeaturesOnObject(current_context, world,
                                              prototype_object, interface_object,
                                              interface_template);
   }
