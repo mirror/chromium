@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4c69777_ff40cdf4",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-11-13T15:32:41Z",
+      "side": 1,
+      "message": "Expecting wrap around is a little dicey. We might want to use a signed type instead.",
+      "revId": "6a86aa218eb53c1fdcb03b159eea5c4f4355db3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1c9976_fbe74842",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-11-13T15:32:41Z",
+      "side": 1,
+      "message": "I like this check, thanks for adding it!",
+      "range": {
+        "startLine": 772,
+        "startChar": 18,
+        "endLine": 772,
+        "endChar": 34
+      },
+      "revId": "6a86aa218eb53c1fdcb03b159eea5c4f4355db3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
