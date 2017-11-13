@@ -203,34 +203,45 @@ bool BoxPaintInvalidator::ShouldFullyInvalidateBackgroundOnLayoutOverflowChange(
 
 bool BoxPaintInvalidator::ViewBackgroundShouldFullyInvalidate() const {
   DCHECK(box_.IsLayoutView());
+
+  const LayoutBox* document_background = nullptr;
+  Element* document_element = box_.GetDocument().documentElement();
+  if (document_element) {
+    const auto* document_layout = document_element->GetLayoutObject();
+    if (document_layout && document_layout->IsBox())
+      document_background = ToLayoutBox(document_layout);
+  }
+
+  // Similar to |ComputeBackgroundInvalidation|, we also need to check the
+  // document's background box for changes because the document's background
+  // is used by the LayoutView.
+  if (document_background &&
+      document_background->BackgroundChangedSinceLastPaintInvalidation()) {
+    return true;
+  }
+
   // Fixed attachment background is handled in LayoutView::layout().
   // TODO(wangxianzhu): Combine code for fixed-attachment background when we
   // enable rootLayerScrolling permanently.
   if (box_.StyleRef().HasEntirelyFixedBackground())
     return false;
 
-  // LayoutView's non-fixed-attachment background is positioned in the
-  // document element and needs to invalidate if the size changes.
-  // See: https://drafts.csswg.org/css-backgrounds-3/#root-background.
-  if (BackgroundGeometryDependsOnLayoutOverflowRect()) {
-    Element* document_element = box_.GetDocument().documentElement();
-    if (document_element) {
-      const auto* document_background = document_element->GetLayoutObject();
-      if (document_background && document_background->IsBox()) {
-        // TODO(pdr): Change this to use layout overflow instead of size because
-        // the background size actually depends on the layout overflow.
-        LayoutSize old_size = ToLayoutBox(document_background)->PreviousSize();
-        LayoutSize new_size = ToLayoutBox(document_background)->Size();
-        const auto& layers = box_.StyleRef().BackgroundLayers();
-        if (old_size.Width() != new_size.Width() &&
-            LayoutBox::MustInvalidateFillLayersPaintOnWidthChange(layers)) {
-          return true;
-        }
-        if (old_size.Height() != new_size.Height() &&
-            LayoutBox::MustInvalidateFillLayersPaintOnHeightChange(layers)) {
-          return true;
-        }
-      }
+  // LayoutView's non-fixed-attachment background is positioned in the document
+  // element and needs to invalidate if the size changes. See:
+  // https://drafts.csswg.org/css-backgrounds-3/#root-background.
+  if (BackgroundGeometryDependsOnLayoutOverflowRect() && document_background) {
+    // TODO(pdr): Change this to use layout overflow instead of size because the
+    // background size actually depends on the layout overflow.
+    LayoutSize old_size = document_background->PreviousSize();
+    LayoutSize new_size = document_background->Size();
+    const auto& layers = box_.StyleRef().BackgroundLayers();
+    if (old_size.Width() != new_size.Width() &&
+        LayoutBox::MustInvalidateFillLayersPaintOnWidthChange(layers)) {
+      return true;
+    }
+    if (old_size.Height() != new_size.Height() &&
+        LayoutBox::MustInvalidateFillLayersPaintOnHeightChange(layers)) {
+      return true;
     }
   }
   return false;
