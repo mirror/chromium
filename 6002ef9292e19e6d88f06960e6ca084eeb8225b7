@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "d40a8fa9_f3fd7513",
+        "filename": "ios/web_view/internal/web_view_web_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-13T23:07:19Z",
+      "side": 1,
+      "message": "I\u0027m ok either way too. I\u0027m fine with waiting on this CL until we have a need for the base class.",
+      "parentUuid": "fd060adc_a6684048",
+      "revId": "6002ef9292e19e6d88f06960e6ca084eeb8225b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8c21da3_1fefe2a6",
         "filename": "ios/web_view/internal/web_view_web_test.mm",
         "patchSetId": 2
