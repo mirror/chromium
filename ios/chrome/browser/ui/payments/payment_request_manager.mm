@@ -1034,10 +1034,10 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
     return;
   }
 
-  payments::PaymentAddress address =
+  payments::mojom::PaymentAddressPtr address =
       payments::data_util::GetPaymentAddressFromAutofillProfile(
           shippingAddress, coordinator.paymentRequest->GetApplicationLocale());
-  [_paymentRequestJsManager updateShippingAddress:address
+  [_paymentRequestJsManager updateShippingAddress:*address
                                 completionHandler:nil];
   [self setUnblockEventQueueTimer];
   [self setUpdateEventTimeoutTimer];
