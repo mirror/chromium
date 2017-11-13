@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "43451b79_534d3a26",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T08:29:35Z",
+      "side": 1,
+      "message": "I misunderstood that ScriptState makes v8::Context alive, but it does not actually.  Added another check to make it sure that the incumbent v8::Context is alive.",
+      "parentUuid": "5a007784_14406206",
+      "revId": "25616f23b6c4e7a14d193b99725c84e97b14ddbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afdc4505_ad6eb2f7",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-12T21:52:14Z",
       "side": 1,
       "message": "I\u0027m confused.\n\nDoes IsCallbackObjectCallable() mean \"!IsCallable(O) is true\"? It looks like IsCallbackObjectCallable() means\"IsCallable(O) is true\".",
+      "revId": "25616f23b6c4e7a14d193b99725c84e97b14ddbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd90782_6294e688",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T08:29:35Z",
+      "side": 1,
+      "message": "IsCallbackObjectCallable() returns if \"callback object\" is callable or not, it doesn\u0027t mean if \"object\" is callable or not.\n\nThe requirements of the spec are:\n\na) single operation callback interface\nb) provided object O is callable\n\nso, IsCallbackObjectCallable() returns true iff a) and b) are true.\n\nAdded a function comment to IsCallbackObjectCallable() in CallbackInterfaceBase.h.",
+      "parentUuid": "afdc4505_ad6eb2f7",
       "revId": "25616f23b6c4e7a14d193b99725c84e97b14ddbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5183f7b0_437e94d0",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T08:29:35Z",
+      "side": 1,
+      "message": "value-\u003eIsFunction() in C++ (without a negate operator) corresponds to \"!IsCallable(X)\" in the spec.\n\nIf you\u0027re confused with ! in the spec, read the following part of ECMAScript.  \"?\" and \"!\" are shorthand prefixes.  \"!\" is not a negate operator.\nhttps://tc39.github.io/ecma262/#sec-returnifabrupt-shorthands",
+      "parentUuid": "b654d407_7624f18b",
+      "revId": "25616f23b6c4e7a14d193b99725c84e97b14ddbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "004b9060_6d96db40",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-12T21:52:14Z",
       "side": 1,
       "message": "Should we move the if block out of the else statement of line 48?\n\nif (...) {\n  // step 9.1\n} else {\n  // step 9.2\n}\nif (!value-\u003eIsFunction()) {\n  // step 10\n}",
+      "revId": "25616f23b6c4e7a14d193b99725c84e97b14ddbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb076a32_63204f91",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T08:29:35Z",
+      "side": 1,
+      "message": "It\u0027s slower than the current style.  The current version checks O-\u003eIsCallable() only when the CallbackInterfaceBase is constructed.\n\nYour suggestion calls X-\u003eIsCallable() every time when callback-\u003eCall() is invoked.  It\u0027s a problem of \"construction time only\" vs \"every runtime\".\n\nMy understanding is that step 9.1 is much more common path than step 9.2, and we knew value-\u003eIsFunction() must be true in case of step 9.1.  So, step 10 is redundant (except for step 9.2 case).",
+      "parentUuid": "004b9060_6d96db40",
       "revId": "25616f23b6c4e7a14d193b99725c84e97b14ddbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "abe23cea_09925102",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T08:29:35Z",
+      "side": 1,
+      "message": "Prefix \"!\" is not a negate operator in ECMAScript.",
+      "parentUuid": "53a38161_aa266b75",
+      "revId": "25616f23b6c4e7a14d193b99725c84e97b14ddbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a142e0a_04fcf0fb",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-12T21:52:14Z",
       "side": 1,
       "message": "Shall we add a check that the IDL compiler supports only bool and void at the moment?",
+      "revId": "25616f23b6c4e7a14d193b99725c84e97b14ddbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2814d4_24574688",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T08:29:35Z",
+      "side": 1,
+      "message": "The following line doesn\u0027t compile if the type is neither of void nor boolean.  So we see a compile error at least.\n\nDo you want a more-friendly error message?",
+      "parentUuid": "3a142e0a_04fcf0fb",
       "revId": "25616f23b6c4e7a14d193b99725c84e97b14ddbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
