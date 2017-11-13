@@ -8,7 +8,6 @@
 
 #include <memory>
 
-#include "base/memory/ptr_util.h"
 #include "components/signin/core/browser/account_reconcilor.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
@@ -78,7 +77,7 @@ class FakeAccountConsistencyService : public AccountConsistencyService {
 class MockAccountReconcilor : public AccountReconcilor {
  public:
   MockAccountReconcilor(SigninClient* client)
-      : AccountReconcilor(nullptr, nullptr, client, nullptr, false) {}
+      : AccountReconcilor(nullptr, nullptr, client, nullptr) {}
   MOCK_METHOD1(OnReceivedManageAccountsResponse, void(signin::GAIAServiceType));
 };
 
@@ -150,7 +149,10 @@ class AccountConsistencyServiceTest : public PlatformTest {
     cookie_settings_ =
         new content_settings::CookieSettings(settings_map_.get(), &prefs_, "");
     account_reconcilor_ =
-        base::MakeUnique<MockAccountReconcilor>(signin_client_.get());
+        std::make_unique<MockAccountReconcilor>(signin_client_.get());
+    account_reconcilor_->SetDelegate(
+        std::make_unique<signin::MirrorAccountReconcilorDelegate>(
+            account_reconcilor_.get(), signin_manager_.get()));
     ResetAccountConsistencyService();
   }
 
