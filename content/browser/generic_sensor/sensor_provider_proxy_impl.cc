@@ -16,6 +16,25 @@
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 
+namespace {
+
+bool IsExtraSensorClass(device::mojom::SensorType type) {
+  switch (type) {
+    case device::mojom::SensorType::ACCELEROMETER:
+    case device::mojom::SensorType::LINEAR_ACCELERATION:
+    case device::mojom::SensorType::GYROSCOPE:
+    case device::mojom::SensorType::ABSOLUTE_ORIENTATION_EULER_ANGLES:
+    case device::mojom::SensorType::ABSOLUTE_ORIENTATION_QUATERNION:
+    case device::mojom::SensorType::RELATIVE_ORIENTATION_EULER_ANGLES:
+    case device::mojom::SensorType::RELATIVE_ORIENTATION_QUATERNION:
+      return false;
+    default:
+      return true;
+  }
+}
+
+}  // namespace
+
 namespace content {
 
 SensorProviderProxyImpl::SensorProviderProxyImpl(
@@ -57,6 +76,9 @@ void SensorProviderProxyImpl::GetSensor(
 
 bool SensorProviderProxyImpl::CheckPermission(
     device::mojom::SensorType type) const {
+  if (!IsExtraSensorClass(type))
+    return true;
+
   content::WebContents* web_contents =
       content::WebContents::FromRenderFrameHost(render_frame_host_);
   if (!web_contents)

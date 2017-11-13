@@ -107,6 +107,8 @@ class Sensor : public EventTargetWithInlineData,
   void NotifyActivated();
   void NotifyError(DOMException* error);
 
+  bool IsSameSecurityOriginAsMainFrame(Document*) const;
+
  private:
   SensorOptions sensor_options_;
   device::mojom::blink::SensorType type_;
