@@ -6,8 +6,6 @@
 
 #include <utility>
 
-#include "base/bind.h"
-#include "base/bind_helpers.h"
 #include "platform/scheduler/base/task_queue_manager_delegate_for_test.h"
 
 namespace blink {
@@ -57,16 +55,6 @@ bool SchedulerTqmDelegateForTest::PostNonNestableDelayedTask(
 bool SchedulerTqmDelegateForTest::RunsTasksInCurrentSequence() const {
   return task_runner_->RunsTasksInCurrentSequence();
 }
-
-bool SchedulerTqmDelegateForTest::IsNested() const {
-  return task_runner_->IsNested();
-}
-
-void SchedulerTqmDelegateForTest::AddNestingObserver(
-    base::RunLoop::NestingObserver* observer) {}
-
-void SchedulerTqmDelegateForTest::RemoveNestingObserver(
-    base::RunLoop::NestingObserver* observer) {}
 
 base::TimeTicks SchedulerTqmDelegateForTest::NowTicks() {
   return task_runner_->NowTicks();

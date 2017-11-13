@@ -64,7 +64,7 @@ TaskQueueManager::TaskQueueManager(
   // TODO(alexclarke): Change this to be a parameter that's passed in.
   RegisterTimeDomain(real_time_domain_.get());
 
-  delegate_->AddNestingObserver(this);
+  base::RunLoop::AddNestingObserverOnCurrentThread(this);
 }
 
 TaskQueueManager::~TaskQueueManager() {
@@ -84,7 +84,7 @@ TaskQueueManager::~TaskQueueManager() {
 
   selector_.SetTaskQueueSelectorObserver(nullptr);
 
-  delegate_->RemoveNestingObserver(this);
+  base::RunLoop::RemoveNestingObserverOnCurrentThread(this);
 }
 
 TaskQueueManager::AnyThread::AnyThread()
@@ -284,7 +284,7 @@ void TaskQueueManager::DoWork(bool delayed) {
                delayed);
 
   LazyNow lazy_now(real_time_domain()->CreateLazyNow());
-  bool is_nested = delegate_->IsNested();
+  bool is_nested = base::RunLoop::IsNestedOnCurrentThread();
 
   // This must be done before running any tasks because they could invoke a
   // nested run loop and we risk having a stale |next_delayed_do_work_|.
@@ -304,7 +304,8 @@ void TaskQueueManager::DoWork(bool delayed) {
           DCHECK_GE(any_thread().immediate_do_work_posted_count, 0);
         }
       }
-      DCHECK_EQ(any_thread().is_nested, delegate_->IsNested());
+      DCHECK_EQ(any_thread().is_nested,
+                base::RunLoop::IsNestedOnCurrentThread());
       std::swap(queues_to_reload, any_thread().has_incoming_immediate_work);
     }
 
@@ -355,7 +356,7 @@ void TaskQueueManager::DoWork(bool delayed) {
     any_thread().do_work_running_count--;
     DCHECK_GE(any_thread().do_work_running_count, 0);
 
-    DCHECK_EQ(any_thread().is_nested, delegate_->IsNested());
+    DCHECK_EQ(any_thread().is_nested, base::RunLoop::IsNestedOnCurrentThread());
 
     PostDoWorkContinuationLocked(next_delay, &lazy_now, std::move(lock));
   }
@@ -505,7 +506,7 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
       observer.WillProcessTask(pending_task);
     queue->NotifyWillProcessTask(pending_task);
 
-    bool notify_time_observers = !delegate_->IsNested() &&
+    bool notify_time_observers = !base::RunLoop::IsNestedOnCurrentThread() &&
                                  (task_time_observers_.might_have_observers() ||
                                   queue->RequiresTaskTiming());
     if (notify_time_observers) {

@@ -7,7 +7,6 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
-#include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/time/tick_clock.h"
 #include "platform/PlatformExport.h"
@@ -20,17 +19,6 @@ class PLATFORM_EXPORT TaskQueueManagerDelegate
       public base::TickClock {
  public:
   TaskQueueManagerDelegate() {}
-
-  // Returns true if the task runner is nested (i.e., running a run loop within
-  // a nested task).
-  virtual bool IsNested() const = 0;
-
-  // A NestingObserver is notified when a nested run loop begins. The
-  // observers are notified before the first task is processed.
-  virtual void AddNestingObserver(base::RunLoop::NestingObserver* observer) = 0;
-
-  virtual void RemoveNestingObserver(
-      base::RunLoop::NestingObserver* observer) = 0;
 
  protected:
   ~TaskQueueManagerDelegate() override {}

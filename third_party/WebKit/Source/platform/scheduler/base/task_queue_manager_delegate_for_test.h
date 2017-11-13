@@ -9,7 +9,6 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
-#include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/time/tick_clock.h"
 #include "platform/scheduler/base/task_queue_manager_delegate.h"
@@ -31,11 +30,6 @@ class TaskQueueManagerDelegateForTest : public TaskQueueManagerDelegate {
                                   base::OnceClosure task,
                                   base::TimeDelta delay) override;
   bool RunsTasksInCurrentSequence() const override;
-
-  // TaskQueueManagerDelegate:
-  bool IsNested() const override;
-  void AddNestingObserver(base::RunLoop::NestingObserver* observer) override;
-  void RemoveNestingObserver(base::RunLoop::NestingObserver* observer) override;
 
   // TickClock:
   base::TimeTicks NowTicks() override;

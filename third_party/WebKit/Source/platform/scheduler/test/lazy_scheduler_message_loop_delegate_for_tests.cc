@@ -87,22 +87,6 @@ bool LazySchedulerMessageLoopDelegateForTests::RunsTasksInCurrentSequence()
   return thread_id_ == base::PlatformThread::CurrentId();
 }
 
-bool LazySchedulerMessageLoopDelegateForTests::IsNested() const {
-  DCHECK(RunsTasksInCurrentSequence());
-  EnsureMessageLoop();
-  return base::RunLoop::IsNestedOnCurrentThread();
-}
-
-void LazySchedulerMessageLoopDelegateForTests::AddNestingObserver(
-    base::RunLoop::NestingObserver* observer) {
-  base::RunLoop::AddNestingObserverOnCurrentThread(observer);
-}
-
-void LazySchedulerMessageLoopDelegateForTests::RemoveNestingObserver(
-    base::RunLoop::NestingObserver* observer) {
-  base::RunLoop::RemoveNestingObserverOnCurrentThread(observer);
-}
-
 base::TimeTicks LazySchedulerMessageLoopDelegateForTests::NowTicks() {
   return time_source_->NowTicks();
 }
