@@ -16,6 +16,23 @@
       "revId": "8bcdd2a17c7d4c31dfd35f43eca33a4e9ff71fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c26ea0_7d34c588",
+        "filename": "tools/perf/page_sets/wasm_realworld_perf.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-13T21:37:57Z",
+      "side": 1,
+      "message": "These arbitrary wait time is bad, as they can caused unexpected failure as the device change. Can you wait for certain event instead? e.g: wait for some element to be available",
+      "revId": "8bcdd2a17c7d4c31dfd35f43eca33a4e9ff71fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
