@@ -124,7 +124,7 @@ class SyncInternalsMessageHandlerTest : public ::testing::Test {
             base::Unretained(this))));
   }
 
-  std::unique_ptr<DictionaryValue> ConstructAboutInformation(
+  std::unique_ptr<DictionaryValue> ConstructAboutInformation_DEPRECATED(
       SyncService* service,
       version_info::Channel channel) {
     ++about_sync_data_delegate_call_count_;
