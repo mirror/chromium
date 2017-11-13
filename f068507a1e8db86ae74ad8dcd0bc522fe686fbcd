@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3204015d_3bf63f5d",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-13T23:10:51Z",
+      "side": 1,
+      "message": "frame_sink_id_ might be invalid, right? You should only send resizeparams if it\u0027s valid.",
+      "revId": "f068507a1e8db86ae74ad8dcd0bc522fe686fbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
