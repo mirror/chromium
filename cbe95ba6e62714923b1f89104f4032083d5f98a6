@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ec17421_98674e6c",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-13T18:35:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44f74bf9_7eb52714",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55611bd1_077a316e",
         "filename": "pdf/out_of_process_instance.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d8739bc9_82b3a6a4",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-13T18:35:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55611bd1_077a316e",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75149c9a_46e8ae09",
         "filename": "pdf/out_of_process_instance.cc",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e98f85_e487010f",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1306,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-13T18:35:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75149c9a_46e8ae09",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "397e5868_ed951e43",
+        "filename": "pdf/pdf_engine.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-13T18:35:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57e016f4_a43d2d2d",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4127094b_0c8ee48d",
         "filename": "pdf/pdf_engine.cc",
         "patchSetId": 9
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "02badec6_242ba70d",
+        "filename": "pdf/pdf_engine.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-13T18:35:18Z",
+      "side": 1,
+      "message": "git cl format is removing it",
+      "parentUuid": "4127094b_0c8ee48d",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a03f551_4387d916",
         "filename": "pdf/pdf_engine.cc",
         "patchSetId": 9
@@ -107,6 +203,24 @@
       "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08292c9d_a0e14727",
+        "filename": "pdf/pdf_engine.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-13T18:35:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a03f551_4387d916",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "aabe5374_a999a322",
+        "filename": "pdf/pdf_engine.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-13T18:35:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be666fd3_329ab85e",
+      "range": {
+        "startLine": 97,
+        "startChar": 42,
+        "endLine": 97,
+        "endChar": 64
+      },
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ef7d2a4_91549a68",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 9
@@ -144,6 +282,24 @@
       "writtenOn": "2017-11-13T14:52:26Z",
       "side": 1,
       "message": "std::vector\u003cint\u003e formerly_visible_pages;\nstd::swap(visible_pages_, formerly_visible_pages);\n\nI think is a bit clearer then the move?",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c05a088_df936e41",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3105,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-13T18:35:18Z",
+      "side": 1,
+      "message": "I don\u0027t know, move seems better to me since we\u0027re not interested in moving formerly_visible_pages into visible_pages_.",
+      "parentUuid": "9ef7d2a4_91549a68",
       "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -164,6 +320,24 @@
       "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc377c04_6e7bc863",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3118,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-13T18:35:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71170cba_68b6106b",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +364,30 @@
     },
     {
       "key": {
+        "uuid": "88e08da7_f109ad8b",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-13T18:35:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b837cec_8a0efb13",
+      "range": {
+        "startLine": 569,
+        "startChar": 0,
+        "endLine": 570,
+        "endChar": 24
+      },
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a38196c2_6bec5d66",
         "filename": "pdf/pdfium/pdfium_page.cc",
         "patchSetId": 9
@@ -207,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "9e24aa7e_1b3d7881",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-13T18:35:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a38196c2_6bec5d66",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3d37722_2bbf4ac9",
         "filename": "pdf/pdfium/pdfium_page.cc",
         "patchSetId": 9
@@ -221,6 +437,24 @@
       "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c44255c6_db2ef47b",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-13T18:35:18Z",
+      "side": 1,
+      "message": "The page_features_ will be uninitialized and the called checked that. Now we\u0027re returning a nullptr, which is a cleaner way to say \"couldn\u0027t get PageFeatures\".",
+      "parentUuid": "a3d37722_2bbf4ac9",
+      "revId": "cbe95ba6e62714923b1f89104f4032083d5f98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
