@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7868169f_b7a1a55f",
+        "filename": "gpu/command_buffer/client/client_transfer_cache.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-13T23:38:33Z",
+      "side": 1,
+      "message": "yup - makes sense. Done.",
+      "parentUuid": "7e9935b5_80df6cf9",
+      "revId": "c18c39decac9adee9ea9be458a4b011476feda9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b8115ef_79513e7c",
         "filename": "gpu/command_buffer/service/service_transfer_cache.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "c18c39decac9adee9ea9be458a4b011476feda9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e01b43_3d0465e2",
+        "filename": "gpu/command_buffer/service/service_transfer_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-13T23:38:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b8115ef_79513e7c",
+      "revId": "c18c39decac9adee9ea9be458a4b011476feda9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1f53be03_f9b6bb1b",
+        "filename": "gpu/command_buffer/service/service_transfer_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-13T23:38:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a671c186_8764b34d",
+      "revId": "c18c39decac9adee9ea9be458a4b011476feda9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d122d4ab_9256e789",
         "filename": "gpu/command_buffer/service/service_transfer_cache.cc",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b9276cf5_c12b4871",
+        "filename": "gpu/command_buffer/service/service_transfer_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-13T23:38:33Z",
+      "side": 1,
+      "message": "Yeah, not sure why I didn\u0027t.",
+      "parentUuid": "d122d4ab_9256e789",
+      "revId": "c18c39decac9adee9ea9be458a4b011476feda9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64650c3a_47ca3841",
         "filename": "gpu/command_buffer/service/service_transfer_cache.cc",
         "patchSetId": 11
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-03T22:10:44Z",
       "side": 1,
       "message": "Is there any need to check for underflow here? What happens if a client double unlocks?",
+      "revId": "c18c39decac9adee9ea9be458a4b011476feda9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f9520b_324438ad",
+        "filename": "gpu/command_buffer/service/service_transfer_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-13T23:38:33Z",
+      "side": 1,
+      "message": "Hmm... I guess it\u0027s a leak - probably better to prevent this. Given that either side can mutate the handle, there\u0027s no way to prevent a malicious client from leaking memory (which is fine, they can already do this), but we can at least prevent an inadvertent double-unlock from leaking. I\u0027ve added a check to ServiceDiscardableHandle::Unlock.",
+      "parentUuid": "64650c3a_47ca3841",
       "revId": "c18c39decac9adee9ea9be458a4b011476feda9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
