@@ -6774,9 +6774,8 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
     begin_navigation_params.client_side_redirect_url =
         frame_->GetDocument().Url();
 
-  Send(new FrameHostMsg_BeginNavigation(
-      routing_id_, MakeCommonNavigationParams(info, load_flags),
-      begin_navigation_params));
+  GetFrameHost()->BeginNavigation(MakeCommonNavigationParams(info, load_flags),
+                                  begin_navigation_params);
 }
 
 void RenderFrameImpl::LoadDataURL(

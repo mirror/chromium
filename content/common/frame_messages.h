@@ -1585,12 +1585,6 @@ IPC_MESSAGE_ROUTED4(FrameHostMsg_DidLoadResourceFromMemoryCache,
 IPC_MESSAGE_ROUTED1(FrameHostMsg_DidBlockFramebust, GURL /* url */)
 
 // PlzNavigate
-// Tells the browser to perform a navigation.
-IPC_MESSAGE_ROUTED2(FrameHostMsg_BeginNavigation,
-                    content::CommonNavigationParams,
-                    content::BeginNavigationParams)
-
-// PlzNavigate
 // Tells the browser to abort an ongoing renderer-initiated navigation. This is
 // used when the page calls document.open.
 IPC_MESSAGE_ROUTED0(FrameHostMsg_AbortNavigation)

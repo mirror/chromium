@@ -274,6 +274,12 @@ void TestRenderFrameHost::SimulateNavigationStop() {
   }
 }
 
+void TestRenderFrameHost::SimulateBeginNavigation(
+    const CommonNavigationParams& common_params,
+    const BeginNavigationParams& begin_params) {
+  BeginNavigation(common_params, begin_params);
+}
+
 void TestRenderFrameHost::SetContentsMimeType(const std::string& mime_type) {
   contents_mime_type_ = mime_type;
 }

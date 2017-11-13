@@ -14,6 +14,8 @@
 #include "content/public/browser/reload_type.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/referrer.h"
+#include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/interface_ptr.h"
 #include "net/base/host_port_pair.h"
 #include "ui/base/page_transition_types.h"
 
