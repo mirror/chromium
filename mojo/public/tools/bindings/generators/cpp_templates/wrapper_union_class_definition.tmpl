@@ -18,12 +18,20 @@ void {{union.name}}::set_{{field.name}}(
 {%-   if field.kind|is_object_kind or
            field.kind|is_any_handle_or_interface_kind %}
   if (tag_ == Tag::{{field.name|upper}}) {
+{%-     if field.kind|is_interface_kind %}
+    *(data_.{{field.name}}) = {{field.name}}.PassInterface();
+{%-     else %}
     *(data_.{{field.name}}) = std::move({{field.name}});
+{%-     endif %}
   } else {
     DestroyActive();
     tag_ = Tag::{{field.name|upper}};
     data_.{{field.name}} = new {{field.kind|cpp_wrapper_type}}(
+{%-     if field.kind|is_interface_kind %}
+        {{field.name}}.PassInterface());
+{%-     else %}
         std::move({{field.name}}));
+{%-     endif %}
   }
 {%-   else %}
   if (tag_ != Tag::{{field.name|upper}}) {

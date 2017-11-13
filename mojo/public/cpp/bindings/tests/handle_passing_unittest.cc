@@ -100,8 +100,10 @@ class SampleFactoryImpl : public sample::Factory {
     sample::ResponsePtr response(sample::Response::New(2, std::move(pipe0)));
     callback.Run(std::move(response), text1);
 
-    if (request->obj)
-      request->obj->DoSomething();
+    if (request->obj) {
+      imported::ImportedInterfacePtr proxy(std::move(request->obj));
+      proxy->DoSomething();
+    }
   }
 
   void DoStuff2(ScopedDataPipeConsumerHandle pipe,
@@ -284,32 +286,6 @@ TEST_P(HandlePassingTest, DataPipe) {
 
   EXPECT_TRUE(got_response);
   EXPECT_EQ(expected_text_reply, got_text_reply);
-}
-
-TEST_P(HandlePassingTest, PipesAreClosed) {
-  sample::FactoryPtr factory;
-  SampleFactoryImpl factory_impl(MakeRequest(&factory));
-
-  MessagePipe extra_pipe;
-
-  MojoHandle handle0_value = extra_pipe.handle0.get().value();
-  MojoHandle handle1_value = extra_pipe.handle1.get().value();
-
-  {
-    std::vector<ScopedMessagePipeHandle> pipes(2);
-    pipes[0] = std::move(extra_pipe.handle0);
-    pipes[1] = std::move(extra_pipe.handle1);
-
-    sample::RequestPtr request(sample::Request::New());
-    request->more_pipes = std::move(pipes);
-
-    factory->DoStuff(std::move(request), ScopedMessagePipeHandle(),
-                     sample::Factory::DoStuffCallback());
-  }
-
-  // We expect the pipes to have been closed.
-  EXPECT_EQ(MOJO_RESULT_INVALID_ARGUMENT, MojoClose(handle0_value));
-  EXPECT_EQ(MOJO_RESULT_INVALID_ARGUMENT, MojoClose(handle1_value));
 }
 
 TEST_P(HandlePassingTest, CreateNamedObject) {

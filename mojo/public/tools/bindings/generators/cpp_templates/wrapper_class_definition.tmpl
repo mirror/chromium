@@ -10,7 +10,11 @@
 {%-    set name = field.name %}
     {% if loop.first %}:{% else %} {% endif %} {{name}}(
 {%-    if is_parameter -%}
+{%-      if field.kind|is_interface_kind -%}
+{{name}}_in.PassInterface()
+{%-      else -%}
 std::move({{name}}_in)
+{%-      endif -%}
 {%-    else -%}
 {{ field|default_value }}
 {%-    endif -%}
