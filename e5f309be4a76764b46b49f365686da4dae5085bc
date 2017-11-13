@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59ff5841_443cc0a9",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-13T14:35:55Z",
+      "side": 1,
+      "message": "Note: Following three methods are re-implementation of the corresponding methods in MockTest by Fake.",
+      "revId": "e5f309be4a76764b46b49f365686da4dae5085bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04cb56f0_d5852166",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-13T14:35:55Z",
+      "side": 1,
+      "message": "note: lint fix and/or git cl format result. Ditto for below,",
+      "revId": "e5f309be4a76764b46b49f365686da4dae5085bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70eb5ffb_cc309ca8",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-13T14:35:55Z",
+      "side": 1,
+      "message": "Note: lint/git cl format fix, too.",
+      "revId": "e5f309be4a76764b46b49f365686da4dae5085bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
