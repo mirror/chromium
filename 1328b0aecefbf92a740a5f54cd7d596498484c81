@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9625352_34e49f69",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-11-13T16:15:14Z",
+      "side": 1,
+      "message": "Thanks, that was a brain fart on my side.",
+      "parentUuid": "46f0b3fc_d78ea2f5",
+      "revId": "1328b0aecefbf92a740a5f54cd7d596498484c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "223e7a32_35b8dce1",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-13T15:44:48Z",
       "side": 1,
       "message": "Nit: I feel like this dict can be folded into the one above, and the test case would still have the same coverage of edge cases. Besides, the current code looks like two tests in one method, which is fine but not ideal.",
+      "revId": "1328b0aecefbf92a740a5f54cd7d596498484c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1544a48_95538e32",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-11-13T16:15:14Z",
+      "side": 1,
+      "message": "The first calendar tests the \"no ecosystem-infra calendar entry for today\" edge case, whereas this one\u0027s testing the \"there\u0027s an ecosystem-infra calendar entry for today, but nobody is on rotation\" edge case. Folding both dicts will inevitably only test only the \"no ecosystam-infra calendar entry today\" case AFAICS.\n\nSo indeed there are two tests, but I thought it\u0027d be OK since we\u0027re conceptually adding checks for the same bug.",
+      "parentUuid": "223e7a32_35b8dce1",
       "revId": "1328b0aecefbf92a740a5f54cd7d596498484c81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
