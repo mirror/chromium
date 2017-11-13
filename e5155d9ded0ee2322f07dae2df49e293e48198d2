@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ea1afe35_6aabd530",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-13T18:26:43Z",
+      "side": 1,
+      "message": "Yes that\u0027s what I meant - the WebView should be responsible for updating its own zoom level when the accessibility setting changes.  One way to do this would be to add a method like WebView::SetAccessibilityFontScaleFactor, so that this line in RenderViewImpl\n\n  settings-\u003eSetAccessibilityFontScaleFactor(prefs.font_scale_factor);\n\nbecomes\n\n  web_view-\u003eSetAccessibilityFontScaleFactor(prefs.font_scale_factor);\n\nThen the call to SetZoomLevel happens inside WebViewImpl.\n\nAnother way is to hook Page::SettingsChanged with a new ChangeType (this is how the TextAutosizer watches the setting), but that might be unnecessarily complicated.",
+      "parentUuid": "90e9236d_39a0de42",
+      "revId": "e5155d9ded0ee2322f07dae2df49e293e48198d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2157b20b_5438488f",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 2
