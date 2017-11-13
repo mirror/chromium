@@ -52,7 +52,7 @@ WrapperTypeInfo V8TestInterface::wrapperTypeInfo = {
     V8TestInterface::domTemplate,
     V8TestInterface::Trace,
     V8TestInterface::TraceWrappers,
-    V8TestInterface::preparePrototypeAndInterfaceObject,
+    V8TestInterface::InstallConditionalFeaturesOnObject,
     "TestInterface",
     &V8TestInterfaceEmpty::wrapperTypeInfo,
     WrapperTypeInfo::kWrapperTypeObjectPrototype,
@@ -3668,7 +3668,13 @@ TestInterfaceImplementation* NativeValueTraits<TestInterfaceImplementation>::Nat
   return nativeValue;
 }
 
-void V8TestInterface::preparePrototypeAndInterfaceObject(v8::Local<v8::Context> context, const DOMWrapperWorld& world, v8::Local<v8::Object> prototypeObject, v8::Local<v8::Function> interfaceObject, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+void V8TestInterface::InstallConditionalFeaturesOnObject(
+    v8::Local<v8::Context> context,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::Object> instanceObject,
+    v8::Local<v8::Object> prototypeObject,
+    v8::Local<v8::Function> interfaceObject,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   v8::Isolate* isolate = context->GetIsolate();
   v8::Local<v8::Signature> signature = v8::Signature::New(isolate, interfaceTemplate);
   ExecutionContext* executionContext = ToExecutionContext(context);
@@ -3960,7 +3966,7 @@ void V8TestInterface::UpdateWrapperTypeInfo(
     InstallTemplateFunction install_template_function,
     InstallRuntimeEnabledFeaturesFunction install_runtime_enabled_features_function,
     InstallRuntimeEnabledFeaturesOnTemplateFunction install_runtime_enabled_features_on_template_function,
-    PreparePrototypeAndInterfaceObjectFunction prepare_prototype_and_interface_object_function) {
+    InstallConditionalFeaturesOnObjectFunction install_conditional_features_on_object_function) {
   V8TestInterface::installV8TestInterfaceTemplateFunction =
       install_template_function;
 
@@ -3968,9 +3974,9 @@ void V8TestInterface::UpdateWrapperTypeInfo(
   V8TestInterface::install_runtime_enabled_features_on_template_function_ =
       install_runtime_enabled_features_on_template_function;
 
-  if (prepare_prototype_and_interface_object_function) {
-    V8TestInterface::wrapperTypeInfo.prepare_prototype_and_interface_object_function =
-        prepare_prototype_and_interface_object_function;
+  if (install_conditional_features_on_object_function) {
+    V8TestInterface::wrapperTypeInfo.install_conditional_features_on_object_function =
+        install_conditional_features_on_object_function;
   }
 }
 

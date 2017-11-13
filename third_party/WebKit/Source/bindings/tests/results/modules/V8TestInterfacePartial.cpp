@@ -546,8 +546,15 @@ void V8TestInterfacePartial::installOriginTrialPartialFeature(ScriptState* scrip
   installOriginTrialPartialFeature(scriptState, v8::Local<v8::Object>());
 }
 
-void V8TestInterfacePartial::preparePrototypeAndInterfaceObject(v8::Local<v8::Context> context, const DOMWrapperWorld& world, v8::Local<v8::Object> prototypeObject, v8::Local<v8::Function> interfaceObject, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
-  V8TestInterface::preparePrototypeAndInterfaceObject(context, world, prototypeObject, interfaceObject, interfaceTemplate);
+void V8TestInterfacePartial::InstallConditionalFeaturesOnObject(
+    v8::Local<v8::Context> context,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::Object> instanceObject,
+    v8::Local<v8::Object> prototypeObject,
+    v8::Local<v8::Function> interfaceObject,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+  V8TestInterface::InstallConditionalFeaturesOnObject(
+      context, world, instanceObject, prototypeObject, interfaceObject, interfaceTemplate);
 
   v8::Isolate* isolate = context->GetIsolate();
 
@@ -567,7 +574,7 @@ void V8TestInterfacePartial::initialize() {
       &V8TestInterfacePartial::installV8TestInterfaceTemplate,
       nullptr,
       &V8TestInterfacePartial::InstallRuntimeEnabledFeaturesOnTemplate,
-      V8TestInterfacePartial::preparePrototypeAndInterfaceObject);
+      V8TestInterfacePartial::InstallConditionalFeaturesOnObject);
   V8TestInterface::registerVoidMethodPartialOverloadMethodForPartialInterface(&TestInterfaceImplementationPartialV8Internal::voidMethodPartialOverloadMethod);
   V8TestInterface::registerStaticVoidMethodPartialOverloadMethodForPartialInterface(&TestInterfaceImplementationPartialV8Internal::staticVoidMethodPartialOverloadMethod);
   V8TestInterface::registerPromiseMethodPartialOverloadMethodForPartialInterface(&TestInterfaceImplementationPartialV8Internal::promiseMethodPartialOverloadMethod);
