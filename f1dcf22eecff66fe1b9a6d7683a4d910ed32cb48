@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "17020e0e_c310656f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-13T19:54:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd1482ad_a50e43cd",
+      "revId": "f1dcf22eecff66fe1b9a6d7683a4d910ed32cb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b833698_ca107bb9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7768d097_3603c01c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-13T19:54:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b833698_ca107bb9",
+      "revId": "f1dcf22eecff66fe1b9a6d7683a4d910ed32cb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5d202e2_ec0523a8",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-13T04:42:19Z",
       "side": 1,
       "message": "Some fine ascii comments going on here :)",
+      "revId": "f1dcf22eecff66fe1b9a6d7683a4d910ed32cb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfedc4e1_81ac8559",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-13T19:54:02Z",
+      "side": 1,
+      "message": "Ascii art FTW!",
+      "parentUuid": "f5d202e2_ec0523a8",
       "revId": "f1dcf22eecff66fe1b9a6d7683a4d910ed32cb48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "40da6f02_1c43c861",
+        "filename": "media/gpu/vaapi_video_decode_accelerator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-13T19:54:02Z",
+      "side": 1,
+      "message": "\u003e Is this needed? Why don\u0027t you just call vda_.assign bla bla in the test?\nIt is needed because only VaapiVideoDecodeAcceleratorTest\nis a friend class of VaapiVideoDecodeAccelerator, whereas\nthe individual test cases are subclasses of this. IOW we\ncan\u0027t access private VaapiVideoDecodeAccelerator stuff\nfrom the individual test cases.\n\n\u003e \n\u003e Btw, how does this work? This guy is allocating native pixmaps IIRC.\n\nIt didn\u0027t so far - that\u0027s why the bot is red, because it\ncomplains Ozone platform is not initialized. I might need\nto mock the factory or some such.",
+      "parentUuid": "4a6d55db_3ca97e44",
+      "revId": "f1dcf22eecff66fe1b9a6d7683a4d910ed32cb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc21ecbe_5fee5a2d",
         "filename": "media/gpu/vaapi_video_decode_accelerator_unittest.cc",
         "patchSetId": 6
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "75ebcd94_c60ffc70",
+        "filename": "media/gpu/vaapi_video_decode_accelerator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-13T19:54:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc21ecbe_5fee5a2d",
+      "revId": "f1dcf22eecff66fe1b9a6d7683a4d910ed32cb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "253e40ff_edca2b97",
         "filename": "media/gpu/vaapi_video_decode_accelerator_unittest.cc",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "f1dcf22eecff66fe1b9a6d7683a4d910ed32cb48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "945e4b76_39f05d31",
+        "filename": "media/gpu/vaapi_video_decode_accelerator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-13T19:54:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "253e40ff_edca2b97",
+      "revId": "f1dcf22eecff66fe1b9a6d7683a4d910ed32cb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

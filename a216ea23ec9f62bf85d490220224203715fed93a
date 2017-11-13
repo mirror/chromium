@@ -22,6 +22,30 @@
       "revId": "a216ea23ec9f62bf85d490220224203715fed93a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c5d429f_e7b5e6e9",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-13T19:54:02Z",
+      "side": 1,
+      "message": "This is just another manifestation of how complicated it\nis to add unittests with static functions:\nhttps://cs.chromium.org/chromium/src/media/gpu/vaapi_video_decode_accelerator.cc?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d808\n\nI propose adding here a TODO() for creating and injecting\ninto VaapiVDA a VaapiPictureFactory.",
+      "parentUuid": "7e8a1fc1_154739f5",
+      "range": {
+        "startLine": 239,
+        "startChar": 6,
+        "endLine": 239,
+        "endChar": 36
+      },
+      "revId": "a216ea23ec9f62bf85d490220224203715fed93a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
