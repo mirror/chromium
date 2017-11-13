@@ -1265,7 +1265,7 @@ TEST_F(NavigationControllerTest, LoadURL_RedirectAbortDoesntShowPendingURL) {
   int entry_id = controller.GetPendingEntry()->GetUniqueID();
   main_test_rfh()->PrepareForCommit();
   main_test_rfh()->SendNavigate(entry_id, true, kExistingURL);
-  main_test_rfh()->OnMessageReceived(FrameHostMsg_DidStopLoading(0));
+  main_test_rfh()->OnMessageReceived(FrameHostMsg_DidStopLoading(0, false));
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
 
@@ -3617,7 +3617,7 @@ TEST_F(NavigationControllerTest, ShowBrowserURLAfterFailUntilModified) {
     params.showing_repost_interstitial = false;
     main_test_rfh()->OnMessageReceived(
         FrameHostMsg_DidFailProvisionalLoadWithError(0, params));
-    main_test_rfh()->OnMessageReceived(FrameHostMsg_DidStopLoading(0));
+    main_test_rfh()->OnMessageReceived(FrameHostMsg_DidStopLoading(0, false));
   }
   EXPECT_EQ(url, controller.GetVisibleEntry()->GetURL());
 

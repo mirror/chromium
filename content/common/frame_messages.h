@@ -1162,7 +1162,7 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_DidStartLoading,
                     bool /* to_different_document */)
 
 // Sent when the renderer is done loading a page.
-IPC_MESSAGE_ROUTED0(FrameHostMsg_DidStopLoading)
+IPC_MESSAGE_ROUTED1(FrameHostMsg_DidStopLoading, bool)
 
 // Notifies the browser that this frame has new session history information.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_UpdateState, content::PageState /* state */)

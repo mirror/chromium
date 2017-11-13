@@ -5449,7 +5449,7 @@ void RenderFrameImpl::DidStopLoading() {
   SendUpdateFaviconURL(icon_types_mask);
 
   render_view_->FrameDidStopLoading(frame_);
-  Send(new FrameHostMsg_DidStopLoading(routing_id_));
+  Send(new FrameHostMsg_DidStopLoading(routing_id_, false));
 }
 
 void RenderFrameImpl::DidChangeLoadProgress(double load_progress) {
@@ -5530,7 +5530,7 @@ void RenderFrameImpl::OnFailedNavigation(
   if (!ShouldDisplayErrorPageForFailedLoad(error_code, common_params.url)) {
     // The browser expects this frame to be loading an error page. Inform it
     // that the load stopped.
-    Send(new FrameHostMsg_DidStopLoading(routing_id_));
+    Send(new FrameHostMsg_DidStopLoading(routing_id_, false));
     browser_side_navigation_pending_ = false;
     browser_side_navigation_pending_url_ = GURL();
     return;
@@ -5547,7 +5547,7 @@ void RenderFrameImpl::OnFailedNavigation(
       // either, as the frame has already been populated with something
       // unrelated to this navigation failure. In that case, just send a stop
       // IPC to the browser to unwind its state, and leave the frame as-is.
-      Send(new FrameHostMsg_DidStopLoading(routing_id_));
+      Send(new FrameHostMsg_DidStopLoading(routing_id_, false));
     }
     browser_side_navigation_pending_ = false;
     browser_side_navigation_pending_url_ = GURL();
@@ -6538,7 +6538,7 @@ void RenderFrameImpl::NavigateInternal(
     // nonetheless. This behavior will go away with subframe navigation
     // entries.
     if (frame_ && !frame_->IsLoading() && !has_history_navigation_in_frame)
-      Send(new FrameHostMsg_DidStopLoading(routing_id_));
+      Send(new FrameHostMsg_DidStopLoading(routing_id_, true));
   }
 
   // In case LoadRequest failed before DidCreateDocumentLoader was called.
