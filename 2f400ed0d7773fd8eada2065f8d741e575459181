@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5000252e_3a677fa6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T23:31:53Z",
+      "side": 1,
+      "message": "The device motion/orientation events now use the the same backend as the generic sensors API. This broke these events in cross-origin iframes because of checks to prevent such usage in the generic sensors API.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 17
+      },
+      "revId": "2f400ed0d7773fd8eada2065f8d741e575459181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "027e37ed_bf37572d",
+        "filename": "content/browser/generic_sensor/sensor_provider_proxy_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T23:31:53Z",
+      "side": 1,
+      "message": "Doing this here effectively disables the permission check entirely. We should instead change SensorPermissionContext::GetPermissionStatusInternal() which unfortunately doesn\u0027t seem to give us the option to check the sensor type. Since the extra sensor classes are still behind a flag I think that\u0027s okay. We probably means we need to create separate permissions for different levels of sensor access or extend the PermissionContextBase interface to allow additional parameters to be passed to the subclass.",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "2f400ed0d7773fd8eada2065f8d741e575459181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
