@@ -12,6 +12,14 @@
 
 @synthesize viewControllerForAlert = _viewControllerForAlert;
 
+- (void)showToolsMenu {
+  [self showAlert:@"showToolsMenu"];
+}
+
+- (void)dismissToolsMenu {
+  [self showAlert:@"dismissToolsMenu"];
+}
+
 - (void)closeCurrentTab {
   [self showAlert:@"closeCurrentTab"];
 }
@@ -34,10 +42,6 @@
 
 - (void)bookmarkPage {
   [self showAlert:@"bookmarkPage"];
-}
-
-- (void)showToolsMenu {
-  [self showAlert:@"showToolsMenu"];
 }
 
 - (void)openNewTab:(OpenNewTabCommand*)newTabCommand {
