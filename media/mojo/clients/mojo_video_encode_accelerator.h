@@ -13,6 +13,7 @@
 #include "gpu/config/gpu_info.h"
 #include "media/mojo/interfaces/video_encode_accelerator.mojom.h"
 #include "media/video/video_encode_accelerator.h"
+#include "mojo/public/cpp/bindings/binding.h"
 
 namespace gfx {
 class Size;
@@ -55,6 +56,11 @@ class MojoVideoEncodeAccelerator : public VideoEncodeAccelerator {
   ~MojoVideoEncodeAccelerator() override;
 
   mojom::VideoEncodeAcceleratorPtr vea_;
+
+  // Constructed during Initialize().
+  std::unique_ptr<mojom::VideoEncodeAcceleratorClient> vea_client_;
+  std::unique_ptr<mojo::Binding<mojom::VideoEncodeAcceleratorClient>>
+      vea_client_binding_;
 
   const gpu::VideoEncodeAcceleratorSupportedProfiles supported_profiles_;
 
