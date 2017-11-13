@@ -174,6 +174,8 @@ class NET_EXPORT_PRIVATE SpdyHttpStream : public SpdyStream::Delegate,
 
   bool response_headers_complete_;
 
+  bool upload_stream_in_progress_;
+
   // We buffer the response body as it arrives asynchronously from the stream.
   SpdyReadQueue response_body_queue_;
 
