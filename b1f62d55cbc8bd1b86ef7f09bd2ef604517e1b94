@@ -22,6 +22,30 @@
       "revId": "b1f62d55cbc8bd1b86ef7f09bd2ef604517e1b94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d379597_076803cc",
+        "filename": "chrome/browser/engagement/important_sites_usage_counter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-13T23:45:13Z",
+      "side": 1,
+      "message": "Thanks for verifying. I did some more digging and changed it to REAL_IO_THREAD, which then necessitated another small change to make the threading work. Now the DCHECK fails if changed.",
+      "parentUuid": "046c4a35_7f5f0f20",
+      "range": {
+        "startLine": 30,
+        "startChar": 57,
+        "endLine": 30,
+        "endChar": 68
+      },
+      "revId": "b1f62d55cbc8bd1b86ef7f09bd2ef604517e1b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
