@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7da8e138_0de1396a",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-13T21:04:33Z",
+      "side": 1,
+      "message": "Working on https://bugs.chromium.org/p/chromium/issues/detail?id\u003d782813, replacing readback with drawing on a canvas for upremul-\u003epremul results in a significant perf regression (like 30%) on my local machine for cs.chromium.org/chromium/src/third_party/WebKit/PerformanceTests/Canvas/createImageBitmapFromImageData.html. I\u0027ll try to see if this is reproducible in a fiddle. If so, I\u0027ll talk to Brian to see if this is expected.",
+      "range": {
+        "startLine": 290,
+        "startChar": 0,
+        "endLine": 290,
+        "endChar": 76
+      },
+      "revId": "f587c90b01fe1a2bce6dcbfa598a58d0e756d34b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
