@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46f0b3fc_d78ea2f5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-13T15:44:48Z",
+      "side": 1,
+      "message": "Nit: could you make yesterday/today a formatted string (i.e. call `isoformat()` at the assignment) consistent with those in other tests?",
+      "revId": "1328b0aecefbf92a740a5f54cd7d596498484c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "223e7a32_35b8dce1",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-13T15:44:48Z",
+      "side": 1,
+      "message": "Nit: I feel like this dict can be folded into the one above, and the test case would still have the same coverage of edge cases. Besides, the current code looks like two tests in one method, which is fine but not ideal.",
+      "revId": "1328b0aecefbf92a740a5f54cd7d596498484c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
