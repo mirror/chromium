@@ -24,6 +24,12 @@ bool UnionTraits<{{mojom_type}}::DataView, {{mojom_type}}Ptr>::Read(
       *output = UnionType::New{{field.name|under_to_camel}}(
           input.Take{{name|under_to_camel}}());
 
+{%-   elif kind|is_interface_kind %}
+      *output = UnionType::New{{field.name|under_to_camel}}(
+          {{kind|get_qualified_name_for_kind}}Ptr(
+              input.Take{{name|under_to_camel}}<
+                  {{kind|cpp_wrapper_type(True)}}>()));
+
 {%-   elif kind|is_any_interface_kind %}
       *output = UnionType::New{{field.name|under_to_camel}}(
           input.Take{{name|under_to_camel}}<{{kind|cpp_wrapper_type(True)}}>());

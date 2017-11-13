@@ -320,13 +320,14 @@ class Generator(generator.Generator):
       "constant_value": self._ConstantValue,
       "contains_handles_or_interfaces": mojom.ContainsHandlesOrInterfaces,
       "contains_move_only_members": self._ContainsMoveOnlyMembers,
-      "cpp_wrapper_param_type": self._GetCppWrapperParamType,
       "cpp_data_view_type": self._GetCppDataViewType,
       "cpp_field_type": self._GetCppFieldType,
       "cpp_union_field_type": self._GetCppUnionFieldType,
       "cpp_pod_type": GetCppPodType,
       "cpp_union_getter_return_type": self._GetUnionGetterReturnType,
       "cpp_union_trait_getter_return_type": self._GetUnionTraitGetterReturnType,
+      "cpp_wrapper_call_type": self._GetCppWrapperCallType,
+      "cpp_wrapper_param_type": self._GetCppWrapperParamType,
       "cpp_wrapper_type": self._GetCppWrapperType,
       "default_value": self._DefaultValue,
       "expression_to_text": self._ExpressionToText,
@@ -346,6 +347,7 @@ class Generator(generator.Generator):
       "is_array_kind": mojom.IsArrayKind,
       "is_enum_kind": mojom.IsEnumKind,
       "is_integral_kind": mojom.IsIntegralKind,
+      "is_interface_kind": mojom.IsInterfaceKind,
       "is_native_only_kind": IsNativeOnlyKind,
       "is_any_handle_kind": mojom.IsAnyHandleKind,
       "is_any_interface_kind": mojom.IsAnyInterfaceKind,
@@ -540,7 +542,7 @@ class Generator(generator.Generator):
               kind.value_kind,
               add_same_module_namespaces=add_same_module_namespaces))
     if mojom.IsInterfaceKind(kind):
-      return "%sPtr" % self._GetNameForKind(
+      return "%sPtrInfo" % self._GetNameForKind(
           kind, add_same_module_namespaces=add_same_module_namespaces)
     if mojom.IsInterfaceRequestKind(kind):
       return "%sRequest" % self._GetNameForKind(
@@ -597,7 +599,18 @@ class Generator(generator.Generator):
     return ((not mojom.IsReferenceKind(kind)) or self._IsMoveOnlyKind(kind) or
         self._IsCopyablePassByValue(kind))
 
+  def _GetCppWrapperCallType(self, kind):
+    if mojom.IsInterfaceKind(kind):
+      return "%sPtr" % self._GetNameForKind(kind)
+    return self._GetCppWrapperType(kind)
+
   def _GetCppWrapperParamType(self, kind):
+    # TODO: We should consider whether or not to pass interface parameters as
+    # PtrInfo as well. It is probably technically better to do, but would
+    # require lots of code churn unless we also allow implicit conversion from
+    # Ptr to PtrInfo.
+    if mojom.IsInterfaceKind(kind):
+      return "%sPtr" % self._GetNameForKind(kind)
     cpp_wrapper_type = self._GetCppWrapperType(kind)
     return (cpp_wrapper_type if self._ShouldPassParamByValue(kind)
                              else "const %s&" % cpp_wrapper_type)
@@ -660,11 +673,10 @@ class Generator(generator.Generator):
     return self._GetCppWrapperType(kind, add_same_module_namespaces=True)
 
   def _MethodSupportsLazySerialization(self, method):
-    # TODO(crbug.com/753431,crbug.com/753433): Support lazy serialization for
-    # methods which pass associated handles and InterfacePtrs.
-    return self.support_lazy_serialization and (
-        not mojom.MethodPassesAssociatedKinds(method) and
-        not mojom.MethodPassesInterfaces(method))
+    # TODO(crbug.com/753433): Support lazy serialization for methods which pass
+    # associated handles.
+    return (self.support_lazy_serialization and
+        not mojom.MethodPassesAssociatedKinds(method))
 
   def _TranslateConstants(self, token, kind):
     if isinstance(token, mojom.NamedValue):
