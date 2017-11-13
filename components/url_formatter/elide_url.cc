@@ -57,6 +57,8 @@ base::string16 BuildPathFromComponents(
 // possible elided path, or an empty string if elision is not possible.
 // Warning: This is O(url_path_elements.size() ^ 2), so it should not be called
 // on a very large path.
+// TODO(mgiuca): Fix the O(N^2) behaviour (since we've removed the length
+// check).
 base::string16 ElideComponentizedPath(
     const base::string16& url_path_prefix,
     const std::vector<base::string16>& url_path_elements,
@@ -332,18 +334,6 @@ base::string16 ElideUrl(const GURL& url,
     --url_path_number_of_elements;
     url_filename =
         url_path_elements[url_path_number_of_elements - 1] + gfx::kForwardSlash;
-  }
-
-  const size_t kMaxNumberOfUrlPathElementsAllowed = 1024;
-  if (url_path_number_of_elements > kMaxNumberOfUrlPathElementsAllowed) {
-    // Too long of a path (ElideComponentizedPath is O(N^2) so this would result
-    // in degenerate behaviour). Just elide this as a text string.
-    // TODO(mgiuca): Fix ElideComponentizedPath to deal with degenerate cases
-    // itself, so we don't need this special case. We should not fall back on
-    // ElideText if we don't know the entire domain will fit, or else we might
-    // chop off the TLD. https://crbug.com/739975.
-    return gfx::ElideText(url_subdomain + url_domain + url_path_query_etc,
-                          font_list, available_pixel_width, gfx::ELIDE_TAIL);
   }
 
   // Start eliding the path and replacing elements by ".../".

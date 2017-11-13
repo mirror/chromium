@@ -32,6 +32,13 @@ struct Testcase {
   const std::string output;
 };
 
+std::string ReplicateString(const std::string& str, int num_copies) {
+  std::string result;
+  for (int i = 0; i < num_copies; ++i)
+    result += str;
+  return result;
+}
+
 struct ProgressiveTestcase {
   const std::string input;
   const std::vector<std::string> output;
@@ -326,6 +333,12 @@ TEST(TextEliderTest, TestElisionSpecialCases) {
       {"http://www.google.com/foo?bar", "www.google.com/foo?bar"},
       {"http://www.google.com/foo?bar", "google.com/foo?bar"},
 
+      // URL with multiple path segments.
+      {"http://www.google.com/foo/bar", "www.google.com/foo/bar"},
+      {"http://www.google.com/foo/bar", "google.com/foo/" + kEllipsisStr},
+      {"http://xyz.google.com/foo/bar", "xyz.google.com/foo/bar"},
+      {"http://xyz.google.com/foo/bar", kEllipsisStr + "google.com/foo/bar"},
+
       // URL with no path.
       {"http://xyz.google.com", kEllipsisStr + "google.com"},
       {"https://xyz.google.com", kEllipsisStr + "google.com"},
@@ -411,6 +424,21 @@ TEST(TextEliderTest, TestFileURLEliding) {
       {"file:///aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:/", "aaa" + kEllipsisStr},
   };
   RunElisionTest(testcases);
+}
+
+// Test eliding of URLs with very long paths.
+TEST(TextEliderTest, TestLongPathEliding) {
+  const std::string kEllipsisStr(gfx::kEllipsis);
+  const std::string very_long_url =
+      "http://www.example.com" + ReplicateString("/foo", 1023);
+  Testcase testcases[] = {
+      {very_long_url, "www.example.com" + ReplicateString("/foo", 1023)},
+      {very_long_url, "example.com/foo/foo/" + kEllipsisStr + "/foo"},
+      {very_long_url, "example.com" + ReplicateString("/foo", 200) + "/" +
+                          kEllipsisStr + "/foo"},
+  };
+
+  RunUrlTest(testcases, arraysize(testcases));
 }
 
 TEST(TextEliderTest, TestHostEliding) {
