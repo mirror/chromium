@@ -187,6 +187,8 @@ blink_core_sources("svg") {
     "SVGMaskElement.h",
     "SVGMatrixTearOff.cpp",
     "SVGMatrixTearOff.h",
+    "SVGMeshGradientElement.cpp",
+    "SVGMeshGradientElement.h",
     "SVGMetadataElement.cpp",
     "SVGMetadataElement.h",
     "SVGNumber.cpp",
