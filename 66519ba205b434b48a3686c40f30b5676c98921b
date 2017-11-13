@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5465576_916489b3",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T21:49:58Z",
+      "side": 1,
+      "message": "Do you want to use nullable annotation?",
+      "revId": "66519ba205b434b48a3686c40f30b5676c98921b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b11be8_6867702f",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T21:49:58Z",
+      "side": 1,
+      "message": "This deserves a separate file. Somewhere close to autofill_agent.h",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "66519ba205b434b48a3686c40f30b5676c98921b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35971e7_64d7faf9",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T21:49:58Z",
+      "side": 1,
+      "message": "Can we inject suggestions for specific (formName, fieldName, type, typedValue) tuples into this object? So that tuple will be the key and |suggestions| will be the value.\n\nThis way the test will actually test that arguments are correctly passed.",
+      "revId": "66519ba205b434b48a3686c40f30b5676c98921b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05828cc_b60ff9c4",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T21:49:58Z",
+      "side": 1,
+      "message": "Seems like this class is used to test interactions, not state. And this is fine, but OCMock works better for testing interactions, so it does not look like we need a class for this.",
+      "range": {
+        "startLine": 78,
+        "startChar": 11,
+        "endLine": 78,
+        "endChar": 34
+      },
+      "revId": "66519ba205b434b48a3686c40f30b5676c98921b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433bb4ae_18f65209",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T21:49:58Z",
+      "side": 1,
+      "message": "Please follow C++ Style Guide for the variable names (we_state_ for ivars and web_state for locals).",
+      "range": {
+        "startLine": 151,
+        "startChar": 37,
+        "endLine": 151,
+        "endChar": 46
+      },
+      "revId": "66519ba205b434b48a3686c40f30b5676c98921b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ab6b24_4b140fa7",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T21:49:58Z",
+      "side": 1,
+      "message": "Isn\u0027t this callback called asynchronously? Do we need to wait until it\u0027s actually called?",
+      "range": {
+        "startLine": 173,
+        "startChar": 22,
+        "endLine": 173,
+        "endChar": 33
+      },
+      "revId": "66519ba205b434b48a3686c40f30b5676c98921b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56b4099_65f28552",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T21:49:58Z",
+      "side": 1,
+      "message": "Can we have tests for clearFormWithName: and fillSuggestion: ?",
+      "revId": "66519ba205b434b48a3686c40f30b5676c98921b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
