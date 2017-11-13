@@ -16,6 +16,24 @@
       "revId": "6fd2b6766a80e1290933412d7373787f39d8f087",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe378f8e_2feee131",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-13T19:40:10Z",
+      "side": 1,
+      "message": "This makes it harder to explicitly test, but done.",
+      "parentUuid": "d6122bab_0423fdd6",
+      "revId": "6fd2b6766a80e1290933412d7373787f39d8f087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
