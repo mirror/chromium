@@ -3934,6 +3934,11 @@ interface LinearAccelerationSensor : Accelerometer
 interface Location
     attribute @@toStringTag
     method constructor
+interface Lock
+    attribute @@toStringTag
+    getter mode
+    getter scope
+    method constructor
 interface MIDIAccess : EventTarget
     attribute @@toStringTag
     getter inputs
@@ -9323,6 +9328,7 @@ interface webkitURL
     method releaseEvents
     method requestAnimationFrame
     method requestIdleCallback
+    method requestLock
     method resizeBy
     method resizeTo
     method scroll
