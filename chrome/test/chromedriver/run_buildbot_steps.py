@@ -31,6 +31,7 @@ GS_SERVER_LOGS_URL = GS_CHROMEDRIVER_DATA_BUCKET + '/server_logs'
 SERVER_LOGS_LINK = (
     'http://chromedriver-data.storage.googleapis.com/server_logs')
 TEST_LOG_FORMAT = '%s_log.json'
+CANARY_RELEASE_STRING = 'canary'
 
 SCRIPT_DIR = os.path.join(_THIS_DIR, os.pardir, os.pardir, os.pardir, os.pardir,
                           os.pardir, os.pardir, os.pardir, 'scripts')
@@ -276,6 +277,36 @@ def _MaybeRelease(platform):
       print 'Android tests have not run at a commit position as recent as', \
           commit_position
 
+def _ReleaseCanary(platform):
+  """Releases a release canary"""
+  assert platform != 'android'
+
+  version = _GetVersion()
+
+  # Fetch release candidates.
+  result, output = slave_utils.GSUtilListBucket(
+      '%s/chromedriver_%s_%s*' % (
+          GS_CONTINUOUS_URL, platform, version),
+      [])
+  assert result == 0 and output, 'No release candidates found'
+  candidate_pattern = re.compile(
+      r'.*/chromedriver_%s_%s\.(\d+)\.zip$' % (platform, version))
+  candidates = []
+  for line in output.strip().split('\n'):
+    result = candidate_pattern.match(line)
+    if not result:
+      print 'Ignored line "%s"' % line
+      continue
+    candidates.append(int(result.group(1)))
+
+  candidates.sort(reverse=True)
+  # release the latest commit
+  assert len(candidates) > 0
+  candidate = 'chromedriver_%s_%s.%s.zip' % (
+            platform, version, candidates[0])
+  _Release('%s/%s' % (GS_CONTINUOUS_URL, candidate), CANARY_RELEASE_STRING, \
+            platform)
+
 
 def _Release(build, version, platform):
   """Releases the given candidate build."""
@@ -294,8 +325,9 @@ def _Release(build, version, platform):
   slave_utils.GSUtilCopy(
       zip_path, '%s/%s/%s' % (GS_CHROMEDRIVER_BUCKET, version, release_name))
 
-  _MaybeUploadReleaseNotes(version)
-  _MaybeUpdateLatestRelease(version)
+  if version != CANARY_RELEASE_STRING:
+      _MaybeUploadReleaseNotes(version)
+      _MaybeUpdateLatestRelease(version)
 
 
 def _GetWebPageContent(url):
@@ -348,7 +380,6 @@ def _MaybeUploadReleaseNotes(version):
 
   if slave_utils.GSUtilCopy(temp_notes_fname, notes_url, mimetype='text/plain'):
     util.MarkBuildStepError()
-
 
 def _MaybeUpdateLatestRelease(version):
   """Update the file LATEST_RELEASE with the latest release version number."""
@@ -479,6 +510,7 @@ def main():
   elif passed:
     _ArchiveGoodBuild(platform, commit_position)
     _MaybeRelease(platform)
+    _ReleaseCanary(platform)
 
   if not passed:
     # Make sure the build is red if there is some uncaught exception during
