@@ -44,6 +44,9 @@ class ArcIntentHelperBridge
   // Returns factory for the ArcIntentHelperBridge.
   static KeyedServiceBaseFactory* GetFactory();
 
+  static std::string AppendStringToIntentHelperPackageName(
+      std::string to_append);
+
   ArcIntentHelperBridge(content::BrowserContext* context,
                         ArcBridgeService* bridge_service);
   ~ArcIntentHelperBridge() override;
