@@ -53,7 +53,8 @@ std::unique_ptr<KeyedService> CreateAutocompleteClassifier(
   Profile* profile = static_cast<Profile*>(context);
   return base::MakeUnique<AutocompleteClassifier>(
       base::WrapUnique(new AutocompleteController(
-          base::WrapUnique(new ChromeAutocompleteProviderClient(profile)),
+          base::WrapUnique(
+              new ChromeAutocompleteProviderClient(profile, nullptr)),
 
           nullptr, AutocompleteClassifier::DefaultOmniboxProviders())),
       std::unique_ptr<AutocompleteSchemeClassifier>(

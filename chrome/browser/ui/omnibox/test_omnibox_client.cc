@@ -8,7 +8,7 @@
 
 std::unique_ptr<AutocompleteProviderClient>
 TestOmniboxClient::CreateAutocompleteProviderClient() {
-  return base::MakeUnique<ChromeAutocompleteProviderClient>(&profile_);
+  return base::MakeUnique<ChromeAutocompleteProviderClient>(&profile_, nullptr);
 }
 
 const SessionID& TestOmniboxClient::GetSessionID() const {
