@@ -1008,11 +1008,6 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
   return layers;
 }
 
-- (void)reverseFadeAnimations {
-  ReverseAnimationsForKeyForLayers(kOmniboxFadeAnimationKey,
-                                   [self fadeAnimationLayers]);
-}
-
 - (void)cleanUpFadeAnimations {
   RemoveAnimationForKeyFromLayers(kOmniboxFadeAnimationKey,
                                   [self fadeAnimationLayers]);
