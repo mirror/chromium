@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c197746_e9091396",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-13T19:02:24Z",
+      "side": 1,
+      "message": "This preserves the old, browsing-instance-unaware behavior for extensions.  I agree that this is icky.  I am trying to add UMAs (to see if we can restrict the ickyness) in https://crrev.com/c/766469",
+      "range": {
+        "startLine": 167,
+        "startChar": 18,
+        "endLine": 167,
+        "endChar": 21
+      },
+      "revId": "c09476e53cadf8514276081f76746231b13ed68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
