@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ce4017e_e319e7ad",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-13T23:24:15Z",
+      "side": 1,
+      "message": "I think this needs a comment explaining how it differs from LocalHitTest.",
+      "revId": "5e18e2e23fc9a29c50245569c739b6ae67e3cf86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
