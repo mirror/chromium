@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "480b19e4_f699020c",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-13T21:14:41Z",
+      "side": 1,
+      "message": "It wasn\u0027t really copied from anywhere, it\u0027s meant to document that if we\u0027re doing this new thing here our mode_ has to be READ_WRITE, so one can draw some conclusions about what the code below would do --- namely that one of the blocks in line 1148  or 1156 will run.\n\nThat the DCHECK holds follows from MaybeRejectBasedOnEntryInMemoryData requiring mode_ to be READ_WRITE --- note that you need to be looking at the latest revision to see it, this one doesn\u0027t have it.",
+      "parentUuid": "aa01de46_55ac6988",
+      "range": {
+        "startLine": 1140,
+        "startChar": 14,
+        "endLine": 1140,
+        "endChar": 19
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2f1f467_33da2e2c",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 11
