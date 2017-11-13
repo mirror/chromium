@@ -566,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "edec450f_4605de1c",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 2851,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T17:38:38Z",
+      "side": 1,
+      "message": "Actually we should not use dispatch_async at all in Chromium code. I agree that we should not mix WebThread with dispatch_async, and because using WebThread is unavoidable, it means that we should use WebThread everywhere.",
+      "parentUuid": "f1c14d13_be8f5659",
+      "range": {
+        "startLine": 2851,
+        "startChar": 19,
+        "endLine": 2851,
+        "endChar": 42
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcbb9fdd_d4463118",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 22
