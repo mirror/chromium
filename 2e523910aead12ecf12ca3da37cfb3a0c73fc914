@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c982fb37_e224f147",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-13T04:22:09Z",
+      "side": 1,
+      "message": "Looks like we\u0027re losing all the benefits of anon namespace :(\n\nlgtm % abbreviated namespace name feels a bit uncommon. Should we just use, say, service_worker_constants (or service_worker_internals to be more generic) for all these constants?",
+      "revId": "2e523910aead12ecf12ca3da37cfb3a0c73fc914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
