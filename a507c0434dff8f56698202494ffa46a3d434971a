@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f622fbd_81fa5d86",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T23:29:05Z",
+      "side": 0,
+      "message": "Remove line 219 since serialized buffer no longer contains report id.",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 222,
+        "endChar": 56
+      },
+      "revId": "a507c0434dff8f56698202494ffa46a3d434971a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3acf0c1f_fa4db283",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-13T23:29:05Z",
+      "side": 0,
+      "message": "Remove line 261 for the same reason as above.",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 35
+      },
+      "revId": "a507c0434dff8f56698202494ffa46a3d434971a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
