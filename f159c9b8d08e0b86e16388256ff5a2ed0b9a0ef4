@@ -16,6 +16,24 @@
       "revId": "f159c9b8d08e0b86e16388256ff5a2ed0b9a0ef4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdd631d_97e0a345",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-13T02:19:08Z",
+      "side": 1,
+      "message": "Done and Thanks!",
+      "parentUuid": "fd8f2765_944e631f",
+      "revId": "f159c9b8d08e0b86e16388256ff5a2ed0b9a0ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
