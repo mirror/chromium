@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aca72eaa_da16fe4f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-13T15:53:09Z",
+      "side": 1,
+      "message": "looks like your other CL bled into this. There\u0027s a few differnet workflows you can use to avoid this:\n1. git cl upload HEAD^ (assumes you only work on one commit per issue). This will only upload the last commit\n2. New topic branches: git checkout -tb foo2. If you upload based on another local/topic branch it\u0027ll only upload the diff. If you want to do this retroactively you can do: git branch -u \u003cparent\u003e to set a new parent",
+      "range": {
+        "startLine": 292,
+        "startChar": 8,
+        "endLine": 292,
+        "endChar": 30
+      },
+      "revId": "2019cb37151734299390c53d14d3d5f9a568f94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b5c96d1_6768b215",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-13T15:53:09Z",
+      "side": 1,
+      "message": "I\u0027d like to keep this out Tab - it already has WebappTabDelegate which I think should provide the hooks we need or be extended as necessary. It seems like it ought to be sufficient that when you construct the InterceptionDelegate for the CustomTab, you seed it with enough state such that it can get back to the souce WebappActivity.\n\n+Peter for thoughts on how to approach this.",
+      "revId": "2019cb37151734299390c53d14d3d5f9a568f94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
