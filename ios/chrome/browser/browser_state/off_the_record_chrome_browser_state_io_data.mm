@@ -23,7 +23,10 @@
 #include "ios/chrome/browser/net/ios_chrome_network_delegate.h"
 #include "ios/chrome/browser/net/ios_chrome_url_request_context_getter.h"
 #include "ios/chrome/browser/pref_names.h"
+#import "ios/net/cookies/ns_http_system_cookie_store.h"
+#import "ios/web/net/cookies/wk_cookie_util.h"
 #include "ios/web/public/web_thread.h"
+
 #include "net/cookies/cookie_store.h"
 #include "net/disk_cache/disk_cache.h"
 #include "net/extras/sqlite/sqlite_channel_id_store.h"
@@ -101,6 +104,9 @@ OffTheRecordChromeBrowserStateIOData::Handle::CreateMainRequestContextGetter(
     ProtocolHandlerMap* protocol_handlers) const {
   DCHECK_CURRENTLY_ON(web::WebThread::UI);
   LazyInitialize();
+  if (@available(iOS 11, *)) {
+    wk_cookie_store_ = web::WKCookieStoreForBrowserState(browser_state_);
+  }
   DCHECK(!main_request_context_getter_.get());
   main_request_context_getter_ =
       IOSChromeURLRequestContextGetter::Create(io_data_, protocol_handlers);
@@ -121,7 +127,6 @@ void OffTheRecordChromeBrowserStateIOData::Handle::LazyInitialize() const {
   // below try to get the ResourceContext pointer.
   initialized_ = true;
   io_data_->InitializeOnUIThread(browser_state_);
-
   // Once initialized, listen to memory warnings.
   CFNotificationCenterAddObserver(
       CFNotificationCenterGetLocalCenter(), this, &OnMemoryWarningReceived,
@@ -193,12 +198,13 @@ void OffTheRecordChromeBrowserStateIOData::InitializeInternal(
       new net::DefaultChannelIDStore(channel_id_store.get()));
   set_channel_id_service(channel_id_service);
   main_context->set_channel_id_service(channel_id_service);
-
-  main_cookie_store_ =
-      cookie_util::CreateCookieStore(cookie_util::CookieStoreConfig(
+  // This is happening in IO Thread
+  main_cookie_store_ = cookie_util::CreateCookieStore(
+      cookie_util::CookieStoreConfig(
           cookie_path_,
           cookie_util::CookieStoreConfig::RESTORED_SESSION_COOKIES,
-          cookie_util::CookieStoreConfig::COOKIE_STORE_IOS, nullptr));
+          cookie_util::CookieStoreConfig::COOKIE_STORE_IOS, nullptr),
+      base::MakeUnique<net::NSHTTPSystemCookieStore>());
   main_context->set_cookie_store(main_cookie_store_.get());
   main_cookie_store_->SetChannelIDServiceID(channel_id_service->GetUniqueID());
 

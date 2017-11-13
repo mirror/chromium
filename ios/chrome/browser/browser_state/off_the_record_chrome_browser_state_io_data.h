@@ -15,6 +15,12 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state_io_data.h"
 #include "ios/chrome/browser/net/net_types.h"
 
+#if __OBJC__
+@class WKHTTPCookieStore;
+#else
+typedef void WKHTTPCookieStore;
+#endif
+
 class IOSChromeURLRequestContextGetter;
 
 namespace ios {
@@ -79,6 +85,10 @@ class OffTheRecordChromeBrowserStateIOData : public ChromeBrowserStateIOData {
     OffTheRecordChromeBrowserStateIOData* const io_data_;
 
     ios::ChromeBrowserState* const browser_state_;
+
+    // A pointer to hold WKHTTPCookieStore set by UI Thread from Browser state,
+    // and used by IO Thread when creating the cookieStoreIOS instance.
+    API_AVAILABLE(ios(11.0)) mutable WKHTTPCookieStore* wk_cookie_store_;
 
     mutable bool initialized_;
 
