@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69728a8b_e684f714",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-13T21:38:06Z",
+      "side": 1,
+      "message": "good point. I haven\u0027t think about the case that we call SetVisibleImmediately while we are animating to be visible. I think it probably make sense to respect SetVisibleImmediately which should sets the opacity to opacity_when_visible() immediately but don\u0027t reset the set_visible_time_ (similar to call SetVisible while animating wont reset the set_visible_time_). WDYT? If it sounds good to you, I will make the change and add a unit test.",
+      "parentUuid": "b4dc73c7_c7cdc31e",
+      "revId": "18c4bdcd7208fa4cd804370e1e7de986c31221e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "049071ca_4f40e9f7",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-13T18:58:44Z",
       "side": 1,
       "message": "I\u0027ve chatted with Chris about the idea of a target-value-specific duration. I\u0027m not suggesting we introduce that in this change, but I think we should keep an eye out for this sort of asymmetric pattern and if it keeps cropping up, we should generalize.",
+      "revId": "18c4bdcd7208fa4cd804370e1e7de986c31221e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c2879c_3a00187b",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-13T21:38:06Z",
+      "side": 1,
+      "message": "Created crbug.com/784565 according to my understanding.",
+      "parentUuid": "049071ca_4f40e9f7",
       "revId": "18c4bdcd7208fa4cd804370e1e7de986c31221e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
