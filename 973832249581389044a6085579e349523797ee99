@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "779f0454_9e6c3009",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-13T04:21:59Z",
+      "side": 1,
+      "message": "Nit: it\u0027s a bit unclear that this returns something, which makes calling code hard to understand. Can you rename this to RestoreOldSettingAndReturnCurrent, or something that makes using code more clear?",
+      "revId": "973832249581389044a6085579e349523797ee99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e85e4a_18622885",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-13T04:21:59Z",
+      "side": 1,
+      "message": "Nit: The above comment applies to this as well. At the very least this needs a comment to explain what it is returning, but better would be a name that makes it obvious.",
+      "revId": "973832249581389044a6085579e349523797ee99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df54e281_56ec9416",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-13T04:21:59Z",
+      "side": 1,
+      "message": "Nit: maybe rephrase as \u0027firing the DSE changed event now should not do anything\u0027",
+      "revId": "973832249581389044a6085579e349523797ee99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f293f8d_dbf48a6b",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-13T04:21:59Z",
+      "side": 1,
+      "message": "Would it be more useful here to test ReinitializeService? That is, test the policy being enabled then disabled while chrome isn\u0027t running. The above test tests it while chrome is running.\n\nAs I\u0027m unsure if the policy can be changed while Chrome is running, or if it can whether the DSE changed notifications would go through, I think testing policy being enabled / disabled while Chrome isn\u0027t running / without the events happening is important.",
+      "revId": "973832249581389044a6085579e349523797ee99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
