@@ -7,6 +7,7 @@
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/vr/elements/rect.h"
 #include "chrome/browser/vr/model/model.h"
+#include "chrome/browser/vr/test/animation_utils.h"
 #include "chrome/browser/vr/test/constants.h"
 #include "chrome/browser/vr/test/fake_ui_element_renderer.h"
 #include "chrome/browser/vr/ui.h"
@@ -107,10 +108,7 @@ void UiSceneManagerTest::VerifyElementsVisible(
 
 bool UiSceneManagerTest::VerifyVisibility(const std::set<UiElementName>& names,
                                           bool visible) const {
-  for (auto& elem : scene_->root_element()) {
-    elem.UpdateComputedOpacity();
-  }
-  scene_->root_element().UpdateWorldSpaceTransformRecursive();
+  OnBeginFrame();
   for (auto name : names) {
     SCOPED_TRACE(name);
     auto* element = scene_->GetUiElementByName(name);
@@ -121,6 +119,21 @@ bool UiSceneManagerTest::VerifyVisibility(const std::set<UiElementName>& names,
     if (!element || (visible && element->draw_phase() == kPhaseNone)) {
       return false;
     }
+  }
+  return true;
+}
+
+bool UiSceneManagerTest::VerifyIsAnimating(
+    const std::set<UiElementName>& names,
+    const std::vector<TargetProperty>& properties,
+    bool animating) const {
+  OnBeginFrame();
+  for (auto name : names) {
+    auto* element = scene_->GetUiElementByName(name);
+    EXPECT_NE(nullptr, element);
+    SCOPED_TRACE(element->DebugName());
+    if (IsAnimating(element, properties) != animating)
+      return false;
   }
   return true;
 }
@@ -143,10 +156,7 @@ int UiSceneManagerTest::NumVisibleChildren(UiElementName name) const {
 bool UiSceneManagerTest::VerifyRequiresLayout(
     const std::set<UiElementName>& names,
     bool requires_layout) const {
-  for (auto& elem : scene_->root_element()) {
-    elem.UpdateComputedOpacity();
-  }
-  scene_->root_element().UpdateWorldSpaceTransformRecursive();
+  OnBeginFrame();
   for (auto name : names) {
     SCOPED_TRACE(name);
     auto* element = scene_->GetUiElementByName(name);
