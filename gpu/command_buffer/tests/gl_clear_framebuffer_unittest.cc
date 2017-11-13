@@ -30,16 +30,8 @@ class GLClearFramebufferTest : public testing::TestWithParam<bool> {
 
  protected:
   void SetUp() override {
-    if (GetParam()) {
-      // Force the glClear() workaround so we can test it here.
-      GpuDriverBugWorkarounds workarounds;
-      workarounds.gl_clear_broken = true;
-      gl_.InitializeWithWorkarounds(GLManager::Options(), workarounds);
-      DCHECK(gl_.workarounds().gl_clear_broken);
-    } else {
-      gl_.Initialize(GLManager::Options());
-      DCHECK(!gl_.workarounds().gl_clear_broken);
-    }
+    GLManager::Options options;
+    gl_.Initialize(options);
   }
 
   bool IsApplicable() {
