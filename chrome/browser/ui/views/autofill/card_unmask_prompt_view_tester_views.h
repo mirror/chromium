@@ -19,6 +19,7 @@ class CardUnmaskPromptViewTesterViews : public CardUnmaskPromptViewTester {
   ~CardUnmaskPromptViewTesterViews() override;
 
   void Close() override;
+  void EnterCVCAndAccept() override;
 
  private:
   CardUnmaskPromptViews* view_;

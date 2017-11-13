@@ -4,7 +4,9 @@
 
 #include "chrome/browser/ui/views/autofill/card_unmask_prompt_view_tester_views.h"
 
+#include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/ui/views/autofill/card_unmask_prompt_views.h"
+#include "ui/views/controls/textfield/textfield.h"
 
 namespace autofill {
 
@@ -27,6 +29,11 @@ CardUnmaskPromptViewTesterViews::~CardUnmaskPromptViewTesterViews() {
 
 void CardUnmaskPromptViewTesterViews::Close() {
   view_->ClosePrompt();
+}
+
+void CardUnmaskPromptViewTesterViews::EnterCVCAndAccept() {
+  view_->cvc_input_->SetText(base::ASCIIToUTF16("123"));
+  view_->Accept();
 }
 
 }  // namespace autofill
