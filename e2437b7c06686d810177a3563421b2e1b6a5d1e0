@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4494c1c3_afe2ec13",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-13T23:11:05Z",
+      "side": 1,
+      "message": "Should there be a DCHECK() here too? Or can there be a race condition where and extension is deleted while GetProvidingExtensionInfo is inflight?",
+      "range": {
+        "startLine": 330,
+        "startChar": 4,
+        "endLine": 332,
+        "endChar": 3
+      },
+      "revId": "e2437b7c06686d810177a3563421b2e1b6a5d1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
