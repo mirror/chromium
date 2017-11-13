@@ -114,6 +114,29 @@
       "revId": "0bb72ada08ffa490cb78d862b1361129b9e0ed02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc25fdde_e1c5afe4",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2501,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-11-13T23:58:12Z",
+      "side": 1,
+      "message": "could you add a case where IME cursor update should not be ignored?",
+      "range": {
+        "startLine": 2501,
+        "startChar": 7,
+        "endLine": 2501,
+        "endChar": 68
+      },
+      "revId": "0bb72ada08ffa490cb78d862b1361129b9e0ed02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
