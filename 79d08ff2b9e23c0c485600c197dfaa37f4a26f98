@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf052019_3ccb2af8",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T18:04:27Z",
+      "side": 1,
+      "message": "cannot do that because the constructor is intentionally private. i can do a couple things if you feel strongly:\n1) make the constructor public and comment that it should not be used in favor of this CreateFromConfig method\n2) make the constructor public and have the constructor call this method privately\n\neither of those things seem a bit less clean to me but let me know what you think",
+      "parentUuid": "4a66f69f_3fa26239",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1035a8fa_ca35fefa",
         "filename": "components/previews/content/previews_optimization_guide_impl.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1798a8f_52dc17c9",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T18:04:27Z",
+      "side": 1,
+      "message": "The current intent is that the component will contain at most 100 hints, so probably not an issue.",
+      "parentUuid": "1035a8fa_ca35fefa",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "46c6a014_10ef98f2",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T18:04:27Z",
+      "side": 1,
+      "message": "added some comments instead. there\u0027s not really a good way to break things out (i.e. lots of param passing and things are tied to the hints object or the url matcher object) :/",
+      "parentUuid": "07a045c9_44c23908",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6eebe5e_dc5537bd",
         "filename": "components/previews/content/previews_optimization_guide_impl.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1503b5_9386bbd9",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T18:04:27Z",
+      "side": 1,
+      "message": "at some point, it is possible that we send multiple optimizations (i.e. client lofi blacklist + noscript whitelist) but this code only supports noscript so we don\u0027t need to keep looping through the rest.",
+      "parentUuid": "f6eebe5e_dc5537bd",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "0e0349da_adeee4b6",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T18:04:27Z",
+      "side": 1,
+      "message": "like doug said, we haven\u0027t defined the format to have prioritized ordering. it certainly is easy to do on the server but i\u0027ll leave the todo in here until we actually honor that contract.",
+      "parentUuid": "eca603bd_3861c8cc",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "070e0c32_c7030725",
         "filename": "components/previews/content/previews_optimization_guide_impl.cc",
         "patchSetId": 6
@@ -119,6 +209,24 @@
       "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5785bc_13cadfbe",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T18:04:27Z",
+      "side": 1,
+      "message": "im just going to remove the sequencechecker since the only thing that would be checking it is the static method for creating the hints.",
+      "parentUuid": "070e0c32_c7030725",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "83269cba_57334715",
+        "filename": "components/previews/content/previews_optimization_guide_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T18:04:27Z",
+      "side": 1,
+      "message": "Consolidated - i think it\u0027s probably fine to just consolidate since we probably won\u0027t have another previews optimization guide implementation for awhile.",
+      "parentUuid": "11f2f40a_54f3ad4d",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a441958_023478bb",
         "filename": "components/previews/content/previews_optimization_guide_impl.h",
         "patchSetId": 6
@@ -171,6 +297,24 @@
       "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3bf7677_02e31e12",
+        "filename": "components/previews/content/previews_optimization_guide_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T18:04:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a441958_023478bb",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "efffa416_43a803d6",
+        "filename": "components/previews/content/previews_optimization_guide_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T18:04:27Z",
+      "side": 1,
+      "message": "the issue here is that UpdateHints takes a unique ptr of Hints as a parameter so it needs the full declaration here.",
+      "parentUuid": "035be707_60cdca90",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21a55278_7c3aeb76",
         "filename": "components/previews/content/previews_ui_service.cc",
         "patchSetId": 6
@@ -202,6 +364,24 @@
       "writtenOn": "2017-11-10T23:59:20Z",
       "side": 1,
       "message": "If possible, would it be better to create the PreviewsOptOutGuide in the IO thread and pass the OptimizationGuide through instead?",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63627bfa_86a14d52",
+        "filename": "components/previews/content/previews_ui_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T18:04:27Z",
+      "side": 1,
+      "message": "It is possible to do, but I\u0027m not sure if it\u0027s significantly better and I don\u0027t really feel strongly one way or the other. \n\nThe one aspect where it is better though is probably the removal of the IO thread post task that would need to be done (OGService does a post task on the IO thread if the AddObserver call is not coming from the IO thread). This plumbing allows for slightly cleaner tests in other Previews code (i.e. PreviewsIOData).",
+      "parentUuid": "21a55278_7c3aeb76",
       "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
