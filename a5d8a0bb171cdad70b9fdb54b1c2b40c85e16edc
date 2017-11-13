@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "01e9819d_8c0bf823",
+        "filename": "content/browser/renderer_host/input/mouse_wheel_phase_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-11-13T22:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b83bd2d_ec7ef276",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 25
+      },
+      "revId": "a5d8a0bb171cdad70b9fdb54b1c2b40c85e16edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38a71399_4bc536fb",
         "filename": "content/browser/renderer_host/input/mouse_wheel_phase_handler.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-10T22:14:58Z",
       "side": 1,
       "message": "The fact that we have https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/page/scrolling/ScrollState.h makes this a bit confusing.\n\nI haven\u0027t thought of a particularly good name yet though...\nScrollProgressState?\nScrollPhaseState?",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 16
+      },
+      "revId": "a5d8a0bb171cdad70b9fdb54b1c2b40c85e16edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281b1d83_8a26683f",
+        "filename": "content/browser/renderer_host/input/mouse_wheel_phase_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-11-13T22:39:34Z",
+      "side": 1,
+      "message": "I changed it to ScrollPhaseState",
+      "parentUuid": "38a71399_4bc536fb",
       "range": {
         "startLine": 22,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "899690e1_c4eceac0",
+        "filename": "content/browser/renderer_host/render_widget_host_view_event_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-11-13T22:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "262aba3f_483c44ae",
+      "range": {
+        "startLine": 448,
+        "startChar": 22,
+        "endLine": 448,
+        "endChar": 26
+      },
+      "revId": "a5d8a0bb171cdad70b9fdb54b1c2b40c85e16edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0227534d_62227be6",
         "filename": "content/browser/renderer_host/render_widget_host_view_event_handler.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-10T22:14:58Z",
       "side": 1,
       "message": "Should we end the in progress sequence at this point?",
+      "range": {
+        "startLine": 449,
+        "startChar": 33,
+        "endLine": 449,
+        "endChar": 52
+      },
+      "revId": "a5d8a0bb171cdad70b9fdb54b1c2b40c85e16edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffdf804_3fea7ee9",
+        "filename": "content/browser/renderer_host/render_widget_host_view_event_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-11-13T22:39:34Z",
+      "side": 1,
+      "message": "yes, I think so, \nwe don\u0027t receive wheel events during the Fling. GFS (sometimes with zero velocity) shows the end of the scrolling sequence. On Mouse_wheel_event_queue when a GFS arrives we change the state of scrolling without sending any GSE events: needs_scroll_end \u003d false and needs_scroll_begin \u003d true",
+      "parentUuid": "0227534d_62227be6",
       "range": {
         "startLine": 449,
         "startChar": 33,
