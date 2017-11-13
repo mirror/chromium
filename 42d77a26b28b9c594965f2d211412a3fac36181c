@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6667b76d_4bffc7f4",
+        "filename": "components/feature_engagement/internal/android/java/src/org/chromium/components/feature_engagement/internal/TrackerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-13T18:53:46Z",
+      "side": 1,
+      "message": "Don\u0027t feel strongly, but you could assert mNativePtr \u003d\u003d 0; after the release call too.",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 9
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f42080_8fc260de",
+        "filename": "components/feature_engagement/internal/android/tracker_impl_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-13T18:53:46Z",
+      "side": 1,
+      "message": "Maybe I just missed it, but is this a common thing for ScopedJavaLocalRef\u003cjobject\u003e()?  If so, cool!",
+      "range": {
+        "startLine": 141,
+        "startChar": 11,
+        "endLine": 141,
+        "endChar": 18
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e119c488_ea197a3d",
+        "filename": "components/feature_engagement/internal/android/tracker_impl_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-13T18:53:46Z",
+      "side": 1,
+      "message": "Could also do lock_handle_android.release()-\u003eGetJavaObject();  Either way is fine.",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 50
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8968b5bf_4d7e1c2a",
+        "filename": "components/feature_engagement/internal/android/tracker_impl_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-13T18:53:46Z",
+      "side": 1,
+      "message": "Inline this I guess?",
+      "range": {
+        "startLine": 175,
+        "startChar": 16,
+        "endLine": 175,
+        "endChar": 52
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f43209e_ecf524aa",
+        "filename": "components/feature_engagement/internal/android/tracker_impl_android.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-13T18:53:46Z",
+      "side": 1,
+      "message": "Does this have to be in the header file?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "368aec89_035ee9aa",
+        "filename": "components/feature_engagement/internal/display_lock_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-13T18:53:46Z",
+      "side": 1,
+      "message": "DCHECK_EQ(0, outstanding_display_locks_.count(handle_id));?",
+      "range": {
+        "startLine": 30,
+        "startChar": 40,
+        "endLine": 30,
+        "endChar": 41
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c23142b_1b049af7",
+        "filename": "components/feature_engagement/internal/display_lock_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-13T18:53:46Z",
+      "side": 1,
+      "message": "BindOnce might make more sense?",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 16
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7992023_afb52503",
+        "filename": "components/feature_engagement/internal/display_lock_controller_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-13T18:53:46Z",
+      "side": 1,
+      "message": "Worth having this or just doing TEST instead of TEST_F?",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 35
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "842015cb_4ab299db",
+        "filename": "components/feature_engagement/internal/noop_display_lock_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-13T18:53:46Z",
+      "side": 1,
+      "message": "Might not need.  Don\u0027t know what the expected behavior is for basically empty test overrides though.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 35
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "961ade2b_7d171c55",
+        "filename": "components/feature_engagement/public/tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-13T18:53:46Z",
+      "side": 1,
+      "message": "base::Closure",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b5667a9_32c5adec",
+        "filename": "components/feature_engagement/public/tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-13T18:53:46Z",
+      "side": 1,
+      "message": "OnceCallback?",
+      "range": {
+        "startLine": 32,
+        "startChar": 29,
+        "endLine": 32,
+        "endChar": 44
+      },
+      "revId": "42d77a26b28b9c594965f2d211412a3fac36181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
