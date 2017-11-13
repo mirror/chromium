@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f403488b_cf208667",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-11-13T12:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f0f87ec_c915fb9c",
+      "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b15b783_dfb0148b",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
         "patchSetId": 1
@@ -68,6 +86,24 @@
       "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25fbf385_075a4caf",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-11-13T12:20:00Z",
+      "side": 1,
+      "message": "Done. I\u0027m not sure if it should be a public method, so for now I\u0027m keeping it private.",
+      "parentUuid": "47e7c4fc_152a447d",
+      "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "1f33b98a_208ef26b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-11-13T12:20:00Z",
+      "side": 1,
+      "message": "Done; I\u0027ve made it a subclass of namedtuple just to be able to add a docstring to it.",
+      "parentUuid": "e710fb29_85df3514",
+      "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bbb1ea6_52c1f115",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
         "patchSetId": 1
@@ -120,6 +174,24 @@
       "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "688fab95_18767845",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-11-13T12:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bbb1ea6_52c1f115",
+      "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +215,30 @@
       "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d3e456_3805ac0f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-11-13T12:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee21501c_78b4c306",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 14
+      },
+      "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
