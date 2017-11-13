@@ -34,7 +34,7 @@ int32_t NetErrorToPepperError(int net_error) {
       return PP_ERROR_FILETOOBIG;
     case net::ERR_ACCESS_DENIED:
       return PP_ERROR_NOACCESS;
-    case net::ERR_NOT_IMPLEMENTED:
+    case net::ERR_NOT_IMPLEMENTED_DONT_CARE:
       return PP_ERROR_NOTSUPPORTED;
     case net::ERR_OUT_OF_MEMORY:
       return PP_ERROR_NOMEMORY;

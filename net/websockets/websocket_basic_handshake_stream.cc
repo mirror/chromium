@@ -457,7 +457,7 @@ Error WebSocketBasicHandshakeStream::GetTokenBindingSignature(
     TokenBindingType tb_type,
     std::vector<uint8_t>* out) {
   NOTREACHED();
-  return ERR_NOT_IMPLEMENTED;
+  return ERR_NOT_IMPLEMENTED8;
 }
 
 void WebSocketBasicHandshakeStream::Drain(HttpNetworkSession* session) {

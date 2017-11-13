@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_NET_DEFAULT_NETWORK_CONTEXT_PARAMS_H_
 #define CHROME_BROWSER_NET_DEFAULT_NETWORK_CONTEXT_PARAMS_H_
 
+#include "base/memory/ref_counted.h"
+#include "base/single_thread_task_runner.h"
 #include "content/public/common/network_service.mojom.h"
 
 // Returns default set of parameters for configuring the network service.

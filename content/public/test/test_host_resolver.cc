@@ -51,7 +51,8 @@ class LocalHostResolverProc : public net::HostResolverProc {
       DVLOG(1) << "To avoid external dependencies, simulating failure for "
                   "external DNS lookup of "
                << host;
-      return net::ERR_NOT_IMPLEMENTED;
+      CHECK(FALSE);
+      return net::ERR_NOT_IMPLEMENTED30;
     }
 
     return ResolveUsingPrevious(host, address_family, host_resolver_flags,
