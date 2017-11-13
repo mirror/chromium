@@ -246,12 +246,14 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
             @Override
             public void onViewAttachedToWindow(View v) {
                 mIsAttachedToWindow = true;
+                updateLogoVisibility();
                 updateLogoTransition();
             }
 
             @Override
             public void onViewDetachedFromWindow(View v) {
                 mIsAttachedToWindow = false;
+                updateLogoVisibility();
                 updateLogoTransition();
             }
         });

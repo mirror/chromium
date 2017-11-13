@@ -168,7 +168,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
                 return new NewTabPageViewHolder(mAboveTheFoldView);
 
             case ItemViewType.LOGO:
-                return new NewTabPageViewHolder(mLogoView);
+                return new LogoItem.ViewHolder(mLogoView);
 
             case ItemViewType.SITE_SECTION:
                 return SiteSection.createViewHolder(
