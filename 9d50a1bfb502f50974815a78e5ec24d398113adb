@@ -568,6 +568,30 @@
     },
     {
       "key": {
+        "uuid": "9f1b68de_2dd97dda",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-13T18:54:50Z",
+      "side": 1,
+      "message": "Looks like resumption is covered because it will continue to call OnDownloadUpdated after it is resumed, therefore can continue to update the cache if needed. Some preliminary logs here: https://paste.googleplex.com/6667009592918016.",
+      "parentUuid": "9f81c145_00f3aaea",
+      "range": {
+        "startLine": 508,
+        "startChar": 2,
+        "endLine": 508,
+        "endChar": 18
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "845896f7_971c23d8",
         "filename": "content/browser/download/download_manager_impl.h",
         "patchSetId": 14
@@ -635,6 +659,30 @@
       "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbc1307_954edbb2",
+        "filename": "content/public/browser/download_manager_delegate.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-13T18:54:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df5874c5_03ca78ef",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 1
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
