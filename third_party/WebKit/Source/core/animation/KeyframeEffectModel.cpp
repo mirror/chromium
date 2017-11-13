@@ -89,17 +89,22 @@ bool KeyframeEffectModelBase::SnapshotNeutralCompositorKeyframes(
     const ComputedStyle* parent_style) const {
   bool updated = false;
   EnsureKeyframeGroups();
-  for (CSSPropertyID property : CompositorAnimations::kCompositableProperties) {
-    if (CSSPropertyEquality::PropertiesEqual(PropertyHandle(property),
+  static const CSSProperty* kCompositableProperties[7] = {
+      &GetCSSPropertyOpacity(),       &GetCSSPropertyRotate(),
+      &GetCSSPropertyScale(),         &GetCSSPropertyTransform(),
+      &GetCSSPropertyTranslate(),     &GetCSSPropertyFilter(),
+      &GetCSSPropertyBackdropFilter()};
+  for (const CSSProperty* property : kCompositableProperties) {
+    if (CSSPropertyEquality::PropertiesEqual(PropertyHandle(*property),
                                              old_style, new_style))
       continue;
     PropertySpecificKeyframeGroup* keyframe_group =
-        keyframe_groups_->at(PropertyHandle(property));
+        keyframe_groups_->at(PropertyHandle(*property));
     if (!keyframe_group)
       continue;
     for (auto& keyframe : keyframe_group->keyframes_) {
       if (keyframe->IsNeutral())
-        updated |= keyframe->PopulateAnimatableValue(property, element,
+        updated |= keyframe->PopulateAnimatableValue(*property, element,
                                                      new_style, parent_style);
     }
   }
@@ -114,13 +119,18 @@ bool KeyframeEffectModelBase::SnapshotAllCompositorKeyframes(
   bool updated = false;
   bool has_neutral_compositable_keyframe = false;
   EnsureKeyframeGroups();
-  for (CSSPropertyID property : CompositorAnimations::kCompositableProperties) {
+  static const CSSProperty* kCompositableProperties[7] = {
+      &GetCSSPropertyOpacity(),       &GetCSSPropertyRotate(),
+      &GetCSSPropertyScale(),         &GetCSSPropertyTransform(),
+      &GetCSSPropertyTranslate(),     &GetCSSPropertyFilter(),
+      &GetCSSPropertyBackdropFilter()};
+  for (const CSSProperty* property : kCompositableProperties) {
     PropertySpecificKeyframeGroup* keyframe_group =
-        keyframe_groups_->at(PropertyHandle(property));
+        keyframe_groups_->at(PropertyHandle(*property));
     if (!keyframe_group)
       continue;
     for (auto& keyframe : keyframe_group->keyframes_) {
-      updated |= keyframe->PopulateAnimatableValue(property, element,
+      updated |= keyframe->PopulateAnimatableValue(*property, element,
                                                    base_style, parent_style);
       has_neutral_compositable_keyframe |= keyframe->IsNeutral();
     }
@@ -175,10 +185,10 @@ KeyframeEffectModelBase::NormalizedKeyframes(const KeyframeVector& keyframes) {
 }
 
 bool KeyframeEffectModelBase::IsTransformRelatedEffect() const {
-  return Affects(PropertyHandle(CSSPropertyTransform)) ||
-         Affects(PropertyHandle(CSSPropertyRotate)) ||
-         Affects(PropertyHandle(CSSPropertyScale)) ||
-         Affects(PropertyHandle(CSSPropertyTranslate));
+  return Affects(PropertyHandle(GetCSSPropertyTransform())) ||
+         Affects(PropertyHandle(GetCSSPropertyRotate())) ||
+         Affects(PropertyHandle(GetCSSPropertyScale())) ||
+         Affects(PropertyHandle(GetCSSPropertyTranslate()));
 }
 
 void KeyframeEffectModelBase::EnsureKeyframeGroups() const {

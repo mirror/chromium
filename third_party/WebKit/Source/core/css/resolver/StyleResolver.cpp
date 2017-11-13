@@ -765,7 +765,7 @@ scoped_refptr<AnimatableValue> StyleResolver::CreateAnimatableValueSnapshot(
     Element& element,
     const ComputedStyle& base_style,
     const ComputedStyle* parent_style,
-    CSSPropertyID property,
+    const CSSProperty& property,
     const CSSValue* value) {
   // TODO(alancutter): Avoid creating a StyleResolverState just to apply a
   // single value on a ComputedStyle.
@@ -773,7 +773,7 @@ scoped_refptr<AnimatableValue> StyleResolver::CreateAnimatableValueSnapshot(
                            parent_style);
   state.SetStyle(ComputedStyle::Clone(base_style));
   if (value) {
-    StyleBuilder::ApplyProperty(property, state, *value);
+    StyleBuilder::ApplyProperty(property.PropertyID(), state, *value);
     state.GetFontBuilder().CreateFont(
         state.GetDocument().GetStyleEngine().GetFontSelector(),
         state.MutableStyleRef());
@@ -1263,8 +1263,8 @@ void StyleResolver::ApplyAnimatedStandardProperties(
   // SVGElement::CollectStyleForPresentationAttribute().
   for (const auto& entry : active_interpolations_map) {
     CSSPropertyID property = entry.key.IsCSSProperty()
-                                 ? entry.key.CssProperty()
-                                 : entry.key.PresentationAttribute();
+                                 ? entry.key.CssPropertyId()
+                                 : entry.key.PresentationAttributeId();
     if (!CSSPropertyPriorityData<priority>::PropertyHasPriority(property))
       continue;
     const Interpolation& interpolation = *entry.value.front();
