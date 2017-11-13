@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d2e1231_5bd3f544",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2269,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-13T14:07:07Z",
+      "side": 1,
+      "message": "In the future, do you think we should have a convention of suffixing these fields with _info?",
+      "revId": "eebc2ff9d4fd6bf1565b4ac5b5868f69027f2596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05d504f_d4edea01",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-13T14:07:07Z",
+      "side": 1,
+      "message": "Maybe this should take an InterfacePtrInfo?",
+      "revId": "eebc2ff9d4fd6bf1565b4ac5b5868f69027f2596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d1e708_058822f6",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-13T14:07:07Z",
+      "side": 1,
+      "message": "Ditto here? To me, it would feel slightly more natural.",
+      "revId": "eebc2ff9d4fd6bf1565b4ac5b5868f69027f2596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4005b992_39d5f564",
+        "filename": "services/preferences/tracked/tracked_persistent_pref_store_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-13T14:07:07Z",
+      "side": 1,
+      "message": "Ditto here: I feel like it might look slightly nicer to pass as a PtrInfo to the ctor.",
+      "revId": "eebc2ff9d4fd6bf1565b4ac5b5868f69027f2596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
