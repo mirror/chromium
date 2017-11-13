@@ -198,12 +198,12 @@ class UpdateResizeParamsMessageFilter : public content::BrowserMessageFilter {
   void OnUpdateResizeParams(const gfx::Rect& rect,
                             const ScreenInfo& screen_info,
                             uint64_t sequence_number,
-                            const viz::LocalSurfaceId& local_surface_id);
+                            const viz::SurfaceId& local_surface_id);
 
   void OnUpdateResizeParamsOnUI(const gfx::Rect& rect,
                                 const ScreenInfo& screen_info,
                                 uint64_t sequence_number,
-                                const viz::LocalSurfaceId& local_surface_id);
+                                const viz::SurfaceId& local_surface_id);
 
   scoped_refptr<content::MessageLoopRunner> message_loop_runner_;
   bool frame_rect_received_;
