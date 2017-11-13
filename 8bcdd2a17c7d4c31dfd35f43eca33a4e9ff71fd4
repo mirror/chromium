@@ -51,6 +51,24 @@
       "revId": "8bcdd2a17c7d4c31dfd35f43eca33a4e9ff71fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e73598e_f30534e6",
+        "filename": "tools/perf/page_sets/wasm_realworld_perf.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-13T23:16:37Z",
+      "side": 1,
+      "message": "I would expect for different pages, you would have different waiting conditions. So you gonna have multiple classes, e.g:\n\nclass EpicZenGardenPage(page_module.Page):\n  def __init__(self, page_set):\n      super(EpicZenGardenPage, self).__init__(\n        url\u003d\u0027https://s3.amazonaws.com/mozilla-games/ZenGarden/EpicZenGarden.html\u0027,\n        name\u003d\u0027zen_garden\u0027)\n   def  RunPageInteractions(self, action_runner):\n    ....",
+      "parentUuid": "eabd6fe5_10011ee5",
+      "revId": "8bcdd2a17c7d4c31dfd35f43eca33a4e9ff71fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
