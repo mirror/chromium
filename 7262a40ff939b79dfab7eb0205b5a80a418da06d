@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "724b2a47_37860485",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-13T16:31:10Z",
+      "side": 1,
+      "message": "Let\u0027s use Network.TimeSinceEpoch.",
+      "range": {
+        "startLine": 1102,
+        "startChar": 58,
+        "endLine": 1102,
+        "endChar": 75
+      },
+      "revId": "7262a40ff939b79dfab7eb0205b5a80a418da06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe709ec_70721645",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-13T16:31:10Z",
+      "side": 1,
+      "message": "Why not base::TimeTicks instead?",
+      "range": {
+        "startLine": 52,
+        "startChar": 10,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "7262a40ff939b79dfab7eb0205b5a80a418da06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
