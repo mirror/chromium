@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5af8bfe_89a45959",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-13T22:19:29Z",
+      "side": 1,
+      "message": "Does this need to be optional? (does it have to have \u0027?\u0027 ?)",
+      "revId": "dc2ece6a815e0666489156adf5860afb1eb1d6c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea81d09_0215daed",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-13T22:19:29Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "dc2ece6a815e0666489156adf5860afb1eb1d6c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d851ab05_625ce07e",
+        "filename": "chrome/browser/ui/ash/test_wallpaper_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-13T22:19:29Z",
+      "side": 1,
+      "message": "nit: include base/macros.h for DISALLOW...",
+      "revId": "dc2ece6a815e0666489156adf5860afb1eb1d6c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
