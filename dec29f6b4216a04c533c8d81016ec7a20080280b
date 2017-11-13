@@ -22,6 +22,30 @@
       "revId": "dec29f6b4216a04c533c8d81016ec7a20080280b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483b5b42_a75158c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-13T20:59:33Z",
+      "side": 1,
+      "message": "1. The renderer is tied with a frame sink id, it\u0027s impossible for the renderer to pretend to be another renderer. \n\n2. In RenderWidgetHostImpl::DidProcess(https://cs.chromium.org/chromium/src/content/browser/renderer_host/render_widget_host_impl.cc?q\u003drender_widget_host_impl\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d2763), we do check if the frame token is monotonically increasing. If it\u0027s not true, we kill the process :(\n\n3. The compromised renderer can simply send messages to browser directly rather than lying with frame token for the browser to process more messages.",
+      "parentUuid": "76e29def_a7901a9d",
+      "range": {
+        "startLine": 14,
+        "startChar": 50,
+        "endLine": 16,
+        "endChar": 48
+      },
+      "revId": "dec29f6b4216a04c533c8d81016ec7a20080280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
