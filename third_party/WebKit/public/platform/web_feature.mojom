@@ -1755,6 +1755,7 @@ enum WebFeature {
   kV8ErrorPrepareStackTrace = 2223,
   kV8ErrorStackTraceLimit = 2224,
   kPaintWorklet = 2225,
+  kRespondToSameOriginRequestWithCrossOriginResponse = 2226,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
