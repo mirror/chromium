@@ -22,6 +22,30 @@
       "revId": "0169dc196698653b06f485ed03c9a51da58ec4ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa718dc_e7a0649c",
+        "filename": "content/renderer/gpu/gpu_benchmarking_extension.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-13T15:37:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c387b55_b3131af9",
+      "range": {
+        "startLine": 804,
+        "startChar": 20,
+        "endLine": 804,
+        "endChar": 22
+      },
+      "revId": "0169dc196698653b06f485ed03c9a51da58ec4ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
