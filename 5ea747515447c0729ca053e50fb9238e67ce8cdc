@@ -46,6 +46,30 @@
       "revId": "5ea747515447c0729ca053e50fb9238e67ce8cdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be370a28_327e3742",
+        "filename": "chrome/browser/extensions/api/idltest/idltest_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T20:46:58Z",
+      "side": 1,
+      "message": "Ah, I did not realize there was a new new way.",
+      "parentUuid": "da01036a_0a829812",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "5ea747515447c0729ca053e50fb9238e67ce8cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
