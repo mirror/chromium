@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "1ba0f9fd_33d06860",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/sandboxed-iframe-navigator-serviceworker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T01:29:27Z",
+      "side": 1,
+      "message": "OK I\u0027ve expanded the comment and clarified that I\u0027m not totally sure of the reading of the spec. I assume we can iterate on this if it causes problems. Firefox throws a SecurityError but in getRegistration() not in navigator.serviceWorker.",
+      "parentUuid": "84a38ab4_91335628",
+      "revId": "424d2f4e2d2a3f4e7c79d2a109098b544f3619ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57416176_11e617da",
         "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/sandboxed-iframe-navigator-serviceworker.html",
         "patchSetId": 1
