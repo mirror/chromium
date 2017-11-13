@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0ccb88f_ff4b5222",
+        "filename": "ui/views/controls/message_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T23:15:23Z",
+      "side": 1,
+      "message": "optional nit: i don\u0027t think this change is needed - it makes the curly stratagem inconsistent with the rest of the file.",
+      "revId": "cde880b8fcc95de36e7e2b526ebb04453d315ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc8240e_84f07eaf",
+        "filename": "ui/views/controls/message_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T23:15:23Z",
+      "side": 1,
+      "message": "nit: while you\u0027re here... constexpr int kMessageColumnSetId \u003d 0",
+      "revId": "cde880b8fcc95de36e7e2b526ebb04453d315ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24156af8_d0786de6",
+        "filename": "ui/views/controls/message_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T23:15:23Z",
+      "side": 1,
+      "message": "constexpr kExtraViewColumnSetId \u003d 1 ?",
+      "revId": "cde880b8fcc95de36e7e2b526ebb04453d315ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c971c59f_19ba8955",
+        "filename": "ui/views/controls/message_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T23:15:23Z",
+      "side": 1,
+      "message": "no-op: I\u0027ve also seen stuff add top and bottom padding rows. I think i prefer the approach you\u0027ve used though.",
+      "revId": "cde880b8fcc95de36e7e2b526ebb04453d315ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
