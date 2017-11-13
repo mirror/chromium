@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "1112d5b4_be968581",
+        "filename": "content/browser/webrtc/webrtc_internals.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-13T20:15:01Z",
+      "side": 1,
+      "message": "Agree with keeping comments and function names consistent. Don\u0027t care if it is done by modifying the comment or the name.",
+      "parentUuid": "34a775ac_879cb4da",
+      "range": {
+        "startLine": 156,
+        "startChar": 19,
+        "endLine": 156,
+        "endChar": 22
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b8d963a_60913843",
         "filename": "content/browser/webrtc/webrtc_rtc_event_log_manager.cc",
         "patchSetId": 3
