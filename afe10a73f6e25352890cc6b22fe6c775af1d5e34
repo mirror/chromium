@@ -70,6 +70,30 @@
       "revId": "afe10a73f6e25352890cc6b22fe6c775af1d5e34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b09382b2_831d6bfa",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-13T04:12:05Z",
+      "side": 1,
+      "message": "+1, this comment really confused me as well, we should check this only at the place where we read things out from the persisted values.",
+      "parentUuid": "c17b84e1_f743927d",
+      "range": {
+        "startLine": 559,
+        "startChar": 0,
+        "endLine": 562,
+        "endChar": 17
+      },
+      "revId": "afe10a73f6e25352890cc6b22fe6c775af1d5e34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
