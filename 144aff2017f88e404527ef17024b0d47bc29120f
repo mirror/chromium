@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd56aabe_624bb695",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Component updates!  The whitelist database is managed in google3, and updates are sent on demand via Component Updater.  This is what we use(d) for pushing flash updates, etc.  Component updater delivers a standalone file to our client install.\n\nThe \"latest\" whitelist database file is built into new installers (for first run), and can currently be pushed to clients daily if there are changes.  (chrome_elf will only consume this file once on startup.)",
+      "parentUuid": "df04b460_5d4cde27",
+      "range": {
+        "startLine": 9,
+        "startChar": 49,
+        "endLine": 9,
+        "endChar": 63
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8634a932_65c3cade",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291e8a48_dda6f528",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "This is temporary for now.  Will be adjusted to share a value with MON component updater code, once we start to tie the two halves together. \n\nSame as the filename below, that won\u0027t be the actual filename of the component file.\n\nAll I know for sure right now is that it will be under UserDataDir, and some subdir there.",
+      "parentUuid": "8634a932_65c3cade",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "bb993f86_174ebc60",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Above.  Placeholder.  Filename doesn\u0027t matter.",
+      "parentUuid": "1b7aeb90_3108c489",
+      "range": {
+        "startLine": 21,
+        "startChar": 52,
+        "endLine": 21,
+        "endChar": 55
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee77387d_87ebf604",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "8051577d_0bff1867",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee77387d_87ebf604",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbd3fc28_d637582c",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -96,6 +180,24 @@
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95296f4f_5cd46963",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbd3fc28_d637582c",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "1bb86533_9193ec13",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02eba1c4_1e4e1179",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 8
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c113ec3_d32b80a8",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "67f878e9_b5ce4eea",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c113ec3_d32b80a8",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af118e61_1caf3044",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -153,6 +297,24 @@
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ce7434_554dee4f",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Binaries won\u0027t run on Windows unless they\u0027re little endian.  If our toolchain changes such that our Windows builds somehow tries to build with big endian, nothing will work.  I don\u0027t believe there\u0027s anything to check in the chrome_elf binary itself.\n\nW.R.T. the contents of the component update file that we\u0027re reading from: it\u0027s a requirement that the database be packed little-endian and also that 32-bit alignment \u003d\u003d 64-bit alignment (so no handling required).  It\u0027s packed in google3.",
+      "parentUuid": "af118e61_1caf3044",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "934b0bfb_12db663c",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc8e6d69_6c1a00c2",
+      "range": {
+        "startLine": 82,
+        "startChar": 42,
+        "endLine": 82,
+        "endChar": 58
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77fb826a_87ff545d",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -193,6 +379,24 @@
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52eb4e22_559ee14a",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77fb826a_87ff545d",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -219,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "80f5936f_5a0586a0",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55543b6e_499f22d1",
+      "range": {
+        "startLine": 98,
+        "startChar": 51,
+        "endLine": 98,
+        "endChar": 55
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a28727c8_a3dcdf76",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -233,6 +461,24 @@
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14644ac_18bb6c75",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Good one, thanks.",
+      "parentUuid": "a28727c8_a3dcdf76",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -253,6 +499,24 @@
     },
     {
       "key": {
+        "uuid": "d375c760_3759c469",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "No, that\u0027s legit.  There are rough plans to store bigger, more detailed information in the back of the file, for use higher up in the component code.\n\nWe designed the beginning of the file to be as small as possible for chrome_elf, only requiring reading in the minimal amount of the file.  Also no \"init\" required: the buffer read in is immediately accessible as a (sorted) array.",
+      "parentUuid": "d8cf0cab_b6520676",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18421bc8_a3f62717",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -267,6 +531,24 @@
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e24b91_5de7d65d",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "It\u0027s a good comment.  I\u0027m still considering this.  Do we think the cost of the is_sorted check at startup is worth it?\n\nThe legitimate component files will be sorted.  And a check in the unittests (once I change the tests to actually use the latest database) will catch if that gets broken.\n\nIf I maliciously replace/edit the component update file locally in the chrome UserDataDir, what\u0027s the result?\n- While reading in the file, if the metadata is corrupt, the format version might not be supported (failed initialization, but chrome will still startup at least for now).\n- A massive value for module_count can only result in max DWORD, and ReadFile would probably fail.\n- If the metadata is good, but the array is somehow not sorted, or has goobledegook contents, the lookups will just fail.  This does require a local edit.  **This is the scenario that a call to is_sorted() would catch.  Is the cost worth it?\n\nIn the end though, we don\u0027t try to really secure our on-client files.  Someone local can mangle the file (or our binaries).  We\u0027ll be able to signal if the component initialization fails, and higher level component updater code can raise a red flag about bad state.\n\n**I\u0027ve adjusted this to always do the check... with a TODO to calculate the time cost once I have a real database file to test with.",
+      "parentUuid": "18421bc8_a3f62717",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -293,6 +575,30 @@
     },
     {
       "key": {
+        "uuid": "ec83f164_56f7070c",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22fad62c_22887eab",
+      "range": {
+        "startLine": 135,
+        "startChar": 9,
+        "endLine": 135,
+        "endChar": 18
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bd74bb9_c5b58b2e",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -313,6 +619,30 @@
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d152122_33e2fd60",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bd74bb9_c5b58b2e",
+      "range": {
+        "startLine": 151,
+        "startChar": 7,
+        "endLine": 151,
+        "endChar": 20
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -339,6 +669,30 @@
     },
     {
       "key": {
+        "uuid": "d3f6c46f_fcf3272f",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc44350b_88ec035a",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 12
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ca29db2_6cc80263",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -362,6 +716,30 @@
     },
     {
       "key": {
+        "uuid": "0f122785_d82b2a23",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ca29db2_6cc80263",
+      "range": {
+        "startLine": 161,
+        "startChar": 47,
+        "endLine": 161,
+        "endChar": 52
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "141c1282_c1c88848",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -376,6 +754,24 @@
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e147aad7_1f6b9f5e",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "141c1282_c1c88848",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -402,6 +798,30 @@
     },
     {
       "key": {
+        "uuid": "1af30ccb_fbb60fd6",
+        "filename": "chrome_elf/whitelist/whitelist_component.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done. Wasn\u0027t 100% it would always default to 0.",
+      "parentUuid": "f994db1d_ffb2cc32",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1984d708_7a94c78f",
         "filename": "chrome_elf/whitelist/whitelist_component.h",
         "patchSetId": 5
@@ -416,6 +836,24 @@
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c82d3db_fe8dc264",
+        "filename": "chrome_elf/whitelist/whitelist_component.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1984d708_7a94c78f",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -442,6 +880,30 @@
     },
     {
       "key": {
+        "uuid": "10360ec0_c6371113",
+        "filename": "chrome_elf/whitelist/whitelist_component_format.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0e173a7_b134a5fe",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 9
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7ea85ce_9dd53adf",
         "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
         "patchSetId": 5
@@ -453,6 +915,24 @@
       "writtenOn": "2017-11-09T14:22:34Z",
       "side": 1,
       "message": "nit: constexpr const wchar_t* kComponent...",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7695166b_763b43aa",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Ya, I tried that, but get compiler errors for each of the strings:\n\"error: ISO C++11 does not allow conversion from string literal to \u0027wchar_t *const\u0027\" (or char *const)\n\nThoughts?",
+      "parentUuid": "b7ea85ce_9dd53adf",
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -482,6 +962,30 @@
     },
     {
       "key": {
+        "uuid": "b4f92416_a3a210d5",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "I honestly don\u0027t think it matters.  It\u0027s an internal function that is called from the test SetUp code only.  All callers are controlled.  Local struct required before push_back.  \n\nI did it anyways though.  Done.",
+      "parentUuid": "3e0b9b88_73f6d209",
+      "range": {
+        "startLine": 46,
+        "startChar": 43,
+        "endLine": 46,
+        "endChar": 57
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fca9afa0_971d7de4",
         "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
         "patchSetId": 5
@@ -496,6 +1000,24 @@
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de2662f_27141807",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Sure, for now.  At some point I\u0027ll have to add some sort of real testing to catch any changes to where the component file gets dropped on clients... but I\u0027ll figure out another way to do that later.",
+      "parentUuid": "fca9afa0_971d7de4",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -522,6 +1044,30 @@
     },
     {
       "key": {
+        "uuid": "1adaec10_784df6fd",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e8cb94a_660ab30b",
+      "range": {
+        "startLine": 110,
+        "startChar": 22,
+        "endLine": 110,
+        "endChar": 31
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fc55dd6_3f90a356",
         "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
         "patchSetId": 5
@@ -539,6 +1085,24 @@
     },
     {
       "key": {
+        "uuid": "b01749ff_f34301e3",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "I thought TearDown was the recommended way to handle cleanup on exception?  \n\nI\u0027ve left out DeleteOnClose, now that the file is inside scoped_temp_dir_ and gets deleted with the dir.",
+      "parentUuid": "1fc55dd6_3f90a356",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1bd488d_062db0cb",
         "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
         "patchSetId": 5
@@ -553,6 +1117,24 @@
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "477c778e_7a190ba8",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-13T23:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1bd488d_062db0cb",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
