@@ -89,8 +89,8 @@ class EmptyFrameScheduler : public WebFrameScheduler {
     return WebFrameScheduler::FrameType::kSubframe;
   }
   WebViewScheduler* GetWebViewScheduler() override { return nullptr; }
-  ScopedVirtualTimePauser CreateScopedVirtualTimePauser() {
-    return ScopedVirtualTimePauser();
+  WebScopedVirtualTimePauser CreateWebScopedVirtualTimePauser() {
+    return WebScopedVirtualTimePauser();
   }
   void DidStartProvisionalLoad(bool is_main_frame) override {}
   void DidCommitProvisionalLoad(bool is_web_history_inert_commit,

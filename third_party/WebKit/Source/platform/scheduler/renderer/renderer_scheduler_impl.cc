@@ -2066,6 +2066,11 @@ void RendererSchedulerImpl::SetRendererProcessType(RendererProcessType type) {
   main_thread_only().process_type = type;
 }
 
+WebScopedVirtualTimePauser
+RendererSchedulerImpl::CreateWebScopedVirtualTimePauser() {
+  return WebScopedVirtualTimePauser(this);
+}
+
 void RendererSchedulerImpl::RegisterTimeDomain(TimeDomain* time_domain) {
   helper_.RegisterTimeDomain(time_domain);
 }
