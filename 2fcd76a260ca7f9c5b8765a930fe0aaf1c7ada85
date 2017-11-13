@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "48e31fc8_5dcefae3",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T21:03:29Z",
+      "side": 1,
+      "message": "Right, +1 to go with this way, as we might set that env variable on CF when testing a single crashing input, so developers will be able to see the native input on the CF page without any extra effort.",
+      "parentUuid": "19b45dc5_bd7a4879",
+      "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04c359de_a15714fc",
         "filename": "testing/libfuzzer/libprotobuf-mutator.md",
         "patchSetId": 3
@@ -107,6 +125,30 @@
       "side": 1,
       "message": "Do you mean change this to: \n`LPM_DUMP_NATIVE_INPUT`\n?",
       "parentUuid": "e6cf695f_4388289d",
+      "range": {
+        "startLine": 123,
+        "startChar": 56,
+        "endLine": 123,
+        "endChar": 77
+      },
+      "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12daa141_12662a6d",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T21:03:29Z",
+      "side": 1,
+      "message": "Yes, sorry I was too lazy to copy-paste that name :D",
+      "parentUuid": "6995e44b_473f00c2",
       "range": {
         "startLine": 123,
         "startChar": 56,
