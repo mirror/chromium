@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3acafab4_3172b4f8",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-13T21:06:44Z",
+      "side": 1,
+      "message": "Right, that makes sense, I have a WIP CL for this:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/760857",
+      "parentUuid": "42ab0fb5_5977fa3d",
+      "range": {
+        "startLine": 661,
+        "startChar": 51,
+        "endLine": 661,
+        "endChar": 70
+      },
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8da31acb_d44e101a",
         "filename": "content/browser/renderer_host/input/input_router.h",
         "patchSetId": 56
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "4c601f7b_10f0167d",
+        "filename": "content/browser/renderer_host/input/input_router.h",
+        "patchSetId": 56
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-13T21:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8da31acb_d44e101a",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73c33805_35076a40",
         "filename": "content/browser/renderer_host/input/input_router_impl.cc",
         "patchSetId": 56
@@ -53,6 +95,24 @@
       "writtenOn": "2017-10-31T20:42:36Z",
       "side": 1,
       "message": "What is the reason for this? Is it that we want to start the ack timeout as soon as we know the touch action is not none? Can we test this? It looks to me like TouchEventQueue::SetAckTimeoutEnabled(false) will prevent us from re-enabling the touch ack timeout if the real touch action comes in later and is not none.",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bdd5289_7c99cbbb",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-13T21:06:44Z",
+      "side": 1,
+      "message": "Actually, I don\u0027t think we need this. We do UpdateTouchAckTimeoutEnabled() when we get the real touch action from blink, and I think that should be sufficient.",
+      "parentUuid": "73c33805_35076a40",
       "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "43015fcd_4c31ac8d",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-13T21:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66ba0508_bf9e5291",
+      "range": {
+        "startLine": 43,
+        "startChar": 41,
+        "endLine": 43,
+        "endChar": 72
+      },
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b584a57d_38191013",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 56
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "df01b14d_4df3aa35",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-13T21:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b584a57d_38191013",
+      "range": {
+        "startLine": 50,
+        "startChar": 51,
+        "endLine": 51,
+        "endChar": 54
+      },
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9defaab0_abad3c7c",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 56
@@ -119,6 +227,24 @@
       "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41224515_de8786af",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-13T21:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9defaab0_abad3c7c",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "c80f1efc_5b2fa7b2",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-13T21:06:44Z",
+      "side": 1,
+      "message": "Hmm, this is wrong. We don\u0027t need to do anything in this case, I removed this part in the new patch.",
+      "parentUuid": "a5611dc1_01b9fd31",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "829f536f_6d4c4c4a",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 56
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "cf0ee745_a81b8a4f",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-13T21:06:44Z",
+      "side": 1,
+      "message": "Right, it makes more sense to move this to the OnSetTouchAction().",
+      "parentUuid": "829f536f_6d4c4c4a",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05c669fd_f52d6f1a",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 56
@@ -167,6 +329,24 @@
       "writtenOn": "2017-10-31T20:42:36Z",
       "side": 1,
       "message": "Does this mean accumulated_pinch_scale_ is only ever non-1 if we are accumulating? Can we DCHECK this? Is it possible that we get the real touch action and then don\u0027t see another pinch update and so we end up doing the wrong thing here?",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54af596d_d6ac9d6e",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-13T21:06:44Z",
+      "side": 1,
+      "message": "I added a DCHECK to say that if the accumulated_pinch_scale is non-1, then the real touch action is unknown.\n\nI think the case that you mentioned is like this\n1. a pinch update (1.2f) gets accumulated, then accumulated_pinch_scale_ \u003d 1.2f\n2. a scroll update comes and the real touch action (say Auto) is now known, then the scroll delta for this event will have 1.2f applied.\n3. a pinch update never comes so we drop the accumulated_pinch_scale_.\nRight, I see the problem. But with the current architecture, I don\u0027t see how can we address that because we never know whether there will be a pinch update or not. So maybe a TODO and a bug? This is highly correlated with crbug.com/780351.",
+      "parentUuid": "05c669fd_f52d6f1a",
       "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "3a1148fe_7504ba77",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 56
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-13T21:06:44Z",
+      "side": 1,
+      "message": "I did have a TODO item for this in touch_action_filter.cc, but moving it to here makes more sense. Please take a look at the comment and the bug to make sure that they reflect it correctly.",
+      "parentUuid": "2ab90704_0a2ec1c8",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ceac3293_ccc7474c",
         "filename": "content/browser/renderer_host/input/touch_action_filter.h",
         "patchSetId": 56
@@ -201,6 +399,24 @@
       "writtenOn": "2017-10-31T20:42:36Z",
       "side": 1,
       "message": "Is this perhaps equivalent to touch_action_from_main_.has_value()?",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e1f12d_2085ed4d",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 56
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-13T21:06:44Z",
+      "side": 1,
+      "message": "This is actually equivalent to touch_action_from_main_.has_value() in the previous gesture event. If the real touch action is unknown in the previous gesture event, then the suppress_manipulation_events_ is set by white-listed touch action, then this bit is false. Say that in the current gesture event, the real touch action is received, then we have to re-calculate the suppress_manipulation_events_, and this bit becomes true. Does that make sense?",
+      "parentUuid": "ceac3293_ccc7474c",
       "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -230,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "248beee9_f849d842",
+        "filename": "ui/events/blink/blink_features.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-13T21:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5faf6fb_e6191f5d",
+      "range": {
+        "startLine": 17,
+        "startChar": 44,
+        "endLine": 17,
+        "endChar": 66
+      },
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa9aa0e2_76b81e75",
         "filename": "ui/events/blink/input_handler_proxy.cc",
         "patchSetId": 56
@@ -241,6 +481,24 @@
       "writtenOn": "2017-10-31T20:42:36Z",
       "side": 1,
       "message": "It looks like we only get NON_BLOCKING on 1084 if there is an event listener, doesn\u0027t this mean the whitelisted touch action will always be none making the result DID_NOT_HANDLE?",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0f9548_62635b9a",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-13T21:06:44Z",
+      "side": 1,
+      "message": "I don\u0027t see why would the whitelisted touch action be done in that case. The |event_listener_type| is computed by LayerTreeHostImpl::EventListenerTypeForTouchStartOrMoveAt, this function returns NO_HANDLER only when LayerTreeImpl::FindLayerThatIsHitByPointInTouchHandlerRegion returns null.\n\nUsing http://output.jsbin.com/yodibuy/1 and http://output.jsbin.com/dikeji/1 as example, when clicking on the blue rect, the |event_listener_type| is not NO_HANDLER and the whitelisted touch action is computed correctly.",
+      "parentUuid": "aa9aa0e2_76b81e75",
       "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -261,6 +519,24 @@
       "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fbfbcda_65008a0c",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-13T21:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c47a7792_25aa5633",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
