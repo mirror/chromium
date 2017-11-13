@@ -242,7 +242,9 @@ InterpolationValue CSSInterpolationType::MaybeConvertCustomPropertyDeclaration(
     resolved_tokens = declaration.Value();
   }
   const CSSValue* resolved_value =
-      resolved_tokens ? resolved_tokens->ParseForSyntax(registration_->Syntax())
+      resolved_tokens ? resolved_tokens->ParseForSyntax(
+                            registration_->Syntax(),
+                            state.GetDocument().SecureContextMode())
                       : nullptr;
   if (!resolved_value) {
     return nullptr;
@@ -304,9 +306,9 @@ void CSSInterpolationType::ApplyCustomPropertyValue(
   const auto tokens = tokenizer.TokenizeToEOF();
   bool is_animation_tainted = true;
   bool needs_variable_resolution = false;
-  scoped_refptr<CSSVariableData> variable_data =
-      CSSVariableData::Create(CSSParserTokenRange(tokens), is_animation_tainted,
-                              needs_variable_resolution);
+  scoped_refptr<CSSVariableData> variable_data = CSSVariableData::Create(
+      CSSParserTokenRange(tokens), is_animation_tainted,
+      needs_variable_resolution, state.GetDocument().SecureContextMode());
   ComputedStyle& style = *state.Style();
   const PropertyHandle property = GetProperty();
   const AtomicString& property_name = property.CustomPropertyName();

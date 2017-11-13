@@ -4401,6 +4401,7 @@ inline void Element::SetInlineStyleFromString(
     DCHECK(inline_style->IsMutable());
     static_cast<MutableCSSPropertyValueSet*>(inline_style.Get())
         ->ParseDeclarationList(new_style_string,
+                               GetDocument().SecureContextMode(),
                                GetDocument().ElementSheet().Contents());
   }
 }
@@ -4489,6 +4490,7 @@ bool Element::SetInlineStyleProperty(CSSPropertyID property_id,
   DCHECK(IsStyledElement());
   bool did_change = EnsureMutableInlineStyle()
                         .SetProperty(property_id, value, important,
+                                     GetDocument().SecureContextMode(),
                                      GetDocument().ElementSheet().Contents())
                         .did_change;
   if (did_change)
@@ -4546,7 +4548,8 @@ void Element::AddPropertyToPresentationAttributeStyle(
     CSSPropertyID property_id,
     const String& value) {
   DCHECK(IsStyledElement());
-  style->SetProperty(property_id, value, false);
+  style->SetProperty(property_id, value, false,
+                     GetDocument().SecureContextMode());
 }
 
 void Element::AddPropertyToPresentationAttributeStyle(

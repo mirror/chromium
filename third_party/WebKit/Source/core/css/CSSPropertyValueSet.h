@@ -27,6 +27,7 @@
 #include "core/css/CSSPropertyValue.h"
 #include "core/css/PropertySetCSSStyleDeclaration.h"
 #include "core/css/parser/CSSParserMode.h"
+#include "core/dom/SecureContextMode.h"
 #include "platform/wtf/ListHashSet.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/Vector.h"
@@ -238,12 +239,14 @@ class CORE_EXPORT MutableCSSPropertyValueSet : public CSSPropertyValueSet {
   // These expand shorthand properties into multiple properties.
   SetResult SetProperty(CSSPropertyID unresolved_property,
                         const String& value,
-                        bool important = false,
+                        bool important,
+                        SecureContextMode,
                         StyleSheetContents* context_style_sheet = 0);
   SetResult SetProperty(const AtomicString& custom_property_name,
                         const PropertyRegistry*,
                         const String& value,
                         bool important,
+                        SecureContextMode,
                         StyleSheetContents* context_style_sheet,
                         bool is_animation_tainted);
   void SetProperty(CSSPropertyID, const CSSValue&, bool important = false);
@@ -264,6 +267,7 @@ class CORE_EXPORT MutableCSSPropertyValueSet : public CSSPropertyValueSet {
 
   void Clear();
   void ParseDeclarationList(const String& style_declaration,
+                            SecureContextMode,
                             StyleSheetContents* context_style_sheet);
 
   CSSStyleDeclaration* EnsureCSSStyleDeclaration();

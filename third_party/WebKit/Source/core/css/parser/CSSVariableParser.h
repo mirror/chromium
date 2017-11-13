@@ -7,6 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "core/css/parser/CSSParserTokenRange.h"
+#include "core/dom/SecureContextMode.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/text/AtomicString.h"
@@ -24,7 +25,8 @@ class CORE_EXPORT CSSVariableParser {
   static CSSCustomPropertyDeclaration* ParseDeclarationValue(
       const AtomicString&,
       CSSParserTokenRange,
-      bool is_animation_tainted);
+      bool is_animation_tainted,
+      SecureContextMode);
   static CSSVariableReferenceValue* ParseRegisteredPropertyValue(
       CSSParserTokenRange,
       const CSSParserContext&,
