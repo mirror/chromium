@@ -28,6 +28,7 @@
 #define ResourceError_h
 
 // TODO(toyoshim): Move net/base inclusion from header file.
+// hogefuga
 #include <iosfwd>
 #include "net/base/net_errors.h"
 #include "platform/PlatformExport.h"
