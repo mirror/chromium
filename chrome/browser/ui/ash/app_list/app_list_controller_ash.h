@@ -45,6 +45,8 @@ class AppListControllerDelegateAsh : public AppListControllerDelegate {
                  int event_flags,
                  int64_t display_id) override;
 
+  app_list::AppListModel* GetAppListModel() override;
+
  private:
   ash::ShelfLaunchSource AppListSourceToLaunchSource(AppListSource source);
 
