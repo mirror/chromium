@@ -739,7 +739,7 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
   NSPoint anchor;
   if (chrome::ShowAllDialogsWithViewsToolkit()) {
     // Anchor to the bottom-right of the button.
-    anchor = NSMakePoint(NSMaxX(bounds), [view isFlipped] ? NSMaxY(bounds) : 0);
+    anchor = NSMakePoint(NSMidX(bounds), [view isFlipped] ? NSMaxY(bounds) : 0);
   } else {
     // Anchor point just above the center of the bottom.
     int y = [view isFlipped] ? NSMaxY(bounds) - kBrowserActionBubbleYOffset
