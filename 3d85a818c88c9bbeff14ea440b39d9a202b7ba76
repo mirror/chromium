@@ -34,6 +34,41 @@
       "revId": "3d85a818c88c9bbeff14ea440b39d9a202b7ba76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3d2556_3af30660",
+        "filename": "ash/system/bluetooth/tray_bluetooth.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-13T20:46:09Z",
+      "side": 1,
+      "message": "FWIW I found that updating the wifi list \u003e once / second was more confusing than helpful.",
+      "parentUuid": "431e7000_7593e222",
+      "revId": "3d85a818c88c9bbeff14ea440b39d9a202b7ba76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856e9a30_fe2dd52f",
+        "filename": "device/bluetooth/bluetooth_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-13T20:46:09Z",
+      "side": 1,
+      "message": "\"adding order\" is intended here to mean \"order in which they were added?\" The terminology is a bit confusing. Also, the order is kind of an implementation detail, I would just call this something like \u0027device_list_\u0027 or \u0027device_cache_\u0027.",
+      "revId": "3d85a818c88c9bbeff14ea440b39d9a202b7ba76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
