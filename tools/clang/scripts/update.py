@@ -399,16 +399,18 @@ def VeryifyVersionOfBuiltClangMatchesVERSION():
     sys.exit(1)
 
 
+def GetPlatformUrlPrefix(platform):
+  if platform == 'win32' or platform == 'cygwin':
+    return CDS_URL + '/Win/'
+  if platform == 'darwin':
+    return CDS_URL + '/Mac/'
+  assert platform.startswith('linux')
+  return CDS_URL + '/Linux_x64/'
+
+
 def DownloadAndUnpackClangPackage(platform, runtimes_only=False):
   cds_file = "clang-%s.tgz" %  PACKAGE_VERSION
-  if platform == 'win32' or platform == 'cygwin':
-    cds_full_url = CDS_URL + '/Win/' + cds_file
-  elif platform == 'darwin':
-    cds_full_url = CDS_URL + '/Mac/' + cds_file
-  else:
-    assert platform.startswith('linux')
-    cds_full_url = CDS_URL + '/Linux_x64/' + cds_file
-
+  cds_full_url = GetPlatformUrlPrefix(platform) + cds_file
   try:
     path_prefix = None
     if runtimes_only:
@@ -416,6 +418,19 @@ def DownloadAndUnpackClangPackage(platform, runtimes_only=False):
     DownloadAndUnpack(cds_full_url, LLVM_BUILD_DIR, path_prefix)
   except urllib2.URLError:
     print 'Failed to download prebuilt clang %s' % cds_file
+    print 'Use --force-local-build if you want to build locally.'
+    print 'Exiting.'
+    sys.exit(1)
+
+
+def DownloadAndUnpackLlvmObjDumpPackage(platform):
+  cds_file = 'llvmobjdump-%s.tgz' % PACKAGE_VERSION
+  cds_full_url = GetPlatformUrlPrefix(platform) + cds_file
+  try:
+    path_prefix = None
+    DownloadAndUnpack(cds_full_url, LLVM_BUILD_DIR, path_prefix)
+  except urllib2.URLError:
+    print 'Failed to download prebuilt utils %s' % cds_file
     print 'Use --force-local-build if you want to build locally.'
     print 'Exiting.'
     sys.exit(1)
