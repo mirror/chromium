@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02773798_595b9eab",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-13T13:46:19Z",
+      "side": 1,
+      "message": "\"default classic script fetch options\"?",
+      "range": {
+        "startLine": 252,
+        "startChar": 41,
+        "endLine": 252,
+        "endChar": 70
+      },
+      "revId": "cf6a84216cbba7bcd88f8da20ddc25c2ea48cb9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
