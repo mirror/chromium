@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d7f8434_eef034c5",
+        "filename": "device/u2f/u2f_message_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T22:48:47Z",
+      "side": 1,
+      "message": "Sorry, should have noticed this on the first review: These static_casts are not necessary either since |serialized| is an std::vector\u003cuint8_t\u003e.",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 32
+      },
+      "revId": "558f1b27f46da34b58b2945939647045e2ed637d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec2d59e_90cbf738",
+        "filename": "device/u2f/u2f_message_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T22:48:47Z",
+      "side": 1,
+      "message": "nit: unindent this bracket. If clang-format insists it be indented we should file a bug.",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 3
+      },
+      "revId": "558f1b27f46da34b58b2945939647045e2ed637d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba673f6b_3d67952c",
+        "filename": "device/u2f/u2f_packet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T22:48:47Z",
+      "side": 1,
+      "message": "nit: This comment is no longer useful.",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "558f1b27f46da34b58b2945939647045e2ed637d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
