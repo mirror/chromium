@@ -13,6 +13,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/containers/flat_map.h"
 #include "base/files/file_path.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
@@ -205,6 +206,15 @@ class CONTENT_EXPORT ServiceWorkerDatabase {
   Status ReadUserDataByKeyPrefix(int64_t registration_id,
                                  const std::string& user_data_name_prefix,
                                  std::vector<std::string>* user_data_values);
+
+  // Reads user keys and associated data for |registration_id| and
+  // |user_data_name_prefix| from the database. Returns OK only if keys matched
+  // to |user_data_name_prefix| are found; otherwise NOT_FOUND, and
+  // |user_data_map| will be empty.
+  Status ReadUserKeysAndDataByKeyPrefix(
+      int64_t registration_id,
+      const std::string& user_data_name_prefix,
+      base::flat_map<std::string, std::string>* user_data_map);
 
   // Writes |name_value_pairs| into the database. Returns NOT_FOUND if the
   // registration specified by |registration_id| does not exist in the database.
