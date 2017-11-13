@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14eeaa25_90f6d9ad",
+        "filename": "ui/webui/resources/cr_elements/policy/cr_tooltip_icon.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-13T23:45:21Z",
+      "side": 0,
+      "message": "I think we still need this no? From the documentation it\u0027s used as an anchor to position the tooltip over the element.\n\nhttps://www.webcomponents.org/element/PolymerElements/paper-tooltip/elements/paper-tooltip",
+      "range": {
+        "startLine": 28,
+        "startChar": 32,
+        "endLine": 28,
+        "endChar": 48
+      },
+      "revId": "c1acbc5f3785df50787c8af6aa40c49b45ce6431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

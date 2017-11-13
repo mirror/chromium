@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1518a3b9_5d582790",
+        "filename": "chrome/browser/resources/md_extensions/toggle_row.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-13T23:45:21Z",
+      "side": 1,
+      "message": "let\u0027s not do this because it\u0027ll add the cr-toggle to the tab order, which means it gets 2 tab stops because the toggle inside is already part of the tab order.\n\nYou may need to sync up w/ dmazzoni@, I just tried to reproduce this on mac w/ voiceover and it works as expected. This could be an issue w/ chromevox",
+      "range": {
+        "startLine": 43,
+        "startChar": 53,
+        "endLine": 43,
+        "endChar": 12
+      },
+      "revId": "e34a65c87d92b6851c3100c54041cdb0985394d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
