@@ -30,7 +30,9 @@ void FakeUpstartClient::RestartAuthPolicyService() {
   authpolicy_client->set_started(true);
 }
 
-void FakeUpstartClient::StartMediaAnalytics(const UpstartCallback& callback) {
+void FakeUpstartClient::StartMediaAnalytics(
+    const UpstartCallback& callback,
+    const std::vector<std::string>& upstart_env) {
   FakeMediaAnalyticsClient* media_analytics_client =
       static_cast<FakeMediaAnalyticsClient*>(
           DBusThreadManager::Get()->GetMediaAnalyticsClient());
@@ -57,6 +59,14 @@ void FakeUpstartClient::StopMediaAnalytics() {
   DLOG_IF(WARNING, !media_analytics_client->process_running())
       << "Trying to stop media analytics which is not started.";
   media_analytics_client->set_process_running(false);
+}
+
+void FakeUpstartClient::StopMediaAnalytics(const UpstartCallback& callback) {
+  FakeMediaAnalyticsClient* media_analytics_client =
+      static_cast<FakeMediaAnalyticsClient*>(
+          DBusThreadManager::Get()->GetMediaAnalyticsClient());
+  media_analytics_client->set_process_running(false);
+  callback.Run(true);
 }
 
 }  // namespace chromeos
