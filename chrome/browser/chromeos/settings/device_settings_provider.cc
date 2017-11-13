@@ -111,6 +111,7 @@ const char* const kKnownSettings[] = {
     kTPMFirmwareUpdateSettings,
     kMinimumRequiredChromeVersion,
     kCastReceiverName,
+    kDeviceHostnameTemplate,
 };
 
 void DecodeLoginPolicies(
@@ -604,6 +605,13 @@ void DecodeGenericPolicies(
       new_values_cache->SetValue(
           kCastReceiverName, base::MakeUnique<base::Value>(container.name()));
     }
+  }
+
+  if (policy.has_network_hostname()) {
+    const em::NetworkHostnameProto& container(policy.network_hostname());
+    if (container.has_device_hostname_template())
+      new_values_cache->SetString(kDeviceHostnameTemplate,
+                                  container.device_hostname_template());
   }
 }
 
