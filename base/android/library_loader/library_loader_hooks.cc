@@ -194,6 +194,11 @@ static jint PercentageOfResidentNativeLibraryCode(
   return NativeLibraryPrefetcher::PercentageOfResidentNativeLibraryCode();
 }
 
+static void PeriodicallyCollectResidency(JNIEnv* env,
+                                         const JavaParamRef<jclass>& clazz) {
+  return NativeLibraryPrefetcher::PeriodicallyCollectResidency();
+}
+
 void SetVersionNumber(const char* version_number) {
   g_library_version_number = strdup(version_number);
 }

@@ -35,6 +35,10 @@ class BASE_EXPORT NativeLibraryPrefetcher {
   // memory, or -1 in case of error.
   static int PercentageOfResidentNativeLibraryCode();
 
+  // Collects residency for the native library executable multiple times, then
+  // dumps it to disk.
+  static void PeriodicallyCollectResidency();
+
  private:
   using AddressRange = std::pair<uintptr_t, uintptr_t>;
   // Returns true if the region matches native code or data.
