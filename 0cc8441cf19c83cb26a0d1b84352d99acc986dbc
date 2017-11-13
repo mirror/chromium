@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccd5662e_7bbfd456",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-13T16:51:30Z",
+      "side": 1,
+      "message": "Any particular reason that this is changed to a DCHECK?\n\nThe previous code used an early return.\n  if (active_it \u003d\u003d active_streams_.end()) {\n    NOTREACHED();\n    return nullptr;\n  }",
+      "revId": "0cc8441cf19c83cb26a0d1b84352d99acc986dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

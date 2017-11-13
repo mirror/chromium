@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "914d0ac7_0fc94719",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-13T16:51:30Z",
+      "side": 1,
+      "message": "I see the problem with |push_stream| being invalidated now. Can we make Http2PushPromiseIndex manage all push streams, and move SpdySession\u0027s UnclaimedPushedStreamContainer to Http2PushPromiseIndex?  We would have a mapping from SpdySession to it\u0027s push stream container. Http2PushPromiseIndex will manage addition and removal (which it already does, though indirectly through SpdySession layer.)\n\n\nMy main concern about this Delegate design is that this claim functionality is separated into two separate steps.\nIf these two steps are done in different message loop iterations, we would be in trouble  (Right now they are not). ValidatePushStream() can return true, but when we try to claim it asynchronously, it can be gone. I am interested to see if we can simplify the flow.",
+      "parentUuid": "5b6fc37b_53ecc730",
+      "revId": "b8603253c94fc21cc7698c69715e3b216964ea40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5c20822_673f1358",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 11
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Good question.  UnclaimedPushedStreamContainer::erase() calls Http2PushPromiseIndex::Unregister().",
       "parentUuid": "e5c20822_673f1358",
+      "revId": "b8603253c94fc21cc7698c69715e3b216964ea40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a37ddd2_3a865e05",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-13T16:51:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8b4ae9fe_0f4ff530",
       "revId": "b8603253c94fc21cc7698c69715e3b216964ea40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
