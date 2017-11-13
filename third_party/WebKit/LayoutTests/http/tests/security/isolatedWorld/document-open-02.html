@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div id="console"></div>
+<script>
+if (window.testRunner) {
+  testRunner.dumpAsText();
+  testRunner.evaluateScriptInIsolatedWorld(
+    1,
+    "window.open = function() { alert('FAIL: The call should be redirected to the real window.open');};\n" +
+    "w = document.open(1, 1, 1);\n" +
+    "if (typeof(w) === 'object')\n" +
+    "alert('PASS');");
+}
+</script>
+</body>
+</html>
