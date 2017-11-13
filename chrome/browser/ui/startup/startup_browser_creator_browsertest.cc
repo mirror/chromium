@@ -1203,11 +1203,93 @@ IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorFirstRunTest, MAYBE_WelcomePages) {
             tab_strip->GetWebContentsAt(0)->GetURL().possibly_invalid_spec());
 }
 
+// http://crbug.com/691707
+#if defined(OS_MACOSX)
+#define MAYBE_WelcomePagesWithPolicy DISABLED_WelcomePagesWithPolicy
+#else
+#define MAYBE_WelcomePagesWithPolicy WelcomePagesWithPolicy
+#endif
+IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorFirstRunTest,
+                       MAYBE_WelcomePagesWithPolicy) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  // Set the following user policies:
+  // * RestoreOnStartup = RestoreOnStartupIsURLs
+  // * RestoreOnStartupURLs = [ "/title1.html" ]
+  policy_map_.Set(policy::key::kRestoreOnStartup,
+                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_MACHINE,
+                  policy::POLICY_SOURCE_CLOUD, base::MakeUnique<base::Value>(4),
+                  nullptr);
+  auto url_list = base::MakeUnique<base::Value>(base::Value::Type::LIST);
+  url_list->GetList().push_back(
+      base::Value(embedded_test_server()->GetURL("/title1.html").spec()));
+  policy_map_.Set(policy::key::kRestoreOnStartupURLs,
+                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_MACHINE,
+                  policy::POLICY_SOURCE_CLOUD, std::move(url_list), nullptr);
+  provider_.UpdateChromePolicy(policy_map_);
+  base::RunLoop().RunUntilIdle();
+
+  ProfileManager* profile_manager = g_browser_process->profile_manager();
+
+  // Open the two profiles.
+  base::FilePath dest_path = profile_manager->user_data_dir();
+
+  Profile* profile1 = nullptr;
+  {
+    base::ScopedAllowBlockingForTesting allow_blocking;
+    profile1 = Profile::CreateProfile(
+        dest_path.Append(FILE_PATH_LITERAL("New Profile 1")), nullptr,
+        Profile::CreateMode::CREATE_MODE_SYNCHRONOUS);
+  }
+  ASSERT_TRUE(profile1);
+  profile_manager->RegisterTestingProfile(profile1, true, false);
+
+  Browser* browser = OpenNewBrowser(profile1);
+  ASSERT_TRUE(browser);
+
+  TabStripModel* tab_strip = browser->tab_strip_model();
+
+  // Windows 10 has its own Welcome page but even that should not show up when
+  // the policy is set.
+  if (IsWindows10OrNewer()) {
+    ASSERT_EQ(1, tab_strip->count());
+    EXPECT_EQ("title1.html",
+              tab_strip->GetWebContentsAt(0)->GetURL().ExtractFileName());
+
+    browser = CloseBrowserAndOpenNew(browser, profile1);
+    ASSERT_TRUE(browser);
+    tab_strip = browser->tab_strip_model();
+  }
+
+  // Ensure that the policy page page appears on second run on Win 10, and
+  // on first run on all other platforms.
+  ASSERT_EQ(1, tab_strip->count());
+  EXPECT_EQ("title1.html",
+            tab_strip->GetWebContentsAt(0)->GetURL().ExtractFileName());
+
+  browser = CloseBrowserAndOpenNew(browser, profile1);
+  ASSERT_TRUE(browser);
+  tab_strip = browser->tab_strip_model();
+
+  // Ensure that the policy page page appears on subsequent runs.
+  ASSERT_EQ(1, tab_strip->count());
+  EXPECT_EQ("title1.html",
+            tab_strip->GetWebContentsAt(0)->GetURL().ExtractFileName());
+}
+
 #endif  // !defined(OS_CHROMEOS)
 
 class StartupBrowserCreatorWelcomeBackTest : public InProcessBrowserTest {
  protected:
   StartupBrowserCreatorWelcomeBackTest() = default;
+
+  void SetUpInProcessBrowserTestFixture() override {
+    EXPECT_CALL(provider_, IsInitializationComplete(testing::_))
+        .WillRepeatedly(testing::Return(true));
+
+    policy::BrowserPolicyConnector::SetPolicyProviderForTesting(&provider_);
+  }
+
   void SetUpOnMainThread() override {
     profile_ = browser()->profile();
 
@@ -1220,8 +1302,23 @@ class StartupBrowserCreatorWelcomeBackTest : public InProcessBrowserTest {
     ASSERT_EQ(0U, BrowserList::GetInstance()->size());
   }
 
-  void StartBrowser(StartupBrowserCreator::WelcomeBackPage welcome_back_page) {
+  void StartBrowser(StartupBrowserCreator::WelcomeBackPage welcome_back_page,
+                    bool are_startup_prefs_mananged) {
     browser_creator_.set_welcome_back_page(welcome_back_page);
+
+    if (are_startup_prefs_mananged) {
+      policy::PolicyMap values;
+      values.Set(policy::key::kRestoreOnStartup, policy::POLICY_LEVEL_MANDATORY,
+                 policy::POLICY_SCOPE_MACHINE, policy::POLICY_SOURCE_CLOUD,
+                 base::MakeUnique<base::Value>(4), nullptr);
+      auto url_list = base::MakeUnique<base::Value>(base::Value::Type::LIST);
+      url_list->GetList().push_back(base::Value("http://managed.site.com/"));
+      values.Set(policy::key::kRestoreOnStartupURLs,
+                 policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_MACHINE,
+                 policy::POLICY_SOURCE_CLOUD, std::move(url_list), nullptr);
+      provider_.UpdateChromePolicy(values);
+    }
+
     ASSERT_TRUE(browser_creator_.Start(
         base::CommandLine(base::CommandLine::NO_PROGRAM), base::FilePath(),
         profile_,
@@ -1241,23 +1338,31 @@ class StartupBrowserCreatorWelcomeBackTest : public InProcessBrowserTest {
   Profile* profile_ = nullptr;
   std::unique_ptr<ScopedKeepAlive> scoped_keep_alive_;
   StartupBrowserCreator browser_creator_;
+  policy::MockConfigurationPolicyProvider provider_;
 
   DISALLOW_COPY_AND_ASSIGN(StartupBrowserCreatorWelcomeBackTest);
 };
 
 #if defined(OS_WIN)
 IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorWelcomeBackTest, WelcomeBackWin10) {
-  ASSERT_NO_FATAL_FAILURE(
-      StartBrowser(StartupBrowserCreator::WelcomeBackPage::kWelcomeWin10));
+  ASSERT_NO_FATAL_FAILURE(StartBrowser(
+      StartupBrowserCreator::WelcomeBackPage::kWelcomeWin10, false));
   ExpectUrlInBrowserAtPosition(
       StartupTabProviderImpl::GetWin10WelcomePageUrl(false), 0);
+}
+
+IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorWelcomeBackTest,
+                       NoWelcomeBackWin10WithPolicy) {
+  ASSERT_NO_FATAL_FAILURE(StartBrowser(
+      StartupBrowserCreator::WelcomeBackPage::kWelcomeWin10, true));
+  ExpectUrlInBrowserAtPosition(GURL("http://managed.site.com/"), 0);
 }
 #endif  // defined(OS_WIN)
 
 IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorWelcomeBackTest,
                        WelcomeBackStandard) {
-  ASSERT_NO_FATAL_FAILURE(
-      StartBrowser(StartupBrowserCreator::WelcomeBackPage::kWelcomeStandard));
+  ASSERT_NO_FATAL_FAILURE(StartBrowser(
+      StartupBrowserCreator::WelcomeBackPage::kWelcomeStandard, false));
   ExpectUrlInBrowserAtPosition(StartupTabProviderImpl::GetWelcomePageUrl(false),
                                0);
 }
