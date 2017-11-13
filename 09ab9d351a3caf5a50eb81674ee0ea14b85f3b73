@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62d8e05b_d83669c7",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-13T04:37:54Z",
+      "side": 1,
+      "message": "Agree. We should not call this function with null position.\nCould you change this to |DCHECK(position.IsNotNull())| to catch such call\nsites if exist?\n\nIf we have such call sites, we should handle null position in call sites.",
+      "revId": "09ab9d351a3caf5a50eb81674ee0ea14b85f3b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
