@@ -33,6 +33,7 @@
 
 #include "core/CSSPropertyNames.h"
 #include "core/animation/animatable/AnimatableValue.h"
+#include "core/css/properties/CSSProperty.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/RefPtr.h"
 
@@ -44,7 +45,7 @@ class CSSAnimatableValueFactory {
   STATIC_ONLY(CSSAnimatableValueFactory);
 
  public:
-  static scoped_refptr<AnimatableValue> Create(CSSPropertyID,
+  static scoped_refptr<AnimatableValue> Create(const CSSProperty&,
                                                const ComputedStyle&);
 };
 

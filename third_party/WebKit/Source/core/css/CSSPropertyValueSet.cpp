@@ -102,7 +102,7 @@ ImmutableCSSPropertyValueSet::ImmutableCSSPropertyValueSet(
 
 ImmutableCSSPropertyValueSet::~ImmutableCSSPropertyValueSet() {}
 
-// Convert property into an uint16_t for comparison with metadata's property_id_
+// Convert property into an uint16_t for comparison with metadata's property id
 // to avoid the compiler converting it to an int multiple times in a loop.
 static uint16_t GetConvertedCSSPropertyID(CSSPropertyID property_id) {
   return static_cast<uint16_t>(property_id);
@@ -117,7 +117,7 @@ static bool IsPropertyMatch(const CSSPropertyValueMetadata& metadata,
                             uint16_t id,
                             CSSPropertyID property_id) {
   DCHECK_EQ(id, property_id);
-  bool result = metadata.property_id_ == id;
+  bool result = metadata.Property().PropertyID() == id;
 // Only enabled properties should be part of the style.
 #if DCHECK_IS_ON()
   DCHECK(!result ||
@@ -131,7 +131,7 @@ static bool IsPropertyMatch(const CSSPropertyValueMetadata& metadata,
                             uint16_t id,
                             const AtomicString& custom_property_name) {
   DCHECK_EQ(id, CSSPropertyVariable);
-  return metadata.property_id_ == id &&
+  return metadata.Property().PropertyID() == id &&
          ToCSSCustomPropertyDeclaration(value).GetName() ==
              custom_property_name;
 }
@@ -359,7 +359,7 @@ void MutableCSSPropertyValueSet::SetProperty(CSSPropertyID property_id,
                                              bool important) {
   StylePropertyShorthand shorthand = shorthandForProperty(property_id);
   if (!shorthand.length()) {
-    SetProperty(CSSPropertyValue(property_id, value, important));
+    SetProperty(CSSPropertyValue(CSSProperty::Get(property_id), value, important));
     return;
   }
 
@@ -367,7 +367,7 @@ void MutableCSSPropertyValueSet::SetProperty(CSSPropertyID property_id,
 
   for (unsigned i = 0; i < shorthand.length(); ++i) {
     property_vector_.push_back(
-        CSSPropertyValue(shorthand.properties()[i], value, important));
+        CSSPropertyValue(CSSProperty::Get(shorthand.properties()[i]), value, important));
   }
 }
 
@@ -393,7 +393,7 @@ bool MutableCSSPropertyValueSet::SetProperty(CSSPropertyID property_id,
                                              CSSValueID identifier,
                                              bool important) {
   SetProperty(CSSPropertyValue(
-      property_id, *CSSIdentifierValue::Create(identifier), important));
+      CSSProperty::Get(property_id), *CSSIdentifierValue::Create(identifier), important));
   return true;
 }
 
@@ -560,7 +560,7 @@ MutableCSSPropertyValueSet* CSSPropertyValueSet::CopyPropertiesInSet(
   for (unsigned i = 0; i < properties.size(); ++i) {
     const CSSValue* value = GetPropertyCSSValue(properties[i]);
     if (value)
-      list.push_back(CSSPropertyValue(properties[i], *value, false));
+      list.push_back(CSSPropertyValue(CSSProperty::Get(properties[i]), *value, false));
   }
   return MutableCSSPropertyValueSet::Create(list.data(), list.size());
 }
