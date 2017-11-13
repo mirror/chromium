@@ -47,6 +47,19 @@ class SimpleFileTrackerTest : public DiskCacheTest {
         SyncEntryDeleter(this));
   }
 
+  // Creates a vector of TrackedFiles object with their key.doom_generation
+  // fields filled in to match |doom_generations|. Nothing else is filled in.
+  std::vector<SimpleFileTracker::TrackedFiles> TrackedFilesWithDoomGenerations(
+      const std::vector<uint32_t>& doom_generations) {
+    std::vector<SimpleFileTracker::TrackedFiles> result;
+    for (uint32_t doom_gen : doom_generations) {
+      SimpleFileTracker::TrackedFiles entry;
+      entry.key.doom_generation = doom_gen;
+      result.push_back(std::move(entry));
+    }
+    return result;
+  }
+
   SimpleFileTracker file_tracker_;
 };
 
@@ -216,6 +229,65 @@ TEST_F(SimpleFileTrackerTest, PointerStability) {
   EXPECT_TRUE(ReadFileToString(cache_path_.AppendASCII("0"), &verify));
   EXPECT_EQ(msg, verify);
   EXPECT_TRUE(file_tracker_.IsEmptyForTesting());
+}
+
+TEST_F(SimpleFileTrackerTest, Doom) {
+  SyncEntryPointer entry1 = MakeSyncEntry(1);
+  base::FilePath path1 = cache_path_.AppendASCII("file1");
+  std::unique_ptr<base::File> file1 = std::make_unique<base::File>(
+      path1, base::File::FLAG_CREATE | base::File::FLAG_WRITE);
+  ASSERT_TRUE(file1->IsValid());
+
+  file_tracker_.Register(entry1.get(), SimpleFileTracker::SubFile::FILE_0,
+                         std::move(file1));
+  SimpleFileTracker::EntryFileKey key1 = entry1->entry_file_key();
+  file_tracker_.Doom(entry1.get(), &key1);
+  EXPECT_NE(0u, key1.doom_generation);
+
+  // Other entry with same key.
+  SyncEntryPointer entry2 = MakeSyncEntry(1);
+  base::FilePath path2 = cache_path_.AppendASCII("file2");
+  std::unique_ptr<base::File> file2 = std::make_unique<base::File>(
+      path2, base::File::FLAG_CREATE | base::File::FLAG_WRITE);
+  ASSERT_TRUE(file2->IsValid());
+
+  file_tracker_.Register(entry2.get(), SimpleFileTracker::SubFile::FILE_0,
+                         std::move(file2));
+  SimpleFileTracker::EntryFileKey key2 = entry2->entry_file_key();
+  file_tracker_.Doom(entry2.get(), &key2);
+  EXPECT_NE(0u, key2.doom_generation);
+  EXPECT_NE(key1.doom_generation, key2.doom_generation);
+
+  file_tracker_.Close(entry1.get(), SimpleFileTracker::SubFile::FILE_0);
+  file_tracker_.Close(entry2.get(), SimpleFileTracker::SubFile::FILE_0);
+}
+
+TEST_F(SimpleFileTrackerTest, FindFreeDoomGeneration) {
+  const uint32_t kMax = std::numeric_limits<uint32_t>::max();
+
+  EXPECT_EQ(1u, file_tracker_.FindFreeDoomGeneration(
+                    TrackedFilesWithDoomGenerations({0})));
+  EXPECT_EQ(2u, file_tracker_.FindFreeDoomGeneration(
+                    TrackedFilesWithDoomGenerations({0, 1})));
+  EXPECT_EQ(4u, file_tracker_.FindFreeDoomGeneration(
+                    TrackedFilesWithDoomGenerations({0, 1, 3})));
+  EXPECT_EQ(4u, file_tracker_.FindFreeDoomGeneration(
+                    TrackedFilesWithDoomGenerations({3, 1})));
+  EXPECT_EQ(1u, file_tracker_.FindFreeDoomGeneration(
+                    TrackedFilesWithDoomGenerations({kMax})));
+  EXPECT_EQ(1u, file_tracker_.FindFreeDoomGeneration(
+                    TrackedFilesWithDoomGenerations({0, kMax})));
+  EXPECT_EQ(2u, file_tracker_.FindFreeDoomGeneration(
+                    TrackedFilesWithDoomGenerations({0, 1, kMax})));
+  EXPECT_EQ(3u, file_tracker_.FindFreeDoomGeneration(
+                    TrackedFilesWithDoomGenerations({0, 1, 2, kMax})));
+  EXPECT_EQ(2u, file_tracker_.FindFreeDoomGeneration(
+                    TrackedFilesWithDoomGenerations({0, 1, 3, kMax})));
+  EXPECT_EQ(2u, file_tracker_.FindFreeDoomGeneration(
+                    TrackedFilesWithDoomGenerations({kMax, 3, 0, 1})));
+  EXPECT_EQ(1u,
+            file_tracker_.FindFreeDoomGeneration(
+                TrackedFilesWithDoomGenerations({kMax - 1, kMax - 2, kMax})));
 }
 
 }  // namespace disk_cache
