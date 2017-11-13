@@ -54,12 +54,6 @@ const char kChromeProxyActionBlockOnce[] = "block-once";
 const char kChromeProxyActionBlock[] = "block";
 const char kChromeProxyActionBypass[] = "bypass";
 
-// Actions for tamper detection fingerprints.
-const char kChromeProxyActionFingerprintChromeProxy[]   = "fcp";
-const char kChromeProxyActionFingerprintVia[]           = "fvia";
-const char kChromeProxyActionFingerprintOtherHeaders[]  = "foh";
-const char kChromeProxyActionFingerprintContentLength[] = "fcl";
-
 const int kShortBypassMaxSeconds = 59;
 const int kMediumBypassMaxSeconds = 300;
 
