@@ -208,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "7ba07e2b_12d373a1",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-13T23:27:05Z",
+      "side": 1,
+      "message": "Definitely don\u0027t worry about it in this CL. Most of the ViewportMetrics usage is for the legacy code path that only runs in a couple services_unittests and is otherwise dead code.",
+      "parentUuid": "a6d77ceb_bc203d85",
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c1d245d_f4117ad2",
         "filename": "ui/display/manager/chromeos/display_configurator_unittest.cc",
         "patchSetId": 18
@@ -273,6 +291,24 @@
       "side": 1,
       "message": "The issue isn\u0027t that DisplayConfigurator::configure_display_ is wrong, but that IsRunningAsSystemCompositor() caches the value, and subsequent calls (ie. my new check in DisplayConfigurator::DisplayLayoutManagerImpl::ParseDisplays) return a stale value. Afaict, I can avoid these test changes by making IsRunningAsSystemCompositor not cache the value, or by changing the first DisplayConfigurator ctor call to be after AppendSwitch (ie. in Init). WDYT?",
       "parentUuid": "a40c57f3_40f6a342",
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9a0dc0_d5e9be20",
+        "filename": "ui/display/manager/chromeos/display_configurator_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-13T23:27:05Z",
+      "side": 1,
+      "message": "Oh ya, IsRunningAsSystemCompositor() is cached. Umm, so I think it\u0027s kind of expensive and used frequently which is why it\u0027s cached.\n\nThis is an interesting problem. Even with your changes this could flaky. If any test that runs before this in display_unittests runs code that calls IsRunningAsSystemCompositor() that value will get cached. The test order can change too. It seems like you either can\u0027t rely on the flag or the flag needs to be set true for all tests, before any tests run in a custom main() or TestSuite?",
+      "parentUuid": "81fde6b9_31bc91d1",
       "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
