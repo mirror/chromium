@@ -7,6 +7,7 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "base/barrier_closure.h"
 #include "base/bind_helpers.h"
@@ -136,6 +137,24 @@ class BackgroundFetchDataManagerTest
     return registration;
   }
 
+  std::vector<std::string> GetDeveloperIds(
+      int64_t service_worker_registration_id,
+      const url::Origin& origin,
+      blink::mojom::BackgroundFetchError* out_error) {
+    DCHECK(out_error);
+
+    std::vector<std::string> ids;
+    base::RunLoop run_loop;
+    background_fetch_data_manager_->GetDeveloperIdsForServiceWorker(
+        service_worker_registration_id, origin,
+        base::BindOnce(&BackgroundFetchDataManagerTest::DidGetDeveloperIds,
+                       base::Unretained(this), run_loop.QuitClosure(),
+                       out_error, &ids));
+    run_loop.Run();
+
+    return ids;
+  }
+
   // Synchronous version of
   // BackgroundFetchDataManager::MarkRegistrationForDeletion().
   void MarkRegistrationForDeletion(
@@ -193,6 +212,17 @@ class BackgroundFetchDataManagerTest
     }
     *out_error = error;
     *out_registration = std::move(registration);
+
+    quit_closure.Run();
+  }
+
+  void DidGetDeveloperIds(base::Closure quit_closure,
+                          blink::mojom::BackgroundFetchError* out_error,
+                          std::vector<std::string>* out_ids,
+                          blink::mojom::BackgroundFetchError error,
+                          const std::vector<std::string>& ids) {
+    *out_error = error;
+    *out_ids = ids;
 
     quit_closure.Run();
   }
@@ -263,11 +293,11 @@ TEST_P(BackgroundFetchDataManagerTest, NoDuplicateRegistrations) {
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
 }
 
-TEST_P(BackgroundFetchDataManagerTest, GetRegistration) {
+TEST_P(BackgroundFetchDataManagerTest, GetDeveloperIds) {
   int64_t sw_id = RegisterServiceWorker();
   ASSERT_NE(blink::mojom::kInvalidServiceWorkerRegistrationId, sw_id);
 
-  BackgroundFetchRegistrationId registration_id1(
+  BackgroundFetchRegistrationId registration_id2(
       sw_id, origin(), kExampleDeveloperId, kExampleUniqueId);
 
   std::vector<ServiceWorkerFetchRequest> requests(2u);
@@ -275,7 +305,37 @@ TEST_P(BackgroundFetchDataManagerTest, GetRegistration) {
   blink::mojom::BackgroundFetchError error;
 
   // Create a single registration
-  CreateRegistration(registration_id1, requests, options, &error);
+  CreateRegistration(registration_id2, requests, options, &error);
+  EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
+
+  // Verify that the developer ID can be found
+  auto developer_ids = GetDeveloperIds(sw_id, origin(), &error);
+  ASSERT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
+  ASSERT_EQ(1u, developer_ids.size());
+  EXPECT_EQ(kExampleDeveloperId, developer_ids[0]);
+
+  RestartDataManagerFromPersistentStorage();
+
+  // After a restart, GetDeveloperIds should still find the IDs
+  developer_ids = GetDeveloperIds(sw_id, origin(), &error);
+  ASSERT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
+  ASSERT_EQ(1u, developer_ids.size());
+  EXPECT_EQ(kExampleDeveloperId, developer_ids[0]);
+}
+
+TEST_P(BackgroundFetchDataManagerTest, GetRegistration) {
+  int64_t sw_id = RegisterServiceWorker();
+  ASSERT_NE(blink::mojom::kInvalidServiceWorkerRegistrationId, sw_id);
+
+  BackgroundFetchRegistrationId registration_id2(
+      sw_id, origin(), kExampleDeveloperId, kExampleUniqueId);
+
+  std::vector<ServiceWorkerFetchRequest> requests(2u);
+  BackgroundFetchOptions options;
+  blink::mojom::BackgroundFetchError error;
+
+  // Create a single registration
+  CreateRegistration(registration_id2, requests, options, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
 
   // Verify that the registration can be retrieved
