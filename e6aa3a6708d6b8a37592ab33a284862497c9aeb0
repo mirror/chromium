@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d5505cf_9634477b",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathMax.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-13T05:19:33Z",
+      "side": 1,
+      "message": "I don\u0027t know, I thought I saw this somewhere else. Personally I don\u0027t find it useful, so happy to remove :)",
+      "parentUuid": "1ecd1df7_b8e63b26",
+      "revId": "e6aa3a6708d6b8a37592ab33a284862497c9aeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfa766fd_863d33b2",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValueType.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-13T04:35:11Z",
       "side": 1,
       "message": "Is this just a fancy way of representing the same thing two ways? Isn\u0027t that going to be \nconfusing?",
+      "revId": "e6aa3a6708d6b8a37592ab33a284862497c9aeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "171f678f_7f7896a4",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValueType.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-13T05:19:33Z",
+      "side": 1,
+      "message": "Yeah I don\u0027t really know what the best representation here is. A numeric type has both a base type (e.g. kLength, kAngle) and an optional percent hint. The percent hint can be any base type other than kPercent. So the most literal implementation would be:\n\n    class CSSNumericValueType {\n      // ...\n      BaseType base_type_;\n      BaseType percent_hint_;\n      bool has_percent_hint_;\n    };\n\nBut since percent hints can\u0027t be kPercent, I thought I\u0027d use kPercent to represent no percent hint. But yeah it could get confusing. Any ideas?",
+      "parentUuid": "bfa766fd_863d33b2",
       "revId": "e6aa3a6708d6b8a37592ab33a284862497c9aeb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
