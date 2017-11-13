@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c6555add_55e3bfb6",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-13T23:00:50Z",
+      "side": 1,
+      "message": "uploaded a new patch. @Yash, do you mind take a look to see if the behavior makes sense?",
+      "parentUuid": "f9132685_4c4f3df2",
+      "revId": "18c4bdcd7208fa4cd804370e1e7de986c31221e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "049071ca_4f40e9f7",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 2
