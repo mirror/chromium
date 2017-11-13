@@ -16,6 +16,24 @@
       "revId": "42a9c3857924702424c195cf80a5e22f707d2c57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f072c508_fc867e88",
+        "filename": "net/cookies/cookie_store_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-13T21:31:17Z",
+      "side": 0,
+      "message": "I\u0027m confused?  The test that isn\u0027t being done here is now being done in canonical_cookie_unittest.cc; there\u0027s no change in test coverage?",
+      "parentUuid": "72f56e30_310c1613",
+      "revId": "42a9c3857924702424c195cf80a5e22f707d2c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

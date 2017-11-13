@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "b8433e62_1b7855a4",
+        "filename": "net/cookies/canonical_cookie_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-13T21:31:17Z",
+      "side": 1,
+      "message": "\u003e Since you are already here, can we update/remove this comment?  CookieMonster::CookieList is an outdated reference.\n\nDone.\n\n\u003e canonical_cookie.h defines CookieList. Could use \"const CookieList\u0026\" as the method argument.\n\nThe current argument is a vector of std::unique_ptr\u003cCanonicalCookie\u003es, so I\u0027d have to change both caller and this function to use const CookieList\u0026.  The caller uses CanonicalCookie::Create(), which returns a std::unique_ptr\u003c\u003e, so it would take some surgery to do that.  My inclination is to leave it the way it is, but let me know if you feel strongly (or if I\u0027ve misunderstood your comment).",
+      "parentUuid": "1978f530_977f00b9",
+      "revId": "535dafafae6d3a7ff111c424eea2147762a487a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b5dced1_257c0ae8",
         "filename": "net/cookies/cookie_store.cc",
         "patchSetId": 6
@@ -83,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "5c1feaf3_9631074f",
+        "filename": "net/cookies/cookie_store.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-13T21:31:17Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "5b5dced1_257c0ae8",
+      "revId": "535dafafae6d3a7ff111c424eea2147762a487a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdd83dbf_3fb73de4",
         "filename": "net/cookies/cookie_store.h",
         "patchSetId": 6
@@ -97,6 +133,24 @@
       "revId": "535dafafae6d3a7ff111c424eea2147762a487a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c845c5e_ad8d8280",
+        "filename": "net/cookies/cookie_store.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-13T21:31:17Z",
+      "side": 1,
+      "message": "Done; almost removed the \"remove when Mojo conversion is complete\" because there\u0027s no reason it couldn\u0027t be done right now.",
+      "parentUuid": "fdd83dbf_3fb73de4",
+      "revId": "535dafafae6d3a7ff111c424eea2147762a487a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
