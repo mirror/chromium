@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcb6b80c_91932247",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-13T19:45:59Z",
+      "side": 1,
+      "message": "maybe \"vid\" instead of \"lnx\", to better contrast w/ \"aud\"?",
+      "revId": "7cfd5cc94c459ac67323cd1fd0d822e4dbb9cc14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c7c2b3_c77011e8",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-13T19:45:59Z",
+      "side": 1,
+      "message": "maybe \"a64\", instead of \"arm\" (since we\u0027ll likely have other 32-bit \"arms\"?)",
+      "revId": "7cfd5cc94c459ac67323cd1fd0d822e4dbb9cc14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
