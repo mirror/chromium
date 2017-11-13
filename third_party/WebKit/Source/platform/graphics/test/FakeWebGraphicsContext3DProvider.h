@@ -34,6 +34,8 @@ class FakeWebGraphicsContext3DProvider : public WebGraphicsContext3DProvider {
     return gpu_feature_info_;
   }
 
+  viz::GLHelper* GetGLHelper() override { return nullptr; }
+
   bool IsSoftwareRendering() const override { return false; }
 
   gpu::gles2::GLES2Interface* ContextGL() override { return gl_; }
