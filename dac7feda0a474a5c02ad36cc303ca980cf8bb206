@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1db324ef_1e419976",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-13T21:52:14Z",
+      "side": 1,
+      "message": "#include \"base/strings/string_util.h\"\nbase::ReplaceSubstringsAfterOffset(str, 0, from, to)",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21134995_12cf3290",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-13T21:52:14Z",
+      "side": 1,
+      "message": "base::IsAsciiAlpha(c) || base::IsAsciiDigit(c) || c \u003d\u003d \u0027_\u0027;\n(+ inline this)",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e5841b_2cf00997",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-13T21:52:14Z",
+      "side": 1,
+      "message": "|| hostname.size() \u003c 1",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a986d7b3_c6812702",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-13T21:52:14Z",
+      "side": 1,
+      "message": "if (hostname[0] \u003d\u003d \u0027-\u0027)\n  return false;",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0257e5_5a814da1",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-13T21:52:14Z",
+      "side": 1,
+      "message": "|network| is going to change over time. We should probably have NSH do this in SetHostname and when the network changes. Or we need this to observer Do we also need to observe NSH::DefaultNetworkChanged.",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055feb2f_aef8483e",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-13T21:52:14Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7eeb6a4_7844c1d1",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3311,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-13T21:52:14Z",
+      "side": 1,
+      "message": "We should probably test all template vars, especially MAC_ADDR (including after a default network change)",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee1a2df_deec62f5",
+        "filename": "components/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-13T21:52:14Z",
+      "side": 1,
+      "message": "patterns",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
