@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83708be4_443c9a85",
+        "filename": "third_party/zlib/contrib/tests/fuzzers/deflate_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T18:35:44Z",
+      "side": 0,
+      "message": "Isn\u0027t that header needed? Why did you remove it?",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 33
+      },
+      "revId": "97f94da4a02d564ae73df20646d01b1438c3ffe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
