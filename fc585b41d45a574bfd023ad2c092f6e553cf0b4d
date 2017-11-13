@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90ac4ab4_143b1be4",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-13T18:46:53Z",
+      "side": 1,
+      "message": "Why do we need to have this method on WebContents?  GamepadList.isGamepadAPIActive(); is a public method that the embedder could call themselves?",
+      "range": {
+        "startLine": 433,
+        "startChar": 27,
+        "endLine": 433,
+        "endChar": 45
+      },
+      "revId": "fc585b41d45a574bfd023ad2c092f6e553cf0b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c71e947_6c47ff0f",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-13T18:46:53Z",
+      "side": 1,
+      "message": "Not CVC anymore",
+      "range": {
+        "startLine": 183,
+        "startChar": 20,
+        "endLine": 183,
+        "endChar": 35
+      },
+      "revId": "fc585b41d45a574bfd023ad2c092f6e553cf0b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ecb029b_c906985e",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-13T18:46:53Z",
+      "side": 1,
+      "message": "why aren\u0027t these going to ViewAndroid/EventForwarder instead?\n\nThese seem very view specific.  They also don\u0027t relate to existing web_contents.h methods, so I\"m curious how/where this is handled on other platforms.  The strong preference should be to keep this class as a simple java exposed proxy of web_contents.h.  Other things should either be in separate classes where possible, or in the embedder themselves.\n\nFor things that are shared between Chrome and WebView, maybe we should discuss exposing a new package of common shared code that is built upon the core components but doesn\u0027t need a full component/ entry itself.\ncontent/public/glue\ncontent/public/client\n\u003c\u003c\u003c or something \u003e\u003e\u003e\n\nIn this example, I\u0027d rather see a ZoomController class that has three methods that all take a WebContents and do their work.",
+      "range": {
+        "startLine": 188,
+        "startChar": 12,
+        "endLine": 188,
+        "endChar": 18
+      },
+      "revId": "fc585b41d45a574bfd023ad2c092f6e553cf0b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
