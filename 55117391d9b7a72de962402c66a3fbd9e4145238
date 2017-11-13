@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a8e613b2_019bf3ea",
+        "filename": "chrome/browser/permissions/permission_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-13T21:16:01Z",
+      "side": 1,
+      "message": "Thanks for spotting this Peter and sorry for the confusion! I think Dom may have pointed this out earlier too. I forgot that we use this for UMA...",
+      "parentUuid": "b9fb8d9c_9325f99a",
+      "revId": "55117391d9b7a72de962402c66a3fbd9e4145238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2258250b_c9a61664",
         "filename": "content/public/browser/permission_type.h",
         "patchSetId": 10
