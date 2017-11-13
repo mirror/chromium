@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "27226422_dfcb94ab",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-13T09:31:13Z",
+      "side": 1,
+      "message": "LGTM",
+      "parentUuid": "61b699c0_6ac7a2b2",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2eb927b5_2822a2da",
         "filename": "ios/web/download/download_task_impl.h",
         "patchSetId": 5
@@ -222,6 +246,30 @@
       "revId": "91109b786eda31f66ffebe9278732209c0362210",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394ec935_86cdbbd4",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-13T09:31:13Z",
+      "side": 1,
+      "message": "Ack.\n\nPlease name the parameter though.",
+      "parentUuid": "4932a5a5_3fc9eee5",
+      "range": {
+        "startLine": 80,
+        "startChar": 18,
+        "endLine": 80,
+        "endChar": 63
+      },
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -447,6 +495,30 @@
       "side": 1,
       "message": "In Objective-C I would definitely call completion block asynchronously. I don\u0027t feel that Chromium C++ code cares about sync/async consistency. Calling synchronously is simpler, faster and clients don\u0027t have to do any checks for iOS version. If you have a strong preference I will not fight for this. Or maybe I misunderstood the proposal?",
       "parentUuid": "f366c738_c29cf997",
+      "range": {
+        "startLine": 277,
+        "startChar": 4,
+        "endLine": 277,
+        "endChar": 33
+      },
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e33e11f_7a791c51",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-13T09:31:13Z",
+      "side": 1,
+      "message": "The comment says \"Asynchronously returns cookies [...] on iOS 11. Synchronously returns [...] on iOS 10 and lower.\"\n\nMy point was that if the documentation points a significant difference in how the callback is returned, and tie it to iOS versions, then when I call this method I *must* take care when using the method because the behavior may be different.\n\nAlso, it may introduce subtle bugs between iOS 11 and earlier version (for example, some objects may be destroyed earlier on iOS 10, leading to unexpected state change). Since most developer uses the default version of the simulator when running under Xcode or iossim and that they both default to the latest version of the OS, then it mean the different behavior will happen in a less tested configuration, possibly leading to hard to understand bugs.\n\nFor example, an object that would call \"delete this\" when the callback is executed would be really dangerous to use with the current API.\n\nTL;DR: I\u0027d prefer the API to always be synchronous/asynchronous for consistency, the goal being that there is less risk of subtle bug being introduced.",
+      "parentUuid": "993939e1_50001086",
       "range": {
         "startLine": 277,
         "startChar": 4,

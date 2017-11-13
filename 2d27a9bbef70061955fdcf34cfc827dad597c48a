@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73f3cbd1_05de9d63",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-13T09:31:13Z",
+      "side": 1,
+      "message": "Please give a name to the parameter.",
+      "range": {
+        "startLine": 81,
+        "startChar": 18,
+        "endLine": 81,
+        "endChar": 63
+      },
+      "revId": "2d27a9bbef70061955fdcf34cfc827dad597c48a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982a39cc_7aa5a75d",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-13T09:31:13Z",
+      "side": 1,
+      "message": "Can this be changed to \"base::OnceCallback\"?",
+      "range": {
+        "startLine": 272,
+        "startChar": 10,
+        "endLine": 272,
+        "endChar": 18
+      },
+      "revId": "2d27a9bbef70061955fdcf34cfc827dad597c48a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
