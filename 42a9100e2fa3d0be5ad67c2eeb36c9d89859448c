@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "ce262ff7_71274a9b",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T22:58:21Z",
+      "side": 1,
+      "message": "if the main need here is to synchronize with the lock screen UI, is there any way that you could hook in with that code? jdufault@ might have ideas about the best way to do that.",
+      "parentUuid": "03eb6f25_faa217b2",
+      "revId": "42a9100e2fa3d0be5ad67c2eeb36c9d89859448c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97b516bc_91ad8bb6",
         "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
         "patchSetId": 5
