@@ -87,11 +87,13 @@ TEST_F(LocalStorageCachedAreaTest, Basics) {
 
   const std::string kStorageAreaId = "123";
   EXPECT_EQ(0u, cached_area->GetLength());
-  EXPECT_TRUE(cached_area->SetItem(kKey, kValue, kPageUrl, kStorageAreaId));
+  EXPECT_TRUE(cached_area->SetItem(kKey, kValue, kPageUrl, kStorageAreaId,
+                                   blink::WebScopedVirtualTimePauser()));
   EXPECT_EQ(1u, cached_area->GetLength());
   EXPECT_EQ(kKey, cached_area->GetKey(0).string());
   EXPECT_EQ(kValue, cached_area->GetItem(kKey).string());
-  cached_area->RemoveItem(kKey, kPageUrl, kStorageAreaId);
+  cached_area->RemoveItem(kKey, kPageUrl, kStorageAreaId,
+                          blink::WebScopedVirtualTimePauser());
   EXPECT_EQ(0u, cached_area->GetLength());
 }
 
@@ -133,7 +135,8 @@ TEST_F(LocalStorageCachedAreaTest, Setters) {
 
   // SetItem, we expect a call to load followed by a call to put in the db.
   EXPECT_FALSE(IsCacheLoaded(cached_area.get()));
-  EXPECT_TRUE(cached_area->SetItem(kKey, kValue, kPageUrl, kStorageAreaId));
+  EXPECT_TRUE(cached_area->SetItem(kKey, kValue, kPageUrl, kStorageAreaId,
+                                   blink::WebScopedVirtualTimePauser()));
   mock_leveldb_wrapper_.Flush();
   EXPECT_TRUE(IsCacheLoaded(cached_area.get()));
   EXPECT_TRUE(mock_leveldb_wrapper_.observed_get_all());
@@ -148,7 +151,8 @@ TEST_F(LocalStorageCachedAreaTest, Setters) {
   // there's no need to load the data prior to deleting it.
   ResetAll(cached_area.get());
   EXPECT_FALSE(IsCacheLoaded(cached_area.get()));
-  cached_area->Clear(kPageUrl, kStorageAreaId);
+  cached_area->Clear(kPageUrl, kStorageAreaId,
+                     blink::WebScopedVirtualTimePauser());
   mock_leveldb_wrapper_.Flush();
   EXPECT_TRUE(IsCacheLoaded(cached_area.get()));
   EXPECT_TRUE(mock_leveldb_wrapper_.observed_delete_all());
@@ -158,7 +162,8 @@ TEST_F(LocalStorageCachedAreaTest, Setters) {
   // RemoveItem with nothing to remove, expect just one call to load.
   ResetAll(cached_area.get());
   EXPECT_FALSE(IsCacheLoaded(cached_area.get()));
-  cached_area->RemoveItem(kKey, kPageUrl, kStorageAreaId);
+  cached_area->RemoveItem(kKey, kPageUrl, kStorageAreaId,
+                          blink::WebScopedVirtualTimePauser());
   mock_leveldb_wrapper_.Flush();
   EXPECT_TRUE(IsCacheLoaded(cached_area.get()));
   EXPECT_TRUE(mock_leveldb_wrapper_.observed_get_all());
@@ -172,7 +177,8 @@ TEST_F(LocalStorageCachedAreaTest, Setters) {
       .mutable_get_all_return_values()[String16ToUint8Vector(kKey)] =
       String16ToUint8Vector(kValue);
   EXPECT_FALSE(IsCacheLoaded(cached_area.get()));
-  cached_area->RemoveItem(kKey, kPageUrl, kStorageAreaId);
+  cached_area->RemoveItem(kKey, kPageUrl, kStorageAreaId,
+                          blink::WebScopedVirtualTimePauser());
   mock_leveldb_wrapper_.Flush();
   EXPECT_TRUE(IsCacheLoaded(cached_area.get()));
   EXPECT_TRUE(mock_leveldb_wrapper_.observed_get_all());
@@ -211,7 +217,8 @@ TEST_F(LocalStorageCachedAreaTest, MutationsAreIgnoredUntilClearCompletion) {
   scoped_refptr<LocalStorageCachedArea> cached_area =
       cached_areas_.GetCachedArea(kOrigin);
 
-  cached_area->Clear(kPageUrl, kStorageAreaId);
+  cached_area->Clear(kPageUrl, kStorageAreaId,
+                     blink::WebScopedVirtualTimePauser());
   mock_leveldb_wrapper_.Flush();
   EXPECT_TRUE(IsIgnoringAllMutations(cached_area.get()));
   mock_leveldb_wrapper_.CompleteOnePendingCallback(true);
@@ -221,10 +228,12 @@ TEST_F(LocalStorageCachedAreaTest, MutationsAreIgnoredUntilClearCompletion) {
   // Verify that calling Clear twice works as expected, the first
   // completion callback should have been cancelled.
   ResetCacheOnly(cached_area.get());
-  cached_area->Clear(kPageUrl, kStorageAreaId);
+  cached_area->Clear(kPageUrl, kStorageAreaId,
+                     blink::WebScopedVirtualTimePauser());
   mock_leveldb_wrapper_.Flush();
   EXPECT_TRUE(IsIgnoringAllMutations(cached_area.get()));
-  cached_area->Clear(kPageUrl, kStorageAreaId);
+  cached_area->Clear(kPageUrl, kStorageAreaId,
+                     blink::WebScopedVirtualTimePauser());
   mock_leveldb_wrapper_.Flush();
   EXPECT_TRUE(IsIgnoringAllMutations(cached_area.get()));
   mock_leveldb_wrapper_.CompleteOnePendingCallback(true);
@@ -241,7 +250,8 @@ TEST_F(LocalStorageCachedAreaTest, KeyMutationsAreIgnoredUntilCompletion) {
   mojom::LevelDBObserver* observer = cached_area.get();
 
   // SetItem
-  EXPECT_TRUE(cached_area->SetItem(kKey, kValue, kPageUrl, kStorageAreaId));
+  EXPECT_TRUE(cached_area->SetItem(kKey, kValue, kPageUrl, kStorageAreaId,
+                                   blink::WebScopedVirtualTimePauser()));
   mock_leveldb_wrapper_.CompleteOnePendingCallback(true);  // load completion
   mock_leveldb_wrapper_.Flush();
   EXPECT_FALSE(IsIgnoringAllMutations(cached_area.get()));
@@ -254,7 +264,8 @@ TEST_F(LocalStorageCachedAreaTest, KeyMutationsAreIgnoredUntilCompletion) {
   EXPECT_FALSE(IsIgnoringKeyMutations(cached_area.get(), kKey));
 
   // RemoveItem
-  cached_area->RemoveItem(kKey, kPageUrl, kStorageAreaId);
+  cached_area->RemoveItem(kKey, kPageUrl, kStorageAreaId,
+                          blink::WebScopedVirtualTimePauser());
   mock_leveldb_wrapper_.Flush();
   EXPECT_TRUE(IsIgnoringKeyMutations(cached_area.get(), kKey));
   mock_leveldb_wrapper_.CompleteOnePendingCallback(true);  // remove completion
@@ -262,8 +273,10 @@ TEST_F(LocalStorageCachedAreaTest, KeyMutationsAreIgnoredUntilCompletion) {
   EXPECT_FALSE(IsIgnoringKeyMutations(cached_area.get(), kKey));
 
   // Multiple mutations to the same key.
-  EXPECT_TRUE(cached_area->SetItem(kKey, kValue, kPageUrl, kStorageAreaId));
-  cached_area->RemoveItem(kKey, kPageUrl, kStorageAreaId);
+  EXPECT_TRUE(cached_area->SetItem(kKey, kValue, kPageUrl, kStorageAreaId,
+                                   blink::WebScopedVirtualTimePauser()));
+  cached_area->RemoveItem(kKey, kPageUrl, kStorageAreaId,
+                          blink::WebScopedVirtualTimePauser());
   mock_leveldb_wrapper_.Flush();
   EXPECT_TRUE(IsIgnoringKeyMutations(cached_area.get(), kKey));
   mock_leveldb_wrapper_.CompleteOnePendingCallback(true);  // set completion
@@ -274,7 +287,8 @@ TEST_F(LocalStorageCachedAreaTest, KeyMutationsAreIgnoredUntilCompletion) {
   EXPECT_FALSE(IsIgnoringKeyMutations(cached_area.get(), kKey));
 
   // A failed set item operation should Reset the cache.
-  EXPECT_TRUE(cached_area->SetItem(kKey, kValue, kPageUrl, kStorageAreaId));
+  EXPECT_TRUE(cached_area->SetItem(kKey, kValue, kPageUrl, kStorageAreaId,
+                                   blink::WebScopedVirtualTimePauser()));
   mock_leveldb_wrapper_.Flush();
   EXPECT_TRUE(IsIgnoringKeyMutations(cached_area.get(), kKey));
   mock_leveldb_wrapper_.CompleteOnePendingCallback(false);
@@ -317,14 +331,16 @@ TEST_F(LocalStorageCachedAreaTest, BrowserDisconnect) {
   EXPECT_EQ(kValue, cached_area->GetItem(kKey).string());
 
   // And setters should also still function.
-  cached_area->RemoveItem(kKey, kPageUrl, kStorageAreaId);
+  cached_area->RemoveItem(kKey, kPageUrl, kStorageAreaId,
+                          blink::WebScopedVirtualTimePauser());
   EXPECT_EQ(0u, cached_area->GetLength());
   EXPECT_TRUE(cached_area->GetItem(kKey).is_null());
 
   // Even resetting the cache should still allow class to function properly.
   ResetCacheOnly(cached_area.get());
   EXPECT_TRUE(cached_area->GetItem(kKey).is_null());
-  EXPECT_TRUE(cached_area->SetItem(kKey, kValue, kPageUrl, kStorageAreaId));
+  EXPECT_TRUE(cached_area->SetItem(kKey, kValue, kPageUrl, kStorageAreaId,
+                                   blink::WebScopedVirtualTimePauser()));
   EXPECT_EQ(1u, cached_area->GetLength());
   EXPECT_EQ(kValue, cached_area->GetItem(kKey).string());
 }

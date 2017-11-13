@@ -14,7 +14,14 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/nullable_string16.h"
 #include "content/common/content_export.h"
+#include "third_party/WebKit/public/platform/WebScopedVirtualTimePauser.h"
 #include "url/gurl.h"
+
+namespace blink {
+namespace scheduler {
+class RendererScheduler;
+}
+}  // namespace blink
 
 namespace content {
 
@@ -72,9 +79,15 @@ class CONTENT_EXPORT DOMStorageCachedArea
   // mutation events from other processes from overwriting local
   // changes made after the mutation.
   void OnLoadComplete(bool success);
-  void OnSetItemComplete(const base::string16& key, bool success);
-  void OnClearComplete(bool success);
-  void OnRemoveItemComplete(const base::string16& key, bool success);
+  void OnSetItemComplete(const base::string16& key,
+                         blink::WebScopedVirtualTimePauser virtual_time_pauser,
+                         bool success);
+  void OnClearComplete(blink::WebScopedVirtualTimePauser virtual_time_pauser,
+                       bool success);
+  void OnRemoveItemComplete(
+      const base::string16& key,
+      blink::WebScopedVirtualTimePauser virtual_time_pauser,
+      bool success);
 
   bool should_ignore_key_mutation(const base::string16& key) const {
     return ignore_key_mutations_.find(key) != ignore_key_mutations_.end();
@@ -87,6 +100,7 @@ class CONTENT_EXPORT DOMStorageCachedArea
   GURL origin_;
   scoped_refptr<DOMStorageMap> map_;
   scoped_refptr<DOMStorageProxy> proxy_;
+  blink::scheduler::RendererScheduler* renderer_scheduler_;  // NOT OWNED
   base::WeakPtrFactory<DOMStorageCachedArea> weak_factory_;
 };
 
