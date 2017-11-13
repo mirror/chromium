@@ -924,6 +924,55 @@ ServiceWorkerDatabase::Status ServiceWorkerDatabase::ReadUserDataByKeyPrefix(
   return status;
 }
 
+ServiceWorkerDatabase::Status
+ServiceWorkerDatabase::ReadUserKeysAndDataByKeyPrefix(
+    int64_t registration_id,
+    const std::string& user_data_name_prefix,
+    std::vector<std::pair<std::string, std::string>>*
+        user_data_key_value_pairs) {
+  DCHECK(sequence_checker_.CalledOnValidSequence());
+  DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationId, registration_id);
+  DCHECK(user_data_key_value_pairs);
+
+  Status status = LazyOpen(false);
+  if (IsNewOrNonexistentDatabase(status))
+    return STATUS_ERROR_NOT_FOUND;
+  if (status != STATUS_OK)
+    return status;
+
+  std::string prefix =
+      CreateUserDataKey(registration_id, user_data_name_prefix);
+  {
+    std::unique_ptr<leveldb::Iterator> itr(
+        db_->NewIterator(leveldb::ReadOptions()));
+    for (itr->Seek(prefix); itr->Valid(); itr->Next()) {
+      status = LevelDBStatusToStatus(itr->status());
+      if (status != STATUS_OK) {
+        user_data_key_value_pairs->clear();
+        break;
+      }
+
+      if (!itr->key().starts_with(prefix))
+        break;
+
+      std::string user_data_value;
+      status = LevelDBStatusToStatus(
+          db_->Get(leveldb::ReadOptions(), itr->key(), &user_data_value));
+      if (status != STATUS_OK) {
+        user_data_key_value_pairs->clear();
+        break;
+      }
+
+      leveldb::Slice s = itr->key();
+      s.remove_prefix(prefix.size());
+      user_data_key_value_pairs->push_back({s.ToString(), user_data_value});
+    }
+  }
+
+  HandleReadResult(FROM_HERE, status);
+  return status;
+}
+
 ServiceWorkerDatabase::Status ServiceWorkerDatabase::WriteUserData(
     int64_t registration_id,
     const GURL& origin,
