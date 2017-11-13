@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e407407c_37cf8465",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-13T07:54:40Z",
+      "side": 1,
+      "message": "We will eventually need this information as well. For example we want to open a new app window if the navigation came from an \"app\" browser window but not if it came from a regular tab. |had_target_contents| is trickier. We need it to differentiate between target\u003d_blank navigations and Ctrl + Shift + Click. The former results in the navigation having a target contents and should open a new app window. The latter doesn\u0027t result in the navigation having a target contents and shouldn\u0027t open a new app window. I\u0027ll keep the first CL to only disposition but we\u0027ll eventually need the other two bools as well.\n\nI thought I should include the change since it seems like something that could fit in the current model.",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04da3c60_593f68cf",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-13T07:54:40Z",
+      "side": 1,
+      "message": "This passes a bare pointer but it\u0027s totally unsafe. I was thinking of making it a unique_ptr but that would mean making LoadURLParams move-only. Do you think it\u0027s OK?",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ddcb78_a715c4e2",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-13T07:54:40Z",
+      "side": 1,
+      "message": "Curious as to why started_from_context_menu is in NavigationEntry. It seems very similar to disposition and was introduced for a very similar reason i.e. a NavigationThrottle needed it[1]. You mentioned before that NavigationEntry is not appropriate for disposition since it\u0027s for information that should be kept even after the navigation ends, so it seems started_from_context_menu is also not appropriate for NavigationEntry. It seems to fit better in NavigationUIData.\n\n[1] https://crrev.com/2304783002",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb73fc1d_9c03d2a4",
+        "filename": "extensions/browser/extension_navigation_ui_data.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-13T07:54:40Z",
+      "side": 1,
+      "message": "Curious as to what you think of this. The other constructor for this class took a NavigationHandle which meant we had access to the RenderFrameHost for that navigation. I couldn\u0027t find a way to get a RendererFrameHost from LoadURLInContents except passing the frame_node_id and then using ExtensionApiFrameIdMap::GetRenderFrameHostById which uses an unsafe method.\n\nAn alternative could be to keep ExtensionNavigationUIData null at the start and then update it when the NavigationHandle retrieves the NavigationUIData from its delegate. So in navigation_handle_impl.cc instead of checking if there is a NavigationUIData before retrieving one from the delegate we would pass one to the delegate for it to update. WDYT?",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
