@@ -993,8 +993,12 @@ void TextControlElement::SetSuggestedValue(const String& value) {
   UpdatePlaceholderText();
 
   HTMLElement* placeholder = PlaceholderElement();
-  if (!placeholder)
+  if (!placeholder) {
+    SetPlaceholderVisibility(PlaceholderShouldBeVisible());
+    PseudoStateChanged(CSSSelector::kPseudoPlaceholderShown);
     return;
+  }
+
   UpdatePlaceholderVisibility();
 
   // Change the pseudo-id to set the style for suggested values or reset the
