@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "30b4f58e_6a5267c5",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-13T19:57:53Z",
+      "side": 1,
+      "message": "\u003e yzshen@: May I have 2 questions about the promise of error handlers?\n\u003e * At this line of code, |network_context| could have already |encountered_error()|. Is it still safe to create |url_loader_factory|, and even create URLLoader and pass in URLLoaderClientPtr?\n\nYes, it is still safe to do so. In that case, messages sent using |network_context| will be discarded, and the interface ptrs / requests in the messages will be closed.\n\nThat means |url_loader_factory| will get a connection error notification. And that happens asynchronously. (Therefore, url_loader_factory.encountered_error() is still false at this point.)\n\n\u003e \n\u003e * Is it guaranteed that InterfacePtr\u0027s error_handler will be called, even if the parent interface has encountered error and dropped the request message?\n\nYes!",
+      "parentUuid": "e46915d9_f839d674",
+      "revId": "8194fa938e70333efa26a39ee6de6e6e4b77f0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a34930c_7f4f2420",
         "filename": "content/browser/network_service_restart_browsertest.cc",
         "patchSetId": 5
@@ -53,6 +71,24 @@
         "endLine": 93,
         "endChar": 32
       },
+      "revId": "8194fa938e70333efa26a39ee6de6e6e4b77f0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636da2af_08b402a9",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-13T19:57:53Z",
+      "side": 1,
+      "message": "|network_context| is guaranteed to received a connection error notification, but it is not guaranteed that at this point it has arrived.",
+      "parentUuid": "4a34930c_7f4f2420",
       "revId": "8194fa938e70333efa26a39ee6de6e6e4b77f0f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
