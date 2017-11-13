@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "74739cce_6a4343ff",
+        "filename": "third_party/content_shell_fonts/LICENSE",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-13T10:04:02Z",
+      "side": 1,
+      "message": "Moved all licenses to LICENSE file, describe which of the files they individually apply to.",
+      "parentUuid": "09dd6430_1d54212c",
+      "revId": "be2bba0ca7c7a2e84950305e50d3842ae6fbeb04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3664319_1cad0b6d",
         "filename": "third_party/content_shell_fonts/README.chromium",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-12T07:28:15Z",
       "side": 1,
       "message": "list the download location(s) here, not in the LICENSE file.  Note that we have moved over to METADATA files rather than README.* files, which formally allow for multiple URLs to be listed.  I don\u0027t know that chromium has moved over to the new format yet, so using either is fine for now, provided the necessary data is present.\n\n(more info on thirdparty METADATA files: https://opensource.google.com/docs/thirdparty/metadata/)",
+      "revId": "be2bba0ca7c7a2e84950305e50d3842ae6fbeb04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30475304_dfafde09",
+        "filename": "third_party/content_shell_fonts/README.chromium",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-11-13T10:04:02Z",
+      "side": 1,
+      "message": "Added the URLs here and in an added \"Font Origins\" section in the readme part below.",
+      "parentUuid": "a3664319_1cad0b6d",
       "revId": "be2bba0ca7c7a2e84950305e50d3842ae6fbeb04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
