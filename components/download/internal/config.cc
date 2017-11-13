@@ -15,6 +15,10 @@ namespace download {
 
 namespace {
 
+// Default value for battery query interval.
+const base::TimeDelta kDefaultBatteryQueryInterval =
+    base::TimeDelta::FromSeconds(120);
+
 // Default value for max concurrent downloads configuration.
 const uint32_t kDefaultMaxConcurrentDownloads = 4;
 
@@ -87,6 +91,10 @@ uint32_t GetFinchConfigUInt(const std::string& name, uint32_t default_value) {
 // static
 std::unique_ptr<Configuration> Configuration::CreateFromFinch() {
   std::unique_ptr<Configuration> config(new Configuration());
+  config->battery_query_interval =
+      base::TimeDelta::FromSeconds(base::saturated_cast<int>(
+          GetFinchConfigUInt(kBatteryQueryIntervalConfig,
+                             kDefaultBatteryQueryInterval.InSeconds())));
   config->max_concurrent_downloads = GetFinchConfigUInt(
       kMaxConcurrentDownloadsConfig, kDefaultMaxConcurrentDownloads);
   config->max_running_downloads = GetFinchConfigUInt(
@@ -139,7 +147,8 @@ std::unique_ptr<Configuration> Configuration::CreateFromFinch() {
 }
 
 Configuration::Configuration()
-    : max_concurrent_downloads(kDefaultMaxConcurrentDownloads),
+    : battery_query_interval(kDefaultBatteryQueryInterval),
+      max_concurrent_downloads(kDefaultMaxConcurrentDownloads),
       max_running_downloads(kDefaultMaxRunningDownloads),
       max_scheduled_downloads(kDefaultMaxScheduledDownloads),
       max_retry_count(kDefaultMaxRetryCount),
