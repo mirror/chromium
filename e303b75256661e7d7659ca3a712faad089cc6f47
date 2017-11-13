@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4330d80_59c6106a",
+        "filename": "chrome/browser/clipboard/clipboard_permission_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-13T06:07:58Z",
+      "side": 1,
+      "message": "nit: please add ./chrome/browser/permissions/PERMISSIONS_OWNERS to the OWNERS of this file",
+      "revId": "e303b75256661e7d7659ca3a712faad089cc6f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a511d518_f461a609",
+        "filename": "chrome/browser/permissions/permission_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-13T06:07:58Z",
+      "side": 1,
+      "message": "This is going to gate both read and write on the clipboard setting, which I don\u0027t think we want, right? I think we may unfortunately have to add a CONTENT_SETTINGS_TYPE_CLIPBOARD_READ and WRITE and a related PermissionContext subclass (there isn\u0027t really another simple way to auto-grant perimission right now). \n\nYou can look at midi_permission_context.cc which is similar to write in the sense that it\u0027s always granted. Actually, please just rename midi_permission_context.cc to always_granted_permission_context.cc (and related class names etc.). It can simply take a ContentSettingsType as an argument to the constructor. It can then be used for both write and midi.",
+      "revId": "e303b75256661e7d7659ca3a712faad089cc6f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723d3aa8_d08f0c50",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-13T06:07:58Z",
+      "side": 1,
+      "message": "nit: settings-\u003esetting \nstore-\u003estores",
+      "revId": "e303b75256661e7d7659ca3a712faad089cc6f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7652e8af_b0841fb3",
+        "filename": "content/browser/permissions/permission_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-13T06:07:58Z",
+      "side": 1,
+      "message": "Is this line needed here and below? In the case of midi it looks like it\u0027s only used to pull something out of the midi-specific descriptor.",
+      "revId": "e303b75256661e7d7659ca3a712faad089cc6f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
