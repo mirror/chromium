@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56dd048c_19bfab29",
+        "filename": "net/cert/cert_verify_proc_nss.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-13T22:48:27Z",
+      "side": 1,
+      "message": "Can you add a comment here? The goal of the comment would be to explain to readers why this is being placed in read-only memory.\n\nMaybe something like:\n\n// The function pointer for CERT_CacheOCSPResponseFromSideChannel is saved to read-only\n// memory after dynamically loading it. This is done as a security mitigation to prevent\n// the function pointer from being tampered with.\n// See crbug.com/771365 for details on this code pattern.\n\nI don\u0027t think this comment needs to mention that CFI is also disabled when making the indirect function call later, but I will leave the exact wording up to you :)",
+      "revId": "ce7cbee31679097c3fa492e5a94aa1977e501237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
