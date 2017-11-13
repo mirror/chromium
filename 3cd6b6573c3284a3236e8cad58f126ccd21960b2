@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "741791ef_661c9306",
+        "filename": "chrome/android/java/res/drawable-hdpi/ic_drag_handle_grey600_24dp.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "All pngs were downloaded from go/icons, after running optimize-png-files, 3 bytes is saved in total.",
+      "parentUuid": "64b5ea57_ad0c9187",
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7a69bc8_fa16f8b5",
         "filename": "chrome/android/java/res/layout/accept_languages_item.xml",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-10T18:13:22Z",
       "side": 1,
       "message": "modern_list_item_view.xml is what we use for other list UI\u0027s. It has a start icon and a block of text. For history and bookmarks, we include list layout in a linear layout and put an image button on the end.\n\nPlease see if this approach will work for you as well. This helps us keep our list item styling (e.g. padding, text, etc) consistent.",
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b31100a_ba74e562",
+        "filename": "chrome/android/java/res/layout/accept_languages_item.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "Thanks for the tips, it\u0027s very helpful. I will change it to modern_list_item.",
+      "parentUuid": "e7a69bc8_fa16f8b5",
       "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06a4ca9_5b66d98c",
+        "filename": "chrome/android/java/res/layout/accept_languages_item.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8884665d_4e0c0a1d",
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +153,30 @@
     },
     {
       "key": {
+        "uuid": "a224e04c_5c4351be",
+        "filename": "chrome/android/java/res/layout/accept_languages_list.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "ac22e5b1_2e6dde06",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b423c6a_f38e7693",
         "filename": "chrome/android/java/res/layout/accept_languages_list.xml",
         "patchSetId": 1
@@ -110,6 +188,30 @@
       "writtenOn": "2017-11-10T18:13:22Z",
       "side": 1,
       "message": "Why horizontal?",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b2987a8_398c6c60",
+        "filename": "chrome/android/java/res/layout/accept_languages_list.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "Changed to vertical. it runs correctly because I reset its layout manager in LanguageListPreference.java",
+      "parentUuid": "9b423c6a_f38e7693",
       "range": {
         "startLine": 24,
         "startChar": 8,
@@ -145,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "1b0e8616_0402eb27",
+        "filename": "chrome/android/java/res/layout/accept_languages_list.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "50191d28_4dae2b93",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cc462fa_a1858762",
         "filename": "chrome/android/java/res/layout/accept_languages_list.xml",
         "patchSetId": 1
@@ -156,6 +282,30 @@
       "writtenOn": "2017-11-10T18:13:22Z",
       "side": 1,
       "message": "I think this should actually be a preference. Let\u0027s try to re-use the code that does the \"+ Add address\" and \"+ Add card\" lines for our autofill preferences. We should probably extract this code somewhere re-useable, maybe in PreferenceUtil.java\n\n\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillCreditCardsFragment.java?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d66",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 42
+      },
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ef0bda_d2923178",
+        "filename": "chrome/android/java/res/layout/accept_languages_list.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "That\u0027s exactly what I need. Thanks.\n\nUnfortunately, I haven\u0027t found a good solution to insert a Preference into the customized layout. Will try again tmr.",
+      "parentUuid": "6cc462fa_a1858762",
       "range": {
         "startLine": 28,
         "startChar": 4,
@@ -214,6 +364,30 @@
     },
     {
       "key": {
+        "uuid": "ef823406_a4da8894",
+        "filename": "chrome/android/java/res/layout/accept_languages_options.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82a82f16_a23051d4",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 10
+      },
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98cb1d55_df0cc9b5",
         "filename": "chrome/android/java/res/layout/accept_languages_options.xml",
         "patchSetId": 1
@@ -225,6 +399,30 @@
       "writtenOn": "2017-11-10T18:13:22Z",
       "side": 1,
       "message": "What happens if you remove this?",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 34
+      },
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165486f6_92a5bbab",
+        "filename": "chrome/android/java/res/layout/accept_languages_options.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "Did\u0027t find any difference in my testings, so remove this attribute.",
+      "parentUuid": "98cb1d55_df0cc9b5",
       "range": {
         "startLine": 9,
         "startChar": 4,
@@ -283,6 +481,54 @@
     },
     {
       "key": {
+        "uuid": "1e213a12_e0baf655",
+        "filename": "chrome/android/java/res/layout/accept_languages_options.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "54cc2108_9703212f",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 40
+      },
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40c2abe2_b0d19738",
+        "filename": "chrome/android/java/res/layout/accept_languages_options.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "Add a \"Options\" accessibility message as bookmarks overflow icon.",
+      "parentUuid": "c2a40bee_41e5524a",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 37
+      },
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1f03413_61fcb453",
         "filename": "chrome/android/java/res/layout/accept_languages_options_dropdown.xml",
         "patchSetId": 1
@@ -300,6 +546,24 @@
     },
     {
       "key": {
+        "uuid": "ff8e6022_c5fd9d86",
+        "filename": "chrome/android/java/res/layout/accept_languages_options_dropdown.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d1f03413_61fcb453",
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35db8eb3_27246f02",
         "filename": "chrome/android/java/res/xml/languages_preferences.xml",
         "patchSetId": 1
@@ -311,6 +575,30 @@
       "writtenOn": "2017-11-10T18:13:22Z",
       "side": 1,
       "message": "In the screenshot there\u0027s a divider line after this preference, so it appears this isn\u0027t working as expected.",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 34
+      },
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e71d260_26a82505",
+        "filename": "chrome/android/java/res/xml/languages_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "Thanks for the catching, I copied this preference from \"Google Translate\" page.\nhttps://cs.chromium.org/chromium/src/chrome/android/java/res/xml/translate_preferences.xml?l\u003d14\u0026rcl\u003d545c7449e8b9d13860c1dbaca4c1d7dc143aad5f\n\nSeems simply change the value to \"false\" didn\u0027t work.",
+      "parentUuid": "35db8eb3_27246f02",
       "range": {
         "startLine": 19,
         "startChar": 7,
@@ -346,6 +634,30 @@
     },
     {
       "key": {
+        "uuid": "cb037f60_bd89a4af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "Thanks for the suggestion, looks replacing Spinner to Popup* needs to change a lots of relevant code. \nAnd I am planning to create a popup helper to reuse one popup window for all languages in the list, which will be a big change.\nHow about adding a TODO here and make the changes with the code refactor (line 56).",
+      "parentUuid": "a1edbc0f_77a79f33",
+      "range": {
+        "startLine": 94,
+        "startChar": 24,
+        "endLine": 94,
+        "endChar": 31
+      },
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73616b26_d41ab0dc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 1
@@ -363,6 +675,24 @@
     },
     {
       "key": {
+        "uuid": "b0f1d307_ad7a4104",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "This is used to show some Option with status. See the mock below\nhttps://screenshot.googleplex.com/gsXRiw3JV8v\n\nHowever, current native API didn\u0027t pass this info with the language list, so I couldn\u0027t use it until the backend is ready. This method is only used to test UI layout locally.",
+      "parentUuid": "73616b26_d41ab0dc",
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "129c06ba_ad30b80a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
         "patchSetId": 1
@@ -374,6 +704,30 @@
       "writtenOn": "2017-11-10T18:13:22Z",
       "side": 1,
       "message": "What\u0027s this for?",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "3cd6b6573c3284a3236e8cad58f126ccd21960b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8f69b7_445e7e73",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-13T15:00:15Z",
+      "side": 1,
+      "message": "Used to turn off/one translate. Pasted the mocks below\nhttps://screenshot.googleplex.com/AHdaiTVQaDa\n\nIt\u0027s kind of duplicate with \"Google Translate\" prefs under \"Site Settings\", PM prefers to keep the switch here, So I may have to kill the \"Google translate\" Page later.",
+      "parentUuid": "129c06ba_ad30b80a",
       "range": {
         "startLine": 35,
         "startChar": 6,
