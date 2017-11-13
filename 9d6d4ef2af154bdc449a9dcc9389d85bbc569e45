@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54029313_dd543ea7",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-13T19:57:50Z",
+      "side": 1,
+      "message": "I guess this is where you were saying there can be aliasing between back-to-back sources vs. viz sources.\n\nWould reserving an process id of 0 for any source that isn\u0027t forwarded to another process solve the back-to-back issue?\n\nOtherwise, I think this is approach is good since I don\u0027t think there are plans to create centralized sources from two different processes.",
+      "revId": "9d6d4ef2af154bdc449a9dcc9389d85bbc569e45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
