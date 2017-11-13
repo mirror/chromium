@@ -149,4 +149,34 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppHelperTest, InvokeDialog_create) {
   RunDialog();
 }
 
+// PWADialogTest checks that a PWA-install dialog is created for an app which
+// is a valid Progressive Web App.
+class PWADialogTest : public DialogBrowserTest {
+ public:
+  PWADialogTest() {}
+
+  // DialogBrowserTest:
+  void ShowDialog(const std::string& name) override {
+    ASSERT_TRUE(embedded_test_server()->Start());
+    AddTabAtIndex(1,
+                  GURL(embedded_test_server()->GetURL(
+                      "/banners/manifest_test_page.html")),
+                  ui::PAGE_TRANSITION_LINK);
+
+    scoped_refptr<WebAppReadyMsgWatcher> filter =
+        new WebAppReadyMsgWatcher(browser());
+    GetActiveRenderWidgetHost(browser())->GetProcess()->AddFilter(filter.get());
+    chrome::ExecuteCommand(browser(), IDC_CREATE_HOSTED_APP);
+    filter->Wait();
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(PWADialogTest);
+};
+
+// Launches an installation confirmation dialog for a PWA.
+IN_PROC_BROWSER_TEST_F(PWADialogTest, InvokeDialog_create) {
+  RunDialog();
+}
+
 }  // namespace extensions
