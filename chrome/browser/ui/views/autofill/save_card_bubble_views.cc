@@ -32,7 +32,6 @@
 #include "ui/views/controls/styled_label.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/layout/box_layout.h"
-#include "ui/views/window/dialog_client_view.h"
 
 namespace autofill {
 
@@ -126,7 +125,7 @@ bool SaveCardBubbleViews::Accept() {
     GetWidget()->UpdateWindowTitle();
     GetWidget()->UpdateWindowIcon();
     // Disable the Save button until a valid CVC is entered:
-    GetDialogClientView()->UpdateDialogButtons();
+    DialogModelChanged();
     // Make the legal messaging footer appear:
     DCHECK(footnote_view_);
     footnote_view_->SetVisible(true);
@@ -270,7 +269,7 @@ void SaveCardBubbleViews::StyledLabelLinkClicked(views::StyledLabel* label,
 void SaveCardBubbleViews::ContentsChanged(views::Textfield* sender,
                                           const base::string16& new_contents) {
   DCHECK_EQ(cvc_textfield_, sender);
-  GetDialogClientView()->UpdateDialogButtons();
+  DialogModelChanged();
 }
 
 SaveCardBubbleViews::~SaveCardBubbleViews() {}
