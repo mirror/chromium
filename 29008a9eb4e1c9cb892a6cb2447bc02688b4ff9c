@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "39eaeb78_e366ea93",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T16:54:17Z",
+      "side": 1,
+      "message": "i\u0027ve sent https://crrev.com/c/766549 to make OnDailyEvent get the reason for the notification.",
+      "parentUuid": "520ba6ec_98a8b8de",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "171ae0c7_3b641672",
         "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
         "patchSetId": 1
