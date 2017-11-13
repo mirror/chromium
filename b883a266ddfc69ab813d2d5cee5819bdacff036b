@@ -493,6 +493,24 @@
     },
     {
       "key": {
+        "uuid": "d891bd50_df8d886d",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-13T16:03:47Z",
+      "side": 1,
+      "message": "FWIW, I think frametoken should go through FrameSinkManagerClient for a couple of reasons. 1. the Viz host has the canonical view of the embedding hierarchy (viz can be stale) and so we should go to the host for finding the parent. 2. I\u0027m not sure the parent client in the case of OOPIF cares about frame tokens...it depends on how we end up using them with OOPIFs ( we don\u0027t really at the moment ). I suspect the viz host cares more than the parent.",
+      "parentUuid": "e78e2545_a2ee6848",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10f50c8e_20880f4e",
         "filename": "ui/android/delegated_frame_host_android.cc",
         "patchSetId": 14
