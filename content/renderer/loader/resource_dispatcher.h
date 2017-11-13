@@ -122,6 +122,8 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
       blink::WebURLRequest::LoadingIPCType ipc_type,
       mojom::URLLoaderFactory* url_loader_factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
+      mojom::URLLoaderPtr url_loader,
+      mojom::URLLoaderClientRequest url_loader_client,
       mojo::ScopedDataPipeConsumerHandle consumer_handle);
 
   // Removes a request from the |pending_requests_| list, returning true if the
@@ -266,6 +268,8 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
 
   void ContinueForNavigation(
       int request_id,
+      mojom::URLLoaderPtr url_loader,
+      mojom::URLLoaderClientRequest url_loader_client,
       mojo::ScopedDataPipeConsumerHandle consumer_handle);
 
   // Returns true if the message passed in is a resource related message.
