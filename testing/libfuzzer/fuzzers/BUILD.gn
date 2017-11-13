@@ -505,3 +505,16 @@ fuzzer_test("javascript_parser_proto_fuzzer") {
   ]
   include_dirs = [ "$root_build_dir/$target_gen_dir" ]
 }
+
+fuzzer_test("v8_fully_instrumented_fuzzer") {
+  sources = [
+    "v8_fuzzer.cc",
+  ]
+  deps = [
+    "//v8:v8",
+    "//v8:v8_libplatform",
+  ]
+  dict = "dicts/generated/v8_script_parser_fuzzer.dict"
+  seed_corpus = "//v8/test/mjsunit/regress/"
+  libfuzzer_options = [ "only_ascii=1" ]
+}
