@@ -472,6 +472,7 @@ class MockNestingObserver : public RunLoop::NestingObserver {
 
   // RunLoop::NestingObserver:
   MOCK_METHOD0(OnBeginNestedRunLoop, void());
+  MOCK_METHOD0(OnExitNestedRunLoop, void());
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockNestingObserver);
@@ -495,13 +496,18 @@ TEST_P(RunLoopTest, NestingObservers) {
     nested_run_loop.Run();
   });
 
-  // Generate a stack of nested RunLoops, an OnBeginNestedRunLoop() is
-  // expected when beginning each nesting depth.
+  // Generate a stack of nested RunLoops. OnBeginNestedRunLoop() is expected
+  // when beginning each nesting depth and OnExitNestedRunLoop() is expected
+  // when exiting each nesting depth.
   ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, run_nested_loop);
   ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, run_nested_loop);
   ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, run_loop_.QuitClosure());
 
-  EXPECT_CALL(nesting_observer, OnBeginNestedRunLoop()).Times(2);
+  {
+    testing::InSequence in_sequence;
+    EXPECT_CALL(nesting_observer, OnBeginNestedRunLoop()).Times(2);
+    EXPECT_CALL(nesting_observer, OnExitNestedRunLoop()).Times(2);
+  }
   run_loop_.Run();
 
   RunLoop::RemoveNestingObserverOnCurrentThread(&nesting_observer);

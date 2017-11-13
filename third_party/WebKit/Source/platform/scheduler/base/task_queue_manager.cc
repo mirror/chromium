@@ -179,6 +179,17 @@ void TaskQueueManager::OnBeginNestedRunLoop() {
   delegate_->PostTask(FROM_HERE, immediate_do_work_closure_);
 }
 
+void TaskQueueManager::OnExitNestedRunLoop() {
+  {
+    base::AutoLock lock(any_thread_lock_);
+    DCHECK(any_thread().is_nested);
+    any_thread().is_nested = false;
+  }
+
+  if (observer_)
+    observer_->OnExitNestedRunLoop();
+}
+
 void TaskQueueManager::OnQueueHasIncomingImmediateWork(
     internal::TaskQueueImpl* queue,
     internal::EnqueueOrder enqueue_order,
