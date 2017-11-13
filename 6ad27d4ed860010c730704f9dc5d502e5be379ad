@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23eb561b_b036b504",
+        "filename": "components/viz/common/frame_sinks/begin_frame_source.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-13T19:42:11Z",
+      "side": 1,
+      "message": "Does this need a cast to 32 bits before shifting?",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "6ad27d4ed860010c730704f9dc5d502e5be379ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2bc3f16_7139cf2f",
+        "filename": "components/viz/common/frame_sinks/begin_frame_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-13T19:42:11Z",
+      "side": 1,
+      "message": "Although not technically against the style guide here, I wonder if we should avoid a default value of zero since it\u0027ll be easy for someone in the future to create a source without thinking about which id to choose.",
+      "revId": "6ad27d4ed860010c730704f9dc5d502e5be379ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
