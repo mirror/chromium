@@ -7117,6 +7117,7 @@ void GLES2Implementation::CreateTransferCacheEntryCHROMIUM(
     const cc::ClientTransferCacheEntry& entry) {
   ScopedMappedMemoryPtr mapped_alloc(entry.SerializedSize(), helper_,
                                      mapped_memory_.get());
+  mapped_alloc.SetFlushAfterRelease(true);
   DCHECK(mapped_alloc.valid());
   bool succeeded = entry.Serialize(
       mapped_alloc.size(), reinterpret_cast<uint8_t*>(mapped_alloc.address()));
@@ -7167,6 +7168,41 @@ void GLES2Implementation::Viewport(GLint x,
 #if !defined(OS_NACL)
 struct SerializeHelper {
  public:
+  class TransferCacheHelperImpl : public cc::TransferCacheHelper {
+   public:
+    TransferCacheHelperImpl(gles2::GLES2Interface* gl,
+                            CommandBuffer* command_buffer,
+                            ClientTransferCache* transfer_cache)
+        : gl_(gl),
+          command_buffer_(command_buffer),
+          transfer_cache_(transfer_cache) {}
+    ~TransferCacheHelperImpl() override {
+      for (const auto& id : ids_to_unlock_) {
+        transfer_cache_->UnlockTransferCacheEntry(gl_, id);
+      }
+    }
+    cc::TransferCacheEntryId CreateCacheEntry(
+        std::unique_ptr<cc::ClientTransferCacheEntry> entry) override {
+      cc::TransferCacheEntryId id = transfer_cache_->CreateCacheEntry(
+          gl_, command_buffer_, std::move(entry));
+      ids_to_unlock_.push_back(id);
+      return id;
+    }
+    bool LockTransferCacheEntry(cc::TransferCacheEntryId id) override {
+      if (transfer_cache_->LockTransferCacheEntry(id)) {
+        ids_to_unlock_.push_back(id);
+        return true;
+      }
+      return false;
+    }
+
+   private:
+    gles2::GLES2Interface* gl_;
+    CommandBuffer* command_buffer_;
+    ClientTransferCache* transfer_cache_;
+    std::vector<cc::TransferCacheEntryId> ids_to_unlock_;
+  };
+
   SerializeHelper(cc::PaintOp::SerializeOptions& options,
                   size_t initial_size,
                   TransferBufferInterface* transfer_buffer,
@@ -7299,6 +7335,9 @@ void GLES2Implementation::RasterCHROMIUM(const cc::DisplayItemList* list,
   static constexpr unsigned int kMinAlloc = 16 * 1024;
   unsigned int free_size = std::max(transfer_buffer_->GetFreeSize(), kMinAlloc);
   cc::PaintOp::SerializeOptions options;
+  SerializeHelper::TransferCacheHelperImpl impl(
+      this, helper_->command_buffer(), share_group()->transfer_cache());
+  options.transfer_cache = &impl;
   SerializeHelper serializer(options, free_size, transfer_buffer_, helper_);
 
   // This section duplicates RasterSource::PlaybackToCanvas setup preamble.

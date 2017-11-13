@@ -13,6 +13,7 @@
 namespace cc {
 
 class PaintShader;
+class TransferCacheDeserializeHelper;
 
 // PaintOpReader takes garbage |memory| and clobbers it with successive
 // read functions.
@@ -42,7 +43,7 @@ class CC_PAINT_EXPORT PaintOpReader {
 
   void Read(SkPath* path);
   void Read(PaintFlags* flags);
-  void Read(PaintImage* image);
+  void Read(PaintImage* image, TransferCacheDeserializeHelper* transfer_cache);
   void Read(sk_sp<SkData>* data);
   void Read(sk_sp<SkTextBlob>* blob);
   void Read(sk_sp<PaintShader>* shader);

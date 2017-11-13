@@ -7,8 +7,11 @@
 #include <stddef.h>
 
 #include "cc/paint/paint_flags.h"
+#include "cc/paint/paint_image_builder.h"
 #include "cc/paint/paint_op_buffer.h"
 #include "cc/paint/paint_shader.h"
+#include "cc/paint/raw_memory_transfer_cache_entry.h"
+#include "cc/paint/transfer_cache_deserialize_helper.h"
 #include "third_party/skia/include/core/SkFlattenableSerialization.h"
 #include "third_party/skia/include/core/SkPath.h"
 #include "third_party/skia/include/core/SkRRect.h"
@@ -184,8 +187,21 @@ void PaintOpReader::Read(PaintFlags* flags) {
   Read(&flags->shader_);
 }
 
-void PaintOpReader::Read(PaintImage* image) {
-  // TODO(enne): implement PaintImage serialization: http://crbug.com/737629
+void PaintOpReader::Read(PaintImage* image,
+                         TransferCacheDeserializeHelper* transfer_cache) {
+  uint64_t id_uint;
+  LOG(ERROR) << "HIHIHI";
+  ReadSimple(&id_uint);
+  LOG(ERROR) << "HIHIHI2";
+  CHECK(transfer_cache);
+  auto* entry = transfer_cache->GetEntry<ServiceRawMemoryTransferCacheEntry>(
+      TransferCacheEntryId::FromUnsafeValue(id_uint));
+  LOG(ERROR) << "HIHIHI3";
+  if (entry)
+    *image = PaintImageBuilder::WithDefault()
+                 .set_image(entry->GetImage())
+                 .set_id(id_uint)
+                 .TakePaintImage();
 }
 
 void PaintOpReader::Read(sk_sp<SkData>* data) {
