@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bfec3f0_6df80055",
+        "filename": "media/gpu/android/codec_image.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-11-13T22:28:02Z",
+      "side": 1,
+      "message": "NIT: can you rephrase this comment?",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 58
+      },
+      "revId": "776ab573fb42b683ef463eb479b771f3f6665b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2b34d5_4b2e91ad",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-11-13T22:28:02Z",
+      "side": 1,
+      "message": "TODO?",
+      "range": {
+        "startLine": 286,
+        "startChar": 48,
+        "endLine": 286,
+        "endChar": 64
+      },
+      "revId": "776ab573fb42b683ef463eb479b771f3f6665b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d4582b_c4d8c001",
+        "filename": "media/gpu/android/promotion_hint_aggregator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-11-13T22:28:02Z",
+      "side": 1,
+      "message": "Needed?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 60
+      },
+      "revId": "776ab573fb42b683ef463eb479b771f3f6665b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
