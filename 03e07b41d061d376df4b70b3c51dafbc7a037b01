@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c944d3ac_4a47e237",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-13T07:26:43Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "25573d28_bf778227",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "03e07b41d061d376df4b70b3c51dafbc7a037b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5107297_55b2ce2e",
         "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.h",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-09T03:01:42Z",
       "side": 1,
       "message": "needed?  (Please prune the rest of these, too)",
+      "revId": "03e07b41d061d376df4b70b3c51dafbc7a037b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d43f86b_bae6b3dd",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-13T07:26:43Z",
+      "side": 1,
+      "message": "Removed all extraneous includes.",
+      "parentUuid": "d5107297_55b2ce2e",
       "revId": "03e07b41d061d376df4b70b3c51dafbc7a037b01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "ac02d2f7_0234afe8",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-13T07:26:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b97877f_f40c2e3c",
+      "revId": "03e07b41d061d376df4b70b3c51dafbc7a037b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a54822c7_a0b43786",
         "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
         "patchSetId": 6
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-09T03:01:42Z",
       "side": 1,
       "message": "git cl format fail :)",
+      "revId": "03e07b41d061d376df4b70b3c51dafbc7a037b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e422ac57_2d2ae2c1",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-13T07:26:43Z",
+      "side": 1,
+      "message": "Oof! Add clang-format off and filed bug 784266.",
+      "parentUuid": "a54822c7_a0b43786",
       "revId": "03e07b41d061d376df4b70b3c51dafbc7a037b01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "d5297823_5aae3254",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-13T07:26:43Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be possible. Removed.",
+      "parentUuid": "90037391_55dbbb45",
+      "revId": "03e07b41d061d376df4b70b3c51dafbc7a037b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98ae655d_6e8a285b",
         "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.h",
         "patchSetId": 6
@@ -104,6 +200,30 @@
       "writtenOn": "2017-11-09T03:01:42Z",
       "side": 1,
       "message": "Not this CL\u0027s code - but what does \"in_out\" mean?  Should this just be \"out\"?",
+      "range": {
+        "startLine": 49,
+        "startChar": 50,
+        "endLine": 49,
+        "endChar": 57
+      },
+      "revId": "03e07b41d061d376df4b70b3c51dafbc7a037b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314b6856_f87c147e",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-13T07:26:43Z",
+      "side": 1,
+      "message": "It\u0027s an input to this function *and* it may be modified upon return.\n\nA node is uniquely specified by a (tree, node) pair. Given a tree and\na node, return its parent node - but if you\u0027re at the root of a tree,\nreturns the host node in the parent tree (modifying the tree_wrapper\nargument).\n\nI added this comment to the header file.",
+      "parentUuid": "98ae655d_6e8a285b",
       "range": {
         "startLine": 49,
         "startChar": 50,

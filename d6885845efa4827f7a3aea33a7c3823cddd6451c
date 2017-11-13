@@ -16,6 +16,24 @@
       "revId": "d6885845efa4827f7a3aea33a7c3823cddd6451c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e3058e_6b1700eb",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-13T07:26:43Z",
+      "side": 0,
+      "message": "You\u0027re right. I wanted to remove the \"delete cache\" since these are\nunique_ptrs now and we don\u0027t have to free the memory explicitly anymore,\nbut clearing the map on Invalidate is still probably a good idea.",
+      "parentUuid": "beef0f19_b1b5e69f",
+      "revId": "d6885845efa4827f7a3aea33a7c3823cddd6451c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
