@@ -321,7 +321,7 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, DisabledFieldsAreIgnored) {
 }
 
 TEST_F(MAYBE_PasswordFormConversionUtilsTest,
-       IdentifyingUsernameFieldsFromDeveloperGroupWithHTMLDetector) {
+       HTMLDetector_DeveloperGroupAttributes) {
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(
       password_manager::features::kEnableHtmlBasedUsernameDetector);
@@ -402,10 +402,7 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
        "loginusername",
        "johnsmith"},
       // Check treatment for short dictionary words.
-      {{"identity_name", "", "johnsmith"},
-       {"email", "", "js@google.com"},
-       "email",
-       "js@google.com"}};
+      {{"id", "id", "123"}, {"identity_name", "", "johnsmith"}, "id", "123"}};
 
   for (size_t i = 0; i < arraysize(cases); ++i) {
     SCOPED_TRACE(testing::Message() << "Iteration " << i);
@@ -433,6 +430,12 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
     EXPECT_EQ(base::UTF8ToUTF16(cases[i].expected_username_value),
               password_form->username_value);
   }
+}
+
+TEST_F(MAYBE_PasswordFormConversionUtilsTest, HTMLDetector_SeveralDetections) {
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndEnableFeature(
+      password_manager::features::kEnableHtmlBasedUsernameDetector);
 
   // If word matches in more than 2 fields, we don't match on it.
   // We search for match with another word.
@@ -456,7 +459,7 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
 }
 
 TEST_F(MAYBE_PasswordFormConversionUtilsTest,
-       IdentifyingUsernameFieldsFromUserGroupWithHTMLDetector) {
+       HTMLDetector_UserGroupAttributes) {
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(
       password_manager::features::kEnableHtmlBasedUsernameDetector);
@@ -596,7 +599,7 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, HTMLDetectorCache) {
   // will be the same because it was cached in |username_detector_cache|.
   WebVector<WebFormControlElement> control_elements;
   form.GetFormControlElements(control_elements);
-  control_elements[0].SetAttribute("name", "login");
+  control_elements[0].SetAttribute("name", "id");
   password_form = CreatePasswordFormFromWebForm(form, nullptr, nullptr,
                                                 &username_detector_cache);
   EXPECT_TRUE(password_form);
@@ -613,7 +616,7 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, HTMLDetectorCache) {
   ASSERT_EQ(1u, username_detector_cache.size());
   EXPECT_EQ(form, username_detector_cache.begin()->first);
   ASSERT_FALSE(username_detector_cache.begin()->second.IsNull());
-  EXPECT_EQ("login",
+  EXPECT_EQ("id",
             username_detector_cache.begin()->second.NameForAutofill().Utf8());
 
   // Change the attributes again ("username" is stronger signal than "login"),
@@ -625,7 +628,7 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, HTMLDetectorCache) {
   ASSERT_EQ(1u, username_detector_cache.size());
   EXPECT_EQ(form, username_detector_cache.begin()->first);
   ASSERT_FALSE(username_detector_cache.begin()->second.IsNull());
-  EXPECT_EQ("login",
+  EXPECT_EQ("id",
             username_detector_cache.begin()->second.NameForAutofill().Utf8());
 }
 
