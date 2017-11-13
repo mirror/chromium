@@ -21,6 +21,7 @@
 #include "ui/views/controls/scroll_view.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/layout/box_layout.h"
+#include "ui/views/layout/fill_layout.h"
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/layout/layout_provider.h"
 #include "ui/views/widget/widget.h"
@@ -102,10 +103,11 @@ bool MessageBoxView::IsCheckBoxSelected() {
 }
 
 void MessageBoxView::SetCheckBoxLabel(const base::string16& label) {
-  if (!checkbox_)
+  if (!checkbox_) {
     checkbox_ = new Checkbox(label);
-  else
+  } else {
     checkbox_->SetText(label);
+  }
   ResetLayoutManager();
 }
 
@@ -225,22 +227,33 @@ void MessageBoxView::ResetLayoutManager() {
   column_set->AddColumn(GridLayout::FILL, GridLayout::FILL, 1,
                         GridLayout::FIXED, message_width_, 0);
 
+  gfx::Insets horizontal_insets =
+      views::LayoutProvider::Get()->GetInsetsMetric(views::INSETS_DIALOG);
+  horizontal_insets.Set(0, horizontal_insets.left(), 0,
+                        horizontal_insets.right());
+
   // Column set for extra elements, if any.
   const int extra_column_view_set_id = 1;
   if (prompt_field_ || checkbox_ || link_) {
     column_set = layout->AddColumnSet(extra_column_view_set_id);
+    column_set->AddPaddingColumn(0, horizontal_insets.left());
     column_set->AddColumn(GridLayout::FILL, GridLayout::FILL, 1,
                           GridLayout::USE_PREF, 0, 0);
+    column_set->AddPaddingColumn(0, horizontal_insets.right());
   }
 
   const int kMaxScrollViewHeight = 400;
   views::View* message_contents = new views::View();
+  // We explicitly set insets on the message contents instead of the scroll view
+  // so that the scroll view borders are not capped by dialog insets.
+  message_contents->SetBorder(CreateEmptyBorder(horizontal_insets));
   message_contents->SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kVertical));
   for (size_t i = 0; i < message_labels_.size(); ++i)
     message_contents->AddChildView(message_labels_[i]);
   ScrollView* scroll_view = new views::ScrollView();
   scroll_view->ClipHeightTo(0, kMaxScrollViewHeight);
+
   scroll_view->SetContents(message_contents);
   layout->StartRow(0, message_column_view_set_id);
   layout->AddView(scroll_view);
@@ -267,9 +280,13 @@ void MessageBoxView::ResetLayoutManager() {
     trailing_content_type = views::TEXT;
   }
 
-  SetBorder(
-      CreateEmptyBorder(LayoutProvider::Get()->GetDialogInsetsForContentType(
-          views::TEXT, trailing_content_type)));
+  gfx::Insets border_insets =
+      LayoutProvider::Get()->GetDialogInsetsForContentType(
+          views::TEXT, trailing_content_type);
+  // Horizontal insets have already been applied to the message contents and
+  // controls as padding columns. Only apply the missing vertical insets.
+  border_insets.Set(border_insets.top(), 0, border_insets.bottom(), 0);
+  SetBorder(CreateEmptyBorder(border_insets));
 }
 
 }  // namespace views
