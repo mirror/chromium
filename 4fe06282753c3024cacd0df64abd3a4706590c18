@@ -16,6 +16,24 @@
       "revId": "4fe06282753c3024cacd0df64abd3a4706590c18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8794a492_eafe5139",
+        "filename": "content/browser/service_worker/service_worker_blob_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1124724
+      },
+      "writtenOn": "2017-11-13T00:52:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3540819d_00915344",
+      "revId": "4fe06282753c3024cacd0df64abd3a4706590c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
