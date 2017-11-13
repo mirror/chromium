@@ -162,7 +162,6 @@ PreferencesPrivateApiTest.*
 ProcessesApiTest.*
 ProxySettingsApiTest.*
 ResourcesPrivateApiTest.*
-ScreenlockPrivateApiTest.*
 ServiceWorkerTest.*
 SetIconAPITest.*
 SettingsPrivateApiTest.*
