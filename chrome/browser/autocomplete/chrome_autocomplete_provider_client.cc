@@ -27,6 +27,7 @@
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
+#include "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
@@ -75,8 +76,10 @@ void NoopCallback(content::StartServiceWorkerForNavigationHintResult) {}
 }  // namespace
 
 ChromeAutocompleteProviderClient::ChromeAutocompleteProviderClient(
-    Profile* profile)
+    Profile* profile,
+    OmniboxEditController* controller)
     : profile_(profile),
+      controller_(static_cast<ChromeOmniboxEditController*>(controller)),
       scheme_classifier_(profile),
       search_terms_data_(profile_),
       storage_partition_(nullptr) {}
@@ -343,7 +346,8 @@ bool ChromeAutocompleteProviderClient::IsTabOpenWithURL(const GURL& url) {
       for (int i = 0; i < browser->tab_strip_model()->count(); ++i) {
         content::WebContents* web_contents =
             browser->tab_strip_model()->GetWebContentsAt(i);
-        if (web_contents->GetLastCommittedURL() == url)
+        if ((!controller_ || web_contents != controller_->GetWebContents()) &&
+            web_contents->GetLastCommittedURL() == url)
           return true;
       }
     }
