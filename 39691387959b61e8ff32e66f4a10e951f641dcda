@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "aa453a4d_76ae7f9d",
+        "filename": "components/os_crypt/key_storage_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-13T08:34:12Z",
+      "side": 1,
+      "message": "I think it would hit a DCHECK at https://chromium.googlesource.com/chromium/src/+/5226572e47a75c4a7cce7c4d9dab05a375556043/base/threading/thread_restrictions.cc#29\n\nWhat task runner is the current Wait() call in components/os_crypt/key_storage_keyring.cc run on? Looking at GetKeyImpl itself, it\u0027s not on the main thread, but I could not quickly figure out which task runner that would mean. As long as the task runner has MayBlock() traits, waiting is OK. Is it the case here?",
+      "parentUuid": "33dc83cd_192f7c27",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 21
+      },
+      "revId": "39691387959b61e8ff32e66f4a10e951f641dcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c735977_9cfccebb",
         "filename": "components/os_crypt/key_storage_linux.h",
         "patchSetId": 4
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Done WaitForInitOnTaskRunner.\nI don\u0027t think GetKey() needs adjustment. It\u0027s contract is unchanged. Also, it\u0027s a public method and I like public names that don\u0027t talk more than they need to.",
       "parentUuid": "3c735977_9cfccebb",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 23
+      },
+      "revId": "39691387959b61e8ff32e66f4a10e951f641dcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c223364_bdeab183",
+        "filename": "components/os_crypt/key_storage_linux.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-13T08:34:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f9694b34_20945b1b",
       "range": {
         "startLine": 55,
         "startChar": 7,
