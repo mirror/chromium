@@ -31,6 +31,7 @@
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #import "ios/chrome/browser/passwords/js_password_manager.h"
 #import "ios/chrome/browser/passwords/password_form_filler.h"
+#include "ios/chrome/browser/passwords/test_helpers.h"
 #import "ios/chrome/browser/ssl/insecure_input_tab_helper.h"
 #import "ios/web/public/navigation_item.h"
 #import "ios/web/public/navigation_manager.h"
@@ -52,6 +53,7 @@
 
 using autofill::PasswordForm;
 using autofill::PasswordFormFillData;
+using test_helpers::SetPasswordFormFillData;
 using testing::NiceMock;
 using testing::Return;
 using testing::_;
@@ -674,38 +676,6 @@ TEST_F(PasswordControllerTest, FLAKY_GetSubmittedPasswordForm) {
   }
 }
 
-// Populates |form_data| with test values.
-void SetPasswordFormFillData(PasswordFormFillData& form_data,
-                             const std::string& origin,
-                             const std::string& action,
-                             const char* username_field,
-                             const char* username_value,
-                             const char* password_field,
-                             const char* password_value,
-                             const char* additional_username,
-                             const char* additional_password,
-                             bool wait_for_username) {
-  form_data.origin = GURL(origin);
-  form_data.action = GURL(action);
-  autofill::FormFieldData username;
-  username.name = base::UTF8ToUTF16(username_field);
-  username.value = base::UTF8ToUTF16(username_value);
-  form_data.username_field = username;
-  autofill::FormFieldData password;
-  password.name = base::UTF8ToUTF16(password_field);
-  password.value = base::UTF8ToUTF16(password_value);
-  form_data.password_field = password;
-  if (additional_username) {
-    autofill::PasswordAndRealm additional_password_data;
-    additional_password_data.password = base::UTF8ToUTF16(additional_password);
-    additional_password_data.realm.clear();
-    form_data.additional_logins.insert(
-        std::pair<base::string16, autofill::PasswordAndRealm>(
-            base::UTF8ToUTF16(additional_username), additional_password_data));
-  }
-  form_data.wait_for_username = wait_for_username;
-}
-
 // Test HTML page.  It contains several password forms.  Tests autofill
 // them and verify that the right ones are autofilled.
 static NSString* kHtmlWithMultiplePasswordForms =
@@ -1214,6 +1184,23 @@ TEST_F(PasswordControllerTest, SelectingSuggestionShouldFillPasswordForm) {
   // Verify that the form has not been autofilled.
   EXPECT_NSEQ(@"[]=, onkeyup=false, onchange=false",
               ExecuteJavaScript(kUsernamePasswordVerificationScript));
+
+  // Emulate that the user clicks on the username field. That's required in
+  // order that PasswordController can identify which form should be filled.
+  block_was_called = NO;
+  [passwordController_
+      retrieveSuggestionsForForm:@"gChrome~0"
+                           field:@"u'"
+                       fieldType:@"text"
+                            type:@"focus"
+                      typedValue:@"abc"
+                        webState:web_state()
+               completionHandler:^(NSArray* suggestions,
+                                   id<FormSuggestionProvider> provider) {
+                 EXPECT_EQ(1u, [suggestions count]);
+                 block_was_called = YES;
+               }];
+  EXPECT_TRUE(block_was_called);
 
   // Tell PasswordController that a suggestion was selected. It should fill
   // out the password form with the corresponding credentials.
