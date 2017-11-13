@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0344e068_a189ae59",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-13T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "061435ab_f929f452",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b668aceb_a3a9191c",
         "filename": "ash/public/interfaces/wallpaper.mojom",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "39f44eb9_c632a72d",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-13T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b668aceb_a3a9191c",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48ce4d86_68b16549",
         "filename": "ash/public/interfaces/wallpaper.mojom",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-11T23:16:25Z",
       "side": 1,
       "message": "Is this a path? If so, use mojo/common/file_path.mojom. You also might want to leave a comment for  your security reviewer (or chat with them in advance). Passing paths around between processes might make them nervous. As long as this interface is between two trusted processes, then this is OK, and if the path is only for reading, that\u0027s reassuring too.",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0634be3_49745a83",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-13T21:40:37Z",
+      "side": 1,
+      "message": "I checked that this is actually a file name, so renamed it to file_name. But there is another method (SetCustomizedDefaultWallpaper) that indeed passes paths, and I will double check with the security reviewer on that.",
+      "parentUuid": "48ce4d86_68b16549",
       "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "88ff712a_6314d898",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-13T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5783a41e_c57cc49a",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a97ffc3d_3b36c25f",
         "filename": "ash/public/interfaces/wallpaper.mojom",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8ee092_b569135e",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-13T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a97ffc3d_3b36c25f",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "1dca3071_def8493a",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-13T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c42fada4_ba41765e",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f0a4405_fbfdac93",
         "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
         "patchSetId": 4
@@ -118,6 +226,24 @@
       "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be404a08_b1d23165",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-13T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f0a4405_fbfdac93",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "0ddb5326_a1a90932",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-13T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92accdce_09325fc2",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e982fb80_24b12925",
         "filename": "chrome/browser/ui/ash/wallpaper_controller_client.h",
         "patchSetId": 4
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "50299f0b_d4416bab",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-13T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e982fb80_24b12925",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03336d23_e1a890d5",
         "filename": "chrome/browser/ui/ash/wallpaper_controller_client.h",
         "patchSetId": 4
@@ -169,6 +331,24 @@
       "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5fdea8e_07f8450f",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-13T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03336d23_e1a890d5",
+      "revId": "a1f23e060b4e56dc821614789901e88bc24d7f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
