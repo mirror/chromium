@@ -36,6 +36,7 @@
 #include "platform/wtf/Optional.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebURLError.h"
+#include "services/network/public/cpp/cors_error_status.h"
 
 namespace blink {
 
@@ -67,7 +68,9 @@ class PLATFORM_EXPORT ResourceError final {
 
   ResourceError() = delete;
   // |error_code| must not be 0.
-  ResourceError(int error_code, const KURL& failing_url);
+  ResourceError(int error_code,
+                const KURL& failing_url,
+                WTF::Optional<network::CORSErrorStatus>);
   ResourceError(const WebURLError&);
 
   // Makes a deep copy. Useful for when you need to use a ResourceError on
@@ -101,6 +104,10 @@ class PLATFORM_EXPORT ResourceError final {
   }
   bool ShouldCollapseInitiator() const { return should_collapse_initiator_; }
 
+  WTF::Optional<network::CORSErrorStatus> CORSErrorStatus() const {
+    return cors_error_status_;
+  }
+
   operator WebURLError() const;
 
   static bool Compare(const ResourceError&, const ResourceError&);
@@ -114,6 +121,7 @@ class PLATFORM_EXPORT ResourceError final {
   bool is_access_check_ = false;
   bool stale_copy_in_cache_ = false;
   bool should_collapse_initiator_ = false;
+  WTF::Optional<network::CORSErrorStatus> cors_error_status_;
 };
 
 inline bool operator==(const ResourceError& a, const ResourceError& b) {

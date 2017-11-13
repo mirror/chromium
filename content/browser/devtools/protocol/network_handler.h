@@ -34,6 +34,7 @@ class NavigationRequest;
 class NavigationThrottle;
 struct GlobalRequestID;
 struct InterceptedRequestInfo;
+class RenderFrameHostImpl;
 struct ResourceRequest;
 struct ResourceResponseHead;
 

@@ -1985,6 +1985,7 @@ test("blink_platform_perftests") {
     ":test_support",
     "//base",
     "//base/test:test_support",
+    "//services/network/public/cpp:cpp",
     "//testing/gtest",
     "//testing/perf",
     "//third_party:freetype_harfbuzz",
