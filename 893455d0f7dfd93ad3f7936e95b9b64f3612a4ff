@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "068901f8_544bd27a",
+        "filename": "content/browser/frame_host/frame_tree_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-13T21:10:07Z",
+      "side": 1,
+      "message": "Missed that one in the middle of the block, thanks :)",
+      "parentUuid": "795a67ed_2d20978a",
+      "revId": "893455d0f7dfd93ad3f7936e95b9b64f3612a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "666c475f_1a96b004",
         "filename": "content/browser/frame_host/frame_tree_browsertest.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "893455d0f7dfd93ad3f7936e95b9b64f3612a4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e4177c_d633a4bc",
+        "filename": "content/browser/frame_host/frame_tree_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-13T21:10:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "666c475f_1a96b004",
+      "revId": "893455d0f7dfd93ad3f7936e95b9b64f3612a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "07ec8b2b_3cde619c",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-13T21:10:07Z",
+      "side": 1,
+      "message": "That actually happens: in UpdateActiveSandboxFlags, the value passed in is ORed with the effective sandbox flags, so it\u0027s not possible to use Update to set a less restrictive sandbox (That\u0027s why I named it Update* rather then Set*)",
+      "parentUuid": "7ae4c357_6526ab99",
+      "range": {
+        "startLine": 600,
+        "startChar": 46,
+        "endLine": 600,
+        "endChar": 75
+      },
+      "revId": "893455d0f7dfd93ad3f7936e95b9b64f3612a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afd0f1f5_e2ced87f",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 12
@@ -79,6 +139,30 @@
       "revId": "893455d0f7dfd93ad3f7936e95b9b64f3612a4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a4274a_cc536eed",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 12153,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-13T21:10:07Z",
+      "side": 1,
+      "message": "Fixed, thanks.",
+      "parentUuid": "afd0f1f5_e2ced87f",
+      "range": {
+        "startLine": 12146,
+        "startChar": 0,
+        "endLine": 12153,
+        "endChar": 43
+      },
+      "revId": "893455d0f7dfd93ad3f7936e95b9b64f3612a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "d8ebf459_880c2368",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 12154,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-13T21:10:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3755d673_7344f9e1",
+      "range": {
+        "startLine": 12154,
+        "startChar": 23,
+        "endLine": 12154,
+        "endChar": 70
+      },
+      "revId": "893455d0f7dfd93ad3f7936e95b9b64f3612a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abe2781b_fedf3a13",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 12
@@ -119,6 +227,24 @@
       "revId": "893455d0f7dfd93ad3f7936e95b9b64f3612a4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c99234_d22c679f",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 12276,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-13T21:10:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abe2781b_fedf3a13",
+      "revId": "893455d0f7dfd93ad3f7936e95b9b64f3612a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "21c2f423_f90c290a",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 12295,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-13T21:10:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42de4e1c_a42086be",
+      "range": {
+        "startLine": 12295,
+        "startChar": 19,
+        "endLine": 12295,
+        "endChar": 59
+      },
+      "revId": "893455d0f7dfd93ad3f7936e95b9b64f3612a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9e9a62f_adc0b255",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 12
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "b71ae304_95af34ea",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 12313,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-13T21:10:07Z",
+      "side": 1,
+      "message": "I can; I just have to change the CSP header there to use something other than \u0027allow-popups\u0027, or my final test will fail :)",
+      "parentUuid": "c9e9a62f_adc0b255",
+      "revId": "893455d0f7dfd93ad3f7936e95b9b64f3612a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fa158f5_48302729",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 12
@@ -176,6 +344,24 @@
       "revId": "893455d0f7dfd93ad3f7936e95b9b64f3612a4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275256e5_ecc59c1a",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 12350,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-13T21:10:07Z",
+      "side": 1,
+      "message": "Done. Now this goes from A(B*(B,B)) to A(B*(A,B)) to A(B*(C,B)) (the other leaf node is there because I\u0027ve combined this test file with the one from the FrameTree browsertests.)",
+      "parentUuid": "3fa158f5_48302729",
+      "revId": "893455d0f7dfd93ad3f7936e95b9b64f3612a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
