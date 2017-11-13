@@ -201,7 +201,7 @@ int TCPSocket::Listen(const std::string& address,
                       std::string* error_msg) {
   if (socket_mode_ == CLIENT) {
     *error_msg = kTCPSocketTypeInvalidError;
-    return net::ERR_NOT_IMPLEMENTED;
+    return net::ERR_NOT_IMPLEMENTED24;
   }
   DCHECK(!socket_.get());
   socket_mode_ = SERVER;

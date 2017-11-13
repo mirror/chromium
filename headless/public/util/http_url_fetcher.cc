@@ -123,7 +123,7 @@ void HttpURLFetcher::Delegate::OnAuthRequired(
     net::AuthChallengeInfo* auth_info) {
   DCHECK_EQ(request, request_.get());
   LOG(WARNING) << "Auth required to fetch URL, aborting.";
-  result_code_ = net::ERR_NOT_IMPLEMENTED;
+  result_code_ = net::ERR_NOT_IMPLEMENTED25;
   request->CancelAuth();
 }
 
