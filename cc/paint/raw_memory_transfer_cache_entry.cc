@@ -39,13 +39,16 @@ TransferCacheEntryType ServiceRawMemoryTransferCacheEntry::Type() const {
 }
 
 size_t ServiceRawMemoryTransferCacheEntry::Size() const {
-  return data_.size();
+  return 1024;
 }
 
 bool ServiceRawMemoryTransferCacheEntry::Deserialize(size_t size,
                                                      uint8_t* data) {
-  data_.resize(size);
-  memcpy(data_.data(), data, size);
+  int32_t width = *reinterpret_cast<int32_t*>(data);
+  int32_t height = *(reinterpret_cast<int32_t*>(data) + 1);
+  SkImageInfo info = SkImageInfo::MakeN32Premul(width, height);
+  SkPixmap pixmap(info, data + sizeof(int32_t) * 2, info.minRowBytes());
+  image_ = SkImage::MakeRasterCopy(pixmap);
   return true;
 }
 

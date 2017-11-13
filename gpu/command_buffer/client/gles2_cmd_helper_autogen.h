@@ -3298,7 +3298,7 @@ void EndRasterCHROMIUM() {
   }
 }
 
-void CreateTransferCacheEntryCHROMIUM(uint64_t handle_id,
+void CreateTransferCacheEntryCHROMIUM(GLuint64 handle_id,
                                       uint32_t handle_shm_id,
                                       uint32_t handle_shm_offset,
                                       uint32_t type,
@@ -3313,7 +3313,7 @@ void CreateTransferCacheEntryCHROMIUM(uint64_t handle_id,
   }
 }
 
-void DeleteTransferCacheEntryCHROMIUM(uint64_t handle_id) {
+void DeleteTransferCacheEntryCHROMIUM(GLuint64 handle_id) {
   gles2::cmds::DeleteTransferCacheEntryCHROMIUM* c =
       GetCmdSpace<gles2::cmds::DeleteTransferCacheEntryCHROMIUM>();
   if (c) {
@@ -3321,7 +3321,7 @@ void DeleteTransferCacheEntryCHROMIUM(uint64_t handle_id) {
   }
 }
 
-void UnlockTransferCacheEntryCHROMIUM(uint64_t handle_id) {
+void UnlockTransferCacheEntryCHROMIUM(GLuint64 handle_id) {
   gles2::cmds::UnlockTransferCacheEntryCHROMIUM* c =
       GetCmdSpace<gles2::cmds::UnlockTransferCacheEntryCHROMIUM>();
   if (c) {

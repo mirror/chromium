@@ -16197,7 +16197,7 @@ struct CreateTransferCacheEntryCHROMIUM {
 
   void SetHeader() { header.SetCmd<ValueType>(); }
 
-  void Init(uint64_t _handle_id,
+  void Init(GLuint64 _handle_id,
             uint32_t _handle_shm_id,
             uint32_t _handle_shm_offset,
             uint32_t _type,
@@ -16205,7 +16205,8 @@ struct CreateTransferCacheEntryCHROMIUM {
             uint32_t _data_shm_offset,
             uint32_t _data_size) {
     SetHeader();
-    handle_id = _handle_id;
+    GLES2Util::MapUint64ToTwoUint32(static_cast<uint64_t>(_handle_id),
+                                    &handle_id_0, &handle_id_1);
     handle_shm_id = _handle_shm_id;
     handle_shm_offset = _handle_shm_offset;
     type = _type;
@@ -16215,7 +16216,7 @@ struct CreateTransferCacheEntryCHROMIUM {
   }
 
   void* Set(void* cmd,
-            uint64_t _handle_id,
+            GLuint64 _handle_id,
             uint32_t _handle_shm_id,
             uint32_t _handle_shm_offset,
             uint32_t _type,
@@ -16228,8 +16229,14 @@ struct CreateTransferCacheEntryCHROMIUM {
     return NextCmdAddress<ValueType>(cmd);
   }
 
+  GLuint64 handle_id() const volatile {
+    return static_cast<GLuint64>(
+        GLES2Util::MapTwoUint32ToUint64(handle_id_0, handle_id_1));
+  }
+
   gpu::CommandHeader header;
-  uint32_t handle_id;
+  uint32_t handle_id_0;
+  uint32_t handle_id_1;
   uint32_t handle_shm_id;
   uint32_t handle_shm_offset;
   uint32_t type;
@@ -16238,31 +16245,34 @@ struct CreateTransferCacheEntryCHROMIUM {
   uint32_t data_size;
 };
 
-static_assert(sizeof(CreateTransferCacheEntryCHROMIUM) == 32,
-              "size of CreateTransferCacheEntryCHROMIUM should be 32");
+static_assert(sizeof(CreateTransferCacheEntryCHROMIUM) == 36,
+              "size of CreateTransferCacheEntryCHROMIUM should be 36");
 static_assert(offsetof(CreateTransferCacheEntryCHROMIUM, header) == 0,
               "offset of CreateTransferCacheEntryCHROMIUM header should be 0");
 static_assert(
-    offsetof(CreateTransferCacheEntryCHROMIUM, handle_id) == 4,
-    "offset of CreateTransferCacheEntryCHROMIUM handle_id should be 4");
+    offsetof(CreateTransferCacheEntryCHROMIUM, handle_id_0) == 4,
+    "offset of CreateTransferCacheEntryCHROMIUM handle_id_0 should be 4");
 static_assert(
-    offsetof(CreateTransferCacheEntryCHROMIUM, handle_shm_id) == 8,
-    "offset of CreateTransferCacheEntryCHROMIUM handle_shm_id should be 8");
+    offsetof(CreateTransferCacheEntryCHROMIUM, handle_id_1) == 8,
+    "offset of CreateTransferCacheEntryCHROMIUM handle_id_1 should be 8");
+static_assert(
+    offsetof(CreateTransferCacheEntryCHROMIUM, handle_shm_id) == 12,
+    "offset of CreateTransferCacheEntryCHROMIUM handle_shm_id should be 12");
 static_assert(offsetof(CreateTransferCacheEntryCHROMIUM, handle_shm_offset) ==
-                  12,
+                  16,
               "offset of CreateTransferCacheEntryCHROMIUM handle_shm_offset "
-              "should be 12");
-static_assert(offsetof(CreateTransferCacheEntryCHROMIUM, type) == 16,
-              "offset of CreateTransferCacheEntryCHROMIUM type should be 16");
+              "should be 16");
+static_assert(offsetof(CreateTransferCacheEntryCHROMIUM, type) == 20,
+              "offset of CreateTransferCacheEntryCHROMIUM type should be 20");
 static_assert(
-    offsetof(CreateTransferCacheEntryCHROMIUM, data_shm_id) == 20,
-    "offset of CreateTransferCacheEntryCHROMIUM data_shm_id should be 20");
+    offsetof(CreateTransferCacheEntryCHROMIUM, data_shm_id) == 24,
+    "offset of CreateTransferCacheEntryCHROMIUM data_shm_id should be 24");
 static_assert(
-    offsetof(CreateTransferCacheEntryCHROMIUM, data_shm_offset) == 24,
-    "offset of CreateTransferCacheEntryCHROMIUM data_shm_offset should be 24");
+    offsetof(CreateTransferCacheEntryCHROMIUM, data_shm_offset) == 28,
+    "offset of CreateTransferCacheEntryCHROMIUM data_shm_offset should be 28");
 static_assert(
-    offsetof(CreateTransferCacheEntryCHROMIUM, data_size) == 28,
-    "offset of CreateTransferCacheEntryCHROMIUM data_size should be 28");
+    offsetof(CreateTransferCacheEntryCHROMIUM, data_size) == 32,
+    "offset of CreateTransferCacheEntryCHROMIUM data_size should be 32");
 
 struct DeleteTransferCacheEntryCHROMIUM {
   typedef DeleteTransferCacheEntryCHROMIUM ValueType;
@@ -16276,27 +16286,37 @@ struct DeleteTransferCacheEntryCHROMIUM {
 
   void SetHeader() { header.SetCmd<ValueType>(); }
 
-  void Init(uint64_t _handle_id) {
+  void Init(GLuint64 _handle_id) {
     SetHeader();
-    handle_id = _handle_id;
+    GLES2Util::MapUint64ToTwoUint32(static_cast<uint64_t>(_handle_id),
+                                    &handle_id_0, &handle_id_1);
   }
 
-  void* Set(void* cmd, uint64_t _handle_id) {
+  void* Set(void* cmd, GLuint64 _handle_id) {
     static_cast<ValueType*>(cmd)->Init(_handle_id);
     return NextCmdAddress<ValueType>(cmd);
   }
 
+  GLuint64 handle_id() const volatile {
+    return static_cast<GLuint64>(
+        GLES2Util::MapTwoUint32ToUint64(handle_id_0, handle_id_1));
+  }
+
   gpu::CommandHeader header;
-  uint32_t handle_id;
+  uint32_t handle_id_0;
+  uint32_t handle_id_1;
 };
 
-static_assert(sizeof(DeleteTransferCacheEntryCHROMIUM) == 8,
-              "size of DeleteTransferCacheEntryCHROMIUM should be 8");
+static_assert(sizeof(DeleteTransferCacheEntryCHROMIUM) == 12,
+              "size of DeleteTransferCacheEntryCHROMIUM should be 12");
 static_assert(offsetof(DeleteTransferCacheEntryCHROMIUM, header) == 0,
               "offset of DeleteTransferCacheEntryCHROMIUM header should be 0");
 static_assert(
-    offsetof(DeleteTransferCacheEntryCHROMIUM, handle_id) == 4,
-    "offset of DeleteTransferCacheEntryCHROMIUM handle_id should be 4");
+    offsetof(DeleteTransferCacheEntryCHROMIUM, handle_id_0) == 4,
+    "offset of DeleteTransferCacheEntryCHROMIUM handle_id_0 should be 4");
+static_assert(
+    offsetof(DeleteTransferCacheEntryCHROMIUM, handle_id_1) == 8,
+    "offset of DeleteTransferCacheEntryCHROMIUM handle_id_1 should be 8");
 
 struct UnlockTransferCacheEntryCHROMIUM {
   typedef UnlockTransferCacheEntryCHROMIUM ValueType;
@@ -16310,27 +16330,37 @@ struct UnlockTransferCacheEntryCHROMIUM {
 
   void SetHeader() { header.SetCmd<ValueType>(); }
 
-  void Init(uint64_t _handle_id) {
+  void Init(GLuint64 _handle_id) {
     SetHeader();
-    handle_id = _handle_id;
+    GLES2Util::MapUint64ToTwoUint32(static_cast<uint64_t>(_handle_id),
+                                    &handle_id_0, &handle_id_1);
   }
 
-  void* Set(void* cmd, uint64_t _handle_id) {
+  void* Set(void* cmd, GLuint64 _handle_id) {
     static_cast<ValueType*>(cmd)->Init(_handle_id);
     return NextCmdAddress<ValueType>(cmd);
   }
 
+  GLuint64 handle_id() const volatile {
+    return static_cast<GLuint64>(
+        GLES2Util::MapTwoUint32ToUint64(handle_id_0, handle_id_1));
+  }
+
   gpu::CommandHeader header;
-  uint32_t handle_id;
+  uint32_t handle_id_0;
+  uint32_t handle_id_1;
 };
 
-static_assert(sizeof(UnlockTransferCacheEntryCHROMIUM) == 8,
-              "size of UnlockTransferCacheEntryCHROMIUM should be 8");
+static_assert(sizeof(UnlockTransferCacheEntryCHROMIUM) == 12,
+              "size of UnlockTransferCacheEntryCHROMIUM should be 12");
 static_assert(offsetof(UnlockTransferCacheEntryCHROMIUM, header) == 0,
               "offset of UnlockTransferCacheEntryCHROMIUM header should be 0");
 static_assert(
-    offsetof(UnlockTransferCacheEntryCHROMIUM, handle_id) == 4,
-    "offset of UnlockTransferCacheEntryCHROMIUM handle_id should be 4");
+    offsetof(UnlockTransferCacheEntryCHROMIUM, handle_id_0) == 4,
+    "offset of UnlockTransferCacheEntryCHROMIUM handle_id_0 should be 4");
+static_assert(
+    offsetof(UnlockTransferCacheEntryCHROMIUM, handle_id_1) == 8,
+    "offset of UnlockTransferCacheEntryCHROMIUM handle_id_1 should be 8");
 
 struct TexStorage2DImageCHROMIUM {
   typedef TexStorage2DImageCHROMIUM ValueType;

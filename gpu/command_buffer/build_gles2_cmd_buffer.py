@@ -4609,7 +4609,7 @@ _FUNCTION_INFO = {
   },
   "CreateTransferCacheEntryCHROMIUM": {
     'type': 'Custom',
-    'cmd_args': 'uint64_t handle_id, uint32_t handle_shm_id, '
+    'cmd_args': 'GLuint64 handle_id, uint32_t handle_shm_id, '
                 'uint32_t handle_shm_offset, uint32_t type, '
                 'uint32_t data_shm_id, uint32_t data_shm_offset, '
                 'uint32_t data_size',
@@ -4619,14 +4619,14 @@ _FUNCTION_INFO = {
   },
   "DeleteTransferCacheEntryCHROMIUM": {
     'type': 'Custom',
-    'cmd_args': 'uint64_t handle_id',
+    'cmd_args': 'GLuint64 handle_id',
     'impl_func': False,
     'client_test': False,
     'extension': True,
   },
   "UnlockTransferCacheEntryCHROMIUM": {
     'type': 'Custom',
-    'cmd_args': 'uint64_t handle_id',
+    'cmd_args': 'GLuint64 handle_id',
     'impl_func': False,
     'client_test': False,
     'extension': True,

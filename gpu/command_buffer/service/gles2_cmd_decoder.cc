@@ -27,6 +27,7 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "cc/paint/paint_op_buffer.h"
+#include "cc/paint/transfer_cache_deserialize_helper.h"
 #include "cc/paint/transfer_cache_entry.h"
 #include "gpu/command_buffer/common/debug_marker_manager.h"
 #include "gpu/command_buffer/common/gles2_cmd_format.h"
@@ -20275,6 +20276,24 @@ void GLES2DecoderImpl::DoBeginRasterCHROMIUM(GLuint texture_id,
   texture_manager()->SetLevelCleared(texture_ref, texture->target(), 0, true);
 }
 
+class TransferCacheDeserializeHelperImpl
+    : public cc::TransferCacheDeserializeHelper {
+ public:
+  explicit TransferCacheDeserializeHelperImpl(
+      ServiceTransferCache* transfer_cache)
+      : transfer_cache_(transfer_cache) {}
+  ~TransferCacheDeserializeHelperImpl() override = default;
+
+ private:
+  cc::ServiceTransferCacheEntry* GetEntryInternal(
+      cc::TransferCacheEntryId id) override {
+    LOG(ERROR) << "HIIIII";
+    CHECK(transfer_cache_);
+    return transfer_cache_->GetEntry(id);
+  }
+  ServiceTransferCache* transfer_cache_;
+};
+
 error::Error GLES2DecoderImpl::HandleRasterCHROMIUM(
     uint32_t immediate_data_size,
     const volatile void* cmd_data) {
@@ -20295,7 +20314,11 @@ error::Error GLES2DecoderImpl::HandleRasterCHROMIUM(
   SkCanvas* canvas = sk_surface_->getCanvas();
   SkMatrix original_ctm;
   cc::PlaybackParams playback_params(nullptr, original_ctm);
+  CHECK(GetContextGroup()->transfer_cache());
+  TransferCacheDeserializeHelperImpl transfer_cache_helper(
+      GetContextGroup()->transfer_cache());
   cc::PaintOp::DeserializeOptions options;
+  options.transfer_cache = &transfer_cache_helper;
 
   int op_idx = 0;
   while (size > 4) {
@@ -20339,7 +20362,7 @@ error::Error GLES2DecoderImpl::HandleCreateTransferCacheEntryCHROMIUM(
           const volatile gles2::cmds::CreateTransferCacheEntryCHROMIUM*>(
           cmd_data);
   cc::TransferCacheEntryId handle_id =
-      cc::TransferCacheEntryId::FromUnsafeValue(c.handle_id);
+      cc::TransferCacheEntryId::FromUnsafeValue(c.handle_id());
   uint32_t handle_shm_id = c.handle_shm_id;
   uint32_t handle_shm_offset = c.handle_shm_offset;
   cc::TransferCacheEntryType type =
@@ -20379,7 +20402,7 @@ error::Error GLES2DecoderImpl::HandleUnlockTransferCacheEntryCHROMIUM(
           const volatile gles2::cmds::UnlockTransferCacheEntryCHROMIUM*>(
           cmd_data);
   cc::TransferCacheEntryId handle_id =
-      cc::TransferCacheEntryId::FromUnsafeValue(c.handle_id);
+      cc::TransferCacheEntryId::FromUnsafeValue(c.handle_id());
   GetContextGroup()->transfer_cache()->UnlockEntry(handle_id);
   return error::kNoError;
 }
@@ -20392,7 +20415,7 @@ error::Error GLES2DecoderImpl::HandleDeleteTransferCacheEntryCHROMIUM(
           const volatile gles2::cmds::DeleteTransferCacheEntryCHROMIUM*>(
           cmd_data);
   cc::TransferCacheEntryId handle_id =
-      cc::TransferCacheEntryId::FromUnsafeValue(c.handle_id);
+      cc::TransferCacheEntryId::FromUnsafeValue(c.handle_id());
   GetContextGroup()->transfer_cache()->DeleteEntry(handle_id);
   return error::kNoError;
 }
