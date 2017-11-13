@@ -22,6 +22,30 @@
       "revId": "f587c90b01fe1a2bce6dcbfa598a58d0e756d34b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f21bd38_9b0be3be",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-13T22:17:14Z",
+      "side": 1,
+      "message": "https://fiddle.skia.org/c/69cfae1d82980c1f6d7d10d7996cbfe9\nDrawing on a surface is slower than using readPixels depending on the size of the canvas:\n64x64: ~150% slower\n256x256: ~30% slower\n1023x1023: ~10% slower",
+      "parentUuid": "7da8e138_0de1396a",
+      "range": {
+        "startLine": 290,
+        "startChar": 0,
+        "endLine": 290,
+        "endChar": 76
+      },
+      "revId": "f587c90b01fe1a2bce6dcbfa598a58d0e756d34b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
