@@ -145,6 +145,24 @@
     },
     {
       "key": {
+        "uuid": "666189ca_58de547e",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-13T12:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85c0ec25_db20925b",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc4aa95d_f1b4108c",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
         "patchSetId": 4
