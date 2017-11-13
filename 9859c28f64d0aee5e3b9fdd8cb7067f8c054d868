@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ed154cf_ceac2ca8",
+        "filename": "chrome/browser/resources/md_history/history_toolbar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-13T06:03:11Z",
+      "side": 1,
+      "message": "Since guestSession can never change after the page is loaded, I think it would be simpler and cleaner to just add another call to loadTimeData.getBoolean(\u0027isGuestSession\u0027) here.\n\nAdding parameters is a bit excessive if they\u0027re never going to change.",
+      "revId": "9859c28f64d0aee5e3b9fdd8cb7067f8c054d868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
