@@ -120,6 +120,11 @@ namespace system.display {
     // (including the display being mirrored).
     DOMString mirroringSourceId;
 
+    // Chrome OS only. Identifiers of the displays to which the source display
+    // is being mirrored to if mirroring is enabled, otherwise empty. This will
+    // be set for all displays.
+    DOMString[] mirroringDestinationIds;
+
     // True if this is the primary display.
     boolean isPrimary;
 
