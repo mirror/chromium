@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bac5da1f_f42bb0d1",
+        "filename": "components/viz/common/frame_sinks/begin_frame_source.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-13T20:14:08Z",
+      "side": 1,
+      "message": "It should be promoted to int before shift is applied so it\u0027d work (unless sizeof(int) \u003c 4 of course so I guess this isn\u0027t strictly portable). That doesn\u0027t help when the output is 64 bits though. Will change.",
+      "parentUuid": "23eb561b_b036b504",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "6ad27d4ed860010c730704f9dc5d502e5be379ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2bc3f16_7139cf2f",
         "filename": "components/viz/common/frame_sinks/begin_frame_source.h",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-13T19:42:11Z",
       "side": 1,
       "message": "Although not technically against the style guide here, I wonder if we should avoid a default value of zero since it\u0027ll be easy for someone in the future to create a source without thinking about which id to choose.",
+      "revId": "6ad27d4ed860010c730704f9dc5d502e5be379ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d06a73b_ca6c38c6",
+        "filename": "components/viz/common/frame_sinks/begin_frame_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-13T20:14:08Z",
+      "side": 1,
+      "message": "For a lot of BeginFrameSources this doesn\u0027t matter, either because they aren\u0027t allocated in the GPU process (allocated in renderer/tests/browser) or because they don\u0027t create BeginFrameArgs. It\u0027s a bit of trade off on having to always specify the value.\n\nI can remove the default value. If a particular BeginFrameSource subclass T needs to then it\u0027s constructor would look something like:\n\nT(int32_t process_restart_id) : BeginFrameSource(process_restart_id) {}\n\nEverywhere that subclass is created would be updated to pass in a value.\n\nIf a subclass will never need this (eg. only used in tests, browser process, etc.) then it\u0027s constructor would look something like:\n\nT() : BeginFrameSource(BeginFrameSource::kDefaultProcessRestartId) {}\n\nDoes that sound reasonable? I had experimented with giving all subclasses that don\u0027t create BeginFrameArgs an invalid source_id in patch 3 too. I don\u0027t think that\u0027s worth the extra complexity though.",
+      "parentUuid": "c2bc3f16_7139cf2f",
       "revId": "6ad27d4ed860010c730704f9dc5d502e5be379ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
