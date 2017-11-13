@@ -1,0 +1,15 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Identifier normalization tests</title>
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#normalize-ident">
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../resources/testhelper.js"></script>
+<script>
+'use strict';
+
+test(() => {
+  assert_style_value_equals(newDivWithStyle('width: auto'), new CSSKeywordValue('auto'));
+}, 'CSS identifiers are normalized to CSSKeywordValues');
+
+</script>
