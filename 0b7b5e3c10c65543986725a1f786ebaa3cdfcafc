@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8025c9e8_f8cc1dc1",
+        "filename": "chrome/browser/content_settings/framebust_block_tab_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-13T13:39:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this really belongs to the content_settings/ codebase.\n\nThe image and bubble models do, but this is their implementation detail which could easily live in some more central place for framebust code. Is there such a place?",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "0b7b5e3c10c65543986725a1f786ebaa3cdfcafc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23015007_4860249f",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-13T13:39:15Z",
+      "side": 1,
+      "message": "nit: Ordering. In  the .h file, you put this image model last.",
+      "range": {
+        "startLine": 480,
+        "startChar": 0,
+        "endLine": 480,
+        "endChar": 20
+      },
+      "revId": "0b7b5e3c10c65543986725a1f786ebaa3cdfcafc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c8b39f_52c8ca42",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-13T13:39:15Z",
+      "side": 1,
+      "message": "nit: image_view for consistency with how the class is named?",
+      "range": {
+        "startLine": 231,
+        "startChar": 18,
+        "endLine": 231,
+        "endChar": 22
+      },
+      "revId": "0b7b5e3c10c65543986725a1f786ebaa3cdfcafc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75f2ba7_458e4b78",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-13T13:39:15Z",
+      "side": 1,
+      "message": "Why is this initialized to true?\n\nUpdate() is called right below, so it shouldn\u0027t matter anyways, but for consistency with the above...",
+      "revId": "0b7b5e3c10c65543986725a1f786ebaa3cdfcafc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1130b1d0_f5235c96",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-13T13:39:15Z",
+      "side": 1,
+      "message": "Hmm, actually we could just include ContentSettingFramebustBlockImageModel at the end of ContentSettingImageModel::GenerateContentSettingModels().\n\n(I think it makes sense for it to be there as this image model is defined in the content_setting_image_model.cc file. It doesn\u0027t matter that the rest of the models in that method are referencing actual content settings... as I mentioned before, I\u0027ll want to rename and refactor this a bit after you land this)\n\nThat should make the integration with LocationBarView a bit simpler. Basically, we should either follow what e.g. the zoom icon has, i.e. have everything built in a custom way, or if we\u0027re reusing content setting image views \u0026 models, then we should just reuse the group methods ContentSettingImageModel::GenerateContentSettingImageModels(), ::UpdateContentSettingsIcons() etc.",
+      "range": {
+        "startLine": 236,
+        "startChar": 1,
+        "endLine": 237,
+        "endChar": 0
+      },
+      "revId": "0b7b5e3c10c65543986725a1f786ebaa3cdfcafc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d542bc2_46bdbe05",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-13T13:39:15Z",
+      "side": 1,
+      "message": "nit: Comment above pls.",
+      "range": {
+        "startLine": 421,
+        "startChar": 2,
+        "endLine": 421,
+        "endChar": 26
+      },
+      "revId": "0b7b5e3c10c65543986725a1f786ebaa3cdfcafc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
