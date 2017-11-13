@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71f80f56_d784ed7e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 45206,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-13T22:04:14Z",
+      "side": 1,
+      "message": "Nit: Can just say \"Removed November 2017.\" to keep things more concise (since this file is already pretty large.)",
+      "range": {
+        "startLine": 45206,
+        "startChar": 23,
+        "endLine": 45206,
+        "endChar": 27
+      },
+      "revId": "b4934c1dcbef3bb1506c89556d5527c59289f9d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
