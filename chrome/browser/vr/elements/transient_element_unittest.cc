@@ -32,6 +32,14 @@ TEST(SimpleTransientElementTest, Visibility) {
   EXPECT_EQ(element.opacity_when_visible(), element.opacity());
   EXPECT_TRUE(element.DoBeginFrame(MsToTicks(2010), kForwardVector));
   EXPECT_EQ(0.0f, element.opacity());
+
+  // Enable, and ensure that the element transiently disappears using
+  // SetVisibleImmediately.
+  element.SetVisibleImmediately(true);
+  EXPECT_FALSE(element.DoBeginFrame(MsToTicks(2020), kForwardVector));
+  EXPECT_EQ(element.opacity_when_visible(), element.opacity());
+  EXPECT_TRUE(element.DoBeginFrame(MsToTicks(4020), kForwardVector));
+  EXPECT_EQ(0.0f, element.opacity());
 }
 
 // Test that refreshing the visibility resets the transience timeout if the
