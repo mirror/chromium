@@ -60,7 +60,9 @@ class CORE_EXPORT ImageResource final
 
   // Use ImageResourceContent::Fetch() unless ImageResource is required.
   // TODO(hiroshige): Make Fetch() private.
-  static ImageResource* Fetch(FetchParameters&, ResourceFetcher*);
+  static ImageResource* Fetch(FetchParameters&,
+                              ResourceFetcher*,
+                              ResourceClient*);
 
   // TODO(hiroshige): Make Create() test-only by refactoring ImageDocument.
   static ImageResource* Create(const ResourceRequest&);

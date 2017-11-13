@@ -75,11 +75,12 @@ String CSSFontFaceSrcValue::CustomCSSText() const {
 }
 
 bool CSSFontFaceSrcValue::HasFailedOrCanceledSubresources() const {
-  return fetched_ && fetched_->GetResource()->LoadFailedOrCanceled();
+  return font_ && font_->LoadFailedOrCanceled();
 }
 
-FontResource* CSSFontFaceSrcValue::Fetch(ExecutionContext* context) const {
-  if (!fetched_) {
+FontResource* CSSFontFaceSrcValue::Fetch(ExecutionContext* context,
+                                         FontResourceClient* client) const {
+  if (!font_) {
     ResourceRequest resource_request(absolute_resource_);
     resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
         referrer_.referrer_policy, resource_request.Url(), referrer_.referrer));
@@ -98,30 +99,32 @@ FontResource* CSSFontFaceSrcValue::Fetch(ExecutionContext* context) const {
                                          kCrossOriginAttributeAnonymous);
     }
 
-    FontResource* resource = FontResource::Fetch(params, context->Fetcher());
-    if (!resource)
-      return nullptr;
-    fetched_ = FontResourceHelper::Create(resource);
+    font_ = FontResource::Fetch(params, context->Fetcher(), client);
   } else {
     // FIXME: CSSFontFaceSrcValue::Fetch is invoked when @font-face rule
     // is processed by StyleResolver / StyleEngine.
     RestoreCachedResourceIfNeeded(context);
+    if (client) {
+      client->SetResource(
+          font_.Get(),
+          context->GetTaskRunner(TaskType::kUnspecedLoading).get());
+    }
   }
-  return fetched_->GetResource();
+  return font_.Get();
 }
 
 void CSSFontFaceSrcValue::RestoreCachedResourceIfNeeded(
     ExecutionContext* context) const {
-  DCHECK(fetched_);
+  DCHECK(font_);
   DCHECK(context);
   DCHECK(context->Fetcher());
 
   const String resource_url = context->CompleteURL(absolute_resource_);
   DCHECK_EQ(should_check_content_security_policy_,
-            fetched_->GetResource()->Options().content_security_policy_option);
+            font_->Options().content_security_policy_option);
   context->Fetcher()->EmulateLoadStartedForInspector(
-      fetched_->GetResource(), KURL(resource_url),
-      WebURLRequest::kRequestContextFont, FetchInitiatorTypeNames::css);
+      font_, KURL(resource_url), WebURLRequest::kRequestContextFont,
+      FetchInitiatorTypeNames::css);
 }
 
 bool CSSFontFaceSrcValue::Equals(const CSSFontFaceSrcValue& other) const {

@@ -149,7 +149,7 @@ LocalFrameClient& DocumentLoader::GetLocalFrameClient() const {
 
 DocumentLoader::~DocumentLoader() {
   DCHECK(!frame_);
-  DCHECK(!main_resource_);
+  DCHECK(!GetMainResource());
   DCHECK(!application_cache_host_);
   DCHECK_EQ(state_, kSentDidFinishLoad);
 }
@@ -157,7 +157,6 @@ DocumentLoader::~DocumentLoader() {
 void DocumentLoader::Trace(blink::Visitor* visitor) {
   visitor->Trace(frame_);
   visitor->Trace(fetcher_);
-  visitor->Trace(main_resource_);
   visitor->Trace(history_item_);
   visitor->Trace(parser_);
   visitor->Trace(subresource_filter_);
@@ -168,7 +167,7 @@ void DocumentLoader::Trace(blink::Visitor* visitor) {
 }
 
 unsigned long DocumentLoader::MainResourceIdentifier() const {
-  return main_resource_ ? main_resource_->Identifier() : 0;
+  return GetMainResource() ? GetMainResource()->Identifier() : 0;
 }
 
 ResourceTimingInfo* DocumentLoader::GetNavigationTimingInfo() const {
@@ -194,34 +193,35 @@ const KURL& DocumentLoader::Url() const {
 }
 
 Resource* DocumentLoader::StartPreload(Resource::Type type,
-                                       FetchParameters& params) {
+                                       FetchParameters& params,
+                                       ResourceClient* client) {
   Resource* resource = nullptr;
   switch (type) {
     case Resource::kImage:
       if (frame_)
         frame_->MaybeAllowImagePlaceholder(params);
-      resource = ImageResource::Fetch(params, Fetcher());
+      resource = ImageResource::Fetch(params, Fetcher(), client);
       break;
     case Resource::kScript:
-      resource = ScriptResource::Fetch(params, Fetcher());
+      resource = ScriptResource::Fetch(params, Fetcher(), client);
       break;
     case Resource::kCSSStyleSheet:
-      resource = CSSStyleSheetResource::Fetch(params, Fetcher());
+      resource = CSSStyleSheetResource::Fetch(params, Fetcher(), client);
       break;
     case Resource::kFont:
-      resource = FontResource::Fetch(params, Fetcher());
+      resource = FontResource::Fetch(params, Fetcher(), client);
       break;
     case Resource::kMedia:
-      resource = RawResource::FetchMedia(params, Fetcher());
+      resource = RawResource::FetchMedia(params, Fetcher(), client);
       break;
     case Resource::kTextTrack:
-      resource = RawResource::FetchTextTrack(params, Fetcher());
+      resource = RawResource::FetchTextTrack(params, Fetcher(), client);
       break;
     case Resource::kImportResource:
-      resource = RawResource::FetchImport(params, Fetcher());
+      resource = RawResource::FetchImport(params, Fetcher(), client);
       break;
     case Resource::kRaw:
-      resource = RawResource::Fetch(params, Fetcher());
+      resource = RawResource::Fetch(params, Fetcher(), client);
       break;
     default:
       NOTREACHED();
@@ -381,25 +381,26 @@ void DocumentLoader::SetHistoryItemStateForCommit(
 }
 
 void DocumentLoader::NotifyFinished(Resource* resource) {
-  DCHECK_EQ(main_resource_, resource);
-  DCHECK(main_resource_);
+  DCHECK_EQ(GetMainResource(), resource);
+  DCHECK(resource);
 
-  if (!main_resource_->ErrorOccurred() && !main_resource_->WasCanceled()) {
-    FinishedLoading(main_resource_->LoadFinishTime());
+  if (!GetMainResource()->ErrorOccurred() &&
+      !GetMainResource()->WasCanceled()) {
+    FinishedLoading(GetMainResource()->LoadFinishTime());
     return;
   }
 
   if (application_cache_host_)
     application_cache_host_->FailedLoadingMainResource();
 
-  if (main_resource_->GetResourceError().WasBlockedByResponse()) {
+  if (GetMainResource()->GetResourceError().WasBlockedByResponse()) {
     probe::CanceledAfterReceivedResourceResponse(
         frame_, this, MainResourceIdentifier(), resource->GetResponse(),
-        main_resource_.Get());
+        GetMainResource());
   }
 
-  LoadFailed(main_resource_->GetResourceError());
-  ClearMainResourceHandle();
+  LoadFailed(GetMainResource()->GetResourceError());
+  ClearResource();
 }
 
 void DocumentLoader::LoadFailed(const ResourceError& error) {
@@ -459,7 +460,7 @@ void DocumentLoader::FinishedLoading(double finish_time) {
     parser_->Finish();
     parser_.Clear();
   }
-  ClearMainResourceHandle();
+  ClearResource();
 }
 
 bool DocumentLoader::RedirectReceived(
@@ -467,7 +468,7 @@ bool DocumentLoader::RedirectReceived(
     const ResourceRequest& request,
     const ResourceResponse& redirect_response) {
   DCHECK(frame_);
-  DCHECK_EQ(resource, main_resource_);
+  DCHECK_EQ(resource, GetMainResource());
   DCHECK(!redirect_response.IsNull());
   request_ = request;
 
@@ -539,7 +540,7 @@ bool DocumentLoader::ShouldContinueForResponse() const {
 void DocumentLoader::CancelLoadAfterCSPDenied(
     const ResourceResponse& response) {
   probe::CanceledAfterReceivedResourceResponse(
-      frame_, this, MainResourceIdentifier(), response, main_resource_.Get());
+      frame_, this, MainResourceIdentifier(), response, GetMainResource());
 
   SetWasBlockedAfterCSP();
 
@@ -548,7 +549,7 @@ void DocumentLoader::CancelLoadAfterCSPDenied(
   //
   // TODO(mkwst):  Remove this once XFO moves to the browser.
   // https://crbug.com/555418.
-  ClearMainResourceHandle();
+  ClearResource();
   content_security_policy_.Clear();
   KURL blocked_url = SecurityOrigin::UrlWithUniqueSecurityOrigin();
   original_request_.SetURL(blocked_url);
@@ -565,7 +566,7 @@ void DocumentLoader::ResponseReceived(
     Resource* resource,
     const ResourceResponse& response,
     std::unique_ptr<WebDataConsumerHandle> handle) {
-  DCHECK_EQ(main_resource_, resource);
+  DCHECK_EQ(GetMainResource(), resource);
   DCHECK(!handle);
   DCHECK(frame_);
 
@@ -576,7 +577,7 @@ void DocumentLoader::ResponseReceived(
   // we don't save the result for future use. All responses loaded from appcache
   // will have a non-zero appCacheID().
   if (response.AppCacheID())
-    GetMemoryCache()->Remove(main_resource_.Get());
+    GetMemoryCache()->Remove(GetMainResource());
 
   content_security_policy_ = ContentSecurityPolicy::Create();
   content_security_policy_->SetOverrideURLForSelf(response.Url());
@@ -626,12 +627,13 @@ void DocumentLoader::ResponseReceived(
   response_ = response;
 
   if (IsArchiveMIMEType(response_.MimeType()) &&
-      main_resource_->GetDataBufferingPolicy() != kBufferData)
-    main_resource_->SetDataBufferingPolicy(kBufferData);
+      GetMainResource()->GetDataBufferingPolicy() != kBufferData)
+    GetMainResource()->SetDataBufferingPolicy(kBufferData);
 
   if (!ShouldContinueForResponse()) {
-    probe::ContinueWithPolicyIgnore(frame_, this, main_resource_->Identifier(),
-                                    response_, main_resource_.Get());
+    probe::ContinueWithPolicyIgnore(frame_, this,
+                                    GetMainResource()->Identifier(), response_,
+                                    GetMainResource());
     fetcher_->StopFetching();
     return;
   }
@@ -709,7 +711,7 @@ void DocumentLoader::DataReceived(Resource* resource,
                                   size_t length) {
   DCHECK(data);
   DCHECK(length);
-  DCHECK_EQ(resource, main_resource_);
+  DCHECK_EQ(resource, GetMainResource());
   DCHECK(!response_.IsNull());
   DCHECK(!frame_->GetPage()->Paused());
 
@@ -782,15 +784,8 @@ void DocumentLoader::DetachFromFrame() {
   application_cache_host_.Clear();
   service_worker_network_provider_ = nullptr;
   WeakIdentifierMap<DocumentLoader>::NotifyObjectDestroyed(this);
-  ClearMainResourceHandle();
+  ClearResource();
   frame_ = nullptr;
-}
-
-void DocumentLoader::ClearMainResourceHandle() {
-  if (!main_resource_)
-    return;
-  main_resource_->RemoveClient(this);
-  main_resource_ = nullptr;
 }
 
 bool DocumentLoader::MaybeCreateArchive() {
@@ -799,9 +794,8 @@ bool DocumentLoader::MaybeCreateArchive() {
   if (!IsArchiveMIMEType(response_.MimeType()))
     return false;
 
-  DCHECK(main_resource_);
-  ArchiveResource* main_resource =
-      fetcher_->CreateArchive(main_resource_.Get());
+  DCHECK(GetMainResource());
+  ArchiveResource* main_resource = fetcher_->CreateArchive(GetMainResource());
   if (!main_resource)
     return false;
   // The origin is the MHTML file, we need to set the base URL to the document
@@ -841,7 +835,7 @@ bool DocumentLoader::MaybeLoadEmpty() {
 
 void DocumentLoader::StartLoading() {
   GetTiming().MarkNavigationStart();
-  DCHECK(!main_resource_);
+  DCHECK(!GetMainResource());
   DCHECK_EQ(state_, kNotStarted);
   state_ = kProvisional;
 
@@ -861,16 +855,16 @@ void DocumentLoader::StartLoading() {
   options.data_buffering_policy = kDoNotBufferData;
   options.initiator_info.name = FetchInitiatorTypeNames::document;
   FetchParameters fetch_params(request_, options);
-  main_resource_ =
-      RawResource::FetchMainResource(fetch_params, Fetcher(), substitute_data_);
+  RawResource::FetchMainResource(fetch_params, Fetcher(), this,
+                                 substitute_data_);
 
   // PlzNavigate:
   // The final access checks are still performed here, potentially rejecting
   // the "provisional" load, but the browser side already expects the renderer
   // to be able to unconditionally commit.
-  if (!main_resource_ ||
+  if (!GetMainResource() ||
       (frame_->GetSettings()->GetBrowserSideNavigationEnabled() &&
-       main_resource_->ErrorOccurred())) {
+       GetMainResource()->ErrorOccurred())) {
     request_ = ResourceRequest(BlankURL());
     MaybeLoadEmpty();
     return;
@@ -878,9 +872,9 @@ void DocumentLoader::StartLoading() {
   // A bunch of headers are set when the underlying resource load begins, and
   // m_request needs to include those. Even when using a cached resource, we may
   // make some modification to the request, e.g. adding the referer header.
-  request_ = main_resource_->IsLoading() ? main_resource_->GetResourceRequest()
-                                         : fetch_params.GetResourceRequest();
-  main_resource_->AddClient(this);
+  request_ = GetMainResource()->IsLoading()
+                 ? GetMainResource()->GetResourceRequest()
+                 : fetch_params.GetResourceRequest();
 }
 
 void DocumentLoader::DidInstallNewDocument(Document* document) {

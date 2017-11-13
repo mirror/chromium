@@ -147,8 +147,7 @@ bool TextTrackLoader::Load(const KURL& url,
   }
 
   ResourceFetcher* fetcher = GetDocument().Fetcher();
-  SetResource(RawResource::FetchTextTrack(cue_fetch_params, fetcher));
-  return GetResource();
+  return RawResource::FetchTextTrack(cue_fetch_params, fetcher, this);
 }
 
 void TextTrackLoader::NewCuesParsed() {
@@ -179,7 +178,7 @@ void TextTrackLoader::Trace(blink::Visitor* visitor) {
   visitor->Trace(client_);
   visitor->Trace(cue_parser_);
   visitor->Trace(document_);
-  ResourceOwner<RawResource>::Trace(visitor);
+  RawResourceClient::Trace(visitor);
   VTTParserClient::Trace(visitor);
 }
 
