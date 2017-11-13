@@ -17,14 +17,9 @@
 #include "content/common/content_export.h"
 #include "ui/gfx/geometry/rect.h"
 
-namespace gfx {
-namespace win {
-class DirectManipulationHelper;
-}  // namespace win
-}  // namespace gfx
-
 namespace ui {
 class AXSystemCaretWin;
+class DirectManipulationHelper;
 class WindowEventTarget;
 }
 
@@ -98,6 +93,8 @@ class CONTENT_EXPORT LegacyRenderWidgetHostHWND
     MESSAGE_HANDLER_EX(WM_NCCALCSIZE, OnNCCalcSize)
     MESSAGE_HANDLER_EX(WM_SIZE, OnSize)
     MESSAGE_HANDLER_EX(WM_WINDOWPOSCHANGED, OnWindowPosChanged)
+    MESSAGE_HANDLER_EX(WM_TIMER, OnTimer)
+    MESSAGE_HANDLER_EX(DM_POINTERHITTEST, OnPointerHitTest)
   END_MSG_MAP()
 
   HWND hwnd() { return m_hWnd; }
@@ -157,6 +154,9 @@ class CONTENT_EXPORT LegacyRenderWidgetHostHWND
   LRESULT OnSize(UINT message, WPARAM w_param, LPARAM l_param);
   LRESULT OnWindowPosChanged(UINT message, WPARAM w_param, LPARAM l_param);
 
+  LRESULT OnTimer(UINT message, WPARAM w_param, LPARAM l_param);
+  LRESULT OnPointerHitTest(UINT message, WPARAM w_param, LPARAM l_param);
+
   Microsoft::WRL::ComPtr<IAccessible> window_accessible_;
 
   // Set to true if we turned on mouse tracking.
@@ -170,8 +170,7 @@ class CONTENT_EXPORT LegacyRenderWidgetHostHWND
   // This class provides functionality to register the legacy window as a
   // Direct Manipulation consumer. This allows us to support smooth scroll
   // in Chrome on Windows 10.
-  std::unique_ptr<gfx::win::DirectManipulationHelper>
-      direct_manipulation_helper_;
+  std::unique_ptr<ui::DirectManipulationHelper> direct_manipulation_helper_;
 
   DISALLOW_COPY_AND_ASSIGN(LegacyRenderWidgetHostHWND);
 };
