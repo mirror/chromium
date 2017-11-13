@@ -27,11 +27,18 @@ class ResourceBundleSourceMap : public SourceMap {
                                   const std::string& name) const override;
   bool Contains(const std::string& name) const override;
 
-  void RegisterSource(const char* const name, int resource_id);
+  void RegisterSource(const char* const name,
+                      int resource_id,
+                      bool gzipped = false);
 
  private:
+  struct ResourceInfo {
+    int id = 0;
+    bool gzipped = false;
+  };
+
   const ui::ResourceBundle* resource_bundle_;
-  std::map<std::string, int> resource_id_map_;
+  std::map<std::string, ResourceInfo> resource_map_;
 
   DISALLOW_COPY_AND_ASSIGN(ResourceBundleSourceMap);
 };
