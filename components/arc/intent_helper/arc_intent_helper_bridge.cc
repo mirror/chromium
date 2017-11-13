@@ -78,6 +78,12 @@ KeyedServiceBaseFactory* ArcIntentHelperBridge::GetFactory() {
   return ArcIntentHelperBridgeFactory::GetInstance();
 }
 
+// static
+std::string ArcIntentHelperBridge::AppendStringToIntentHelperPackageName(
+    std::string to_append) {
+  return kArcIntentHelperPackageName + to_append;
+}
+
 ArcIntentHelperBridge::ArcIntentHelperBridge(content::BrowserContext* context,
                                              ArcBridgeService* bridge_service)
     : context_(context),
