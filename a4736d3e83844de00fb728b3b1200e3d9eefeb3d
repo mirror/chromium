@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be362c97_6dc884fb",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/sequence.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-13T21:50:20Z",
+      "side": 1,
+      "message": "I think we decided mid-Friday that this would return a bool.",
+      "range": {
+        "startLine": 21,
+        "startChar": 10,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "a4736d3e83844de00fb728b3b1200e3d9eefeb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6958ca_4d4dd6c6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-13T21:50:20Z",
+      "side": 1,
+      "message": "Mention this is due to the existing integration with MessageLoop.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 49
+      },
+      "revId": "a4736d3e83844de00fb728b3b1200e3d9eefeb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8da369c4_807a64a3",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-13T21:50:20Z",
+      "side": 1,
+      "message": "Let\u0027s make this an enum so we can avoid guessing what\u0027s false and what\u0027s true.",
+      "range": {
+        "startLine": 29,
+        "startChar": 65,
+        "endLine": 29,
+        "endChar": 70
+      },
+      "revId": "a4736d3e83844de00fb728b3b1200e3d9eefeb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e5c728_72fcc53c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-13T21:50:20Z",
+      "side": 1,
+      "message": "Split this DCHECK so we can tell which sequence was nullptr.",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "a4736d3e83844de00fb728b3b1200e3d9eefeb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565ecf41_0ba32f3a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-13T21:50:20Z",
+      "side": 1,
+      "message": "Nit: we can start removing this from the interface headers.",
+      "range": {
+        "startLine": 33,
+        "startChar": 22,
+        "endLine": 33,
+        "endChar": 36
+      },
+      "revId": "a4736d3e83844de00fb728b3b1200e3d9eefeb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b5b400e_2bac7a48",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-13T21:50:20Z",
+      "side": 1,
+      "message": "These need override directives.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "a4736d3e83844de00fb728b3b1200e3d9eefeb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9215a171_fce335d9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-13T21:50:20Z",
+      "side": 1,
+      "message": "It would be nice if we can make these const. This would mean reevaluating the structure with the lazy version.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 59
+      },
+      "revId": "a4736d3e83844de00fb728b3b1200e3d9eefeb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1ce237f_1852b622",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-13T21:50:20Z",
+      "side": 1,
+      "message": "Some of these can probably be const too.",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 72
+      },
+      "revId": "a4736d3e83844de00fb728b3b1200e3d9eefeb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6000978a_fd2eb296",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-13T21:50:20Z",
+      "side": 1,
+      "message": "Can we have folks just call the constructor directly?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 1
+      },
+      "revId": "a4736d3e83844de00fb728b3b1200e3d9eefeb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5989bfb_5d4b0448",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-13T21:50:20Z",
+      "side": 1,
+      "message": "This should be grouped with \"base/threading/platform_thread.h\"\nhttps://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 59
+      },
+      "revId": "a4736d3e83844de00fb728b3b1200e3d9eefeb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c194d0a_328daaa0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-13T21:50:20Z",
+      "side": 1,
+      "message": "What code currently depends on this late binding?",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "a4736d3e83844de00fb728b3b1200e3d9eefeb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da4c789_0913bbd2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-13T21:50:20Z",
+      "side": 1,
+      "message": "Add an \n// internal::ThreadControllerImpl:\nabove here.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "a4736d3e83844de00fb728b3b1200e3d9eefeb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
