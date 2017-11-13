@@ -32,6 +32,7 @@ class ContentPaymentRequestDelegate;
 class JourneyLogger;
 class PaymentInstrument;
 class ServiceWorkerPaymentAppFactory;
+class ServiceWorkerPaymentInstrument;
 
 // Keeps track of the information currently selected by the user and whether the
 // user is ready to pay. Uses information from the PaymentRequestSpec, which is
@@ -240,6 +241,10 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   void OnAddressNormalized(bool success,
                            const autofill::AutofillProfile& normalized_profile);
 
+  void OnSWPaymentInstrumentValidated(
+      ServiceWorkerPaymentInstrument* instrument,
+      bool result);
+
   bool is_ready_to_pay_;
 
   bool get_all_instruments_finished_;
@@ -261,6 +266,10 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   autofill::AutofillProfile* selected_shipping_option_error_profile_;
   autofill::AutofillProfile* selected_contact_profile_;
   PaymentInstrument* selected_instrument_;
+
+  // Number of pending service worker payment instruments waiting for
+  // validation.
+  int number_of_pending_sw_payment_instruments_;
 
   // Profiles may change due to (e.g.) sync events, so profiles are cached after
   // loading and owned here. They are populated once only, and ordered by
