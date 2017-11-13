@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "c903c3a5_ecaebe7f",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-11-13T20:35:56Z",
+      "side": 1,
+      "message": "Our original intention was to advice user to create trivial converter as standalone binary which makes, so you can use something like \"cat input | converter\"\nNot sure which approach is going to be more convenient in long term.",
+      "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c359de_a15714fc",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-11-13T20:35:56Z",
+      "side": 1,
+      "message": "In google3 we recommend to just use default DEFINE_PROTO_FUZZER which is DEFINE_TEXT_PROTO_FUZZER\n\nif yo like we can make it configurable so cluster fuzz can set it to DEFINE_BINARY_PROTO_FUZZER",
+      "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6cf695f_4388289d",
         "filename": "testing/libfuzzer/libprotobuf-mutator.md",
         "patchSetId": 3
@@ -19,6 +53,23 @@
         "endLine": 123,
         "endChar": 77
       },
+      "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2a7a9a7_0dcf4631",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-11-13T20:35:56Z",
+      "side": 1,
+      "message": "FYI https://github.com/google/libprotobuf-mutator/commit/3fc43a01d721ef1bacfefed170bc22abf1b8b051\nmaybe you need to mention it somewhere",
       "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
