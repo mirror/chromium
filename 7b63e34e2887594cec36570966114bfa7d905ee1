@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2557e84c_71bba53d",
+        "filename": "third_party/WebKit/Source/core/css/DocumentStyleSheetCollection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-13T09:15:56Z",
+      "side": 1,
+      "message": "Reverts the change in crrev.com/30168b9 since now we need to collect injected author style sheets here again.",
+      "revId": "7b63e34e2887594cec36570966114bfa7d905ee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72ef44a_2e70ec2c",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-13T09:15:56Z",
+      "side": 1,
+      "message": "Reverts the change in crrev.com/30168b9",
+      "revId": "7b63e34e2887594cec36570966114bfa7d905ee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5054d368_299d84d0",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-13T09:15:56Z",
+      "side": 1,
+      "message": "Now we\u0027ll just start calling them \"injected\" style sheets again generically.",
+      "revId": "7b63e34e2887594cec36570966114bfa7d905ee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3173f82d_edf662cc",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngineTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-13T09:15:56Z",
+      "side": 1,
+      "message": "Most of the tests here are still for user style sheets so we pass the second argument here.",
+      "revId": "7b63e34e2887594cec36570966114bfa7d905ee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b8f60e_6d7a1d8f",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngineTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-13T09:15:56Z",
+      "side": 1,
+      "message": "New tests for injected author style sheets.",
+      "revId": "7b63e34e2887594cec36570966114bfa7d905ee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97957918_5ae005f5",
+        "filename": "third_party/WebKit/public/web/WebDocument.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-13T09:15:56Z",
+      "side": 1,
+      "message": "Defaults to author origin",
+      "revId": "7b63e34e2887594cec36570966114bfa7d905ee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

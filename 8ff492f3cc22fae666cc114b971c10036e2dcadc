@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51f03424_79c9e5b2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-2/inject-stylesheet-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-13T09:15:56Z",
+      "side": 0,
+      "message": "All the changes in this file revert the corresponding changes in crrev.com/30168b9",
+      "revId": "8ff492f3cc22fae666cc114b971c10036e2dcadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cbecf90_4f08416e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-2/inject-stylesheet.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-13T09:15:56Z",
+      "side": 0,
+      "message": "This reverts the previous change in crrev.com/30168b9",
+      "revId": "8ff492f3cc22fae666cc114b971c10036e2dcadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
