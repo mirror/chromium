@@ -33,6 +33,75 @@
       "revId": "8194fa938e70333efa26a39ee6de6e6e4b77f0f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96a37bb_c48ea5b9",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-13T19:20:52Z",
+      "side": 1,
+      "message": "Also mention that this is needed to ensure we wait until the NetworkContextPtr has been notified of its destruction?",
+      "range": {
+        "startLine": 93,
+        "startChar": 31,
+        "endLine": 93,
+        "endChar": 32
+      },
+      "revId": "8194fa938e70333efa26a39ee6de6e6e4b77f0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510069b2_39b6c4cf",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-13T19:20:52Z",
+      "side": 1,
+      "message": "Not sure we get anything from this one - this should be guaranteed by Mojo itself.",
+      "range": {
+        "startLine": 98,
+        "startChar": 46,
+        "endLine": 98,
+        "endChar": 61
+      },
+      "revId": "8194fa938e70333efa26a39ee6de6e6e4b77f0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3895f8f_e9303e3e",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-13T19:20:52Z",
+      "side": 1,
+      "message": "I don\u0027t think this is guaranteed to succeed, is it?  The NetworkContext may or may not have been notified of the crash.  To fix this, I think we need to call FlushForTesting on the NetworkContext first.",
+      "range": {
+        "startLine": 124,
+        "startChar": 30,
+        "endLine": 124,
+        "endChar": 47
+      },
+      "revId": "8194fa938e70333efa26a39ee6de6e6e4b77f0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
