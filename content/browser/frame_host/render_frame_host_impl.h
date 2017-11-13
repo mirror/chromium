@@ -796,8 +796,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
                      blink::WebTextDirection title_direction);
   void OnUpdateEncoding(const std::string& encoding);
   void OnDidBlockFramebust(const GURL& url);
-  void OnBeginNavigation(const CommonNavigationParams& common_params,
-                         const BeginNavigationParams& begin_params);
   void OnAbortNavigation();
   void OnDispatchLoad();
   void OnAccessibilityEvents(
@@ -864,6 +862,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void DidCommitProvisionalLoad(
       std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
           validated_params) override;
+  void BeginNavigation(const CommonNavigationParams& common_params,
+                       const BeginNavigationParams& begin_params) override;
 
   // Registers Mojo interfaces that this frame host makes available.
   void RegisterMojoInterfaces();

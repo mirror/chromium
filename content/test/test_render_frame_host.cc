@@ -274,6 +274,12 @@ void TestRenderFrameHost::SimulateNavigationStop() {
   }
 }
 
+void TestRenderFrameHost::SimulateBeginNavigation(
+    const CommonNavigationParams& common_params,
+    const BeginNavigationParams& begin_params) {
+  BeginNavigation(common_params, begin_params);
+}
+
 void TestRenderFrameHost::SetContentsMimeType(const std::string& mime_type) {
   contents_mime_type_ = mime_type;
 }
@@ -473,7 +479,7 @@ void TestRenderFrameHost::SendRendererInitiatedNavigationRequest(
     common_params.transition = ui::PAGE_TRANSITION_LINK;
     common_params.navigation_type = FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT;
     common_params.has_user_gesture = has_user_gesture;
-    OnBeginNavigation(common_params, begin_params);
+    BeginNavigation(common_params, begin_params);
   }
 }
 

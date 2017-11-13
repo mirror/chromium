@@ -121,6 +121,11 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
   // DEPRECATED: use NavigationSimulator instead.
   void SimulateNavigationCommit(const GURL& url);
 
+  // Simulates the renderer asking the RenderFrameHost to navigate.
+  // DEPRECATED: use NavigationSimulator instead.
+  void SimulateBeginNavigation(const CommonNavigationParams& common_params,
+                               const BeginNavigationParams& begin_params);
+
   // PlzNavigate: this method simulates receiving a BeginNavigation IPC.
   void SendRendererInitiatedNavigationRequest(const GURL& url,
                                               bool has_user_gesture);
