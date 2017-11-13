@@ -27,7 +27,8 @@ class CacheURLLoader {
     ResourceResponseHead resource_response;
     resource_response.headers = headers;
     resource_response.mime_type = "text/html";
-    client_->OnReceiveResponse(resource_response, base::nullopt, nullptr);
+    client_->OnReceiveResponse(resource_response, base::nullopt, nullptr,
+                               mojom::URLLoaderNavigationDataPtr());
 
     DCHECK(base::StartsWith(url.spec(), kChromeUINetworkViewCacheURL,
                             base::CompareCase::INSENSITIVE_ASCII));

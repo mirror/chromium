@@ -118,7 +118,8 @@ class FileURLDirectoryLoader
     ResourceResponseHead head;
     head.mime_type = "text/html";
     head.charset = "utf-8";
-    client->OnReceiveResponse(head, base::nullopt, nullptr);
+    client->OnReceiveResponse(head, base::nullopt, nullptr,
+                              mojom::URLLoaderNavigationDataPtr());
     client->OnStartLoadingResponseBody(std::move(pipe.consumer_handle));
     client_ = std::move(client);
 
@@ -431,7 +432,8 @@ class FileURLLoader : public mojom::URLLoader {
       net::SniffMimeType(initial_read_buffer, initial_read_result, request.url,
                          head.mime_type, &head.mime_type);
     }
-    client->OnReceiveResponse(head, base::nullopt, nullptr);
+    client->OnReceiveResponse(head, base::nullopt, nullptr,
+                              mojom::URLLoaderNavigationDataPtr());
     client->OnStartLoadingResponseBody(std::move(pipe.consumer_handle));
     client_ = std::move(client);
 

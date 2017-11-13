@@ -149,9 +149,9 @@ void ResourceDownloader::InterceptResponse(
   net::SSLInfo info;
   info.cert_status = ssl_status.cert_status;
   response_handler_.SetURLChain(std::move(url_chain));
-  response_handler_.OnReceiveResponse(response->head,
-                                      base::Optional<net::SSLInfo>(info),
-                                      mojom::DownloadedTempFilePtr());
+  response_handler_.OnReceiveResponse(
+      response->head, base::Optional<net::SSLInfo>(info),
+      mojom::DownloadedTempFilePtr(), mojom::URLLoaderNavigationDataPtr());
   response_handler_.OnStartLoadingResponseBody(std::move(consumer_handle));
   if (completion_status.has_value())
     response_handler_.OnComplete(completion_status.value());

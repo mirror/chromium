@@ -16,7 +16,8 @@ TestURLLoaderClient::~TestURLLoaderClient() {}
 void TestURLLoaderClient::OnReceiveResponse(
     const ResourceResponseHead& response_head,
     const base::Optional<net::SSLInfo>& ssl_info,
-    mojom::DownloadedTempFilePtr downloaded_file) {
+    mojom::DownloadedTempFilePtr downloaded_file,
+    mojom::URLLoaderNavigationDataPtr navigation_data) {
   EXPECT_FALSE(has_received_response_);
   EXPECT_FALSE(has_received_cached_metadata_);
   EXPECT_FALSE(has_received_completion_);
