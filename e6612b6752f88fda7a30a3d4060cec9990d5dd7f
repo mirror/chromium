@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5cf19315_8778f320",
+        "filename": "third_party/WebKit/LayoutTests/media/track/opera/track/track-element/cloneNode.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-13T09:26:18Z",
+      "side": 0,
+      "message": "I think in this particular case, the .mode setting was removed, so removing the assert after it makes sense? In general it looks like the right thing to do to just remove this test. (This test was the basis of the WPT test, but it\u0027s pretty aged by now.)",
+      "parentUuid": "07c91a8f_b653eec9",
+      "range": {
+        "startLine": 10,
+        "startChar": 14,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "e6612b6752f88fda7a30a3d4060cec9990d5dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "119756dd_0f923d2f",
         "filename": "third_party/WebKit/LayoutTests/media/track/opera/track/track-element/src-clear-cues.html",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "e6612b6752f88fda7a30a3d4060cec9990d5dd7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583ad06c_0bfd2c55",
+        "filename": "third_party/WebKit/LayoutTests/media/track/opera/track/track-element/src-clear-cues.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-13T09:26:18Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "119756dd_0f923d2f",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "e6612b6752f88fda7a30a3d4060cec9990d5dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
