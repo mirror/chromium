@@ -27,6 +27,11 @@ namespace content {
 
 namespace {
 
+// TODO(eladalon): This blocks the new code until the code handling it is
+// introduce by the next CL in the stack.
+// Namely, https://chromium-review.googlesource.com/c/chromium/src/+/760816.
+constexpr bool kRtcEventLoggingFromHostApplication = false;
+
 // In addition to the limit to the number of files given below, the size of the
 // files is also capped, see content/renderer/media/peer_connection_tracker.cc.
 #if defined(OS_ANDROID)
@@ -146,14 +151,23 @@ WebRTCEventLogHost::ActivePeerConnectionsWithLogFiles() {
 
 void WebRTCEventLogHost::StartEventLogForPeerConnection(
     int peer_connection_local_id) {
-  if (ActivePeerConnectionsWithLogFiles().size() < kMaxNumberLogFiles) {
-    RtcEventLogAdded(peer_connection_local_id);
-    base::PostTaskWithTraitsAndReplyWithResult(
-        FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-        base::Bind(&CreateEventLogFileForChildProcess, base_file_path_,
-                   render_process_id_, peer_connection_local_id),
-        base::Bind(&WebRTCEventLogHost::SendEventLogFileToRenderer,
-                   weak_ptr_factory_.GetWeakPtr(), peer_connection_local_id));
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (kRtcEventLoggingFromHostApplication) {
+    RenderProcessHost* rph = RenderProcessHost::FromID(render_process_id_);
+    if (rph) {
+      rph->Send(new PeerConnectionTracker_StartEventLogOutput(
+          peer_connection_local_id));
+    }
+  } else {
+    if (ActivePeerConnectionsWithLogFiles().size() < kMaxNumberLogFiles) {
+      RtcEventLogAdded(peer_connection_local_id);
+      base::PostTaskWithTraitsAndReplyWithResult(
+          FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+          base::Bind(&CreateEventLogFileForChildProcess, base_file_path_,
+                     render_process_id_, peer_connection_local_id),
+          base::Bind(&WebRTCEventLogHost::SendEventLogFileToRenderer,
+                     weak_ptr_factory_.GetWeakPtr(), peer_connection_local_id));
+    }
   }
 }
 
@@ -168,8 +182,8 @@ void WebRTCEventLogHost::SendEventLogFileToRenderer(
   }
   RenderProcessHost* rph = RenderProcessHost::FromID(render_process_id_);
   if (rph) {
-    rph->Send(new PeerConnectionTracker_StartEventLog(peer_connection_local_id,
-                                                      file_for_transit));
+    rph->Send(new PeerConnectionTracker_StartEventLogFile(
+        peer_connection_local_id, file_for_transit));
   } else {
     bool removed = RtcEventLogRemoved(peer_connection_local_id);
     DCHECK(removed);

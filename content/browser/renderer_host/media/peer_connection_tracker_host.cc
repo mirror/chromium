@@ -32,6 +32,8 @@ bool PeerConnectionTrackerHost::OnMessageReceived(const IPC::Message& message) {
                         OnUpdatePeerConnection)
     IPC_MESSAGE_HANDLER(PeerConnectionTrackerHost_AddStats, OnAddStats)
     IPC_MESSAGE_HANDLER(PeerConnectionTrackerHost_GetUserMedia, OnGetUserMedia)
+    IPC_MESSAGE_HANDLER(PeerConnectionTrackerHost_RtcEventLogWrite,
+                        OnRtcEventLogWrite)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;
@@ -113,6 +115,13 @@ void PeerConnectionTrackerHost::OnGetUserMedia(
                                                  video,
                                                  audio_constraints,
                                                  video_constraints);
+}
+
+void PeerConnectionTrackerHost::OnRtcEventLogWrite(int lid,
+                                                   const std::string& output) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  // TODO(eladalon): This is handled in the next CL in the stack.
+  // Namely, https://chromium-review.googlesource.com/c/chromium/src/+/760816.
 }
 
 void PeerConnectionTrackerHost::OnSuspend() {
