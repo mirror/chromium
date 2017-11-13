@@ -1234,7 +1234,7 @@ const GUI = {
   },
 
   toggleResults: function(expectation, event) {
-    let applyToAll = event && event.altKey;
+    let applyToAll = event && event.metaKey;
     let closeOthers = !applyToAll && event && !event.shiftKey;
     let details = expectation.querySelector(".details");
     let isOpen = details.classList.contains("open");
@@ -1243,7 +1243,7 @@ const GUI = {
       if (allExpectations.length > 100) {
         console.error("Too many details to be shown at once");
       } else {
-        for (e of allExpectations)
+        for (let e of allExpectations)
           if (e != expectation)
             isOpen ? GUI.hideResults(e) : GUI.showResults(e, true);
       }
