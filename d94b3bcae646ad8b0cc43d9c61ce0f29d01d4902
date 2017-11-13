@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6379c25d_47dd12a5",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T21:14:20Z",
+      "side": 1,
+      "message": "nit: document that it returns true on success and false on failure.",
+      "revId": "d94b3bcae646ad8b0cc43d9c61ce0f29d01d4902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
