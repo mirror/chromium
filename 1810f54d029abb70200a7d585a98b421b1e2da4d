@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e49c678_955e4588",
+        "filename": "docs/testing/layout_test_baseline_fallback.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-13T20:39:17Z",
+      "side": 1,
+      "message": "Or: Terminology\nThis word is often used as an uncountable noun.",
+      "range": {
+        "startLine": 18,
+        "startChar": 3,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "1810f54d029abb70200a7d585a98b421b1e2da4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e81bc2d_6bd1db8c",
+        "filename": "docs/testing/layout_test_baseline_fallback.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-13T20:39:17Z",
+      "side": 1,
+      "message": "Maybe unnecessary, but also OK",
+      "range": {
+        "startLine": 89,
+        "startChar": 58,
+        "endLine": 90,
+        "endChar": 30
+      },
+      "revId": "1810f54d029abb70200a7d585a98b421b1e2da4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c7519d_7a5f5239",
+        "filename": "docs/testing/layout_test_baseline_fallback.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-13T20:39:17Z",
+      "side": 1,
+      "message": "Could remove this colon.",
+      "range": {
+        "startLine": 123,
+        "startChar": 53,
+        "endLine": 123,
+        "endChar": 54
+      },
+      "revId": "1810f54d029abb70200a7d585a98b421b1e2da4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
