@@ -9,6 +9,7 @@
 
 #include <map>
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "base/macros.h"
@@ -252,6 +253,11 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   std::map<std::string, bool> GetSubframeUniqueNames(
       FrameTreeNode* frame_tree_node) const;
 
+  // Removes |tree_node| and its associated FrameNavigationEntry.
+  // |frame_tree_node| has to have a parent (i.e. cannot represent the main
+  // frame).
+  void RemoveTreeNode(NavigationEntryImpl::TreeNode* node);
+
   // Removes any subframe FrameNavigationEntries that match the unique name of
   // |frame_tree_node|, and all of their children. There should be at most one,
   // since collisions are avoided but leave old FrameNavigationEntries in the
@@ -413,7 +419,7 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
     return has_user_gesture_;
   }
 
-  void set_has_user_gesture (bool has_user_gesture) {
+  void set_has_user_gesture(bool has_user_gesture) {
     has_user_gesture_ = has_user_gesture;
   }
 #endif
