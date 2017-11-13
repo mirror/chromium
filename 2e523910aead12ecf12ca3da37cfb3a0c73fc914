@@ -52,6 +52,24 @@
       "revId": "2e523910aead12ecf12ca3da37cfb3a0c73fc914",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9822d140_53fd597c",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-13T07:27:13Z",
+      "side": 1,
+      "message": "\u003e Do you mean moving these to service_worker_consts.h? I thought we should keep these private to this .cc file.\n\nNo, I just wanted to use non-abbreviated names.  We can just keep using this name in multiple files, like we do for base::internal etc, assuming we won\u0027t have further conflicts even in jumbo build if they\u0027re scoped within \u0027service_worker\u0027, is what I thought.",
+      "parentUuid": "0c4c7c36_e022be7d",
+      "revId": "2e523910aead12ecf12ca3da37cfb3a0c73fc914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
