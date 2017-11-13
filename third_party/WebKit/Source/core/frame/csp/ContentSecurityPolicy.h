@@ -478,7 +478,11 @@ class CORE_EXPORT ContentSecurityPolicy
 
   Member<ExecutionContext> execution_context_;
   bool override_inline_style_allowed_;
+
+ public:
   CSPDirectiveListVector policies_;
+
+ private:
   ConsoleMessageVector console_messages_;
   bool header_delivered_{false};
 
