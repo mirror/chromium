@@ -40,6 +40,9 @@ class CORE_EXPORT CSSNumericValueType {
   static CSSNumericValueType Add(CSSNumericValueType,
                                  CSSNumericValueType,
                                  bool& error);
+  static CSSNumericValueType Multiply(CSSNumericValueType,
+                                      CSSNumericValueType,
+                                      bool& error);
 
   int GetEntry(BaseType type) const {
     DCHECK_LT(type, BaseType::kNumBaseTypes);

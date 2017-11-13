@@ -111,6 +111,28 @@ CSSNumericValueType CSSNumericValueType::Add(CSSNumericValueType type1,
   return type1;
 }
 
+/* static */
+CSSNumericValueType CSSNumericValueType::Multiply(CSSNumericValueType type1,
+                                                  CSSNumericValueType type2,
+                                                  bool& error) {
+  if (type1.HasPercentHint() && type2.HasPercentHint() &&
+      type1.PercentHint() != type2.PercentHint()) {
+    error = true;
+    return type1;
+  }
+
+  if (type1.HasPercentHint())
+    type2.ApplyPercentHint(type1.PercentHint());
+  else if (type2.HasPercentHint())
+    type1.ApplyPercentHint(type2.PercentHint());
+
+  for (unsigned i = 0; i < kNumBaseTypes; ++i)
+    type1.entries_[i] += type2.entries_[i];
+
+  error = false;
+  return type1;
+}
+
 void CSSNumericValueType::ApplyPercentHint(BaseType hint) {
   DCHECK_NE(hint, BaseType::kNullPercentHint);
   SetEntry(hint, GetEntry(hint) + GetEntry(BaseType::kPercent));
