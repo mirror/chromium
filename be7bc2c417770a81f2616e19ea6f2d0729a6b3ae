@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ee17be1_7666cf37",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-13T14:04:23Z",
+      "side": 1,
+      "message": "naming bikeshed: I\u0027m struggling a bit with this name. How does something like this feel:\n\n// Requests a callback with the next Geoposition obtained later than |time_of_prev_position|.\n// Specifically:\n// * If a position has been obtained subsequent to |time_of_prev_position|, returns it.\n// * Otherwise, returns an updated position once a network change has occurred.\n// * Note that it is possible for |callback| to never be called if no network change ever occurs // * after |time_of_prev_position|.\nvoid QueryNextPosition(\n  base::Time time_of_prev_position, ...);\n\nI realize that that skirts the detail of \"new position is available but network change has been detected\", but I think that\u0027s basically an impl detail?",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 38
+      },
+      "revId": "be7bc2c417770a81f2616e19ea6f2d0729a6b3ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -399,6 +399,24 @@
     },
     {
       "key": {
+        "uuid": "e1290a74_347a2bd1",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-13T14:04:23Z",
+      "side": 1,
+      "message": "We can do this basic approach without any WeakPtrs via the magic of base::CallbackList. The clients can register for the notifier\u0027s destruction via that class (see its header, which shows exactly how to use it). Clients can have a mojo::Binding, listen for connection error, and destroy themselves when either (a) there\u0027s a connection error or (b) the notifier goes away. We use this pattern in other places that have a similar situation of \"client has a Mojo connection plus depends on some object with an unrelated lifetime\".",
+      "parentUuid": "0bf2ec9c_9ba4b2c0",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fec87fa_692a4567",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
         "patchSetId": 4
