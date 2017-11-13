@@ -125,12 +125,13 @@ class Supplement : public GarbageCollectedMixin,
 
   static Supplement<T>* From(Supplementable<T>& supplementable,
                              const char* key) {
-    return supplementable.RequireSupplement(key);
+    return const_cast<Supplement<T>*>(
+        From(static_cast<const Supplementable<T>&>(supplementable), key));
   }
 
   static Supplement<T>* From(Supplementable<T>* supplementable,
                              const char* key) {
-    return supplementable ? supplementable->RequireSupplement(key) : 0;
+    return supplementable ? From(*supplementable, key) : 0;
   }
 
   static const Supplement<T>* From(const Supplementable<T>& supplementable,
@@ -140,7 +141,7 @@ class Supplement : public GarbageCollectedMixin,
 
   static const Supplement<T>* From(const Supplementable<T>* supplementable,
                                    const char* key) {
-    return supplementable ? supplementable->RequireSupplement(key) : 0;
+    return supplementable ? From(*supplementable, key) : 0;
   }
 
   virtual void Trace(blink::Visitor* visitor) {
@@ -172,7 +173,7 @@ class Supplementable : public GarbageCollectedMixin {
 
   Supplement<T>* RequireSupplement(const char* key) {
     return const_cast<Supplement<T>*>(
-        static_cast<const Supplementable&>(*this).RequireSupplement(key));
+        static_cast<const Supplementable<T>&>(*this).RequireSupplement(key));
   }
 
   const Supplement<T>* RequireSupplement(const char* key) const {
