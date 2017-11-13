@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "ea1d8519_662621c3",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-13T20:38:48Z",
+      "side": 1,
+      "message": "nit: Does operator\u003d work for DictionaryValue? swap is more efficient, but less readable, and this is just a unit test...",
+      "revId": "e5f309be4a76764b46b49f365686da4dae5085bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04cb56f0_d5852166",
         "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
         "patchSetId": 1
