@@ -279,6 +279,18 @@ void PrefProxyConfigTrackerImpl::OnProxyConfigChanged(
 
   if (!proxy_config_service_impl_)
     return;
+
+  // If the ProxyConfigService lives on the current thread, just synchronously
+  // tell if about the new configuration.
+  // TODO(mmenke): When/if iOS is migrated to using the NetworkService, get rid
+  // of |io_task_runner_|. Can also merged ProxyConfigServiceImpl into the
+  // tracker, and make the class talk over the Mojo pipe directly, at that
+  // point.
+  if (!io_task_runner_) {
+    proxy_config_service_impl_->UpdateProxyConfig(config_state, config);
+    return;
+  }
+
   io_task_runner_->PostTask(
       FROM_HERE, base::Bind(&ProxyConfigServiceImpl::UpdateProxyConfig,
                             base::Unretained(proxy_config_service_impl_),
