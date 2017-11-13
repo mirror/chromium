@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1c1faeb_bbd680cd",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-13T17:30:41Z",
+      "side": 1,
+      "message": "nit: -setUpViewsForInitialLayout:(BOOL)initialLayout\n\n(When we have more time ... isn\u0027t this what -viewDidLoad is for?)",
+      "range": {
+        "startLine": 691,
+        "startChar": 8,
+        "endLine": 691,
+        "endChar": 23
+      },
+      "revId": "b3552211586c8185de1ceffd6789b2ebc96aa0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
