@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "04903f4d_060864ce",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-13T17:09:58Z",
+      "side": 1,
+      "message": "@maruel - if we use sha256 right away, this means that the hashes we have here don\u0027t match the hashes the isolate server uses, and that would make it impossible for a generic viewer to link directly to the results in the isolateserver. Given that I think that\u0027s a plausible way to want to store most of our results, I\u0027m not happy taking this off the table at this time.\n\nAlso, my concern about us having hash collisions for test artifacts is almost nonexistent, and I think we can either trivially change the hash function at any point in time (since nothing is likely re-calculating it to check), or do so simply by bumping the version number in the file format.\n\nGiven the above, does that change your recommendation at all?",
+      "parentUuid": "ca26dba5_997ea75b",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6593836c_a167d8d7",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 4
