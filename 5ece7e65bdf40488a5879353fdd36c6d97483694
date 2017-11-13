@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "82bb0932_18f88c5f",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-13T18:44:30Z",
+      "side": 1,
+      "message": "The internal display doesn\u0027t get reset in ash, it shouldn\u0027t change after initially being set in DisplayChangeObserver::UpdateInternalDisplay(), so it might be broken.",
+      "parentUuid": "3f9d65dd_3a824f21",
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d4caba3_9ebfc4d5",
         "filename": "services/ui/ws/display_manager.cc",
         "patchSetId": 18
@@ -154,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "31f0df28_33dac77a",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-13T18:44:30Z",
+      "side": 1,
+      "message": "Well, that would work. ViewportMetrics could just contain a display::Display potentially so there is just |displays| and |mirrors|?",
+      "parentUuid": "0d4d5306_1112150a",
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c1d245d_f4117ad2",
         "filename": "ui/display/manager/chromeos/display_configurator_unittest.cc",
         "patchSetId": 18
@@ -183,6 +219,24 @@
       "side": 1,
       "message": "The DisplayConfigurator ctor caches the value in |configure_display_|.\nI could probably delay that check to DisplayConfigurator::Init... WDYT?",
       "parentUuid": "2c1d245d_f4117ad2",
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40c57f3_40f6a342",
+        "filename": "ui/display/manager/chromeos/display_configurator_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-13T18:44:30Z",
+      "side": 1,
+      "message": "DisplayConfigurator::SetDelegateForTesting() sets |configure_display_| to true. There is a DisplayConfigurator::set_configure_displays(true) used for mus/mash too, which happens before DisplayConfigurator::Init().",
+      "parentUuid": "b344d207_7135b016",
       "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
