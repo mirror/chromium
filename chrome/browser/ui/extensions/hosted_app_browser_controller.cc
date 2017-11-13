@@ -16,6 +16,7 @@
 #include "chrome/common/extensions/manifest_handlers/app_launch_info.h"
 #include "chrome/common/extensions/manifest_handlers/app_theme_color_info.h"
 #include "components/security_state/core/security_state.h"
+#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/extension.h"
@@ -150,6 +151,19 @@ base::Optional<SkColor> HostedAppBrowserController::GetThemeColor() const {
   const Extension* extension =
       registry->GetExtensionById(extension_id_, ExtensionRegistry::EVERYTHING);
   return AppThemeColorInfo::GetThemeColor(extension);
+}
+
+base::string16 HostedAppBrowserController::GetTitle() const {
+  const content::NavigationController& controller =
+      browser_->tab_strip_model()->GetActiveWebContents()->GetController();
+  // Transient entries take precedence. They are used for interstitial pages
+  // that are shown on top of existing pages.
+  content::NavigationEntry* entry = controller.GetTransientEntry();
+  if (entry)
+    return entry->GetTitleForDisplay();
+
+  entry = controller.GetLastCommittedEntry();
+  return entry ? entry->GetTitle() : base::string16();
 }
 
 }  // namespace extensions

@@ -371,6 +371,22 @@ IN_PROC_BROWSER_TEST_P(HostedAppTest, BookmarkAppThemeColor) {
   }
 }
 
+// Ensure that hosted app windows with blank titles don't display the URL as a
+// default window title.
+IN_PROC_BROWSER_TEST_P(HostedAppTest, Title) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  GURL url = embedded_test_server()->GetURL("app.site.com", "/empty.html");
+  WebApplicationInfo web_app_info;
+  web_app_info.app_url = url;
+  const extensions::Extension* app = InstallBookmarkApp(web_app_info);
+
+  Browser* app_browser = LaunchAppBrowser(app);
+  content::WebContents* web_contents =
+      app_browser->tab_strip_model()->GetActiveWebContents();
+  content::WaitForLoadStop(web_contents);
+  EXPECT_EQ(base::string16(), app_browser->GetWindowTitleForCurrentTab(false));
+}
+
 class HostedAppVsTdiTest : public HostedAppTest {
  public:
   HostedAppVsTdiTest() {}
