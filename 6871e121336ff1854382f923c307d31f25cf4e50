@@ -46,6 +46,30 @@
       "revId": "6871e121336ff1854382f923c307d31f25cf4e50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aee6b49_77ae0be5",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-13T02:45:28Z",
+      "side": 1,
+      "message": "I think this is currently only used by VR (just because Chris is a VR engineer) but it is not intended to be VR-specific. Chris is working out a general elision algorithm which we can then port over other clients to use.\n\nSo this test should be running on all builds, even if it isn\u0027t currently used on those builds.",
+      "parentUuid": "a3c21be5_9491da6e",
+      "range": {
+        "startLine": 733,
+        "startChar": 21,
+        "endLine": 733,
+        "endChar": 44
+      },
+      "revId": "6871e121336ff1854382f923c307d31f25cf4e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
