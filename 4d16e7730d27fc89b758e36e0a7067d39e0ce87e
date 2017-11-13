@@ -1,0 +1,289 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a707a405_6ff06765",
+        "filename": "content/browser/dom_storage/dom_storage_context_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T22:03:44Z",
+      "side": 1,
+      "message": "only create SessionStorageContextMojo if mojo session storage is enabled?",
+      "revId": "4d16e7730d27fc89b758e36e0a7067d39e0ce87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285ff83e_0f094c31",
+        "filename": "content/browser/dom_storage/dom_storage_context_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T22:03:44Z",
+      "side": 1,
+      "message": "std::make_unique?",
+      "revId": "4d16e7730d27fc89b758e36e0a7067d39e0ce87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc7402c_38200fd2",
+        "filename": "content/browser/dom_storage/dom_storage_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T22:03:44Z",
+      "side": 1,
+      "message": "is a raw pointer really safe here? DOMStorageSession is refcounted, so could easily outlive SessionStorageContextMojo afaict?",
+      "revId": "4d16e7730d27fc89b758e36e0a7067d39e0ce87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b357ef0_ee288b1a",
+        "filename": "content/browser/dom_storage/session_storage_context_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T22:03:44Z",
+      "side": 1,
+      "message": "maybe add a DCHECK to make sure we\u0027re not creating this unless mojo session storage is actually enabled?",
+      "revId": "4d16e7730d27fc89b758e36e0a7067d39e0ce87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ff1c71_6666e592",
+        "filename": "content/browser/dom_storage/session_storage_context_mojo.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T22:03:44Z",
+      "side": 1,
+      "message": "do we actually need this overload? You\u0027re not calling it yet, but maybe that is going to change later?",
+      "revId": "4d16e7730d27fc89b758e36e0a7067d39e0ce87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17c056bd_09f549a8",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T22:03:44Z",
+      "side": 1,
+      "message": "should this have the same origin security check as localstorage does above?",
+      "revId": "4d16e7730d27fc89b758e36e0a7067d39e0ce87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252edb1e_5df2eba9",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T22:03:44Z",
+      "side": 1,
+      "message": ";",
+      "revId": "4d16e7730d27fc89b758e36e0a7067d39e0ce87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68bc8d2e_34eb848c",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T22:03:44Z",
+      "side": 1,
+      "message": "one thing you\u0027ll have to deal with at some point is that I (mistakenly?) changed LocalStorageCachedArea to expect a different encoding of keys/values than what the sessionstorage leveldb database currently uses...",
+      "revId": "4d16e7730d27fc89b758e36e0a7067d39e0ce87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc7bfa34_11d135ff",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T22:03:44Z",
+      "side": 1,
+      "message": "base::MakeRefCounted()? And we should probably refactor this/the above GetCachedArea methods to share most of their logic (i.e. histograms + possibly evicting unused areas).",
+      "range": {
+        "startLine": 69,
+        "startChar": 25,
+        "endLine": 69,
+        "endChar": 28
+      },
+      "revId": "4d16e7730d27fc89b758e36e0a7067d39e0ce87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e221066_4c385bab",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T22:03:44Z",
+      "side": 1,
+      "message": "maybe add a TODO to LocalStorageCachedArea and this class to rename them to no longer have LocalStorage in their name? (probably back to DOMStorage...)",
+      "range": {
+        "startLine": 69,
+        "startChar": 29,
+        "endLine": 69,
+        "endChar": 51
+      },
+      "revId": "4d16e7730d27fc89b758e36e0a7067d39e0ce87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c072b2e_48a37744",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T22:03:44Z",
+      "side": 1,
+      "message": "also doing two/three lookups for key is kind of unnecessary. But of course unlikely to be an actual performance issue.",
+      "range": {
+        "startLine": 73,
+        "startChar": 23,
+        "endLine": 73,
+        "endChar": 26
+      },
+      "revId": "4d16e7730d27fc89b758e36e0a7067d39e0ce87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c1caf8_0dde2e8c",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T22:03:44Z",
+      "side": 1,
+      "message": "update comment to explain what the int64_t is?",
+      "revId": "4d16e7730d27fc89b758e36e0a7067d39e0ce87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4760bbef_5836e957",
+        "filename": "content/renderer/dom_storage/session_storage_namespace.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T22:03:44Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "4d16e7730d27fc89b758e36e0a7067d39e0ce87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1e0e91_b3434230",
+        "filename": "content/renderer/dom_storage/session_storage_namespace.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T22:03:44Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "4d16e7730d27fc89b758e36e0a7067d39e0ce87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e6d6b3_41c6737f",
+        "filename": "third_party/WebKit/Source/modules/storage/StorageNamespaceController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T22:03:44Z",
+      "side": 1,
+      "message": "std::make_unique?",
+      "revId": "4d16e7730d27fc89b758e36e0a7067d39e0ce87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
