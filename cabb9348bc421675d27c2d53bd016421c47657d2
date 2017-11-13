@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6fbde04c_93d5ecb4",
+        "filename": "chrome/browser/resources/print_preview/new/number_input.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-13T19:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0482d84_a0a1fb13",
+      "revId": "cabb9348bc421675d27c2d53bd016421c47657d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6e272ee_5479a7e9",
         "filename": "chrome/browser/resources/print_preview/new/number_input.html",
         "patchSetId": 11
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "559b84ff_d249ca94",
+        "filename": "chrome/browser/resources/print_preview/new/number_input.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-13T19:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6e272ee_5479a7e9",
+      "range": {
+        "startLine": 24,
+        "startChar": 57,
+        "endLine": 24,
+        "endChar": 69
+      },
+      "revId": "cabb9348bc421675d27c2d53bd016421c47657d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e659d97_e4920959",
         "filename": "chrome/browser/resources/print_preview/new/number_input.html",
         "patchSetId": 11
@@ -53,6 +95,30 @@
       "writtenOn": "2017-11-11T02:19:09Z",
       "side": 1,
       "message": "I doubt this will work. IIUC the browser expects the label element and the element that is \"labeled by\" to be on the same DOM (can\u0027t span Shadow DOM boundary). We can only figure out by trying this with a screen reader.\n\nPerhaps we should move the aria-labelledby to the print-preview-number-input element itself. It\u0027s fine to explore this in a follow up CL, let\u0027s just make a note to verify whether this works with screen readers.",
+      "range": {
+        "startLine": 25,
+        "startChar": 58,
+        "endLine": 25,
+        "endChar": 68
+      },
+      "revId": "cabb9348bc421675d27c2d53bd016421c47657d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2488cc79_a1dd4bc0",
+        "filename": "chrome/browser/resources/print_preview/new/number_input.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-13T19:11:33Z",
+      "side": 1,
+      "message": "Restructured things so I think this is fixed.",
+      "parentUuid": "6e659d97_e4920959",
       "range": {
         "startLine": 25,
         "startChar": 58,
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "15608ab8_7d942e59",
+        "filename": "chrome/browser/resources/print_preview/new/number_input.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-13T19:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac8447fd_9a33936f",
+      "revId": "cabb9348bc421675d27c2d53bd016421c47657d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11dbf6c4_a628370b",
         "filename": "chrome/browser/resources/print_preview/new/number_input.js",
         "patchSetId": 11
@@ -96,6 +180,24 @@
       "revId": "cabb9348bc421675d27c2d53bd016421c47657d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db228c2_f5473c47",
+        "filename": "chrome/browser/resources/print_preview/new/number_input.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-13T19:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11dbf6c4_a628370b",
+      "revId": "cabb9348bc421675d27c2d53bd016421c47657d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
