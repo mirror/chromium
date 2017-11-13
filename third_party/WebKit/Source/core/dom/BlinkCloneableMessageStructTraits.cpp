@@ -40,7 +40,7 @@ bool StructTraits<blink::mojom::blink::CloneableMessage::DataView,
     out->message->BlobDataHandles().Set(
         blob->uuid,
         blink::BlobDataHandle::Create(blob->uuid, blob->content_type,
-                                      blob->size, blob->blob.PassInterface()));
+                                      blob->size, std::move(blob->blob)));
   }
 
   return true;

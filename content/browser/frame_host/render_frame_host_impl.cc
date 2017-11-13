@@ -1144,7 +1144,7 @@ bool RenderFrameHostImpl::CreateRenderFrame(int proxy_routing_id,
   BindInterfaceProviderRequest(mojo::MakeRequest(&interface_provider));
 
   mojom::CreateFrameParamsPtr params = mojom::CreateFrameParams::New();
-  params->interface_provider = std::move(interface_provider);
+  params->interface_provider = interface_provider.PassInterface();
   params->routing_id = routing_id_;
   params->proxy_routing_id = proxy_routing_id;
   params->opener_routing_id = opener_routing_id;
