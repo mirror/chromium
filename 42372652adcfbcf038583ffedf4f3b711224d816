@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "aa01de46_55ac6988",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-13T21:06:41Z",
+      "side": 1,
+      "message": "I apologize, but I\u0027m still not understanding.  It sounds like you copied this code (and the DCHECK) from somewhere, but I\u0027m still not understanding where it came from?",
+      "parentUuid": "091307cf_d187175f",
+      "range": {
+        "startLine": 1140,
+        "startChar": 14,
+        "endLine": 1140,
+        "endChar": 19
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2f1f467_33da2e2c",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 11
@@ -343,6 +367,30 @@
       "side": 1,
       "message": "I could just add a boolean property instead; there is a second argument for that, even: I only use the new enum value for CantConditionalizeCause, and the enum is used for more than that, so that\u0027s a little weird.",
       "parentUuid": "918f998f_8bac0d2e",
+      "range": {
+        "startLine": 20866,
+        "startChar": 17,
+        "endLine": 20866,
+        "endChar": 22
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6875c204_f02ef1c8",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 20866,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-13T21:06:41Z",
+      "side": 1,
+      "message": "I\u0027m torn, so I\u0027ll go along with whatever call you make.  The counter-argument to an enum is that the mem hint is a different code path than actually reading the entry in and finding zero freshness, and hence might be appropriately considered part of this enum.  \n\nAs I write this out, though, this enum isn\u0027t about code as much as it is about type of validation failure, and from that perspective the mem hint is equivalent to reading in the entry and finding it has zero freshness, only faster.  So sure, if you\u0027re comfortable with a boolean property, that would make sense to me.",
+      "parentUuid": "0f232af2_e435d2b8",
       "range": {
         "startLine": 20866,
         "startChar": 17,
