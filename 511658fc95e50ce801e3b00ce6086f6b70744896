@@ -2,6 +2,115 @@
   "comments": [
     {
       "key": {
+        "uuid": "55a0882d_a977b8eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-13T15:44:28Z",
+      "side": 1,
+      "message": "if you look at session.totalduration and webapk.session.totalduration - both are stopped in onPause. We should be consistent",
+      "range": {
+        "startLine": 295,
+        "startChar": 16,
+        "endLine": 295,
+        "endChar": 22
+      },
+      "revId": "511658fc95e50ce801e3b00ce6086f6b70744896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff5ef2a_7e848b33",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-13T15:44:28Z",
+      "side": 1,
+      "message": "I\u0027d clean this up a little to have this grab a suffix. Something like:\nif (..)\n  suffix \u003d \".WebApk\"\n} else if (..)\n  suffix \u003d \".Webapp\"\n}\n\nRecord..(\"CustomTab.SessionDuration.\" +suffix, ..)\n\nAlso makes it easy to have a \"TWA\" and \"Other\" buckets as catch-all",
+      "revId": "511658fc95e50ce801e3b00ce6086f6b70744896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0e9d5b_bda56a17",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-13T15:44:28Z",
+      "side": 1,
+      "message": "i feel like this is a *chrome* custom tabs thing and not custom tabs support lib so package should be: org.chromium.chrome.browser.customtabs \n\n(but defer to Yusuf)",
+      "range": {
+        "startLine": 99,
+        "startChar": 29,
+        "endLine": 99,
+        "endChar": 39
+      },
+      "revId": "511658fc95e50ce801e3b00ce6086f6b70744896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8be8425_1c6905f7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-13T15:44:28Z",
+      "side": 1,
+      "message": "prefer to avoid instanceof where possible.\n\nIf you sync past Yusuf\u0027s CL (https://chromium-review.googlesource.com/c/chromium/src/+/754022), you can use getNativeClientPackageName() to tell whether it\u0027s an app (i.e. WebApk or TWA) vs webapp and then if getBrowserSession() is null to determine TWA vs WebApk.",
+      "range": {
+        "startLine": 743,
+        "startChar": 19,
+        "endLine": 743,
+        "endChar": 36
+      },
+      "revId": "511658fc95e50ce801e3b00ce6086f6b70744896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24e4c41_e2d2bee2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-13T15:44:28Z",
+      "side": 1,
+      "message": "Same as previoous comment",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 29
+      },
+      "revId": "511658fc95e50ce801e3b00ce6086f6b70744896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c41cc4d1_a7df0672",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappTabDelegate.java",
         "patchSetId": 1
@@ -22,6 +131,47 @@
       "revId": "511658fc95e50ce801e3b00ce6086f6b70744896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81bc3016_211645be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappTabDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-13T15:44:28Z",
+      "side": 1,
+      "message": "I think this is for window.open as opposed to navigating off scope. Is that the case? If so, we may want to distinguish this from just handling a regular navigation? I\u0027m unsure",
+      "parentUuid": "c41cc4d1_a7df0672",
+      "range": {
+        "startLine": 41,
+        "startChar": 16,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "511658fc95e50ce801e3b00ce6086f6b70744896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33b8168d_b3130088",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 91258,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-13T15:44:28Z",
+      "side": 1,
+      "message": "if you follow my suggestion elsewhere, then you can make use of a \u003csuffix\u003e declaration and only need a single histogram listed here",
+      "revId": "511658fc95e50ce801e3b00ce6086f6b70744896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

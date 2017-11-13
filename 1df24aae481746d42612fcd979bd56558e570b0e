@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81f175fc_24dcbcaf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-13T15:44:28Z",
+      "side": 1,
+      "message": "this needs to be in onResume or you miss capturing for repeated sessions (e.g. user clicking to go home, then restores from recents)",
+      "range": {
+        "startLine": 287,
+        "startChar": 8,
+        "endLine": 287,
+        "endChar": 30
+      },
+      "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "005aac5e_d17b59c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-13T15:44:28Z",
+      "side": 1,
+      "message": "Session.TotalDuration and Webapk.Session.TotalDuration both use onPause. Please update to be consistent",
+      "range": {
+        "startLine": 300,
+        "startChar": 12,
+        "endLine": 300,
+        "endChar": 34
+      },
+      "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0effa7_b7bbcd58",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-13T15:44:28Z",
+      "side": 1,
+      "message": "I\u0027d add a comment saying that this explicitly doesn\u0027t check whether the TWA is valid as the point is to capture time by use-case.",
+      "range": {
+        "startLine": 701,
+        "startChar": 12,
+        "endLine": 701,
+        "endChar": 29
+      },
+      "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cdbdc0d_b42c9e4c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-13T15:44:28Z",
+      "side": 1,
+      "message": "I know Yusuf asked you to record this only for WebApps but I\u0027m curious why we don\u0027t want to support these else clause? Isn\u0027t it useful to get %-age of time in CCT as a % of whole browser? This helps understand how each mode of browser usage is represented so we can make informed security/usability trade-offs (for example).\n\nAlso, you could just check if it\u0027s ACTIVITY_TYPE_INVALID",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 28
+      },
+      "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "043017db_d52854ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-13T15:44:28Z",
+      "side": 1,
+      "message": "do this with a suffix instead:\nCustomTab.SessionDuration.{..}",
+      "range": {
+        "startLine": 62,
+        "startChar": 32,
+        "endLine": 62,
+        "endChar": 41
+      },
+      "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1bbd9b9_87f27a1f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 88112,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-13T15:44:28Z",
+      "side": 1,
+      "message": "replace all 3 of these with one histogram with a suffix",
+      "range": {
+        "startLine": 88112,
+        "startChar": 17,
+        "endLine": 88112,
+        "endChar": 35
+      },
+      "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
