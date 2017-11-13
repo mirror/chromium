@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3d31eaf_048fac1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/NearOomMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-13T20:05:34Z",
+      "side": 1,
+      "message": "Any particular reason to add another Java callback fro this instead of listening to memory pressure signals in native code?\n\nWe already send onLowMemory() in MemoryPressureListener.java down to native code and then dispatch notifications. Wouldn\u0027t it be cleaner to just listen to those in near-oom monitor?",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "ee074fda04689353d493ae1f9a3fb1e946c004e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
