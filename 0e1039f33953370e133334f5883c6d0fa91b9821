@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "8fe3449d_2f199ef5",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-13T09:06:29Z",
+      "side": 1,
+      "message": "Could we use some alias for g_null_atom to make it more clear that it\u0027s the universal selector?",
+      "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bebe0a4_9b82111f",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-13T09:06:29Z",
+      "side": 1,
+      "message": "Don\u0027t we need to support escaped \\* as namespace prefix as well?",
+      "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577ddfa7_1019812f",
+        "filename": "third_party/WebKit/Source/core/css/PageRuleCollector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-13T09:06:29Z",
+      "side": 1,
+      "message": "Can the component ever be g_null_atom here? Does \"*\" pass through as a valid page selector? That sound like a bug.",
+      "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01e2c7ed_8c866afc",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParser.cpp",
         "patchSetId": 1
@@ -13,6 +64,24 @@
       "writtenOn": "2017-11-13T07:17:59Z",
       "side": 1,
       "message": "I don\u0027t like this part. The problem is that element_name can be null if there\u0027s no qualified name (e.g. class selector), but can now also be null if it\u0027s a universal selector. PrependTypeSelector needs to differentiate the two cases, so I had to save the return value and pass it down. This feels kinda ugly to me.\n\nMaybe ConsumeName could return a WTF::Optional\u003cQualifiedName\u003e or something? Any ideas?",
+      "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d38b82e9_6cafc737",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-13T09:06:29Z",
+      "side": 1,
+      "message": "Optional sgtm.",
+      "parentUuid": "01e2c7ed_8c866afc",
       "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
