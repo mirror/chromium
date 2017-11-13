@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d39625c_d4559ce8",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-13T03:07:41Z",
+      "side": 1,
+      "message": "Remove this include.",
+      "range": {
+        "startLine": 12,
+        "startChar": 15,
+        "endLine": 12,
+        "endChar": 22
+      },
+      "revId": "223e7dd66e9335d4d7e8b9dd8db609510a414ee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d7d64f_dbaa63e7",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-13T03:07:41Z",
+      "side": 1,
+      "message": "Remove this include.",
+      "range": {
+        "startLine": 15,
+        "startChar": 25,
+        "endLine": 15,
+        "endChar": 40
+      },
+      "revId": "223e7dd66e9335d4d7e8b9dd8db609510a414ee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d7c33d_32ec1fe4",
+        "filename": "chrome/browser/permissions/permission_uma_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-13T03:07:41Z",
+      "side": 1,
+      "message": "May as well remove?",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "223e7dd66e9335d4d7e8b9dd8db609510a414ee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6ba44a_797d8f97",
+        "filename": "chrome/browser/permissions/permission_uma_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-13T03:07:41Z",
+      "side": 1,
+      "message": "Remove this include",
+      "range": {
+        "startLine": 16,
+        "startChar": 25,
+        "endLine": 16,
+        "endChar": 32
+      },
+      "revId": "223e7dd66e9335d4d7e8b9dd8db609510a414ee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf9b148_d6b0ed4a",
+        "filename": "tools/metrics/rappor/rappor.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-13T03:07:41Z",
+      "side": 1,
+      "message": "Yeah I think these can get an:\n\n\u003cobsolete\u003e\n  Removed in M64, see ...\n\u003c/obsolete\u003e\n\nI think the obsolete designation was introduced after the last set of things was removed.",
+      "range": {
+        "startLine": 365,
+        "startChar": 2,
+        "endLine": 365,
+        "endChar": 3
+      },
+      "revId": "223e7dd66e9335d4d7e8b9dd8db609510a414ee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
