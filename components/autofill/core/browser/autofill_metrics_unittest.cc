@@ -32,6 +32,7 @@
 #include "components/autofill/core/browser/test_autofill_driver.h"
 #include "components/autofill/core/browser/webdata/autofill_webdata_service.h"
 #include "components/autofill/core/common/autofill_clock.h"
+#include "components/autofill/core/common/autofill_features.h"
 #include "components/autofill/core/common/form_data.h"
 #include "components/autofill/core/common/form_field_data.h"
 #include "components/prefs/pref_service.h"
@@ -48,6 +49,9 @@
 #include "ui/gfx/geometry/rect.h"
 #include "url/gurl.h"
 
+using autofill::features::kAutofillEnforceMinRequiredFieldsForHeuristics;
+using autofill::features::kAutofillEnforceMinRequiredFieldsForQuery;
+using autofill::features::kAutofillEnforceMinRequiredFieldsForUpload;
 using base::ASCIIToUTF16;
 using base::Bucket;
 using base::TimeTicks;
@@ -178,9 +182,10 @@ class TestPersonalDataManager : public PersonalDataManager {
     local_credit_cards_.clear();
     server_credit_cards_.clear();
     if (include_local_credit_card) {
-      std::unique_ptr<CreditCard> credit_card =
-          std::make_unique<CreditCard>(test::GetCreditCard());
-      credit_card->set_guid("10000000-0000-0000-0000-000000000001");
+      std::unique_ptr<CreditCard> credit_card = std::make_unique<CreditCard>(
+          "10000000-0000-0000-0000-000000000001", std::string());
+      test::SetCreditCardInfo(credit_card.get(), nullptr, "4111111111111111",
+                              "12", "24", "1");
       local_credit_cards_.push_back(std::move(credit_card));
     }
     if (include_masked_server_credit_card) {
@@ -1466,26 +1471,39 @@ TEST_F(AutofillMetricsTest, PredictedMetricsWithAutocomplete) {
     std::string histogram_name =
         "Autofill.FieldPredictionQuality.ByFieldType." + source;
     // First verify that country was not predicted by client or server.
-    histogram_tester.ExpectBucketCount(
-        histogram_name,
-        GetFieldTypeGroupMetric(ADDRESS_HOME_COUNTRY,
-                                source == "Overall"
-                                    ? AutofillMetrics::TRUE_POSITIVE
-                                    : AutofillMetrics::FALSE_NEGATIVE_UNKNOWN),
-        1);
+    {
+      SCOPED_TRACE("ADDRESS_HOME_COUNTRY");
+      histogram_tester.ExpectBucketCount(
+          histogram_name,
+          GetFieldTypeGroupMetric(
+              ADDRESS_HOME_COUNTRY,
+              source == "Overall" ? AutofillMetrics::TRUE_POSITIVE
+                                  : AutofillMetrics::FALSE_NEGATIVE_UNKNOWN),
+          1);
+    }
 
-    // We did not predict zip code or phone number, because they did not have
-    // |autocomplete_attribute|, nor client or server predictions.
-    histogram_tester.ExpectBucketCount(
-        histogram_name,
-        GetFieldTypeGroupMetric(ADDRESS_HOME_ZIP,
-                                AutofillMetrics::FALSE_NEGATIVE_UNKNOWN),
-        1);
-    histogram_tester.ExpectBucketCount(
-        histogram_name,
-        GetFieldTypeGroupMetric(PHONE_HOME_WHOLE_NUMBER,
-                                AutofillMetrics::FALSE_NEGATIVE_UNKNOWN),
-        1);
+    // We did not predict zip code because it did not have an autocomplete
+    // attribute, nor client or server predictions.
+    {
+      SCOPED_TRACE("ADDRESS_HOME_ZIP");
+      histogram_tester.ExpectBucketCount(
+          histogram_name,
+          GetFieldTypeGroupMetric(ADDRESS_HOME_ZIP,
+                                  AutofillMetrics::FALSE_NEGATIVE_UNKNOWN),
+          1);
+    }
+
+    // Phone should have been predicted by the heuristics but not the server.
+    {
+      SCOPED_TRACE("PHONE_HOME_WHOLE_NUMBER");
+      histogram_tester.ExpectBucketCount(
+          histogram_name,
+          GetFieldTypeGroupMetric(PHONE_HOME_WHOLE_NUMBER,
+                                  source == "Server"
+                                      ? AutofillMetrics::FALSE_NEGATIVE_UNKNOWN
+                                      : AutofillMetrics::TRUE_POSITIVE),
+          1);
+    }
 
     // Sanity check.
     histogram_tester.ExpectTotalCount(histogram_name, 3);
@@ -1622,6 +1640,8 @@ TEST_F(AutofillMetricsTest, StoredProfileCountAutofillableFormSubmission) {
 // Verify that when submitting a non-autofillable form, the stored profile
 // metric is not logged.
 TEST_F(AutofillMetricsTest, StoredProfileCountNonAutofillableFormSubmission) {
+  base::test::ScopedFeatureList features;
+  features.InitAndEnableFeature(kAutofillEnforceMinRequiredFieldsForHeuristics);
   // Construct a non-fillable form.
   FormData form;
   form.name = ASCIIToUTF16("TestForm");
@@ -1766,12 +1786,26 @@ TEST_F(AutofillMetricsTest, DeveloperEngagement) {
 
   std::vector<FormData> forms(1, form);
 
-  // Ensure no metrics are logged when loading a non-fillable form.
+  // Ensure no metrics are logged when small form support is disabled (min
+  // number of fields enforced).
   {
     base::HistogramTester histogram_tester;
     autofill_manager_->OnFormsSeen(forms, TimeTicks());
     autofill_manager_->Reset();
     histogram_tester.ExpectTotalCount("Autofill.DeveloperEngagement", 0);
+  }
+
+  // Otherwise, log developer engagement for all forms.
+  {
+    base::test::ScopedFeatureList features;
+    features.InitAndDisableFeature(
+        kAutofillEnforceMinRequiredFieldsForHeuristics);
+    base::HistogramTester histogram_tester;
+    autofill_manager_->OnFormsSeen(forms, TimeTicks());
+    autofill_manager_->Reset();
+    histogram_tester.ExpectUniqueSample(
+        "Autofill.DeveloperEngagement",
+        AutofillMetrics::FILLABLE_FORM_PARSED_WITHOUT_TYPE_HINTS, 1);
   }
 
   // Add another field to the form, so that it becomes fillable.
@@ -1857,6 +1891,9 @@ TEST_F(AutofillMetricsTest,
 
   // Ensure no metrics are logged when loading a non-fillable form.
   {
+    base::test::ScopedFeatureList features;
+    features.InitAndEnableFeature(
+        kAutofillEnforceMinRequiredFieldsForHeuristics);
     autofill_manager_->OnFormsSeen(forms, TimeTicks::Now());
     autofill_manager_->Reset();
 
@@ -1959,8 +1996,10 @@ TEST_F(AutofillMetricsTest, UkmDeveloperEngagement_LogUpiVpaTypeHint) {
 
     ASSERT_EQ(1U, test_ukm_recorder_.entries_count());
     ASSERT_EQ(1U, test_ukm_recorder_.sources_count());
-    VerifyDeveloperEngagementUkm(test_ukm_recorder_, form,
-                                 {AutofillMetrics::FORM_CONTAINS_UPI_VPA_HINT});
+    VerifyDeveloperEngagementUkm(
+        test_ukm_recorder_, form,
+        {AutofillMetrics::FILLABLE_FORM_PARSED_WITH_TYPE_HINTS,
+         AutofillMetrics::FORM_CONTAINS_UPI_VPA_HINT});
     test_ukm_recorder_.Purge();
   }
 
@@ -4799,8 +4838,8 @@ TEST_F(AutofillMetricsTest, AutofillFormSubmittedState) {
   }
 
   // Non fillable form.
-  form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
-  form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+  form.fields[0].value = ASCIIToUTF16("Unknown Person");
+  form.fields[1].value = ASCIIToUTF16("unknown.person@gmail.com");
   forms.front() = form;
 
   {
@@ -4827,7 +4866,9 @@ TEST_F(AutofillMetricsTest, AutofillFormSubmittedState) {
                              expected_field_fill_status_ukm_metrics);
   }
 
-  // Fill in the third field.
+  // Fillable form.
+  form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+  form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
   form.fields[2].value = ASCIIToUTF16("12345678901");
   forms.front() = form;
 
@@ -4957,8 +4998,12 @@ TEST_F(AutofillMetricsTest, AutofillFormSubmittedState) {
   form.fields[2].value = base::string16();
   forms.front() = form;
 
-  // Non fillable form.
+  // This form is non-fillable if small form support is disabled (min number
+  // of fields enforced.)
   {
+    base::test::ScopedFeatureList features;
+    features.InitAndEnableFeature(
+        kAutofillEnforceMinRequiredFieldsForHeuristics);
     base::HistogramTester histogram_tester;
     base::UserActionTester user_action_tester;
     autofill_manager_->SubmitForm(form, TimeTicks::Now());
@@ -5130,16 +5175,11 @@ TEST_F(AutofillMetricsTest, UserHappinessFormInteraction_EmptyForm) {
 // Verify that we correctly log user happiness metrics dealing with form
 // interaction.
 TEST_F(AutofillMetricsTest, UserHappinessFormInteraction_CreditCardForm) {
-  personal_data_->RecreateCreditCards(
-      true /* include_local_credit_card */,
-      false /* include_masked_server_credit_card */,
-      false /* include_full_server_credit_card */);
-
   // Load a fillable form.
   FormData form;
   form.name = ASCIIToUTF16("TestForm");
-  form.origin = GURL("https://example.com/form.html");
-  form.action = GURL("https://example.com/submit.html");
+  form.origin = GURL("http://example.com/form.html");
+  form.action = GURL("http://example.com/submit.html");
 
   // Construct a valid credit card form with minimal fields.
   FormFieldData field;
@@ -5244,10 +5284,10 @@ TEST_F(AutofillMetricsTest, UserHappinessFormInteraction_CreditCardForm) {
   // Simulate editing an autofilled field.
   {
     base::HistogramTester histogram_tester;
-    std::string guid("10000000-0000-0000-0000-000000000001");
+    std::string guid("00000000-0000-0000-0000-000000000001");
     autofill_manager_->FillOrPreviewForm(
         AutofillDriver::FORM_DATA_ACTION_FILL, 0, form, form.fields.front(),
-        autofill_manager_->MakeFrontendID(guid, std::string()));
+        autofill_manager_->MakeFrontendID(std::string(), guid));
     autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
                                             gfx::RectF(), TimeTicks());
     // Simulate a second keystroke; make sure we don't log the metric twice.
