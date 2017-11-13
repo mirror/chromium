@@ -34,6 +34,24 @@
       "revId": "2e523910aead12ecf12ca3da37cfb3a0c73fc914",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4c7c36_e022be7d",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-13T07:17:12Z",
+      "side": 1,
+      "message": "Yeah... unfortunately the Jumbo build seems to lose them... :(\n\nI\u0027m fine with either abbreviated namespace or service_worker_{constants/internals}.",
+      "parentUuid": "a09f6bdb_8427a8f7",
+      "revId": "2e523910aead12ecf12ca3da37cfb3a0c73fc914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
