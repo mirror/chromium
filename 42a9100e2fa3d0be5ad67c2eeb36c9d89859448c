@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "03eb6f25_faa217b2",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-13T19:17:28Z",
+      "side": 1,
+      "message": "I tried doing that (i.e. showing a black window immediately when the stylus is removed), and it didn\u0027t fix the issue with the lock screen UI flashing for a moment.",
+      "parentUuid": "b1b9b0a9_09a12262",
+      "revId": "42a9100e2fa3d0be5ad67c2eeb36c9d89859448c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97b516bc_91ad8bb6",
         "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
         "patchSetId": 5
