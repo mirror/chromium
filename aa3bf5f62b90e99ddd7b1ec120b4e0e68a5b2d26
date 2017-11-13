@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0814764a_64f10b9a",
+        "filename": "chrome/browser/media/webrtc/webrtc_event_log_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T20:54:57Z",
+      "side": 1,
+      "message": "nit: link to bug.",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4d106d_43009a9f",
+        "filename": "chrome/browser/media/webrtc/webrtc_event_log_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T20:54:57Z",
+      "side": 1,
+      "message": "nit: link to bug.",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0bd90bb_0fc3844d",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T20:54:57Z",
+      "side": 1,
+      "message": "Should we PostTaskAndReply so that the caller has any way of knowing...?\n- if the operation succeeded or failed\n- the path to the log file being used",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac79cb3_23f765ca",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T20:54:57Z",
+      "side": 1,
+      "message": "Here and other places: I think the success of the operation should be reported (previous comment).\n\nAnd nit: on failure, LOG(LS_WARNING)?",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d88f797e_7d4498a5",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T20:54:57Z",
+      "side": 1,
+      "message": "nit: LOG(LS_WARNING) that an error occurred?",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b43829_5bd2f020",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T20:54:57Z",
+      "side": 1,
+      "message": "nit: LOG(LS_WARNING) that an error occurred?",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c9af03_7ef832dc",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T20:54:57Z",
+      "side": 1,
+      "message": "Uploading log files to servers. Has this gone through privacy reviews?",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6c9015_57599ecc",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T20:54:57Z",
+      "side": 1,
+      "message": "Yes please.",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0703cce3_b5b9d52d",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T20:54:57Z",
+      "side": 1,
+      "message": "I believe at this point we do not know if the request to start logging was a success or failure. Do we need to make the interface support callbacks to allow asynchronous behavior?",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32443cab_ee926c43",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1868,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T20:54:57Z",
+      "side": 1,
+      "message": "I think an operation reporting if it was successful or failed is useful, whether or not a particular calling place decides to handle failures.\n\nThat said, a failure would be unexpected, how about LOG(LS_WARNING)?\n\nHow would it know if it succeeded or failed though? The logging is multi-process and multi-threaded, with asynchronous posts?",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56fb9af8_c5ab4c8d",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1873,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T20:54:57Z",
+      "side": 1,
+      "message": "What is the difference between these two StartEventLog() functions?",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7c074305_e1b648ce",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T20:54:57Z",
+      "side": 1,
+      "message": "+1 In the content context it is not clear that RTC refers to WebRTC.\n\nIn case anyone wonders about usual naming things...\n\nInterfaces in the spec (JavaScript objects) are blink::RTCBlah and implemented across layers as blink::WebRTCBlah (interface) and content::RTCBlah (implementation).\n\nEverything else WebRTC-related, such as helper classes, are typically named WebRtcBlah. Starting WebRTC logging should be done by starting \"WebRtc\" logging rather than \"Rtc\" logging.\nSuch as MediaStreamVideoWebRtcSink, WebRtcMediaStreamAdapterMap or WebRtcVideoCapturerAdapter.",
+      "parentUuid": "1b844fec_0b119fa8",
+      "range": {
+        "startLine": 193,
+        "startChar": 7,
+        "endLine": 193,
+        "endChar": 32
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70bd53de_1b76e493",
         "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
         "patchSetId": 3
