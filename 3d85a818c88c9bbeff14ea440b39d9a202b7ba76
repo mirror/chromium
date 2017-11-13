@@ -16,6 +16,24 @@
       "revId": "3d85a818c88c9bbeff14ea440b39d9a202b7ba76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431e7000_7593e222",
+        "filename": "ash/system/bluetooth/tray_bluetooth.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-13T17:58:10Z",
+      "side": 1,
+      "message": "Will try some small numbers. Network list use this frequency to update itself as well.\nSee: https://cs.chromium.org/chromium/src/ash/system/network/tray_network_state_observer.cc?rcl\u003dfc2c490b97e09423e1017f2739e8c6ad6cea9b3c\u0026l\u003d22",
+      "parentUuid": "55addac1_71ade2b4",
+      "revId": "3d85a818c88c9bbeff14ea440b39d9a202b7ba76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
