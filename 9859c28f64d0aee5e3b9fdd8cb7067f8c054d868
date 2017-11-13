@@ -34,6 +34,24 @@
       "revId": "9859c28f64d0aee5e3b9fdd8cb7067f8c054d868",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c716ad_db5f728e",
+        "filename": "chrome/browser/resources/md_history/history_toolbar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-13T07:48:33Z",
+      "side": 1,
+      "message": "Yes, and remove all other unrelated changes.",
+      "parentUuid": "88bf2be5_6c68b641",
+      "revId": "9859c28f64d0aee5e3b9fdd8cb7067f8c054d868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
