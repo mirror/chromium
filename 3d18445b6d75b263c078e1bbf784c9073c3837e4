@@ -22,6 +22,30 @@
       "revId": "3d18445b6d75b263c078e1bbf784c9073c3837e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e964ec64_6f98571c",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-11-13T07:39:57Z",
+      "side": 1,
+      "message": "It could, but would incur a little more overhead - if the state machine doesn\u0027t need the BeginFrame when we receive it, we throw it out as NACK right when we get it. Otherwise, we\u0027ll accept it and schedule another (immediate) deadline task. It\u0027s also useful for debugging to have the \"real\" needsBF signal still be present in the state machine\u0027s state.",
+      "parentUuid": "54a7bc6e_552f0a00",
+      "range": {
+        "startLine": 237,
+        "startChar": 5,
+        "endLine": 237,
+        "endChar": 8
+      },
+      "revId": "3d18445b6d75b263c078e1bbf784c9073c3837e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
