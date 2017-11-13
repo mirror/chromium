@@ -83,7 +83,7 @@ void StatusCallback(bool* was_called,
   *result = status;
 }
 
-ServiceWorkerStorage::StatusCallback MakeStatusCallback(
+ServiceWorkerStorage::LegacyStatusCallback MakeStatusCallback(
     bool* was_called,
     ServiceWorkerStatusCode* result) {
   return base::Bind(&StatusCallback, was_called, result);
@@ -99,7 +99,7 @@ void FindCallback(bool* was_called,
   *found = std::move(registration);
 }
 
-ServiceWorkerStorage::FindRegistrationCallback MakeFindCallback(
+ServiceWorkerStorage::LegacyFindRegistrationCallback MakeFindCallback(
     bool* was_called,
     ServiceWorkerStatusCode* result,
     scoped_refptr<ServiceWorkerRegistration>* found) {
@@ -128,14 +128,14 @@ void GetAllInfosCallback(
   *all_out = all;
 }
 
-ServiceWorkerStorage::GetRegistrationsCallback MakeGetRegistrationsCallback(
+ServiceWorkerStorage::LegacyGetRegistrationsCallback MakeGetRegistrationsCallback(
     bool* was_called,
     ServiceWorkerStatusCode* status,
     std::vector<scoped_refptr<ServiceWorkerRegistration>>* all) {
   return base::Bind(&GetAllCallback, was_called, status, all);
 }
 
-ServiceWorkerStorage::GetRegistrationsInfosCallback
+ServiceWorkerStorage::LegacyGetRegistrationsInfosCallback
 MakeGetRegistrationsInfosCallback(
     bool* was_called,
     ServiceWorkerStatusCode* status,

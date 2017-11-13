@@ -53,27 +53,48 @@ struct ServiceWorkerRegistrationInfo;
 class CONTENT_EXPORT ServiceWorkerStorage
     : public ServiceWorkerVersion::Listener {
  public:
-  typedef std::vector<ServiceWorkerDatabase::ResourceRecord> ResourceList;
-  typedef base::Callback<void(ServiceWorkerStatusCode status)> StatusCallback;
+  // TODO: Remove after removing LazyInitialize.
+  typedef base::Callback<void(
+      ServiceWorkerStatusCode status)> LegacyStatusCallback;
   typedef base::Callback<void(
       ServiceWorkerStatusCode status,
       scoped_refptr<ServiceWorkerRegistration> registration)>
-      FindRegistrationCallback;
+      LegacyFindRegistrationCallback;
   typedef base::Callback<void(
       ServiceWorkerStatusCode status,
       const std::vector<scoped_refptr<ServiceWorkerRegistration>>&
           registrations)>
-      GetRegistrationsCallback;
+      LegacyGetRegistrationsCallback;
   typedef base::Callback<void(
       ServiceWorkerStatusCode status,
       const std::vector<ServiceWorkerRegistrationInfo>& registrations)>
-      GetRegistrationsInfosCallback;
-  using GetUserDataCallback =
+      LegacyGetRegistrationsInfosCallback;
+  using LegacyGetUserDataCallback =
       base::Callback<void(const std::vector<std::string>& data,
                           ServiceWorkerStatusCode status)>;
   typedef base::Callback<void(
       const std::vector<std::pair<int64_t, std::string>>& user_data,
-      ServiceWorkerStatusCode status)> GetUserDataForAllRegistrationsCallback;
+      ServiceWorkerStatusCode status)> LegacyGetUserDataForAllRegistrationsCallback;
+
+
+  using ResourceList = std::vector<ServiceWorkerDatabase::ResourceRecord>;
+  using StatusCallback =
+      base::OnceCallback<void(ServiceWorkerStatusCode status)>;
+  using FindRegistrationCallback = base::OnceCallback<void(
+      ServiceWorkerStatusCode status,
+      scoped_refptr<ServiceWorkerRegistration> registration)>;
+  using GetRegistrationsCallback = base::OnceCallback<void(
+      ServiceWorkerStatusCode status,
+      const std::vector<scoped_refptr<ServiceWorkerRegistration>>&
+          registrations)>;
+  using GetRegistrationsInfosCallback = base::OnceCallback<void(
+      ServiceWorkerStatusCode status,
+      const std::vector<ServiceWorkerRegistrationInfo>& registrations)>;
+  using GetUserDataCallback = base::OnceCallback<void(
+      const std::vector<std::string>& data, ServiceWorkerStatusCode status)>;
+  using GetUserDataForAllRegistrationsCallback = base::OnceCallback<void(
+      const std::vector<std::pair<int64_t, std::string>>& user_data,
+      ServiceWorkerStatusCode status)>;
 
   ~ServiceWorkerStorage() override;
 
@@ -99,12 +120,12 @@ class CONTENT_EXPORT ServiceWorkerStorage
   // (the callback may be called prior to the method returning) or
   // asynchronously.
   void FindRegistrationForDocument(const GURL& document_url,
-                                   const FindRegistrationCallback& callback);
+                                   const LegacyFindRegistrationCallback& callback);
   void FindRegistrationForPattern(const GURL& scope,
-                                  const FindRegistrationCallback& callback);
+                                  const LegacyFindRegistrationCallback& callback);
   void FindRegistrationForId(int64_t registration_id,
                              const GURL& origin,
-                             const FindRegistrationCallback& callback);
+                             const LegacyFindRegistrationCallback& callback);
 
   // Generally |FindRegistrationForId| should be used to look up a registration
   // by |registration_id| since it's more efficient. But if a |registration_id|
@@ -112,16 +133,16 @@ class CONTENT_EXPORT ServiceWorkerStorage
   // Like |FindRegistrationForId| this method may complete immediately (the
   // callback may be called prior to the method returning) or asynchronously.
   void FindRegistrationForIdOnly(int64_t registration_id,
-                                 const FindRegistrationCallback& callback);
+                                 const LegacyFindRegistrationCallback& callback);
 
   ServiceWorkerRegistration* GetUninstallingRegistration(const GURL& scope);
 
   // Returns all stored registrations for a given origin.
   void GetRegistrationsForOrigin(const GURL& origin,
-                                 const GetRegistrationsCallback& callback);
+                                 const LegacyGetRegistrationsCallback& callback);
 
   // Returns info about all stored and initially installing registrations.
-  void GetAllRegistrationsInfos(const GetRegistrationsInfosCallback& callback);
+  void GetAllRegistrationsInfos(const LegacyGetRegistrationsInfosCallback& callback);
 
   // Commits |registration| with the installed but not activated |version|
   // to storage, overwritting any pre-existing registration data for the scope.
@@ -129,12 +150,11 @@ class CONTENT_EXPORT ServiceWorkerStorage
   // is live. PurgeResources should be called when it's OK to delete them.
   void StoreRegistration(ServiceWorkerRegistration* registration,
                          ServiceWorkerVersion* version,
-                         const StatusCallback& callback);
+                         StatusCallback callback);
 
   // Updates the state of the registration's stored version to active.
-  void UpdateToActiveState(
-      ServiceWorkerRegistration* registration,
-      const StatusCallback& callback);
+  void UpdateToActiveState(ServiceWorkerRegistration* registration,
+                           StatusCallback callback);
 
   // Updates the stored time to match the value of
   // registration->last_update_check().
@@ -145,18 +165,18 @@ class CONTENT_EXPORT ServiceWorkerStorage
   void UpdateNavigationPreloadEnabled(int64_t registration_id,
                                       const GURL& origin,
                                       bool enable,
-                                      const StatusCallback& callback);
+                                      StatusCallback callback);
   void UpdateNavigationPreloadHeader(int64_t registration_id,
                                      const GURL& origin,
                                      const std::string& value,
-                                     const StatusCallback& callback);
+                                     StatusCallback callback);
 
   // Deletes the registration data for |registration_id|. If the registration's
   // version is live, its script resources will remain available.
   // PurgeResources should be called when it's OK to delete them.
   void DeleteRegistration(int64_t registration_id,
                           const GURL& origin,
-                          const StatusCallback& callback);
+                          StatusCallback callback);
 
   // Creates a resource accessor. Never returns nullptr but an accessor may be
   // associated with the disabled disk cache if the storage is disabled.
@@ -182,43 +202,43 @@ class CONTENT_EXPORT ServiceWorkerStorage
   // otherwise NOT_FOUND, and the callback's data will be empty.
   void GetUserData(int64_t registration_id,
                    const std::vector<std::string>& keys,
-                   const GetUserDataCallback& callback);
+                   const LegacyGetUserDataCallback& callback);
   void GetUserDataByKeyPrefix(int64_t registration_id,
                               const std::string& key_prefix,
-                              const GetUserDataCallback& callback);
+                              const LegacyGetUserDataCallback& callback);
 
   // Stored data is deleted when the associated registraton is deleted.
   void StoreUserData(
       int64_t registration_id,
       const GURL& origin,
       const std::vector<std::pair<std::string, std::string>>& key_value_pairs,
-      const StatusCallback& callback);
+      const LegacyStatusCallback& callback);
   // Responds OK if all are successfully deleted or not found in the database.
   void ClearUserData(int64_t registration_id,
                      const std::vector<std::string>& keys,
-                     const StatusCallback& callback);
+                     const LegacyStatusCallback& callback);
   // Responds OK if all are successfully deleted or not found in the database.
   // Neither |key_prefixes| nor the prefixes within can be empty.
   void ClearUserDataByKeyPrefixes(int64_t registration_id,
                                   const std::vector<std::string>& key_prefixes,
-                                  const StatusCallback& callback);
+                                  const LegacyStatusCallback& callback);
   // Responds with all registrations that have user data with a particular key,
   // as well as that user data.
   void GetUserDataForAllRegistrations(
       const std::string& key,
-      const GetUserDataForAllRegistrationsCallback& callback);
+      const LegacyGetUserDataForAllRegistrationsCallback& callback);
   // Responds with all registrations that have user data with a particular key,
   // as well as that user data.
   void GetUserDataForAllRegistrationsByKeyPrefix(
       const std::string& key_prefix,
-      const GetUserDataForAllRegistrationsCallback& callback);
+      const LegacyGetUserDataForAllRegistrationsCallback& callback);
 
   // Returns true if any service workers at |origin| have registered for foreign
   // fetch.
   bool OriginHasForeignFetchRegistrations(const GURL& origin);
 
   // Deletes the storage and starts over.
-  void DeleteAndStartOver(const StatusCallback& callback);
+  void DeleteAndStartOver(StatusCallback callback);
 
   // Returns a new registration id which is guaranteed to be unique in the
   // storage. Returns blink::mojom::kInvalidServiceWorkerRegistrationId if the
@@ -282,8 +302,9 @@ class CONTENT_EXPORT ServiceWorkerStorage
     GURL origin;
     StatusCallback callback;
 
-    DidDeleteRegistrationParams();
-    DidDeleteRegistrationParams(const DidDeleteRegistrationParams& other);
+    DidDeleteRegistrationParams(int64_t registration_id,
+                                GURL origin,
+                                StatusCallback callback);
     ~DidDeleteRegistrationParams();
   };
 
@@ -297,38 +318,34 @@ class CONTENT_EXPORT ServiceWorkerStorage
     DELETE_FROM_ALL
   };
 
-  typedef std::vector<ServiceWorkerDatabase::RegistrationData> RegistrationList;
-  typedef std::map<int64_t, scoped_refptr<ServiceWorkerRegistration>>
-      RegistrationRefsById;
-  typedef base::Callback<void(std::unique_ptr<InitialData> data,
-                              ServiceWorkerDatabase::Status status)>
-      InitializeCallback;
-  typedef base::Callback<void(ServiceWorkerDatabase::Status status)>
-      DatabaseStatusCallback;
-  typedef base::Callback<void(
+  using RegistrationList = std::vector<ServiceWorkerDatabase::RegistrationData>;
+  using RegistrationRefsById =
+      std::map<int64_t, scoped_refptr<ServiceWorkerRegistration>>;
+  using InitializeCallback = base::OnceCallback<void(std::unique_ptr<InitialData> data,
+                              ServiceWorkerDatabase::Status status)>;
+  using WriteRegistrationCallback = base::OnceCallback<void(
       const GURL& origin,
       const ServiceWorkerDatabase::RegistrationData& deleted_version_data,
       const std::vector<int64_t>& newly_purgeable_resources,
-      ServiceWorkerDatabase::Status status)> WriteRegistrationCallback;
-  typedef base::Callback<void(
+      ServiceWorkerDatabase::Status status)>;
+  using DeleteRegistrationCallback = base::OnceCallback<void(
       OriginState origin_state,
       const ServiceWorkerDatabase::RegistrationData& deleted_version_data,
       const std::vector<int64_t>& newly_purgeable_resources,
-      ServiceWorkerDatabase::Status status)> DeleteRegistrationCallback;
-  typedef base::Callback<void(
+      ServiceWorkerDatabase::Status status)>;
+  using FindInDBCallback = base::OnceCallback<void(
       const ServiceWorkerDatabase::RegistrationData& data,
       const ResourceList& resources,
-      ServiceWorkerDatabase::Status status)> FindInDBCallback;
-  typedef base::Callback<void(const std::vector<std::string>& data,
-                              ServiceWorkerDatabase::Status)>
-      GetUserDataInDBCallback;
-  typedef base::Callback<void(
+      ServiceWorkerDatabase::Status status)>;
+  using GetUserDataInDBCallback = base::OnceCallback<void(
+      const std::vector<std::string>& data,
+      ServiceWorkerDatabase::Status)>;
+  using GetUserDataForAllRegistrationsInDBCallback = base::OnceCallback<void(
       const std::vector<std::pair<int64_t, std::string>>& user_data,
-      ServiceWorkerDatabase::Status)>
-      GetUserDataForAllRegistrationsInDBCallback;
-  typedef base::Callback<void(const std::vector<int64_t>& resource_ids,
-                              ServiceWorkerDatabase::Status status)>
-      GetResourcesCallback;
+      ServiceWorkerDatabase::Status)>;
+  using GetResourcesCallback = base::OnceCallback<void(
+      const std::vector<int64_t>& resource_ids,
+      ServiceWorkerDatabase::Status status)>;
 
   ServiceWorkerStorage(
       const base::FilePath& path,
@@ -345,43 +362,42 @@ class CONTENT_EXPORT ServiceWorkerStorage
                           ServiceWorkerDatabase::Status status);
   void DidFindRegistrationForDocument(
       const GURL& document_url,
-      const FindRegistrationCallback& callback,
+      FindRegistrationCallback callback,
       int64_t callback_id,
       const ServiceWorkerDatabase::RegistrationData& data,
       const ResourceList& resources,
       ServiceWorkerDatabase::Status status);
   void DidFindRegistrationForPattern(
       const GURL& scope,
-      const FindRegistrationCallback& callback,
+      FindRegistrationCallback callback,
       const ServiceWorkerDatabase::RegistrationData& data,
       const ResourceList& resources,
       ServiceWorkerDatabase::Status status);
   void DidFindRegistrationForId(
-      const FindRegistrationCallback& callback,
+      FindRegistrationCallback callback,
       const ServiceWorkerDatabase::RegistrationData& data,
       const ResourceList& resources,
       ServiceWorkerDatabase::Status status);
-  void DidGetRegistrationsForOrigin(const GetRegistrationsCallback& callback,
+  void DidGetRegistrationsForOrigin(GetRegistrationsCallback callback,
                                     RegistrationList* registration_data_list,
                                     std::vector<ResourceList>* resources_list,
                                     const GURL& origin_filter,
                                     ServiceWorkerDatabase::Status status);
   void DidGetAllRegistrationsInfos(
-      const GetRegistrationsInfosCallback& callback,
+      GetRegistrationsInfosCallback callback,
       RegistrationList* registration_data_list,
       ServiceWorkerDatabase::Status status);
   void DidStoreRegistration(
-      const StatusCallback& callback,
+      StatusCallback callback,
       const ServiceWorkerDatabase::RegistrationData& new_version,
       const GURL& origin,
       const ServiceWorkerDatabase::RegistrationData& deleted_version,
       const std::vector<int64_t>& newly_purgeable_resources,
       ServiceWorkerDatabase::Status status);
-  void DidUpdateToActiveState(
-      const StatusCallback& callback,
-      ServiceWorkerDatabase::Status status);
+  void DidUpdateToActiveState(StatusCallback callback,
+                              ServiceWorkerDatabase::Status status);
   void DidDeleteRegistration(
-      const DidDeleteRegistrationParams& params,
+      std::unique_ptr<DidDeleteRegistrationParams> params,
       OriginState origin_state,
       const ServiceWorkerDatabase::RegistrationData& deleted_version,
       const std::vector<int64_t>& newly_purgeable_resources,
@@ -389,21 +405,19 @@ class CONTENT_EXPORT ServiceWorkerStorage
   void DidWriteUncommittedResourceIds(ServiceWorkerDatabase::Status status);
   void DidPurgeUncommittedResourceIds(const std::set<int64_t>& resource_ids,
                                       ServiceWorkerDatabase::Status status);
-  void DidStoreUserData(
-      const StatusCallback& callback,
-      ServiceWorkerDatabase::Status status);
-  void DidGetUserData(const GetUserDataCallback& callback,
+  void DidStoreUserData(StatusCallback callback,
+                        ServiceWorkerDatabase::Status status);
+  void DidGetUserData(GetUserDataCallback callback,
                       const std::vector<std::string>& data,
                       ServiceWorkerDatabase::Status status);
-  void DidDeleteUserData(
-      const StatusCallback& callback,
-      ServiceWorkerDatabase::Status status);
+  void DidDeleteUserData(StatusCallback callback,
+                         ServiceWorkerDatabase::Status status);
   void DidGetUserDataForAllRegistrations(
-      const GetUserDataForAllRegistrationsCallback& callback,
+      GetUserDataForAllRegistrationsCallback callback,
       const std::vector<std::pair<int64_t, std::string>>& user_data,
       ServiceWorkerDatabase::Status status);
   void ReturnFoundRegistration(
-      const FindRegistrationCallback& callback,
+      FindRegistrationCallback callback,
       const ServiceWorkerDatabase::RegistrationData& data,
       const ResourceList& resources);
 
@@ -442,66 +456,66 @@ class CONTENT_EXPORT ServiceWorkerStorage
   static void CollectStaleResourcesFromDB(
       ServiceWorkerDatabase* database,
       scoped_refptr<base::SequencedTaskRunner> original_task_runner,
-      const GetResourcesCallback& callback);
+      GetResourcesCallback callback);
   static void ReadInitialDataFromDB(
       ServiceWorkerDatabase* database,
       scoped_refptr<base::SequencedTaskRunner> original_task_runner,
-      const InitializeCallback& callback);
+      InitializeCallback callback);
   static void DeleteRegistrationFromDB(
       ServiceWorkerDatabase* database,
       scoped_refptr<base::SequencedTaskRunner> original_task_runner,
       int64_t registration_id,
       const GURL& origin,
-      const DeleteRegistrationCallback& callback);
+      DeleteRegistrationCallback callback);
   static void WriteRegistrationInDB(
       ServiceWorkerDatabase* database,
       scoped_refptr<base::SequencedTaskRunner> original_task_runner,
       const ServiceWorkerDatabase::RegistrationData& registration,
       const ResourceList& resources,
-      const WriteRegistrationCallback& callback);
+      WriteRegistrationCallback callback);
   static void FindForDocumentInDB(
       ServiceWorkerDatabase* database,
       scoped_refptr<base::SequencedTaskRunner> original_task_runner,
       const GURL& document_url,
-      const FindInDBCallback& callback);
+      FindInDBCallback callback);
   static void FindForPatternInDB(
       ServiceWorkerDatabase* database,
       scoped_refptr<base::SequencedTaskRunner> original_task_runner,
       const GURL& scope,
-      const FindInDBCallback& callback);
+      FindInDBCallback callback);
   static void FindForIdInDB(
       ServiceWorkerDatabase* database,
       scoped_refptr<base::SequencedTaskRunner> original_task_runner,
       int64_t registration_id,
       const GURL& origin,
-      const FindInDBCallback& callback);
+      FindInDBCallback callback);
   static void FindForIdOnlyInDB(
       ServiceWorkerDatabase* database,
       scoped_refptr<base::SequencedTaskRunner> original_task_runner,
       int64_t registration_id,
-      const FindInDBCallback& callback);
+      FindInDBCallback callback);
   static void GetUserDataInDB(
       ServiceWorkerDatabase* database,
       scoped_refptr<base::SequencedTaskRunner> original_task_runner,
       int64_t registration_id,
       const std::vector<std::string>& keys,
-      const GetUserDataInDBCallback& callback);
+      GetUserDataInDBCallback callback);
   static void GetUserDataByKeyPrefixInDB(
       ServiceWorkerDatabase* database,
       scoped_refptr<base::SequencedTaskRunner> original_task_runner,
       int64_t registration_id,
       const std::string& key_prefix,
-      const GetUserDataInDBCallback& callback);
+      GetUserDataInDBCallback callback);
   static void GetUserDataForAllRegistrationsInDB(
       ServiceWorkerDatabase* database,
       scoped_refptr<base::SequencedTaskRunner> original_task_runner,
       const std::string& key,
-      const GetUserDataForAllRegistrationsInDBCallback& callback);
+      GetUserDataForAllRegistrationsInDBCallback callback);
   static void GetUserDataForAllRegistrationsByKeyPrefixInDB(
       ServiceWorkerDatabase* database,
       scoped_refptr<base::SequencedTaskRunner> original_task_runner,
       const std::string& key_prefix,
-      const GetUserDataForAllRegistrationsInDBCallback& callback);
+      GetUserDataForAllRegistrationsInDBCallback callback);
   static void DeleteAllDataForOriginsFromDB(
       ServiceWorkerDatabase* database,
       const std::set<GURL>& origins);
@@ -512,12 +526,10 @@ class CONTENT_EXPORT ServiceWorkerStorage
   // Posted by the underlying cache implementation after it finishes making
   // disk changes upon its destruction.
   void DiskCacheImplDoneWithDisk();
-  void DidDeleteDatabase(const StatusCallback& callback,
+  void DidDeleteDatabase(StatusCallback callback,
                          ServiceWorkerDatabase::Status status);
   // Posted when we finish deleting the cache directory.
-  void DidDeleteDiskCache(
-      const StatusCallback& callback,
-      bool result);
+  void DidDeleteDiskCache(StatusCallback callback, bool result);
 
   // For finding registrations being installed or uninstalled.
   RegistrationRefsById installing_registrations_;

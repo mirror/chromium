@@ -131,7 +131,7 @@ void ServiceWorkerRegisterJob::Start() {
 
 void ServiceWorkerRegisterJob::StartImpl() {
   SetPhase(START);
-  ServiceWorkerStorage::FindRegistrationCallback next_step;
+  ServiceWorkerStorage::LegacyFindRegistrationCallback next_step;
   if (job_type_ == REGISTRATION_JOB) {
     next_step = base::Bind(
         &ServiceWorkerRegisterJob::ContinueWithRegistration,

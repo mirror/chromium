@@ -36,7 +36,7 @@ void TestBackgroundSyncManager::StoreDataInBackend(
     const GURL& origin,
     const std::string& key,
     const std::string& data,
-    const ServiceWorkerStorage::StatusCallback& callback) {
+    const ServiceWorkerStorage::LegacyStatusCallback& callback) {
   EXPECT_TRUE(continuation_.is_null());
   if (corrupt_backend_) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -54,7 +54,7 @@ void TestBackgroundSyncManager::StoreDataInBackend(
 
 void TestBackgroundSyncManager::GetDataFromBackend(
     const std::string& key,
-    const ServiceWorkerStorage::GetUserDataForAllRegistrationsCallback&
+    const ServiceWorkerStorage::LegacyGetUserDataForAllRegistrationsCallback&
         callback) {
   EXPECT_TRUE(continuation_.is_null());
   if (corrupt_backend_) {
@@ -100,14 +100,14 @@ void TestBackgroundSyncManager::StoreDataInBackendContinue(
     const GURL& origin,
     const std::string& key,
     const std::string& data,
-    const ServiceWorkerStorage::StatusCallback& callback) {
+    const ServiceWorkerStorage::LegacyStatusCallback& callback) {
   BackgroundSyncManager::StoreDataInBackend(sw_registration_id, origin, key,
                                             data, callback);
 }
 
 void TestBackgroundSyncManager::GetDataFromBackendContinue(
     const std::string& key,
-    const ServiceWorkerStorage::GetUserDataForAllRegistrationsCallback&
+    const ServiceWorkerStorage::LegacyGetUserDataForAllRegistrationsCallback&
         callback) {
   BackgroundSyncManager::GetDataFromBackend(key, callback);
 }
