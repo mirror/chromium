@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4816c1d3_449d5f04",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-13T23:37:00Z",
+      "side": 1,
+      "message": "note: the previous code was calling gpu_channel_-\u003eDestroyChannel(), however that is just posting a task that will noop (since the channel is already known to be lost), so I removed it.",
+      "revId": "87453690d4badd9b1fab43ebd8085832fcc3351e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
