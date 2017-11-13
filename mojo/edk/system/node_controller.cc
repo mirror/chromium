@@ -1145,29 +1145,27 @@ void NodeController::OnRelayEventMessage(const ports::NodeName& from_node,
   // Note that we explicitly mark the handles as being owned by the sending
   // process before rewriting them, in order to accommodate RewriteHandles'
   // internal sanity checks.
-  ScopedPlatformHandleVectorPtr handles = message->TakeHandles();
-  for (size_t i = 0; i < handles->size(); ++i)
-    (*handles)[i].owning_process = from_process;
-  if (!Channel::Message::RewriteHandles(from_process,
-                                        base::GetCurrentProcessHandle(),
-                                        handles.get())) {
+  ScopedPlatformHandleVector handles = message->TakeHandles();
+  for (auto& handle : handles)
+    handle.get().owning_process = from_process;
+  if (!Channel::Message::RewriteHandles(
+          from_process, base::GetCurrentProcessHandle(), &handles)) {
     DLOG(ERROR) << "Failed to relay one or more handles.";
   }
   message->SetHandles(std::move(handles));
 #else
-  ScopedPlatformHandleVectorPtr handles = message->TakeHandles();
-  for (size_t i = 0; i < handles->size(); ++i) {
-    PlatformHandle* handle = &(*handles)[i];
-    if (handle->type == PlatformHandle::Type::MACH_NAME) {
+  ScopedPlatformHandleVector handles = message->TakeHandles();
+  for (auto& handle : handles) {
+    if (handle.get().type == PlatformHandle::Type::MACH_NAME) {
       MachPortRelay* relay = GetMachPortRelay();
       if (!relay) {
-        handle->type = PlatformHandle::Type::MACH;
-        handle->port = MACH_PORT_NULL;
+        handle.get().type = PlatformHandle::Type::MACH;
+        handle.get().port = MACH_PORT_NULL;
         DLOG(ERROR) << "Receiving Mach ports without a port relay from "
                     << from_node << ".";
         continue;
       }
-      relay->ExtractPort(handle, from_process);
+      relay->ExtractPort(&handle, from_process);
     }
   }
   message->SetHandles(std::move(handles));
