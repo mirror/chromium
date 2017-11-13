@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d278924_b154cc6c",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapingLineBreaker.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-11-13T15:35:37Z",
+      "side": 1,
+      "message": "s/braek/break/",
+      "range": {
+        "startLine": 293,
+        "startChar": 29,
+        "endLine": 293,
+        "endChar": 34
+      },
+      "revId": "165f4db4cca22f1616aac124b5dfb33235546676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
