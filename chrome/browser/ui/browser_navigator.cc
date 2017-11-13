@@ -16,6 +16,7 @@
 #include "chrome/browser/prerender/prerender_manager.h"
 #include "chrome/browser/prerender/prerender_manager_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/renderer_host/chrome_navigation_ui_data.h"
 #include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/browser/task_manager/web_contents_tags.h"
 #include "chrome/browser/ui/browser.h"
@@ -264,6 +265,8 @@ Profile* GetSourceProfile(chrome::NavigateParams* params) {
 }
 
 void LoadURLInContents(WebContents* target_contents,
+                       bool is_source_browser_app,
+                       bool had_target_contents,
                        const GURL& url,
                        chrome::NavigateParams* params) {
   NavigationController::LoadURLParams load_url_params(url);
@@ -278,6 +281,9 @@ void LoadURLInContents(WebContents* target_contents,
       params->should_replace_current_entry;
   load_url_params.is_renderer_initiated = params->is_renderer_initiated;
   load_url_params.started_from_context_menu = params->started_from_context_menu;
+  load_url_params.navigation_ui_data = new ChromeNavigationUIData(
+      target_contents, params->frame_tree_node_id, params->disposition,
+      is_source_browser_app, had_target_contents);
 
   if (params->uses_post) {
     load_url_params.load_type = NavigationController::LOAD_TYPE_HTTP_POST;
@@ -407,8 +413,11 @@ namespace chrome {
 
 void Navigate(NavigateParams* params) {
   Browser* source_browser = params->browser;
-  if (source_browser)
+  bool is_source_browser_app = false;
+  if (source_browser) {
     params->initiating_profile = source_browser->profile();
+    is_source_browser_app = source_browser->is_app();
+  }
   DCHECK(params->initiating_profile);
 
   if (!AdjustNavigateParamsForURL(params))
@@ -434,7 +443,7 @@ void Navigate(NavigateParams* params) {
   // focusing a regular browser window an opening a tab in the background
   // of that window. Change the disposition to NEW_FOREGROUND_TAB so that
   // the new tab is focused.
-  if (source_browser && source_browser->is_app() &&
+  if (is_source_browser_app &&
       params->disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB) {
     params->disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
   }
@@ -526,7 +535,8 @@ void Navigate(NavigateParams* params) {
   // If no target WebContents was specified, we need to construct one if
   // we are supposed to target a new tab; unless it's a singleton that already
   // exists.
-  if (!params->target_contents && singleton_index < 0) {
+  bool had_target_contents = params->target_contents;
+  if (!had_target_contents && singleton_index < 0) {
     DCHECK(!params->url.is_empty());
     if (params->disposition != WindowOpenDisposition::CURRENT_TAB) {
       params->target_contents = CreateTargetContents(*params, params->url);
@@ -555,7 +565,8 @@ void Navigate(NavigateParams* params) {
         // Perform the actual navigation, tracking whether it came from the
         // renderer.
 
-        LoadURLInContents(params->target_contents, params->url, params);
+        LoadURLInContents(params->target_contents, is_source_browser_app,
+                          had_target_contents, params->url, params);
       }
     }
   } else {
@@ -605,7 +616,8 @@ void Navigate(NavigateParams* params) {
       target->GetController().Reload(content::ReloadType::NORMAL, true);
     } else if (params->path_behavior == NavigateParams::IGNORE_AND_NAVIGATE &&
         target->GetURL() != params->url) {
-      LoadURLInContents(target, params->url, params);
+      LoadURLInContents(target, is_source_browser_app, had_target_contents,
+                        params->url, params);
     }
 
     // If the singleton tab isn't already selected, select it.

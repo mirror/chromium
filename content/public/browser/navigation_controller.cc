@@ -24,7 +24,8 @@ NavigationController::LoadURLParams::LoadURLParams(const GURL& url)
       has_user_gesture(false),
 #endif
       should_clear_history_list(false),
-      started_from_context_menu(false) {
+      started_from_context_menu(false),
+      navigation_ui_data(nullptr) {
 }
 
 NavigationController::LoadURLParams::~LoadURLParams() {
@@ -50,7 +51,8 @@ NavigationController::LoadURLParams::LoadURLParams(
       has_user_gesture(other.has_user_gesture),
 #endif
       should_clear_history_list(false),
-      started_from_context_menu(other.started_from_context_menu) {
+      started_from_context_menu(other.started_from_context_menu),
+      navigation_ui_data(other.navigation_ui_data) {
 }
 
 NavigationController::LoadURLParams&
@@ -76,6 +78,7 @@ NavigationController::LoadURLParams::operator=(
   has_user_gesture = other.has_user_gesture;
 #endif
   started_from_context_menu = other.started_from_context_menu;
+  navigation_ui_data = other.navigation_ui_data;
 
   return *this;
 }

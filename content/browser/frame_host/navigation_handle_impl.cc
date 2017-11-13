@@ -76,12 +76,13 @@ std::unique_ptr<NavigationHandleImpl> NavigationHandleImpl::Create(
     int pending_nav_entry_id,
     bool started_from_context_menu,
     CSPDisposition should_check_main_world_csp,
-    bool is_form_submission) {
+    bool is_form_submission,
+    NavigationUIData* navigation_ui_data) {
   return std::unique_ptr<NavigationHandleImpl>(new NavigationHandleImpl(
       url, redirect_chain, frame_tree_node, is_renderer_initiated,
       is_same_document, navigation_start, pending_nav_entry_id,
       started_from_context_menu, should_check_main_world_csp,
-      is_form_submission));
+      is_form_submission, navigation_ui_data));
 }
 
 NavigationHandleImpl::NavigationHandleImpl(
@@ -94,7 +95,8 @@ NavigationHandleImpl::NavigationHandleImpl(
     int pending_nav_entry_id,
     bool started_from_context_menu,
     CSPDisposition should_check_main_world_csp,
-    bool is_form_submission)
+    bool is_form_submission,
+    NavigationUIData* navigation_ui_data)
     : url_(url),
       has_user_gesture_(false),
       transition_(ui::PAGE_TRANSITION_LINK),
@@ -119,6 +121,7 @@ NavigationHandleImpl::NavigationHandleImpl(
       request_context_type_(REQUEST_CONTEXT_TYPE_UNSPECIFIED),
       mixed_content_context_type_(
           blink::WebMixedContentContextType::kBlockable),
+      navigation_ui_data_(navigation_ui_data),
       navigation_id_(CreateUniqueHandleID()),
       should_replace_current_entry_(false),
       redirect_chain_(redirect_chain),
@@ -300,6 +303,12 @@ ui::PageTransition NavigationHandleImpl::GetPageTransition() {
   CHECK_NE(INITIAL, state_)
       << "This accessor should not be called before the request is started.";
   return transition_;
+}
+
+NavigationUIData* NavigationHandleImpl::GetNavigationUIData() {
+  CHECK_NE(INITIAL, state_)
+      << "This accessor should not be called before the request is started.";
+  return navigation_ui_data_.get();
 }
 
 bool NavigationHandleImpl::IsExternalProtocol() {
@@ -608,7 +617,7 @@ void NavigationHandleImpl::WillStartRequest(
   if (!IsRendererDebugURL(url_))
     RegisterNavigationThrottles();
 
-  if (IsBrowserSideNavigationEnabled())
+  if (IsBrowserSideNavigationEnabled() && !navigation_ui_data_)
     navigation_ui_data_ = GetDelegate()->GetNavigationUIData(this);
 
   // Notify each throttle of the request.

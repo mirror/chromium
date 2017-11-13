@@ -94,7 +94,8 @@ class CONTENT_EXPORT Navigator : public base::RefCounted<Navigator> {
   virtual bool NavigateToPendingEntry(FrameTreeNode* frame_tree_node,
                                       const FrameNavigationEntry& frame_entry,
                                       ReloadType reload_type,
-                                      bool is_same_document_history_load);
+                                      bool is_same_document_history_load,
+                                      NavigationUIData* navigation_ui_data);
 
   // Called on a newly created subframe during a history navigation. The browser
   // process looks up the corresponding FrameNavigationEntry for the new frame
