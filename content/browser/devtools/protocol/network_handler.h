@@ -9,6 +9,7 @@
 
 #include "base/containers/flat_map.h"
 #include "base/containers/flat_set.h"
+#include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "content/browser/devtools/protocol/devtools_domain_handler.h"
@@ -103,6 +104,11 @@ class NetworkHandler : public DevToolsDomainHandler,
       Maybe<protocol::Network::Headers> headers,
       Maybe<protocol::Network::AuthChallengeResponse> auth_challenge_response,
       std::unique_ptr<ContinueInterceptedRequestCallback> callback) override;
+
+  void GetResponseBodyForInterception(
+      const String& interception_id,
+      std::unique_ptr<GetResponseBodyForInterceptionCallback> callback)
+      override;
 
   void NavigationPreloadRequestSent(int worker_version_id,
                                     const std::string& request_id,

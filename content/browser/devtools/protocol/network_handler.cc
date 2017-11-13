@@ -53,6 +53,10 @@
 
 namespace content {
 namespace protocol {
+
+static base::LazyInstance<base::flat_map<net::Error, const char*>>::
+    DestructorAtExit net_error_to_error_reason_;
+
 namespace {
 
 using ProtocolCookieArray = Array<Network::Cookie>;
@@ -461,34 +465,63 @@ String securityState(const GURL& url, const net::CertStatus& cert_status) {
   return Security::SecurityStateEnum::Secure;
 }
 
+DevToolsURLRequestInterceptor::InterceptionStage ToInterceptorStage(
+    const protocol::Network::InterceptionStage& interceptor_stage) {
+  if (interceptor_stage == protocol::Network::InterceptionStageEnum::Request)
+    return DevToolsURLRequestInterceptor::REQUEST;
+  if (interceptor_stage ==
+      protocol::Network::InterceptionStageEnum::HeadersReceived)
+    return DevToolsURLRequestInterceptor::RESPONSE;
+  NOTREACHED();
+  return DevToolsURLRequestInterceptor::REQUEST;
+}
+
+const base::flat_map<net::Error, const char*>&
+getOrCreateNetErrorToReasonMap() {
+  base::flat_map<net::Error, const char*>* instance =
+      net_error_to_error_reason_.Pointer();
+  if (!instance->empty())
+    return *instance;
+  instance->emplace(net::ERR_ABORTED, Network::ErrorReasonEnum::Aborted);
+  instance->emplace(net::ERR_TIMED_OUT, Network::ErrorReasonEnum::TimedOut);
+  instance->emplace(net::ERR_ACCESS_DENIED,
+                    Network::ErrorReasonEnum::AccessDenied);
+  instance->emplace(net::ERR_CONNECTION_CLOSED,
+                    Network::ErrorReasonEnum::ConnectionClosed);
+  instance->emplace(net::ERR_CONNECTION_RESET,
+                    Network::ErrorReasonEnum::ConnectionReset);
+  instance->emplace(net::ERR_CONNECTION_REFUSED,
+                    Network::ErrorReasonEnum::ConnectionRefused);
+  instance->emplace(net::ERR_CONNECTION_ABORTED,
+                    Network::ErrorReasonEnum::ConnectionAborted);
+  instance->emplace(net::ERR_CONNECTION_FAILED,
+                    Network::ErrorReasonEnum::ConnectionFailed);
+  instance->emplace(net::ERR_NAME_NOT_RESOLVED,
+                    Network::ErrorReasonEnum::NameNotResolved);
+  instance->emplace(net::ERR_INTERNET_DISCONNECTED,
+                    Network::ErrorReasonEnum::InternetDisconnected);
+  instance->emplace(net::ERR_ADDRESS_UNREACHABLE,
+                    Network::ErrorReasonEnum::AddressUnreachable);
+  return *instance;
+}
+
 net::Error NetErrorFromString(const std::string& error, bool* ok) {
   *ok = true;
-  if (error == Network::ErrorReasonEnum::Failed)
-    return net::ERR_FAILED;
-  if (error == Network::ErrorReasonEnum::Aborted)
-    return net::ERR_ABORTED;
-  if (error == Network::ErrorReasonEnum::TimedOut)
-    return net::ERR_TIMED_OUT;
-  if (error == Network::ErrorReasonEnum::AccessDenied)
-    return net::ERR_ACCESS_DENIED;
-  if (error == Network::ErrorReasonEnum::ConnectionClosed)
-    return net::ERR_CONNECTION_CLOSED;
-  if (error == Network::ErrorReasonEnum::ConnectionReset)
-    return net::ERR_CONNECTION_RESET;
-  if (error == Network::ErrorReasonEnum::ConnectionRefused)
-    return net::ERR_CONNECTION_REFUSED;
-  if (error == Network::ErrorReasonEnum::ConnectionAborted)
-    return net::ERR_CONNECTION_ABORTED;
-  if (error == Network::ErrorReasonEnum::ConnectionFailed)
-    return net::ERR_CONNECTION_FAILED;
-  if (error == Network::ErrorReasonEnum::NameNotResolved)
-    return net::ERR_NAME_NOT_RESOLVED;
-  if (error == Network::ErrorReasonEnum::InternetDisconnected)
-    return net::ERR_INTERNET_DISCONNECTED;
-  if (error == Network::ErrorReasonEnum::AddressUnreachable)
-    return net::ERR_ADDRESS_UNREACHABLE;
+  for (const auto it : getOrCreateNetErrorToReasonMap()) {
+    if (it.second == error)
+      return it.first;
+  }
   *ok = false;
   return net::ERR_FAILED;
+}
+
+String NetErrorToString(int net_error) {
+  const base::flat_map<net::Error, const char*>& instance =
+      getOrCreateNetErrorToReasonMap();
+  const auto it = instance.find(net_error);
+  if (it != instance.end())
+    return it->second;
+  return Network::ErrorReasonEnum::Failed;
 }
 
 bool AddInterceptedResourceType(
@@ -1083,7 +1116,9 @@ DispatchResponse NetworkHandler::SetRequestInterception(
         }
       }
       interceptor_patterns.push_back(DevToolsURLRequestInterceptor::Pattern(
-          patterns->get(i)->GetUrlPattern("*"), std::move(resource_types)));
+          patterns->get(i)->GetUrlPattern("*"), std::move(resource_types),
+          ToInterceptorStage(patterns->get(i)->GetInterceptionStage(
+              protocol::Network::InterceptionStageEnum::Request))));
     }
 
     interceptor->StartInterceptingRequests(frame_tree_node,
@@ -1127,7 +1162,6 @@ bool GetPostData(const net::URLRequest* request, std::string* post_data) {
 }
 }  // namespace
 
-// TODO(alexclarke): Support structured data as well as |base64_raw_response|.
 void NetworkHandler::ContinueInterceptedRequest(
     const std::string& interception_id,
     Maybe<std::string> error_reason,
@@ -1176,6 +1210,20 @@ void NetworkHandler::ContinueInterceptedRequest(
           std::move(method), std::move(post_data), std::move(headers),
           std::move(auth_challenge_response), mark_as_canceled),
       std::move(callback));
+}
+
+void NetworkHandler::GetResponseBodyForInterception(
+    const String& interception_id,
+    std::unique_ptr<GetResponseBodyForInterceptionCallback> callback) {
+  DevToolsInterceptorController* interceptor =
+      DevToolsInterceptorController::FromBrowserContext(
+          process_->GetBrowserContext());
+
+  if (!interceptor) {
+    callback->sendFailure(Response::InternalError());
+    return;
+  }
+  interceptor->GetResponseBody(interception_id, std::move(callback));
 }
 
 // static
@@ -1290,12 +1338,16 @@ const char* ResourceTypeToString(ResourceType resource_type) {
 
 void NetworkHandler::RequestIntercepted(
     std::unique_ptr<InterceptedRequestInfo> info) {
+  protocol::Maybe<protocol::Network::ErrorReason> error_reason;
+  if (info->response_error_code < 0)
+    error_reason = NetErrorToString(info->response_error_code);
   frontend_->RequestIntercepted(
       info->interception_id, std::move(info->network_request),
       info->frame_id.ToString(), ResourceTypeToString(info->resource_type),
-      info->is_navigation, std::move(info->headers_object),
-      std::move(info->http_status_code), std::move(info->redirect_url),
-      std::move(info->auth_challenge));
+      info->is_navigation, std::move(info->redirect_url),
+      std::move(info->auth_challenge), std::move(error_reason),
+      std::move(info->http_response_status_code),
+      std::move(info->response_headers));
 }
 
 void NetworkHandler::SetNetworkConditions(
