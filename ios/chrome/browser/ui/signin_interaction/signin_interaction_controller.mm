@@ -273,20 +273,9 @@ using signin_ui::CompletionCallback;
   signInIdentity_ = signInIdentity;
   identityAdded_ = identityAdded;
 
-  if (identityInteractionManager_) {
-    // If |identityInteractionManager_| is currently displayed,
-    // |signinViewController_| is presented on top of it (instead of on top of
-    // |presentingViewController_|), to avoid an awkward transition (dismissing
-    // |identityInteractionManager_|, followed by presenting
-    // |signinViewController_|).
-    [self.presenter presentTopViewController:signinViewController_
-                                    animated:YES
-                                  completion:nil];
-  } else {
     [self.presenter presentViewController:signinViewController_
                                  animated:YES
                                completion:nil];
-  }
 }
 
 - (void)dismissSigninViewControllerWithSignInSuccess:(BOOL)success
