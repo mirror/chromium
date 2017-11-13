@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbc310fd_22a990b0",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-11-13T19:55:40Z",
+      "side": 1,
+      "message": "Nit: How about changing WebApkTestHelper#registerWebApkWithMetaData() to have a List\u003cString\u003e as input, not List\u003cActivityInfo\u003e?",
+      "range": {
+        "startLine": 132,
+        "startChar": 81,
+        "endLine": 132,
+        "endChar": 91
+      },
+      "revId": "d354702e4813dcaae139a9687ac626e624408191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
