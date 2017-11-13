@@ -34,7 +34,7 @@ const WrapperTypeInfo V8TestInterfaceSecureContext::wrapperTypeInfo = {
     V8TestInterfaceSecureContext::domTemplate,
     V8TestInterfaceSecureContext::Trace,
     V8TestInterfaceSecureContext::TraceWrappers,
-    V8TestInterfaceSecureContext::preparePrototypeAndInterfaceObject,
+    V8TestInterfaceSecureContext::InstallConditionalFeaturesOnObject,
     "TestInterfaceSecureContext",
     nullptr,
     WrapperTypeInfo::kWrapperTypeObjectPrototype,
@@ -473,7 +473,16 @@ TestInterfaceSecureContext* NativeValueTraits<TestInterfaceSecureContext>::Nativ
   return nativeValue;
 }
 
-void V8TestInterfaceSecureContext::preparePrototypeAndInterfaceObject(v8::Local<v8::Context> context, const DOMWrapperWorld& world, v8::Local<v8::Object> prototypeObject, v8::Local<v8::Function> interfaceObject, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+void V8TestInterfaceSecureContext::InstallConditionalFeaturesOnObject(
+    v8::Local<v8::Context> context,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::Object> instanceObject,
+    v8::Local<v8::Object> prototypeObject,
+    v8::Local<v8::Function> interfaceObject,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+  DCHECK((!prototypeObject.IsEmpty() && !interfaceObject.IsEmpty()) ||
+         !instanceObject.IsEmpty());
+
   v8::Isolate* isolate = context->GetIsolate();
   v8::Local<v8::Signature> signature = v8::Signature::New(isolate, interfaceTemplate);
   ExecutionContext* executionContext = ToExecutionContext(context);
@@ -485,7 +494,7 @@ void V8TestInterfaceSecureContext::preparePrototypeAndInterfaceObject(v8::Local<
         { "secureContextAttribute", V8TestInterfaceSecureContext::secureContextAttributeAttributeGetterCallback, V8TestInterfaceSecureContext::secureContextAttributeAttributeSetterCallback, V8PrivateProperty::kNoCachedAccessor, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds },
     };
     V8DOMConfiguration::InstallAccessors(
-        isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject,
+        isolate, world, instanceObject, prototypeObject, interfaceObject,
         signature, accessor_configurations,
         WTF_ARRAY_LENGTH(accessor_configurations));
     if (RuntimeEnabledFeatures::SecureFeatureEnabled()) {
@@ -493,7 +502,7 @@ void V8TestInterfaceSecureContext::preparePrototypeAndInterfaceObject(v8::Local<
           { "secureContextRuntimeEnabledAttribute", V8TestInterfaceSecureContext::secureContextRuntimeEnabledAttributeAttributeGetterCallback, V8TestInterfaceSecureContext::secureContextRuntimeEnabledAttributeAttributeSetterCallback, V8PrivateProperty::kNoCachedAccessor, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds },
       };
       V8DOMConfiguration::InstallAccessors(
-          isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject,
+          isolate, world, instanceObject, prototypeObject, interfaceObject,
           signature, accessor_configurations,
           WTF_ARRAY_LENGTH(accessor_configurations));
     }
@@ -504,7 +513,7 @@ void V8TestInterfaceSecureContext::preparePrototypeAndInterfaceObject(v8::Local<
           { "secureContextWindowExposedAttribute", V8TestInterfaceSecureContext::secureContextWindowExposedAttributeAttributeGetterCallback, V8TestInterfaceSecureContext::secureContextWindowExposedAttributeAttributeSetterCallback, V8PrivateProperty::kNoCachedAccessor, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds },
       };
       V8DOMConfiguration::InstallAccessors(
-          isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject,
+          isolate, world, instanceObject, prototypeObject, interfaceObject,
           signature, accessor_configurations,
           WTF_ARRAY_LENGTH(accessor_configurations));
       if (RuntimeEnabledFeatures::SecureFeatureEnabled()) {
@@ -512,7 +521,7 @@ void V8TestInterfaceSecureContext::preparePrototypeAndInterfaceObject(v8::Local<
             { "secureContextWindowExposedRuntimeEnabledAttribute", V8TestInterfaceSecureContext::secureContextWindowExposedRuntimeEnabledAttributeAttributeGetterCallback, V8TestInterfaceSecureContext::secureContextWindowExposedRuntimeEnabledAttributeAttributeSetterCallback, V8PrivateProperty::kNoCachedAccessor, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds },
         };
         V8DOMConfiguration::InstallAccessors(
-            isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject,
+            isolate, world, instanceObject, prototypeObject, interfaceObject,
             signature, accessor_configurations,
             WTF_ARRAY_LENGTH(accessor_configurations));
       }
@@ -524,7 +533,7 @@ void V8TestInterfaceSecureContext::preparePrototypeAndInterfaceObject(v8::Local<
           { "secureContextWorkerExposedAttribute", V8TestInterfaceSecureContext::secureContextWorkerExposedAttributeAttributeGetterCallback, V8TestInterfaceSecureContext::secureContextWorkerExposedAttributeAttributeSetterCallback, V8PrivateProperty::kNoCachedAccessor, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds },
       };
       V8DOMConfiguration::InstallAccessors(
-          isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject,
+          isolate, world, instanceObject, prototypeObject, interfaceObject,
           signature, accessor_configurations,
           WTF_ARRAY_LENGTH(accessor_configurations));
       if (RuntimeEnabledFeatures::SecureFeatureEnabled()) {
@@ -532,7 +541,7 @@ void V8TestInterfaceSecureContext::preparePrototypeAndInterfaceObject(v8::Local<
             { "secureContextWorkerExposedRuntimeEnabledAttribute", V8TestInterfaceSecureContext::secureContextWorkerExposedRuntimeEnabledAttributeAttributeGetterCallback, V8TestInterfaceSecureContext::secureContextWorkerExposedRuntimeEnabledAttributeAttributeSetterCallback, V8PrivateProperty::kNoCachedAccessor, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds },
         };
         V8DOMConfiguration::InstallAccessors(
-            isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject,
+            isolate, world, instanceObject, prototypeObject, interfaceObject,
             signature, accessor_configurations,
             WTF_ARRAY_LENGTH(accessor_configurations));
       }
