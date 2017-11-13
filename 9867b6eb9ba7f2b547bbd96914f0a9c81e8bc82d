@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e54ce170_94846d00",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsersTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-13T19:32:56Z",
+      "side": 1,
+      "message": "Typo?",
+      "range": {
+        "startLine": 528,
+        "startChar": 59,
+        "endLine": 528,
+        "endChar": 64
+      },
+      "revId": "9867b6eb9ba7f2b547bbd96914f0a9c81e8bc82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec3f2a7_1417af66",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsersTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-13T19:32:56Z",
+      "side": 1,
+      "message": "Typo?",
+      "range": {
+        "startLine": 533,
+        "startChar": 52,
+        "endLine": 533,
+        "endChar": 56
+      },
+      "revId": "9867b6eb9ba7f2b547bbd96914f0a9c81e8bc82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf8e3e8d_e108ea8b",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsersTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-13T19:32:56Z",
+      "side": 1,
+      "message": "Could you add a test for repetition in a single header? e.g. `metric1;duration\u003d12.3;duration\u003d45.6;description\u003ddescription1` and similar?\n\nEdit: Nevermind, I see some below. :)",
+      "revId": "9867b6eb9ba7f2b547bbd96914f0a9c81e8bc82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c9c1f00_6929bba6",
+        "filename": "third_party/WebKit/Source/platform/network/ServerTimingHeader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-13T19:32:56Z",
+      "side": 1,
+      "message": "Right now, you\u0027re setting `duration_` to zero if someone passes in `duration\u003dwhatever`. Did you consider something a little more draconian? Reject the header entirely, perhaps, with an appropriate console warning for non-numeric values?",
+      "revId": "9867b6eb9ba7f2b547bbd96914f0a9c81e8bc82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
