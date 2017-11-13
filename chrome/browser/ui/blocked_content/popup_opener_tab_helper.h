@@ -11,6 +11,7 @@
 #include "base/optional.h"
 #include "base/time/tick_clock.h"
 #include "base/time/time.h"
+#include "components/ukm/ukm_source.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
@@ -38,12 +39,19 @@ class PopupOpenerTabHelper
   void OnOpenedPopup(PopupTracker* popup_tracker);
   void OnDidTabUnder();
 
+  // Must be called after at least a single popup occurred.
+  base::TimeDelta TimeSinceLastPopup() const;
+
   bool has_opened_popup_since_last_user_gesture() const {
     return has_opened_popup_since_last_user_gesture_;
   }
 
   bool did_tab_under() const {
     return visible_time_before_tab_under_.has_value();
+  }
+
+  const base::Optional<ukm::SourceId>& last_committed_source_id() {
+    return last_committed_source_id_;
   }
 
  private:
@@ -53,6 +61,8 @@ class PopupOpenerTabHelper
                        std::unique_ptr<base::TickClock> tick_clock);
 
   // content::WebContentsObserver:
+  void DidFinishNavigation(
+      content::NavigationHandle* navigation_handle) override;
   void WasShown() override;
   void WasHidden() override;
   void DidGetUserInteraction(const blink::WebInputEvent::Type type) override;
@@ -61,6 +71,10 @@ class PopupOpenerTabHelper
   // gets the visible time from the |visibility_tracker_|. Will be unset until a
   // tab-under is detected.
   base::Optional<base::TimeDelta> visible_time_before_tab_under_;
+
+  // The UKM source id of the current page load. i.e. the id of the last
+  // committed main frame navigation.
+  base::Optional<ukm::SourceId> last_committed_source_id_;
 
   // The clock which is used by the visibility trackers.
   std::unique_ptr<base::TickClock> tick_clock_;

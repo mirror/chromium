@@ -25,6 +25,9 @@
 #include "chrome/test/base/testing_browser_process.h"
 #include "components/rappor/public/rappor_parameters.h"
 #include "components/rappor/test_rappor_service.h"
+#include "components/ukm/content/source_url_recorder.h"
+#include "components/ukm/test_ukm_recorder.h"
+#include "components/ukm/ukm_source.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_utils.h"
@@ -549,7 +552,9 @@ TEST_F(BlockTabUnderTest, DisableFeature_LogsDidTabUnder) {
   histogram_tester()->ExpectTotalCount(kTabUnderAction, 3);
 }
 
-TEST_F(BlockTabUnderTest, LogsRappor) {
+TEST_F(BlockTabUnderTest, LogsRapporAndUkm) {
+  ukm::InitializeSourceUrlRecorderForWebContents(web_contents());
+  ukm::TestAutoSetUkmRecorder test_ukm_recorder;
   rappor::TestRapporServiceImpl test_rappor_service;
   TestingBrowserProcess::GetGlobal()->SetRapporServiceImpl(
       &test_rappor_service);
@@ -557,6 +562,7 @@ TEST_F(BlockTabUnderTest, LogsRappor) {
   const GURL first_url("https://first.test/");
   EXPECT_TRUE(NavigateAndCommitWithoutGesture(first_url));
   SimulatePopup();
+  raw_clock()->Advance(base::TimeDelta::FromMilliseconds(15));
   const GURL blocked_url("https://example.test/");
   EXPECT_FALSE(NavigateAndCommitWithoutGesture(blocked_url));
 
@@ -566,6 +572,13 @@ TEST_F(BlockTabUnderTest, LogsRappor) {
       "Tab.TabUnder.Opener", &sample, &type));
   EXPECT_EQ(first_url.host(), sample);
   EXPECT_EQ(rappor::UMA_RAPPOR_TYPE, type);
+
+  const ukm::UkmSource* source = test_ukm_recorder.GetSourceForUrl(first_url);
+  ASSERT_TRUE(source);
+  EXPECT_EQ(first_url, source->url());
+  EXPECT_GE(test_ukm_recorder.entries_count(), 1ul);
+  test_ukm_recorder.ExpectMetric(*source, "TabUnder", "PopupToTabUnderTime",
+                                 15);
 }
 
 TEST_F(BlockTabUnderTest, LogsToConsole) {

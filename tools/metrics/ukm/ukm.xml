@@ -18,6 +18,17 @@ be describing additional metrics about the same event.
 
 <ukm-configuration>
 
+<event name="TabUnder">
+  <summary>
+    Recorded when the page attempts a &quot;tab-under&quot; navigation.
+  </summary>
+  <metric name="PopupToTabUnderTime">
+    <summary>
+      How long between the popup and the tab-under navigation, in ms.
+    </summary>
+  </metric>
+</event>
+
 <event name="Autofill.CardUploadDecision">
   <owner>sebsg@chromium.org</owner>
   <metric name="UploadDecision">

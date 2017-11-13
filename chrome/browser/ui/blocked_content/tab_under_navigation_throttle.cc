@@ -23,6 +23,8 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/console_message_level.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "url/gurl.h"
 #include "url/origin.h"
 
@@ -33,19 +35,37 @@
 
 namespace {
 
-// Logs RAPPOR for the opener URL, not the destination URL.
-void LogRappor(const GURL& opener_url) {
+void LogAction(TabUnderNavigationThrottle::Action action) {
+  UMA_HISTOGRAM_ENUMERATION("Tab.TabUnderAction", action,
+                            TabUnderNavigationThrottle::Action::kCount);
+}
+
+void LogTabUnderAttempt(content::NavigationHandle* handle,
+                        base::Optional<ukm::SourceId> opener_source_id,
+                        base::TimeDelta popup_to_tab_under_time) {
+  LogAction(TabUnderNavigationThrottle::Action::kDidTabUnder);
+
+  // Log RAPPOR / UKM based on the opener URL, not the URL navigated to.
+  const GURL& opener_url = handle->GetWebContents()->GetLastCommittedURL();
   if (rappor::RapporService* rappor_service =
           g_browser_process->rappor_service()) {
     rappor_service->RecordSampleString(
         "Tab.TabUnder.Opener", rappor::UMA_RAPPOR_TYPE,
         rappor::GetDomainAndRegistrySampleFromGURL(opener_url));
   }
-}
 
-void LogAction(TabUnderNavigationThrottle::Action action) {
-  UMA_HISTOGRAM_ENUMERATION("Tab.TabUnderAction", action,
-                            TabUnderNavigationThrottle::Action::kCount);
+  UMA_HISTOGRAM_LONG_TIMES("Tab.TabUnder.PopupToTabUnderTime",
+                           popup_to_tab_under_time);
+
+  // The source id should generally be set, except for very rare circumstances
+  // where the popup opener tab helper is not observing at the time the
+  // previous navigation commit.
+  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+  if (opener_source_id && ukm_recorder) {
+    ukm::builders::TabUnder(opener_source_id.value())
+        .SetPopupToTabUnderTime(popup_to_tab_under_time.InMilliseconds())
+        .Record(ukm_recorder);
+  }
 }
 
 void ShowUI(content::WebContents* web_contents,
@@ -123,8 +143,9 @@ TabUnderNavigationThrottle::MaybeBlockNavigation() {
       IsSuspiciousClientRedirect(navigation_handle(), started_in_background_)) {
     seen_tab_under_ = true;
     popup_opener->OnDidTabUnder();
-    LogAction(Action::kDidTabUnder);
-    LogRappor(contents->GetLastCommittedURL());
+    LogTabUnderAttempt(navigation_handle(),
+                       popup_opener->last_committed_source_id(),
+                       popup_opener->TimeSinceLastPopup());
 
     if (block_) {
       const GURL& url = navigation_handle()->GetURL();
