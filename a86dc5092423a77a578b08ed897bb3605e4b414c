@@ -22,6 +22,30 @@
       "revId": "a86dc5092423a77a578b08ed897bb3605e4b414c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc0d499a_65800ddd",
+        "filename": "base/task/sequence_manager/enqueue_order.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-13T20:28:58Z",
+      "side": 1,
+      "message": "Right... I thought of a way to support an atomic EnqueueOrder on 32-bit platforms.\n\nThe idea is based on two assumptions:\n 1) A 32-bit unsigned int has a space with ~4B indices.\n 2) Indices are consumed more or less in order and we always at least process a task before 1B more are posted.\n\nWith those assumptions we can use an Atomic32 on 32-bit platforms and have a custom operator\u003c() on EnqueueOrder which knows to consider indices in the 3B-4B range as \"smaller\" than indices in the 0B-1B range after we\u0027ve overflowed (i.e. split the space in 4 quadrants, if numbers are in same quadrant compare as usual, if not, consider number in \"preceding\" quadrant as \"less\" than number in current quadrant).\n\nAlexander preferred we don\u0027t use this approach per the Lock not having been identified as a significant overhead. I\u0027m in-between since I\u0027d like to avoid this global lock for the entire thread on each PostTask() and find the solution simple enough -- on the flipside, we have a lock on each PostTask() on each thread (managed or not) in the current model so it\u0027s probably not a big deal.",
+      "parentUuid": "9271f9d1_98dd11ec",
+      "range": {
+        "startLine": 48,
+        "startChar": 13,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "a86dc5092423a77a578b08ed897bb3605e4b414c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
