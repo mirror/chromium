@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c995f466_0a7f48f8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-13T14:22:05Z",
+      "side": 1,
+      "message": "Well you\u0027re adding a new API which you don\u0027t strictly need either ;)",
+      "parentUuid": "f6ac9942_9f0feec1",
+      "range": {
+        "startLine": 91,
+        "startChar": 52,
+        "endLine": 91,
+        "endChar": 73
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20076846_ce528a49",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 7
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "I\u0027m not sure I follow — that\u0027s what this patch does, right? Existing logic for task grouping in TaskQueueManager::DoWork hasn\u0027t been changed.",
       "parentUuid": "ef8fa243_514f3123",
+      "range": {
+        "startLine": 738,
+        "startChar": 0,
+        "endLine": 738,
+        "endChar": 79
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f352283_984dae15",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-13T14:22:05Z",
+      "side": 1,
+      "message": "Exactly! We discussed doing away with DoWork entirely which is probably useful long term but risking perf regressions in the short term.",
+      "parentUuid": "51af3ef1_758fdc9d",
       "range": {
         "startLine": 738,
         "startChar": 0,
