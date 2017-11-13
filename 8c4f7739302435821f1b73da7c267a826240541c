@@ -46,6 +46,30 @@
       "revId": "8c4f7739302435821f1b73da7c267a826240541c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b02ace_8d864f15",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-13T15:06:19Z",
+      "side": 1,
+      "message": "Heh everybody is going to keep grilling you about this:\nPlease add an explanatory comment as to why we need the\nrare block-on-destruction idiom.",
+      "parentUuid": "142899ea_dce830db",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "8c4f7739302435821f1b73da7c267a826240541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
