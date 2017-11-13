@@ -163,7 +163,6 @@ file_system_provider::RequestManager* SmbFileSystem::GetRequestManager() {
 }
 
 file_system_provider::Watchers* SmbFileSystem::GetWatchers() {
-  NOTIMPLEMENTED();
   return &watchers_;
 }
 
