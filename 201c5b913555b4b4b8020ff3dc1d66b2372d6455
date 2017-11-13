@@ -22,6 +22,30 @@
       "revId": "201c5b913555b4b4b8020ff3dc1d66b2372d6455",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d666d7_57c541dc",
+        "filename": "ios/chrome/browser/passwords/password_tab_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-13T12:05:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03c327d3_cbd1d244",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "201c5b913555b4b4b8020ff3dc1d66b2372d6455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
