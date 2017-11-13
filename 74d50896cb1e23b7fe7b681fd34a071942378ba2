@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9055d8e7_e038610f",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-13T05:45:28Z",
+      "side": 1,
+      "message": "why not kImageSize + BadgedProfilePhoto::kBadgeSpacing?",
+      "range": {
+        "startLine": 27,
+        "startChar": 42,
+        "endLine": 27,
+        "endChar": 52
+      },
+      "revId": "74d50896cb1e23b7fe7b681fd34a071942378ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
