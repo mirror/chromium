@@ -22,6 +22,30 @@
       "revId": "fac74dab5a33f874d338c9a1101de93aac18e9d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "351ce5ee_c41a85cf",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-13T22:14:14Z",
+      "side": 1,
+      "message": "I think there is no convention, although for new methods, it is preferred to preserve the order.",
+      "parentUuid": "4a09e78d_875dd02d",
+      "range": {
+        "startLine": 178,
+        "startChar": 31,
+        "endLine": 178,
+        "endChar": 43
+      },
+      "revId": "fac74dab5a33f874d338c9a1101de93aac18e9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
