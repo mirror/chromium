@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfd839aa_3310ae97",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2687,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-13T18:13:02Z",
+      "side": 1,
+      "message": "Please add a crbug here.\n\nAlso, we are evaluating to get rid of driver bug workarounds by reporting them to vendors.\n\nIf this is observed on the bots, can we limit it to that specific renderer? A widely applied workaround like this one will make it very hard to exit in the future.",
+      "range": {
+        "startLine": 2687,
+        "startChar": 7,
+        "endLine": 2687,
+        "endChar": 18
+      },
+      "revId": "7d66180f723876c832f9e91b4b6117a4b4d92f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
