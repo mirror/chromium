@@ -117,7 +117,6 @@ PlainTextRange GetSelectionOffsets(LocalFrame* frame) {
 
 SelectionInDOMTree CreateSelection(const size_t start,
                                    const size_t end,
-                                   const bool is_directional,
                                    Element* element) {
   const EphemeralRange& start_range =
       PlainTextRange(0, static_cast<int>(start)).CreateRange(*element);
@@ -132,7 +131,6 @@ SelectionInDOMTree CreateSelection(const size_t start,
   const SelectionInDOMTree& selection =
       SelectionInDOMTree::Builder()
           .SetBaseAndExtent(start_position, end_position)
-          .SetIsDirectional(is_directional)
           .Build();
   return selection;
 }
@@ -336,8 +334,7 @@ void TypingCommand::AdjustSelectionAfterIncrementalInsertion(
   const size_t end = selection_start + text_length;
   const size_t start =
       CompositionType() == kTextCompositionUpdate ? selection_start : end;
-  const SelectionInDOMTree& selection =
-      CreateSelection(start, end, EndingSelection().IsDirectional(), element);
+  const SelectionInDOMTree& selection = CreateSelection(start, end, element);
 
   if (selection == frame->Selection()
                        .ComputeVisibleSelectionInDOMTreeDeprecated()
@@ -345,7 +342,11 @@ void TypingCommand::AdjustSelectionAfterIncrementalInsertion(
     return;
 
   SetEndingSelection(SelectionForUndoStep::From(selection));
-  frame->Selection().SetSelection(selection);
+  // We take directional from the TopLevelCommand
+  frame->Selection().SetSelection(
+      selection, SetSelectionOptions::Builder()
+                     .SetIsDirectional(SelectionIsDirectional())
+                     .Build());
 }
 
 // FIXME: We shouldn't need to take selectionForInsertion. It should be
@@ -450,7 +451,11 @@ void TypingCommand::InsertText(
         current_selection.AsSelection();
     command->SetEndingSelection(
         SelectionForUndoStep::From(current_selection_as_dom));
-    frame->Selection().SetSelection(current_selection_as_dom);
+    frame->Selection().SetSelection(
+        current_selection_as_dom,
+        SetSelectionOptions::Builder()
+            .SetIsDirectional(frame->Selection().IsDirectional())
+            .Build());
   }
 }
 
@@ -757,7 +762,6 @@ bool TypingCommand::MakeEditableRootEmpty(EditingState* editing_state) {
   const SelectionInDOMTree& selection =
       SelectionInDOMTree::Builder()
           .Collapse(Position::FirstPositionInNode(*root))
-          .SetIsDirectional(EndingSelection().IsDirectional())
           .Build();
   SetEndingSelection(SelectionForUndoStep::From(selection));
 
@@ -882,7 +886,6 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
         SelectionInDOMTree::Builder()
             .Collapse(Position::BeforeNode(*table))
             .Extend(EndingSelection().Start())
-            .SetIsDirectional(EndingSelection().IsDirectional())
             .Build();
     SetEndingSelection(SelectionForUndoStep::From(selection));
     TypingAddedToOpenCommand(kDeleteKey);
@@ -1021,7 +1024,6 @@ void TypingCommand::ForwardDeleteKeyPressed(TextGranularity granularity,
             .SetBaseAndExtentDeprecated(
                 EndingSelection().End(),
                 Position::AfterNode(*downstream_end.ComputeContainerNode()))
-            .SetIsDirectional(EndingSelection().IsDirectional())
             .Build();
     SetEndingSelection(SelectionForUndoStep::From(selection));
     TypingAddedToOpenCommand(kForwardDeleteKey);
