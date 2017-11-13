@@ -10,6 +10,12 @@
 #include "content/renderer/dom_storage/local_storage_cached_area.h"
 #include "third_party/WebKit/public/platform/WebStorageArea.h"
 
+namespace blink {
+namespace scheduler {
+class RendererScheduler;
+}
+}  // namespace blink
+
 namespace content {
 
 // There could be n instances of this class for the same origin in a renderer
@@ -39,6 +45,7 @@ class LocalStorageArea : public blink::WebStorageArea {
   // A globally unique identifier for this storage area. It's used to pass the
   // source storage area, if any, in mutation events.
   std::string id_;
+  blink::scheduler::RendererScheduler* renderer_scheduler_;  // NOT OWNED
 
   DISALLOW_COPY_AND_ASSIGN(LocalStorageArea);
 };

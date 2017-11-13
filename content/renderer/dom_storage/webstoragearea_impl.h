@@ -14,6 +14,12 @@
 
 class GURL;
 
+namespace blink {
+namespace scheduler {
+class RendererScheduler;
+}
+}  // namespace blink
+
 namespace content {
 
 class DOMStorageCachedArea;
@@ -40,6 +46,7 @@ class WebStorageAreaImpl : public blink::WebStorageArea {
  private:
   int connection_id_;
   scoped_refptr<DOMStorageCachedArea> cached_area_;
+  blink::scheduler::RendererScheduler* renderer_scheduler_;  // NOT OWNED
 };
 
 }  // namespace content

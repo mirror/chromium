@@ -6,6 +6,7 @@
 
 #include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "content/renderer/render_thread_impl.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 
 using blink::WebString;
@@ -16,7 +17,9 @@ namespace content {
 LocalStorageArea::LocalStorageArea(
     scoped_refptr<LocalStorageCachedArea> cached_area)
     : cached_area_(std::move(cached_area)),
-      id_(base::Uint64ToString(base::RandUint64())) {
+      id_(base::Uint64ToString(base::RandUint64())),
+      renderer_scheduler_(
+          content::RenderThreadImpl::current()->GetRendererScheduler()) {
   cached_area_->AreaCreated(this);
 }
 
@@ -40,19 +43,25 @@ void LocalStorageArea::SetItem(const WebString& key,
                                const WebString& value,
                                const WebURL& page_url,
                                WebStorageArea::Result& result) {
-  if (!cached_area_->SetItem(key.Utf16(), value.Utf16(), page_url, id_))
+  if (!cached_area_->SetItem(
+          key.Utf16(), value.Utf16(), page_url, id_,
+          renderer_scheduler_->CreateWebScopedVirtualTimePauser())) {
     result = kResultBlockedByQuota;
-  else
+  } else {
     result = kResultOK;
+  }
 }
 
 void LocalStorageArea::RemoveItem(const WebString& key,
                                   const WebURL& page_url) {
-  cached_area_->RemoveItem(key.Utf16(), page_url, id_);
+  cached_area_->RemoveItem(
+      key.Utf16(), page_url, id_,
+      renderer_scheduler_->CreateWebScopedVirtualTimePauser());
 }
 
 void LocalStorageArea::Clear(const WebURL& page_url) {
-  cached_area_->Clear(page_url, id_);
+  cached_area_->Clear(page_url, id_,
+                      renderer_scheduler_->CreateWebScopedVirtualTimePauser());
 }
 
 }  // namespace content

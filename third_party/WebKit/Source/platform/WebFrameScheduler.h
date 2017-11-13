@@ -5,9 +5,10 @@
 #ifndef WebFrameScheduler_h
 #define WebFrameScheduler_h
 
-#include "platform/ScopedVirtualTimePauser.h"
 #include "platform/wtf/RefPtr.h"
 #include "public/platform/TaskType.h"
+
+#include "public/platform/WebScopedVirtualTimePauser.h"
 
 #include <memory>
 
@@ -122,12 +123,13 @@ class WebFrameScheduler {
   // Returns the parent WebViewScheduler.
   virtual WebViewScheduler* GetWebViewScheduler() = 0;
 
-  // Returns a ScopedVirtualTimePauser which can be used to vote for pausing
-  // virtual time. Virtual time will be paused if any ScopedVirtualTimePauser
-  // votes to pause it, and only unpaused only if all ScopedVirtualTimePausers
-  // are either destroyed or vote to unpause.  Note the ScopedVirtualTimePauser
-  // returned by this method is initially unpaused.
-  virtual ScopedVirtualTimePauser CreateScopedVirtualTimePauser() = 0;
+  // Returns a WebScopedVirtualTimePauser which can be used to vote for pausing
+  // virtual time. Virtual time will be paused if any WebScopedVirtualTimePauser
+  // votes to pause it, and only unpaused only if all
+  // WebScopedVirtualTimePausers are either destroyed or vote to unpause.  Note
+  // the WebScopedVirtualTimePauser returned by this method is initially
+  // unpaused.
+  virtual WebScopedVirtualTimePauser CreateWebScopedVirtualTimePauser() = 0;
 
   // Tells the scheduler that a provisional load has started, the scheduler may
   // reset the task cost estimators and the UserModel. Must be called from the

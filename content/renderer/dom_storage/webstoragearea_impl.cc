@@ -36,9 +36,10 @@ WebStorageAreaImpl* WebStorageAreaImpl::FromConnectionId(int id) {
 
 WebStorageAreaImpl::WebStorageAreaImpl(int64_t namespace_id, const GURL& origin)
     : connection_id_(g_all_areas_map.Pointer()->Add(this)),
-      cached_area_(dispatcher()->OpenCachedArea(connection_id_,
-                                                namespace_id,
-                                                origin)) {}
+      cached_area_(
+          dispatcher()->OpenCachedArea(connection_id_, namespace_id, origin)),
+      renderer_scheduler_(
+          content::RenderThreadImpl::current()->GetRendererScheduler()) {}
 
 WebStorageAreaImpl::~WebStorageAreaImpl() {
   g_all_areas_map.Pointer()->Remove(connection_id_);
@@ -63,20 +64,25 @@ void WebStorageAreaImpl::SetItem(const WebString& key,
                                  const WebString& value,
                                  const WebURL& page_url,
                                  WebStorageArea::Result& result) {
-  if (!cached_area_->SetItem(connection_id_, key.Utf16(), value.Utf16(),
-                             page_url))
+  if (!cached_area_->SetItem(
+          connection_id_, key.Utf16(), value.Utf16(), page_url,
+          renderer_scheduler_->CreateWebScopedVirtualTimePauser())) {
     result = kResultBlockedByQuota;
-  else
+  } else {
     result = kResultOK;
+  }
 }
 
 void WebStorageAreaImpl::RemoveItem(const WebString& key,
                                     const WebURL& page_url) {
-  cached_area_->RemoveItem(connection_id_, key.Utf16(), page_url);
+  cached_area_->RemoveItem(
+      connection_id_, key.Utf16(), page_url,
+      renderer_scheduler_->CreateWebScopedVirtualTimePauser());
 }
 
 void WebStorageAreaImpl::Clear(const WebURL& page_url) {
-  cached_area_->Clear(connection_id_, page_url);
+  cached_area_->Clear(connection_id_, page_url,
+                      renderer_scheduler_->CreateWebScopedVirtualTimePauser());
 }
 
 }  // namespace content

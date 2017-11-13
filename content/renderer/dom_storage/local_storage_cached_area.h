@@ -14,6 +14,7 @@
 #include "content/common/dom_storage/dom_storage_map.h"
 #include "content/common/leveldb_wrapper.mojom.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
+#include "third_party/WebKit/public/platform/WebScopedVirtualTimePauser.h"
 #include "url/gurl.h"
 #include "url/origin.h"
 
@@ -49,11 +50,15 @@ class CONTENT_EXPORT LocalStorageCachedArea
   bool SetItem(const base::string16& key,
                const base::string16& value,
                const GURL& page_url,
-               const std::string& storage_area_id);
+               const std::string& storage_area_id,
+               blink::WebScopedVirtualTimePauser virtual_time_pauser);
   void RemoveItem(const base::string16& key,
                   const GURL& page_url,
-                  const std::string& storage_area_id);
-  void Clear(const GURL& page_url, const std::string& storage_area_id);
+                  const std::string& storage_area_id,
+                  blink::WebScopedVirtualTimePauser virtual_time_pauser);
+  void Clear(const GURL& page_url,
+             const std::string& storage_area_id,
+             blink::WebScopedVirtualTimePauser virtual_time_pauser);
 
   // Allow this object to keep track of the LocalStorageAreas corresponding to
   // it, which is needed for mutation event notifications.
@@ -99,9 +104,15 @@ class CONTENT_EXPORT LocalStorageCachedArea
   // fetched already.
   void EnsureLoaded();
 
-  void OnSetItemComplete(const base::string16& key, bool success);
-  void OnRemoveItemComplete(const base::string16& key, bool success);
-  void OnClearComplete(bool success);
+  void OnSetItemComplete(const base::string16& key,
+                         blink::WebScopedVirtualTimePauser virtual_time_pauser,
+                         bool success);
+  void OnRemoveItemComplete(
+      const base::string16& key,
+      blink::WebScopedVirtualTimePauser virtual_time_pauser,
+      bool success);
+  void OnClearComplete(blink::WebScopedVirtualTimePauser virtual_time_pauser,
+                       bool success);
   void OnGetAllComplete(bool success);
 
   // Resets the object back to its newly constructed state.
