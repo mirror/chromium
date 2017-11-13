@@ -1,0 +1,361 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8624ffe7_1c8e44f8",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "per earlier discussion, how hard is it to add TimeDiff to android so it can be used here? if it\u0027s not feasible to add it, why not just drop seconds_from_now? 2**63 ns is 292 years.\n\nalso nit: do we usually wrap .mojom at 80 columns?",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40055afb_2eed37bd",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "ArcTimerResult is returned by Start rather than by this method, right? can this fail or is it guaranteed to succeed?",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b0cac87_ba6f869c",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "delete this",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0ee8b5_2efd3935",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "delete this",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d0dd483_7d1640d7",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "delete this?",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31eeb8de_55a5943a",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "don\u0027t think you use PMC::Observer",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8fd1b21_34ae3aee",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "can you delete this method? was it just for debugging?",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3280270b_4f96250d",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "do you need this check? Start has a DCHECK that assumes that timer_ is non-null.",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92958fdf_709a969b",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "since you only support two clock types, i think it\u0027s very likely that it\u0027s faster to just use an or expression to check that the type is one of these two.",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600a4ff2_cf2fa836",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "CreateArcTimers can only be called once? is this something that you plan to change later?",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb3126ef_6375acfb",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "const auto\u0026",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f018803_5e893a8b",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "should you also clear arc_timers_ in all of these error cases?",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82620d4d_951f6313",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "should you return an error for now if a not-yet-supported clock type is passed?",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3df20d_3e794a23",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "do we usually put classes like this one into the same file, or should this be in arc_timer.h/.cc?",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1cf557_a2cb0255",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "this should be in the .cc file since it\u0027s a non-trivial d\u0027tor: https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Stop-inlining-constructors-and-destructors",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d828e7f_a3eb378e",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "override",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72952899_ea53fcc8",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "please add comments for all methods documenting what they do and when they\u0027re called.",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238beb1a_bf047bfa",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "nit: OnExpiration?",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fffc408d_b79ec3cf",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e28d79a_374cf243",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "can this class just be rolled into ArcTimerBridge? it\u0027s not obvious to me what splitting the implementation like this gains us.",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b50bf6d_a751c530",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T00:06:43Z",
+      "side": 1,
+      "message": "DISALOW_COPY_AND_ASSIGN",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
