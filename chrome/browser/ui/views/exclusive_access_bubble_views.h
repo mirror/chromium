@@ -59,9 +59,8 @@ class ExclusiveAccessBubbleViews : public ExclusiveAccessBubble,
   views::View* GetView();
 
  private:
-  // Starts or stops polling the mouse location based on |popup_| and
-  // |bubble_type_|.
-  void UpdateMouseWatcher();
+  // Starts or stops waiting for the hide timeout.
+  void UpdateTimeoutWatcher();
 
   // Updates |popup|'s bounds given |animation_| and |animated_attribute_|.
   void UpdateBounds();

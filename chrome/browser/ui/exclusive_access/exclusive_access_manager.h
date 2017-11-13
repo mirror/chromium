@@ -50,7 +50,6 @@ class ExclusiveAccessManager {
   GURL GetExclusiveAccessBubbleURL() const;
 
   static bool IsExperimentalKeyboardLockUIEnabled();
-  static bool IsSimplifiedFullscreenUIEnabled();
 
   // Callbacks ////////////////////////////////////////////////////////////////
 

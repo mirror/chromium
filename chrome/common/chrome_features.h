@@ -230,8 +230,6 @@ extern const base::Feature kSafeSearchUrlReporting;
 extern const base::Feature kShowAllDialogsWithViewsToolkit;
 #endif
 
-extern const base::Feature kSimplifiedFullscreenUI;
-
 extern const base::Feature kSiteDetails;
 
 #if defined(OS_ANDROID)
