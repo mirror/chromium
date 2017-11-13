@@ -22,6 +22,30 @@
       "revId": "02c8764e3ce22917e6d639360c4a066ea2a44203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c7786e_7aa2bfa9",
+        "filename": "ui/views/win/pen_event_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-13T20:11:22Z",
+      "side": 1,
+      "message": "No only ctrl and shift can be extracted from dwKeyState (see https://msdn.microsoft.com/en-us/library/windows/desktop/hh454907(v\u003dvs.85).aspx)\n\nSince we don\u0027t know which ones web pages will want we have to extract them all. This is consistent with the other events.",
+      "parentUuid": "3cdf4c98_5c36df91",
+      "range": {
+        "startLine": 152,
+        "startChar": 13,
+        "endLine": 152,
+        "endChar": 41
+      },
+      "revId": "02c8764e3ce22917e6d639360c4a066ea2a44203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
