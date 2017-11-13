@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "071c92ab_61d8ea28",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encrypted-media/encrypted-media-default-feature-policy.https.sub.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-13T20:08:55Z",
+      "side": 1,
+      "message": "Per https://github.com/WICG/feature-policy/issues/92#issuecomment-343967768 this test should be made tentative, i.e. be named encrypted-media-default-feature-policy.https.sub.tentative.html.\n\nI could rename it but then there\u0027ll be a conflict. Would you like me to do it, or do it here? If here, then also add a \"Tentative until https://github.com/w3c/encrypted-media/pull/432 is merged\" comment somewhere in the test.",
+      "range": {
+        "startLine": 12,
+        "startChar": 7,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "6e2b72cf47115b53fa8fdef8ab702e4a336ce183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
