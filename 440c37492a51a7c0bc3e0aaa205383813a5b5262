@@ -16,6 +16,24 @@
       "revId": "440c37492a51a7c0bc3e0aaa205383813a5b5262",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb575889_6390a453",
+        "filename": "cc/resources/video_resource_updater.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-13T05:54:29Z",
+      "side": 1,
+      "message": "Let me try it separately: http://crrev.com/c/765611",
+      "parentUuid": "0eb98a3b_c9633399",
+      "revId": "440c37492a51a7c0bc3e0aaa205383813a5b5262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
