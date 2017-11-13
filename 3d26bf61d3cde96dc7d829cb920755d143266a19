@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "13df18bd_83faa37f",
+        "filename": "content/browser/background_fetch/storage/get_developer_ids_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-13T14:10:46Z",
+      "side": 1,
+      "message": "Ah yes, for counting the length of kActiveRegistrationUniqueIdKeyPrefix. Could probably do with sizeof as well to make it a compile-time operation.",
+      "parentUuid": "c30f7cfc_89c24efc",
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7d10359_535275ed",
         "filename": "content/browser/background_fetch/storage/get_developer_ids_task.h",
         "patchSetId": 3
