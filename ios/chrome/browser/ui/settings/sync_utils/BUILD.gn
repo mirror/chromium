@@ -42,6 +42,7 @@ source_set("eg_tests") {
   ]
   deps = [
     "//base",
+    "//base/test:test_support",
     "//components/bookmarks/browser",
     "//components/browser_sync",
     "//components/strings",
@@ -49,6 +50,7 @@ source_set("eg_tests") {
     "//ios/chrome/app/strings",
     "//ios/chrome/browser/bookmarks",
     "//ios/chrome/browser/bookmarks:bookmarks_utils",
+    "//ios/chrome/browser/bookmarks:features",
     "//ios/chrome/browser/signin",
     "//ios/chrome/browser/sync",
     "//ios/chrome/browser/ui/authentication:authentication_ui",

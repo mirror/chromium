@@ -138,6 +138,11 @@ void WaitForMatcher(id<GREYMatcher> matcher) {
 // Tests signing in with one account, switching sync account to a second and
 // choosing to import the browsing data during the switch.
 - (void)testSignInSwitchAccountsAndImportData {
+  // TODO(crbug.com/782551): This egtest could crash on iPad iOS 11 when the new
+  // bookmark feature flag is ON.  Fix this later.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
+
   // Set up the fake identities.
   ios::FakeChromeIdentityService* identity_service =
       ios::FakeChromeIdentityService::GetInstanceFromChromeProvider();
@@ -221,6 +226,11 @@ void WaitForMatcher(id<GREYMatcher> matcher) {
 
 // Tests that signing out from the Settings works correctly.
 - (void)testSignInDisconnectFromChrome {
+  // TODO(crbug.com/782551): This egtest could crash on iPad iOS 11 when the new
+  // bookmark feature flag is ON.  Fix this later.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
+
   ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
       identity);
@@ -403,6 +413,11 @@ void WaitForMatcher(id<GREYMatcher> matcher) {
 // that the authentication flow is correctly canceled and dismissed.
 // crbug.com/462202
 - (void)testSignInCancelAuthenticationFlow {
+  // TODO(crbug.com/782551): This egtest could crash on iPad iOS 11 when the new
+  // bookmark feature flag is ON.  Fix this later.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
+
   // Set up the fake identities.
   ios::FakeChromeIdentityService* identity_service =
       ios::FakeChromeIdentityService::GetInstanceFromChromeProvider();
@@ -465,9 +480,8 @@ void WaitForMatcher(id<GREYMatcher> matcher) {
 // Opens the sign in screen from the bookmarks and then cancel it by opening a
 // new tab. Ensures that the sign in screen is correctly dismissed.
 // Regression test for crbug.com/596029.
-// TODO(crbug.com/695749): Check if we need to rewrite this test for the new
-// Bookmarks UI.
 - (void)testSignInCancelFromBookmarks {
+  // TODO(crbug.com/782551): Rewrite this test for the new Bookmarks UI.
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
 
