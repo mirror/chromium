@@ -24126,6 +24126,8 @@ from previous Chrome versions.
 -->
 
   <int value="-2146613579" label="V8Future:disabled"/>
+  <int value="-2146613578" label="Av1Decode:disabled"/>
+  <int value="-2146613577" label="Av1Decode:enabled"/>
   <int value="-2145472146" label="OfflinePagesResourceBasedSnapshot:disabled"/>
   <int value="-2143961262" label="D3DVsync:disabled"/>
   <int value="-2143328006"

@@ -33,6 +33,8 @@ extern const base::Feature kViewsProfileChooser;
 extern const base::Feature kViewsTaskManager;
 #endif  // defined(OS_MACOSX)
 
+extern const base::Feature kAv1Decoder;
+
 #if !defined(OS_ANDROID)
 extern const base::Feature kAnimatedAppMenuIcon;
 extern const base::Feature kAppBanners;

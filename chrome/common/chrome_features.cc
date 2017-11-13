@@ -23,6 +23,10 @@ const base::Feature kAllowAutoplayUnmutedInWebappManifestScope{
     base::FEATURE_ENABLED_BY_DEFAULT};
 #endif  // defined(OS_ANDROID)
 
+// Enables playback of AV1 video files.
+const base::Feature kAv1Decoder{"Av1Decoder",
+                                 base::FEATURE_DISABLED_BY_DEFAULT};
+
 #if defined(OS_MACOSX)
 // Enables Javascript execution via AppleScript.
 const base::Feature kAppleScriptExecuteJavaScriptMenuItem{

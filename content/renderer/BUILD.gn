@@ -10,6 +10,7 @@ import("//content/common/features.gni")
 import("//media/media_options.gni")
 import("//ppapi/features/features.gni")
 import("//printing/features/features.gni")
+import("//third_party/libaom/options.gni")
 import("//third_party/webrtc/webrtc.gni")
 import("//tools/ipc_fuzzer/ipc_fuzzer.gni")
 
@@ -909,6 +910,8 @@ target(link_target_type, "renderer") {
     deps += [
       "//crypto",
       "//jingle:jingle_glue",
+      "//third_party/libaom",
+      "//third_party/libaom:av1_features",
       "//third_party/libvpx",
       "//third_party/opus",
       "//third_party/webrtc/api:libjingle_peerconnection",

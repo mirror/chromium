@@ -3,4 +3,5 @@ include_rules = [
   "+third_party/libyuv",
   '+third_party/openh264/src/codec/api/svc',
   '+third_party/opus',
+  '+chrome/common',
 ]
