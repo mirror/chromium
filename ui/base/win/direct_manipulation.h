@@ -2,20 +2,55 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_GFX_WIN_DIRECT_MANIPULATION_H_
-#define UI_GFX_WIN_DIRECT_MANIPULATION_H_
+#ifndef UI_BASE_WIN_DIRECT_MANIPULATION_H_
+#define UI_BASE_WIN_DIRECT_MANIPULATION_H_
+
+#include <windows.h>
 
 #include <directmanipulation.h>
-#include <wrl/client.h>
-
+#include <wrl.h>
 #include <memory>
 
 #include "base/macros.h"
+#include "ui/base/ui_base_export.h"
+#include "ui/base/win/window_event_target.h"
 #include "ui/gfx/geometry/rect.h"
-#include "ui/gfx/gfx_export.h"
 
-namespace gfx {
-namespace win {
+namespace ui {
+
+class DirectManipulationHelper;
+
+class DirectManipulationHandler
+    : public Microsoft::WRL::RuntimeClass<
+          Microsoft::WRL::RuntimeClassFlags<
+              Microsoft::WRL::RuntimeClassType::ClassicCom>,
+          Microsoft::WRL::Implements<
+              Microsoft::WRL::RuntimeClassFlags<
+                  Microsoft::WRL::RuntimeClassType::ClassicCom>,
+              Microsoft::WRL::FtmBase,
+              IDirectManipulationViewportEventHandler>> {
+ public:
+  HRESULT STDMETHODCALLTYPE
+  OnViewportStatusChanged(_In_ IDirectManipulationViewport* viewport,
+                          _In_ DIRECTMANIPULATION_STATUS current,
+                          _In_ DIRECTMANIPULATION_STATUS previous) override;
+
+  HRESULT STDMETHODCALLTYPE
+  OnViewportUpdated(_In_ IDirectManipulationViewport* viewport) override;
+
+  HRESULT STDMETHODCALLTYPE
+  OnContentUpdated(_In_ IDirectManipulationViewport* viewport,
+                   _In_ IDirectManipulationContent* content) override;
+  void SetDirectManipulationHelper(DirectManipulationHelper* helper);
+  void SetWindowEventTarget(WindowEventTarget* event_target);
+
+ private:
+  DirectManipulationHelper* helper_;
+  WindowEventTarget* event_target_;
+  float last_scale_;
+  float last_x_offset_;
+  float last_y_offset_;
+};
 
 // Windows 10 provides a new API called Direct Manipulation which generates
 // smooth scroll events via WM_MOUSEWHEEL messages with predictable deltas
@@ -39,7 +74,7 @@ namespace win {
 // Direct Manipulation consumer. We don't rely on Direct manipulation
 // to do the smooth scrolling in the background thread as documented on
 // msdn.
-class GFX_EXPORT DirectManipulationHelper {
+class UI_BASE_EXPORT DirectManipulationHelper {
  public:
   // Creates an instance of this class if Direct Manipulation is enabled on
   // the platform. If not returns NULL.
@@ -48,7 +83,7 @@ class GFX_EXPORT DirectManipulationHelper {
   // This function instantiates Direct Manipulation and creates a viewport for
   // the passed in |window|.
   // consumer. Most of the code is boiler plate and is based on the sample.
-  void Initialize(HWND window);
+  void Initialize(HWND window, WindowEventTarget* event_target);
 
   // Sets the bounds of the fake Direct manipulation viewport to match those
   // of the legacy window.
@@ -61,26 +96,31 @@ class GFX_EXPORT DirectManipulationHelper {
   // Deactivates Direct Manipulation processing on the passed in |window|.
   void Deactivate(HWND window);
 
-  // Passes the WM_MOUSEWHEEL messages to Direct Manipulation. This is for
-  // logistics purposes.
-  void HandleMouseWheel(HWND window, UINT message, WPARAM w_param,
-      LPARAM l_param);
+  void ResetViewport();
+
+  void OnPointerHitTest(WPARAM w_param);
+
+  void OnTimer(WPARAM w_param);
 
   ~DirectManipulationHelper();
 
  private:
   DirectManipulationHelper();
 
+  static DirectManipulationHelper instance_;
+
   Microsoft::WRL::ComPtr<IDirectManipulationManager2> manager_;
-  Microsoft::WRL::ComPtr<IDirectManipulationCompositor> compositor_;
   Microsoft::WRL::ComPtr<IDirectManipulationUpdateManager> update_manager_;
-  Microsoft::WRL::ComPtr<IDirectManipulationFrameInfoProvider> frame_info_;
   Microsoft::WRL::ComPtr<IDirectManipulationViewport2> view_port_outer_;
+  Microsoft::WRL::ComPtr<DirectManipulationHandler> event_handler_;
+  UINT_PTR render_timer_;
+  DWORD view_port_handler_cookie_;
+
+  RECT const default_rect_ = {0, 0, 100, 100};
 
   DISALLOW_COPY_AND_ASSIGN(DirectManipulationHelper);
 };
 
-}  // namespace win
-}  // namespace gfx
+}  // namespace ui
 
-#endif  // UI_GFX_WIN_DIRECT_MANIPULATION_H_
+#endif  // UI_BASE_WIN_DIRECT_MANIPULATION_H_

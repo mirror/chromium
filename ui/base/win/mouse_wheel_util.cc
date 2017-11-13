@@ -73,6 +73,9 @@ bool RerouteMouseWheel(HWND window, WPARAM w_param, LPARAM l_param) {
   POINT wheel_location = { GET_X_LPARAM(l_param), GET_Y_LPARAM(l_param) };
   HWND window_under_wheel = WindowFromPoint(wheel_location);
 
+  LOG(ERROR) << current_process << "," << wheel_location.x << ","
+             << wheel_location.y << "," << window_under_wheel;
+
   if (!CanRedirectMouseWheelFrom(window_under_wheel))
     return false;
 
@@ -81,8 +84,10 @@ bool RerouteMouseWheel(HWND window, WPARAM w_param, LPARAM l_param) {
   while (window != window_under_wheel) {
     // If window_under_wheel is not a valid Chrome window, then return true to
     // suppress further processing of the message.
-    if (!::IsWindow(window_under_wheel))
+    if (!::IsWindow(window_under_wheel)) {
+      LOG(ERROR) << "not window";
       return true;
+    }
     DWORD wheel_window_process = 0;
     GetWindowThreadProcessId(window_under_wheel, &wheel_window_process);
     if (current_process != wheel_window_process) {
@@ -96,8 +101,10 @@ bool RerouteMouseWheel(HWND window, WPARAM w_param, LPARAM l_param) {
         // have marked that window as supporting mouse wheel rerouting.
         // Otherwise, we cannot send random WM_MOUSEWHEEL messages to arbitrary
         // windows. So just drop the message.
-        if (!WindowSupportsRerouteMouseWheel(window_under_wheel))
+        if (!WindowSupportsRerouteMouseWheel(window_under_wheel)) {
+          LOG(ERROR) << "not support reroute" << window_under_wheel;
           return true;
+        }
       }
     }
 
@@ -111,6 +118,7 @@ bool RerouteMouseWheel(HWND window, WPARAM w_param, LPARAM l_param) {
 
     // window_under_wheel is a Chrome window.  If allowed, redirect.
     if (IsCompatibleWithMouseWheelRedirection(window_under_wheel)) {
+      LOG(ERROR) << "MouseWheelRedirect";
       base::AutoReset<bool> auto_reset_recursion_break(&recursion_break, true);
       SendMessage(window_under_wheel, WM_MOUSEWHEEL, w_param, l_param);
       return true;

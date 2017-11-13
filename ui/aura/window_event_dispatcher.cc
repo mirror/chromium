@@ -561,6 +561,7 @@ ui::EventDispatchDetails WindowEventDispatcher::PreDispatchEvent(
 
   DispatchDetails details;
   if (event->IsMouseEvent()) {
+    LOG(ERROR) << target_window << "," << event->type();
     details = PreDispatchMouseEvent(target_window, event->AsMouseEvent());
   } else if (event->IsScrollEvent()) {
     details = PreDispatchLocatedEvent(target_window, event->AsScrollEvent());

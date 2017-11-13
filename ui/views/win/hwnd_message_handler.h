@@ -34,13 +34,11 @@
 namespace gfx {
 class ImageSkia;
 class Insets;
-namespace win {
-class DirectManipulationHelper;
-}  // namespace win
 }  // namespace gfx
 
 namespace ui  {
 class AXSystemCaretWin;
+class DirectManipulationHelper;
 class InputMethod;
 class TextInputClient;
 class ViewProp;
@@ -269,6 +267,10 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
 
   void HandleParentChanged() override;
 
+  LRESULT HandleDManipMessage(float scale,
+                              float scroll_x,
+                              float scroll_y) override;
+
   // Returns the auto-hide edges of the appbar. See
   // ViewsDelegate::GetAppbarAutohideEdges() for details. If the edges change,
   // OnAppbarAutohideEdgesChanged() is called.
@@ -414,6 +416,9 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
     // MSG_WM_NCACTIVATE would convert WPARAM type to BOOL type. The high
     // word of WPARAM could be set when the window is minimized or restored.
     CR_MESSAGE_HANDLER_EX(WM_NCACTIVATE, OnNCActivate)
+
+    CR_MESSAGE_HANDLER_EX(WM_TIMER, OnTimer)
+    CR_MESSAGE_HANDLER_EX(DM_POINTERHITTEST, OnPointerHitTest)
 
     // This list is in _ALPHABETICAL_ order! OR I WILL HURT YOU.
     CR_MSG_WM_ACTIVATEAPP(OnActivateApp)
@@ -605,6 +610,9 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   // if they request its location.
   void DestroyAXSystemCaret();
 
+  LRESULT OnTimer(UINT message, WPARAM w_param, LPARAM l_param);
+  LRESULT OnPointerHitTest(UINT message, WPARAM w_param, LPARAM l_param);
+
   HWNDMessageHandlerDelegate* delegate_;
 
   std::unique_ptr<FullscreenHandler> fullscreen_handler_;
@@ -711,6 +719,9 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   // HandleMouseEventInternal function as to why this is needed.
   long last_mouse_hwheel_time_;
 
+  // Save l_param for Direct Manipulation API.
+  long last_mouse_event_l_param_;
+
   // On Windows Vista and beyond, if we are transitioning from custom frame
   // to Aero(glass) we delay setting the DWM related properties in full
   // screen mode as DWM is not supported in full screen windows. We perform
@@ -737,8 +748,7 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   // This class provides functionality to register the legacy window as a
   // Direct Manipulation consumer. This allows us to support smooth scroll
   // in Chrome on Windows 10.
-  std::unique_ptr<gfx::win::DirectManipulationHelper>
-      direct_manipulation_helper_;
+  std::unique_ptr<ui::DirectManipulationHelper> direct_manipulation_helper_;
 
   // The location where the user clicked on the caption. We cache this when we
   // receive the WM_NCLBUTTONDOWN message. We use this in the subsequent

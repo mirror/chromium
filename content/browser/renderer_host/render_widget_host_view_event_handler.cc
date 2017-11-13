@@ -293,6 +293,7 @@ void RenderWidgetHostViewEventHandler::OnKeyEvent(ui::KeyEvent* event) {
 }
 
 void RenderWidgetHostViewEventHandler::OnMouseEvent(ui::MouseEvent* event) {
+  LOG(ERROR) << event->type();
   TRACE_EVENT0("input", "RenderWidgetHostViewBase::OnMouseEvent");
 
   // CrOS will send a mouse exit event to update hover state when mouse is

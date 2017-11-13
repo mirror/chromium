@@ -840,6 +840,7 @@ void DesktopWindowTreeHostWin::HandleNativeBlur(HWND focused_window) {
 }
 
 bool DesktopWindowTreeHostWin::HandleMouseEvent(const ui::MouseEvent& event) {
+  LOG(ERROR) << "HandleMouseEvent " << event.type();
   SendEventToSink(const_cast<ui::MouseEvent*>(&event));
   return event.handled();
 }
