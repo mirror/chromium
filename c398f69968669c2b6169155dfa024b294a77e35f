@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0934363f_b4d3e379",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-13T06:46:20Z",
+      "side": 1,
+      "message": "I checked the implementation (https://cs.chromium.org/chromium/src/ui/views/animation/ink_drop_host_view.cc?type\u003dcs\u0026l\u003d279) and it looks like it returns an InkDropStub when the ink drop mode is off, but regardless that shouldn\u0027t happen because the line just before turns it on always. So I think it\u0027s OK we don\u0027t check if null? Should we DCHECK?\n\nThanks for checking, it didn\u0027t occur to me until you asked offline. :)",
+      "revId": "c398f69968669c2b6169155dfa024b294a77e35f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
