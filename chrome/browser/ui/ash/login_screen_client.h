@@ -63,6 +63,7 @@ class LoginScreenClient : public ash::mojom::LoginScreenClient {
 
   // Wrappers around the mojom::LockScreen interface.
   void ShowLockScreen(ash::mojom::LoginScreen::ShowLockScreenCallback on_shown);
+  void ShowLoginScreen();
   void ShowErrorMessage(int32_t login_attempts,
                         const std::string& error_text,
                         const std::string& help_link_text,

@@ -357,6 +357,7 @@ void ExistingUserController::Init(const user_manager::UserList& users) {
 
 void ExistingUserController::UpdateLoginDisplay(
     const user_manager::UserList& users) {
+  // TODO(crbug.com/784495): Share user-filtering between views and webui.
   bool show_users_on_signin;
   user_manager::UserList filtered_users;
 

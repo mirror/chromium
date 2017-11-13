@@ -4,6 +4,11 @@
 
 #include "chrome/browser/chromeos/login/ui/login_display_host_views.h"
 
+#include "base/threading/thread_task_runner_handle.h"
+#include "chrome/browser/chromeos/login/screens/user_selection_screen.h"
+#include "chrome/browser/ui/ash/login_screen_client.h"
+#include "chrome/browser/ui/ash/system_tray_client.h"
+
 namespace chromeos {
 
 LoginDisplayHostViews::LoginDisplayHostViews() {}
@@ -71,16 +76,39 @@ void LoginDisplayHostViews::CancelUserAdding() {
   NOTIMPLEMENTED();
 }
 
-void LoginDisplayHostViews::StartSignInScreen(
-    const LoginScreenContext& context) {
-  NOTIMPLEMENTED();
+void LoginDisplayHostViews::OnStartSignInScreen(
+    const LoginScreenContext& context,
+    const user_manager::UserList& users) {
+  // |StartSignInScreen| will be called during chrome initialization, which
+  // means that mojo APIs may not have been set up yet. Wait until there is a
+  // LockScreenClient instance.
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(
+                     [](const user_manager::UserList& users) {
+                       LoginScreenClient::Get()->ShowLoginScreen();
+
+                       #if false  // FIXME/DONOTSUBMIT
+                       std::vector<ash::mojom::LoginUserInfoPtr> users_list;
+                       for (user_manager::User* user : users) {
+                         auto mojo_user = ash::mojom::LoginUserInfo::New();
+
+                         // TODO(crbug.com/784495): Properly plumb constants to
+                         // this function.
+                         chromeos::UserSelectionScreen::FillUserMojoStruct(
+                             user, false /*is_owner*/,
+                             false /*is_signin_to_add*/,
+                             proximity_auth::mojom::AuthType::ONLINE_SIGN_IN,
+                             mojo_user.get());
+                       }
+                       // TODO(crbug.com/784495): Properly plumb show_guest.
+                       LoginScreenClient::Get()->LoadUsers(
+                           std::move(users_list), false /*show_guest*/);
+                        #endif
+                     },
+                     users));
 }
 
 void LoginDisplayHostViews::OnPreferencesChanged() {
-  NOTIMPLEMENTED();
-}
-
-void LoginDisplayHostViews::PrewarmAuthentication() {
   NOTIMPLEMENTED();
 }
 
