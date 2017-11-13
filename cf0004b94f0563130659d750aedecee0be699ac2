@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80eb997c_479d777c",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathVariadic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-13T03:23:23Z",
+      "side": 1,
+      "message": "Will this ever be used?",
+      "revId": "cf0004b94f0563130659d750aedecee0be699ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2092b0_df343023",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericArray.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-13T03:23:23Z",
+      "side": 1,
+      "message": "CSSNumericValueVector?",
+      "revId": "cf0004b94f0563130659d750aedecee0be699ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace26300_8730d126",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-13T03:23:23Z",
+      "side": 1,
+      "message": "Possibly dumb question: Why not put this is CSSNumericArray.h where it is used?",
+      "revId": "cf0004b94f0563130659d750aedecee0be699ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
