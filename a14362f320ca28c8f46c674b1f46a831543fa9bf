@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f807150_1ae08491",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_characteristic_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2171,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-13T20:52:20Z",
+      "side": 1,
+      "message": "I would like to see this test use observer.gatt_services_discovered_count()\n\nCall chain should happen now:\n BluetoothRemoteGattCharacteristicWin::OnGetIncludedDescriptorsCallback\n BluetoothRemoteGattServiceWin::GattCharacteristicDiscoveryComplete\n BluetoothRemoteGattServiceWin::NotifyGattDiscoveryCompleteForServiceIfNecessary\n // Add detection that all requests for characteristic discovery completed\n // and if so call BluetoothAdapter::NotifyGattServicesDiscovered",
+      "revId": "a14362f320ca28c8f46c674b1f46a831543fa9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
