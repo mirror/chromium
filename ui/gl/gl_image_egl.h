@@ -18,7 +18,10 @@ class GL_EXPORT GLImageEGL : public GLImage {
  public:
   explicit GLImageEGL(const gfx::Size& size);
 
-  bool Initialize(EGLenum target, EGLClientBuffer buffer, const EGLint* attrs);
+  bool Initialize(EGLContext context,
+                  EGLenum target,
+                  EGLClientBuffer buffer,
+                  const EGLint* attrs);
 
   // Overridden from GLImage:
   gfx::Size GetSize() override;
