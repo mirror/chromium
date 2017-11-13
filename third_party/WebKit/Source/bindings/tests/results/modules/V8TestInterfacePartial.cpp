@@ -546,19 +546,33 @@ void V8TestInterfacePartial::installOriginTrialPartialFeature(ScriptState* scrip
   installOriginTrialPartialFeature(scriptState, v8::Local<v8::Object>());
 }
 
-void V8TestInterfacePartial::preparePrototypeAndInterfaceObject(v8::Local<v8::Context> context, const DOMWrapperWorld& world, v8::Local<v8::Object> prototypeObject, v8::Local<v8::Function> interfaceObject, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
-  V8TestInterface::preparePrototypeAndInterfaceObject(context, world, prototypeObject, interfaceObject, interfaceTemplate);
+void V8TestInterfacePartial::InstallConditionalFeaturesOnObject(
+    v8::Local<v8::Context> context,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::Object> instanceObject,
+    v8::Local<v8::Object> prototypeObject,
+    v8::Local<v8::Function> interfaceObject,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+  DCHECK((!prototypeObject.IsEmpty() && !interfaceObject.IsEmpty()) ||
+         !instanceObject.IsEmpty());
+  V8TestInterface::InstallConditionalFeaturesOnObject(
+      context, world, instanceObject, prototypeObject, interfaceObject, interfaceTemplate);
 
   v8::Isolate* isolate = context->GetIsolate();
 
-  v8::Local<v8::Name> unscopablesSymbol(v8::Symbol::GetUnscopables(isolate));
-  v8::Local<v8::Object> unscopables;
-  if (V8CallBoolean(prototypeObject->HasOwnProperty(context, unscopablesSymbol)))
-    unscopables = prototypeObject->Get(context, unscopablesSymbol).ToLocalChecked().As<v8::Object>();
-  else
-    unscopables = v8::Object::New(isolate);
-  unscopables->CreateDataProperty(context, V8AtomicString(isolate, "unscopableVoidMethod"), v8::True(isolate)).FromJust();
-  prototypeObject->CreateDataProperty(context, unscopablesSymbol, unscopables).FromJust();
+  if (!prototypeObject.IsEmpty()) {
+    v8::Local<v8::Name> unscopablesSymbol(v8::Symbol::GetUnscopables(isolate));
+    v8::Local<v8::Object> unscopables;
+    if (V8CallBoolean(prototypeObject->HasOwnProperty(context, unscopablesSymbol))) {
+      unscopables = prototypeObject->Get(context, unscopablesSymbol).ToLocalChecked().As<v8::Object>();
+    } else {
+      unscopables = v8::Object::New(isolate);
+    }
+    unscopables->CreateDataProperty(
+        context, V8AtomicString(isolate, "unscopableVoidMethod"), v8::True(isolate))
+        .FromJust();
+    prototypeObject->CreateDataProperty(context, unscopablesSymbol, unscopables).FromJust();
+  }
 }
 
 void V8TestInterfacePartial::initialize() {
@@ -567,7 +581,7 @@ void V8TestInterfacePartial::initialize() {
       &V8TestInterfacePartial::installV8TestInterfaceTemplate,
       nullptr,
       &V8TestInterfacePartial::InstallRuntimeEnabledFeaturesOnTemplate,
-      V8TestInterfacePartial::preparePrototypeAndInterfaceObject);
+      V8TestInterfacePartial::InstallConditionalFeaturesOnObject);
   V8TestInterface::registerVoidMethodPartialOverloadMethodForPartialInterface(&TestInterfaceImplementationPartialV8Internal::voidMethodPartialOverloadMethod);
   V8TestInterface::registerStaticVoidMethodPartialOverloadMethodForPartialInterface(&TestInterfaceImplementationPartialV8Internal::staticVoidMethodPartialOverloadMethod);
   V8TestInterface::registerPromiseMethodPartialOverloadMethodForPartialInterface(&TestInterfaceImplementationPartialV8Internal::promiseMethodPartialOverloadMethod);
