@@ -80,6 +80,30 @@
       "revId": "57fcc2874a06f65b1d5ede99704b9638bb618ab7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9f42d4_7b9a5cbd",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-13T17:00:59Z",
+      "side": 1,
+      "message": "\u003e \u003e This is kind of ugly. :(  Basically, this is because RPHI::IsSuitableHost checks origin locks, and allowing reuse for matching locks, before checking the content client.  So the issue I described with nonexisting extensions in https://crbug.com/782349 won\u0027t occur with --site-per-process, as origin locks effectively override the process privilege level comparison.\n\u003e \n\u003e I think that\u0027s worth fixing on its own.  IsSuitableHost should probably be giving the content client a chance to return false, without the early return true for origin lock.  Can we change that part to:\n\u003e \n\u003e     if (lock_state !\u003d ChildProcessSecurityPolicyImpl::CheckOriginLockResult::\n\u003e                              HAS_EQUAL_LOCK)\n\u003e       return false;\n\u003e \n\u003e \u003e \n\u003e \u003e I still think having IsSuitableHost() checks in the Unmatched SW tracker makes sense to have in general, but perhaps we should also consider changing CCBCEP::SiteInstanceGotProcess to assign PRIV_EXTENSION for nonexistent extensions, which would allow process reuse in this case without --site-per-process as well.  Or is that undesirable in general?\n\u003e \n\u003e Good question, independent of the fix above.  I\u0027m debating between that and your other suggestion on the bug of having GetPrivilegeRequiredByUrl return PRIV_NORMAL for nonexistent extensions.  I don\u0027t think an attacker can control any content in nonexistent extension URLs, though it\u0027s a little weird to let them create an extension process for an otherwise invalid extension URL.\n\u003e \n\u003e That said, maybe treating it consistently as PRIV_EXTENSION would help us with CanCommitURL checks down the line, such that we could enforce that no chrome-extension:// URLs can ever commit in a PRIV_NORMAL process?  That might be the nicest outcome if we\u0027ll be able to do it.\n\nSome drive-by thoughts:\n\n1. There are various ways that CanCommitURL can make sure that extension-level data stays in sync / agrees with site/process allocations. \n\n1.1. In the reverted r512959 we started consulting extensions::ProcessMap::Get(browser_context) to verify that process_map-\u003eContains(enabled_extension-\u003eid(), process_id) IFF the URL being committed belongs to an *enabled* extension.\n\n1.2. I guess we can also compare GetProcessPrivilege vs GetPrivilegeRequiredByUrl.  I see that GetPrivilegeRequiredByUrl is restricted to *enabled* extensions.\n\n2. Ultimately ChromeContentBrowserClientExtensionsPart::CanCommitURL helps catch issues in extensions-related process allocation decisions, but to reject invalid DidCommitProvisionalLoad IPC in general, we need mojofication of NavigationRequest as proposed by Camille.  I guess I am trying to say that tightening of CanCommitURL is like a DCHECK - it is not an end in itself / it might be okay to sacrifice it for other goals.\n\n\nIf we care about CanCommitURL tightening, then I think we should not commit a URL of an uninstalled/disabled extension (and/or purge renderers hosting such a URL when the extension gets uninstalled/disabled).  To commit such an URL (and keep tightened CanCommitURL checks), we would have to make sure that the process is treated as an extension process by extensions::ProcessMap::Get and GetProcessPrivilege - such treatment seems undesirable.",
+      "parentUuid": "6189fc35_0c13af2c",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 13
+      },
+      "revId": "57fcc2874a06f65b1d5ede99704b9638bb618ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
