@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a714540b_9915173e",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2017-11-13T21:27:21Z",
+      "side": 1,
+      "message": "there are no builder dimension values for non-sandbox builders in https://chrome-internal.googlesource.com/infradata/config/+/master/configs/chromium-swarm/bots.cfg\nplease either add them first, or set auto_builder_dimension only to sandbox builders. I think i prefer the latter to test this out",
+      "revId": "4ba94bae52c4064f74efe32c426e456402bb6304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
