@@ -106,6 +106,24 @@
       "revId": "5ed1aece396a2398fda2bfb4546f7c788083b33b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7524fd07_c9a2fc57",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-13T02:51:40Z",
+      "side": 1,
+      "message": "My hypothesis is that user\u0027s local profile went wrong by some reason and stayed in the device, though not relevant to the sync. The possible reason may be either:\n- Before the extension becomes component extension, user could disable it manually (I am not sure if this is this true). When it were turned into external component extension, sync was stopped but the local data was still live.\n- Local profile data simply got broken by another bug somewhere in the past, like you suggested.",
+      "parentUuid": "9ce6494d_61563115",
+      "revId": "5ed1aece396a2398fda2bfb4546f7c788083b33b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
