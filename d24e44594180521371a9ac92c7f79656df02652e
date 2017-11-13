@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "059ef84b_e6ce1474",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1000455
+      },
+      "writtenOn": "2017-11-13T19:26:38Z",
+      "side": 1,
+      "message": "Why is -u__cxa_demangle necessary? It is an undefined weak symbol in asan-rt, that should be enough to force linking.",
+      "revId": "d24e44594180521371a9ac92c7f79656df02652e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
