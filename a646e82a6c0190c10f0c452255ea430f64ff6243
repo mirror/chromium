@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afb0b216_bbeaf395",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-13T20:00:38Z",
+      "side": 1,
+      "message": "It\u0027s worth a comment as to why this should run in the background.",
+      "range": {
+        "startLine": 1456,
+        "startChar": 4,
+        "endLine": 1462,
+        "endChar": 48
+      },
+      "revId": "a646e82a6c0190c10f0c452255ea430f64ff6243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
