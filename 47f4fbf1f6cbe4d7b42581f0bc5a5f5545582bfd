@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1324be02_4b2dd3b1",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T22:29:42Z",
+      "side": 1,
+      "message": "Looking back on this code shouldn\u0027t this check be in RequestPermission and check for request_id_ !\u003d PermissionManager::kNoPendingOperation?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 3
+      },
+      "revId": "47f4fbf1f6cbe4d7b42581f0bc5a5f5545582bfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
