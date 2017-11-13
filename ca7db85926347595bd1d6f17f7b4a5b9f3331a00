@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d6825cf_8764fb65",
+        "filename": "ui/views/controls/message_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T23:33:43Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "revId": "ca7db85926347595bd1d6f17f7b4a5b9f3331a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
