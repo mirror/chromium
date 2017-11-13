@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5768db0_48446ad5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T22:25:30Z",
+      "side": 1,
+      "message": "can you also add OWNERS file with your and my chromium accounts in it?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 7
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d2c43d_de67ab3f",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T22:25:30Z",
+      "side": 1,
+      "message": "I don\u0027t really know why, but lots of python scripts in Chromium are using:\n\n  from __future__ import print_function\n  # and then print calls like the following one:\n  print(\u0027Building %s\u0027 % str(targets))\n\n\nI think it\u0027s worth to switch to that print() version",
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b721255b_7115d1c0",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T22:25:30Z",
+      "side": 1,
+      "message": "I wonder if we can make paths shorter. This can be done in the follow-up CLs, but let\u0027s at least remove SRC_ROOT_PATH prefix from the full paths.",
+      "range": {
+        "startLine": 135,
+        "startChar": 32,
+        "endLine": 135,
+        "endChar": 36
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05014100_15e2a9f3",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T22:25:30Z",
+      "side": 1,
+      "message": "What\u0027s the benefit or building targets via the script? IMHO it would be better to just run the specified targets (those can be located in different directories or even outside of Chromium checkout), but maybe I\u0027m missing something important?",
+      "range": {
+        "startLine": 179,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 17
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b7c349_22e1aac0",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T22:25:30Z",
+      "side": 1,
+      "message": "are these checks really needed? I think we\u0027ve blocked incorrect usage via asserts in GN files. Is there any invalid combination of flags that we didn\u0027t block?",
+      "range": {
+        "startLine": 294,
+        "startChar": 4,
+        "endLine": 294,
+        "endChar": 22
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cbefedc_ee4bc10f",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T22:25:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure that\u0027s the best way to handle multiple targets and specific options. For example, I tried to run two fuzz targets that need two different cmdline arguments:\n\n  $ tools/code_coverage/coverage.py zlib_uncompress_fuzzer h264_bitstream_parser_fuzzer -b out/coverage -o yuke2 -c\u003d\"-runs\u003d0 ~/fuzzing/zlib_uncompress_fuzzer\" -c\u003d\"-runs\u003d0 ~/fuzzing/h264_bitstream_parser_fuzzer\"\n\nThat ended up with the following:\n\n  Running zlib_uncompress_fuzzer with command: out/coverage/zlib_uncompress_fuzzer --test-launcher-jobs\u003d1 -runs\u003d0 ~/fuzzing/h264_bitstream_parser_fuzzer\n  Running h264_bitstream_parser_fuzzer with command: out/coverage/h264_bitstream_parser_fuzzer --test-launcher-jobs\u003d1 -runs\u003d0 ~/fuzzing/h264_bitstream_parser_fuzzer\n\nWhich is wrong, as libFuzzer ignores arguments with \"--\" and everything after that. Also note that it used the same argument for two different targets.\n\n\nI believe that a better solution would be to specify a full commands like:\n\n  $ tools/code_coverage/coverage.py -c \"zlib_uncompress_fuzzer -runs\u003d0 ~/fuzzing/zlib_uncompress_fuzzer\" \"h264_bitstream_parser_fuzzer -runs\u003d0 ~/fuzzing/h264_bitstream_parser_fuzzer\"\n\nFirst element of each command can be extracted and used as a value of |target| argument.\n\nWhat do you think about that?",
+      "range": {
+        "startLine": 366,
+        "startChar": 27,
+        "endLine": 366,
+        "endChar": 34
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
