@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6eee9d6_66407af1",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-13T06:13:07Z",
+      "side": 1,
+      "message": "nit: Content setting is quite jargony, how about\nEnables a site-wide permission in the UI which controls access to the asynchronous clipboard web API.",
+      "revId": "0cdf65be8a58ec904c2aaa8bc1127a86b7541d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9906907_cf60a1d7",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-13T06:13:07Z",
+      "side": 1,
+      "message": "nit: Enables a permission which enables or disables...\n\n(Though this could probably match the flag description?)",
+      "revId": "0cdf65be8a58ec904c2aaa8bc1127a86b7541d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
