@@ -143,6 +143,9 @@ class VizProcessTransportFactory : public ui::ContextFactory,
   std::unique_ptr<cc::SingleThreadTaskGraphRunner> task_graph_runner_;
   const viz::RendererSettings renderer_settings_;
 
+  // Incremented when viz process is restarted.
+  uint16_t viz_process_restart_id_ = 0;
+
   base::WeakPtrFactory<VizProcessTransportFactory> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(VizProcessTransportFactory);

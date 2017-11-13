@@ -104,18 +104,22 @@ void VizProcessTransportFactory::ConnectHostFrameSinkManager() {
       std::move(frame_sink_manager_client_request), resize_task_runner_,
       std::move(frame_sink_manager));
 
+  viz::mojom::FrameSinkManagerParamsPtr params =
+      viz::mojom::FrameSinkManagerParams::New();
+  params->process_restart_id = viz_process_restart_id_++;
+  params->frame_sink_manager = std::move(frame_sink_manager_request);
+  params->frame_sink_manager_client = std::move(frame_sink_manager_client);
+
   // Hop to the IO thread, then send the other side of interface to viz process.
-  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                          base::BindOnce(
-                              [](viz::mojom::FrameSinkManagerRequest request,
-                                 viz::mojom::FrameSinkManagerClientPtr client) {
-                                // TODO(kylechar): Check GpuProcessHost isn't
-                                // null but don't enter a restart loop.
-                                GpuProcessHost::Get()->ConnectFrameSinkManager(
-                                    std::move(request), std::move(client));
-                              },
-                              std::move(frame_sink_manager_request),
-                              std::move(frame_sink_manager_client)));
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(
+          [](viz::mojom::FrameSinkManagerParamsPtr params) {
+            auto* gpu_process_host = GpuProcessHost::Get();
+            if (gpu_process_host)
+              gpu_process_host->ConnectFrameSinkManager(std::move(params));
+          },
+          std::move(params)));
 }
 
 void VizProcessTransportFactory::CreateLayerTreeFrameSink(
