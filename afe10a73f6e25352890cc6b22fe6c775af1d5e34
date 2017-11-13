@@ -94,6 +94,30 @@
       "revId": "afe10a73f6e25352890cc6b22fe6c775af1d5e34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7607732b_8383169b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-13T08:15:55Z",
+      "side": 1,
+      "message": "SGTM. Thank you for taking a look at this.",
+      "parentUuid": "b09382b2_831d6bfa",
+      "range": {
+        "startLine": 559,
+        "startChar": 0,
+        "endLine": 562,
+        "endChar": 17
+      },
+      "revId": "afe10a73f6e25352890cc6b22fe6c775af1d5e34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
