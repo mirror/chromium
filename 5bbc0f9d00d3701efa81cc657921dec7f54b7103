@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f6ac9942_9f0feec1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-13T14:14:23Z",
+      "side": 1,
+      "message": "Let\u0027s avoid exposing extra arguments (tick clock) when we don\u0027t need it.\n\nCreateTaskQueueManagerForTest is needed due to having to specify task runner (in addition to message loop), so let\u0027s keep it as is for now.",
+      "parentUuid": "332a3176_c53fac1f",
+      "range": {
+        "startLine": 91,
+        "startChar": 52,
+        "endLine": 91,
+        "endChar": 73
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20076846_ce528a49",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7984a46e_1b1dfc51",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-13T14:14:23Z",
+      "side": 1,
+      "message": "Probably yes, but let\u0027s keep it out of the scope of this patch.",
+      "parentUuid": "20076846_ce528a49",
+      "range": {
+        "startLine": 300,
+        "startChar": 32,
+        "endLine": 300,
+        "endChar": 55
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dfc86860_61c3b1fb",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-13T14:14:23Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the plan. It\u0027s out of scope for the current patch, however.",
+      "parentUuid": "75f5db39_3860c0a4",
+      "range": {
+        "startLine": 500,
+        "startChar": 4,
+        "endLine": 500,
+        "endChar": 15
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef8fa243_514f3123",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-13T11:00:16Z",
       "side": 1,
       "message": "I think it\u0027s probably wise to keep DoWork at least initially since we can choose to run N tasks.  I wouldn\u0027t be surprised if there was some perf impact to taking individual tasks although I assume that can be optimized.",
+      "range": {
+        "startLine": 738,
+        "startChar": 0,
+        "endLine": 738,
+        "endChar": 79
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51af3ef1_758fdc9d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-13T14:14:23Z",
+      "side": 1,
+      "message": "I\u0027m not sure I follow — that\u0027s what this patch does, right? Existing logic for task grouping in TaskQueueManager::DoWork hasn\u0027t been changed.",
+      "parentUuid": "ef8fa243_514f3123",
       "range": {
         "startLine": 738,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0f3f34ea_cb46c071",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-13T14:14:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebdc8351_c9b48d33",
+      "range": {
+        "startLine": 67,
+        "startChar": 40,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "722c37ac_141e683e",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5391d471_95770efe",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-13T14:14:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "722c37ac_141e683e",
+      "range": {
+        "startLine": 37,
+        "startChar": 43,
+        "endLine": 37,
+        "endChar": 48
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ea74c361_71624848",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/scheduler_helper_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-13T14:14:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4582f8b7_ebf7f8b2",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 26
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d8b3128_45082a28",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
         "patchSetId": 7
@@ -183,6 +351,30 @@
       "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db767b09_7a59164b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-13T14:14:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d8b3128_45082a28",
+      "range": {
+        "startLine": 212,
+        "startChar": 2,
+        "endLine": 212,
+        "endChar": 30
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
