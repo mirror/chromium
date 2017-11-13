@@ -34,6 +34,24 @@
       "revId": "6a1209b3ffa8b9874086ae33acc2e981e30c12a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9b2ba4_285e9a28",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/IndexedDB/wasm-module-value.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-11-13T20:40:59Z",
+      "side": 1,
+      "message": "The library builds the bytes for you, so you\u0027d still have the raw bytes, in an array buffer, just that the way you build them is slightly more symbolic.",
+      "parentUuid": "493dd899_6d656d6f",
+      "revId": "6a1209b3ffa8b9874086ae33acc2e981e30c12a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
