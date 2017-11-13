@@ -88,6 +88,13 @@ AudioOutputDevice::AudioOutputDevice(
 
 void AudioOutputDevice::Initialize(const AudioParameters& params,
                                    RenderCallback* callback) {
+  task_runner()->PostTask(
+      FROM_HERE, base::BindOnce(&AudioOutputDevice::InitializeOnIOThread, this,
+                                params, callback));
+}
+
+void AudioOutputDevice::InitializeOnIOThread(const AudioParameters& params,
+                                             RenderCallback* callback) {
   DCHECK(!callback_) << "Calling Initialize() twice?";
   DCHECK(params.IsValid());
   audio_parameters_ = params;
@@ -114,7 +121,6 @@ void AudioOutputDevice::RequestDeviceAuthorization() {
 }
 
 void AudioOutputDevice::Start() {
-  DCHECK(callback_) << "Initialize hasn't been called";
   task_runner()->PostTask(FROM_HERE,
       base::Bind(&AudioOutputDevice::CreateStreamOnIOThread, this,
                  audio_parameters_));
@@ -198,6 +204,7 @@ void AudioOutputDevice::RequestDeviceAuthorizationOnIOThread() {
 
 void AudioOutputDevice::CreateStreamOnIOThread(const AudioParameters& params) {
   DCHECK(task_runner()->BelongsToCurrentThread());
+  DCHECK(callback_) << "Initialize hasn't been called";
   switch (state_) {
     case IPC_CLOSED:
       if (callback_)
