@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "962ed21f_eb3f5bff",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-13T15:37:01Z",
+      "side": 1,
+      "message": "This still doesn\u0027t look good--what this if block should do is to reset layer (unset the old one in Line 112, reset a new one in Line 127), but you seem to try to do something else by overridding this function. This makes this function hard to understand on its own.\n\nYou mentioned that you have \"double registering content\" in video path. Could you tell me where else do you register/unregister layer in video path? That might be the place that should be fixed, instead of SurfaceLayerBridge and HTMLCanvasElement.",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
