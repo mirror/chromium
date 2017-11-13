@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cd7ff5d_ad6a5274",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 3403,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-13T21:13:29Z",
+      "side": 1,
+      "message": "What do you show when you don\u0027t have an internal display?",
+      "range": {
+        "startLine": 3403,
+        "startChar": 0,
+        "endLine": 3403,
+        "endChar": 29
+      },
+      "revId": "6db27af0e3d5aede290f1ce51d2827a604b49903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
