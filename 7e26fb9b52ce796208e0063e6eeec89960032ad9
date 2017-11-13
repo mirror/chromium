@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "839bb7f9_c4d7ada4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/isolatedWorld/document-open.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T07:30:11Z",
+      "side": 1,
+      "message": "It\u0027s good that you\u0027re testing the thing in a non-isolated world.  I like it.  However, as you see that this test is placed in security/isolatedWorld/ directory, it\u0027s also important to test in an isolated world.\n\nPlease keep the test with testRunner.evaluateScriptInIsolatedWorld().\n\nSo, now we\u0027d like to have test cases for\n\na) non-isolated world (normal one like this version).\nb) isolated world (evaluateScriptInIsolatedWorld version).\n\n1) document/window\n2) contentDocument/contentWindow\n\ni.e. four test cases in total: a1, a2, b1 and b2.",
+      "revId": "7e26fb9b52ce796208e0063e6eeec89960032ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

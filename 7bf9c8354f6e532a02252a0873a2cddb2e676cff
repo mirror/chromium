@@ -34,6 +34,24 @@
       "revId": "7bf9c8354f6e532a02252a0873a2cddb2e676cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32a3a1e6_6deadc0c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/isolatedWorld/document-open.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T07:30:11Z",
+      "side": 1,
+      "message": "Oops, sorry for my poor wording.  I meant that we\u0027d better add another test case in addition to the current one.  It\u0027s still important to test document/window.  We need both cases of document/window and contentDocument/contentWindow.",
+      "parentUuid": "1955cd11_e142ebbb",
+      "revId": "7bf9c8354f6e532a02252a0873a2cddb2e676cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
