@@ -864,6 +864,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void DidCommitProvisionalLoad(
       std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
           validated_params) override;
+  void BeginNavigation(const CommonNavigationParams& common_params,
+                       const BeginNavigationParams& begin_params) override;
 
   // Registers Mojo interfaces that this frame host makes available.
   void RegisterMojoInterfaces();

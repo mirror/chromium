@@ -32,6 +32,10 @@ struct CommonNavigationParams;
 [Native]
 struct RequestNavigationParams;
 
+// See src/content/common/navigation_params.h
+[Native]
+struct BeginNavigationParams;
+
 // Implemented by the frame provider and currently must be associated with the
 // legacy IPC channel.
 interface FrameNavigationControl {
@@ -158,4 +162,14 @@ interface FrameHost {
   // Sent by the renderer when a navigation commits in the frame.
   DidCommitProvisionalLoad(
       DidCommitProvisionalLoadParams params);
+
+  BeginNavigation(
+      CommonNavigationParams common_params,
+      BeginNavigationParams begin_params);
+
 };
+
+interface NavigationClient {
+
+};
+

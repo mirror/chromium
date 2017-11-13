@@ -766,8 +766,15 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
         blink::WebMixedContentContextType::kBlockable,
         false,  // is_form_submission
         url::Origin::Create(kUrl0));
-    main_test_rfh()->OnMessageReceived(FrameHostMsg_BeginNavigation(
-        main_test_rfh()->GetRoutingID(), common_params, begin_params));
+
+    mojom::FrameHostPtr frame_host_ptr;
+    mojo::Binding<mojom::FrameHost> binding(main_test_rfh(),
+                                            mojo::MakeRequest(&frame_host_ptr));
+
+    frame_host_ptr->BeginNavigation(common_params, begin_params);
+
+    // main_test_rfh()->OnMessageReceived(FrameHostMsg_BeginNavigation(
+    // main_test_rfh()->GetRoutingID(), common_params, begin_params));
   }
   NavigationRequest* request2 = node->navigation_request();
   ASSERT_TRUE(request2);
