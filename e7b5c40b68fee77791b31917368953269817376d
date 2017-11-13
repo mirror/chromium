@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "fddc8e50_9070e4f5",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-13T21:21:06Z",
+      "side": 1,
+      "message": "As long as we are adding the provider ID to MediaRoute as a follow up soon, I am fine with this.",
+      "parentUuid": "9af053ad_5a110ed8",
+      "revId": "e7b5c40b68fee77791b31917368953269817376d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0af479d2_a273ff9a",
         "filename": "chrome/common/media_router/media_route.h",
         "patchSetId": 2
