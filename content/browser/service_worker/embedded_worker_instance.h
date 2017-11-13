@@ -31,11 +31,6 @@
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "url/gurl.h"
 
-// Windows headers will redefine SendMessage.
-#ifdef SendMessage
-#undef SendMessage
-#endif
-
 namespace IPC {
 class Message;
 }
@@ -160,7 +155,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   // Sends |message| to the embedded worker running in the child process.
   // It is invalid to call this while the worker is not in STARTING or RUNNING
   // status.
-  ServiceWorkerStatusCode SendMessage(const IPC::Message& message);
+  ServiceWorkerStatusCode SendIpcMessage(const IPC::Message& message);
 
   // Resumes the worker if it paused after download.
   void ResumeAfterDownload();

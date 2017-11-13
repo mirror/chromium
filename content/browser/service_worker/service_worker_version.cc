@@ -364,7 +364,7 @@ void ServiceWorkerVersion::SetStatus(Status status) {
         // Resolve skip waiting promises.
         ClearTick(&skip_waiting_time_);
         for (int request_id : pending_skip_waiting_requests_) {
-          embedded_worker_->SendMessage(
+          embedded_worker_->SendIpcMessage(
               ServiceWorkerMsg_DidSkipWaiting(request_id));
         }
         pending_skip_waiting_requests_.clear();
@@ -1048,7 +1048,7 @@ void ServiceWorkerVersion::OnGetClientFinished(
     return;
   }
 
-  embedded_worker_->SendMessage(
+  embedded_worker_->SendIpcMessage(
       ServiceWorkerMsg_DidGetClient(request_id, client_info));
 }
 
@@ -1079,7 +1079,7 @@ void ServiceWorkerVersion::OnGetClientsFinished(
     return;
   }
 
-  embedded_worker_->SendMessage(
+  embedded_worker_->SendIpcMessage(
       ServiceWorkerMsg_DidGetClients(request_id, *clients));
 }
 
@@ -1157,7 +1157,7 @@ void ServiceWorkerVersion::OnOpenWindow(int request_id,
   // filtered out by Blink.
   if (!ChildProcessSecurityPolicyImpl::GetInstance()->CanRequestURL(
           embedded_worker_->process_id(), url)) {
-    embedded_worker_->SendMessage(ServiceWorkerMsg_OpenWindowError(
+    embedded_worker_->SendIpcMessage(ServiceWorkerMsg_OpenWindowError(
         request_id, url.spec() + " cannot be opened."));
     return;
   }
@@ -1178,12 +1178,12 @@ void ServiceWorkerVersion::OnOpenWindowFinished(
     return;
 
   if (status != SERVICE_WORKER_OK) {
-    embedded_worker_->SendMessage(ServiceWorkerMsg_OpenWindowError(
+    embedded_worker_->SendIpcMessage(ServiceWorkerMsg_OpenWindowError(
         request_id, "Something went wrong while trying to open the window."));
     return;
   }
 
-  embedded_worker_->SendMessage(
+  embedded_worker_->SendIpcMessage(
       ServiceWorkerMsg_OpenWindowResponse(request_id, client_info));
 }
 
@@ -1288,7 +1288,7 @@ void ServiceWorkerVersion::OnFocusClientFinished(
   if (running_status() != EmbeddedWorkerStatus::RUNNING)
     return;
 
-  embedded_worker_->SendMessage(
+  embedded_worker_->SendIpcMessage(
       ServiceWorkerMsg_FocusClientResponse(request_id, client_info));
 }
 
@@ -1315,7 +1315,7 @@ void ServiceWorkerVersion::OnNavigateClient(int request_id,
   // filtered out by Blink.
   if (!ChildProcessSecurityPolicyImpl::GetInstance()->CanRequestURL(
           embedded_worker_->process_id(), url)) {
-    embedded_worker_->SendMessage(
+    embedded_worker_->SendIpcMessage(
         ServiceWorkerMsg_NavigateClientError(request_id, url));
     return;
   }
@@ -1323,7 +1323,7 @@ void ServiceWorkerVersion::OnNavigateClient(int request_id,
   ServiceWorkerProviderHost* provider_host =
       context_->GetProviderHostByClientID(client_uuid);
   if (!provider_host || provider_host->active_version() != this) {
-    embedded_worker_->SendMessage(
+    embedded_worker_->SendIpcMessage(
         ServiceWorkerMsg_NavigateClientError(request_id, url));
     return;
   }
@@ -1344,12 +1344,12 @@ void ServiceWorkerVersion::OnNavigateClientFinished(
     return;
 
   if (status != SERVICE_WORKER_OK) {
-    embedded_worker_->SendMessage(
+    embedded_worker_->SendIpcMessage(
         ServiceWorkerMsg_NavigateClientError(request_id, GURL()));
     return;
   }
 
-  embedded_worker_->SendMessage(
+  embedded_worker_->SendIpcMessage(
       ServiceWorkerMsg_NavigateClientResponse(request_id, client_info));
 }
 
@@ -1364,7 +1364,8 @@ void ServiceWorkerVersion::OnSkipWaiting(int request_id) {
   // activation. In that case, it's a slight spec violation to not resolve now,
   // but we'll eventually resolve the promise in SetStatus().
   if (status_ != INSTALLED) {
-    embedded_worker_->SendMessage(ServiceWorkerMsg_DidSkipWaiting(request_id));
+    embedded_worker_->SendIpcMessage(
+        ServiceWorkerMsg_DidSkipWaiting(request_id));
     return;
   }
 
@@ -1383,7 +1384,7 @@ void ServiceWorkerVersion::OnSkipWaiting(int request_id) {
 
 void ServiceWorkerVersion::OnClaimClients(int request_id) {
   if (status_ != ACTIVATING && status_ != ACTIVATED) {
-    embedded_worker_->SendMessage(ServiceWorkerMsg_ClaimClientsError(
+    embedded_worker_->SendIpcMessage(ServiceWorkerMsg_ClaimClientsError(
         request_id, blink::mojom::ServiceWorkerErrorType::kState,
         base::ASCIIToUTF16(kClaimClientsStateErrorMesage)));
     return;
@@ -1392,13 +1393,13 @@ void ServiceWorkerVersion::OnClaimClients(int request_id) {
     if (ServiceWorkerRegistration* registration =
             context_->GetLiveRegistration(registration_id_)) {
       registration->ClaimClients();
-      embedded_worker_->SendMessage(
+      embedded_worker_->SendIpcMessage(
           ServiceWorkerMsg_DidClaimClients(request_id));
       return;
     }
   }
 
-  embedded_worker_->SendMessage(ServiceWorkerMsg_ClaimClientsError(
+  embedded_worker_->SendIpcMessage(ServiceWorkerMsg_ClaimClientsError(
       request_id, blink::mojom::ServiceWorkerErrorType::kAbort,
       base::ASCIIToUTF16(kClaimClientsShutdownErrorMesage)));
 }
