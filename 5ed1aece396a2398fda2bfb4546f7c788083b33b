@@ -88,6 +88,24 @@
       "revId": "5ed1aece396a2398fda2bfb4546f7c788083b33b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ce6494d_61563115",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-13T02:02:15Z",
+      "side": 1,
+      "message": "Interesting. If this is true, then the bug we\u0027re resolving should not happen. Why would users end up with disabled ZIP unpacker? My assumption was that it was due to sync from the cloud. But if this code prevents that, then the bug is somewhere else. WDYT?",
+      "parentUuid": "d37a1418_25c46f3c",
+      "revId": "5ed1aece396a2398fda2bfb4546f7c788083b33b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
