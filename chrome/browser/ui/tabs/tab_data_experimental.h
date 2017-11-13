@@ -15,28 +15,42 @@ namespace content {
 class WebContents;
 }
 
-class TabStripModel;
+class TabStripModelExperimental;
 
 // This class can represent either a single WebContents or a group of tabs.
 class TabDataExperimental {
  public:
-  enum class Type { kSingle, kGroup };
+  enum class Type {
+    // A single WebContents.
+    kSingle,
+
+    // A group of WebContentses.
+    kGroup,
+
+    // A group that also has a WebContents associated with it. This is the
+    // "hub" of a sequence of navigations.
+    kHubAndSpoke };
 
   TabDataExperimental();
   TabDataExperimental(TabDataExperimental&&) noexcept;
-  TabDataExperimental(content::WebContents* contents, TabStripModel* model);
+  TabDataExperimental(content::WebContents* contents, TabStripModelExperimental* model);
   ~TabDataExperimental();
 
   TabDataExperimental& operator=(TabDataExperimental&&);
 
   Type type() const { return type_; }
+  bool expanded() const { return expanded_; }
 
-  // Valid when type() == kSingle.
+  // Valid when type() == kSingle or kHubAndSpoke.
   const base::string16& GetTitle() const;
 
-  // Valid when type() == kGroup;
-  // bool first_is_hub() const { return first_is_hub_; }
+  // Returns true if this tab data itself is counted as a enumerable item when
+  // going through the view.
+  bool CountsAsViewIndex() const;
+
+  // Valid when type() == kGroup or kHubAndSpoke;
   const std::vector<TabDataExperimental>& children() const { return children_; }
+  std::vector<TabDataExperimental>& children() { return children_; }
 
  private:
   friend class TabStripModelExperimental;
@@ -46,9 +60,8 @@ class TabDataExperimental {
 
   Type type_ = Type::kSingle;
 
-  // Only valid when Type == kSingle. This is not exposed in the API so that
-  // we can represent tabs that have no underlying WebContents in the future if
-  // we want.
+  bool expanded_ = true;
+
   content::WebContents* contents_ = nullptr;
   std::unique_ptr<ContentsWatcher> contents_watcher_;
 
