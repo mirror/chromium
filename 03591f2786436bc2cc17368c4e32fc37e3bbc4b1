@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9e70ded8_88f92549",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1172234
+      },
+      "writtenOn": "2017-11-13T19:28:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f18a53c3_6e267d88",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb956d52_53ec2939",
         "filename": "components/omnibox/browser/keyword_extensions_delegate.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d44988_64632f94",
+        "filename": "components/omnibox/browser/keyword_extensions_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1172234
+      },
+      "writtenOn": "2017-11-13T19:28:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb956d52_53ec2939",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "50609da0_1e2cc1b2",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1172234
+      },
+      "writtenOn": "2017-11-13T19:28:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "872f4d4e_449fa19a",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c647c3eb_5b6e7cbd",
         "filename": "components/omnibox/browser/keyword_provider.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-10T06:09:29Z",
       "side": 1,
       "message": "I don\u0027t thinks this test is right.  Previously GetKeywordForText() would return the empty string if it finds an extension keyword and that keyword is disabled.\nNow it returns the empty string if this function returns false.  This function returns false for all non-extension keywords and for disable keywords.\n\nI think this function should be called IsKeywordEnabled, and it should return\n  return (template_url-\u003etype() !\u003d TemplateURL::OMNIBOX_API_EXTENSION) ||\n         (extensions_delegate_ \u0026\u0026\n          extensions_delegate_-\u003eIsEnabledExtension(\n              template_url-\u003eGetExtensionId()));\n\nThe code in GetKeywordForText() does not need to be changed.\n\nYou will have to slightly revise the call in DeleteMatch() to make sure the keyword is an extension before calling this function.\n\nIf you take this implementation suggestion, remember to also revise the comment for this function.",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5194b74_6c01b483",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1172234
+      },
+      "writtenOn": "2017-11-13T19:28:01Z",
+      "side": 1,
+      "message": "I\u0027ve made the suggested revisions. Just one thing though, with regards to DeleteMatch(), should the check to make sure the keyword is an extension be embedded in the IsKeywordEnabled? For example:\n\nreturn (template_url-\u003etype() !\u003d TemplateURL::OMNIBOX_API_EXTENSION) ||\n       (template_url-\u003etype() \u003d\u003d TemplateURL::OMNIBOX_API_EXTENSION \u0026\u0026\n        extensions_delegate_ \u0026\u0026\n        extensions_delegate_-\u003eIsEnabledExtension(\n              template_url-\u003eGetExtensionId()));",
+      "parentUuid": "c647c3eb_5b6e7cbd",
       "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e6c2e5cd_d2da8674",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1172234
+      },
+      "writtenOn": "2017-11-13T19:28:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe39066e_8d9addcc",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f054240_a1dfa03e",
         "filename": "components/omnibox/browser/omnibox_edit_model.h",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d450d30e_fa9d47fb",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1172234
+      },
+      "writtenOn": "2017-11-13T19:28:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f054240_a1dfa03e",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
