@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4099786_8f88b035",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-13T21:35:02Z",
+      "side": 1,
+      "message": "var {element, [sidebarListSpacer, dicoveryItem]} \u003d html`\u003cdiv bind /\u003e  \u003cdiv bind /\u003e`;\nvar element \u003d html`\u003cdiv bind\u003dsidebarListSpacer /\u003e`;\nvar element \u003d html`\u003cdiv ${n \u003d\u003e this._sidebarListSpacer \u003d n} /\u003e`;\nvar element \u003d html`\u003cdiv ${{sidebarListSpacer:0}} /\u003e`;\nvar element \u003d html({sidebarListSpacer: \u0027q1\u0027})`\u003cdiv bind\u003dq1 /\u003e`;",
+      "range": {
+        "startLine": 45,
+        "startChar": 17,
+        "endLine": 45,
+        "endChar": 42
+      },
+      "revId": "3ea56dd08c57246c5b2166f75e5b17c7b68910cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d6d1c0_550288a2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-13T21:35:02Z",
+      "side": 1,
+      "message": "\u003cdiv\u003e\n \u003cspan UI\u003dtrue bind\u003ddeviceCount/\u003e....\n\u003c/div\u003e\n\nthis._template.deviceCount.textContent \u003d common.UIString(\u0027%d Read\u0027, deviceCount);\n\n\n\n\n\u003cinput type\u003dcheckbox ${UI.bindSetting(mySetting)} /\u003e\n\n\u003cinput type\u003dcheckbox bind\u003dmySettingBox /\u003e\nUI.bindSetting(mySetting, template.mySettingBox);",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 23
+      },
+      "revId": "3ea56dd08c57246c5b2166f75e5b17c7b68910cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
