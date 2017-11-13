@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96fcfcff_a1fc035a",
+        "filename": "chrome/browser/net/errorpage_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-13T19:30:05Z",
+      "side": 1,
+      "message": "I\u0027d feel better if this comment linked to a place with more information.  Maybe file a bug about the incompatibility between the new hint stuff and loading the stale entries with a link to it from here?",
+      "range": {
+        "startLine": 994,
+        "startChar": 23,
+        "endLine": 994,
+        "endChar": 31
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ac3fb6_ec9e4ccc",
+        "filename": "chrome/test/data/nocache-with-etag.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-13T19:30:05Z",
+      "side": 1,
+      "message": "If you haven\u0027t done so, would you be willing to look at the two remaining tests that reference nocache.html (NetworkServiceTestWithService.RawRequestAccessControl and NetworkServiceTestWithService.SetNetworkConditions) and confirm that they don\u0027t need to be modified as well?  The reason I specifically call them out is that, since they\u0027re NetworkService tests, they may not be running in your default try job runs.",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 5
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed494af4_f316018c",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-13T19:30:05Z",
+      "side": 1,
+      "message": "Why is this here?  It looks like it\u0027s only used in http_cache_transaction.cc.",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 37
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb510013_9efe675b",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-13T19:30:05Z",
+      "side": 1,
+      "message": "I\u0027m not understanding this DCHECK; willing to share the context for it with me?",
+      "range": {
+        "startLine": 1140,
+        "startChar": 14,
+        "endLine": 1140,
+        "endChar": 19
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f1f467_33da2e2c",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-13T19:30:05Z",
+      "side": 1,
+      "message": "These two methods look like they can be moved to private; they\u0027re only used in http_cache_transaction.cc.",
+      "range": {
+        "startLine": 202,
+        "startChar": 7,
+        "endLine": 202,
+        "endChar": 39
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414adb07_83883e8d",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 5811,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-13T19:30:05Z",
+      "side": 1,
+      "message": "Confirming: This comment applies to both pathways?  (I\u0027d presume based on the comment by itself that it does, but since it\u0027s a new comment in this CL I wanted to confirm it wasn\u0027t memory hint dependent.)",
+      "range": {
+        "startLine": 5811,
+        "startChar": 22,
+        "endLine": 5811,
+        "endChar": 29
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918f998f_8bac0d2e",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 20866,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-13T19:30:05Z",
+      "side": 1,
+      "message": "I want to call out that from a purist point of view, I think this requires a histogram revision.  I think of you as owner of these histograms, so I\u0027ll basically happily yield to your choice on it.  But I wanted to call out that I think that what\u0027s going to happen here is that after this change, some of the counts that would have gone into ZERO_FRESHNESS will go instead into ZERO_FRESHNESS_MEM_HINT, and hence comparisons (including timeline graphs) pre-/post- this CL on that value will be invalid.",
+      "range": {
+        "startLine": 20866,
+        "startChar": 17,
+        "endLine": 20866,
+        "endChar": 22
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
