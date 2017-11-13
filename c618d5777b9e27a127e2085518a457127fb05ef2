@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ab06210_e2857896",
+        "filename": "media/capabilities/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-13T20:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b211a4d2_37a464a8",
+      "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80a6b119_469cb97d",
         "filename": "media/capabilities/metadata_bucketter.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "232cae3e_70eb3597",
+        "filename": "media/capabilities/metadata_bucketter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-13T20:34:27Z",
+      "side": 1,
+      "message": "Seems like we\u0027re open to either static or anon-namespaces. I\u0027ve moved these to an anonymous namespace since I think its a little less subtle.",
+      "parentUuid": "80a6b119_469cb97d",
+      "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d61b2e4e_80678fb6",
+        "filename": "media/capabilities/metadata_bucketter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-13T20:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "264c6c5b_efaee185",
+      "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6a2e7aa_14137caf",
         "filename": "media/capabilities/metadata_bucketter.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c0f6511_460a9fd6",
+        "filename": "media/capabilities/metadata_bucketter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-13T20:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6a2e7aa_14137caf",
+      "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6c643c6d_62b2260d",
+        "filename": "media/capabilities/metadata_bucketter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-13T20:34:27Z",
+      "side": 1,
+      "message": "Almost. I end up also using them in the render-side VideoDecodeStatsReporter to smooth over little fps/resolution changes that are still within the current fps/resolution bucket.",
+      "parentUuid": "c954a5c1_090319ba",
+      "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef1f431d_77f41fc0",
         "filename": "media/capabilities/video_decode_stats_db.h",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "8c920486_abb8b0f2",
+        "filename": "media/capabilities/video_decode_stats_db.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-13T20:34:27Z",
+      "side": 1,
+      "message": "I\u0027m trying to highlight that implementation detail. I want everyone that makes a DB key to know that the key really points at a bucket.",
+      "parentUuid": "ef1f431d_77f41fc0",
+      "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "002a2a18_e4f907ee",
         "filename": "media/capabilities/video_decode_stats_db_impl.cc",
         "patchSetId": 3
@@ -115,6 +223,24 @@
       "writtenOn": "2017-11-13T18:28:15Z",
       "side": 1,
       "message": "Delete?",
+      "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36fcce5e_beafb1f1",
+        "filename": "media/capabilities/video_decode_stats_db_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-13T20:34:27Z",
+      "side": 1,
+      "message": "Leaving this one - helps me debug",
+      "parentUuid": "002a2a18_e4f907ee",
       "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
