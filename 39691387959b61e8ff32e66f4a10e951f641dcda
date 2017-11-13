@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "33dd7e0b_fb8c67dd",
+        "filename": "components/os_crypt/key_storage_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-13T09:48:47Z",
+      "side": 1,
+      "message": "I checked and we would indeed fail a DCHECK, both here and in the current implementation of KeyStorageKeyring (this must have changed since I introduced it).\n\nI will argue that we should allow blocking here. Making OSCrypt asynchronous is a longer effort, while fixing concurrency issues is more urgent. Also, the source of the blocking already exists and all we\u0027ve introduced is jumping between threads.\n\nDoes that sound good?",
+      "parentUuid": "aa453a4d_76ae7f9d",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 21
+      },
+      "revId": "39691387959b61e8ff32e66f4a10e951f641dcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c735977_9cfccebb",
         "filename": "components/os_crypt/key_storage_linux.h",
         "patchSetId": 4
