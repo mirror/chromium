@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01cb19fc_3adeb1a6",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-13T06:55:37Z",
+      "side": 1,
+      "message": "Why isn\u0027t it always true?",
+      "range": {
+        "startLine": 1044,
+        "startChar": 9,
+        "endLine": 1044,
+        "endChar": 53
+      },
+      "revId": "98d6ac3cb23b5b06afa97b71a0f34e80c1060a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
