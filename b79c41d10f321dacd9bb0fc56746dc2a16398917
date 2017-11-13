@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "322ff66e_eb9959e3",
+        "filename": "third_party/WebKit/Source/platform/text/SegmentedString.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-11-13T16:55:42Z",
+      "side": 1,
+      "message": "Done. I\u0027ve also added a regression test for this, since nothing caught it.",
+      "parentUuid": "5fbae3a1_c4acfbe4",
+      "revId": "b79c41d10f321dacd9bb0fc56746dc2a16398917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2da6bef_e1a359b6",
         "filename": "third_party/WebKit/Source/platform/text/SegmentedString.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "b79c41d10f321dacd9bb0fc56746dc2a16398917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95bf9df_17b497e1",
+        "filename": "third_party/WebKit/Source/platform/text/SegmentedString.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-11-13T16:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2da6bef_e1a359b6",
+      "revId": "b79c41d10f321dacd9bb0fc56746dc2a16398917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "45291d87_4b895465",
+        "filename": "third_party/WebKit/Source/platform/text/SegmentedString.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-11-13T16:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "589c6b72_074e83e2",
+      "revId": "b79c41d10f321dacd9bb0fc56746dc2a16398917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba6727ad_1f99938b",
         "filename": "third_party/WebKit/Source/platform/text/SegmentedString.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-13T01:59:01Z",
       "side": 1,
       "message": "I think this makes sense, but would you document this optimization in CL desc?",
+      "revId": "b79c41d10f321dacd9bb0fc56746dc2a16398917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da045d01_4b642abe",
+        "filename": "third_party/WebKit/Source/platform/text/SegmentedString.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-11-13T16:55:42Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ba6727ad_1f99938b",
       "revId": "b79c41d10f321dacd9bb0fc56746dc2a16398917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
