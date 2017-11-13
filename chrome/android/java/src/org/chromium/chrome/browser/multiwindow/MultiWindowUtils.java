@@ -27,7 +27,6 @@ import org.chromium.chrome.browser.util.IntentUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nullable;
 
@@ -37,7 +36,8 @@ import javax.annotation.Nullable;
  * Thread-safe: This class may be accessed from any thread.
  */
 public class MultiWindowUtils implements ActivityStateListener {
-    private static AtomicReference<MultiWindowUtils> sInstance = new AtomicReference<>();
+    // getInstance() is called early in start-up, so there is not point in lazily initializing it.
+    private static MultiWindowUtils sInstance = AppHooks.get().createMultiWindowUtils();
 
     // Used to keep track of whether ChromeTabbedActivity2 is running. A tri-state Boolean is
     // used in case both activities die in the background and MultiWindowUtils is recreated.
@@ -49,10 +49,7 @@ public class MultiWindowUtils implements ActivityStateListener {
      * Returns the singleton instance of MultiWindowUtils, creating it if needed.
      */
     public static MultiWindowUtils getInstance() {
-        if (sInstance.get() == null) {
-            sInstance.compareAndSet(null, AppHooks.get().createMultiWindowUtils());
-        }
-        return sInstance.get();
+        return sInstance;
     }
 
     /**
