@@ -55,21 +55,6 @@ class CONTENT_EXPORT MediaStreamDispatcher
   // Stop a started device that has been requested by calling GenerateStream.
   virtual void StopStreamDevice(const MediaStreamDevice& device);
 
-  // Request to open a device.
-  void OpenDevice(
-      int request_id,
-      const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler,
-      const std::string& device_id,
-      MediaStreamType type);
-
-  // Cancel the request to open a device.
-  virtual void CancelOpenDevice(
-      int request_id,
-      const base::WeakPtr<MediaStreamDispatcherEventHandler>& event_handler);
-
-  // Close a started device. |label| is provided in OnDeviceOpened.
-  void CloseDevice(const std::string& label);
-
   // This method is called when the stream is started successfully.
   void OnStreamStarted(const std::string& label);
 
@@ -78,8 +63,6 @@ class CONTENT_EXPORT MediaStreamDispatcher
   // being shown to the user.
   MediaStreamDevices GetNonScreenCaptureDevices();
 
-  // Check if the label is a valid stream.
-  virtual bool IsStream(const std::string& label);
   // Get the video session_id given a label. The label identifies a stream.
   // index is the index in the video_device_array of the stream.
   virtual int video_session_id(const std::string& label, int index);
@@ -89,11 +72,8 @@ class CONTENT_EXPORT MediaStreamDispatcher
  private:
   friend class MediaStreamDispatcherTest;
   friend class UserMediaClientImplTest;
-  FRIEND_TEST_ALL_PREFIXES(MediaStreamDispatcherTest, BasicVideoDevice);
   FRIEND_TEST_ALL_PREFIXES(MediaStreamDispatcherTest, TestFailure);
   FRIEND_TEST_ALL_PREFIXES(MediaStreamDispatcherTest, CancelGenerateStream);
-  FRIEND_TEST_ALL_PREFIXES(MediaStreamDispatcherTest,
-                           GetNonScreenCaptureDevices);
   FRIEND_TEST_ALL_PREFIXES(MediaStreamDispatcherTest, DeviceClosed);
 
   struct Request;
@@ -115,10 +95,6 @@ class CONTENT_EXPORT MediaStreamDispatcher
                          const MediaStreamDevices& video_devices) override;
   void OnStreamGenerationFailed(int32_t request_id,
                                 MediaStreamRequestResult result) override;
-  void OnDeviceOpened(int32_t request_id,
-                      const std::string& label,
-                      const MediaStreamDevice& device) override;
-  void OnDeviceOpenFailed(int32_t request_id) override;
   void OnDeviceStopped(const std::string& label,
                        const MediaStreamDevice& device) override;
 

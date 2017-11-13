@@ -9,14 +9,16 @@
 #include "base/logging.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "content/child/child_thread_impl.h"
 #include "content/public/common/console_message_level.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/renderer/media/media_devices_event_dispatcher.h"
-#include "content/renderer/media/media_stream_dispatcher.h"
 #include "content/renderer/pepper/renderer_ppapi_host_impl.h"
 #include "content/renderer/render_frame_impl.h"
 #include "media/media_features.h"
 #include "ppapi/shared_impl/ppb_device_ref_shared.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace content {
@@ -69,6 +71,13 @@ ppapi::DeviceRefData FromMediaDeviceInfo(MediaDeviceType type,
 }
 
 }  // namespace
+
+struct PepperMediaDeviceManager::Stream {
+  Stream() {}
+  ~Stream() {}
+  MediaStreamDevices audio_devices;
+  MediaStreamDevices video_devices;
+};
 
 base::WeakPtr<PepperMediaDeviceManager>
 PepperMediaDeviceManager::GetForRenderFrame(
@@ -134,6 +143,17 @@ void PepperMediaDeviceManager::StopMonitoringDevices(PP_DeviceType_Dev type,
 #endif
 }
 
+MediaStreamDevices PepperMediaDeviceManager::GetNonScreenCaptureDevices() {
+  MediaStreamDevices video_devices;
+  for (const auto& stream_it : label_stream_map_) {
+    for (const auto& video_device : stream_it.second.video_devices) {
+      if (!IsScreenCaptureMediaType(video_device.type))
+        video_devices.push_back(video_device);
+    }
+  }
+  return video_devices;
+}
+
 int PepperMediaDeviceManager::OpenDevice(PP_DeviceType_Dev type,
                                          const std::string& device_id,
                                          PP_Instance pp_instance,
@@ -150,19 +170,23 @@ int PepperMediaDeviceManager::OpenDevice(PP_DeviceType_Dev type,
                                         kPepperInsecureOriginMessage);
     }
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(&PepperMediaDeviceManager::OnDeviceOpenFailed,
-                                  AsWeakPtr(), request_id));
+        FROM_HERE,
+        base::BindOnce(&PepperMediaDeviceManager::OnDeviceOpened, AsWeakPtr(),
+                       request_id, false, std::string(), MediaStreamDevice()));
     return request_id;
   }
 
 #if BUILDFLAG(ENABLE_WEBRTC)
-  GetMediaStreamDispatcher()->OpenDevice(
-      request_id, AsWeakPtr(), device_id,
-      PepperMediaDeviceManager::FromPepperDeviceType(type));
+  GetMediaStreamDispatcherHost()->OpenDevice(
+      routing_id(), request_id, device_id,
+      PepperMediaDeviceManager::FromPepperDeviceType(type),
+      base::BindOnce(&PepperMediaDeviceManager::OnDeviceOpened, AsWeakPtr(),
+                     request_id));
 #else
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&PepperMediaDeviceManager::OnDeviceOpenFailed,
-                            AsWeakPtr(), request_id));
+      FROM_HERE,
+      base::Bind(&PepperMediaDeviceManager::OnDeviceOpened, AsWeakPtr(),
+                 request_id, false, std::string(), MediaStreamDevice()));
 #endif
 
   return request_id;
@@ -172,28 +196,28 @@ void PepperMediaDeviceManager::CancelOpenDevice(int request_id) {
   open_callbacks_.erase(request_id);
 
 #if BUILDFLAG(ENABLE_WEBRTC)
-  GetMediaStreamDispatcher()->CancelOpenDevice(request_id, AsWeakPtr());
+  GetMediaStreamDispatcherHost()->CancelRequest(routing_id(), request_id);
 #endif
 }
 
 void PepperMediaDeviceManager::CloseDevice(const std::string& label) {
 #if BUILDFLAG(ENABLE_WEBRTC)
-  GetMediaStreamDispatcher()->CloseDevice(label);
+  GetMediaStreamDispatcherHost()->CloseDevice(label);
 #endif
 }
 
 int PepperMediaDeviceManager::GetSessionID(PP_DeviceType_Dev type,
                                            const std::string& label) {
 #if BUILDFLAG(ENABLE_WEBRTC)
-  switch (type) {
-    case PP_DEVICETYPE_DEV_AUDIOCAPTURE:
-      return GetMediaStreamDispatcher()->audio_session_id(label, 0);
-    case PP_DEVICETYPE_DEV_VIDEOCAPTURE:
-      return GetMediaStreamDispatcher()->video_session_id(label, 0);
-    default:
-      NOTREACHED();
-      return 0;
-  }
+  LabelStreamMap::iterator it = label_stream_map_.find(label);
+  if (it == label_stream_map_.end())
+    return MediaStreamDevice::kNoId;
+  if (type == PP_DEVICETYPE_DEV_AUDIOCAPTURE)
+    return it->second.audio_devices[0].session_id;
+  else if (type == PP_DEVICETYPE_DEV_VIDEOCAPTURE)
+    return it->second.video_devices[0].session_id;
+  else
+    return 0;
 #else
   return 0;
 #endif
@@ -213,16 +237,6 @@ void PepperMediaDeviceManager::OnDeviceStopped(
     const std::string& label,
     const MediaStreamDevice& device) {}
 
-void PepperMediaDeviceManager::OnDeviceOpened(int request_id,
-                                              const std::string& label,
-                                              const MediaStreamDevice& device) {
-  NotifyDeviceOpened(request_id, true, label);
-}
-
-void PepperMediaDeviceManager::OnDeviceOpenFailed(int request_id) {
-  NotifyDeviceOpened(request_id, false, std::string());
-}
-
 // static
 MediaStreamType PepperMediaDeviceManager::FromPepperDeviceType(
     PP_DeviceType_Dev type) {
@@ -239,19 +253,32 @@ MediaStreamType PepperMediaDeviceManager::FromPepperDeviceType(
   }
 }
 
-void PepperMediaDeviceManager::NotifyDeviceOpened(int request_id,
-                                                  bool succeeded,
-                                                  const std::string& label) {
+void PepperMediaDeviceManager::OnDeviceOpened(int request_id,
+                                              bool success,
+                                              const std::string& label,
+                                              const MediaStreamDevice& device) {
   OpenCallbackMap::iterator iter = open_callbacks_.find(request_id);
   if (iter == open_callbacks_.end()) {
     // The callback may have been unregistered.
     return;
   }
 
+  if (success) {
+    Stream new_stream;
+    if (IsAudioInputMediaType(device.type))
+      new_stream.audio_devices.push_back(device);
+    else if (IsVideoMediaType(device.type))
+      new_stream.video_devices.push_back(device);
+    else
+      NOTREACHED();
+
+    label_stream_map_[label] = new_stream;
+  }
+
   OpenDeviceCallback callback = iter->second;
   open_callbacks_.erase(iter);
 
-  callback.Run(request_id, succeeded, label);
+  callback.Run(request_id, success, label);
 }
 
 void PepperMediaDeviceManager::DevicesEnumerated(
@@ -273,13 +300,13 @@ void PepperMediaDeviceManager::DevicesChanged(
   client_callback.Run(devices);
 }
 
-MediaStreamDispatcher* PepperMediaDeviceManager::GetMediaStreamDispatcher()
-    const {
-  DCHECK(render_frame());
-  MediaStreamDispatcher* const dispatcher =
-      static_cast<RenderFrameImpl*>(render_frame())->GetMediaStreamDispatcher();
-  DCHECK(dispatcher);
-  return dispatcher;
+const mojom::MediaStreamDispatcherHostPtr&
+PepperMediaDeviceManager::GetMediaStreamDispatcherHost() {
+  if (!dispatcher_host_) {
+    ChildThreadImpl::current()->GetConnector()->BindInterface(
+        mojom::kBrowserServiceName, &dispatcher_host_);
+  }
+  return dispatcher_host_;
 }
 
 const ::mojom::MediaDevicesDispatcherHostPtr&

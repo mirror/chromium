@@ -86,6 +86,7 @@
 #include "content/renderer/media/media_stream_dispatcher.h"
 #include "content/renderer/media/video_capture_impl_manager.h"
 #include "content/renderer/navigation_state_impl.h"
+#include "content/renderer/pepper/pepper_media_device_manager.h"
 #include "content/renderer/render_frame_impl.h"
 #include "content/renderer/render_frame_proxy.h"
 #include "content/renderer/render_process.h"
@@ -2417,6 +2418,14 @@ void RenderViewImpl::SuspendVideoCaptureDevices(bool suspend) {
 
   MediaStreamDevices video_devices =
       media_stream_dispatcher->GetNonScreenCaptureDevices();
+
+  PepperMediaDeviceManager* device_manager =
+      PepperMediaDeviceManager::GetForRenderFrame(main_render_frame_).get();
+  if (device_manager) {
+    MediaStreamDevices devices = device_manager->GetNonScreenCaptureDevices();
+    video_devices.insert(video_devices.end(), devices.begin(), devices.end());
+  }
+
   RenderThreadImpl::current()->video_capture_impl_manager()->SuspendDevices(
       video_devices, suspend);
 #endif  // BUILDFLAG(ENABLE_WEBRTC)

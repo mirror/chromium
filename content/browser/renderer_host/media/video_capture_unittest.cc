@@ -180,23 +180,17 @@ class VideoCaptureTest : public testing::Test,
     // Open the first device.
     {
       base::RunLoop run_loop;
-      MediaStreamDevice opened_device;
       media_stream_manager_->OpenDevice(
-          stream_requester_.AsWeakPtr(), render_process_id, render_frame_id,
+          render_process_id, render_frame_id,
           browser_context_.GetMediaDeviceIDSalt(), page_request_id,
           video_devices[0].device_id, MEDIA_DEVICE_VIDEO_CAPTURE,
-          security_origin);
-      EXPECT_CALL(stream_requester_,
-                  DeviceOpened(render_frame_id, page_request_id, _, _))
-          .Times(1)
-          .WillOnce(DoAll(ExitMessageLoop(task_runner_, run_loop.QuitClosure()),
-                          SaveArg<2>(&opened_device_label_),
-                          SaveArg<3>(&opened_device)));
+          security_origin,
+          base::BindOnce(&VideoCaptureTest::OnDeviceOpened,
+                         base::Unretained(this), run_loop.QuitClosure(),
+                         page_request_id));
       run_loop.Run();
-      Mock::VerifyAndClearExpectations(&stream_requester_);
-      ASSERT_NE(MediaStreamDevice::kNoId, opened_device.session_id);
-      opened_session_id_ = opened_device.session_id;
     }
+    ASSERT_NE(MediaStreamDevice::kNoId, opened_session_id_);
   }
 
   void CloseSession() {
@@ -315,6 +309,16 @@ class VideoCaptureTest : public testing::Test,
   std::unique_ptr<FakeMediaStreamUIProxy> CreateFakeUI() {
     return std::make_unique<FakeMediaStreamUIProxy>(
         /*tests_use_fake_render_frame_hosts=*/true);
+  }
+
+  void OnDeviceOpened(base::Closure quit_closure,
+                      int request_id,
+                      bool success,
+                      const std::string& label,
+                      const MediaStreamDevice& opened_device) {
+    opened_device_label_ = label;
+    opened_session_id_ = opened_device.session_id;
+    quit_closure.Run();
   }
 
   // |media_stream_manager_| needs to outlive |thread_bundle_| because it is a
