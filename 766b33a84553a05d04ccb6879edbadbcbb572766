@@ -1,0 +1,402 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46dae59d_b84c0636",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "It looks like all of the call sites for CloneAndReplace now pass nullptr for root_frame_tree_node.  Should that parameter and functionality be removed now?",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "423c457f_98d605c1",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2280,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "I\u0027m concerned about this firing at unexpected times, like for a failed navigation that never commits.  That wouldn\u0027t correspond to the last committed entry.  (See my first question for Camille.)",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44bed07c_ab2a105c",
+        "filename": "content/browser/frame_host/navigation_controller_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "Would it be easier to do this once per page (at the time of WebContentsImpl::DidStopLoading) rather than once per frame?  We could walk the tree at that point, doing it all in one pass.",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d28cef2_b614f6f4",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6180,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "Worth adding a short explanation why these should be kept, and a mention of https://crbug.com/774151.",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c030d052_48d5cf0c",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6252,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "nit: I know these test names are getting long, but this should be a more descriptive name.",
+      "range": {
+        "startLine": 6252,
+        "startChar": 6,
+        "endLine": 6252,
+        "endChar": 11
+      },
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb9fe86_e3223deb",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6326,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "nit: We\u0027ll want to remove these before committing.",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001f8acb_28133718",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6353,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "This is seeming pretty complex.  I wonder if there\u0027s an easier way to test what we\u0027re after.",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f5ee9a_826b2ecf",
+        "filename": "content/browser/frame_host/navigation_entry_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "Is this reachable?  As noted before, it looks like all the call sites now pass nullptr for current_frame_tree_node.  (Did I miss any?)",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa554cd7_aed84572",
+        "filename": "content/browser/frame_host/navigation_entry_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "Worth a comment indicating this is O(N^2), due to the lookup logic and the frames potentially being in a different order between FTNs and FNEs.",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1923a698_71dc69a6",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "nit: FrameTreeNode",
+      "range": {
+        "startLine": 67,
+        "startChar": 52,
+        "endLine": 67,
+        "endChar": 57
+      },
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d0b9ca6_d5df3ef0",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "nit: immediate children\n(to indicate that this isn\u0027t recursive)",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 24
+      },
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db33a6db_cc74f341",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "Let\u0027s rephrase this last part to be more precise as well, to give a better sense for what this is doing.  Something like:\nthat matches the FrameNavigationEntry at the given child index of this TreeNode.",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025b4081_5b0f9119",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "FindMatchingFrameTreeNodeForChild",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad9eec9_2397083d",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "nit: fne_child_index\n(To clarify what the input and output expectations are)",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29bff167_baee1ec5",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "nit: parent_frame_tree_node",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604736e8_a630d415",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment, especially noting whether or not this is recursive.",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470e09c9_f3106c18",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2663,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "It feels unfortunate having all this plumbing, right next to the FTN::DidStopLoading call above.  I wonder if we can simplify this.",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116ba199_95838c87",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "I\u0027m hoping we can avoid storing this as state on RFH.",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7bb019_27b5bc8e",
+        "filename": "content/browser/streams/stream_url_request_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "This doesn\u0027t feel like it belongs in this CL.  Is this a separate bug that should be fixed?  How does the rest of the change depend on it?",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1b8f7d_22dee5d2",
+        "filename": "content/test/data/navigation_controller/iframe_loaded_once.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "Will this have problems for repeated tests?  Maybe it should use session storage so that the value doesn\u0027t stick around and affect other test runs?",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416b13fb_e0122c9f",
+        "filename": "content/test/data/navigation_controller/remove_blank_iframe_on_second_load.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b5d5ab_2e8a067f",
+        "filename": "net/test/url_request/url_request_failed_job.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-13T04:44:56Z",
+      "side": 1,
+      "message": "Maybe we can get by without changing this file using ControllableHttpResponse?  I think you can return error codes there.",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
