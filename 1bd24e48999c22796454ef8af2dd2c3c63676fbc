@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "044c5354_2cd462a7",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-13T23:20:41Z",
+      "side": 1,
+      "message": "We should probably DCHECK that topViewController is not already presenting.",
+      "revId": "1bd24e48999c22796454ef8af2dd2c3c63676fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0208c2e3_6f598637",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-13T23:20:41Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "1bd24e48999c22796454ef8af2dd2c3c63676fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
