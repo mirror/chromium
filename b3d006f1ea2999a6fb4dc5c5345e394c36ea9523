@@ -302,6 +302,30 @@
     },
     {
       "key": {
+        "uuid": "8d3a6956_3551472e",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-13T14:42:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "031abc58_e72c0e32",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 38
+      },
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e78e57e_e5866b66",
         "filename": "chromeos/dbus/smb_provider_client.h",
         "patchSetId": 3
