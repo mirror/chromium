@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "ca304ccb_39003d55",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-13T19:29:21Z",
+      "side": 1,
+      "message": "It was placed here so that any tab or space specific code can execute before the OnKeywordEntered event is handled.\n\nThinking about this now, it makes more sense to put this OnKeywordEntered handling earlier, as soon as keyword mode is entered. I have adjusted this and placed the call right after line 740.",
+      "parentUuid": "fe39066e_8d9addcc",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f054240_a1dfa03e",
         "filename": "components/omnibox/browser/omnibox_edit_model.h",
         "patchSetId": 5
@@ -203,6 +221,24 @@
         "id": 1172234
       },
       "writtenOn": "2017-11-13T19:28:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f054240_a1dfa03e",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee6dbfc2_338a25df",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-13T19:29:21Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "4f054240_a1dfa03e",
