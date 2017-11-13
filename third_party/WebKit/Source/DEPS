@@ -7,7 +7,6 @@ include_rules = [
     "+testing/gmock/include/gmock",
     "+testing/gtest/include/gtest",
     "+third_party/WebKit/common",
-    "+v8",
 ]
 
 skip_child_includes = [
