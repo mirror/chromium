@@ -39,6 +39,7 @@ void MouseWheelPhaseHandler::AddPhaseIfNeededAndScheduleEndEvent(
       IgnorePendingWheelEndEvent();
     }
   } else {  // !has_phase
+    mouse_wheel_event.has_synthetic_phase = true;
     if (!mouse_wheel_end_dispatch_timer_.IsRunning()) {
       mouse_wheel_event.phase = blink::WebMouseWheelEvent::kPhaseBegan;
       ScheduleMouseWheelEndDispatching(mouse_wheel_event, should_route_event);
