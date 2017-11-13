@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13d834e0_bbdaefbc",
+        "filename": "chrome/browser/chromeos/system_logs/single_debug_daemon_log_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-13T19:31:22Z",
+      "side": 1,
+      "message": "Nit: Can you please remove this unused local?",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 27
+      },
+      "revId": "aaf9f7c70ce9be744cc5325714f7a8483a7ed05d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
