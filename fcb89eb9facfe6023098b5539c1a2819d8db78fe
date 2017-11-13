@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34487f87_1c081f66",
+        "filename": "chrome/browser/pdf/pdf_extension_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-11-13T17:55:27Z",
+      "side": 1,
+      "message": "Done.\n\nOops, using statements for local convenience aliases are fine, but bringing in an entire namespace isn\u0027t.",
+      "parentUuid": "defc9fe8_6dbcfcf9",
+      "range": {
+        "startLine": 1339,
+        "startChar": 2,
+        "endLine": 1339,
+        "endChar": 23
+      },
+      "revId": "fcb89eb9facfe6023098b5539c1a2819d8db78fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6e9fbb0_c7a6de05",
         "filename": "content/public/test/browser_test_utils.h",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "fcb89eb9facfe6023098b5539c1a2819d8db78fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1193fb06_f72399cc",
+        "filename": "content/public/test/browser_test_utils.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-11-13T17:55:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6e9fbb0_c7a6de05",
+      "revId": "fcb89eb9facfe6023098b5539c1a2819d8db78fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
