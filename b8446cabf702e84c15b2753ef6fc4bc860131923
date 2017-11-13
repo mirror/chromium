@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04da3c73_26785ae2",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-13T22:16:08Z",
+      "side": 1,
+      "message": "Please file a new bug or reopen the cited one. Add some explanation with the comment here.",
+      "revId": "b8446cabf702e84c15b2753ef6fc4bc860131923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a22d81_8e0f2c42",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-13T22:16:08Z",
+      "side": 1,
+      "message": "q: Is there a new/better way to do this (eg. TestingProfileManager::CreateTestingProfile)?",
+      "revId": "b8446cabf702e84c15b2753ef6fc4bc860131923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3bcad5e_dc718f1b",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-13T22:16:08Z",
+      "side": 1,
+      "message": "q: can this whole block be skipped, since the code below also closes and re-opens and expects the same thing?",
+      "revId": "b8446cabf702e84c15b2753ef6fc4bc860131923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57fa6a37_537db558",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-13T22:16:08Z",
+      "side": 1,
+      "message": "nit: cache the pref for use on line 613",
+      "revId": "b8446cabf702e84c15b2753ef6fc4bc860131923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
