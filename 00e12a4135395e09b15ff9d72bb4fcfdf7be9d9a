@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bbe8f3ef_3be0aa9b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium.respond-to-same-origin-request-with-cross-origin-response.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-13T08:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d10462b7_603c2ab1",
+      "revId": "00e12a4135395e09b15ff9d72bb4fcfdf7be9d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee15262c_15a51b84",
         "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium.respond-to-same-origin-request-with-cross-origin-response.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "00e12a4135395e09b15ff9d72bb4fcfdf7be9d9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079a6696_52aa1e68",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium.respond-to-same-origin-request-with-cross-origin-response.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-13T08:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee15262c_15a51b84",
+      "revId": "00e12a4135395e09b15ff9d72bb4fcfdf7be9d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a42a2a64_10d5b5b4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium.respond-to-same-origin-request-with-redirected-cross-origin-response.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-13T08:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21060c7a_3836486f",
+      "revId": "00e12a4135395e09b15ff9d72bb4fcfdf7be9d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be516a23_106a014c",
         "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium.respond-to-same-origin-request-with-redirected-cross-origin-response.html",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-13T08:07:34Z",
       "side": 1,
       "message": "BTW I probably would have just made them in the same file because they are so related... did you prefer them in separate files for some reason?",
+      "revId": "00e12a4135395e09b15ff9d72bb4fcfdf7be9d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3030f093_c85c5682",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium.respond-to-same-origin-request-with-redirected-cross-origin-response.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-13T08:55:23Z",
+      "side": 1,
+      "message": "UseCounter is per page.\nSo assert_false(isUseCounted()) fails in the second test if we have two tests in one file.",
+      "parentUuid": "be516a23_106a014c",
       "revId": "00e12a4135395e09b15ff9d72bb4fcfdf7be9d9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "f68b9304_c511d6a6",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/FetchRespondWithObserver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-13T08:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70d2fa82_c77d8b84",
+      "range": {
+        "startLine": 241,
+        "startChar": 6,
+        "endLine": 241,
+        "endChar": 28
+      },
+      "revId": "00e12a4135395e09b15ff9d72bb4fcfdf7be9d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08fca73f_ed3ab8af",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/FetchRespondWithObserver.cpp",
         "patchSetId": 3
@@ -104,6 +200,24 @@
       "writtenOn": "2017-11-13T08:07:34Z",
       "side": 1,
       "message": "I\u0027m pretty confused that AreSameSchemeHostPort is the function Blink uses to check for same-origin vs cross-origin..... it\u0027s weird that the documentation says \"It is used for postMessage\". What is the diff between this and \"SecurityOrigin::CanRequest()\" or \"SecurityOrigin::CanAccess\"?",
+      "revId": "00e12a4135395e09b15ff9d72bb4fcfdf7be9d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18964252_1c12db19",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/FetchRespondWithObserver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-11-13T08:55:23Z",
+      "side": 1,
+      "message": "I think the difference is AreSameSchemeHostPort ignores the white list.",
+      "parentUuid": "08fca73f_ed3ab8af",
       "revId": "00e12a4135395e09b15ff9d72bb4fcfdf7be9d9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
