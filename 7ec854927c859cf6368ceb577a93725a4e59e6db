@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c206b913_131a037a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1939,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-13T19:08:20Z",
+      "side": 1,
+      "message": "Wait... Doesn\u0027t this break the command?\n\nAt L1933, |mark| is a reference to |Editor::mark_|.\nL1938 overwrites |Editor::mark_| by the current frame selection, which also overwrites |mark|.\nAs a result, L1939 fails to set selection to the old mark.",
+      "range": {
+        "startLine": 1938,
+        "startChar": 0,
+        "endLine": 1939,
+        "endChar": 53
+      },
+      "revId": "7ec854927c859cf6368ceb577a93725a4e59e6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
