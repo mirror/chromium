@@ -22,6 +22,57 @@
       "revId": "ca482420bf996d5c01db03327aa4eaebcc8022ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "009d00e6_ef36ed7e",
+        "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-13T12:53:49Z",
+      "side": 1,
+      "message": "Use WTF::ThreadSpecific in Blink.",
+      "revId": "ca482420bf996d5c01db03327aa4eaebcc8022ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a330a127_9c4fa3ab",
+        "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithThread.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-13T12:53:49Z",
+      "side": 1,
+      "message": "Instead of creating a new class, would it be possible to add CreateThread and CurrentThread to TestingPlatformSupport?",
+      "revId": "ca482420bf996d5c01db03327aa4eaebcc8022ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37dcd78c_7b45a895",
+        "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithThread.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-13T12:53:49Z",
+      "side": 1,
+      "message": "What do you mean by \"may not for the main thread\"? When does it work?",
+      "revId": "ca482420bf996d5c01db03327aa4eaebcc8022ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
