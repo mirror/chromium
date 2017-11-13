@@ -16,6 +16,24 @@
       "revId": "5bbe4066f22110e742a9518a232b5d287c6361c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0401ff_0fd31719",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-13T15:35:17Z",
+      "side": 1,
+      "message": "True, it does look pretty weird. Updated.",
+      "parentUuid": "646f9a0b_e8f8e066",
+      "revId": "5bbe4066f22110e742a9518a232b5d287c6361c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
