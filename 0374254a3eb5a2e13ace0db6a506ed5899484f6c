@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a400f94_2bb51d75",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-13T20:15:24Z",
+      "side": 1,
+      "message": "I think this back-and-forth between the delegate and controller is pretty confusing, and makes it hard to reason about under which circumstances bubbles will show.  I\u0027d prefer we put more of the logic into the delegate, and these methods become much simpler.  e.g., ShouldShow() remains similar, but OnShown() just notifies the delegate that it was shown:\n\nvoid ExtensionMessageBubbleController::OnShown(\n    const base::Closure\u0026 close_bubble_callback) {\n  close_bubble_callback_ \u003d close_bubble_callback;\n  DCHECK(is_active_bubble_);\n  delegate_-\u003eOnShown();\n};\n\nThen the delegate class implements the logic:\n\n// chrome/browser/extensions/ntp_overridden_bubble_delegate.cc\nbase::LazyInstance\u003cstd::set\u003cstd::pair\u003cProfile*, std::string\u003e\u003e::Leaky\n    g_shown \u003d LAZY_INSTANCE_INITIALIZER;\n\nbool NtpOverriddenBubbleDelegate::ShouldShow(\n    const ExtensionIdList\u0026 extensions) {\n  DCHECK_EQ(1u, extensions.size());\n  return !base::ContainsValue(\n      g_shown, std::make_pair(profile_, extensions[0]));\n}\n\nvoid NtpOverriddenBubbleDelegate::OnShown(const ExtensionIdList\u0026 extensions) {\n  DCHECK_EQ(1u, extensions.size());\n  DCHECK(!base::ContainsValue(\n    g_shown, std::make_pair(profile_, extensions[0]));\n  g_shown.insert(std::make_pair(profile_, extensions[0]));\n}\n\n// chrome/browser/extensions/dev_mode_bubble_delegate.cc\nbase::LazyInstance\u003cstd::set\u003cProfile*\u003e::Leaky g_shown \u003d\n    LAZY_INSTANCE_INITIALIZER;\n\nbool DevModeBubbleDelegate::ShouldShow(\n    const ExtensionIdList\u0026 extensions) {\n  DCHECK_EQ(1u, extensions.size());\n  return !base::ContainsValue(g_shown, profile_);\n}\n\nvoid DevModeBubbleDelegate::OnShown(const ExtensionIdList\u0026 extensions) {\n  DCHECK_EQ(1u, extensions.size());\n  DCHECK(!base::ContainsValue(g_shown, profile_));\n  g_shown.insert(profile_);\n}\n\n----------\n\nIt seems like something like that would make it a lot easier to quickly tell whether a bubble will show.  WDYT?  We could also then get rid of the lazy instances in this file, the GetKey() delegate function, and the ClearProfileSetAfterAction().",
+      "revId": "0374254a3eb5a2e13ace0db6a506ed5899484f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
