@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "419abf57_d59f16b5",
+        "filename": "gin/converter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-13T21:42:12Z",
+      "side": 1,
+      "message": "Is the bifurcation between Converter\u003cT\u003e and ToV8Traits\u003cT\u003e necessary, or could these be one template? It\u0027s slightly confusing the way this is presently routed.",
+      "revId": "3092c3d3cb377c63488c80d81819f9fa9ae31999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
