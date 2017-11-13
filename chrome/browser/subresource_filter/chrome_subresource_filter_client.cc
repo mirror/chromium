@@ -16,6 +16,7 @@
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
+#include "chrome/browser/subresource_filter/better_ads_console_messager.h"
 #include "chrome/browser/subresource_filter/subresource_filter_content_settings_manager.h"
 #include "chrome/browser/subresource_filter/subresource_filter_profile_context.h"
 #include "chrome/browser/subresource_filter/subresource_filter_profile_context_factory.h"
@@ -25,6 +26,7 @@
 #include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/rappor_service_impl.h"
 #include "components/safe_browsing/db/database_manager.h"
+#include "components/subresource_filter/content/browser/console_messager.h"
 #include "components/subresource_filter/content/browser/content_ruleset_service.h"
 #include "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.h"
 #include "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle.h"
@@ -162,6 +164,25 @@ void ChromeSubresourceFilterClient::WhitelistByContentSettings(
 
 bool ChromeSubresourceFilterClient::ForceActivationInCurrentWebContents() {
   return activated_via_devtools_;
+}
+
+std::unique_ptr<subresource_filter::ConsoleMessager>
+ChromeSubresourceFilterClient::GetConsoleMessagerForPageLoad(
+    const subresource_filter::Configuration& matched_configuration,
+    bool warning) {
+  DCHECK_EQ(matched_configuration.activation_options.activation_level,
+            subresource_filter::ActivationLevel::ENABLED);
+  if (matched_configuration.activation_options.should_suppress_notifications)
+    return nullptr;
+
+  switch (matched_configuration.activation_conditions.activation_list) {
+    case subresource_filter::ActivationList::BETTER_ADS:
+      return MakeBetterAdsMessager(warning);
+    default:
+      return nullptr;
+  }
+  NOTREACHED();
+  return nullptr;
 }
 
 void ChromeSubresourceFilterClient::WhitelistInCurrentWebContents(

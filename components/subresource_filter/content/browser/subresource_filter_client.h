@@ -5,7 +5,11 @@
 #ifndef COMPONENTS_SUBRESOURCE_FILTER_CONTENT_BROWSER_SUBRESOURCE_FILTER_CLIENT_H_
 #define COMPONENTS_SUBRESOURCE_FILTER_CONTENT_BROWSER_SUBRESOURCE_FILTER_CLIENT_H_
 
+#include <memory>
+
+#include "components/subresource_filter/content/browser/console_messager.h"
 #include "components/subresource_filter/content/browser/verified_ruleset_dealer.h"
+#include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "content/public/browser/web_contents.h"
 
 class GURL;
@@ -15,6 +19,8 @@ class NavigationHandle;
 }  // namespace content
 
 namespace subresource_filter {
+
+class ConsoleMessager;
 
 class SubresourceFilterClient {
  public:
@@ -46,6 +52,10 @@ class SubresourceFilterClient {
   // Returns whether this navigation should be forced to be activated. This is
   // currently only used for devtools.
   virtual bool ForceActivationInCurrentWebContents() = 0;
+
+  virtual std::unique_ptr<ConsoleMessager> GetConsoleMessagerForPageLoad(
+      const Configuration& matched_configuration,
+      bool warning);
 };
 
 }  // namespace subresource_filter

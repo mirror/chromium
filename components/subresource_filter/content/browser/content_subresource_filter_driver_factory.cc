@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/rand_util.h"
 #include "base/time/time.h"
+#include "components/subresource_filter/content/browser/console_messager.h"
 #include "components/subresource_filter/content/browser/page_load_statistics.h"
 #include "components/subresource_filter/content/browser/subresource_filter_client.h"
 #include "components/subresource_filter/content/browser/subresource_filter_observer_manager.h"
@@ -100,18 +101,18 @@ void ContentSubresourceFilterDriverFactory::NotifyPageActivationComputed(
   state.measure_performance = ShouldMeasurePerformanceForPageLoad(
       activation_options().performance_measurement_rate);
 
+  console_messager_.reset();
+  if (matched_configuration_.activation_options.activation_level ==
+      subresource_filter::ActivationLevel::ENABLED) {
+    client_->GetConsoleMessagerForPageLoad(matched_configuration, warning);
+  }
+
   // This bit keeps track of BAS enforcement-style logging, not warning logging.
   state.enable_logging =
-      activation_options().activation_level == ActivationLevel::ENABLED &&
-      !activation_options().should_suppress_notifications &&
-      matched_configuration != Configuration::MakeForForcedActivation() &&
-      base::FeatureList::IsEnabled(
-          kSafeBrowsingSubresourceFilterExperimentalUI);
+      console_messager_ && console_messager_->ShouldLogSubresources();
 
   if (warning &&
       activation_options().activation_level == ActivationLevel::ENABLED) {
-    DCHECK(on_commit_warning_messages_.empty());
-    SetOnCommitWarningMessages();
     // Do not disallow enforcement if activated via devtools.
     if (!forced_activation_via_devtools) {
       activation_decision_ = ActivationDecision::ACTIVATION_DISABLED;
@@ -137,6 +138,10 @@ void ContentSubresourceFilterDriverFactory::OnFirstSubresourceLoadDisallowed() {
   client_->ShowNotification();
 }
 
+ConsoleMessager* ContentSubresourceFilterDriverFactory::GetConsoleMessager() {
+  return console_messager_.get();
+}
+
 void ContentSubresourceFilterDriverFactory::DidStartNavigation(
     content::NavigationHandle* navigation_handle) {
   if (navigation_handle->IsInMainFrame() &&
@@ -153,34 +158,14 @@ void ContentSubresourceFilterDriverFactory::DidFinishNavigation(
     return;
   }
 
-  std::vector<std::string> log_messages =
-      std::move(on_commit_warning_messages_);
-
   if (!navigation_handle->HasCommitted())
     return;
-
-  DCHECK(on_commit_warning_messages_.empty());
 
   if (activation_decision_ == ActivationDecision::UNKNOWN) {
     activation_decision_ = ActivationDecision::ACTIVATION_DISABLED;
     matched_configuration_ = Configuration();
+    console_messager_.reset();
     return;
-  }
-
-  content::RenderFrameHost* frame_host =
-      navigation_handle->GetRenderFrameHost();
-  for (auto& warning_message : log_messages) {
-    frame_host->AddMessageToConsole(content::CONSOLE_MESSAGE_LEVEL_WARNING,
-                                    warning_message);
-  }
-}
-
-void ContentSubresourceFilterDriverFactory::SetOnCommitWarningMessages() {
-  DCHECK_EQ(ActivationLevel::ENABLED, activation_options().activation_level);
-  // If the matched configuration *would have* triggered resource blocking,
-  // log a warning.
-  if (!activation_options().should_suppress_notifications) {
-    on_commit_warning_messages_.push_back(kActivationWarningConsoleMessage);
   }
 }
 

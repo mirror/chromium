@@ -118,6 +118,10 @@ class ChromeSubresourceFilterClient
   subresource_filter::VerifiedRulesetDealer::Handle* GetRulesetDealer()
       override;
   bool ForceActivationInCurrentWebContents() override;
+  std::unique_ptr<subresource_filter::ConsoleMessager>
+  GetConsoleMessagerForPageLoad(
+      const subresource_filter::Configuration& matched_configuration,
+      bool warning) override;
 
   // Should be called by devtools in response to a protocol command to enable ad
   // blocking in this WebContents. Should only persist while devtools is

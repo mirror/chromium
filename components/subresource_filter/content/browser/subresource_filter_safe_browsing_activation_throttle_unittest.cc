@@ -101,6 +101,12 @@ class MockSubresourceFilterClient : public SubresourceFilterClient {
     return ruleset_dealer_.get();
   }
 
+  std::unique_ptr<ConsoleMessager> GetConsoleMessagerForPageLoad(
+      const subresource_filter::Configuration& matched_configuration,
+      bool warning) override {
+    return nullptr;
+  }
+
   MOCK_METHOD0(ShowNotification, void());
   MOCK_METHOD0(OnNewNavigationStarted, void());
   MOCK_METHOD0(ForceActivationInCurrentWebContents, bool());

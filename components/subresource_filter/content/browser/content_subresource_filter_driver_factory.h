@@ -24,6 +24,7 @@ class SafeBrowsingServiceTest;
 
 namespace subresource_filter {
 
+class ConsoleMessager;
 class SubresourceFilterClient;
 enum class ActivationLevel;
 enum class ActivationList;
@@ -64,6 +65,7 @@ class ContentSubresourceFilterDriverFactory
 
   // ContentSubresourceFilterThrottleManager::Delegate:
   void OnFirstSubresourceLoadDisallowed() override;
+  ConsoleMessager* GetConsoleMessager() override;
 
   ContentSubresourceFilterThrottleManager* throttle_manager() {
     return throttle_manager_.get();
@@ -90,6 +92,10 @@ class ContentSubresourceFilterDriverFactory
   // Must outlive this class.
   SubresourceFilterClient* client_;
 
+  // Scoped to a single page load. Will be set at page activation time. Will be
+  // nullptr if the activation should not have any logging.
+  std::unique_ptr<ConsoleMessager> console_messager_;
+
   std::unique_ptr<ContentSubresourceFilterThrottleManager> throttle_manager_;
 
   // The activation decision corresponding to the most recently _started_
@@ -115,11 +121,6 @@ class ContentSubresourceFilterDriverFactory
   // a config in GetEnabledConfigurations() due to activation computation
   // changing the config (e.g. for forcing devtools activation).
   Configuration matched_configuration_;
-
-  // Messages to be logged if the most recently _committed_ non-same-document
-  // navigation in the main frame was in an activation list with warning bit
-  // set. Has the same lifetime as |matched_configuration_|.
-  std::vector<std::string> on_commit_warning_messages_;
 
   DISALLOW_COPY_AND_ASSIGN(ContentSubresourceFilterDriverFactory);
 };

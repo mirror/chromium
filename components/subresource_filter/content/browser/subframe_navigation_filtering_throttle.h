@@ -19,6 +19,7 @@ class NavigationHandle;
 namespace subresource_filter {
 
 class AsyncDocumentSubresourceFilter;
+class ConsoleMessager;
 
 // NavigationThrottle responsible for filtering subframe document loads, which
 // are considered subresource loads of their parent frame, hence are subject to
@@ -32,7 +33,8 @@ class SubframeNavigationFilteringThrottle : public content::NavigationThrottle {
  public:
   SubframeNavigationFilteringThrottle(
       content::NavigationHandle* handle,
-      AsyncDocumentSubresourceFilter* parent_frame_filter);
+      AsyncDocumentSubresourceFilter* parent_frame_filter,
+      ConsoleMessager* console_messager);
   ~SubframeNavigationFilteringThrottle() override;
 
   // content::NavigationThrottle:
@@ -54,6 +56,7 @@ class SubframeNavigationFilteringThrottle : public content::NavigationThrottle {
 
   // Must outlive this class.
   AsyncDocumentSubresourceFilter* parent_frame_filter_;
+  ConsoleMessager* console_messager_;
 
   base::TimeTicks last_defer_timestamp_;
   base::TimeDelta total_defer_time_;

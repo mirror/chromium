@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
+#include "components/subresource_filter/content/browser/console_messager.h"
 #include "components/subresource_filter/content/browser/subresource_filter_observer_manager.h"
 #include "components/subresource_filter/core/browser/subresource_filter_constants.h"
 #include "components/subresource_filter/core/common/time_measurements.h"
@@ -22,9 +23,11 @@ namespace subresource_filter {
 
 SubframeNavigationFilteringThrottle::SubframeNavigationFilteringThrottle(
     content::NavigationHandle* handle,
-    AsyncDocumentSubresourceFilter* parent_frame_filter)
+    AsyncDocumentSubresourceFilter* parent_frame_filter,
+    ConsoleMessager* console_messager)
     : content::NavigationThrottle(handle),
       parent_frame_filter_(parent_frame_filter),
+      console_messager_(console_messager),
       weak_ptr_factory_(this) {
   DCHECK(!handle->IsInMainFrame());
   DCHECK(parent_frame_filter_);
@@ -92,15 +95,10 @@ void SubframeNavigationFilteringThrottle::OnCalculatedLoadPolicy(
   total_defer_time_ += base::TimeTicks::Now() - last_defer_timestamp_;
 
   if (policy == LoadPolicy::DISALLOW) {
-    if (parent_frame_filter_->activation_state().enable_logging) {
-      std::ostringstream oss(kDisallowSubframeConsoleMessagePrefix);
-      oss << navigation_handle()->GetURL();
-      oss << kDisallowSubframeConsoleMessageSuffix;
-      navigation_handle()
-          ->GetWebContents()
-          ->GetMainFrame()
-          ->AddMessageToConsole(content::CONSOLE_MESSAGE_LEVEL_ERROR,
-                                oss.str());
+    if (console_messager_) {
+      console_messager_->LogSubframeDisallowed(
+          navigation_handle()->GetURL(),
+          navigation_handle()->GetWebContents()->GetMainFrame());
     }
 
     parent_frame_filter_->ReportDisallowedLoad();

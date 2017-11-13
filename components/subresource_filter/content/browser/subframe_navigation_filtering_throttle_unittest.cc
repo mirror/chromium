@@ -60,7 +60,7 @@ class SubframeNavigationFilteringThrottleTest
     if (parent_filter_) {
       navigation_handle->RegisterThrottleForTesting(
           base::MakeUnique<SubframeNavigationFilteringThrottle>(
-              navigation_handle, parent_filter_.get()));
+              navigation_handle, parent_filter_.get(), nullptr));
     }
   }
 

@@ -15,6 +15,7 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "components/subresource_filter/content/browser/activation_state_computing_navigation_throttle.h"
 #include "components/subresource_filter/content/browser/async_document_subresource_filter.h"
+#include "components/subresource_filter/content/browser/console_messager.h"
 #include "components/subresource_filter/content/browser/page_load_statistics.h"
 #include "components/subresource_filter/content/browser/subframe_navigation_filtering_throttle.h"
 #include "components/subresource_filter/content/browser/subresource_filter_observer_manager.h"
@@ -29,6 +30,11 @@
 #include "net/base/net_errors.h"
 
 namespace subresource_filter {
+
+ConsoleMessager*
+ContentSubresourceFilterThrottleManager::Delegate::GetConsoleMessager() {
+  return nullptr;
+}
 
 ContentSubresourceFilterThrottleManager::
     ContentSubresourceFilterThrottleManager(
@@ -122,16 +128,12 @@ void ContentSubresourceFilterThrottleManager::DidFinishNavigation(
       navigation_handle->GetRenderFrameHost();
   if (navigation_handle->IsInMainFrame()) {
     current_committed_load_has_notified_disallowed_load_ = false;
+    if (auto* messager = delegate_->GetConsoleMessager())
+      messager->LogOnCommit(!!filter, frame_host);
     statistics_.reset();
     if (filter) {
       statistics_ =
           base::MakeUnique<PageLoadStatistics>(filter->activation_state());
-      if (filter->activation_state().enable_logging) {
-        DCHECK(filter->activation_state().activation_level !=
-               ActivationLevel::DISABLED);
-        frame_host->AddMessageToConsole(content::CONSOLE_MESSAGE_LEVEL_WARNING,
-                                        kActivationConsoleMessage);
-      }
     }
     ActivationLevel level = filter ? filter->activation_state().activation_level
                                    : ActivationLevel::DISABLED;
@@ -234,7 +236,8 @@ ContentSubresourceFilterThrottleManager::
   AsyncDocumentSubresourceFilter* parent_filter =
       GetParentFrameFilter(navigation_handle);
   return parent_filter ? base::MakeUnique<SubframeNavigationFilteringThrottle>(
-                             navigation_handle, parent_filter)
+                             navigation_handle, parent_filter,
+                             delegate_->GetConsoleMessager())
                        : nullptr;
 }
 

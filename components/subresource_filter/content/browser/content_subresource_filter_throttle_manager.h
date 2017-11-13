@@ -32,6 +32,7 @@ namespace subresource_filter {
 
 class AsyncDocumentSubresourceFilter;
 class ActivationStateComputingNavigationThrottle;
+class ConsoleMessager;
 class SubframeNavigationFilteringThrottle;
 class SubresourceFilterObserverManager;
 class PageLoadStatistics;
@@ -57,6 +58,8 @@ class ContentSubresourceFilterThrottleManager
     // The embedder may be interested in displaying UI to the user when the
     // first load is disallowed for a given page load.
     virtual void OnFirstSubresourceLoadDisallowed() {}
+
+    virtual ConsoleMessager* GetConsoleMessager();
   };
 
   ContentSubresourceFilterThrottleManager(
