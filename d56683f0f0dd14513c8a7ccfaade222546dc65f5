@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79530b16_91580cfc",
+        "filename": "ui/ozone/platform/wayland/wayland_cursor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-13T13:32:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d04658fc_46c9076c",
+      "range": {
+        "startLine": 98,
+        "startChar": 13,
+        "endLine": 98,
+        "endChar": 14
+      },
+      "revId": "d56683f0f0dd14513c8a7ccfaade222546dc65f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fe78d92_300c8fa0",
         "filename": "ui/ozone/platform/wayland/wayland_cursor.h",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-10T20:56:21Z",
       "side": 1,
       "message": "Can you write some docs here. Should say that |location| is the hotspot. Also what is |serial| ?",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 19
+      },
+      "revId": "d56683f0f0dd14513c8a7ccfaade222546dc65f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9689096d_c31a9ea8",
+        "filename": "ui/ozone/platform/wayland/wayland_cursor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-13T13:32:41Z",
+      "side": 1,
+      "message": "Done. I have added some docs to the method.\n\nAs for \u0027serial\u0027, this is what is stated in Wayland\u0027s documentation [1]:\n\n\u0027To avoid race conditions, input events that are likely to trigger further requests (such as button presses, key events, pointer motions) carry serial numbers, and requests such as wl_surface.set_popup require that the serial number of the triggering event is specified. The server maintains a monotonically increasing counter for these serial numbers.\u0027\n\nWe keep track of the serial value sent by the Wayland server in various methods, including mouse button down, mouse entering/exiting from a window bound, server ping, etc. We the API needs, we pass the latest serial we have tracked back to the server.\n\n[1] https://wayland.freedesktop.org/docs/html/ch04.html#sect-Protocol-Input",
+      "parentUuid": "3fe78d92_300c8fa0",
       "range": {
         "startLine": 40,
         "startChar": 7,
