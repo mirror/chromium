@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "16dc5d40_9b723c75",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-13T23:29:31Z",
+      "side": 1,
+      "message": "I\u0027d +1 for starting the mini container for the UI (in a separate CL) unless it\u0027s difficult to implement.",
+      "parentUuid": "40a6372c_44de9a2f",
+      "revId": "a8fbf5b6da5e8322087998f52dde6c5216575d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2a8f65b_33b3b5aa",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 1
