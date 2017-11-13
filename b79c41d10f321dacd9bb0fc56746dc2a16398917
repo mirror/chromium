@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2da6bef_e1a359b6",
+        "filename": "third_party/WebKit/Source/platform/text/SegmentedString.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-13T01:59:01Z",
+      "side": 1,
+      "message": "For consistency, would you move all initializers in default ctor as default params?",
+      "revId": "b79c41d10f321dacd9bb0fc56746dc2a16398917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "589c6b72_074e83e2",
+        "filename": "third_party/WebKit/Source/platform/text/SegmentedString.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-13T01:59:01Z",
+      "side": 1,
+      "message": "Should we add data_.void_ptr for this cmp?\nWould you add a comment that this is sentinel checking for both {8,16}bit?",
+      "revId": "b79c41d10f321dacd9bb0fc56746dc2a16398917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6727ad_1f99938b",
+        "filename": "third_party/WebKit/Source/platform/text/SegmentedString.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-13T01:59:01Z",
+      "side": 1,
+      "message": "I think this makes sense, but would you document this optimization in CL desc?",
+      "revId": "b79c41d10f321dacd9bb0fc56746dc2a16398917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
