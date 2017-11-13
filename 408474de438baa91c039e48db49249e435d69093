@@ -22,6 +22,30 @@
       "revId": "408474de438baa91c039e48db49249e435d69093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe4b220_1d3605af",
+        "filename": "components/sync/driver/about_sync_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-13T08:42:58Z",
+      "side": 1,
+      "message": "I\u0027m expecting that it won\u0027t take long, but expectations are kind of like assumptions ;)...I renamed it :).",
+      "parentUuid": "e06b0af8_e71e7473",
+      "range": {
+        "startLine": 79,
+        "startChar": 42,
+        "endLine": 79,
+        "endChar": 67
+      },
+      "revId": "408474de438baa91c039e48db49249e435d69093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
