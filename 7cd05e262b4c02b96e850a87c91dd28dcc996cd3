@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "98636d98_0b674340",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-13T21:47:46Z",
+      "side": 1,
+      "message": "Oh snap! Good catch! I\u0027ve added the capabilities here. The long-term plan is to merge the capability matching on desktop and Android once CanMakePaymentEvents are implemented on desktop.",
+      "parentUuid": "201724fa_bf57f190",
+      "range": {
+        "startLine": 174,
+        "startChar": 34,
+        "endLine": 174,
+        "endChar": 74
+      },
+      "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d10f835_b653ebc7",
         "filename": "components/payments/content/service_worker_payment_app_factory.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "01ba71ec_52ff4488",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-13T21:47:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d10f835_b653ebc7",
+      "range": {
+        "startLine": 24,
+        "startChar": 19,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3597e986_57407283",
         "filename": "components/payments/content/service_worker_payment_app_factory.cc",
         "patchSetId": 8
@@ -62,6 +110,24 @@
       "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ebbd31b_70299ca5",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-13T21:47:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3597e986_57407283",
+      "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "dd02495e_7e4d96cd",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-13T21:47:46Z",
+      "side": 1,
+      "message": "Goodness---code reviews are so good! This indeed can happen and should result in a match, but my patch here had a bug that resulted in non-match. I\u0027ve added a test and fixed the bug.",
+      "parentUuid": "3a0024a7_d7a45cba",
+      "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19724df0_5008ba94",
         "filename": "components/payments/content/service_worker_payment_app_factory.cc",
         "patchSetId": 8
@@ -96,6 +180,24 @@
       "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0159cf_f1466aad",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-13T21:47:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19724df0_5008ba94",
+      "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "97997740_8d423c31",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-13T21:47:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "436c802d_0ddbb456",
+      "range": {
+        "startLine": 43,
+        "startChar": 33,
+        "endLine": 43,
+        "endChar": 35
+      },
+      "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55162d05_7da4ccb2",
         "filename": "components/payments/content/service_worker_payment_app_factory.h",
         "patchSetId": 8
@@ -136,6 +262,24 @@
       "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40825902_4504e738",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-13T21:47:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55162d05_7da4ccb2",
+      "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
