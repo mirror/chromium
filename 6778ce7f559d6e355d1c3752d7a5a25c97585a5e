@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92875795_75b60465",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-13T22:01:17Z",
+      "side": 1,
+      "message": "drop public, just struct.",
+      "revId": "6778ce7f559d6e355d1c3752d7a5a25c97585a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad22443f_a2edec80",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-13T22:01:17Z",
+      "side": 1,
+      "message": "const auto\u0026 it",
+      "revId": "6778ce7f559d6e355d1c3752d7a5a25c97585a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e38fe9f_d511a244",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-13T22:01:17Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "6778ce7f559d6e355d1c3752d7a5a25c97585a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66540da3_10fcfc86",
+        "filename": "content/browser/devtools/protocol/network_handler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-13T22:01:17Z",
+      "side": 1,
+      "message": "I think this is not needed here.",
+      "revId": "6778ce7f559d6e355d1c3752d7a5a25c97585a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
