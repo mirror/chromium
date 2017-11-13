@@ -11,6 +11,8 @@
 #include "components/omnibox/browser/autocomplete_provider_client.h"
 
 class Profile;
+class OmniboxEditController;
+class ChromeOmniboxEditController;
 
 namespace content {
 class StoragePartition;
@@ -18,7 +20,8 @@ class StoragePartition;
 
 class ChromeAutocompleteProviderClient : public AutocompleteProviderClient {
  public:
-  explicit ChromeAutocompleteProviderClient(Profile* profile);
+  explicit ChromeAutocompleteProviderClient(Profile* profile,
+                                            OmniboxEditController* controller);
   ~ChromeAutocompleteProviderClient() override;
 
   // AutocompleteProviderClient:
@@ -71,6 +74,7 @@ class ChromeAutocompleteProviderClient : public AutocompleteProviderClient {
 
  private:
   Profile* profile_;
+  ChromeOmniboxEditController* controller_;
   ChromeAutocompleteSchemeClassifier scheme_classifier_;
   UIThreadSearchTermsData search_terms_data_;
 

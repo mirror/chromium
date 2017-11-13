@@ -118,7 +118,8 @@ ChromeOmniboxClient::~ChromeOmniboxClient() {
 
 std::unique_ptr<AutocompleteProviderClient>
 ChromeOmniboxClient::CreateAutocompleteProviderClient() {
-  return base::MakeUnique<ChromeAutocompleteProviderClient>(profile_);
+  return base::MakeUnique<ChromeAutocompleteProviderClient>(profile_,
+                                                            controller_);
 }
 
 std::unique_ptr<OmniboxNavigationObserver>
