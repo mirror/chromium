@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4eeeaca_6b0b7733",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1502,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-13T21:35:39Z",
+      "side": 1,
+      "message": "Is the qualifier arc:: necessary here?",
+      "range": {
+        "startLine": 1498,
+        "startChar": 0,
+        "endLine": 1502,
+        "endChar": 31
+      },
+      "revId": "333d4fe274a60583487e3b5c9a28fb90e4b34716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb51ee43_2ae98c59",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-13T21:35:39Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 688,
+        "startChar": 14,
+        "endLine": 688,
+        "endChar": 19
+      },
+      "revId": "333d4fe274a60583487e3b5c9a28fb90e4b34716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e386ec4_177b9881",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-13T21:35:39Z",
+      "side": 1,
+      "message": "same",
+      "revId": "333d4fe274a60583487e3b5c9a28fb90e4b34716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7874d218_d6b88951",
+        "filename": "chrome/browser/chromeos/arc/user_session/arc_user_session_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-13T21:35:39Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 11
+      },
+      "revId": "333d4fe274a60583487e3b5c9a28fb90e4b34716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d316fc_6d9ff244",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-13T21:35:39Z",
+      "side": 1,
+      "message": "How about adding \".\" here instead?\n\n #include \u003cbase/strings/string_util.h\u003e\n ...\n return base::JoinString({kArcIntentHelperPackageName, to_append}, \".\");",
+      "revId": "333d4fe274a60583487e3b5c9a28fb90e4b34716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d9e446_3da53e56",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-13T21:35:39Z",
+      "side": 1,
+      "message": "const std::string\u0026",
+      "revId": "333d4fe274a60583487e3b5c9a28fb90e4b34716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
