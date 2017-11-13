@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "abbc6e55_2acb0da0",
+        "filename": "chrome/browser/ui/app_list/search/search_resource_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-13T06:16:06Z",
+      "side": 1,
+      "message": "I think a lot more code could be deleted from here. If you don\u0027t want to do it in this CL, could add some TODOs.\n\nThe speech_ui_ member can probably go entirely, along with the CreateNewProperty, OnSpeechRecognitionStateChanged, and the SpeechUIModel class, and possibly more would follow on from there.",
+      "revId": "38d78a5eced88bc1318de46b82d37379099fe39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1ec636a_9b7a9e23",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 3
@@ -19,6 +36,23 @@
         "endLine": 20431,
         "endChar": 13
       },
+      "revId": "38d78a5eced88bc1318de46b82d37379099fe39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46af994a_0c01f4b7",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-13T06:16:06Z",
+      "side": 1,
+      "message": "You should look at search_box_model.h which contains these four fields. on_icon and on_tooltip are no longer used and can be deleted. The off_* versions should have a different comment (since it mentions hotword).\n\nAlso I\u0027m not sure this is even used any more. From what I can tell in Code Search, the only call to create a SpeechButtonProperty is in the code you deleted above. So it\u0027s possible that speech_button_prop is now always null, so this entire code block (\"if (speech_button_prop)\" above) is dead code. Please consider whether this is true and possibly delete all this code, and the SpeechButtonProperty class in search_box_model.h.",
       "revId": "38d78a5eced88bc1318de46b82d37379099fe39a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
