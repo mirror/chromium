@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d40d1b3_58756d6f",
+        "filename": "chrome/browser/ui/find_bar/find_bar_controller_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-13T22:01:40Z",
+      "side": 1,
+      "message": "Instead of a class do:\nusing FindBaseControllErest \u003d InProcessBrowserTest;",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 59
+      },
+      "revId": "1b4794bc1ce5b1ffcb00b9194adb92f29c787e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d79b302_ce702242",
+        "filename": "chrome/browser/ui/find_bar/find_bar_controller_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-13T22:01:40Z",
+      "side": 1,
+      "message": "Generally we use an order of \u0027expected, actual.\u0027 So, null should be first.",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 11
+      },
+      "revId": "1b4794bc1ce5b1ffcb00b9194adb92f29c787e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bcc0a0b_82f0ec69",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-13T22:01:40Z",
+      "side": 1,
+      "message": "I looked at the history here and it seems the patch that introduced the regression also added the browser_ and browser_-\u003ewindow() checks. Could you elaborate on why these were necessary? AFAICT LocationBarView should never had a situation where the browser or BrowserWindow is null.",
+      "range": {
+        "startLine": 767,
+        "startChar": 25,
+        "endLine": 767,
+        "endChar": 57
+      },
+      "revId": "1b4794bc1ce5b1ffcb00b9194adb92f29c787e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
