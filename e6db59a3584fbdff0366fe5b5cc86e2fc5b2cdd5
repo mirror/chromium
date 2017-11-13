@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac6aae26_e826331f",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 4004,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-13T18:17:25Z",
+      "side": 1,
+      "message": "AFAIU (please correct me if I misunderstood something) with a cross-document, same-frame navigation, the sequence of events will look as follows:\n\n10. Browser sends to the Renderer a FrameMsg_Navigate\n20. Renderer runs unload handler.\n30. At this point old remote interfaces are still applicable.\n40. Renderer installs a new Document.\n50. !!! at this point old remote interfaces are no longer applicable\n60. Renderer calls |remote_interfaces_.Close()| (on line 4004 above)\n70. Renderer binds new |remote_interfaces_| (on line 4005 below)\n\nThe gap between 40-60 seems undesirable - at that point the frame is associated with a new document, but remote interfaces are still associated with the old document.  Would it be possible to call |remote_interfaces_.Close()| earlier.  Maybe not in this CL, but in a follow-up?",
+      "range": {
+        "startLine": 4004,
+        "startChar": 4,
+        "endLine": 4004,
+        "endChar": 31
+      },
+      "revId": "e6db59a3584fbdff0366fe5b5cc86e2fc5b2cdd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
