@@ -39,7 +39,8 @@ class DevToolsFrontendImpl : public RenderFrameObserver,
                        mojom::DevToolsFrontendAssociatedRequest request);
 
   // RenderFrameObserver overrides.
-  void DidClearWindowObject() override;
+  void DidCommitProvisionalLoad(bool is_new_navigation,
+                                bool is_same_document_navigation) override;
   void OnDestruct() override;
 
   // WebDevToolsFrontendClient implementation.

@@ -27,7 +27,9 @@ DevToolsFrontendImpl::DevToolsFrontendImpl(
 
 DevToolsFrontendImpl::~DevToolsFrontendImpl() {}
 
-void DevToolsFrontendImpl::DidClearWindowObject() {
+void DevToolsFrontendImpl::DidCommitProvisionalLoad(
+    bool is_new_navigation,
+    bool is_same_document_navigation) {
   if (!api_script_.empty())
     render_frame()->ExecuteJavaScript(base::UTF8ToUTF16(api_script_));
 }

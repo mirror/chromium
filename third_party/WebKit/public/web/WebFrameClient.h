@@ -242,9 +242,6 @@ class BLINK_EXPORT WebFrameClient {
   // This frame has become focused.
   virtual void FrameFocused() {}
 
-  // A provisional load is about to commit.
-  virtual void WillCommitProvisionalLoad() {}
-
   // This frame's name has changed.
   virtual void DidChangeName(const WebString& name) {}
 
@@ -421,6 +418,10 @@ class BLINK_EXPORT WebFrameClient {
   // that may have been set by script from the previously loaded document. This
   // will get invoked multiple times when navigating from an initial empty
   // document to the actual document.
+  //
+  // At this point it is safe to add new properties to the |window| object (e.g.
+  // to bind |window.chrome| or |window.internals|).  At this point it is NOT
+  // yet safe to execute scripts.
   virtual void DidClearWindowObject() {}
 
   // The document element has been created.

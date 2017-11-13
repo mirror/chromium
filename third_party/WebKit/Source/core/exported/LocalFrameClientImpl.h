@@ -96,7 +96,6 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void DispatchDidNavigateWithinPage(HistoryItem*,
                                      HistoryCommitType,
                                      bool content_initiated) override;
-  void DispatchWillCommitProvisionalLoad() override;
   void DispatchDidStartProvisionalLoad(DocumentLoader*,
                                        ResourceRequest&) override;
   void DispatchDidReceiveTitle(const String&) override;
