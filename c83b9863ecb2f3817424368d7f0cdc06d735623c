@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "c9727f39_27b733d0",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "Can we do the shift first, and OR\u0027ing later?",
+      "parentUuid": "f6090187_f06caaac",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28473a64_d3d61afc",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 1
@@ -447,6 +465,24 @@
     },
     {
       "key": {
+        "uuid": "703435d5_c113f7c0",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "Makes sense. Let\u0027s explain this in a short comment in the header, so that users of this class won\u0027t be surprised.",
+      "parentUuid": "8ffd6ac8_7609a5e4",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d1c1cba_a2d7b1fb",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 1
@@ -605,6 +641,24 @@
       "side": 1,
       "message": "Yes! RFC 7049 defines strict mode for decoder. However, in our case, we do not support tags, the restrictions for strict mode is equivalent to that of canonical CBOR. Below is first few paragraphs from RPC section 3.10. Please let me know which one would be more consistent. :) \n\n A decoder in strict mode will reliably reject any data that could be\n interpreted by other decoders in different ways.  It will reliably\n reject data items with syntax errors (Section 3.3).  It will also\n expend the effort to reliably detect other decoding errors\n (Section 3.4).  In particular, a strict decoder needs to have an API\n that reports an error (and does not return data) for a CBOR data item\n that contains any of the following:\n\n   o  a map (major type 5) that has more than one entry with the same\n      key\n\n   o  a tag that is used on a data item of the incorrect type\n\n   o  a data item that is incorrectly formatted for the type given to\n      it, such as invalid UTF-8 or data that cannot be interpreted with\n      the specific tag that it has been tagged with",
       "parentUuid": "c3336e48_0144eaef",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce52512b_13f0a0bd",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "Got it, thanks! In this case, I\u0027d stick to primarily using `canonical` in variable names and comments, and maybe mentioning `strict mode` in parentheses in the comment.",
+      "parentUuid": "af50aded_4858ad26",
       "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,345 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a8922d1_b1227f46",
+        "filename": "content/browser/webauth/cbor/cbor_binary.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: Blank line before.",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55318e87_229f22b3",
+        "filename": "content/browser/webauth/cbor/cbor_binary.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: Let\u0027s put these into a sub-namespace, like `impl` or `authenticator_impl`.",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f6a9e5_0f4ed9d7",
+        "filename": "content/browser/webauth/cbor/cbor_binary.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: , which is where ...\nnit: s/last/low-order/",
+      "range": {
+        "startLine": 11,
+        "startChar": 57,
+        "endLine": 11,
+        "endChar": 62
+      },
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e108246_e39288ab",
+        "filename": "content/browser/webauth/cbor/cbor_binary.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "// Mask selecting the high-order 3 bits  of the \"initial byte\", which indicates the major type of the encoded value.",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae28db2_215c6609",
+        "filename": "content/browser/webauth/cbor/cbor_binary.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: shift to the right",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fcda7df_d23078b2",
+        "filename": "content/browser/webauth/cbor/cbor_binary.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: Let\u0027s move this next to the corresponding mask.",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b173e4_549d953b",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: blank line at start/end of namespaces with multiple definitions.",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca41b59_221ceb96",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: initial_data_byte for consistency with the spec, same below.",
+      "range": {
+        "startLine": 13,
+        "startChar": 29,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b827ce4b_998bf813",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: For readability, how about explicitly naming things around here:\n\nconst uint8_t initial_byte \u003d *it_++;\nconst CBORValue::Type major_type \u003d GetMajorType(initial_byte);\nconst uint8_t additional_info \u003d GetAdditionalInfo(initial_byte);\n\nuint64_t length;\nif (!ReadUnsignedInt(additional_info, \u0026value))\n  ...\n\nswitch(...) {\n  case CBORValue::Type::UNSIGNED:\n    return CBORValue(length /* value */);\n\n  case CBORValue::Type::BYTE_STRING:\n    return ReadBytes(length);\n\n   ...\n}",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e756316b_9f099c1e",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "Do we want to set some specific error message here?",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f802b7b3_7214c849",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: Make output argument the last one.",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3a2913_7852d96c",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "Have you considered a more functional approach like this (to be more consistent with ReadBytes):\n\nif (!CanConsume(num_bytes))\n  return base::null_opt;\n\nstd::string cbor_string(num_bytes, \u0027\\0\u0027);\nstd::transform(it_, it_ + num_bytes, cbor_string.begin(), [] (uint8_t v) {\n  return static_cast\u003cconst char\u003e(v);\n});\n\nreturn ...",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdb64f0a_5d686397",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: Can we use base::make_optional(std::move(cbor_string)) here?",
+      "range": {
+        "startLine": 138,
+        "startChar": 15,
+        "endLine": 138,
+        "endChar": 50
+      },
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b227c24_a4df3a91",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: This could be simplified to:\n\nstd::vector\u003cuint8_t\u003e cbor_byte_string(it_, it_ + num_bytes);",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65a3985_70c7e948",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: Do we need this in the header?",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca915747_ed2d39e3",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: #include \u003cstddef.h\u003e",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2a4efe_412368a1",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: Include what you use: #include \u003cstring\u003e\nnit: Blank line between methods and variables.",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c2575c_a0b8d001",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: Unused.",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97710401_da609b90",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-13T14:27:56Z",
+      "side": 1,
+      "message": "nit: blank line after.",
+      "revId": "f465cd9dbb5101465b064ac055b714af1ae758d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
