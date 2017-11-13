@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f883018a_24511bdc",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T19:01:07Z",
+      "side": 1,
+      "message": "i\u0027m just going to leave it as is.",
+      "parentUuid": "cd75e7aa_cf67fa28",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1035a8fa_ca35fefa",
         "filename": "components/previews/content/previews_optimization_guide_impl.cc",
         "patchSetId": 6
@@ -547,6 +565,24 @@
       "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc59477_3bfac54a",
+        "filename": "components/previews/content/previews_ui_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-13T19:01:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a18239d9_a721e3d9",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
