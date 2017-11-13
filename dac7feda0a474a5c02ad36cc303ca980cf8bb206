@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "04b7e762_deb42dda",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-11-13T22:17:14Z",
+      "side": 1,
+      "message": "We would treat empty string as valid - it just disables setting hostname in DHCP request.\nHowever, this check should probably do that explicitly in line 111.",
+      "parentUuid": "e2e5841b_2cf00997",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a986d7b3_c6812702",
         "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
         "patchSetId": 2
