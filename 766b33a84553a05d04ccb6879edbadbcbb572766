@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "50353c82_75c039f0",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-11-13T21:40:16Z",
+      "side": 1,
+      "message": "Yes - please keep in mind that this is still a proof-of-concept. I hoped to hear if you find all of this applicable in general, and then cleanup things like this, fix naming, etc.",
+      "parentUuid": "46dae59d_b84c0636",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "423c457f_98d605c1",
         "filename": "content/browser/frame_host/navigation_controller_impl.cc",
         "patchSetId": 6
@@ -54,6 +72,42 @@
     },
     {
       "key": {
+        "uuid": "d76d4237_0cce2d37",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2280,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-11-13T21:40:16Z",
+      "side": 1,
+      "message": "The |current_document_load_failed_| flag in RFHI is cleared only in DidCommitProvisionalLoad handler, and only for cross-document commits. So it is not reset after same-document navigations.\n\n\u003e You need to reset the state in RFH when calling CommitNavigation and CommitErrorPage as well to avoid this issue.\n\nI think no, because the renderer can still send messages that refer to the previous document.\nBoth CommitNavigation and CommitErrorPage will result in a DidCommitProvisionalLoad sent back to the browser, should the renderer commit. And if it does not commit for some reason, the flag should not be reset.",
+      "parentUuid": "fb1aa5a5_14e3df04",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d2fba0_e66766e8",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2280,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-11-13T21:40:16Z",
+      "side": 1,
+      "message": "The |current_document_load_failed_| flag in RFHI is cleared only in DidCommitProvisionalLoad handler, and only for cross-document commits. So it is not reset after same-document navigations.\n\n\u003e You need to reset the state in RFH when calling CommitNavigation and CommitErrorPage as well to avoid this issue.\n\nI think no, because the renderer can still send messages that refer to the previous document.\nBoth CommitNavigation and CommitErrorPage will result in a DidCommitProvisionalLoad sent back to the browser, should the renderer commit. And if it does not commit for some reason, the flag should not be reset.",
+      "parentUuid": "fb1aa5a5_14e3df04",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44bed07c_ab2a105c",
         "filename": "content/browser/frame_host/navigation_controller_impl.h",
         "patchSetId": 6
@@ -65,6 +119,24 @@
       "writtenOn": "2017-11-13T04:44:56Z",
       "side": 1,
       "message": "Would it be easier to do this once per page (at the time of WebContentsImpl::DidStopLoading) rather than once per frame?  We could walk the tree at that point, doing it all in one pass.",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34120225_c2340d27",
+        "filename": "content/browser/frame_host/navigation_controller_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-11-13T21:40:16Z",
+      "side": 1,
+      "message": "Probably, yes, I\u0027ll give it a try.",
+      "parentUuid": "44bed07c_ab2a105c",
       "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "2e24c08f_8eb290a0",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6180,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-11-13T21:40:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4d28cef2_b614f6f4",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c030d052_48d5cf0c",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 6
@@ -99,6 +189,30 @@
       "writtenOn": "2017-11-13T04:44:56Z",
       "side": 1,
       "message": "nit: I know these test names are getting long, but this should be a more descriptive name.",
+      "range": {
+        "startLine": 6252,
+        "startChar": 6,
+        "endLine": 6252,
+        "endChar": 11
+      },
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd58407_d731761c",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6252,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-11-13T21:40:16Z",
+      "side": 1,
+      "message": "Of course :) saying it again, this is not a final and cleaned up version, please do not pay attention to these names. However, suggestions will be appreciated :)",
+      "parentUuid": "c030d052_48d5cf0c",
       "range": {
         "startLine": 6252,
         "startChar": 6,
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "0449ce7c_fcbd8b78",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6326,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-11-13T21:40:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8fb9fe86_e3223deb",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "001f8acb_28133718",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 6
@@ -139,6 +271,24 @@
       "writtenOn": "2017-11-13T04:44:56Z",
       "side": 1,
       "message": "This is seeming pretty complex.  I wonder if there\u0027s an easier way to test what we\u0027re after.",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64815dbe_f89dce3c",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6353,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-11-13T21:40:16Z",
+      "side": 1,
+      "message": "I don\u0027t know. Without this, the error sent by UrlRequestFailedJob would make the document appear empty. Probably the error received just cancels parsing of unprocessed chunks. If that\u0027s the case, I doubt that changing it in this CL would be a good idea.",
+      "parentUuid": "001f8acb_28133718",
       "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -367,6 +517,24 @@
     },
     {
       "key": {
+        "uuid": "0397dd50_ab18d745",
+        "filename": "content/browser/streams/stream_url_request_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-11-13T21:40:16Z",
+      "side": 1,
+      "message": "Please see my comment https://chromium-review.googlesource.com/c/chromium/src/+/713474/5/content/browser/streams/stream_url_request_job.cc#60\nWithout this change, if something was sent in the response body, the response was always successful. I believe this won\u0027t be needed when the recently announced passing of mojo URLLoader to the renderer is implemented instead of these streams.",
+      "parentUuid": "0a7bb019_27b5bc8e",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d1b8f7d_22dee5d2",
         "filename": "content/test/data/navigation_controller/iframe_loaded_once.html",
         "patchSetId": 6
@@ -378,6 +546,24 @@
       "writtenOn": "2017-11-13T04:44:56Z",
       "side": 1,
       "message": "Will this have problems for repeated tests?  Maybe it should use session storage so that the value doesn\u0027t stick around and affect other test runs?",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ead68404_786df89f",
+        "filename": "content/test/data/navigation_controller/iframe_loaded_once.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-11-13T21:40:16Z",
+      "side": 1,
+      "message": "That would mean that tests can reuse user data dir. I thought that it never happens, under any conditions (apart from PRE_ tests). Am I missing something?",
+      "parentUuid": "0d1b8f7d_22dee5d2",
       "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -412,6 +598,24 @@
       "writtenOn": "2017-11-13T04:44:56Z",
       "side": 1,
       "message": "Maybe we can get by without changing this file using ControllableHttpResponse?  I think you can return error codes there.",
+      "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42129d49_85ca30e7",
+        "filename": "net/test/url_request/url_request_failed_job.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-11-13T21:40:16Z",
+      "side": 1,
+      "message": "I did not see a way to return error codes with ControllableHttpResponse. I tried closing the connection of an unfinished response, but it is the same as calling Done on it. After digging for some time the internals of net/, I came to the conclusion that it is not possible to induce an arbitrary net error on the receiving side. Well, maybe it is possible, but it seems to be much much more complex than patching URLRequestFailedJob.",
+      "parentUuid": "13b5d5ab_2e8a067f",
       "revId": "766b33a84553a05d04ccb6879edbadbcbb572766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
