@@ -21,6 +21,7 @@ extern const char kHistogramDomContentLoaded[];
 extern const char kHistogramLoad[];
 extern const char kHistogramFirstContentfulPaint[];
 extern const char kHistogramFirstMeaningfulPaint[];
+extern const char kHistogramTimeToInteractive[];
 extern const char kHistogramParseDuration[];
 extern const char kHistogramParseBlockedOnScriptLoad[];
 extern const char kHistogramParseBlockedOnScriptExecution[];
@@ -82,6 +83,15 @@ enum FirstMeaningfulPaintStatus {
   FIRST_MEANINGFUL_PAINT_LAST_ENTRY
 };
 
+// enum TimeToInteractiveStatus {
+//   TIME_TO_INTERACTIVE_RECORDED,
+//   TIME_TO_INTERACTIVE_BACKGROUNDED,
+//   TIME_TO_INTERACTIVE_DID_NOT_REACH_NETWORK_STABLE,
+//   TIME_TO_INTERACTIVE_USER_INTERACTION_BEFORE_FMP,
+//   TIME_TO_INTERACTIVE_DID_NOT_REACH_FIRST_MEANINGFUL_PAINT,
+//   TIME_TO_INTERACTIVE_LAST_ENTRY
+// };
+
 }  // namespace internal
 
 // Observer responsible for recording 'core' page load metrics. Core metrics are
@@ -120,6 +130,9 @@ class CorePageLoadMetricsObserver
       const page_load_metrics::mojom::PageLoadTiming& timing,
       const page_load_metrics::PageLoadExtraInfo& extra_info) override;
   void OnFirstMeaningfulPaintInMainFrameDocument(
+      const page_load_metrics::mojom::PageLoadTiming& timing,
+      const page_load_metrics::PageLoadExtraInfo& extra_info) override;
+  void OnPageInteractive(
       const page_load_metrics::mojom::PageLoadTiming& timing,
       const page_load_metrics::PageLoadExtraInfo& extra_info) override;
   void OnParseStart(

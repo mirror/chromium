@@ -83,6 +83,18 @@ struct StyleSheetTiming {
   mojo.common.mojom.TimeDelta? update_style_duration_before_fcp;
 };
 
+// TimeDeltas below relative to navigation start.
+struct InteractiveTiming {
+  // The time of the first time the page is considered 'interactive'. This is
+  // determined using heuristics based on main thread and network activity.
+  mojo.common.mojom.TimeDelta? interactive;
+
+  // The time of when we detect the page is interactive. There is a delay
+  // between when the page was interactive and when we were able to detect it.
+  mojo.common.mojom.TimeDelta? interactive_detection;
+};
+
+
 // PageLoadTiming contains timing metrics associated with a page load. Many of
 // the metrics here are based on the Navigation Timing spec:
 // http://www.w3.org/TR/navigation-timing/.
@@ -97,6 +109,7 @@ struct PageLoadTiming {
   // received.
   mojo.common.mojom.TimeDelta? response_start;
   DocumentTiming document_timing;
+  InteractiveTiming interactive_timing;
   PaintTiming paint_timing;
   ParseTiming parse_timing;
   StyleSheetTiming style_sheet_timing;
