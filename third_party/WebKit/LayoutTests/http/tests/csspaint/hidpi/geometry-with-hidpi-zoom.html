@@ -19,7 +19,8 @@ html, body { margin: 0; padding: 0; }
 <script id="code" type="text/worklet">
 registerPaint('geometry', class {
     paint(ctx, geom) {
-        if (geom.width == 187 && geom.height == 187)
+        var expected_size = Math.round(187 * 0.33 * devicePixelRatio) / (0.33 * devicePixelRatio);
+        if (Math.abs(geom.width - expected_size) < 0.001 && Math.abs(geom.height - expected_size) < 0.001)
             ctx.fillStyle = 'green';
         else
             ctx.fillStyle = 'red';
