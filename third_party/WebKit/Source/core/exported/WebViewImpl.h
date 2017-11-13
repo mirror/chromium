@@ -191,6 +191,7 @@ class CORE_EXPORT WebViewImpl final
                                 WebLocalFrame* to) override;
   double ZoomLevel() override;
   double SetZoomLevel(double) override;
+  void UpdateZoomFactor() override;
   void ZoomLimitsChanged(double minimum_zoom_level,
                          double maximum_zoom_level) override;
   float TextZoomFactor() override;

@@ -218,6 +218,10 @@ class WebView : protected WebWidget {
   // change.
   virtual double SetZoomLevel(double) = 0;
 
+  // Updates the zoom factor based changes of zoom level and accessibility zoom
+  // and propagate it.
+  virtual void UpdateZoomFactor() = 0;
+
   // Updates the zoom limits for this view.
   virtual void ZoomLimitsChanged(double minimum_zoom_level,
                                  double maximum_zoom_level) = 0;

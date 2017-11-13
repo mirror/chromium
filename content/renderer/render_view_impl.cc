@@ -913,6 +913,8 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
   settings->SetAllowCustomScrollbarInMainFrame(false);
   settings->SetTextAutosizingEnabled(prefs.text_autosizing_enabled);
   settings->SetAccessibilityFontScaleFactor(prefs.font_scale_factor);
+  if (web_view->MainFrame())
+    web_view->UpdateZoomFactor();
   settings->SetDeviceScaleAdjustment(prefs.device_scale_adjustment);
   settings->SetFullscreenSupported(prefs.fullscreen_supported);
   web_view->SetIgnoreViewportTagScaleLimits(prefs.force_enable_zoom);
@@ -2516,6 +2518,7 @@ void RenderViewImpl::UpdateWebViewWithDeviceScaleFactor() {
   } else {
     webview()->SetDeviceScaleFactor(device_scale_factor_);
   }
+  webview()->UpdateZoomFactor();
   webview()->GetSettings()->SetPreferCompositingToLCDTextEnabled(
       PreferCompositingToLCDText(compositor_deps_, device_scale_factor_));
 }

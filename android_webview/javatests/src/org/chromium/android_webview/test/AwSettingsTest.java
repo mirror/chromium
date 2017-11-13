@@ -1043,102 +1043,6 @@ public class AwSettingsTest {
         }
     }
 
-    class AwSettingsTextZoomTestHelper extends AwSettingsTextAutosizingTestHelper<Integer> {
-        private static final int INITIAL_TEXT_ZOOM = 100;
-        private final float mInitialActualFontSize;
-
-        AwSettingsTextZoomTestHelper(
-                AwTestContainerView containerView,
-                TestAwContentsClient contentViewClient) throws Throwable {
-            super(containerView, contentViewClient);
-            mInitialActualFontSize = getActualFontSize();
-        }
-
-        @Override
-        protected Integer getAlteredValue() {
-            return INITIAL_TEXT_ZOOM * 2;
-        }
-
-        @Override
-        protected Integer getInitialValue() {
-            return INITIAL_TEXT_ZOOM;
-        }
-
-        @Override
-        protected Integer getCurrentValue() {
-            return mAwSettings.getTextZoom();
-        }
-
-        @Override
-        protected void setCurrentValue(Integer value) throws Throwable {
-            super.setCurrentValue(value);
-            mAwSettings.setTextZoom(value);
-        }
-
-        @Override
-        protected void doEnsureSettingHasValue(Integer value) throws Throwable {
-            final float actualFontSize = getActualFontSize();
-            // Ensure that actual vs. initial font size ratio is similar to actual vs. initial
-            // text zoom values ratio.
-            final float ratiosDelta = Math.abs(
-                    (actualFontSize / mInitialActualFontSize)
-                    - (value / (float) INITIAL_TEXT_ZOOM));
-            Assert.assertTrue("|(" + actualFontSize + " / " + mInitialActualFontSize + ") - ("
-                            + value + " / " + INITIAL_TEXT_ZOOM + ")| = " + ratiosDelta,
-                    ratiosDelta <= 0.2f);
-        }
-    }
-
-    class AwSettingsTextZoomAutosizingTestHelper
-            extends AwSettingsTextAutosizingTestHelper<Integer> {
-        private static final int INITIAL_TEXT_ZOOM = 100;
-        private final float mInitialActualFontSize;
-
-        AwSettingsTextZoomAutosizingTestHelper(
-                AwTestContainerView containerView,
-                TestAwContentsClient contentViewClient) throws Throwable {
-            super(containerView, contentViewClient);
-            mAwSettings.setLayoutAlgorithm(AwSettings.LAYOUT_ALGORITHM_TEXT_AUTOSIZING);
-            // The initial font size can be adjusted by font autosizer depending on the page's
-            // viewport width.
-            mInitialActualFontSize = getActualFontSize();
-        }
-
-        @Override
-        protected Integer getAlteredValue() {
-            return INITIAL_TEXT_ZOOM * 2;
-        }
-
-        @Override
-        protected Integer getInitialValue() {
-            return INITIAL_TEXT_ZOOM;
-        }
-
-        @Override
-        protected Integer getCurrentValue() {
-            return mAwSettings.getTextZoom();
-        }
-
-        @Override
-        protected void setCurrentValue(Integer value) throws Throwable {
-            super.setCurrentValue(value);
-            mAwSettings.setTextZoom(value);
-        }
-
-        @Override
-        protected void doEnsureSettingHasValue(Integer value) throws Throwable {
-            final float actualFontSize = getActualFontSize();
-            // Ensure that actual vs. initial font size ratio is similar to actual vs. initial
-            // text zoom values ratio.
-            final float ratiosDelta = Math.abs(
-                    (actualFontSize / mInitialActualFontSize)
-                    - (value / (float) INITIAL_TEXT_ZOOM));
-            Assert.assertTrue("|(" + actualFontSize + " / " + mInitialActualFontSize + ") - ("
-                            + value + " / " + INITIAL_TEXT_ZOOM + ")| = " + ratiosDelta,
-                    ratiosDelta <= 0.2f);
-        }
-    }
-
     class AwSettingsJavaScriptPopupsTestHelper extends AwSettingsTestHelper<Boolean> {
         private static final String POPUP_ENABLED = "Popup enabled";
         private static final String POPUP_BLOCKED = "Popup blocked";
@@ -2244,28 +2148,6 @@ public class AwSettingsTest {
         runPerViewSettingsTest(
                 new AwSettingsLayoutAlgorithmTestHelper(views.getContainer0(), views.getClient0()),
                 new AwSettingsLayoutAlgorithmTestHelper(views.getContainer1(), views.getClient1()));
-    }
-
-    @Test
-    @SmallTest
-    @Feature({"AndroidWebView", "Preferences"})
-    public void testTextZoomWithTwoViews() throws Throwable {
-        ViewPair views = createViews();
-        runPerViewSettingsTest(
-                new AwSettingsTextZoomTestHelper(views.getContainer0(), views.getClient0()),
-                new AwSettingsTextZoomTestHelper(views.getContainer1(), views.getClient1()));
-    }
-
-    @Test
-    @SmallTest
-    @Feature({"AndroidWebView", "Preferences"})
-    public void testTextZoomAutosizingWithTwoViews() throws Throwable {
-        ViewPair views = createViews();
-        runPerViewSettingsTest(
-                new AwSettingsTextZoomAutosizingTestHelper(
-                        views.getContainer0(), views.getClient0()),
-                new AwSettingsTextZoomAutosizingTestHelper(
-                        views.getContainer1(), views.getClient1()));
     }
 
     @Test

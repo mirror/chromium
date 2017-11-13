@@ -263,7 +263,6 @@ class CORE_EXPORT TextAutosizer final
     PageInfo()
         : frame_width_(0),
           layout_width_(0),
-          accessibility_font_scale_factor_(1),
           device_scale_adjustment_(1),
           page_needs_autosizing_(false),
           has_autosized_(false),
@@ -271,7 +270,6 @@ class CORE_EXPORT TextAutosizer final
 
     int frame_width_;  // LocalFrame width in density-independent pixels (DIPs).
     int layout_width_;  // Layout width in CSS pixels.
-    float accessibility_font_scale_factor_;
     float device_scale_adjustment_;
     bool page_needs_autosizing_;
     bool has_autosized_;

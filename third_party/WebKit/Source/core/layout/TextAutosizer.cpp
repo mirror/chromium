@@ -583,11 +583,6 @@ void TextAutosizer::UpdatePageInfo() {
     page_info_.layout_width_ =
         horizontal_writing_mode ? layout_size.Width() : layout_size.Height();
 
-    // TODO(pdr): Accessibility should be moved out of the text autosizer. See:
-    // crbug.com/645717.
-    page_info_.accessibility_font_scale_factor_ =
-        document_->GetSettings()->GetAccessibilityFontScaleFactor();
-
     // If the page has a meta viewport or @viewport, don't apply the device
     // scale adjustment.
     if (!main_frame.GetDocument()
@@ -605,8 +600,7 @@ void TextAutosizer::UpdatePageInfo() {
     // trigger autosizing. See: crbug.com/646237.
     page_info_.page_needs_autosizing_ =
         !!page_info_.frame_width_ &&
-        (page_info_.accessibility_font_scale_factor_ *
-             page_info_.device_scale_adjustment_ *
+        (page_info_.device_scale_adjustment_ *
              (static_cast<float>(page_info_.layout_width_) /
               page_info_.frame_width_) >
          1.0f);
@@ -617,8 +611,6 @@ void TextAutosizer::UpdatePageInfo() {
     // recompute them.
     if (page_info_.frame_width_ != previous_page_info.frame_width_ ||
         page_info_.layout_width_ != previous_page_info.layout_width_ ||
-        page_info_.accessibility_font_scale_factor_ !=
-            previous_page_info.accessibility_font_scale_factor_ ||
         page_info_.device_scale_adjustment_ !=
             previous_page_info.device_scale_adjustment_ ||
         page_info_.setting_enabled_ != previous_page_info.setting_enabled_)
@@ -1009,8 +1001,7 @@ float TextAutosizer::MultiplierFromBlock(const LayoutBlock* block) {
       std::min(block_width, static_cast<float>(page_info_.layout_width_));
   float multiplier =
       page_info_.frame_width_ ? layout_width / page_info_.frame_width_ : 1.0f;
-  multiplier *= page_info_.accessibility_font_scale_factor_ *
-                page_info_.device_scale_adjustment_;
+  multiplier *= page_info_.device_scale_adjustment_;
   return std::max(multiplier, 1.0f);
 }
 
@@ -1114,15 +1105,8 @@ void TextAutosizer::ApplyMultiplier(LayoutObject* layout_object,
   DCHECK(layout_object);
   ComputedStyle& current_style = layout_object->MutableStyleRef();
   if (!current_style.GetTextSizeAdjust().IsAuto()) {
-    // The accessibility font scale factor is applied by the autosizer so we
-    // need to apply that scale factor on top of the text-size-adjust
-    // multiplier. Only apply the accessibility factor if the autosizer has
-    // determined a multiplier should be applied so that text-size-adjust:none
-    // does not cause a multiplier to be applied when it wouldn't be otherwise.
-    bool should_apply_accessibility_font_scale_factor = multiplier > 1;
+    // Text-size-adjust
     multiplier = current_style.GetTextSizeAdjust().Multiplier();
-    if (should_apply_accessibility_font_scale_factor)
-      multiplier *= page_info_.accessibility_font_scale_factor_;
   } else if (multiplier < 1) {
     // Unlike text-size-adjust, the text autosizer should only inflate fonts.
     multiplier = 1;

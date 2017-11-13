@@ -4914,6 +4914,38 @@ TEST_P(WebViewTest, ViewportUnitsPrintingWithPageZoom) {
   frame->PrintEnd();
 }
 
+// unit test to check zoom level set by accessibility zoom factor
+TEST_P(WebViewTest, UpdateAccessibilityZoomFactor) {
+  WebViewImpl* web_view = web_view_helper_.Initialize();
+
+  // check no accessibility zoom
+  WebURL base_url = URLTestHelpers::ToKURL("https://example.com/");
+  FrameTestHelpers::LoadHTMLString(web_view->MainFrameImpl(),
+                                   "<!DOCTYPE html><html><body>"
+                                   "<div>A simple HTML page</div>"
+                                   "</body></html>",
+                                   base_url);
+  LocalFrame* frame = web_view->MainFrameImpl()->GetFrame();
+  EXPECT_EQ(1, frame->PageZoomFactor());
+
+  // check accessibility zoom
+  web_view->GetSettings()->SetAccessibilityFontScaleFactor(2.0);
+  web_view->UpdateZoomFactor();
+  EXPECT_EQ(2, frame->PageZoomFactor());
+
+  // check accessibility zoom for viewport meta page
+  FrameTestHelpers::LoadHTMLString(
+      web_view->MainFrameImpl(),
+      "<!DOCTYPE html><html>"
+      "<meta name='viewport' content='width=device-width'>"
+      "<body><div>A simple HTML page</div>"
+      "</body></html>",
+      base_url);
+  web_view->GetSettings()->SetAccessibilityFontScaleFactor(3.0);
+  web_view->UpdateZoomFactor();
+  EXPECT_EQ(3, frame->PageZoomFactor());
+}
+
 TEST_P(WebViewTest, DeviceEmulationResetScrollbars) {
   WebViewImpl* web_view = web_view_helper_.Initialize();
   web_view->Resize(WebSize(800, 600));

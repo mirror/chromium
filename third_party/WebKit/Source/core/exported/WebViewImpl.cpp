@@ -2691,14 +2691,7 @@ void WebViewImpl::PropagateZoomFactorToLocalFrameRoots(Frame* frame,
     PropagateZoomFactorToLocalFrameRoots(child, zoom_factor);
 }
 
-double WebViewImpl::SetZoomLevel(double zoom_level) {
-  if (zoom_level < minimum_zoom_level_)
-    zoom_level_ = minimum_zoom_level_;
-  else if (zoom_level > maximum_zoom_level_)
-    zoom_level_ = maximum_zoom_level_;
-  else
-    zoom_level_ = zoom_level;
-
+void WebViewImpl::UpdateZoomFactor() {
   float zoom_factor =
       zoom_factor_override_
           ? zoom_factor_override_
@@ -2716,7 +2709,28 @@ double WebViewImpl::SetZoomLevel(double zoom_level) {
       zoom_factor *= zoom_factor_for_device_scale_factor_;
     }
   }
+  if (GetPage()) {
+    // TODO(jaebaek): As crbug.com/645717, the accessibility font scale is
+    // removed from Android and applies it to zoom level. The name with
+    // "AccessibilityFontScaleFactor" will be changed to "AccessibilityZoom".
+    zoom_factor =
+        zoom_factor
+            ? zoom_factor *
+                  GetPage()->GetSettings().GetAccessibilityFontScaleFactor()
+            : GetPage()->GetSettings().GetAccessibilityFontScaleFactor();
+  }
   PropagateZoomFactorToLocalFrameRoots(page_->MainFrame(), zoom_factor);
+}
+
+double WebViewImpl::SetZoomLevel(double zoom_level) {
+  if (zoom_level < minimum_zoom_level_)
+    zoom_level_ = minimum_zoom_level_;
+  else if (zoom_level > maximum_zoom_level_)
+    zoom_level_ = maximum_zoom_level_;
+  else
+    zoom_level_ = zoom_level;
+
+  UpdateZoomFactor();
 
   return zoom_level_;
 }
@@ -2835,7 +2849,6 @@ void WebViewImpl::SetZoomFactorForDeviceScaleFactor(
   zoom_factor_for_device_scale_factor_ = zoom_factor_for_device_scale_factor;
   if (!layer_tree_view_)
     return;
-  SetZoomLevel(zoom_level_);
 }
 
 void WebViewImpl::EnableAutoResizeMode(const WebSize& min_size,
@@ -3241,7 +3254,7 @@ void WebViewImpl::SetCompositorDeviceScaleFactorOverride(
     return;
   compositor_device_scale_factor_override_ = device_scale_factor;
   if (zoom_factor_for_device_scale_factor_) {
-    SetZoomLevel(ZoomLevel());
+    UpdateZoomFactor();
     return;
   }
   if (GetPage() && layer_tree_view_)
@@ -3499,7 +3512,7 @@ void WebViewImpl::ClearBackgroundColorOverride() {
 
 void WebViewImpl::SetZoomFactorOverride(float zoom_factor) {
   zoom_factor_override_ = zoom_factor;
-  SetZoomLevel(ZoomLevel());
+  UpdateZoomFactor();
 }
 
 void WebViewImpl::SetPageOverlayColor(WebColor color) {

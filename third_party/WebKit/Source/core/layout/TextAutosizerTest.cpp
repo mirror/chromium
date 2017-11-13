@@ -307,181 +307,6 @@ TEST_F(TextAutosizerTest, PrefixedTextSizeAdjustIsAlias) {
                   text_size_adjust->Style()->GetTextSizeAdjust().Multiplier());
 }
 
-TEST_F(TextAutosizerTest, AccessibilityFontScaleFactor) {
-  GetDocument().GetSettings()->SetAccessibilityFontScaleFactor(1.5);
-  SetBodyInnerHTML(R"HTML(
-    <style>
-      html { font-size: 16px; }
-      body { width: 800px; margin: 0; overflow-y: hidden; }
-    </style>
-    <div id='autosized'>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-      ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat. Duis aute irure dolor in
-      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-      culpa qui officia deserunt mollit anim id est laborum.
-    </div>
-  )HTML");
-  Element* autosized = GetDocument().getElementById("autosized");
-  EXPECT_FLOAT_EQ(16.f,
-                  autosized->GetLayoutObject()->Style()->SpecifiedFontSize());
-  // 1.5 * (specified font-size = 16px) * (viewport width = 800px) /
-  // (window width = 320px) = 60px.
-  EXPECT_FLOAT_EQ(60.f,
-                  autosized->GetLayoutObject()->Style()->ComputedFontSize());
-}
-
-TEST_F(TextAutosizerTest, AccessibilityFontScaleFactorWithTextSizeAdjustNone) {
-  GetDocument().GetSettings()->SetAccessibilityFontScaleFactor(1.5);
-  SetBodyInnerHTML(R"HTML(
-    <style>
-      html { font-size: 16px; }
-      body { width: 800px; margin: 0; overflow-y: hidden; }
-      #autosized { width: 400px; text-size-adjust: 100%; }
-      #notAutosized { width: 100px; text-size-adjust: 100%; }
-    </style>
-    <div id='autosized'>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-      ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat. Duis aute irure dolor in
-      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-      culpa qui officia deserunt mollit anim id est laborum.
-    </div>
-    <div id='notAutosized'>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-      ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat. Duis aute irure dolor in
-      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-      culpa qui officia deserunt mollit anim id est laborum.
-    </div>
-  )HTML");
-  Element* autosized = GetDocument().getElementById("autosized");
-  EXPECT_FLOAT_EQ(16.f,
-                  autosized->GetLayoutObject()->Style()->SpecifiedFontSize());
-  // 1.5 * (specified font-size = 16px) = 24px.
-  EXPECT_FLOAT_EQ(24.f,
-                  autosized->GetLayoutObject()->Style()->ComputedFontSize());
-
-  // Because this does not autosize (due to the width), no accessibility font
-  // scale factor should be applied.
-  Element* not_autosized = GetDocument().getElementById("notAutosized");
-  EXPECT_FLOAT_EQ(
-      16.f, not_autosized->GetLayoutObject()->Style()->SpecifiedFontSize());
-  // specified font-size = 16px.
-  EXPECT_FLOAT_EQ(
-      16.f, not_autosized->GetLayoutObject()->Style()->ComputedFontSize());
-}
-
-TEST_F(TextAutosizerTest, ChangingAccessibilityFontScaleFactor) {
-  GetDocument().GetSettings()->SetAccessibilityFontScaleFactor(1);
-  SetBodyInnerHTML(R"HTML(
-    <style>
-      html { font-size: 16px; }
-      body { width: 800px; margin: 0; overflow-y: hidden; }
-    </style>
-    <div id='autosized'>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-      ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat. Duis aute irure dolor in
-      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-      culpa qui officia deserunt mollit anim id est laborum.
-    </div>
-  )HTML");
-  Element* autosized = GetDocument().getElementById("autosized");
-  EXPECT_FLOAT_EQ(16.f,
-                  autosized->GetLayoutObject()->Style()->SpecifiedFontSize());
-  // 1.0 * (specified font-size = 16px) * (viewport width = 800px) /
-  // (window width = 320px) = 40px.
-  EXPECT_FLOAT_EQ(40.f,
-                  autosized->GetLayoutObject()->Style()->ComputedFontSize());
-
-  GetDocument().GetSettings()->SetAccessibilityFontScaleFactor(2);
-  GetDocument().View()->UpdateAllLifecyclePhases();
-
-  EXPECT_FLOAT_EQ(16.f,
-                  autosized->GetLayoutObject()->Style()->SpecifiedFontSize());
-  // 2.0 * (specified font-size = 16px) * (viewport width = 800px) /
-  // (window width = 320px) = 80px.
-  EXPECT_FLOAT_EQ(80.f,
-                  autosized->GetLayoutObject()->Style()->ComputedFontSize());
-}
-
-TEST_F(TextAutosizerTest, TextSizeAdjustDoesNotDisableAccessibility) {
-  GetDocument().GetSettings()->SetAccessibilityFontScaleFactor(1.5);
-  SetBodyInnerHTML(R"HTML(
-    <style>
-      html { font-size: 16px; }
-      body { width: 800px; margin: 0; overflow-y: hidden; }
-    </style>
-    <div id='textSizeAdjustNone' style='text-size-adjust: none;'>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-      ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat. Duis aute irure dolor in
-      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-      culpa qui officia deserunt mollit anim id est laborum.
-    </div>
-    <div id='textSizeAdjustDouble' style='text-size-adjust: 200%;'>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-      ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat. Duis aute irure dolor in
-      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-      culpa qui officia deserunt mollit anim id est laborum.
-    </div>
-  )HTML");
-  Element* text_size_adjust_none =
-      GetDocument().getElementById("textSizeAdjustNone");
-  EXPECT_FLOAT_EQ(
-      16.f,
-      text_size_adjust_none->GetLayoutObject()->Style()->SpecifiedFontSize());
-  // 1.5 * (specified font-size = 16px) = 24px.
-  EXPECT_FLOAT_EQ(
-      24.f,
-      text_size_adjust_none->GetLayoutObject()->Style()->ComputedFontSize());
-
-  Element* text_size_adjust_double =
-      GetDocument().getElementById("textSizeAdjustDouble");
-  EXPECT_FLOAT_EQ(
-      16.f,
-      text_size_adjust_double->GetLayoutObject()->Style()->SpecifiedFontSize());
-  // 1.5 * (specified font-size = 16px) * (text size adjustment = 2) = 48px.
-  EXPECT_FLOAT_EQ(
-      48.f,
-      text_size_adjust_double->GetLayoutObject()->Style()->ComputedFontSize());
-
-  // Changing the accessibility font scale factor should change the adjusted
-  // size.
-  GetDocument().GetSettings()->SetAccessibilityFontScaleFactor(2);
-  GetDocument().View()->UpdateAllLifecyclePhases();
-
-  EXPECT_FLOAT_EQ(
-      16.f,
-      text_size_adjust_none->GetLayoutObject()->Style()->SpecifiedFontSize());
-  // 2.0 * (specified font-size = 16px) = 32px.
-  EXPECT_FLOAT_EQ(
-      32.f,
-      text_size_adjust_none->GetLayoutObject()->Style()->ComputedFontSize());
-
-  EXPECT_FLOAT_EQ(
-      16.f,
-      text_size_adjust_double->GetLayoutObject()->Style()->SpecifiedFontSize());
-  // 2.0 * (specified font-size = 16px) * (text size adjustment = 2) = 64px.
-  EXPECT_FLOAT_EQ(
-      64.f,
-      text_size_adjust_double->GetLayoutObject()->Style()->ComputedFontSize());
-}
-
 // https://crbug.com/646237
 TEST_F(TextAutosizerTest, DISABLED_TextSizeAdjustWithoutNeedingAutosizing) {
   GetDocument().GetSettings()->SetTextAutosizingWindowSizeOverride(
@@ -981,11 +806,10 @@ TEST_F(TextAutosizerTest, ScaledbyDSF) {
 }
 
 TEST_F(TextAutosizerTest, ClusterHasEnoughTextToAutosizeForZoomDSF) {
-  GetTextAutosizerClient().set_device_scale_factor(1.f);
+  GetTextAutosizerClient().set_device_scale_factor(1.5f);
   // Change setting triggers updating device scale factor
   GetDocument().GetSettings()->SetTextAutosizingWindowSizeOverride(
       IntSize(800, 600));
-  GetDocument().GetSettings()->SetAccessibilityFontScaleFactor(4);
   SetBodyInnerHTML(R"HTML(
     <style>
       html { font-size: 8px; }
@@ -994,8 +818,7 @@ TEST_F(TextAutosizerTest, ClusterHasEnoughTextToAutosizeForZoomDSF) {
       <div id='target'>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
         do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat.
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco.
       </div>
     </body>
   )HTML");
@@ -1003,20 +826,20 @@ TEST_F(TextAutosizerTest, ClusterHasEnoughTextToAutosizeForZoomDSF) {
   Element* target = GetDocument().getElementById("target");
   // ClusterHasEnoughTextToAutosize() returns false because
   // minimum_text_length_to_autosize < length. Thus, ClusterMultiplier()
-  // returns 1 (not multiplied by the accessibility font scale factor).
+  // returns 1 (not multiplied by the device scale factor).
   // computed font-size = specified font-size = 8px.
   EXPECT_FLOAT_EQ(8.0f, target->GetLayoutObject()->Style()->ComputedFontSize());
 
   GetTextAutosizerClient().set_device_scale_factor(3);
   // Change setting triggers updating device scale factor
-  GetDocument().GetSettings()->SetAccessibilityFontScaleFactor(2);
+  GetDocument().GetSettings()->SetDeviceScaleAdjustment(1.5f);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
-  // (accessibility font scale factor = 2) * (specified font-size = 8px) *
-  // (device scale factor = 3) = 48.
-  // ClusterHasEnoughTextToAutosize() returns true and both accessibility font
-  // scale factor and device scale factor are multiplied.
-  EXPECT_FLOAT_EQ(48.0f,
+  // (specified font-size = 8px) * (device scale factor = 3)
+  // * (device scale adjustment = 1.5) = 36.
+  // ClusterHasEnoughTextToAutosize() returns true and device scale factor is
+  // multiplied.
+  EXPECT_FLOAT_EQ(36.0f,
                   target->GetLayoutObject()->Style()->ComputedFontSize());
 }
 }  // namespace blink
