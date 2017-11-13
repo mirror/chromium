@@ -676,7 +676,8 @@ void URLLoader::SendResponseToClient() {
     ssl_info = url_request_->ssl_info();
   mojom::DownloadedTempFilePtr downloaded_file_ptr;
   url_loader_client_->OnReceiveResponse(response_->head, ssl_info,
-                                        std::move(downloaded_file_ptr));
+                                        std::move(downloaded_file_ptr),
+                                        mojom::URLLoaderNavigationDataPtr());
 
   net::IOBufferWithSize* metadata =
       url_request_->response_info().metadata.get();

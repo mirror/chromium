@@ -750,7 +750,8 @@ class ExtensionURLLoaderFactory : public content::mojom::URLLoaderFactory {
         return;
       }
 
-      client->OnReceiveResponse(head, base::nullopt, nullptr);
+      client->OnReceiveResponse(head, base::nullopt, nullptr,
+                                content::mojom::URLLoaderNavigationDataPtr());
       client->OnStartLoadingResponseBody(std::move(pipe.consumer_handle));
       client->OnComplete(network::URLLoaderStatus(net::OK));
       return;

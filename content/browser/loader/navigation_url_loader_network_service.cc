@@ -426,7 +426,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   void OnReceiveResponse(
       const ResourceResponseHead& head,
       const base::Optional<net::SSLInfo>& ssl_info,
-      mojom::DownloadedTempFilePtr downloaded_file) override {
+      mojom::DownloadedTempFilePtr downloaded_file,
+      mojom::URLLoaderNavigationDataPtr navigation_data) override {
     received_response_ = true;
 
     mojom::URLLoaderPtr url_loader;
@@ -456,7 +457,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
         base::BindOnce(&NavigationURLLoaderNetworkService::OnReceiveResponse,
                        owner_, url_loader.PassInterface(),
                        std::move(url_loader_client), response->DeepCopy(),
-                       ssl_info, base::Passed(&downloaded_file)));
+                       ssl_info, base::Passed(&downloaded_file),
+                       std::move(navigation_data)));
   }
 
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
@@ -771,7 +773,8 @@ void NavigationURLLoaderNetworkService::OnReceiveResponse(
     mojom::URLLoaderClientRequest url_loader_client_request,
     scoped_refptr<ResourceResponse> response,
     const base::Optional<net::SSLInfo>& ssl_info,
-    mojom::DownloadedTempFilePtr downloaded_file) {
+    mojom::DownloadedTempFilePtr downloaded_file,
+    mojom::URLLoaderNavigationDataPtr navigation_data) {
   // TODO(scottmg): This needs to do more of what
   // NavigationResourceHandler::OnResponseStarted() does. Or maybe in
   // OnStartLoadingResponseBody().
@@ -786,14 +789,15 @@ void NavigationURLLoaderNetworkService::OnReceiveResponse(
                            this, "&NavigationURLLoaderNetworkService", this,
                            "success", true);
 
+    DCHECK(navigation_data);
     mojom::URLLoaderPtr url_loader;
     url_loader.Bind(std::move(url_loader_info));
     delegate_->OnResponseStarted(
         response_, std::move(url_loader), std::move(url_loader_client_request),
         nullptr, mojo::ScopedDataPipeConsumerHandle(), ssl_status_,
         std::unique_ptr<NavigationData>(),
-        GlobalRequestID(-1, g_next_request_id), IsDownload(),
-        false /* is_stream */,
+        GlobalRequestID(-1, g_next_request_id), navigation_data->is_download,
+        navigation_data->is_stream,
         request_controller_->TakeSubresourceLoaderParams());
   }
 }
