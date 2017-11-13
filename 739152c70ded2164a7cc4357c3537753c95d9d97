@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ffb03a1_7dae7bf6",
+        "filename": "testing/libfuzzer/fuzzers/icu_collator_compare_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179941
+      },
+      "writtenOn": "2017-11-13T07:02:15Z",
+      "side": 1,
+      "message": "that\u0027s all right, later will never be used because size\u003d\u003d0",
+      "parentUuid": "9c76f677_ef38c5cf",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 26
+      },
+      "revId": "739152c70ded2164a7cc4357c3537753c95d9d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c196a16_fc2c4b84",
         "filename": "testing/libfuzzer/fuzzers/intl-objects.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "739152c70ded2164a7cc4357c3537753c95d9d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b45c262_7343e81a",
+        "filename": "testing/libfuzzer/fuzzers/intl-objects.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1179941
+      },
+      "writtenOn": "2017-11-13T07:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c196a16_fc2c4b84",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 33
+      },
+      "revId": "739152c70ded2164a7cc4357c3537753c95d9d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4b78a387_4d41040f",
+        "filename": "testing/libfuzzer/fuzzers/intl-objects.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179941
+      },
+      "writtenOn": "2017-11-13T07:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fc7d1c0_fed7e726",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "739152c70ded2164a7cc4357c3537753c95d9d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1692b3ee_0b91b6f3",
         "filename": "testing/libfuzzer/fuzzers/intl-objects.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "739152c70ded2164a7cc4357c3537753c95d9d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61ea9ed9_bb464e94",
+        "filename": "testing/libfuzzer/fuzzers/intl-objects.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1179941
+      },
+      "writtenOn": "2017-11-13T07:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1692b3ee_0b91b6f3",
+      "range": {
+        "startLine": 128,
+        "startChar": 18,
+        "endLine": 128,
+        "endChar": 21
+      },
+      "revId": "739152c70ded2164a7cc4357c3537753c95d9d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
