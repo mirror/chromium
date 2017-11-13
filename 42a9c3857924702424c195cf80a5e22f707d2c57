@@ -34,6 +34,24 @@
       "revId": "42a9c3857924702424c195cf80a5e22f707d2c57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7bd125_6a40b62b",
+        "filename": "net/cookies/cookie_store_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-13T21:40:15Z",
+      "side": 0,
+      "message": "Ack. I missed the part where you only removed one BuildCookieLine and not the other.",
+      "parentUuid": "f072c508_fc867e88",
+      "revId": "42a9c3857924702424c195cf80a5e22f707d2c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
