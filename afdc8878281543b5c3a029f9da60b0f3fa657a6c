@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53900bc3_e81159c2",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-13T22:39:55Z",
+      "side": 1,
+      "message": "Maybe a comment saying that this is used for tests, to explain why we\u0027re bothering to create a DoNothing closure.",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4aebdd_d382e7bd",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-13T22:39:55Z",
+      "side": 1,
+      "message": "Typo: \"two\" sequences",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9eeb08_d45891a9",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-13T22:39:55Z",
+      "side": 1,
+      "message": "Could use a DCHECK_CALLED_ON_VALID_SEQUENCE here to make sure instance_ is accessed on the right sequence.",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853200ff_7d607b70",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-13T22:39:55Z",
+      "side": 1,
+      "message": "Nit: \"are\" no further invocations",
+      "range": {
+        "startLine": 701,
+        "startChar": 37,
+        "endLine": 701,
+        "endChar": 40
+      },
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22011b08_b6df964d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-13T22:39:55Z",
+      "side": 1,
+      "message": "Can you make a \"DeleteSelf\" method to call \"delete this\"? That way you can bind to it here instead of a lambda, and you can make the destructor private to ensure only that method calls it.",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa73108_846b957d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-13T22:39:55Z",
+      "side": 1,
+      "message": "What\u0027s the std::move for here?",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5225c8bb_d2028733",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-13T22:39:55Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t see the point in moving this to a separate function, since it\u0027s only called once.\n\nIf you do keep it as its own function, I think it should be called PopNextInvocation since lower_case method names are supposed to be just for one-liners.",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ffc241_cd9cab37",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-13T22:39:55Z",
+      "side": 1,
+      "message": "Nit: I find this function just obscures the fact that it\u0027s calling empty(). When you see \"if (!done())\" above you have to come down here to find out what that actually means. I would just call \"invocations_.empty()\" directly; if not, please rename it something like \"done_all_invocations\" (but better).",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
