@@ -16,6 +16,24 @@
       "revId": "ee41c4cdd901ecfd7c49113c91c7f984176c8057",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ee2192_a35b39c5",
+        "filename": "media/audio/mac/audio_manager_mac.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-13T19:37:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b74f0da2_42736cc6",
+      "revId": "ee41c4cdd901ecfd7c49113c91c7f984176c8057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
