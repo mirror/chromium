@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "49cffcf2_b5fd0c05",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 5811,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-13T20:53:08Z",
+      "side": 1,
+      "message": "Short version: rewritten, scoped down.\n\nLong version:\n1) The comment was true* for both paths.\n2) The truth had a giant asterisk since the \"or a non-range request\" should have been \"on a non-range request\". It was actually false as written. \n2) The intended factoid was only relevant in case where use_memory_entry_data was true anyway.",
+      "parentUuid": "40aa2f69_b3294638",
+      "range": {
+        "startLine": 5811,
+        "startChar": 22,
+        "endLine": 5811,
+        "endChar": 29
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "918f998f_8bac0d2e",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 11
