@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0825550e_afe1f4a2",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-13T20:15:57Z",
+      "side": 1,
+      "message": "Yeah. I\u0027d rather keep the code simple for now; in my tests, it seems decently performant. Nothing ever took more than a minute to upload I think.",
+      "parentUuid": "57106136_0e2d5ac6",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aaeed5db_b24b1428",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-13T17:27:02Z",
       "side": 1,
       "message": "Is it possible for us to only have one of \u0027expected\u0027 or \u0027actual\u0027? What happens in that case?\n\nWhat if, more generally, the value of an item other than \u0027expected\u0027 or \u0027actual\u0027 isn\u0027t a dict? This should handle that gracefully.",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3e6064_df763a7f",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-13T20:15:57Z",
+      "side": 1,
+      "message": "According to https://chromium.googlesource.com/chromium/src/+/master/docs/testing/json_test_results_format.md#per_test-fields, those are both required fields for tests. Not sure how much we want to deal with error handling; I don\u0027t know when we\u0027d be given a json file that\u0027s not a test result file, and expected to do something other than just barf and fail.\n\nWhat do you mean by the second sentence?",
+      "parentUuid": "aaeed5db_b24b1428",
       "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "17805505_bc15237e",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-13T20:15:57Z",
+      "side": 1,
+      "message": "Whoops, meant to use check_call, not check_output.",
+      "parentUuid": "7cd842a4_001e4e7b",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f4809ab_98113b66",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-13T17:27:02Z",
       "side": 1,
       "message": "Are you planning this for a subsequent CL? Is there some condition blocking this?",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80537c56_44b659d0",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-13T20:15:57Z",
+      "side": 1,
+      "message": "I originally wrote this just to document in the code that I wanted to support other buckets. I could just turn this into a command line argument, and let the caller decide what bucket to try to upload, which would be fairly easy for us.",
+      "parentUuid": "3f4809ab_98113b66",
       "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "93cf5830_30e45201",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-13T20:15:57Z",
+      "side": 1,
+      "message": "I\u0027ll delete the directory. I don\u0027t think it\u0027s easy for me to import that file.",
+      "parentUuid": "fe4ec772_675762f5",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a700ae08_49d13a04",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 7
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-13T17:27:02Z",
       "side": 1,
       "message": "Do we have a sense for how long this will take? Should we consider parallelizing this?",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce8da9a_eae01ccb",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-13T20:15:57Z",
+      "side": 1,
+      "message": "I\u0027ve tested it locally with the unittest in this CL. That CL takes 20 seconds to run, if you ignore uploading to google storage. Uploading to google storage is fairly fast, as it\u0027s just a copy. The upload steps take at most 30 seconds I think.",
+      "parentUuid": "a700ae08_49d13a04",
       "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "8f4c822d_d1374025",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-13T20:15:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa0ba102_374e851c",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04417fbd_ea5b0018",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 7
@@ -135,6 +261,24 @@
       "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8204dc3_9e662877",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-13T20:15:57Z",
+      "side": 1,
+      "message": "I\u0027m going with them specifying an output file, so I\u0027ll make it just be one file.",
+      "parentUuid": "04417fbd_ea5b0018",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "74549263_1fe4bb1d",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-13T20:15:57Z",
+      "side": 1,
+      "message": "That makes sense; i\u0027ll do that instead.",
+      "parentUuid": "9b7d11ee_943ca4ae",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b197ec7f_d0c07bd4",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 7
@@ -169,6 +331,24 @@
       "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec4c9662_d9748a95",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-13T20:15:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b197ec7f_d0c07bd4",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
