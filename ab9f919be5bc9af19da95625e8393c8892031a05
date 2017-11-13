@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f1beb42_8b60cd7f",
+        "filename": "chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-13T18:32:20Z",
+      "side": 1,
+      "message": "Ideally, assuming this is a good test, it will start failing if the notification ID ever changes. So I\u0027m not too eager to add a test-only function that doesn\u0027t seem to improve the test in the sense that it won\u0027t make the test catch any more errors than it would have anyway.",
+      "parentUuid": "8523461b_e0fa837b",
+      "range": {
+        "startLine": 68,
+        "startChar": 12,
+        "endLine": 68,
+        "endChar": 50
+      },
+      "revId": "ab9f919be5bc9af19da95625e8393c8892031a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85b53ed2_8b040e59",
         "filename": "chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_apitest.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-11T01:33:53Z",
       "side": 1,
       "message": "Should this be a DCHECK? The notification must be there.",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 17
+      },
+      "revId": "ab9f919be5bc9af19da95625e8393c8892031a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5538f4c8_de9d54af",
+        "filename": "chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-13T18:32:20Z",
+      "side": 1,
+      "message": "no, because \"OnRequestTimeouted\" gets called a whole lot of times for reasons that I didn\u0027t investigate, including after the notification has been removed.",
+      "parentUuid": "85b53ed2_8b040e59",
       "range": {
         "startLine": 69,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ca9f5c52_b85738fc",
+        "filename": "chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-13T18:32:20Z",
+      "side": 1,
+      "message": "This becomes the parameter for NotificationManager::OnButtonClicked, which is ignored. It is intended to be an index into the vector of buttons, not an enum value.",
+      "parentUuid": "6beb1f65_ce4a548e",
+      "range": {
+        "startLine": 70,
+        "startChar": 44,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "ab9f919be5bc9af19da95625e8393c8892031a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "558c16b2_18c22ddb",
         "filename": "chrome/browser/chromeos/file_system_provider/notification_manager.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-11T01:33:53Z",
       "side": 1,
       "message": "notification-\u003eSetSystemPriority is gone. Is it intentional?",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 28
+      },
+      "revId": "ab9f919be5bc9af19da95625e8393c8892031a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "340a75b0_d6c989eb",
+        "filename": "chrome/browser/chromeos/file_system_provider/notification_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-13T18:32:20Z",
+      "side": 1,
+      "message": "It\u0027s still there on L129.",
+      "parentUuid": "558c16b2_18c22ddb",
       "range": {
         "startLine": 131,
         "startChar": 2,
