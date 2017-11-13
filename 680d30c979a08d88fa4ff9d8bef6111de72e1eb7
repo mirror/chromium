@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "99dbb9c1_da5239d3",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T21:44:22Z",
+      "side": 1,
+      "message": "static counter seems fine, I guess the original code avoided it to save memory?\n\nAnyway this CL doesn\u0027t need to change this.",
+      "parentUuid": "f8cea3da_b02f27c6",
+      "revId": "680d30c979a08d88fa4ff9d8bef6111de72e1eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45410de5_75a4500c",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 6

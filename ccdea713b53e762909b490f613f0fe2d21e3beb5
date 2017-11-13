@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a65c1c7_c7f164fb",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T21:44:22Z",
+      "side": 1,
+      "message": "Could just be called service_worker_host_map_ or service_worker_hosts_?",
+      "revId": "ccdea713b53e762909b490f613f0fe2d21e3beb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b858812_169bb386",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T21:44:22Z",
+      "side": 1,
+      "message": "This test shouldn\u0027t be interested in the expects like STARTING and RUNNING. Lines 913-920 look like they could be extracted into a function StartWorker() that other tests in this file could also call.",
+      "revId": "ccdea713b53e762909b490f613f0fe2d21e3beb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb18320_153982eb",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T21:44:22Z",
+      "side": 1,
+      "message": "I guess this should say \"These Mojo objects are\"?",
+      "revId": "ccdea713b53e762909b490f613f0fe2d21e3beb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aeb909b_0254faca",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T21:44:22Z",
+      "side": 1,
+      "message": "I\u0027d like the first sentence to be a quick summary of the interface:\n\n\"Host for a running service worker execution context. Implemented in the browser process. The service worker running in the renderer process uses this interface to ask the browser process to do operations needed for ServiceWorkerGlobalScope functionalities.",
+      "revId": "ccdea713b53e762909b490f613f0fe2d21e3beb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db68fdfb_b256fb85",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T21:44:22Z",
+      "side": 1,
+      "message": "\"Sets\"\n\nCan make this shorter:\n\"Sets V8 code cache |data| for the given service worker script |url|, which may be the main script or an imported script.",
+      "revId": "ccdea713b53e762909b490f613f0fe2d21e3beb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51578f9e_b1cf0adf",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T21:44:22Z",
+      "side": 1,
+      "message": "\"Clears\"",
+      "revId": "ccdea713b53e762909b490f613f0fe2d21e3beb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
