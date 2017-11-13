@@ -70,6 +70,24 @@
       "revId": "5bbccc18fc1aecffef7478e4505fa1e46f2105d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ff234a_0cc3ccb8",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-13T20:30:20Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s.. .complicated.\n\n* A service may not exist in any profile (e.g. a \"visible\" i.e. nearby WiFi network)\n* A service exits in a profile if it is \"remembered\" (aka a \"favorite\")\n* A service may exist in multiple profiles (i.e. a device configuration + a user configuration). This is unusual but possible.\n* \u0027AddService\u0027 by default should not add an entry to a profile, but it would make sense to have an AddServiceToProfile helper in the test API that creates a service and adds it to a specified profile.\n* RemoveConfiguration always removes a service from all active profiles (for both simplicity and security). e.g. if a service was configured in the login screen (device profile), then changed by the user (saved in user profile, device profile entry still exists), if the user \"forgets\" the network we remove it from both to avoid unexpected behavior. (Any normal user is allowed to remove a service from the device profile).\n\nSo, again, if you want to make and test the changes to support AddServiceToProfile that would be great. I would suggest something like:\n\na) Create AddServiceToProfile to wrap AddService and properly add a service to an existing specified profile path.\nb) Remove properties-\u003eSetKey(shill::kProfileProperty,...) from FakeShillServiceClient::SetServiceProperties. This may break some tests but those can be fixed using AddServiceToProfile instead.\nc) Remove the properties-\u003eGetStringWithoutPathExpansion(shill::kProfileProperty...) {} code in AddServiceWithIPConfig which will become pointles after (b) and call that explicitly in AddServiceToProfile().\n\nIf that makes sense and you want to make and test the changes, grea! If not I completely understand and the code as-is with an updated comment is fine too :)",
+      "parentUuid": "b64665d6_4109ae2b",
+      "revId": "5bbccc18fc1aecffef7478e4505fa1e46f2105d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
