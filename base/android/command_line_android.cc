@@ -74,7 +74,7 @@ static void AppendSwitchesAndArguments(
   AppendJavaStringArrayToCommandLine(env, array, false);
 }
 
-static void Init(JNIEnv* env,
+static void CommandLine__Init(JNIEnv* env,
                  const JavaParamRef<jclass>& jclazz,
                  const JavaParamRef<jobjectArray>& init_command_line) {
   // TODO(port): Make an overload of Init() that takes StringVector rather than

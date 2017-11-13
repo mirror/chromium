@@ -488,7 +488,7 @@ ProfileSyncServiceAndroid*
           AttachCurrentThread()));
 }
 
-static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+static jlong ProfileSyncService__Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   ProfileSyncServiceAndroid* profile_sync_service_android =
       new ProfileSyncServiceAndroid(env, obj);
   if (profile_sync_service_android->Init()) {

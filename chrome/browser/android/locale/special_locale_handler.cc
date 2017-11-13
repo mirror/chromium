@@ -26,7 +26,7 @@ using base::android::ConvertJavaStringToUTF8;
 class PrefService;
 class TemplateURL;
 
-static jlong Init(JNIEnv* env,
+static jlong SpecialLocaleHandler__Init(JNIEnv* env,
                   const JavaParamRef<jclass>& clazz,
                   const JavaParamRef<jstring>& jlocale) {
   Profile* profile =

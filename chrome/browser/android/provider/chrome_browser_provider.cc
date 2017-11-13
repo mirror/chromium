@@ -810,7 +810,7 @@ void FillSearchRow(JNIEnv* env,
 
 // ------------- Native initialization and destruction ------------- //
 
-static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+static jlong ChromeBrowserProvider__Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   ChromeBrowserProvider* provider = new ChromeBrowserProvider(env, obj);
   return reinterpret_cast<intptr_t>(provider);
 }

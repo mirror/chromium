@@ -148,7 +148,7 @@ void OverlayPanelContent::SetInterceptNavigationDelegate(
           env, delegate));
 }
 
-jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+jlong OverlayPanelContent__Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   OverlayPanelContent* content = new OverlayPanelContent(env, obj);
   return reinterpret_cast<intptr_t>(content);
 }

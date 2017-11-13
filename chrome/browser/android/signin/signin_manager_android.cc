@@ -368,7 +368,7 @@ void SigninManagerAndroid::WipeData(Profile* profile,
   new ProfileDataRemover(profile, all_data, callback);
 }
 
-static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+static jlong SigninManager__Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   SigninManagerAndroid* signin_manager_android =
       new SigninManagerAndroid(env, obj);
   return reinterpret_cast<intptr_t>(signin_manager_android);
