@@ -1,0 +1,20 @@
+<html>
+<body>
+<script>
+if (window.testRunner)
+    testRunner.dumpAsText();
+
+window.onload = function()
+{
+    frame = document.body.appendChild(document.createElement("iframe"));
+
+    frame.contentWindow.open = function() {
+        alert('FAIL: The call should be redirected to the real window.open');
+    }
+    frame.contentDocument.open(1, 1, 1);
+    alert('PASS');
+    document.body.removeChild(frame);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<html>
+<body>
+<script>
+if (window.testRunner)
+    testRunner.dumpAsText();
+
+window.onload = function()
+{
+    window.open = function() { alert('FAIL: The call should be redirected to the real window.open');};
+    document.open(1, 1, 1);
+    alert('PASS');
+}
+</script>
+</body>
+</html>
+
