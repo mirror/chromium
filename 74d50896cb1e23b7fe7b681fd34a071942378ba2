@@ -22,6 +22,30 @@
       "revId": "74d50896cb1e23b7fe7b681fd34a071942378ba2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd37748_2c94e1ed",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-13T09:47:05Z",
+      "side": 1,
+      "message": "The badge should be placed shifted to the right, so that the bottom of the profile photo and the bottom of the badge are still aligned. That\u0027s why there\u0027s no badge spacing needed for the height.",
+      "parentUuid": "9055d8e7_e038610f",
+      "range": {
+        "startLine": 27,
+        "startChar": 42,
+        "endLine": 27,
+        "endChar": 52
+      },
+      "revId": "74d50896cb1e23b7fe7b681fd34a071942378ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
