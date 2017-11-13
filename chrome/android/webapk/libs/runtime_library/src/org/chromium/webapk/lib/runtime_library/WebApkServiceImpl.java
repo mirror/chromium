@@ -73,6 +73,8 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
         getNotificationManager().cancel(platformTag, platformID);
     }
 
+    @Override
+    @Override
     public boolean notificationPermissionEnabled() {
         return NotificationManagerCompat.from(mContext).areNotificationsEnabled();
     }
