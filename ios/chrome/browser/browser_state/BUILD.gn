@@ -114,6 +114,7 @@ source_set("browser_state_impl") {
     "//ios/public/provider/chrome/browser",
     "//ios/public/provider/chrome/browser/signin",
     "//ios/web",
+    "//ios/web/net/cookies",
     "//net",
     "//net:extras",
   ]

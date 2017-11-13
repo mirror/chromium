@@ -65,6 +65,8 @@ void WKHTTPSystemCookieStore::GetCookiesForURLAsync(
     SystemCookieCallbackForCookies callback) {
   __block SystemCookieCallbackForCookies shared_callback = std::move(callback);
   GURL block_url = url;
+  [cookie_store_ getAllCookies:^(NSArray<NSHTTPCookie*>* cookies){
+  }];
   [cookie_store_ getAllCookies:^(NSArray<NSHTTPCookie*>* cookies) {
     NSMutableArray* result = [NSMutableArray array];
     for (NSHTTPCookie* cookie in cookies) {
