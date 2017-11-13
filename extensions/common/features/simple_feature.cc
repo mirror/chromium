@@ -85,8 +85,6 @@ std::string GetDisplayName(Manifest::Type type) {
       return "user script";
     case Manifest::TYPE_SHARED_MODULE:
       return "shared module";
-    case Manifest::NUM_LOAD_TYPES:
-      NOTREACHED();
   }
   NOTREACHED();
   return "";

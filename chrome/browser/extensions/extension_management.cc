@@ -386,7 +386,7 @@ void ExtensionManagement::Refresh() {
       int int_value;
       std::string string_value;
       if (it->GetAsInteger(&int_value) && int_value >= 0 &&
-          int_value < Manifest::Type::NUM_LOAD_TYPES) {
+          int_value <= Manifest::Type::TYPE_MAX) {
         global_settings_->allowed_types.push_back(
             static_cast<Manifest::Type>(int_value));
       } else if (it->GetAsString(&string_value)) {

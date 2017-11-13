@@ -166,12 +166,27 @@ content::RenderFrame* ExtensionFrameHelper::FindFrame(
 
   // Try to match all same-origin frames in this process.
   for (const ExtensionFrameHelper* helper : g_frame_helpers.Get()) {
+    if (helper->render_frame()->GetWebFrame()->AssignedName().Utf8() != name)
+      continue;
+
     if (!relative_to_frame->GetWebFrame()->GetSecurityOrigin().CanAccess(
             helper->render_frame()->GetWebFrame()->GetSecurityOrigin()))
       continue;
 
-    if (helper->render_frame()->GetWebFrame()->AssignedName().Utf8() == name)
-      return helper->render_frame();
+    UMA_HISTOGRAM_ENUMERATION(
+        "Extensions.BrowsingInstanceViolation.ExtensionViewType",
+        helper->view_type(), VIEW_TYPE_LAST);
+    GURL effective_target_url = ScriptContext::GetEffectiveDocumentURL(
+        helper->render_frame()->GetWebFrame(),
+        helper->render_frame()->GetWebFrame()->GetDocument().Url(), true);
+    const Extension* target_extension =
+        extensions::RendererExtensionRegistry::Get()->GetExtensionOrAppByURL(
+            effective_target_url);
+    UMA_HISTOGRAM_ENUMERATION(
+        "Extensions.BrowsingInstanceViolation.ExtensionType",
+        target_extension->GetType(), Manifest::TYPE_MAX);
+
+    return helper->render_frame();
   }
 
   return nullptr;

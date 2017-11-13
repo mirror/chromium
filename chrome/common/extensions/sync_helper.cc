@@ -71,9 +71,6 @@ bool IsSyncable(const Extension* extension) {
     case Manifest::TYPE_UNKNOWN:
     case Manifest::TYPE_SHARED_MODULE:
       return false;
-
-    case Manifest::NUM_LOAD_TYPES:
-      NOTREACHED();
   }
   NOTREACHED();
   return false;
