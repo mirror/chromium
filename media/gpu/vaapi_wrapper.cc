@@ -8,6 +8,9 @@
 #include <string.h>
 
 #include <va/va.h>
+#include <va/va_drm.h>
+#include <va/va_drmcommon.h>
+#include <va/va_version.h>
 
 #include "base/bind.h"
 #include "base/callback_helpers.h"
@@ -23,25 +26,25 @@
 
 #include "media/gpu/vaapi/vaapi_picture.h"
 #include "third_party/libyuv/include/libyuv.h"
+#include "ui/gfx/buffer_format_util.h"
+#include "ui/gfx/native_pixmap.h"
 #include "ui/gl/gl_bindings.h"
+#include "ui/gl/gl_implementation.h"
 
 #if defined(USE_X11)
 #include "ui/gfx/x/x11_types.h"  // nogncheck
-#elif defined(USE_OZONE)
-#include <va/va_drm.h>
-#include <va/va_drmcommon.h>
-#include <va/va_version.h>
-#include "ui/gfx/buffer_format_util.h"
+#endif
+
+#if defined(USE_OZONE)
 #include "ui/ozone/public/ozone_platform.h"
 #include "ui/ozone/public/surface_factory_ozone.h"
-#endif  // USE_X11
+#endif
 
 using media_gpu_vaapi::kModuleVa;
+using media_gpu_vaapi::kModuleVa_drm;
 #if defined(USE_X11)
 using media_gpu_vaapi::kModuleVa_x11;
-#elif defined(USE_OZONE)
-using media_gpu_vaapi::kModuleVa_drm;
-#endif  // USE_X11
+#endif
 using media_gpu_vaapi::InitializeStubs;
 using media_gpu_vaapi::StubPathMap;
 
@@ -65,7 +68,6 @@ using media_gpu_vaapi::StubPathMap;
     }                                                \
   } while (0)
 
-#if defined(USE_OZONE)
 namespace {
 
 uint32_t BufferFormatToVAFourCC(gfx::BufferFormat fmt) {
@@ -74,6 +76,8 @@ uint32_t BufferFormatToVAFourCC(gfx::BufferFormat fmt) {
       return VA_FOURCC_BGRX;
     case gfx::BufferFormat::BGRA_8888:
       return VA_FOURCC_BGRA;
+    case gfx::BufferFormat::RGBA_8888:
+      return VA_FOURCC_RGBA;
     case gfx::BufferFormat::UYVY_422:
       return VA_FOURCC_UYVY;
     case gfx::BufferFormat::YVU_420:
@@ -90,6 +94,7 @@ uint32_t BufferFormatToVARTFormat(gfx::BufferFormat fmt) {
       return VA_RT_FORMAT_YUV422;
     case gfx::BufferFormat::BGRX_8888:
     case gfx::BufferFormat::BGRA_8888:
+    case gfx::BufferFormat::RGBA_8888:
       return VA_RT_FORMAT_RGB32;
     case gfx::BufferFormat::YVU_420:
       return VA_RT_FORMAT_YUV420;
@@ -100,7 +105,6 @@ uint32_t BufferFormatToVARTFormat(gfx::BufferFormat fmt) {
 }
 
 }  // namespace
-#endif
 
 namespace media {
 
@@ -159,9 +163,7 @@ class VADisplayState {
   base::Lock* va_lock() { return &va_lock_; }
   VADisplay va_display() const { return va_display_; }
 
-#if defined(USE_OZONE)
   void SetDrmFd(base::PlatformFile fd) { drm_fd_.reset(HANDLE_EINTR(dup(fd))); }
-#endif  // USE_OZONE
 
  private:
   // Protected by |va_lock_|.
@@ -172,10 +174,8 @@ class VADisplayState {
   // the entire job submission sequence in ExecuteAndDestroyPendingBuffers().
   base::Lock va_lock_;
 
-#if defined(USE_OZONE)
   // Drm fd used to obtain access to the driver interface by VA.
   base::ScopedFD drm_fd_;
-#endif  // USE_OZONE
 
   // The VADisplay handle.
   VADisplay va_display_;
@@ -192,14 +192,12 @@ VADisplayState* VADisplayState::Get() {
 
 // static
 void VADisplayState::PreSandboxInitialization() {
-#if defined(USE_OZONE)
   const char kDriRenderNode0Path[] = "/dev/dri/renderD128";
   base::File drm_file = base::File(
       base::FilePath::FromUTF8Unsafe(kDriRenderNode0Path),
       base::File::FLAG_OPEN | base::File::FLAG_READ | base::File::FLAG_WRITE);
   if (drm_file.IsValid())
     VADisplayState::Get()->SetDrmFd(drm_file.GetPlatformFile());
-#endif
 }
 
 // static
@@ -207,11 +205,10 @@ bool VADisplayState::PostSandboxInitialization() {
   StubPathMap paths;
 
   paths[kModuleVa].push_back("libva.so.1");
+  paths[kModuleVa_drm].push_back("libva-drm.so.1");
 
 #if defined(USE_X11)
   paths[kModuleVa_x11].push_back("libva-x11.so.1");
-#elif defined(USE_OZONE)
-  paths[kModuleVa_drm].push_back("libva-drm.so.1");
 #endif
 
   const bool success = InitializeStubs(paths);
@@ -225,6 +222,7 @@ bool VADisplayState::PostSandboxInitialization() {
     DVLOG(1) << kErrorMsg;
 #endif
   }
+
   return success;
 }
 
@@ -235,11 +233,25 @@ bool VADisplayState::Initialize() {
   va_lock_.AssertAcquired();
   if (refcount_++ > 0)
     return true;
+
+  switch (gl::GetGLImplementation()) {
+    case gl::kGLImplementationEGLGLES2:
+      va_display_ = vaGetDisplayDRM(drm_fd_.get());
+      break;
+    case gl::kGLImplementationDesktopGL:
 #if defined(USE_X11)
-  va_display_ = vaGetDisplay(gfx::GetXDisplay());
-#elif defined(USE_OZONE)
-  va_display_ = vaGetDisplayDRM(drm_fd_.get());
+      va_display_ = vaGetDisplay(gfx::GetXDisplay());
+#else
+      LOG(WARNING) << "HW video decode acceleration not available without "
+                      "DesktopGL (GLX).";
 #endif  // USE_X11
+      break;
+
+    default:
+      LOG(WARNING) << "HW video decode acceleration not available for "
+                   << gl::GetGLImplementationName(gl::GetGLImplementation());
+      return false;
+  }
 
   if (!vaDisplayIsValid(va_display_)) {
     LOG(ERROR) << "Could not get a valid VA display";
@@ -733,7 +745,6 @@ scoped_refptr<VASurface> VaapiWrapper::CreateUnownedSurface(
   return va_surface;
 }
 
-#if defined(USE_OZONE)
 scoped_refptr<VASurface> VaapiWrapper::CreateVASurfaceForPixmap(
     const scoped_refptr<gfx::NativePixmap>& pixmap) {
   // Create a VASurface for a NativePixmap by importing the underlying dmabufs.
@@ -799,7 +810,6 @@ scoped_refptr<VASurface> VaapiWrapper::CreateVASurfaceForPixmap(
 
   return va_surface;
 }
-#endif
 
 void VaapiWrapper::DestroyUnownedSurface(VASurfaceID va_surface_id) {
   base::AutoLock auto_lock(*va_lock_);
