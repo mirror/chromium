@@ -16,6 +16,40 @@
       "revId": "7e78da3ab068fe3d81c223f491b23b44464ec4b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8cca53_d8e2bce7",
+        "filename": "third_party/WebKit/public/platform/web_page_visibility_state.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T03:53:26Z",
+      "side": 1,
+      "message": "Couldn\u0027t users of core/page/PageVisibilityState just use this enum instead?",
+      "revId": "7e78da3ab068fe3d81c223f491b23b44464ec4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a57f02_4034110f",
+        "filename": "third_party/WebKit/public/platform/web_page_visibility_state.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-13T03:53:26Z",
+      "side": 1,
+      "message": "Then we don\u0027t need \"Web\" here?",
+      "revId": "7e78da3ab068fe3d81c223f491b23b44464ec4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
