@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb6677de_31603dc7",
+        "filename": "components/arc/common/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-13T19:10:44Z",
+      "side": 1,
+      "message": "public?",
+      "range": {
+        "startLine": 58,
+        "startChar": 16,
+        "endLine": 58,
+        "endChar": 23
+      },
+      "revId": "44b200a6c0437a1b5a7f3701b0b91f79d68eba6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
