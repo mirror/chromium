@@ -107,6 +107,7 @@ bool ChildAccountService::IsChildAccountDetectionEnabled() {
 void ChildAccountService::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
   registry->RegisterBooleanPref(prefs::kChildAccountStatusKnown, false);
+  registry->RegisterBooleanPref(prefs::kAccountConsistencyRequired, false);
 }
 
 void ChildAccountService::Init() {
@@ -191,6 +192,16 @@ bool ChildAccountService::SetActive(bool active) {
     settings_service->SetLocalSetting(supervised_users::kForceSafeSearch,
                                       base::MakeUnique<base::Value>(false));
 
+#if defined(OS_CHROMEOS)
+    // Account consistency is required for child accounts on Chrome OS.
+    settings_service->SetLocalSetting(
+        supervised_users::kAccountConsistencyRequired,
+        base::MakeUnique<base::Value>(true));
+#else
+    settings_service->SetLocalSetting(
+        supervised_users::kAccountConsistencyRequired, nullptr);
+#endif
+
 #if !defined(OS_CHROMEOS)
     // This is also used by user policies (UserPolicySigninService), but since
     // child accounts can not also be Dasher accounts, there shouldn't be any
@@ -223,6 +234,8 @@ bool ChildAccountService::SetActive(bool active) {
                                       nullptr);
     settings_service->SetLocalSetting(supervised_users::kForceSafeSearch,
                                       nullptr);
+    settings_service->SetLocalSetting(
+        supervised_users::kAccountConsistencyRequired, nullptr);
 
 #if !defined(OS_CHROMEOS)
     SigninManagerFactory::GetForProfile(profile_)->ProhibitSignout(false);
