@@ -111,6 +111,9 @@ class TimeTest : public testing::Test {
   Time comparison_time_pdt_;
 };
 
+// TODO(crbug.com/782033): Re-enable this test. It has been disabled because it
+// is flaky on iPad Air 2 iOS 10.0 simulator.
+#if !defined(OS_IOS)
 // Test conversions to/from time_t and exploding/unexploding.
 TEST_F(TimeTest, TimeT) {
   // C library time and exploded time.
@@ -150,6 +153,7 @@ TEST_F(TimeTest, TimeT) {
   EXPECT_EQ(0, Time().ToTimeT());
   EXPECT_EQ(0, Time::FromTimeT(0).ToInternalValue());
 }
+#endif  // !defined(OS_IOS)
 
 // Test conversions to/from javascript time.
 TEST_F(TimeTest, JsTime) {
