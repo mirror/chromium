@@ -148,6 +148,7 @@ using web::WebStateImpl;
 - (void)selectedTabChanged;
 - (void)dismissToolsMenuPopup;
 - (void)cancelOmniboxEdit;
+- (void)setToolsMenuStateProvider:(id)provider;
 @end
 
 @implementation TestWebToolbarController
@@ -176,6 +177,9 @@ using web::WebStateImpl;
   return;
 }
 - (void)cancelOmniboxEdit {
+  return;
+}
+- (void)setToolsMenuStateProvider:(id)provider {
   return;
 }
 @end
