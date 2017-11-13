@@ -25,6 +25,8 @@ namespace base {
 class BucketRanges;
 }
 
+class GURL;
+
 namespace net {
 
 class DatagramClientSocket;
@@ -111,6 +113,9 @@ class NET_EXPORT_PRIVATE DnsSession
 
   void ApplyPersistentData(const base::Value& data);
   std::unique_ptr<const base::Value> GetPersistentData() const;
+
+  // List of DNS over HTTP servers;
+  std::vector<std::tuple<GURL, bool>> dohservers;
 
  private:
   friend class base::RefCounted<DnsSession>;
