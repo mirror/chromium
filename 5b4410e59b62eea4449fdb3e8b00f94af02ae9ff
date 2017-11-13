@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9b98c8f_44bc14fd",
+        "filename": "content/public/browser/render_process_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-13T18:41:24Z",
+      "side": 0,
+      "message": "I didn\u0027t see any reason why this was in the public file, so I moved it to RPHI -- this allowed passing in the BrowsingInstance to it, which isn\u0027t publicly exposed.  But see also my discussion there on whether this is needed.",
+      "range": {
+        "startLine": 492,
+        "startChar": 28,
+        "endLine": 492,
+        "endChar": 50
+      },
+      "revId": "5b4410e59b62eea4449fdb3e8b00f94af02ae9ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

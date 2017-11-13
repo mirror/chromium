@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14a94e29_27fc8fba",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3473,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-13T18:41:24Z",
+      "side": 1,
+      "message": "This raises an interesting question of how we want BI-scoped isolated origins to behave with --process-per-site.\n\nI plumbed the BI here so that it can be passed to IsSuitableHost -\u003e ShouldLockToOrigin -\u003e DoesSiteRequireDedicatedProcess.  On first thought, it feels weird, since this is picking a process for a site in --process-per-site, which feels like it shouldn\u0027t care about isolated origins scoped to any BrowsingInstances.  On the other hand, I think if a particular BrowsingInstance requires foo.com to be isolated, that should probably override --process-per-site, and this will let us do this.\n\nThinking through the behavior here, with browser-wide isolated origins and --process-per-site, we\u0027ll only ever have one process for an isolated origin, and it will be origin-locked and should always be considered suitable below.  With BI-scoped isolated origins, however, if we\u0027ve been using process 1 for foo.com, but then hit a BI which requires foo.com to be isolated, we probably shouldn\u0027t reuse process 1 anymore, and need to now create a second foo.com process, which will host the isolated part of foo.com.\n\nThe way it does this though is by taking process 1 off the --process-per-site map and then re-adding the second process to the map once it\u0027s created in RPHI::GetProcessHostForSiteInstance, which may not be ideal.  Perhaps ShouldUseProcessPerSite needs to return false in this case, so that we never even use this logic in this case?  That still would need a way for us to plumb through the BrowserContext to IsSuitableHost -\u003e ShouldLockToOrigin -\u003e DoesSiteRequireDedicatedProcess. It seems wasteful to pass in both a BrowserContext and a BrowsingInstance, but maybe that\u0027s better for cases like this?  In any case, I\u0027ll need to add a test for --process-per-site behavior in a subsequent CL that introduces isolated origins within a BI, and perhaps iron out more of this behavior there.",
+      "range": {
+        "startLine": 3473,
+        "startChar": 4,
+        "endLine": 3473,
+        "endChar": 39
+      },
+      "revId": "757256878c1184236009f0a16d6e94e7ef695705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7438f6d7_2f57f2a7",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-13T18:41:24Z",
+      "side": 1,
+      "message": "Oops, I think this comment should have been in the followup CL; I\u0027ll change it in the next PS.",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 42
+      },
+      "revId": "757256878c1184236009f0a16d6e94e7ef695705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
