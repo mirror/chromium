@@ -1,0 +1,346 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87095f63_05d61933",
+        "filename": "chrome/browser/ui/autofill/card_unmask_prompt_view_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "The new tests describe entering a state when confirm is clicked -- is it possible to get the dialog into that state here, before returning from ShowDialog()?\n\nE.g. one way might be to call controller()-\u003eview()-\u003eGetWidget()-\u003eAsDialogDelegate()-\u003eGetDialogClientView()-\u003eAcceptWindow()\n\n(maybe via CardUnmaskPromptViewTesterViews)\n\n\nI\u0027d also be open to adding functionality to TestBrowserDialog that does this. E.g. moving |widgets_before| from TestBrowserDialog::RunDialog() to a data member could allow the detect-dialog logic to move to a helper method, and a `ClickAccept()` method to be implemented using DialogClientView::AcceptWindow()\n\n(Long term - I actually want to automate that flow -- currently `RunDialog()` usually just calls CloseNow() on the widget, but we can easily get automated coverage for clicking Accept and Cancel on all dialogs too)",
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28478919_6e0b3c65",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "optional: move to data member initializers? #consistency",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 54
+      },
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a954050e_6ed6215d",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "optional: you can probably omit this",
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c99ef5c_b2ac2693",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c78e5bd_c4550cf8",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "optional: since `views::View` is a parent class, you get a free `using views::View` in the scope of child class. CardUnmaskPromptViews relies on this in a few places, you could do the same here (and above/below) for more consistency.",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 15
+      },
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3045af_18f52572",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "nit: blank line before",
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f6f163_e24914b2",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "255 -\u003e SK_AlphaOPAQUE. more below",
+      "range": {
+        "startLine": 81,
+        "startChar": 39,
+        "endLine": 81,
+        "endChar": 42
+      },
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f84024e6_d645d6f1",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "nit: newly introduced methods before overides",
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec89505_ef0b7385",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "SkAlpha alpha_ \u003d SK_AlphaOPAQUE;\n\n(SkAlpha is just a uint8_t typedef -- you can get rid of the \"0 is transparent and 255 is opaque.\" comments then since it becomes intrinsic)",
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce883f7d_60c6c143",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "this should probably use View::SetPaintToLayer(..) and ui::Layer::GetAnimator / ui::ImplicitAnimationObserver etc. But that\u0027s a different yak to explore...",
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b18cfc88_8bee82fe",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "can you use the CreateEmptyBorder overload taking a gfx::Insets?",
+      "range": {
+        "startLine": 402,
+        "startChar": 13,
+        "endLine": 402,
+        "endChar": 30
+      },
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f4d7b8_d062840a",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "0 -\u003e kThrobberColumnSetId or similar",
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfceb349_df4b4cbb",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "the \u00270.5\u0027s don\u0027t carry much context. I typically do something like\n\nconstexpr float kStretchy \u003d 1.0f;\nconstexpr float kFixed \u003d 0.0f;\n\n(and pass kStretchy instead of 0.5 for all the rows/columns that stretch to fit)",
+      "range": {
+        "startLine": 496,
+        "startChar": 37,
+        "endLine": 496,
+        "endChar": 40
+      },
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d604ea0_7eaf1cae",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "And pass kFixed instead of \u00270\u0027 on this line.",
+      "range": {
+        "startLine": 498,
+        "startChar": 71,
+        "endLine": 498,
+        "endChar": 72
+      },
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54269c73_d7549871",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "1 -\u003e kLabelColumnSetId",
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61236e3a_03452bc3",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "It\u0027s not clear why two column sets are required - can you comment?. They both have 3 columns - the difference seems to be this TRAILING/LEADING vertical alignment, but I think you could achieve the same with fixed-height rows and a stretchy padding row at the top and bottom, and it would end up simpler.",
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c9de34_af22e44d",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "0 -\u003e kThrobberColumnSetId",
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2287b7b4_690e7040",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T01:52:53Z",
+      "side": 1,
+      "message": "1 -\u003e kLabelColumnSetId",
+      "revId": "bc0af19dc5e7c13ced8a892cd774e54de28e6e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
