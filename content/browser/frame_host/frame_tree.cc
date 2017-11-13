@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include <queue>
+#include <set>
 #include <utility>
 
 #include "base/bind.h"
@@ -109,6 +110,7 @@ FrameTree::FrameTree(Navigator* navigator,
                               blink::WebTreeScopeType::kDocument,
                               std::string(),
                               std::string(),
+                              false,
                               base::UnguessableToken::Create(),
                               FrameOwnerProperties())),
       focused_frame_tree_node_id_(FrameTreeNode::kFrameTreeNodeInvalidId),
@@ -179,6 +181,7 @@ bool FrameTree::AddFrame(
     blink::WebTreeScopeType scope,
     const std::string& frame_name,
     const std::string& frame_unique_name,
+    bool is_created_by_script,
     const base::UnguessableToken& devtools_frame_token,
     const blink::FramePolicy& frame_policy,
     const FrameOwnerProperties& frame_owner_properties) {
@@ -194,7 +197,8 @@ bool FrameTree::AddFrame(
   std::unique_ptr<FrameTreeNode> new_node = base::WrapUnique(new FrameTreeNode(
       this, parent->navigator(), render_frame_delegate_,
       render_widget_delegate_, manager_delegate_, parent, scope, frame_name,
-      frame_unique_name, devtools_frame_token, frame_owner_properties));
+      frame_unique_name, is_created_by_script, devtools_frame_token,
+      frame_owner_properties));
 
   // Set sandbox flags and container policy and make them effective immediately,
   // since initial sandbox flags and feature policy should apply to the initial
