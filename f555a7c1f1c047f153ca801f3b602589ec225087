@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98457cfa_af482f01",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-13T23:20:29Z",
+      "side": 1,
+      "message": "nit: this is a bit confusing to read. Perhaps you could store GetTargetOpacity() !\u003d opacity_when_visible in a boolean named something descriptive like will_be_visible?",
+      "revId": "f555a7c1f1c047f153ca801f3b602589ec225087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
