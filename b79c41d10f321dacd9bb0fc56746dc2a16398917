@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5fbae3a1_c4acfbe4",
+        "filename": "third_party/WebKit/Source/platform/text/SegmentedString.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-13T16:34:56Z",
+      "side": 1,
+      "message": "This was reverse iteration before, and probably should still be.",
+      "revId": "b79c41d10f321dacd9bb0fc56746dc2a16398917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2da6bef_e1a359b6",
         "filename": "third_party/WebKit/Source/platform/text/SegmentedString.h",
         "patchSetId": 3
