@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a60ec716_3ae468cb",
+        "filename": "ios/chrome/browser/open_url_util.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T17:47:01Z",
+      "side": 1,
+      "message": "nit: s/main/UI",
+      "revId": "22366266596423d91d0dbe82110911f295124aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "496da685_50d8a874",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 28
@@ -25,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "fc49fdf0_c4efcc75",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T17:47:01Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure if it\u0027s OK to keep working with Tab after WebState destruction. Early return would be a safer practice here.",
+      "range": {
+        "startLine": 643,
+        "startChar": 23,
+        "endLine": 643,
+        "endChar": 26
+      },
+      "revId": "22366266596423d91d0dbe82110911f295124aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddb947a3_6bff3dcc",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 28
@@ -41,6 +81,69 @@
         "startChar": 10,
         "endLine": 653,
         "endChar": 19
+      },
+      "revId": "22366266596423d91d0dbe82110911f295124aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b384cc61_e6b0b6cb",
+        "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T17:47:01Z",
+      "side": 1,
+      "message": "EXPECT_TRUE(testing::WaitUntilCondition(testing::kWaitForUIElementTimeout, ^{\n  return completion_called;\n}));",
+      "revId": "22366266596423d91d0dbe82110911f295124aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75370f2a_1490bf64",
+        "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T17:47:01Z",
+      "side": 1,
+      "message": "|completion_called| holds the result of the last call, not all calls. There is no value in checking the variable, because WaitUntilCondition suppose to handle timeouts.",
+      "range": {
+        "startLine": 363,
+        "startChar": 16,
+        "endLine": 363,
+        "endChar": 33
+      },
+      "revId": "22366266596423d91d0dbe82110911f295124aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a7faf1_988a4626",
+        "filename": "ios/chrome/browser/web/external_app_launcher.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T17:47:01Z",
+      "side": 1,
+      "message": "nit: s/main/UI",
+      "range": {
+        "startLine": 23,
+        "startChar": 67,
+        "endLine": 23,
+        "endChar": 71
       },
       "revId": "22366266596423d91d0dbe82110911f295124aa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
