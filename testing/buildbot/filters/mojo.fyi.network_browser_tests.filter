@@ -358,6 +358,7 @@
 -PDFExtensionTest.BasicPlugin
 -PDFExtensionTest.BlockDirectAccess
 -PDFExtensionTest.Bookmark
+-PDFExtensionTest.CtrlWheelInvokesCustomZoom
 -PDFExtensionTest.Elements
 -PDFExtensionTest.EnsurePDFFromLocalFileLoads
 -PDFExtensionTest.EnsureSameOriginRepliesAllowed
