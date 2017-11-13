@@ -9,6 +9,8 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(OutOfMemoryReporter);
 
@@ -40,6 +42,12 @@ OutOfMemoryReporter::OutOfMemoryReporter(content::WebContents* web_contents)
 
 void OutOfMemoryReporter::OnForegroundOOMDetected(const GURL& url,
                                                   ukm::SourceId source_id) {
+  ukm::UkmRecorder* recorder = ukm::UkmRecorder::Get();
+  base::TimeDelta time_since_last_navigation =
+      base::TimeTicks::Now() - last_navigation_timestamp_;
+  ukm::builders::Tab_RendererOOM(source_id)
+      .SetTimeSinceLastNavigation(time_since_last_navigation.InMilliseconds())
+      .Record(recorder);
   for (auto& observer : observers_) {
     observer.OnForegroundOOMDetected(url, source_id);
   }
@@ -53,6 +61,7 @@ void OutOfMemoryReporter::DidFinishNavigation(
     return;
   }
   last_committed_source_id_.reset();
+  last_navigation_timestamp_ = base::TimeTicks::Now();
   crashed_render_process_id_ = content::ChildProcessHost::kInvalidUniqueID;
   if (handle->IsErrorPage())
     return;
