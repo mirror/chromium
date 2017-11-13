@@ -52,6 +52,24 @@
       "revId": "2e3f815437d4186aeb943e965f420e707b6a67b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "717148a4_fccff8e2",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-13T14:40:50Z",
+      "side": 0,
+      "message": "CreateDeviceInternal was renamed into CreateDeviceByID and it\u0027s called from:\n1. AudioManagerBase::MakeAudioInputStream()[1] that calls CoreAudioUtil::GetPreferredAudioParameters [2]. For this call stack, behavior was not changed because in AudioManagerBase::MakeAudioInputStream if device_id.empty(), CoreAudioUtil::GetPreferredAudioParameters is not called [3]\n2. AudioManagerBase::MakeAudioOutputStreamProxy()[4] that calls CoreAudioUtil::GetPreferredAudioParameters [2]. For this call stack, behavior was not changed because in AudioManagerBase::MakeAudioOutputStreamProxy if device_id.empty(), CoreAudioUtil::GetPreferredAudioParameters is called with AudioDeviceDescription::kDefaultDevice [5]\n\nCreateDeviceInternal is replacing CreateDefaultDevice and CreateDevice and it\u0027s called from\n1. CoreAudioUtil::GetDefaultOutputDeviceID [6]\n2. CoreAudioUtil::GetMatchingOutputDeviceID [7]\n3. CoreAudioUtil::GetFriendlyName[8] - fixed behavior [9]\n4. CoreAudioUtil::CreateClient[10]\nBehavior is not changed\n\n\n[1] https://cs.chromium.org/chromium/src/media/audio/audio_manager_base.cc?rcl\u003dbfd292e6512ec25b8640723eb8abe1702c414512\u0026l\u003d208\n[2] https://cs.chromium.org/chromium/src/media/audio/win/core_audio_util_win.cc?rcl\u003dbfd292e6512ec25b8640723eb8abe1702c414512\u0026l\u003d724\n[3] https://cs.chromium.org/chromium/src/media/audio/audio_manager_base.cc?rcl\u003dbfd292e6512ec25b8640723eb8abe1702c414512\u0026l\u003d215\n[4]https://cs.chromium.org/chromium/src/media/audio/audio_manager_base.cc?rcl\u003dbfd292e6512ec25b8640723eb8abe1702c414512\u0026l\u003d270\n[5] https://cs.chromium.org/chromium/src/media/audio/win/audio_manager_win.cc?rcl\u003dbfd292e6512ec25b8640723eb8abe1702c414512\u0026l\u003d283\n[6] https://cs.chromium.org/chromium/src/media/audio/win/core_audio_util_win.cc?rcl\u003dbfd292e6512ec25b8640723eb8abe1702c414512\u0026l\u003d352\n[7] https://cs.chromium.org/chromium/src/media/audio/win/core_audio_util_win.cc?rcl\u003dbfd292e6512ec25b8640723eb8abe1702c414512\u0026l\u003d450\n[8] https://cs.chromium.org/chromium/src/media/audio/win/core_audio_util_win.cc?rcl\u003dbfd292e6512ec25b8640723eb8abe1702c414512\u0026l\u003d504\n[9] https://cs.chromium.org/chromium/src/media/audio/win/audio_device_listener_win.cc?rcl\u003dbfd292e6512ec25b8640723eb8abe1702c414512\u0026l\u003d141\n[10] https://cs.chromium.org/chromium/src/media/audio/win/core_audio_util_win.cc?rcl\u003dbfd292e6512ec25b8640723eb8abe1702c414512\u0026l\u003d564",
+      "parentUuid": "2a133584_da878082",
+      "revId": "2e3f815437d4186aeb943e965f420e707b6a67b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
