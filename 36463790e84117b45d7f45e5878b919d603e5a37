@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "7a831c07_db5d3fdb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-13T23:31:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "612012b8_af6dbf5a",
+      "range": {
+        "startLine": 493,
+        "startChar": 51,
+        "endLine": 493,
+        "endChar": 67
+      },
+      "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e1c55da_d7c6b12e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 1
@@ -306,6 +330,30 @@
       "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df4eb754_c2a6d25b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-13T23:31:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "969467c3_ee11eba4",
+      "range": {
+        "startLine": 692,
+        "startChar": 11,
+        "endLine": 692,
+        "endChar": 23
+      },
+      "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
