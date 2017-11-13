@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a13f37f1_8ac769b1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigateTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-13T19:13:54Z",
+      "side": 1,
+      "message": "Quite a lot of code here was somewhat duplicated from NavigateTest. Let me know if any of it should be refactored, or at least tracked in a bug.",
+      "revId": "1425cd6089c788ac6fc4894ecf81b77669c6ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d56af79_c56b01a5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigateTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-13T19:13:54Z",
+      "side": 1,
+      "message": "Above I had to wait for it to be done with the SHEET_STATE_SCROLLING. Do you know if it\u0027s expected to be safe here, after observing the tab load?",
+      "revId": "1425cd6089c788ac6fc4894ecf81b77669c6ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
