@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "160873fe_057cdad0",
+        "filename": "ios/web_view/internal/web_view_web_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T22:00:10Z",
+      "side": 1,
+      "message": "Do we really need this base class? Do we expect most of web_view unit tests to inherit from this class? Per my previous comment I would prefer to avoid creating a base class which will only be used in a few unit tests. And at this moment I don\u0027t think that WebViewWebTest will be very widely adopted.",
+      "parentUuid": "9a731f6f_62bc0ae7",
+      "revId": "6002ef9292e19e6d88f06960e6ca084eeb8225b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8c21da3_1fefe2a6",
         "filename": "ios/web_view/internal/web_view_web_test.mm",
         "patchSetId": 2
