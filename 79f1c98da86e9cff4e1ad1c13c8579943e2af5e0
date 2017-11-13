@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "21e92d09_00ab7e93",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-backwards-at-start.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-13T10:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28ce4975_55d371c7",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 48
+      },
+      "revId": "79f1c98da86e9cff4e1ad1c13c8579943e2af5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "316270ec_d9c67df4",
         "filename": "third_party/WebKit/LayoutTests/media/controls/modern/singletap-on-outside.html",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "79f1c98da86e9cff4e1ad1c13c8579943e2af5e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46dc3c7b_34ce856a",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/singletap-on-outside.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-13T10:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "316270ec_d9c67df4",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 23
+      },
+      "revId": "79f1c98da86e9cff4e1ad1c13c8579943e2af5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "75de3f09_5f377984",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/singletap-on-play-button.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-13T10:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcc8006b_3ad6b4fd",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 23
+      },
+      "revId": "79f1c98da86e9cff4e1ad1c13c8579943e2af5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c29c7da_25a07236",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "79f1c98da86e9cff4e1ad1c13c8579943e2af5e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3576c28a_76e119b5",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-13T10:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c29c7da_25a07236",
+      "range": {
+        "startLine": 34,
+        "startChar": 57,
+        "endLine": 34,
+        "endChar": 63
+      },
+      "revId": "79f1c98da86e9cff4e1ad1c13c8579943e2af5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +234,30 @@
       "revId": "79f1c98da86e9cff4e1ad1c13c8579943e2af5e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f31d85_ec86c2a5",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-13T10:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a65c981_50ecaaa4",
+      "range": {
+        "startLine": 119,
+        "startChar": 60,
+        "endLine": 119,
+        "endChar": 0
+      },
+      "revId": "79f1c98da86e9cff4e1ad1c13c8579943e2af5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
