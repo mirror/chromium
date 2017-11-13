@@ -16,6 +16,24 @@
       "revId": "321ef3239237a01b3eee7a3f618b327a7c14dd02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16bfcc78_3a35bbeb",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-13T10:35:39Z",
+      "side": 1,
+      "message": "Done. I actually already have a staged CL to fix this :)",
+      "parentUuid": "4c54409d_268e3cee",
+      "revId": "321ef3239237a01b3eee7a3f618b327a7c14dd02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
