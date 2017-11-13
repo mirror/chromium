@@ -34,6 +34,24 @@
       "revId": "617d981871b105017b9ad42d5725c710b653d826",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8eaa7cb_b2e7e802",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-11-13T17:50:29Z",
+      "side": 1,
+      "message": "Decided that ResolveBlockLength should stay as is.",
+      "parentUuid": "35bf247f_9cd13d8b",
+      "revId": "617d981871b105017b9ad42d5725c710b653d826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
