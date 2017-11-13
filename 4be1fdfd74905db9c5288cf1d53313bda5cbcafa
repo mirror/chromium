@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1d5d02f_e0b11267",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-13T17:59:48Z",
+      "side": 1,
+      "message": "nit: maybe CreateFilteredCopyForPublicSession() (or CreatePublicSessionCopy())",
+      "revId": "4be1fdfd74905db9c5288cf1d53313bda5cbcafa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
