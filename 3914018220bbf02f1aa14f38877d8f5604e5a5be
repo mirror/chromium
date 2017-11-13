@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d3c1847_528bfa71",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2253,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-13T14:30:27Z",
+      "side": 1,
+      "message": "nit: I think there\u0027s at least an effort to make these alphabetical, this should probably go below kMergeKeyCharEventsDescription",
+      "range": {
+        "startLine": 2253,
+        "startChar": 11,
+        "endLine": 2253,
+        "endChar": 22
+      },
+      "revId": "3914018220bbf02f1aa14f38877d8f5604e5a5be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489d96a6_f3f4d73c",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-13T14:30:27Z",
+      "side": 1,
+      "message": "nit: share the #if defined(OS_WIN) below?",
+      "range": {
+        "startLine": 211,
+        "startChar": 1,
+        "endLine": 211,
+        "endChar": 6
+      },
+      "revId": "3914018220bbf02f1aa14f38877d8f5604e5a5be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
