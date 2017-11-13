@@ -93,6 +93,12 @@ void WebClient::AllowCertificateError(
   callback.Run(false);
 }
 
+void WebClient::ShouldDisplayError(WebState* web_state,
+                                   const GURL& request_url,
+                                   const base::Callback<void(bool)>& callback) {
+  callback.Run(true);
+}
+
 bool WebClient::IsSlimNavigationManagerEnabled() const {
   return base::FeatureList::IsEnabled(web::features::kSlimNavigationManager);
 }
