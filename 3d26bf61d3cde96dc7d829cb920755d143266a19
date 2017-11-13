@@ -70,6 +70,29 @@
     },
     {
       "key": {
+        "uuid": "bb6a5e30_324de49e",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-13T09:51:58Z",
+      "side": 1,
+      "message": "+nhiroki, I\u0027ve changed this to strip off the entire prefix rather than just the USER_DATA prefix. In my case, I know what the prefix is and need to strip it anyway so it would save on copying unnecessary data and I suspect that will be the same for anyone else who wants to use this API.\n\nI will update the comments to reflect this as well assuming you agree.",
+      "range": {
+        "startLine": 968,
+        "startChar": 6,
+        "endLine": 968,
+        "endChar": 53
+      },
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0972fea_2e5ea4bb",
         "filename": "content/browser/service_worker/service_worker_database.h",
         "patchSetId": 3
@@ -110,6 +133,30 @@
     },
     {
       "key": {
+        "uuid": "ddd7d527_2ad09bb6",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-13T09:51:58Z",
+      "side": 1,
+      "message": "Done. What about all the other uses in this file? I just copy+pasted this from the above function. I can do a clean up in a follow-up CL to avoid bloating this one.",
+      "parentUuid": "27038fd6_a5d1e08b",
+      "range": {
+        "startLine": 711,
+        "startChar": 22,
+        "endLine": 711,
+        "endChar": 32
+      },
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e48feaeb_243faad7",
         "filename": "content/browser/service_worker/service_worker_storage.cc",
         "patchSetId": 3
@@ -124,6 +171,24 @@
       "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4cc57f_05864d19",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-13T09:51:58Z",
+      "side": 1,
+      "message": "Done. (Note this was also a copy+paste from the above function).",
+      "parentUuid": "e48feaeb_243faad7",
+      "revId": "3d26bf61d3cde96dc7d829cb920755d143266a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
