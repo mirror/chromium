@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f9132685_4c4f3df2",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-13T21:55:25Z",
+      "side": 1,
+      "message": "Yep, that sounds right to me, though I\u0027d really like Yash\u0027s opinion on set_visible_time_ in case I\u0027m misunderstanding the meaning of that value.",
+      "parentUuid": "69728a8b_e684f714",
+      "revId": "18c4bdcd7208fa4cd804370e1e7de986c31221e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "049071ca_4f40e9f7",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 2
