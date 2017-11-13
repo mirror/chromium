@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60af9c7e_de79ff5c",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-11-13T21:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f235f8d0_ae9fb15d",
+      "range": {
+        "startLine": 311,
+        "startChar": 7,
+        "endLine": 311,
+        "endChar": 20
+      },
+      "revId": "9018d124cf9c24ea74d8b8d3c5965f7c7dd923c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f24aeab6_87c28d03",
         "filename": "content/test/gpu/generate_buildbot_json.py",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "9018d124cf9c24ea74d8b8d3c5965f7c7dd923c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30673858_14a7a41c",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1888,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-11-13T21:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f24aeab6_87c28d03",
+      "range": {
+        "startLine": 1888,
+        "startChar": 32,
+        "endLine": 1888,
+        "endChar": 44
+      },
+      "revId": "9018d124cf9c24ea74d8b8d3c5965f7c7dd923c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "188f4893_586748fe",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2494,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-11-13T21:38:48Z",
+      "side": 1,
+      "message": "Done, but one thought about usage:\n\nIf the experimental configs differ, and we run the no-op job, it would increase cycle time. However, counter-intuitively, I think it will also decrease resource utilization.\n\nThe experimental FYI tests run serially, so we\u0027re always using at least one swarming shard (not counting during the bot_update/etc steps). But our maximum usage is 20 shards for the WebGL 2.0 tests; if we ran nothing but WebGL 2.0, we\u0027d be using 20 shards always. So, since running the no-op test decreases the time we spend in WebGL 2.0 (and other multi-shard jobs), we actually decrease peak usage.\n\nAll that to say we should probably think about how to improve the swarming usage in FYI jobs, like we were talking about in the crbug.",
+      "parentUuid": "066dde14_7d7f03fa",
+      "range": {
+        "startLine": 2494,
+        "startChar": 17,
+        "endLine": 2494,
+        "endChar": 21
+      },
+      "revId": "9018d124cf9c24ea74d8b8d3c5965f7c7dd923c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03077505_94808ac7",
         "filename": "content/test/gpu/generate_buildbot_json.py",
         "patchSetId": 3
@@ -85,6 +157,24 @@
       "revId": "9018d124cf9c24ea74d8b8d3c5965f7c7dd923c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c534d4ea_c7970989",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2498,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-11-13T21:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03077505_94808ac7",
+      "revId": "9018d124cf9c24ea74d8b8d3c5965f7c7dd923c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
