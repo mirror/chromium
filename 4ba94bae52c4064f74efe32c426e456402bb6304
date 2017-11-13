@@ -34,6 +34,24 @@
       "revId": "4ba94bae52c4064f74efe32c426e456402bb6304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0394e86d_b1a8d065",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2017-11-13T23:43:46Z",
+      "side": 1,
+      "message": "ah sorry, i confused it with luci.chromium.try",
+      "parentUuid": "ea97d479_50399a4a",
+      "revId": "4ba94bae52c4064f74efe32c426e456402bb6304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
