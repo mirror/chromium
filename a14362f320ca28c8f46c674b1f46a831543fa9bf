@@ -16,6 +16,24 @@
       "revId": "a14362f320ca28c8f46c674b1f46a831543fa9bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10bf023a_76c2c37f",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_characteristic_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2171,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-13T23:01:01Z",
+      "side": 1,
+      "message": "Why are we checking gatt_characteristic_added_count()? I though we were not going to implement the ServiceAdded/CharacteristicAdded/etc. events?",
+      "parentUuid": "2f807150_1ae08491",
+      "revId": "a14362f320ca28c8f46c674b1f46a831543fa9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
