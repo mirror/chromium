@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6f34e50c_353bb924",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1478,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-11-13T20:37:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c70716d8_7277baab",
+      "revId": "83ff2d12bf57dc46d2634ccbab45f85e77846945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ee4ac8c_1a92c34c",
         "filename": "chromeos/audio/cras_audio_handler.h",
         "patchSetId": 1
