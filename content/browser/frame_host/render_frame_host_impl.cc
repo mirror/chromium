@@ -53,6 +53,7 @@
 #include "content/browser/keyboard_lock/keyboard_lock_service_impl.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/loader/resource_scheduler_filter.h"
+#include "content/browser/locks/locks_context.h"
 #include "content/browser/media/media_interface_proxy.h"
 #include "content/browser/media/session/media_session_service_impl.h"
 #include "content/browser/payments/payment_app_context_impl.h"
@@ -145,6 +146,7 @@
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/common/feature_policy/feature_policy.h"
 #include "third_party/WebKit/common/frame_policy.h"
+#include "third_party/WebKit/public/platform/modules/locks/locks_service.mojom.h"
 #include "ui/accessibility/ax_tree.h"
 #include "ui/accessibility/ax_tree_id_registry.h"
 #include "ui/accessibility/ax_tree_update.h"
@@ -3085,6 +3087,17 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
       &KeyboardLockServiceImpl::CreateMojoService, base::Unretained(this)));
 
   registry_->AddInterface(base::Bind(&ImageCaptureImpl::Create));
+
+  registry_->AddInterface(base::Bind(
+      [](RenderFrameHostImpl* rfh, blink::mojom::LocksServiceRequest request) {
+        static_cast<StoragePartitionImpl*>(
+            BrowserContext::GetStoragePartition(
+                rfh->GetSiteInstance()->GetBrowserContext(),
+                rfh->GetSiteInstance()))
+            ->GetLocksContext()
+            ->CreateService(std::move(request));
+      },
+      base::Unretained(this)));
 
   if (base::FeatureList::IsEnabled(features::kWebAuth)) {
     registry_->AddInterface(
