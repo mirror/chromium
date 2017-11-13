@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+#include "net/url_request/url_request.h"
+
 namespace net {
 class URLRequestContextGetter;
 
@@ -29,6 +31,19 @@ class HTTPProtocolHandlerDelegate {
   // a RequestTracker. This includes in particular the requests that are not
   // aware of the network stack. Must not return null.
   virtual URLRequestContextGetter* GetDefaultURLRequestContext() = 0;
+};
+
+class MetricsDelegate {
+ public:
+  // Set the global instance of the MetricsDelegate.
+  static void SetInstance(MetricsDelegate* delegate);
+
+  virtual ~MetricsDelegate() {}
+
+  // This is invoked once metrics have been been collected by net.
+  // It will need to take a metrics object argument.
+  virtual void didFinishCollectingMetrics(
+      const LoadTimingInfo& load_timing_info) = 0;
 };
 
 }  // namespace net
