@@ -22,6 +22,30 @@
       "revId": "5bd2aacbfe188109d3c2fbd18fa2d745a5343724",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb11548_38cd3a1b",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-13T22:31:01Z",
+      "side": 1,
+      "message": "Good idea. Simplifies code below.",
+      "parentUuid": "abf479a1_dda59e9b",
+      "range": {
+        "startLine": 761,
+        "startChar": 25,
+        "endLine": 761,
+        "endChar": 34
+      },
+      "revId": "5bd2aacbfe188109d3c2fbd18fa2d745a5343724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
