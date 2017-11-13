@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb308cd3_3c716928",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-13T23:14:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "779f0454_9e6c3009",
+      "revId": "973832249581389044a6085579e349523797ee99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41e85e4a_18622885",
         "filename": "chrome/browser/android/search_permissions/search_permissions_service.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "973832249581389044a6085579e349523797ee99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0003c16a_961f8320",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-13T23:14:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41e85e4a_18622885",
+      "revId": "973832249581389044a6085579e349523797ee99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f97fc99c_79d506c1",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-13T23:14:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df54e281_56ec9416",
+      "revId": "973832249581389044a6085579e349523797ee99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f293f8d_dbf48a6b",
         "filename": "chrome/browser/android/search_permissions/search_permissions_service_unittest.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-13T04:21:59Z",
       "side": 1,
       "message": "Would it be more useful here to test ReinitializeService? That is, test the policy being enabled then disabled while chrome isn\u0027t running. The above test tests it while chrome is running.\n\nAs I\u0027m unsure if the policy can be changed while Chrome is running, or if it can whether the DSE changed notifications would go through, I think testing policy being enabled / disabled while Chrome isn\u0027t running / without the events happening is important.",
+      "revId": "973832249581389044a6085579e349523797ee99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb244917_e03b339c",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-13T23:14:53Z",
+      "side": 1,
+      "message": "Good idea. The policy can actually be changed while Chrome is running and the DSE changed notifications do appear to get fired.",
+      "parentUuid": "2f293f8d_dbf48a6b",
       "revId": "973832249581389044a6085579e349523797ee99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
