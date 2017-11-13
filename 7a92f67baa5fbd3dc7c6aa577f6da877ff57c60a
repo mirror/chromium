@@ -131,6 +131,29 @@
       "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83454fe8_9688b3bb",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T22:28:48Z",
+      "side": 1,
+      "message": "I would prefer just printing the URL, as popping up a tab in browser can be quite distracting, e.g. iamgine you launched a large unit tests binary and switched to doing other tasks on your machine, you probably don\u0027t want to suddenly jump into the browser window :)",
+      "range": {
+        "startLine": 398,
+        "startChar": 2,
+        "endLine": 398,
+        "endChar": 39
+      },
+      "revId": "7a92f67baa5fbd3dc7c6aa577f6da877ff57c60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
