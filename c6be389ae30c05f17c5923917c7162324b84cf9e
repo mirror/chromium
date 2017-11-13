@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d5f3633a_76909c32",
+        "filename": "ash/accessibility/accessibility_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-13T06:35:44Z",
+      "side": 1,
+      "message": "Done. Thanks for this. I saw a lot of BindingSet in ash/ code. They might need the change too (not sure if all of them).",
+      "parentUuid": "83d302dc_f2b4b734",
+      "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c058f7e7_ca337944",
         "filename": "ash/accessibility/test_accessibility_controller_client.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b2d7c1c4_7da759d7",
+        "filename": "ash/accessibility/test_accessibility_controller_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-13T06:35:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c058f7e7_ca337944",
+      "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d2814ae_aa34bdc9",
         "filename": "ash/public/interfaces/accessibility_controller.mojom",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d7a5abf_0659c971",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-13T06:35:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d2814ae_aa34bdc9",
+      "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "df89d7f7_e9644ea8",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-13T06:35:44Z",
+      "side": 1,
+      "message": "I saw ash::WebNotificationItem::AnimationProgressed() in crash stack trace. I think I solved it.",
+      "parentUuid": "50b7f5ef_35dac61b",
+      "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bcfac7e_d442da11",
         "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.cc",
         "patchSetId": 3
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "28c828ce_8d380c81",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-13T06:35:44Z",
+      "side": 1,
+      "message": "Done. I cached last_a11y_alert_for_test_ for testing. I think this might be a better way since it doesn\u0027t need to depend on AutomationManager enabled state.",
+      "parentUuid": "3bcfac7e_d442da11",
+      "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1eee718_7bb8b8c8",
         "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h",
         "patchSetId": 3
@@ -119,6 +209,24 @@
       "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79ab16f_967a9750",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-13T06:35:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1eee718_7bb8b8c8",
+      "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
