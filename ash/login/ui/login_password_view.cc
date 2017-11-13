@@ -501,11 +501,13 @@ void LoginPasswordView::Backspace() {
                                   ui::DomCode::BACKSPACE, ui::EF_NONE));
 }
 
-void LoginPasswordView::Submit() {}
-
 void LoginPasswordView::SetPlaceholderText(
     const base::string16& placeholder_text) {
   textfield_->set_placeholder_text(placeholder_text);
+}
+
+void LoginPasswordView::SetReadOnly(bool read_only) {
+  textfield_->SetReadOnly(read_only);
 }
 
 const char* LoginPasswordView::GetClassName() const {
@@ -558,8 +560,9 @@ void LoginPasswordView::OnCapsLockChanged(bool enabled) {
 }
 
 void LoginPasswordView::SubmitPassword() {
+  if (textfield_->read_only())
+    return;
   on_submit_.Run(textfield_->text());
-  Clear();
 }
 
 }  // namespace ash

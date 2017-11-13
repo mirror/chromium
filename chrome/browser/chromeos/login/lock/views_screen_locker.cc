@@ -154,9 +154,10 @@ void ViewsScreenLocker::HandleAuthenticateUser(
   user_context.SetIsUsingPin(authenticated_by_pin);
   if (account_id.GetAccountType() == AccountType::ACTIVE_DIRECTORY)
     user_context.SetUserType(user_manager::USER_TYPE_ACTIVE_DIRECTORY);
-  ScreenLocker::default_screen_locker()->Authenticate(user_context,
-                                                      std::move(callback));
-  UpdatePinKeyboardState(account_id);
+  ScreenLocker::default_screen_locker()->Authenticate(
+      user_context, base::BindOnce(&ViewsScreenLocker::OnAuthenticate,
+                                   weak_factory_.GetWeakPtr(),
+                                   std::move(callback), account_id));
 }
 
 void ViewsScreenLocker::HandleAttemptUnlock(const AccountId& account_id) {
@@ -232,6 +233,16 @@ void ViewsScreenLocker::UnregisterLockScreenAppFocusHandler() {
 
 void ViewsScreenLocker::HandleLockScreenAppFocusOut(bool reverse) {
   LockScreenClient::Get()->HandleFocusLeavingLockScreenApps(reverse);
+}
+
+void ViewsScreenLocker::OnAuthenticate(AuthenticateUserCallback callback,
+                                       const AccountId& account_id,
+                                       bool success) {
+  // Defer the pin keyboard update until after authentication is complete, as
+  // that may update UI state which should happen at the same time as the
+  // password result.
+  UpdatePinKeyboardState(account_id);
+  std::move(callback).Run(success);
 }
 
 void ViewsScreenLocker::UpdatePinKeyboardState(const AccountId& account_id) {

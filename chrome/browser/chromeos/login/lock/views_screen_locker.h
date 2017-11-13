@@ -68,6 +68,10 @@ class ViewsScreenLocker : public LockScreenClient::Delegate,
   void HandleLockScreenAppFocusOut(bool reverse) override;
 
  private:
+  // Called when authentication is complete.
+  void OnAuthenticate(AuthenticateUserCallback callback,
+                      const AccountId& account_id,
+                      bool success);
   void UpdatePinKeyboardState(const AccountId& account_id);
   void OnAllowedInputMethodsChanged();
 

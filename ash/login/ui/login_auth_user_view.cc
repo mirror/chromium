@@ -339,10 +339,20 @@ void LoginAuthUserView::RequestFocus() {
 }
 
 void LoginAuthUserView::OnAuthSubmit(const base::string16& password) {
-  bool authenticated_by_pin = (auth_methods_ & AUTH_PIN) != 0;
+  password_view_->SetReadOnly(true);
   Shell::Get()->lock_screen_controller()->AuthenticateUser(
       current_user()->basic_user_info->account_id, base::UTF16ToUTF8(password),
-      authenticated_by_pin, on_auth_);
+      authenticated_by_pin,
+      base::BindOnce(
+          [](OnAuthCallback on_auth, LoginPasswordView* password_view,
+             base::Optional<bool> auth_success) {
+            password_view->SetReadOnly(false);
+            password_view->Clear();
+            if (auth_success.has_value())
+              on_auth.Run(*auth_success);
+          },
+          on_auth_, password_view_));
+
 }
 
 void LoginAuthUserView::OnUserViewTap() {
@@ -357,5 +367,6 @@ void LoginAuthUserView::OnUserViewTap() {
 bool LoginAuthUserView::HasAuthMethod(AuthMethods auth_method) const {
   return (auth_methods_ & auth_method) != 0;
 }
+
 
 }  // namespace ash

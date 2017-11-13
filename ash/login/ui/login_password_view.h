@@ -95,12 +95,12 @@ class ASH_EXPORT LoginPasswordView
   // Erase the last entered value.
   void Backspace();
 
-  // Dispatch a submit event.
-  void Submit();
-
   // Set password field placeholder. The password view cannot set the text by
   // itself because it doesn't know which auth methods are enabled.
   void SetPlaceholderText(const base::string16& placeholder_text);
+
+  // Makes the textfield read-only and enables/disables submitting.
+  void SetReadOnly(bool read_only);
 
   // views::View:
   const char* GetClassName() const override;

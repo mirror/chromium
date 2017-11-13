@@ -9,6 +9,7 @@
 #include "ash/public/interfaces/lock_screen.mojom.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "base/optional.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 
 class PrefRegistrySimple;
@@ -26,6 +27,11 @@ class LoginDataDispatcher;
 class ASH_EXPORT LockScreenController : public mojom::LockScreen {
  public:
   using OnShownCallback = base::OnceCallback<void(bool did_show)>;
+  // Callback for authentication checks. |success| is nullopt if an
+  // authentication check did not run, otherwise it is true/false if auth
+  // succeeded/failed.
+  using OnAuthenticateCallback =
+      base::OnceCallback<void(base::Optional<bool> success)>;
 
   LockScreenController();
   ~LockScreenController() override;
@@ -60,11 +66,10 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
   // LockScreenClient(chrome) will do the authentication and request to show
   // error messages in the lock screen if auth fails, or request to clear
   // errors if auth succeeds.
-  void AuthenticateUser(
-      const AccountId& account_id,
-      const std::string& password,
-      bool authenticated_by_pin,
-      mojom::LockScreenClient::AuthenticateUserCallback callback);
+  void AuthenticateUser(const AccountId& account_id,
+                        const std::string& password,
+                        bool authenticated_by_pin,
+                        OnAuthenticateCallback callback);
   void AttemptUnlock(const AccountId& account_id);
   void HardlockPod(const AccountId& account_id);
   void RecordClickOnLockIcon(const AccountId& account_id);
@@ -91,17 +96,18 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
   }
 
  private:
-  using PendingAuthenticateUserCall =
+  using PendingDoAuthenticateUser =
       base::OnceCallback<void(const std::string& system_salt)>;
 
-  void DoAuthenticateUser(
-      const AccountId& account_id,
-      const std::string& password,
-      bool authenticated_by_pin,
-      mojom::LockScreenClient::AuthenticateUserCallback callback,
-      const std::string& system_salt);
+  void DoAuthenticateUser(const AccountId& account_id,
+                          const std::string& password,
+                          bool authenticated_by_pin,
+                          OnAuthenticateCallback callback,
+                          const std::string& system_salt);
+  void OnAuthenticateComplete(OnAuthenticateCallback callback, bool success);
 
-  void OnGetSystemSalt(const std::string& system_salt);
+  void OnGetSystemSalt(PendingDoAuthenticateUser then,
+                       const std::string& system_salt);
 
   // Returns the active data dispatcher or nullptr if there is no lock screen.
   LoginDataDispatcher* DataDispatcher() const;
@@ -112,8 +118,10 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
   // Bindings for the LockScreen interface.
   mojo::BindingSet<mojom::LockScreen> bindings_;
 
-  // User authentication call that will run when we have system salt.
-  PendingAuthenticateUserCall pending_user_auth_;
+  // True iff we are currently authentication.
+  bool is_authenticating_ = false;
+
+  base::WeakPtrFactory<LockScreenController> weak_factory_;
 
   base::ObserverList<LockScreenAppsFocusObserver>
       lock_screen_apps_focus_observers_;
