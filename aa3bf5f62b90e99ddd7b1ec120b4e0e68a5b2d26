@@ -104,6 +104,23 @@
     },
     {
       "key": {
+        "uuid": "111e68c0_7bdd18c7",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T21:10:26Z",
+      "side": 1,
+      "message": "With regards to all the failures, including failing to start logging, should this cause the RtcEventLogOutputSinkProxy to become inactive?",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66c9af03_7ef832dc",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 6
