@@ -124,9 +124,10 @@ void ArcIntentHelperBridge::OnOpenDownloads() {
 
 void ArcIntentHelperBridge::OnOpenUrl(const std::string& url) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  // Converts |url| to a fixed-up one. This converts about: URIs to chrome://,
-  // for example.
-  const GURL gurl(url_formatter::FixupURL(url, std::string()));
+  // TODO(yusukes): Once b/68953603 is resolved, change this back to
+  //   const GURL gurl(url_formatter::FixupURL(url, std::string()));
+  // to handle about: properly.
+  const GURL gurl(url);
   // Disallow opening chrome:// URLs.
   if (!gurl.is_valid() || gurl.SchemeIs(kChromeUIScheme))
     return;

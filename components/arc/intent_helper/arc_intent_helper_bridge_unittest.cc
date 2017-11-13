@@ -293,11 +293,11 @@ TEST_F(ArcIntentHelperTest, TestOnOpenUrl_ChromeScheme) {
   instance_->OnOpenUrl("chrome://settings");
   EXPECT_FALSE(test_open_url_delegate_->TakeLastOpenedUrl().is_valid());
 
+  // TODO(yusukes): Change these back to FALSE once b/68953603 is resolved.
   instance_->OnOpenUrl("about:");
-  EXPECT_FALSE(test_open_url_delegate_->TakeLastOpenedUrl().is_valid());
-
+  EXPECT_TRUE(test_open_url_delegate_->TakeLastOpenedUrl().is_valid());
   instance_->OnOpenUrl("about:settings");
-  EXPECT_FALSE(test_open_url_delegate_->TakeLastOpenedUrl().is_valid());
+  EXPECT_TRUE(test_open_url_delegate_->TakeLastOpenedUrl().is_valid());
 }
 
 // Tests that OnOpenChromeSettings opens the specified settings section in the
