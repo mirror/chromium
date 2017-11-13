@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "310c581a_840e78d4",
+        "filename": "chrome/browser/accessibility/accessibility_extension_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-13T23:25:41Z",
+      "side": 1,
+      "message": "(Most) Extension APIs generate strong types and conversion code.  This code lives in \u003cout_dir\u003e/gen/chrome/common/extensions/api/ and \u003cout_dir\u003e/gen/extensions/common/api.  So for this, it\u0027s \u003cout_dir\u003e/gen/chrome/common/extensions/api/accessibility_private.h.  These strong types help a lot with avoiding all the Get* value methods and EXTENSION_FUNCTION_VALIDATES.\n\nHere\u0027s an example: https://chromium.googlesource.com/chromium/src/+/85a465380e41389d2e922edbe9c63769115dd802/chrome/browser/extensions/api/developer_private/developer_private_api.cc#545\n\nThis will work for most methods, and it *looks* like we should be able to use it here.",
+      "parentUuid": "b4457651_abce6b2d",
+      "revId": "af3033c1730d820f666aba6239c1557009ec13fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a6b4d7b_5b0f19c0",
         "filename": "chrome/common/extensions/api/accessibility_private.json",
         "patchSetId": 7
