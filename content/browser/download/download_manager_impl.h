@@ -149,6 +149,13 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
       mojo::ScopedDataPipeConsumerHandle consumer_handle,
       const SSLStatus& ssl_status);
 
+  void CheckDownloadAllowed(
+      const content::ResourceRequestInfo::WebContentsGetter&
+          web_contents_getter,
+      const GURL& url,
+      const std::string& request_method,
+      CheckDownloadAllowedCallback check_download_allowed_cb);
+
  private:
   using DownloadSet = std::set<DownloadItem*>;
   using DownloadGuidMap = std::unordered_map<std::string, DownloadItemImpl*>;

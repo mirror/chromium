@@ -67,6 +67,13 @@
 namespace content {
 namespace {
 
+WebContents* GetWebContents(int render_process_id, int render_frame_id) {
+  content::RenderFrameHost* render_frame_host =
+      content::RenderFrameHost::FromID(render_process_id, render_frame_id);
+
+  return WebContents::FromRenderFrameHost(render_frame_host);
+}
+
 StoragePartitionImpl* GetStoragePartition(BrowserContext* context,
                                           int render_process_id,
                                           int render_frame_id) {
@@ -185,6 +192,45 @@ DownloadManagerImpl::UniqueUrlDownloadHandlerPtr BeginResourceDownload(
           .release());
 }
 
+void OnDownloadAllowedCheckComplete(
+    CheckDownloadAllowedCallback check_download_allowed_cb,
+    bool allow) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(std::move(check_download_allowed_cb), allow));
+}
+
+// Creates a ResourceDownloader to own the URLLoader and intercept the response,
+// and passes it back to the DownloadManager.
+void ContinueNavigationInterception(
+    base::OnceCallback<void(DownloadManagerImpl::UniqueUrlDownloadHandlerPtr)>
+        callback,
+    base::WeakPtr<DownloadManagerImpl> download_manager,
+    const scoped_refptr<ResourceResponse>& response,
+    mojo::ScopedDataPipeConsumerHandle consumer_handle,
+    const SSLStatus& ssl_status,
+    std::unique_ptr<ResourceRequest> resource_request,
+    std::unique_ptr<ThrottlingURLLoader> url_loader,
+    std::vector<GURL> url_chain,
+    base::Optional<network::URLLoaderStatus> status,
+    bool allowed) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!allowed)
+    return;
+
+  DownloadManagerImpl::UniqueUrlDownloadHandlerPtr resource_downloader(
+      ResourceDownloader::InterceptNavigationResponse(
+          download_manager, std::move(resource_request), response,
+          std::move(consumer_handle), ssl_status, std::move(url_loader),
+          std::move(url_chain), std::move(status))
+          .release());
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(std::move(callback), std::move(resource_downloader)));
+}
+
 // Creates a ResourceDownloader to own the URLLoader and intercept the response,
 // and passes it back to the DownloadManager.
 void InterceptNavigationResponse(
@@ -199,16 +245,22 @@ void InterceptNavigationResponse(
     std::vector<GURL> url_chain,
     base::Optional<network::URLLoaderStatus> status) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DownloadManagerImpl::UniqueUrlDownloadHandlerPtr resource_downloader(
-      ResourceDownloader::InterceptNavigationResponse(
-          download_manager, std::move(resource_request), response,
-          std::move(consumer_handle), ssl_status, std::move(url_loader),
-          std::move(url_chain), std::move(status))
-          .release());
+  GURL url = resource_request->url;
+  std::string method = resource_request->method;
+  ResourceRequestInfo::WebContentsGetter getter =
+      base::Bind(&GetWebContents, resource_request->origin_pid,
+                 resource_request->render_frame_id);
 
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(std::move(callback), std::move(resource_downloader)));
+      base::BindOnce(
+          &DownloadManagerImpl::CheckDownloadAllowed, download_manager, getter,
+          url, method,
+          base::BindOnce(&ContinueNavigationInterception, std::move(callback),
+                         download_manager, response, std::move(consumer_handle),
+                         ssl_status, std::move(resource_request),
+                         std::move(url_loader), std::move(url_chain),
+                         std::move(status))));
 }
 
 class DownloadItemFactoryImpl : public DownloadItemFactory {
@@ -680,6 +732,21 @@ DownloadManagerImpl::GetNavigationInterceptionCB(
                      weak_factory_.GetWeakPtr()),
       weak_factory_.GetWeakPtr(), response, std::move(consumer_handle),
       ssl_status);
+}
+
+void DownloadManagerImpl::CheckDownloadAllowed(
+    const content::ResourceRequestInfo::WebContentsGetter& web_contents_getter,
+    const GURL& url,
+    const std::string& request_method,
+    CheckDownloadAllowedCallback check_download_allowed_cb) {
+  if (delegate_) {
+    delegate_->CheckDownloadAllowed(
+        web_contents_getter, url, request_method,
+        base::BindOnce(&OnDownloadAllowedCheckComplete,
+                       std::move(check_download_allowed_cb)));
+  } else {
+    OnDownloadAllowedCheckComplete(std::move(check_download_allowed_cb), false);
+  }
 }
 
 int DownloadManagerImpl::RemoveDownloadsByURLAndTime(

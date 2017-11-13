@@ -14,6 +14,7 @@
 #include "content/common/content_export.h"
 #include "content/public/browser/download_danger_type.h"
 #include "content/public/browser/download_item.h"
+#include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/save_page_type.h"
 
 namespace content {
@@ -67,6 +68,9 @@ using DownloadOpenDelayedCallback = base::Callback<void(bool)>;
 using CheckForFileExistenceCallback = base::OnceCallback<void(bool result)>;
 
 using DownloadIdCallback = base::Callback<void(uint32_t)>;
+
+// Called on whether a download is allowed to continue.
+using CheckDownloadAllowedCallback = base::OnceCallback<void(bool /*allow*/)>;
 
 // Browser's download manager: manages all downloads and destination view.
 class CONTENT_EXPORT DownloadManagerDelegate {
@@ -162,6 +166,15 @@ class CONTENT_EXPORT DownloadManagerDelegate {
   //
   // This GUID is only used on Windows.
   virtual std::string ApplicationClientIdForFileScanning() const;
+
+  // Checks whether download is allowed to continue. |check_download_allowed_cb|
+  // is called with the decision on completion.
+  virtual void CheckDownloadAllowed(
+      const content::ResourceRequestInfo::WebContentsGetter&
+          web_contents_getter,
+      const GURL& url,
+      const std::string& request_method,
+      CheckDownloadAllowedCallback check_download_allowed_cb);
 
  protected:
   virtual ~DownloadManagerDelegate();
