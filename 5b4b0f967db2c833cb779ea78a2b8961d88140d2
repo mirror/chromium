@@ -22,6 +22,30 @@
       "revId": "5b4b0f967db2c833cb779ea78a2b8961d88140d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8033a8c5_205a9816",
+        "filename": "third_party/WebKit/Source/modules/wake_lock/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-13T17:47:20Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "09a1ebbc_cc641c9c",
+      "range": {
+        "startLine": 4,
+        "startChar": 7,
+        "endLine": 4,
+        "endChar": 8
+      },
+      "revId": "5b4b0f967db2c833cb779ea78a2b8961d88140d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
