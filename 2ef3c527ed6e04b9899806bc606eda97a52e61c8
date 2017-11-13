@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e27967a_36a1e843",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-13T13:16:09Z",
+      "side": 1,
+      "message": "I\u0027m concerned about fixing the TODO... Won\u0027t it have a risk of producing a reference cycle?\n\nAlso what\u0027s the point of running a callback function on an already detached incumbent realm?",
+      "revId": "2ef3c527ed6e04b9899806bc606eda97a52e61c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b44c048c_ccd55403",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-13T13:16:09Z",
+      "side": 1,
+      "message": "Can we use ContextIsValid()?\n\nMaybe would it be better to make IsCallbackFunctionRunnable check both relevant ScriptState and incumbent ScriptState?",
+      "revId": "2ef3c527ed6e04b9899806bc606eda97a52e61c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
