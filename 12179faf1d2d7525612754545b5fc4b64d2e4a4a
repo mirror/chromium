@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f1dbfd4_2da6ec70",
+        "filename": "components/safe_browsing/db/v4_local_database_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-11-13T23:52:57Z",
+      "side": 1,
+      "message": "Please also update the relevant comment in components/safe_browsing/db/database_manager.h since it\u0027s a little vague about comparing |str| to hashes...",
+      "revId": "12179faf1d2d7525612754545b5fc4b64d2e4a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
