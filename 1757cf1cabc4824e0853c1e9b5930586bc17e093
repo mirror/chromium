@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a43493b_b7e27858",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-13T21:57:50Z",
+      "side": 1,
+      "message": "I don\u0027t think we can test this from the UI thread like this. hardware_gpu_enabled_ is written on the IO thread, so reading it from the UI thread without lock would be a data race.",
+      "revId": "1757cf1cabc4824e0853c1e9b5930586bc17e093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
