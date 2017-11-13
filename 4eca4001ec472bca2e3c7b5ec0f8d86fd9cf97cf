@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a67cf5fe_776d397a",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-13T08:46:42Z",
+      "side": 1,
+      "message": "There\u0027s no need for this one as the latest_geoposition_ is already cleared if and when the network_changed_since_last_request_ flag is set.",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 32
+      },
+      "revId": "4eca4001ec472bca2e3c7b5ec0f8d86fd9cf97cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

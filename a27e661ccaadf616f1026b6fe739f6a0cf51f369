@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "85c0ec25_db20925b",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-13T08:46:42Z",
+      "side": 1,
+      "message": "Yeah fair point of confusion.\n\nHow about adding the following lines to the comment of QueryNextPositionAfterTimestamp in the .h file:\n\n  // * If no position change is detected later than |timestamp|, |callback| will not be invoked.\n  // * Example usage:\n  //   First, call this method with a zero-initialized timestamp to get the latest position.\n  //   Subsequently, call this method with the timestamp of the returned Geoposition.",
+      "parentUuid": "8ecd005b_6adec7c2",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc4aa95d_f1b4108c",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
         "patchSetId": 4
