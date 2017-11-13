@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d072248_6ba6dee8",
+        "filename": "chrome/browser/net/errorpage_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-13T20:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96fcfcff_a1fc035a",
+      "range": {
+        "startLine": 994,
+        "startChar": 23,
+        "endLine": 994,
+        "endChar": 31
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6ac3fb6_ec9e4ccc",
         "filename": "chrome/test/data/nocache-with-etag.html",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9448b98f_ab5b9d15",
+        "filename": "chrome/test/data/nocache-with-etag.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-13T20:31:41Z",
+      "side": 1,
+      "message": "Those seem to be part of content_unittests, w/o any special invocation magic, and pass just fine for me...",
+      "parentUuid": "b6ac3fb6_ec9e4ccc",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 5
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "38d9aa81_5e3f580d",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-13T20:31:41Z",
+      "side": 1,
+      "message": "No reason any longer, indeed. Moved.",
+      "parentUuid": "ed494af4_f316018c",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 37
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb510013_9efe675b",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 11
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-13T19:30:05Z",
       "side": 1,
       "message": "I\u0027m not understanding this DCHECK; willing to share the context for it with me?",
+      "range": {
+        "startLine": 1140,
+        "startChar": 14,
+        "endLine": 1140,
+        "endChar": 19
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091307cf_d187175f",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-13T20:31:41Z",
+      "side": 1,
+      "message": "So this was quite brittle; I made the conditional in MaybeRejectBasedOnEntryInMemoryData match this exactly rather than relying on some rather subtle logic, which may not have even been true when the DCHECK was written...",
+      "parentUuid": "cb510013_9efe675b",
       "range": {
         "startLine": 1140,
         "startChar": 14,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d09a1740_faf32bc1",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-13T20:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2f1f467_33da2e2c",
+      "range": {
+        "startLine": 202,
+        "startChar": 7,
+        "endLine": 202,
+        "endChar": 39
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "414adb07_83883e8d",
         "filename": "net/http/http_cache_unittest.cc",
         "patchSetId": 11
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "40aa2f69_b3294638",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 5811,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-13T20:31:41Z",
+      "side": 1,
+      "message": "(working on paging this in, just wanted to flush out stuff since I think have a meeting coming up).",
+      "parentUuid": "414adb07_83883e8d",
+      "range": {
+        "startLine": 5811,
+        "startChar": 22,
+        "endLine": 5811,
+        "endChar": 29
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "918f998f_8bac0d2e",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 11
@@ -151,6 +295,30 @@
       "writtenOn": "2017-11-13T19:30:05Z",
       "side": 1,
       "message": "I want to call out that from a purist point of view, I think this requires a histogram revision.  I think of you as owner of these histograms, so I\u0027ll basically happily yield to your choice on it.  But I wanted to call out that I think that what\u0027s going to happen here is that after this change, some of the counts that would have gone into ZERO_FRESHNESS will go instead into ZERO_FRESHNESS_MEM_HINT, and hence comparisons (including timeline graphs) pre-/post- this CL on that value will be invalid.",
+      "range": {
+        "startLine": 20866,
+        "startChar": 17,
+        "endLine": 20866,
+        "endChar": 22
+      },
+      "revId": "42372652adcfbcf038583ffedf4f3b711224d816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f232af2_e435d2b8",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 20866,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-13T20:31:41Z",
+      "side": 1,
+      "message": "I could just add a boolean property instead; there is a second argument for that, even: I only use the new enum value for CantConditionalizeCause, and the enum is used for more than that, so that\u0027s a little weird.",
+      "parentUuid": "918f998f_8bac0d2e",
       "range": {
         "startLine": 20866,
         "startChar": 17,
