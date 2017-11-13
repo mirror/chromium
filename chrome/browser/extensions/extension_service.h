@@ -405,6 +405,10 @@ class ExtensionService
     return external_install_manager_.get();
   }
 
+  const extensions::ExtensionPrefs* extension_prefs() {
+    return extension_prefs_;
+  }
+
   //////////////////////////////////////////////////////////////////////////////
   // For Testing
 

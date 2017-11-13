@@ -21,12 +21,14 @@
 #include "chrome/browser/extensions/chrome_app_sorting.h"
 #include "chrome/browser/extensions/chrome_content_verifier_delegate.h"
 #include "chrome/browser/extensions/component_loader.h"
+#include "chrome/browser/extensions/crx_installer.h"
 #include "chrome/browser/extensions/extension_error_reporter.h"
 #include "chrome/browser/extensions/extension_garbage_collector.h"
 #include "chrome/browser/extensions/extension_management.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_sync_service.h"
 #include "chrome/browser/extensions/extension_system_factory.h"
+#include "chrome/browser/extensions/external_install_manager.h"
 #include "chrome/browser/extensions/install_verifier.h"
 #include "chrome/browser/extensions/navigation_observer.h"
 #include "chrome/browser/extensions/shared_module_service.h"
@@ -44,6 +46,7 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/url_data_source.h"
 #include "extensions/browser/content_verifier.h"
+#include "extensions/browser/extension_file_task_runner.h"
 #include "extensions/browser/extension_pref_store.h"
 #include "extensions/browser/extension_pref_value_map.h"
 #include "extensions/browser/extension_pref_value_map_factory.h"
@@ -58,6 +61,7 @@
 #include "extensions/browser/uninstall_ping_sender.h"
 #include "extensions/browser/value_store/value_store_factory_impl.h"
 #include "extensions/common/constants.h"
+#include "extensions/common/extension_urls.h"
 #include "extensions/common/features/feature_channel.h"
 #include "extensions/common/manifest_url_handlers.h"
 #include "ui/message_center/notifier_id.h"
@@ -432,10 +436,62 @@ std::unique_ptr<ExtensionSet> ExtensionSystemImpl::GetDependentExtensions(
       extension);
 }
 
-void ExtensionSystemImpl::InstallUpdate(const std::string& extension_id,
-                                        const base::FilePath& temp_dir) {
-  NOTREACHED() << "Not yet implemented";
-  base::DeleteFile(temp_dir, true /* recursive */);
+void ExtensionSystemImpl::InstallUpdate(
+    const std::string& extension_id,
+    const std::string& public_key,
+    const base::FilePath& unpacked_dir,
+    InstallUpdateCallback install_update_callback) {
+  DCHECK(!install_update_callback.is_null());
+
+  ExtensionService* service = extension_service();
+  DCHECK(service);
+
+  const Extension* extension = service->GetInstalledExtension(extension_id);
+  if (!extension) {
+    LOG(WARNING) << "Will not update extension " << extension_id
+                 << " because it is not installed";
+    // Delete extension_path since we're not creating a CrxInstaller
+    // that would do it for us.
+    if (!content::BrowserThread::GetTaskRunnerForThread(
+             content::BrowserThread::UI)
+             ->PostTask(FROM_HERE,
+                        base::BindOnce(base::IgnoreResult(&base::DeleteFile),
+                                       unpacked_dir, true)))
+      NOTREACHED();
+    if (!content::BrowserThread::GetTaskRunnerForThread(
+             content::BrowserThread::UI)
+             ->PostTask(
+                 FROM_HERE,
+                 base::BindOnce(std::move(install_update_callback), false)))
+      NOTREACHED();
+    return;
+  }
+
+  int creation_flags = Extension::NO_FLAGS;
+  scoped_refptr<CrxInstaller> installer = CrxInstaller::CreateSilent(service);
+  installer->set_install_source(extension->location());
+
+  if (extension->from_webstore() ||
+      extensions::ManifestURL::UpdatesFromGallery(extension)) {
+    creation_flags |= Extension::FROM_WEBSTORE;
+  }
+  if (extension->from_bookmark())
+    creation_flags |= Extension::FROM_BOOKMARK;
+  if (extension->was_installed_by_default())
+    creation_flags |= Extension::WAS_INSTALLED_BY_DEFAULT;
+  if (extension->was_installed_by_oem())
+    creation_flags |= Extension::WAS_INSTALLED_BY_OEM;
+  if (service->extension_prefs()) {
+    installer->set_do_not_sync(
+        service->extension_prefs()->DoNotSync(extension_id));
+  }
+
+  installer->set_delete_source(true);
+  installer->set_expected_id(extension_id);
+  installer->set_creation_flags(creation_flags);
+  installer->set_install_cause(extension_misc::INSTALL_CAUSE_UPDATE);
+  installer->set_installer_callback(std::move(install_update_callback));
+  installer->InstallUnpackedCrx(extension_id, public_key, unpacked_dir);
 }
 
 void ExtensionSystemImpl::RegisterExtensionWithRequestContexts(

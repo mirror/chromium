@@ -73,6 +73,7 @@ class ComponentUnpacker : public base::RefCountedThreadSafe<ComponentUnpacker> {
     base::FilePath unpack_path;
 
     // The extracted public key of the package if the unpacking was successful.
+    //
     std::string public_key;
   };
 
