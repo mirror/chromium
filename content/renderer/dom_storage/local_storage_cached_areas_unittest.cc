@@ -30,7 +30,8 @@ TEST(LocalStorageCachedAreasTest, CacheLimit) {
 
   scoped_refptr<LocalStorageCachedArea> cached_area1 =
       cached_areas.GetCachedArea(kOrigin);
-  cached_area1->SetItem(kKey, kValue, kPageUrl, kStorageAreaId);
+  cached_area1->SetItem(kKey, kValue, kPageUrl, kStorageAreaId,
+                        blink::WebScopedVirtualTimePauser());
   const LocalStorageCachedArea* area1_ptr = cached_area1.get();
   size_t expected_total = (kKey.size() + kValue.size()) * sizeof(base::char16);
   EXPECT_EQ(expected_total, cached_area1->memory_used());
@@ -39,13 +40,15 @@ TEST(LocalStorageCachedAreasTest, CacheLimit) {
 
   scoped_refptr<LocalStorageCachedArea> cached_area2 =
       cached_areas.GetCachedArea(kOrigin2);
-  cached_area2->SetItem(kKey, kValue, kPageUrl, kStorageAreaId);
+  cached_area2->SetItem(kKey, kValue, kPageUrl, kStorageAreaId,
+                        blink::WebScopedVirtualTimePauser());
   // Area for kOrigin should still be alive.
   EXPECT_EQ(2 * cached_area2->memory_used(), cached_areas.TotalCacheSize());
   EXPECT_EQ(area1_ptr, cached_areas.GetCachedArea(kOrigin));
 
   base::string16 long_value(kCacheLimit, 'a');
-  cached_area2->SetItem(kKey, long_value, kPageUrl, kStorageAreaId);
+  cached_area2->SetItem(kKey, long_value, kPageUrl, kStorageAreaId,
+                        blink::WebScopedVirtualTimePauser());
   // Cache is cleared when a new area is opened.
   scoped_refptr<LocalStorageCachedArea> cached_area3 =
       cached_areas.GetCachedArea(kOrigin3);

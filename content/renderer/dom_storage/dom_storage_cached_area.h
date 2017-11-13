@@ -14,6 +14,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/nullable_string16.h"
 #include "content/common/content_export.h"
+#include "third_party/WebKit/public/platform/WebScopedVirtualTimePauser.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -43,11 +44,15 @@ class CONTENT_EXPORT DOMStorageCachedArea
   bool SetItem(int connection_id,
                const base::string16& key,
                const base::string16& value,
-               const GURL& page_url);
+               const GURL& page_url,
+               blink::WebScopedVirtualTimePauser virtual_time_pauser);
   void RemoveItem(int connection_id,
                   const base::string16& key,
-                  const GURL& page_url);
-  void Clear(int connection_id, const GURL& page_url);
+                  const GURL& page_url,
+                  blink::WebScopedVirtualTimePauser virtual_time_pauser);
+  void Clear(int connection_id,
+             const GURL& page_url,
+             blink::WebScopedVirtualTimePauser virtual_time_pauser);
 
   void ApplyMutation(const base::NullableString16& key,
                      const base::NullableString16& new_value);
@@ -72,9 +77,15 @@ class CONTENT_EXPORT DOMStorageCachedArea
   // mutation events from other processes from overwriting local
   // changes made after the mutation.
   void OnLoadComplete(bool success);
-  void OnSetItemComplete(const base::string16& key, bool success);
-  void OnClearComplete(bool success);
-  void OnRemoveItemComplete(const base::string16& key, bool success);
+  void OnSetItemComplete(const base::string16& key,
+                         blink::WebScopedVirtualTimePauser virtual_time_pauser,
+                         bool success);
+  void OnClearComplete(blink::WebScopedVirtualTimePauser virtual_time_pauser,
+                       bool success);
+  void OnRemoveItemComplete(
+      const base::string16& key,
+      blink::WebScopedVirtualTimePauser virtual_time_pauser,
+      bool success);
 
   bool should_ignore_key_mutation(const base::string16& key) const {
     return ignore_key_mutations_.find(key) != ignore_key_mutations_.end();

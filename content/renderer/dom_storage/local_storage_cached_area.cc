@@ -97,10 +97,12 @@ base::NullableString16 LocalStorageCachedArea::GetItem(
   return map_->GetItem(key);
 }
 
-bool LocalStorageCachedArea::SetItem(const base::string16& key,
-                                     const base::string16& value,
-                                     const GURL& page_url,
-                                     const std::string& storage_area_id) {
+bool LocalStorageCachedArea::SetItem(
+    const base::string16& key,
+    const base::string16& value,
+    const GURL& page_url,
+    const std::string& storage_area_id,
+    blink::WebScopedVirtualTimePauser virtual_time_pauser) {
   // A quick check to reject obviously overbudget items to avoid priming the
   // cache.
   if ((key.length() + value.length()) * sizeof(base::char16) >
@@ -122,16 +124,20 @@ bool LocalStorageCachedArea::SetItem(const base::string16& key,
   base::Optional<std::vector<uint8_t>> optional_old_value;
   if (!old_nullable_value.is_null())
     optional_old_value = String16ToUint8Vector(old_nullable_value.string());
+  virtual_time_pauser.PauseVirtualTime(true);
   leveldb_->Put(String16ToUint8Vector(key), String16ToUint8Vector(value),
                 optional_old_value, PackSource(page_url, storage_area_id),
                 base::BindOnce(&LocalStorageCachedArea::OnSetItemComplete,
-                               weak_factory_.GetWeakPtr(), key));
+                               weak_factory_.GetWeakPtr(), key,
+                               base::Passed(std::move(virtual_time_pauser))));
   return true;
 }
 
-void LocalStorageCachedArea::RemoveItem(const base::string16& key,
-                                        const GURL& page_url,
-                                        const std::string& storage_area_id) {
+void LocalStorageCachedArea::RemoveItem(
+    const base::string16& key,
+    const GURL& page_url,
+    const std::string& storage_area_id,
+    blink::WebScopedVirtualTimePauser virtual_time_pauser) {
   EnsureLoaded();
   bool result = false;
   base::string16 old_value;
@@ -147,21 +153,29 @@ void LocalStorageCachedArea::RemoveItem(const base::string16& key,
   base::Optional<std::vector<uint8_t>> optional_old_value;
   if (should_send_old_value_on_mutations_)
     optional_old_value = String16ToUint8Vector(old_value);
-  leveldb_->Delete(String16ToUint8Vector(key), optional_old_value,
-                   PackSource(page_url, storage_area_id),
-                   base::BindOnce(&LocalStorageCachedArea::OnRemoveItemComplete,
-                                  weak_factory_.GetWeakPtr(), key));
+  virtual_time_pauser.PauseVirtualTime(true);
+  leveldb_->Delete(
+      String16ToUint8Vector(key), optional_old_value,
+      PackSource(page_url, storage_area_id),
+      base::BindOnce(&LocalStorageCachedArea::OnRemoveItemComplete,
+                     weak_factory_.GetWeakPtr(), key,
+                     base::Passed(std::move(virtual_time_pauser))));
 }
 
-void LocalStorageCachedArea::Clear(const GURL& page_url,
-                                   const std::string& storage_area_id) {
+void LocalStorageCachedArea::Clear(
+    const GURL& page_url,
+    const std::string& storage_area_id,
+    blink::WebScopedVirtualTimePauser virtual_time_pauser) {
   // No need to prime the cache in this case.
   Reset();
   map_ = new DOMStorageMap(kPerStorageAreaQuota);
   ignore_all_mutations_ = true;
-  leveldb_->DeleteAll(PackSource(page_url, storage_area_id),
-                      base::BindOnce(&LocalStorageCachedArea::OnClearComplete,
-                                     weak_factory_.GetWeakPtr()));
+  virtual_time_pauser.PauseVirtualTime(true);
+  leveldb_->DeleteAll(
+      PackSource(page_url, storage_area_id),
+      base::BindOnce(&LocalStorageCachedArea::OnClearComplete,
+                     weak_factory_.GetWeakPtr(),
+                     base::Passed(std::move(virtual_time_pauser))));
 }
 
 void LocalStorageCachedArea::AreaCreated(LocalStorageArea* area) {
@@ -387,8 +401,10 @@ void LocalStorageCachedArea::EnsureLoaded() {
   }
 }
 
-void LocalStorageCachedArea::OnSetItemComplete(const base::string16& key,
-                                               bool success) {
+void LocalStorageCachedArea::OnSetItemComplete(
+    const base::string16& key,
+    blink::WebScopedVirtualTimePauser,
+    bool success) {
   if (!success) {
     Reset();
     return;
@@ -401,7 +417,9 @@ void LocalStorageCachedArea::OnSetItemComplete(const base::string16& key,
 }
 
 void LocalStorageCachedArea::OnRemoveItemComplete(
-    const base::string16& key, bool success) {
+    const base::string16& key,
+    blink::WebScopedVirtualTimePauser,
+    bool success) {
   DCHECK(success);
   auto found = ignore_key_mutations_.find(key);
   DCHECK(found != ignore_key_mutations_.end());
@@ -409,7 +427,8 @@ void LocalStorageCachedArea::OnRemoveItemComplete(
     ignore_key_mutations_.erase(found);
 }
 
-void LocalStorageCachedArea::OnClearComplete(bool success) {
+void LocalStorageCachedArea::OnClearComplete(blink::WebScopedVirtualTimePauser,
+                                             bool success) {
   DCHECK(success);
   DCHECK(ignore_all_mutations_);
   ignore_all_mutations_ = false;
