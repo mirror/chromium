@@ -593,7 +593,9 @@ void AddDeviceStrings(content::WebUIDataSource* html_source) {
       {"displayTitle", IDS_SETTINGS_DISPLAY_TITLE},
       {"displayArrangementText", IDS_SETTINGS_DISPLAY_ARRANGEMENT_TEXT},
       {"displayArrangementTitle", IDS_SETTINGS_DISPLAY_ARRANGEMENT_TITLE},
+      {"displayInternalDisplay", IDS_SETTINGS_DISPLAY_INTERNAL_DISPLAY},
       {"displayMirror", IDS_SETTINGS_DISPLAY_MIRROR},
+      {"displayMirrorDisplayName", IDS_SETTINGS_DISPLAY_MIRROR_DISPLAY_NAME},
       {"displayNightLightLabel", IDS_SETTINGS_DISPLAY_NIGHT_LIGHT_LABEL},
       {"displayNightLightScheduleCustom",
        IDS_SETTINGS_DISPLAY_NIGHT_LIGHT_SCHEDULE_CUSTOM},
@@ -641,6 +643,9 @@ void AddDeviceStrings(content::WebUIDataSource* html_source) {
   html_source->AddBoolean("unifiedDesktopAvailable",
                           base::CommandLine::ForCurrentProcess()->HasSwitch(
                               ::switches::kEnableUnifiedDesktop));
+  html_source->AddBoolean("multiMirroringAvailable",
+                          base::CommandLine::ForCurrentProcess()->HasSwitch(
+                              ::switches::kEnableMultiMirroring));
 
   html_source->AddBoolean(
       "enableTouchCalibrationSetting",

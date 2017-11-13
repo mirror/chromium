@@ -92,6 +92,14 @@ Polymer({
     },
 
     /** @private */
+    multiMirroringAvailable_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('multiMirroringAvailable');
+      }
+    },
+
+    /** @private */
     nightLightFeatureEnabled_: {
       type: Boolean,
       value: function() {
@@ -310,7 +318,10 @@ Polymer({
    * @private
    */
   getDisplayMirrorText_: function(displays) {
-    return this.i18n(this.isMirrored_(displays) ? 'toggleOn' : 'toggleOff');
+    if (displays[0].isInternal)
+      return this.i18n('displayMirror', this.i18n('displayInternalDisplay'));
+    else
+      return this.i18n('displayMirror', displays[0].name);
   },
 
   /**
@@ -344,7 +355,9 @@ Polymer({
    */
   showMirror_: function(unifiedDesktopMode, displays) {
     return this.isMirrored_(displays) ||
-        (!unifiedDesktopMode && displays.length == 2);
+        (!unifiedDesktopMode &&
+         ((this.multiMirroringAvailable_ && displays.length > 1) ||
+          displays.length == 2));
   },
 
   /**
