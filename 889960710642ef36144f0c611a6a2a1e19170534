@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38b71568_e7066814",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3596,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-13T20:54:25Z",
+      "side": 1,
+      "message": "Extra line",
+      "revId": "889960710642ef36144f0c611a6a2a1e19170534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a241b7_b2d00560",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-13T20:54:25Z",
+      "side": 1,
+      "message": "video codec?",
+      "revId": "889960710642ef36144f0c611a6a2a1e19170534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53982d27_f1061b47",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-13T20:54:25Z",
+      "side": 1,
+      "message": "AV1Decoder? Up to you.",
+      "revId": "889960710642ef36144f0c611a6a2a1e19170534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f24d941_29d9e96b",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-13T20:54:25Z",
+      "side": 1,
+      "message": "Put this in media/base/media_switches.h instead. You can\u0027t depend on chrome from content, but you can depend on //media/",
+      "revId": "889960710642ef36144f0c611a6a2a1e19170534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef1321e_f42c14f5",
+        "filename": "content/renderer/media_recorder/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-13T20:54:25Z",
+      "side": 1,
+      "message": "Not allowed.  content can\u0027t depend on chrome/",
+      "revId": "889960710642ef36144f0c611a6a2a1e19170534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
