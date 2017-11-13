@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79141c90_7ebbbaca",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T21:06:34Z",
+      "side": 1,
+      "message": "Do we expect this file to be present on VMs used for fuzzing?",
+      "range": {
+        "startLine": 69,
+        "startChar": 53,
+        "endLine": 69,
+        "endChar": 65
+      },
+      "revId": "67ad4575110cdd6da3a7b244458b07b43c4f0433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
