@@ -104,6 +104,24 @@
       "revId": "7e78da3ab068fe3d81c223f491b23b44464ec4b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13344eff_d137098d",
+        "filename": "third_party/WebKit/public/platform/web_page_visibility_state.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-13T07:36:26Z",
+      "side": 1,
+      "message": "I think our custom is to use Web* types for public types in WebKit/public, regardless of whether it\u0027s used from core/ or not. My preference is having it in WebKit/common, use it everywhere and drop the Web prefix.",
+      "parentUuid": "12c0cb57_0be3df9b",
+      "revId": "7e78da3ab068fe3d81c223f491b23b44464ec4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
