@@ -45,12 +45,18 @@ std::unique_ptr<KeyedService> AccountReconcilorFactory::BuildServiceInstanceFor(
     web::BrowserState* context) const {
   ios::ChromeBrowserState* chrome_browser_state =
       ios::ChromeBrowserState::FromBrowserState(context);
+  SigninManager* signin_manager =
+      SigninManagerFactory::GetForBrowserState(chrome_browser_state);
   std::unique_ptr<AccountReconcilor> reconcilor(new AccountReconcilor(
       OAuth2TokenServiceFactory::GetForBrowserState(chrome_browser_state),
-      SigninManagerFactory::GetForBrowserState(chrome_browser_state),
+      signin_manager,
       SigninClientFactory::GetForBrowserState(chrome_browser_state),
-      GaiaCookieManagerServiceFactory::GetForBrowserState(chrome_browser_state),
-      false /* is_new_profile */));
+      GaiaCookieManagerServiceFactory::GetForBrowserState(
+          chrome_browser_state)));
+  account_reconcilor->SetDelegate(
+      std::make_unique<signin::MirrorAccountReconcilorDelegate>(
+          account_reconcilor.get(), signin_manager));
+
   reconcilor->Initialize(true /* start_reconcile_if_tokens_available */);
   return reconcilor;
 }

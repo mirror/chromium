@@ -7,8 +7,8 @@
 
 #include "base/memory/singleton.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
-#include "components/signin/core/browser/account_reconcilor.h"
 
+class AccountReconcilor;
 class Profile;
 
 // Singleton that owns all AccountReconcilors and associates them with
@@ -22,6 +22,10 @@ class AccountReconcilorFactory : public BrowserContextKeyedServiceFactory {
 
   // Returns an instance of the factory singleton.
   static AccountReconcilorFactory* GetInstance();
+
+  // Setup the AccountReconcilorDelegate. Public for testing.
+  static void SetupAccountReconcilorDelegate(AccountReconcilor* reconcilor,
+                                             Profile* profile);
 
  private:
   friend struct base::DefaultSingletonTraits<AccountReconcilorFactory>;
