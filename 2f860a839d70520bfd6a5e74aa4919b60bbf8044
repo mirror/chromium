@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ae4dadd_3da2246d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium.respond-to-same-origin-request-with-cross-origin-response.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-13T10:51:22Z",
+      "side": 1,
+      "message": "cros -\u003e cors",
+      "revId": "2f860a839d70520bfd6a5e74aa4919b60bbf8044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48cc1168_1172f8ba",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium.respond-to-same-origin-request-with-redirected-cross-origin-response.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-13T10:51:22Z",
+      "side": 1,
+      "message": "cros -\u003e cors",
+      "revId": "2f860a839d70520bfd6a5e74aa4919b60bbf8044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
