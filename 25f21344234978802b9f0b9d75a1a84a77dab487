@@ -22,6 +22,30 @@
       "revId": "25f21344234978802b9f0b9d75a1a84a77dab487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de0b1e1e_687b640d",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-11-13T18:19:52Z",
+      "side": 1,
+      "message": "Done, brought it back from patch set 3.",
+      "parentUuid": "b017fc21_866f127c",
+      "range": {
+        "startLine": 389,
+        "startChar": 23,
+        "endLine": 389,
+        "endChar": 37
+      },
+      "revId": "25f21344234978802b9f0b9d75a1a84a77dab487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
