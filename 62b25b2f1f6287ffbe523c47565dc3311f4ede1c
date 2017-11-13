@@ -16,6 +16,24 @@
       "revId": "62b25b2f1f6287ffbe523c47565dc3311f4ede1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4a2995_1f18bb66",
+        "filename": "base/android/java/src/org/chromium/base/BuildInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-13T23:57:30Z",
+      "side": 1,
+      "message": "Downstream has landed, so I\u0027ll update to deprecate this \u0026 include instructions.",
+      "parentUuid": "c7277a5e_55b945e3",
+      "revId": "62b25b2f1f6287ffbe523c47565dc3311f4ede1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
