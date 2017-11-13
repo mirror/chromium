@@ -1,0 +1,104 @@
+// Copyright (c) 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Proto buffer for user activity events.
+
+syntax = "proto2";
+
+package chromeos.power;
+
+message UserActivcityEvent {
+  // 1. Model params and additional info not necessarily used as features.
+  // Both delays below are in seconds.
+  optional int32 model_start_delay = 1;
+  optional int32 model_timeout_delay = 2;
+
+  // 2. Event type as training label.
+  enum EventType {
+    REACTIVATE = 1;
+    OFF = 2;
+    TIMEOUT = 3;
+  }
+
+  optional EventType event_type = 3;
+
+  // Trigger of the event. currently not used as labels and stored for analysis
+  // only.
+  enum EventReason {
+    USER_ACTIVITY = 1;
+    VIDEO_ACTIVITY = 2;
+    POWER_CHANGED = 3;
+    LID_CLOSED = 4;
+    SHUTDOWN = 5;
+    SESSION_STOPPED = 6;
+    SCREEN_OFF = 7;
+    SCREEN_LOCK = 8;
+    IDLE_SLEEP = 9;
+  }
+
+  optional EventReason event_reason = 4;
+
+  // 3. Features
+  // Time taken in seconds to transition between states.
+  optional int32 on_to_dim = 5;
+  optional int32 dim_to_screen_off = 6;
+  optional int32 last_active_to_event = 7;
+
+  // Local time of the day in seconds.
+  optional int32 last_user_activity_time = 8;
+
+  enum DayOfWeek {
+    MON = 1;
+    TUE = 2;
+    WED = 3;
+    THU = 4;
+    FRI = 5;
+    SAT = 6;
+    SUN = 7;
+  }
+  optional DayOfWeek day_of_week = 9;
+
+  // Time in seconds since the last mouse and key events. This may not be the
+  // same as model_start_delay, depending on what the last activity is.
+  optional int32 time_since_last_mouse = 10;
+  optional int32 time_since_last_key = 11;
+
+  // How long in seconds the user has been active.
+  optional int32 time_active = 12;
+
+  // Apps that are active and recently closed.
+  repeated string active_apps = 13;
+  repeated string closed_apps = 14;
+
+  // Identifier of tabs, either in the form of URL or domain of URL or content
+  // type of the URL.
+  repeated string active_tabs = 15;
+  repeated string closed_tabs = 16;
+
+  enum DeviceState {
+    UNKNOWN_STATE = 0;
+    OPEN = 1;
+    FLIPPED = 2;
+  }
+  optional DeviceState device_state = 17;
+
+  optional float battery_level = 18;
+  optional bool on_battery = 19;
+
+  // Region and languages.
+  optional string region = 20;
+  repeated string languages = 21;
+
+  // Whether user/device is managed.
+  enum ManagementType {
+    UNKNOWN_TYPE = 0;
+    MANAGED = 1;
+    UNMANAGED = 2;
+  }
+  optional ManagementType user_management = 22;
+  optional ManagementType device_management = 23;
+
+  // Whether network is connected.
+  optional bool is_network_connected = 24;
+}
