@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40bbe057_95c0085a",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-13T23:59:44Z",
+      "side": 1,
+      "message": "sorry, function. fixing..",
+      "range": {
+        "startLine": 304,
+        "startChar": 57,
+        "endLine": 304,
+        "endChar": 65
+      },
+      "revId": "c7be1213e02d25b817d65467f78d748168573c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
