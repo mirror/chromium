@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "370e0ba6_c3ed54ff",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-13T17:15:03Z",
+      "side": 1,
+      "message": "Hmm... I\u0027d prefer to use the same timestamp in protocol. The fact that TimeSinceEpoch is in seconds is a pity, but we have legacy to work with.\nDoes Network.MonothonicTime work for you?",
+      "parentUuid": "a7a60c6c_71014e82",
+      "range": {
+        "startLine": 1102,
+        "startChar": 58,
+        "endLine": 1102,
+        "endChar": 75
+      },
+      "revId": "7262a40ff939b79dfab7eb0205b5a80a418da06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fe709ec_70721645",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler.h",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Because I\u0027m not allowed to use base::TimeTicks::UnixEpoch() outside platform/. We could try to add this method to the internal::TimeWrapper\u003cbase::TimeTicks\u003e class alternatively, but I figured it\u0027d be easier this way. wdyt?",
       "parentUuid": "0fe709ec_70721645",
+      "range": {
+        "startLine": 52,
+        "startChar": 10,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "7262a40ff939b79dfab7eb0205b5a80a418da06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133f0212_31951399",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-13T17:15:03Z",
+      "side": 1,
+      "message": "Well, I guess we\u0027ll have to expose UnixEpoch() eventually? Let\u0027s ask arch people and get this right.",
+      "parentUuid": "208f4d16_4e6b26c2",
       "range": {
         "startLine": 52,
         "startChar": 10,
