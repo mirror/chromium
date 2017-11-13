@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7406aba6_fe37c994",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/sequence.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-13T18:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "404aa879_2ef67616",
+      "revId": "6f3690fcac934582177d310d1d8c80ce35229009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "415deaee_841254cc",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1dd53ab2_a57c6107",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-13T18:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "415deaee_841254cc",
+      "revId": "6f3690fcac934582177d310d1d8c80ce35229009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34d876d2_0ee29f33",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "6f3690fcac934582177d310d1d8c80ce35229009",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f567d5a_d5d7fe38",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-13T18:45:40Z",
+      "side": 1,
+      "message": "Actually, I\u0027d like to stop ThreadController knowing about the current time and just pass a clock to SequenceController directly, so this is the simplest way to achieve that.\n\nAlso it doesn\u0027t really reduce the number of changes - we need to stop referencing TaskQueueManagerDelegate/ThreadController in the places different from TaskQueueManager, so we need to change these callsites anyway.",
+      "parentUuid": "34d876d2_0ee29f33",
+      "revId": "6f3690fcac934582177d310d1d8c80ce35229009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "315558d0_9b782420",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-13T18:45:40Z",
+      "side": 1,
+      "message": "Added a todo in sequence.h.",
+      "parentUuid": "0a322658_7975eb7a",
+      "range": {
+        "startLine": 97,
+        "startChar": 27,
+        "endLine": 97,
+        "endChar": 55
+      },
+      "revId": "6f3690fcac934582177d310d1d8c80ce35229009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b05faefe_cbe27e5c",
         "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.h",
         "patchSetId": 3
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "3da53f21_8b43a63a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-13T18:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b05faefe_cbe27e5c",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 31
+      },
+      "revId": "6f3690fcac934582177d310d1d8c80ce35229009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ca7b267_138fdf2b",
         "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.h",
         "patchSetId": 3
@@ -119,6 +221,30 @@
       "revId": "6f3690fcac934582177d310d1d8c80ce35229009",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f441a481_835a69d8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-13T18:45:40Z",
+      "side": 1,
+      "message": "Didn\u0027t know, thanks!",
+      "parentUuid": "8ca7b267_138fdf2b",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 36
+      },
+      "revId": "6f3690fcac934582177d310d1d8c80ce35229009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
