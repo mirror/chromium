@@ -11,7 +11,6 @@
 #include "base/synchronization/waitable_event.h"
 #include "base/time/default_tick_clock.h"
 #include "platform/scheduler/base/task_queue.h"
-#include "platform/scheduler/child/scheduler_tqm_delegate_impl.h"
 #include "platform/scheduler/child/web_scheduler_impl.h"
 #include "platform/scheduler/child/web_task_runner_impl.h"
 #include "platform/scheduler/child/worker_scheduler_impl.h"
@@ -44,7 +43,7 @@ void WebThreadImplForWorkerScheduler::Init() {
 }
 
 WebThreadImplForWorkerScheduler::~WebThreadImplForWorkerScheduler() {
-  if (task_runner_delegate_) {
+  if (worker_scheduler_) {
     base::WaitableEvent completion(
         base::WaitableEvent::ResetPolicy::AUTOMATIC,
         base::WaitableEvent::InitialState::NOT_SIGNALED);
@@ -62,8 +61,6 @@ void WebThreadImplForWorkerScheduler::InitOnThread(
     base::WaitableEvent* completion) {
   // TODO(alexclarke): Do we need to unify virtual time for workers and the
   // main thread?
-  task_runner_delegate_ = SchedulerTqmDelegateImpl::Create(
-      thread_->message_loop(), std::make_unique<base::DefaultTickClock>());
   worker_scheduler_ = CreateWorkerScheduler();
   worker_scheduler_->Init();
   task_queue_ = worker_scheduler_->DefaultTaskQueue();
@@ -78,9 +75,14 @@ void WebThreadImplForWorkerScheduler::InitOnThread(
   completion->Signal();
 }
 
+std::unique_ptr<WorkerScheduler>
+WebThreadImplForWorkerScheduler::CreateWorkerScheduler() {
+  return WorkerScheduler::Create();
+}
+
 void WebThreadImplForWorkerScheduler::RestoreTaskRunnerOnThread(
     base::WaitableEvent* completion) {
-  task_runner_delegate_->RestoreDefaultTaskRunner();
+  worker_scheduler_->RestoreDefaultTaskRunner();
   completion->Signal();
 }
 
@@ -90,11 +92,6 @@ void WebThreadImplForWorkerScheduler::WillDestroyCurrentMessageLoop() {
   web_scheduler_.reset();
   worker_scheduler_.reset();
   web_task_runner_.Reset();
-}
-
-std::unique_ptr<scheduler::WorkerScheduler>
-WebThreadImplForWorkerScheduler::CreateWorkerScheduler() {
-  return WorkerScheduler::Create(task_runner_delegate_);
 }
 
 blink::PlatformThreadId WebThreadImplForWorkerScheduler::ThreadId() const {

@@ -21,6 +21,7 @@
 #include "platform/scheduler/base/enqueue_order.h"
 #include "platform/scheduler/base/graceful_queue_shutdown_helper.h"
 #include "platform/scheduler/base/moveable_auto_lock.h"
+#include "platform/scheduler/base/sequence.h"
 #include "platform/scheduler/base/task_queue_impl.h"
 #include "platform/scheduler/base/task_queue_selector.h"
 
@@ -37,12 +38,12 @@ class TaskQueueManagerTest;
 }
 namespace internal {
 class TaskQueueImpl;
+class ThreadController;
 }  // namespace internal
 
 class LazyNow;
 class RealTimeDomain;
 class TaskQueue;
-class TaskQueueManagerDelegate;
 class TaskTimeObserver;
 class TimeDomain;
 
@@ -59,14 +60,25 @@ class TimeDomain;
 //    registered with the selector as input to the scheduling decision.
 //
 class PLATFORM_EXPORT TaskQueueManager
-    : public internal::TaskQueueSelector::Observer,
+    : public internal::Sequence,
+      public internal::TaskQueueSelector::Observer,
       public base::RunLoop::NestingObserver {
  public:
-  // Create a task queue manager where |delegate| identifies the thread
-  // on which where the tasks are  eventually run. Category strings must have
-  // application lifetime (statics or literals). They may not include " chars.
-  explicit TaskQueueManager(scoped_refptr<TaskQueueManagerDelegate> delegate);
+  // Create a task queue manager where |controller| identifies the thread
+  // on which where the tasks are/eventually run.
+  explicit TaskQueueManager(
+      std::unique_ptr<internal::ThreadController> controller);
   ~TaskQueueManager() override;
+
+  static std::unique_ptr<TaskQueueManager> TakeOverCurrentThread();
+
+  void SetDefaultTaskRunner(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+  void RestoreDefaultTaskRunner();
+
+  // Implementation of Sequence:
+  base::PendingTask TakeTask(bool delayed) override;
+  void DidRunTask() override;
 
   // Requests that a task to process work is posted on the main task runner.
   // These tasks are de-duplicated in two buckets: main-thread and all other
@@ -131,9 +143,6 @@ class PLATFORM_EXPORT TaskQueueManager
   // Note |observer| is expected to outlive the SchedulerHelper.
   void SetObserver(Observer* observer);
 
-  // Returns the delegate used by the TaskQueueManager.
-  const scoped_refptr<TaskQueueManagerDelegate>& Delegate() const;
-
   // Time domains must be registered for the task queues to get updated.
   void RegisterTimeDomain(TimeDomain* time_domain);
   void UnregisterTimeDomain(TimeDomain* time_domain);
@@ -165,6 +174,9 @@ class PLATFORM_EXPORT TaskQueueManager
 
   scoped_refptr<internal::GracefulQueueShutdownHelper>
   GetGracefulQueueShutdownHelper() const;
+
+  base::TickClock* GetClock() const;
+  base::TimeTicks NowTicks() const;
 
   base::WeakPtr<TaskQueueManager> GetWeakPtr();
 
@@ -289,7 +301,6 @@ class PLATFORM_EXPORT TaskQueueManager
                                              LazyNow time_before_task,
                                              base::TimeTicks* time_after_task);
 
-  bool RunsTasksInCurrentSequence() const;
   bool PostNonNestableDelayedTask(const base::Location& from_here,
                                   const base::Closure& task,
                                   base::TimeDelta delay);
@@ -357,12 +368,8 @@ class PLATFORM_EXPORT TaskQueueManager
   base::debug::TaskAnnotator task_annotator_;
 
   base::ThreadChecker main_thread_checker_;
-  scoped_refptr<TaskQueueManagerDelegate> delegate_;
+  std::unique_ptr<internal::ThreadController> controller_;
   internal::TaskQueueSelector selector_;
-
-  base::RepeatingClosure immediate_do_work_closure_;
-  base::RepeatingClosure delayed_do_work_closure_;
-  base::CancelableClosure cancelable_delayed_do_work_closure_;
 
   bool task_was_run_on_quiescence_monitored_queue_;
 

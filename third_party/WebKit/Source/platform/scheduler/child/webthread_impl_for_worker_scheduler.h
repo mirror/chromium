@@ -20,7 +20,6 @@ class WebScheduler;
 
 namespace blink {
 namespace scheduler {
-class SchedulerTqmDelegate;
 class SingleThreadIdleTaskRunner;
 class TaskQueue;
 class WebSchedulerImpl;
@@ -55,9 +54,6 @@ class PLATFORM_EXPORT WebThreadImplForWorkerScheduler
 
  protected:
   base::Thread* GetThread() const { return thread_.get(); }
-  SchedulerTqmDelegate* task_runner_delegate() const {
-    return task_runner_delegate_.get();
-  }
 
  private:
   virtual std::unique_ptr<scheduler::WorkerScheduler> CreateWorkerScheduler();
@@ -76,7 +72,6 @@ class PLATFORM_EXPORT WebThreadImplForWorkerScheduler
   scoped_refptr<base::SingleThreadTaskRunner> thread_task_runner_;
   scoped_refptr<TaskQueue> task_queue_;
   scoped_refptr<scheduler::SingleThreadIdleTaskRunner> idle_task_runner_;
-  scoped_refptr<SchedulerTqmDelegate> task_runner_delegate_;
   WebPrivatePtr<WebTaskRunnerImpl> web_task_runner_;
 };
 

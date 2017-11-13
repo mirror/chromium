@@ -1,6 +1,7 @@
 include_rules = [
   "+base/atomic_sequence_num.h",
   "+base/atomicops.h",
+  "+base/test_time_source.h",
   "+base/bind_helpers.h",
   "+base/callback.h",
   "+base/cancelable_callback.h",
