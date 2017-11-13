@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4eac83ba_0962be89",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-13T15:27:36Z",
+      "side": 1,
+      "message": "I wished I could just write [[showImportPasswords_ || showExportPasswords_]] but that apparently does not work with disjunction, only with ! for negation.",
+      "range": {
+        "startLine": 87,
+        "startChar": 34,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "c3ceecad06aba648429cbcdd38d77f320138fd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccdf542a_faa11e9b",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-13T15:27:36Z",
+      "side": 1,
+      "message": "This is awkward, but I have not been able to call showImportPasswords_ and showExportPasswords_ from here to just perform the disjunction. I got to this.showImportPasswords_.value(), but the value was reported undefined and this.showImportPasswords_ was not a function itself.",
+      "range": {
+        "startLine": 270,
+        "startChar": 15,
+        "endLine": 273,
+        "endChar": 60
+      },
+      "revId": "c3ceecad06aba648429cbcdd38d77f320138fd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
