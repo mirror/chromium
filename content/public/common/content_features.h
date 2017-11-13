@@ -53,6 +53,7 @@ CONTENT_EXPORT extern const base::Feature kMainThreadBusyScrollIntervention;
 CONTENT_EXPORT extern const base::Feature kMojoBlobs;
 CONTENT_EXPORT extern const base::Feature kMojoInputMessages;
 CONTENT_EXPORT extern const base::Feature kMojoVideoEncodeAccelerator;
+CONTENT_EXPORT extern const base::Feature kMojoVideoCapture;
 CONTENT_EXPORT extern const base::Feature kModuleScriptsDynamicImport;
 CONTENT_EXPORT extern const base::Feature kModuleScriptsImportMetaUrl;
 CONTENT_EXPORT extern const base::Feature kOffMainThreadFetch;
@@ -118,6 +119,8 @@ CONTENT_EXPORT extern const base::Feature kMacV2Sandbox;
 #endif  // defined(OS_MACOSX)
 
 CONTENT_EXPORT bool IsMojoBlobsEnabled();
+CONTENT_EXPORT bool IsVideoCaptureServiceEnabledForDedicatedUtilityProcess();
+CONTENT_EXPORT bool IsVideoCaptureServiceEnabledForBrowserProcess();
 
 // DON'T ADD RANDOM STUFF HERE. Put it in the main section above in
 // alphabetical order, or in one of the ifdefs (also in order in each section).

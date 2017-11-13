@@ -165,6 +165,10 @@ const base::Feature kMojoInputMessages{"MojoInputMessages",
 const base::Feature kMojoVideoEncodeAccelerator{
     "MojoVideoEncodeAccelerator", base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Enables/disables the video capture service.
+const base::Feature kMojoVideoCapture{"MojoVideoCapture",
+                                      base::FEATURE_ENABLED_BY_DEFAULT};
+
 // ES6 Modules dynamic imports.
 const base::Feature kModuleScriptsDynamicImport{
     "ModuleScriptsDynamicImport", base::FEATURE_ENABLED_BY_DEFAULT};
@@ -441,6 +445,22 @@ const base::Feature kV8VmFuture{"V8VmFuture",
 bool IsMojoBlobsEnabled() {
   return base::FeatureList::IsEnabled(features::kMojoBlobs) ||
          base::FeatureList::IsEnabled(features::kNetworkService);
+}
+
+bool IsVideoCaptureServiceEnabledForDedicatedUtilityProcess() {
+#if defined(OS_ANDROID)
+  return false;
+#else
+  return base::FeatureList::IsEnabled(features::kMojoVideoCapture);
+#endif
+}
+
+bool IsVideoCaptureServiceEnabledForBrowserProcess() {
+#if defined(OS_ANDROID)
+  return base::FeatureList::IsEnabled(features::kMojoVideoCapture);
+#else
+  return false;
+#endif
 }
 
 }  // namespace features
