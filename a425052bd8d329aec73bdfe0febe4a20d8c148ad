@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "89918efa_0ddd6e36",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-13T22:28:23Z",
+      "side": 1,
+      "message": "I don\u0027t mind us erroring out; I would prefer that we error out in an intelligible way.\n\nRight now, if you have an item other than \u0027expected\u0027 or \u0027actual\u0027 with a non-dict value, you\u0027d call get_items(v) on it, then that call would call v.items(). You\u0027d wind up with an error saying something like \"no value attribute of test_trie\" or something along those lines. It\u0027d be nice if we could point out what\u0027s wrong and why when we error out.\n\n(I\u0027m trying to dig us out of this in some places in the recipes at the moment, which can fail in ways that aren\u0027t easy to understand from the error log.)",
+      "parentUuid": "8645922d_cb8278b6",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cd842a4_001e4e7b",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 7
