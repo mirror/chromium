@@ -3086,6 +3086,8 @@ void RenderFrameImpl::CommitNavigation(
     const GURL& body_url,
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params,
+    mojom::URLLoaderPtr url_loader,
+    mojom::URLLoaderClientRequest url_loader_client,
     mojo::ScopedDataPipeConsumerHandle body_data,
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories) {
   CHECK(IsBrowserSideNavigationEnabled());
@@ -3104,6 +3106,8 @@ void RenderFrameImpl::CommitNavigation(
   std::unique_ptr<StreamOverrideParameters> stream_override(
       new StreamOverrideParameters());
   stream_override->stream_url = body_url;
+  stream_override->url_loader = std::move(url_loader);
+  stream_override->url_loader_client = std::move(url_loader_client);
   stream_override->consumer_handle = std::move(body_data);
   stream_override->response = head;
   stream_override->redirects = request_params.redirects;

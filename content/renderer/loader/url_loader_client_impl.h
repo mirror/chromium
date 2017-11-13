@@ -13,6 +13,7 @@
 #include "content/common/content_export.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "ipc/ipc_message.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 
 namespace base {
@@ -46,6 +47,9 @@ class CONTENT_EXPORT URLLoaderClientImpl final : public mojom::URLLoaderClient {
   // Disaptches the messages received after SetDefersLoading is called.
   void FlushDeferredMessages();
 
+  void Bind(mojom::URLLoaderPtr url_loader,
+            mojom::URLLoaderClientRequest url_loader_client);
+
   // mojom::URLLoaderClient implementation
   void OnReceiveResponse(const ResourceResponseHead& response_head,
                          const base::Optional<net::SSLInfo>& ssl_info,
@@ -75,6 +79,11 @@ class CONTENT_EXPORT URLLoaderClientImpl final : public mojom::URLLoaderClient {
   int32_t accumulated_transfer_size_diff_during_deferred_ = 0;
   ResourceDispatcher* const resource_dispatcher_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+
+  // PlzNavigateOverMojo.
+  mojom::URLLoaderPtr url_loader_;
+  mojo::Binding<mojom::URLLoaderClient> url_loader_client_binding_;
+
   base::WeakPtrFactory<URLLoaderClientImpl> weak_factory_;
 };
 
