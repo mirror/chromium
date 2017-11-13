@@ -21,6 +21,7 @@
 #include "ui/views/controls/scroll_view.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/layout/box_layout.h"
+#include "ui/views/layout/fill_layout.h"
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/layout/layout_provider.h"
 #include "ui/views/widget/widget.h"
@@ -63,6 +64,18 @@ void SplitStringIntoParagraphs(const base::string16& text,
   paragraphs->push_back(text.substr(start, text.length() - start));
 }
 
+views::View* CreateWrappedViewWithInsets(views::View* view) {
+  gfx::Insets dialog_insets =
+      views::LayoutProvider::Get()->GetInsetsMetric(views::INSETS_DIALOG);
+  dialog_insets.Set(0, dialog_insets.left(), 0, dialog_insets.right());
+
+  views::View* wrapping_view = new views::View();
+  wrapping_view->SetBorder(views::CreateEmptyBorder(dialog_insets));
+  wrapping_view->SetLayoutManager(new views::FillLayout());
+  wrapping_view->AddChildView(view);
+  return wrapping_view;
+}
+
 }  // namespace
 
 namespace views {
@@ -102,10 +115,12 @@ bool MessageBoxView::IsCheckBoxSelected() {
 }
 
 void MessageBoxView::SetCheckBoxLabel(const base::string16& label) {
-  if (!checkbox_)
+  if (!checkbox_) {
     checkbox_ = new Checkbox(label);
-  else
+    checkbox_container_ = CreateWrappedViewWithInsets(checkbox_);
+  } else {
     checkbox_->SetText(label);
+  }
   ResetLayoutManager();
 }
 
@@ -125,6 +140,7 @@ void MessageBoxView::SetLink(const base::string16& text,
     DCHECK(listener);
     if (!link_) {
       link_ = new Link(text);
+      link_container_ = CreateWrappedViewWithInsets(link_);
       link_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     } else {
       link_->SetText(text);
@@ -207,6 +223,7 @@ void MessageBoxView::Init(const InitParams& params) {
 
   if (params.options & HAS_PROMPT_FIELD) {
     prompt_field_ = new Textfield;
+    prompt_field_container_ = CreateWrappedViewWithInsets(prompt_field_);
     prompt_field_->SetText(params.default_prompt);
   }
 
@@ -233,15 +250,18 @@ void MessageBoxView::ResetLayoutManager() {
                           GridLayout::USE_PREF, 0, 0);
   }
 
-  const int kMaxScrollViewHeight = 400;
+  const int kMaxScrollViewHeight = 160;
   views::View* message_contents = new views::View();
+  // We explicitly set insets on the message contents instead of the scroll view
+  // so that the scroll view borders are not capped by dialog insets.
   message_contents->SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kVertical));
   for (size_t i = 0; i < message_labels_.size(); ++i)
     message_contents->AddChildView(message_labels_[i]);
   ScrollView* scroll_view = new views::ScrollView();
   scroll_view->ClipHeightTo(0, kMaxScrollViewHeight);
-  scroll_view->SetContents(message_contents);
+
+  scroll_view->SetContents(CreateWrappedViewWithInsets(message_contents));
   layout->StartRow(0, message_column_view_set_id);
   layout->AddView(scroll_view);
 
@@ -249,27 +269,29 @@ void MessageBoxView::ResetLayoutManager() {
   if (prompt_field_) {
     layout->AddPaddingRow(0, inter_row_vertical_spacing_);
     layout->StartRow(0, extra_column_view_set_id);
-    layout->AddView(prompt_field_);
+    layout->AddView(prompt_field_container_);
     trailing_content_type = views::CONTROL;
   }
 
   if (checkbox_) {
     layout->AddPaddingRow(0, inter_row_vertical_spacing_);
     layout->StartRow(0, extra_column_view_set_id);
-    layout->AddView(checkbox_);
+    layout->AddView(checkbox_container_);
     trailing_content_type = views::CONTROL;
   }
 
   if (link_) {
     layout->AddPaddingRow(0, inter_row_vertical_spacing_);
     layout->StartRow(0, extra_column_view_set_id);
-    layout->AddView(link_);
+    layout->AddView(link_container_);
     trailing_content_type = views::TEXT;
   }
 
-  SetBorder(
-      CreateEmptyBorder(LayoutProvider::Get()->GetDialogInsetsForContentType(
-          views::TEXT, trailing_content_type)));
+  gfx::Insets border_insets =
+      LayoutProvider::Get()->GetDialogInsetsForContentType(
+          views::TEXT, trailing_content_type);
+  border_insets.Set(border_insets.top(), 0, border_insets.bottom(), 0);
+  SetBorder(CreateEmptyBorder(border_insets));
 }
 
 }  // namespace views

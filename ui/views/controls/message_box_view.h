@@ -107,12 +107,15 @@ class VIEWS_EXPORT MessageBoxView : public View {
 
   // Input text field for the message box.
   Textfield* prompt_field_;
+  View* prompt_field_container_;
 
   // Checkbox for the message box.
   Checkbox* checkbox_;
+  View* checkbox_container_;
 
   // Link displayed at the bottom of the view.
   Link* link_;
+  View* link_container_;
 
   // Maximum width of the message label.
   int message_width_;
