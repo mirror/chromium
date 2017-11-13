@@ -21,6 +21,7 @@
 #include "base/strings/string16.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
+#include "chrome/browser/resource_coordinator/browser_enumerator.h"
 #include "chrome/browser/resource_coordinator/tab_lifetime_observer.h"
 #include "chrome/browser/resource_coordinator/tab_stats.h"
 #include "chrome/browser/sessions/session_restore_observer.h"
@@ -30,7 +31,6 @@
 #include "content/public/browser/navigation_throttle.h"
 #include "ui/gfx/native_widget_types.h"
 
-class BrowserList;
 class GURL;
 class TabStripModel;
 
@@ -47,14 +47,6 @@ class BackgroundTabNavigationThrottle;
 class TabManagerDelegate;
 #endif
 class TabManagerStatsCollector;
-
-// Information about a Browser.
-struct BrowserInfo {
-  Browser* browser = nullptr;  // Can be nullptr in tests.
-  TabStripModel* tab_strip_model = nullptr;
-  bool window_is_minimized = false;
-  bool browser_is_app = false;
-};
 
 // The TabManager periodically updates (see
 // |kAdjustmentIntervalSeconds| in the source) the status of renderers
@@ -231,6 +223,7 @@ class TabManager : public TabStripModelObserver,
 
  private:
   friend class TabManagerStatsCollectorTest;
+  friend class TabManagerTest;
 
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, PurgeBackgroundRenderer);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ActivateTabResetPurgeState);
@@ -413,11 +406,6 @@ class TabManager : public TabStripModelObserver,
   // Browser.
   bool IsActiveWebContentsInActiveBrowser(content::WebContents* contents) const;
 
-  // Returns a list of BrowserInfo constructed from either
-  // |test_browser_info_list_| or BrowserList. The first BrowserInfo in the list
-  // corresponds to the last active Browser.
-  std::vector<BrowserInfo> GetBrowserInfoList() const;
-
   void OnSessionRestoreStartedLoadingTabs();
   void OnSessionRestoreFinishedLoadingTabs();
   void OnWillRestoreTab(content::WebContents* contents);
@@ -479,6 +467,12 @@ class TabManager : public TabStripModelObserver,
     memory_pressure_listener_.reset();
   }
 
+  // Sets the BrowserInfo used to enumerate browsers. Used only in tests.
+  void SetBrowserEnumeratorForTest(
+      std::unique_ptr<BrowserEnumerator> test_browser_enumerator) {
+    browser_enumerator_ = std::move(test_browser_enumerator);
+  }
+
   TabManagerStatsCollector* stats_collector() { return stats_collector_.get(); }
 
   // Timer to periodically update the stats of the renderers.
@@ -517,14 +511,9 @@ class TabManager : public TabStripModelObserver,
   // TabStripModels. Automatically tracks browsers as they come and go.
   BrowserTabStripTracker browser_tab_strip_tracker_;
 
-  // Injected BrowserInfo list. Allows this to be tested end-to-end without
-  // requiring a full browser environment. If specified these BrowserInfo will
-  // be crawled as the authoritative source of tabs, otherwise the BrowserList
-  // and associated Browser objects are crawled. The first BrowserInfo in the
-  // list corresponds to the last active Browser.
-  // TODO(chrisha): Factor out tab-strip model enumeration to a helper class,
-  //     and make a delegate that centralizes all testing seams.
-  std::vector<BrowserInfo> test_browser_info_list_;
+  // Delegate that enumerates existing browsers.
+  // Allows tests to inject their own BrowserInfo lists.
+  std::unique_ptr<BrowserEnumerator> browser_enumerator_;
 
   // List of observers that will receive notifications on state changes.
   base::ObserverList<TabLifetimeObserver> observers_;

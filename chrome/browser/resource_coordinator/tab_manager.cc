@@ -32,6 +32,7 @@
 #include "chrome/browser/memory/oom_memory_details.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
+#include "chrome/browser/resource_coordinator/mru_browser_enumerator.h"
 #include "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h"
 #include "chrome/browser/resource_coordinator/tab_lifetime_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_resource_coordinator_signal_observer.h"
@@ -224,6 +225,7 @@ TabManager::TabManager()
       minimum_protection_time_(base::TimeDelta::FromMinutes(10)),
 #endif
       browser_tab_strip_tracker_(this, nullptr, this),
+      browser_enumerator_(std::make_unique<MRUBrowserEnumerator>()),
       is_session_restore_loading_tabs_(false),
       background_tab_loading_mode_(BackgroundTabLoadingMode::kStaggered),
       force_load_timer_(base::MakeUnique<base::OneShotTimer>(GetTickClock())),
@@ -337,7 +339,7 @@ int TabManager::FindTabStripModelById(int64_t target_web_contents_id,
                                       TabStripModel** model) const {
   DCHECK(model);
 
-  for (const auto& browser_info : GetBrowserInfoList()) {
+  for (const auto& browser_info : browser_enumerator_->GetBrowserInfoList()) {
     TabStripModel* local_model = browser_info.tab_strip_model;
     int idx = FindWebContentsById(local_model, target_web_contents_id);
     if (idx != -1) {
@@ -473,7 +475,7 @@ TabStatsList TabManager::GetUnsortedTabStats(
     const std::vector<gfx::NativeWindow>& windows_sorted_by_z_index) const {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  const auto browser_info_list = GetBrowserInfoList();
+  const auto browser_info_list = browser_enumerator_->GetBrowserInfoList();
   const base::flat_set<const BrowserInfo*> occluded_browsers =
       GetOccludedBrowsers(browser_info_list, windows_sorted_by_z_index);
 
@@ -1084,34 +1086,11 @@ bool TabManager::CanOnlyDiscardOnce() const {
 
 bool TabManager::IsActiveWebContentsInActiveBrowser(
     content::WebContents* contents) const {
-  auto browser_info_list = GetBrowserInfoList();
-  if (browser_info_list.empty())
-    return false;
-  return browser_info_list.front().tab_strip_model->GetActiveWebContents() ==
-         contents;
-}
-
-std::vector<BrowserInfo> TabManager::GetBrowserInfoList() const {
-  if (!test_browser_info_list_.empty())
-    return test_browser_info_list_;
-
-  std::vector<BrowserInfo> browser_info_list;
-
-  BrowserList* browser_list = BrowserList::GetInstance();
-  for (auto browser_iterator = browser_list->begin_last_active();
-       browser_iterator != browser_list->end_last_active();
-       ++browser_iterator) {
-    Browser* browser = *browser_iterator;
-
-    BrowserInfo browser_info;
-    browser_info.browser = browser;
-    browser_info.tab_strip_model = browser->tab_strip_model();
-    browser_info.window_is_minimized = browser->window()->IsMinimized();
-    browser_info.browser_is_app = browser->is_app();
-    browser_info_list.push_back(browser_info);
-  }
-
-  return browser_info_list;
+  base::Optional<BrowserInfo> active_browser_info =
+      browser_enumerator_->GetActiveBrowserInfo();
+  return active_browser_info.has_value() &&
+         active_browser_info->tab_strip_model->GetActiveWebContents() ==
+             contents;
 }
 
 content::NavigationThrottle::ThrottleCheckResult
