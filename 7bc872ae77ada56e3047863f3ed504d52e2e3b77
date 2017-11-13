@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e573cdb8_c66f0f6b",
+        "filename": "infra/config/cq.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-13T21:29:43Z",
+      "side": 1,
+      "message": "Sort of. It\u0027s what we do on the iOS bots today, and is more-or-less the direction I\u0027m moving in.\n\n@tikuta - yup, we definitely need to be careful :)",
+      "parentUuid": "a87d0bc4_ae6eded4",
+      "revId": "7bc872ae77ada56e3047863f3ed504d52e2e3b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc5a2518_384daf68",
         "filename": "testing/buildbot/chromium.win.json",
         "patchSetId": 1
