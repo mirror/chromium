@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76e29def_a7901a9d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-13T17:52:08Z",
+      "side": 1,
+      "message": "can a compromised renderer skip this validation? What happens then?",
+      "range": {
+        "startLine": 14,
+        "startChar": 50,
+        "endLine": 16,
+        "endChar": 48
+      },
+      "revId": "dec29f6b4216a04c533c8d81016ec7a20080280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
