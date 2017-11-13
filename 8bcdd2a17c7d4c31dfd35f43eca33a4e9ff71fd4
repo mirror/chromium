@@ -33,6 +33,24 @@
       "revId": "8bcdd2a17c7d4c31dfd35f43eca33a4e9ff71fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabd6fe5_10011ee5",
+        "filename": "tools/perf/page_sets/wasm_realworld_perf.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1131655
+      },
+      "writtenOn": "2017-11-13T22:35:29Z",
+      "side": 1,
+      "message": "Do you have any idea for this? I can find some element for this specific test but since we\u0027ll be adding more once this is done right, I don\u0027t think we\u0027ll be able to do it for all in the same way.\nI tried action_runner.tab.WaitForDocumentReadyStateToBeComplete() but that doesn\u0027t work right (it shuts down before it starts).",
+      "parentUuid": "f9c26ea0_7d34c588",
+      "revId": "8bcdd2a17c7d4c31dfd35f43eca33a4e9ff71fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
