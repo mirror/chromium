@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8cea3da_b02f27c6",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-13T08:32:43Z",
+      "side": 1,
+      "message": "How about a static counter? The key for matching the TRACE_EVENT is a set of the category, name and id, so a simple incremental counter would be enough.",
+      "parentUuid": "c9622d30_dd27134d",
+      "revId": "680d30c979a08d88fa4ff9d8bef6111de72e1eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45410de5_75a4500c",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 6
@@ -30,6 +48,29 @@
       "writtenOn": "2017-11-13T05:21:22Z",
       "side": 1,
       "message": "observer -\u003e listener?",
+      "revId": "680d30c979a08d88fa4ff9d8bef6111de72e1eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56bfd14c_712e656d",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-13T08:32:43Z",
+      "side": 1,
+      "message": "nit: we don\u0027t need to explicitly say it\u0027s bound on the IO thread since most of all things are on the IO thread.",
+      "range": {
+        "startLine": 706,
+        "startChar": 2,
+        "endLine": 706,
+        "endChar": 24
+      },
       "revId": "680d30c979a08d88fa4ff9d8bef6111de72e1eb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +94,24 @@
     },
     {
       "key": {
+        "uuid": "e6cdb0cc_9ca7393b",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-13T08:32:43Z",
+      "side": 1,
+      "message": "and I think we don\u0027t have to say SWGlobalScope since SetCachedMetadata is only for the SWGlobalScope.",
+      "parentUuid": "6dcdc3e3_74cddfd9",
+      "revId": "680d30c979a08d88fa4ff9d8bef6111de72e1eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa6683fd_041c18da",
         "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
         "patchSetId": 6
@@ -70,6 +129,29 @@
     },
     {
       "key": {
+        "uuid": "bc379639_e9bb518f",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-13T08:32:43Z",
+      "side": 1,
+      "message": "FromSWGlobalScope might be a bit redundant.",
+      "range": {
+        "startLine": 911,
+        "startChar": 53,
+        "endLine": 911,
+        "endChar": 70
+      },
+      "revId": "680d30c979a08d88fa4ff9d8bef6111de72e1eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea386338_7f3e9886",
         "filename": "content/common/service_worker/embedded_worker.mojom",
         "patchSetId": 6
@@ -81,6 +163,24 @@
       "writtenOn": "2017-11-13T05:21:22Z",
       "side": 1,
       "message": "Need documentation for this.\n\nIt\u0027s a bit unfortunate this method keeps getting growing params... I guess moving them all to EWStartParams may improve things.",
+      "revId": "680d30c979a08d88fa4ff9d8bef6111de72e1eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5803f8da_cfd6b9c8",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-13T08:32:43Z",
+      "side": 1,
+      "message": "I agree that the params are too many. I\u0027ve created another issue for this crbug.com/776263 . I think it\u0027s better to work on that in another CL.",
+      "parentUuid": "ea386338_7f3e9886",
       "revId": "680d30c979a08d88fa4ff9d8bef6111de72e1eb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
