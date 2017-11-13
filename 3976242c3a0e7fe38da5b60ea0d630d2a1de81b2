@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f925614a_04b4a37b",
+        "filename": "chrome/common/extensions/docs/examples/api/commands/default_command_override/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-13T18:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bba172c2_57e8a06a",
+      "revId": "3976242c3a0e7fe38da5b60ea0d630d2a1de81b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78bdd5ab_5420abc9",
         "filename": "chrome/common/extensions/docs/examples/api/commands/default_command_override/manifest.json",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "3976242c3a0e7fe38da5b60ea0d630d2a1de81b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c682459_d895c478",
+        "filename": "chrome/common/extensions/docs/examples/api/commands/default_command_override/manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-13T18:53:52Z",
+      "side": 1,
+      "message": "They should! Well, first intention was shift, then to remove shift, BUT, command+left/right is serves a different function this shouldn\u0027t override. Fixed it!",
+      "parentUuid": "78bdd5ab_5420abc9",
+      "revId": "3976242c3a0e7fe38da5b60ea0d630d2a1de81b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
