@@ -17,6 +17,7 @@ static_library("browser_sync") {
   ]
 
   public_deps = [
+    "//components/signin/core/browser",
     "//components/sync",
   ]
 
@@ -34,7 +35,6 @@ static_library("browser_sync") {
     "//components/pref_registry",
     "//components/prefs",
     "//components/reading_list/features:flags",
-    "//components/signin/core/browser",
     "//components/sync_bookmarks",
     "//components/sync_preferences",
     "//components/sync_sessions",

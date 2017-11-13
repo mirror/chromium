@@ -145,6 +145,7 @@ static_library("browser") {
   public_deps = [
     "//components/history/core/browser",
     "//components/omnibox/common",
+    "//components/signin/core/browser",
     "//third_party/metrics_proto",
   ]
   deps = [
@@ -166,7 +167,6 @@ static_library("browser") {
     "//components/search",
     "//components/search_engines",
     "//components/sessions",
-    "//components/signin/core/browser",
     "//components/strings",
     "//components/toolbar",
     "//components/url_formatter",
