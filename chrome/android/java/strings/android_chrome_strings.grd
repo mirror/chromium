@@ -482,11 +482,6 @@ CHAR-LIMIT guidelines:
         Unlock to continue setting up your phone
       </message>
 
-      <!-- Languages preferences -->
-      <message name="IDS_PREFS_LANGUAGES" desc="Menu item for Languages, which allows users to manage their languages preferences. [CHAR-LIMIT=32]">
-        Languages
-      </message>
-
       <!-- Homepage preferences -->
       <message name="IDS_OPTIONS_HOMEPAGE_EDIT_TITLE" desc="The title of the screen that allows users to change the URL that opens when they tap on the home page button in the omnibox.">
         Edit home page
@@ -912,6 +907,27 @@ Your Google account may have other forms of browsing history like searches and a
       <!-- Single site settings -->
       <message name="IDS_NO_SAVED_WEBSITE_SETTINGS" desc="Text to display when there are no saved website settings.">
         You have no saved website settings.
+      </message>
+
+      <!-- Languages preferences -->
+      <!-- TODO(crbug/783049): Set all strings translateable after reviewed. -->
+      <message name="IDS_PREFS_LANGUAGES" desc="Menu item for Languages, which allows users to manage their languages preferences. [CHAR-LIMIT=32]">
+        Languages
+      </message>
+      <message name="IDS_LANGUAGE_OFFER_TRANSLATE_ON" desc="Turn on the translate for these langauge listed." translateable="false">
+        Offer to translate pages that aren’t in a language you read.
+      </message>
+      <message name="IDS_LANGUAGE_OFFER_TRANSLATE_OFF" desc="Turn off the translate for these langauge listed." translateable="false">
+        Don't translate pages that aren’t in a language you read.
+      </message>
+      <message name="IDS_LANGUAGE_LIST_DESC" desc="Listed language desc." translateable="false">
+        Websites will show text in your preferred language, when possible.
+      </message>
+      <message name="IDS_LANGUAGE_ADD_BUTTON" desc="Add language btn." translateable="false">
+        Add language
+      </message>
+      <message name="IDS_ACCESSIBILITY_LANGUAGE_ITEM_OPTIOINS" desc="Content description for the button that shows option menu for a language item.">
+        Options
       </message>
 
       <!-- Location preferences -->

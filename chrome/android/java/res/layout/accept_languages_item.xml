@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 The Chromium Authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license that can be
+     found in the LICENSE file. -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/pref_languages_line_height">
+
+    <ImageView
+        android:id="@+id/language_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/pref_languages_spacing_large"
+        android:paddingBottom="@dimen/pref_languages_spacing_large"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_drag_handle_grey600_24dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:contentDescription="@null"/>
+
+    <Spinner
+        android:id="@+id/language_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/language_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/pref_languages_spacing_large"
+        android:textColor="@color/black_alpha_87"
+        android:textSize="@dimen/pref_languages_text_size"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@id/language_options"
+        android:layout_toEndOf="@id/language_icon"/>
+
+</RelativeLayout>
+

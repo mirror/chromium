@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 The Chromium Authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license that can be
+     found in the LICENSE file. -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/accept_language_list_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/language_list_desc" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/language_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <LinearLayout
+	android:orientation="horizontal"
+	android:layout_width="match_parent"
+	android:layout_height="@dimen/pref_languages_line_height"
+	android:gravity="start|center_vertical" >
+
+	<ImageView
+	    android:layout_width="@dimen/pref_languages_icon_size"
+	    android:layout_height="@dimen/pref_languages_icon_size"
+	    android:adjustViewBounds="true"
+	    android:scaleType="fitCenter"
+	    android:src="@drawable/plus"
+	    android:contentDescription="@null"/>
+
+	<Button
+	    android:id="@+id/add_language_btn"
+	    android:layout_width="wrap_content"
+	    android:layout_height="match_parent"
+	    android:paddingStart="@dimen/pref_languages_spacing_large"
+	    android:paddingEnd="@dimen/pref_languages_spacing_large"
+	    android:text="@string/language_add_button"
+	    android:textColor="@color/black_alpha_87"
+            android:textSize="@dimen/pref_languages_text_size"
+	    style="@style/ButtonCompatBorderless" />
+
+    </LinearLayout>
+</LinearLayout>
