@@ -13,6 +13,9 @@
 #include "components/sync/base/model_type.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "ios/chrome/browser/bookmarks/bookmarks_utils.h"
+#include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#include "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory.h"
+#include "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory_util.h"
 #include "ios/chrome/browser/signin/authentication_service.h"
 #include "ios/chrome/browser/signin/authentication_service_factory.h"
 #include "ios/chrome/browser/sync/ios_chrome_profile_sync_service_factory.h"
@@ -110,6 +113,30 @@ void AssertNumberOfEntitiesWithName(int entity_count,
 @end
 
 @implementation SyncFakeServerTestCase
+
++ (void)setUp {
+  [super setUp];
+  ios::ChromeBrowserState* browserState =
+      chrome_test_util::GetOriginalBrowserState();
+  // Sets the ContentSuggestionsService associated with this browserState to a
+  // service with no provider registered, allowing to register fake providers
+  // which do not require internet connection. The previous service is deleted.
+  // It prevents having a MDC spinner on the NTP which prevent the animations
+  // from finishing.
+  IOSChromeContentSuggestionsServiceFactory::GetInstance()->SetTestingFactory(
+      browserState, ntp_snippets::CreateChromeContentSuggestionsService);
+}
+
++ (void)tearDown {
+  ios::ChromeBrowserState* browserState =
+      chrome_test_util::GetOriginalBrowserState();
+  // Resets the Service associated with this browserState to a service with
+  // default providers. The previous service is deleted.
+  IOSChromeContentSuggestionsServiceFactory::GetInstance()->SetTestingFactory(
+      browserState,
+      ntp_snippets::CreateChromeContentSuggestionsServiceWithProviders);
+  [super tearDown];
+}
 
 - (void)tearDown {
   GREYAssert(testing::WaitUntilConditionOrTimeout(
