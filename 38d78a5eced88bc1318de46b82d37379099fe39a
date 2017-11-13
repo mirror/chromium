@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "861b72d7_6f4a50ec",
+        "filename": "chrome/browser/ui/app_list/search/search_resource_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-11-13T23:22:19Z",
+      "side": 1,
+      "message": "We are going to implement voice search in new applist soonish.  I think this code is still useful in that case.  Adding a TODO to make it clear.",
+      "parentUuid": "abbc6e55_2acb0da0",
+      "revId": "38d78a5eced88bc1318de46b82d37379099fe39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1ec636a_9b7a9e23",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3fba5b03_d0c52d27",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 20431,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-11-13T23:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1ec636a_9b7a9e23",
+      "range": {
+        "startLine": 20429,
+        "startChar": 0,
+        "endLine": 20431,
+        "endChar": 13
+      },
+      "revId": "38d78a5eced88bc1318de46b82d37379099fe39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46af994a_0c01f4b7",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-13T06:16:06Z",
       "side": 1,
       "message": "You should look at search_box_model.h which contains these four fields. on_icon and on_tooltip are no longer used and can be deleted. The off_* versions should have a different comment (since it mentions hotword).\n\nAlso I\u0027m not sure this is even used any more. From what I can tell in Code Search, the only call to create a SpeechButtonProperty is in the code you deleted above. So it\u0027s possible that speech_button_prop is now always null, so this entire code block (\"if (speech_button_prop)\" above) is dead code. Please consider whether this is true and possibly delete all this code, and the SpeechButtonProperty class in search_box_model.h.",
+      "revId": "38d78a5eced88bc1318de46b82d37379099fe39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "babddb2d_aafb9190",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-11-13T23:22:19Z",
+      "side": 1,
+      "message": "Removed on_xxx and rename off_xxx fields.\n\nThis logic is very likely not used right now because the old applist is obsoleted by the new tablet friendly fullscreen applist.  The new applist does not have a voice search button implemented yet, but it is on the roadmap (timeline and feature got cut).  I will leave the code for voice search to help them implement it in the new applist (very soon).",
+      "parentUuid": "46af994a_0c01f4b7",
       "revId": "38d78a5eced88bc1318de46b82d37379099fe39a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
