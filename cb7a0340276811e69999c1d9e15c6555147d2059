@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b75d1a38_7cc1389d",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T21:16:43Z",
+      "side": 1,
+      "message": "Generally discouraged but that\u0027s OK if it lessens the workload and is only temporary.",
+      "parentUuid": "8c09f9e9_a989000a",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b409866_0054c552",
         "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "This would be inconsistent with other places in this file. Defer this to a separate CL?",
       "parentUuid": "9b409866_0054c552",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef32ba2f_684cd157",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T21:16:43Z",
+      "side": 1,
+      "message": "\"rph\" is only used in the two places that you\u0027re already modifying. Doing it here would only change two additional lines of code that aren\u0027t already in the diff.",
+      "parentUuid": "33a2e2e9_b47b6619",
       "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -142,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "e1b44d2e_b6934da2",
+        "filename": "content/renderer/media/peer_connection_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T21:16:43Z",
+      "side": 1,
+      "message": "Ack.\n\n1. Has uploading the file to a remote location gone through privacy review? In case the log may contain sensitive data. If logging happens in webrtc-land, this may be a surface where people write to logs without realizing they\u0027re exposing the data to remote parties.\n\n2. By JS-triggered configuration, do you mean the RTCConfiguration you pass to the RTCPeerConnection constructor? Is this introducing behavior not in the spec? Has there been a spec discussion? Generally speaking we shouldn\u0027t introduce non-experimental JavaScript surfaces that aren\u0027t in the spec.",
+      "parentUuid": "8ee91c70_fd07f87f",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3aac8ee_b501bbde",
         "filename": "content/renderer/media/rtc_event_log_output_sink_proxy.cc",
         "patchSetId": 1
@@ -177,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "f56ee9c5_b20785eb",
+        "filename": "content/renderer/media/rtc_event_log_output_sink_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T21:16:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "49f3eb69_381c84ea",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b809caa2_68227c14",
         "filename": "content/renderer/media/rtc_event_log_output_sink_proxy.h",
         "patchSetId": 1
@@ -209,6 +281,24 @@
       "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "580a1937_0894032a",
+        "filename": "content/renderer/media/rtc_event_log_output_sink_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-13T21:16:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "34133190_8ae12dbd",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
