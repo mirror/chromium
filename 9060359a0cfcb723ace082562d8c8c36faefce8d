@@ -16,6 +16,24 @@
       "revId": "9060359a0cfcb723ace082562d8c8c36faefce8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3ea9ac_57b0b86d",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-13T17:58:39Z",
+      "side": 1,
+      "message": "I don\u0027t quite like that first idea. I uploaded another approach though that I think is a bit better along the lines of the 2nd point.",
+      "parentUuid": "b95ebfaa_77352c95",
+      "revId": "9060359a0cfcb723ace082562d8c8c36faefce8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
