@@ -106,6 +106,12 @@ class SearchPermissionsService : public KeyedService {
   // geolocation disclosure so that it will be shown again.
   void OnDSEChanged();
 
+  // Restore the setting for an origin before it became the DSE. Returns the
+  // setting that the origin was set to before restoring the old value.
+  ContentSetting RestoreOldSetting(const GURL& dse_origin,
+                                   ContentSettingsType type,
+                                   ContentSetting setting_to_restore);
+
   ContentSetting UpdatePermission(ContentSettingsType type,
                                   const GURL& old_dse_origin,
                                   const GURL& new_dse_origin,
