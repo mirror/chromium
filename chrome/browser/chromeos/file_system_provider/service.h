@@ -138,7 +138,8 @@ class Service : public KeyedService,
   // If the extension is not a provider, or it doesn't exist, then false is
   // returned.
   bool GetProvidingExtensionInfo(const std::string& provider_id,
-                                 ProvidingExtensionInfo* result) const;
+                                 ProvidingExtensionInfo* result) const
+      WARN_UNUSED_RESULT;
 
   // Adds and removes observers.
   void AddObserver(Observer* observer);
