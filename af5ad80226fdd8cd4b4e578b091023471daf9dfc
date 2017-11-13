@@ -16,6 +16,24 @@
       "revId": "af5ad80226fdd8cd4b4e578b091023471daf9dfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc40501_928f0d35",
+        "filename": "ui/compositor/test/in_process_context_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-13T20:05:50Z",
+      "side": 1,
+      "message": "Done. Also marked the field unused to silence the compiler warning.",
+      "parentUuid": "9552c255_77413bef",
+      "revId": "af5ad80226fdd8cd4b4e578b091023471daf9dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
