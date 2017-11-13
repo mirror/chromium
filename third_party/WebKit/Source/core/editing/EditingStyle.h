@@ -35,6 +35,7 @@
 #include "core/CSSPropertyNames.h"
 #include "core/CSSValueKeywords.h"
 #include "core/CoreExport.h"
+#include "core/dom/SecureContextMode.h"
 #include "core/editing/Forward.h"
 #include "core/editing/WritingDirection.h"
 #include "platform/heap/Handle.h"
@@ -161,7 +162,10 @@ class CORE_EXPORT EditingStyle final : public GarbageCollected<EditingStyle> {
   float FontSizeDelta() const { return font_size_delta_; }
   bool HasFontSizeDelta() const { return font_size_delta_ != no_font_delta_; }
 
-  void SetProperty(CSSPropertyID, const String& value, bool important = false);
+  void SetProperty(CSSPropertyID,
+                   const String& value,
+                   bool important,
+                   SecureContextMode);
 
   void Trace(blink::Visitor*);
 

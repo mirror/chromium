@@ -39,9 +39,10 @@ static_assert(sizeof(CSSRule) == sizeof(SameSizeAsCSSRule),
               "CSSRule should stay small");
 
 const CSSParserContext* CSSRule::ParserContext() const {
+  // DO NOT SUBMIT
   CSSStyleSheet* style_sheet = parentStyleSheet();
   return style_sheet ? style_sheet->Contents()->ParserContext()
-                     : StrictCSSParserContext();
+                     : StrictCSSParserContext(kInsecureContext);
 }
 
 void CSSRule::SetParentStyleSheet(CSSStyleSheet* style_sheet) {

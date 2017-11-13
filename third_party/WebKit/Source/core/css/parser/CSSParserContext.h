@@ -8,6 +8,7 @@
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
 #include "core/css/parser/CSSParserMode.h"
+#include "core/dom/SecureContextMode.h"
 #include "core/frame/WebFeatureForward.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
@@ -49,6 +50,7 @@ class CORE_EXPORT CSSParserContext
 
   static CSSParserContext* Create(
       CSSParserMode,
+      SecureContextMode,
       SelectorProfile = kDynamicProfile,
       const Document* use_counter_document = nullptr);
   static CSSParserContext* Create(const Document&);
@@ -110,6 +112,7 @@ class CORE_EXPORT CSSParserContext
                    const Referrer&,
                    bool is_html_document,
                    bool use_legacy_background_size_shorthand_behavior,
+                   SecureContextMode,
                    ContentSecurityPolicyDisposition,
                    const Document* use_counter_document);
 
@@ -121,12 +124,13 @@ class CORE_EXPORT CSSParserContext
   Referrer referrer_;
   bool is_html_document_;
   bool use_legacy_background_size_shorthand_behavior_;
+  SecureContextMode secure_context_mode_;
   ContentSecurityPolicyDisposition should_check_content_security_policy_;
 
   WeakMember<const Document> document_;
 };
 
-CORE_EXPORT const CSSParserContext* StrictCSSParserContext();
+CORE_EXPORT const CSSParserContext* StrictCSSParserContext(SecureContextMode);
 
 }  // namespace blink
 

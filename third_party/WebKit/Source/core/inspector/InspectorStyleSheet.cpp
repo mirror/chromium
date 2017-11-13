@@ -46,6 +46,7 @@
 #include "core/dom/DOMNodeIds.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
+#include "core/dom/SecureContextMode.h"
 #include "core/html/HTMLStyleElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/inspector/IdentifiersFactory.h"
@@ -65,8 +66,9 @@ namespace blink {
 namespace {
 
 static const CSSParserContext* ParserContextForDocument(Document* document) {
-  return document ? CSSParserContext::Create(*document)
-                  : StrictCSSParserContext();
+  return document
+             ? CSSParserContext::Create(*document)
+             : StrictCSSParserContext(/* DO NOT SUBMIT */ kInsecureContext);
 }
 
 String FindMagicComment(const String& content, const String& name) {
@@ -343,7 +345,7 @@ void StyleSheetHandler::ObserveComment(unsigned start_offset,
 bool VerifyRuleText(Document* document, const String& rule_text) {
   DEFINE_STATIC_LOCAL(String, bogus_property_name, ("-webkit-boguz-propertee"));
   StyleSheetContents* style_sheet =
-      StyleSheetContents::Create(StrictCSSParserContext());
+      StyleSheetContents::Create(ParserContextForDocument(document));
   CSSRuleSourceDataList* source_data = new CSSRuleSourceDataList();
   String text = rule_text + " div { " + bogus_property_name + ": none; }";
   StyleSheetHandler handler(text, document, source_data);
@@ -380,7 +382,7 @@ bool VerifyStyleText(Document* document, const String& text) {
 
 bool VerifyKeyframeKeyText(Document* document, const String& key_text) {
   StyleSheetContents* style_sheet =
-      StyleSheetContents::Create(StrictCSSParserContext());
+      StyleSheetContents::Create(ParserContextForDocument(document));
   CSSRuleSourceDataList* source_data = new CSSRuleSourceDataList();
   String text = "@keyframes boguzAnim { " + key_text +
                 " { -webkit-boguz-propertee : none; } }";
@@ -410,7 +412,7 @@ bool VerifyKeyframeKeyText(Document* document, const String& key_text) {
 bool VerifySelectorText(Document* document, const String& selector_text) {
   DEFINE_STATIC_LOCAL(String, bogus_property_name, ("-webkit-boguz-propertee"));
   StyleSheetContents* style_sheet =
-      StyleSheetContents::Create(StrictCSSParserContext());
+      StyleSheetContents::Create(ParserContextForDocument(document));
   CSSRuleSourceDataList* source_data = new CSSRuleSourceDataList();
   String text = selector_text + " { " + bogus_property_name + ": none; }";
   StyleSheetHandler handler(text, document, source_data);
@@ -439,7 +441,7 @@ bool VerifySelectorText(Document* document, const String& selector_text) {
 bool VerifyMediaText(Document* document, const String& media_text) {
   DEFINE_STATIC_LOCAL(String, bogus_property_name, ("-webkit-boguz-propertee"));
   StyleSheetContents* style_sheet =
-      StyleSheetContents::Create(StrictCSSParserContext());
+      StyleSheetContents::Create(ParserContextForDocument(document));
   CSSRuleSourceDataList* source_data = new CSSRuleSourceDataList();
   String text = "@media " + media_text + " { div { " + bogus_property_name +
                 ": none; } }";
@@ -1115,7 +1117,7 @@ CSSRule* InspectorStyleSheet::SetStyleText(const SourceRange& range,
     style = ToCSSStyleRule(rule)->style();
   else if (rule->type() == CSSRule::kKeyframeRule)
     style = ToCSSKeyframeRule(rule)->style();
-  style->setCSSText(text, exception_state);
+  style->setCSSText(page_style_sheet_->OwnerDocument(), text, exception_state);
 
   ReplaceText(source_data->rule_body_range, text, new_range, old_text);
   OnStyleSheetTextChanged();

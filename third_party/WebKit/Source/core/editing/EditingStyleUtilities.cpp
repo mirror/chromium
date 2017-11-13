@@ -162,8 +162,10 @@ EditingStyle* EditingStyleUtilities::CreateStyleAtSelectionStart(
       (selection.IsRange() || HasTransparentBackgroundColor(style->Style()))) {
     const EphemeralRange range(selection.ToNormalizedEphemeralRange());
     if (const CSSValue* value =
-            BackgroundColorValueInEffect(range.CommonAncestorContainer()))
-      style->SetProperty(CSSPropertyBackgroundColor, value->CssText());
+            BackgroundColorValueInEffect(range.CommonAncestorContainer())) {
+      style->SetProperty(CSSPropertyBackgroundColor, value->CssText(),
+                         /* important */ false, document.SecureContextMode());
+    }
   }
 
   return style;

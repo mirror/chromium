@@ -90,11 +90,12 @@ const CSSValue* CSSUnparsedValue::ToCSSValue() const {
   const auto tokens = tokenizer.TokenizeToEOF();
   // TODO(alancutter): This should be using a real parser context instead of
   // StrictCSSParserContext.
+  // DO NOT SUBMIT
   return CSSVariableReferenceValue::Create(
       CSSVariableData::Create(CSSParserTokenRange(tokens),
                               false /* isAnimationTainted */,
                               true /* needsVariableResolution */),
-      *StrictCSSParserContext());
+      *StrictCSSParserContext(kInsecureContext));
 }
 
 }  // namespace blink

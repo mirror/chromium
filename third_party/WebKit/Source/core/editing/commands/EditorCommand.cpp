@@ -275,9 +275,11 @@ static bool ExecuteApplyStyle(LocalFrame& frame,
                               InputEvent::InputType input_type,
                               CSSPropertyID property_id,
                               const String& property_value) {
+  DCHECK(frame.GetDocument());
   MutableCSSPropertyValueSet* style =
       MutableCSSPropertyValueSet::Create(kHTMLQuirksMode);
-  style->SetProperty(property_id, property_value);
+  style->SetProperty(property_id, property_value, /* important */ false,
+                     frame.GetDocument()->SecureContextMode());
   return ApplyCommandToFrame(frame, source, input_type, style);
 }
 
@@ -301,6 +303,8 @@ static bool ExecuteToggleStyleInList(LocalFrame& frame,
                                      InputEvent::InputType input_type,
                                      CSSPropertyID property_id,
                                      CSSValue* value) {
+  DCHECK(frame.GetDocument());
+
   EditingStyle* selection_style =
       EditingStyleUtilities::CreateStyleAtSelectionStart(
           frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated());
@@ -326,7 +330,8 @@ static bool ExecuteToggleStyleInList(LocalFrame& frame,
   // have setPropertyCSSValue.
   MutableCSSPropertyValueSet* new_mutable_style =
       MutableCSSPropertyValueSet::Create(kHTMLQuirksMode);
-  new_mutable_style->SetProperty(property_id, new_style);
+  new_mutable_style->SetProperty(property_id, new_style, /* important */ false,
+                                 frame.GetDocument()->SecureContextMode());
   return ApplyCommandToFrame(frame, source, input_type, new_mutable_style);
 }
 
@@ -358,9 +363,11 @@ static bool ExecuteApplyParagraphStyle(LocalFrame& frame,
                                        InputEvent::InputType input_type,
                                        CSSPropertyID property_id,
                                        const String& property_value) {
+  DCHECK(frame.GetDocument());
   MutableCSSPropertyValueSet* style =
       MutableCSSPropertyValueSet::Create(kHTMLQuirksMode);
-  style->SetProperty(property_id, property_value);
+  style->SetProperty(property_id, property_value, /* important */ false,
+                     frame.GetDocument()->SecureContextMode());
   // FIXME: We don't call shouldApplyStyle when the source is DOM; is there a
   // good reason for that?
   switch (source) {
