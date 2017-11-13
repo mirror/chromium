@@ -5,6 +5,8 @@
 #ifndef CONTENT_BROWSER_WEBAUTH_CBOR_CBOR_WRITER_H_
 #define CONTENT_BROWSER_WEBAUTH_CBOR_CBOR_WRITER_H_
 
+#include "content/browser/webauth/cbor/cbor_binary.h"
+
 #include <stdint.h>
 #include <string>
 #include <vector>
@@ -32,30 +34,8 @@
 //  * Floating-point numbers.
 //  * Indefinite-length encodings.
 //  * Parsing.
-enum class CborMajorType {
-  kUnsigned = 0,    // Unsigned integer.
-  kNegative = 1,    // Negative integer. Unsupported by this implementation.
-  kByteString = 2,  // Byte string.
-  kString = 3,      // String.
-  kArray = 4,       // Array.
-  kMap = 5,         // Map.
-};
 
 namespace content {
-
-namespace {
-// Mask selecting the last 5 bits  of the "initial byte" where
-// 'additional information is encoded.
-constexpr uint8_t kAdditionalInformationDataMask = 0x1F;
-// Indicates the integer is in the following byte.
-constexpr uint8_t kAdditionalInformation1Byte = 24;
-// Indicates the integer is in the next 2 bytes.
-constexpr uint8_t kAdditionalInformation2Bytes = 25;
-// Indicates the integer is in the next 4 bytes.
-constexpr uint8_t kAdditionalInformation4Bytes = 26;
-// Indicates the integer is in the next 8 bytes.
-constexpr uint8_t kAdditionalInformation8Bytes = 27;
-}  // namespace
 
 class CONTENT_EXPORT CBORWriter {
  public:
@@ -72,7 +52,7 @@ class CONTENT_EXPORT CBORWriter {
   void EncodeCBOR(const CBORValue& node);
 
   // Encodes the type and size of the data being added.
-  void StartItem(CborMajorType type, uint64_t size);
+  void StartItem(CBORValue::Type type, uint64_t size);
 
   // Encodes the additional information for the data.
   void SetAdditionalInformation(uint8_t additional_information);
