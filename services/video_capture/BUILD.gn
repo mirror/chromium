@@ -39,6 +39,10 @@ source_set("lib") {
     "service_impl.h",
     "testing_controls_impl.cc",
     "testing_controls_impl.h",
+    "virtual_device_enabled_device_factory.cc",
+    "virtual_device_enabled_device_factory.h",
+    "virtual_device_mojo_adapter.cc",
+    "virtual_device_mojo_adapter.h",
   ]
 
   public_deps = [

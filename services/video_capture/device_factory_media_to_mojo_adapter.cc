@@ -132,6 +132,13 @@ void DeviceFactoryMediaToMojoAdapter::CreateDevice(
                  base::Passed(&create_and_add_new_device_cb)));
 }
 
+void DeviceFactoryMediaToMojoAdapter::AddVirtualDevice(
+    const media::VideoCaptureDeviceInfo& device_info,
+    mojom::VirtualDeviceRequest virtual_device_request,
+    AddVirtualDeviceCallback callback) {
+  NOTIMPLEMENTED();
+}
+
 void DeviceFactoryMediaToMojoAdapter::CreateAndAddNewDevice(
     const std::string& device_id,
     mojom::DeviceRequest device_request,
