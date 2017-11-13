@@ -63,8 +63,9 @@ v8::Local<v8::Function> ConstructPlainType(v8::Isolate* isolate,
     prototype_object->SetAlignedPointerInInternalField(
         kV8PrototypeTypeIndex, const_cast<WrapperTypeInfo*>(type));
   }
-  type->PreparePrototypeAndInterfaceObject(
-      context, world, prototype_object, interface_object, interface_template);
+  type->InstallConditionalFeaturesOnObject(
+      context, world, v8::Local<v8::Object>(), prototype_object,
+      interface_object, interface_template);
 
   return interface_object;
 }
