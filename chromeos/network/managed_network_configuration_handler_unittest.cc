@@ -18,6 +18,8 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/fake_shill_profile_client.h"
+#include "chromeos/dbus/fake_shill_service_client.h"
 #include "chromeos/dbus/mock_shill_manager_client.h"
 #include "chromeos/dbus/mock_shill_profile_client.h"
 #include "chromeos/dbus/mock_shill_service_client.h"
@@ -223,13 +225,118 @@ class TestNetworkPolicyObserver : public NetworkPolicyObserver {
 
 class ManagedNetworkConfigurationHandlerTest : public testing::Test {
  public:
-  ManagedNetworkConfigurationHandlerTest()
-      : mock_manager_client_(NULL),
-        mock_profile_client_(NULL),
-        mock_service_client_(NULL) {
+  ManagedNetworkConfigurationHandlerTest() {
+    DBusThreadManager::Initialize();
+
+    network_state_handler_ = NetworkStateHandler::InitializeForTest();
+    network_profile_handler_ = std::make_unique<TestNetworkProfileHandler>();
+    network_configuration_handler_.reset(
+        NetworkConfigurationHandler::InitializeForTest(
+            network_state_handler_.get(),
+            nullptr /* no NetworkDeviceHandler */));
+
+    // ManagedNetworkConfigurationHandlerImpl's ctor is private.
+    managed_network_configuration_handler_.reset(
+        new ManagedNetworkConfigurationHandlerImpl());
+    managed_network_configuration_handler_->Init(
+        network_state_handler_.get(), network_profile_handler_.get(),
+        network_configuration_handler_.get(), nullptr /* no DeviceHandler */,
+        nullptr /* no ProhibitedTechnologiesHandler */);
+    managed_network_configuration_handler_->AddObserver(&policy_observer_);
+
+    base::RunLoop().RunUntilIdle();
   }
 
-  ~ManagedNetworkConfigurationHandlerTest() override {}
+  ~ManagedNetworkConfigurationHandlerTest() override {
+    network_state_handler_->Shutdown();
+    managed_network_configuration_handler_->RemoveObserver(&policy_observer_);
+    managed_network_configuration_handler_.reset();
+    network_configuration_handler_.reset();
+    network_profile_handler_.reset();
+    network_state_handler_.reset();
+    DBusThreadManager::Shutdown();
+  }
+
+  FakeShillServiceClient* GetShillServiceClient() {
+    return static_cast<FakeShillServiceClient*>(
+        DBusThreadManager::Get()->GetShillServiceClient());
+  }
+
+  FakeShillProfileClient* GetShillProfileClient() {
+    return static_cast<FakeShillProfileClient*>(
+        DBusThreadManager::Get()->GetShillProfileClient());
+  }
+
+  void InitializeStandardProfiles() {
+    GetShillProfileClient()->AddProfile(kUser1ProfilePath, kUser1);
+    GetShillProfileClient()->AddProfile(
+        NetworkProfileHandler::GetSharedProfilePath(),
+        std::string() /* no userhash */);
+  }
+
+  void SetPolicy(::onc::ONCSource onc_source,
+                 const std::string& userhash,
+                 const std::string& path_to_onc) {
+    std::unique_ptr<base::DictionaryValue> policy =
+        test_utils::ReadTestDictionary(path_to_onc);
+
+    base::ListValue network_configs;
+    {
+      const base::Value* found =
+          policy->FindKeyOfType(::onc::toplevel_config::kNetworkConfigurations,
+                                base::Value::Type::LIST);
+      if (found)
+        network_configs = base::ListValue(found->GetList());
+    }
+
+    base::DictionaryValue global_config;
+    {
+      const base::Value* found = policy->FindKeyOfType(
+          ::onc::toplevel_config::kGlobalNetworkConfiguration,
+          base::Value::Type::DICTIONARY);
+      if (found) {
+        global_config.Swap(base::DictionaryValue::From(
+                               base::Value::ToUniquePtrValue(found->Clone()))
+                               .get());
+      }
+    }
+
+    managed_network_configuration_handler_->SetPolicy(
+        onc_source, userhash, network_configs, global_config);
+  }
+
+  void SetUpEntry(const std::string& path_to_shill_json,
+                  const std::string& profile_path,
+                  const std::string& entry_path) {
+    std::unique_ptr<base::DictionaryValue> entry =
+        test_utils::ReadTestDictionary(path_to_shill_json);
+    GetShillProfileClient()->AddEntry(profile_path, entry_path, *entry);
+  }
+
+ private:
+  base::MessageLoop message_loop_;
+
+  TestNetworkPolicyObserver policy_observer_;
+  std::unique_ptr<NetworkStateHandler> network_state_handler_;
+  std::unique_ptr<TestNetworkProfileHandler> network_profile_handler_;
+  std::unique_ptr<NetworkConfigurationHandler> network_configuration_handler_;
+  std::unique_ptr<ManagedNetworkConfigurationHandlerImpl>
+      managed_network_configuration_handler_;
+
+  DISALLOW_COPY_AND_ASSIGN(ManagedNetworkConfigurationHandlerTest);
+};
+
+// DEPRECATED. Use ManagedNetworkConfigurationHandlerTest, instead.
+// TODO(hidehiko): Remove this, when all TEST_Fs are migrated into
+// fake.
+class ManagedNetworkConfigurationHandlerMockTest : public testing::Test {
+ public:
+  ManagedNetworkConfigurationHandlerMockTest()
+      : mock_manager_client_(NULL),
+        mock_profile_client_(NULL),
+        mock_service_client_(NULL) {}
+
+  ~ManagedNetworkConfigurationHandlerMockTest() override {}
 
   void SetUp() override {
     std::unique_ptr<DBusThreadManagerSetter> dbus_setter =
@@ -246,17 +353,17 @@ class ManagedNetworkConfigurationHandlerTest : public testing::Test {
 
     SetNetworkConfigurationHandlerExpectations();
 
-    ON_CALL(*mock_profile_client_, GetProperties(_,_,_))
-        .WillByDefault(Invoke(&profiles_stub_,
-                              &ShillProfileTestClient::GetProperties));
+    ON_CALL(*mock_profile_client_, GetProperties(_, _, _))
+        .WillByDefault(
+            Invoke(&profiles_stub_, &ShillProfileTestClient::GetProperties));
 
-    ON_CALL(*mock_profile_client_, GetEntry(_,_,_,_))
-        .WillByDefault(Invoke(&profiles_stub_,
-                              &ShillProfileTestClient::GetEntry));
+    ON_CALL(*mock_profile_client_, GetEntry(_, _, _, _))
+        .WillByDefault(
+            Invoke(&profiles_stub_, &ShillProfileTestClient::GetEntry));
 
-    ON_CALL(*mock_service_client_, GetProperties(_,_))
-        .WillByDefault(Invoke(&services_stub_,
-                              &ShillServiceTestClient::GetProperties));
+    ON_CALL(*mock_service_client_, GetProperties(_, _))
+        .WillByDefault(
+            Invoke(&services_stub_, &ShillServiceTestClient::GetProperties));
 
     network_state_handler_ = NetworkStateHandler::InitializeForTest();
     network_profile_handler_.reset(new TestNetworkProfileHandler());
@@ -355,12 +462,12 @@ class ManagedNetworkConfigurationHandlerTest : public testing::Test {
   void GetManagedProperties(const std::string& userhash,
                             const std::string& service_path) {
     managed_handler()->GetManagedProperties(
-        userhash,
-        service_path,
+        userhash, service_path,
         base::Bind(
-            &ManagedNetworkConfigurationHandlerTest::GetPropertiesCallback,
+            &ManagedNetworkConfigurationHandlerMockTest::GetPropertiesCallback,
             base::Unretained(this)),
-        base::Bind(&ManagedNetworkConfigurationHandlerTest::UnexpectedError));
+        base::Bind(
+            &ManagedNetworkConfigurationHandlerMockTest::UnexpectedError));
   }
 
   void GetPropertiesCallback(const std::string& service_path,
@@ -394,10 +501,10 @@ class ManagedNetworkConfigurationHandlerTest : public testing::Test {
   base::DictionaryValue get_properties_result_;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(ManagedNetworkConfigurationHandlerTest);
+  DISALLOW_COPY_AND_ASSIGN(ManagedNetworkConfigurationHandlerMockTest);
 };
 
-TEST_F(ManagedNetworkConfigurationHandlerTest, ProfileInitialization) {
+TEST_F(ManagedNetworkConfigurationHandlerMockTest, ProfileInitialization) {
   InitializeStandardProfiles();
   base::RunLoop().RunUntilIdle();
 }
@@ -408,19 +515,15 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, RemoveIrrelevantFields) {
       test_utils::ReadTestDictionary(
           "policy/shill_policy_on_unconfigured_wifi1.json");
 
-  EXPECT_CALL(*mock_profile_client_,
-              GetProperties(dbus::ObjectPath(kUser1ProfilePath), _, _));
-
-  EXPECT_CALL(*mock_manager_client_,
-              ConfigureServiceForProfile(
-                  dbus::ObjectPath(kUser1ProfilePath),
-                  IsEqualTo(expected_shill_properties.get()),
-                  _, _));
-
   SetPolicy(::onc::ONC_SOURCE_USER_POLICY,
             kUser1,
             "policy/policy_wifi1_with_redundant_fields.onc");
   base::RunLoop().RunUntilIdle();
+
+  const base::DictionaryValue* properties =
+      GetShillServiceClient()->GetServiceProperties("policy_wifi1");
+  ASSERT_TRUE(properties);
+  EXPECT_EQ(*expected_shill_properties, *properties);
 }
 
 TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyManageUnconfigured) {
@@ -429,20 +532,17 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyManageUnconfigured) {
       test_utils::ReadTestDictionary(
           "policy/shill_policy_on_unconfigured_wifi1.json");
 
-  EXPECT_CALL(*mock_profile_client_,
-              GetProperties(dbus::ObjectPath(kUser1ProfilePath), _, _));
-
-  EXPECT_CALL(*mock_manager_client_,
-              ConfigureServiceForProfile(
-                  dbus::ObjectPath(kUser1ProfilePath),
-                  IsEqualTo(expected_shill_properties.get()),
-                  _, _));
-
   SetPolicy(::onc::ONC_SOURCE_USER_POLICY, kUser1, "policy/policy_wifi1.onc");
   base::RunLoop().RunUntilIdle();
+
+  const base::DictionaryValue* properties =
+      GetShillServiceClient()->GetServiceProperties("policy_wifi1");
+  ASSERT_TRUE(properties);
+  EXPECT_EQ(*expected_shill_properties, *properties);
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerTest, EnableManagedCredentialsWiFi) {
+TEST_F(ManagedNetworkConfigurationHandlerMockTest,
+       EnableManagedCredentialsWiFi) {
   InitializeStandardProfiles();
   std::unique_ptr<base::DictionaryValue> expected_shill_properties =
       test_utils::ReadTestDictionary(
@@ -462,7 +562,8 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, EnableManagedCredentialsWiFi) {
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerTest, EnableManagedCredentialsVPN) {
+TEST_F(ManagedNetworkConfigurationHandlerMockTest,
+       EnableManagedCredentialsVPN) {
   InitializeStandardProfiles();
   std::unique_ptr<base::DictionaryValue> expected_shill_properties =
       test_utils::ReadTestDictionary(
@@ -484,7 +585,7 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, EnableManagedCredentialsVPN) {
 
 // Ensure that EAP settings for ethernet are matched with the right profile
 // entry and written to the dedicated EthernetEAP service.
-TEST_F(ManagedNetworkConfigurationHandlerTest,
+TEST_F(ManagedNetworkConfigurationHandlerMockTest,
        SetPolicyManageUnmanagedEthernetEAP) {
   InitializeStandardProfiles();
   std::unique_ptr<base::DictionaryValue> expected_shill_properties =
@@ -523,7 +624,7 @@ TEST_F(ManagedNetworkConfigurationHandlerTest,
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyIgnoreUnmodified) {
+TEST_F(ManagedNetworkConfigurationHandlerMockTest, SetPolicyIgnoreUnmodified) {
   InitializeStandardProfiles();
   EXPECT_CALL(*mock_profile_client_, GetProperties(_, _, _));
 
@@ -550,7 +651,7 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyIgnoreUnmodified) {
   EXPECT_EQ(1, policy_observer_.GetPoliciesAppliedCountAndReset());
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerTest, PolicyApplicationRunning) {
+TEST_F(ManagedNetworkConfigurationHandlerMockTest, PolicyApplicationRunning) {
   InitializeStandardProfiles();
   EXPECT_CALL(*mock_profile_client_, GetProperties(_, _, _)).Times(AnyNumber());
   EXPECT_CALL(*mock_manager_client_, ConfigureServiceForProfile(_, _, _, _))
@@ -581,7 +682,7 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, PolicyApplicationRunning) {
   EXPECT_FALSE(managed_handler()->IsAnyPolicyApplicationRunning());
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerTest, UpdatePolicyAfterFinished) {
+TEST_F(ManagedNetworkConfigurationHandlerMockTest, UpdatePolicyAfterFinished) {
   InitializeStandardProfiles();
   EXPECT_CALL(*mock_profile_client_, GetProperties(_, _, _));
   EXPECT_CALL(*mock_manager_client_, ConfigureServiceForProfile(_, _, _, _));
@@ -607,7 +708,7 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, UpdatePolicyAfterFinished) {
   EXPECT_EQ(1, policy_observer_.GetPoliciesAppliedCountAndReset());
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerTest, UpdatePolicyBeforeFinished) {
+TEST_F(ManagedNetworkConfigurationHandlerMockTest, UpdatePolicyBeforeFinished) {
   InitializeStandardProfiles();
   EXPECT_CALL(*mock_profile_client_, GetProperties(_, _, _)).Times(2);
   EXPECT_CALL(*mock_manager_client_, ConfigureServiceForProfile(_, _, _, _))
@@ -623,7 +724,7 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, UpdatePolicyBeforeFinished) {
   EXPECT_EQ(1, policy_observer_.GetPoliciesAppliedCountAndReset());
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyManageUnmanaged) {
+TEST_F(ManagedNetworkConfigurationHandlerMockTest, SetPolicyManageUnmanaged) {
   InitializeStandardProfiles();
   SetUpEntry("policy/shill_unmanaged_wifi1.json",
              kUser1ProfilePath,
@@ -655,7 +756,7 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyManageUnmanaged) {
 }
 
 // Old ChromeOS versions may not have used the UIData property
-TEST_F(ManagedNetworkConfigurationHandlerTest,
+TEST_F(ManagedNetworkConfigurationHandlerMockTest,
        SetPolicyManageUnmanagedWithoutUIData) {
   InitializeStandardProfiles();
   SetUpEntry("policy/shill_unmanaged_wifi1.json",
@@ -687,7 +788,8 @@ TEST_F(ManagedNetworkConfigurationHandlerTest,
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyUpdateManagedNewGUID) {
+TEST_F(ManagedNetworkConfigurationHandlerMockTest,
+       SetPolicyUpdateManagedNewGUID) {
   InitializeStandardProfiles();
   SetUpEntry("policy/shill_managed_wifi1.json",
              kUser1ProfilePath,
@@ -723,7 +825,7 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyUpdateManagedNewGUID) {
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyUpdateManagedVPN) {
+TEST_F(ManagedNetworkConfigurationHandlerMockTest, SetPolicyUpdateManagedVPN) {
   InitializeStandardProfiles();
   SetUpEntry("policy/shill_managed_vpn.json", kUser1ProfilePath, "entry_path");
 
@@ -748,7 +850,7 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyUpdateManagedVPN) {
   VerifyAndClearExpectations();
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyReapplyToManaged) {
+TEST_F(ManagedNetworkConfigurationHandlerMockTest, SetPolicyReapplyToManaged) {
   InitializeStandardProfiles();
   SetUpEntry("policy/shill_policy_on_unmanaged_wifi1.json",
              kUser1ProfilePath,
@@ -793,7 +895,7 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyReapplyToManaged) {
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyUnmanageManaged) {
+TEST_F(ManagedNetworkConfigurationHandlerMockTest, SetPolicyUnmanageManaged) {
   InitializeStandardProfiles();
   SetUpEntry("policy/shill_policy_on_unmanaged_wifi1.json",
              kUser1ProfilePath,
@@ -816,7 +918,8 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyUnmanageManaged) {
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerTest, SetEmptyPolicyIgnoreUnmanaged) {
+TEST_F(ManagedNetworkConfigurationHandlerMockTest,
+       SetEmptyPolicyIgnoreUnmanaged) {
   InitializeStandardProfiles();
   SetUpEntry("policy/shill_unmanaged_wifi1.json",
              kUser1ProfilePath,
@@ -841,28 +944,20 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyIgnoreUnmanaged) {
              kUser1ProfilePath,
              "wifi2_entry_path");
 
-  EXPECT_CALL(*mock_profile_client_,
-              GetProperties(dbus::ObjectPath(kUser1ProfilePath), _, _));
-
-  EXPECT_CALL(
-      *mock_profile_client_,
-      GetEntry(dbus::ObjectPath(kUser1ProfilePath), "wifi2_entry_path", _, _));
-
   std::unique_ptr<base::DictionaryValue> expected_shill_properties =
       test_utils::ReadTestDictionary(
           "policy/shill_policy_on_unconfigured_wifi1.json");
 
-  EXPECT_CALL(*mock_manager_client_,
-              ConfigureServiceForProfile(
-                  dbus::ObjectPath(kUser1ProfilePath),
-                  IsEqualTo(expected_shill_properties.get()),
-                  _, _));
-
   SetPolicy(::onc::ONC_SOURCE_USER_POLICY, kUser1, "policy/policy_wifi1.onc");
   base::RunLoop().RunUntilIdle();
+
+  const base::DictionaryValue* properties =
+      GetShillServiceClient()->GetServiceProperties("policy_wifi1");
+  ASSERT_TRUE(properties);
+  EXPECT_EQ(*expected_shill_properties, *properties);
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerTest, AutoConnectDisallowed) {
+TEST_F(ManagedNetworkConfigurationHandlerMockTest, AutoConnectDisallowed) {
   InitializeStandardProfiles();
   // Setup an unmanaged network.
   SetUpEntry("policy/shill_unmanaged_wifi2.json",
@@ -910,8 +1005,7 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, AutoConnectDisallowed) {
 
   services_stub_.SetFakeProperties(*expected_shill_properties);
   EXPECT_CALL(*mock_service_client_,
-              GetProperties(dbus::ObjectPath(
-                                "wifi2"),_));
+              GetProperties(dbus::ObjectPath("wifi2"), _));
 
   GetManagedProperties(kUser1, "wifi2");
   base::RunLoop().RunUntilIdle();
@@ -927,32 +1021,26 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, AutoConnectDisallowed) {
 
 TEST_F(ManagedNetworkConfigurationHandlerTest, LateProfileLoading) {
   SetPolicy(::onc::ONC_SOURCE_USER_POLICY, kUser1, "policy/policy_wifi1.onc");
-
   base::RunLoop().RunUntilIdle();
-  VerifyAndClearExpectations();
 
   std::unique_ptr<base::DictionaryValue> expected_shill_properties =
       test_utils::ReadTestDictionary(
           "policy/shill_policy_on_unconfigured_wifi1.json");
 
-  EXPECT_CALL(*mock_profile_client_,
-              GetProperties(dbus::ObjectPath(kUser1ProfilePath), _, _));
-
-  EXPECT_CALL(*mock_manager_client_,
-              ConfigureServiceForProfile(
-                  dbus::ObjectPath(kUser1ProfilePath),
-                  IsEqualTo(expected_shill_properties.get()),
-                  _, _));
-
   InitializeStandardProfiles();
   base::RunLoop().RunUntilIdle();
+
+  const base::DictionaryValue* properties =
+      GetShillServiceClient()->GetServiceProperties("policy_wifi1");
+  ASSERT_TRUE(properties);
+  EXPECT_EQ(*expected_shill_properties, *properties);
 }
 
 class ManagedNetworkConfigurationHandlerShutdownTest
-    : public ManagedNetworkConfigurationHandlerTest {
+    : public ManagedNetworkConfigurationHandlerMockTest {
  public:
   void SetUp() override {
-    ManagedNetworkConfigurationHandlerTest::SetUp();
+    ManagedNetworkConfigurationHandlerMockTest::SetUp();
     ON_CALL(*mock_profile_client_, GetProperties(_, _, _)).WillByDefault(
         Invoke(&ManagedNetworkConfigurationHandlerShutdownTest::GetProperties));
   }
