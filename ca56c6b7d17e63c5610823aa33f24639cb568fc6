@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "a26eccad_01bc9c27",
+        "filename": "ui/views/widget/native_widget_mac_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2086,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T22:55:42Z",
+      "side": 1,
+      "message": "Woah geez I assumed that was the accessor for the touch bar the group was in, but there\u0027s a whole other TouchBar in there! Updated the test with a helper - ExtractTouchBarGroupIdentifiers. Thanks!",
+      "parentUuid": "3df9674a_a1d255c1",
+      "revId": "ca56c6b7d17e63c5610823aa33f24639cb568fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f561085c_594e18d0",
         "filename": "ui/views/window/dialog_observer.h",
         "patchSetId": 4
