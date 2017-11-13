@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5d7d67a_906c1227",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-13T04:56:47Z",
+      "side": 1,
+      "message": "Did you consider putting this at the place we actually query the content setting for whether to mute audio? That seems like it would be more a little more appropriate/potentially more accurate.",
+      "revId": "bdd7cc613888d4c47a270bb07a27685f17bed7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d94d894_61e32716",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-13T04:56:47Z",
+      "side": 1,
+      "message": "Please also check the source of the content setting here is SETTING_SOURCE_USER.",
+      "revId": "bdd7cc613888d4c47a270bb07a27685f17bed7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58988e57_f601fdf4",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-13T04:56:47Z",
+      "side": 1,
+      "message": "Two suggestions to try to keep this file/API tidy:\n1) Consider moving these functions into an audio-specific util file, or\n2) Consider moving these functions into the anonymous namespace at the top of this file.\n\nI realize that we would still need to track whether we\u0027ve already recorded a metric but it would be nice to try to keep it as separate as possible.",
+      "revId": "bdd7cc613888d4c47a270bb07a27685f17bed7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
