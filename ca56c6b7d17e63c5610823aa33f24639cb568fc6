@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "3df9674a_a1d255c1",
+        "filename": "ui/views/widget/native_widget_mac_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2086,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-11-13T21:45:12Z",
+      "side": 1,
+      "message": "Hey! I played around and it looks like you can check the identifiers inside NSGroupTouchBarItem\n\nOne thing you can do is call groupTouchBar in NSGroupTouchBarItem and then call itemIdentifier to see what\u0027s inside. Let me know if you have any questions!",
+      "parentUuid": "b8695f2f_988a2591",
+      "revId": "ca56c6b7d17e63c5610823aa33f24639cb568fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f561085c_594e18d0",
         "filename": "ui/views/window/dialog_observer.h",
         "patchSetId": 4
