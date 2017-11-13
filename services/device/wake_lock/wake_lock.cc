@@ -20,7 +20,7 @@ WakeLock::WakeLock(mojom::WakeLockRequest request,
     : num_lock_requests_(0),
       type_(type),
       reason_(reason),
-      description_(std::make_unique<std::string>(description)),
+      description_(description),
 #if defined(OS_ANDROID)
       context_id_(context_id),
       native_view_getter_(native_view_getter),
@@ -113,7 +113,7 @@ void WakeLock::CreateWakeLock() {
   DCHECK(!wake_lock_);
 
   wake_lock_ = std::make_unique<PowerSaveBlocker>(
-      type_, reason_, *description_, main_task_runner_, file_task_runner_);
+      type_, reason_, description_, main_task_runner_, file_task_runner_);
 
   if (type_ != mojom::WakeLockType::kPreventDisplaySleep)
     return;
@@ -140,7 +140,7 @@ void WakeLock::SwapWakeLock() {
   DCHECK(wake_lock_);
 
   auto new_wake_lock = std::make_unique<PowerSaveBlocker>(
-      type_, reason_, *description_, main_task_runner_, file_task_runner_);
+      type_, reason_, description_, main_task_runner_, file_task_runner_);
 
   // Do a swap to ensure that there isn't a brief period where the old
   // PowerSaveBlocker is unblocked while the new PowerSaveBlocker is not

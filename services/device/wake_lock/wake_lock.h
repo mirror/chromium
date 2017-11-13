@@ -52,7 +52,7 @@ class WakeLock : public mojom::WakeLock {
 
   mojom::WakeLockType type_;
   mojom::WakeLockReason reason_;
-  std::unique_ptr<std::string> description_;
+  std::string description_;
 
 #if defined(OS_ANDROID)
   int context_id_;
