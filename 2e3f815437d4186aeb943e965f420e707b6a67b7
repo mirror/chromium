@@ -70,6 +70,24 @@
       "revId": "2e3f815437d4186aeb943e965f420e707b6a67b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29146ffc_d4ab8a2b",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-13T17:21:40Z",
+      "side": 0,
+      "message": "Thanks!\n\u003e\u003eCoreAudioUtil::GetFriendlyName[8] - fixed behavior\nUnchanged behavior, right? It\u0027s an intention of the code to create a device with a device ID passed to it. And if the system by chance has a device with id \"default\" - it will be created successfully.",
+      "parentUuid": "717148a4_fccff8e2",
+      "revId": "2e3f815437d4186aeb943e965f420e707b6a67b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
