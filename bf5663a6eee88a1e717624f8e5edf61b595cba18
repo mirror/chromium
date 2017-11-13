@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "9af7ddcd_334c11c6",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-13T19:52:24Z",
+      "side": 1,
+      "message": "Move all the implementations in this function to WebMediaPlayerImpl::SetContentsLayer().\n\nYou need to update your unit test to call the SetContentsLayer() instead of this function.",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1ab032_f0a68734",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1532,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-13T19:52:24Z",
+      "side": 1,
+      "message": "Add:\nvoid HTMLCanvasElement::UnsetContentsLayer() {\n  GraphicsLayer::UnregisterContentsLayer(surface_layer_bridge_-\u003eGetWebLayer());\n}",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc48b4d_494b3dde",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-13T19:52:24Z",
+      "side": 1,
+      "message": "remove this include.",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a4585d_dd9408d3",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-13T19:52:24Z",
+      "side": 1,
+      "message": "Replace this with \"if (observer_) observer_-\u003eSetContentsLayer();\"",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "790095d5_33bb473e",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-13T19:52:24Z",
+      "side": 1,
+      "message": "Add \"DCHECK(observer_);\"",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af179e3_44c252dd",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-13T19:52:24Z",
+      "side": 1,
+      "message": "Replace this with \"if (observer_) observer_-\u003eUnsetContentsLayer()\".",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "962ed21f_eb3f5bff",
         "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
         "patchSetId": 3
@@ -31,6 +133,41 @@
       "side": 1,
       "message": "https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp?rcl\u003dab2fa2647ee5b2dd0e321aedf2a7990bab444f9b\u0026l\u003d3824\n\nSetWebLayer via OnWebLayerUpdated.",
       "parentUuid": "962ed21f_eb3f5bff",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85488594_858a909f",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-13T19:52:24Z",
+      "side": 1,
+      "message": "Replace this with \"if (observer_) observer_-\u003eSetContentsLayer();\"",
+      "parentUuid": "eb444a63_e05384f6",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c369ec2_bda1f4e2",
+        "filename": "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-13T19:52:24Z",
+      "side": 1,
+      "message": "Add one more virtual function \"virtual void UnsetContentsLayer()\".",
       "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
