@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72f56e30_310c1613",
+        "filename": "net/cookies/cookie_store_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-13T19:31:54Z",
+      "side": 0,
+      "message": "Suggest to keep this as is until the BuildCookieLine code is removed, so we don\u0027t lose test coverage unintentionally.",
+      "revId": "42a9c3857924702424c195cf80a5e22f707d2c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
