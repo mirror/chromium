@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73a5c366_f1d624c0",
+        "filename": "third_party/WebKit/Source/core/html/forms/FormController.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-13T20:49:53Z",
+      "side": 1,
+      "message": "side complaint (not your responsibility to fix): what a vague name this class has.",
+      "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94cd5bbd_f9706e24",
+        "filename": "third_party/WebKit/Source/core/html/forms/FormController.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-13T20:49:53Z",
+      "side": 1,
+      "message": "Do we have a guarantee that this remains valid? Can the elements it points to for head/tail be collected, for instance? It might be desirable to extend DoublyLinkedList to allow it to explicitly trace the head/tail members so that at least the GC lifetime correctness is clear.",
+      "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0e1faae_cdc5bf48",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElementWithState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-13T20:49:53Z",
+      "side": 1,
+      "message": "nit: Member\u003c\u003e initializes to null by default, so this is unnecessary.",
+      "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e925fe_cce69813",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElementWithState.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-13T20:49:53Z",
+      "side": 1,
+      "message": "Mention the list that this is a part of in DocumentState, so it\u0027s clear what list this is intended to be. Ideally also briefly clarify why it\u0027s reasonable to expect this object to only be in one such list at a time, as this is required to use DoublyLinkedList but is not immediately apparent to me (though I think I\u0027m convinced it is indeed true).",
+      "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
