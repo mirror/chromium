@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd04fdc5_fa1838ce",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-13T16:21:54Z",
+      "side": 1,
+      "message": "SG",
+      "parentUuid": "1923c7db_68ddc07a",
+      "range": {
+        "startLine": 217,
+        "startChar": 6,
+        "endLine": 217,
+        "endChar": 21
+      },
+      "revId": "3569ccf786592369aefc1efe73f66f1c5398f49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a923cf62_2b29eab8",
         "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-13T10:58:47Z",
       "side": 1,
       "message": "Do we need this \"new\"?",
+      "range": {
+        "startLine": 379,
+        "startChar": 18,
+        "endLine": 379,
+        "endChar": 47
+      },
+      "revId": "3569ccf786592369aefc1efe73f66f1c5398f49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35b6df0_325eabc7",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-13T16:21:54Z",
+      "side": 1,
+      "message": "Yes, we need it to check the thread restriction on its destruction.",
+      "parentUuid": "a923cf62_2b29eab8",
       "range": {
         "startLine": 379,
         "startChar": 18,
