@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9930c0a_8de2cb54",
+        "filename": "net/spdy/chromium/http2_push_promise_index.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-13T14:19:50Z",
+      "side": 1,
+      "message": "Good catch.\n\nIf this is the only element in |url_it-\u003esecond|, then it will be erased and thus invalidated.  If, however, there are other elements, then |url_it-\u003esecond|, a StreamList, is still valid, but |pushed_stream|, a reference to an element in it, will become invalid.  So how about I write |pushed_stream| in the comment?",
+      "parentUuid": "a291c50e_3818a36c",
+      "revId": "b8603253c94fc21cc7698c69715e3b216964ea40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "496ad183_f4edc569",
         "filename": "net/spdy/chromium/http2_push_promise_index.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "b8603253c94fc21cc7698c69715e3b216964ea40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cef3e62_ebe2d0fd",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-13T14:19:50Z",
+      "side": 1,
+      "message": "Oh no, you have already spotted this in a previous CL and I have fixed it, but during the rebasing process I brought it back by mistake!  Sorry.",
+      "parentUuid": "496ad183_f4edc569",
+      "revId": "b8603253c94fc21cc7698c69715e3b216964ea40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5b6fc37b_53ecc730",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-13T14:19:50Z",
+      "side": 1,
+      "message": "I would love to avoid re-entrancy, but unfortunately this by itself would not help.\n\nCurrently, ValidatePushedStream() is called, and if that returns true, then OnPushedStreamClaimed() is called, which calls UnclaimedPushedStreamContainer::erase(), which calls back to Unregister().\n\nIf I understand your proposition, a since Delegate::Claim() would do what ValidatePushedStream() does, and if valid, then do what OnPushedStreamClaimed() does, including calling UnclaimedPushedStreamContainer::erase(), which calls back to Unregister().  That does not seem to help.  In fact, it makes it impossible to copy members of |pushed_stream| reference into |spdy_session| and |stream_id| outparams, because |pushed_stream| might already be invalid.  Sure these member can be copied beforehand, or the outparams could be passed into Delegate::Claim(), but I do not think either of that would be an improvement.\n\nDid I misunderstand your suggestion?",
+      "parentUuid": "c1ae9efe_0dc6d080",
+      "revId": "b8603253c94fc21cc7698c69715e3b216964ea40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5c20822_673f1358",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "b8603253c94fc21cc7698c69715e3b216964ea40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4ae9fe_0f4ff530",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-13T14:19:50Z",
+      "side": 1,
+      "message": "Good question.  UnclaimedPushedStreamContainer::erase() calls Http2PushPromiseIndex::Unregister().",
+      "parentUuid": "e5c20822_673f1358",
+      "revId": "b8603253c94fc21cc7698c69715e3b216964ea40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
