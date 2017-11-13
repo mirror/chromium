@@ -90,7 +90,7 @@ const WrapperTypeInfo V8TestObject::wrapperTypeInfo = {
     V8TestObject::domTemplate,
     V8TestObject::Trace,
     V8TestObject::TraceWrappers,
-    V8TestObject::preparePrototypeAndInterfaceObject,
+    V8TestObject::InstallConditionalFeaturesOnObject,
     "TestObject",
     nullptr,
     WrapperTypeInfo::kWrapperTypeObjectPrototype,
@@ -13825,7 +13825,12 @@ TestObject* NativeValueTraits<TestObject>::NativeValue(v8::Isolate* isolate, v8:
   return nativeValue;
 }
 
-void V8TestObject::preparePrototypeAndInterfaceObject(v8::Local<v8::Context> context, const DOMWrapperWorld& world, v8::Local<v8::Object> prototypeObject, v8::Local<v8::Function> interfaceObject, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+void V8TestObject::InstallConditionalFeaturesOnObject(
+    v8::Local<v8::Context> context,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::Object> prototypeObject,
+    v8::Local<v8::Function> interfaceObject,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   v8::Isolate* isolate = context->GetIsolate();
 
   v8::Local<v8::Name> unscopablesSymbol(v8::Symbol::GetUnscopables(isolate));
