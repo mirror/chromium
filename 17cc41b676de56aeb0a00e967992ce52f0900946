@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f139ad4b_786e691f",
+        "filename": "ui/app_list/app_list_view_state.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-13T22:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f366fa50_31931155",
+      "revId": "17cc41b676de56aeb0a00e967992ce52f0900946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7f93ec6_85bbe222",
         "filename": "ui/app_list/app_list_view_state.h",
         "patchSetId": 1
@@ -59,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "231be9f7_84beab00",
+        "filename": "ui/app_list/app_list_view_state.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-13T22:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4fe04fb_19449c24",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 20
+      },
+      "revId": "17cc41b676de56aeb0a00e967992ce52f0900946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb64be5b_8352c7e4",
+        "filename": "ui/app_list/app_list_view_state.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-13T22:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7f93ec6_85bbe222",
+      "revId": "17cc41b676de56aeb0a00e967992ce52f0900946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52a70093_74c413bf",
         "filename": "ui/app_list/views/suggestions_container_view.h",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "17cc41b676de56aeb0a00e967992ce52f0900946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0c8dd8_c84c0c9d",
+        "filename": "ui/app_list/views/suggestions_container_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-13T22:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52a70093_74c413bf",
+      "revId": "17cc41b676de56aeb0a00e967992ce52f0900946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
