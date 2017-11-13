@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d71185d_b339f9ec",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-13T23:56:56Z",
+      "side": 1,
+      "message": "nit: remove extra newline",
+      "revId": "d3454b3998de45a97001e019c6b620646ebee707",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da680e38_f4caad7b",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-13T23:56:56Z",
+      "side": 1,
+      "message": "nit: remove extra newline",
+      "revId": "d3454b3998de45a97001e019c6b620646ebee707",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "007d6e60_8fd16825",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-13T23:56:56Z",
+      "side": 1,
+      "message": "nit: remove space",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 9
+      },
+      "revId": "d3454b3998de45a97001e019c6b620646ebee707",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c28d925_a5991fab",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-13T23:56:56Z",
+      "side": 1,
+      "message": "nit: wrap this line (or use git cl format)",
+      "revId": "d3454b3998de45a97001e019c6b620646ebee707",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b7cf27a_e6d3c393",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-13T23:56:56Z",
+      "side": 1,
+      "message": "nit: end in a semicolon",
+      "revId": "d3454b3998de45a97001e019c6b620646ebee707",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658ec596_d17cd14c",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-13T23:56:56Z",
+      "side": 1,
+      "message": "nit: semicolon",
+      "revId": "d3454b3998de45a97001e019c6b620646ebee707",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296ef6c1_be40db27",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-13T23:56:56Z",
+      "side": 1,
+      "message": "nit: two-space indentation",
+      "revId": "d3454b3998de45a97001e019c6b620646ebee707",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
