@@ -28,6 +28,13 @@ void GeolocationServiceImplContext::RequestPermission(
     RenderFrameHost* render_frame_host,
     bool user_gesture,
     const base::Callback<void(blink::mojom::PermissionStatus)>& callback) {
+  if (request_id_ != PermissionManager::kNoPendingOperation) {
+    mojo::ReportBadMessage(
+        "GeolocationService client may only create one Geolocation at a "
+        "time.");
+    return;
+  }
+
   request_id_ = permission_manager_->RequestPermission(
       PermissionType::GEOLOCATION, render_frame_host,
       render_frame_host->GetLastCommittedOrigin().GetURL(), user_gesture,
@@ -38,13 +45,6 @@ void GeolocationServiceImplContext::RequestPermission(
 }
 
 void GeolocationServiceImplContext::CancelPermissionRequest() {
-  if (request_id_ == PermissionManager::kNoPendingOperation) {
-    mojo::ReportBadMessage(
-        "GeolocationService client may only create one Geolocation at a "
-        "time.");
-    return;
-  }
-
   permission_manager_->CancelPermissionRequest(request_id_);
   request_id_ = PermissionManager::kNoPendingOperation;
 }
