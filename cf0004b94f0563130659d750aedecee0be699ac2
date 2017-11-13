@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cc3a5ccc_bffd7542",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathVariadic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-13T05:59:34Z",
+      "side": 1,
+      "message": "In the current patch yes, since CSSMathSum etc. have a mutable \u0027values\u0027, so you can set it to whatever you want. However, this is being reconsidered because you can do weird things with it. So in the future, this possibly won\u0027t be needed.",
+      "parentUuid": "80eb997c_479d777c",
+      "revId": "cf0004b94f0563130659d750aedecee0be699ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c2092b0_df343023",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericArray.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5814bfe2_fc9a43e5",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericArray.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-13T05:59:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c2092b0_df343023",
+      "revId": "cf0004b94f0563130659d750aedecee0be699ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ace26300_8730d126",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.h",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "cf0004b94f0563130659d750aedecee0be699ac2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "458b97d4_22a1c3bd",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-13T05:59:34Z",
+      "side": 1,
+      "message": "Not dumb :P You\u0027re right, it\u0027s only used in CSSNumericArray. But in future patches, this type will be used a lot more so I\u0027ll keep it here.",
+      "parentUuid": "ace26300_8730d126",
+      "revId": "cf0004b94f0563130659d750aedecee0be699ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
