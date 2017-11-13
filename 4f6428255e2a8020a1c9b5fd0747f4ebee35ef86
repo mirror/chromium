@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc8ba4fd_84616168",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T23:00:29Z",
+      "side": 1,
+      "message": "nit: newline above, for symmetry.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 1
+      },
+      "revId": "4f6428255e2a8020a1c9b5fd0747f4ebee35ef86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8069575c_a269879f",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T23:00:29Z",
+      "side": 1,
+      "message": "nit: you can elide braces for single-line blocks.",
+      "range": {
+        "startLine": 206,
+        "startChar": 25,
+        "endLine": 206,
+        "endChar": 26
+      },
+      "revId": "4f6428255e2a8020a1c9b5fd0747f4ebee35ef86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1628954_3b79c38d",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T23:00:29Z",
+      "side": 1,
+      "message": "Can this be in the anonymous namespace instead of being marked as \"static\"?",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 6
+      },
+      "revId": "4f6428255e2a8020a1c9b5fd0747f4ebee35ef86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a09779bd_f18fe3d5",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T23:00:29Z",
+      "side": 1,
+      "message": "Can you make these all base::BindOnce?",
+      "range": {
+        "startLine": 363,
+        "startChar": 33,
+        "endLine": 363,
+        "endChar": 37
+      },
+      "revId": "4f6428255e2a8020a1c9b5fd0747f4ebee35ef86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69cf398e_99b60f5c",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T23:00:29Z",
+      "side": 1,
+      "message": "Is this thread allowed to do I/O?",
+      "range": {
+        "startLine": 575,
+        "startChar": 0,
+        "endLine": 577,
+        "endChar": 32
+      },
+      "revId": "4f6428255e2a8020a1c9b5fd0747f4ebee35ef86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f3ae5f_97055cc9",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T23:00:29Z",
+      "side": 1,
+      "message": "nit: Arc",
+      "range": {
+        "startLine": 33,
+        "startChar": 37,
+        "endLine": 33,
+        "endChar": 41
+      },
+      "revId": "4f6428255e2a8020a1c9b5fd0747f4ebee35ef86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e8728b_d03748e9",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T23:00:29Z",
+      "side": 1,
+      "message": "nit: Can you add a small comment for this, too?",
+      "range": {
+        "startLine": 78,
+        "startChar": 47,
+        "endLine": 78,
+        "endChar": 61
+      },
+      "revId": "4f6428255e2a8020a1c9b5fd0747f4ebee35ef86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4fdb16_47d161fb",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T23:00:29Z",
+      "side": 1,
+      "message": "nit: \"|on_error_|\", to be consistent with how we refer to the other members in comments.",
+      "range": {
+        "startLine": 101,
+        "startChar": 5,
+        "endLine": 101,
+        "endChar": 14
+      },
+      "revId": "4f6428255e2a8020a1c9b5fd0747f4ebee35ef86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12d1200_dee1a920",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T23:00:29Z",
+      "side": 1,
+      "message": "nit: can you explicitly initialize this to false?",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 19
+      },
+      "revId": "4f6428255e2a8020a1c9b5fd0747f4ebee35ef86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab5cabc_67ae14cb",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T23:00:29Z",
+      "side": 1,
+      "message": "nit:\n\n ProtectedBufferManager* const protected_buffer_manager_;  // Owned by caller",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 25
+      },
+      "revId": "4f6428255e2a8020a1c9b5fd0747f4ebee35ef86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f11294_f6facf6f",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-13T23:00:29Z",
+      "side": 1,
+      "message": "nit: can this be \"success\"?",
+      "range": {
+        "startLine": 76,
+        "startChar": 50,
+        "endLine": 76,
+        "endChar": 56
+      },
+      "revId": "4f6428255e2a8020a1c9b5fd0747f4ebee35ef86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
