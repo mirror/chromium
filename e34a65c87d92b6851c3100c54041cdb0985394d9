@@ -22,6 +22,30 @@
       "revId": "e34a65c87d92b6851c3100c54041cdb0985394d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb33ec59_fa56df2d",
+        "filename": "chrome/browser/resources/md_extensions/toggle_row.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-13T23:50:30Z",
+      "side": 1,
+      "message": "Thanks for the additional info.\nThe fact that voiceover handles the existing code as expected, and that ChromeVox misses an object that is in the regular tab order, suggests to me also that this is most likely a ChromeVox issue.",
+      "parentUuid": "1518a3b9_5d582790",
+      "range": {
+        "startLine": 43,
+        "startChar": 53,
+        "endLine": 43,
+        "endChar": 12
+      },
+      "revId": "e34a65c87d92b6851c3100c54041cdb0985394d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
