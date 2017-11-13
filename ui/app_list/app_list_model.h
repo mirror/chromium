@@ -152,6 +152,20 @@ class APP_LIST_EXPORT AppListModel : public AppListItemListObserver {
   // histograms.
   void RecordFolderMetrics();
 
+  // Records the |user_journey_start_| time, used to compute the user journey
+  // metric.
+  void RecordUserJourneyStartTime();
+
+  // Records the |user_journey_end_| time, used to compute the user journey
+  // metric.
+  void RecordUserJourneyEndTime();
+
+  // Sets |user_journey_start_| and |user_journey_end_| for test.
+  void SetUserJourneyStartAndEndTimeForTest(base::Time start, base::Time end);
+
+  // Computes and records the user journey metric.
+  void ComputeAndRecordUserJourneyMetric();
+
   // Sets whether or not the custom launcher page should be enabled.
   void SetCustomLauncherPageEnabled(bool enabled);
   bool custom_launcher_page_enabled() const {
@@ -241,6 +255,12 @@ class APP_LIST_EXPORT AppListModel : public AppListItemListObserver {
   // The AppListView state. Controlled by the AppListView.
   AppListView::AppListState state_fullscreen_;
   base::ObserverList<AppListModelObserver, true> observers_;
+  // The time that the AppListView becomes visible to the user.
+  base::Time user_journey_start_;
+  // The time that we consider the user journey to be complete. This could be
+  // when an AnswerCard was presented or when the user interacted with an app or
+  // search result.
+  base::Time user_journey_end_;
   bool folders_enabled_;
   bool custom_launcher_page_enabled_;
   std::string custom_launcher_page_name_;
