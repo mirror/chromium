@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "b211a4d2_37a464a8",
+        "filename": "media/capabilities/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-13T18:28:15Z",
+      "side": 1,
+      "message": "Add note explaining why this is both here and in the target above.",
+      "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a6b119_469cb97d",
+        "filename": "media/capabilities/metadata_bucketter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-13T18:28:15Z",
+      "side": 1,
+      "message": "I forget are we no longer writing static?",
+      "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "264c6c5b_efaee185",
         "filename": "media/capabilities/metadata_bucketter.cc",
         "patchSetId": 3
@@ -13,6 +47,23 @@
       "writtenOn": "2017-11-11T18:13:55Z",
       "side": 1,
       "message": "Comment seems off as it starts at 50p?",
+      "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a2e7aa_14137caf",
+        "filename": "media/capabilities/metadata_bucketter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-13T18:28:15Z",
+      "side": 1,
+      "message": "No double T :) https://www.merriam-webster.com/dictionary/bucketer Though this is more a bucket_utility type class.",
       "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -47,6 +98,23 @@
       "writtenOn": "2017-11-11T18:13:55Z",
       "side": 1,
       "message": "nit: I would call this `Create` as the bucketting is an implementation detail, really",
+      "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002a2a18_e4f907ee",
+        "filename": "media/capabilities/video_decode_stats_db_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-13T18:28:15Z",
+      "side": 1,
+      "message": "Delete?",
       "revId": "c618d5777b9e27a127e2085518a457127fb05ef2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
