@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f9880b6_7b01cf38",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 15
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T20:55:43Z",
+      "side": 1,
+      "message": "revert this?",
+      "revId": "c4521d2d5abe8cc2fa90b41749d995adff34b521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eae5f2c_be933c1a",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 15
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T20:55:43Z",
+      "side": 1,
+      "message": "this change also should probably be reverted?",
+      "revId": "c4521d2d5abe8cc2fa90b41749d995adff34b521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "808149a2_1e02f05c",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-13T20:55:43Z",
+      "side": 1,
+      "message": "Is \"secure origin\" actually the right term to use here? Specs only talk about \"secure context\" and \"potentially trustworthy origin\". It (I assume intentionally) doesn\u0027t have a \"secure origin\" concept.\n\nBut then of course most developers wouldn\u0027t know spec language anyway, and maybe this is a term that is used in documentation already?",
+      "revId": "c4521d2d5abe8cc2fa90b41749d995adff34b521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
