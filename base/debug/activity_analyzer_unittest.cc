@@ -86,6 +86,30 @@ class ActivityAnalyzerTest : public testing::Test {
     GlobalActivityTracker::SetForTesting(std::move(old_global));
   }
 
+  template <typename Function>
+  void AsOtherDirProcess(const FilePath& dir, int64_t pid, Function function) {
+    std::unique_ptr<GlobalActivityTracker> old_global =
+        GlobalActivityTracker::ReleaseForTesting();
+    ASSERT_TRUE(old_global);
+
+    std::unique_ptr<MemoryMappedFile> mapped_file(new MemoryMappedFile());
+    ASSERT_TRUE(mapped_file->Initialize(
+        File(GlobalActivityTracker::ProcessFilePath(dir, pid),
+             File::FLAG_CREATE_ALWAYS | File::FLAG_READ | File::FLAG_WRITE),
+        {0, kMemorySize}, MemoryMappedFile::READ_WRITE_EXTEND));
+
+    // Only CreateWithAllocator allows setting the PID (for testing).
+    GlobalActivityTracker::CreateWithAllocator(
+        std::make_unique<FilePersistentMemoryAllocator>(
+            std::move(mapped_file), kMemorySize, 0, "", false),
+        3, pid);
+
+    function();
+
+    GlobalActivityTracker::ReleaseForTesting();
+    GlobalActivityTracker::SetForTesting(std::move(old_global));
+  }
+
   static void DoNothing() {}
 };
 
@@ -511,6 +535,82 @@ TEST_F(ActivityAnalyzerTest, GlobalMultiProcess) {
       analyzer.GetProcessDataSnapshot(pid2);
   EXPECT_EQ(1001, pdata1.at("pid").GetInt());
   EXPECT_EQ(2002, pdata2.at("pid").GetInt());
+}
+
+TEST_F(ActivityAnalyzerTest, GlobalMultiProcessDir) {
+  ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+
+  GlobalActivityTracker::CreateWithDir(temp_dir.GetPath(), true, kMemorySize, 0,
+                                       "", 3);
+  GlobalActivityTracker* global = GlobalActivityTracker::Get();
+  const int64_t main_pid = global->process_id();
+  GlobalActivityTracker::Get()->process_data().SetInt("pid", main_pid);
+
+  // Do something as another process.
+  const int64_t pid2 = main_pid + 2;
+  global->RecordProcessLaunch(pid2, FILE_PATH_LITERAL("2"));
+  AsOtherDirProcess(temp_dir.GetPath(), pid2, [=]() {
+    ASSERT_NE(global, GlobalActivityTracker::Get());
+    EXPECT_EQ(pid2, GlobalActivityTracker::Get()->process_id());
+
+    int64_t process_id;
+    int64_t create_stamp;
+    ActivityUserData::GetOwningProcessId(
+        GlobalActivityTracker::Get()->process_data().GetBaseAddress(),
+        &process_id, &create_stamp);
+    ASSERT_EQ(pid2, process_id);
+
+    GlobalActivityTracker::Get()->process_data().SetInt(
+        "pid", GlobalActivityTracker::Get()->process_id());
+  });
+
+  // Again, but two nested processes.
+  const int64_t pid3 = main_pid + 3;
+  const int64_t pid4 = main_pid + 4;
+  global->RecordProcessLaunch(pid3, FILE_PATH_LITERAL("3"));
+  AsOtherDirProcess(temp_dir.GetPath(), pid3, [&]() {
+    GlobalActivityTracker::Get()->process_data().SetInt(
+        "pid", GlobalActivityTracker::Get()->process_id());
+
+    global->RecordProcessLaunch(pid4, FILE_PATH_LITERAL("4"));
+    AsOtherDirProcess(temp_dir.GetPath(), pid4, [&]() {
+      GlobalActivityTracker::Get()->process_data().SetInt(
+          "pid", GlobalActivityTracker::Get()->process_id());
+    });
+  });
+
+  ASSERT_EQ(global, GlobalActivityTracker::Get());
+
+  // Now analyze the directory.
+  std::unique_ptr<GlobalActivityAnalyzer> analyzer =
+      GlobalActivityAnalyzer::CreateWithDir(temp_dir.GetPath());
+  ASSERT_TRUE(analyzer);
+  EXPECT_EQ(main_pid, GlobalActivityTracker::Get()->process_id());
+
+  ASSERT_EQ(main_pid, analyzer->GetFirstProcess());
+  ASSERT_EQ(pid2, analyzer->GetNextProcess());
+  ASSERT_EQ(pid3, analyzer->GetNextProcess());
+  ASSERT_EQ(pid4, analyzer->GetNextProcess());
+  EXPECT_EQ(0, analyzer->GetNextProcess());
+
+  const ActivityUserData::Snapshot& pdata1 =
+      analyzer->GetProcessDataSnapshot(main_pid);
+  const ActivityUserData::Snapshot& pdata2 =
+      analyzer->GetProcessDataSnapshot(pid2);
+  const ActivityUserData::Snapshot& pdata3 =
+      analyzer->GetProcessDataSnapshot(pid3);
+  const ActivityUserData::Snapshot& pdata4 =
+      analyzer->GetProcessDataSnapshot(pid4);
+  EXPECT_EQ(main_pid, pdata1.at("pid").GetInt());
+  EXPECT_EQ(pid2, pdata2.at("pid").GetInt());
+  EXPECT_EQ(pid3, pdata3.at("pid").GetInt());
+  EXPECT_EQ(pid4, pdata4.at("pid").GetInt());
+
+  // This has to be done before the test exits so that |temp_dir| can
+  // delete itself.
+  global->ReleaseTrackerForCurrentThreadForTesting();
+  delete global;
 }
 
 }  // namespace debug

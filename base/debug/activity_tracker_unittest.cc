@@ -98,6 +98,10 @@ class ActivityTrackerTest : public testing::Test {
     exit_data_ = std::move(data);
   }
 
+  static FilePath ProcessFilePath(const FilePath& dir_path, int64_t pid) {
+    return GlobalActivityTracker::ProcessFilePath(dir_path, pid);
+  }
+
   static void DoNothing() {}
 
   int64_t exit_id_ = 0;
@@ -581,6 +585,37 @@ TEST_F(ActivityTrackerTest, ProcessDeathTest) {
   global->allocator()->ChangeType(
       user_data_ref, GlobalActivityTracker::kTypeIdUserDataRecord,
       GlobalActivityTracker::kTypeIdUserDataRecordFree, false);
+}
+
+TEST_F(ActivityTrackerTest, CreateWithDir) {
+  ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+
+  GlobalActivityTracker::CreateWithDir(temp_dir.GetPath(), true, kMemorySize, 0,
+                                       "", 3);
+  GlobalActivityTracker* global = GlobalActivityTracker::Get();
+  EXPECT_TRUE(PathExists(ProcessFilePath(temp_dir.GetPath(), 0)));
+
+  // Simulate a process starting.
+  global->RecordProcessLaunch(42, FILE_PATH_LITERAL("foo"));
+  EXPECT_FALSE(PathExists(ProcessFilePath(temp_dir.GetPath(), 42)));
+  {
+    File file(ProcessFilePath(temp_dir.GetPath(), 42),
+              File::FLAG_CREATE | File::FLAG_READ | File::FLAG_WRITE);
+  }
+  EXPECT_TRUE(PathExists(ProcessFilePath(temp_dir.GetPath(), 42)));
+
+  // Recording the process exit should delete the file.
+  global->RecordProcessExit(42, 0);
+  EXPECT_FALSE(PathExists(ProcessFilePath(temp_dir.GetPath(), 42)));
+
+  // This has to be done before the test exits so that |temp_dir| can
+  // delete itself.
+  global->ReleaseTrackerForCurrentThreadForTesting();
+  delete global;
+
+  // Exiting the tracker shouldn't delete its own file.
+  EXPECT_TRUE(PathExists(ProcessFilePath(temp_dir.GetPath(), 0)));
 }
 
 }  // namespace debug

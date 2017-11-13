@@ -4,6 +4,7 @@
 
 #include "base/debug/activity_tracker.h"
 
+#include <inttypes.h>
 #include <algorithm>
 #include <limits>
 #include <utility>
@@ -12,6 +13,7 @@
 #include "base/debug/stack_trace.h"
 #include "base/files/file.h"
 #include "base/files/file_path.h"
+#include "base/files/file_util.h"
 #include "base/files/memory_mapped_file.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -23,6 +25,7 @@
 #include "base/process/process_handle.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/platform_thread.h"
 
@@ -1295,6 +1298,28 @@ bool GlobalActivityTracker::CreateWithFile(const FilePath& file_path,
                       stack_depth, 0);
   return true;
 }
+
+// static
+bool GlobalActivityTracker::CreateWithDir(const FilePath& dir_path,
+                                          bool root,
+                                          size_t size,
+                                          uint64_t id,
+                                          StringPiece name,
+                                          int stack_depth) {
+  if (!CreateWithFile(
+          ProcessFilePath(dir_path,
+                          root ? 0 : static_cast<int64_t>(GetCurrentProcId())),
+          size, id, name, stack_depth)) {
+    return false;
+  }
+
+  // The |create_dir_| is "const" because it should never be changed outside
+  // of initialization. This *is* initialization but not the constructor so
+  // a const-cast is necessary.
+  *const_cast<FilePath*>(&Get()->create_dir_) = dir_path;
+
+  return true;
+}
 #endif  // !defined(OS_NACL)
 
 // static
@@ -1414,21 +1439,36 @@ void GlobalActivityTracker::RecordProcessLaunch(
   DCHECK_NE(GetProcessId(), pid);
   DCHECK_NE(0, pid);
 
-  base::AutoLock lock(global_tracker_lock_);
+  AutoLock lock(global_tracker_lock_);
   if (base::ContainsKey(known_processes_, pid)) {
     // TODO(bcwhite): Measure this in UMA.
+    SubprocessRecord* proc_info =
+        allocator_->GetAsObject<SubprocessRecord>(known_processes_[pid]);
+    const char* command =
+        proc_info ? proc_info->command : "(reference not found)";
     NOTREACHED() << "Process #" << process_id
                  << " was previously recorded as \"launched\""
                  << " with no corresponding exit.\n"
-                 << known_processes_[pid];
+                 << command;
     known_processes_.erase(pid);
   }
 
 #if defined(OS_WIN)
-  known_processes_.insert(std::make_pair(pid, UTF16ToUTF8(cmd)));
+  const std::string cmd8 = UTF16ToUTF8(cmd);
 #else
-  known_processes_.insert(std::make_pair(pid, cmd));
+  const std::string& cmd8 = cmd;
 #endif
+
+  PersistentMemoryAllocator::Reference ref =
+      subprocess_info_allocator_.GetObjectReference();
+  SubprocessRecord* proc_info = allocator_->GetAsObject<SubprocessRecord>(ref);
+  if (proc_info) {
+    proc_info->pid = pid;
+    strncpy(proc_info->command, cmd8.data(),
+            std::min(cmd8.size(), sizeof(proc_info->command) - 1));
+  }
+
+  known_processes_.insert(std::make_pair(pid, ref));
 }
 
 void GlobalActivityTracker::RecordProcessLaunch(
@@ -1457,7 +1497,13 @@ void GlobalActivityTracker::RecordProcessExit(ProcessId process_id,
     task_runner = background_task_runner_;
     auto found = known_processes_.find(pid);
     if (found != known_processes_.end()) {
-      command_line = std::move(found->second);
+      SubprocessRecord* proc_info =
+          allocator_->GetAsObject<SubprocessRecord>(found->second);
+      if (proc_info && proc_info->pid == pid) {
+        if (proc_info->command[sizeof(proc_info->command) - 1] == 0)
+          command_line = proc_info->command;
+        subprocess_info_allocator_.ReleaseObjectReference(found->second);
+      }
       known_processes_.erase(found);
     } else {
       DLOG(ERROR) << "Recording exit of unknown process #" << process_id;
@@ -1543,6 +1589,7 @@ void GlobalActivityTracker::CleanupAfterProcess(int64_t process_id,
   while ((ref = iter.GetNext(&type)) != 0) {
     switch (type) {
       case kTypeIdActivityTracker:
+      case kTypeIdSubprocessRecord:
       case kTypeIdUserDataRecord:
       case kTypeIdProcessDataRecord:
       case ModuleInfoRecord::kPersistentTypeId: {
@@ -1569,6 +1616,11 @@ void GlobalActivityTracker::CleanupAfterProcess(int64_t process_id,
       } break;
     }
   }
+
+  // Remove any associated file if they're being stored as separate files in
+  // a single directory.
+  if (!create_dir_.empty())
+    DeleteFile(ProcessFilePath(create_dir_, process_id), /*recursive=*/false);
 }
 
 void GlobalActivityTracker::RecordLogMessage(StringPiece message) {
@@ -1652,7 +1704,13 @@ GlobalActivityTracker::GlobalActivityTracker(
                         kTypeIdProcessDataRecord,
                         kProcessDataSize),
                     kProcessDataSize,
-                    process_id_) {
+                    process_id_),
+      subprocess_info_allocator_(allocator_.get(),
+                                 kTypeIdSubprocessRecord,
+                                 kTypeIdSubprocessRecordFree,
+                                 sizeof(SubprocessRecord),
+                                 kCachedSubprocessInfoMemories,
+                                 /*make_iterable=*/true) {
   DCHECK_NE(0, process_id_);
 
   // Ensure that there is no other global object and then make this one such.
@@ -1710,6 +1768,12 @@ void GlobalActivityTracker::RecordExceptionImpl(const void* pc,
 
   tracker->RecordExceptionActivity(pc, origin, Activity::ACT_EXCEPTION,
                                    ActivityData::ForException(code));
+}
+
+// static
+FilePath GlobalActivityTracker::ProcessFilePath(const FilePath& dir_path,
+                                                int64_t pid) {
+  return dir_path.AppendASCII(StringPrintf("%08" PRIx64 ".pma", pid));
 }
 
 // static

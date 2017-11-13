@@ -771,11 +771,13 @@ class BASE_EXPORT GlobalActivityTracker {
   // can recognize records of this type within an allocator.
   enum : uint32_t {
     kTypeIdActivityTracker = 0x5D7381AF + 4,   // SHA1(ActivityTracker) v4
+    kTypeIdSubprocessRecord = 0x21F2A925 + 1,  // SHA1(SubprocessRecord) v1
     kTypeIdUserDataRecord = 0x615EDDD7 + 3,    // SHA1(UserDataRecord) v3
     kTypeIdGlobalLogMessage = 0x4CF434F9 + 1,  // SHA1(GlobalLogMessage) v1
     kTypeIdProcessDataRecord = kTypeIdUserDataRecord + 0x100,
 
     kTypeIdActivityTrackerFree = ~kTypeIdActivityTracker,
+    kTypeIdSubprocessRecordFree = ~kTypeIdSubprocessRecord,
     kTypeIdUserDataRecordFree = ~kTypeIdUserDataRecord,
     kTypeIdProcessDataRecordFree = ~kTypeIdProcessDataRecord,
   };
@@ -894,6 +896,16 @@ class BASE_EXPORT GlobalActivityTracker {
                              uint64_t id,
                              StringPiece name,
                              int stack_depth);
+
+  // Like above but uses a file with a generated name that uniquely indentifies
+  // it from others created in the same directory.  |root| indicates that this
+  // is the base process of the tree.
+  static bool CreateWithDir(const FilePath& dir_path,
+                            bool root,
+                            size_t size,
+                            uint64_t id,
+                            StringPiece name,
+                            int stack_depth);
 #endif  // !defined(OS_NACL)
 
   // Like above but internally creates an allocator using local heap memory of
@@ -1047,12 +1059,14 @@ class BASE_EXPORT GlobalActivityTracker {
   friend class GlobalActivityAnalyzer;
   friend class ScopedThreadActivity;
   friend class ActivityTrackerTest;
+  friend class ActivityAnalyzerTest;
 
   enum : int {
     // The maximum number of threads that can be tracked within a process. If
     // more than this number run concurrently, tracking of new ones may cease.
     kMaxThreadCount = 100,
     kCachedThreadMemories = 10,
+    kCachedSubprocessInfoMemories = 5,
     kCachedUserDataMemories = 10,
   };
 
@@ -1140,6 +1154,21 @@ class BASE_EXPORT GlobalActivityTracker {
     DISALLOW_COPY_AND_ASSIGN(ManagedActivityTracker);
   };
 
+  struct SubprocessRecord {
+    // SHA1(MyPersistentObjectType): Increment this if structure changes!
+    static constexpr uint32_t kPersistentTypeId =
+        GlobalActivityTracker::kTypeIdSubprocessRecord;
+
+    // Expected size for 32/64-bit check. Update this if structure changes!
+    static constexpr size_t kExpectedInstanceSize =
+        OwningProcess::kExpectedInstanceSize + 1032;
+
+    OwningProcess owner;  // Information about the creating process.
+
+    int64_t pid;
+    char command[1024];
+  };
+
   // Creates a global tracker using a given persistent-memory |allocator| and
   // providing the given |stack_depth| to each thread tracker it manages. The
   // created object is activated so tracking has already started upon return.
@@ -1155,6 +1184,9 @@ class BASE_EXPORT GlobalActivityTracker {
 
   // Records exception information.
   void RecordExceptionImpl(const void* pc, const void* origin, uint32_t code);
+
+  // Creates a predictable process file path.
+  static FilePath ProcessFilePath(const FilePath& dir_path, int64_t pid);
 
   // Releases the activity-tracker associcated with thread. It is called
   // automatically when a thread is joined and thus there is nothing more to
@@ -1178,6 +1210,10 @@ class BASE_EXPORT GlobalActivityTracker {
   // The process-id of the current process. This is kept as a member variable,
   // defined during initialization, for testing purposes.
   const int64_t process_id_;
+
+  // The directory in which the global tracker was created if created using
+  // CreateWithDir().
+  const FilePath create_dir_;
 
   // The activity tracker for the currently executing thread.
   ThreadLocalStorage::Slot this_thread_tracker_;
@@ -1206,8 +1242,9 @@ class BASE_EXPORT GlobalActivityTracker {
   // A lock that is used to protect access to the following fields.
   Lock global_tracker_lock_;
 
-  // The collection of processes being tracked and their command-lines.
-  std::map<int64_t, std::string> known_processes_;
+  // The collection of processes being tracked and their launch info.
+  std::map<int64_t, PersistentMemoryAllocator::Reference> known_processes_;
+  ActivityTrackerMemoryAllocator subprocess_info_allocator_;
 
   // A task-runner that can be used for doing background processing.
   scoped_refptr<TaskRunner> background_task_runner_;

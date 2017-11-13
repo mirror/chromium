@@ -9,6 +9,7 @@
 
 #include "base/files/file.h"
 #include "base/files/file_path.h"
+#include "base/files/file_util.h"
 #include "base/files/memory_mapped_file.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
@@ -128,6 +129,21 @@ std::unique_ptr<GlobalActivityAnalyzer> GlobalActivityAnalyzer::CreateWithFile(
   }
 
   return WrapUnique(new GlobalActivityAnalyzer(std::move(allocator)));
+}
+
+std::unique_ptr<GlobalActivityAnalyzer> GlobalActivityAnalyzer::CreateWithDir(
+    const FilePath& dir_path) {
+  std::unique_ptr<GlobalActivityAnalyzer> analyzer =
+      CreateWithFile(GlobalActivityTracker::ProcessFilePath(dir_path, 0));
+  if (!analyzer)
+    return nullptr;
+
+  // The |create_dir_| is "const" because it should never be changed outside
+  // of initialization. This *is* initialization but not the constructor so
+  // a const-cast is necessary.
+  *const_cast<FilePath*>(&analyzer->create_dir_) = dir_path;
+
+  return analyzer;
 }
 #endif  // !defined(OS_NACL)
 
@@ -279,6 +295,56 @@ GlobalActivityAnalyzer::UserDataSnapshot::UserDataSnapshot(
 GlobalActivityAnalyzer::UserDataSnapshot::~UserDataSnapshot() {}
 
 void GlobalActivityAnalyzer::PrepareAllAnalyzers() {
+  PrepareLocalAnalyzers();
+
+  if (!create_dir_.empty()) {
+    flat_set<int64_t> seen_pids(process_ids_.begin(), process_ids_.end());
+
+    // Go through all PIDs looking for files specific to them.
+    for (size_t i = 0; i < process_ids_.size(); ++i) {
+      int64_t pid = process_ids_[i];
+      FilePath pid_file =
+          GlobalActivityTracker::ProcessFilePath(create_dir_, pid);
+      if (PathExists(pid_file)) {
+        std::unique_ptr<GlobalActivityAnalyzer> subanalyzer =
+            CreateWithFile(pid_file);
+        if (subanalyzer) {
+          subanalyzer->PrepareLocalAnalyzers();
+
+          // Go through all the PIDs found by the sub-analyzer.
+          for (int64_t subpid : subanalyzer->process_ids_) {
+            if (ContainsKey(process_data_, subpid))
+              continue;
+            if (!ContainsKey(seen_pids, subpid))
+              process_ids_.push_back(subpid);
+
+            // Move the process "user data" for the PID.
+            auto process_data_iter = subanalyzer->process_data_.find(subpid);
+            if (process_data_iter != subanalyzer->process_data_.end()) {
+              process_data_.emplace(process_data_iter->first,
+                                    std::move(process_data_iter->second));
+            }
+
+            // Move all analyzers (one per thread) for the PID.
+            for (auto analyzer_iter =
+                     subanalyzer->analyzers_.lower_bound(ThreadKey(subpid));
+                 analyzer_iter != subanalyzer->analyzers_.end() &&
+                 analyzer_iter->first.pid() == subpid;
+                 ++analyzer_iter) {
+              analyzers_.emplace(analyzer_iter->first,
+                                 std::move(analyzer_iter->second));
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Reverse the list of PIDs so that they get popped in the order found.
+  std::reverse(process_ids_.begin(), process_ids_.end());
+}
+
+void GlobalActivityAnalyzer::PrepareLocalAnalyzers() {
   // Record the time when analysis started.
   analysis_stamp_ = base::Time::Now().ToInternalValue();
 
@@ -290,6 +356,8 @@ void GlobalActivityAnalyzer::PrepareAllAnalyzers() {
     switch (type) {
       case GlobalActivityTracker::kTypeIdActivityTracker:
       case GlobalActivityTracker::kTypeIdActivityTrackerFree:
+      case GlobalActivityTracker::kTypeIdSubprocessRecord:
+      case GlobalActivityTracker::kTypeIdSubprocessRecordFree:
       case GlobalActivityTracker::kTypeIdProcessDataRecord:
       case GlobalActivityTracker::kTypeIdProcessDataRecordFree:
       case PersistentMemoryAllocator::kTypeIdTransitioning:
@@ -304,7 +372,7 @@ void GlobalActivityAnalyzer::PrepareAllAnalyzers() {
   analyzers_.clear();
   process_data_.clear();
   process_ids_.clear();
-  std::set<int64_t> seen_pids;
+  flat_set<int64_t> seen_pids;
 
   // Go through all the known references and create objects for them with
   // snapshots of the current state.
@@ -344,6 +412,16 @@ void GlobalActivityAnalyzer::PrepareAllAnalyzers() {
         analyzers_[analyzer->GetThreadKey()] = std::move(analyzer);
       } break;
 
+      case GlobalActivityTracker::kTypeIdSubprocessRecord: {
+        // Include subprocess PIDs in set of known ones.
+        const GlobalActivityTracker::SubprocessRecord* proc_info =
+            static_cast<GlobalActivityTracker::SubprocessRecord*>(base);
+        if (!ContainsKey(seen_pids, proc_info->pid)) {
+          process_ids_.push_back(proc_info->pid);
+          seen_pids.insert(proc_info->pid);
+        }
+      } break;
+
       case GlobalActivityTracker::kTypeIdProcessDataRecord: {
         // Get the PID associated with this data record.
         int64_t process_id;
@@ -369,16 +447,13 @@ void GlobalActivityAnalyzer::PrepareAllAnalyzers() {
         }
 
         // Track PIDs.
-        if (seen_pids.find(process_id) == seen_pids.end()) {
+        if (!ContainsKey(seen_pids, process_id)) {
           process_ids_.push_back(process_id);
           seen_pids.insert(process_id);
         }
       } break;
     }
   }
-
-  // Reverse the list of PIDs so that they get popped in the order found.
-  std::reverse(process_ids_.begin(), process_ids_.end());
 }
 
 }  // namespace debug

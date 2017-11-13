@@ -7,11 +7,11 @@
 
 #include <map>
 #include <memory>
-#include <set>
 #include <string>
 #include <vector>
 
 #include "base/base_export.h"
+#include "base/containers/flat_set.h"
 #include "base/debug/activity_tracker.h"
 
 namespace base {
@@ -37,6 +37,8 @@ class BASE_EXPORT ThreadActivityAnalyzer {
   // multiple processes.
   class ThreadKey {
    public:
+    explicit ThreadKey(int64_t pid)
+        : pid_(pid), tid_(std::numeric_limits<int64_t>::min()) {}
     ThreadKey(int64_t pid, int64_t tid) : pid_(pid), tid_(tid) {}
 
     bool operator<(const ThreadKey& rhs) const {
@@ -48,6 +50,9 @@ class BASE_EXPORT ThreadActivityAnalyzer {
     bool operator==(const ThreadKey& rhs) const {
       return (pid_ == rhs.pid_ && tid_ == rhs.tid_);
     }
+
+    int64_t pid() const { return pid_; }
+    int64_t tid() const { return tid_; }
 
    private:
     int64_t pid_;
@@ -142,6 +147,8 @@ class BASE_EXPORT GlobalActivityAnalyzer {
   // |file_path|.
   static std::unique_ptr<GlobalActivityAnalyzer> CreateWithFile(
       const FilePath& file_path);
+  static std::unique_ptr<GlobalActivityAnalyzer> CreateWithDir(
+      const FilePath& dir_path);
 #endif  // !defined(OS_NACL)
 
   // Iterates over all known valid processes and returns their PIDs or zero
@@ -211,6 +218,16 @@ class BASE_EXPORT GlobalActivityAnalyzer {
   // Finds, creates, and indexes analyzers for all known processes and threads.
   void PrepareAllAnalyzers();
 
+  // Finds, creates, and indexes analyzers for threads of this file.
+  void PrepareLocalAnalyzers();
+
+  // Extracts analysis from another analyzer into this one.
+  void ImportAnalyzersFrom(GlobalActivityAnalyzer* other);
+
+  // The directory in which the global tracker was created if created using
+  // CreateWithDir().
+  const FilePath create_dir_;
+
   // The persistent memory allocator holding all tracking data.
   std::unique_ptr<PersistentMemoryAllocator> allocator_;
 
@@ -222,7 +239,7 @@ class BASE_EXPORT GlobalActivityAnalyzer {
   PersistentMemoryAllocator::Iterator allocator_iterator_;
 
   // A set of all interesting memory references found within the allocator.
-  std::set<PersistentMemoryAllocator::Reference> memory_references_;
+  flat_set<PersistentMemoryAllocator::Reference> memory_references_;
 
   // A set of all process-data memory references found within the allocator.
   std::map<int64_t, UserDataSnapshot> process_data_;
