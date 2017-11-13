@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c90cd824_71cce1dd",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-13T20:18:34Z",
+      "side": 1,
+      "message": "Does this need to be a constant outside of this scope? Can we just move the definition here?",
+      "range": {
+        "startLine": 800,
+        "startChar": 33,
+        "endLine": 800,
+        "endChar": 73
+      },
+      "revId": "367fcf378d5d97ec33294534ba6064bc8497bfaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
