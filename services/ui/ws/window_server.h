@@ -410,6 +410,9 @@ class WindowServer : public ServerWindowDelegate,
 
   viz::SurfaceId root_surface_id_;
 
+  // Incremented when viz process is restarted.
+  uint16_t viz_process_restart_id_ = 0;
+
   // Provides interfaces to create and manage FrameSinks.
   std::unique_ptr<viz::HostFrameSinkManager> host_frame_sink_manager_;
 
