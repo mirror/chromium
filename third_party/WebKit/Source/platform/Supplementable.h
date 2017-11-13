@@ -133,6 +133,16 @@ class Supplement : public GarbageCollectedMixin,
     return supplementable ? supplementable->RequireSupplement(key) : 0;
   }
 
+  static const Supplement<T>* From(const Supplementable<T>& supplementable,
+                                   const char* key) {
+    return supplementable.RequireSupplement(key);
+  }
+
+  static const Supplement<T>* From(const Supplementable<T>* supplementable,
+                                   const char* key) {
+    return supplementable ? supplementable->RequireSupplement(key) : 0;
+  }
+
   virtual void Trace(blink::Visitor* visitor) {
     visitor->Trace(supplementable_);
   }
@@ -161,6 +171,11 @@ class Supplementable : public GarbageCollectedMixin {
   }
 
   Supplement<T>* RequireSupplement(const char* key) {
+    return const_cast<Supplement<T>*>(
+        static_cast<const Supplementable&>(*this).RequireSupplement(key));
+  }
+
+  const Supplement<T>* RequireSupplement(const char* key) const {
 #if DCHECK_IS_ON()
     DCHECK_EQ(attached_thread_id_, CurrentThread());
 #endif
