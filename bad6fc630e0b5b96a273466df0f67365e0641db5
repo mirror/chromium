@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b855629b_c398fbf7",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2950,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-13T21:54:52Z",
+      "side": 1,
+      "message": "I read through the fullscreen API spec, and it does not specify the\ndocument background color includig the fullscreen element\u0027s background.\n\nThe code here affects painting of the LayoutView, so the above sentence\nis important.",
+      "revId": "bad6fc630e0b5b96a273466df0f67365e0641db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
