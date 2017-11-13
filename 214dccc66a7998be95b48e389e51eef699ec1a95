@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "b9aab49c_2e354200",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-13T15:41:57Z",
+      "side": 0,
+      "message": "The total transfer size calculated with data pipe for Network Service case is bogus for now and should be fixed anyways, I think it\u0027s okay to remove it.",
+      "parentUuid": "9d0b224b_125944f3",
+      "revId": "214dccc66a7998be95b48e389e51eef699ec1a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76c2d74d_34f291a9",
         "filename": "content/renderer/loader/web_url_loader_impl.cc",
         "patchSetId": 8
