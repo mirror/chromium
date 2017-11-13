@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "090ead07_faa63389",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-13T23:55:27Z",
+      "side": 1,
+      "message": "Make the first line more meaningful within 50-60 chars. Since that\u0027s what people see when scanning logs. Maybe something like \u0027Fix unchecked return value of Get... in Mount...\u0027 or similar.\n\nAlso be specific that some fields of ProvidedExtensionInfo are not initialized if the call fails rather than just a generic \u0027malformed data\u0027.\n\nAlso, blank line after the subject line.\n\nhttps://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions",
+      "revId": "e2437b7c06686d810177a3563421b2e1b6a5d1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0fc168b_ea14023a",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-13T23:55:27Z",
+      "side": 1,
+      "message": "I\u0027ll leave to Tomasz if he likes the name. But should be got_info.",
+      "revId": "e2437b7c06686d810177a3563421b2e1b6a5d1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4494c1c3_afe2ec13",
         "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
         "patchSetId": 1
@@ -13,6 +47,30 @@
       "writtenOn": "2017-11-13T23:11:05Z",
       "side": 1,
       "message": "Should there be a DCHECK() here too? Or can there be a race condition where and extension is deleted while GetProvidingExtensionInfo is inflight?",
+      "range": {
+        "startLine": 330,
+        "startChar": 4,
+        "endLine": 332,
+        "endChar": 3
+      },
+      "revId": "e2437b7c06686d810177a3563421b2e1b6a5d1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "559c26f5_406e4f08",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-13T23:55:27Z",
+      "side": 1,
+      "message": "Also note that if it is possibly for an extension to \u0027disappear\u0027 the other DCHECK above would need to become a returned error too.",
+      "parentUuid": "4494c1c3_afe2ec13",
       "range": {
         "startLine": 330,
         "startChar": 4,
