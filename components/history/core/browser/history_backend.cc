@@ -307,24 +307,32 @@ SegmentID HistoryBackend::UpdateSegments(const GURL& url,
        ui::PageTransitionCoreTypeIs(transition_type,
                                     ui::PAGE_TRANSITION_AUTO_BOOKMARK)) &&
       (transition_type & ui::PAGE_TRANSITION_FORWARD_BACK) == 0) {
-    // If so, create or get the segment.
-    std::string segment_name = db_->ComputeSegmentName(url);
     URLID url_id = db_->GetRowForURL(url, nullptr);
     if (!url_id)
       return 0;
 
-    segment_id = db_->GetSegmentNamed(segment_name);
+    // See if there is a matching segment before we create a new one. For
+    // backward-compatibility, we try against multiple names.
+    const std::vector<std::string> segment_names =
+        db_->ComputeSegmentNames(url);
+    for (const std::string& segment_name : segment_names) {
+      segment_id = db_->GetSegmentNamed(segment_name);
+      if (segment_id) {
+        // Note: if we update an existing segment, we update the url used to
+        // represent that segment in order to minimize stale most visited
+        // images.
+        db_->UpdateSegmentRepresentationURL(segment_id, url_id);
+        break;
+      }
+    }
+
     if (!segment_id) {
-      segment_id = db_->CreateSegment(url_id, segment_name);
+      // When creating a new segment, we use the highest-priority name.
+      segment_id = db_->CreateSegment(url_id, segment_names.front());
       if (!segment_id) {
         NOTREACHED();
         return 0;
       }
-    } else {
-      // Note: if we update an existing segment, we update the url used to
-      // represent that segment in order to minimize stale most visited
-      // images.
-      db_->UpdateSegmentRepresentationURL(segment_id, url_id);
     }
   } else {
     // Note: it is possible there is no segment ID set for this visit chain.
@@ -332,9 +340,10 @@ SegmentID HistoryBackend::UpdateSegments(const GURL& url,
     // TYPED. (For example GENERATED). In this case this visit doesn't count
     // toward any segment.
     segment_id = GetLastSegmentID(from_visit);
-    if (!segment_id)
-      return 0;
   }
+
+  if (!segment_id)
+    return 0;
 
   // Set the segment in the visit.
   if (!db_->SetSegmentID(visit_id, segment_id)) {

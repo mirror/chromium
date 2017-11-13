@@ -6,6 +6,8 @@
 #define COMPONENTS_HISTORY_CORE_BROWSER_VISITSEGMENT_DATABASE_H_
 
 #include <memory>
+#include <string>
+#include <vector>
 
 #include "base/callback_forward.h"
 #include "base/macros.h"
@@ -26,9 +28,10 @@ class VisitSegmentDatabase {
   VisitSegmentDatabase();
   virtual ~VisitSegmentDatabase();
 
-  // Compute a segment name given a URL. The segment name is currently the
-  // source url spec less some information such as query strings.
-  static std::string ComputeSegmentName(const GURL& url);
+  // Compute a segment names given a URL, in decreasing priority order. The
+  // segment name is currently the source url spec less some information such as
+  // query strings, which is returned in multiple variants (http and https).
+  static std::vector<std::string> ComputeSegmentNames(const GURL& url);
 
   // Returns the ID of the segment with the corresponding name, or 0 if there
   // is no segment with that name.

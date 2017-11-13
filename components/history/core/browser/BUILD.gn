@@ -214,6 +214,7 @@ source_set("unit_tests") {
     "url_utils_unittest.cc",
     "visit_database_unittest.cc",
     "visit_tracker_unittest.cc",
+    "visitsegment_database_unittest.cc",
     "web_history_service_unittest.cc",
   ]
   deps = [

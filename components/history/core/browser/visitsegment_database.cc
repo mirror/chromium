@@ -36,6 +36,22 @@
 //
 
 namespace history {
+namespace {
+
+// If the URL host begins with the provided prefix, it gets stripped. Returns
+// true if |*url| was actually modified.
+void TryStripCaseInsensitivePrefixFromHost(const std::string& host,
+                                           base::StringPiece prefix,
+                                           GURL::Replacements* replacements) {
+  if (host.size() > prefix.size() &&
+      base::StartsWith(host, prefix, base::CompareCase::INSENSITIVE_ASCII)) {
+    replacements->SetHost(
+        host.c_str(),
+        url::Component(prefix.size(), host.size() - prefix.size()));
+  }
+}
+
+}  // namespace
 
 VisitSegmentDatabase::VisitSegmentDatabase() {
 }
@@ -100,21 +116,14 @@ bool VisitSegmentDatabase::DropSegmentTables() {
 // be an MD5 to limit the length.
 //
 // static
-std::string VisitSegmentDatabase::ComputeSegmentName(const GURL& url) {
+std::vector<std::string> VisitSegmentDatabase::ComputeSegmentNames(
+    const GURL& url) {
   // TODO(brettw) this should probably use the registry controlled
   // domains service.
   GURL::Replacements r;
-  const char kWWWDot[] = "www.";
-  const int kWWWDotLen = arraysize(kWWWDot) - 1;
-
   std::string host = url.host();
-  // Remove www. to avoid some dups.
-  if (static_cast<int>(host.size()) > kWWWDotLen &&
-      base::StartsWith(host, kWWWDot, base::CompareCase::INSENSITIVE_ASCII)) {
-    r.SetHost(host.c_str(),
-              url::Component(kWWWDotLen,
-                             static_cast<int>(host.size()) - kWWWDotLen));
-  }
+  TryStripCaseInsensitivePrefixFromHost(host, "www.", &r);
+
   // Remove other stuff we don't want.
   r.ClearUsername();
   r.ClearPassword();
@@ -122,7 +131,29 @@ std::string VisitSegmentDatabase::ComputeSegmentName(const GURL& url) {
   r.ClearRef();
   r.ClearPort();
 
-  return url.ReplaceComponents(r).spec();
+  // Segment name as computed by older version of Chrome.
+  std::string legacy_name = url.ReplaceComponents(r).spec();
+
+  // We now canonicalize the name more aggressively for the purpose of avoiding
+  // duplicates, but we return both names for backward-compatibility.
+  if (url.SchemeIs(url::kHttpsScheme))
+    r.SetSchemeStr(url::kHttpScheme);
+
+  for (base::StringPiece prefix :
+       std::vector<base::StringPiece>({"m.", "mobile.", "touch."})) {
+    if (r.IsHostOverridden())
+      break;
+
+    TryStripCaseInsensitivePrefixFromHost(host, prefix, &r);
+  }
+
+  std::vector<std::string> names;
+  names.push_back(url.ReplaceComponents(r).spec());
+
+  if (legacy_name != names.front())
+    names.push_back(std::move(legacy_name));
+
+  return names;
 }
 
 SegmentID VisitSegmentDatabase::GetSegmentNamed(

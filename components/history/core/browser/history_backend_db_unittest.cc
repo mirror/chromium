@@ -1233,7 +1233,7 @@ TEST_F(HistoryBackendDBTest, MigratePresentations) {
   const SegmentID segment_id = 2;
   const URLID url_id = 3;
   const GURL url("http://www.foo.com");
-  const std::string url_name(VisitSegmentDatabase::ComputeSegmentName(url));
+  const std::string url_name(VisitSegmentDatabase::ComputeSegmentNames(url)[0]);
   const base::string16 title(base::ASCIIToUTF16("Title1"));
   const base::Time segment_time(base::Time::Now());
 
@@ -1349,10 +1349,10 @@ TEST_F(HistoryBackendDBTest, QuerySegmentUsage) {
   ASSERT_NE(0, url_id2);
 
   SegmentID segment_id1 = db_->CreateSegment(
-      url_id1, VisitSegmentDatabase::ComputeSegmentName(url1));
+      url_id1, VisitSegmentDatabase::ComputeSegmentNames(url1)[0]);
   ASSERT_NE(0, segment_id1);
   SegmentID segment_id2 = db_->CreateSegment(
-      url_id2, VisitSegmentDatabase::ComputeSegmentName(url2));
+      url_id2, VisitSegmentDatabase::ComputeSegmentNames(url2)[0]);
   ASSERT_NE(0, segment_id2);
 
   ASSERT_TRUE(db_->IncreaseSegmentVisitCount(segment_id1, time, visit_count1));

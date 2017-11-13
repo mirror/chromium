@@ -925,7 +925,7 @@ TEST_F(HistoryBackendTest, KeywordGenerated) {
   ASSERT_EQ(1, row.typed_count());
 
   // KEYWORD_GENERATED urls should not be added to the segment db.
-  std::string segment_name = VisitSegmentDatabase::ComputeSegmentName(url);
+  std::string segment_name = VisitSegmentDatabase::ComputeSegmentNames(url)[0];
   EXPECT_EQ(0, backend_->db()->GetSegmentNamed(segment_name));
 
   // One visit should be added.
