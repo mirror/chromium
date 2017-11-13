@@ -18,6 +18,8 @@
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/dip_util.h"
 #include "ui/compositor/layer.h"
+#include "ui/gfx/image/image.h"
+#include "ui/gfx/image/image_skia.h"
 #include "ui/snapshot/snapshot_async.h"
 
 namespace ui {
@@ -137,7 +139,7 @@ void GrabViewSnapshotAsync(gfx::NativeView view,
 
 void GrabLayerSnapshotAsync(ui::Layer* layer,
                             const gfx::Rect& source_rect,
-                            const GrabLayerSnapshotCallback& callback) {
+                            const GrabWindowSnapshotAsyncCallback& callback) {
   MakeAsyncCopyRequest(
       layer, source_rect,
       base::BindOnce(&SnapshotAsync::RunCallbackWithCopyOutputResult,
