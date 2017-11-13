@@ -68,6 +68,24 @@
       "revId": "17321e34f830fb514c28d32b1b30ab6991637b0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bac663d_f5df5ba0",
+        "filename": "chrome/common/extensions/docs/templates/json/chrome_sidenav.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-13T22:44:51Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "2ce1e127_64d0a61c",
+      "revId": "17321e34f830fb514c28d32b1b30ab6991637b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
