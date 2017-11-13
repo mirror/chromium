@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59041c5a_5a781e8e",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-13T20:11:33Z",
+      "side": 1,
+      "message": "there\u0027s a whole bunch of other logic in loadAlreadyLocked. why is it correct to ignore all that, and just pull this bit out? I mean if Linker.isUsed returns true, this code never executes\n\nAlso now this is called before receiving command lines from browser, so should name the method that way (fooWithoutCommandline or something like), and audit all the methods that this calls that none of them use command line either, then rename them as well.",
+      "revId": "c3ce5d815a9f9247d09ce572c56b6892249517f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a2433a0_21a5973c",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-13T20:11:33Z",
+      "side": 1,
+      "message": "uhh, UI thread just reads wrong in a service, can you just get the current looper instead\n\nprobably should put a note that this happens on the java main thread, and that it can run in parallel with (or while waiting for) setupConnection. that\u0027s where the speed up is coming from, right?",
+      "revId": "c3ce5d815a9f9247d09ce572c56b6892249517f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
