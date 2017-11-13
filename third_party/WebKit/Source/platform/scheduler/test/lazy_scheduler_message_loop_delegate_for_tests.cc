@@ -23,8 +23,7 @@ LazySchedulerMessageLoopDelegateForTests::
     LazySchedulerMessageLoopDelegateForTests()
     : message_loop_(base::MessageLoop::current()),
       thread_id_(base::PlatformThread::CurrentId()),
-      time_source_(std::make_unique<base::DefaultTickClock>()),
-      pending_observer_(nullptr) {
+      time_source_(std::make_unique<base::DefaultTickClock>()) {
   if (message_loop_)
     original_task_runner_ = message_loop_->task_runner();
 }
@@ -44,8 +43,6 @@ base::MessageLoop* LazySchedulerMessageLoopDelegateForTests::EnsureMessageLoop()
   original_task_runner_ = message_loop_->task_runner();
   if (pending_task_runner_)
     message_loop_->SetTaskRunner(std::move(pending_task_runner_));
-  if (pending_observer_)
-    base::RunLoop::AddNestingObserverOnCurrentThread(pending_observer_);
   return message_loop_;
 }
 
@@ -98,43 +95,11 @@ bool LazySchedulerMessageLoopDelegateForTests::IsNested() const {
 
 void LazySchedulerMessageLoopDelegateForTests::AddNestingObserver(
     base::RunLoop::NestingObserver* observer) {
-  // While |observer| _could_ be associated with the current thread regardless
-  // of the presence of a MessageLoop, the association is delayed until
-  // EnsureMessageLoop() is invoked. This works around a state issue where
-  // otherwise many tests fail because of the following sequence:
-  //   1) blink::scheduler::CreateRendererSchedulerForTests()
-  //       -> TaskQueueManager::TaskQueueManager()
-  //       -> LazySchedulerMessageLoopDelegateForTests::AddNestingObserver()
-  //   2) Any test framework with a base::MessageLoop member (and not caring
-  //      about the blink scheduler) does:
-  //        ThreadTaskRunnerHandle::Get()->PostTask(
-  //            FROM_HERE, an_init_task_with_a_nested_loop);
-  //        RunLoop.RunUntilIdle();
-  //   3) |a_task_with_a_nested_loop| triggers
-  //          TaskQueueManager::OnBeginNestedLoop() which:
-  //            a) flags any_thread().is_nested = true;
-  //            b) posts a task to self, which triggers:
-  //                 LazySchedulerMessageLoopDelegateForTests::PostDelayedTask()
-  //   4) This self-task in turn triggers TaskQueueManager::DoWork()
-  //      which expects to be the only one to trigger nested loops (doesn't
-  //      support TaskQueueManager::OnBeginNestedLoop() being invoked before
-  //      it kicks in), resulting in it hitting:
-  //      DCHECK_EQ(any_thread().is_nested, delegate_->IsNested()); (1 vs 0).
-  // TODO(skyostil): fix this convulotion as part of http://crbug.com/495659.
-  if (!HasMessageLoop()) {
-    pending_observer_ = observer;
-    return;
-  }
   base::RunLoop::AddNestingObserverOnCurrentThread(observer);
 }
 
 void LazySchedulerMessageLoopDelegateForTests::RemoveNestingObserver(
     base::RunLoop::NestingObserver* observer) {
-  if (!message_loop_ || message_loop_ != base::MessageLoop::current()) {
-    DCHECK_EQ(pending_observer_, observer);
-    pending_observer_ = nullptr;
-    return;
-  }
   base::RunLoop::RemoveNestingObserverOnCurrentThread(observer);
 }
 
