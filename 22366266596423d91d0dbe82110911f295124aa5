@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "496da685_50d8a874",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-11-13T17:43:37Z",
+      "side": 1,
+      "message": "why not add Nonnull ?",
+      "range": {
+        "startLine": 588,
+        "startChar": 32,
+        "endLine": 588,
+        "endChar": 33
+      },
+      "revId": "22366266596423d91d0dbe82110911f295124aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb947a3_6bff3dcc",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-11-13T17:43:37Z",
+      "side": 1,
+      "message": "Should we have a local copy of the parent method params to use in here as they may be deleted/changed",
+      "range": {
+        "startLine": 653,
+        "startChar": 10,
+        "endLine": 653,
+        "endChar": 19
+      },
+      "revId": "22366266596423d91d0dbe82110911f295124aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
