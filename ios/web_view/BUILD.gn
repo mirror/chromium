@@ -239,6 +239,8 @@ test("ios_web_view_unittests") {
     "internal/cwv_html_element_unittest.mm",
     "internal/cwv_preferences_unittest.mm",
     "internal/cwv_preview_element_info_unittest.mm",
+    "internal/web_view_test_with_test_web_state.h",
+    "internal/web_view_test_with_test_web_state.mm",
   ]
   sources += ios_web_view_sources
 
@@ -246,6 +248,8 @@ test("ios_web_view_unittests") {
     "test:test_support",
     "//base/test:run_all_unittests",
     "//ios/testing:ios_test_support",
+    "//ios/web/public/test",
+    "//ios/web/public/test/fakes",
     "//testing/gtest",
   ]
   deps += ios_web_view_deps
