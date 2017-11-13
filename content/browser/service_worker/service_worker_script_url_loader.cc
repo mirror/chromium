@@ -126,7 +126,8 @@ void ServiceWorkerScriptURLLoader::ResumeReadingBodyFromNet() {
 void ServiceWorkerScriptURLLoader::OnReceiveResponse(
     const ResourceResponseHead& response_head,
     const base::Optional<net::SSLInfo>& ssl_info,
-    mojom::DownloadedTempFilePtr downloaded_file) {
+    mojom::DownloadedTempFilePtr downloaded_file,
+    mojom::URLLoaderNavigationDataPtr navigation_data) {
   if (!version_->context() || version_->is_redundant()) {
     CommitCompleted(network::URLLoaderStatus(net::ERR_FAILED));
     return;
@@ -197,7 +198,8 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
       base::MakeRefCounted<HttpResponseInfoIOBuffer>(response_info.release()));
 
   client_->OnReceiveResponse(response_head, ssl_info,
-                             std::move(downloaded_file));
+                             std::move(downloaded_file),
+                             mojom::URLLoaderNavigationDataPtr());
 }
 
 void ServiceWorkerScriptURLLoader::OnReceiveRedirect(
