@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4318d87a_4798f2a9",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-13T17:05:44Z",
+      "side": 1,
+      "message": "nit: we should also check that back and forward are not true at the same time.",
+      "revId": "beebbff1e63011f32ccd95a9e265dd5a2fe8f4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "facf73f8_6a93413a",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-13T17:05:44Z",
+      "side": 1,
+      "message": "nit: add a line and a comment\n// Note: back and forward navigations should only be specified for browser-initiated navigations.\n\nAlso, no need for virtual.",
+      "revId": "beebbff1e63011f32ccd95a9e265dd5a2fe8f4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3b651a1_3ab744df",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-13T17:05:44Z",
+      "side": 1,
+      "message": "nit: remove \",\"",
+      "revId": "beebbff1e63011f32ccd95a9e265dd5a2fe8f4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
