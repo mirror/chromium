@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<title>Test that player will jump backwards 10 seconds if double tapped.</title>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<script src="../../media-controls.js"></script>
+<video controls width=400 src="../../content/60_sec_video.webm"></video>
+<script>
+async_test(t => {
+  const video = document.querySelector('video');
+  let time = 0;
+
+  video.onplaying = () => {
+    // Seek the video to the middle
+    video.currentTime = 30;
+  };
+
+  video.ontimeupdate = () => {
+    // The time should never be in the 20-30 second range
+    assert_not_equals(parseInt(video.currentTime, 10), 25);
+  };
+
+  video.onseeked = t.step_func(() => {
+    const currentTime = parseInt(video.currentTime, 10);
+
+    if (currentTime == 30) {
+      // Double tap in the top left hand corner
+      time = currentTime;
+      const coordinates =
+        coordinatesOutsideElement(mediaControlsOverlayPlayButton(video));
+      doubleTapAtCoordinates(coordinates[0] + 1, coordinates[1] + 1);
+    } else if (time > 0) {
+      // Check the video went back 10 seconds
+      assert_equals(currentTime, time - 10);
+      t.done();
+    }
+  });
+
+  video.play();
+});
+</script>
+</html>
