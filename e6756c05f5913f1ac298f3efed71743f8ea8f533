@@ -22,6 +22,30 @@
       "revId": "e6756c05f5913f1ac298f3efed71743f8ea8f533",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22332807_fc94e65a",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/singletap-on-outside.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-13T16:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74712764_fef69fa6",
+      "range": {
+        "startLine": 13,
+        "startChar": 7,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "e6756c05f5913f1ac298f3efed71743f8ea8f533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
