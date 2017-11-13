@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e946c4a2_6b7b319c",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-13T22:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e048c3ad_d0b37ed8",
+      "revId": "a51ba5faf662fa553e593bea9edcf57e314c04c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38b63909_0a1ac489",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "a51ba5faf662fa553e593bea9edcf57e314c04c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1467d49_346bbb19",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-13T22:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38b63909_0a1ac489",
+      "revId": "a51ba5faf662fa553e593bea9edcf57e314c04c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6c2ba31f_ad7ef925",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-13T22:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb7c4fb8_f59ce264",
+      "range": {
+        "startLine": 105,
+        "startChar": 29,
+        "endLine": 105,
+        "endChar": 52
+      },
+      "revId": "a51ba5faf662fa553e593bea9edcf57e314c04c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7d21331_c45e4bc2",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 8
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "21b037f9_63b05710",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-13T22:13:47Z",
+      "side": 1,
+      "message": "I remove the whole partial output directory with a try-finally, so I *think* it\u0027d be fine. But doing a first pass does make sense anyways.",
+      "parentUuid": "e7d21331_c45e4bc2",
+      "revId": "a51ba5faf662fa553e593bea9edcf57e314c04c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "886a0a36_0f4af3ac",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 8
@@ -87,6 +165,24 @@
       "writtenOn": "2017-11-13T21:04:07Z",
       "side": 1,
       "message": "this is effectively printing multiple json data streams without making it a proper list, so the output can\u0027t be piped into another tool. Is that desired?",
+      "revId": "a51ba5faf662fa553e593bea9edcf57e314c04c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7af76d3_5d3d456b",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-13T22:13:47Z",
+      "side": 1,
+      "message": "My bad; I changed the argument but didn\u0027t change this. I changed the script to only process one file. \n\nAlso added a --quiet argument.",
+      "parentUuid": "886a0a36_0f4af3ac",
       "revId": "a51ba5faf662fa553e593bea9edcf57e314c04c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
