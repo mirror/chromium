@@ -166,9 +166,6 @@ cr.define('extensions', function() {
 
     /** @override */
     attached: function() {
-      document.documentElement.classList.remove('loading');
-      document.fonts.load('bold 12px Roboto');
-
       this.navigationListener_ = extensions.navigation.addListener(newPage => {
         this.changePage_(newPage);
       });
@@ -308,6 +305,23 @@ cr.define('extensions', function() {
 
       this.apps_ = apps;
       this.extensions_ = extensions;
+
+      requestIdleCallback(this.loadLazyModule_.bind(this));
+    },
+
+    /**
+     * Triggers loading of the "lazy loaded" module.
+     * @return {!Promise} A signal that the module was loaded.
+     * @private
+     */
+    loadLazyModule_: function() {
+      return new Promise((resolve, reject) => {
+        this.importHref('lazy_load.html', () => {
+          document.documentElement.classList.remove('loading');
+          document.fonts.load('bold 12px Roboto');
+          resolve();
+        }, reject);
+      });
     },
 
     /**

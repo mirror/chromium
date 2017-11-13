@@ -32,6 +32,7 @@ var CrExtensionsBrowserTest = class extends PolymerTest {
   /** @override */
   get extraLibraries() {
     return PolymerTest.getLibraries(ROOT_PATH).concat([
+      '../settings/ensure_lazy_loaded.js',
       ROOT_PATH + 'ui/webui/resources/js/assert.js',
       'extension_test_util.js',
       '../mock_controller.js',
@@ -43,6 +44,12 @@ var CrExtensionsBrowserTest = class extends PolymerTest {
   /** @override */
   get typedefCppFixture() {
     return 'ExtensionSettingsUIBrowserTest';
+  }
+
+  /** @override */
+  setUp() {
+    super.setUp();
+    settings.ensureLazyLoaded();
   }
 };
 
