@@ -63,7 +63,7 @@ class ShortcutsProviderExtensionTest : public testing::Test {
 };
 
 ShortcutsProviderExtensionTest::ShortcutsProviderExtensionTest()
-    : client_(&profile_) {}
+    : client_(&profile_, nullptr) {}
 
 void ShortcutsProviderExtensionTest::SetUp() {
   ShortcutsBackendFactory::GetInstance()->SetTestingFactoryAndUse(

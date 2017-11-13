@@ -91,7 +91,7 @@ class ZeroSuggestPrefetcher : public AutocompleteControllerDelegate {
 
 ZeroSuggestPrefetcher::ZeroSuggestPrefetcher(Profile* profile)
     : controller_(new AutocompleteController(
-          base::MakeUnique<ChromeAutocompleteProviderClient>(profile),
+          base::MakeUnique<ChromeAutocompleteProviderClient>(profile, nullptr),
           this,
           AutocompleteProvider::TYPE_ZERO_SUGGEST)) {
   // Creating an arbitrary fake_request_source to avoid passing in an invalid
@@ -128,7 +128,8 @@ void ZeroSuggestPrefetcher::OnResultChanged(bool default_match_changed) {
 
 AutocompleteControllerAndroid::AutocompleteControllerAndroid(Profile* profile)
     : autocomplete_controller_(new AutocompleteController(
-          base::WrapUnique(new ChromeAutocompleteProviderClient(profile)),
+          base::WrapUnique(
+              new ChromeAutocompleteProviderClient(profile, nullptr)),
           this,
           AutocompleteClassifier::DefaultOmniboxProviders())),
       inside_synchronous_start_(false),
