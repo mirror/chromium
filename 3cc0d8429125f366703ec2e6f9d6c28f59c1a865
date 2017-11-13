@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea828e67_763d7736",
+        "filename": "tools/gn/command_args.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-13T16:57:13Z",
+      "side": 1,
+      "message": "Is this change intentional?",
+      "revId": "3cc0d8429125f366703ec2e6f9d6c28f59c1a865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
