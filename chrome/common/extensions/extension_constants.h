@@ -263,6 +263,11 @@ extern const char kZipArchiverExtensionId[];
 extern const char kZipArchiverExtensionPath[];
 #endif
 
+// The extension id of the test system app.
+extern const char kTestSystemAppId[];
+// The path of the test system app.
+extern const char kTestSystemAppPath[];
+
 // What causes an extension to be installed? Used in histograms, so don't
 // change existing values.
 enum CrxInstallCause {

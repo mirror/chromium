@@ -101,6 +101,14 @@ class ComponentLoader {
       const char* extension_id,
       const base::Closure& done_cb);
 
+  // Same as above, adding the |extra_flags| provided as creation flags to the
+  // extension.
+  void AddComponentFromDirWithFlags(
+      const base::FilePath& root_directory,
+      const char* extension_id,
+      int extra_flags,
+      const base::Closure& done_cb);
+
   // Add a component extension from a specific directory. Assumes that the
   // extension's manifest file lives in |root_directory| and its name is
   // 'manifest.json'. |name_string| and |description_string| are used to
@@ -139,6 +147,9 @@ class ComponentLoader {
     // The component extension's ID.
     std::string extension_id;
 
+    // Extra creation flags for the extension.
+    int extra_flags;
+
    private:
     DISALLOW_COPY_AND_ASSIGN(ComponentExtensionInfo);
   };
@@ -153,7 +164,8 @@ class ComponentLoader {
                   bool skip_whitelist);
   std::string Add(std::unique_ptr<base::DictionaryValue> parsed_manifest,
                   const base::FilePath& root_directory,
-                  bool skip_whitelist);
+                  bool skip_whitelist,
+                  int extra_flags);
 
   // Loads a registered component extension.
   void Load(const ComponentExtensionInfo& info);
@@ -171,6 +183,7 @@ class ComponentLoader {
   void AddHotwordHelperExtension();
   void AddImageLoaderExtension();
   void AddNetworkSpeechSynthesisExtension();
+  void AddTestSystemApp();
 
   void AddWithNameAndDescription(int manifest_resource_id,
                                  const base::FilePath& root_directory,
@@ -190,6 +203,9 @@ class ComponentLoader {
   // Enable HTML5 FileSystem for given component extension in Guest mode.
   void EnableFileSystemInGuestMode(const std::string& id);
 
+  // Sets the given component extension to open as a window.
+  void SetOpenAsWindow(const std::string& id);
+
 #if defined(OS_CHROMEOS)
   // Used as a reply callback by |AddComponentFromDir|.
   // Called with a |root_directory| and parsed |manifest| and invokes
@@ -199,6 +215,7 @@ class ComponentLoader {
       const char* extension_id,
       const base::Optional<std::string>& name_string,
       const base::Optional<std::string>& description_string,
+      int extra_flags,
       const base::Closure& done_cb,
       std::unique_ptr<base::DictionaryValue> manifest);
 #endif
