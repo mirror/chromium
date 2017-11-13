@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56399d73_7204929d",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-13T11:42:54Z",
+      "side": 1,
+      "message": "This is the call site with null position that breaks few layout tests.\nI\u0027ve fixed it quite straightforward, is that acceptable?\nOr should I add a TODO for future investigation?",
+      "revId": "732d1b58d9aef59c60079ec17f27c116e0689d38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
