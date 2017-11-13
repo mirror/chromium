@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "88ae027f_d313a6ac",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T14:02:57Z",
+      "side": 1,
+      "message": "\u003e I\u0027m concerned about fixing the TODO... Won\u0027t it have a risk of producing a reference cycle?\n\nReference cycles are expected and it\u0027s quite normal in web specs.  As we\u0027re willing to conform to the web specs, Blink needs to be able to handle reference cycles.\n\nI\u0027m not planning to fix this point before ScriptState gets Oilpanized.  Once everything is well organized, (I hope that) Blink will be able to hold a strong reference to the incumbent realm without causing a leak.\n\n\u003e Also what\u0027s the point of running a callback function on an already detached incumbent realm?\n\nI simply don\u0027t know which web spec prohibits running callback functions if the incumbent environment is detached.  Supposing that it\u0027s not prohibited by web specs, Blink should be able to run it.\n\nI\u0027d rather want a good reason when Blink is doing a different thing from web specs.  AFAIK, the specs don\u0027t prohibit it, and the incumbent realm is rarely used except for navigation, why do we better prohibit running callback functions if the incumbent environment is detached?",
+      "parentUuid": "7e27967a_36a1e843",
+      "revId": "2ef3c527ed6e04b9899806bc606eda97a52e61c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b44c048c_ccd55403",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-13T13:16:09Z",
       "side": 1,
       "message": "Can we use ContextIsValid()?\n\nMaybe would it be better to make IsCallbackFunctionRunnable check both relevant ScriptState and incumbent ScriptState?",
+      "revId": "2ef3c527ed6e04b9899806bc606eda97a52e61c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa512a79_85a95c04",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-13T14:02:57Z",
+      "side": 1,
+      "message": "\u003e Maybe would it be better to make IsCallbackFunctionRunnable check both relevant ScriptState and incumbent ScriptState?\n\nThat\u0027s what my first version was. ;)  And I changed my mind according to your review comment.  I now believe that it\u0027s the right direction to make the incumbent environment alive.",
+      "parentUuid": "b44c048c_ccd55403",
       "revId": "2ef3c527ed6e04b9899806bc606eda97a52e61c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
