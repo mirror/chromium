@@ -95,7 +95,18 @@ MediaPerceptionPrivateSetAnalyticsComponentFunction::
 
 ExtensionFunction::ResponseAction
 MediaPerceptionPrivateSetAnalyticsComponentFunction::Run() {
-  return RespondNow(Error("Not implemented."));
+  std::unique_ptr<media_perception::SetAnalyticsComponent::Params> params =
+      media_perception::SetAnalyticsComponent::Params::Create(*args_);
+  EXTENSION_FUNCTION_VALIDATE(params.get());
+
+  MediaPerceptionAPIManager* manager =
+      MediaPerceptionAPIManager::Get(browser_context());
+  manager->SetAnalyticsComponent(
+      params->type,
+      base::Bind(&MediaPerceptionPrivateSetAnalyticsComponentFunction::
+                     SetAnalyticsComponentCallback,
+                 this));
+  return ResponseLater();
 }
 
 }  // namespace extensions
