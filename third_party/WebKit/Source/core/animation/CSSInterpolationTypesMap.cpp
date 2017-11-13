@@ -84,14 +84,14 @@ const InterpolationTypes& CSSInterpolationTypesMap::Get(
   std::unique_ptr<InterpolationTypes> applicable_types =
       WTF::MakeUnique<InterpolationTypes>();
 
-  CSSPropertyID css_property = property.IsCSSProperty()
-                                   ? property.CssProperty()
-                                   : property.PresentationAttribute();
+  const CSSProperty& css_property = property.IsCSSProperty()
+                                        ? property.CssProperty()
+                                        : property.PresentationAttribute();
   // We treat presentation attributes identically to their CSS property
   // equivalents when interpolating.
   PropertyHandle used_property =
       property.IsCSSProperty() ? property : PropertyHandle(css_property);
-  switch (css_property) {
+  switch (css_property.PropertyID()) {
     case CSSPropertyBaselineShift:
     case CSSPropertyBorderBottomWidth:
     case CSSPropertyBorderLeftWidth:
@@ -322,7 +322,7 @@ const InterpolationTypes& CSSInterpolationTypesMap::Get(
       DCHECK_EQ(GetRegistration(registry_.Get(), property), nullptr);
       break;
     default:
-      DCHECK(!CSSProperty::Get(css_property).IsInterpolable());
+      DCHECK(!css_property.IsInterpolable());
       break;
   }
 
