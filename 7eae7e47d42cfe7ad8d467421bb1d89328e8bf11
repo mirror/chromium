@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f487da0a_f622ccba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-13T19:11:58Z",
+      "side": 1,
+      "message": "nit: to -\u003e too",
+      "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "193ff671_f2865b04",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-13T19:11:58Z",
+      "side": 1,
+      "message": "line 90 - 95 can be put inside of the if-clause ShouldUpdatePhantomWindowOrSnap(..)?",
+      "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe51efce_43db4006",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-13T19:11:58Z",
+      "side": 1,
+      "message": "In this case can we just reset initial_event_location_ \u003d gfx::Point(-1, -1); and early return true if initial_event_location_ has been reset?",
+      "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de820567_b1f89a9e",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-13T19:11:58Z",
+      "side": 1,
+      "message": "Is this right? I feel a little confused. Should it be:\nconst bool on_the_left_or_top \u003d (!inverted \u0026\u0026 snap_position \u003d\u003d SplitViewController::LEFT) ||\n                                (inverted \u0026\u0026 snap_position \u003d\u003d SplitViewController::RIGHT);",
+      "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c76642_eb2c3f47",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-13T19:11:58Z",
+      "side": 1,
+      "message": "Just curious: Why don\u0027t compare distance_scalar with OverviewWindowDragController::kMinimumDragOffsetAlreadyInSnapRegionDp directly?",
+      "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690c0b25_5c70a139",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-13T19:11:58Z",
+      "side": 1,
+      "message": "combine this if-clause into line 180? i.e.\nif (!ShouldUpdatePhantomWindowOrSnap(location_in_screen) || \n    snap_position_ \u003d\u003d SplitViewController::NONE) {\n  ...\n} else {\n  ...\n}",
+      "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a3accd_b9cd3586",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1983,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-13T19:11:58Z",
+      "side": 1,
+      "message": "line 1983 is redundant?",
+      "revId": "7eae7e47d42cfe7ad8d467421bb1d89328e8bf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
