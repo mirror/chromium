@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b844fec_0b119fa8",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-13T09:56:10Z",
+      "side": 1,
+      "message": "I\u0027d prefer \"WebRtc\" over \"Rtc\" in chromium code. I know it doesn\u0027t match the name we use internally, but I think the increased clarity is worth it. Most people reading this code won\u0027t be WebRTC engineers.",
+      "range": {
+        "startLine": 193,
+        "startChar": 7,
+        "endLine": 193,
+        "endChar": 32
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70bd53de_1b76e493",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-13T09:56:10Z",
+      "side": 1,
+      "message": "Is this intended to be moved into the EventLogManager?",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 60
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e847939_53f60ae2",
+        "filename": "content/browser/webrtc/webrtc_internals.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-13T09:56:10Z",
+      "side": 1,
+      "message": "I think you can skip \"RTC\" here. Since this is the webrtc_internals, it is clear from context which log we are talking about. (At least, none of the other function names use RTC/Rtc/WebRtc/WebRTC.)",
+      "range": {
+        "startLine": 156,
+        "startChar": 19,
+        "endLine": 156,
+        "endChar": 22
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b8d963a_60913843",
+        "filename": "content/browser/webrtc/webrtc_rtc_event_log_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-13T09:56:10Z",
+      "side": 1,
+      "message": "If we are neither logging to file nor uploading, the RtcEventLog shouldn\u0027t have an output object, should it? Isn\u0027t this satisfied automatically?",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb6e6c4_9836cc98",
+        "filename": "content/browser/webrtc/webrtc_rtc_event_log_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-13T09:56:10Z",
+      "side": 1,
+      "message": "Are there any points on the way down to the actual log implementation that can fail? I.e. is it possible that we never remove the log from local_logs because it never actually starts?",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 75
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a638b21_8edf7a41",
+        "filename": "content/browser/webrtc/webrtc_rtc_event_log_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-13T09:56:10Z",
+      "side": 1,
+      "message": "double std::move?",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 74
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3227aeea_e8d83d5d",
+        "filename": "content/browser/webrtc/webrtc_rtc_event_log_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-13T09:56:10Z",
+      "side": 1,
+      "message": "Won\u0027t the sum be unsigned?",
+      "range": {
+        "startLine": 169,
+        "startChar": 29,
+        "endLine": 169,
+        "endChar": 39
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1092597_4f629177",
+        "filename": "content/browser/webrtc/webrtc_rtc_event_log_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-13T09:56:10Z",
+      "side": 1,
+      "message": "I\u0027d prefer \"WebRtc\". Here and below.",
+      "range": {
+        "startLine": 28,
+        "startChar": 21,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "deb0622ab7119a6f34507b0bac61df9a22222752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
