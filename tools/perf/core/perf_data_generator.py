@@ -35,6 +35,7 @@ _UNSCHEDULED_TELEMETRY_BENCHMARKS = set([
   'speedometer-future',
   'speedometer2-future',
   'dromaeo',
+  'wasm.runtime_stats.real_world'
   ])
 
 
