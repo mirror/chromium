@@ -141,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "ce616394_a9b53dcf",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T02:29:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4cbaa8ff_90ee6f50",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80e2ad2d_03381eb4",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
@@ -246,6 +264,30 @@
       "side": 1,
       "message": "I don\u0027t know. These are the IDS that BookmarkAppConfirmationView uses. I don\u0027t know where these IDS are generated, because the generated code is undocumented AFAICT.",
       "parentUuid": "670aecb7_c9e3b565",
+      "range": {
+        "startLine": 74,
+        "startChar": 68,
+        "endLine": 74,
+        "endChar": 78
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b185d80_1ee92df6",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T02:29:08Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t know. These are the IDS that BookmarkAppConfirmationView uses. I don\u0027t know where these IDS are generated, because the generated code is undocumented AFAICT.\n\nI guess it doesn\u0027t matter.. there are probably two to satisfy some layering requirement (like, iOS can\u0027t depend on src/ui or something). They really should be merged though :/",
+      "parentUuid": "5904d7f7_242b1d41",
       "range": {
         "startLine": 74,
         "startChar": 68,
@@ -410,6 +452,24 @@
     },
     {
       "key": {
+        "uuid": "13a6ce00_6041ea84",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T02:29:08Z",
+      "side": 1,
+      "message": "\u003e How do I set the label width?  (SizeToFit() and SetMaximumWidth() CHECK that the label is multiline.)\n\nAh, you don\u0027t :). That\u0027s up to the LayoutManager. overriding ClientView::CalculatePreferredSize() as I suggested should cause the layout Manager to manipulate the \"stretchy\" columns and set the width for you. You might need to give the column with the labels a non-zero |resize_percent| argument to make it stretchy. I usually do\n\nconstexpr float kFixed \u003d 0.0f;\nconstexpr float kStretchy \u003d 1.0f;\n\nand pass those constants as the |resize_percent| arguments.",
+      "parentUuid": "a52b1438_090427cd",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ba97e24_ce2d1310",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
@@ -556,6 +616,24 @@
     },
     {
       "key": {
+        "uuid": "9d954dc5_bbaedec2",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T02:29:08Z",
+      "side": 1,
+      "message": "\u003e The documentation for GetDialogInsetsForContentType is unclear to me:\n\u003e \n\u003e \"|leading| is the type (text or control) of the first\n\u003e  element in the content  and |trailing| is the type of the final element.\"\n\u003e \n\u003e and the documentation for DialogContentType is: \n\u003e \"TEXT should be used for Labels or other elements that only show text. Otherwise CONTROL should be used.\"\n\u003e \n\u003e I would have thought that the icon was the first element, which is not text, hence \"CONTROL\". Perhaps CONTROL implies an interactive element; I\u0027m not sure.\n\u003e \n\u003e As for the final element, I wasn\u0027t sure.  Is it the final element horizontally, or vertically? Are the dialog buttons the final elements, or are they excluded?\n\u003e \n\u003e I\u0027ve added a link to the mocks in the bug, so you can see the spacing.\n\nYeah, we don\u0027t have clarity on how an icon should be classified from UX - it hasn\u0027t come up before :/. AFAIK views::CONTROL is currently just used for Textfields and dialog buttons inside the dialog contents (at the top or bottom: between title and dialog buttons). Basically, one will give a spacing that matches your mock, and one won\u0027t. If it\u0027s not obvious why one was chosen, there should be a comment here.",
+      "parentUuid": "9c1468f9_fb741eb1",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad9e93cc_f49a73c7",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 9
@@ -585,6 +663,24 @@
       "side": 1,
       "message": "Should that show the icon in the dialog? I tried implementing GetWindowIcon, but it doesn\u0027t look like the icon shows up anywhere.",
       "parentUuid": "ad9e93cc_f49a73c7",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4db901_6ee0a987",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T02:29:08Z",
+      "side": 1,
+      "message": "\u003e Should that show the icon in the dialog? I tried implementing GetWindowIcon, but it doesn\u0027t look like the icon shows up anywhere.\n\nit might also need ShouldShowWindowIcon(). But now I\u0027ve seen the mock, I don\u0027t think this will do what you want. It looks like you want a 3-column, 2-row GridLayout, and the icon ImageView should be added with |row_span| \u003d 2. Second column is padding. (or you could probably add a views::CreateEmptyBorder() to the ImageView with the appropriate padding on the right, then use a 2-column layout).",
+      "parentUuid": "80679445_04bf68b0",
       "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -817,6 +913,30 @@
       "side": 1,
       "message": "Done. I now wonder why it\u0027s called \"title\" in WebApplicationInfo in the first place, since it\u0027s \"name\" in the manifest spec.",
       "parentUuid": "f6da89b0_d4f672a1",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d354de_fc75d07f",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-13T02:29:08Z",
+      "side": 1,
+      "message": "\u003e Done. I now wonder why it\u0027s called \"title\" in WebApplicationInfo in the first place, since it\u0027s \"name\" in the manifest spec.\n\nheh - feel free to put up a CL to change it.. this has confused me a few times :/",
+      "parentUuid": "943e8542_fcfc014f",
       "range": {
         "startLine": 42,
         "startChar": 5,
