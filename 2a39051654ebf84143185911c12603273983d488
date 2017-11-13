@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40f756d7_743d51bc",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-13T23:24:46Z",
+      "side": 1,
+      "message": "You should not pass entries_ by reference onto another thread, you can use PostTaskAndReplyWithResult() to return a vector from ReadEntriesFromFile, and then assign it to entries in the OnInitialized() method",
+      "revId": "2a39051654ebf84143185911c12603273983d488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4718fb59_1ce78644",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-13T23:24:46Z",
+      "side": 1,
+      "message": "This is probably not needed. Caller of this class should already get OnInitialized() callback, and they can set a is_initialized variable member.",
+      "revId": "2a39051654ebf84143185911c12603273983d488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f117a83_fdb57947",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-13T23:24:46Z",
+      "side": 1,
+      "message": "return on new line?",
+      "revId": "2a39051654ebf84143185911c12603273983d488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb49fd67_b03dfecc",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-13T23:24:46Z",
+      "side": 1,
+      "message": "ditto?",
+      "revId": "2a39051654ebf84143185911c12603273983d488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18f2426_2ba000a2",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-13T23:24:46Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2a39051654ebf84143185911c12603273983d488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
