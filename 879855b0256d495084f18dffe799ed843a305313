@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6466a077_1192e0ac",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-relative-table-tbody-left.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-11-13T21:55:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47d8ba7d_aedcbe28",
+      "revId": "879855b0256d495084f18dffe799ed843a305313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6290d9ec_546ac69b",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-relative-table-tbody-left.html",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9544254b_0cf841aa",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-relative-table-tbody-left.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-11-13T21:55:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6290d9ec_546ac69b",
+      "revId": "879855b0256d495084f18dffe799ed843a305313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05282e1b_d8b3bad8",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-relative-table-tbody-left.html",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-10T11:31:56Z",
       "side": 1,
       "message": "Why is it inline-block?",
+      "revId": "879855b0256d495084f18dffe799ed843a305313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784eaf0c_4595791d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-relative-table-tbody-left.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-11-13T21:55:49Z",
+      "side": 1,
+      "message": "No good reason, copypasta really.",
+      "parentUuid": "05282e1b_d8b3bad8",
       "revId": "879855b0256d495084f18dffe799ed843a305313",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "30fab4d3_7ad5c9c8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-relative-table-tbody-left.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-11-13T21:55:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "310ea30a_4e8d283b",
+      "revId": "879855b0256d495084f18dffe799ed843a305313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e87d79f6_430ca749",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "879855b0256d495084f18dffe799ed843a305313",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c31c9314_e466bf11",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-11-13T21:55:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e87d79f6_430ca749",
+      "revId": "879855b0256d495084f18dffe799ed843a305313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "ba205452_ba0b74e0",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-11-13T21:55:49Z",
+      "side": 1,
+      "message": "I was going to allow sticky in a follow-up CL.",
+      "parentUuid": "7d5108b8_3bacdf51",
+      "revId": "879855b0256d495084f18dffe799ed843a305313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f8c5e6f_86f58ff8",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableRow.h",
         "patchSetId": 1
@@ -118,6 +226,24 @@
       "revId": "879855b0256d495084f18dffe799ed843a305313",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a88a5c_d145822a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableRow.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-11-13T21:55:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f8c5e6f_86f58ff8",
+      "revId": "879855b0256d495084f18dffe799ed843a305313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
