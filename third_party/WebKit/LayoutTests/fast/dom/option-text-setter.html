@@ -1,0 +1,19 @@
+<!doctype html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<form>
+    <select id='sel'>
+        <option value='foo'>bar</option>
+    </select>
+</form>
+<script>
+test(() => {
+    var textChild = document.getElementById('sel').options[0].firstChild;
+    assert_equals(textChild.nodeValue, "bar", "Verify that text child node's value equals the option value.");
+    assert_true(textChild.isConnected, 'Verify that text child node is in the document.');
+    document.getElementById('sel').options[0].text = "baz";
+    assert_equals(textChild.nodeValue, "bar", 'Verify that the text child node does not have an updated value.');
+    assert_false(textChild.isConnected, 'Verify that the text child node is not in the document.');
+    assert_false(textChild == document.getElementById('sel').options[0].firstChild, 'Verify that text child node was replaced by a different text child node.');
+}, 'Verify that using HTMLOptionElement.text setter does not update the existing text child node.');
+</script>
