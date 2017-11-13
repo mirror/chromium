@@ -296,6 +296,10 @@ bool ConfigureAsyncDnsNoFallbackFieldTrial() {
     return base::StartsWith(group_name, "AsyncDnsNoFallback",
                             base::CompareCase::INSENSITIVE_ASCII);
   }
+  group_name = base::FieldTrialList::FindFullName("DoH");
+  if (!group_name.empty()) {
+    return true;
+  }
   return kDefault;
 }
 
