@@ -127,7 +127,7 @@ ScopedJavaLocalRef<jobject> DownloadManagerService::CreateJavaDownloadInfo(
       item->GetLastAccessTime().ToJavaTime());
 }
 
-static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& jobj) {
+static jlong DownloadManagerService__Init(JNIEnv* env, const JavaParamRef<jobject>& jobj) {
   Profile* profile = ProfileManager::GetActiveUserProfile();
   DownloadManagerService* service = DownloadManagerService::GetInstance();
   service->Init(env, jobj);

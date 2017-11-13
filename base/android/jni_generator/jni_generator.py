@@ -979,6 +979,12 @@ $CLOSE_NAMESPACE
     c_type = _GetJNIFirstParamType(native)
     return [self.GetJavaParamRefForCall(c_type, 'jcaller')]
 
+  def GetCName(self, native):
+    if native.name == "Init":
+      # Too many of these. They collide, especially in jumbo builds.
+      return self.class_name + "__" + native.name
+    return native.name
+
   def GetNativeStub(self, native):
     is_method = native.type == 'method'
 
@@ -1008,6 +1014,7 @@ $CLOSE_NAMESPACE
         'RETURN': return_type,
         'RETURN_DECLARATION': return_declaration,
         'NAME': native.name,
+        'C_NAME': self.GetCName(native),
         'PARAMS': _GetParamsInDeclaration(native),
         'PARAMS_IN_STUB': GetParamsInStub(native),
         'PARAMS_IN_CALL': params_in_call,
@@ -1035,11 +1042,11 @@ JNI_GENERATOR_EXPORT ${RETURN} ${STUB_NAME}(JNIEnv* env, ${PARAMS_IN_STUB}) {
 """)
     else:
       template = Template("""
-static ${RETURN_DECLARATION} ${NAME}(JNIEnv* env, ${PARAMS});
+static ${RETURN_DECLARATION} ${C_NAME}(JNIEnv* env, ${PARAMS});
 
 JNI_GENERATOR_EXPORT ${RETURN} ${STUB_NAME}(JNIEnv* env, ${PARAMS_IN_STUB}) {
   ${PROFILING_ENTERED_NATIVE}
-  return ${NAME}(${PARAMS_IN_CALL})${POST_CALL};
+  return ${C_NAME}(${PARAMS_IN_CALL})${POST_CALL};
 }
 """)
 

@@ -153,7 +153,7 @@ ExternalPrerenderHandlerAndroid::ExternalPrerenderHandlerAndroid() {}
 
 ExternalPrerenderHandlerAndroid::~ExternalPrerenderHandlerAndroid() {}
 
-static jlong Init(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
+static jlong ExternalPrerenderHandler__Init(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   ExternalPrerenderHandlerAndroid* external_handler =
       new ExternalPrerenderHandlerAndroid();
   return reinterpret_cast<intptr_t>(external_handler);

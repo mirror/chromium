@@ -19,7 +19,7 @@ using base::android::ScopedJavaLocalRef;
 
 namespace content {
 
-static jlong Init(JNIEnv* env,
+static jlong DialogOverlayImpl__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   jlong high,
                   jlong low,

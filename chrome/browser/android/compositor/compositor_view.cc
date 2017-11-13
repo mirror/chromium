@@ -40,7 +40,7 @@ using base::android::JavaParamRef;
 
 namespace android {
 
-jlong Init(JNIEnv* env,
+jlong CompositorView__Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
            jboolean low_mem_device,
            jlong native_window_android,

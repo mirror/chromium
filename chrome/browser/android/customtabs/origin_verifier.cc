@@ -78,7 +78,7 @@ void OriginVerifier::Destroy(JNIEnv* env,
   delete this;
 }
 
-static jlong Init(JNIEnv* env,
+static jlong OriginVerifier__Init(JNIEnv* env,
                   const base::android::JavaParamRef<jobject>& obj,
                   const base::android::JavaParamRef<jobject>& jprofile) {
   if (!g_browser_process)
