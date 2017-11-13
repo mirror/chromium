@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <string>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -192,11 +193,31 @@ void PrintJobWorker::SetSettings(
                      base::Unretained(this), base::Passed(&new_settings))));
 }
 
+void PrintJobWorker::SetSettings2(
+    std::unique_ptr<printing::PrintSettings> new_settings) {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(
+          &HoldRefCallback, base::WrapRefCounted(owner_),
+          base::Bind(&PrintJobWorker::UpdatePrintSettings2,
+                     base::Unretained(this), base::Passed(&new_settings))));
+}
+
 void PrintJobWorker::UpdatePrintSettings(
     std::unique_ptr<base::DictionaryValue> new_settings) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   PrintingContext::Result result =
       printing_context_->UpdatePrintSettings(*new_settings);
+  GetSettingsDone(result);
+}
+
+void PrintJobWorker::UpdatePrintSettings2(
+    std::unique_ptr<printing::PrintSettings> new_settings) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  PrintingContext::Result result =
+      printing_context_->UpdatePrintSettings(std::move(new_settings));
   GetSettingsDone(result);
 }
 

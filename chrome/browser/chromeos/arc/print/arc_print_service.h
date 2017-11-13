@@ -5,11 +5,9 @@
 #ifndef CHROME_BROWSER_CHROMEOS_ARC_PRINT_ARC_PRINT_SERVICE_H_
 #define CHROME_BROWSER_CHROMEOS_ARC_PRINT_ARC_PRINT_SERVICE_H_
 
-#include "base/files/file.h"
-#include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/optional.h"
-#include "base/threading/thread_checker.h"
+#include "chrome/browser/chromeos/printing/cups_printers_manager.h"
+#include "chrome/browser/chromeos/printing/printer_configurer.h"
 #include "components/arc/common/print.mojom.h"
 #include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -36,23 +34,25 @@ class ArcPrintService : public KeyedService,
                   ArcBridgeService* bridge_service);
   ~ArcPrintService() override;
 
-  // InstanceHolder<mojom::PrintInstance>::Observer override:
+  // InstanceHolder<mojom::PrintInstance>::Observer overrides:
   void OnInstanceReady() override;
 
-  // mojom::PrintHost override:
-  void Print(mojo::ScopedHandle pdf_data) override;
+  // mojom::PrintHost overrides:
+  void PrintDeprecated(mojo::ScopedHandle pdf_data) override;
+
+  void Print(mojom::PrintJobInstancePtr instance,
+             mojom::PrintJobRequestPtr print_job,
+             PrintCallback callback) override;
+
+  void CreateDiscoverySession(
+      mojom::PrinterDiscoverySessionInstancePtr instance,
+      CreateDiscoverySessionCallback callback) override;
 
  private:
-  // Opens the pdf file at |file_path|.
-  // If given |file_path| is nullopt, do nothing.
-  void OpenPdf(base::Optional<base::FilePath> file_path) const;
-
-  THREAD_CHECKER(thread_checker_);
-
+  Profile* const profile_;                      // Owner by ProfileManager.
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
   mojo::Binding<mojom::PrintHost> binding_;
 
-  base::WeakPtrFactory<ArcPrintService> weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(ArcPrintService);
 };
 
