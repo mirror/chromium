@@ -3157,13 +3157,13 @@ void RenderProcessHostImpl::DisableAudioDebugRecordings() {
                      weak_factory_.GetWeakPtr()));
 }
 
-bool RenderProcessHostImpl::StartWebRTCEventLog(
-    const base::FilePath& file_path) {
-  return webrtc_eventlog_host_.StartWebRTCEventLog(file_path);
+bool RenderProcessHostImpl::StartLocalRtcEventLogging(
+    const base::FilePath& base_path) {
+  return webrtc_eventlog_host_.StartLocalRtcEventLogging(base_path);
 }
 
-bool RenderProcessHostImpl::StopWebRTCEventLog() {
-  return webrtc_eventlog_host_.StopWebRTCEventLog();
+bool RenderProcessHostImpl::StopLocalRtcEventLogging() {
+  return webrtc_eventlog_host_.StopLocalRtcEventLogging();
 }
 
 void RenderProcessHostImpl::SetEchoCanceller3(bool enable) {
