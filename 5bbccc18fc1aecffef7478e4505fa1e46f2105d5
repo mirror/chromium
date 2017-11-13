@@ -52,6 +52,24 @@
       "revId": "5bbccc18fc1aecffef7478e4505fa1e46f2105d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64665d6_4109ae2b",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-13T07:31:15Z",
+      "side": 1,
+      "message": "Thank you for explanation!\n\nI\u0027ve re-read the code, and found that FakeShillProfileClient::AddService() may be the one we need?\nHowever, it prohibits to add one service to multiple profiles:\nhttps://cs.chromium.org/chromium/src/chromeos/dbus/fake_shill_profile_client.cc?sq\u003dpackage:chromium\u0026l\u003d211\n\nAnd then I\u0027m slightly confused, so I need more your advice.\n\nQuestion: what is the expected relationship between shill profile and service, in real implementation?\nCan a service have relationship to multiple profiles at once?\n- If so, should we make some change for FakeShillProfileClient::AddService and its deferred methods?\n- If not, what\u0027s the goal of RemoveConfiguration, which removes the specified service from \"all\" profiles, but conceptually it should be tied to at most one profile?\n\nNote that, technically we can workaround by the combination of AddEntry and AddService, but I think it\u0027s better if we can make \"fake\" situation closer to the real one.",
+      "parentUuid": "2e4ff3f4_898b49ee",
+      "revId": "5bbccc18fc1aecffef7478e4505fa1e46f2105d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
