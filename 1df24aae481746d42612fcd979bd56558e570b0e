@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b3b5cdb_c181bbac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-13T21:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81f175fc_24dcbcaf",
+      "range": {
+        "startLine": 287,
+        "startChar": 8,
+        "endLine": 287,
+        "endChar": 30
+      },
+      "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "005aac5e_d17b59c4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2675d46f_4e1747cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-13T21:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "005aac5e_d17b59c4",
+      "range": {
+        "startLine": 300,
+        "startChar": 12,
+        "endLine": 300,
+        "endChar": 34
+      },
+      "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8891cd99_57db04d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-13T21:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f0effa7_b7bbcd58",
+      "range": {
+        "startLine": 701,
+        "startChar": 12,
+        "endLine": 701,
+        "endChar": 29
+      },
+      "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cdbdc0d_b42c9e4c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-13T15:44:28Z",
       "side": 1,
       "message": "I know Yusuf asked you to record this only for WebApps but I\u0027m curious why we don\u0027t want to support these else clause? Isn\u0027t it useful to get %-age of time in CCT as a % of whole browser? This helps understand how each mode of browser usage is represented so we can make informed security/usability trade-offs (for example).\n\nAlso, you could just check if it\u0027s ACTIVITY_TYPE_INVALID",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 28
+      },
+      "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cccd65c2_4765b102",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-13T21:36:40Z",
+      "side": 1,
+      "message": "Defer this question to Yusuf",
+      "parentUuid": "1cdbdc0d_b42c9e4c",
       "range": {
         "startLine": 47,
         "startChar": 16,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3bfe675e_8f3c1268",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-13T21:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "043017db_d52854ae",
+      "range": {
+        "startLine": 62,
+        "startChar": 32,
+        "endLine": 62,
+        "endChar": 41
+      },
+      "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1bbd9b9_87f27a1f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059106bc_6ad823b3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 88112,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-13T21:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1bbd9b9_87f27a1f",
+      "range": {
+        "startLine": 88112,
+        "startChar": 17,
+        "endLine": 88112,
+        "endChar": 35
+      },
+      "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

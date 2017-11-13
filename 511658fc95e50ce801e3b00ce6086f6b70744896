@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80ebcaf0_b1c0748c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-13T21:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55a0882d_a977b8eb",
+      "range": {
+        "startLine": 295,
+        "startChar": 16,
+        "endLine": 295,
+        "endChar": 22
+      },
+      "revId": "511658fc95e50ce801e3b00ce6086f6b70744896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bff5ef2a_7e848b33",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "511658fc95e50ce801e3b00ce6086f6b70744896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b9fd40_51b42ba1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-13T21:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bff5ef2a_7e848b33",
+      "revId": "511658fc95e50ce801e3b00ce6086f6b70744896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +127,30 @@
       "revId": "511658fc95e50ce801e3b00ce6086f6b70744896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abcb7b28_2c648366",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-13T21:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8be8425_1c6905f7",
+      "range": {
+        "startLine": 743,
+        "startChar": 19,
+        "endLine": 743,
+        "endChar": 36
+      },
+      "revId": "511658fc95e50ce801e3b00ce6086f6b70744896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
