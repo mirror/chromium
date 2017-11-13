@@ -14,6 +14,10 @@
 #include "services/viz/privileged/interfaces/gl/gpu_service.mojom.h"
 #include "services/viz/privileged/interfaces/viz_main.mojom.h"
 
+#if defined(OS_CHROMEOS)
+#include "services/viz/privileged/interfaces/gl/gpu_service.mojom.h"
+#endif
+
 namespace gpu {
 class GpuMemoryBufferFactory;
 class SyncPointManager;
@@ -23,6 +27,10 @@ namespace viz {
 class DisplayProvider;
 class FrameSinkManagerImpl;
 class GpuServiceImpl;
+
+#if defined(OS_CHROMEOS)
+class ArcServiceImpl;
+#endif
 
 class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
  public:
@@ -80,6 +88,7 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
                         mojo::ScopedSharedBufferHandle activity_flags) override;
   void CreateFrameSinkManager(mojom::FrameSinkManagerRequest request,
                               mojom::FrameSinkManagerClientPtr client) override;
+  void CreateArcService(mojom::ArcServiceRequest request) override;
 
   GpuServiceImpl* gpu_service() { return gpu_service_.get(); }
   const GpuServiceImpl* gpu_service() const { return gpu_service_.get(); }
@@ -113,6 +122,10 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
 
   std::unique_ptr<gpu::GpuInit> gpu_init_;
   std::unique_ptr<GpuServiceImpl> gpu_service_;
+
+#if defined(OS_CHROMEOS)
+  std::unique_ptr<ArcServiceImpl> arc_service_;
+#endif
 
   // The InCommandCommandBuffer::Service used by the frame sink manager.
   scoped_refptr<gpu::InProcessCommandBuffer::Service> gpu_command_service_;

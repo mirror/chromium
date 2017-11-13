@@ -16,6 +16,10 @@
 #include "services/ui/public/cpp/gpu/client_gpu_memory_buffer_manager.h"
 #include "services/ui/public/interfaces/gpu.mojom.h"
 
+#if defined(OS_CHROMEOS)
+#include "services/ui/public/interfaces/arc.mojom.h"
+#endif
+
 namespace service_manager {
 class Connector;
 }
@@ -40,7 +44,14 @@ class Gpu : public gpu::GpuChannelHostFactory,
 
   scoped_refptr<viz::ContextProvider> CreateContextProvider(
       scoped_refptr<gpu::GpuChannelHost> gpu_channel);
-
+#if defined(OS_CHROMEOS)
+  void CreateArcVideoDecodeAccelerator(
+      arc::mojom::VideoDecodeAcceleratorRequest vda_request);
+  void CreateArcVideoEncodeAccelerator(
+      arc::mojom::VideoEncodeAcceleratorRequest vea_request);
+  void CreateArcProtectedBufferManager(
+      arc::mojom::ProtectedBufferManagerRequest pbm_request);
+#endif
   void CreateJpegDecodeAccelerator(
       media::mojom::GpuJpegDecodeAcceleratorRequest jda_request);
   void CreateVideoEncodeAcceleratorProvider(
@@ -72,6 +83,11 @@ class Gpu : public gpu::GpuChannelHostFactory,
   // |pending_request_|.
   void OnEstablishedGpuChannel();
 
+#if defined(OS_CHROMEOS)
+  void InitializeArc(service_manager::Connector* connector,
+                     const std::string& service_name);
+#endif
+
   // gpu::GpuChannelHostFactory overrides:
   scoped_refptr<base::SingleThreadTaskRunner> GetIOThreadTaskRunner() override;
   std::unique_ptr<base::SharedMemory> AllocateSharedMemory(
@@ -82,6 +98,9 @@ class Gpu : public gpu::GpuChannelHostFactory,
   std::unique_ptr<ClientGpuMemoryBufferManager> gpu_memory_buffer_manager_;
 
   scoped_refptr<ui::mojom::ThreadSafeGpuPtr> gpu_;
+#if defined(OS_CHROMEOS)
+  ui::mojom::ArcPtr arc_;
+#endif
   scoped_refptr<EstablishRequest> pending_request_;
   scoped_refptr<gpu::GpuChannelHost> gpu_channel_;
   std::vector<gpu::GpuChannelEstablishedCallback> establish_callbacks_;
