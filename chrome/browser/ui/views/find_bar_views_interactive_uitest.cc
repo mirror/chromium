@@ -535,3 +535,15 @@ IN_PROC_BROWSER_TEST_F(FindInPageTest, CtrlEnter) {
 
   observer.Wait();
 }
+
+// Creating the FindBarController on startup can result in a startup performance
+// regression. This test ensures that the FindBarController isn't created until
+// truly needed. See https://crbug.com/783350.
+IN_PROC_BROWSER_TEST_F(FindInPageTest, NoFindBarControllerOnBrowserCreate) {
+  // FindBarController should not be created on browser start.
+  EXPECT_FALSE(browser()->HasFindBarController());
+  // GetFindBarController should create the FindBarController on demand.
+  EXPECT_NE(browser()->GetFindBarController(), nullptr);
+  // This should now indicate that there is now a FindBarController instance.
+  EXPECT_TRUE(browser()->HasFindBarController());
+}
