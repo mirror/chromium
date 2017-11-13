@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99684468_53ac90a8",
+        "filename": "media/gpu/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-13T15:50:35Z",
+      "side": 1,
+      "message": "// Break task scheduling sequence in case |device_poll_thread_| restarts.",
+      "range": {
+        "startLine": 1176,
+        "startChar": 5,
+        "endLine": 1176,
+        "endChar": 76
+      },
+      "revId": "e1e1b6ff2c024a98fa1d0709bf16f36e24628f27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6002c377_7c1723f9",
+        "filename": "media/gpu/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2012,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-13T15:50:35Z",
+      "side": 1,
+      "message": "I can think of two other ways to address this situation,\nwhich might or might not be applicable/better than the\narguably easy current proposed solution:\n\n- use CancelableTaskTracker [1], and cancel pending tasks\n in StopDevicePoll(). Arguably, it\u0027s a complicated solution,\n so what about  the next one:\n- don\u0027t rely on base::Unretained(this) here and instead\n use a WeakPtrFactory to be used exclusively on \n |decoder_thread_.task_runner()|, and call the Factory\u0027s\n InvalidateWeakPtrs() [2] on StopDevicePoll() (invalidate\n must happen on the thread where the WeakPtrFactory is\n pegged to, so you might need to PostTask a DeleteSoon\n for the factory to go down nicely).\n\n\n\n[1] https://cs.chromium.org/chromium/src/base/task/cancelable_task_tracker.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d58\n[2] https://cs.chromium.org/chromium/src/base/memory/weak_ptr.h?type\u003dcs\u0026q\u003dInvalidateWeakPtrs\u0026sq\u003dpackage:chromium\u0026l\u003d317",
+      "range": {
+        "startLine": 2011,
+        "startChar": 28,
+        "endLine": 2012,
+        "endChar": 61
+      },
+      "revId": "e1e1b6ff2c024a98fa1d0709bf16f36e24628f27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
