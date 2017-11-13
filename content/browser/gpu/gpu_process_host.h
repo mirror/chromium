@@ -179,6 +179,8 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
     return wake_up_gpu_before_drawing_;
   }
 
+  static bool HardwareGpuEnabled() { return hardware_gpu_enabled_; }
+
  private:
   class ConnectionFilterImpl;
 

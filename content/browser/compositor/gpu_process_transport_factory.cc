@@ -45,6 +45,7 @@
 #include "content/browser/compositor/software_browser_compositor_output_surface.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/gpu/gpu_data_manager_impl.h"
+#include "content/browser/gpu/gpu_process_host.h"
 #include "content/browser/mus_util.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/common/gpu_stream_constants.h"
@@ -324,8 +325,9 @@ void GpuProcessTransportFactory::CreateLayerTreeFrameSink(
 #endif
 
   const bool use_vulkan = static_cast<bool>(SharedVulkanContextProvider());
-  const bool use_gpu_compositing =
-      !compositor->force_software_compositor() && !is_gpu_compositing_disabled_;
+  const bool use_gpu_compositing = !compositor->force_software_compositor() &&
+                                   !is_gpu_compositing_disabled_ &&
+                                   GpuProcessHost::HardwareGpuEnabled();
   if (use_gpu_compositing && !use_vulkan) {
     gpu_channel_factory_->EstablishGpuChannel(base::Bind(
         &GpuProcessTransportFactory::EstablishedGpuChannel,
@@ -1043,10 +1045,18 @@ GpuProcessTransportFactory::SharedVulkanContextProvider() {
 }
 
 void GpuProcessTransportFactory::OnContextLost() {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::BindOnce(&GpuProcessTransportFactory::OnLostMainThreadSharedContext,
-                     callback_factory_.GetWeakPtr()));
+  if (!GpuProcessHost::HardwareGpuEnabled()) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE,
+        base::BindOnce(&GpuProcessTransportFactory::DisableGpuCompositing,
+                       callback_factory_.GetWeakPtr(), nullptr));
+  } else {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE,
+        base::BindOnce(
+            &GpuProcessTransportFactory::OnLostMainThreadSharedContext,
+            callback_factory_.GetWeakPtr()));
+  }
 }
 
 scoped_refptr<ui::ContextProviderCommandBuffer>
