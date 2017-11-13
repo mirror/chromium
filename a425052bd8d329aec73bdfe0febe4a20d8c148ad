@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57106136_0e2d5ac6",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-13T17:27:02Z",
+      "side": 1,
+      "message": "This may not be something we want to do in-process, particularly if we parallelize it as suggested below.",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaeed5db_b24b1428",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-13T17:27:02Z",
+      "side": 1,
+      "message": "Is it possible for us to only have one of \u0027expected\u0027 or \u0027actual\u0027? What happens in that case?\n\nWhat if, more generally, the value of an item other than \u0027expected\u0027 or \u0027actual\u0027 isn\u0027t a dict? This should handle that gracefully.",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd842a4_001e4e7b",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-13T17:27:02Z",
+      "side": 1,
+      "message": "nit: Since the call below returns a string, should this also return a string? (Do we care about the returned string?)",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4809ab_98113b66",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-13T17:27:02Z",
+      "side": 1,
+      "message": "Are you planning this for a subsequent CL? Is there some condition blocking this?",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe4ec772_675762f5",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-13T17:27:02Z",
+      "side": 1,
+      "message": "nit: make sure you delete this directory when you\u0027re done with it (or use https://codesearch.chromium.org/chromium/src/third_party/catapult/common/py_utils/py_utils/tempfile_ext.py?rcl\u003df5d92693eb80907f2a45e229f8c01b19305ec4ee\u0026l\u003d12)",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a700ae08_49d13a04",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-13T17:27:02Z",
+      "side": 1,
+      "message": "Do we have a sense for how long this will take? Should we consider parallelizing this?",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0ba102_374e851c",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-13T17:27:02Z",
+      "side": 1,
+      "message": "super nit: prefer \u0027 over \" unless the string contains \u0027",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04417fbd_ea5b0018",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-13T17:27:02Z",
+      "side": 1,
+      "message": "Do we need to support multiple files at once here? Should we instead just have this script do single files and support multiple files at a higher level?",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7d11ee_943ca4ae",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-13T17:27:02Z",
+      "side": 1,
+      "message": "This seems a little specific. Could we just let the user specify an output file \u0026 ensure that it works if the input file matches the output file?",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b197ec7f_d0c07bd4",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-13T17:27:02Z",
+      "side": 1,
+      "message": "This should be -n/--dry-run.",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
