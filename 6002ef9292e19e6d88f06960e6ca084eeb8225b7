@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9a731f6f_62bc0ae7",
+        "filename": "ios/web_view/internal/web_view_web_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-13T20:37:44Z",
+      "side": 1,
+      "message": "Sending out another CL to rename WebViewTest.\n\nWebTest uses a TestBrowserState, whereas we need a WebViewBrowserState. WebTest also has a ScopedTestingWebClient, which we don\u0027t need. Should we still derive from it?\n\nI think I\u0027ll at least rename this to \"WebViewTestWithTestWebState\".",
+      "parentUuid": "303e8737_91906116",
+      "revId": "6002ef9292e19e6d88f06960e6ca084eeb8225b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8c21da3_1fefe2a6",
         "filename": "ios/web_view/internal/web_view_web_test.mm",
         "patchSetId": 2
@@ -75,6 +93,30 @@
       "revId": "6002ef9292e19e6d88f06960e6ca084eeb8225b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665b0ac4_b1e7eb1f",
+        "filename": "ios/web_view/internal/web_view_web_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-13T20:37:44Z",
+      "side": 1,
+      "message": "I think it complains if the destructors ever become non-trivial.",
+      "parentUuid": "b8c21da3_1fefe2a6",
+      "range": {
+        "startLine": 20,
+        "startChar": 36,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "6002ef9292e19e6d88f06960e6ca084eeb8225b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
