@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97b30f39_6d783928",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletGlobalScopeTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-13T14:38:47Z",
+      "side": 1,
+      "message": "We should probably have a default constructor for AnimationState so we can\u0027t use an uninitialized current_time.",
+      "revId": "3bff6e3b46b40d3300fed13e7900fb15b4892567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
