@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<title>contentDocument.open test for creating new window</title>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<body>
+<script>
+test(function() {
+    frame = document.body.appendChild(document.createElement("iframe"));
+    frame.contentWindow.open = function() {
+        alert('FAIL: The call should be redirected to the real window.open');
+    }
+    w = frame.contentDocument.open(1, 1, 1);
+    assert_equals(typeof(w), 'object', 'w should be a window object');
+});
+</script>
+</body>
