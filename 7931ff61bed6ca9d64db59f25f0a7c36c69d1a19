@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91321c20_7c82824b",
+        "filename": "testing/libfuzzer/fuzzers/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-11-13T22:23:18Z",
+      "side": 1,
+      "message": "Please rename this file after you update this in next cl. since two fuzzers are using this, it could v8_tokens.dict or even just v8.dict.",
+      "revId": "7931ff61bed6ca9d64db59f25f0a7c36c69d1a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3d7772_89db8030",
+        "filename": "testing/libfuzzer/fuzzers/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-11-13T22:23:18Z",
+      "side": 1,
+      "message": "Why only just regress dir, probably all of v8/test/mjsunit ? Later we need to find a way to pollinate with other browser corpuses as well.",
+      "revId": "7931ff61bed6ca9d64db59f25f0a7c36c69d1a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
