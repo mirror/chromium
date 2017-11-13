@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "773cec34_49fb049d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2397,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-13T22:20:52Z",
+      "side": 1,
+      "message": "OK, it looks like we can\u0027t do that because is_guest_view_hack_ is\na private variable on both RWHVAura and RWHVMac. I filed bug\n784590.\n\nYou can still make this a helper function here in this file,\nrather than duplicating the logic and the 5-line comment.",
+      "parentUuid": "39523051_ce1e579f",
+      "revId": "c075a857d96f8bc6c1d56482cf670c2e1523c05c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "985829fe_958329d5",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-08T21:26:29Z",
       "side": 1,
       "message": "Can you share more of this code with RenderWidgetHostViewAura::OnTextSelectionChanged?\n\nI feel like it\u0027d be cleanest if both OnSelectionBoundsChanged and\nOnTextSelectionChanged both called the same helper function to move\nthe caret.",
+      "revId": "c075a857d96f8bc6c1d56482cf670c2e1523c05c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daec083d_5aab6bd4",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2415,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-13T22:20:52Z",
+      "side": 1,
+      "message": "Nevermind on this one. If OnSelectionBoundsChanged is always\ncalled, you only need it here.",
+      "parentUuid": "985829fe_958329d5",
       "revId": "c075a857d96f8bc6c1d56482cf670c2e1523c05c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
