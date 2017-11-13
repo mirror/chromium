@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "404aa879_2ef67616",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/sequence.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-13T17:49:58Z",
+      "side": 1,
+      "message": "Add comments.",
+      "revId": "6f3690fcac934582177d310d1d8c80ce35229009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "415deaee_841254cc",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-13T17:49:58Z",
+      "side": 1,
+      "message": "Add comments.",
+      "revId": "6f3690fcac934582177d310d1d8c80ce35229009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d876d2_0ee29f33",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-13T17:49:58Z",
+      "side": 1,
+      "message": "You could make ThreadController a derived class of TickClock instead of adding this method. It would reduce the number of changes that you have to make to other files to switch from TaskQueueManagerDelegate to ThreadController.",
+      "revId": "6f3690fcac934582177d310d1d8c80ce35229009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a322658_7975eb7a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-13T17:49:58Z",
+      "side": 1,
+      "message": "Could TaskQueueManager decide by itself when to return a delayed / undelayed task?",
+      "range": {
+        "startLine": 97,
+        "startChar": 27,
+        "endLine": 97,
+        "endChar": 55
+      },
+      "revId": "6f3690fcac934582177d310d1d8c80ce35229009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05faefe_cbe27e5c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-13T17:49:58Z",
+      "side": 1,
+      "message": "ThreadControllerImpl",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 31
+      },
+      "revId": "6f3690fcac934582177d310d1d8c80ce35229009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca7b267_138fdf2b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-13T17:49:58Z",
+      "side": 1,
+      "message": "Use PlatformThreadRef instead. It is specifically intended for this use case. https://cs.chromium.org/chromium/src/base/threading/platform_thread.h?l\u003d141\u0026rcl\u003d4ec4bda8962655d209beb167d0719322fd956fd9\n\nPlatformThreadId should only be used when we need to show a value to the user.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 36
+      },
+      "revId": "6f3690fcac934582177d310d1d8c80ce35229009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
