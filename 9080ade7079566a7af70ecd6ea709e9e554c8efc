@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8bd5561_e9e5ecfc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T21:03:22Z",
+      "side": 1,
+      "message": "The standard format for the title of a relanded patch is:\n\nReland \"Update U2fPacket::GetSerializedData() to get rid of report_id.\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "9080ade7079566a7af70ecd6ea709e9e554c8efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf197781_af6f1d82",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T21:03:22Z",
+      "side": 1,
+      "message": "Write this as \"rN\" where N is the from the Cr-Commit-Position line in the original change (in this case 513104). This will be properly turned into a link in our tools. The Gerrit code review numbers aren\u0027t as linkable.",
+      "range": {
+        "startLine": 9,
+        "startChar": 26,
+        "endLine": 9,
+        "endChar": 35
+      },
+      "revId": "9080ade7079566a7af70ecd6ea709e9e554c8efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd78c9e_5bb59166",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T21:03:22Z",
+      "side": 1,
+      "message": "You can just write:\n\nstd::unique_ptr\u003cU2fMessage\u003e read_message \u003d\n    U2fMessage::CreateFromSerializedData(*buf);",
+      "range": {
+        "startLine": 218,
+        "startChar": 2,
+        "endLine": 220,
+        "endChar": 56
+      },
+      "revId": "9080ade7079566a7af70ecd6ea709e9e554c8efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb3830a_b0b60540",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T21:03:22Z",
+      "side": 1,
+      "message": "Same here:\n\nmessage-\u003eAddContinuationPacket(*buf);",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 46
+      },
+      "revId": "9080ade7079566a7af70ecd6ea709e9e554c8efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d438eb1e_685a08d9",
+        "filename": "device/u2f/u2f_message_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T21:03:22Z",
+      "side": 1,
+      "message": "\".data()\" is not necessary as std::vector\u003cuint8_t\u003e supports the subscript operator directly.",
+      "range": {
+        "startLine": 48,
+        "startChar": 43,
+        "endLine": 48,
+        "endChar": 50
+      },
+      "revId": "9080ade7079566a7af70ecd6ea709e9e554c8efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37a994f_f53235a3",
+        "filename": "device/u2f/u2f_message_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T21:03:22Z",
+      "side": 1,
+      "message": "Leftover from debugging?",
+      "range": {
+        "startLine": 183,
+        "startChar": 2,
+        "endLine": 183,
+        "endChar": 79
+      },
+      "revId": "9080ade7079566a7af70ecd6ea709e9e554c8efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414b702c_4d4c9c76",
+        "filename": "device/u2f/u2f_packet.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T21:03:22Z",
+      "side": 1,
+      "message": "Since we know |serialized| will eventually be kPacketSize bytes long reserve the capacity up front to avoid reallocations while running the code below:\n\nserialized.reserve(kPacketSize);",
+      "revId": "9080ade7079566a7af70ecd6ea709e9e554c8efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e21bc65_8f2560dd",
+        "filename": "device/u2f/u2f_packet.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-13T21:03:22Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "9080ade7079566a7af70ecd6ea709e9e554c8efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
