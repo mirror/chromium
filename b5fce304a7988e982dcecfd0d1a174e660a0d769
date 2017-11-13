@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81d4f999_ad6c3d9d",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-13T20:55:10Z",
+      "side": 1,
+      "message": "When investigating test failures, I found out that ReadbackYUV() causes both the source canvas and captured stream to be rendered corruptly. I discussed the issue with miu@ offline and found out that context is not restored to its state before. This change fixes it as far as I tested.\ndanakj@ can you take a look at this and advise? I am not sure if this is the right approach as the context is shared. Do you know what is the safe way to do this?",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 51
+      },
+      "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
