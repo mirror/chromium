@@ -62,6 +62,23 @@
       "revId": "5f8acf1fb5d84e40643a764ccc6af9cfe8cca793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9436e90_782b43f5",
+        "filename": "net/cert/cert_verify_proc_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-13T20:48:49Z",
+      "side": 1,
+      "message": "note: Chromium/Google C++ variable naming rules also apply here (for \"I\")",
+      "revId": "5f8acf1fb5d84e40643a764ccc6af9cfe8cca793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
