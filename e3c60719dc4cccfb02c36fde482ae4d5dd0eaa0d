@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f827f558_ffb000cf",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-13T18:19:10Z",
+      "side": 1,
+      "message": "nit: private section normally goes down below public.\nnit2: only trivial setters/getters are expected to be inlined, more complex should be implemented outside the class definition.",
+      "range": {
+        "startLine": 135,
+        "startChar": 10,
+        "endLine": 135,
+        "endChar": 21
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e0a82b_5c3f3f20",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-13T18:19:10Z",
+      "side": 1,
+      "message": "I think if this callback gets the task, then they can come from the task.",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 31
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428cc96a_1b46f3c8",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-13T18:19:10Z",
+      "side": 1,
+      "message": "Is it start of the task? \nShould it be |load_timing_info.request_start_time|?",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 32
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ef1419_f22d3a36",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-13T18:19:10Z",
+      "side": 1,
+      "message": "receive_headers_end?\nThere is also some info in HttpResponseInfo, which we will need as well: https://cs.chromium.org/chromium/src/net/http/http_response_info.h?rcl\u003d4051ebd19b3fe7cd183273eb881cfa06da8bc8a9\u0026l\u003d27",
+      "range": {
+        "startLine": 187,
+        "startChar": 44,
+        "endLine": 187,
+        "endChar": 45
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5ca4874_63c1b6af",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-13T18:19:10Z",
+      "side": 1,
+      "message": "Now?",
+      "range": {
+        "startLine": 188,
+        "startChar": 42,
+        "endLine": 188,
+        "endChar": 43
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "781dce66_2423a1bb",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-13T18:19:10Z",
+      "side": 1,
+      "message": "that\u0027s *very* important.\nrequest-\u003eresponse_info().alpn_negotiated_protocol\nSee\nhttps://cs.chromium.org/chromium/src/components/cronet/android/cronet_url_request_adapter.cc?rcl\u003d4051ebd19b3fe7cd183273eb881cfa06da8bc8a9\u0026l\u003d262",
+      "range": {
+        "startLine": 190,
+        "startChar": 15,
+        "endLine": 190,
+        "endChar": 37
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cda6628_373da621",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-13T18:19:10Z",
+      "side": 1,
+      "message": "See GetProxy(request-\u003eresponse_info())\nhttps://cs.chromium.org/chromium/src/components/cronet/android/cronet_url_request_adapter.cc?rcl\u003d4051ebd19b3fe7cd183273eb881cfa06da8bc8a9\u0026l\u003d263",
+      "range": {
+        "startLine": 191,
+        "startChar": 15,
+        "endLine": 191,
+        "endChar": 33
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9c60a46_6abd1c54",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-13T18:19:10Z",
+      "side": 1,
+      "message": "We would want to run these tasks on different thread if this delegate is called on network thread. This should also be running under lock, so gMetricsDelegates doesn\u0027t change during loop.",
+      "range": {
+        "startLine": 195,
+        "startChar": 14,
+        "endLine": 195,
+        "endChar": 35
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df4078f9_8f9a6553",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-13T18:19:10Z",
+      "side": 1,
+      "message": "IIUIC this will be called on the network thread. This may or may not be ideal. \nWe need to decide and document the decision.\n+kapishnikov, WDYT?",
+      "range": {
+        "startLine": 736,
+        "startChar": 6,
+        "endLine": 736,
+        "endChar": 24
+      },
+      "revId": "e3c60719dc4cccfb02c36fde482ae4d5dd0eaa0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

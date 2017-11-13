@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5c0a85c2_a4972fe0",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-13T18:19:10Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#forward-declarations-vs_includes",
+      "parentUuid": "a96c8787_9579d000",
+      "range": {
+        "startLine": 10,
+        "startChar": 14,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "9fd698516e725926152e1f9f2d1fa1199567a673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a302395_1ff9a635",
         "filename": "ios/net/crn_http_protocol_handler.h",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Should there also be a comment for HTTPProtocolHandlerDelegate, then?",
       "parentUuid": "3a302395_1ff9a635",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "9fd698516e725926152e1f9f2d1fa1199567a673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c597fa_9d1323e9",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-13T18:19:10Z",
+      "side": 1,
+      "message": "Probably, but we don\u0027t have to add it as part of this CL.",
+      "parentUuid": "768a9008_1ffe0d7b",
       "range": {
         "startLine": 36,
         "startChar": 6,
@@ -140,6 +188,30 @@
       "revId": "9fd698516e725926152e1f9f2d1fa1199567a673",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be09920_ac405932",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-13T18:19:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "44deceee_72b56110",
+      "range": {
+        "startLine": 45,
+        "startChar": 42,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "9fd698516e725926152e1f9f2d1fa1199567a673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
