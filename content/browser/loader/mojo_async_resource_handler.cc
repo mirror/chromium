@@ -101,6 +101,7 @@ MojoAsyncResourceHandler::MojoAsyncResourceHandler(
     : ResourceHandler(request),
       rdh_(rdh),
       binding_(this, std::move(mojo_request)),
+      resource_type_(resource_type),
       handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       url_loader_client_(std::move(url_loader_client)),
       weak_factory_(this) {
@@ -111,7 +112,7 @@ MojoAsyncResourceHandler::MojoAsyncResourceHandler(
   binding_.set_connection_error_handler(base::BindOnce(
       &MojoAsyncResourceHandler::Cancel, base::Unretained(this)));
 
-  if (IsResourceTypeFrame(resource_type)) {
+  if (IsResourceTypeFrame(resource_type_)) {
     GetRequestInfo()->set_on_transfer(base::Bind(
         &MojoAsyncResourceHandler::OnTransfer, weak_factory_.GetWeakPtr()));
   } else {
@@ -189,8 +190,16 @@ void MojoAsyncResourceHandler::OnResponseStarted(
   // * info->GetGlobalRequestID();
   // * info->IsDownload()
   // * info->IsStream()
+  mojom::URLLoaderNavigationDataPtr navigation_data;
+  if (IsResourceTypeFrame(resource_type_)) {
+    navigation_data = mojom::URLLoaderNavigationData::New();
+    navigation_data->is_download = info->IsDownload();
+    navigation_data->is_stream = info->is_stream();
+  }
+
   url_loader_client_->OnReceiveResponse(response->head, base::nullopt,
-                                        std::move(downloaded_file_ptr));
+                                        std::move(downloaded_file_ptr),
+                                        std::move(navigation_data));
 
   net::IOBufferWithSize* metadata = GetResponseMetadata(request());
   if (metadata) {
