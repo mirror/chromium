@@ -55,7 +55,21 @@ void ShowTabSwitcher() {
   }
   DCHECK(matcher);
 
-  [[EarlGrey selectElementWithMatcher:matcher] performAction:grey_tap()];
+  // Perform a tap with a timeout. Occasionally EG doesn't sync up properly to
+  // the animations of tab switcher, so it is necessary to poll here.
+  GREYCondition* tapTabSwitcher =
+      [GREYCondition conditionWithName:@"Tap tab switcher button"
+                                 block:^BOOL {
+                                   NSError* error;
+                                   [[EarlGrey selectElementWithMatcher:matcher]
+                                       performAction:grey_tap()
+                                               error:&error];
+                                   return error == nil;
+                                 }];
+
+  // Wait until 2 seconds for the tap.
+  BOOL hasClicked = [tapTabSwitcher waitWithTimeout:2];
+  GREYAssertTrue(hasClicked, @"Tab switcher could not be clicked.");
 }
 
 // Hides the tab switcher by tapping the switcher button.  Works on both phone
