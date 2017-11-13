@@ -22,6 +22,23 @@
       "revId": "44b200a6c0437a1b5a7f3701b0b91f79d68eba6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc044d8_418b9296",
+        "filename": "services/ui/public/interfaces/gpu.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-13T19:29:23Z",
+      "side": 1,
+      "message": "Should they be in a different interface, if it\u0027s not used by the renderer?",
+      "revId": "44b200a6c0437a1b5a7f3701b0b91f79d68eba6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
