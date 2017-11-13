@@ -1836,7 +1836,7 @@ config("afdo") {
 # Full symbols.
 config("symbols") {
   if (is_win) {
-    if (use_goma) {
+    if (use_goma && !is_clang) {
       # Note that this requires is_win_fastlink, enforced elsewhere.
       cflags = [ "/Z7" ]  # Debug information in the .obj files.
     } else {
