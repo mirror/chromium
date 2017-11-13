@@ -106,7 +106,11 @@ class VIZ_COMMON_EXPORT BeginFrameObserverBase : public BeginFrameObserver {
 // all BeginFrameSources *must* provide.
 class VIZ_COMMON_EXPORT BeginFrameSource {
  public:
-  BeginFrameSource();
+  // If the BeginFrameSource will generate BeginFrameArgs that are forwarded to
+  // another processes *and* this process has crashed then |process_restart_id|
+  // should be incremented. This ensures that |source_id| is still unique after
+  // process restart.
+  explicit BeginFrameSource(uint16_t process_restart_id = 0);
   virtual ~BeginFrameSource();
 
   // Returns an identifier for this BeginFrameSource. Guaranteed unique within a
@@ -150,6 +154,7 @@ class VIZ_COMMON_EXPORT StubBeginFrameSource : public BeginFrameSource {
 // A frame source which ticks itself independently.
 class VIZ_COMMON_EXPORT SyntheticBeginFrameSource : public BeginFrameSource {
  public:
+  explicit SyntheticBeginFrameSource(uint16_t process_restart_id = 0);
   ~SyntheticBeginFrameSource() override;
 
   virtual void OnUpdateVSyncParameters(base::TimeTicks timebase,
@@ -199,7 +204,8 @@ class VIZ_COMMON_EXPORT DelayBasedBeginFrameSource
       public DelayBasedTimeSourceClient {
  public:
   explicit DelayBasedBeginFrameSource(
-      std::unique_ptr<DelayBasedTimeSource> time_source);
+      std::unique_ptr<DelayBasedTimeSource> time_source,
+      uint16_t process_restart_id = 0);
   ~DelayBasedBeginFrameSource() override;
 
   // BeginFrameSource implementation.

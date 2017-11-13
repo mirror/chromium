@@ -23,6 +23,15 @@ namespace {
 // kDoubleTickDivisor prevents the SyntheticBFS from sending BeginFrames too
 // often to an observer.
 static const double kDoubleTickDivisor = 2.0;
+
+base::AtomicSequenceNumber g_next_source_id;
+
+// Generates a 32 bit source_id from 16 bits of |process_restart_id| and 16 bits
+// of an atomic sequence.
+uint32_t GenerateSourceId(uint16_t process_restart_id) {
+  return (process_restart_id << 16) | (0xFFFF & g_next_source_id.GetNext());
+}
+
 }  // namespace
 
 // BeginFrameObserverBase -------------------------------------------------
@@ -58,12 +67,8 @@ void BeginFrameObserverBase::AsValueInto(
   state->EndDictionary();
 }
 
-// BeginFrameSource -------------------------------------------------------
-namespace {
-static base::AtomicSequenceNumber g_next_source_id;
-}  // namespace
-
-BeginFrameSource::BeginFrameSource() : source_id_(g_next_source_id.GetNext()) {}
+BeginFrameSource::BeginFrameSource(uint16_t process_restart_id)
+    : source_id_(GenerateSourceId(process_restart_id)) {}
 
 BeginFrameSource::~BeginFrameSource() = default;
 
@@ -78,6 +83,10 @@ bool StubBeginFrameSource::IsThrottled() const {
 }
 
 // SyntheticBeginFrameSource ----------------------------------------------
+SyntheticBeginFrameSource::SyntheticBeginFrameSource(
+    uint16_t process_restart_id)
+    : BeginFrameSource(process_restart_id) {}
+
 SyntheticBeginFrameSource::~SyntheticBeginFrameSource() = default;
 
 // BackToBackBeginFrameSource ---------------------------------------------
@@ -143,8 +152,10 @@ void BackToBackBeginFrameSource::OnTimerTick() {
 
 // DelayBasedBeginFrameSource ---------------------------------------------
 DelayBasedBeginFrameSource::DelayBasedBeginFrameSource(
-    std::unique_ptr<DelayBasedTimeSource> time_source)
-    : time_source_(std::move(time_source)),
+    std::unique_ptr<DelayBasedTimeSource> time_source,
+    uint16_t process_restart_id)
+    : SyntheticBeginFrameSource(process_restart_id),
+      time_source_(std::move(time_source)),
       next_sequence_number_(BeginFrameArgs::kStartingFrameNumber) {
   time_source_->SetClient(this);
 }
