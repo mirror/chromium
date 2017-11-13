@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c84a8461_17233a97",
+        "filename": "ios/web/download/download_controller_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T19:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d518636e_78d7aa6b",
+      "revId": "bcfc6d1cf72c2b28b2310633a1d874a5afdba4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3810ecc9_c69d381e",
         "filename": "ios/web/download/download_controller_impl.mm",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9b6b2153_86164d2d",
+        "filename": "ios/web/download/download_controller_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T19:43:52Z",
+      "side": 1,
+      "message": "It will be safer to return void. Slightly inconvenient for restoring the download after app termination, but returning raw pointer can lead to security bugs.",
+      "parentUuid": "3810ecc9_c69d381e",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 18
+      },
+      "revId": "bcfc6d1cf72c2b28b2310633a1d874a5afdba4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69646530_c7dd5ae7",
         "filename": "ios/web/download/download_controller_impl_unittest.mm",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "bcfc6d1cf72c2b28b2310633a1d874a5afdba4fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552da70a_0686cae0",
+        "filename": "ios/web/download/download_controller_impl_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T19:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69646530_c7dd5ae7",
+      "revId": "bcfc6d1cf72c2b28b2310633a1d874a5afdba4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

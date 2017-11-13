@@ -445,6 +445,24 @@
       "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e94d70_980b75ac",
+        "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-13T19:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3143383f_d33a286f",
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
