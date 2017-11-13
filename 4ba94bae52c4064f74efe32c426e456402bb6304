@@ -16,6 +16,24 @@
       "revId": "4ba94bae52c4064f74efe32c426e456402bb6304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea97d479_50399a4a",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-11-13T22:15:03Z",
+      "side": 1,
+      "message": "this **bucket** has only sandbox builders **right now**.\nYes, pool has more bots in it, they are in reserve. So, I don\u0027t understand what exactly you are asking for.",
+      "parentUuid": "a714540b_9915173e",
+      "revId": "4ba94bae52c4064f74efe32c426e456402bb6304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
