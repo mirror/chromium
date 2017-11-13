@@ -83,6 +83,7 @@ bool PdfMetafileCg::Init() {
   if (!context_.get()) {
     LOG(ERROR) << "Failed to create pdf context for metafile";
     pdf_data_.reset();
+    return false;
   }
 
   return true;
@@ -143,14 +144,12 @@ bool PdfMetafileCg::FinishDocument() {
   DCHECK(!page_is_open_);
 
 #ifndef NDEBUG
-  // Check that the context will be torn down properly; if it's not, pdf_data_
+  // Check that the context will be torn down properly; if it's not, |pdf_data|
   // will be incomplete and generate invalid PDF files/documents.
-  if (context_.get()) {
-    CFIndex extra_retain_count = CFGetRetainCount(context_.get()) - 1;
-    if (extra_retain_count > 0) {
-      LOG(ERROR) << "Metafile context has " << extra_retain_count
-                 << " extra retain(s) on Close";
-    }
+  CFIndex extra_retain_count = CFGetRetainCount(context_.get()) - 1;
+  if (extra_retain_count > 0) {
+    LOG(ERROR) << "Metafile context has " << extra_retain_count
+               << " extra retain(s) on Close";
   }
 #endif
   CGPDFContextClose(context_.get());
