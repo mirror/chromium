@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "3ba561be_fce04ae3",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 3403,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-13T22:19:16Z",
+      "side": 1,
+      "message": "Since the display name of the internal display is \"Internal Display\", I would remove this string here.",
+      "parentUuid": "531dc192_6a1018df",
+      "range": {
+        "startLine": 3403,
+        "startChar": 0,
+        "endLine": 3403,
+        "endChar": 29
+      },
+      "revId": "6db27af0e3d5aede290f1ce51d2827a604b49903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b3f0598_bdaed2fa",
         "filename": "chrome/browser/resources/settings/device_page/display.html",
         "patchSetId": 3
@@ -87,6 +111,24 @@
       "revId": "6db27af0e3d5aede290f1ce51d2827a604b49903",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7099bac1_32882468",
+        "filename": "chrome/browser/resources/settings/device_page/display.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-13T22:19:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b3f0598_bdaed2fa",
+      "revId": "6db27af0e3d5aede290f1ce51d2827a604b49903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
