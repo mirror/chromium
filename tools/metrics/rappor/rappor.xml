@@ -367,6 +367,7 @@ components/rappor/rappor_parameters.h.
   <owner>miguelg@chromium.org</owner>
   <owner>tsergeant@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which an AudioCapture permission prompt was Denied.
   </summary>
 </rappor-metric>
@@ -392,6 +393,7 @@ components/rappor/rappor_parameters.h.
   <owner>miguelg@chromium.org</owner>
   <owner>tsergeant@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which an AudioCapture permission prompt was Dismissed.
   </summary>
 </rappor-metric>
@@ -417,6 +419,7 @@ components/rappor/rappor_parameters.h.
   <owner>miguelg@chromium.org</owner>
   <owner>tsergeant@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which an AudioCapture permission prompt was accepted.
   </summary>
 </rappor-metric>
@@ -442,6 +445,7 @@ components/rappor/rappor_parameters.h.
   <owner>miguelg@chromium.org</owner>
   <owner>tsergeant@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which an AudioCapture permission prompt was Ignored.
   </summary>
 </rappor-metric>
@@ -464,6 +468,7 @@ components/rappor/rappor_parameters.h.
   <owner>dominickn@chromium.org</owner>
   <owner>tsergeant@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which an AudioCapture permission was revoked.
   </summary>
 </rappor-metric>
@@ -482,6 +487,7 @@ components/rappor/rappor_parameters.h.
     type="LOW_FREQUENCY_ETLD_PLUS_ONE">
   <owner>dominickn@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a Flash permission prompt was Denied.
   </summary>
 </rappor-metric>
@@ -490,6 +496,7 @@ components/rappor/rappor_parameters.h.
     type="LOW_FREQUENCY_ETLD_PLUS_ONE">
   <owner>dominickn@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a Flash permission prompt was Dismissed.
   </summary>
 </rappor-metric>
@@ -498,6 +505,7 @@ components/rappor/rappor_parameters.h.
     type="LOW_FREQUENCY_ETLD_PLUS_ONE">
   <owner>dominickn@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a Flash permission prompt was Granted.
   </summary>
 </rappor-metric>
@@ -506,6 +514,7 @@ components/rappor/rappor_parameters.h.
     type="LOW_FREQUENCY_ETLD_PLUS_ONE">
   <owner>dominickn@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a Flash permission prompt was Ignored.
   </summary>
 </rappor-metric>
@@ -525,6 +534,7 @@ components/rappor/rappor_parameters.h.
   <owner>dominickn@chromium.org</owner>
   <owner>miguelg@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a Geolocation permission prompt was Denied.
   </summary>
 </rappor-metric>
@@ -546,6 +556,7 @@ components/rappor/rappor_parameters.h.
   <owner>dominickn@chromium.org</owner>
   <owner>miguelg@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a Geolocation permission prompt was Dismissed.
   </summary>
 </rappor-metric>
@@ -566,6 +577,7 @@ components/rappor/rappor_parameters.h.
   <owner>dominickn@chromium.org</owner>
   <owner>miguelg@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a Geolocation permission prompt was accepted.
   </summary>
 </rappor-metric>
@@ -586,6 +598,7 @@ components/rappor/rappor_parameters.h.
   <owner>dominickn@chromium.org</owner>
   <owner>miguelg@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a Geolocation permission prompt was Ignored.
   </summary>
 </rappor-metric>
@@ -607,6 +620,7 @@ components/rappor/rappor_parameters.h.
   <owner>dominickn@chromium.org</owner>
   <owner>jialiul@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a Geolocation permission was revoked.
   </summary>
 </rappor-metric>
@@ -638,6 +652,7 @@ components/rappor/rappor_parameters.h.
   <owner>dominickn@chromium.org</owner>
   <owner>jialiul@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a Notification permission prompt was Denied.
   </summary>
 </rappor-metric>
@@ -659,6 +674,7 @@ components/rappor/rappor_parameters.h.
   <owner>dominickn@chromium.org</owner>
   <owner>jialiul@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a Notification permission prompt was Dismissed.
   </summary>
 </rappor-metric>
@@ -680,6 +696,7 @@ components/rappor/rappor_parameters.h.
   <owner>dominickn@chromium.org</owner>
   <owner>miguelg@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a Notification permission prompt was accepted.
   </summary>
 </rappor-metric>
@@ -701,6 +718,7 @@ components/rappor/rappor_parameters.h.
   <owner>dominickn@chromium.org</owner>
   <owner>miguelg@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a Notification permission prompt was Ignored.
   </summary>
 </rappor-metric>
@@ -723,6 +741,7 @@ components/rappor/rappor_parameters.h.
   <owner>dominickn@chromium.org</owner>
   <owner>jialiul@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a Notification permission was revoked.
   </summary>
 </rappor-metric>
@@ -747,6 +766,7 @@ components/rappor/rappor_parameters.h.
   <owner>miguelg@chromium.org</owner>
   <owner>tsergeant@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a VideoCapture permission prompt was Denied.
   </summary>
 </rappor-metric>
@@ -772,6 +792,7 @@ components/rappor/rappor_parameters.h.
   <owner>miguelg@chromium.org</owner>
   <owner>tsergeant@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a VideoCapture permission prompt was Dismissed.
   </summary>
 </rappor-metric>
@@ -797,6 +818,7 @@ components/rappor/rappor_parameters.h.
   <owner>miguelg@chromium.org</owner>
   <owner>tsergeant@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a VideoCapture permission prompt was accepted.
   </summary>
 </rappor-metric>
@@ -822,6 +844,7 @@ components/rappor/rappor_parameters.h.
   <owner>miguelg@chromium.org</owner>
   <owner>tsergeant@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which a VideoCapture permission prompt was Ignored.
   </summary>
 </rappor-metric>
@@ -844,6 +867,7 @@ components/rappor/rappor_parameters.h.
   <owner>dominickn@chromium.org</owner>
   <owner>tsergeant@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain for which an VideoCapture permission was revoked.
   </summary>
 </rappor-metric>
@@ -863,6 +887,7 @@ components/rappor/rappor_parameters.h.
   <owner>dominickn@chromium.org</owner>
   <owner>miguelg@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain that issues a Geolocation permission prompt.
   </summary>
 </rappor-metric>
@@ -880,6 +905,7 @@ components/rappor/rappor_parameters.h.
     type="LOW_FREQUENCY_ETLD_PLUS_ONE">
   <owner>toyoshim@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain that requests using MIDI devices.
   </summary>
 </rappor-metric>
@@ -899,6 +925,7 @@ components/rappor/rappor_parameters.h.
   <owner>dominickn@chromium.org</owner>
   <owner>miguelg@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain that issues a Notification permission prompt.
   </summary>
 </rappor-metric>
@@ -907,6 +934,7 @@ components/rappor/rappor_parameters.h.
     type="LOW_FREQUENCY_ETLD_PLUS_ONE">
   <owner>xhwang@chromium.org</owner>
   <summary>
+    **DEPRECATED: Removed in M64, see UMA or Permission Action Reporting data.
     The domain that issues a Protected Media Identifier permission prompt.
   </summary>
 </rappor-metric>

@@ -111,9 +111,7 @@ class PermissionUmaUtil {
   static const char kPermissionsPromptIgnoredPriorIgnoreCountPrefix[];
 
   static void PermissionRequested(ContentSettingsType permission,
-                                  const GURL& requesting_origin,
-                                  const GURL& embedding_origin,
-                                  Profile* profile);
+                                  const GURL& requesting_origin);
   static void PermissionGranted(ContentSettingsType permission,
                                 PermissionRequestGestureType gesture_type,
                                 const GURL& requesting_origin,
