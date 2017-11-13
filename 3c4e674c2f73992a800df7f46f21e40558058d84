@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "bdf80583_ff362324",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-13T14:46:56Z",
+      "side": 1,
+      "message": "If you insist... I have reverted the order to the same as before. The code ended up before more repetitive. I will clean it up in a next CL.",
+      "parentUuid": "3bd41aa6_1712d266",
+      "range": {
+        "startLine": 617,
+        "startChar": 16,
+        "endLine": 617,
+        "endChar": 24
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7915a83e_f0a918e0",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 19
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "So how about we replace |if (completionHandler)| with |DCHECK(completionHandler)| ?",
       "parentUuid": "6466d0b3_f073032c",
+      "range": {
+        "startLine": 619,
+        "startChar": 8,
+        "endLine": 619,
+        "endChar": 25
+      },
+      "revId": "3c4e674c2f73992a800df7f46f21e40558058d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d30fb6_9eff2b27",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-13T14:46:56Z",
+      "side": 1,
+      "message": "I changed everything to require nonnull completionHandler.",
+      "parentUuid": "fec38c30_0fa94a16",
       "range": {
         "startLine": 619,
         "startChar": 8,

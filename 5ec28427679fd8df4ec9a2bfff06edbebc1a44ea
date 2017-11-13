@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2d60155_00594f85",
+        "filename": "ios/chrome/browser/open_url_util.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-13T14:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9868aad6_df5cb4a3",
+      "range": {
+        "startLine": 11,
+        "startChar": 32,
+        "endLine": 11,
+        "endChar": 37
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea73ad45_adc5b6e9",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 22
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-11T01:27:32Z",
       "side": 1,
       "message": "Tab can outlive webState, which will lead to the crash.",
+      "range": {
+        "startLine": 630,
+        "startChar": 25,
+        "endLine": 630,
+        "endChar": 42
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc29a16_84d42c27",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-13T14:46:56Z",
+      "side": 1,
+      "message": "Check added.",
+      "parentUuid": "ea73ad45_adc5b6e9",
       "range": {
         "startLine": 630,
         "startChar": 25,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1554fc69_7d1d8efa",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-13T14:46:56Z",
+      "side": 1,
+      "message": "Since there\u0027s only one caller (from CRWWebController) that never passes in a nil, we can get rid of this here.",
+      "parentUuid": "2eb8d11d_05f8e83d",
+      "range": {
+        "startLine": 642,
+        "startChar": 8,
+        "endLine": 642,
+        "endChar": 25
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a061e4a_36a33cdd",
         "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
         "patchSetId": 22
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-11T01:27:32Z",
       "side": 1,
       "message": "Can we wait for condition to be true, instead of spinning the runloop and hoping that condition will be true?",
+      "range": {
+        "startLine": 353,
+        "startChar": 25,
+        "endLine": 353,
+        "endChar": 41
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990ee226_4a51f7e9",
+        "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-13T14:46:56Z",
+      "side": 1,
+      "message": "Sure. Oversight. Changed to WaitUntilCondition().",
+      "parentUuid": "9a061e4a_36a33cdd",
       "range": {
         "startLine": 353,
         "startChar": 25,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0aa11704_c6964f80",
+        "filename": "ios/chrome/browser/web/external_app_launcher.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-13T14:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "260279e1_ded566ad",
+      "range": {
+        "startLine": 28,
+        "startChar": 35,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "855c86c8_8a3133b0",
         "filename": "ios/chrome/browser/web/external_app_launcher.mm",
         "patchSetId": 22
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "106a2459_0e3d52c0",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-13T14:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "855c86c8_8a3133b0",
+      "range": {
+        "startLine": 73,
+        "startChar": 32,
+        "endLine": 73,
+        "endChar": 47
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7cce74f_b62a254b",
         "filename": "ios/chrome/browser/web/external_app_launcher.mm",
         "patchSetId": 22
@@ -151,6 +295,30 @@
       "writtenOn": "2017-11-11T01:27:32Z",
       "side": 1,
       "message": "nit: completionHandler ?",
+      "range": {
+        "startLine": 103,
+        "startChar": 20,
+        "endLine": 103,
+        "endChar": 30
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08481a63_e04a7dfe",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-13T14:46:56Z",
+      "side": 1,
+      "message": "Renamed",
+      "parentUuid": "d7cce74f_b62a254b",
       "range": {
         "startLine": 103,
         "startChar": 20,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "bfb8d2a1_8587a943",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-13T14:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "733b360e_7a1e412e",
+      "range": {
+        "startLine": 221,
+        "startChar": 4,
+        "endLine": 221,
+        "endChar": 21
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0585ca35_8364dbe4",
         "filename": "ios/chrome/browser/web/external_app_launcher.mm",
         "patchSetId": 22
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "0b4d916e_9c6f7ae2",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-13T14:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0585ca35_8364dbe4",
+      "range": {
+        "startLine": 230,
+        "startChar": 6,
+        "endLine": 230,
+        "endChar": 23
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f783649_68cc85d7",
         "filename": "ios/chrome/browser/web/external_app_launcher.mm",
         "patchSetId": 22
@@ -220,6 +436,30 @@
       "writtenOn": "2017-11-11T01:27:32Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 273,
+        "startChar": 28,
+        "endLine": 273,
+        "endChar": 45
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4310e2f9_addcab9d",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-13T14:46:56Z",
+      "side": 1,
+      "message": "This particular case does not need to be redispatched to main queue. Note that this response handler will be ran on the main queue.",
+      "parentUuid": "1f783649_68cc85d7",
       "range": {
         "startLine": 273,
         "startChar": 28,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "4fbc768f_798f59cc",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-13T14:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e715176_9277c651",
+      "range": {
+        "startLine": 290,
+        "startChar": 4,
+        "endLine": 290,
+        "endChar": 21
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0992a5f7_a31c8f09",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 22
@@ -266,6 +530,30 @@
       "writtenOn": "2017-11-11T01:27:32Z",
       "side": 1,
       "message": "nit: Can we use Chromium threading API? Sorry, I missed this in the previous round in other place.\n\nweb::WebThread::PostTask(web::WebThread::UI, FROM_HERE, base::BindBlockArc(^{\n  completionHandler(NO);\n});",
+      "range": {
+        "startLine": 2851,
+        "startChar": 19,
+        "endLine": 2851,
+        "endChar": 42
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c14d13_be8f5659",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 2851,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-13T14:46:56Z",
+      "side": 1,
+      "message": "I would prefer not to mix Chromium threading with GCD dispatch_async.",
+      "parentUuid": "0992a5f7_a31c8f09",
       "range": {
         "startLine": 2851,
         "startChar": 19,
@@ -298,6 +586,30 @@
       "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8952d239_0d0b9021",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 2904,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-13T14:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcbb9fdd_d4463118",
+      "range": {
+        "startLine": 2904,
+        "startChar": 17,
+        "endLine": 2904,
+        "endChar": 29
+      },
+      "revId": "5ec28427679fd8df4ec9a2bfff06edbebc1a44ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
