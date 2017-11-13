@@ -13,6 +13,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
@@ -30,6 +31,7 @@ class WebServiceWorkerRegistrationProxy;
 namespace content {
 
 class WebServiceWorkerImpl;
+class ServiceWorkerProviderContext;
 
 // WebServiceWorkerRegistrationImpl corresponds to one ServiceWorkerRegistration
 // object in JavaScript. It is owned by content::ServiceWorkerRegistrationHandle
@@ -85,11 +87,9 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
       scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
   static scoped_refptr<WebServiceWorkerRegistrationImpl>
   CreateForServiceWorkerClient(
-      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info);
-
-  void AttachForServiceWorkerGlobalScope(
       blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
-      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
+      base::WeakPtr<ServiceWorkerProviderContext> context);
+
   void AttachForServiceWorkerClient(
       blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info);
 
@@ -125,8 +125,9 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
  private:
   friend class base::RefCounted<WebServiceWorkerRegistrationImpl,
                                 WebServiceWorkerRegistrationImpl>;
-  explicit WebServiceWorkerRegistrationImpl(
-      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info);
+  WebServiceWorkerRegistrationImpl(
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
+      base::WeakPtr<ServiceWorkerProviderContext> context);
   ~WebServiceWorkerRegistrationImpl() override;
 
   // Implements blink::mojom::ServiceWorkerRegistrationObject.
@@ -165,8 +166,7 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
   //   When |this| is in |kDetached| state, if an inflight
   //   ServiceWorkerRegistrationObjectInfo for the same JavaScript registration
   //   object arrived, |this| is reused to be provided to Blink. In such a case
-  //   AttachForServiceWorkerGlobalScope() or AttachForServiceWorkerClient()
-  //   sets |state_| to |kAttachedAndBound|.
+  //   AttachForServiceWorkerClient() sets |state_| to |kAttachedAndBound|.
   enum class LifecycleState {
     kInitial,
     kAttachedAndBound,
@@ -221,9 +221,9 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
       blink::mojom::ServiceWorkerErrorType error,
       const base::Optional<std::string>& error_msg);
 
-  // |handle_id_| is the key to map with remote
-  // content::ServiceWorkerRegistrationHandle.
-  const int handle_id_;
+  // |registration_id_| is id of the corresponding
+  // content::ServiceWorkerRegistration in the browser process.
+  const int64_t registration_id_;
   // |info_| is initialized by the contructor with |info| passed from the remote
   // content::ServiceWorkerRegistrationHandle just created in the browser
   // process. It will be reset to nullptr by DetachAndMaybeDestroy() when
@@ -278,6 +278,12 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
   LifecycleState state_;
 
   std::vector<QueuedTask> queued_tasks_;
+
+  // |this| is tracked (not owned) in
+  // |context_->controllee_state_->registrations_| for service worker client
+  // contexts, the key is |registration_id|.
+  // |context_| is null for service worker execution contexts.
+  base::WeakPtr<ServiceWorkerProviderContext> context_;
 
   DISALLOW_COPY_AND_ASSIGN(WebServiceWorkerRegistrationImpl);
 };
