@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "defc9fe8_6dbcfcf9",
+        "filename": "chrome/browser/pdf/pdf_extension_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-13T15:01:48Z",
+      "side": 1,
+      "message": "Is this a common idiom in Chrome to have using statements in the code?",
+      "range": {
+        "startLine": 1339,
+        "startChar": 2,
+        "endLine": 1339,
+        "endChar": 23
+      },
+      "revId": "fcb89eb9facfe6023098b5539c1a2819d8db78fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e9fbb0_c7a6de05",
+        "filename": "content/public/test/browser_test_utils.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-11-13T15:01:48Z",
+      "side": 1,
+      "message": "nit:  // !defined(OS_MACOSX)",
+      "revId": "fcb89eb9facfe6023098b5539c1a2819d8db78fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
