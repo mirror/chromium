@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f95673c2_3627298a",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T15:29:27Z",
+      "side": 1,
+      "message": "please move this comment just above the \u0027message\u0027 line and add more detail about what this proto is used for.",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf0283e_0ad38f8f",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T15:29:27Z",
+      "side": 1,
+      "message": "Activity\n\nalso, a lot of the events described by this proto don\u0027t have anything to do with user activity. would a different name (TrainingEvent?) be more appropriate?",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02427f85_61603b63",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T15:29:27Z",
+      "side": 1,
+      "message": "nit: off_to_dim_sec etc. so that the units are obvious?",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab493e69_d968a484",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T15:29:27Z",
+      "side": 1,
+      "message": "how will this handle days containing transitions to or from daylight saving time?",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646d7874_9cbf1574",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T15:29:27Z",
+      "side": 1,
+      "message": "cumulative time throughout the whole day? time since activity started?",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "560a2b3a_2c23a969",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T15:29:27Z",
+      "side": 1,
+      "message": "please add more details here. are these chrome app IDs? app names (from where?)? something else?",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671eec84_4611abdd",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T15:29:27Z",
+      "side": 1,
+      "message": "why does this need to be three different things? what\u0027s \"content type of the URL\" -- like, \"text/html\"?",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c84d634_d526954c",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T15:29:27Z",
+      "side": 1,
+      "message": "is this describing the lid position or something else? we usually use the terms \"clamshell\" and \"tablet\", but note also that the lid could be closed or not even present.",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9bfa61a_9b656f02",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T15:29:27Z",
+      "side": 1,
+      "message": "UNKNOWN?",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db418fc9_d4757d16",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T15:29:27Z",
+      "side": 1,
+      "message": "please add more detail about the format for these strings.",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59f0ac4_952dcaf0",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-13T15:29:27Z",
+      "side": 1,
+      "message": "is_online?",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
