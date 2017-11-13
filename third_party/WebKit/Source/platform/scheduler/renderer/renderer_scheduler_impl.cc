@@ -133,6 +133,8 @@ RendererSchedulerImpl::RendererSchedulerImpl(
       NewTimerTaskQueue(MainThreadTaskQueue::QueueType::DEFAULT_TIMER);
   v8_task_queue_ = NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(
       MainThreadTaskQueue::QueueType::V8));
+  ipc_task_queue_ = NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(
+      MainThreadTaskQueue::QueueType::IPC));
 
   TRACE_EVENT_OBJECT_CREATED_WITH_ID(
       TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"), "RendererScheduler",
@@ -320,6 +322,11 @@ RendererSchedulerImpl::CompositorTaskRunner() {
 scoped_refptr<SingleThreadIdleTaskRunner>
 RendererSchedulerImpl::IdleTaskRunner() {
   return idle_helper_.IdleTaskRunner();
+}
+
+scoped_refptr<base::SingleThreadTaskRunner>
+RendererSchedulerImpl::IPCTaskRunner() {
+  return ipc_task_queue_;
 }
 
 scoped_refptr<base::SingleThreadTaskRunner>
@@ -2020,6 +2027,7 @@ void RendererSchedulerImpl::SetTopLevelBlameContext(
   compositor_task_queue_->SetBlameContext(blame_context);
   idle_helper_.IdleTaskRunner()->SetBlameContext(blame_context);
   v8_task_queue_->SetBlameContext(blame_context);
+  ipc_task_queue_->SetBlameContext(blame_context);
 }
 
 void RendererSchedulerImpl::SetRAILModeObserver(RAILModeObserver* observer) {
