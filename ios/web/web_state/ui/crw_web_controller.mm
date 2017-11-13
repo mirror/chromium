@@ -2979,9 +2979,74 @@ registerLoadRequestForURL:(const GURL&)requestURL
     return;
   }
 
-  [self loadCompleteWithSuccess:NO forNavigation:navigation];
-  [self loadErrorInNativeView:error navigationContext:navigationContext];
+  //  FIXME: On swipe a notification away from the top of the screen, this code
+  //  was called again, which caused a problem with trying to show the
+  //  interstitial again.
+
+  // Ask web client if this error should be displayed.
+  web::GetWebClient()->ShouldDisplayError(
+      _webStateImpl, errorGURL, base::BindBlockArc(^(bool shouldDisplay) {
+        if (shouldDisplay) {
+          [self loadCompleteWithSuccess:NO forNavigation:navigation];
+          [self loadErrorInNativeView:error
+                    navigationContext:navigationContext];
+        } else {
+          // FIXME: The loading spinner is still going here for some reason.
+          [self loadCancelled];
+          [self loadCurrentURL];
+        }
+      }));
+
+  // This code below worked, but I refactored it into calling the WebClient
+  // because of layering violation of below code.
+
+  //  // Test for Captive Portal before displaying the error. This logic needs
+  //  to move, hopefully into the shared tab helper so that the blocking page
+  //  doesn't need to do the same logic again if it's cached.
+  //
+  //  // also including the detector here is a layering violation. Need to use a
+  //  delegate or something maybe or tie into the staticHTMLViewController with
+  //  the ErrorContentPage thing
+  //
+  //  static captive_portal::CaptivePortalDetector* detector = new
+  //  captive_portal::CaptivePortalDetector(self.webState->GetBrowserState()->GetRequestContext());
+  ////  auto detector = base::MakeUnique<captive_portal::CaptivePortalDetector>(
+  //// self.webState->GetBrowserState()->GetRequestContext());
+  //  detector->DetectCaptivePortal(
+  //                                GURL(captive_portal::CaptivePortalDetector::kDefaultURL),
+  //                                base::BindBlockArc(^(const
+  //                                captive_portal::CaptivePortalDetector::Results&
+  //                                results) {
+  //    if (results.result ==
+  //    captive_portal::CaptivePortalResult::RESULT_BEHIND_CAPTIVE_PORTAL) {
+  //      [self handleDisplayCaptivePortalWithError:error
+  //      forNavigation:navigation];
+  //    } else {
+  //      [self loadCompleteWithSuccess:NO forNavigation:navigation];
+  //      [self loadErrorInNativeView:error
+  //      navigationContext:navigationContext];
+  //    }
+  //  }),
+  //                                NO_TRAFFIC_ANNOTATION_YET);
 }
+
+//- (void)handleDisplayCaptivePortalWithError:(NSError*)error
+// forNavigation:(WKNavigation*)navigation {
+//  net::SSLInfo info;
+//  NSURL* requestURL = error.userInfo[web::kNSErrorFailingURLKey];
+//
+//  web::GetWebClient()->AllowCertificateError(
+//                                             _webStateImpl,
+//                                             net::ERR_CERT_INVALID, info,
+//                                             net::GURLWithNSURL(requestURL),
+//                                             NO, base::BindBlockArc(^(bool
+//                                             proceed) {
+//    [self loadCurrentURL];
+//  }));
+//
+//  _webStateImpl->DidChangeVisibleSecurityState();
+//  [self loadCancelled];
+//}
 
 - (void)handleCancelledError:(NSError*)error {
   if ([self shouldCancelLoadForCancelledError:error]) {

@@ -8,9 +8,12 @@
 #include "base/feature_list.h"
 #include "base/files/file_util.h"
 #include "base/ios/ios_util.h"
+#import "base/mac/bind_objc_block.h"
 #include "base/mac/bundle_locations.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
+#include "components/captive_portal/captive_portal_detector.h"
+#include "components/captive_portal/captive_portal_types.h"
 #include "components/dom_distiller/core/url_constants.h"
 #include "components/payments/core/features.h"
 #include "components/prefs/pref_service.h"
@@ -25,6 +28,8 @@
 #include "ios/chrome/browser/ios_chrome_main_parts.h"
 #include "ios/chrome/browser/passwords/credential_manager_features.h"
 #include "ios/chrome/browser/pref_names.h"
+#import "ios/chrome/browser/ssl/captive_portal_detector_tab_helper.h"
+#include "ios/chrome/browser/ssl/ios_captive_portal_blocking_page.h"
 #include "ios/chrome/browser/ssl/ios_ssl_error_handler.h"
 #import "ios/chrome/browser/ui/chrome_web_view_factory.h"
 #include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
@@ -60,6 +65,8 @@ NSString* GetPageScript(NSString* script_file_name) {
   DCHECK(content);
   return content;
 }
+
+void DoNothing(bool) {}
 }  // namespace
 
 ChromeWebClient::ChromeWebClient() {}
@@ -192,4 +199,51 @@ void ChromeWebClient::AllowCertificateError(
   // or web_state used to fetch offline content in Reading List.
   IOSSSLErrorHandler::HandleSSLError(web_state, cert_error, info, request_url,
                                      overridable, callback);
+}
+
+void ChromeWebClient::ShouldDisplayError(
+    web::WebState* web_state,
+    const GURL& request_url,
+    const base::Callback<void(bool)>& callback) {
+  // Check if we are behind a captive portal.
+  CaptivePortalDetectorTabHelper* tab_helper =
+      CaptivePortalDetectorTabHelper::FromWebState(web_state);
+
+  // TODO(crbug.com/760873): replace test with DCHECK when this method is only
+  // called on WebStates attached to tabs.
+  if (!tab_helper) {
+    return;
+  }
+
+  GURL scoped_request_url = request_url;
+  base::Callback<void(bool)> scoped_callback = callback;
+  tab_helper->detector()->DetectCaptivePortal(
+      GURL(captive_portal::CaptivePortalDetector::kDefaultURL),
+      base::BindBlockArc(^(
+          const captive_portal::CaptivePortalDetector::Results& results) {
+        if (results.result ==
+            captive_portal::CaptivePortalResult::RESULT_BEHIND_CAPTIVE_PORTAL) {
+          // If behind captive portal, don't show error, but display captive
+          // portal interstitial instead.
+
+          // IOSCaptivePortalBlockingPage deletes itself when it's dismissed.
+          //      auto dismissal_callback(
+          //                              base::Bind(&WebClient::InterstitialWasDismissed,
+          //                                         base::Unretained(web_state),
+          //                                         callback));
+          if (!scoped_callback.is_null()) {
+            scoped_callback.Run(false);
+          }
+          IOSCaptivePortalBlockingPage* page = new IOSCaptivePortalBlockingPage(
+              web_state, scoped_request_url, results.landing_url,
+              base::Bind(&DoNothing));
+          page->Show();
+        } else {
+          // If not behind captive portal, display error to user
+          if (!scoped_callback.is_null()) {
+            scoped_callback.Run(true);
+          }
+        }
+      }),
+      NO_TRAFFIC_ANNOTATION_YET);
 }

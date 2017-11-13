@@ -162,6 +162,10 @@ class WebClient {
       bool overridable,
       const base::Callback<void(bool)>& callback);
 
+  virtual void ShouldDisplayError(WebState* web_state,
+                                  const GURL& request_url,
+                                  const base::Callback<void(bool)>& callback);
+
   // Allows upper layers to inject experimental flags to the web layer.
   // TODO(crbug.com/734150): Clean up this flag after experiment. If need for a
   // second flag arises before clean up, consider generalizing to an experiment

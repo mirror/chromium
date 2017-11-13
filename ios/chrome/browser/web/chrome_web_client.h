@@ -45,6 +45,9 @@ class ChromeWebClient : public web::WebClient {
       const GURL& request_url,
       bool overridable,
       const base::Callback<void(bool)>& callback) override;
+  void ShouldDisplayError(web::WebState* web_state,
+                          const GURL& request_url,
+                          const base::Callback<void(bool)>& callback) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ChromeWebClient);
