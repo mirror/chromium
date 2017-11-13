@@ -49,6 +49,8 @@ class AXList final : public AXLayoutObject {
 
   AccessibilityRole RoleValue() const final;
 
+  std::string AXClassName() const override { return "AXList"; }
+
  private:
   bool IsDescriptionList() const;
   bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const override;

@@ -56,6 +56,8 @@ class AXARIAGridCell final : public AXTableCell {
     return Restriction() != kDisabled;
   }
 
+  std::string AXClassName() const override { return "AXARIAGridCell"; }
+
  protected:
   bool IsAriaColumnHeader() const;
   bool IsAriaRowHeader() const;

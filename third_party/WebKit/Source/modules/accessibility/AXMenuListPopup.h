@@ -51,6 +51,8 @@ class AXMenuListPopup final : public AXMockObject {
   AXObject* ActiveDescendant() final;
   void UpdateChildrenIfNecessary() override;
 
+  std::string AXClassName() const override { return "AXMenuListPopup"; }
+
  private:
   explicit AXMenuListPopup(AXObjectCacheImpl&);
 

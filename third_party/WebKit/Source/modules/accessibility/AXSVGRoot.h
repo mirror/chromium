@@ -50,6 +50,8 @@ class AXSVGRoot final : public AXLayoutObject {
   AccessibilityRole DetermineAccessibilityRole() override;
   bool ComputeAccessibilityIsIgnored(IgnoredReasons*) const override;
 
+  std::string AXClassName() const override { return "AXSVGRoot"; }
+
  private:
   AXObject* ComputeParent() const override;
   bool IsAXSVGRoot() const override { return true; }

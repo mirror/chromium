@@ -79,6 +79,8 @@ class MODULES_EXPORT AXTable : public AXLayoutObject {
   // an object that contains, as children, all the objects that act as headers
   AXObject* HeaderContainer();
 
+  std::string AXClassName() const override { return "AXTable"; }
+
  protected:
   AXObjectVector rows_;
   AXObjectVector columns_;

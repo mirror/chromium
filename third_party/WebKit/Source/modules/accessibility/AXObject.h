@@ -804,6 +804,10 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   static const AtomicString& InternalRoleName(AccessibilityRole);
   static void AccessibleNodeListToElementVector(const AccessibleNodeList&,
                                                 HeapVector<Member<Element>>&);
+  // Subclasses must return the class name here so that
+  // objects can be passed to a string for easier debugging.
+  // E.g. LOG(INFO) << my_ax_object
+  virtual std::string AXClassName() const = 0;
 
  protected:
   AXID id_;
@@ -893,6 +897,7 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
 };
 
 MODULES_EXPORT std::ostream& operator<<(std::ostream&, const AXObject&);
+MODULES_EXPORT std::ostream& operator<<(std::ostream&, const AXObject*);
 
 #define DEFINE_AX_OBJECT_TYPE_CASTS(thisType, predicate)           \
   DEFINE_TYPE_CASTS(thisType, AXObject, object, object->predicate, \

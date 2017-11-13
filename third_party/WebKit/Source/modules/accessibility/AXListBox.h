@@ -51,6 +51,8 @@ class AXListBox final : public AXLayoutObject {
 
   void ActiveIndexChanged();
 
+  std::string AXClassName() const override { return "AXListBox"; }
+
  private:
   int active_index_;
 };

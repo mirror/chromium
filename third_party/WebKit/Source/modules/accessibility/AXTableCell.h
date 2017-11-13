@@ -62,6 +62,8 @@ class MODULES_EXPORT AXTableCell : public AXLayoutObject {
   void SetARIAColIndexFromRow(int index) { aria_col_index_from_row_ = index; }
   virtual bool CanSetSelectedAttribute() const { return false; }
 
+  std::string AXClassName() const override { return "AXTableCell"; }
+
  protected:
   virtual AXObject* ParentTable() const;
   virtual AXObject* ParentRow() const;

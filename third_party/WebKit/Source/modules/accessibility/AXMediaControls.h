@@ -55,6 +55,10 @@ class AccessibilityMediaControl : public AXLayoutObject {
                      AXDescriptionFrom&,
                      AXObjectVector* description_objects) const override;
 
+  std::string AXClassName() const override {
+    return "AccessibilityMediaControl";
+  }
+
  protected:
   AccessibilityMediaControl(LayoutObject*, AXObjectCacheImpl&);
   MediaControlElementType ControlType() const;
@@ -96,6 +100,10 @@ class AXMediaControlsContainer final : public AccessibilityMediaControl {
                      AXDescriptionFrom&,
                      AXObjectVector* description_objects) const override;
 
+  std::string AXClassName() const override {
+    return "AXMediaControlsContainer";
+  }
+
  private:
   AXMediaControlsContainer(LayoutObject*, AXObjectCacheImpl&);
   bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const override;
@@ -117,6 +125,10 @@ class AccessibilityMediaTimeDisplay final : public AccessibilityMediaControl {
                          AXNameFrom&,
                          AXRelatedObjectVector*,
                          NameSources*) const override;
+
+  std::string AXClassName() const override {
+    return "AccessibilityMediaTimeDisplay";
+  }
 
  private:
   AccessibilityMediaTimeDisplay(LayoutObject*, AXObjectCacheImpl&);

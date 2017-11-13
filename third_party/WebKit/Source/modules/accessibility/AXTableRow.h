@@ -64,6 +64,8 @@ class MODULES_EXPORT AXTableRow : public AXLayoutObject {
 
   virtual bool CanSetSelectedAttribute() const { return false; }
 
+  std::string AXClassName() const override { return "AXTableRow"; }
+
  protected:
   AccessibilityRole DetermineAccessibilityRole() final;
 

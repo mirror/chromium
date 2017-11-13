@@ -44,6 +44,8 @@ class AXSlider : public AXLayoutObject {
   static AXSlider* Create(LayoutObject*, AXObjectCacheImpl&);
   ~AXSlider() override {}
 
+  std::string AXClassName() const override { return "AXSlider"; }
+
  protected:
   AXSlider(LayoutObject*, AXObjectCacheImpl&);
 
@@ -69,6 +71,8 @@ class AXSliderThumb final : public AXMockObject {
   ~AXSliderThumb() override {}
 
   AccessibilityRole RoleValue() const override { return kSliderThumbRole; }
+
+  std::string AXClassName() const override { return "AXSliderThumb"; }
 
  private:
   explicit AXSliderThumb(AXObjectCacheImpl&);

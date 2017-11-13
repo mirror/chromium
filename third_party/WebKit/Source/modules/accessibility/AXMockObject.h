@@ -46,6 +46,8 @@ class MODULES_EXPORT AXMockObject : public AXObject {
   AXObject* ComputeParent() const override { return parent_; }
   AXRestriction Restriction() const override { return kNone; }
 
+  std::string AXClassName() const override { return "AXMockObject"; }
+
  private:
   bool IsMockObject() const final { return true; }
 

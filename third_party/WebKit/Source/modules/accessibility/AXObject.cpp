@@ -2477,8 +2477,15 @@ VisiblePosition AXObject::VisiblePositionForIndex(int) const {
 }
 
 std::ostream& operator<<(std::ostream& stream, const AXObject& obj) {
-  return stream << AXObject::InternalRoleName(obj.RoleValue()) << ": "
+  return stream << '|' << obj.AXClassName() << '|'
+                << AXObject::InternalRoleName(obj.RoleValue()) << ": "
                 << obj.ComputedName();
+}
+
+std::ostream& operator<<(std::ostream& stream, const AXObject* obj) {
+  if (!obj)
+    return stream << "null";
+  return stream << *obj;
 }
 
 void AXObject::Trace(blink::Visitor* visitor) {

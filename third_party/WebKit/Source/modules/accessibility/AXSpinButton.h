@@ -46,6 +46,8 @@ class AXSpinButton final : public AXMockObject {
   }
   void Step(int amount);
 
+  std::string AXClassName() const override { return "AXSpinButton"; }
+
  private:
   explicit AXSpinButton(AXObjectCacheImpl&);
 

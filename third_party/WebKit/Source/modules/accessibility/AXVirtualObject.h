@@ -35,6 +35,7 @@ class MODULES_EXPORT AXVirtualObject : public AXObject {
                          AXNameFrom&,
                          AXRelatedObjectVector*,
                          NameSources*) const override;
+  std::string AXClassName() const override { return "AXVirtualObject"; }
 
  private:
   bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const override;

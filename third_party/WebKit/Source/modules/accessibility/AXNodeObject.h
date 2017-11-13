@@ -220,6 +220,8 @@ class MODULES_EXPORT AXNodeObject : public AXObject {
   void ComputeAriaOwnsChildren(
       HeapVector<Member<AXObject>>& owned_children) const;
 
+  std::string AXClassName() const override { return "AXNodeObject"; }
+
  private:
   Member<Node> node_;
 

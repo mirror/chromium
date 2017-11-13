@@ -54,6 +54,8 @@ class AXARIAGrid final : public AXTable {
 
   void AddChildren() override;
 
+  std::string AXClassName() const override { return "AXARIAGrid"; }
+
  private:
   // ARIA treegrids and grids support selected rows.
   bool SupportsSelectedRows() override { return true; }

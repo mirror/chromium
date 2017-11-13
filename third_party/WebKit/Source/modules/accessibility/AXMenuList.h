@@ -48,6 +48,8 @@ class AXMenuList final : public AXLayoutObject {
   void DidShowPopup();
   void DidHidePopup();
 
+  std::string AXClassName() const override { return "AXMenuList"; }
+
  private:
   friend class AXMenuListOption;
 
