@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f29ec550_250edfdc",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-13T17:53:09Z",
+      "side": 1,
+      "message": "That was my initial plan (putting this logic in SoundContentSettingObserver). However, the logic for determining when sound was blocked was already implemented here, so it seemed to make more sense to put the UKM here instead of re-implementing the sound-blocked logic there. If you think this really doesn\u0027t belong here, I can move it there though.",
+      "parentUuid": "f5d7d67a_906c1227",
+      "revId": "bdd7cc613888d4c47a270bb07a27685f17bed7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d94d894_61e32716",
         "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
         "patchSetId": 5
