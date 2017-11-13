@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95540a76_bad59d8b",
+        "filename": "content/shell/browser/layout_test/layout_test_devtools_bindings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-13T19:53:04Z",
+      "side": 1,
+      "message": "Need to move it before navigation, otherwise render frame created doesn\u0027t get observed.",
+      "revId": "e083ac134ecf05fcae64fa6c9ff62983c249b96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
