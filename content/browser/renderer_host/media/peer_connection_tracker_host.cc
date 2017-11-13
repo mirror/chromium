@@ -1,10 +1,12 @@
 // Copyright (c) 2013 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+
 #include "content/browser/renderer_host/media/peer_connection_tracker_host.h"
 
 #include "base/power_monitor/power_monitor.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
+#include "content/browser/webrtc/webrtc_event_log_manager.h"
 #include "content/browser/webrtc/webrtc_eventlog_host.h"
 #include "content/browser/webrtc/webrtc_internals.h"
 #include "content/common/media/peer_connection_tracker_messages.h"
@@ -71,6 +73,7 @@ void PeerConnectionTrackerHost::OnChannelClosing() {
 
 void PeerConnectionTrackerHost::OnAddPeerConnection(
     const PeerConnectionInfo& info) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   WebRTCInternals::GetInstance()->OnAddPeerConnection(
       render_process_id_,
       peer_pid(),
@@ -83,6 +86,7 @@ void PeerConnectionTrackerHost::OnAddPeerConnection(
 }
 
 void PeerConnectionTrackerHost::OnRemovePeerConnection(int lid) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   WebRTCInternals::GetInstance()->OnRemovePeerConnection(peer_pid(), lid);
   if (event_log_host_)
     event_log_host_->PeerConnectionRemoved(lid);
@@ -120,8 +124,8 @@ void PeerConnectionTrackerHost::OnGetUserMedia(
 void PeerConnectionTrackerHost::OnRtcEventLogWrite(int lid,
                                                    const std::string& output) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  // TODO(eladalon): This is handled in the next CL in the stack.
-  // Namely, https://chromium-review.googlesource.com/c/chromium/src/+/760816.
+  auto* manager = RtcEventLogManager::GetInstance();
+  manager->OnRtcEventLogWrite(render_process_id_, lid, output);
 }
 
 void PeerConnectionTrackerHost::OnSuspend() {

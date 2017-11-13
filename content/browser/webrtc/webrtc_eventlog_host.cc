@@ -4,67 +4,34 @@
 
 #include "content/browser/webrtc/webrtc_eventlog_host.h"
 
-#include <algorithm>
-#include <string>
-
-#include "base/files/file_util.h"
-#include "base/strings/string_number_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_restrictions.h"
+#include "content/browser/webrtc/webrtc_event_log_manager.h"
 #include "content/browser/webrtc/webrtc_internals.h"
 #include "content/common/media/peer_connection_tracker_messages.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
 
-#if defined(OS_WIN)
-#define IntToStringType base::IntToString16
-#else
-#define IntToStringType base::IntToString
-#endif
-
 namespace content {
 
 namespace {
 
-// TODO(eladalon): This blocks the new code until the code handling it is
-// introduce by the next CL in the stack.
-// Namely, https://chromium-review.googlesource.com/c/chromium/src/+/760816.
-constexpr bool kRtcEventLoggingFromHostApplication = false;
-
-// In addition to the limit to the number of files given below, the size of the
-// files is also capped, see content/renderer/media/peer_connection_tracker.cc.
+// A lower maximum filesize is used on Android because storage space is
+// more scarce on mobile. This upper limit applies to each peerconnection
+// individually, so the total amount of used storage can be a multiple of
+// this.
+// TODO(eladalon): The cap on the size is identical to that set in
+// content/renderer/media/peer_connection_tracker.cc. The version there is
+// intended for removal in an upcoming CL; the version here is inteded to be
+// moved.
 #if defined(OS_ANDROID)
 const int kMaxNumberLogFiles = 3;
+constexpr int64_t kMaxLocalRtcEventLogFileSizeBytes = 10000000;
 #else
 const int kMaxNumberLogFiles = 5;
+constexpr int64_t kMaxLocalRtcEventLogFileSizeBytes = 60000000;
 #endif
-
-// Appends the IDs to the RTC event log file name.
-base::FilePath GetWebRtcEventLogPath(const base::FilePath& base_file,
-                                     int render_process_id,
-                                     int connection_id) {
-  return base_file.AddExtension(IntToStringType(render_process_id))
-      .AddExtension(IntToStringType(connection_id));
-}
-
-// Opens a logfile to pass on to the renderer.
-IPC::PlatformFileForTransit CreateEventLogFileForChildProcess(
-    const base::FilePath& base_path,
-    int render_process_id,
-    int connection_id) {
-  base::AssertBlockingAllowed();
-  base::FilePath file_path =
-      GetWebRtcEventLogPath(base_path, render_process_id, connection_id);
-  base::File event_log_file(
-      file_path, base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
-  if (!event_log_file.IsValid()) {
-    PLOG(ERROR) << "Could not open WebRTC event log file, error="
-                << event_log_file.error_details();
-    return IPC::InvalidPlatformFileForTransit();
-  }
-  return IPC::TakePlatformFileForTransit(std::move(event_log_file));
-}
 
 }  // namespace
 
@@ -75,7 +42,7 @@ WebRTCEventLogHost::WebRTCEventLogHost(int render_process_id)
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   auto* webrtc_internals = WebRTCInternals::GetInstance();
   if (webrtc_internals->IsEventLogRecordingsEnabled())
-    StartWebRTCEventLog(webrtc_internals->GetEventLogFilePath());
+    StartLocalRtcEventLogging(webrtc_internals->GetEventLogFilePath());
 }
 
 WebRTCEventLogHost::~WebRTCEventLogHost() {
@@ -110,18 +77,19 @@ void WebRTCEventLogHost::PeerConnectionRemoved(int peer_connection_local_id) {
   RtcEventLogRemoved(peer_connection_local_id);
 }
 
-bool WebRTCEventLogHost::StartWebRTCEventLog(const base::FilePath& file_path) {
+bool WebRTCEventLogHost::StartLocalRtcEventLogging(
+    const base::FilePath& base_path) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (rtc_event_logging_enabled_)
     return false;
   rtc_event_logging_enabled_ = true;
-  base_file_path_ = file_path;
+  base_file_path_ = base_path;
   for (int local_id : active_peer_connection_local_ids_)
     StartEventLogForPeerConnection(local_id);
   return true;
 }
 
-bool WebRTCEventLogHost::StopWebRTCEventLog() {
+bool WebRTCEventLogHost::StopLocalRtcEventLogging() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (!rtc_event_logging_enabled_) {
     DCHECK(ActivePeerConnectionsWithLogFiles().empty());
@@ -130,8 +98,11 @@ bool WebRTCEventLogHost::StopWebRTCEventLog() {
   rtc_event_logging_enabled_ = false;
   RenderProcessHost* host = RenderProcessHost::FromID(render_process_id_);
   if (host) {
-    for (int local_id : active_peer_connection_local_ids_)
+    for (int local_id : active_peer_connection_local_ids_) {
       host->Send(new PeerConnectionTracker_StopEventLog(local_id));
+      RtcEventLogManager::GetInstance()->LocalRtcEventLogStop(
+          render_process_id_, local_id);
+    }
   }
   ActivePeerConnectionsWithLogFiles().clear();
   return true;
@@ -152,42 +123,14 @@ WebRTCEventLogHost::ActivePeerConnectionsWithLogFiles() {
 void WebRTCEventLogHost::StartEventLogForPeerConnection(
     int peer_connection_local_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (kRtcEventLoggingFromHostApplication) {
-    RenderProcessHost* rph = RenderProcessHost::FromID(render_process_id_);
-    if (rph) {
-      rph->Send(new PeerConnectionTracker_StartEventLogOutput(
-          peer_connection_local_id));
-    }
-  } else {
-    if (ActivePeerConnectionsWithLogFiles().size() < kMaxNumberLogFiles) {
-      RtcEventLogAdded(peer_connection_local_id);
-      base::PostTaskWithTraitsAndReplyWithResult(
-          FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-          base::Bind(&CreateEventLogFileForChildProcess, base_file_path_,
-                     render_process_id_, peer_connection_local_id),
-          base::Bind(&WebRTCEventLogHost::SendEventLogFileToRenderer,
-                     weak_ptr_factory_.GetWeakPtr(), peer_connection_local_id));
-    }
-  }
-}
-
-void WebRTCEventLogHost::SendEventLogFileToRenderer(
-    int peer_connection_local_id,
-    IPC::PlatformFileForTransit file_for_transit) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (file_for_transit == IPC::InvalidPlatformFileForTransit()) {
-    bool removed = RtcEventLogRemoved(peer_connection_local_id);
-    DCHECK(removed);
-    return;
-  }
   RenderProcessHost* rph = RenderProcessHost::FromID(render_process_id_);
-  if (rph) {
-    rph->Send(new PeerConnectionTracker_StartEventLogFile(
-        peer_connection_local_id, file_for_transit));
-  } else {
-    bool removed = RtcEventLogRemoved(peer_connection_local_id);
-    DCHECK(removed);
-    IPC::PlatformFileForTransitToFile(file_for_transit).Close();
+  if (rph && ActivePeerConnectionsWithLogFiles().size() < kMaxNumberLogFiles) {
+    RtcEventLogAdded(peer_connection_local_id);
+    RtcEventLogManager::GetInstance()->LocalRtcEventLogStart(
+        render_process_id_, peer_connection_local_id, base_file_path_,
+        kMaxLocalRtcEventLogFileSizeBytes);
+    rph->Send(new PeerConnectionTracker_StartEventLogOutput(
+        peer_connection_local_id));
   }
 }
 

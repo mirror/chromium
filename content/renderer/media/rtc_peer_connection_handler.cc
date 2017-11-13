@@ -1864,12 +1864,16 @@ void RTCPeerConnectionHandler::StartEventLog(IPC::PlatformFileForTransit file,
                                              int64_t max_file_size_bytes) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(file != IPC::InvalidPlatformFileForTransit());
+  // TODO(eladalon): StartRtcEventLog() return value is not useful; remove it
+  // or find a way to be able to use it.
   native_peer_connection_->StartRtcEventLog(
       IPC::PlatformFileForTransitToPlatformFile(file), max_file_size_bytes);
 }
 
 void RTCPeerConnectionHandler::StartEventLog() {
   DCHECK(thread_checker_.CalledOnValidThread());
+  // TODO(eladalon): StartRtcEventLog() return value is not useful; remove it
+  // or find a way to be able to use it.
   native_peer_connection_->StartRtcEventLog(
       base::MakeUnique<RtcEventLogOutputSinkProxy>(
           peer_connection_observer_.get()));
