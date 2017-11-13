@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "2d741790_63345bc1",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-13T15:27:54Z",
+      "side": 1,
+      "message": "I don\u0027t like the pattern of having a state switch for\narbitrating what is essentially a class preamble, i.e.\nwhat we\u0027re interested in is, adding numbers to the time\nevents:\n\n1- start creating |face_detector_|\n2- ... |face_detector_| is created.\n3- Detect()\n4- ... face is Detect()ed (correct or incorrectly).\n\nand we need to arbitrate: a (3) getting in between (1)-(2)\nand a/multiple (3) getting in between previous (3)-(4), \ncorrect?\n\nIn all cases I think it\u0027d be better to have a DetectCallback\nqueue, in which:\n\n- if a Detect() request (3) comes between (1)-(2), then\nit\u0027s queued up. Upon OnFaceDetectorCreated(), any queued\nup DetectCallbacks are serviced.\n\n- if a Detect() request (3) comes between 3-4, i.e.\nwhen another Detect() is being served, do the same: queue\nit up and serve it upon completion of the previous Detect().\n\nTake a look at e.g. |take_photo_callbacks_| in [1].\n\nWe might need to make the Q bounded to avoid flooding/hacking\nthe system. \n\nRemember that the Web Platform client of the Mojo interface is\nentirely asynchronous, so it\u0027s OK to let requests wait.\n\nWDYT?\n\n[1] https://cs.chromium.org/chromium/src/media/capture/video/win/video_capture_device_win.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d143",
+      "parentUuid": "349feb5e_c11b2d5c",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 26
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f2c0c7e_2465e916",
         "filename": "services/shape_detection/face_detection_impl_win.h",
         "patchSetId": 8
