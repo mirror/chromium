@@ -364,6 +364,9 @@ class TabSpecificContentSettings
   // This method is called to update the sound status.
   void OnAudioStateChanged(bool is_audible);
 
+  // Updates the blocked framebust icon in the location bar.
+  void OnBlockedFramebust(const GURL& blocked_url);
+
  private:
   friend class content::WebContentsUserData<TabSpecificContentSettings>;
 

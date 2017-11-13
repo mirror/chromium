@@ -455,6 +455,7 @@ gfx::Size LocationBarView::CalculatePreferredSize() const {
   if (intent_picker_view_)
     trailing_width += IncrementalMinimumWidth(intent_picker_view_);
 #endif  // defined(OS_CHROMEOS)
+
   for (auto i = content_setting_views_.begin();
        i != content_setting_views_.end(); ++i) {
     trailing_width += IncrementalMinimumWidth((*i));
