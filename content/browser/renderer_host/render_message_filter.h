@@ -129,15 +129,15 @@ class CONTENT_EXPORT RenderMessageFilter
                            base::ThreadPriority priority);
 #endif
 
-  void OnCacheableMetadataAvailable(const GURL& url,
+  void DidGenerateCacheableMetadata(const GURL& url,
                                     base::Time expected_response_time,
-                                    const std::vector<char>& data);
-  void OnCacheableMetadataAvailableForCacheStorage(
+                                    const std::vector<uint8_t>& data) override;
+  void DidGenerateCacheableMetadataInCacheStorage(
       const GURL& url,
       base::Time expected_response_time,
-      const std::vector<char>& data,
+      const std::vector<uint8_t>& data,
       const url::Origin& cache_storage_origin,
-      const std::string& cache_storage_cache_name);
+      const std::string& cache_storage_cache_name) override;
   void OnCacheStorageOpenCallback(const GURL& url,
                                   base::Time expected_response_time,
                                   scoped_refptr<net::IOBuffer> buf,
