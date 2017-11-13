@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cd75e7aa_cf67fa28",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-13T18:49:51Z",
+      "side": 1,
+      "message": "This is fine as is, IMO. I\u0027m not sure if there is a good way to just define this whole method as Hint\u0027s constructor that takes a config argument. Since you are using PostTaskAndReply, it might be tricky. Using that, you would enforce that the config must be present, and not have a private constructor. If that\u0027s possible, great. Otherwise leave it as is.",
+      "parentUuid": "cf052019_3ccb2af8",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1035a8fa_ca35fefa",
         "filename": "components/previews/content/previews_optimization_guide_impl.cc",
         "patchSetId": 6
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "The current intent is that the component will contain at most 100 hints, so probably not an issue.",
       "parentUuid": "1035a8fa_ca35fefa",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5c66de6_24cd15ab",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-13T18:49:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c1798a8f_52dc17c9",
       "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "a9dc3599_a8b75b42",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-13T18:49:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "46c6a014_10ef98f2",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6eebe5e_dc5537bd",
         "filename": "components/previews/content/previews_optimization_guide_impl.cc",
         "patchSetId": 6
@@ -136,6 +190,24 @@
       "side": 1,
       "message": "at some point, it is possible that we send multiple optimizations (i.e. client lofi blacklist + noscript whitelist) but this code only supports noscript so we don\u0027t need to keep looping through the rest.",
       "parentUuid": "f6eebe5e_dc5537bd",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd8bfbc0_ff882f36",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-13T18:49:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "af1503b5_9386bbd9",
       "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -195,6 +267,24 @@
     },
     {
       "key": {
+        "uuid": "0414a91b_b7b8033e",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-13T18:49:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0e0349da_adeee4b6",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "070e0c32_c7030725",
         "filename": "components/previews/content/previews_optimization_guide_impl.cc",
         "patchSetId": 6
@@ -224,6 +314,24 @@
       "side": 1,
       "message": "im just going to remove the sequencechecker since the only thing that would be checking it is the static method for creating the hints.",
       "parentUuid": "070e0c32_c7030725",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb47ce1b_300cf010",
+        "filename": "components/previews/content/previews_optimization_guide_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-13T18:49:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "df5785bc_13cadfbe",
       "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -353,6 +461,24 @@
     },
     {
       "key": {
+        "uuid": "d1d0c00e_cb0650dc",
+        "filename": "components/previews/content/previews_optimization_guide_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-13T18:49:51Z",
+      "side": 1,
+      "message": "Hmm. I\u0027m not sure I understand why that wouldn\u0027t work. If both things that use Hints are declarations of unique_ptrs and not definitions that call move or let it be deleted, why would they need to know that Hints has a destructor in order to compile?\n\nIt seems like you could just do\nclass Hints;\nand\nclass PreviewsOptimizationGuideImpl::Hints {\n...\n}\nin the cc.\n\nThe class \"Texture\" in here seems to do that:\nhttps://cs.chromium.org/chromium/src/components/exo/buffer.h?type\u003dcs\u0026sq\u003dpackage:chromium\n\nIs there something special I\u0027m missing like the private constructor causing weird behavior?",
+      "parentUuid": "efffa416_43a803d6",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21a55278_7c3aeb76",
         "filename": "components/previews/content/previews_ui_service.cc",
         "patchSetId": 6
@@ -382,6 +508,24 @@
       "side": 1,
       "message": "It is possible to do, but I\u0027m not sure if it\u0027s significantly better and I don\u0027t really feel strongly one way or the other. \n\nThe one aspect where it is better though is probably the removal of the IO thread post task that would need to be done (OGService does a post task on the IO thread if the AddObserver call is not coming from the IO thread). This plumbing allows for slightly cleaner tests in other Previews code (i.e. PreviewsIOData).",
       "parentUuid": "21a55278_7c3aeb76",
+      "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18239d9_a721e3d9",
+        "filename": "components/previews/content/previews_ui_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-13T18:49:51Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "63627bfa_86a14d52",
       "revId": "79d08ff2b9e23c0c485600c197dfaa37f4a26f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
