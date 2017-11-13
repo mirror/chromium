@@ -54,6 +54,7 @@ PaymentRequestState::PaymentRequestState(
       selected_shipping_option_error_profile_(nullptr),
       selected_contact_profile_(nullptr),
       selected_instrument_(nullptr),
+      number_of_pending_sw_payment_instruments_(0),
       payment_request_delegate_(payment_request_delegate),
       profile_comparator_(app_locale, *spec),
       weak_ptr_factory_(this) {
@@ -89,12 +90,36 @@ void PaymentRequestState::GetAllPaymentAppsCallback(
     const GURL& top_level_origin,
     const GURL& frame_origin,
     content::PaymentAppProvider::PaymentApps apps) {
+  number_of_pending_sw_payment_instruments_ = apps.size();
+
   for (auto& app : apps) {
-    available_instruments_.push_back(
+    std::unique_ptr<ServiceWorkerPaymentInstrument> instrument =
         std::make_unique<ServiceWorkerPaymentInstrument>(
             context, top_level_origin, frame_origin, spec_,
-            std::move(app.second)));
+            std::move(app.second));
+    instrument->Validate(
+        base::BindOnce(&PaymentRequestState::OnSWPaymentInstrumentValidated,
+                       weak_ptr_factory_.GetWeakPtr()));
+    available_instruments_.push_back(std::move(instrument));
   }
+}
+
+void PaymentRequestState::OnSWPaymentInstrumentValidated(
+    ServiceWorkerPaymentInstrument* instrument,
+    bool result) {
+  // Remove failed to validated service worker payment instruments.
+  if (!result) {
+    for (size_t i = 0; i < available_instruments_.size(); i++) {
+      if (available_instruments_[i].get() == instrument) {
+        available_instruments_.erase(available_instruments_.begin() + i);
+        break;
+      }
+    }
+  }
+
+  number_of_pending_sw_payment_instruments_--;
+  if (number_of_pending_sw_payment_instruments_ > 0)
+    return;
 
   PopulateProfileCache();
   SetDefaultProfileSelections();

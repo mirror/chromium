@@ -25,6 +25,15 @@ class ServiceWorkerPaymentInstrument : public PaymentInstrument {
       std::unique_ptr<content::StoredPaymentApp> stored_payment_app_info);
   ~ServiceWorkerPaymentInstrument() override;
 
+  // Validates whether this payment instrument can be used for this payment
+  // request. It fires CanMakePaymentEvent to the payment handler to do
+  // validation. The result is returned through callback. If the returned result
+  // is false, then this instrument should not be used for this payment request.
+  // It must be called before any other interfaces in this class.
+  using ValidateCallback =
+      base::OnceCallback<void(ServiceWorkerPaymentInstrument*, bool)>;
+  void Validate(ValidateCallback callback);
+
   // PaymentInstrument:
   void InvokePaymentApp(Delegate* delegate) override;
   bool IsCompleteForPayment() const override;
@@ -48,6 +57,9 @@ class ServiceWorkerPaymentInstrument : public PaymentInstrument {
   void OnPaymentAppInvoked(mojom::PaymentHandlerResponsePtr response);
   mojom::PaymentRequestEventDataPtr CreatePaymentRequestEventData();
 
+  mojom::CanMakePaymentEventDataPtr CreateCanMakePaymentEventData();
+  void OnCanMakePayment(ValidateCallback callback, bool result);
+
   content::BrowserContext* browser_context_;
   GURL top_level_origin_;
   GURL frame_origin_;
@@ -58,6 +70,8 @@ class ServiceWorkerPaymentInstrument : public PaymentInstrument {
   // Weak pointer is fine here since the owner of this object is
   // PaymentRequestState which also owns PaymentResponseHelper.
   Delegate* delegate_;
+
+  bool can_make_payment_result_;
 
   base::WeakPtrFactory<ServiceWorkerPaymentInstrument> weak_ptr_factory_;
 

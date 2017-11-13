@@ -30,6 +30,7 @@ class ServiceWorkerPaymentInstrumentTest : public testing::Test,
     amount->currency = "USD";
     total->amount = std::move(amount);
     details->total = std::move(total);
+    details->id = base::Optional<std::string>("123456");
 
     mojom::PaymentDetailsModifierPtr modifier_1 =
         mojom::PaymentDetailsModifier::New();
@@ -106,6 +107,10 @@ class ServiceWorkerPaymentInstrumentTest : public testing::Test,
     return instrument_->CreatePaymentRequestEventData();
   }
 
+  mojom::CanMakePaymentEventDataPtr CreateCanMakePaymentEventData() {
+    return instrument_->CreateCanMakePaymentEventData();
+  }
+
  private:
   content::TestBrowserContext browser_context_;
 
@@ -144,6 +149,34 @@ TEST_F(ServiceWorkerPaymentInstrumentTest, CreatePaymentRequestEventData) {
 
   EXPECT_EQ(event_data->total->currency, "USD");
   EXPECT_EQ(event_data->total->value, "5.00");
+  EXPECT_EQ(event_data->payment_request_id, "123456");
+
+  EXPECT_EQ(event_data->modifiers.size(), 2U);
+  EXPECT_EQ(event_data->modifiers[0]->total->amount->value, "4.00");
+  EXPECT_EQ(event_data->modifiers[0]->total->amount->currency, "USD");
+  EXPECT_EQ(event_data->modifiers[0]->method_data->supported_methods[0],
+            "basic-card");
+  EXPECT_EQ(event_data->modifiers[1]->total->amount->value, "3.00");
+  EXPECT_EQ(event_data->modifiers[1]->total->amount->currency, "USD");
+  EXPECT_EQ(event_data->modifiers[1]->method_data->supported_methods[0],
+            "https://bobpay.com");
+}
+
+// Test CanMakePaymentEvent can be correctly constructed for invoking
+// Validate.
+TEST_F(ServiceWorkerPaymentInstrumentTest, CreateCanMakePaymentEvent) {
+  mojom::CanMakePaymentEventDataPtr event_data =
+      CreateCanMakePaymentEventData();
+
+  EXPECT_EQ(event_data->top_level_origin.spec(), "https://testmerchant.com/");
+  EXPECT_EQ(event_data->payment_request_origin.spec(),
+            "https://testmerchant.com/bobpay");
+
+  EXPECT_EQ(event_data->method_data.size(), 1U);
+  EXPECT_EQ(event_data->method_data[0]->supported_methods.size(), 1U);
+  EXPECT_EQ(event_data->method_data[0]->supported_methods[0], "basic-card");
+  EXPECT_EQ(event_data->method_data[0]->supported_networks.size(), 3U);
+  EXPECT_EQ(event_data->method_data[0]->supported_types.size(), 1U);
 
   EXPECT_EQ(event_data->modifiers.size(), 2U);
   EXPECT_EQ(event_data->modifiers[0]->total->amount->value, "4.00");

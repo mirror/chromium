@@ -28,6 +28,7 @@ ServiceWorkerPaymentInstrument::ServiceWorkerPaymentInstrument(
       spec_(spec),
       stored_payment_app_info_(std::move(stored_payment_app_info)),
       delegate_(nullptr),
+      can_make_payment_result_(false),
       weak_ptr_factory_(this) {
   DCHECK(browser_context_);
   DCHECK(top_level_origin_.is_valid());
@@ -53,6 +54,62 @@ ServiceWorkerPaymentInstrument::~ServiceWorkerPaymentInstrument() {
         browser_context_, stored_payment_app_info_->registration_id,
         base::Bind([](bool) {}));
   }
+}
+
+void ServiceWorkerPaymentInstrument::Validate(ValidateCallback callback) {
+  content::PaymentAppProvider::GetInstance()->CanMakePayment(
+      browser_context_, stored_payment_app_info_->registration_id,
+      CreateCanMakePaymentEventData(),
+      base::BindOnce(&ServiceWorkerPaymentInstrument::OnCanMakePayment,
+                     weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+}
+
+mojom::CanMakePaymentEventDataPtr
+ServiceWorkerPaymentInstrument::CreateCanMakePaymentEventData() {
+  mojom::CanMakePaymentEventDataPtr event_data =
+      mojom::CanMakePaymentEventData::New();
+
+  event_data->top_level_origin = top_level_origin_;
+  event_data->payment_request_origin = frame_origin_;
+
+  std::unordered_set<std::string> supported_methods;
+  supported_methods.insert(stored_payment_app_info_->enabled_methods.begin(),
+                           stored_payment_app_info_->enabled_methods.end());
+  for (const auto& modifier : spec_->details().modifiers) {
+    std::vector<std::string>::const_iterator it =
+        modifier->method_data->supported_methods.begin();
+    for (; it != modifier->method_data->supported_methods.end(); it++) {
+      if (supported_methods.find(*it) != supported_methods.end())
+        break;
+    }
+    if (it == modifier->method_data->supported_methods.end())
+      continue;
+
+    event_data->modifiers.emplace_back(modifier.Clone());
+  }
+
+  for (const auto& data : spec_->method_data()) {
+    std::vector<std::string>::const_iterator it =
+        data->supported_methods.begin();
+    for (; it != data->supported_methods.end(); it++) {
+      if (supported_methods.find(*it) != supported_methods.end())
+        break;
+    }
+    if (it == data->supported_methods.end())
+      continue;
+
+    event_data->method_data.push_back(data.Clone());
+  }
+
+  return event_data;
+}
+
+void ServiceWorkerPaymentInstrument::OnCanMakePayment(ValidateCallback callback,
+                                                      bool result) {
+  can_make_payment_result_ = result;
+
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(std::move(callback), this, result));
 }
 
 void ServiceWorkerPaymentInstrument::InvokePaymentApp(Delegate* delegate) {
@@ -135,7 +192,9 @@ base::string16 ServiceWorkerPaymentInstrument::GetMissingInfoLabel() const {
 }
 
 bool ServiceWorkerPaymentInstrument::IsValidForCanMakePayment() const {
-  return true;
+  DCHECK(can_make_payment_result_);
+
+  return can_make_payment_result_;
 }
 
 void ServiceWorkerPaymentInstrument::RecordUse() {
