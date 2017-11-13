@@ -581,7 +581,10 @@ source_set("unit_tests") {
   ]
 
   if (use_vaapi) {
-    sources += [ "vaapi_video_decode_accelerator_unittest.cc" ]
+    sources += [
+      "vaapi/vaapi_picture.cc",
+      "vaapi_video_decode_accelerator_unittest.cc",
+    ]
     deps += [
       ":gpu",
       "//base/test:test_support",
