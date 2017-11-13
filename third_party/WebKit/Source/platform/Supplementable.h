@@ -123,6 +123,16 @@ class Supplement : public GarbageCollectedMixin,
     supplementable.ProvideSupplement(key, supplement);
   }
 
+  static const Supplement<T>* From(const Supplementable<T>& supplementable,
+                                   const char* key) {
+    return supplementable.RequireSupplement(key);
+  }
+
+  static const Supplement<T>* From(const Supplementable<T>* supplementable,
+                                   const char* key) {
+    return supplementable ? From(*supplementable, key) : 0;
+  }
+
   static Supplement<T>* From(Supplementable<T>& supplementable,
                              const char* key) {
     return const_cast<Supplement<T>*>(
@@ -131,16 +141,6 @@ class Supplement : public GarbageCollectedMixin,
 
   static Supplement<T>* From(Supplementable<T>* supplementable,
                              const char* key) {
-    return supplementable ? From(*supplementable, key) : 0;
-  }
-
-  static const Supplement<T>* From(const Supplementable<T>& supplementable,
-                                   const char* key) {
-    return supplementable.RequireSupplement(key);
-  }
-
-  static const Supplement<T>* From(const Supplementable<T>* supplementable,
-                                   const char* key) {
     return supplementable ? From(*supplementable, key) : 0;
   }
 
@@ -171,16 +171,16 @@ class Supplementable : public GarbageCollectedMixin {
     this->supplements_.erase(key);
   }
 
-  Supplement<T>* RequireSupplement(const char* key) {
-    return const_cast<Supplement<T>*>(
-        static_cast<const Supplementable<T>&>(*this).RequireSupplement(key));
-  }
-
   const Supplement<T>* RequireSupplement(const char* key) const {
 #if DCHECK_IS_ON()
     DCHECK_EQ(attached_thread_id_, CurrentThread());
 #endif
     return this->supplements_.at(key);
+  }
+
+  Supplement<T>* RequireSupplement(const char* key) {
+    return const_cast<Supplement<T>*>(
+        static_cast<const Supplementable<T>&>(*this).RequireSupplement(key));
   }
 
   void ReattachThread() {
