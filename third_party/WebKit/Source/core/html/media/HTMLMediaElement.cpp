@@ -1768,9 +1768,6 @@ void HTMLMediaElement::SetReadyState(ReadyState state) {
 
     duration_ = web_media_player_->Duration();
     ScheduleEvent(EventTypeNames::durationchange);
-
-    if (IsHTMLVideoElement())
-      ScheduleEvent(EventTypeNames::resize);
     ScheduleEvent(EventTypeNames::loadedmetadata);
 
     bool jumped = false;
