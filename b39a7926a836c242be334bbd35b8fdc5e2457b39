@@ -52,6 +52,24 @@
       "revId": "b39a7926a836c242be334bbd35b8fdc5e2457b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f12395d_04c1dff3",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-13T03:30:59Z",
+      "side": 1,
+      "message": "I\u0027m still confused by the difference between \"constructive\" and \"destructive\".\nDoJobLoop() may start and abort jobs at the same time.\nWhat should we do for this code with the new API?\n\nAlso, IsOffline() and GetConnectionType() being inconsistent with the connection type value here is surprising.\nIt\u0027d be helpful if you could note this in the comment for NetworkChangeObserver, hopefully with diagrams which describe how the values returned by IsOffline(), GetConnectionType(), and NetworkChangeObserver will change in each step in various scenarios (e.g. the device being online/offline, the device switching from ethernet to wifi, the device switching from ethernet to wifi but suddenly being offline before being completely online, etc.).",
+      "parentUuid": "b79951ff_92131adc",
+      "revId": "b39a7926a836c242be334bbd35b8fdc5e2457b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
