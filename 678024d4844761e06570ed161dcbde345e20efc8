@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "11cb10e2_971011b3",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-13T19:06:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e439cfbf_9853f8ed",
+      "range": {
+        "startLine": 150,
+        "startChar": 50,
+        "endLine": 150,
+        "endChar": 0
+      },
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77166407_4cc8a496",
         "filename": "net/http/http_server_properties_impl.h",
         "patchSetId": 5
@@ -93,6 +117,30 @@
       "revId": "678024d4844761e06570ed161dcbde345e20efc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f804da9_831cc786",
+        "filename": "net/http/http_server_properties_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-13T19:06:22Z",
+      "side": 1,
+      "message": "Changed them to base::flat_map. I also think that base::flat_map should work better since the number of elements is very low.",
+      "parentUuid": "77166407_4cc8a496",
+      "range": {
+        "startLine": 153,
+        "startChar": 14,
+        "endLine": 153,
+        "endChar": 15
+      },
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "293c82c7_d065de72",
+        "filename": "net/http/http_server_properties_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-13T19:06:22Z",
+      "side": 1,
+      "message": "That makes sense. Changed it to net::HostPortPair. Do you think we should also change\nbase::MRUCache\u003cQuicServerId, std::string\u003e QuicServerInfoMap\nto have HostPortPair as the key? I guess, it shouldn\u0027t matter much when we search for a specific (non-canonical) host.",
+      "parentUuid": "8afbbe9e_4229cb98",
+      "range": {
+        "startLine": 154,
+        "startChar": 19,
+        "endLine": 154,
+        "endChar": 31
+      },
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d3965fc_49adb9a0",
         "filename": "net/http/http_server_properties_impl.h",
         "patchSetId": 5
@@ -181,6 +253,24 @@
       "revId": "678024d4844761e06570ed161dcbde345e20efc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b8a446_fbf97bcd",
+        "filename": "net/http/http_server_properties_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-13T19:06:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d3965fc_49adb9a0",
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +297,30 @@
     },
     {
       "key": {
+        "uuid": "fa13fa0e_9c0c8a36",
+        "filename": "net/http/http_server_properties_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-13T19:06:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0900942_dc8aeac2",
+      "range": {
+        "startLine": 172,
+        "startChar": 26,
+        "endLine": 172,
+        "endChar": 30
+      },
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59434259_83173d09",
         "filename": "net/http/http_server_properties_impl.h",
         "patchSetId": 5
@@ -221,6 +335,24 @@
       "revId": "678024d4844761e06570ed161dcbde345e20efc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3983a73b_b881a63a",
+        "filename": "net/http/http_server_properties_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-13T19:06:22Z",
+      "side": 1,
+      "message": "The shorter the better. Done.",
+      "parentUuid": "59434259_83173d09",
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
