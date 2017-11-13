@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "412a499e_4136d1f0",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-13T15:57:07Z",
+      "side": 1,
+      "message": "updated the name to OnFrameTokenChangedForView",
+      "parentUuid": "3da7e8d4_09aab705",
+      "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7eab9d3_dcc7a187",
         "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
         "patchSetId": 19
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-10T21:39:16Z",
       "side": 1,
       "message": "Yi points out that none of the subclasses are actually overriding this version of the function, but the other interfaces that has the same function name (e.g. RWHVAndroid is a subclass of RWHVBase and DelegatedFrameHost::Client, both of which have an OnFrameTokenChanged() function with the same signature. The same applies for RWHVAMac, TestRWHV etc. I think this is confusing.\n\nMy suggestion was to rename this to OnFrameTokenChangedForView to make this less confusing.",
+      "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df2bb095_b0e12825",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-13T15:57:07Z",
+      "side": 1,
+      "message": "updated the function name to OnFrameTokenChangedForView. The old name has been over-used.",
+      "parentUuid": "b7eab9d3_dcc7a187",
       "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d0cf0f15_dc6b7e9f",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-13T15:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1134c901_8b074faf",
+      "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f86d0ab4_06181fb4",
         "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
         "patchSetId": 19
@@ -67,6 +121,24 @@
       "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3dbe28_3eb3b2e3",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-13T15:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f86d0ab4_06181fb4",
+      "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "49adcc3b_3bd91427",
+        "filename": "content/test/test_render_view_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-13T15:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3016c56_c8891c7a",
+      "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5589d2d7_1c8b9da3",
         "filename": "ui/aura/local/layer_tree_frame_sink_local.cc",
         "patchSetId": 19
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d06414af_2fe9bf60",
+        "filename": "ui/aura/local/layer_tree_frame_sink_local.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-13T15:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5589d2d7_1c8b9da3",
+      "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f8f3c5d_c3fb87bd",
         "filename": "ui/compositor/compositor.cc",
         "patchSetId": 19
@@ -118,6 +226,24 @@
       "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c6cd2d_85083809",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-13T15:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f8f3c5d_c3fb87bd",
+      "revId": "67e8ec25eac6095ad479e02564f8cf1088c4012b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
