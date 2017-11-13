@@ -25,9 +25,9 @@ namespace {
 
 mojom::GpuPtr DefaultFactory(service_manager::Connector* connector,
                              const std::string& service_name) {
-  mojom::GpuPtr gpu_ptr;
-  connector->BindInterface(service_name, &gpu_ptr);
-  return gpu_ptr;
+  mojom::GpuPtr ptr;
+  connector->BindInterface(service_name, &ptr);
+  return ptr;
 }
 
 }  // namespace
@@ -182,7 +182,12 @@ std::unique_ptr<Gpu> Gpu::Create(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   GpuPtrFactory factory =
       base::BindRepeating(&DefaultFactory, connector, service_name);
-  return base::WrapUnique(new Gpu(std::move(factory), std::move(task_runner)));
+  auto gpu =
+      base::WrapUnique(new Gpu(std::move(factory), std::move(task_runner)));
+#if defined(OS_CHROMEOS)
+  gpu->InitializeArc(connector, service_name);
+#endif
+  return gpu;
 }
 
 scoped_refptr<viz::ContextProvider> Gpu::CreateContextProvider(
@@ -208,6 +213,26 @@ scoped_refptr<viz::ContextProvider> Gpu::CreateContextProvider(
       automatic_flushes, support_locking, gpu::SharedMemoryLimits(), attributes,
       shared_context_provider, command_buffer_metrics::MUS_CLIENT_CONTEXT);
 }
+
+#if defined(OS_CHROMEOS)
+void Gpu::CreateArcVideoDecodeAccelerator(
+    arc::mojom::VideoDecodeAcceleratorRequest vda_request) {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
+  arc_->CreateArcVideoDecodeAccelerator(std::move(vda_request));
+}
+
+void Gpu::CreateArcVideoEncodeAccelerator(
+    arc::mojom::VideoEncodeAcceleratorRequest vea_request) {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
+  arc_->CreateArcVideoEncodeAccelerator(std::move(vea_request));
+}
+
+void Gpu::CreateArcProtectedBufferManager(
+    arc::mojom::ProtectedBufferManagerRequest pbm_request) {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
+  arc_->CreateArcProtectedBufferManager(std::move(pbm_request));
+}
+#endif  // OS_CHROMEOS
 
 void Gpu::CreateJpegDecodeAccelerator(
     media::mojom::GpuJpegDecodeAcceleratorRequest jda_request) {
@@ -302,6 +327,14 @@ void Gpu::OnEstablishedGpuChannel() {
   for (const auto& callback : callbacks)
     callback.Run(gpu_channel_);
 }
+
+#if defined(OS_CHROMEOS)
+void Gpu::InitializeArc(service_manager::Connector* connector,
+                        const std::string& service_name) {
+  DCHECK(!arc_);
+  connector->BindInterface(service_name, &arc_);
+}
+#endif
 
 scoped_refptr<base::SingleThreadTaskRunner> Gpu::GetIOThreadTaskRunner() {
   return io_task_runner_;

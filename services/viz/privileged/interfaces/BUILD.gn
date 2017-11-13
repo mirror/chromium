@@ -10,6 +10,7 @@ mojom("interfaces") {
   ]
 
   public_deps = [
+    "//services/viz/privileged/interfaces/arc",
     "//services/viz/privileged/interfaces/compositing",
     "//services/viz/privileged/interfaces/gl",
   ]
