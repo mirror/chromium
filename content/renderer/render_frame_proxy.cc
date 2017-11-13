@@ -302,9 +302,14 @@ void RenderFrameProxy::SetReplicatedState(const FrameReplicationState& state) {
 // about updates to its flags until they take effect.
 void RenderFrameProxy::OnDidUpdateFramePolicy(
     const blink::FramePolicy& frame_policy) {
-  web_frame_->SetReplicatedSandboxFlags(frame_policy.sandbox_flags);
-  web_frame_->SetFrameOwnerPolicy(frame_policy.sandbox_flags,
-                                  frame_policy.container_policy);
+  if (web_frame()->Parent())
+    web_frame_->SetFrameOwnerPolicy(frame_policy.sandbox_flags,
+                                    frame_policy.container_policy);
+}
+
+void RenderFrameProxy::OnDidSetActiveSandboxFlags(
+    blink::WebSandboxFlags active_sandbox_flags) {
+  web_frame_->SetReplicatedSandboxFlags(active_sandbox_flags);
 }
 
 void RenderFrameProxy::SetChildFrameSurface(
@@ -341,6 +346,8 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_DidStartLoading, OnDidStartLoading)
     IPC_MESSAGE_HANDLER(FrameMsg_DidStopLoading, OnDidStopLoading)
     IPC_MESSAGE_HANDLER(FrameMsg_DidUpdateFramePolicy, OnDidUpdateFramePolicy)
+    IPC_MESSAGE_HANDLER(FrameMsg_DidSetActiveSandboxFlags,
+                        OnDidSetActiveSandboxFlags)
     IPC_MESSAGE_HANDLER(FrameMsg_DispatchLoad, OnDispatchLoad)
     IPC_MESSAGE_HANDLER(FrameMsg_Collapse, OnCollapse)
     IPC_MESSAGE_HANDLER(FrameMsg_DidUpdateName, OnDidUpdateName)
