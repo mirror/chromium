@@ -51,7 +51,8 @@ static bool CookiePartsContains(const std::vector<std::string>& parts,
 bool ExtractOAuth2TokenPairResponse(const std::string& data,
                                     std::string* refresh_token,
                                     std::string* access_token,
-                                    int* expires_in_secs) {
+                                    int* expires_in_secs,
+                                    std::string* id_token) {
   DCHECK(access_token);
   DCHECK(expires_in_secs);
 
@@ -70,6 +71,10 @@ bool ExtractOAuth2TokenPairResponse(const std::string& data,
   // Refresh token may not be required.
   if (refresh_token) {
     if (!dict->GetStringWithoutPathExpansion("refresh_token", refresh_token))
+      return false;
+
+    // Extract ID token as well when obtaining refresh token.
+    if (!dict->GetStringWithoutPathExpansion("id_token", id_token))
       return false;
   }
   return true;
@@ -1030,12 +1035,14 @@ void GaiaAuthFetcher::OnOAuth2TokenPairFetched(
     int response_code) {
   std::string refresh_token;
   std::string access_token;
+  std::string id_token;
   int expires_in_secs = 0;
 
   bool success = false;
   if (status.is_success() && response_code == net::HTTP_OK) {
       success = ExtractOAuth2TokenPairResponse(data, &refresh_token,
-                                               &access_token, &expires_in_secs);
+                                               &access_token, &expires_in_secs,
+                                               &id_token);
   }
 
   if (success) {
@@ -1169,7 +1176,8 @@ void GaiaAuthFetcher::OnGetTokenResponseFetched(
   if (status.is_success() && response_code == net::HTTP_OK) {
     VLOG(1) << "GetTokenResponse successful!";
     success = ExtractOAuth2TokenPairResponse(data, NULL,
-                                             &access_token, &expires_in_secs);
+                                             &access_token, &expires_in_secs
+                                             NULL);
   }
 
   if (success) {
