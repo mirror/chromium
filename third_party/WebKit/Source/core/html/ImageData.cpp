@@ -758,11 +758,12 @@ bool ImageData::ImageDataInCanvasColorSettings(
       GetCanvasColorParams().GetSkColorSpaceForSkSurfaces();
   sk_sp<SkColorSpace> dst_color_space =
       dst_color_params.GetSkColorSpaceForSkSurfaces();
+  bool cropping_needed = crop_rect && *crop_rect != IntRect(IntPoint(), Size());
 
   // if color conversion is not needed, copy data into pixel buffer.
   if (!src_color_space.get() && !dst_color_space.get() && data_) {
-    SwizzleIfNeeded(u8_color_type, crop_rect);
-    if (crop_rect) {
+    SwizzleIfNeeded(u8_color_type, cropping_needed ? crop_rect : nullptr);
+    if (cropping_needed) {
       unsigned char* src_data =
           static_cast<unsigned char*>(BufferBase()->Data());
       unsigned char* dst_data =
@@ -779,7 +780,7 @@ bool ImageData::ImageDataInCanvasColorSettings(
     } else {
       memcpy(converted_pixels.get(), data_->Data(), data_->length());
     }
-    SwizzleIfNeeded(u8_color_type, crop_rect);
+    SwizzleIfNeeded(u8_color_type, cropping_needed ? crop_rect : nullptr);
     return true;
   }
 
@@ -810,7 +811,7 @@ bool ImageData::ImageDataInCanvasColorSettings(
   // and forth before passing uint16 data to SkColorSpaceXform::apply().
   SwapU16EndiannessForSkColorSpaceXform(crop_rect);
 
-  if (crop_rect) {
+  if (cropping_needed) {
     unsigned char* src_data = static_cast<unsigned char*>(BufferBase()->Data());
     unsigned char* dst_data =
         static_cast<unsigned char*>(converted_pixels.get());
