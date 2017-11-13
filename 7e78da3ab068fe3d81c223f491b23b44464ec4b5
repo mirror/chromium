@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "ebfccc0b_1e713bed",
+        "filename": "third_party/WebKit/public/platform/web_page_visibility_state.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-13T05:23:31Z",
+      "side": 1,
+      "message": "Are the files in the core folder only for WebKit internal usage?",
+      "parentUuid": "ca8cca53_d8e2bce7",
+      "revId": "7e78da3ab068fe3d81c223f491b23b44464ec4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53a57f02_4034110f",
         "filename": "third_party/WebKit/public/platform/web_page_visibility_state.mojom",
         "patchSetId": 3
@@ -50,6 +68,24 @@
       "revId": "7e78da3ab068fe3d81c223f491b23b44464ec4b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c0cb57_0be3df9b",
+        "filename": "third_party/WebKit/public/platform/web_page_visibility_state.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-13T05:23:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "53a57f02_4034110f",
+      "revId": "7e78da3ab068fe3d81c223f491b23b44464ec4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
