@@ -52,6 +52,24 @@
       "revId": "e610039e99691fb8f1f1a16e23dafb44961e21c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc9de92_2cdc0118",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/stylevalue-normalization/normalize-ident.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-13T01:48:46Z",
+      "side": 1,
+      "message": "Ah right, e.g. we could be returning \u0027auto\u0027 all the time? I think this won\u0027t be a problem once we add tests for other types of normalization. But yeah as it stands, the normalization code could be doing something funky.",
+      "parentUuid": "8074c978_fa0a5453",
+      "revId": "e610039e99691fb8f1f1a16e23dafb44961e21c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
