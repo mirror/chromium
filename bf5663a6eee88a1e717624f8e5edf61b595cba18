@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a372291_d92707e8",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-13T21:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9af7ddcd_334c11c6",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de1ab032_f0a68734",
         "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e3d13ab_f7ed5d99",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1532,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-13T21:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de1ab032_f0a68734",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "13a9e02e_0f36b0a9",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-13T21:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bc48b4d_494b3dde",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03a4585d_dd9408d3",
         "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f242463d_3efc1f02",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-13T21:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03a4585d_dd9408d3",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "691b2bc9_cce50bbb",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-13T21:45:11Z",
+      "side": 1,
+      "message": "What is the point of this DCHECK If we are checking every utilization of observer_ there after?",
+      "parentUuid": "790095d5_33bb473e",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6af179e3_44c252dd",
         "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea58fe7_c38f2674",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-13T21:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6af179e3_44c252dd",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "d9eec86d_605ebb6d",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-13T21:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85488594_858a909f",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c369ec2_bda1f4e2",
         "filename": "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h",
         "patchSetId": 3
@@ -171,6 +297,24 @@
       "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4248c8ad_2597da28",
+        "filename": "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-13T21:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c369ec2_bda1f4e2",
+      "revId": "bf5663a6eee88a1e717624f8e5edf61b595cba18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
