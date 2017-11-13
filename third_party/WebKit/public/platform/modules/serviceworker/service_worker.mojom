@@ -1,0 +1,32 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module blink.mojom;
+
+import "url/mojo/url.mojom";
+
+// This interface lives in the browser process. The service worker execution
+// context in the renderer process uses this interface to ask its host
+// service worker instance in the browser process to do operations needed by
+// ServiceWorkerGlobalScope functionalities.
+interface ServiceWorkerHost {
+  // Set V8 code cache |data| for |url|, which may be a service worker main
+  // script or a service worker script loaded by
+  // WorkerGlobalScope::importScripts().
+  SetCachedMetadata(url.mojom.Url url, array<uint8> data);
+
+  // Clear V8 code cache for |url| set by the above |SetCachedMetadata| before.
+  ClearCachedMetadata(url.mojom.Url url);
+
+  // TODO(leonhsl): Impl all methods.
+  // GetClient();
+  // GetClients();
+  // OpenNewTab();
+  // OpenNewPopup();
+  // PostMessageToClient();
+  // FocusClient();
+  // NavigateClient();
+  // SkipWaiting();
+  // ClaimClients();
+};

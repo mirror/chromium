@@ -29,6 +29,7 @@
 #include "content/public/test/test_utils.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_event_status.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
@@ -66,10 +67,55 @@ class MessageReceiver : public EmbeddedWorkerTestHelper {
         new TestMsg_TestEventResult(embedded_worker_id, request_id, reply));
   }
 
+  void SimulateSetCachedMetadata(int embedded_worker_id,
+                                 const GURL& url,
+                                 const std::vector<uint8_t>& data) {
+    ASSERT_TRUE(
+        embedded_worker_id_service_worker_host_ptr_map_[embedded_worker_id]);
+    embedded_worker_id_service_worker_host_ptr_map_[embedded_worker_id]
+        ->SetCachedMetadata(url, data);
+  }
+
+  void SimulateClearCachedMetadata(int embedded_worker_id, const GURL& url) {
+    ASSERT_TRUE(
+        embedded_worker_id_service_worker_host_ptr_map_[embedded_worker_id]);
+    embedded_worker_id_service_worker_host_ptr_map_[embedded_worker_id]
+        ->ClearCachedMetadata(url);
+  }
+
+ protected:
+  void OnStartWorker(
+      int embedded_worker_id,
+      int64_t service_worker_version_id,
+      const GURL& scope,
+      const GURL& script_url,
+      bool pause_after_download,
+      mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+      mojom::ControllerServiceWorkerRequest controller_request,
+      blink::mojom::ServiceWorkerHostAssociatedPtrInfo service_worker_host,
+      mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
+      mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
+      mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info)
+      override {
+    embedded_worker_id_service_worker_host_ptr_map_[embedded_worker_id].Bind(
+        std::move(service_worker_host));
+    EmbeddedWorkerTestHelper::OnStartWorker(
+        embedded_worker_id, service_worker_version_id, scope, script_url,
+        pause_after_download, std::move(dispatcher_request),
+        std::move(controller_request), nullptr /* service_worker_host */,
+        std::move(instance_host), std::move(provider_info),
+        std::move(installed_scripts_info));
+  }
+
  private:
   void OnMessage() {
     // Do nothing.
   }
+
+  std::map<
+      int /* embedded_worker_id */,
+      blink::mojom::ServiceWorkerHostAssociatedPtr /* service_worker_host */>
+      embedded_worker_id_service_worker_host_ptr_map_;
 
   DISALLOW_COPY_AND_ASSIGN(MessageReceiver);
 };
@@ -160,6 +206,15 @@ class ServiceWorkerVersionTest : public testing::Test {
       last_status = version->running_status();
     }
     EmbeddedWorkerStatus last_status;
+  };
+
+  struct CachedMetadataUpdateListener : public ServiceWorkerVersion::Listener {
+    CachedMetadataUpdateListener() = default;
+    ~CachedMetadataUpdateListener() override = default;
+    void OnCachedMetadataUpdated(ServiceWorkerVersion* version) override {
+      ++updated_count;
+    }
+    int updated_count = 0;
   };
 
   ServiceWorkerVersionTest()
@@ -272,6 +327,7 @@ class MessageReceiverDisallowStart : public MessageReceiver {
       bool pause_after_download,
       mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
       mojom::ControllerServiceWorkerRequest controller_request,
+      blink::mojom::ServiceWorkerHostAssociatedPtrInfo service_worker_host,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
       mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
       mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info)
@@ -299,8 +355,9 @@ class MessageReceiverDisallowStart : public MessageReceiver {
         MessageReceiver::OnStartWorker(
             embedded_worker_id, service_worker_version_id, scope, script_url,
             pause_after_download, std::move(dispatcher_request),
-            std::move(controller_request), std::move(instance_host),
-            std::move(provider_info), std::move(installed_scripts_info));
+            std::move(controller_request), std::move(service_worker_host),
+            std::move(instance_host), std::move(provider_info),
+            std::move(installed_scripts_info));
         break;
     }
     current_mock_instance_index_++;
@@ -847,6 +904,37 @@ TEST_F(ServiceWorkerVersionTest, StaleUpdate_DoNotDeferTimer) {
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(version_->stale_time_.is_null());
   EXPECT_EQ(run_time, version_->update_timer_.desired_run_time());
+}
+
+TEST_F(ServiceWorkerVersionTest, UpdateCachedMetadata) {
+  CachedMetadataUpdateListener listener;
+  version_->AddListener(&listener);
+  ASSERT_EQ(0, listener.updated_count);
+  // Start worker.
+  ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_FAILED;
+  version_->StartWorker(ServiceWorkerMetrics::EventType::UNKNOWN,
+                        CreateReceiverOnCurrentThread(&status));
+  EXPECT_EQ(EmbeddedWorkerStatus::STARTING, version_->running_status());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(SERVICE_WORKER_OK, status);
+  EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, version_->running_status());
+
+  // Simulate requesting SetCachedMetadata from the service worker global scope.
+  std::vector<uint8_t> data{1, 2, 3};
+  helper_->SimulateSetCachedMetadata(
+      version_->embedded_worker()->embedded_worker_id(), version_->script_url(),
+      data);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1, listener.updated_count);
+
+  // Simulate requesting ClearCachedMetadata from the service worker global
+  // scope.
+  helper_->SimulateClearCachedMetadata(
+      version_->embedded_worker()->embedded_worker_id(),
+      version_->script_url());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(2, listener.updated_count);
+  version_->RemoveListener(&listener);
 }
 
 class MessageReceiverControlEvents : public MessageReceiver {
