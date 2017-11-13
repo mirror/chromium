@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db30ef0f_10c3ee50",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/frame-deleted-in-document-open.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-11-13T07:17:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ef0d8e6_da1610d8",
+      "revId": "8208890b4b8229b9b434ac59b027999ffb1e431e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e96d9512_64d94671",
         "filename": "third_party/WebKit/LayoutTests/fast/js/script-tests/document-open-getter-throw-no-crash.js",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "8208890b4b8229b9b434ac59b027999ffb1e431e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307dd2b1_da09d50e",
+        "filename": "third_party/WebKit/LayoutTests/fast/js/script-tests/document-open-getter-throw-no-crash.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-11-13T07:17:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e96d9512_64d94671",
+      "revId": "8208890b4b8229b9b434ac59b027999ffb1e431e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
