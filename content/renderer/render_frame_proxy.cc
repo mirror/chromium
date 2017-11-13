@@ -523,9 +523,10 @@ void RenderFrameProxy::WasResized() {
 
   if (resize_params_changed) {
     // Let the browser know about the updated view rect.
+    viz::SurfaceId surface_id(frame_sink_id_, local_surface_id_);
     Send(new FrameHostMsg_UpdateResizeParams(
         routing_id_, frame_rect(), screen_info(), auto_size_sequence_number(),
-        local_surface_id_));
+        surface_id));
     sent_resize_params_ = pending_resize_params_;
   }
 }
@@ -670,6 +671,7 @@ void RenderFrameProxy::OnMusEmbeddedFrameSurfaceChanged(
 void RenderFrameProxy::OnMusEmbeddedFrameSinkIdAllocated(
     const viz::FrameSinkId& frame_sink_id) {
   frame_sink_id_ = frame_sink_id;
+
   // Resend the FrameRects and allocate a new viz::LocalSurfaceId when the view
   // changes.
   ResendResizeParams();
