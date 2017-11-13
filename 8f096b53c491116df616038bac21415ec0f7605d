@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9ff6b9b_af8f0bb5",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-13T10:10:37Z",
+      "side": 1,
+      "message": "ok, let me try. I just kept this as is to avoid a risk to expose the sensitive message to JS. But as far as I can see, it won\u0027t be exposed.",
+      "parentUuid": "8f72223d_834188e9",
+      "revId": "8f096b53c491116df616038bac21415ec0f7605d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aba63ec0_307f8f9f",
         "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "8f096b53c491116df616038bac21415ec0f7605d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34eeb7b7_f1de3a61",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-13T10:10:37Z",
+      "side": 1,
+      "message": "My understanding is both terms were used intentionally, \"not allowed\" means it was rejected by CORS checks, but \"not supported\" means CORS request is not allowed.\n\nI chatted with Takeshi offline, and confirmed that this is not a spec concept, and probably \"not allowed\" is better for this case. Only exceptional case will be the error for invalid scheme. In that case, \"not supported\" sounds better.",
+      "parentUuid": "aba63ec0_307f8f9f",
+      "revId": "8f096b53c491116df616038bac21415ec0f7605d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
