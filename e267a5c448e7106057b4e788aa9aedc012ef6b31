@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d888f8af_ced5c021",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-13T08:53:26Z",
+      "side": 1,
+      "message": "I think you are calling this twice. Maybe you should add a BOOL property isAnimatingFakeOmnibox which would prevent the -shiftTilesUp from triggering twice?",
+      "range": {
+        "startLine": 313,
+        "startChar": 8,
+        "endLine": 313,
+        "endChar": 20
+      },
+      "revId": "e267a5c448e7106057b4e788aa9aedc012ef6b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
