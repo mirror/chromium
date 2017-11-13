@@ -94,7 +94,7 @@ class TestBackgroundSyncManager : public BackgroundSyncManager {
       const GURL& origin,
       const std::string& key,
       const std::string& data,
-      const ServiceWorkerStorage::StatusCallback& callback) override;
+      const ServiceWorkerStorage::LegacyStatusCallback& callback) override;
 
   // Override to allow delays to be injected by tests.
   void GetDataFromBackend(
@@ -128,7 +128,7 @@ class TestBackgroundSyncManager : public BackgroundSyncManager {
       const GURL& origin,
       const std::string& key,
       const std::string& data,
-      const ServiceWorkerStorage::StatusCallback& callback);
+      const ServiceWorkerStorage::LegacyStatusCallback& callback);
 
   // Callback to resume the GetDataFromBackend operation, after explicit delays
   // injected by tests.

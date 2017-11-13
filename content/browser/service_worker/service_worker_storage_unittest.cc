@@ -83,7 +83,7 @@ void StatusCallback(bool* was_called,
   *result = status;
 }
 
-ServiceWorkerStorage::StatusCallback MakeStatusCallback(
+ServiceWorkerStorage::LegacyStatusCallback MakeStatusCallback(
     bool* was_called,
     ServiceWorkerStatusCode* result) {
   return base::Bind(&StatusCallback, was_called, result);

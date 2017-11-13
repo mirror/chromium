@@ -636,7 +636,7 @@ BackgroundSyncRegistration* BackgroundSyncManager::LookupActiveRegistration(
 
 void BackgroundSyncManager::StoreRegistrations(
     int64_t sw_registration_id,
-    const ServiceWorkerStorage::StatusCallback& callback) {
+    const ServiceWorkerStorage::LegacyStatusCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   // Serialize the data.
@@ -740,7 +740,7 @@ void BackgroundSyncManager::StoreDataInBackend(
     const GURL& origin,
     const std::string& backend_key,
     const std::string& data,
-    const ServiceWorkerStorage::StatusCallback& callback) {
+    const ServiceWorkerStorage::LegacyStatusCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   service_worker_context_->StoreRegistrationUserData(
