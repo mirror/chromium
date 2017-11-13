@@ -427,6 +427,24 @@
       "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3143383f_d33a286f",
+        "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-13T09:52:34Z",
+      "side": 1,
+      "message": "Even if code formatting is ugly, I think using a standard algorithm (std::find_if) vs custom code (even if it is a simple for loop) make it the code easier to read, as I don\u0027t have to look in detail to understand that the code just do a linear search for an element.\n\nSince we are using C++14 to build, we can use \"auto\" for the type of the parameter (see http://en.cppreference.com/w/cpp/language/lambda and search for generic lambda):\n\n  auto iterator \u003d std::find_if(\n      alive_download_tasks_.begin(), alive_download_tasks_.end(),\n      [\u003d](const auto\u0026 pair) { return pair.second.get() \u003d\u003d task; });\n  DCHECK(iterator !\u003d alive_download_tasks_.end());\n\nWDYT?",
+      "parentUuid": "5bc8d9e0_f536253f",
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d518636e_78d7aa6b",
+        "filename": "ios/web/download/download_controller_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-13T09:52:34Z",
+      "side": 1,
+      "message": "nit: you can use auto here\n\n  auto task \u003d std::make_unique\u003cDownloadTaskImpl\u003e(...);",
+      "revId": "bcfc6d1cf72c2b28b2310633a1d874a5afdba4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3810ecc9_c69d381e",
+        "filename": "ios/web/download/download_controller_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-13T09:52:34Z",
+      "side": 1,
+      "message": "This is dangerous. The delegate may have decided that this task does not need to be kept alive, and may destroy it immediately in OnDownloadCreated. Or more simply, if delegate_ is null, then the scoped unique_ptr\u003c\u003e will be destroyed and the task deleted.\n\nSo, there are two cases to consider to see how to fix. First we need to consider the case when delegate_ is null. If this is supported, then we should do the following:\n\n  if (!delegate_)\n    return nullptr;\n\n  delegate_-\u003e...\n\nAnother option is to DCHECK that delegate_ is non-null at this point.\n\nOnce the question of delegate_ is solved, we need to address returning a raw pointer to an object that may have been deleted by the delegate. I think the simplest is to check whether task_ptr is still in alive_tasks_ before returning it:\n\n  delegate_-\u003eOnDownloadCreated(this, web_state, std::move(task));\n  \n  // The delegate may have decided to discard the DownloadTask, so\n  // check whether it is still alive. If not, return null.\n  if (!base::ContainsValue(alive_tasks_, task_ptr))\n    return nullptr;\n\n  return task_ptr;\n\nAnother option is to DCHECK that task_ptr is still in the alive_tasks_ at this point (it needs to be added as a comment to OnDownloadCreated that the DownloadTask must still be valid when the method return then).",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 18
+      },
+      "revId": "bcfc6d1cf72c2b28b2310633a1d874a5afdba4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69646530_c7dd5ae7",
+        "filename": "ios/web/download/download_controller_impl_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-13T09:52:34Z",
+      "side": 1,
+      "message": "You should add a test that check the behavior of CreateDownloadTask when there is no delegate (if supported), and when the delegate drop the task (if supported).",
+      "revId": "bcfc6d1cf72c2b28b2310633a1d874a5afdba4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
