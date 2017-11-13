@@ -187,6 +187,11 @@ class CORE_TEMPLATE_CLASS_EXPORT TextIteratorAlgorithm {
     return behavior_.DoesNotBreakAtReplacedElement();
   }
 
+  // Clipboard should respect user-select style attribute
+  bool DoesRespectUserSelect() const {
+    return behavior_.DoesRespectsUserSelect();
+  }
+
   bool ForInnerText() const { return behavior_.ForInnerText(); }
 
   bool IsBetweenSurrogatePair(unsigned position) const;
