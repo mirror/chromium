@@ -147,6 +147,11 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint
 // controller to the tab switcher.
 - (UIView<TabStripFoldAnimation>*)tabStripPlaceholderView;
 
+// Presents |viewController| at the top of the presentation hierarchy.
+- (void)presentTopViewController:(UIViewController*)viewController
+                        animated:(BOOL)animated
+                      completion:(ProceduralBlock)completion;
+
 // Called before the instance is deallocated.
 - (void)shutdown;
 

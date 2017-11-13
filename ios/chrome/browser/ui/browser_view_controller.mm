@@ -311,6 +311,18 @@ bool IsURLAllowedInIncognito(const GURL& url) {
 NSString* const kBrowserViewControllerSnackbarCategory =
     @"BrowserViewControllerSnackbarCategory";
 
+// TODO(crbug.com/754642): Remove TopPresentedViewController().
+UIViewController* TopPresentedViewControllerFrom(
+    UIViewController* baseViewController) {
+  UIViewController* topController = baseViewController;
+  for (UIViewController* controller = [topController presentedViewController];
+       controller && ![controller isBeingDismissed];
+       controller = [controller presentedViewController]) {
+    topController = controller;
+  }
+  return topController;
+}
+
 }  // namespace
 
 #pragma mark - HeaderDefinition helper
@@ -1072,6 +1084,17 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
 - (void)dealloc {
   DCHECK(_isShutdown) << "-shutdown must be called before dealloc.";
+}
+
+#pragma mark - BrowserViewController public methods
+
+- (void)presentTopViewController:(UIViewController*)viewController
+                        animated:(BOOL)animated
+                      completion:(ProceduralBlock)completion {
+  // TODO(crbug.com/754642): Stop using TopPresentedViewControllerFrom().
+  [TopPresentedViewControllerFrom(self) presentViewController:viewController
+                                                     animated:animated
+                                                   completion:completion];
 }
 
 #pragma mark - Accessibility
