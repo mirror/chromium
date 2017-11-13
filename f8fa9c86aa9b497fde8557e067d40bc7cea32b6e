@@ -16,6 +16,24 @@
       "revId": "f8fa9c86aa9b497fde8557e067d40bc7cea32b6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bda93d2_a3e9ffab",
+        "filename": "chrome/test/data/webui/settings/search_settings_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-13T18:20:29Z",
+      "side": 1,
+      "message": "Done. ESLint threw an invalid syntax error here because of the comma+parethesis, like \"(foo, bar,)\". I made manual changes after that. FYI, the current checks are at https://cs.chromium.org/chromium/src/.eslintrc.js and do not perform any formatting in terms of reflowing text or line-breaks.",
+      "parentUuid": "3a8ff434_c1d8fd1e",
+      "revId": "f8fa9c86aa9b497fde8557e067d40bc7cea32b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
