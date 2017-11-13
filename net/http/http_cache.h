@@ -67,6 +67,13 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
     DISABLE
   };
 
+  enum MemoryEntryDataHints {
+    // If this hint is set, the caching headers indicate we can't do anything
+    // with this entry (unless we are ignoring them thanks to a loadflag),
+    // i.e. it's expired and has nothing that permits validations.
+    HINT_UNUSABLE_PER_CACHING_HEADERS = (1 << 0),
+  };
+
   // A BackendFactory creates a backend object to be used by the HttpCache.
   class NET_EXPORT BackendFactory {
    public:
@@ -389,7 +396,9 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
 
   // Opens the disk cache entry associated with |key|, returning an ActiveEntry
   // in |*entry|. |trans| will be notified via its IO callback if this method
-  // returns ERR_IO_PENDING.
+  // returns ERR_IO_PENDING. This should not be called if there already is
+  // an active entry associated with |key|, e.g. you should call FindActiveEntry
+  // first.
   int OpenEntry(const std::string& key, ActiveEntry** entry,
                 Transaction* trans);
 

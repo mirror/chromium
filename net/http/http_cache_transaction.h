@@ -190,6 +190,17 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   // entry has finished writing.
   void WriteModeTransactionAboutToBecomeReader();
 
+  // Returns true if the resource info MemoryEntryDataHints bit flags in
+  // |in_memory_info| and the current request & load flags suggest that
+  // the cache entry in question is not actually usable for HTTP
+  // (i.e. already expired, and nothing is forcing us to disregard that).
+  bool MaybeRejectBasedOnEntryInMemoryData(uint8_t in_memory_info);
+
+  // Returns true if response_ is such that, if saved to cache, it would only
+  // be usable if load flags asked us to ignore caching headers.
+  // (return value of false makes no statement as to suitability of the entry).
+  bool ComputeUnusablePerCachingHeaders();
+
  private:
   static const size_t kNumValidationHeaders = 2;
   // Helper struct to pair a header name with its value, for
@@ -290,6 +301,7 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
     VALIDATION_CAUSE_VALIDATE_FLAG,
     VALIDATION_CAUSE_STALE,
     VALIDATION_CAUSE_ZERO_FRESHNESS,
+    VALIDATION_CAUSE_ZERO_FRESHNESS_MEM_HINT,
     VALIDATION_CAUSE_MAX
   };
 
@@ -399,6 +411,13 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   // Called to make the request conditional (to ask the server if the cached
   // copy is valid).  Returns true if able to make the request conditional.
   bool ConditionalizeRequest();
+
+  // Determines if saved response permits conditionalization, and extracts
+  // etag/last-modified values. Only depends on |response_.headers|.
+  // |*etag_value| and |*last_modified_value| will be set if true is returned,
+  // but may also be modified in other cases.
+  bool IsResponseConditionalizable(std::string* etag_value,
+                                   std::string* last_modified_value) const;
 
   // Makes sure that a 206 response is expected.  Returns true on success.
   // On success, handling_206_ will be set to true if we are processing a
