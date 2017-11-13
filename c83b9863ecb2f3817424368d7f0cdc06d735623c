@@ -719,6 +719,24 @@
     },
     {
       "key": {
+        "uuid": "419a3268_952555d2",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "Hm, there\u0027s actually a subtle distinction in that \u0027canonical CBOR\u0027 describes the output of an encoder, whereas \u0027strict mode\u0027 describes certain decoder behavior. They don\u0027t necessarily go hand-in-hand. \"Some areas of application of CBOR do not require canonicalization, but may require that different decoders reach the same results, even in the presence of potentially malicious data.\n\nSo, while in this case they are functionally equivalent, they\u0027re not semantically equivalent. I\u0027d argue for using \u0027strict mode\u0027 in the decoder but no mention of canonicalization, since the decoder really isn\u0027t precisely concerned with whether the data it has received is necessarily canonical.",
+      "parentUuid": "ce52512b_13f0a0bd",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f2065b0_38c40fd6",
         "filename": "content/browser/webauth/cbor/cbor_values.cc",
         "patchSetId": 1

@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63b3d7d6_959fa6e0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "nit: specs -\u003e specs, so readers aren\u0027t wondering if there\u0027s a spec missing?",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c24708_33b552c2",
+        "filename": "content/browser/webauth/cbor/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "Should this be in //src/content/test/fuzzer/BUILD.gn? This and the change in content/browser/BUILD.gn doesn\u0027t seem conventional (but I\u0027ve also never added a fuzzer before and could be wrong).",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9603d818_b200faf8",
+        "filename": "content/browser/webauth/cbor/cbor_binary.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "Hm, can we just call it impl or cbor_impl? These aren\u0027t related to authenticator in any way.",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6165d19b_28db6387",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "nit: Only cbor_reader.h should be up here. cbor_binary goes below.",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7909e0c9_e0f63259",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "Is this an error condition? Or just additional info whenever there are trailing bytes?",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53569c5_ec708604",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "nit: \"duplicate map keys are not allowed...\"",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef756b15_ff486750",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "nit: \"map keys must be sorted in strict mode\"",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42f779c_524162e8",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "strict_mode",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a9e5cb_c7e7b9c3",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "This goes with the other includes.",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a63a7e8f_1fcba328",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "Can we say \u0027definite-length arrays\u0027 and \u0027definite-length maps\u0027? (I know, I know, I wrote this original comment in cborwriter).",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012f5637_59d8f79d",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "I think it\u0027s all right to say \"Unknown formats are treated as syntax errors\".",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6ab166_51817f0e",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "Let\u0027s remove the \"as non-canonical decoding format\" portion.",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622e1401_53293e6a",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "Let\u0027s move lines 45-52 ahead of \"Known limitations and interpretations\". Also, see my response to the discussion regarding \u0027strict mode\u0027 vs \u0027canonical\u0027",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56110da8_6e7a7461",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "nit: \"-\" instead of \"--\"",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28825e19_cae95e6c",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "\"the decoder rejects any data that could be interpreted by other decoders in different ways\"",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "841e9474_52a2ce6f",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "This is a repeat of what was said at the start of the comment",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d028ae_f3e4a2bd",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "nit: nesing -\u003e nesting",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c186fb_6d0d2c42",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "\"Translates errors to human-readable error messages\"",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82da34a0_13230792",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "nit: newline above #endif",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b0dc96_573cac38",
+        "filename": "content/browser/webauth/cbor/cbor_reader_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "nit: newline above cbor_reader.h",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a07a143b_8ec0cd79",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "s/Read/Reade",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06292e6_d49cca5d",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "Can you annotate these test bytes?",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0c8237_38cb112e",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "This comment isn\u0027t really necessary.",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b368b3d8_2ee7bd29",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-13T22:47:33Z",
+      "side": 1,
+      "message": "nit: \"Corresponds to a CBOR structure with a nesting depth of 2\"?",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
