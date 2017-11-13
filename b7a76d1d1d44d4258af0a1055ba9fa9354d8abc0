@@ -22,6 +22,30 @@
       "revId": "b7a76d1d1d44d4258af0a1055ba9fa9354d8abc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15853b7_33b207da",
+        "filename": "media/mojo/clients/mojo_video_encode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-13T22:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3e6b886_c45d4e2f",
+      "range": {
+        "startLine": 117,
+        "startChar": 33,
+        "endLine": 117,
+        "endChar": 61
+      },
+      "revId": "b7a76d1d1d44d4258af0a1055ba9fa9354d8abc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
