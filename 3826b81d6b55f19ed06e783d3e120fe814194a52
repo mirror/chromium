@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc910d2b_87569e24",
+        "filename": "chrome/test/chromedriver/run_buildbot_steps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-11-13T20:28:03Z",
+      "side": 1,
+      "message": "This seems to be unnecessary. We have just built and uploaded a chromedriver to GS_CONTINUOUS_URL, and that should be the version we\u0027ll find. Might as well just directly upload that version as the canary.\n\nThe extra logic is necessary for the release, because we require the build to pass Android test before becoming a candidate.",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 43
+      },
+      "revId": "3826b81d6b55f19ed06e783d3e120fe814194a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b58cec4_ee58c214",
+        "filename": "chrome/test/chromedriver/run_buildbot_steps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-11-13T20:28:03Z",
+      "side": 1,
+      "message": "This doesn\u0027t match the actual function name.",
+      "range": {
+        "startLine": 513,
+        "startChar": 4,
+        "endLine": 513,
+        "endChar": 23
+      },
+      "revId": "3826b81d6b55f19ed06e783d3e120fe814194a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
