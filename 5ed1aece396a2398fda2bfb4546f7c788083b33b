@@ -124,6 +124,24 @@
       "revId": "5ed1aece396a2398fda2bfb4546f7c788083b33b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "783110d6_f545cd25",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-13T03:04:07Z",
+      "side": 1,
+      "message": "#1 This is unlikely. ZIP unpacker has been an external component extension since I remember.\n#2 Yes, this is likely. I remember there was a bug in the past. However I once added a functionality to reenable component extensions in profile resetter to fix satorux@\u0027s issue, but it didn\u0027t work. The extension got disabled again.\n\nAnyway, we don\u0027t have any more data, so let\u0027s hope this fix is enough.",
+      "parentUuid": "7524fd07_c9a2fc57",
+      "revId": "5ed1aece396a2398fda2bfb4546f7c788083b33b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
