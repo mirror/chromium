@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "332a3176_c53fac1f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-13T11:00:16Z",
+      "side": 1,
+      "message": "Bikeshed: Should this API let you pass in the tick clock? We can provide a default of std::make_unique\u003cbase::DefaultTickClock\u003e()\n\nNB I\u0027ve noticed CreateTaskQueueManagerForTest which may be unnecessary if we did that.",
+      "range": {
+        "startLine": 91,
+        "startChar": 52,
+        "endLine": 91,
+        "endChar": 73
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20076846_ce528a49",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-13T11:00:16Z",
+      "side": 1,
+      "message": "Can we add this?",
+      "range": {
+        "startLine": 300,
+        "startChar": 32,
+        "endLine": 300,
+        "endChar": 55
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f5db39_3860c0a4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-13T11:00:16Z",
+      "side": 1,
+      "message": "This is more of a design question, but I favor nestibility becoming a TaskQueueManager thing.  I.e. the controller wouldn\u0027t know or care about it.\n\nI\u0027ll start a thread.",
+      "range": {
+        "startLine": 500,
+        "startChar": 4,
+        "endLine": 500,
+        "endChar": 15
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8fa243_514f3123",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-13T11:00:16Z",
+      "side": 1,
+      "message": "I think it\u0027s probably wise to keep DoWork at least initially since we can choose to run N tasks.  I wouldn\u0027t be surprised if there was some perf impact to taking individual tasks although I assume that can be optimized.",
+      "range": {
+        "startLine": 738,
+        "startChar": 0,
+        "endLine": 738,
+        "endChar": 79
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebdc8351_c9b48d33",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-13T11:00:16Z",
+      "side": 1,
+      "message": "controller",
+      "range": {
+        "startLine": 67,
+        "startChar": 40,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "722c37ac_141e683e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-13T11:00:16Z",
+      "side": 1,
+      "message": "Maybe list a tracking bug.",
+      "range": {
+        "startLine": 37,
+        "startChar": 43,
+        "endLine": 37,
+        "endChar": 48
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4582f8b7_ebf7f8b2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/scheduler_helper_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-13T11:00:16Z",
+      "side": 1,
+      "message": "Is this no longer relevant?",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 26
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8b3128_45082a28",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-13T11:00:16Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 212,
+        "startChar": 2,
+        "endLine": 212,
+        "endChar": 30
+      },
+      "revId": "5bbc0f9d00d3701efa81cc657921dec7f54b7103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
