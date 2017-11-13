@@ -10,6 +10,7 @@ include_rules = [
     "+base/run_loop.h",
     "+base/message_loop",
     "+base/metrics/statistics_recorder.h",
+    "+base/threading/thread_local.h",
     "+base/test/test_io_thread.h",
     "+cc",
     "+components/viz/test",
