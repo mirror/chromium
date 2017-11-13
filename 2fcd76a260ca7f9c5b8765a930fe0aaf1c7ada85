@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6cf695f_4388289d",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T16:03:11Z",
+      "side": 1,
+      "message": "I think you need to wrap it into `qwerty`",
+      "range": {
+        "startLine": 123,
+        "startChar": 56,
+        "endLine": 123,
+        "endChar": 77
+      },
+      "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb567018_47c20de1",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T16:03:11Z",
+      "side": 1,
+      "message": "nit: double space",
+      "range": {
+        "startLine": 176,
+        "startChar": 9,
+        "endLine": 176,
+        "endChar": 10
+      },
+      "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c36c6d4_c9057de5",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T16:03:11Z",
+      "side": 1,
+      "message": "nit: double space",
+      "range": {
+        "startLine": 176,
+        "startChar": 9,
+        "endLine": 176,
+        "endChar": 10
+      },
+      "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50329c11_2455c432",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-13T16:03:11Z",
+      "side": 1,
+      "message": "Let\u0027s wrap these modifiers in ``? Also might be useful to do so in the text above, where you describe compatibility issues.",
+      "range": {
+        "startLine": 181,
+        "startChar": 3,
+        "endLine": 181,
+        "endChar": 25
+      },
+      "revId": "2fcd76a260ca7f9c5b8765a930fe0aaf1c7ada85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
