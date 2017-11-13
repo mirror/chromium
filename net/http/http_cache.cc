@@ -752,6 +752,13 @@ int HttpCache::OpenEntry(const std::string& key, ActiveEntry** entry,
     return OK;
   }
 
+  // See if we could potentially quick-reject the entry.
+  uint8_t in_memory_info = disk_cache_->GetEntryInMemoryData(key);
+  if (trans->MaybeRejectBasedOnEntryInMemoryData(in_memory_info)) {
+    disk_cache_->DoomEntry(key, base::Bind([](int) {}));
+    return net::ERR_CACHE_ENTRY_NOT_SUITABLE;
+  }
+
   std::unique_ptr<WorkItem> item =
       std::make_unique<WorkItem>(WI_OPEN_ENTRY, trans, entry);
   PendingOp* pending_op = GetPendingOp(key);
