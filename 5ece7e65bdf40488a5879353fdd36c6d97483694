@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c25abad_279c3f99",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-13T18:23:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76892fe6_12aed127",
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df4130bc_4be0416d",
         "filename": "services/ui/ws/display_manager.cc",
         "patchSetId": 18
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-13T14:06:20Z",
       "side": 1,
       "message": "Are these better as DCHECKs? Should it be possible the WM sends any of these cases?",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 5
+      },
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f253c339_e3fb827f",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-13T18:23:12Z",
+      "side": 1,
+      "message": "This follows the pattern of other display config invariant checks and I think it\u0027s reasonable to strongly guard against bad usage here. Returning false causes the current production client to abort; see window_tree_client.cc\u0027s OnAckMustSucceed. I\u0027m open to alternatives, but all checks should probably follow the same pattern. I converted my new DCHECKs below to this pattern as well.",
+      "parentUuid": "df4130bc_4be0416d",
       "range": {
         "startLine": 101,
         "startChar": 0,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "3f9d65dd_3a824f21",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-13T18:23:12Z",
+      "side": 1,
+      "message": "I\u0027m not sure exactly what happens in that case; perhaps ash passes display::kInvalidDisplayId for |internal_display_id|? I\u0027ll try to repro and file an issue if this is broken.",
+      "parentUuid": "8becd03e_a11e7ae8",
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d4caba3_9ebfc4d5",
         "filename": "services/ui/ws/display_manager.cc",
         "patchSetId": 18
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "0d4d5306_1112150a",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-13T18:23:12Z",
+      "side": 1,
+      "message": "Yes, I can add a second vector for mirror metrics if you think that\u0027s appropriate.",
+      "parentUuid": "1d4caba3_9ebfc4d5",
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c1d245d_f4117ad2",
         "filename": "ui/display/manager/chromeos/display_configurator_unittest.cc",
         "patchSetId": 18
@@ -87,6 +165,24 @@
       "writtenOn": "2017-11-13T14:06:20Z",
       "side": 1,
       "message": "Do you need to create these things after the command line change? The check for chromeos::IsRunningAsSystemCompositor() only happens when running display configuration I think.",
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b344d207_7135b016",
+        "filename": "ui/display/manager/chromeos/display_configurator_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-13T18:23:12Z",
+      "side": 1,
+      "message": "The DisplayConfigurator ctor caches the value in |configure_display_|.\nI could probably delay that check to DisplayConfigurator::Init... WDYT?",
+      "parentUuid": "2c1d245d_f4117ad2",
       "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
