@@ -14,6 +14,8 @@
 
 namespace history {
 
+class HistoryService;
+
 class TypedURLSyncBridge : public syncer::ModelTypeSyncBridge,
                            public history::HistoryBackendObserver {
  public:
