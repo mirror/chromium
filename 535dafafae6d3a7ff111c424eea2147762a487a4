@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cb733b5_a03bb872",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-13T18:20:27Z",
+      "side": 1,
+      "message": "Using the WaitableEvent mechanism requires the signaling of the event to occur on a different thread, as event.Wait() doesn\u0027t run any event loop, so a PostTask to this thread will not be executed.  So shifting to Mojo required shifting over to a RunLoop waiting mechanism.",
+      "range": {
+        "startLine": 1161,
+        "startChar": 2,
+        "endLine": 1161,
+        "endChar": 10
+      },
+      "revId": "535dafafae6d3a7ff111c424eea2147762a487a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
