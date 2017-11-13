@@ -38,6 +38,7 @@ void Session::StartWindowManager() {
 void Session::StartQuickLaunch() {
   // TODO(beng): monitor this service for death & bring down the whole system
   // if necessary.
+  LOG(ERROR) << "JAMES StartQuickLaunch";
   context()->connector()->StartService(quick_launch::mojom::kServiceName);
 }
 

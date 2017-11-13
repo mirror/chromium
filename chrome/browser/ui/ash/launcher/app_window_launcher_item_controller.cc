@@ -81,6 +81,7 @@ void AppWindowLauncherItemController::ItemSelected(
     int64_t display_id,
     ash::ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  LOG(ERROR) << "JAMES ItemSelected";
   if (windows_.empty()) {
     std::move(callback).Run(ash::SHELF_ACTION_NONE, base::nullopt);
     return;
@@ -137,6 +138,7 @@ void AppWindowLauncherItemController::OnWindowPropertyChanged(
     const void* key,
     intptr_t old) {
   if (key == aura::client::kDrawAttentionKey) {
+    LOG(ERROR) << "JAMES DrawAttention changed";
     ash::ShelfItemStatus status;
     // Active windows don't draw attention because the user is looking at them.
     if (window->GetProperty(aura::client::kDrawAttentionKey) &&

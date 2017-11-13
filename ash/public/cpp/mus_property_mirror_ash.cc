@@ -50,6 +50,7 @@ void MusPropertyMirrorAsh::MirrorPropertyFromWidgetWindowToRootWindow(
     MirrorOwnedProperty(window, root_window, kShelfIDKey);
   } else if (key == aura::client::kDrawAttentionKey) {
     bool value = window->GetProperty(aura::client::kDrawAttentionKey);
+    LOG(ERROR) << "JAMES mirroring DrawAttention " << value;
     root_window->SetProperty(aura::client::kDrawAttentionKey, value);
   } else if (key == aura::client::kMinimumSize) {
     MirrorOwnedProperty(window, root_window, aura::client::kMinimumSize);

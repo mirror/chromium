@@ -59,6 +59,7 @@ void DefaultActivationClient::RemoveObserver(
 }
 
 void DefaultActivationClient::ActivateWindow(aura::Window* window) {
+  LOG(ERROR) << "JAMES ActivateWindow";
   ActivateWindowImpl(
       ActivationChangeObserver::ActivationReason::ACTIVATION_CLIENT, window);
 }

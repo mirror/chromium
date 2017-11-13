@@ -154,7 +154,8 @@ void ShelfModel::Set(int index, const ShelfItem& item) {
   int new_index = item.type == items_[index].type
                       ? index
                       : ValidateInsertionIndex(item.type, index);
-
+  LOG(ERROR) << "JAMES Set index " << index << " new_index " << new_index
+    << " status " << item.status;
   ShelfItem old_item(items_[index]);
   items_[index] = item;
   DCHECK(old_item.id == item.id);

@@ -73,6 +73,7 @@ void RegisterMashServices(
     content::ContentUtilityClient::StaticServiceMap* services) {
   RegisterMashService(services, ui::mojom::kServiceName, &CreateUiService);
 #if defined(OS_CHROMEOS)
+  LOG(ERROR) << "JAMES Register quicklaunch";
   RegisterMashService(services, mash::quick_launch::mojom::kServiceName,
                       &CreateQuickLaunch);
   RegisterMashService(services, ash::mojom::kServiceName, &CreateAshService);

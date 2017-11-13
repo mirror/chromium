@@ -184,6 +184,7 @@ void QuickLaunch::OnStart() {
   }
 
   Launch(mojom::kWindow, mojom::LaunchMode::MAKE_NEW);
+  LOG(ERROR) << "JAMES QuickLaunch::OnStart";
 }
 
 void QuickLaunch::OnBindInterface(

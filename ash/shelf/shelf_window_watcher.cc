@@ -60,6 +60,8 @@ void UpdateShelfItemForWindow(ShelfItem* item, aura::Window* window) {
   item->id = GetShelfID(window);
   item->type = GetShelfItemType(window);
   item->title = window->GetTitle();
+  LOG(ERROR) << "JAMES UpdateShelfItemForWindow " << item->id.Serialize()
+    << " " << item->title;
 
   // Active windows don't draw attention because the user is looking at them.
   if (window->GetProperty(aura::client::kDrawAttentionKey) &&
@@ -229,6 +231,7 @@ void ShelfWindowWatcher::OnUserWindowPropertyChanged(aura::Window* window) {
   // ShelfWindowWatcher only handles panels and dialogs for now, all other shelf
   // item types are handled by ChromeLauncherController.
   const ShelfItemType item_type = GetShelfItemType(window);
+  LOG(ERROR) << "JAMES ash WindowPropertyChanged for type " << item_type;
   if ((item_type != TYPE_APP_PANEL && item_type != TYPE_DIALOG) ||
       GetShelfID(window).IsNull()) {
     // Remove |window|'s ShelfItem if it was added by ShelfWindowWatcher.

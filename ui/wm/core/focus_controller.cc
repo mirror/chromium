@@ -61,6 +61,7 @@ void FocusController::RemoveObserver(ActivationChangeObserver* observer) {
 }
 
 void FocusController::ActivateWindow(aura::Window* window) {
+  LOG(ERROR) << "JAMES ActivateWindow";
   FocusWindow(window);
 }
 

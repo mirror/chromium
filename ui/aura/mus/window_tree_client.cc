@@ -1536,6 +1536,7 @@ void WindowTreeClient::OnPointerEventObserved(std::unique_ptr<ui::Event> event,
 }
 
 void WindowTreeClient::OnWindowFocused(Id focused_window_id) {
+  LOG(ERROR) << "JAMES OnWindowFocused";
   WindowMus* focused_window = GetWindowByServerId(focused_window_id);
   InFlightFocusChange new_change(this, focus_synchronizer_.get(),
                                  focused_window);

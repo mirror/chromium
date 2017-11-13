@@ -505,6 +505,7 @@ void ChromeLauncherController::SetRefocusURLPatternForTest(
 ash::ShelfAction ChromeLauncherController::ActivateWindowOrMinimizeIfActive(
     ui::BaseWindow* window,
     bool allow_minimize) {
+  LOG(ERROR) << "JAMES ActivateWindowOrMinimizeIfActive";
   // We might have to teleport a window back to the current user.
   aura::Window* native_window = window->GetNativeWindow();
   const AccountId& current_account_id =

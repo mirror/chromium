@@ -50,10 +50,12 @@ void ShelfWindowWatcherItemDelegate::ItemSelected(
     int64_t display_id,
     ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  LOG(ERROR) << "JAMES ItemSelected";
   // Move panels attached on another display to the current display.
   if (GetShelfItemType(shelf_id()) == TYPE_APP_PANEL &&
       window_->GetProperty(kPanelAttachedKey) &&
       wm::MoveWindowToDisplay(window_, display_id)) {
+    LOG(ERROR) << "JAMES moving to other display";
     wm::ActivateWindow(window_);
     std::move(callback).Run(SHELF_ACTION_WINDOW_ACTIVATED, base::nullopt);
     return;
@@ -65,10 +67,12 @@ void ShelfWindowWatcherItemDelegate::ItemSelected(
       std::move(callback).Run(SHELF_ACTION_NONE, base::nullopt);
       return;
     }
+    LOG(ERROR) << "JAMES Minimizing";
     window_->SetProperty(aura::client::kShowStateKey, ui::SHOW_STATE_MINIMIZED);
     std::move(callback).Run(SHELF_ACTION_WINDOW_MINIMIZED, base::nullopt);
     return;
   }
+  LOG(ERROR) << "JAMES calling ActivateWindow";
   wm::ActivateWindow(window_);
   std::move(callback).Run(SHELF_ACTION_WINDOW_ACTIVATED, base::nullopt);
 }
