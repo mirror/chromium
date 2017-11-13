@@ -20,6 +20,7 @@
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_export.h"
 #include "cc/paint/paint_flags.h"
+#include "cc/paint/transfer_cache_helper.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkPicture.h"
 #include "third_party/skia/include/core/SkRect.h"
@@ -31,6 +32,7 @@
 
 namespace cc {
 class ImageDecodeCache;
+class TransferCacheDeserializeHelper;
 
 class CC_PAINT_EXPORT ThreadsafeMatrix : public SkMatrix {
  public:
@@ -113,9 +115,12 @@ class CC_PAINT_EXPORT PaintOp {
 
   struct SerializeOptions {
     ImageDecodeCache* decode_cache = nullptr;
+    TransferCacheHelper* transfer_cache = nullptr;
   };
 
-  struct DeserializeOptions {};
+  struct DeserializeOptions {
+    TransferCacheDeserializeHelper* transfer_cache = nullptr;
+  };
 
   // Subclasses should provide a static Serialize() method called from here.
   // If the op can be serialized to |memory| in no more than |size| bytes,

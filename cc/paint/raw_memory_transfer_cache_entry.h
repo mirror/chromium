@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "cc/paint/transfer_cache_entry.h"
+#include "third_party/skia/include/core/SkImage.h"
 
 namespace cc {
 
@@ -36,8 +37,10 @@ class CC_PAINT_EXPORT ServiceRawMemoryTransferCacheEntry
   size_t Size() const override;
   bool Deserialize(size_t size, uint8_t* data) override;
 
+  sk_sp<SkImage> GetImage() { return image_; }
+
  private:
-  std::vector<uint8_t> data_;
+  sk_sp<SkImage> image_;
 };
 
 }  // namespace cc

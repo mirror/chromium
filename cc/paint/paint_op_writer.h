@@ -7,6 +7,7 @@
 
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_export.h"
+#include "cc/paint/transfer_cache_helper.h"
 
 struct SkRect;
 struct SkIRect;
@@ -45,7 +46,7 @@ class CC_PAINT_EXPORT PaintOpWriter {
 
   void Write(const SkPath& path);
   void Write(const PaintFlags& flags);
-  void Write(const PaintImage& image, ImageDecodeCache* cache);
+  void Write(const PaintImage& image, TransferCacheHelper* cache);
   void Write(const sk_sp<SkData>& data);
   void Write(const sk_sp<SkTextBlob>& blob);
   void Write(const PaintShader* shader);

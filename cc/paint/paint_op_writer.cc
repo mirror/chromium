@@ -4,8 +4,10 @@
 
 #include "cc/paint/paint_op_writer.h"
 
+#include "base/memory/ptr_util.h"
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/paint_shader.h"
+#include "cc/paint/raw_memory_transfer_cache_entry.h"
 #include "third_party/skia/include/core/SkFlattenableSerialization.h"
 #include "third_party/skia/include/core/SkTextBlob.h"
 
@@ -96,8 +98,18 @@ void PaintOpWriter::Write(const PaintFlags& flags) {
   Write(flags.shader_.get());
 }
 
-void PaintOpWriter::Write(const PaintImage& image, ImageDecodeCache* cache) {
-  // TODO(enne): implement PaintImage serialization: http://crbug.com/737629
+void PaintOpWriter::Write(const PaintImage& image, TransferCacheHelper* cache) {
+  SkImageInfo decode_info = image.CreateDecodeImageInfo(
+      SkISize::Make(image.width(), image.height()), kN32_SkColorType);
+  std::vector<uint8_t> memory(decode_info.computeMinByteSize() +
+                              sizeof(int32_t) * 2);
+  *reinterpret_cast<int32_t*>(memory.data()) = image.width();
+  *(reinterpret_cast<int32_t*>(memory.data()) + 1) = image.height();
+  image.Decode(memory.data() + sizeof(int32_t) * 2, &decode_info, nullptr, 0);
+  auto entry =
+      base::MakeUnique<ClientRawMemoryTransferCacheEntry>(std::move(memory));
+  auto id = cache->CreateCacheEntry(std::move(entry));
+  Write(id.GetUnsafeValue());
 }
 
 void PaintOpWriter::Write(const sk_sp<SkData>& data) {
