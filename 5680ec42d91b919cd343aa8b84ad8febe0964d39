@@ -22,6 +22,30 @@
       "revId": "5680ec42d91b919cd343aa8b84ad8febe0964d39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6439a9_3ae2f3b2",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-13T23:31:10Z",
+      "side": 1,
+      "message": "Yes and as a workaround, it\u0027s even safer. Done.",
+      "parentUuid": "9feafedb_20f99963",
+      "range": {
+        "startLine": 130,
+        "startChar": 13,
+        "endLine": 130,
+        "endChar": 17
+      },
+      "revId": "5680ec42d91b919cd343aa8b84ad8febe0964d39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
