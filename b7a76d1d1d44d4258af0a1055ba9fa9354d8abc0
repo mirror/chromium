@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3e6b886_c45d4e2f",
+        "filename": "media/mojo/clients/mojo_video_encode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-13T21:37:10Z",
+      "side": 1,
+      "message": "Does it make sense to make |vea_client_binding_| a member of |vea_client_| instead? (You could then pass the interface request as a constructor argument along with |client|)?\nWhen you destroy |vea_client_|, it will destroy the Binding object. You don\u0027t have manage two members in this class.",
+      "range": {
+        "startLine": 117,
+        "startChar": 33,
+        "endLine": 117,
+        "endChar": 61
+      },
+      "revId": "b7a76d1d1d44d4258af0a1055ba9fa9354d8abc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
