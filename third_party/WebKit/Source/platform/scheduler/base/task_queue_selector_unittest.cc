@@ -176,8 +176,8 @@ TEST_F(TaskQueueSelectorTest, TestControlPriority) {
   size_t queue_order[] = {0, 1, 2, 3, 4};
   PushTasks(queue_order, 5);
   selector_.SetQueuePriority(task_queues_[4].get(),
-                             TaskQueue::CONTROL_PRIORITY);
-  EXPECT_EQ(TaskQueue::CONTROL_PRIORITY, task_queues_[4]->GetQueuePriority());
+                             TaskQueue::kControl_PRIORITY);
+  EXPECT_EQ(TaskQueue::kControl_PRIORITY, task_queues_[4]->GetQueuePriority());
   selector_.SetQueuePriority(task_queues_[2].get(), TaskQueue::HIGH_PRIORITY);
   EXPECT_EQ(TaskQueue::HIGH_PRIORITY, task_queues_[2]->GetQueuePriority());
   EXPECT_THAT(PopTasks(), ::testing::ElementsAre(4, 2, 0, 1, 3));
@@ -275,7 +275,7 @@ TEST_F(TaskQueueSelectorTest, TestControlStarvesOthers) {
   size_t queue_order[] = {0, 1, 2, 3};
   PushTasks(queue_order, 4);
   selector_.SetQueuePriority(task_queues_[3].get(),
-                             TaskQueue::CONTROL_PRIORITY);
+                             TaskQueue::kControl_PRIORITY);
   selector_.SetQueuePriority(task_queues_[2].get(), TaskQueue::HIGH_PRIORITY);
   selector_.SetQueuePriority(task_queues_[1].get(),
                              TaskQueue::BEST_EFFORT_PRIORITY);
@@ -366,7 +366,7 @@ TEST_F(TaskQueueSelectorTest, TestBestEffortGetsStarved) {
     // Don't remove task from queue to simulate all queues still being full.
   }
   selector_.SetQueuePriority(task_queues_[1].get(),
-                             TaskQueue::CONTROL_PRIORITY);
+                             TaskQueue::kControl_PRIORITY);
   for (int i = 0; i < 100; i++) {
     ASSERT_TRUE(selector_.SelectWorkQueueToService(&chosen_work_queue));
     EXPECT_EQ(task_queues_[1].get(), chosen_work_queue->task_queue());
@@ -389,7 +389,7 @@ TEST_F(TaskQueueSelectorTest, EnabledWorkQueuesEmpty_ControlPriority) {
   PushTasks(queue_order, 1);
 
   selector_.SetQueuePriority(task_queues_[0].get(),
-                             TaskQueue::CONTROL_PRIORITY);
+                             TaskQueue::kControl_PRIORITY);
 
   EXPECT_FALSE(selector_.EnabledWorkQueuesEmpty());
 }
@@ -474,7 +474,7 @@ TEST_F(TaskQueueSelectorTest, TestObserverWithTwoBlockedQueues) {
   selector.DisableQueue(task_queue.get());
   selector.DisableQueue(task_queue2.get());
 
-  selector.SetQueuePriority(task_queue2.get(), TaskQueue::CONTROL_PRIORITY);
+  selector.SetQueuePriority(task_queue2.get(), TaskQueue::kControl_PRIORITY);
 
   TaskQueueImpl::Task task1(TaskQueue::PostedTask(test_closure_, FROM_HERE),
                             base::TimeTicks(), 0);

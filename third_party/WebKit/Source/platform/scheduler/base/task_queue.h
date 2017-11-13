@@ -78,7 +78,7 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
     // Queues with control priority will run before any other queue, and will
     // explicitly starve other queues. Typically this should only be used for
     // private queues which perform control operations.
-    CONTROL_PRIORITY,
+    kControl_PRIORITY,
 
     // The selector will prioritize high over normal and low and normal over
     // low. However it will ensure neither of the lower priority queues can be
@@ -94,7 +94,7 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
     BEST_EFFORT_PRIORITY,
     // Must be the last entry.
     QUEUE_PRIORITY_COUNT,
-    FIRST_QUEUE_PRIORITY = CONTROL_PRIORITY,
+    FIRST_QUEUE_PRIORITY = kControl_PRIORITY,
   };
 
   // Can be called on any thread.
@@ -219,9 +219,9 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
   TimeDomain* GetTimeDomain() const;
 
   enum class InsertFencePosition {
-    NOW,  // Tasks posted on the queue up till this point further may run.
-          // All further tasks are blocked.
-    BEGINNING_OF_TIME,  // No tasks posted on this queue may run.
+    kNow,  // Tasks posted on the queue up till this point further may run.
+           // All further tasks are blocked.
+    kBeginningOfTime,  // No tasks posted on this queue may run.
   };
 
   // Inserts a barrier into the task queue which prevents tasks with an enqueue
@@ -233,7 +233,7 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
   // Fences come in three flavours:
   // - Regular (InsertFence(NOW)) - all tasks posted after this moment
   //   are blocked.
-  // - Fully blocking (InsertFence(BEGINNING_OF_TIME)) - all tasks including
+  // - Fully blocking (InsertFence(kBeginningOfTime)) - all tasks including
   //   already posted are blocked.
   // - Delayed (InsertFenceAt(timestamp)) - blocks all tasks posted after given
   //   point in time (must be in the future).

@@ -208,8 +208,8 @@ bool TaskQueueSelector::PrioritizingSelector::SelectWorkQueueToService(
   DCHECK_EQ(*out_chose_delayed_over_immediate, false);
 
   // Always service the control queue if it has any work.
-  if (max_priority > TaskQueue::CONTROL_PRIORITY &&
-      ChooseOldestWithPriority(TaskQueue::CONTROL_PRIORITY,
+  if (max_priority > TaskQueue::kControl_PRIORITY &&
+      ChooseOldestWithPriority(TaskQueue::kControl_PRIORITY,
                                out_chose_delayed_over_immediate,
                                out_work_queue)) {
     return true;
@@ -333,7 +333,7 @@ void TaskQueueSelector::DidSelectQueueWithPriority(
     TaskQueue::QueuePriority priority,
     bool chose_delayed_over_immediate) {
   switch (priority) {
-    case TaskQueue::CONTROL_PRIORITY:
+    case TaskQueue::kControl_PRIORITY:
       break;
     case TaskQueue::HIGH_PRIORITY:
       low_priority_starvation_score_ +=
@@ -379,7 +379,7 @@ void TaskQueueSelector::SetTaskQueueSelectorObserver(Observer* observer) {
 
 bool TaskQueueSelector::EnabledWorkQueuesEmpty() const {
   DCHECK(main_thread_checker_.CalledOnValidThread());
-  for (TaskQueue::QueuePriority priority = TaskQueue::CONTROL_PRIORITY;
+  for (TaskQueue::QueuePriority priority = TaskQueue::kControl_PRIORITY;
        priority < TaskQueue::QUEUE_PRIORITY_COUNT;
        priority = NextPriority(priority)) {
     if (!enabled_selector_.delayed_work_queue_sets()->IsSetEmpty(priority) ||

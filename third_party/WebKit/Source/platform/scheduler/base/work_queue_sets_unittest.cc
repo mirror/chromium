@@ -36,9 +36,9 @@ class WorkQueueSetsTest : public ::testing::Test {
 
   WorkQueue* NewTaskQueue(const char* queue_name) {
     WorkQueue* queue =
-        new WorkQueue(nullptr, "test", WorkQueue::QueueType::IMMEDIATE);
+        new WorkQueue(nullptr, "test", WorkQueue::QueueType::kImmediate);
     work_queues_.push_back(base::WrapUnique(queue));
-    work_queue_sets_->AddQueue(queue, TaskQueue::CONTROL_PRIORITY);
+    work_queue_sets_->AddQueue(queue, TaskQueue::kControl_PRIORITY);
     return queue;
   }
 
@@ -281,7 +281,7 @@ TEST_F(WorkQueueSetsTest, BlockQueuesByFence) {
   queue1->Push(FakeTaskWithEnqueueOrder(8));
   queue2->Push(FakeTaskWithEnqueueOrder(9));
 
-  size_t set = TaskQueue::CONTROL_PRIORITY;
+  size_t set = TaskQueue::kControl_PRIORITY;
 
   WorkQueue* selected_work_queue;
   EXPECT_TRUE(work_queue_sets_->GetOldestQueueInSet(set, &selected_work_queue));
