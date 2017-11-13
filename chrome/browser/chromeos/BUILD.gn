@@ -1271,6 +1271,8 @@ source_set("chromeos") {
     "policy/enrollment_status_chromeos.h",
     "policy/heartbeat_scheduler.cc",
     "policy/heartbeat_scheduler.h",
+    "policy/hostname_handler.cc",
+    "policy/hostname_handler.h",
     "policy/login_profile_policy_provider.cc",
     "policy/login_profile_policy_provider.h",
     "policy/minimum_version_policy_handler.cc",
