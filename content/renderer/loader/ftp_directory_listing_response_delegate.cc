@@ -85,7 +85,7 @@ void FtpDirectoryListingResponseDelegate::OnReceivedData(const char* data,
 
 void FtpDirectoryListingResponseDelegate::OnCompletedRequest() {
   std::vector<FtpDirectoryListingEntry> entries;
-  int rv = net::ERR_NOT_IMPLEMENTED;
+  int rv = net::ERR_NOT_IMPLEMENTED22;
 #if !BUILDFLAG(DISABLE_FTP_SUPPORT)
   rv = net::ParseFtpDirectoryListing(buffer_, base::Time::Now(), &entries);
 #endif

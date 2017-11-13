@@ -1285,7 +1285,7 @@ int QuicStreamFactory::ConfigureSocket(DatagramClientSocket* socket,
 
   rv = socket->SetDoNotFragment();
   // SetDoNotFragment is not implemented on all platforms, so ignore errors.
-  if (rv != OK && rv != ERR_NOT_IMPLEMENTED) {
+  if (rv != OK && rv != ERR_NOT_IMPLEMENTED16) {
     HistogramCreateSessionFailure(CREATION_ERROR_SETTING_DO_NOT_FRAGMENT);
     return rv;
   }

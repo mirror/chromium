@@ -82,7 +82,7 @@ IN_PROC_BROWSER_TEST_F(InProcessBrowserTest, ExternalConnectionFail) {
     LoadFailObserver observer(contents);
     ui_test_utils::NavigateToURL(browser(), url);
     EXPECT_TRUE(observer.failed_load());
-    EXPECT_EQ(net::ERR_NOT_IMPLEMENTED, observer.error_code());
+    EXPECT_EQ(net::ERR_NOT_IMPLEMENTED35, observer.error_code());
     EXPECT_EQ(url, observer.validated_url());
   }
 }

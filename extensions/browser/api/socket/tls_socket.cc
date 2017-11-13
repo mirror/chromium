@@ -154,7 +154,7 @@ int TLSSocket::Listen(const std::string& address,
                       int backlog,
                       std::string* error_msg) {
   *error_msg = kTLSSocketTypeInvalidError;
-  return net::ERR_NOT_IMPLEMENTED;
+  return net::ERR_NOT_IMPLEMENTED23;
 }
 
 void TLSSocket::Accept(const AcceptCompletionCallback& callback) {

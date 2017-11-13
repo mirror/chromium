@@ -234,11 +234,11 @@ void QuicProxyClientSocket::OnWriteComplete(int rv) {
 }
 
 int QuicProxyClientSocket::SetReceiveBufferSize(int32_t size) {
-  return ERR_NOT_IMPLEMENTED;
+  return ERR_NOT_IMPLEMENTED14;
 }
 
 int QuicProxyClientSocket::SetSendBufferSize(int32_t size) {
-  return ERR_NOT_IMPLEMENTED;
+  return ERR_NOT_IMPLEMENTED15;
 }
 
 int QuicProxyClientSocket::GetPeerAddress(IPEndPoint* address) const {
