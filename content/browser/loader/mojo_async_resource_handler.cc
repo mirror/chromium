@@ -182,6 +182,13 @@ void MojoAsyncResourceHandler::OnResponseStarted(
                                      response->head.download_file_path);
   }
 
+  // TODO(arthursonzogni): When the loading a document for a navigation,
+  // transmit more information to the client inside a specific struct.
+  // * Navigationdata
+  // * SSLStatus
+  // * info->GetGlobalRequestID();
+  // * info->IsDownload()
+  // * info->IsStream()
   url_loader_client_->OnReceiveResponse(response->head, base::nullopt,
                                         std::move(downloaded_file_ptr));
 

@@ -656,12 +656,17 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
   // contains the body of the response. The network request has already been
   // made by the browser.
   mojo::ScopedDataPipeConsumerHandle consumer_handle;
+  mojom::URLLoaderPtr url_loader;
+  mojom::URLLoaderClientRequest url_loader_client;
   if (stream_override_) {
     CHECK(IsBrowserSideNavigationEnabled());
     DCHECK(!sync_load_response);
     DCHECK_NE(WebURLRequest::kFrameTypeNone, request.GetFrameType());
     if (stream_override_->consumer_handle.is_valid()) {
       consumer_handle = std::move(stream_override_->consumer_handle);
+    } else if (stream_override_->url_loader_client.is_pending()) {
+      url_loader = std::move(stream_override_->url_loader);
+      url_loader_client = std::move(stream_override_->url_loader_client);
     } else {
       resource_request->resource_body_stream_url = stream_override_->stream_url;
     }
@@ -694,7 +699,8 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
       false /* is_sync */,
       std::make_unique<WebURLLoaderImpl::RequestPeerImpl>(this),
       request.GetLoadingIPCType(), url_loader_factory_,
-      extra_data->TakeURLLoaderThrottles(), std::move(consumer_handle));
+      extra_data->TakeURLLoaderThrottles(), std::move(url_loader),
+      std::move(url_loader_client), std::move(consumer_handle));
 
   if (defers_loading_ != NOT_DEFERRING)
     resource_dispatcher_->SetDefersLoading(request_id_, true);

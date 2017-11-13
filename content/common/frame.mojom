@@ -46,6 +46,8 @@ interface FrameNavigationControl {
                    url.mojom.Url body_url,
                    CommonNavigationParams common_params,
                    RequestNavigationParams request_params,
+                   URLLoader? url_loader,
+                   URLLoaderClient&? url_loader_client,
                    handle<data_pipe_consumer>? body_data,
                    URLLoaderFactoryBundle? subresource_loader_factories);
 };

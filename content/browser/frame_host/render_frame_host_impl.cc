@@ -3226,9 +3226,10 @@ void RenderFrameHostImpl::NavigateToInterstitialURL(const GURL& data_url) {
       CSPDisposition::CHECK /* should_check_main_world_csp */,
       false /* started_from_context_menu */, false /* has_user_gesture */);
   if (IsBrowserSideNavigationEnabled()) {
-    CommitNavigation(nullptr, nullptr, mojo::ScopedDataPipeConsumerHandle(),
-                     common_params, RequestNavigationParams(), false,
-                     base::nullopt);
+    CommitNavigation(
+        nullptr, mojom::URLLoaderPtr(), mojom::URLLoaderClientRequest(),
+        std::unique_ptr<StreamHandle>(), mojo::ScopedDataPipeConsumerHandle(),
+        common_params, RequestNavigationParams(), false, base::nullopt);
   } else {
     Navigate(common_params, StartNavigationParams(), RequestNavigationParams());
   }
@@ -3374,6 +3375,8 @@ void RenderFrameHostImpl::SendJavaScriptDialogReply(
 // PlzNavigate
 void RenderFrameHostImpl::CommitNavigation(
     ResourceResponse* response,
+    mojom::URLLoaderPtr url_loader,
+    mojom::URLLoaderClientRequest url_loader_client,
     std::unique_ptr<StreamHandle> body,
     mojo::ScopedDataPipeConsumerHandle handle,
     const CommonNavigationParams& common_params,
@@ -3384,7 +3387,8 @@ void RenderFrameHostImpl::CommitNavigation(
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
                common_params.url.possibly_invalid_spec());
   DCHECK(
-      (response && (body.get() || handle.is_valid())) ||
+      (response &&
+       (body.get() || handle.is_valid() || url_loader_client.is_pending())) ||
       common_params.url.SchemeIs(url::kDataScheme) ||
       !IsURLHandledByNetworkStack(common_params.url) ||
       FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type) ||
@@ -3398,8 +3402,13 @@ void RenderFrameHostImpl::CommitNavigation(
   // prevent us from doing inappropriate things with javascript-url.
   // See https://crbug.com/766149.
   if (common_params.url.SchemeIs(url::kJavaScriptScheme)) {
+    DCHECK(!url_loader.is_bound());
+    DCHECK(!url_loader_client.is_pending());
+    DCHECK(!body);
+    DCHECK(!handle.is_valid());
     GetNavigationControl()->CommitNavigation(
         ResourceResponseHead(), GURL(), common_params, request_params,
+        mojom::URLLoaderPtr(), mojom::URLLoaderClientRequest(),
         mojo::ScopedDataPipeConsumerHandle(),
         /*subresource_loader_factories=*/base::nullopt);
     return;
@@ -3512,7 +3521,8 @@ void RenderFrameHostImpl::CommitNavigation(
          subresource_loader_factories.has_value());
 
   GetNavigationControl()->CommitNavigation(
-      head, body_url, common_params, request_params, std::move(handle),
+      head, body_url, common_params, request_params, std::move(url_loader),
+      std::move(url_loader_client), std::move(handle),
       std::move(subresource_loader_factories));
 
   // If a network request was made, update the Previews state.

@@ -48,7 +48,9 @@ class CONTENT_EXPORT NavigationURLLoaderNetworkService
   void ProceedWithResponse() override;
   void InterceptNavigation(NavigationInterceptionCB callback) override;
 
-  void OnReceiveResponse(scoped_refptr<ResourceResponse> response,
+  void OnReceiveResponse(mojom::URLLoaderPtrInfo url_loader_info,
+                         mojom::URLLoaderClientRequest url_loader_client,
+                         scoped_refptr<ResourceResponse> response,
                          const base::Optional<net::SSLInfo>& ssl_info,
                          mojom::DownloadedTempFilePtr downloaded_file);
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
