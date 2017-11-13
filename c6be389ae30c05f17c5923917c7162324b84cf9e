@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a9b7c4bf_2fc7465f",
+        "filename": "ash/accessibility/accessibility_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-13T15:17:13Z",
+      "side": 1,
+      "message": "Yeah, in general BindingSet will work, but it\u0027s not necessary in most cases and IMHO less clear. I think I might have made some early mistakes by using BindingSet and they got copy/pasted. I\u0027ll do a clean up pass this week.",
+      "parentUuid": "d5f3633a_76909c32",
+      "revId": "c6be389ae30c05f17c5923917c7162324b84cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c058f7e7_ca337944",
         "filename": "ash/accessibility/test_accessibility_controller_client.h",
         "patchSetId": 3

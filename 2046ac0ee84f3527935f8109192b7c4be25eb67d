@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "141ed09c_bd426f8b",
+        "filename": "ash/system/tray_caps_lock_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-13T15:17:13Z",
+      "side": 1,
+      "message": "Thanks for adding tests!",
+      "revId": "2046ac0ee84f3527935f8109192b7c4be25eb67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
