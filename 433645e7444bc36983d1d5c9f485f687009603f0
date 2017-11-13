@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11835dc1_0c3850a6",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-13T14:46:13Z",
+      "side": 1,
+      "message": "/* success */",
+      "range": {
+        "startLine": 1251,
+        "startChar": 13,
+        "endLine": 1251,
+        "endChar": 18
+      },
+      "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43c9d0f_2672a9cd",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-13T14:46:13Z",
+      "side": 1,
+      "message": "/* success */",
+      "range": {
+        "startLine": 1266,
+        "startChar": 41,
+        "endLine": 1266,
+        "endChar": 45
+      },
+      "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a93406c_8155ac13",
+        "filename": "content/renderer/media/mock_mojo_media_stream_dispatcher_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-13T14:46:13Z",
+      "side": 1,
+      "message": "This should do something with |callback| so that you can test things that were previously tested.",
+      "range": {
+        "startLine": 39,
+        "startChar": 18,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5a25d7_b2e24665",
+        "filename": "content/renderer/pepper/pepper_media_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-13T14:46:13Z",
+      "side": 1,
+      "message": "Put this logic in a method of a MediaStreamLabelMap class so that you don\u0027t have to duplicate it when you port GenerateStream.",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 20
+      },
+      "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26db274b_e5fbe6e3",
+        "filename": "content/renderer/pepper/pepper_media_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-13T14:46:13Z",
+      "side": 1,
+      "message": "use a MediaStreamLabelMap class with higher-level methods to do this.",
+      "range": {
+        "startLine": 212,
+        "startChar": 2,
+        "endLine": 212,
+        "endChar": 16
+      },
+      "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61bc6ab7_fda00f1e",
+        "filename": "content/renderer/pepper/pepper_media_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-13T14:46:13Z",
+      "side": 1,
+      "message": "Put this logic in a method of a MediaStreamLabelMap class (or similar name).\n|label_stream_map_| should be of that type.\nYou\u0027ll use a similar variable for UserMediaProcessor when you port GenerateStream.",
+      "range": {
+        "startLine": 266,
+        "startChar": 14,
+        "endLine": 266,
+        "endChar": 15
+      },
+      "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad93ac46_804380fe",
+        "filename": "content/renderer/pepper/pepper_media_device_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-13T14:46:13Z",
+      "side": 1,
+      "message": "All the logic for the LabelStreamMap you can move it to a separate utility class, since you\u0027re going to need it for GenerateStream as well.\nPerhaps in a file called media_stream_dispatcher_util.{cc|h}",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 16
+      },
+      "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

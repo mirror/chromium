@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "44e8bb14_a2958a4d",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-13T14:46:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "319e1021_6032ee96",
+      "range": {
+        "startLine": 69,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "071f078220c3d42cc888392a34f49cc973afd085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74beff71_50448c0c",
         "filename": "content/browser/renderer_host/media/media_stream_manager.h",
         "patchSetId": 1
@@ -281,6 +305,29 @@
       "revId": "071f078220c3d42cc888392a34f49cc973afd085",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5552ab20_e5498456",
+        "filename": "content/browser/renderer_host/media/video_capture_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-13T14:46:13Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you keep these checks?",
+      "range": {
+        "startLine": 196,
+        "startChar": 12,
+        "endLine": 196,
+        "endChar": 38
+      },
+      "revId": "071f078220c3d42cc888392a34f49cc973afd085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
