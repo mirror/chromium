@@ -7,6 +7,8 @@ import("//ios/web/js_compile.gni")
 source_set("passwords") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
+    "account_select_fill_data.cc",
+    "account_select_fill_data.h",
     "credential_manager.h",
     "credential_manager.mm",
     "credential_manager_features.cc",
@@ -114,6 +116,7 @@ source_set("unit_tests") {
   configs += [ "//build/config/compiler:enable_arc" ]
   testonly = true
   sources = [
+    "account_select_fill_data_unittest.cc",
     "credential_manager_unittest.mm",
     "credential_manager_util_unittest.cc",
     "js_credential_manager_unittest.mm",

@@ -1215,6 +1215,23 @@ TEST_F(PasswordControllerTest, SelectingSuggestionShouldFillPasswordForm) {
   EXPECT_NSEQ(@"[]=, onkeyup=false, onchange=false",
               ExecuteJavaScript(kUsernamePasswordVerificationScript));
 
+  // Emulate that the user clicks on the username field. That's required in
+  // order that PasswordController can identify which form should be filled.
+  block_was_called = NO;
+  [passwordController_
+      retrieveSuggestionsForForm:@"gChrome~0"
+                           field:@"u'"
+                       fieldType:@"text"
+                            type:@"focus"
+                      typedValue:@"abc"
+                        webState:web_state()
+               completionHandler:^(NSArray* suggestions,
+                                   id<FormSuggestionProvider> provider) {
+                 EXPECT_EQ(1u, [suggestions count]);
+                 block_was_called = YES;
+               }];
+  EXPECT_TRUE(block_was_called);
+
   // Tell PasswordController that a suggestion was selected. It should fill
   // out the password form with the corresponding credentials.
   FormSuggestion* suggestion = [FormSuggestion suggestionWithValue:@"abc"
