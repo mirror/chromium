@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7073903f_73a84b70",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-14T06:29:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2dbf3c1b_94ec6c81",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "214265c8_5c6c6927",
         "filename": "chrome/renderer/DEPS",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5859d9_802932ec",
+        "filename": "chrome/renderer/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-14T06:29:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "214265c8_5c6c6927",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "73d0dfea_ae9b4d32",
+        "filename": "components/plugins/renderer/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-14T06:29:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b4b24ba4_7f05e546",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c1d3809_544fe518",
         "filename": "components/plugins/renderer/DEPS",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3533d3a_a3784759",
+        "filename": "components/plugins/renderer/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-14T06:29:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6c1d3809_544fe518",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e77fe986_61d67e64",
+        "filename": "content/browser/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-14T06:29:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "148578a5_c7376390",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1df4db77_7d53410b",
         "filename": "content/browser/loader/async_resource_handler_unittest.cc",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c470033_806cbdb3",
+        "filename": "content/browser/loader/async_resource_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-14T06:29:04Z",
+      "side": 1,
+      "message": "Ack. But I did git cl format, It\u0027s wired.. Anyway, I will do it to keep the same with original code.",
+      "parentUuid": "1df4db77_7d53410b",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "dcd973e5_a662317f",
+        "filename": "content/common/service_worker/service_worker_client_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-14T06:29:04Z",
+      "side": 1,
+      "message": "Yeah, agree, let\u0027s keep it.",
+      "parentUuid": "661fa8fd_a7c3245e",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "750d0b5f_5a95796f",
         "filename": "extensions/renderer/DEPS",
         "patchSetId": 5
@@ -152,6 +278,24 @@
       "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4235420_9394512a",
+        "filename": "extensions/renderer/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-14T06:29:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "750d0b5f_5a95796f",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "54c6d0cf_122ecd2b",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3871,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-14T06:29:04Z",
+      "side": 1,
+      "message": "Is it possible the setting value is out of the enum?",
+      "parentUuid": "831186f5_5c523b2b",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50ed4b00_0bf19dcc",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 5
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "d80e9a34_62b76237",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3875,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-14T06:29:04Z",
+      "side": 1,
+      "message": "Ohh, sorry, I missed that.",
+      "parentUuid": "50ed4b00_0bf19dcc",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b55039c9_03733072",
         "filename": "third_party/WebKit/common/page_visibility_state.mojom",
         "patchSetId": 5
@@ -203,6 +383,24 @@
       "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3187caf9_1cda9202",
+        "filename": "third_party/WebKit/common/page_visibility_state.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-14T06:29:04Z",
+      "side": 1,
+      "message": "Ack, thank a lot.",
+      "parentUuid": "b55039c9_03733072",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
