@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1495f8de_12d4c05a",
+        "filename": "ash/mus/window_manager_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T21:21:30Z",
+      "side": 1,
+      "message": "I think that will result in needing a bunch of mus:: in this file. I\u0027m hoping I can entirely remove the ash::mus namespace in one cl.",
+      "parentUuid": "c03838ac_49a03f83",
+      "revId": "186a05a105d7a2dca10e55dd468a536a67693ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd7126dc_a9f0d3a2",
         "filename": "chrome/utility/mash_service_factory.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "186a05a105d7a2dca10e55dd468a536a67693ef0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3c4482_fb5595d4",
+        "filename": "chrome/utility/mash_service_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T21:21:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd7126dc_a9f0d3a2",
+      "revId": "186a05a105d7a2dca10e55dd468a536a67693ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
