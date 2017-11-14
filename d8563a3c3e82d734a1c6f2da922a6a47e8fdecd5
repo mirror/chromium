@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1f9e261_09e74c7b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-stick-to-bottom.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-14T22:49:20Z",
+      "side": 0,
+      "message": "I discovered that this is flaky, not just on Windows, but all platforms.  The initial setText() on console prompt triggers a immediatelyScrollToBottom.  This can cause an unintentional, async call to viewport.refresh() that throws off the test.  For now, I\u0027ve removed this piece, and will take a look later.",
+      "range": {
+        "startLine": 59,
+        "startChar": 13,
+        "endLine": 59,
+        "endChar": 49
+      },
+      "revId": "d8563a3c3e82d734a1c6f2da922a6a47e8fdecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
