@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/scoped_observer.h"
+#include "base/time/time.h"
 #include "build/build_config.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
@@ -64,6 +65,7 @@ class OutOfMemoryReporter
   base::ObserverList<Observer> observers_;
 
   base::Optional<ukm::SourceId> last_committed_source_id_;
+  base::TimeTicks last_navigation_timestamp_;
   int crashed_render_process_id_ = content::ChildProcessHost::kInvalidUniqueID;
 
   DISALLOW_COPY_AND_ASSIGN(OutOfMemoryReporter);
