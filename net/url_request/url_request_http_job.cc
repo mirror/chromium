@@ -34,6 +34,7 @@
 #include "net/base/trace_constants.h"
 #include "net/base/url_util.h"
 #include "net/cert/cert_status_flags.h"
+#include "net/cert/ct_policy_status.h"
 #include "net/cookies/cookie_store.h"
 #include "net/filter/brotli_source_stream.h"
 #include "net/filter/filter_source_stream.h"
@@ -79,6 +80,29 @@
 #endif  // BUILDFLAG(ENABLE_REPORTING)
 
 namespace {
+
+// Records per-request histograms relating to Certificate Transparency
+// compliance.
+void RecordCTHistograms(const net::SSLInfo& ssl_info) {
+  if (!ssl_info.ct_compliance_details_available)
+    return;
+
+  // Record the CT compliance of each request, to give a picture of the
+  // percentage of overall requests that are CT-compliant.
+  UMA_HISTOGRAM_ENUMERATION(
+      "Net.CertificateTransparency.RequestComplianceStatus",
+      ssl_info.ct_cert_policy_compliance,
+      net::ct::CertPolicyCompliance::CERT_POLICY_MAX);
+  // Record the CT compliance of each request which was required to be CT
+  // compliant but wasn't. This gives a picture of the sites that are supposed
+  // to be compliant and how well they do at actually being compliant.
+  if (ssl_info.ct_cert_policy_required) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "Net.CertificateTransparency.CTRequiredRequestComplianceStatus",
+        ssl_info.ct_cert_policy_compliance,
+        net::ct::CertPolicyCompliance::CERT_POLICY_MAX);
+  }
+}
 
 // Logs whether the CookieStore used for this request matches the
 // ChannelIDService used when establishing the connection that this request is
@@ -859,7 +883,7 @@ void URLRequestHttpJob::OnStartCompleted(int result) {
     // Maybe overridable, maybe not. Ask the delegate to decide.
     TransportSecurityState* state = context->transport_security_state();
     NotifySSLCertificateError(
-        transaction_->GetResponseInfo()->ssl_info,
+        response_info_->ssl_info,
         state->ShouldSSLErrorsBeFatal(request_info_.url.host()));
   } else if (result == ERR_SSL_CLIENT_AUTH_CERT_NEEDED) {
     NotifyCertificateRequested(
@@ -1456,6 +1480,7 @@ void URLRequestHttpJob::DoneWithRequest(CompletionCause reason) {
 
   RecordPerfHistograms(reason);
   request()->set_received_response_content_length(prefilter_bytes_read());
+  RecordCTHistograms(transaction_->GetResponseInfo()->ssl_info);
 }
 
 HttpResponseHeaders* URLRequestHttpJob::GetResponseHeaders() const {
