@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2164f3cf_cdd57205",
+        "filename": "chrome/browser/resources/settings/site_settings/protocol_handlers.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-14T22:48:43Z",
+      "side": 1,
+      "message": "nit: this might be not necessary. settingsAppAvailable should be enough",
+      "range": {
+        "startLine": 101,
+        "startChar": 14,
+        "endLine": 101,
+        "endChar": 30
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243cba6f_f45bc68b",
+        "filename": "chrome/browser/resources/settings/site_settings/protocol_handlers.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-14T22:48:43Z",
+      "side": 1,
+      "message": "nit: Is is expected to be null?",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 13
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca0c6d7_4e2ec5d1",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-14T22:48:43Z",
+      "side": 1,
+      "message": "nit: once this is not exposed, you may use constexpr char",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 10
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a0a441_c8800c36",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-14T22:48:43Z",
+      "side": 1,
+      "message": "nit: const std::string or inline.",
+      "range": {
+        "startLine": 293,
+        "startChar": 2,
+        "endLine": 293,
+        "endChar": 13
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b5bef1a_e6c2a2ef",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-14T22:48:43Z",
+      "side": 1,
+      "message": "nit: It seems you no need to expose this. It is used internally.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 50
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f648bde_9c97a41e",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/android_apps_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-14T22:48:43Z",
+      "side": 1,
+      "message": "hmm. I don\u0027t see any reason to use CHECK.\nYou may want to change it to DCHECK. args are are not used here and could not affect the behavior",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 10
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd63849e_e1e8c046",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/android_apps_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-14T22:48:43Z",
+      "side": 1,
+      "message": "Again, CHECK is too dangerous here. Please use DCHECK",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 7
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d66d749_05936c21",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/android_apps_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-14T22:48:43Z",
+      "side": 1,
+      "message": "nit: you have several places here where you use the same code. L110 for example. Would it be possible to extract this code to separate function?",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 16
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
