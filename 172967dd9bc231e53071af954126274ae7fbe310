@@ -16,6 +16,24 @@
       "revId": "172967dd9bc231e53071af954126274ae7fbe310",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44029682_b65d6d7b",
+        "filename": "extensions/renderer/resource_bundle_source_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-14T07:26:48Z",
+      "side": 1,
+      "message": "It is not too much work to make the change. However, most of the places don\u0027t need to store or pass JS resource info around as a single object. For example:\nhttps://cs.chromium.org/chromium/src/chrome/renderer/extensions/chrome_extensions_dispatcher_delegate.cc?rcl\u003d0dbac2beb9d5800b882314387d7fd449f14d4a2c\u0026l\u003d168\n\nThe typical usage is:\n source_map-\u003eRegisterSource(\"automation\", IDR_AUTOMATION_CUSTOM_BINDINGS_JS);\n\nWith a const JsResourceInfo\u0026 parameter, this line should be changed to:\n source_map-\u003eRegisterSource({\"automation\", IDR_AUTOMATION_CUSTOM_BINDINGS_JS});\n\nIt doesn\u0027t seem to be more clear or concise. Moreover, |source_map| internally doesn\u0027t use this JsResourceInfo type either. So I personally feel that it is okay to leave it as it is.\n\n(Dispatcher needs to use this JsResourceInfo type because it needs to pass info of multiple resources in a vector.)\n\nWDYT? Thanks!",
+      "parentUuid": "ac5acd55_9de5260d",
+      "revId": "172967dd9bc231e53071af954126274ae7fbe310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
