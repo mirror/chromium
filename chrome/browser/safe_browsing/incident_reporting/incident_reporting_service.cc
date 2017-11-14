@@ -943,24 +943,9 @@ void IncidentReportingService::ProcessIncidentsIfCollectionComplete() {
 
   std::unique_ptr<UploadContext> context(new UploadContext(std::move(report)));
   context->profiles_to_state.swap(profiles_to_state);
-  if (!database_manager_.get()) {
-    // No database manager during testing. Take ownership of the context and
-    // continue processing.
-    UploadContext* temp_context = context.get();
-    uploads_.push_back(std::move(context));
-    IncidentReportingService::OnKillSwitchResult(temp_context, false);
-  } else {
-    if (content::BrowserThread::PostTaskAndReplyWithResult(
-            content::BrowserThread::IO,
-            FROM_HERE,
-            base::Bind(&SafeBrowsingDatabaseManager::IsCsdWhitelistKillSwitchOn,
-                       database_manager_),
-            base::Bind(&IncidentReportingService::OnKillSwitchResult,
-                       weak_ptr_factory_.GetWeakPtr(),
-                       context.get()))) {
-      uploads_.push_back(std::move(context));
-    }  // else should not happen. Let the context be deleted automatically.
-  }
+  UploadContext* temp_context = context.get();
+  uploads_.push_back(std::move(context));
+  IncidentReportingService::OnKillSwitchResult(temp_context, false);
 }
 
 void IncidentReportingService::CancelAllReportUploads() {

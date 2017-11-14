@@ -59,7 +59,6 @@ class RemoteSafeBrowsingDatabaseManager : public SafeBrowsingDatabaseManager {
   bool MatchDownloadWhitelistUrl(const GURL& url) override;
   bool MatchMalwareIP(const std::string& ip_address) override;
   safe_browsing::ThreatSource GetThreatSource() const override;
-  bool IsCsdWhitelistKillSwitchOn() override;
   bool IsDownloadProtectionEnabled() const override;
   bool IsMalwareKillSwitchOn() override;
   bool IsSupported() const override;
