@@ -22,6 +22,30 @@
       "revId": "20b2057d68d1a7af744cdcea6b20c8c25b30f07d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "994c61db_b734f663",
+        "filename": "chrome/browser/sessions/tab_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-14T21:13:26Z",
+      "side": 1,
+      "message": "When it happens, TabLoader::NotifyPageAlmostIdle is called, which ends up calling HandleTabClosedOrLoaded so the tab will be removed if I understand correctly.\n\nPage almost idle indicates that the page is network quiet(no more than 2 connections in total) and the main thread task load is low, we plans to replace the current usage of onload(DidStopLoading) with it.",
+      "parentUuid": "1c020a29_8112cd12",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "20b2057d68d1a7af744cdcea6b20c8c25b30f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
