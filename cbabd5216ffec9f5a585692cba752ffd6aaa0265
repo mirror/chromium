@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b178483_88ed5b1c",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T23:11:25Z",
+      "side": 1,
+      "message": "move to anonymous namespace?  (or declare static, but anon namespace is better)",
+      "revId": "cbabd5216ffec9f5a585692cba752ffd6aaa0265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "b7be41fb_6308bf71",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T23:11:25Z",
+      "side": 1,
+      "message": "Ack. Thanks for explaining!",
+      "parentUuid": "64c6fabc_a954f566",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e27e5d0_dd9b15c4",
         "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
         "patchSetId": 22
@@ -241,6 +259,24 @@
       "side": 1,
       "message": "I\u0027m not sure what to add. The definition is already quite obvious (at least for me).\nDo you have anything in mind?",
       "parentUuid": "bc13d935_f0e4c314",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7004b82e_30a5a9c2",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T23:11:25Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure what to add. The definition is already quite obvious (at least for me).\n\u003e Do you have anything in mind?\n\nAt least describe |icon| -- e.g. is it the profile photo, an avatar icon, or the badge. Can it be null?\n\nI think there\u0027s lots of things you could say (maybe some of these are follow-ups to improve a11y support). You can use your judgement about what you think is worth mentioning.\n\n  // Constructs a View hierarchy with the gfx::VectorIcon corresponding to |badge_type| positioned in the bottom-right of |icon|. \u003csomething about requesting a circular version of |icon| from the profile system\u003e. If |badge_type| is other than BADGE_TYPE_NONE, \u003csomething about clipping to circles\u003e. \u003cCan |icon| be null - is there a fallback?\u003e \u003cWhat does a screen reader say for it?\u003e \u003cdoes it have a tooltip?\u003e \u003cis it a fixed size?\u003e \u003cwhat if |icon| is too big/small? - how is it scaled?\u003e \u003cis the badge positioned differently in RTL?\u003e",
+      "parentUuid": "62d4edba_c4374ab1",
       "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
