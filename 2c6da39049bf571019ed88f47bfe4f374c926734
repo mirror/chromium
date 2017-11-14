@@ -22,6 +22,30 @@
       "revId": "2c6da39049bf571019ed88f47bfe4f374c926734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4420e8e6_84426345",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-14T17:55:55Z",
+      "side": 1,
+      "message": "Thank you for pointing out!\n\nYes, I\u0027m planning to patch this as well as |SystemNetworkContextManager::GetURLLoaderFactory()| in a followup CL.",
+      "parentUuid": "e0592bd9_8e9495d1",
+      "range": {
+        "startLine": 612,
+        "startChar": 22,
+        "endLine": 612,
+        "endChar": 58
+      },
+      "revId": "2c6da39049bf571019ed88f47bfe4f374c926734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
