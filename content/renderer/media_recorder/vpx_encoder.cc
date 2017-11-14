@@ -8,9 +8,12 @@
 #include <string>
 
 #include "base/bind.h"
+#include "base/command_line.h"
 #include "base/sys_info.h"
 #include "base/threading/thread.h"
 #include "base/trace_event/trace_event.h"
+#include "base/feature_list.h"
+#include "media/base/media_switches.h"
 #include "media/base/video_frame.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -48,6 +51,9 @@ VpxEncoder::VpxEncoder(
     int32_t bits_per_second)
     : VideoTrackRecorder::Encoder(on_encoded_video_callback, bits_per_second),
       use_vp9_(use_vp9) {
+#if BUILDFLAG(ENABLE_AV1_DECODER)
+  use_vp9 = base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kAv1Decoder),
+#endif
   codec_config_.g_timebase.den = 0;        // Not initialized.
   alpha_codec_config_.g_timebase.den = 0;  // Not initialized.
   DCHECK(encoding_thread_->IsRunning());
