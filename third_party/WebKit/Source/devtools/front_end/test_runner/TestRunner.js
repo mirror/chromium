@@ -510,16 +510,8 @@ TestRunner.addStylesheetTag = function(path) {
       link.rel = 'stylesheet';
       link.type = 'text/css';
       link.href = '${path}';
-      link.onload = onload;
       document.head.append(link);
-      var resolve;
-      var promise = new Promise(r => resolve = r);
-      function onload() {
-        // Force style recalc
-        window.getComputedStyle(document.body).color;
-        resolve();
-      }
-      return promise;
+      return new Promise(r => link.onload = r);
     })();
   `);
 };
