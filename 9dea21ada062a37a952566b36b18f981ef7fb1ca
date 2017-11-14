@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32509216_96cc4b6e",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-14T19:52:42Z",
+      "side": 1,
+      "message": "This feels wrong.  Do any other views still use this wrappedController stuff?  If it\u0027s just ReportAnIssue this probably needs removal.  White works for ReportAnIssue, not sure about everything else...",
+      "revId": "9dea21ada062a37a952566b36b18f981ef7fb1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
