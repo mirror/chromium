@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5641f621_0dc85ca1",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-iframe.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-14T23:24:31Z",
+      "side": 1,
+      "message": "Just make this a function (no promise) and then below, return a promise:\n\ni.e., return Promise.all(promises);",
+      "revId": "38c80ab59430a8fa1062ca3f06d360e3e71beee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd5884e_722a8834",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/requestDevice-in-iframe.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-14T23:24:31Z",
+      "side": 1,
+      "message": "console.error",
+      "revId": "38c80ab59430a8fa1062ca3f06d360e3e71beee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
