@@ -63,6 +63,7 @@
 -NavigationControllerBrowserTest.ErrorPageReplacement
 -NavigationHandleImplBrowserTest.ErrorCodeOnRedirect
 -NavigationHandleImplBrowserTest.RedirectToRendererDebugUrl
+-NavigationMojoResponseBrowserTest.FailedNavigation
 -PlzNavigateNavigationHandleImplBrowserTest.ErrorPageNetworkError
 -PowerMonitorTest.TestGpuProcess
 -PowerMonitorTest.TestRendererProcess
