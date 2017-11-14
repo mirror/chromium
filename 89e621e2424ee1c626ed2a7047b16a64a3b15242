@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3c7567e_385950dd",
+        "filename": "chrome/common/extensions/api/_api_features.json",
+        "patchSetId": 24
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T16:14:38Z",
+      "side": 1,
+      "message": "\u003e I had to adjust the api permissions definition to prohibit getLogsDirectory access by the other webrtcLoggingPrivate whitelisted ids (The hangouts component extensions, in particular). I added a test for that too.\n\nI\u0027m a bit confused by this - what rules were allowing other extensions access to these methods?",
+      "revId": "89e621e2424ee1c626ed2a7047b16a64a3b15242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffdc70e9_320f79f8",
+        "filename": "chrome/common/extensions/api/_permission_features.json",
+        "patchSetId": 24
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T16:14:38Z",
+      "side": 1,
+      "message": "Do we need these whitelisted if we don\u0027t have dependencies for the API feature?  Though I\u0027m a bit confused by why that\u0027s preferable (see also other comment in api_features.json)",
+      "revId": "89e621e2424ee1c626ed2a7047b16a64a3b15242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce75f21_b9bdca05",
+        "filename": "chrome/test/data/extensions/api_test/webrtc_logging_private/no_get_logs_directory_permissions/test.js",
+        "patchSetId": 24
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T16:14:38Z",
+      "side": 1,
+      "message": "nit: prefer\nchrome.test.assertFalse(!!chrome.webrtcLoggingPrivate.getLogsDirectory)",
+      "revId": "89e621e2424ee1c626ed2a7047b16a64a3b15242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
