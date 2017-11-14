@@ -16,6 +16,24 @@
       "revId": "9d6d4ef2af154bdc449a9dcc9389d85bbc569e45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f725f5_49f76a23",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-14T16:07:56Z",
+      "side": 1,
+      "message": "The aliasing of BackToBackBeginFrameSources with viz sources isn\u0027t a problem in practice, since if a renderer is using a BackToBackBeginFrameSources then it doesn\u0027t get BeginFrameArgs from browser/viz.\n\nIt might help conceptually to use 0 for all BFS that are only used in the current process and start at 1 for all others. That would make it more obvious what\u0027s going on.",
+      "parentUuid": "54029313_dd543ea7",
+      "revId": "9d6d4ef2af154bdc449a9dcc9389d85bbc569e45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
