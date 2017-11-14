@@ -32,7 +32,7 @@
 #include "content/common/frame_messages.h"
 #include "content/common/gpu_stream_constants.h"
 #include "content/common/origin_trials/trial_policy_impl.h"
-#include "content/common/render_process_messages.h"
+#include "content/common/render_message_filter.mojom.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/service_manager_connection.h"
@@ -495,10 +495,10 @@ void RendererBlinkPlatformImpl::CacheMetadata(const blink::WebURL& url,
   // Let the browser know we generated cacheable metadata for this resource. The
   // browser may cache it and return it on subsequent responses to speed
   // the processing of this resource.
-  std::vector<char> copy(data, data + size);
-  RenderThread::Get()->Send(
-      new RenderProcessHostMsg_DidGenerateCacheableMetadata(url, response_time,
-                                                            copy));
+  std::vector<uint8_t> copy(data, data + size);
+  RenderThreadImpl::current()
+      ->render_message_filter()
+      ->DidGenerateCacheableMetadata(url, response_time, copy);
 }
 
 void RendererBlinkPlatformImpl::CacheMetadataInCacheStorage(
@@ -511,11 +511,12 @@ void RendererBlinkPlatformImpl::CacheMetadataInCacheStorage(
   // Let the browser know we generated cacheable metadata for this resource in
   // CacheStorage. The browser may cache it and return it on subsequent
   // responses to speed the processing of this resource.
-  std::vector<char> copy(data, data + size);
-  RenderThread::Get()->Send(
-      new RenderProcessHostMsg_DidGenerateCacheableMetadataInCacheStorage(
+  std::vector<uint8_t> copy(data, data + size);
+  RenderThreadImpl::current()
+      ->render_message_filter()
+      ->DidGenerateCacheableMetadataInCacheStorage(
           url, response_time, copy, cacheStorageOrigin,
-          cacheStorageCacheName.Utf8()));
+          cacheStorageCacheName.Utf8());
 }
 
 WebString RendererBlinkPlatformImpl::DefaultLocale() {
@@ -537,9 +538,9 @@ void RendererBlinkPlatformImpl::SuddenTerminationChanged(bool enabled) {
       return;
   }
 
-  RenderThread* thread = RenderThread::Get();
+  RenderThreadImpl* thread = RenderThreadImpl::current();
   if (thread)  // NULL in unittests.
-    thread->Send(new RenderProcessHostMsg_SuddenTerminationChanged(enabled));
+    thread->GetRendererHost()->SuddenTerminationChanged(enabled);
 }
 
 void RendererBlinkPlatformImpl::AddRefProcess() {
@@ -623,8 +624,10 @@ bool RendererBlinkPlatformImpl::SandboxSupport::LoadFont(NSFont* src_font,
   uint32_t font_data_size;
   FontDescriptor src_font_descriptor(src_font);
   base::SharedMemoryHandle font_data;
-  if (!RenderThread::Get()->Send(new RenderProcessHostMsg_LoadFont(
-        src_font_descriptor, &font_data_size, &font_data, font_id))) {
+  if (!RenderThreadImpl::current()->render_message_filter()->LoadFont(
+          mojom::FontDescriptorPtr(src_font_descriptor.font_name,
+                                   src_font_descriptor.font_point_size),
+          &font_data_size, &font_data, font_id)) {
     *out = NULL;
     *font_id = 0;
     return false;
