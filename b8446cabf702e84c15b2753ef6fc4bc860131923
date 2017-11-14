@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b21cbdcd_9a55ca09",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-14T12:11:35Z",
+      "side": 1,
+      "message": "Well the bug seems to be marked fixed because the test above was disabled on mac :)\n\nThis test follows the same logic so it will be just as flaky. I can add a comment to the existing bug that a new test was added to the same bug because of risk for the same flakyness or make it run on all bots and see if it either doesn\u0027t flake so much anymore or get it disabled in its own bug. WDYT?",
+      "parentUuid": "04da3c73_26785ae2",
+      "revId": "b8446cabf702e84c15b2753ef6fc4bc860131923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72a22d81_8e0f2c42",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_browsertest.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-13T22:16:08Z",
       "side": 1,
       "message": "q: Is there a new/better way to do this (eg. TestingProfileManager::CreateTestingProfile)?",
+      "revId": "b8446cabf702e84c15b2753ef6fc4bc860131923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a82ab4f1_a13bc08e",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-14T12:11:35Z",
+      "side": 1,
+      "message": "If I understand correctly the TestingProfileManager is a construct meant for unit tests not for browser tests. It can\u0027t be plugged into a complete g_browser_instance.",
+      "parentUuid": "72a22d81_8e0f2c42",
       "revId": "b8446cabf702e84c15b2753ef6fc4bc860131923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cd0027dd_fc05c9d8",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-14T12:11:35Z",
+      "side": 1,
+      "message": "The thing is that there are 2 different promos for the first run and the second run so by testing 3 starts we enumerate the first, second and any other run. Just as it is done in the no-policy case above.",
+      "parentUuid": "c3bcad5e_dc718f1b",
+      "revId": "b8446cabf702e84c15b2753ef6fc4bc860131923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57fa6a37_537db558",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "b8446cabf702e84c15b2753ef6fc4bc860131923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27962eaf_84df2d37",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-14T12:11:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57fa6a37_537db558",
+      "revId": "b8446cabf702e84c15b2753ef6fc4bc860131923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
