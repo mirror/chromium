@@ -434,6 +434,28 @@ void WASAPIAudioOutputStream::Run() {
   }
 }
 
+namespace {
+
+base::TimeTicks CalculateAudioDelayTimestamp(UINT64 qpc_position) {
+  if (base::TimeTicks::IsHighResolution()) {
+    LARGE_INTEGER perf_frequency = {};
+    if (::QueryPerformanceFrequency(&perf_frequency)) {
+      // Convert to raw PC value:
+      // 1. Multiply by the counter frequency obtained from
+      //    QueryPerformanceFrequency.
+      // 2. Divide the result by 10,000,000.
+      // See for details:
+      // https://msdn.microsoft.com/en-us/library/windows/desktop/dd370889(v=vs.85).aspx
+      double ratio = perf_frequency.QuadPart * 0.0000001;
+      return base::TimeTicks::FromQPCValue(
+          static_cast<LONGLONG>(qpc_position * ratio + 0.5));
+    }
+  }
+  return base::TimeTicks::Now();
+}
+
+}  // namespace
+
 bool WASAPIAudioOutputStream::RenderAudioFromSource(UINT64 device_frequency) {
   TRACE_EVENT0("audio", "RenderAudioFromSource");
 
@@ -526,7 +548,7 @@ bool WASAPIAudioOutputStream::RenderAudioFromSource(UINT64 device_frequency) {
           delay_frames * base::Time::kMicrosecondsPerSecond /
           format_.Format.nSamplesPerSec);
 
-      delay_timestamp = base::TimeTicks::FromQPCValue(qpc_position);
+      delay_timestamp = CalculateAudioDelayTimestamp(qpc_position);
     } else {
       // Use a delay of zero.
       delay_timestamp = base::TimeTicks::Now();
