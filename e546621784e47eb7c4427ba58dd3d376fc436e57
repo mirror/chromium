@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14645cf2_7eb80356",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-11-14T15:37:34Z",
+      "side": 1,
+      "message": "BTW, it\u0027s a bit of a code smell to have the same CrosSettings set by device policy *and* by other code - my expectation would be that on every subsequent boot, the policy code would reset the CrosSetting.\n\nNot a *huge* issue here (in theory, the subsequent boot would force a device policy fetch, which *should* download a policy with kDeviceEnrollmentIdNeeded \u003d false) but you will get at least one extra EID upload (and the behavior is weird enough that it deserves some documentation).",
+      "range": {
+        "startLine": 172,
+        "startChar": 18,
+        "endLine": 172,
+        "endChar": 28
+      },
+      "revId": "e546621784e47eb7c4427ba58dd3d376fc436e57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
