@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b28512b9_4cdd5e1f",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-14T16:59:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b4260e42_e6bf522c",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d4aebdd_d382e7bd",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
         "patchSetId": 9
@@ -189,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "55d71d46_ae494a8d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-14T16:59:39Z",
+      "side": 1,
+      "message": "Huh, I\u0027m surprised the \"delete instance\" version worked, then.",
+      "parentUuid": "049f0614_de52e50b",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aa73108_846b957d",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 9
@@ -218,6 +254,24 @@
       "side": 1,
       "message": "ScopedClosureRunner::Release has a WARN_UNUSED_RESULT annotation. Even though I prefer not to duplicate API documentation in places where its functions are used, this looks odd enough to deserve a comment.",
       "parentUuid": "4aa73108_846b957d",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20acd9e1_557ffd9f",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-14T16:59:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dad43fce_276153b5",
       "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
