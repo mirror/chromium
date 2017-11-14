@@ -113,7 +113,8 @@ bool DirectCompositionChildSurfaceWin::InitializeSurface() {
     desc.Format = output_format;
     desc.Stereo = FALSE;
     desc.SampleDesc.Count = 1;
-    desc.BufferCount = 2;
+    desc.BufferCount = 3;
+    OutputDebugStringA("Triple buffering!\n");
     desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
     desc.Scaling = DXGI_SCALING_STRETCH;
     desc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
