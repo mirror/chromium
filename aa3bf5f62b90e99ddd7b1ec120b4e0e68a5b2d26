@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3fe141d3_dc3716c7",
+        "filename": "chrome/browser/media/webrtc/webrtc_event_log_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T12:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0814764a_64f10b9a",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e4d106d_43009a9f",
         "filename": "chrome/browser/media/webrtc/webrtc_event_log_handler.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c7c4b6de_323a0790",
+        "filename": "chrome/browser/media/webrtc/webrtc_event_log_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T12:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e4d106d_43009a9f",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0bd90bb_0fc3844d",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-13T20:54:57Z",
       "side": 1,
       "message": "Should we PostTaskAndReply so that the caller has any way of knowing...?\n- if the operation succeeded or failed\n- the path to the log file being used",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3320ee06_fcd094ad",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T12:51:16Z",
+      "side": 1,
+      "message": "In this case, the caller shouldn\u0027t care. Specifically, it might be that the manager both uploads to a remote server as well as writes to a local file; whether the file operation is successful or not does not impact the manager\u0027s desire to receive Write() events, so the caller doesn\u0027t care.",
+      "parentUuid": "f0bd90bb_0fc3844d",
       "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9c60fe80_ca350ece",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T12:51:16Z",
+      "side": 1,
+      "message": "Discussed offline.",
+      "parentUuid": "bac79cb3_23f765ca",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d88f797e_7d4498a5",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 6
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d97d1250_ded04369",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T12:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d88f797e_7d4498a5",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88b43829_5bd2f020",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-13T20:54:57Z",
       "side": 1,
       "message": "nit: LOG(LS_WARNING) that an error occurred?",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6913692_9eccbe39",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T12:51:16Z",
+      "side": 1,
+      "message": "Sorry, but no. This is not an error. When there is a limit on a file\u0027s size, it\u0027s perfectly fine to reach that limit. (What would be an error would be to exceed it, but for that, I have a DCHECK above. The \u003e\u003d operator is used in place of \u003d\u003d just for extra-conservativeness.)",
+      "parentUuid": "88b43829_5bd2f020",
       "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "18b31795_dd600ee0",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T12:51:16Z",
+      "side": 1,
+      "message": "For posterity - no. (Discussed offline.)",
+      "parentUuid": "111e68c0_7bdd18c7",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66c9af03_7ef832dc",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 6
@@ -132,6 +258,24 @@
       "writtenOn": "2017-11-13T20:54:57Z",
       "side": 1,
       "message": "Uploading log files to servers. Has this gone through privacy reviews?",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b46668_ca605217",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T12:51:16Z",
+      "side": 1,
+      "message": "It\u0027s one of our main OKRs. Björn is working on the content of what we\u0027re uploading, and I\u0027m sure he\u0027s going through all the necessary procedure in getting the appropriate approvals.",
+      "parentUuid": "66c9af03_7ef832dc",
       "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "3c0ef932_1b7f4fce",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T12:51:16Z",
+      "side": 1,
+      "message": "No worries, it was going to get done. Or do you mean to say \"I\u0027m fine enough with this CL\u0027s general approach that I think doing it now would not risk ending up as wasted effort\"?",
+      "parentUuid": "2b6c9015_57599ecc",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0703cce3_b5b9d52d",
         "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
         "patchSetId": 6
@@ -166,6 +328,24 @@
       "writtenOn": "2017-11-13T20:54:57Z",
       "side": 1,
       "message": "I believe at this point we do not know if the request to start logging was a success or failure. Do we need to make the interface support callbacks to allow asynchronous behavior?",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f596c2a4_d015637f",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T12:51:16Z",
+      "side": 1,
+      "message": "Please see my response to this elsewhere.",
+      "parentUuid": "0703cce3_b5b9d52d",
       "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "85bf3272_e5c02a57",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1868,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T12:51:16Z",
+      "side": 1,
+      "message": "You\u0027re right that the file-based version should be allowed to return false. The RtcEventLogOutput-based version shouldn\u0027t. I\u0027ll keep only that version.",
+      "parentUuid": "32443cab_ee926c43",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56fb9af8_c5ab4c8d",
         "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
         "patchSetId": 6
@@ -200,6 +398,24 @@
       "writtenOn": "2017-11-13T20:54:57Z",
       "side": 1,
       "message": "What is the difference between these two StartEventLog() functions?",
+      "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa86e356_d4b24023",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1873,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T12:51:16Z",
+      "side": 1,
+      "message": "One gives WebRTC a file to write into on its own, the other asks WebRTC to provide the logs back, and then lets the hosting application (here - Chrome) decide what to do with those (potentially also writing to a file on its own, but not necessarily).",
+      "parentUuid": "56fb9af8_c5ab4c8d",
       "revId": "aa3bf5f62b90e99ddd7b1ec120b4e0e68a5b2d26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
