@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d576606_e5f7b6e9",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-11-14T19:20:49Z",
+      "side": 1,
+      "message": "If we don\u0027t fix this, we get a build error due to unable to find reference to kASLRMaskBefore8_10 which is due to this condition https://cs.chromium.org/chromium/src/base/allocator/partition_allocator/address_space_randomization.h?rcl\u003d172c7e374787f68ff1036cbc355fb802883c3620\u0026l\u003d33",
+      "revId": "27acb1f46eaadfbf41debb0b68c4d914924d0428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
