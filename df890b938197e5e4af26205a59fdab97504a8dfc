@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b77cbf85_4e4a759a",
+        "filename": "ash/wm/overview/overview_window_drag_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-14T20:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cbcc13f_1ee7d069",
+      "revId": "df890b938197e5e4af26205a59fdab97504a8dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3e091ce_66572f54",
         "filename": "ash/wm/overview/window_selector.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-14T18:50:12Z",
       "side": 1,
       "message": "Why we need to pass |item|? If we can assume the window is being dragged,\nhow about ActivateDragged(or -ing)Window?",
+      "revId": "df890b938197e5e4af26205a59fdab97504a8dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "833d765c_a2cae09d",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-14T20:02:28Z",
+      "side": 1,
+      "message": "Renamed. I like passing item just to DCHECK call site is not passing a item other than the dragged on.",
+      "parentUuid": "f3e091ce_66572f54",
       "revId": "df890b938197e5e4af26205a59fdab97504a8dfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1997bc22_9114da56",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-14T20:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "653a45f7_7619120d",
+      "revId": "df890b938197e5e4af26205a59fdab97504a8dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35146a24_28b79c51",
         "filename": "ash/wm/overview/window_selector_item.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b059286d_53011253",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-14T20:02:28Z",
+      "side": 1,
+      "message": "I changed logic in ScopedTransformOverviewWindow to match here, and tested. I will look into combining the two more graceful in another cl.",
+      "parentUuid": "35146a24_28b79c51",
+      "revId": "df890b938197e5e4af26205a59fdab97504a8dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c587417_0888e361",
         "filename": "ash/wm/overview/window_selector_unittest.cc",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-14T15:51:24Z",
       "side": 1,
       "message": "You can also look into actually generating the tap/scroll etc. gesture events using a ui::test::EventGenerator.",
+      "revId": "df890b938197e5e4af26205a59fdab97504a8dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c148a9_19bcea50",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2641,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-14T20:02:28Z",
+      "side": 1,
+      "message": "I tried but getting the long press to work was a little tricky.",
+      "parentUuid": "3c587417_0888e361",
       "revId": "df890b938197e5e4af26205a59fdab97504a8dfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
