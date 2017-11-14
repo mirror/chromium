@@ -22,6 +22,30 @@
       "revId": "b56c09736153cc7b78219cc7230f593b5941180c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e849e4e9_5d4e9dde",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-14T22:34:38Z",
+      "side": 1,
+      "message": "I would say no, this CL is not worthwhile. It duplicates the VC walk from one place to two separate places. WDYT?",
+      "parentUuid": "4f61cac1_91ad2cd1",
+      "range": {
+        "startLine": 2028,
+        "startChar": 2,
+        "endLine": 2036,
+        "endChar": 3
+      },
+      "revId": "b56c09736153cc7b78219cc7230f593b5941180c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
