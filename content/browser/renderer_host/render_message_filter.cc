@@ -44,7 +44,6 @@
 #include "content/common/child_process_messages.h"
 #include "content/common/content_constants_internal.h"
 #include "content/common/render_message_filter.mojom.h"
-#include "content/common/render_process_messages.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_child_process_host.h"
 #include "content/public/browser/browser_context.h"
@@ -164,9 +163,6 @@ bool RenderMessageFilter::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ChildProcessHostMsg_SetThreadPriority,
                         OnSetThreadPriority)
 #endif
-#if defined(OS_MACOSX)
-    IPC_MESSAGE_HANDLER_DELAY_REPLY(RenderProcessHostMsg_LoadFont, OnLoadFont)
-#endif
     IPC_MESSAGE_HANDLER(ViewHostMsg_MediaLogEvents, OnMediaLogEvents)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
@@ -210,24 +206,25 @@ void RenderMessageFilter::CreateFullscreenWidget(
   std::move(callback).Run(route_id);
 }
 
+void RenderMessageFilter::LoadFont(mojom::FontDescriptorPtr font_to_load,
+                                   uint32_t buffer_size,
+                                   mojo::ScopedSharedBufferHandle font_data,
+                                   uint32_t font_id,
+                                   LoadFontCallback callback) {
 #if defined(OS_MACOSX)
-
-void RenderMessageFilter::OnLoadFont(const FontDescriptor& font,
-                                     IPC::Message* reply_msg) {
   FontLoader::LoadFont(
       font,
-      base::BindOnce(&RenderMessageFilter::SendLoadFontReply, this, reply_msg));
+      base::BindOnce(&RenderMessageFilter::SendLoadFontReply, this, callback));
+#endif  // defined(OS_MACOSX)
 }
 
-void RenderMessageFilter::SendLoadFontReply(IPC::Message* reply,
+#if defined(OS_MACOSX)
+void RenderMessageFilter::SendLoadFontReply(LoadFontCallback reply,
                                             uint32_t data_size,
                                             base::SharedMemoryHandle handle,
                                             uint32_t font_id) {
-  RenderProcessHostMsg_LoadFont::WriteReplyParams(reply, data_size, handle,
-                                                  font_id);
-  Send(reply);
+  std::move(reply).Run(false);
 }
-
 #endif  // defined(OS_MACOSX)
 
 #if defined(OS_LINUX)
