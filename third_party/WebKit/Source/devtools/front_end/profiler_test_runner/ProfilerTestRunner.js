@@ -7,9 +7,10 @@
  * @suppress {accessControls}
  */
 
-ProfilerTestRunner.startProfilerTest = function(callback) {
+ProfilerTestRunner.startProfilerTest = function(callback, panel) {
+  ProfilerTestRunner._panel = panel || UI.panels.js_profiler;
   TestRunner.addResult('Profiler was enabled.');
-  TestRunner.addSniffer(UI.panels.js_profiler, '_addProfileHeader', ProfilerTestRunner._profileHeaderAdded, true);
+  TestRunner.addSniffer(ProfilerTestRunner._panel, '_addProfileHeader', ProfilerTestRunner._profileHeaderAdded, true);
   TestRunner.addSniffer(Profiler.ProfileView.prototype, 'refresh', ProfilerTestRunner._profileViewRefresh, true);
   TestRunner.safeWrap(callback)();
 };
@@ -20,7 +21,7 @@ ProfilerTestRunner.completeProfilerTest = function() {
   TestRunner.completeTest();
 };
 
-ProfilerTestRunner.runProfilerTestSuite = function(testSuite) {
+ProfilerTestRunner.runProfilerTestSuite = function(testSuite, panel) {
   var testSuiteTests = testSuite.slice();
 
   function runner() {
@@ -37,7 +38,7 @@ ProfilerTestRunner.runProfilerTestSuite = function(testSuite) {
     TestRunner.safeWrap(nextTest)(runner, runner);
   }
 
-  ProfilerTestRunner.startProfilerTest(runner);
+  ProfilerTestRunner.startProfilerTest(runner, panel);
 };
 
 ProfilerTestRunner.showProfileWhenAdded = function(title) {
@@ -46,12 +47,12 @@ ProfilerTestRunner.showProfileWhenAdded = function(title) {
 
 ProfilerTestRunner._profileHeaderAdded = function(profile) {
   if (ProfilerTestRunner._showProfileWhenAdded === profile.title)
-    UI.panels.js_profiler.showProfile(profile);
+    ProfilerTestRunner._panel.showProfile(profile);
 };
 
 ProfilerTestRunner.waitUntilProfileViewIsShown = function(title, callback) {
   callback = TestRunner.safeWrap(callback);
-  var profilesPanel = UI.panels.js_profiler;
+  var profilesPanel = ProfilerTestRunner._panel;
 
   if (profilesPanel.visibleView && profilesPanel.visibleView.profile &&
       profilesPanel.visibleView._profileHeader.title === title)
