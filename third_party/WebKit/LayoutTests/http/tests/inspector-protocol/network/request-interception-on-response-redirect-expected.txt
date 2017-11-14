@@ -1,0 +1,39 @@
+Tests interception blocking, modification of network fetches.
+Test started
+Network agent enabled
+Request interception enabled
+Page agent enabled
+Runtime agent enabled
+Request Intercepted: ping-redirect.php
+  responseErrorReason: undefined
+  responseStatusCode: undefined
+  responseHeaders: <None>
+  responseBody:
+    error: Can only get response body on requests captured after headers received.
+Continue request unchanged.
+
+Request Intercepted: ping-redirect.php
+  responseErrorReason: undefined
+  responseStatusCode: 307
+  responseHeaders:
+    Date: <Masked>
+    Server: <Masked>
+    X-Powered-By: <Masked>
+    Expires: <Masked>
+    Cache-Control: no-cache, must-revalidate
+    Pragma: no-cache
+    Location: ping-redirected-page.html
+    Content-Length: 0
+    Keep-Alive: <Masked>
+    Connection: Keep-Alive
+    Content-Type: <Masked>
+  redirectUrl: ping-redirected-page.html
+  responseBody:
+    error: Can only get response body on requests captured after headers received.
+Modifying request with new body.
+
+Body content received by renderer:
+<html>
+<body>This content was rewritten!</body>
+</html>
+
