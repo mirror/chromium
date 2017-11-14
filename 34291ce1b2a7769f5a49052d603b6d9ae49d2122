@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f15b4a71_dc543a28",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T02:10:20Z",
+      "side": 1,
+      "message": "\u003e This means that the first bullet point here is a behaviour change; is that intentional?\n\nYes and no.  Since the bindings are instantiated lazily, you can really have all sorts of fun with this in the current system. e.g.,\n\nchrome.runtime.sendMessage \u003d \u0027foo\u0027;\ntypeof chrome.extension.sendMessage;  // \"string\"\n\nvs\n\nchrome.extension;\nchrome.runtime.sendMessage \u003d \u0027foo\u0027;\ntypeof chrome.extension.sendMessage;  // \"function\"\n\nGiven there was no real defined behavior before, I\u0027m inclined to not overly-complicate this now, especially since all of these APIs are deprecated and undocumented.  But if you think differently, I\u0027m happy to entertain alternatives. :) (because I, too, am not a fan of this)",
+      "parentUuid": "649f4bb1_c18c7e28",
+      "revId": "34291ce1b2a7769f5a49052d603b6d9ae49d2122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2936ab46_2d7b5f37",
         "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-13T20:29:43Z",
       "side": 1,
       "message": "This list seems to be missing \"Port\". Intentional?",
+      "revId": "34291ce1b2a7769f5a49052d603b6d9ae49d2122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07dfbe3d_3aa59e73",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T02:10:20Z",
+      "side": 1,
+      "message": "\"Port\" no longer has a type in JS, and before it was actually a private type.  I have no idea why that was (trying to be) exposed in JS.  I\u0027ll see about writing a separate CL to remove that line from extension_custom_bindings.js.",
+      "parentUuid": "2936ab46_2d7b5f37",
       "revId": "34291ce1b2a7769f5a49052d603b6d9ae49d2122",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
