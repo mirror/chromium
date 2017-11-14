@@ -39,6 +39,41 @@
       "revId": "2019cb37151734299390c53d14d3d5f9a568f94a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8230f73_73655e2f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-14T20:15:45Z",
+      "side": 1,
+      "message": "I don\u0027t like storing state in Tab either.\n\nI think that you only need to pass the launching package name to the CustomTabActivity to the InterceptNavigationDelegate constructor\n\nYou might be able to get the WebAPK/TWA package name from Tab#getAppAssociatedWith()\n\nI recommend either:\na) Passing the scope as an extra via the CustomTabActivity intent\nb) Getting the WebAPK scope from WebappRegistry (This does not work right now but we could make it work)",
+      "parentUuid": "5b5c96d1_6768b215",
+      "revId": "2019cb37151734299390c53d14d3d5f9a568f94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4a4e25_5146e56b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-14T20:15:45Z",
+      "side": 1,
+      "message": "- Should this logic apply to TWAs too?\n\n- Can we instead do:\nintent.setPackage(params.getWebappInfo().apkPackageName());",
+      "revId": "2019cb37151734299390c53d14d3d5f9a568f94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
