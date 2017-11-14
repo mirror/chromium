@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "4b0bad24_e7c1b698",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-11-14T09:32:30Z",
+      "side": 1,
+      "message": "I\u0027m rebuilding, but it takes too long.\n\nThis is a revised version.\n\n// Works the same as a base::i18n::BreakIterator except that it separates\n// words from the underscore.\nclass TailoredWordBreakIterator : public base::i18n::BreakIterator {\n.....\n  // If BreakIterator::GetStringPiece() has \u0027underscore\u0027, initiates\n  // TailoredWordBreakIterator.\n  // Returns true if TailoredWordBreakIterator is working or\n  // BreakIterator::IsWord() returns false.\n  // Returns false if we\u0027ve run past the end of the string.\n  bool Advance();",
+      "parentUuid": "a1ecc54a_80aa0ba4",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 59
+      },
+      "revId": "05230e7eaa522cb4454d51fb3a90bd9938f23d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ec0e05f_1a4cd692",
         "filename": "components/omnibox/browser/break_iterator_adapter.h",
         "patchSetId": 9
@@ -555,6 +579,30 @@
       "side": 1,
       "message": "One possibility is to not use default parameters and simply make two versions of String16VectorFromString16(), one with (string16, bool, bool, WordStarts)\nand one with (string16, bool, WordStarts)\nwhere the latter simply calls the former with break_on_underscore as false.\n\nI.e., function overloading\n\nP.S.  Come to think of it, this parameter is an experiment override.  I think you should call it something like |force_break_on_underscore| because the function will sometimes break on underscores even if that parameter is false.  If it\u0027s true, it definitely will break on underscores.",
       "parentUuid": "0bbfa9fa_540a2007",
+      "range": {
+        "startLine": 136,
+        "startChar": 9,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "05230e7eaa522cb4454d51fb3a90bd9938f23d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866c40eb_c707adf2",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-11-14T09:32:30Z",
+      "side": 1,
+      "message": "I think overloading version is better.\n\nThere is an other case in url_index_private_data.h.\n\n  static void CalculateWordStartsOffsets(\n      const String16Vector\u0026 terms,\n      WordStarts* terms_to_word_starts_offsets);\n\nThere are no parameters to omit to make overloading version.\nRename function? like this;\n\n  static void CalculateWordStartsOffsetsForTest(\n      const String16Vector\u0026 terms,\n      WordStarts* terms_to_word_starts_offsets);",
+      "parentUuid": "3517bd04_6cb3fb2b",
       "range": {
         "startLine": 136,
         "startChar": 9,
