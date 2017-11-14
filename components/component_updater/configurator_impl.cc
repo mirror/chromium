@@ -29,7 +29,7 @@ namespace component_updater {
 namespace {
 
 // Default time constants.
-const int kDelayOneMinute = 60;
+const int kDelayOneMinute = 5;
 const int kDelayOneHour = kDelayOneMinute * 60;
 
 // Debug values you can pass to --component-updater=value1,value2. Do not
