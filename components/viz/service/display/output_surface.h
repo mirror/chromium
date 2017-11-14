@@ -18,6 +18,7 @@
 #include "components/viz/service/viz_service_export.h"
 #include "gpu/command_buffer/common/texture_in_use_response.h"
 #include "ui/gfx/color_space.h"
+#include "ui/latency/latency_info.h"
 
 namespace gfx {
 class ColorSpace;
@@ -124,6 +125,17 @@ class VIZ_SERVICE_EXPORT OutputSurface {
   scoped_refptr<ContextProvider> context_provider_;
   scoped_refptr<VulkanContextProvider> vulkan_context_provider_;
   std::unique_ptr<SoftwareOutputDevice> software_device_;
+
+  struct SwapLatencyInfo {
+    SwapLatencyInfo(uint64_t id, std::vector<ui::LatencyInfo>&& info);
+    SwapLatencyInfo(SwapLatencyInfo&& src);
+    ~SwapLatencyInfo();
+
+    uint64_t swap_id;
+    std::vector<ui::LatencyInfo> latency_info;
+
+    DISALLOW_COPY_AND_ASSIGN(SwapLatencyInfo);
+  };
 
  private:
   DISALLOW_COPY_AND_ASSIGN(OutputSurface);
