@@ -6,7 +6,8 @@
 
 [
     Exposed=Window,
-    RuntimeEnabled=MediaCapabilities
+    RuntimeEnabled=MediaCapabilities,
+    OriginTrialEnabled=MediaCapabilities
 ] interface MediaCapabilitiesInfo {
     readonly attribute boolean supported;
     readonly attribute boolean smooth;

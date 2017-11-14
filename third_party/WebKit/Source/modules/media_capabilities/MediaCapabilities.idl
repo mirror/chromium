@@ -6,7 +6,8 @@
 
 [
     Exposed=Window,
-    RuntimeEnabled=MediaCapabilities
+    RuntimeEnabled=MediaCapabilities,
+    OriginTrialEnabled=MediaCapabilities
 ] interface MediaCapabilities {
     [CallWith=ScriptState] Promise<MediaCapabilitiesInfo> decodingInfo(MediaDecodingConfiguration configuration);
     [CallWith=ScriptState] Promise<MediaCapabilitiesInfo> encodingInfo(
