@@ -22,6 +22,30 @@
       "revId": "c3859171b303eb7fd473ca465b31bffb27b11ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8cc96d5_ac1ddb0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-14T21:55:40Z",
+      "side": 1,
+      "message": "Yup!\n\nWe usually need a good reason to go above 100 buckets. I\u0027d be surprised if 50 wasn\u0027t enough for you. You can see https://chromium.googlesource.com/chromium/src/+/lkgr/tools/metrics/histograms/README.md#Count-Histograms for a tiny bit more detail/guidance.",
+      "parentUuid": "9ed5df5c_d7bacacf",
+      "range": {
+        "startLine": 540,
+        "startChar": 80,
+        "endLine": 540,
+        "endChar": 83
+      },
+      "revId": "c3859171b303eb7fd473ca465b31bffb27b11ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
