@@ -77,8 +77,8 @@ class DelayedReleaseServiceContextRef {
 InterfaceFactoryImpl::InterfaceFactoryImpl(
     service_manager::mojom::InterfaceProviderPtr interfaces,
     MediaLog* media_log,
-    std::unique_ptr<service_manager::ServiceContextRef> connection_ref,
-    MojoMediaClient* mojo_media_client)
+    MojoMediaClient* mojo_media_client,
+    service_manager::ServiceContextRefFactory* context_ref_factory)
     :
 #if BUILDFLAG(ENABLE_MOJO_RENDERER)
       media_log_(media_log),
@@ -86,9 +86,10 @@ InterfaceFactoryImpl::InterfaceFactoryImpl(
 #if BUILDFLAG(ENABLE_MOJO_CDM)
       interfaces_(std::move(interfaces)),
 #endif
-      connection_ref_(std::make_unique<DelayedReleaseServiceContextRef>(
-          std::move(connection_ref))),
-      mojo_media_client_(mojo_media_client) {
+      mojo_media_client_(mojo_media_client),
+      context_ref_factory_(context_ref_factory),
+      context_ref_(std::make_unique<DelayedReleaseServiceContextRef>(
+          context_ref_factory_->CreateRef())) {
   DVLOG(1) << __func__;
   DCHECK(mojo_media_client_);
 }
@@ -123,7 +124,8 @@ void InterfaceFactoryImpl::CreateVideoDecoder(
     mojom::VideoDecoderRequest request) {
 #if BUILDFLAG(ENABLE_MOJO_VIDEO_DECODER)
   video_decoder_bindings_.AddBinding(
-      base::MakeUnique<MojoVideoDecoderService>(mojo_media_client_),
+      base::MakeUnique<MojoVideoDecoderService>(mojo_media_client_,
+                                                context_ref_factory_),
       std::move(request));
 #endif  // BUILDFLAG(ENABLE_MOJO_VIDEO_DECODER)
 }

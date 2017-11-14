@@ -129,8 +129,8 @@ void MediaService::CreateInterfaceFactory(
 
   interface_factory_bindings_.AddBinding(
       base::MakeUnique<InterfaceFactoryImpl>(
-          std::move(host_interfaces), &media_log_, ref_factory_->CreateRef(),
-          mojo_media_client_.get()),
+          std::move(host_interfaces), &media_log_, mojo_media_client_.get(),
+          ref_factory_.get()),
       std::move(request));
 }
 
