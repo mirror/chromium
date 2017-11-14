@@ -16,6 +16,57 @@
       "revId": "e282aac78cfbc4a687495bead52b607062422b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c241662a_e298c416",
+        "filename": "base/files/memory_mapped_file_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-14T23:38:00Z",
+      "side": 1,
+      "message": "Huh, I wonder why we static cast here...",
+      "revId": "e282aac78cfbc4a687495bead52b607062422b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7839778f_bfe282b4",
+        "filename": "base/process/process_iterator_mac.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-14T23:38:00Z",
+      "side": 1,
+      "message": "Nit: maybe we don\u0027t need to set this? Otherwise, it looks like we actually care about this value later (which presumably we don\u0027t due to the shadowing)",
+      "revId": "e282aac78cfbc4a687495bead52b607062422b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3eae583_981fbd67",
+        "filename": "base/threading/sequenced_worker_pool.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-14T23:38:00Z",
+      "side": 1,
+      "message": "Similarly, I\u0027m wondering if this should just check the member field directly here.",
+      "revId": "e282aac78cfbc4a687495bead52b607062422b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
