@@ -151,6 +151,10 @@ const PrefService* FakeProfile::GetPrefs() const {
   return nullptr;
 }
 
+policy::PolicyService* FakeProfile::GetPolicy() {
+  return nullptr;
+}
+
 PrefService* FakeProfile::GetOffTheRecordPrefs() {
   return nullptr;
 }
