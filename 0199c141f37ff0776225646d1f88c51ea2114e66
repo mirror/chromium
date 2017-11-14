@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdd65cf3_27cbbc7f",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-14T23:42:43Z",
+      "side": 1,
+      "message": "This is similar to the rule right after it, which raises two questions for me:\n\n(1) The next line says dotless j isn\u0027t allowed anyway.  If that\u0027s accurate, don\u0027t we only need to disallow dotless i + combining mark here?\n\n(2) Also, the next line talks about \u0027l\u0027 as well.  Do we need to disallow \u0027l\u0027 + combining mark?",
+      "revId": "0199c141f37ff0776225646d1f88c51ea2114e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
