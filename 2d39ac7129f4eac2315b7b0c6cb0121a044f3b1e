@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b720404a_fdc1ec77",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-14T01:40:00Z",
+      "side": 1,
+      "message": "\u003e Last I checked closures are only for the case when it ends up being synchronous. That isn\u0027t the case here. \n\nOoops, thank you.\n\n\u003e That said, can you supply an empty callback here? By that I mean CookieManager::DeleteCookiesCallback() (I no doubt have the exact name wrong here, the mojom bindings generate a \u0027using\u0027 for the callback type, use it).?\n\n*chuckle*  We appear to have consistently different aesthetics around which features to take advantage of and which to leave alone.  I had thought about doing that, and had decided that there was a good enough argument against treating null callbacks as \"Don\u0027t do anything\" (as opposed to \"Uninitialized; DCHECK() so the author realizes they aren\u0027t doing anything\") that I would avoid it in this case.  But the care factor is low--done.",
+      "parentUuid": "2612c565_f3c7bf55",
+      "range": {
+        "startLine": 84,
+        "startChar": 27,
+        "endLine": 84,
+        "endChar": 58
+      },
+      "revId": "2d39ac7129f4eac2315b7b0c6cb0121a044f3b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9262ccb_1370bd68",
         "filename": "chrome/browser/sessions/session_data_deleter.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2d39ac7129f4eac2315b7b0c6cb0121a044f3b1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "216c2ebd_0a2ad529",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-14T01:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9262ccb_1370bd68",
+      "range": {
+        "startLine": 122,
+        "startChar": 8,
+        "endLine": 122,
+        "endChar": 38
+      },
+      "revId": "2d39ac7129f4eac2315b7b0c6cb0121a044f3b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
