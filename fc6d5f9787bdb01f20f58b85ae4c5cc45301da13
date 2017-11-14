@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00b03efa_9ed1d19d",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContentsStatics.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-14T19:33:38Z",
+      "side": 1,
+      "message": "I\u0027m not sure the Java service that\u0027ll be used by Webview to fetch variations seeds is supposed to run any native code.\n\nSo I suggest leaving this part of the change out for now and putting a TODO(paulmiller): To follow up on this in AwVariationsSeedFetchService.java where we pass the params. (And pass \"\" for now.)",
+      "range": {
+        "startLine": 85,
+        "startChar": 46,
+        "endLine": 85,
+        "endChar": 0
+      },
+      "revId": "fc6d5f9787bdb01f20f58b85ae4c5cc45301da13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
