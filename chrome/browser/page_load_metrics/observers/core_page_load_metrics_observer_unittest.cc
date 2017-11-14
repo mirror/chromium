@@ -16,6 +16,7 @@
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_utils.h"
+#include "third_party/WebKit/common/metrics/time_to_interactive_status.h"
 #include "third_party/WebKit/public/platform/WebMouseEvent.h"
 
 namespace {
@@ -759,4 +760,88 @@ TEST_F(CorePageLoadMetricsObserverTest, ForegroundToFirstMeaningfulPaint) {
 
   histogram_tester().ExpectTotalCount(
       internal::kHistogramForegroundToFirstMeaningfulPaint, 1);
+}
+
+TEST_F(CorePageLoadMetricsObserverTest, TimeToInteractiveAlwaysForeground) {
+  page_load_metrics::mojom::PageLoadTiming timing;
+  page_load_metrics::InitPageLoadTimingForTest(&timing);
+  timing.navigation_start = base::Time::FromDoubleT(1);
+  timing.interactive_timing->interactive =
+      base::TimeDelta::FromMilliseconds(100);
+  timing.interactive_timing->interactive_detection =
+      base::TimeDelta::FromMilliseconds(5200);
+  PopulateRequiredTimingFields(&timing);
+
+  NavigateAndCommit(GURL(kDefaultTestUrl));
+  SimulateTimingUpdate(timing);
+  NavigateAndCommit(GURL(kDefaultTestUrl2));
+
+  histogram_tester().ExpectTotalCount(internal::kHistogramTimeToInteractive, 1);
+  histogram_tester().ExpectBucketCount(blink::kHistogramTimeToInteractiveStatus,
+                                       blink::TIME_TO_INTERACTIVE_RECORDED, 1);
+}
+
+TEST_F(CorePageLoadMetricsObserverTest, TimeToInteractiveStatusBackgrounded) {
+  page_load_metrics::mojom::PageLoadTiming timing;
+  page_load_metrics::InitPageLoadTimingForTest(&timing);
+  timing.navigation_start = base::Time::FromDoubleT(1);
+  timing.interactive_timing->interactive =
+      base::TimeDelta::FromMilliseconds(100);
+  timing.interactive_timing->interactive_detection =
+      base::TimeDelta::FromMilliseconds(5200);
+  PopulateRequiredTimingFields(&timing);
+
+  NavigateAndCommit(GURL(kDefaultTestUrl));
+
+  // Background the tab, then foreground it.
+  web_contents()->WasHidden();
+  web_contents()->WasShown();
+
+  SimulateTimingUpdate(timing);
+
+  // Navigate again to force histogram recording.
+  NavigateAndCommit(GURL(kDefaultTestUrl2));
+
+  histogram_tester().ExpectTotalCount(internal::kHistogramTimeToInteractive, 0);
+  histogram_tester().ExpectUniqueSample(
+      blink::kHistogramTimeToInteractiveStatus,
+      blink::TIME_TO_INTERACTIVE_BACKGROUNDED, 1);
+}
+
+TEST_F(CorePageLoadMetricsObserverTest,
+       TimeToInteractiveStatusDidNotReachQuiescence) {
+  page_load_metrics::mojom::PageLoadTiming timing;
+  page_load_metrics::InitPageLoadTimingForTest(&timing);
+  timing.navigation_start = base::Time::FromDoubleT(1);
+  timing.paint_timing->first_meaningful_paint =
+      base::TimeDelta::FromMilliseconds(200);
+  PopulateRequiredTimingFields(&timing);
+
+  NavigateAndCommit(GURL(kDefaultTestUrl));
+  SimulateTimingUpdate(timing);
+  // Navigate again to force histogram recording.
+  NavigateAndCommit(GURL(kDefaultTestUrl2));
+
+  histogram_tester().ExpectTotalCount(internal::kHistogramTimeToInteractive, 0);
+  histogram_tester().ExpectUniqueSample(
+      blink::kHistogramTimeToInteractiveStatus,
+      blink::TIME_TO_INTERACTIVE_DID_NOT_REACH_QUIESCENCE, 1);
+}
+
+TEST_F(CorePageLoadMetricsObserverTest, TimeToInteractiveStatusDidNotReachFMP) {
+  page_load_metrics::mojom::PageLoadTiming timing;
+  page_load_metrics::InitPageLoadTimingForTest(&timing);
+  timing.navigation_start = base::Time::FromDoubleT(1);
+  timing.paint_timing->first_paint = base::TimeDelta::FromMilliseconds(200);
+  PopulateRequiredTimingFields(&timing);
+
+  NavigateAndCommit(GURL(kDefaultTestUrl));
+  SimulateTimingUpdate(timing);
+  // Navigate again to force histogram recording.
+  NavigateAndCommit(GURL(kDefaultTestUrl2));
+
+  histogram_tester().ExpectTotalCount(internal::kHistogramTimeToInteractive, 0);
+  histogram_tester().ExpectUniqueSample(
+      blink::kHistogramTimeToInteractiveStatus,
+      blink::TIME_TO_INTERACTIVE_DID_NOT_REACH_FIRST_MEANINGFUL_PAINT, 1);
 }
