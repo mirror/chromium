@@ -331,6 +331,18 @@ void VideoCaptureImpl::OnBufferReady(int32_t buffer_id,
 
   frame->metadata()->MergeInternalValuesFrom(*info->metadata);
 
+  // USE THIS TO SET Y CHANNEL AS ALPHA FROM YOUR CAMERA OUTPUT
+
+  scoped_refptr<media::VideoFrame> yuva_frame =
+      media::VideoFrame::WrapExternalYuvaData(
+          media::PIXEL_FORMAT_YV12A, info->coded_size, info->visible_rect,
+          info->visible_rect.size(), frame->stride(0), frame->stride(1),
+          frame->stride(2), frame->stride(0), frame->data(0), frame->data(1),
+          frame->data(2), frame->data(0), info->timestamp);
+  yuva_frame->AddDestructionObserver(
+      base::Bind([](scoped_refptr<media::VideoFrame>) {}, std::move(frame)));
+  frame = yuva_frame;
+
   // TODO(qiangchen): Dive into the full code path to let frame metadata hold
   // reference time rather than using an extra parameter.
   for (const auto& client : clients_)
