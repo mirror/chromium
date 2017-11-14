@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f69a9c2_3449a44f",
+        "filename": "chrome/browser/metrics/oom/out_of_memory_reporter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-14T22:55:04Z",
+      "side": 1,
+      "message": "nit: prefer std::make_unique\u003cbase::DefaultTickClock\u003e() to avoid bare new.",
+      "revId": "65cdb1b9d6561899a7973cd01f6606bb2fcbff5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38418878_010768f8",
+        "filename": "chrome/browser/metrics/oom/out_of_memory_reporter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-14T22:55:04Z",
+      "side": 1,
+      "message": "nit: #include \u003cutility\u003e for std::move",
+      "revId": "65cdb1b9d6561899a7973cd01f6606bb2fcbff5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a686275_393d60fd",
+        "filename": "chrome/browser/metrics/oom/out_of_memory_reporter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-14T22:55:04Z",
+      "side": 1,
+      "message": "nit: #include \u003cmemory\u003e",
+      "revId": "65cdb1b9d6561899a7973cd01f6606bb2fcbff5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fce97c0_c6956cbc",
+        "filename": "chrome/browser/metrics/oom/out_of_memory_reporter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-14T22:55:04Z",
+      "side": 1,
+      "message": "optional nit: slight prefer\n\nauto tick_clock \u003d std::make_unique\u003cbase::SimpleTestTickClock\u003e();\ntest_tick_clock_ \u003d tick_clock.get();\nreporter-\u003eSetTickClockForTest(std::move(tick_clock));",
+      "revId": "65cdb1b9d6561899a7973cd01f6606bb2fcbff5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8069ed74_4b5a46f2",
+        "filename": "chrome/browser/metrics/oom/out_of_memory_reporter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-14T22:55:04Z",
+      "side": 1,
+      "message": "std::make_unique is preferred now.",
+      "range": {
+        "startLine": 104,
+        "startChar": 25,
+        "endLine": 104,
+        "endChar": 41
+      },
+      "revId": "65cdb1b9d6561899a7973cd01f6606bb2fcbff5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a591e2_a24fbfb7",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1405,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-14T22:55:04Z",
+      "side": 1,
+      "message": "Should only be logged when the process hosting the main frame OOMs.",
+      "range": {
+        "startLine": 1405,
+        "startChar": 66,
+        "endLine": 1405,
+        "endChar": 74
+      },
+      "revId": "65cdb1b9d6561899a7973cd01f6606bb2fcbff5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
