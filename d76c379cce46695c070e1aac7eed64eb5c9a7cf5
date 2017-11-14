@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd003b2b_1a90f682",
+        "filename": "chrome/test/mini_installer/config/chrome_beta_installed.prop",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T13:46:33Z",
+      "side": 1,
+      "message": "uses of this in the *_no_pv.prop files should also have WOW64_32KEY",
+      "revId": "d76c379cce46695c070e1aac7eed64eb5c9a7cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3310265c_24724550",
+        "filename": "chrome/test/mini_installer/registry_verifier.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T13:46:33Z",
+      "side": 1,
+      "message": "how about making this mapping a class member so it isn\u0027t built up each time through the function? i think the proper style would be:\n  _REGISTRY_VIEW_MAPPING \u003d {...}\nnear the top of the class. (https://google.github.io/styleguide/pyguide.html?showone\u003dNaming#Naming)",
+      "revId": "d76c379cce46695c070e1aac7eed64eb5c9a7cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4f2b6d_d9450efd",
+        "filename": "chrome/test/mini_installer/variable_expander.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T13:46:33Z",
+      "side": 1,
+      "message": "please move this up into the block above, introducing a _GetFileBitness() helper that returns \u002732\u0027 or \u002764\u0027.",
+      "revId": "d76c379cce46695c070e1aac7eed64eb5c9a7cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
