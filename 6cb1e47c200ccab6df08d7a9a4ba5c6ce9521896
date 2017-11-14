@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9146178f_40efb6dd",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-html-crash-nonvisible-layouttext.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-14T19:11:04Z",
+      "side": 1,
+      "message": "nit: For selection_test, there\u0027s no need to pass an array for one line html. You can pass a string directly.",
+      "revId": "6cb1e47c200ccab6df08d7a9a4ba5c6ce9521896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc017f80_ed7530f6",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-html-crash-nonvisible-layouttext.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-14T19:11:04Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "6cb1e47c200ccab6df08d7a9a4ba5c6ce9521896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf234c0_a81be55c",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-html-crash-nonvisible-layouttext.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-14T19:11:04Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "6cb1e47c200ccab6df08d7a9a4ba5c6ce9521896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396d9922_bac76192",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-html-crash-nonvisible-layouttext.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-14T19:11:04Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "6cb1e47c200ccab6df08d7a9a4ba5c6ce9521896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
