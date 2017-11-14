@@ -225,6 +225,21 @@ TEST_F(AutofillAddressValidationTest, ValidateAddress_AdminAreaSpecialLetter) {
   EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
 
+TEST_F(AutofillAddressValidationTest, ValidateAddress_AdminAreaNonDefault) {
+  const std::string admin_area = "Nouveau-Brunswick";
+  const std::string postal_code = "E1A 8R5";  // A valid postal code for NB.
+  AutofillProfile profile(autofill::test::GetFullValidProfileForCanada());
+  profile.SetRawInfo(ADDRESS_HOME_STATE, base::UTF8ToUTF16(admin_area));
+  profile.SetRawInfo(ADDRESS_HOME_ZIP, base::UTF8ToUTF16(postal_code));
+
+  EXPECT_EQ(AutofillProfile::VALID, ValidateAddressTest(&profile));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_COUNTRY));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_STATE));
+  EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
+}
+
 TEST_F(AutofillAddressValidationTest, ValidateAddress_ValidZipNoSpace) {
   const std::string postal_code = "H3C6S3";
   AutofillProfile profile(autofill::test::GetFullValidProfileForCanada());
