@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c7f9331_12ab756e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 63496,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T23:57:55Z",
+      "side": 1,
+      "message": "done. thanks for the explanation!",
+      "parentUuid": "1106d5a2_b6ab511d",
+      "range": {
+        "startLine": 63496,
+        "startChar": 47,
+        "endLine": 63496,
+        "endChar": 48
+      },
+      "revId": "caeae257b87839c8e2aa9058c40031be2a3e232a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58dcb7a7_a7220903",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-14T23:40:31Z",
       "side": 1,
       "message": "It might be useful to document how daily reporting is implemented.  In particular, what happens if the user reboots their machine multiple times per day – is the metric still reported daily?  What if the user powers the machine off for a week – does the code backfill zeroes?  What if the user powers off the machine briefly, but overlapping the reporting period?\n\nBasically, it\u0027s hard to implement daily reporting \"perfectly\", so it\u0027s often helpful to describe in more detail what the actual reporting schedule is in practice, in addition to the idealized target schedule.\n\nAnother thought: It might be a bit hard to interpret these numbers reported on a daily basis, since that hides how much users actually used their devices over a day.  Perhaps it makes sense to report this type of metric normalized by usage somehow?  If you describe how you\u0027re hoping to analyze the data, I might be able to provide better/clearer guidance.",
+      "range": {
+        "startLine": 63499,
+        "startChar": 0,
+        "endLine": 63500,
+        "endChar": 47
+      },
+      "revId": "caeae257b87839c8e2aa9058c40031be2a3e232a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee8e19b_294b91f5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 63500,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T23:57:55Z",
+      "side": 1,
+      "message": "i\u0027ve added more detail to all three of these. please let me know if it\u0027s too much or not enough.\n\nre normalizing usage, that\u0027s something that i\u0027ve considered. we\u0027re collecting this with the goal of determining an upper bound on battery savings from a proposed power management change, so i think that the current X-times-per-day formulation is what we want: if we know how many times the system suspended due to inactivity per day, we should be able to say \"we could\u0027ve avoided this many minutes of fully-awake battery usage per day if we had suspended immediately when the user became inactive.\"\n\ndoes that make sense?",
+      "parentUuid": "58dcb7a7_a7220903",
       "range": {
         "startLine": 63499,
         "startChar": 0,
