@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ecfe4a39_ddf670a0",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-11-14T20:33:54Z",
+      "side": 1,
+      "message": "Previously preloader was called if (!mLoaded \u0026\u0026 !Linker.isUsed()) was true. Now it\u0027s called if (!Linker.isUsed() \u0026\u0026 !sLibraryPreloaderCalled) is true. The only difference is that now it\u0027s called at most once, while previously it could be called multiple times, if library loading was retried after an exception. But I don\u0027t think Chrome ever retries library loading on failure. So while there is a difference, I don\u0027t think it matters.\n\nI can rename a method, but I don\u0027t think it\u0027s necessary. By definition NativeLibraryPreloader. loadLibrary(Context) only depends on Context, so it can\u0027t possibly care about Chrome-specific stuff, like command line.",
+      "parentUuid": "59041c5a_5a781e8e",
+      "revId": "c3ce5d815a9f9247d09ce572c56b6892249517f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a2433a0_21a5973c",
         "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessServiceImpl.java",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-13T20:11:33Z",
       "side": 1,
       "message": "uhh, UI thread just reads wrong in a service, can you just get the current looper instead\n\nprobably should put a note that this happens on the java main thread, and that it can run in parallel with (or while waiting for) setupConnection. that\u0027s where the speed up is coming from, right?",
+      "revId": "c3ce5d815a9f9247d09ce572c56b6892249517f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a786dc3_bc0f31b0",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-11-14T20:33:54Z",
+      "side": 1,
+      "message": "I agree, it looks strange. I\u0027ve replaced that call with a handler.\n\nActually, we could just call preload() from bind() directly. But I thought it\u0027ll be good to avoid increasing bind() runtime without a good reason.\n\nThe speedup is only for warmed up renderers, and comes from the fact that chunk of loading work happens in bind() (i.e. before navigation), and not during navigation. This affects a case where Chrome reloads last tab (or navigates to a URL) on startup. Other usecase where renderer is started during navigation is not affected - see the bug for graphs.",
+      "parentUuid": "6a2433a0_21a5973c",
       "revId": "c3ce5d815a9f9247d09ce572c56b6892249517f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
