@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a88c9f_e9e1f355",
+        "filename": "net/cert/x509_certificate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-14T21:14:50Z",
+      "side": 1,
+      "message": "Why leave these?",
+      "revId": "2e196e6b61f78a95cd8c53957d01794796f6b06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a90900_420dbb15",
+        "filename": "net/cert/x509_certificate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-14T21:14:50Z",
+      "side": 1,
+      "message": "Why still have this enum?",
+      "revId": "2e196e6b61f78a95cd8c53957d01794796f6b06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
