@@ -32,6 +32,7 @@
 #include "chrome/browser/favicon/favicon_service_factory.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/language/url_language_histogram_factory.h"
+#include "chrome/browser/memory/heavy_site_cache_factory.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/permissions/permission_decision_auto_blocker.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
@@ -2504,6 +2505,7 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, AllTypesAreGettingDeleted) {
   TestingProfile* profile = GetProfile();
   ASSERT_TRUE(profile->CreateHistoryService(true, false));
   ASSERT_TRUE(SubresourceFilterProfileContextFactory::GetForProfile(profile));
+  ASSERT_TRUE(memory::HeavySiteCacheFactory::GetForProfile(profile));
 
   auto* map = HostContentSettingsMapFactory::GetForProfile(profile);
   auto* registry = content_settings::WebsiteSettingsRegistry::GetInstance();
