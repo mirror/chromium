@@ -5,7 +5,6 @@
 #include "ash/mus/drag_window_resizer.h"
 
 namespace ash {
-namespace mus {
 
 DragWindowResizer::DragWindowResizer(
     std::unique_ptr<WindowResizer> next_window_resizer,
@@ -36,5 +35,4 @@ void DragWindowResizer::RevertDrag() {
   NOTIMPLEMENTED_LOG_ONCE();
 }
 
-}  // namespace mus
 }  // namespace ash
