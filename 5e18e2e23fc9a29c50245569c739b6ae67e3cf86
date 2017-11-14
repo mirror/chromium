@@ -34,6 +34,52 @@
       "revId": "5e18e2e23fc9a29c50245569c739b6ae67e3cf86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "373f0e30_27d30c62",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-14T14:37:00Z",
+      "side": 1,
+      "message": "This \"2 *\" might have really gone for a ride.  It was probably originally \"background sphere is twice the distance as the content window.  The background distance should probably incorporate the 2x factor at this point.",
+      "range": {
+        "startLine": 93,
+        "startChar": 38,
+        "endLine": 93,
+        "endChar": 39
+      },
+      "revId": "5e18e2e23fc9a29c50245569c739b6ae67e3cf86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547aa583_4e426355",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-14T14:37:00Z",
+      "side": 1,
+      "message": "FWIW, this name doesn\u0027t make sense anymore, because the variable isn\u0027t getting modified to be the closest element.  Could probably just remove it entirely.",
+      "range": {
+        "startLine": 367,
+        "startChar": 8,
+        "endLine": 367,
+        "endChar": 32
+      },
+      "revId": "5e18e2e23fc9a29c50245569c739b6ae67e3cf86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
