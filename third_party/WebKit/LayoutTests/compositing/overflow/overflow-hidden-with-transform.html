@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<style>
+#scroller {
+  position: absolute;
+  overflow: hidden;
+  width: 300px;
+  height: 300px;
+  will-change: transform;
+}
+.space {
+  width: 600px;
+  height: 600px;
+}
+</style>
+<div id="scroller">
+  <div class="space"></div>
+</div>
+<script>
+test(() => {
+  var hasCompositedScrolling = internals.elementLayerTreeAsText(scroller).
+      indexOf("Scrolling Contents Layer") != -1;
+  assert_true(hasCompositedScrolling);
+}, "Transformed overflow: hidden gets composited scrolling layers.");
+</script>
