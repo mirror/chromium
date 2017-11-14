@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c037448f_901c0823",
+        "filename": "chromeos/dbus/modem_messaging_client_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-14T03:52:48Z",
+      "side": 1,
+      "message": "Maybe it\u0027s nicer to have EXPECT_FALSE(*called), but probably unnecessary if we are going to switch to BindOnce.",
+      "revId": "5146ac22816ae2c5541071e7f548bbca6bf9edfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
