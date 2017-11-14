@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "78c4461f_264f3a86",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-11-14T10:37:02Z",
+      "side": 1,
+      "message": "MonotonicTime also refers to seconds as a unit... Runtime.Timestamp however has this comment:\n\"Number of milliseconds since epoch.\", which is exactly what we want. Why not use it?",
+      "parentUuid": "370e0ba6_c3ed54ff",
+      "range": {
+        "startLine": 1102,
+        "startChar": 58,
+        "endLine": 1102,
+        "endChar": 75
+      },
+      "revId": "7262a40ff939b79dfab7eb0205b5a80a418da06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fe709ec_70721645",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler.h",
         "patchSetId": 3
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Well, I guess we\u0027ll have to expose UnixEpoch() eventually? Let\u0027s ask arch people and get this right.",
       "parentUuid": "208f4d16_4e6b26c2",
+      "range": {
+        "startLine": 52,
+        "startChar": 10,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "7262a40ff939b79dfab7eb0205b5a80a418da06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e875be8_7c92fdbf",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-11-14T10:37:02Z",
+      "side": 1,
+      "message": "+yutak :) Would you be happy if we expose TimeTicks::UnixEpoch() in wtf::internal::TimeWrapper?",
+      "parentUuid": "133f0212_31951399",
       "range": {
         "startLine": 52,
         "startChar": 10,
