@@ -822,7 +822,8 @@ ui::EventDispatchDetails WindowEventDispatcher::SynthesizeMouseMoveEvent() {
   client::CursorClient* cursor_client =
       client::GetCursorClient(host_->window());
   if (cursor_client && (!cursor_client->IsMouseEventsEnabled() ||
-                        !cursor_client->IsCursorVisible())) {
+                        (!cursor_client->IsCursorVisible() &&
+                         !cursor_client->IsCursorLocked()))) {
     return details;
   }
 
