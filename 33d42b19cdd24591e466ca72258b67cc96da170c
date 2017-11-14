@@ -16,6 +16,24 @@
       "revId": "33d42b19cdd24591e466ca72258b67cc96da170c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b712fd60_5923e1e8",
+        "filename": "third_party/protobuf/proto_library.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-14T10:36:17Z",
+      "side": 1,
+      "message": "I\u0027m considering dropping this, but I think the dependency on those py files are through them being \"input\" files in the action, rather as sources in the \"compilation\" step. As far as I know there is nobody that knows what to do with .pb, .y, .g and other files in the sources list since they don\u0027t map to any tools. Maybe the dependency check cares?\n\nBut I\u0027ll drop this for now and make the script silent instead.",
+      "parentUuid": "5a817327_2c50c7fe",
+      "revId": "33d42b19cdd24591e466ca72258b67cc96da170c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
