@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a3496d7b_4f5c4f8a",
+        "filename": "third_party/WebKit/Source/core/html/forms/FormController.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-14T16:11:17Z",
+      "side": 1,
+      "message": "Hmm. I think you\u0027re right, but I\u0027d still feel better if we made this properly traced. It shouldn\u0027t be insanely hard: probably just something like:\n\n  using PointerType \u003d std::conditional_t\u003cWTF::IsGarbageCollectedType\u003cT\u003e::value, Member\u003cT\u003e, T*\u003e;\n  PointerType head_;\n  PointerType tail_;\n\nand then a trace method. The trace method can be made to exist only in the GC case, like:\n\nstd::enable_if_t\u003cWTF::IsGarbageCollectedType\u003cT\u003e::value, void\u003e Trace(Visitor* visitor) {\n  visitor-\u003eTrace(head_);\n  visitor-\u003eTrace(tail_);\n}\n\nIt\u0027s slightly ugly, but it will mean that this gets traced the normal GC way, which I\u0027d somewhat prefer since keeping raw pointers to GC objects is a bit of an anti-pattern.\n\nAside: we should also almost certainly delete the copy constructor and such from DoublyLinkedList (e.g. WTF_MAKE_NONCOPYABLE); currently it would do bad things if copied.",
+      "parentUuid": "c9dd9fc4_946882ae",
+      "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0e1faae_cdc5bf48",
         "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElementWithState.cpp",
         "patchSetId": 5
@@ -107,6 +125,23 @@
     },
     {
       "key": {
+        "uuid": "ef5d3ab7_0fb32f5a",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElementWithState.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-14T16:11:17Z",
+      "side": 1,
+      "message": "nit: we usually put friends in the private section at the bottom (and that\u0027s reasonable enough here, as it\u0027s necessary to access those two pointers)",
+      "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89e925fe_cce69813",
         "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElementWithState.h",
         "patchSetId": 5
@@ -136,6 +171,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "89e925fe_cce69813",
+      "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c70fc9b_e07dd4c2",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElementWithState.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-14T16:11:17Z",
+      "side": 1,
+      "message": "Double-check that the HistoryItem reference to DocumentState doesn\u0027t break this. I don\u0027t *think* it does, but I\u0027m not 100% certain I understand it properly.",
+      "parentUuid": "60f0c1aa_bf6f2ae8",
       "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
