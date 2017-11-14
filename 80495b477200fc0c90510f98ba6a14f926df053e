@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bb3c099_d2ed4c1b",
+        "filename": "chrome/browser/ui/tabs/tab_data_experimental.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T23:26:24Z",
+      "side": 1,
+      "message": "I see some use of const is ok with you... EMBRACE IT!",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 8
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c9d723_e9a1ba55",
+        "filename": "chrome/browser/ui/tabs/tab_data_experimental.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T23:26:24Z",
+      "side": 1,
+      "message": "Should this class now have DISALLOW...",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 2
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d20113_672c54bb",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T23:26:24Z",
+      "side": 1,
+      "message": "{} ?",
+      "range": {
+        "startLine": 138,
+        "startChar": 58,
+        "endLine": 138,
+        "endChar": 59
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f28a76a_08db0d63",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T23:26:24Z",
+      "side": 1,
+      "message": "It looks like you only allow a depth of 1 (only the items in tabs_ can have children). If that\u0027s right, add a comment.",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 50
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba616d5_d84f4f37",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T23:26:24Z",
+      "side": 1,
+      "message": "consistency nit: either return everywhere, or break everywhere.",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 12
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c0a1ae_88c51493",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T23:26:24Z",
+      "side": 1,
+      "message": "How come you don\u0027t use the view iterator here?",
+      "range": {
+        "startLine": 571,
+        "startChar": 2,
+        "endLine": 576,
+        "endChar": 3
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c0e343_3d6ff0b6",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T23:26:24Z",
+      "side": 1,
+      "message": "optional: with multiple coordinate spaces it\u0027s very easy to get confused as to what \u0027index\u0027 applies to, the view or the model or even top level vs inner? I encourage you to either apply consistent prefixes (perhaps model and view) or better yet use different types.",
+      "range": {
+        "startLine": 768,
+        "startChar": 6,
+        "endLine": 768,
+        "endChar": 26
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c05127d_9aae838f",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T23:26:24Z",
+      "side": 1,
+      "message": "Do you need to declare a virtual destructor for the non-const version?",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe3ba3d_9fc4d8a5",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T23:26:24Z",
+      "side": 1,
+      "message": "Document what these indices mean.",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 25
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99bd953e_22429420",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2184,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T23:26:24Z",
+      "side": 1,
+      "message": "\u0027tab\u0027 slides?",
+      "range": {
+        "startLine": 2184,
+        "startChar": 68,
+        "endLine": 2184,
+        "endChar": 74
+      },
+      "revId": "80495b477200fc0c90510f98ba6a14f926df053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
