@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8e1a8f3_dd1dc2d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-14T17:39:17Z",
+      "side": 1,
+      "message": "use FeatureUtilities.isChromeHomeEnabled\n\nAlso, will this value be stored or queried every time? Keep in mind that whether we are using the Chrome Home UI can change at runtime\n\nSecond concern: don\u0027t we want to do (ChromeHome OR ExperimentGroup)? If we are closing the expriement and just shipping for real with chrome home then great! it\u0027s not needed :)",
+      "range": {
+        "startLine": 89,
+        "startChar": 15,
+        "endLine": 89,
+        "endChar": 74
+      },
+      "revId": "ab0bf695f4560ec8daae858012678bf194591eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
