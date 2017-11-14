@@ -608,4 +608,29 @@ public class DownloadNotificationServiceTest
         service.notifyDownloadCanceled(id);
         Assert.assertTrue(service.hideSummaryNotificationIfNecessary(-1));
     }
+
+    @Test
+    @SmallTest
+    @Feature({"Download"})
+    public void testServiceStopsIfPauseIsCalledWhenServiceIsStopped() {
+        // On versions of Android that use a foreground service, the service will currently die with
+        // the notifications.
+        if (DownloadNotificationService.useForegroundService()) return;
+
+        // Make sure that when the download fails, the service stops.
+        setupService();
+        startNotificationService();
+        DownloadNotificationService service = bindNotificationService();
+        ContentId id = LegacyHelpers.buildLegacyContentId(false, UUID.randomUUID().toString());
+        service.notifyDownloadProgress(id, "/path/to/test", Progress.createIndeterminateProgress(),
+                10L, 1000L, 10L, false, false, false, null);
+        Assert.assertFalse(service.hideSummaryNotificationIfNecessary(-1));
+        service.notifyDownloadPaused(id, "/path/to/test", true, false, false, false, null);
+        Assert.assertTrue(service.hideSummaryNotificationIfNecessary(-1));
+
+        // In the case of offline pages pause, pause is called even after the download pauses and
+        // the service stops. Confirm that if this happens, the service will still stop.
+        service.notifyDownloadPaused(id, "/path/to/test", true, false, false, false, null);
+        Assert.assertTrue(service.hideSummaryNotificationIfNecessary(-1));
+    }
 }
