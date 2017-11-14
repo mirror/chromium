@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "905a4243_b159f0af",
+        "filename": "chrome/browser/chromeos/system_logs/single_debug_daemon_log_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T04:14:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13d834e0_bbdaefbc",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 27
+      },
+      "revId": "aaf9f7c70ce9be744cc5325714f7a8483a7ed05d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71634857_4831181b",
         "filename": "chromeos/dbus/debug_daemon_client.h",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "aaf9f7c70ce9be744cc5325714f7a8483a7ed05d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf82f38_5080b993",
+        "filename": "chromeos/dbus/debug_daemon_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T04:14:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71634857_4831181b",
+      "revId": "aaf9f7c70ce9be744cc5325714f7a8483a7ed05d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "aaf9f7c70ce9be744cc5325714f7a8483a7ed05d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9375b296_3c129d82",
+        "filename": "chromeos/dbus/fake_debug_daemon_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T04:14:26Z",
+      "side": 1,
+      "message": "Good catch. Dine.",
+      "parentUuid": "534905c7_6e9b26d1",
+      "range": {
+        "startLine": 85,
+        "startChar": 42,
+        "endLine": 85,
+        "endChar": 68
+      },
+      "revId": "aaf9f7c70ce9be744cc5325714f7a8483a7ed05d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
