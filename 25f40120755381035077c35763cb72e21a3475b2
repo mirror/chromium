@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ca92de7_bed002f1",
+        "filename": "ui/base/x/x11_pointer_grab.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-14T14:35:27Z",
+      "side": 1,
+      "message": "I\u0027ve used git mv on this file as well, but after I made changes to it, it is shown as a new.",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "25f40120755381035077c35763cb72e21a3475b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
