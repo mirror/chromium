@@ -75,14 +75,10 @@ class SigninSupervisedUserImportHandlerTest : public BrowserWithTestWindowTest {
     handler_.reset(new TestSigninSupervisedUserImportHandler(web_ui()));
 
     // Build a test profile.
-    profile_manager_.reset(
-        new TestingProfileManager(TestingBrowserProcess::GetGlobal()));
-    ASSERT_TRUE(profile_manager_->SetUp());
-
     TestingProfile::TestingFactories factories;
     factories.push_back(std::make_pair(SigninManagerFactory::GetInstance(),
                                        BuildFakeSigninManagerBase));
-    profile_ = profile_manager_.get()->CreateTestingProfile(
+    profile_ = profile_manager()->CreateTestingProfile(
         "test-profile",
         std::unique_ptr<sync_preferences::PrefServiceSyncable>(),
         base::UTF8ToUTF16("test-profile"), 0, std::string(), factories);
@@ -111,7 +107,6 @@ class SigninSupervisedUserImportHandlerTest : public BrowserWithTestWindowTest {
   }
 
   void TearDown() override {
-    profile_manager_.reset();
     handler_.reset();
     web_ui_.reset();
     BrowserWithTestWindowTest::TearDown();
@@ -123,10 +118,6 @@ class SigninSupervisedUserImportHandlerTest : public BrowserWithTestWindowTest {
 
   TestSigninSupervisedUserImportHandler* handler() {
     return handler_.get();
-  }
-
-  TestingProfileManager* profile_manager() {
-    return profile_manager_.get();
   }
 
   TestingProfile* profile() {

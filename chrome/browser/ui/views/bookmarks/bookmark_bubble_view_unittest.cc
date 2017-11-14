@@ -15,9 +15,11 @@
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/ui/sync/bubble_sync_promo_delegate.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
+#include "chrome/test/base/testing_profile_manager.h"
 #include "components/bookmarks/browser/bookmark_utils.h"
 #include "components/bookmarks/test/bookmark_test_helpers.h"
 #include "components/signin/core/browser/signin_manager.h"
+#include "components/sync_preferences/pref_service_syncable.h"
 
 using bookmarks::BookmarkModel;
 
@@ -51,10 +53,9 @@ class BookmarkBubbleViewTest : public BrowserWithTestWindowTest {
 
   // BrowserWithTestWindowTest:
   TestingProfile* CreateProfile() override {
-    TestingProfile::Builder builder;
-    builder.AddTestingFactory(SigninManagerFactory::GetInstance(),
-                              BuildFakeSigninManagerBase);
-    return builder.Build().release();
+    return profile_manager()->CreateTestingProfile(
+        "testing_profile", nullptr, base::string16(), 0, std::string(),
+        {{SigninManagerFactory::GetInstance(), BuildFakeSigninManagerBase}});
   }
 
  protected:

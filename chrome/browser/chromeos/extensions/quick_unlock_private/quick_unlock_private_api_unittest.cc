@@ -17,7 +17,9 @@
 #include "chrome/browser/signin/easy_unlock_service_factory.h"
 #include "chrome/browser/signin/easy_unlock_service_regular.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/test/base/testing_profile_manager.h"
 #include "chromeos/login/auth/fake_extended_authenticator.h"
+#include "components/sync_preferences/pref_service_syncable.h"
 #include "components/user_manager/scoped_user_manager.h"
 #include "extensions/browser/api_test_utils.h"
 #include "extensions/browser/extension_function_dispatcher.h"
@@ -120,10 +122,10 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
   }
 
   TestingProfile* CreateProfile() override {
-    TestingProfile::Builder builder;
-    builder.AddTestingFactory(EasyUnlockServiceFactory::GetInstance(),
-                              &CreateEasyUnlockServiceForTest);
-    return builder.Build().release();
+    return profile_manager()->CreateTestingProfile(
+        "testing_profile", nullptr, base::string16(), 0, std::string(),
+        {{EasyUnlockServiceFactory::GetInstance(),
+          &CreateEasyUnlockServiceForTest}});
   }
 
   // If a mode change event is raised, fail the test.
