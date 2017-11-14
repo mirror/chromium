@@ -129,6 +129,18 @@ PlatformImeController* DrmWindowHost::GetPlatformImeController() {
   return nullptr;
 }
 
+bool DrmWindowHost::IsMinimized() const {
+  return false;
+}
+
+bool DrmWindowHost::IsMaximized() const {
+  return false;
+}
+
+bool DrmWindowHost::IsFullscreen() const {
+  return false;
+}
+
 bool DrmWindowHost::CanDispatchEvent(const PlatformEvent& ne) {
   DCHECK(ne);
   Event* event = static_cast<Event*>(ne);
