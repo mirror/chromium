@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "534c1ab3_bb98b23d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-14T21:17:47Z",
+      "side": 1,
+      "message": "oh you meant the representation. sorry for confusion.",
+      "parentUuid": "d389f601_89d42e94",
+      "revId": "ce225e2b6137b07b893f250751ecf1791121480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "483a9b06_995f4a3d",
         "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
         "patchSetId": 7
