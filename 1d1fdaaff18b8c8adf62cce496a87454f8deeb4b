@@ -16,6 +16,24 @@
       "revId": "1d1fdaaff18b8c8adf62cce496a87454f8deeb4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641ead65_1afd1028",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 11
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-14T05:37:05Z",
+      "side": 1,
+      "message": "We pass an instance object when we create a new wrapper (\u003dinstance object).\nWe pass prototype and interface objects, when we create them.\nBecause of prototype chain, we have to handle these two types independently.\n\nHowever, as an exception, we pass all objects when we create the Window wrapper (and HTMLDocuemnt wrapper) from snapshot. See V8ContextSnapshot::InstallConditionalFeaturesOnObjects() for this case.",
+      "parentUuid": "63fcdb30_72497d18",
+      "revId": "1d1fdaaff18b8c8adf62cce496a87454f8deeb4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
