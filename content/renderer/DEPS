@@ -24,6 +24,7 @@ include_rules = [
   "+services",
   "-storage/browser",
   "+third_party/hyphen/hyphen.h",
+  "+third_party/libaom/av1_features.h",
   "+third_party/webrtc_overrides",
   "+third_party/WebKit/common/origin_trials",
   "+v8/include",
