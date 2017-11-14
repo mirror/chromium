@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cf4c4b2_aff1708d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/isolatedWorld/document-open-01.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-14T07:43:21Z",
+      "side": 1,
+      "message": "I\u0027d propose the following message here.\n\nFAIL: contentDocument.open must not invoke contentWindow.open, contentDocument.open must open a new window with only internal implementation.\n\nIt\u0027s because \"redirect\" could be misleading as if we need to redirect a call to another ECMAScript-exposed API.  \"real window.open\" is not crystal clear to me, too.\n\n\nDitto for all other places that the same message appears.",
+      "range": {
+        "startLine": 11,
+        "startChar": 58,
+        "endLine": 11,
+        "endChar": 111
+      },
+      "revId": "f95229332231c4676fde14415281d5dcbf30f547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
