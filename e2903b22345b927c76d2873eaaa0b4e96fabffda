@@ -16,6 +16,24 @@
       "revId": "e2903b22345b927c76d2873eaaa0b4e96fabffda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6660acd8_0bfb4c66",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-14T21:56:21Z",
+      "side": 1,
+      "message": "I changed this to make the function more \"pure\". The function now just process a file, rather than reading, processing, and then sometimes writing out.\n\nAlso, I had thought I wanted to conditionally assign the artifact permanent location, but I don\u0027t think I need to. I think it\u0027s always fine to add that to the json file.",
+      "parentUuid": "f15805a6_745c339b",
+      "revId": "e2903b22345b927c76d2873eaaa0b4e96fabffda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

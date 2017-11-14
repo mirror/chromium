@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f3f1ee8_ad3c1e18",
+        "filename": "testing/scripts/upload_test_result_artifacts_unittest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-14T21:56:21Z",
+      "side": 1,
+      "message": "This is a test for the main logic in the file, upload_artifacts. It\u0027s a bit complicated, but it does let me test pretty much everything about the function. \n\nMaybe I should refactor the function? Since the test is fairly complicated, which usually suggests maybe the function is doing too much.\n\nI can write more complicated tests for this, just wanted to send this out and see if anyone had comments about this before I spent more time on that.",
+      "revId": "3829a64202a30a52daa1d4aac94f99e0bd6d7123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
