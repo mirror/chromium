@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e185d4af_8157b955",
+        "filename": "chrome/browser/ui/extensions/extension_enable_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T02:18:05Z",
+      "side": 1,
+      "message": "Good idea; done.",
+      "parentUuid": "ac16581d_a18cffe1",
+      "range": {
+        "startLine": 95,
+        "startChar": 14,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "a4af72dd0354bcc446e77b7809cb745650236c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51a418c1_9324c244",
         "filename": "chrome/browser/ui/extensions/extension_enable_flow_browsertest.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a4af72dd0354bcc446e77b7809cb745650236c52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab92490_23bb0caf",
+        "filename": "chrome/browser/ui/extensions/extension_enable_flow_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T02:18:05Z",
+      "side": 1,
+      "message": "Correct. Which, in the app list, would then result in resuming the launch flow, which would try to enable the extension again.",
+      "parentUuid": "51a418c1_9324c244",
+      "range": {
+        "startLine": 112,
+        "startChar": 28,
+        "endLine": 112,
+        "endChar": 35
+      },
+      "revId": "a4af72dd0354bcc446e77b7809cb745650236c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
