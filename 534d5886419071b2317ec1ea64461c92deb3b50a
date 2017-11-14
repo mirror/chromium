@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18daac5e_9fa580e8",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-14T02:57:01Z",
+      "side": 1,
+      "message": "Sorry, I shouldn\u0027t put this question on comments, will remove it. I wonder why we need to keep multiple controls, do we have any example to show that latest interacted element is enough for assuming form submission? Password manager only is one control, and WebFormElementObserver only accept one control now.",
+      "range": {
+        "startLine": 279,
+        "startChar": 51,
+        "endLine": 279,
+        "endChar": 0
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7342665b_d38e2b7b",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-14T02:57:01Z",
+      "side": 1,
+      "message": "Do we really need FrameClosing()? As I understand a PassAutofilAgent instance is created for every frame, Do we prepare the fame is attached latter? FYI, AutofillAgent seems fine without handling the frame close.\n\nIf we can get ride of FrameClosing(), the subframe check can be moved to InteractedFormChecker.",
+      "range": {
+        "startLine": 1209,
+        "startChar": 2,
+        "endLine": 1209,
+        "endChar": 14
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64fac799_3ee551c3",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-14T02:57:01Z",
+      "side": 1,
+      "message": "Do we still need below log? if not, gatekeeper_.Reset() can be moved to OnDidStartProvisionalLoad, and we don\u0027t need this method anymore.",
+      "range": {
+        "startLine": 1278,
+        "startChar": 48,
+        "endLine": 1278,
+        "endChar": 0
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c88f38_1fbff1ce",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1300,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-11-14T02:57:01Z",
+      "side": 1,
+      "message": "This code will generate different log since this method is only called for main frame now, is this OK?",
+      "range": {
+        "startLine": 1300,
+        "startChar": 30,
+        "endLine": 1300,
+        "endChar": 0
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
