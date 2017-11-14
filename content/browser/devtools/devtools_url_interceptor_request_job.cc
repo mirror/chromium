@@ -450,7 +450,6 @@ int DevToolsURLInterceptorRequestJob::MockResponseDetails::ReadRawData(
 namespace {
 
 void SendPendingBodyRequestsOnUiThread(
-    base::WeakPtr<protocol::NetworkHandler> network_handler,
     std::vector<std::unique_ptr<
         protocol::Network::Backend::GetResponseBodyForInterceptionCallback>>
         callbacks,
@@ -458,21 +457,16 @@ void SendPendingBodyRequestsOnUiThread(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   std::string encoded_response;
   base::Base64Encode(content, &encoded_response);
-  if (!network_handler)
-    return;
   for (auto&& callback : callbacks)
     callback->sendSuccess(encoded_response, true);
 }
 
 void SendPendingBodyRequestsWithErrorOnUiThread(
-    base::WeakPtr<protocol::NetworkHandler> network_handler,
     std::vector<std::unique_ptr<
         protocol::Network::Backend::GetResponseBodyForInterceptionCallback>>
         callbacks,
     protocol::DispatchResponse error) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (!network_handler)
-    return;
   for (auto&& callback : callbacks)
     callback->sendFailure(error);
 }
@@ -528,16 +522,17 @@ std::unique_ptr<net::UploadDataStream> GetUploadData(net::URLRequest* request) {
   return std::make_unique<net::ElementsUploadDataStream>(
       std::move(proxy_readers), 0);
 }
+
 }  // namespace
 
 DevToolsURLInterceptorRequestJob::DevToolsURLInterceptorRequestJob(
     DevToolsURLRequestInterceptor* interceptor,
     const std::string& interception_id,
+    intptr_t owning_entry_id,
     net::URLRequest* original_request,
     net::NetworkDelegate* original_network_delegate,
     const base::UnguessableToken& devtools_token,
-    const base::UnguessableToken& target_id,
-    base::WeakPtr<protocol::NetworkHandler> network_handler,
+    DevToolsURLRequestInterceptor::RequestInterceptedCallback callback,
     bool is_redirect,
     ResourceType resource_type,
     InterceptionStage stage_to_intercept)
@@ -551,9 +546,9 @@ DevToolsURLInterceptorRequestJob::DevToolsURLInterceptorRequestJob(
                        original_request->context()),
       waiting_for_user_response_(WaitingForUserResponse::NOT_WAITING),
       interception_id_(interception_id),
+      owning_entry_id_(owning_entry_id),
       devtools_token_(devtools_token),
-      target_id_(target_id),
-      network_handler_(network_handler),
+      callback_(callback),
       is_redirect_(is_redirect),
       resource_type_(resource_type),
       stage_to_intercept_(stage_to_intercept),
@@ -612,10 +607,8 @@ void DevToolsURLInterceptorRequestJob::Start() {
   DCHECK(stage_to_intercept_ == InterceptionStage::REQUEST ||
          stage_to_intercept_ == InterceptionStage::BOTH);
   waiting_for_user_response_ = WaitingForUserResponse::WAITING_FOR_REQUEST_ACK;
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&protocol::NetworkHandler::RequestIntercepted,
-                     network_handler_, BuildRequestInfo()));
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(callback_, BuildRequestInfo()));
 }
 
 void DevToolsURLInterceptorRequestJob::Kill() {
@@ -739,10 +732,8 @@ void DevToolsURLInterceptorRequestJob::OnSubRequestAuthRequired(
           .SetScheme(auth_info->scheme)
           .SetRealm(auth_info->realm)
           .Build();
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&protocol::NetworkHandler::RequestIntercepted,
-                     network_handler_, std::move(request_info)));
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(callback_, std::move(request_info)));
 }
 
 void DevToolsURLInterceptorRequestJob::OnSubRequestResponseStarted(
@@ -801,10 +792,8 @@ void DevToolsURLInterceptorRequestJob::OnSubRequestRedirectReceived(
       protocol::Object::fromValue(headers_dict.get(), nullptr);
   request_info->http_response_status_code = redirectinfo.status_code;
   request_info->redirect_url = redirectinfo.new_url.spec();
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&protocol::NetworkHandler::RequestIntercepted,
-                     network_handler_, std::move(request_info)));
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(callback_, std::move(request_info)));
 }
 
 void DevToolsURLInterceptorRequestJob::OnInterceptedRequestResponseStarted(
@@ -830,10 +819,8 @@ void DevToolsURLInterceptorRequestJob::OnInterceptedRequestResponseStarted(
     request_info->response_headers =
         protocol::Object::fromValue(headers_dict.get(), nullptr);
   }
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&protocol::NetworkHandler::RequestIntercepted,
-                     network_handler_, std::move(request_info)));
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(callback_, std::move(request_info)));
 }
 
 // If result is < 0 it means error.
@@ -846,24 +833,24 @@ void DevToolsURLInterceptorRequestJob::OnInterceptedRequestResponseReady(
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(
-            &SendPendingBodyRequestsWithErrorOnUiThread, network_handler_,
-            base::Passed(std::move(pending_body_requests_)),
+            &SendPendingBodyRequestsWithErrorOnUiThread,
+            std::move(pending_body_requests_),
             protocol::Response::Error(base::StringPrintf(
                 "Could not get response body because of error code: %d",
                 result))));
     return;
   }
 
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&SendPendingBodyRequestsOnUiThread, network_handler_,
-                     base::Passed(std::move(pending_body_requests_)),
-                     std::string(buf.data(), result)));
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(&SendPendingBodyRequestsOnUiThread,
+                                         std::move(pending_body_requests_),
+                                         std::string(buf.data(), result)));
 }
 
 void DevToolsURLInterceptorRequestJob::StopIntercepting() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   stage_to_intercept_ = InterceptionStage::DONT_INTERCEPT;
+  callback_.Reset();
 
   // Allow the request to continue if we're waiting for user input.
   switch (waiting_for_user_response_) {
