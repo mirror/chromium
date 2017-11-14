@@ -250,6 +250,8 @@ public class ActivityWindowAndroid
         keyboardVisibilityPossiblyChanged(UiUtils.isKeyboardShowing(getActivity().get(), v));
     }
 
+    protected void logUMAOnRequestPermissionDenied(String permission) {}
+
     private int generateNextRequestCode() {
         int requestCode = REQUEST_CODE_PREFIX + mNextRequestCode;
         mNextRequestCode = (mNextRequestCode + 1) % REQUEST_CODE_RANGE_SIZE;
@@ -272,26 +274,32 @@ public class ActivityWindowAndroid
 
         @Override
         public boolean canRequestPermission(String permission) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return false;
+            boolean ret;
+            Activity activity = (getActivity() != null ? getActivity().get() : null);
 
-            Activity activity = getActivity().get();
-            if (activity == null) return false;
-
-            if (isPermissionRevokedByPolicy(permission)) {
-                return false;
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                ret = false;
+            } else {
+                if (activity == null) {
+                    ret = false;
+                } else if (isPermissionRevokedByPolicy(permission)) {
+                    ret = false;
+                } else if (activity.shouldShowRequestPermissionRationale(permission)) {
+                    ret = true;
+                } else {
+                    // Check whether we have ever asked for this permission by checking whether we
+                    // saved a preference associated with it before.
+                    String permissionQueriedKey = getHasRequestedPermissionKey(permission);
+                    SharedPreferences prefs = ContextUtils.getAppSharedPreferences();
+                    if (!prefs.getBoolean(permissionQueriedKey, false)) {
+                        ret = true;
+                    } else {
+                        ret = false;
+                    }
+                }
             }
-
-            if (activity.shouldShowRequestPermissionRationale(permission)) {
-                return true;
-            }
-
-            // Check whether we have ever asked for this permission by checking whether we saved
-            // a preference associated with it before.
-            String permissionQueriedKey = getHasRequestedPermissionKey(permission);
-            SharedPreferences prefs = ContextUtils.getAppSharedPreferences();
-            if (!prefs.getBoolean(permissionQueriedKey, false)) return true;
-
-            return false;
+            if (!ret) logUMAOnRequestPermissionDenied(permission);
+            return ret;
         }
 
         @Override

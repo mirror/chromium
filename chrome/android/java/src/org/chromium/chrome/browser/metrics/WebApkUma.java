@@ -188,6 +188,11 @@ public class WebApkUma {
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+    public static void recordAndroidRuntimePermissionDeniedInWebApk(String permission) {
+        RecordHistogram.recordEnumeratedHistogram("WebApk.Permission.ChromeDeniedPermission",
+                getPermissionGroup(permission), PERMISSION_COUNT);
+    }
+
     private static int getPermissionGroup(String permission) {
         if (TextUtils.equals(permission, Manifest.permission.ACCESS_COARSE_LOCATION)
                 || TextUtils.equals(permission, Manifest.permission.ACCESS_FINE_LOCATION)) {
