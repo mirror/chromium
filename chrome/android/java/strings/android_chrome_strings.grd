@@ -2793,13 +2793,13 @@ However, you aren’t invisible. Going incognito doesn’t hide your browsing fr
         Go to page
       </message>
       <message name="IDS_CONTEXTUAL_SEARCH_IPH_ENTITY" desc="The in-product-help message for encouraging users to open the Contextual Search panel to learn to more about the phrase they have tapped on. This is a placeholder while the string is being finalized. Do not translate for now.">
-        Open this panel to find more information
+        See instant search results in this panel
       </message>
       <message name="IDS_CONTEXTUAL_SEARCH_IPH_SEARCH_RESULT" desc="The in-product-help message for encouraging users to open the Contextual Search panel to see related results about a phrase they have selected. This is a placeholder while the string is being finalized. Do not translate for now.">
-        Open this panel to find related search results
+        Tap a word to search instantly or see related actions
       </message>
       <message name="IDS_CONTEXTUAL_SEARCH_IPH_TAP" desc="The in-product-help message for encouraging users to tap instead of long pressing for triggeting Contextual Search. This is a placeholder while the string is being finalized. Do not translate for now.">
-        You can also search with one tap
+        You can also search with a quick tap
       </message>
 
       <!-- Web apps -->
