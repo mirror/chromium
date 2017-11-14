@@ -70,6 +70,24 @@
       "revId": "b2c4889fc025aa732ddf0fc069b7a4f83e161b4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6577ff00_548b65fc",
+        "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-14T16:17:03Z",
+      "side": 1,
+      "message": "I guess we could add a hook from LocalFrameClientImpl::DispatchDidCommitLoad/DispatchDidNavigateWithinPage (which both call into DidCommitProvisionalLoad eventually) to CoreInitializer for this. That is adding more mess though, so I\u0027d rather (as Daniel suggests) try to cleanup all the various callbacks.",
+      "parentUuid": "6927e4ff_31263cb2",
+      "revId": "b2c4889fc025aa732ddf0fc069b7a4f83e161b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
