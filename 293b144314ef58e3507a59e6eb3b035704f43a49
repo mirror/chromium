@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "360c69c0_9ce7cd1b",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-14T17:53:14Z",
+      "side": 1,
+      "message": "This DCHECK is correct in production, but tests seem to pass null for the web_contents. I\u0027ll remove this DCHECK tomorrow or see if I can pass a non-null one for the tests.",
+      "parentUuid": "5796b43a_cf2b56c3",
+      "revId": "293b144314ef58e3507a59e6eb3b035704f43a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2462535_df22f64f",
         "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_handler.cc",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-14T16:42:17Z",
       "side": 1,
       "message": "Why this change?",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 66
+      },
+      "revId": "293b144314ef58e3507a59e6eb3b035704f43a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72710be5_e0499cf9",
+        "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-14T17:53:14Z",
+      "side": 1,
+      "message": "This is a debug page that we used initially to test the sign-in flow. I preferred replacing the internal debug function with the right API that I added last week.\n\nI think it is safe to use unknown access point as it would be strange to use a real access point for this debug page.",
+      "parentUuid": "f2462535_df22f64f",
       "range": {
         "startLine": 55,
         "startChar": 4,
