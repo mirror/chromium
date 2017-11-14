@@ -23,7 +23,6 @@ import org.robolectric.annotation.Implements;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.multidex.ShadowMultiDex;
 
-import org.chromium.base.BaseChromiumApplication.WindowFocusChangedListener;
 import org.chromium.testing.local.LocalRobolectricTestRunner;
 
 /** Unit tests for {@link BaseChromiumApplication}. */
@@ -55,9 +54,11 @@ public class BaseChromiumApplicationTest {
     @Test
     public void testWindowsFocusChanged() throws Exception {
         BaseChromiumApplication app = (BaseChromiumApplication) RuntimeEnvironment.application;
+        ApplicationStatus.initialize(app);
 
-        WindowFocusChangedListener mock = mock(WindowFocusChangedListener.class);
-        app.registerWindowFocusChangedListener(mock);
+        ApplicationStatus.WindowFocusChangedListener mock =
+                mock(ApplicationStatus.WindowFocusChangedListener.class);
+        ApplicationStatus.registerWindowFocusChangedListener(mock);
 
         ActivityController<Activity> controller =
                 Robolectric.buildActivity(Activity.class).create().start().visible();
