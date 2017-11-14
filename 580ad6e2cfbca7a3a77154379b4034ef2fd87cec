@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23fd471e_c5a2bf95",
+        "filename": "media/audio/win/audio_low_latency_output_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-14T16:11:57Z",
+      "side": 1,
+      "message": "Is it ok to just return Now() if IsHighResolution() is false or if QueryPerformanceFreqency() is false?  In what situations can these fail?",
+      "revId": "580ad6e2cfbca7a3a77154379b4034ef2fd87cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
