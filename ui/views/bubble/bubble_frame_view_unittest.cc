@@ -13,6 +13,7 @@
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/gfx/text_utils.h"
 #include "ui/views/bubble/bubble_border.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/controls/button/label_button.h"
@@ -791,6 +792,41 @@ TEST_F(BubbleFrameViewTest, LayoutWithIcon) {
   EXPECT_LT(title->height(), icon->height());
   const int title_offset_y = (icon->height() - title->height()) / 2;
   EXPECT_EQ(icon->y() + title_offset_y, title->y());
+}
+
+// Test the size of the bubble allows a |gfx::NO_ELIDE| title to fit, even if
+// there is no content.
+TEST_F(BubbleFrameViewTest, NoElideTitle) {
+  test::TestLayoutProvider provider;
+  TestBubbleDialogDelegateView delegate;
+  TestAnchor anchor(CreateParams(Widget::InitParams::TYPE_WINDOW));
+  delegate.SetAnchorView(anchor.widget().GetContentsView());
+
+  // Make sure the client area size doesn't interfere with the final size.
+  delegate.SetPreferredSize(gfx::Size());
+
+  Widget* bubble = BubbleDialogDelegateView::CreateBubble(&delegate);
+  bubble->Show();
+  base::string16 title = base::ASCIIToUTF16("This is a title string");
+  delegate.ChangeTitle(title);
+
+  // Set the title to a non-eliding label.
+  Label* title_label =
+      static_cast<Label*>(delegate.GetBubbleFrameView()->title());
+  title_label->SetElideBehavior(gfx::NO_ELIDE);
+  title_label->SetMultiLine(false);
+
+  // Update the bubble size now that some properties of the title have changed.
+  delegate.SizeToContents();
+
+  // Make sure the bubble is wide enough to fit the title's full size.
+  EXPECT_GE(bubble->GetClientAreaBoundsInScreen().width(),
+            title_label->GetPreferredSize().width());
+  // Make sure the title's actual size has enough room for all its text.
+  EXPECT_EQ(gfx::GetStringWidth(
+                title, views::style::GetFont(views::style::CONTEXT_DIALOG_TITLE,
+                                             views::style::STYLE_PRIMARY)),
+            title_label->size().width());
 }
 
 }  // namespace views

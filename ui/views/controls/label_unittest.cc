@@ -23,6 +23,7 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/render_text.h"
 #include "ui/gfx/switches.h"
+#include "ui/gfx/text_elider.h"
 #include "ui/strings/grit/ui_strings.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/link.h"
@@ -368,6 +369,39 @@ TEST_F(LabelTest, ElideBehavior) {
   EXPECT_GT(text.size(), label()->GetDisplayTextForTesting().size());
 
   label()->SetElideBehavior(gfx::NO_ELIDE);
+  EXPECT_EQ(text, label()->GetDisplayTextForTesting());
+}
+
+// Test the minimum width of a Label is correct depending on its ElideBehavior,
+// including |gfx::NO_ELIDE|.
+TEST_F(LabelTest, ElideBehaviorMinimumWidth) {
+  base::string16 text(ASCIIToUTF16("This is example text."));
+  label()->SetText(text);
+
+  label()->SetElideBehavior(gfx::ELIDE_TAIL);
+  gfx::Size size = label()->GetMinimumSize();
+  // Elidable labels have a minimum width that fits |gfx::kEllipsisUTF16|.
+  EXPECT_EQ(gfx::Canvas::GetStringWidth(base::string16(gfx::kEllipsisUTF16),
+                                        Label::GetDefaultFontList()),
+            size.width());
+  EXPECT_GT(text.size(), label()->GetDisplayTextForTesting().size());
+
+  // Truncated labels can take up the size they are given, but not exceed that
+  // if the text can't fit.
+  label()->SetElideBehavior(gfx::TRUNCATE);
+  label()->SetSize(gfx::Size(10, 10));
+  size = label()->GetMinimumSize();
+  EXPECT_LT(size.width(), label()->size().width());
+  EXPECT_GT(text.size(), label()->GetDisplayTextForTesting().size());
+
+  // Non-elidable single-line labels should take up their full text size, since
+  // this behavior implies the text should not be cut off.
+  EXPECT_FALSE(label()->multi_line());
+  label()->SetElideBehavior(gfx::NO_ELIDE);
+  size = label()->GetMinimumSize();
+  EXPECT_EQ(text.size(), label()->GetDisplayTextForTesting().size());
+
+  label()->SetSize(label()->GetMinimumSize());
   EXPECT_EQ(text, label()->GetDisplayTextForTesting());
 }
 
