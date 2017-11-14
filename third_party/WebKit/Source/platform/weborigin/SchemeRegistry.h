@@ -87,6 +87,7 @@ class PLATFORM_EXPORT SchemeRegistry {
       const String& scheme);
 
   // Allow non-HTTP schemes to be registered to allow CORS requests.
+  static void RegisterURLSchemeAsCORSEnabled(const String& scheme);
   static bool ShouldTreatURLSchemeAsCORSEnabled(const String& scheme);
 
   // Serialize the registered schemes in a comma-separated list.
