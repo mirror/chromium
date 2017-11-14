@@ -2,6 +2,183 @@
   "comments": [
     {
       "key": {
+        "uuid": "9eaa65e5_06b0a109",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "Did you modify the Impl after the extraction? I noticed that you added CreateDelegate(). Are there any other modifications? If there are, what about splitting this into two CLs? (The first one is just a simple file split w/o any mod, and the second one is mods for testablity and for adding _unittest.cc.)\n\nI guess you didn\u0027t modify it except for CreateDelegate() but asking just in case.",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c377378e_3841445f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "You can take over chromium:739118.",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d8870d_2bc85eaf",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "Can you return an empty id for upgrade which is what the real session_manager does? That should allow us to write more unit tests with upgrade.",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363c86c0_1067a3fa",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "/* result */\n\n?",
+      "range": {
+        "startLine": 299,
+        "startChar": 55,
+        "endLine": 299,
+        "endChar": 60
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a771ead_e458ee2f",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 304,
+        "startChar": 53,
+        "endLine": 304,
+        "endChar": 57
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c5399af_caee5db6",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "I think we usually use the parameter name as-is.",
+      "range": {
+        "startLine": 310,
+        "startChar": 29,
+        "endLine": 310,
+        "endChar": 51
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939581c2_fc1224bd",
+        "filename": "chromeos/dbus/fake_session_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "clean_shutdown\n\nor something similar might be easier to understand.",
+      "range": {
+        "startLine": 95,
+        "startChar": 37,
+        "endLine": 95,
+        "endChar": 42
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be265129_acd90611",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "761fea30_59adb06c",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f1ea364_4f919254",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 1
@@ -71,6 +248,29 @@
     },
     {
       "key": {
+        "uuid": "485323b9_478a3651",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "clean_shutdown ?",
+      "range": {
+        "startLine": 190,
+        "startChar": 31,
+        "endLine": 190,
+        "endChar": 37
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "472ff55a_8e2ea916",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -85,6 +285,80 @@
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b1564b2_e8fd9d9c",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "same",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6892e152_124d5c3a",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "How about move this to a separate file to make this file smaller and simpler?",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a43e670_757acb0b",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "Can you explicitly mention that when this is called with false, |callback| passed to ConnectMojo will be called with nullptr?",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f741bcde_6cc50a25",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "Renaming this to EmulateMojoConnectionFailure() or something like that might make the tests easier to read.",
+      "range": {
+        "startLine": 96,
+        "startChar": 7,
+        "endLine": 96,
+        "endChar": 18
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -111,6 +385,40 @@
     },
     {
       "key": {
+        "uuid": "7effb748_f58d025a",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "SuspendMojoConnection() maybe?",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6efd665a_b8bdc346",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "same",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbe25902_2a1d4543",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -127,6 +435,97 @@
         "startChar": 7,
         "endLine": 123,
         "endChar": 18
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be40da43_5389b733",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN?\n\nI know ConnectMojoCallback is currently move-only though.",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31367481_88eef3b3",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "Can you do either renaming this to TestArcSessionObserver or adding a class comment? At first glance (of the TEST_Fs), it was unclear to me what the class was for.",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d136c7_26fbc82d",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "on_session_stopped_args() might be easier to read. Ditto for |args_|.",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a21a5975_7fd2f5aa",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "// ArcSession::Observer overrides:\n\nto be consistent with the fake delegate above.",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a018d3_45e093a9",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "It was unclear to me what this meant. Can you clarify? Did you mean \u0027not\u0027?",
+      "range": {
+        "startLine": 156,
+        "startChar": 38,
+        "endLine": 156,
+        "endChar": 47
       },
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -169,6 +568,23 @@
     },
     {
       "key": {
+        "uuid": "08da8959_6cc75ea3",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "same, DISALLOW_COPY_AND_ASSIGN might be nice to have.",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ab6d2a9_f9d8bd6d",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -186,6 +602,97 @@
         "endLine": 215,
         "endChar": 60
       },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8081aee_ee71c361",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "I think a test description like this should be above TEST_F (in this case, at line 213). (here and elsewhere)",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7069f95_1c5888c1",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "qq: Why does this have to be an ASSERT?",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a80af6_45202b8d",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "hmm.. I\u0027m not sure if set_arc_available() is a good method name for emulating DBus failures. Can\u0027t we rename it to a more straightforward one like EmulateDBusFailure()?",
+      "range": {
+        "startLine": 342,
+        "startChar": 29,
+        "endLine": 342,
+        "endChar": 46
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963e3d1f_e9604192",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "What about doing the same with upgrade for each test below?",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b743fa2_08c821a7",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T23:55:40Z",
+      "side": 1,
+      "message": "Why can\u0027t we call delegate-\u003eResume() directly here?",
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
