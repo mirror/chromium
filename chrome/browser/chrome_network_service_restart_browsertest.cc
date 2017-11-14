@@ -12,14 +12,8 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_features.h"
-#include "content/public/common/network_service_test.mojom.h"
-#include "content/public/common/service_manager_connection.h"
-#include "content/public/common/service_names.mojom.h"
 #include "content/public/test/browser_test.h"
 #include "content/public/test/browser_test_utils.h"
-#include "content/public/test/simple_url_loader_test_helper.h"
-#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
-#include "services/service_manager/public/cpp/connector.h"
 
 namespace content {
 
@@ -28,34 +22,6 @@ class ChromeNetworkServiceRestartBrowserTest : public InProcessBrowserTest {
   ChromeNetworkServiceRestartBrowserTest() {
     scoped_feature_list_.InitAndEnableFeature(features::kNetworkService);
     EXPECT_TRUE(embedded_test_server()->Start());
-  }
-
-  void SimulateNetworkServiceCrash() {
-    mojom::NetworkServiceTestPtr network_service_test;
-    ServiceManagerConnection::GetForProcess()->GetConnector()->BindInterface(
-        mojom::kNetworkServiceName, &network_service_test);
-    network_service_test->SimulateCrash();
-    network_service_test.FlushForTesting();
-  }
-
-  int LoadBasicRequest(mojom::NetworkContext* network_context) {
-    mojom::URLLoaderFactoryPtr url_loader_factory;
-    network_context->CreateURLLoaderFactory(MakeRequest(&url_loader_factory),
-                                            0);
-
-    content::SimpleURLLoaderTestHelper simple_loader_helper;
-    std::unique_ptr<content::SimpleURLLoader> simple_loader =
-        content::SimpleURLLoader::Create();
-
-    ResourceRequest request;
-    request.url = embedded_test_server()->GetURL("/echo");
-
-    simple_loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
-        request, url_loader_factory.get(), TRAFFIC_ANNOTATION_FOR_TESTS,
-        simple_loader_helper.GetCallback());
-    simple_loader_helper.WaitForCallback();
-
-    return simple_loader->NetError();
   }
 
  private:
@@ -76,7 +42,8 @@ IN_PROC_BROWSER_TEST_F(ChromeNetworkServiceRestartBrowserTest,
       BrowserContext::GetDefaultStoragePartition(browser()->profile());
 
   mojom::NetworkContext* old_network_context = partition->GetNetworkContext();
-  EXPECT_EQ(net::OK, LoadBasicRequest(old_network_context));
+  EXPECT_EQ(net::OK, LoadBasicRequest(old_network_context,
+                                      embedded_test_server()->GetURL("/echo")));
 
   // Crash the NetworkService process. Existing interfaces should receive error
   // notifications at some point.
@@ -87,7 +54,8 @@ IN_PROC_BROWSER_TEST_F(ChromeNetworkServiceRestartBrowserTest,
   // |partition->GetNetworkContext()| should return a valid new pointer after
   // crash.
   EXPECT_NE(old_network_context, partition->GetNetworkContext());
-  EXPECT_EQ(net::OK, LoadBasicRequest(partition->GetNetworkContext()));
+  EXPECT_EQ(net::OK, LoadBasicRequest(partition->GetNetworkContext(),
+                                      embedded_test_server()->GetURL("/echo")));
 }
 
 // Make sure |SystemNetworkContextManager::GetContext()| returns valid interface
@@ -103,7 +71,8 @@ IN_PROC_BROWSER_TEST_F(ChromeNetworkServiceRestartBrowserTest,
 
   mojom::NetworkContext* old_network_context =
       system_network_context_manager->GetContext();
-  EXPECT_EQ(net::OK, LoadBasicRequest(old_network_context));
+  EXPECT_EQ(net::OK, LoadBasicRequest(old_network_context,
+                                      embedded_test_server()->GetURL("/echo")));
 
   // Crash the NetworkService process. Existing interfaces should receive error
   // notifications at some point.
@@ -115,7 +84,8 @@ IN_PROC_BROWSER_TEST_F(ChromeNetworkServiceRestartBrowserTest,
   // pointer after crash.
   EXPECT_NE(old_network_context, system_network_context_manager->GetContext());
   EXPECT_EQ(net::OK,
-            LoadBasicRequest(system_network_context_manager->GetContext()));
+            LoadBasicRequest(system_network_context_manager->GetContext(),
+                             embedded_test_server()->GetURL("/echo")));
 }
 
 }  // namespace content
