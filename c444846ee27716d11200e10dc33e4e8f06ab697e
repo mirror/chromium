@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "227a4c56_299bd4c0",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-14T19:02:33Z",
+      "side": 0,
+      "message": "Moved this part up with the rest, seemed cleaner to have everything under one #if defined. I\u0027ll put it back here if you think it\u0027s better that way.",
+      "range": {
+        "startLine": 704,
+        "startChar": 24,
+        "endLine": 704,
+        "endChar": 0
+      },
+      "revId": "c444846ee27716d11200e10dc33e4e8f06ab697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
