@@ -105,7 +105,7 @@ class DirectOutputSurface : public viz::OutputSurface {
 
     context_provider_->ContextSupport()->SignalSyncToken(
         sync_token, base::Bind(&DirectOutputSurface::OnSwapBuffersComplete,
-                               weak_ptr_factory_.GetWeakPtr()));
+                               weak_ptr_factory_.GetWeakPtr(), ++swap_count_));
   }
   uint32_t GetFramebufferCopyTextureFormat() override {
     auto* gl = static_cast<InProcessContextProvider*>(context_provider());
@@ -125,9 +125,14 @@ class DirectOutputSurface : public viz::OutputSurface {
   void ApplyExternalStencil() override {}
 
  private:
-  void OnSwapBuffersComplete() { client_->DidReceiveSwapBuffersAck(); }
+  void OnSwapBuffersComplete(uint32_t count) {
+    client_->DidReceiveSwapBuffersAck(count);
+    client_->DidPresentation(count, base::TimeTicks::Now(), base::TimeDelta(),
+                             0u);
+  }
 
   viz::OutputSurfaceClient* client_ = nullptr;
+  uint32_t swap_count_ = 0;
   base::WeakPtrFactory<DirectOutputSurface> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DirectOutputSurface);

@@ -26,14 +26,20 @@ class DRTSurfaceOSMesa : public gl::GLSurfaceOSMesa {
           gfx::Size(1, 1)) {}
 
   // Implement a subset of GLSurface.
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(const PresentationCallback& callback) override;
 
  private:
   ~DRTSurfaceOSMesa() override {}
   DISALLOW_COPY_AND_ASSIGN(DRTSurfaceOSMesa);
 };
 
-gfx::SwapResult DRTSurfaceOSMesa::SwapBuffers() {
+gfx::SwapResult DRTSurfaceOSMesa::SwapBuffers(
+    const PresentationCallback& callback) {
+  // The buffer will never be presented to user, so fire the callback with
+  // base::TimeTicks().
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::Bind(callback, base::TimeTicks(), base::TimeDelta(), 0u));
   return gfx::SwapResult::SWAP_ACK;
 }
 
