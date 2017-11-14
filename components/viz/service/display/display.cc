@@ -55,8 +55,8 @@ Display::Display(SharedBitmapManager* bitmap_manager,
       output_surface_(std::move(output_surface)),
       scheduler_(std::move(scheduler)),
       texture_mailbox_deleter_(std::move(texture_mailbox_deleter)) {
-  DCHECK(output_surface_);
-  DCHECK(frame_sink_id_.is_valid());
+  //  DCHECK(output_surface_);
+  //  DCHECK(frame_sink_id_.is_valid());
   if (scheduler_)
     scheduler_->SetClient(this);
 }
