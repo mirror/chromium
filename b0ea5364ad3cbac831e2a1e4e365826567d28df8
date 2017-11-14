@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60a91852_8f521020",
+        "filename": "third_party/WebKit/public/platform/WebScopedVirtualTimePauser.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-14T03:19:21Z",
+      "side": 1,
+      "message": "This means that the call sites need to be careful so that WebScopedVirtualTimePauser does not outlive RendererSchedulerImpl...\n\nIdeally RendererSchedulerImpl should be ref-counted. You don\u0027t need to address it in this CL though.",
+      "revId": "b0ea5364ad3cbac831e2a1e4e365826567d28df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
