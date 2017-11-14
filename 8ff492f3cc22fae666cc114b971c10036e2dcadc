@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cca2e310_a87409f7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-2/inject-stylesheet-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-14T06:14:10Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "51f03424_79c9e5b2",
+      "revId": "8ff492f3cc22fae666cc114b971c10036e2dcadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cbecf90_4f08416e",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-2/inject-stylesheet.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "8ff492f3cc22fae666cc114b971c10036e2dcadc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3739e1ec_67342d03",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-2/inject-stylesheet.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-14T06:14:10Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "6cbecf90_4f08416e",
+      "revId": "8ff492f3cc22fae666cc114b971c10036e2dcadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
