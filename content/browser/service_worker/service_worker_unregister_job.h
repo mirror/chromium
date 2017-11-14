@@ -32,6 +32,10 @@ class ServiceWorkerUnregisterJob : public ServiceWorkerRegisterJobBase {
                               ServiceWorkerStatusCode status)>
       UnregistrationCallback;
 
+  typedef base::Callback<void(int64_t registration_id,
+                              ServiceWorkerStatusCode status)>
+      RegistrationDeletedCallback;
+
   ServiceWorkerUnregisterJob(base::WeakPtr<ServiceWorkerContextCore> context,
                              const GURL& pattern);
   ~ServiceWorkerUnregisterJob() override;
@@ -39,6 +43,11 @@ class ServiceWorkerUnregisterJob : public ServiceWorkerRegisterJobBase {
   // Registers a callback to be called when the job completes (whether
   // successfully or not). Multiple callbacks may be registered.
   void AddCallback(const UnregistrationCallback& callback);
+
+  // Registers a callback to be called when the deletion is removed completely
+  // or if there was an error. Multiple callbacks may be registered.
+  void AddRegistrationDeletedCallback(
+      const RegistrationDeletedCallback& callback);
 
   // ServiceWorkerRegisterJobBase implementation:
   void Start() override;
@@ -54,11 +63,15 @@ class ServiceWorkerUnregisterJob : public ServiceWorkerRegisterJobBase {
   void CompleteInternal(int64_t registration_id,
                         ServiceWorkerStatusCode status);
   void ResolvePromise(int64_t registration_id, ServiceWorkerStatusCode status);
+  void OnRegistrationDeleted(int64_t registration_id,
+                             ServiceWorkerStatusCode status);
 
   base::WeakPtr<ServiceWorkerContextCore> context_;
   const GURL pattern_;
   std::vector<UnregistrationCallback> callbacks_;
+  std::vector<RegistrationDeletedCallback> registration_deleted_callbacks_;
   bool is_promise_resolved_;
+  bool is_registration_deleted_;
   base::WeakPtrFactory<ServiceWorkerUnregisterJob> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerUnregisterJob);

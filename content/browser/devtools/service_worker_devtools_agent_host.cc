@@ -33,8 +33,8 @@ void UnregisterServiceWorkerOnIO(
   if (ServiceWorkerContextCore* context = context_weak.get()) {
     if (ServiceWorkerVersion* version = context->GetLiveVersion(version_id)) {
       version->StopWorker(base::BindOnce(&base::DoNothing));
-      context->UnregisterServiceWorker(version->scope(),
-                                       base::Bind(&StatusNoOp));
+      context->UnregisterServiceWorker(
+          version->scope(), base::Bind(&StatusNoOp), base::Bind(&StatusNoOp));
     }
   }
 }

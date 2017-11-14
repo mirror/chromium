@@ -134,7 +134,8 @@ void ServiceWorkerRegistrationHandle::Unregister(UnregisterCallback callback) {
       registration_->pattern(),
       base::AdaptCallbackForRepeating(base::BindOnce(
           &ServiceWorkerRegistrationHandle::UnregistrationComplete,
-          weak_ptr_factory_.GetWeakPtr(), std::move(callback))));
+          weak_ptr_factory_.GetWeakPtr(), std::move(callback))),
+      ServiceWorkerContextCore::RegistrationDeletedCallback());
 }
 
 void ServiceWorkerRegistrationHandle::EnableNavigationPreload(

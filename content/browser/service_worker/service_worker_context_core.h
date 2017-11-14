@@ -70,6 +70,8 @@ class CONTENT_EXPORT ServiceWorkerContextCore
                                              int64_t registration_id)>;
   using UnregistrationCallback =
       base::Callback<void(ServiceWorkerStatusCode status)>;
+  using RegistrationDeletedCallback =
+      base::Callback<void(ServiceWorkerStatusCode status)>;
   using ProviderMap = base::IDMap<std::unique_ptr<ServiceWorkerProviderHost>>;
   using ProcessToProviderMap = base::IDMap<std::unique_ptr<ProviderMap>>;
 
@@ -201,14 +203,18 @@ class CONTENT_EXPORT ServiceWorkerContextCore
       const blink::mojom::ServiceWorkerRegistrationOptions& options,
       ServiceWorkerProviderHost* provider_host,
       const RegistrationCallback& callback);
-  void UnregisterServiceWorker(const GURL& pattern,
-                               const UnregistrationCallback& callback);
+  void UnregisterServiceWorker(
+      const GURL& pattern,
+      const UnregistrationCallback& callback,
+      const RegistrationDeletedCallback& deleted_callback);
 
   // Callback is called issued after all unregistrations occur.  The Status
   // is populated as SERVICE_WORKER_OK if all succeed, or SERVICE_WORKER_FAILED
   // if any did not succeed.
-  void UnregisterServiceWorkers(const GURL& origin,
-                                const UnregistrationCallback& callback);
+  void UnregisterServiceWorkers(
+      const GURL& origin,
+      const UnregistrationCallback& callback,
+      const RegistrationDeletedCallback& deleted_callback);
 
   // Updates the service worker. If |force_bypass_cache| is true or 24 hours
   // have passed since the last update, bypasses the browser cache.
@@ -336,8 +342,14 @@ class CONTENT_EXPORT ServiceWorkerContextCore
                               int64_t registration_id,
                               ServiceWorkerStatusCode status);
 
+  void OnRegistrationDeleted(const GURL& pattern,
+                             const RegistrationDeletedCallback& callback,
+                             int64_t registration_id,
+                             ServiceWorkerStatusCode status);
+
   void DidGetAllRegistrationsForUnregisterForOrigin(
       const UnregistrationCallback& result,
+      const RegistrationDeletedCallback& deleted_callback,
       const GURL& origin,
       ServiceWorkerStatusCode status,
       const std::vector<ServiceWorkerRegistrationInfo>& registrations);

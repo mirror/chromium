@@ -23,14 +23,19 @@ ServiceWorkerUnregisterJob::ServiceWorkerUnregisterJob(
     : context_(context),
       pattern_(pattern),
       is_promise_resolved_(false),
-      weak_factory_(this) {
-}
+      is_registration_deleted_(false),
+      weak_factory_(this) {}
 
 ServiceWorkerUnregisterJob::~ServiceWorkerUnregisterJob() {}
 
 void ServiceWorkerUnregisterJob::AddCallback(
     const UnregistrationCallback& callback) {
   callbacks_.push_back(callback);
+}
+
+void ServiceWorkerUnregisterJob::AddRegistrationDeletedCallback(
+    const UnregistrationCallback& callback) {
+  registration_deleted_callbacks_.push_back(callback);
 }
 
 void ServiceWorkerUnregisterJob::Start() {
@@ -72,13 +77,12 @@ void ServiceWorkerUnregisterJob::OnRegistrationFound(
   }
 
   // TODO: "7. If registration.updatePromise is not null..."
-
   // "8. Resolve promise."
   ResolvePromise(registration->id(), SERVICE_WORKER_OK);
 
-  registration->ClearWhenReady();
-
-  Complete(registration->id(), SERVICE_WORKER_OK);
+  registration->ClearWhenReady(
+      base::Bind(&ServiceWorkerUnregisterJob::OnRegistrationDeleted,
+                 weak_factory_.GetWeakPtr(), registration->id()));
 }
 
 void ServiceWorkerUnregisterJob::Complete(int64_t registration_id,
@@ -90,8 +94,11 @@ void ServiceWorkerUnregisterJob::Complete(int64_t registration_id,
 void ServiceWorkerUnregisterJob::CompleteInternal(
     int64_t registration_id,
     ServiceWorkerStatusCode status) {
-  if (!is_promise_resolved_)
+  if (!is_promise_resolved_) {
     ResolvePromise(registration_id, status);
+    if (status != ServiceWorkerStatusCode::SERVICE_WORKER_OK)
+      OnRegistrationDeleted(registration_id, status);
+  }
 }
 
 void ServiceWorkerUnregisterJob::ResolvePromise(
@@ -99,11 +106,20 @@ void ServiceWorkerUnregisterJob::ResolvePromise(
     ServiceWorkerStatusCode status) {
   DCHECK(!is_promise_resolved_);
   is_promise_resolved_ = true;
-  for (std::vector<UnregistrationCallback>::iterator it = callbacks_.begin();
-       it != callbacks_.end();
-       ++it) {
-    it->Run(registration_id, status);
+  for (auto& callback : callbacks_) {
+    callback.Run(registration_id, status);
   }
+}
+
+void ServiceWorkerUnregisterJob::OnRegistrationDeleted(
+    int64_t registration_id,
+    ServiceWorkerStatusCode status) {
+  DCHECK(!is_registration_deleted_);
+  is_registration_deleted_ = true;
+  for (auto& callback : registration_deleted_callbacks_) {
+    callback.Run(registration_id, status);
+  }
+  Complete(registration_id, SERVICE_WORKER_OK);
 }
 
 }  // namespace content

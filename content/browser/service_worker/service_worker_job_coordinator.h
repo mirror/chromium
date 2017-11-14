@@ -35,7 +35,9 @@ class CONTENT_EXPORT ServiceWorkerJobCoordinator {
 
   void Unregister(
       const GURL& pattern,
-      const ServiceWorkerUnregisterJob::UnregistrationCallback& callback);
+      const ServiceWorkerUnregisterJob::UnregistrationCallback& callback,
+      const ServiceWorkerUnregisterJob::RegistrationDeletedCallback&
+          deleted_callback);
 
   void Update(ServiceWorkerRegistration* registration, bool force_bypass_cache);
 

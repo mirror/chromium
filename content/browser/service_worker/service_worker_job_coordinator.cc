@@ -116,13 +116,18 @@ void ServiceWorkerJobCoordinator::Register(
 
 void ServiceWorkerJobCoordinator::Unregister(
     const GURL& pattern,
-    const ServiceWorkerUnregisterJob::UnregistrationCallback& callback) {
+    const ServiceWorkerUnregisterJob::UnregistrationCallback& callback,
+    const ServiceWorkerUnregisterJob::RegistrationDeletedCallback&
+        deleted_callback) {
   std::unique_ptr<ServiceWorkerRegisterJobBase> job(
       new ServiceWorkerUnregisterJob(context_, pattern));
   ServiceWorkerUnregisterJob* queued_job =
       static_cast<ServiceWorkerUnregisterJob*>(
           job_queues_[pattern].Push(std::move(job)));
   queued_job->AddCallback(callback);
+  if (deleted_callback) {
+    queued_job->AddRegistrationDeletedCallback(deleted_callback);
+  }
 }
 
 void ServiceWorkerJobCoordinator::Update(

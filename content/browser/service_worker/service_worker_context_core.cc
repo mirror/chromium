@@ -66,9 +66,18 @@ void CheckFetchHandlerOfInstalledServiceWorker(
           : ServiceWorkerCapability::SERVICE_WORKER_NO_FETCH_HANDLER);
 }
 
-void SuccessCollectorCallback(const base::Closure& done_closure,
+void FailureCollectorCallback(const base::Closure& done_closure,
                               bool* overall_success,
                               ServiceWorkerStatusCode status) {
+  if (status != ServiceWorkerStatusCode::SERVICE_WORKER_OK) {
+    *overall_success = false;
+    done_closure.Run();
+  }
+}
+
+void DeletionCollectorCallback(const base::Closure& done_closure,
+                               bool* overall_success,
+                               ServiceWorkerStatusCode status) {
   if (status != ServiceWorkerStatusCode::SERVICE_WORKER_OK) {
     *overall_success = false;
   }
@@ -148,6 +157,7 @@ class ClearAllServiceWorkersHelper
     for (const auto& registration_info : registrations) {
       context->UnregisterServiceWorker(
           registration_info.pattern,
+          base::Bind(&ClearAllServiceWorkersHelper::OnResult, this),
           base::Bind(&ClearAllServiceWorkersHelper::OnResult, this));
     }
   }
@@ -464,27 +474,30 @@ void ServiceWorkerContextCore::UpdateServiceWorker(
 
 void ServiceWorkerContextCore::UnregisterServiceWorker(
     const GURL& pattern,
-    const UnregistrationCallback& callback) {
+    const UnregistrationCallback& callback,
+    const RegistrationDeletedCallback& deleted_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   job_coordinator_->Unregister(
       pattern,
-      base::Bind(&ServiceWorkerContextCore::UnregistrationComplete,
-                 AsWeakPtr(),
-                 pattern,
-                 callback));
+      base::Bind(&ServiceWorkerContextCore::UnregistrationComplete, AsWeakPtr(),
+                 pattern, callback),
+      base::Bind(&ServiceWorkerContextCore::OnRegistrationDeleted, AsWeakPtr(),
+                 pattern, deleted_callback));
 }
 
 void ServiceWorkerContextCore::UnregisterServiceWorkers(
     const GURL& origin,
-    const UnregistrationCallback& callback) {
+    const UnregistrationCallback& callback,
+    const RegistrationDeletedCallback& deleted_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   storage()->GetAllRegistrationsInfos(base::Bind(
       &ServiceWorkerContextCore::DidGetAllRegistrationsForUnregisterForOrigin,
-      AsWeakPtr(), callback, origin));
+      AsWeakPtr(), callback, deleted_callback, origin));
 }
 
 void ServiceWorkerContextCore::DidGetAllRegistrationsForUnregisterForOrigin(
     const UnregistrationCallback& result,
+    const RegistrationDeletedCallback& deleted_callback,
     const GURL& origin,
     ServiceWorkerStatusCode status,
     const std::vector<ServiceWorkerRegistrationInfo>& registrations) {
@@ -505,7 +518,8 @@ void ServiceWorkerContextCore::DidGetAllRegistrationsForUnregisterForOrigin(
 
   for (const GURL& scope : scopes) {
     UnregisterServiceWorker(
-        scope, base::Bind(&SuccessCollectorCallback, barrier, overall_success));
+        scope, base::Bind(&FailureCollectorCallback, barrier, overall_success),
+        base::Bind(&DeletionCollectorCallback, barrier, overall_success));
   }
 }
 
@@ -563,6 +577,15 @@ void ServiceWorkerContextCore::UnregistrationComplete(
     int64_t registration_id,
     ServiceWorkerStatusCode status) {
   callback.Run(status);
+}
+
+void ServiceWorkerContextCore::OnRegistrationDeleted(
+    const GURL& pattern,
+    const ServiceWorkerContextCore::RegistrationDeletedCallback& callback,
+    int64_t registration_id,
+    ServiceWorkerStatusCode status) {
+  if (callback)
+    callback.Run(status);
   if (status == SERVICE_WORKER_OK && observer_list_.get()) {
     observer_list_->Notify(
         FROM_HERE, &ServiceWorkerContextCoreObserver::OnRegistrationDeleted,

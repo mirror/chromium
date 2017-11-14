@@ -301,7 +301,8 @@ void ServiceWorkerContextWrapper::UnregisterServiceWorker(
 
   context()->UnregisterServiceWorker(
       net::SimplifyUrlForRequest(pattern),
-      base::Bind(&FinishUnregistrationOnIO, base::Passed(std::move(callback))));
+      base::Bind(&FinishUnregistrationOnIO, base::Passed(std::move(callback))),
+      ServiceWorkerContextCore::RegistrationDeletedCallback());
 }
 
 bool ServiceWorkerContextWrapper::StartingExternalRequest(
@@ -366,8 +367,10 @@ void ServiceWorkerContextWrapper::DeleteForOrigin(const GURL& origin,
     return;
   }
   context()->UnregisterServiceWorkers(
-      origin.GetOrigin(), base::Bind(&StatusCodeToBoolCallbackAdapter,
-                                     base::Passed(std::move(callback))));
+      origin.GetOrigin(),
+      base::Bind(&StatusCodeToBoolCallbackAdapter,
+                 base::Passed(std::move(callback))),
+      ServiceWorkerContextCore::RegistrationDeletedCallback());
 }
 
 void ServiceWorkerContextWrapper::CheckHasServiceWorker(

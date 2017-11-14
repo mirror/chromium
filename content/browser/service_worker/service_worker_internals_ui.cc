@@ -610,7 +610,8 @@ void ServiceWorkerInternalsUI::UnregisterWithScope(
   // ServiceWorkerContextWrapper::UnregisterServiceWorker doesn't work here
   // because that reduces a status code to boolean.
   context->context()->UnregisterServiceWorker(
-      scope, base::AdaptCallbackForRepeating(std::move(callback)));
+      scope, base::AdaptCallbackForRepeating(std::move(callback)),
+      ServiceWorkerContextCore::RegistrationDeletedCallback());
 }
 
 }  // namespace content
