@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4652d2e7_235c358e",
+        "filename": "chromeos/dbus/image_loader_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T21:13:34Z",
+      "side": 1,
+      "message": "+1 to dan\u0027s comments - We should never use CallMethodAndBlock unless we explicitly document and check that this is called from a task runner that allows blocking (i.e. not the UI thread). Since dbus client calls usually *are* made from the UI thread, we need to be especially careful here.",
+      "revId": "3e832ce40e8548f5914439781155b0ba39ed0529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
