@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a21d1447_99397736",
+        "filename": "third_party/WebKit/Tools/.gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-14T16:41:08Z",
+      "side": 1,
+      "message": "Unrelated to this CL: I have a feeling that this isn\u0027t necessary anymore...",
+      "revId": "9c90ea3075d6ee436beb56dfd76fbe7f2287741b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6582786_d25fa410",
+        "filename": "third_party/WebKit/Tools/.gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-14T16:41:08Z",
+      "side": 1,
+      "message": "You could add a comment saying that this is is the \"pyc\" file for this script, created if it is imported.",
+      "revId": "9c90ea3075d6ee436beb56dfd76fbe7f2287741b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
