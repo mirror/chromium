@@ -246,11 +246,31 @@ Polymer({
     },
 
     /** @private */
-    showImportExportPasswords_: {
+    showExportPasswords_: {
       type: Boolean,
       value: function() {
-        return loadTimeData.valueExists('showImportExportPasswords') &&
-            loadTimeData.getBoolean('showImportExportPasswords');
+        return loadTimeData.valueExists('showExportPasswords') &&
+            loadTimeData.getBoolean('showExportPasswords');
+      }
+    },
+
+    /** @private */
+    showImportPasswords_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.valueExists('showImportPasswords') &&
+            loadTimeData.getBoolean('showImportPasswords');
+      }
+    },
+
+    /** @private */
+    showImportOrExportPasswords_: {
+      type: Boolean,
+      value: function() {
+        return (loadTimeData.valueExists('showExportPasswords') &&
+                loadTimeData.getBoolean('showExportPasswords')) ||
+            (loadTimeData.valueExists('showImportPasswords') &&
+             loadTimeData.getBoolean('showImportPasswords'));
       }
     },
 
