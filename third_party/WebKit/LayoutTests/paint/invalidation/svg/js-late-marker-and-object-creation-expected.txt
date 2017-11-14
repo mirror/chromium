@@ -9,7 +9,7 @@
         {
           "object": "LayoutSVGPath path",
           "rect": [202, 211, 112, 112],
-          "reason": "style change"
+          "reason": "full"
         },
         {
           "object": "LayoutSVGPath path",
@@ -35,7 +35,7 @@
     },
     {
       "object": "LayoutSVGPath path",
-      "reason": "style change"
+      "reason": "full"
     }
   ]
 }
