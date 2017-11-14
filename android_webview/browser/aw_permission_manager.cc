@@ -321,7 +321,6 @@ int AwPermissionManager::RequestPermissions(
       case PermissionType::AUDIO_CAPTURE:
       case PermissionType::VIDEO_CAPTURE:
       case PermissionType::NOTIFICATIONS:
-      case PermissionType::PUSH_MESSAGING:
       case PermissionType::DURABLE_STORAGE:
       case PermissionType::BACKGROUND_SYNC:
       case PermissionType::SENSORS:
@@ -340,6 +339,8 @@ int AwPermissionManager::RequestPermissions(
         NOTREACHED() << "PermissionType::NUM was not expected here.";
         pending_request_raw->SetPermissionStatus(permissions[i],
                                                  PermissionStatus::DENIED);
+        break;
+      default:
         break;
     }
   }
@@ -459,7 +460,6 @@ void AwPermissionManager::CancelPermissionRequest(int request_id) {
           delegate->CancelMIDISysexPermissionRequests(requesting_origin);
         break;
       case PermissionType::NOTIFICATIONS:
-      case PermissionType::PUSH_MESSAGING:
       case PermissionType::DURABLE_STORAGE:
       case PermissionType::AUDIO_CAPTURE:
       case PermissionType::VIDEO_CAPTURE:
@@ -475,6 +475,8 @@ void AwPermissionManager::CancelPermissionRequest(int request_id) {
         break;
       case PermissionType::NUM:
         NOTREACHED() << "PermissionType::NUM was not expected here.";
+        break;
+      default:
         break;
     }
     pending_request->SetPermissionStatus(permission, PermissionStatus::DENIED);
