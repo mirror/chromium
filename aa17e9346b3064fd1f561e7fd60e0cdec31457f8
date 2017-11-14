@@ -88,6 +88,24 @@
       "revId": "aa17e9346b3064fd1f561e7fd60e0cdec31457f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aadae8c_da14e3ef",
+        "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-14T08:36:44Z",
+      "side": 1,
+      "message": "We do have some UMA penetration in Enterprise not great but it does give us some data. So please add some UMA stats. You won\u0027t get much info from unstable channels but once the stats are in stable we will start seeing data.\n\nAlso agree on the plan for strict vs  relaxed.",
+      "parentUuid": "f162844e_ba1d5729",
+      "revId": "aa17e9346b3064fd1f561e7fd60e0cdec31457f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
