@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b8d56ee1_3e23f852",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-14T07:33:02Z",
+      "side": 1,
+      "message": "\u003e This was a question to the spec :)\n\nWe don\u0027t want to change the spec on this point, I think, because it\u0027s simply doesn\u0027t make much sense.\n\nFor example,\n\na) A callback function is registered to a user agent.  The callback function\u0027s realm is X, and the incumbent realm at that time is X, too.\nb) X is not detached, and the user agent invokes the callback function.\nc) The callback function invokes another function whose realm is Y that is detached.\n\nStep c) has nothing to do with HTML or Web IDL, it\u0027s purely ECMAScript things (a function invokes another function), and ECMAScript doesn\u0027t recognize a \"frame\" nor \"detach\".  There is no good way to prohibit step c).\n\nGiven that there is no way to prohibit running a function created in a certain realm, it\u0027s an imperfect solution to prohibit running a callback function when the incumbent realm is detached.  Such a solution will make 98.0%-working-code be 98.4%-working-code.  I don\u0027t think that the spec people are happy with such an imperfect solution.",
+      "parentUuid": "f5f86dc0_eab507d8",
+      "revId": "2ef3c527ed6e04b9899806bc606eda97a52e61c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b44c048c_ccd55403",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
         "patchSetId": 6
