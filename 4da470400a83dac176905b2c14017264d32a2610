@@ -70,6 +70,30 @@
       "revId": "4da470400a83dac176905b2c14017264d32a2610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00333313_549b9d1e",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLOptionElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-11-14T03:11:46Z",
+      "side": 1,
+      "message": "Ah I see what you mean :) I added the test that verifies the name behavior, i.e. \"as opposed to having been replaced by a new text node with the new value\". It passes with and fails without my patch.",
+      "parentUuid": "9d2e0c90_0ad96b55",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 16
+      },
+      "revId": "4da470400a83dac176905b2c14017264d32a2610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
