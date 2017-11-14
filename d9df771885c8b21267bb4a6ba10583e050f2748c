@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "685e0ffa_717f8f90",
+        "filename": "content/common/render_message_filter.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-14T17:05:09Z",
+      "side": 1,
+      "message": "nit: 80 cols (and lines 20, 28, 33)",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 1
+      },
+      "revId": "d9df771885c8b21267bb4a6ba10583e050f2748c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
