@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f5f86dc0_eab507d8",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-14T00:14:47Z",
+      "side": 1,
+      "message": "Blink should follow the spec. We can do this by oilpanizing ScriptState and supporting the wrapper tracing for v8::Context held by ScriptState.\n\n\u003e Also what\u0027s the point of running a callback function on an already detached incumbent realm?\n\nThis was a question to the spec :)",
+      "parentUuid": "88ae027f_d313a6ac",
+      "revId": "2ef3c527ed6e04b9899806bc606eda97a52e61c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b44c048c_ccd55403",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
         "patchSetId": 6
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "\u003e Maybe would it be better to make IsCallbackFunctionRunnable check both relevant ScriptState and incumbent ScriptState?\n\nThat\u0027s what my first version was. ;)  And I changed my mind according to your review comment.  I now believe that it\u0027s the right direction to make the incumbent environment alive.",
       "parentUuid": "b44c048c_ccd55403",
+      "revId": "2ef3c527ed6e04b9899806bc606eda97a52e61c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8964b52_e51e90d3",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-14T00:14:47Z",
+      "side": 1,
+      "message": "Yeah, sorry about that. At that point I was thinking that we won\u0027t need to check IncumbentScriptState()-\u003eGetContext() before calling the callback. If we need to check it, it looks better to check it in IsCallbackFunctionRunnable().",
+      "parentUuid": "fa512a79_85a95c04",
       "revId": "2ef3c527ed6e04b9899806bc606eda97a52e61c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
