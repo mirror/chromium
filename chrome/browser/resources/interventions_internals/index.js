@@ -249,13 +249,29 @@ InterventionsInternalPageImpl.prototype = {
 
   /**
    * Update the page with the new value of estimated effective connection type.
+   * Log the ECT to the ECT logs table.
    *
    * @override
    * @param {string} type The string representation of estimated ECT.
    */
   onEffectiveConnectionTypeChanged: function(type) {
+    // Change the current ETC.
     let ectType = $('nqe-type');
     ectType.textContent = type;
+
+    // Log ETC changed event.
+    let nqeRow = document.createElement('tr');
+
+    let timeCol = document.createElement('td');
+    timeCol.textContent = getTimeFormat(Date.now());
+    timeCol.setAttribute('class', 'nqe-time-column');
+    nqeRow.appendChild((timeCol));
+
+    let nqeCol = document.createElement('td');
+    nqeCol.setAttribute('class', 'nqe-value-column');
+    nqeCol.textContent = type;
+    nqeRow.appendChild(nqeCol);
+    $('nqe-logs-table').appendChild(nqeRow);
   },
 };
 
