@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "321cdb44_4ef2e708",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:45:29Z",
+      "side": 1,
+      "message": "really nitty: prefer Oxford comma (A, B, C, and D)",
+      "revId": "64ba28e07f54c62e52dc4088e24877d606ec5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552f136c_90f55a94",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:45:29Z",
+      "side": 1,
+      "message": "can it just be called StartWorker()? UntilRunning sounds redundant.",
+      "revId": "64ba28e07f54c62e52dc4088e24877d606ec5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
