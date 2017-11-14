@@ -96,9 +96,44 @@ function setupLogSearch() {
 }
 
 /**
+ * Create and add a copy to clipboard button to a given node.
+ *
+ * @param {string} text The text that will be copied to the clipboard.
+ * @param {element!} node The node that will have the button appended to.
+ */
+function appendCopyToClipBoardButton(text, node) {
+  if (!document.queryCommandSupported ||
+      !document.queryCommandSupported('copy')) {
+    // Don't add copy to clipboard button if not supported.
+    return;
+  }
+  let copyButton = document.createElement('div');
+  copyButton.setAttribute('class', 'copy-to-clipboard-button');
+  copyButton.textContent = 'Copy';
+
+  copyButton.addEventListener('click', () => {
+    var textarea = document.createElement('textarea');
+    textarea.textContent = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      return document.execCommand('copy');  // Security exception may be thrown.
+    } catch (ex) {
+      console.warn('Copy to clipboard failed.', ex);
+      return false;
+    } finally {
+      document.body.removeChild(textarea);
+    }
+  });
+  node.appendChild(copyButton);
+}
+
+/**
  * Shorten long URL string so that it can be displayed nicely on mobile devices.
  * If |url| is longer than URL_THRESHOLD, then it will be shorten, and a tooltip
  * element will be added so that user can see the original URL.
+ *
+ * Add copy to clipboard button to it.
  *
  * @param {string} url The given URL string.
  * @return An DOM node with the original URL if the length is within THRESHOLD,
@@ -117,6 +152,9 @@ function createUrlElement(url) {
     tooltip.textContent = url;
     urlTd.appendChild(tooltip);
   }
+
+  // Append copy to clipboard button.
+  appendCopyToClipBoardButton(url, urlTd);
   return urlTd;
 }
 
