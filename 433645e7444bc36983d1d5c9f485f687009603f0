@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c3b0542_0449bcce",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-14T10:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11835dc1_0c3850a6",
+      "range": {
+        "startLine": 1251,
+        "startChar": 13,
+        "endLine": 1251,
+        "endChar": 18
+      },
+      "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e43c9d0f_2672a9cd",
         "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "805c1e68_35cef004",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-14T10:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e43c9d0f_2672a9cd",
+      "range": {
+        "startLine": 1266,
+        "startChar": 41,
+        "endLine": 1266,
+        "endChar": 45
+      },
+      "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a93406c_8155ac13",
         "filename": "content/renderer/media/mock_mojo_media_stream_dispatcher_host.h",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-13T14:46:13Z",
       "side": 1,
       "message": "This should do something with |callback| so that you can test things that were previously tested.",
+      "range": {
+        "startLine": 39,
+        "startChar": 18,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a9d6a6_00dfb3f2",
+        "filename": "content/renderer/media/mock_mojo_media_stream_dispatcher_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-14T10:02:39Z",
+      "side": 1,
+      "message": "OpenDevice here is a mock method. Didn\u0027t really test anything earlier as well. This was used in MediaStreamDispatcher unittest which anyway has been removed.",
+      "parentUuid": "6a93406c_8155ac13",
       "range": {
         "startLine": 39,
         "startChar": 18,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d919ff5a_269be858",
+        "filename": "content/renderer/pepper/pepper_media_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-14T10:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f5a25d7_b2e24665",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 20
+      },
+      "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26db274b_e5fbe6e3",
         "filename": "content/renderer/pepper/pepper_media_device_manager.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb28edbe_670e80b6",
+        "filename": "content/renderer/pepper/pepper_media_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-14T10:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26db274b_e5fbe6e3",
+      "range": {
+        "startLine": 212,
+        "startChar": 2,
+        "endLine": 212,
+        "endChar": 16
+      },
+      "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "93232a22_4692e427",
+        "filename": "content/renderer/pepper/pepper_media_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-14T10:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61bc6ab7_fda00f1e",
+      "range": {
+        "startLine": 266,
+        "startChar": 14,
+        "endLine": 266,
+        "endChar": 15
+      },
+      "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad93ac46_804380fe",
         "filename": "content/renderer/pepper/pepper_media_device_manager.h",
         "patchSetId": 3
@@ -160,6 +304,30 @@
       "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "572b4583_1a3c532b",
+        "filename": "content/renderer/pepper/pepper_media_device_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-14T10:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad93ac46_804380fe",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 16
+      },
+      "revId": "433645e7444bc36983d1d5c9f485f687009603f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
