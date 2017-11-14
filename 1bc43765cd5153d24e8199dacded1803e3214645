@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9018a5a_59203cc8",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T21:24:52Z",
+      "side": 1,
+      "message": "I\u0027d prefer to have something like\n\n  constexpr std::array\u003cmojom::AppDiscoveryRequestState\u003e kErrorStates \u003d { ... };\n\n  for (const auto\u0026 error_state : kErrorStates) {\n    // ...\n  }\n\nYou can leave the TODO to do a\n\n  static_assert(kErrorStates.size() \u003d\u003d AppDiscoveryRequestState_UmaBoundary - 2,\n                \"Missing entries\");",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 52
+      },
+      "revId": "1bc43765cd5153d24e8199dacded1803e3214645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab50ebe1_0ef37a29",
+        "filename": "components/arc/test/fake_app_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T21:24:52Z",
+      "side": 1,
+      "message": "Would it be possible to do something like add a FakeAppInstance::SetRecentAndSuggestedAppsFromPlayStore(), add a\n\n base::Optional\u003cstd::tuple\u003carc::mojom::AppDiscoveryRequestState,\n                           std::vector\u003carc::mojom::AppDiscoveryResultPtr\u003e\u003e fake_apps_;\n\nand\n\n if (fake_apps_.has_value()) {\n   std::move(callback).Run(fake_apps_.get\u003c0\u003e, fake_apps_.get\u003c1\u003e);\n   // Extra points if you can modify base::DispatchToMethod() to accept a move-only type,\n   // that way you can do\n   // base::DispatchToMethod(std::move(callback), \u0026callback.Run, fake_apps_.value());\n   return;\n }",
+      "range": {
+        "startLine": 331,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 60
+      },
+      "revId": "1bc43765cd5153d24e8199dacded1803e3214645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
