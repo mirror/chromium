@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "dcb1195c_ed06aea0",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-11-14T20:51:27Z",
+      "side": 1,
+      "message": "maybe merge with the OS_POSIX case from lines 99-102 ?",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 43
+      },
+      "revId": "27acb1f46eaadfbf41debb0b68c4d914924d0428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d576606_e5f7b6e9",
         "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
         "patchSetId": 1
