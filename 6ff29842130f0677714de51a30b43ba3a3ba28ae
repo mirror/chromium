@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd1422ce_eb602805",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-14T22:16:45Z",
+      "side": 1,
+      "message": "nit: can we put \"SafeBrowsing\" in the name (since now it\u0027s unclear)? I think a reasonable name would be \"fetchSafeBrowsingUserOptIn().\" Also, @NonNull would be nice (to state downstream\u0027s expectation).",
+      "range": {
+        "startLine": 73,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 38
+      },
+      "revId": "6ff29842130f0677714de51a30b43ba3a3ba28ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d83d8626_1bc14e8d",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-14T22:16:45Z",
+      "side": 1,
+      "message": "Can you add an explanation why? It\u0027s sufficient to say \"User opt-in preference depends on a SafetyNet API\"",
+      "range": {
+        "startLine": 74,
+        "startChar": 11,
+        "endLine": 74,
+        "endChar": 51
+      },
+      "revId": "6ff29842130f0677714de51a30b43ba3a3ba28ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
