@@ -462,6 +462,9 @@ class BASE_EXPORT MessageLoopForUI : public MessageLoop {
   // In Android there are cases where we want to abort immediately without
   // calling Quit(), in these cases we call Abort().
   void Abort();
+
+  // Called when the MessagePump goes idle.
+  void SetIdleCallback(base::OnceClosure callback);
 #endif
 
 #if (defined(USE_OZONE) && !defined(OS_FUCHSIA)) || \
