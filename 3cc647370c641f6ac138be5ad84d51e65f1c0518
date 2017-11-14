@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37622653_979ce80a",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-14T17:14:47Z",
+      "side": 1,
+      "message": "SkBitmap is not thread safe either [1]. Usually SkBitmap::setImmutable is called before passing it between threads. IMHO, it seems that \"std::move(image)\" is more concise than using SkBitmap.\n\n[1] https://cs.chromium.org/chromium/src/third_party/skia/include/core/SkBitmap.h?rcl\u003d1662257bdaaaf26b016bf2a3e329c34f7f5ed581\u0026l\u003d42",
+      "parentUuid": "1b03b375_dd558dc8",
+      "range": {
+        "startLine": 172,
+        "startChar": 10,
+        "endLine": 172,
+        "endChar": 26
+      },
+      "revId": "3cc647370c641f6ac138be5ad84d51e65f1c0518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5d64933_1583db84",
         "filename": "ui/snapshot/snapshot_aura.cc",
         "patchSetId": 2
