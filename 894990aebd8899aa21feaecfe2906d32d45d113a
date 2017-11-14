@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6547d116_b95e569d",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-14T16:36:31Z",
+      "side": 1,
+      "message": "nit: add TODOs to remove these tests once NavigationMojoResponse has launched.",
+      "revId": "894990aebd8899aa21feaecfe2906d32d45d113a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4e59cf_c06da03d",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-14T16:36:31Z",
+      "side": 1,
+      "message": "nit: add a TODO to see if this could eventually be unified with the network service version.",
+      "revId": "894990aebd8899aa21feaecfe2906d32d45d113a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7eb035_3eccd9c4",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-14T16:36:31Z",
+      "side": 1,
+      "message": "nit: remove this line? I think it can be cancelled from various places.",
+      "revId": "894990aebd8899aa21feaecfe2906d32d45d113a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8e0de0_a09a8695",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-14T16:36:31Z",
+      "side": 1,
+      "message": "nit: no need to move this member?",
+      "revId": "894990aebd8899aa21feaecfe2906d32d45d113a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "972375db_e56b30e0",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-14T16:36:31Z",
+      "side": 1,
+      "message": "nit: add a comment about this member?",
+      "revId": "894990aebd8899aa21feaecfe2906d32d45d113a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee4d0b2c_405ebbb0",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-14T16:36:31Z",
+      "side": 1,
+      "message": "These tests really exercise the NavigationURLLoaderImpl version of the URLLoader (+NavigationURLLoaderImplCore), and I don\u0027t think it will still make sense to have most (all of?) them in unit test form once we switch to mojom::URLLoader. We should be looking at moving them to browser test versions if what they test is not already covered, and remove them.",
+      "revId": "894990aebd8899aa21feaecfe2906d32d45d113a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "743aef1d_2cb8bdb4",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1562,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-14T16:36:31Z",
+      "side": 1,
+      "message": "Ok so looking at this, I really think we should pause the navigation in MojoAsyncResourceHandler when we get OnResponseStarted, and only resume it when the UI thread tells us to do so because otherwise we can\u0027t block downloads/streams from NavigationThrottles.\n\nCurrently, the ResourceHandlers are ordered in the following way:\nNavigationResourceHandler -\u003e ... -\u003e InterceptingResourceHandler -\u003e StreamResourceHandler.\n\nIf we detect that the navigation is a download or a stream, we\u0027ll tell the InterceptingResourceHandler that it will need to replace the StreamResourceHandler by a new StreamResourceHandler or a DownloadResourceHandler. This happens when we get to InterceptingResourceHandler::OnResponseStarted. However, since NavigationResourceHandler paused the navigation while the UI thread was processing, we\u0027re sure the all NavigationThrottles have run and decided to proceed with the response.\n\nIn NavigationMojoResponse, the chain of handlers looks like this:\nInterceptingResourceHandler -\u003e MojoAsyncResourceHandler. So by the time we get to InterceptingResourceHandler::OnResponseStarted, NavigationThrottles haven\u0027t ran yet (since we haven\u0027t gotten to MojoAsyncResourceHandler). In the case of a ResourceHandler switch, if MojoAsyncResourceHandler returns right away from OnResponseStarted, it will be destroyed immediately and replaced by the new ResourceHandler. So NavigationThrottles won\u0027t be able to cancel the download anymore, since MojoAsyncResourceHandler doesn\u0027t exist anymore at that point.\n\nSo, as long as we have an InterceptingResourceHandler before the MojoAsyncReosurceHandler we need to pause the request while the UI thread processes the navigation.",
+      "revId": "894990aebd8899aa21feaecfe2906d32d45d113a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
