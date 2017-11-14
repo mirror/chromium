@@ -10,12 +10,16 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <algorithm>
+#include <memory>
 #include <utility>
 #include <vector>
 
+#include "base/files/file.h"
+#include "base/format_macros.h"
 #include "base/macros.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "build/build_config.h"
 
 namespace base {
@@ -76,6 +80,80 @@ bool Prefetch(const std::vector<std::pair<uintptr_t, uintptr_t>>& ranges) {
     }
   }
   return true;
+}
+
+// Populate the per-page residency for |range| in |residency|. If successful,
+// |residency| has the size of |range| in pages.
+// Returns true for success.
+bool MincoreOnRange(const NativeLibraryPrefetcher::AddressRange& range,
+                    std::vector<unsigned char>* residency) {
+  size_t size = range.second - range.first;
+  size_t size_in_pages = size / kPageSize;
+  if (residency->size() != size_in_pages)
+    residency->resize(size_in_pages);
+  int err = HANDLE_EINTR(
+      mincore(reinterpret_cast<void*>(range.first), size, &(*residency)[0]));
+  if (err) {
+    PLOG(ERROR) << "mincore() failed";
+    return false;
+  }
+  return true;
+}
+
+// Timestamp in ns since Unix Epoch, and residency, as returned by mincore().
+struct TimestampAndResidency {
+  uint64_t timestamp_nanos;
+  std::vector<unsigned char> residency;
+
+  TimestampAndResidency(uint64_t timestamp_nanos,
+                        std::vector<unsigned char>&& residency)
+      : timestamp_nanos(timestamp_nanos), residency(residency) {}
+};
+
+// Returns true for success.
+bool CollectResidency(const NativeLibraryPrefetcher::AddressRange& range,
+                      std::vector<TimestampAndResidency>* data) {
+  // Not using base::TimeTicks() to not call too many base:: symbol that would
+  // pollute the reached symbols dumps.
+  struct timespec ts;
+  if (HANDLE_EINTR(clock_gettime(CLOCK_MONOTONIC, &ts))) {
+    PLOG(ERROR) << "Cannot get the time.";
+    return false;
+  }
+  uint64_t now =
+      static_cast<uint64_t>(ts.tv_sec) * 1000 * 1000 * 1000 + ts.tv_nsec;
+  std::vector<unsigned char> residency;
+  if (!MincoreOnRange(range, &residency))
+    return false;
+
+  data->emplace_back(now, std::move(residency));
+  return true;
+}
+
+void DumpResidency(std::unique_ptr<std::vector<TimestampAndResidency>> data) {
+  auto path = base::FilePath(
+      base::StringPrintf("/data/local/tmp/chrome/residency-%d.txt", getpid()));
+  auto file =
+      base::File(path, base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
+  if (!file.IsValid()) {
+    // This is expected in renderer processes, as they don't have access to
+    // the file system.
+    LOG(WARNING) << "Cannot open the file";
+    return;
+  }
+
+  for (const auto& data_point : *data) {
+    auto timestamp =
+        base::StringPrintf("%" PRIu64 " ", data_point.timestamp_nanos);
+    file.WriteAtCurrentPos(timestamp.c_str(), timestamp.size());
+
+    std::vector<char> dump;
+    dump.reserve(data_point.residency.size() + 1);
+    for (auto c : data_point.residency)
+      dump.push_back(c ? '1' : '0');
+    dump[dump.size() - 1] = '\n';
+    file.WriteAtCurrentPos(&dump[0], dump.size());
+  }
 }
 
 }  // namespace
@@ -174,18 +252,13 @@ int NativeLibraryPrefetcher::PercentageOfResidentCode(
   for (const auto& range : ranges) {
     if (range.first & page_mask || range.second & page_mask)
       return -1;
-    size_t length = range.second - range.first;
-    size_t pages = length / kPageSize;
-    total_pages += pages;
-    std::vector<unsigned char> is_page_resident(pages);
-    int err = mincore(reinterpret_cast<void*>(range.first), length,
-                      &is_page_resident[0]);
-    DPCHECK(!err);
-    if (err)
+    std::vector<unsigned char> residency;
+    bool ok = MincoreOnRange(range, &residency);
+    if (!ok)
       return -1;
-    resident_pages +=
-        std::count_if(is_page_resident.begin(), is_page_resident.end(),
-                      [](unsigned char x) { return x & 1; });
+    total_pages += residency.size();
+    resident_pages += std::count_if(residency.begin(), residency.end(),
+                                    [](unsigned char x) { return x & 1; });
   }
   if (total_pages == 0)
     return -1;
@@ -198,6 +271,28 @@ int NativeLibraryPrefetcher::PercentageOfResidentNativeLibraryCode() {
   if (!FindRanges(&ranges))
     return -1;
   return PercentageOfResidentCode(ranges);
+}
+
+// static
+void NativeLibraryPrefetcher::PeriodicallyCollectResidency() {
+  std::vector<AddressRange> ranges;
+  if (!FindRanges(&ranges))
+    return;
+
+  // ranges contain .data, .rodata, .text, the last one is larger.
+  const auto& range =
+      *std::max_element(ranges.begin(), ranges.end(),
+                        [](const AddressRange& a, const AddressRange& b) {
+                          return a.second - a.first < b.second - b.first;
+                        });
+
+  auto data = std::make_unique<std::vector<TimestampAndResidency>>();
+  for (int i = 0; i < 60; ++i) {
+    if (!CollectResidency(range, data.get()))
+      return;
+    usleep(2e5);
+  }
+  DumpResidency(std::move(data));
 }
 
 }  // namespace android
