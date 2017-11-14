@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "c1c888cd_bec521a7",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-14T23:46:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d2fa9163_86d397eb",
+      "range": {
+        "startLine": 782,
+        "startChar": 32,
+        "endLine": 782,
+        "endChar": 38
+      },
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdcc737b_e2da6063",
         "filename": "chrome/browser/resource_coordinator/tab_manager.h",
         "patchSetId": 2
