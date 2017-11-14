@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b8d9efe_2d9ecc29",
+        "filename": "chrome/browser/generic_sensor/sensor_permission_context.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-14T01:05:28Z",
+      "side": 1,
+      "message": "For both of these comments can you reference the fact that these properties are enforced for the Generic Sensor API by the renderer.",
+      "revId": "24dc00a16001d1abfd09d5d09cdc457467f5de0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
