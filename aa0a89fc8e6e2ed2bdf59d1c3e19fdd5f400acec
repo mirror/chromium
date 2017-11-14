@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e2f73698_2200903b",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T22:59:23Z",
+      "side": 0,
+      "message": "Is the new snapshot_requested_callback_ being called at a similar enough time compared to the previous latency_info_callback_ that callers won\u0027t be confused?",
+      "revId": "aa0a89fc8e6e2ed2bdf59d1c3e19fdd5f400acec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd314f40_60d72465",
         "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
         "patchSetId": 7
@@ -13,6 +30,30 @@
       "writtenOn": "2017-11-14T21:51:13Z",
       "side": 0,
       "message": "LatencyInfo is currently (ab)used to communicate when a frame has an associated snapshot here. To keep this patch a no-op, I converted all AddLatencyInfo\u0027s to SetSnapshotRequested instead of just removing AddLatencyInfo.\n\nIs it okay to figure out how to remove it properly a followup patch? I\u0027m assuming there\u0027s a better way of plumbing that bit other than as an argument to the AsyncFlush IPC (which is how LatencyInfo is communicated before this patch).",
+      "range": {
+        "startLine": 211,
+        "startChar": 12,
+        "endLine": 211,
+        "endChar": 51
+      },
+      "revId": "aa0a89fc8e6e2ed2bdf59d1c3e19fdd5f400acec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1dcf54_0007ce87",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T22:59:23Z",
+      "side": 0,
+      "message": "Yes, please do keep the logic in this area. tdresser@ has been discussing how to remove the snapshot functionality from LatencyInfo but it\u0027s tricky to avoid regressions. It\u0027s important to keep the snapshot tracking working as it currently does because many tests rely on it. The newly introduced SnapshotBrowserTests should reliably catch breakage in this area now.",
+      "parentUuid": "bd314f40_60d72465",
       "range": {
         "startLine": 211,
         "startChar": 12,

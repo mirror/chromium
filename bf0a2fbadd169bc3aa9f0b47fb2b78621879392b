@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "f41667f1_495ffd5b",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T22:59:23Z",
+      "side": 1,
+      "message": "I don\u0027t know the answer to that question but would suggest figuring out a way to test this scenario. Not sure how much gets torn down and re-created upon context loss (like a GPU process crash). Perhaps the pixel_tests can be modified to conditionally crash the GPU process, and then take a snapshot after it comes back up. Happy to discuss this possibility more offline.",
+      "parentUuid": "a7f76b0e_7e600c33",
+      "revId": "bf0a2fbadd169bc3aa9f0b47fb2b78621879392b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6a7c068_ef4e08b6",
         "filename": "ui/gfx/swap_result.h",
         "patchSetId": 7
