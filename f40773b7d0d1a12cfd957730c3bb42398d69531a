@@ -94,6 +94,29 @@
       "revId": "f40773b7d0d1a12cfd957730c3bb42398d69531a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5afd26fb_845f846d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/media-capabilities/decodingInfo.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-14T11:04:47Z",
+      "side": 1,
+      "message": "Tests involving the exponential form, periods and trailing things would be nice, since those are likely bugs using some number parsing helpers. For example \u002724000/1e4\u0027, \u002724/1.0001\u0027 and \u00271/3x\u0027",
+      "range": {
+        "startLine": 208,
+        "startChar": 6,
+        "endLine": 208,
+        "endChar": 15
+      },
+      "revId": "f40773b7d0d1a12cfd957730c3bb42398d69531a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
