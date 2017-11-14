@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "00b4baa0_90b41cb2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-14T18:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "436a435d_b34e973c",
+      "range": {
+        "startLine": 393,
+        "startChar": 8,
+        "endLine": 393,
+        "endChar": 19
+      },
+      "revId": "3c4d725927c13cc8d753a97bc88bda46e441ecb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "962ea05c_0bc25c61",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-14T18:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad2194c3_c3edff4f",
+      "revId": "3c4d725927c13cc8d753a97bc88bda46e441ecb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68a1819e_e60bb84e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-14T16:50:30Z",
       "side": 1,
       "message": "isAppInstalledAndAssociatedWithOrigin() asserts that it\u0027s called from a background thread. That should be the case here, but it\u0027s not guaranteed, AFAIK.\nIs it a problem?",
+      "revId": "3c4d725927c13cc8d753a97bc88bda46e441ecb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cefc563e_920f9ea4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-14T18:00:25Z",
+      "side": 1,
+      "message": "That would be a problem actually. I was assuming that no binder calls would happen on UI Thread. Doesn\u0027t the binder thread pool exclude the main thread?",
+      "parentUuid": "68a1819e_e60bb84e",
       "revId": "3c4d725927c13cc8d753a97bc88bda46e441ecb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "cd18e608_874b5a58",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-14T18:00:25Z",
+      "side": 1,
+      "message": "imho, we should use Uri there as well. But we are essentially a client for this API, which is used for webapp manifest related verifications and using URI seems to be the norm over there.",
+      "parentUuid": "c11a437a_435ca126",
+      "revId": "3c4d725927c13cc8d753a97bc88bda46e441ecb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c20a7040_43a4f47d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
         "patchSetId": 1
@@ -87,6 +165,24 @@
       "writtenOn": "2017-11-14T16:50:30Z",
       "side": 1,
       "message": "IIRC, this only guarantees that warmup as been called, not that the native side is initialized, which is what we want here, right? Unless this is called from the UI thread, and then we should be fine.\n\nAh, looking again this is indeed fine, as the real work will be done on the UI thread.\nCan you add a comment to make that explicit?",
+      "revId": "3c4d725927c13cc8d753a97bc88bda46e441ecb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4982fdcb_de575acf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-14T18:00:25Z",
+      "side": 1,
+      "message": "Yes, the addition of running the only native dependent part of ClientManager side call was to assure that we don\u0027t run into issues with that.\n\nAdded a comment to clarify.",
+      "parentUuid": "c20a7040_43a4f47d",
       "revId": "3c4d725927c13cc8d753a97bc88bda46e441ecb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
