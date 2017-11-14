@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "22620740_bb2abb17",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-14T13:37:12Z",
+      "side": 1,
+      "message": "Yeah. It\u0027s a good question, while as we chatted offline at this moment it doesn\u0027t look too clear about where the line should be put. Probably when all Web platform code migrates into Blink the things that are exposed outside Blink would be public, while how much we\u0027ll be moving into or out of Blink is a bit unclear, and currently everything in WebKit/common is virtually public right now.\n\nMy current stance is to assume everything could be public for now, and sort out later, but if we can come up with a good separation (say, if we expose it outside //content it\u0027s public?) I\u0027m also all for creating public / private distinction now. (jam@- you may have any thoughts?)",
+      "parentUuid": "9f1ff365_e9477858",
+      "revId": "7e78da3ab068fe3d81c223f491b23b44464ec4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca8cca53_d8e2bce7",
         "filename": "third_party/WebKit/public/platform/web_page_visibility_state.mojom",
         "patchSetId": 3
