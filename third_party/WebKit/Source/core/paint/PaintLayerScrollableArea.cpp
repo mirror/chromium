@@ -1308,8 +1308,12 @@ void PaintLayerScrollableArea::ComputeScrollbarExistence(
     ComputeScrollbarExistenceOption option) const {
   // Scrollbars may be hidden or provided by visual viewport or frame instead.
   DCHECK(Box().GetFrame()->GetSettings());
-  if (VisualViewportSuppliesScrollbars() || !CanHaveOverflowScrollbars(Box()) ||
-      Box().GetFrame()->GetSettings()->GetHideScrollbars()) {
+  bool can_have_scrollbar = (Box().GetFrame()->View() &&
+                             Box().GetFrame()->View()->CanHaveScrollbars());
+  if (!can_have_scrollbar &&
+      (VisualViewportSuppliesScrollbars() ||
+       !CanHaveOverflowScrollbars(Box()) ||
+       Box().GetFrame()->GetSettings()->GetHideScrollbars())) {
     needs_horizontal_scrollbar = false;
     needs_vertical_scrollbar = false;
     return;

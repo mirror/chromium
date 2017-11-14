@@ -2079,7 +2079,10 @@ void RenderViewImpl::OnResize(const ResizeParams& params) {
     webview()->HidePopups();
     if (send_preferred_size_changes_ &&
         webview()->MainFrame()->IsWebLocalFrame()) {
+      bool curr_can_have_scrollbars =
+          webview()->MainFrame()->ToWebLocalFrame()->CanHaveScrollbars();
       webview()->MainFrame()->ToWebLocalFrame()->SetCanHaveScrollbars(
+          curr_can_have_scrollbars &&
           ShouldDisplayScrollbars(params.new_size.width(),
                                   params.new_size.height()));
     }

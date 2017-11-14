@@ -682,7 +682,13 @@ scoped_refptr<WebTaskRunner> LocalFrameView::GetTimerTaskRunner() const {
 }
 
 void LocalFrameView::SetCanHaveScrollbars(bool can_have_scrollbars) {
-  can_have_scrollbars_ = can_have_scrollbars;
+  if (can_have_scrollbars_ != can_have_scrollbars) {
+    can_have_scrollbars_ = can_have_scrollbars;
+    if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+      GetLayoutView()->SetNeedsLayout("");
+      PerformLayout(false);
+    }
+  }
 
   ScrollbarMode new_vertical_mode = vertical_scrollbar_mode_;
   if (can_have_scrollbars && vertical_scrollbar_mode_ == kScrollbarAlwaysOff)

@@ -754,6 +754,7 @@ class WebLocalFrame : public WebFrame {
 
   // If set to false, do not draw scrollbars on this frame's view.
   virtual void SetCanHaveScrollbars(bool) = 0;
+  virtual bool CanHaveScrollbars() const = 0;
 
   // The size of the contents area.
   virtual WebSize ContentsSize() const = 0;
