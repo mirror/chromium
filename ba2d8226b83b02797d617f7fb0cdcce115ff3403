@@ -22,6 +22,30 @@
       "revId": "ba2d8226b83b02797d617f7fb0cdcce115ff3403",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad74a27_fd7c5b6d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/csspaint/hidpi/geometry-with-hidpi-zoom.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-14T16:31:35Z",
+      "side": 1,
+      "message": "--use-zoom-for-dsf is not yet turned on for Android and Mac. Android is in progress.\nThat the platforms differ on this point is a consequence of the feature only being half-\nimplemented.",
+      "parentUuid": "beff437f_09928cec",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "ba2d8226b83b02797d617f7fb0cdcce115ff3403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

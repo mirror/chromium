@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a71dadfc_b7c635e5",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-14T16:31:35Z",
+      "side": 1,
+      "message": "For devices without --use-zoom-for-dsf, I think you should also\ndivide by the device scale factor.",
+      "revId": "32e5081f792017b24e5f245fe896a63ddc409261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7ab8ad_0b13e310",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-14T16:31:35Z",
+      "side": 1,
+      "message": "The image backing should have size equal to |container_size|, which is the device pixel\nsize, no? Then all drawing commands into the custom paint buffer should be multiplied\nback up by the ratio between container_size and specified_size.",
+      "revId": "32e5081f792017b24e5f245fe896a63ddc409261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
