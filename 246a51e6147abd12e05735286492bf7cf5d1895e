@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "839e9466_9c3e2287",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:10:03Z",
+      "side": 1,
+      "message": "so can you drop this arg for now if you\u0027re not sure if you\u0027ll be able to use the existing mojo type?",
+      "range": {
+        "startLine": 37,
+        "startChar": 10,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a79fed97_f50188b9",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 10
@@ -156,6 +179,23 @@
       "side": 1,
       "message": "Oh, I overlooked \"one per clockid\" discussion on the review thread.\nIf so, could you document it explicitly in the mojom file?",
       "parentUuid": "e20775cf_db14ba6f",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0102b0c4_fab7af0b",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:10:03Z",
+      "side": 1,
+      "message": "re returning an error: specifically, SimpleAlarmTimer looks like it only uses CLOCK_REALTIME_ALARM. shouldn\u0027t requests to create a timer using CLOCK_BOOTTIME_ALARM fail instead of silently using the wrong type?",
       "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
