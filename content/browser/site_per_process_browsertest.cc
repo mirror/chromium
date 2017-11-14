@@ -8910,32 +8910,24 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
 
 // Helper class to wait for a ChildProcessHostMsg_ShutdownRequest message to
 // arrive.
-class ShutdownRequestMessageFilter : public BrowserMessageFilter {
+class ShutdownObserver : public RenderProcessHostObserver {
  public:
-  ShutdownRequestMessageFilter()
-      : BrowserMessageFilter(ChildProcessMsgStart),
-        message_loop_runner_(new MessageLoopRunner) {}
+  ShutdownObserver() : message_loop_runner_(new MessageLoopRunner) {}
 
-  bool OnMessageReceived(const IPC::Message& message) override {
-    if (message.type() == ChildProcessHostMsg_ShutdownRequest::ID) {
-      content::BrowserThread::PostTask(
-          content::BrowserThread::UI, FROM_HERE,
-          base::BindOnce(&ShutdownRequestMessageFilter::OnShutdownRequest,
-                         this));
-    }
-    return false;
+  void RenderProcessWillExit(RenderProcessHost* host) override {
+    content::BrowserThread::PostTask(
+        content::BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&ShutdownObserver::OnProcessExit,
+                       base::Unretained(this)));
   }
 
-  void OnShutdownRequest() { message_loop_runner_->Quit(); }
+  void OnProcessExit() { message_loop_runner_->Quit(); }
 
   void Wait() { message_loop_runner_->Run(); }
 
  private:
-  ~ShutdownRequestMessageFilter() override {}
-
   scoped_refptr<MessageLoopRunner> message_loop_runner_;
-
-  DISALLOW_COPY_AND_ASSIGN(ShutdownRequestMessageFilter);
+  DISALLOW_COPY_AND_ASSIGN(ShutdownObserver);
 };
 
 // Test for https://crbug.com/568836.  From an A-embed-B page, navigate the
@@ -8977,12 +8969,12 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   // the process and send a ChildProcessHostMsg_ShutdownRequest to the browser
   // process to ask whether it's ok to terminate.  Thus, wait for this message
   // to ensure that the RenderView and widget were closed without crashing.
-  scoped_refptr<ShutdownRequestMessageFilter> filter =
-      new ShutdownRequestMessageFilter();
-  subframe_process->AddFilter(filter.get());
+  auto observer = std::make_unique<ShutdownObserver>();
+  subframe_process->AddObserver(observer.get());
   NavigateFrameToURL(root->child_at(0),
                      embedded_test_server()->GetURL("a.com", "/title1.html"));
-  filter->Wait();
+  observer->Wait();
+  subframe_process->RemoveObserver(observer.get());
 
   // TODO(alexmos): Navigating the subframe back to b.com at this point would
   // trigger the race in https://crbug.com/535246, where the browser process
