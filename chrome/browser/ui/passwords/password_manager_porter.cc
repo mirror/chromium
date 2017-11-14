@@ -42,7 +42,7 @@ const base::FilePath::CharType kFileExtension[] = FILE_PATH_LITERAL("csv");
 
 // The default name of the password file when exporting.
 constexpr base::FilePath::CharType kDefaultFileName[] =
-    FILE_PATH_LITERAL("chrome_passwords");
+    FILE_PATH_LITERAL("Chrome Passwords");
 
 // Returns the file extensions corresponding to supported formats.
 // Inner vector indicates equivalent extensions. For example:
