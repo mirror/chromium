@@ -16,6 +16,7 @@
 #include "components/autofill/content/common/autofill_agent.mojom.h"
 #include "components/autofill/content/common/autofill_driver.mojom.h"
 #include "components/autofill/content/renderer/form_cache.h"
+#include "components/autofill/content/renderer/interacted_form_tracker.h"
 #include "components/autofill/content/renderer/page_click_listener.h"
 #include "components/autofill/content/renderer/page_click_tracker.h"
 #include "content/public/renderer/render_frame_observer.h"
@@ -36,6 +37,7 @@ namespace autofill {
 struct FormData;
 struct FormFieldData;
 struct PasswordFormFillData;
+class InteractedFormTracker;
 class PasswordAutofillAgent;
 class PasswordGenerationAgent;
 
@@ -48,6 +50,7 @@ class PasswordGenerationAgent;
 
 class AutofillAgent : public content::RenderFrameObserver,
                       public PageClickListener,
+                      public InteractedFormTracker::Observer,
                       public blink::WebAutofillClient,
                       public mojom::AutofillAgent {
  public:
@@ -93,6 +96,24 @@ class AutofillAgent : public content::RenderFrameObserver,
     page_click_tracker_ = std::move(page_click_tracker);
   }
 
+  base::WeakPtr<AutofillAgent> GetWeakPtr() {
+    return weak_ptr_factory_.GetWeakPtr();
+  }
+
+  // InteractedFormTracker::Observer
+  void OnProvisionallySaveForm(const blink::WebFormElement& form,
+                               const blink::WebInputElement& element,
+                               ElementChangeSource source) override;
+  void OnFormSubmitted(const blink::WebFormElement& form) override;
+  void OnSuccessfulSubmission(SubmissionSource source) override;
+
+  void AddInteractedFormObserver(Observer* observer);
+  void RemoveInteractedFormObserver(Observer* observer);
+
+  InteractedFormTracker* GetInteractedFormTrackerForTesting() {
+    return interacted_form_tracker_.get();
+  }
+
  protected:
   // blink::WebAutofillClient:
   void DidAssociateFormControlsDynamically() override;
@@ -136,20 +157,17 @@ class AutofillAgent : public content::RenderFrameObserver,
   void DidCommitProvisionalLoad(bool is_new_navigation,
                                 bool is_same_document_navigation) override;
   void DidFinishDocumentLoad() override;
-  void WillSendSubmitEvent(const blink::WebFormElement& form) override;
-  void WillSubmitForm(const blink::WebFormElement& form) override;
   void DidChangeScrollOffset() override;
   void FocusedNodeChanged(const blink::WebNode& node) override;
   void OnDestruct() override;
 
   // Fires IPC messages for a given form submission. Will always fire
-  // AutofillHostMsg_WillSubmitForm,  and will also fire
-  // AutofillHostMsg_FormSubmitted if |form_submitted| is true. Respects
-  // submitted_forms_ contents to ensure no duplicate submissions of
-  // AutofillHostMsg_WillSubmitForm.
+  // AutofillHostMsg_WillSubmitForm and AutofillHostMsg_FormSubmitted
+  // in sequence.
+  // TODO(michaelbai): Combine those two events to one.
   void FireHostSubmitEvents(const blink::WebFormElement& form,
-                            bool form_submitted);
-  void FireHostSubmitEvents(const FormData& form_data, bool form_submitted);
+                            bool known_success);
+  void FireHostSubmitEvents(const FormData& form_data, bool known_success);
 
   // Shuts the AutofillAgent down on RenderFrame deletion. Safe to call multiple
   // times.
@@ -173,17 +191,13 @@ class AutofillAgent : public content::RenderFrameObserver,
   void DidReceiveLeftMouseDownOrGestureTapInNode(
       const blink::WebNode& node) override;
 
-  // Called when a same-document navigation is detected.
-  void OnSameDocumentNavigationCompleted();
   // Helper method which collects unowned elements (i.e., those not inside a
   // form tag) and writes them into |output|. Returns true if the process is
   // successful, and all conditions for firing events are true.
   bool CollectFormlessElements(FormData* output);
   FRIEND_TEST_ALL_PREFIXES(FormAutocompleteTest, CollectFormlessElements);
 
-  // Called in a posted task by textFieldDidChange() to work-around a WebKit bug
-  // http://bugs.webkit.org/show_bug.cgi?id=16976
-  void TextFieldDidChangeImpl(const blink::WebFormControlElement& element);
+  void OnTextFieldDidChange(const blink::WebInputElement& element);
 
   // Shows the autofill suggestions for |element|. This call is asynchronous
   // and may or may not lead to the showing of a suggestion popup (no popup is
@@ -229,17 +243,22 @@ class AutofillAgent : public content::RenderFrameObserver,
   // Hides any currently showing Autofill popup.
   void HidePopup();
 
+  // TODO(michaelbai): Investigate why this method need to be mocked in
+  // chrome_render_view_test.cc, this isn't called now, but this is no test
+  // failed.
   // Returns true if the text field change is due to a user gesture. Can be
   // overriden in tests.
   virtual bool IsUserGesture() const;
 
+  // Attempt to get submitted FormData from last_interacted_form_ or
+  // constructed_form_, return true if |form| is set.
+  bool GetSubmittedForm(FormData* form) const;
+
+  void ResetLastInteractedElements();
+
   // Formerly cached forms for all frames, now only caches forms for the current
   // frame.
   FormCache form_cache_;
-
-  // Keeps track of the forms for which a "will submit" message has been sent in
-  // this frame's current load. We use a simplified comparison function.
-  std::set<FormData, FormDataCompare> submitted_forms_;
 
   PasswordAutofillAgent* password_autofill_agent_;  // Weak reference.
   PasswordGenerationAgent* password_generation_agent_;  // Weak reference.
@@ -257,9 +276,11 @@ class AutofillAgent : public content::RenderFrameObserver,
   // Last form which was interacted with by the user.
   blink::WebFormElement last_interacted_form_;
 
+  // Do we really need keep a set of element here??
   // When dealing with forms that don't use a <form> tag, we keep track of the
   // elements the user has modified so we can determine when submission occurs.
-  std::set<blink::WebFormControlElement> formless_elements_user_edited_;
+  std::set<blink::WebInputElement> formless_elements_user_edited_;
+  std::unique_ptr<FormData> constructed_form_;
 
   // Was the query node autofilled prior to previewing the form?
   bool was_query_node_autofilled_;
@@ -289,6 +310,8 @@ class AutofillAgent : public content::RenderFrameObserver,
   bool is_secure_context_required_;
 
   std::unique_ptr<PageClickTracker> page_click_tracker_;
+
+  std::unique_ptr<InteractedFormTracker> interacted_form_tracker_;
 
   mojo::Binding<mojom::AutofillAgent> binding_;
 
