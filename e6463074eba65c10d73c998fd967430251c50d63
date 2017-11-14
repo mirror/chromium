@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e189b0bc_411224a2",
+        "filename": "ash/system/web_notification/web_notification_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T21:03:51Z",
+      "side": 1,
+      "message": "We should really also test that the icons are shown / hidden correctly.",
+      "revId": "e6463074eba65c10d73c998fd967430251c50d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
