@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad2194c3_c3edff4f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-14T16:50:30Z",
+      "side": 1,
+      "message": "nit: use a lambda?",
+      "revId": "3c4d725927c13cc8d753a97bc88bda46e441ecb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436a435d_b34e973c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-14T16:50:30Z",
+      "side": 1,
+      "message": "nit2: runOnUiThread()?\nThis way we avoid posting a task if we\u0027re already on the UI thread.",
+      "range": {
+        "startLine": 393,
+        "startChar": 8,
+        "endLine": 393,
+        "endChar": 19
+      },
+      "revId": "3c4d725927c13cc8d753a97bc88bda46e441ecb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a1819e_e60bb84e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-14T16:50:30Z",
+      "side": 1,
+      "message": "isAppInstalledAndAssociatedWithOrigin() asserts that it\u0027s called from a background thread. That should be the case here, but it\u0027s not guaranteed, AFAIK.\nIs it a problem?",
+      "revId": "3c4d725927c13cc8d753a97bc88bda46e441ecb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11a437a_435ca126",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-14T16:50:30Z",
+      "side": 1,
+      "message": "Out of curiosity, why does this use java.net.URI, and not android.net.Uri?\nSeems to me that the second one is more frequent in chrome.",
+      "revId": "3c4d725927c13cc8d753a97bc88bda46e441ecb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20a7040_43a4f47d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-14T16:50:30Z",
+      "side": 1,
+      "message": "IIRC, this only guarantees that warmup as been called, not that the native side is initialized, which is what we want here, right? Unless this is called from the UI thread, and then we should be fine.\n\nAh, looking again this is indeed fine, as the real work will be done on the UI thread.\nCan you add a comment to make that explicit?",
+      "revId": "3c4d725927c13cc8d753a97bc88bda46e441ecb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
