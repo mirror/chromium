@@ -22,6 +22,63 @@
       "revId": "cbe3e7cb141d5f13e3df60985215f507e64d8fbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5784b62_0ab488de",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-14T18:41:27Z",
+      "side": 1,
+      "message": "from when?  The first click on the launcher?  The first keystroke?  The last keystroke?",
+      "range": {
+        "startLine": 2046,
+        "startChar": 76,
+        "endLine": 2046,
+        "endChar": 77
+      },
+      "revId": "cbe3e7cb141d5f13e3df60985215f507e64d8fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa642b45_2b34ee38",
+        "filename": "ui/app_list/app_list_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-14T18:41:27Z",
+      "side": 1,
+      "message": "How can this test fail?  Should it be a DCHECK?",
+      "revId": "cbe3e7cb141d5f13e3df60985215f507e64d8fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c49970_0ae7ffae",
+        "filename": "ui/app_list/app_list_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-14T18:41:27Z",
+      "side": 1,
+      "message": "Why would this ComputeAndRecord be called twice without a new user journey?  That seems odd to me.",
+      "revId": "cbe3e7cb141d5f13e3df60985215f507e64d8fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
