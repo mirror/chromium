@@ -1,0 +1,7 @@
+CONSOLE MESSAGE: line 20: Testing on: http://127.0.0.1:8000/media/autoplay/resources/nested-iframe-2.html
+CONSOLE MESSAGE: line 20: Testing on: http://localhost:8000/media/autoplay/resources/nested-iframe-1a.html
+CONSOLE MESSAGE: line 20: Testing on: http://127.0.0.1:8000/media/autoplay/document-user-activation-cross-origin-feature-policy-delegation.html
+PASS successfullyParsed is true
+
+TEST COMPLETE
+
