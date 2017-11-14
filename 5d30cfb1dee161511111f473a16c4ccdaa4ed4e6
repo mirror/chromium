@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3f22cf5_e025af24",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-14T14:49:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ae46fd6_169d693c",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 70
+      },
+      "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2c27e21_10b6e528",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38785717_de36e068",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-14T14:49:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2c27e21_10b6e528",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 55
+      },
+      "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "21e1b9b5_5c609d61",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-14T14:49:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc890e2c_3bd31231",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 25
+      },
+      "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87c6594a_b72e6243",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56fb5247_bb7ba0a4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-14T14:49:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87c6594a_b72e6243",
+      "range": {
+        "startLine": 52,
+        "startChar": 35,
+        "endLine": 52,
+        "endChar": 48
+      },
+      "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e81b29d3_802ca178",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-14T14:49:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23d75810_04f37770",
+      "range": {
+        "startLine": 28,
+        "startChar": 31,
+        "endLine": 28,
+        "endChar": 50
+      },
+      "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a47bce2_b30df2c3",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.cc",
         "patchSetId": 5
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "2c359683_ff8ea569",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-14T14:49:07Z",
+      "side": 1,
+      "message": "The constructor also allows to specify task runner directly (needed for tests). We could have two different constructors (private and public), but I believe that having a static Create makes it more clear.",
+      "parentUuid": "6a47bce2_b30df2c3",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 51
+      },
+      "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7df82ee_c5ef138d",
         "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.cc",
         "patchSetId": 5
@@ -160,6 +304,30 @@
       "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "502f9cf3_d434589e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-14T14:49:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7df82ee_c5ef138d",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 1
+      },
+      "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
