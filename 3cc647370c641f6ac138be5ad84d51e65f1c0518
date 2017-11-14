@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9356fa86_6f6c90b5",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T21:02:32Z",
+      "side": 1,
+      "message": "We do pass SkBitmaps between threads in a handful of places, and if you use Bind it\u0027ll make a copy, so you should be good. OTOH gfx::Image uses ImageStorage, which is *not* thread safe (see comments in image.cc above ImageStorage declaration).",
+      "parentUuid": "7f368c22_2bdd1ebb",
+      "range": {
+        "startLine": 172,
+        "startChar": 10,
+        "endLine": 172,
+        "endChar": 26
+      },
+      "revId": "3cc647370c641f6ac138be5ad84d51e65f1c0518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5d64933_1583db84",
         "filename": "ui/snapshot/snapshot_aura.cc",
         "patchSetId": 2
