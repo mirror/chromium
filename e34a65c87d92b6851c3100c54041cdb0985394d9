@@ -46,6 +46,30 @@
       "revId": "e34a65c87d92b6851c3100c54041cdb0985394d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1a0174_c4b6f265",
+        "filename": "chrome/browser/resources/md_extensions/toggle_row.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-14T01:07:24Z",
+      "side": 1,
+      "message": "Okay. I\u0027ve put in a Q to dmazzoni@ in this CL and in the bug.\n\nhcarmona@, if a workaround is necessary, which item would be more appropriate to have a tab stop? (Would it be the \u0027row\u0027 with the text and the toggle; or would it be just the toggle itself)?",
+      "parentUuid": "fb33ec59_fa56df2d",
+      "range": {
+        "startLine": 43,
+        "startChar": 53,
+        "endLine": 43,
+        "endChar": 12
+      },
+      "revId": "e34a65c87d92b6851c3100c54041cdb0985394d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
