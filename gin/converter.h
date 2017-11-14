@@ -12,6 +12,7 @@
 
 #include "base/logging.h"
 #include "base/strings/string_piece.h"
+#include "base/template_util.h"
 #include "gin/gin_export.h"
 #include "v8/include/v8.h"
 
@@ -26,11 +27,6 @@ bool SetProperty(v8::Isolate* isolate,
       object->DefineOwnProperty(isolate->GetCurrentContext(), key, value);
   return !maybe.IsNothing() && maybe.FromJust();
 }
-
-template <typename T, typename Enable = void>
-struct ToV8ReturnsMaybe {
-  static const bool value = false;
-};
 
 template<typename T, typename Enable = void>
 struct Converter {};
@@ -163,89 +159,81 @@ struct GIN_EXPORT Converter<v8::Local<v8::Value> > {
 
 template<typename T>
 struct Converter<std::vector<T> > {
-  static v8::MaybeLocal<v8::Value> ToV8(v8::Local<v8::Context> context,
-                                        const std::vector<T>& val) {
-    v8::Isolate* isolate = context->GetIsolate();
-    v8::Local<v8::Array> result(
-        v8::Array::New(isolate, static_cast<int>(val.size())));
-    for (uint32_t i = 0; i < val.size(); ++i) {
-      auto maybe = result->Set(context, i, Converter<T>::ToV8(isolate, val[i]));
-      if (maybe.IsNothing() || !maybe.FromJust())
-        return v8::MaybeLocal<v8::Value>();
-    }
-    return result;
-  }
+  inline static v8::Local<v8::Value> ToV8(v8::Local<v8::Context> context,
+                                          const std::vector<T>& val);
+  inline static bool FromV8(v8::Isolate* isolate,
+                            v8::Local<v8::Value> val,
+                            std::vector<T>* out);
+};
 
-  static bool FromV8(v8::Isolate* isolate,
-                     v8::Local<v8::Value> val,
-                     std::vector<T>* out) {
-    if (!val->IsArray())
-      return false;
+namespace internal {
 
-    std::vector<T> result;
-    v8::Local<v8::Array> array(v8::Local<v8::Array>::Cast(val));
-    uint32_t length = array->Length();
-    for (uint32_t i = 0; i < length; ++i) {
-      v8::Local<v8::Value> v8_item;
-      if (!array->Get(isolate->GetCurrentContext(), i).ToLocal(&v8_item))
-        return false;
-      T item;
-      if (!Converter<T>::FromV8(isolate, v8_item, &item))
-        return false;
-      result.push_back(item);
-    }
+struct IsolateOrCurrentContext {
+  v8::Isolate* isolate;
 
-    out->swap(result);
-    return true;
+  operator v8::Isolate*() const { return isolate; }
+  operator v8::Local<v8::Context>() const {
+    return isolate->GetCurrentContext();
   }
 };
 
-template<typename T>
-struct ToV8ReturnsMaybe<std::vector<T>> {
-  static const bool value = true;
+struct ContextOrIsolate {
+  explicit inline ContextOrIsolate(v8::Local<v8::Context> context);
+  operator v8::Isolate*() const { return context->GetIsolate(); }
+  operator v8::Local<v8::Context>() const { return context; }
+
+  v8::Local<v8::Context> context;
 };
 
-// Convenience functions that deduce T.
-template<typename T>
-v8::Local<v8::Value> ConvertToV8(v8::Isolate* isolate, T input) {
-  return Converter<T>::ToV8(isolate, input);
+ContextOrIsolate::ContextOrIsolate(v8::Local<v8::Context> context)
+    : context(context) {}
+
+template <typename T>
+auto ConvertToV8(v8::Isolate* isolate, T input)
+    -> decltype(Converter<T>::ToV8(IsolateOrCurrentContext{isolate},
+                                   std::move(input))) {
+  return Converter<T>::ToV8(IsolateOrCurrentContext{isolate}, std::move(input));
 }
 
-template<typename T>
-v8::MaybeLocal<v8::Value> ConvertToV8(v8::Local<v8::Context> context, T input) {
-  return Converter<T>::ToV8(context, input);
+template <typename T>
+auto ConvertToV8(v8::Local<v8::Context> context, T input)
+    -> decltype(Converter<T>::ToV8(ContextOrIsolate{context},
+                                   std::move(input))) {
+  return Converter<T>::ToV8(ContextOrIsolate{context}, std::move(input));
 }
 
-template<typename T, bool = ToV8ReturnsMaybe<T>::value> struct ToV8Traits;
+inline bool ToLocal(v8::Local<v8::Value> value, v8::Local<v8::Value>* out) {
+  *out = value;
+  return true;
+}
 
-template <typename T>
-struct ToV8Traits<T, true> {
-  static bool TryConvertToV8(v8::Isolate* isolate,
-                             T input,
-                             v8::Local<v8::Value>* output) {
-    auto maybe = ConvertToV8(isolate->GetCurrentContext(), input);
-    if (maybe.IsEmpty())
-      return false;
-    *output = maybe.ToLocalChecked();
-    return true;
-  }
-};
+inline bool ToLocal(v8::MaybeLocal<v8::Value> value,
+                    v8::Local<v8::Value>* out) {
+  return value.ToLocal(out);
+}
 
-template <typename T>
-struct ToV8Traits<T, false> {
-  static bool TryConvertToV8(v8::Isolate* isolate,
-                             T input,
-                             v8::Local<v8::Value>* output) {
-    *output = ConvertToV8(isolate, input);
-    return true;
-  }
-};
+}  // namespace internal
 
-template <typename T>
-bool TryConvertToV8(v8::Isolate* isolate,
+// Convert to V8. Will not compile if success might be an empty MaybeLocal.
+template <typename T, typename ContextOrIsolate>
+v8::Local<v8::Value> ConvertToV8(ContextOrIsolate context_or_isolate, T input) {
+  return internal::ConvertToV8(context_or_isolate, std::move(input));
+}
+
+// Convert to V8. Preserves MaybeLocal.
+template <typename T, typename ContextOrIsolate>
+v8::MaybeLocal<v8::Value> MaybeConvertToV8(ContextOrIsolate context_or_isolate,
+                                           T input) {
+  return internal::ConvertToV8(context_or_isolate, std::move(input));
+}
+
+// Try to convert, but produce a boolean result.
+template <typename T, typename ContextOrIsolate>
+bool TryConvertToV8(ContextOrIsolate context_or_isolate,
                     T input,
-                    v8::Local<v8::Value>* output) {
-  return ToV8Traits<T>::TryConvertToV8(isolate, input, output);
+                    v8::Local<v8::Value>* out) {
+  auto result = internal::ConvertToV8(context_or_isolate, std::move(input));
+  return internal::ToLocal(result, out);
 }
 
 // This crashes when input.size() > v8::String::kMaxLength.
@@ -266,6 +254,50 @@ bool ConvertFromV8(v8::Isolate* isolate, v8::Local<v8::Value> input,
 }
 
 GIN_EXPORT std::string V8ToString(v8::Local<v8::Value> value);
+
+// static
+template <typename T>
+v8::Local<v8::Value> Converter<std::vector<T>>::ToV8(
+    v8::Local<v8::Context> context,
+    const std::vector<T>& val) {
+  v8::Isolate* isolate = context->GetIsolate();
+  v8::Local<v8::Array> result(
+      v8::Array::New(isolate, static_cast<int>(val.size())));
+  for (uint32_t i = 0; i < val.size(); ++i) {
+    auto maybe =
+        result->CreateDataProperty(context, i, ConvertToV8(context, val[i]));
+    // This should never fail, since it's creating a data property on a
+    // newly-instantiated array.
+    DCHECK(maybe.IsJust());
+    DCHECK(maybe.FromJust());
+  }
+  return result;
+}
+
+// static
+template <typename T>
+bool Converter<std::vector<T>>::FromV8(v8::Isolate* isolate,
+                                       v8::Local<v8::Value> val,
+                                       std::vector<T>* out) {
+  if (!val->IsArray())
+    return false;
+
+  std::vector<T> result;
+  v8::Local<v8::Array> array(v8::Local<v8::Array>::Cast(val));
+  uint32_t length = array->Length();
+  for (uint32_t i = 0; i < length; ++i) {
+    v8::Local<v8::Value> v8_item;
+    if (!array->Get(isolate->GetCurrentContext(), i).ToLocal(&v8_item))
+      return false;
+    T item;
+    if (!Converter<T>::FromV8(isolate, v8_item, &item))
+      return false;
+    result.push_back(item);
+  }
+
+  out->swap(result);
+  return true;
+}
 
 }  // namespace gin
 
