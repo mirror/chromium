@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef0c9de9_8a451688",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "It\u0027s the equivalent of a null check, except that mojo::InterfaceRequests aren\u0027t quite modeled off of unique_ptrs, unlike mojo::InterfacePtrs.\n\nIf it\u0027s not pending, then the consumer process did not request we give it a ProxyConfigClient for it to send us configuration updates on.",
+      "parentUuid": "da8fb367_2f9a7a24",
+      "range": {
+        "startLine": 228,
+        "startChar": 60,
+        "endLine": 228,
+        "endChar": 69
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50cdec13_574ecd14",
         "filename": "content/network/network_context.cc",
         "patchSetId": 11
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "1b65b25d_e7d9a0f5",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "I assume the purpose of duplicating Chrome\u0027s command line processing is to allow some tests to pass before we supported proxy configuration.  Removing this logic in this CL would cause a couple tests to fail.  I may be able to remove this logic in the next CL, if only chrome browser_tests depend on it.  I\u0027ll try that, and see if tests pass.",
+      "parentUuid": "50cdec13_574ecd14",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27f74d90_80dd7f78",
         "filename": "content/network/network_context.cc",
         "patchSetId": 11
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-14T22:21:16Z",
       "side": 1,
       "message": "This is odd that MakeURLRequestContext() would be modifying |network_context_params|. Can this be moved to the caller and only set the builder in her?",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9315a2_37dab74c",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "Per above comment, it would make tests fail.  Fixing the caller means 500 more lines of code.  I\u0027ll try in the next CL.",
+      "parentUuid": "27f74d90_80dd7f78",
       "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "052e8647_53a0cf64",
+        "filename": "content/network/network_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1445bab4_3da5ac2b",
+      "range": {
+        "startLine": 541,
+        "startChar": 74,
+        "endLine": 541,
+        "endChar": 78
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e445911c_7286e81c",
         "filename": "content/network/network_context_unittest.cc",
         "patchSetId": 11
@@ -102,6 +186,30 @@
       "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a144de7_2f3903e6",
+        "filename": "content/network/network_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e445911c_7286e81c",
+      "range": {
+        "startLine": 542,
+        "startChar": 70,
+        "endLine": 542,
+        "endChar": 78
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "1b879cf3_d2126cae",
+        "filename": "content/network/network_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04b3a975_86288b0f",
+      "range": {
+        "startLine": 543,
+        "startChar": 16,
+        "endLine": 543,
+        "endChar": 19
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75c78bf8_8605c05b",
         "filename": "content/network/network_context_unittest.cc",
         "patchSetId": 11
@@ -148,6 +280,30 @@
       "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e8b52d_625e2f2a",
+        "filename": "content/network/network_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "Done (Well, removed lookups instead)",
+      "parentUuid": "75c78bf8_8605c05b",
+      "range": {
+        "startLine": 619,
+        "startChar": 49,
+        "endLine": 619,
+        "endChar": 58
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "91aceb98_3d196c09",
+        "filename": "content/network/proxy_config_service_mojo.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3489469a_bfdc069f",
+      "range": {
+        "startLine": 62,
+        "startChar": 31,
+        "endLine": 62,
+        "endChar": 41
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b54cea81_4ebf8a98",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 11
@@ -185,6 +365,30 @@
       "writtenOn": "2017-11-14T22:21:16Z",
       "side": 1,
       "message": "Can we just use DIRECT in this case?",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 71
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c1a64f_d7218398",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "Not unless we want another 500 lines in this CL.  Notice the TODO a couple lines down.\n\nThe next CL I sent to you does change this.",
+      "parentUuid": "b54cea81_4ebf8a98",
       "range": {
         "startLine": 72,
         "startChar": 5,
@@ -214,6 +418,24 @@
     },
     {
       "key": {
+        "uuid": "b0fcf57f_baa0509f",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9687eb0f_f287cb8f",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d4dcef1_516b36b5",
         "filename": "content/public/common/proxy_config.mojom",
         "patchSetId": 11
@@ -225,6 +447,24 @@
       "writtenOn": "2017-11-14T22:21:16Z",
       "side": 1,
       "message": "Why use the string form?",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ffcd9a_b6211440",
+        "filename": "content/public/common/proxy_config.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "Is there another form you\u0027d suggest?  Rule itself is virtual, and there\u0027s no way to extract anything from it directly to produce a new rule.  Adding 5 rules to serialize/deserialize each type of rule also seems a lot of code to not get us anything, even if we could do it without bloating up the API.",
+      "parentUuid": "6d4dcef1_516b36b5",
       "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -248,6 +488,24 @@
     },
     {
       "key": {
+        "uuid": "078cfa21_22862aa9",
+        "filename": "content/public/common/proxy_config.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "Adding rules for ProxyServer and HostPortPair seems like it doesn\u0027t get us anything (Though we may need HostPortPair eventually, anyways).  Or am I missing something?",
+      "parentUuid": "2f1cc655_928e7d46",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b22443d_4230465c",
         "filename": "content/public/common/proxy_config.mojom",
         "patchSetId": 11
@@ -259,6 +517,24 @@
       "writtenOn": "2017-11-14T22:21:16Z",
       "side": 1,
       "message": "ProxyConfig is a poor historical abstraction. It would be more aptly named SystemProxySettings, since it tries to represent the intersection of how platforms define their proxy settings, and intermixes assumptions about prioritization and fallback ordering.\n\nIf this gets exposed to Mojo as is, how hard will it be to change later?",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0d1dd8_a5cb6948",
+        "filename": "content/public/common/proxy_config.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "Sane consumers will presumably be passing us net::ProxyConfigs, rather than creating these from scratch, so it shouldn\u0027t be too hard.  If we want to rename the net class, too, it\u0027s not really any harder from renaming ProxyConfigs itself.  Just a couple extra files to handle.  We don\u0027t need backward compatibility when modifying mojo APIs.",
+      "parentUuid": "1b22443d_4230465c",
       "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -288,6 +564,30 @@
     },
     {
       "key": {
+        "uuid": "8bec377d_d2f8639e",
+        "filename": "content/public/common/proxy_config.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "Added TODO.",
+      "parentUuid": "b35292d2_d6f560a5",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 10
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71aa1247_a8a0caf5",
         "filename": "content/public/common/proxy_config_traits.cc",
         "patchSetId": 11
@@ -305,6 +605,24 @@
     },
     {
       "key": {
+        "uuid": "a943ea26_97d14e53",
+        "filename": "content/public/common/proxy_config_traits.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "No, there\u0027s no such expectation.",
+      "parentUuid": "71aa1247_a8a0caf5",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f35e471_62ae2c7c",
         "filename": "content/public/common/proxy_config_traits.cc",
         "patchSetId": 11
@@ -319,6 +637,24 @@
       "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f74b2e_52f296ff",
+        "filename": "content/public/common/proxy_config_traits.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T23:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f35e471_62ae2c7c",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
