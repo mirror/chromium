@@ -16,6 +16,24 @@
       "revId": "47c85bfabc175c0bf6d1f6e4544e5b44ca74c22e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e103299e_056b3b89",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValueType.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-14T06:58:53Z",
+      "side": 1,
+      "message": "lol yeah you\u0027re right. I renamed it to \u0027exponents\u0027; looks better now IMO.",
+      "parentUuid": "7d4af04a_9a1e17be",
+      "revId": "47c85bfabc175c0bf6d1f6e4544e5b44ca74c22e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
