@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0b6550df_0ae414c7",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-11-14T02:54:58Z",
+      "side": 1,
+      "message": "That first comment made a lot more sense in my head...\nLet me try to explain what I mean here:\nThe following code is used everywhere where LazyInitialize is called. This means we can\u0027t just use std::move(callback) because callback will be null after that.\n\nif (!LazyInitialize(... callback)) {\n  if (state_ !\u003d INITIALIZING) { // disabled\n    // do something with callback\n  }\n  return;\n}\n// do something with callback\n\nOne way to change this would be to add AdaptCallbackForRepeating and use the adapted callback everywhere, but I\u0027m not sure if this is the right thing to do.\n\nauto cb \u003d AdaptCallbackForRepeating(callback);\nif (!LazyInitialize(... cb)) {\n  if (state_ !\u003d INITIALIZING) { // disabled\n    // do something with cb\n  }\n  return;\n}\n// do something with cb\n\nThe other way would be to change LazyInitialize and do the work in that callback which would look like this: (ServiceWorkerVersion::RunAfterStartWorker does something similar).\n\nvoid FindRegistrationForDocument(...) {\n  if (state_ \u003d\u003d UNINITIALIZED || state_ \u003d\u003d INITIALIZING) {\n    LazyInitialize(bindOnce(\u0026FindRegistrationForDocumentInternal, ...));\n    return;\n  }\n  FindRegistrationForDocumentInternal(...);\n}\n\nvoid FindRegistrationForDocumentInternal(...) {\n  if (state_ \u003d\u003d DISABLED) {\n    // do something with callback\n    return;\n  }\n  // state_ \u003d\u003d INITIALIZED\n\n  // do something with callback\n}\n\nI\u0027d prefer the second way because I think it makes the code more readable, but I didn\u0027t want to go ahead and do it without asking first.",
+      "parentUuid": "1c9b88d6_eeb4d0ce",
+      "revId": "eeef58e93632ff223600b2646e76c468d837f21d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1acbe1ac_195e010f",
         "filename": "content/browser/service_worker/service_worker_storage.h",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "writtenOn": "2017-11-14T01:31:12Z",
       "side": 1,
       "message": "How difficult would it be to just change all these to OnceCallback now?",
+      "revId": "eeef58e93632ff223600b2646e76c468d837f21d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6b625e_188f5f5a",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-11-14T02:54:58Z",
+      "side": 1,
+      "message": "Most of them should be easy to change and I\u0027m planning to remove them in this CL.",
+      "parentUuid": "1acbe1ac_195e010f",
       "revId": "eeef58e93632ff223600b2646e76c468d837f21d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
