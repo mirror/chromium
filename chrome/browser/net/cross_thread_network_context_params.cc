@@ -14,6 +14,8 @@ CrossThreadNetworkContextParams::CrossThreadNetworkContextParams(
 
   proxy_config_poller_client_ =
       context_params->proxy_config_poller_client.PassInterface();
+  proxy_resolver_factory_ =
+      context_params->proxy_resolver_factory.PassInterface();
   context_params_ = std::move(context_params);
 }
 
@@ -25,5 +27,7 @@ CrossThreadNetworkContextParams::ExtractParams() {
 
   context_params_->proxy_config_poller_client.Bind(
       std::move(proxy_config_poller_client_));
+  context_params_->proxy_resolver_factory.Bind(
+      std::move(proxy_resolver_factory_));
   return std::move(context_params_);
 }
