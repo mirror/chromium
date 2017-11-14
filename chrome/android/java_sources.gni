@@ -1304,6 +1304,7 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/widget/ImageViewTinter.java",
   "java/src/org/chromium/chrome/browser/widget/LoadingView.java",
   "java/src/org/chromium/chrome/browser/widget/MaterialProgressBar.java",
+  "java/src/org/chromium/chrome/browser/widget/ModernListMenuButton.java",
   "java/src/org/chromium/chrome/browser/widget/NumberRollView.java",
   "java/src/org/chromium/chrome/browser/widget/OverviewListLayout.java",
   "java/src/org/chromium/chrome/browser/widget/PaddedFrameLayout.java",
