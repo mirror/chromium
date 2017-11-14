@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27e716bc_ff455bbd",
+        "filename": "media/gpu/android/codec_image.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-14T19:55:17Z",
+      "side": 1,
+      "message": "done.  i also clarified why we can\u0027t just let NotifyPromotionHint do it all the time.  we don\u0027t know for sure that we\u0027re going to get promotion hints.  pre-M, we don\u0027t, since we can\u0027t act on them anyway.  so, we save the IPC.",
+      "parentUuid": "9bfec3f0_6df80055",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 58
+      },
+      "revId": "776ab573fb42b683ef463eb479b771f3f6665b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec2b34d5_4b2e91ad",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ffc89143_6a8d6815",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-14T19:55:17Z",
+      "side": 1,
+      "message": "it\u0027s all part of the todo @284.",
+      "parentUuid": "ec2b34d5_4b2e91ad",
+      "range": {
+        "startLine": 286,
+        "startChar": 48,
+        "endLine": 286,
+        "endChar": 64
+      },
+      "revId": "776ab573fb42b683ef463eb479b771f3f6665b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6d4582b_c4d8c001",
         "filename": "media/gpu/android/promotion_hint_aggregator.h",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "776ab573fb42b683ef463eb479b771f3f6665b81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2eb0585_28c85b39",
+        "filename": "media/gpu/android/promotion_hint_aggregator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-14T19:55:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6d4582b_c4d8c001",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 60
+      },
+      "revId": "776ab573fb42b683ef463eb479b771f3f6665b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
