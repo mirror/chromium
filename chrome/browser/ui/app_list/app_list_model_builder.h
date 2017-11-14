@@ -7,10 +7,10 @@
 
 #include <string>
 
+#include "ash/public/cpp/app_list/app_list_item_list_observer.h"
+#include "ash/public/cpp/app_list/app_list_model.h"
 #include "base/macros.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
-#include "ui/app_list/app_list_item_list_observer.h"
-#include "ui/app_list/app_list_model.h"
 
 class AppListControllerDelegate;
 class Profile;

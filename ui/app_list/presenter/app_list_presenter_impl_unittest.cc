@@ -6,8 +6,8 @@
 
 #include <memory>
 
+#include "ash/public/cpp/app_list/app_list_features.h"
 #include "base/memory/ptr_util.h"
-#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/presenter/app_list_presenter_delegate_factory.h"
 #include "ui/app_list/presenter/test/app_list_presenter_impl_test_api.h"
 #include "ui/app_list/test/app_list_test_view_delegate.h"
