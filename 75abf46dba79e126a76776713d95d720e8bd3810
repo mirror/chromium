@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b51e1be1_dea2b4fa",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-14T01:04:25Z",
+      "side": 1,
+      "message": "Presubmit check warns if \u0027%s::Install...\u0027.  I guess it is check script\u0027s bug.",
+      "range": {
+        "startLine": 462,
+        "startChar": 12,
+        "endLine": 462,
+        "endChar": 77
+      },
+      "revId": "75abf46dba79e126a76776713d95d720e8bd3810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
