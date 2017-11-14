@@ -253,11 +253,8 @@ class CHROMEOS_EXPORT CrasAudioHandler : public CrasAudioClient::Observer,
   // If the feature is not supported on the device, nothing happens.
   void SwapInternalSpeakerLeftRightChannel(bool swap);
 
-  // Accessibility audio setting: sets the output mono or not.
-  void SetOutputMono(bool mono_on);
-
-  // Returns true if output mono is enabled.
-  bool IsOutputMonoEnabled() const;
+  // Accessibility mono audio setting: sets the output mono or not.
+  void SetOutputMonoEnabled(bool enabled);
 
   // Enables error logging.
   void LogErrors();
@@ -508,7 +505,7 @@ class CHROMEOS_EXPORT CrasAudioHandler : public CrasAudioClient::Observer,
 
   // Audio output channel counts.
   int32_t output_channels_;
-  bool output_mono_on_;
+  bool output_mono_enabled_;
 
   // Failures are not logged at startup, since CRAS may not be running yet.
   bool log_errors_;
