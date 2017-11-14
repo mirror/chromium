@@ -31,7 +31,7 @@ class GLRendererShaderTest;
 class OutputSurface;
 class Resource;
 class ResourcePool;
-class ScopedResource;
+class ScopedLocalResource;
 class StreamVideoDrawQuad;
 }  // namespace cc
 
@@ -287,8 +287,9 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
                                int multiplier);
 
   // A map from RenderPass id to the texture used to draw the RenderPass from.
-  base::flat_map<RenderPassId, std::unique_ptr<cc::ScopedResource>>
+  base::flat_map<RenderPassId, std::unique_ptr<cc::ScopedLocalResource>>
       render_pass_textures_;
+  std::unique_ptr<cc::TextureIdAllocator> texture_id_allocator_;
 
   using OverlayResourceLock =
       std::unique_ptr<cc::DisplayResourceProvider::ScopedReadLockGL>;
@@ -339,8 +340,7 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
   TexturedQuadDrawCache draw_cache_;
   int highp_threshold_cache_ = 0;
 
-  std::unique_ptr<cc::ResourceProvider::ScopedWriteLockGL>
-      current_framebuffer_lock_;
+  cc::ScopedLocalResource* current_framebuffer_lock_;
   // This is valid when current_framebuffer_lock_ is not null.
   ResourceFormat current_framebuffer_format_;
 

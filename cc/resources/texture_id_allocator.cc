@@ -1,0 +1,39 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "cc/resources/texture_id_allocator.h"
+
+#if DCHECK_IS_ON()
+#include "base/threading/platform_thread.h"
+#endif
+
+namespace cc {
+
+TextureIdAllocator::TextureIdAllocator(GLES2Interface* gl,
+                                       size_t texture_id_allocation_chunk_size)
+    : gl_(gl),
+      id_allocation_chunk_size_(texture_id_allocation_chunk_size),
+      ids_(new GLuint[texture_id_allocation_chunk_size]),
+      next_id_index_(texture_id_allocation_chunk_size) {
+  DCHECK(id_allocation_chunk_size_);
+  DCHECK_LE(id_allocation_chunk_size_,
+            static_cast<size_t>(std::numeric_limits<int>::max()));
+}
+
+TextureIdAllocator::~TextureIdAllocator() {
+  gl_->DeleteTextures(
+      static_cast<int>(id_allocation_chunk_size_ - next_id_index_),
+      ids_.get() + next_id_index_);
+}
+
+GLuint TextureIdAllocator::NextId() {
+  if (next_id_index_ == id_allocation_chunk_size_) {
+    gl_->GenTextures(static_cast<int>(id_allocation_chunk_size_), ids_.get());
+    next_id_index_ = 0;
+  }
+
+  return ids_[next_id_index_++];
+}
+
+}  // namespace cc
