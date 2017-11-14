@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a3e64e8_ff434a74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T00:15:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94af851f_8dbc37e8",
+      "revId": "558f1b27f46da34b58b2945939647045e2ed637d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d7f8434_eef034c5",
         "filename": "device/u2f/u2f_message_unittest.cc",
         "patchSetId": 4
