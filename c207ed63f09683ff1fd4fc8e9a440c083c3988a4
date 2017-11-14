@@ -22,6 +22,30 @@
       "revId": "c207ed63f09683ff1fd4fc8e9a440c083c3988a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b40b3449_5b2496fa",
+        "filename": "chrome/browser/ui/extensions/extension_enable_flow.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T15:43:08Z",
+      "side": 1,
+      "message": "It does, I just slightly prefer \u003d\u003d nullptr when chaining conditions (so that I don\u0027t have to de Morgans-ify things in my head :)).  But !extension is probably more common; changed.",
+      "parentUuid": "eb34845c_035c3512",
+      "range": {
+        "startLine": 92,
+        "startChar": 6,
+        "endLine": 92,
+        "endChar": 15
+      },
+      "revId": "c207ed63f09683ff1fd4fc8e9a440c083c3988a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
