@@ -16,6 +16,24 @@
       "revId": "8d65cfd70ea3c48b29bb7b9944aca6bc0b301d0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67758495_37b93d0d",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-14T21:11:45Z",
+      "side": 1,
+      "message": "Done. Passed back a ptr and did the double-defref inside the method itself.",
+      "parentUuid": "383c59fb_8490fa8c",
+      "revId": "8d65cfd70ea3c48b29bb7b9944aca6bc0b301d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
