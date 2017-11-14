@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5c2a1a2_a0ef2bc8",
+        "filename": "ui/keyboard/keyboard_controller_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-11-14T06:41:27Z",
+      "side": 1,
+      "message": "Can you update the tests for observer methods in keyboard_controller_unittests.cc?",
+      "revId": "81a00a644224c4257a9b853b7cbd730a9329cd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
