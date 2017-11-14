@@ -22,6 +22,29 @@
       "revId": "84ed42472779157039ad552506980e691acfae97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c54c4e4d_cf4ae807",
+        "filename": "android_webview/browser/aw_media_url_interceptor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-14T20:32:57Z",
+      "side": 1,
+      "message": "Does casting really fix the test? In the failed case, size_t is uint32_t, so casting it to int64_t would still make it 4294967295.",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 23
+      },
+      "revId": "84ed42472779157039ad552506980e691acfae97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
