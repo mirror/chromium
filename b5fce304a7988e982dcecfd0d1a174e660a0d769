@@ -118,6 +118,30 @@
       "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84752cc4_d0600a36",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-14T23:15:04Z",
+      "side": 1,
+      "message": "Oh thanks Justin. Canvas is drawing through the GrContext I guess, and we\u0027re changing state and then calling GrContext things again? I\u0027m not sure why I was thinking canvas is using the GL context directly.. #justtuesdaythings.\n\nReadbackYUV() is changing the framebuffer attachment, so that would also need to be passed. In that case I agree resetContext() would be the right thing to do.",
+      "parentUuid": "e6d1b47f_576a21e7",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 51
+      },
+      "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
