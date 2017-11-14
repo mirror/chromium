@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c027da81_8d359455",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-14T22:47:01Z",
+      "side": 1,
+      "message": "Note that all the elements getting this new SetVisible() call also have a binding to SetVisible(), which corrects the state when needed.",
+      "revId": "97a9b94f30749bfb49b0aaef6f7570ff90937f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
