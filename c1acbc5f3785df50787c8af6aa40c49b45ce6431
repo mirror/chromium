@@ -22,6 +22,30 @@
       "revId": "c1acbc5f3785df50787c8af6aa40c49b45ce6431",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c8a76b_dd5cd22a",
+        "filename": "ui/webui/resources/cr_elements/policy/cr_tooltip_icon.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-14T00:57:10Z",
+      "side": 0,
+      "message": "It\u0027s not strictly necessary in this case based on, \"It will be centered\nto an anchor element specified in the `for` attribute, or, if that doesn\u0027t exist,\ncentered to the parent node containing it.\"\n\nhttps://github.com/PolymerElements/paper-tooltip/blob/master/paper-tooltip.html",
+      "parentUuid": "14eeaa25_90f6d9ad",
+      "range": {
+        "startLine": 28,
+        "startChar": 32,
+        "endLine": 28,
+        "endChar": 48
+      },
+      "revId": "c1acbc5f3785df50787c8af6aa40c49b45ce6431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
