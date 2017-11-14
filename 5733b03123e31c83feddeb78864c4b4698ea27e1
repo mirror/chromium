@@ -22,6 +22,30 @@
       "revId": "5733b03123e31c83feddeb78864c4b4698ea27e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e274a4e9_3f65d00f",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-14T21:10:21Z",
+      "side": 1,
+      "message": "(It was previously set for device, did you mean non-device?)\n\nI don\u0027t _think_ it should matter for qemu, but we can de-homogenize if we see any problems.",
+      "parentUuid": "5df9e9d8_6eaf6a5d",
+      "range": {
+        "startLine": 500,
+        "startChar": 17,
+        "endLine": 500,
+        "endChar": 49
+      },
+      "revId": "5733b03123e31c83feddeb78864c4b4698ea27e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
