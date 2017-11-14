@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "549786b6_e0219021",
+        "filename": "chrome/browser/ui/autofill/card_unmask_prompt_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T06:59:20Z",
+      "side": 1,
+      "message": "nit: trend I usually see is just \n\n  // CardUnmaskPromptControllerImpl:",
+      "revId": "81472071e106e96aa3032ef60c78c07a3bb1ce86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b8e414_d7ba1273",
+        "filename": "chrome/browser/ui/autofill/card_unmask_prompt_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T06:59:20Z",
+      "side": 1,
+      "message": "perhaps\n\n  controller()-\u003eset_expected_verification_failure(\n      /*allow_retry*/ name \u003d\u003d kExpiryValidTemporaryError);\n\n(and remove the two `if` above)",
+      "revId": "81472071e106e96aa3032ef60c78c07a3bb1ce86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3185ee_22317483",
+        "filename": "chrome/browser/ui/autofill/card_unmask_prompt_view_tester.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T06:59:20Z",
+      "side": 1,
+      "message": "nit: blank line before",
+      "revId": "81472071e106e96aa3032ef60c78c07a3bb1ce86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58da1c3_e5306d68",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_view_tester_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T06:59:20Z",
+      "side": 1,
+      "message": "does\n\n view-\u003eGetDialogClientView()-\u003eAcceptWindow();\n\nwork? That\u0027s a more \"authentic\" way of clicking a button, and prevents the dialog client view getting into illegal states that could cause it to invoke {Accept/Cancel/Close} multiple times when it shouldn\u0027t.",
+      "revId": "81472071e106e96aa3032ef60c78c07a3bb1ce86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8641d4eb_8e5932d8",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_view_tester_views.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T06:59:20Z",
+      "side": 1,
+      "message": "nit:\n  // CardUnmaskPromptViewTester",
+      "revId": "81472071e106e96aa3032ef60c78c07a3bb1ce86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
