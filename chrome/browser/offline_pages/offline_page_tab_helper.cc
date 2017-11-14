@@ -27,6 +27,12 @@ DEFINE_WEB_CONTENTS_USER_DATA_KEY(offline_pages::OfflinePageTabHelper);
 
 namespace offline_pages {
 
+namespace {
+void SavePageLaterCallback(AddRequestResult result) {
+  // do nothing.
+}
+}  // namespace
+
 OfflinePageTabHelper::LoadedOfflinePageInfo::LoadedOfflinePageInfo()
     : is_showing_offline_preview(false) {}
 
@@ -279,7 +285,8 @@ void OfflinePageTabHelper::DoDownloadPageLater(
   params.url = url;
   params.client_id = offline_pages::ClientId(name_space, base::GenerateGUID());
   params.request_origin = request_origin;
-  request_coordinator->SavePageLater(params);
+  request_coordinator->SavePageLater(params,
+                                     base::Bind(&SavePageLaterCallback));
 
   if (static_cast<int>(ui_action) &
       static_cast<int>(OfflinePageUtils::DownloadUIActionFlags::

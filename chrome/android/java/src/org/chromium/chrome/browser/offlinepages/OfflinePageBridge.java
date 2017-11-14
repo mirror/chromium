@@ -407,7 +407,32 @@ public class OfflinePageBridge {
      */
     public void savePageLater(final String url, final ClientId clientId, boolean userRequested,
             OfflinePageOrigin origin) {
-        nativeSavePageLater(mNativeOfflinePageBridge, url, clientId.getNamespace(),
+        savePageLater(url, clientId, userRequested, origin, null);
+    }
+
+    /**
+     * Save the given URL as an offline page when the network becomes available with the given
+     * origin. Callback with status when done.
+     *
+     * @param url The given URL to save for later.
+     * @param clientId the clientId for the offline page to be saved later.
+     * @param userRequested Whether this request should be prioritized because the user explicitly
+     *                      requested it.
+     * @param origin The app that initiated the request.
+     * @param callback Callback for whether the URL is successfully added to queue. Non-zero number
+     *                 represents the ID of the request. 0 means failure.
+     */
+    public void savePageLater(final String url, final ClientId clientId, boolean userRequested,
+            OfflinePageOrigin origin, Callback<Long> callback) {
+        Callback<Long> wrapper = new Callback<Long>() {
+            @Override
+            public void onResult(Long i) {
+                if (callback != null) {
+                    callback.onResult(i);
+                }
+            }
+        };
+        nativeSavePageLater(mNativeOfflinePageBridge, wrapper, url, clientId.getNamespace(),
                 clientId.getId(), origin.encodeAsJsonString(), userRequested);
     }
 
@@ -436,8 +461,26 @@ public class OfflinePageBridge {
      */
     public void savePageLater(final String url, final String namespace, boolean userRequested,
             OfflinePageOrigin origin) {
+        savePageLater(url, namespace, userRequested, origin, null);
+    }
+
+    /**
+     * Save the given URL as an offline page when the network becomes available with a randomly
+     * generated clientId in the given namespace and the given origin. Calls back with whether
+     * the URL has been successfully added to queue.
+     *
+     * @param url The given URL to save for later
+     * @param namespace The namespace for the offline page to be saved later.
+     * @param userRequested Whether this request should be prioritized because the user explicitly
+     *                      requested it.
+     * @param origin The app that initiated the request.
+     * @param callback Callback to call whether the URL is successfully added to the queue. Non-zero
+     *                 number represents the ID of the request. Zero means failure.
+     */
+    public void savePageLater(final String url, final String namespace, boolean userRequested,
+            OfflinePageOrigin origin, Callback<Long> callback) {
         ClientId clientId = ClientId.createGuidClientIdForNamespace(namespace);
-        savePageLater(url, clientId, userRequested, origin);
+        savePageLater(url, clientId, userRequested, origin, callback);
     }
 
     /**
@@ -722,8 +765,9 @@ public class OfflinePageBridge {
             Callback<OfflinePageItem> callback);
     private native void nativeSavePage(long nativeOfflinePageBridge, SavePageCallback callback,
             WebContents webContents, String clientNamespace, String clientId, String origin);
-    private native void nativeSavePageLater(long nativeOfflinePageBridge, String url,
-            String clientNamespace, String clientId, String origin, boolean userRequested);
+    private native void nativeSavePageLater(long nativeOfflinePageBridge, Callback<Long> callback,
+            String url, String clientNamespace, String clientId, String origin,
+            boolean userRequested);
     private native String nativeGetOfflinePageHeaderForReload(
             long nativeOfflinePageBridge, WebContents webContents);
     private native boolean nativeIsShowingOfflinePreview(

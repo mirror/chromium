@@ -78,6 +78,10 @@ std::string GetStringFromSavePageStatus() {
   return "Available";
 }
 
+void SavePageLaterCallback(offline_pages::AddRequestResult result) {
+  // do nothing.
+}
+
 }  // namespace
 
 OfflineInternalsUIMessageHandler::OfflineInternalsUIMessageHandler()
@@ -444,7 +448,8 @@ void OfflineInternalsUIMessageHandler::HandleAddToRequestQueue(
                                                id_stream.str());
     ResolveJavascriptCallback(
         *callback_id,
-        base::Value(request_coordinator_->SavePageLater(params) > 0));
+        base::Value(request_coordinator_->SavePageLater(
+                        params, base::Bind(&SavePageLaterCallback)) > 0));
   } else {
     ResolveJavascriptCallback(*callback_id, base::Value(false));
   }
