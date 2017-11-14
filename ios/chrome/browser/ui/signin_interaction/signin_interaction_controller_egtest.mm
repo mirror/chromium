@@ -10,7 +10,10 @@
 #include "base/test/scoped_feature_list.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
+#include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/experimental_flags.h"
+#include "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory.h"
+#include "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory_util.h"
 #include "ios/chrome/browser/signin/signin_manager_factory.h"
 #import "ios/chrome/browser/ui/authentication/signin_earlgrey_utils.h"
 #import "ios/chrome/browser/ui/authentication/signin_promo_view.h"
@@ -78,6 +81,30 @@ void WaitForMatcher(id<GREYMatcher> matcher) {
 @end
 
 @implementation SigninInteractionControllerTestCase
+
++ (void)setUp {
+  [super setUp];
+  ios::ChromeBrowserState* browserState =
+      chrome_test_util::GetOriginalBrowserState();
+  // Sets the ContentSuggestionsService associated with this browserState to a
+  // service with no provider registered, allowing to register fake providers
+  // which do not require internet connection. The previous service is deleted.
+  // It prevents having a MDC spinner on the NTP which prevent the animations
+  // from finishing.
+  IOSChromeContentSuggestionsServiceFactory::GetInstance()->SetTestingFactory(
+      browserState, ntp_snippets::CreateChromeContentSuggestionsService);
+}
+
++ (void)tearDown {
+  ios::ChromeBrowserState* browserState =
+      chrome_test_util::GetOriginalBrowserState();
+  // Resets the Service associated with this browserState to a service with
+  // default providers. The previous service is deleted.
+  IOSChromeContentSuggestionsServiceFactory::GetInstance()->SetTestingFactory(
+      browserState,
+      ntp_snippets::CreateChromeContentSuggestionsServiceWithProviders);
+  [super tearDown];
+}
 
 // Tests that opening the sign-in screen from the Settings and signing in works
 // correctly when there is already an identity on the device.
