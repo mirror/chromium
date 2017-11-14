@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c64375_cf45f685",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-14T06:56:50Z",
+      "side": 1,
+      "message": "Just a note that that this needs to be updated so that the file writer is given in Start(). You may want to do this in the other CL.",
+      "revId": "35139f8c08522d4d8865d50fd2d241eb36553ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
