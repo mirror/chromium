@@ -8,6 +8,7 @@
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/common/proxy_config.mojom.h"
 #include "mojo/public/cpp/bindings/interface_ptr_info.h"
+#include "services/proxy_resolver/public/interfaces/proxy_resolver.mojom.h"
 
 // Utility class to move a NetworkContextParamsPtr between threads. It's needed
 // because InterfacePtrs can't be passed directly between threads, instead their
@@ -27,6 +28,7 @@ class CrossThreadNetworkContextParams {
  private:
   content::mojom::NetworkContextParamsPtr context_params_;
   content::mojom::ProxyConfigPollerClientPtrInfo proxy_config_poller_client_;
+  proxy_resolver::mojom::ProxyResolverFactoryPtrInfo proxy_resolver_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(CrossThreadNetworkContextParams);
 };
