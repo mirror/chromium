@@ -1181,10 +1181,9 @@ static size_t PartitionPurgePage(PartitionPage* page, bool discard) {
 #endif
   memset(slot_usage, 1, num_slots);
   char* ptr = reinterpret_cast<char*>(PartitionPageToPointer(page));
-  PartitionFreelistEntry* entry = page->freelist_head;
   // First, walk the freelist for this page and make a bitmap of which slots
   // are not in use.
-  while (entry) {
+  for (PartitionFreelistEntry* entry = page->freelist_head; entry; /**/) {
     size_t slotIndex = (reinterpret_cast<char*>(entry) - ptr) / slot_size;
     DCHECK(slotIndex < num_slots);
     slot_usage[slotIndex] = 0;
@@ -1265,8 +1264,8 @@ static size_t PartitionPurgePage(PartitionPage* page, bool discard) {
     // The first address we can safely discard is just after the freelist
     // pointer. There's one quirk: if the freelist pointer is actually a
     // null, we can discard that pointer value too.
-    char* begin_ptr = ptr + (i * slot_size);
-    char* end_ptr = begin_ptr + slot_size;
+    begin_ptr = ptr + (i * slot_size);
+    end_ptr = begin_ptr + slot_size;
 #if !defined(OS_WIN)
     if (i != last_slot)
       begin_ptr += sizeof(PartitionFreelistEntry);
@@ -1466,16 +1465,15 @@ void PartitionDumpStatsGeneric(PartitionRootGeneric* partition,
     for (size_t i = 0; i < num_direct_mapped_allocations; ++i) {
       uint32_t size = direct_map_lengths[i];
 
-      PartitionBucketMemoryStats stats;
-      memset(&stats, '\0', sizeof(stats));
-      stats.is_valid = true;
-      stats.is_direct_map = true;
-      stats.num_full_pages = 1;
-      stats.allocated_page_size = size;
-      stats.bucket_slot_size = size;
-      stats.active_bytes = size;
-      stats.resident_bytes = size;
-      dumper->PartitionsDumpBucketStats(partition_name, &stats);
+      PartitionBucketMemoryStats mapped_stats = {};
+      mapped_stats.is_valid = true;
+      mapped_stats.is_direct_map = true;
+      mapped_stats.num_full_pages = 1;
+      mapped_stats.allocated_page_size = size;
+      mapped_stats.bucket_slot_size = size;
+      mapped_stats.active_bytes = size;
+      mapped_stats.resident_bytes = size;
+      dumper->PartitionsDumpBucketStats(partition_name, &mapped_stats);
     }
   }
 
