@@ -99,6 +99,10 @@ enum ContentSettingsType {
   // technology.
   CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS,
 
+  // Website setting which backs a persistent cache of sites which are memory
+  // heavy and have caused e.g. foreground OOMs in the past.
+  CONTENT_SETTINGS_TYPE_HEAVY_MEMORY,
+
   CONTENT_SETTINGS_NUM_TYPES,
 };
 
