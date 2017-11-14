@@ -48,6 +48,12 @@ Polymer({
     },
 
     /**
+     * List of GUIDs corresponding to all currently-available networks.
+     * @type {!Array<string>|undefined}
+     */
+    currentNetworkGuids: Array,
+
+    /**
      * Set by internet-subpage. Controls spinner visibility in subpage header.
      * @private
      */

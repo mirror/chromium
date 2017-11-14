@@ -89,7 +89,8 @@
           <settings-internet-detail-page prefs="{{prefs}}"
               default-network="[[defaultNetwork]]"
               global-policy="[[globalPolicy_]]"
-              networking-private="[[networkingPrivate]]">
+              networking-private="[[networkingPrivate]]"
+              current-network-guids="{{currentNetworkGuids}}">
           </settings-internet-detail-page>
         </settings-subpage>
       </template>
@@ -113,7 +114,8 @@
               global-policy="[[globalPolicy_]]"
               third-party-vpn-providers="[[thirdPartyVpnProviders_]]"
               networking-private="[[networkingPrivate]]"
-              show-spinner="{{showSpinner_}}">
+              show-spinner="{{showSpinner_}}"
+              current-network-guids="{{currentNetworkGuids}}">
           </settings-bluetooth-subpage>
         </settings-subpage>
       </template>
