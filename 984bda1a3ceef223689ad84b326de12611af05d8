@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62ce0a5f_59ae007a",
+        "filename": "tools/perf/page_sets/media_cases/mse.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-11-14T22:06:34Z",
+      "side": 1,
+      "message": "nit: add comment here indicating the intent is to not attach MediaSource object until all the buffer appenders have received the data from the network that they\u0027ll append, to remove network overhead from the attachment timing telemetry.",
+      "revId": "984bda1a3ceef223689ad84b326de12611af05d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
