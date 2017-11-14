@@ -60,6 +60,11 @@ class PLATFORM_EXPORT LayoutRectOutsets {
         right_(LayoutUnit(right)),
         bottom_(LayoutUnit(bottom)),
         left_(LayoutUnit(left)) {}
+  LayoutRectOutsets(float top, float right, float bottom, float left)
+      : top_(LayoutUnit::FromFloatCeil(top)),
+        right_(LayoutUnit::FromFloatCeil(right)),
+        bottom_(LayoutUnit::FromFloatCeil(bottom)),
+        left_(LayoutUnit::FromFloatCeil(left)) {}
 
   LayoutRectOutsets(const IntRectOutsets& outsets)
       : top_(LayoutUnit(outsets.Top())),
@@ -68,10 +73,10 @@ class PLATFORM_EXPORT LayoutRectOutsets {
         left_(LayoutUnit(outsets.Left())) {}
 
   LayoutRectOutsets(const FloatRectOutsets& outsets)
-      : top_(LayoutUnit(outsets.Top())),
-        right_(LayoutUnit(outsets.Right())),
-        bottom_(LayoutUnit(outsets.Bottom())),
-        left_(LayoutUnit(outsets.Left())) {}
+      : top_(LayoutUnit::FromFloatCeil(outsets.Top())),
+        right_(LayoutUnit::FromFloatCeil(outsets.Right())),
+        bottom_(LayoutUnit::FromFloatCeil(outsets.Bottom())),
+        left_(LayoutUnit::FromFloatCeil(outsets.Left())) {}
 
   LayoutUnit Top() const { return top_; }
   LayoutUnit Right() const { return right_; }
@@ -82,6 +87,11 @@ class PLATFORM_EXPORT LayoutRectOutsets {
   void SetRight(LayoutUnit value) { right_ = value; }
   void SetBottom(LayoutUnit value) { bottom_ = value; }
   void SetLeft(LayoutUnit value) { left_ = value; }
+
+  void Expand(LayoutUnit value);
+
+  // Change outsets to be at least as large as |other|.
+  void Unite(const LayoutRectOutsets&);
 
   // Produces a new LayoutRectOutsets in line orientation
   // (https://www.w3.org/TR/css-writing-modes-3/#line-orientation), whose

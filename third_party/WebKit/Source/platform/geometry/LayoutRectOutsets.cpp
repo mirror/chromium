@@ -35,6 +35,21 @@
 
 namespace blink {
 
+void LayoutRectOutsets::Expand(LayoutUnit value) {
+  top_ += value;
+  right_ += value;
+  bottom_ += value;
+  left_ += value;
+}
+
+// Change outsets to be at least as large as |other|.
+void LayoutRectOutsets::Unite(const LayoutRectOutsets& other) {
+  top_ = std::max(top_, other.top_);
+  right_ = std::max(right_, other.right_);
+  bottom_ = std::max(bottom_, other.bottom_);
+  left_ = std::max(left_, other.left_);
+}
+
 LayoutRectOutsets LayoutRectOutsets::LineOrientationOutsets(
     WritingMode writing_mode) const {
   if (!IsHorizontalWritingMode(writing_mode))
