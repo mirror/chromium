@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "005591ed_39c61ed6",
+        "filename": "services/network/public/cpp/cors_error_status.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-14T05:24:11Z",
+      "side": 1,
+      "message": "Is this needed? If this is needed, please initialize |cors_error|.",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 17
+      },
+      "revId": "9d710da14a429958fbbb313a34551a935c1f28d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af2356e9_a97a9428",
+        "filename": "third_party/WebKit/public/platform/WebURLError.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-14T05:24:11Z",
+      "side": 1,
+      "message": "Can we have a DCHECK which ensures |is_web_security_violation_| is true when |cors_error_status_| is set in the constructor, and returns is_web_security_violation_ here?",
+      "range": {
+        "startLine": 76,
+        "startChar": 44,
+        "endLine": 76,
+        "endChar": 45
+      },
+      "revId": "9d710da14a429958fbbb313a34551a935c1f28d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
