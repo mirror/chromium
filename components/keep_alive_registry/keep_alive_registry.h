@@ -32,6 +32,7 @@ class KeepAliveRegistry {
 
   // Methods to query the state of the registry.
   bool IsKeepingAlive() const;
+  bool IsKeepingAliveNonBrowserOrigins() const;
   bool IsRestartAllowed() const;
   bool IsOriginRegistered(KeepAliveOrigin origin) const;
 
