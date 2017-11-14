@@ -16,6 +16,24 @@
       "revId": "df00420b849085504df2154d2860490b563f3ecd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa165091_81bc1f2e",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-14T02:32:51Z",
+      "side": 1,
+      "message": "Yes! Thanks for the reference to views::PlatformStyle::kUseRipples as well :) Done",
+      "parentUuid": "cd309130_911f3819",
+      "revId": "df00420b849085504df2154d2860490b563f3ecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
