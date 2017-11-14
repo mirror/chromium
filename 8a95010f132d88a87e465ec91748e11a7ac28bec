@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e69e4fd0_42895e56",
+        "filename": "third_party/WebKit/Source/core/exported/WebSettingsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-14T04:35:54Z",
+      "side": 1,
+      "message": "UseMockScrollbarSettings.h is for unit testing only which should not be used from non-testing code.",
+      "revId": "8a95010f132d88a87e465ec91748e11a7ac28bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd574f8_10ca2023",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTestHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-14T04:35:54Z",
+      "side": 1,
+      "message": "Remove the above line. RenderingTest already uses UseMockScrollbarSettings as a super class.",
+      "revId": "8a95010f132d88a87e465ec91748e11a7ac28bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e334ac5b_da70ff74",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-14T04:35:54Z",
+      "side": 1,
+      "message": "Remove the above line. We already inherit UseMockScrollbarSettings from super classes (-\u003ePaintControllerPaintTest -\u003e RenderingTest -\u003e UseMockScrollbarSettings).",
+      "revId": "8a95010f132d88a87e465ec91748e11a7ac28bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f42ad4_6c16bf93",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-14T04:35:54Z",
+      "side": 1,
+      "message": "Remove the whole method.",
+      "revId": "8a95010f132d88a87e465ec91748e11a7ac28bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "037187d9_4edb0be5",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreePrinterTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-14T04:35:54Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "8a95010f132d88a87e465ec91748e11a7ac28bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ae0dab_5b5e3cba",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreePrinterTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-14T04:35:54Z",
+      "side": 1,
+      "message": "Remove the whole method.",
+      "revId": "8a95010f132d88a87e465ec91748e11a7ac28bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9aaeb8f_1f709066",
+        "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalkTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-14T04:35:54Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "8a95010f132d88a87e465ec91748e11a7ac28bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1637c6_472917cf",
+        "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalkTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-14T04:35:54Z",
+      "side": 1,
+      "message": "Remove the whole method.",
+      "revId": "8a95010f132d88a87e465ec91748e11a7ac28bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
