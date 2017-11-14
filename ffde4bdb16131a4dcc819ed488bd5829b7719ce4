@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc18489f_2e384e16",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "This does not seem like it should be necessary. See comments below but if it does end up being necessary we should spell out exactly why.",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be6bd57b_1b0d129e",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "This would cause the details page to close whenever an arc VPN becomes disconnected which could be confusing and disruptive to a user. Why do we want to do this exactly?",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514c0411_893dddf3",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "Are there eventually plans to support connect through this UI? It seems pretty inconvenient that we can not and that there should at least be an issue tracking implementing it and a TODO added here.",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236f3fff_cc682270",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "\u0027isRemembered\u0027 should probably return false for arc VPN? That would remove the need for several of these extra checks.",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a53701a_220769c0",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "There\u0027s actually a bug in this logic, we shouldn\u0027t show \u0027advanced\u0027 for any connected VPN:\n\nreturn this.hasAdvancedFields_() || this.hasDeviceFields_() ||\n        (networkProperties.Type !\u003d CrOnc.Type.VPN \u0026\u0026\n         this.isRememberedOrConnected_(networkProperties));",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f423ff_6114e3b4",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "nit:\nreturn networkProperties.VPN \u0026\u0026\n    CrOnc.getActiveValue(this.networkProperties.VPN.Type) \u003d\u003d \u0027ARCVPN\u0027;",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43adc7e1_9c74c834",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "Why don\u0027t we want to show IP address for Arc VPN?",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd5a869_437a38be",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "We want to wrap all of this in a browser proxy so that we can easily remove the chrome dependency for testing or potential migration to the ash shell. See device_page_browser_proxy for an example.",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310222a7_efa1a30a",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "Add a showNetworksSubpage_(type) helper and have this and onShowNetworks_ call it.",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3930d3d8_6f466b90",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "no else after return",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ea8aca_c2227cb2",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "Wrap this in a helper and call it here and from onArcVpnProviderUpdated_.",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac1ac818_285ada67",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "Use same dom-if as third party VPNs (move the third party comment inside the dom-if)",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa2779f7_3c5b77ce",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "This should be:\nvar providerType \u003d this.get(\u0027VPN.ThirdPartyVPN.ProviderName\u0027, state)",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a41282f_109f9799",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "if (this.get(\u0027VPN.Type\u0027, state) \u003d\u003d \u0027ARCVPN\u0027)",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7091829_bd537478",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "There should be a TODO above this:\n// TODO(stevenjb): Use a browser proxy for this.\n\nMost of the chrome.send(\u0027addNetwork\u0027) calls will go away with crbug.com/380937 (currently behind the --network-settings-config flag), but third party VPN like Arc VPN has a built-in chrome dependency and will not use the networkingPrivate API.\n\nWe should name the proxy something like ExternalVpnConfigBrowserProxy so that we just have one for extension (\u0027third party\u0027) and Arc.",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01db4ef0_bef83871",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "See above - use browser proxy",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc8d42ee_792232b7",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "getArcVpnNetworks_",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f12c01a_14ad7a04",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/internet_handler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T23:53:00Z",
+      "side": 1,
+      "message": "Can we actually make this a separate \u0027ThirdPartyVpnHandler\u0027? The rest of this handler should eventually go away and that will make the deprecation easier to track / revert / etc.",
+      "revId": "ffde4bdb16131a4dcc819ed488bd5829b7719ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
