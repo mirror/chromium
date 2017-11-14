@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9376adcf_6796a304",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-14T10:15:44Z",
+      "side": 1,
+      "message": "I\u0027m curious why do we have different constants for input and output? Is it just by chance?",
+      "revId": "530dec5f163d9f6a2e4a64afa81f54d2a9b9e436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
