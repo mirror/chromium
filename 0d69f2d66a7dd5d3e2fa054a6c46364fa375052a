@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba64798f_03222412",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-14T05:04:18Z",
+      "side": 1,
+      "message": "Updated to something else since I implemented your suggestion just below this one :)",
+      "parentUuid": "a716e911_c1cd145e",
+      "revId": "0d69f2d66a7dd5d3e2fa054a6c46364fa375052a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "880d03d4_4a8e5ab5",
         "filename": "chrome/browser/ui/views/hover_button.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "738cb2a4_0e58f7aa",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-14T05:04:18Z",
+      "side": 1,
+      "message": "Ooh, true. Done, thanks!",
+      "parentUuid": "880d03d4_4a8e5ab5",
+      "revId": "0d69f2d66a7dd5d3e2fa054a6c46364fa375052a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6032c12_b719316a",
         "filename": "chrome/browser/ui/views/hover_button.cc",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "0d69f2d66a7dd5d3e2fa054a6c46364fa375052a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d727519_0be425ea",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-14T05:04:18Z",
+      "side": 1,
+      "message": "Ok, I went back to the if. :)",
+      "parentUuid": "a6032c12_b719316a",
+      "revId": "0d69f2d66a7dd5d3e2fa054a6c46364fa375052a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "ba760bf5_8d2f1a35",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-14T05:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7917db8a_b4ab4999",
+      "range": {
+        "startLine": 997,
+        "startChar": 56,
+        "endLine": 997,
+        "endChar": 58
+      },
+      "revId": "0d69f2d66a7dd5d3e2fa054a6c46364fa375052a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a144459f_eff7d70d",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_unittest.cc",
         "patchSetId": 6
@@ -90,6 +168,24 @@
       "revId": "0d69f2d66a7dd5d3e2fa054a6c46364fa375052a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f008fc87_ec9929ee",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-14T05:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a144459f_eff7d70d",
+      "revId": "0d69f2d66a7dd5d3e2fa054a6c46364fa375052a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

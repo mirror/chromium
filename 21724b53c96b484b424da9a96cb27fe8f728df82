@@ -429,6 +429,24 @@
     },
     {
       "key": {
+        "uuid": "c311a3e3_31e38f55",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-14T05:04:18Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s been a regression in non-MD for this, even without this bit of code :) Deleted.",
+      "parentUuid": "4ccedda4_5515cbb4",
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a655be0_66c8e929",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 4
