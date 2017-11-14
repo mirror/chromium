@@ -16,7 +16,7 @@
 #include "base/time/time.h"
 #include "device/geolocation/geolocation_export.h"
 #include "device/geolocation/geolocation_provider.h"
-#include "device/geolocation/location_provider.h"
+#include "device/geolocation/public/cpp/location_provider.h"
 #include "device/geolocation/public/interfaces/geoposition.mojom.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "url/gurl.h"
@@ -26,8 +26,6 @@ class URLRequestContextGetter;
 }
 
 namespace device {
-class GeolocationDelegate;
-class LocationProvider;
 
 // This class is responsible for handling updates from multiple underlying
 // providers and resolving them to a single 'best' location fix at any given
@@ -38,7 +36,7 @@ class DEVICE_GEOLOCATION_EXPORT LocationArbitrator : public LocationProvider {
   // switching to this location provider on the basis of it being fresher
   // (regardles of relative accuracy). Public for tests.
   static const base::TimeDelta kFixStaleTimeoutTimeDelta;
-  LocationArbitrator(std::unique_ptr<GeolocationDelegate> delegate,
+  LocationArbitrator(std::unique_ptr<LocationProvider> custom_location_provider,
                      const GeolocationProvider::RequestContextProducer
                          request_context_producer,
                      const std::string& api_key);
@@ -93,7 +91,7 @@ class DEVICE_GEOLOCATION_EXPORT LocationArbitrator : public LocationProvider {
                            const mojom::Geoposition& new_position,
                            bool from_same_provider) const;
 
-  const std::unique_ptr<GeolocationDelegate> delegate_;
+  std::unique_ptr<LocationProvider> custom_location_provider_;
   const GeolocationProvider::RequestContextProducer request_context_producer_;
   const std::string api_key_;
 
