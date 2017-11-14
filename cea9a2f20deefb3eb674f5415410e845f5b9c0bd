@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6135841e_b19d9a84",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwBrowserContext.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-14T23:54:37Z",
+      "side": 1,
+      "message": "We can just remove \"initSafeBrowsingApiHandler\" (just directly call setSafeBrowsingHandler from AwBrowserContext constructor)",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 47
+      },
+      "revId": "cea9a2f20deefb3eb674f5415410e845f5b9c0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
