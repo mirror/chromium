@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "8eb96b49_26dab5a2",
+        "filename": "components/arc/test/fake_app_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-14T21:27:43Z",
+      "side": 1,
+      "message": "nit: redundant?",
+      "range": {
+        "startLine": 332,
+        "startChar": 20,
+        "endLine": 332,
+        "endChar": 22
+      },
+      "revId": "1bc43765cd5153d24e8199dacded1803e3214645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f2755c_9d5a6a64",
+        "filename": "components/arc/test/fake_app_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-14T21:27:43Z",
+      "side": 1,
+      "message": "Can you please check it earlier? L299 and in this case you no need to fill and then clear fake_apps.",
+      "range": {
+        "startLine": 336,
+        "startChar": 7,
+        "endLine": 336,
+        "endChar": 20
+      },
+      "revId": "1bc43765cd5153d24e8199dacded1803e3214645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab50ebe1_0ef37a29",
         "filename": "components/arc/test/fake_app_instance.cc",
         "patchSetId": 4
