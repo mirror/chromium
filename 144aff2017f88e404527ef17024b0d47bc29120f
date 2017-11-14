@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e439d239_9e60ea3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "Got it, thanks. \"Component file\" is still a little vague. How about \"from a packed whitelist file supplied out of band.\" or something like that? This particular hunk of code isn\u0027t concerned with exactly how the file is delivered, just that it is, right? Along those lines, I kinda think \"component\" doesn\u0027t really belong in anything here (function names, file names, etc). The feature here is that a DLL whitelist provided in the form of a packed whitelist file is used to enforce a DLL whilelist for the process, right? I think this is orthogonal to the mechanism by which the whitelist is put into place.",
+      "parentUuid": "bd56aabe_624bb695",
+      "range": {
+        "startLine": 9,
+        "startChar": 49,
+        "endLine": 9,
+        "endChar": 63
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8634a932_65c3cade",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "This is temporary for now.  Will be adjusted to share a value with MON component updater code, once we start to tie the two halves together. \n\nSame as the filename below, that won\u0027t be the actual filename of the component file.\n\nAll I know for sure right now is that it will be under UserDataDir, and some subdir there.",
       "parentUuid": "8634a932_65c3cade",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "650b9ee0_8cff1b78",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "291e8a48_dda6f528",
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -119,6 +161,30 @@
       "side": 1,
       "message": "Above.  Placeholder.  Filename doesn\u0027t matter.",
       "parentUuid": "1b7aeb90_3108c489",
+      "range": {
+        "startLine": 21,
+        "startChar": 52,
+        "endLine": 21,
+        "endChar": 55
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "441daf0e_095633d5",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bb993f86_174ebc60",
       "range": {
         "startLine": 21,
         "startChar": 52,
@@ -312,6 +378,24 @@
       "side": 1,
       "message": "Binaries won\u0027t run on Windows unless they\u0027re little endian.  If our toolchain changes such that our Windows builds somehow tries to build with big endian, nothing will work.  I don\u0027t believe there\u0027s anything to check in the chrome_elf binary itself.\n\nW.R.T. the contents of the component update file that we\u0027re reading from: it\u0027s a requirement that the database be packed little-endian and also that 32-bit alignment \u003d\u003d 64-bit alignment (so no handling required).  It\u0027s packed in google3.",
       "parentUuid": "af118e61_1caf3044",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3c29c0c_c7921f34",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "wdyt of documenting these requirements in whitelist_component_format.h?",
+      "parentUuid": "d7ce7434_554dee4f",
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -517,6 +601,24 @@
     },
     {
       "key": {
+        "uuid": "63c3e4fd_451156bc",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "sounds good. please leave a comment here saying that extra contents in the file are ignored so that someone like me doesn\u0027t come along in 18 months and add the check (which would be wrong).",
+      "parentUuid": "d375c760_3759c469",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18421bc8_a3f62717",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -546,6 +648,24 @@
       "side": 1,
       "message": "It\u0027s a good comment.  I\u0027m still considering this.  Do we think the cost of the is_sorted check at startup is worth it?\n\nThe legitimate component files will be sorted.  And a check in the unittests (once I change the tests to actually use the latest database) will catch if that gets broken.\n\nIf I maliciously replace/edit the component update file locally in the chrome UserDataDir, what\u0027s the result?\n- While reading in the file, if the metadata is corrupt, the format version might not be supported (failed initialization, but chrome will still startup at least for now).\n- A massive value for module_count can only result in max DWORD, and ReadFile would probably fail.\n- If the metadata is good, but the array is somehow not sorted, or has goobledegook contents, the lookups will just fail.  This does require a local edit.  **This is the scenario that a call to is_sorted() would catch.  Is the cost worth it?\n\nIn the end though, we don\u0027t try to really secure our on-client files.  Someone local can mangle the file (or our binaries).  We\u0027ll be able to signal if the component initialization fails, and higher level component updater code can raise a red flag about bad state.\n\n**I\u0027ve adjusted this to always do the check... with a TODO to calculate the time cost once I have a real database file to test with.",
       "parentUuid": "18421bc8_a3f62717",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ce86a11_0292bfb5",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "\u003e It\u0027s a good comment.  I\u0027m still considering this.  Do we think the cost of the is_sorted check at startup is worth it?\n\nis it possible to defer the check until later? maybe hope the data is sorted to begin with, but then do something after startup if it isn\u0027t sorted (e.g., UMA, delete the file, force a component update, etc)?\n\n\u003e The legitimate component files will be sorted.  And a check in the unittests (once I change the tests to actually use the latest database) will catch if that gets broken.\n\nthis will tell you that the files you produce are sorted, which is good, but it doesn\u0027t help in this case.\n\n\u003e If I maliciously replace/edit the component update file locally in the chrome UserDataDir, what\u0027s the result?\n\u003e - While reading in the file, if the metadata is corrupt, the format version might not be supported (failed initialization, but chrome will still startup at least for now).\n\u003e - A massive value for module_count can only result in max DWORD, and ReadFile would probably fail.\n\u003e - If the metadata is good, but the array is somehow not sorted, or has goobledegook contents, the lookups will just fail.  This does require a local edit.  **This is the scenario that a call to is_sorted() would catch.  Is the cost worth it?\n\u003e \n\u003e In the end though, we don\u0027t try to really secure our on-client files.  Someone local can mangle the file (or our binaries).  We\u0027ll be able to signal if the component initialization fails, and higher level component updater code can raise a red flag about bad state.\n\u003e \n\u003e **I\u0027ve adjusted this to always do the check... with a TODO to calculate the time cost once I have a real database file to test with.\n\nsounds good. from experience, local files will not be what you expect them to be some of the time. i think the v8 and l10n folks have seen this with v8_context_snapshot.bin and icudtl.dat, respectively. whether by malicious intent, flaky disks, or folks who try to craft up their own magical Chrome pony installs, expect there to be cases where the file isn\u0027t what you think it is. especially if there\u0027s any advantage at all in tampering with it to any party.",
+      "parentUuid": "a9e24b91_5de7d65d",
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -939,6 +1059,24 @@
     },
     {
       "key": {
+        "uuid": "d368d3e0_e3c330c7",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "odd. it works here:\n\nhttps://cs.chromium.org/chromium/src/chrome_elf/nt_registry/nt_registry_unittest.cc?type\u003dcs\u0026q\u003dconstexpr%5C+const%5C+wchar_t%5C*\u0026sq\u003dpackage:chromium\u0026l\u003d119\n\ncan you spot a difference between the two?",
+      "parentUuid": "7695166b_763b43aa",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e0b9b88_73f6d209",
         "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
         "patchSetId": 5
@@ -1021,6 +1159,24 @@
     },
     {
       "key": {
+        "uuid": "d7834eb0_efbbb21f",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "i think that browser tests create profiles in temp dirs. maybe the tests for integration with the component updater should be browser tests?",
+      "parentUuid": "3de2662f_27141807",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e8cb94a_660ab30b",
         "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
         "patchSetId": 5
@@ -1097,6 +1253,24 @@
       "side": 1,
       "message": "I thought TearDown was the recommended way to handle cleanup on exception?  \n\nI\u0027ve left out DeleteOnClose, now that the file is inside scoped_temp_dir_ and gets deleted with the dir.",
       "parentUuid": "1fc55dd6_3f90a356",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6946a68a_4bccb8ed",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "RAII, TearDown, and the fixture\u0027s dtor are all fine places to do cleanup, though none help in case of crash. delete-on-close is for the paranoid like me, although it won\u0027t result in the dir itself being deleted on crash.",
+      "parentUuid": "b01749ff_f34301e3",
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

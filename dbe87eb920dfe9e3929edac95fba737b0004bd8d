@@ -1,0 +1,261 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "501da46d_1145769d",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "nit: we generally spell it out\n#if defined(_WIN64)",
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ab736e_c1c3bfee",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "L\"64\"",
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ce494c_e337e562",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "L\"32\"",
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0870c698_3f654030",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "i\u0027m not sure a debug-only assert is the right choice here. how about making this check everpresent and doing something specific in the failure case (e.g., assert in debug, return false in release)?",
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9b8543_2bacb04f",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "std::wstring\u0026",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 14
+      },
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bec06b1_bcd5a29e",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "i don\u0027t get this. isn\u0027t this true when it has already been initialized?",
+      "range": {
+        "startLine": 189,
+        "startChar": 27,
+        "endLine": 189,
+        "endChar": 29
+      },
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27024a50_e7ee1569",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "nit: remove comment since the function name makes it clear and we have a presubmit check to help make sure it\u0027s obeyed.",
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f5c1c6_19ea842b",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "how about getting rid of the duplication by using base::UTF16ToASCII to cheaply compute the basenames while iterating over kComponentTestBins? i think this would let you get rid of kTestArraySize and use:\n\n  for (const char* test_bin : kComponentTestBins) {\n\nfor the loop below.\n\ni would also be in favor of moving kComponentTestBins into GetTestModules as a static constexpr.",
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3150f97d_97dba863",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "nit: \"{}\" -\u003e \" \u003d default;\"",
+      "range": {
+        "startLine": 100,
+        "startChar": 27,
+        "endLine": 100,
+        "endChar": 29
+      },
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5077b54f_112e6f10",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "kTestArraySize -\u003e test_file_array.size()",
+      "range": {
+        "startLine": 122,
+        "startChar": 53,
+        "endLine": 122,
+        "endChar": 67
+      },
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f48835_83dd26cd",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "nit:\n  for (const auto\u0026 test_module : GetTestArray()) {",
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2076ab_9cd1a42e",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "nit: at() is banned since it does range checking and throws exceptions. use [], which does neither.",
+      "range": {
+        "startLine": 158,
+        "startChar": 37,
+        "endLine": 158,
+        "endChar": 39
+      },
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b3e579_2ac8e6e9",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-14T11:47:23Z",
+      "side": 1,
+      "message": "nit: i think you can get rid of the explicit std::string.",
+      "range": {
+        "startLine": 164,
+        "startChar": 35,
+        "endLine": 164,
+        "endChar": 47
+      },
+      "revId": "dbe87eb920dfe9e3929edac95fba737b0004bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
