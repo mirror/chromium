@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a69d952_ae5a69a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T21:20:59Z",
+      "side": 1,
+      "message": "It is unclear whether this describes the bug or the fix (it should describe the fix)",
+      "revId": "b792627442b5279073a4707db5b49b744620705b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f622cab1_5d99d696",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T21:20:59Z",
+      "side": 1,
+      "message": "Fix wrapping",
+      "revId": "b792627442b5279073a4707db5b49b744620705b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
