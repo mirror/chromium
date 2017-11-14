@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22aef44b_7c8963c9",
+        "filename": "third_party/WebKit/Source/core/html/forms/FormController.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-14T15:51:47Z",
+      "side": 1,
+      "message": "Haha agreed. FormController has a getter method called FormElementsState() that returns the DocumentState object, maybe it should just be called that instead.",
+      "parentUuid": "73a5c366_f1d624c0",
+      "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94cd5bbd_f9706e24",
         "filename": "third_party/WebKit/Source/core/html/forms/FormController.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-13T20:49:53Z",
       "side": 1,
       "message": "Do we have a guarantee that this remains valid? Can the elements it points to for head/tail be collected, for instance? It might be desirable to extend DoublyLinkedList to allow it to explicitly trace the head/tail members so that at least the GC lifetime correctness is clear.",
+      "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9dd9fc4_946882ae",
+        "filename": "third_party/WebKit/Source/core/html/forms/FormController.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-14T15:51:47Z",
+      "side": 1,
+      "message": "I think right now we can guarantee it: a form element is added to this list in InsertedInto (it\u0027s only inserted if it\u0027s in a document, so if it gets collected, DocumentState is also getting collected) and is removed from the list in RemovedFrom. Although making a special DoublyLinkedList would enforce correctness if this changed, WDYT?",
+      "parentUuid": "94cd5bbd_f9706e24",
       "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "82804474_3434b395",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElementWithState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-14T15:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0e1faae_cdc5bf48",
+      "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89e925fe_cce69813",
         "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElementWithState.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f0c1aa_bf6f2ae8",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElementWithState.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-14T15:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89e925fe_cce69813",
+      "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
