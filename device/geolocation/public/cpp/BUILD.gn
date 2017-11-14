@@ -4,8 +4,13 @@
 
 source_set("cpp") {
   sources = [
+    # TODO(ke.he@intel.com): Move the geolocation_export.h to public/cpp.
+    # After geolocation-core is moved into //services, the geolocation_export.h
+    # is needed only by location_provider.h.
+    "//device/geolocation/geolocation_export.h",
     "geoposition.cc",
     "geoposition.h",
+    "location_provider.h",
   ]
 
   deps = [
