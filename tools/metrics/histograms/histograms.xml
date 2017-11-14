@@ -76292,6 +76292,49 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="ServiceWorker.InstalledPWAScript.CachedMetadataSize"
+    units="bytes">
+  <owner>horo@chromium.org</owner>
+  <summary>
+    The length of cached metadata of scripts which are stored to the
+    CacheStorage by the installing service worker.
+  </summary>
+</histogram>
+
+<histogram name="ServiceWorker.InstalledPWAScript.CachedMetadataTotalSize"
+    units="bytes">
+  <owner>horo@chromium.org</owner>
+  <summary>
+    The total length of cached metadata of scripts which are stored to the
+    CacheStorage by the installing service worker.
+  </summary>
+</histogram>
+
+<histogram name="ServiceWorker.InstalledPWAScript.Count" units="count">
+  <owner>horo@chromium.org</owner>
+  <summary>
+    The counts of scripts which are stored to the CacheStorage by the installing
+    service worker.
+  </summary>
+</histogram>
+
+<histogram name="ServiceWorker.InstalledPWAScript.ScriptSize" units="bytes">
+  <owner>horo@chromium.org</owner>
+  <summary>
+    The length of scripts which are stored to the     CacheStorage by the
+    installing service worker.
+  </summary>
+</histogram>
+
+<histogram name="ServiceWorker.InstalledPWAScript.ScriptTotalSize"
+    units="bytes">
+  <owner>horo@chromium.org</owner>
+  <summary>
+    The total length of scripts which are stored to the     CacheStorage by the
+    installing service worker.
+  </summary>
+</histogram>
+
 <histogram name="ServiceWorker.InstallEvent.Time" units="ms">
   <owner>shimazu@chromium.org</owner>
   <summary>
