@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "edcac514_a0d9e36e",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-14T00:05:44Z",
+      "side": 1,
+      "message": "I seem to recall you suggested the opposite in my last CL :P",
+      "parentUuid": "39d6e845_2c14e78b",
+      "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6185fe26_bfaa5aa4",
         "filename": "components/viz/service/display/surface_aggregator.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b649e79_3023f82d",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-14T00:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6185fe26_bfaa5aa4",
+      "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c424bf06_49304542",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-14T00:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33191ca3_9ce4a6ea",
+      "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c52e18a_29af4d63",
         "filename": "components/viz/service/display/surface_aggregator.cc",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92944dba_071c60fd",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-14T00:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c52e18a_29af4d63",
+      "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7d81103c_86152c5f",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-14T00:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cd37350_98adead9",
+      "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffb45547_fb0ee966",
         "filename": "components/viz/service/display/surface_aggregator.cc",
         "patchSetId": 13
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-13T20:55:19Z",
       "side": 1,
       "message": "We shouldn\u0027t need new clip data.",
+      "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65a53c6_02e070fd",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-14T00:05:44Z",
+      "side": 1,
+      "message": "I\u0027m not scaling here. I\u0027m putting the clip rect in the target transform.",
+      "parentUuid": "ffb45547_fb0ee966",
       "revId": "d18b1e040935ee1cced5a89bc57adefe5d0f6291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
