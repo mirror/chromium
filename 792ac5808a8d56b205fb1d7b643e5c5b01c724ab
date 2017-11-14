@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c81f990c_9ab72174",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-14T10:48:34Z",
+      "side": 1,
+      "message": "Maybe use \"auto\" here as \"equal_range\" is a well known method of std::multimap, so it is not surprising how it is used.",
+      "range": {
+        "startLine": 537,
+        "startChar": 4,
+        "endLine": 538,
+        "endChar": 56
+      },
+      "revId": "792ac5808a8d56b205fb1d7b643e5c5b01c724ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8989ae3f_b5bdb01d",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-14T10:48:34Z",
+      "side": 1,
+      "message": "style: optimize for reading, not writing, so maybe call this \"duplicatesRange\" or \"rangeToRemove\"",
+      "range": {
+        "startLine": 539,
+        "startChar": 8,
+        "endLine": 539,
+        "endChar": 12
+      },
+      "revId": "792ac5808a8d56b205fb1d7b643e5c5b01c724ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12352dc_cc542d9d",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-14T10:48:34Z",
+      "side": 1,
+      "message": "I think we can use \"auto\" here too. And again, optimize for reading, not writing, and avoid abbreviations. I would name the iterator \"iterator\", not \"it\". So, that would be:\n\n  for (auto iterator \u003d dups.first; iterator !\u003d dups.second; ++iterator) {\n    passwordStore_-\u003eRemoveLogin(*(iterator-\u003esecond));\n  }",
+      "range": {
+        "startLine": 540,
+        "startChar": 9,
+        "endLine": 540,
+        "endChar": 53
+      },
+      "revId": "792ac5808a8d56b205fb1d7b643e5c5b01c724ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
