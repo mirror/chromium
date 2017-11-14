@@ -45,6 +45,8 @@ void MouseWheelPhaseHandler::AddPhaseIfNeededAndScheduleEndEvent(
   } else {  // !has_phase
     switch (scroll_phase_state_) {
       case SCROLL_STATE_UNKNOWN: {
+        mouse_wheel_event.has_synthetic_phase = true;
+        last_mouse_wheel_event_.has_synthetic_phase = true;
         if (!mouse_wheel_end_dispatch_timer_.IsRunning()) {
           mouse_wheel_event.phase = blink::WebMouseWheelEvent::kPhaseBegan;
           ScheduleMouseWheelEndDispatching(should_route_event);
