@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cad21c2_4e17acb0",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T00:48:38Z",
+      "side": 1,
+      "message": "DCHECK(expr) + if(!expr) is an anti-pattern. Please think of a different way to express this going forward.",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 4
+      },
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef27858_d1b28d8c",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T00:48:38Z",
+      "side": 1,
+      "message": "If I understand this and the GpuMemoryBufferImageCopy class, this might overwrite the GMB while it\u0027s still being displayed. To avoid tearing, won\u0027t it be necessary to do some sort of multi-buffering and re-use the GMBs once the vr_presentation_provider_ isn\u0027t referring to them any more?",
+      "range": {
+        "startLine": 712,
+        "startChar": 9,
+        "endLine": 712,
+        "endChar": 26
+      },
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7611d80_633f4f9f",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T00:48:38Z",
+      "side": 1,
+      "message": "How does the synchronization work between the GPU process and the vr_presentation_provider_? The GpuMemoryBufferImageCopy\u0027s work is done asynchronously in the GPU process, and it\u0027s not clear to me that it\u0027ll be done before the vr_presentation_provider_ picks up the share handle, turns it back into a texture, and displays it.",
+      "range": {
+        "startLine": 724,
+        "startChar": 28,
+        "endLine": 724,
+        "endChar": 44
+      },
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f36868_5f92485b",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T00:48:38Z",
+      "side": 1,
+      "message": "If this code is supposed to be reusing the same GpuMemoryBuffer over and over -- which I\u0027m not sure is correct, see comments in VRDisplay.cpp -- then all of the work for binding an OpenGL texture to the GMB, and setting up the draw framebuffer, is redundant frame-after-frame, and should be moved to EnsureMemoryBuffer. Even if you have a queue of frames which have been copied and sent to the vr_presentation_provider_, if you have a mechanism for reusing them, you would want to reuse this work.\n\nNote also the recently introduced extension CHROMIUM_texture_storage_image, but I think it\u0027s not applicable because your code requires the handle to the GpuMemoryBuffer.",
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b086d9_fc9ba64a",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T00:48:38Z",
+      "side": 1,
+      "message": "Per above, I think you should reuse this work frame after frame, if the GMB is reused.",
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
