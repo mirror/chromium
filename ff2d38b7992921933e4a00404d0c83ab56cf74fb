@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e0a3854_e7f43a54",
+        "filename": "ios/chrome/browser/ui/commands/start_voice_search_command.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-14T12:54:41Z",
+      "side": 1,
+      "message": "Just for context, the approach I would recommend using named guides is that you pass an enum value that identifies where the transition should begin -- FROM_NTP_BUTTON, FROM_OMNIBOX_BUTTON, FROM_CENTER_OF_PAGE, FROM_NOWHERE, etc. Then the UI layer maps that to a specific named guide (which the UI layer has somewhere else created). This completely removes the specific UI details from the command/coordinator layer.",
+      "range": {
+        "startLine": 20,
+        "startChar": 44,
+        "endLine": 20,
+        "endChar": 54
+      },
+      "revId": "ff2d38b7992921933e4a00404d0c83ab56cf74fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
