@@ -19,7 +19,7 @@ namespace blink {
 // implementation of callback functions.
 //
 // As the signatures of callback functions vary, this class does not implement
-// |call| member function that performs "invoke" steps. Subclasses will
+// |Invoke| member function that performs "invoke" steps. Subclasses will
 // implement it.
 class PLATFORM_EXPORT CallbackFunctionBase
     : public GarbageCollectedFinalized<CallbackFunctionBase>,
@@ -57,5 +57,64 @@ class PLATFORM_EXPORT CallbackFunctionBase
 };
 
 }  // namespace blink
+
+namespace v8 {
+
+template <>
+class Maybe<void> {
+ public:
+  V8_INLINE bool IsNothing() const { return !has_value_; }
+  V8_INLINE bool IsJust() const { return has_value_; }
+
+  /**
+   * An alias for |FromJust|. Will crash if the Maybe<> is nothing.
+   */
+  V8_INLINE void ToChecked() const { return FromJust(); }
+
+  /**
+   * Converts this Maybe<> to a value of type T. If this Maybe<> is
+   * nothing (empty), V8 will crash the process.
+   */
+  V8_INLINE void FromJust() const {
+    if (V8_UNLIKELY(!IsJust()))
+      V8::FromJustIsNothing();
+    return;
+  }
+
+  V8_INLINE bool operator==(const Maybe& other) const {
+    return IsJust() == other.IsJust();
+  }
+
+  V8_INLINE bool operator!=(const Maybe& other) const {
+    return !operator==(other);
+  }
+
+ private:
+  Maybe() : has_value_(false) {}
+
+  bool has_value_;
+
+  template <class U>
+  friend Maybe<U> Nothing();
+  template <class U>
+  friend Maybe<U> Just();
+};
+
+template <>
+inline Maybe<void> Nothing() {
+  return Maybe<void>();
+}
+
+template <class T>
+inline Maybe<T> Just();
+
+template <>
+inline Maybe<void> Just() {
+  Maybe<void> maybe;
+  maybe.has_value_ = true;
+  return maybe;
+}
+
+}  // namespace v8
 
 #endif  // CallbackFunctionBase_h
