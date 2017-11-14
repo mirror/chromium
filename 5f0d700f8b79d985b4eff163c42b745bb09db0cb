@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "ee7b9bb0_0d158f7d",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:40:02Z",
+      "side": 1,
+      "message": "OK in that case use scoped_refptr\u003cWebServiceWorkerRegistrationImpl\u003e impl \u003d new ...",
+      "parentUuid": "b2e1bb54_375a64ac",
+      "revId": "5f0d700f8b79d985b4eff163c42b745bb09db0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc5b3403_c1b19c20",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 15

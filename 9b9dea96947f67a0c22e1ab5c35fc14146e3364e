@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dfef6f5_710a437a",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:40:02Z",
+      "side": 1,
+      "message": "Don\u0027t need newline here.",
+      "revId": "9b9dea96947f67a0c22e1ab5c35fc14146e3364e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
