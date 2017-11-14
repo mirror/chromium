@@ -72,6 +72,7 @@ const char kSeekCurrentMedia[] = "seekCurrentMedia";
 const char kSelectLocalMediaFile[] = "selectLocalMediaFile";
 const char kSetCurrentMediaMute[] = "setCurrentMediaMute";
 const char kSetCurrentMediaVolume[] = "setCurrentMediaVolume";
+const char kSetMediaRemotingEnabled[] = "setMediaRemotingEnabled";
 const char kHangoutsSetLocalPresent[] = "hangouts.setLocalPresent";
 
 // JS function names.
@@ -348,11 +349,19 @@ void MediaRouterWebUIMessageHandler::UpdateMediaRouteStatus(
   status_value.SetBoolean("canMute", status.can_mute);
   status_value.SetBoolean("canSetVolume", status.can_set_volume);
   status_value.SetBoolean("canSeek", status.can_seek);
+  status_value.SetBoolean("canSetMediaRemotingEnabled",
+                          status.can_set_media_remoting_enabled);
   status_value.SetInteger("playState", static_cast<int>(status.play_state));
   status_value.SetBoolean("isMuted", status.is_muted);
   status_value.SetInteger("duration", status.duration.InSeconds());
   status_value.SetInteger("currentTime", status.current_time.InSeconds());
   status_value.SetDouble("volume", status.volume);
+
+  PrefService* pref_service = Profile::FromWebUI(web_ui())->GetPrefs();
+  bool media_remoting_enabled =
+      pref_service->GetBoolean(prefs::kMediaRouterMediaRemotingEnabled);
+  status_value.SetBoolean("mediaRemotingEnabled", media_remoting_enabled);
+
   if (status.hangouts_extra_data) {
     auto hangouts_extra_data = base::MakeUnique<base::DictionaryValue>();
     hangouts_extra_data->SetBoolean("localPresent",
@@ -491,6 +500,10 @@ void MediaRouterWebUIMessageHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       kSetCurrentMediaVolume,
       base::Bind(&MediaRouterWebUIMessageHandler::OnSetCurrentMediaVolume,
+                 base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      kSetMediaRemotingEnabled,
+      base::Bind(&MediaRouterWebUIMessageHandler::OnSetMediaRemotingEnabled,
                  base::Unretained(this)));
   web_ui()->RegisterMessageCallback(
       kHangoutsSetLocalPresent,
@@ -982,6 +995,20 @@ void MediaRouterWebUIMessageHandler::OnSetCurrentMediaVolume(
       media_router_ui_->GetMediaRouteController();
   if (route_controller && volume >= 0 && volume <= 1)
     route_controller->SetVolume(volume);
+}
+
+void MediaRouterWebUIMessageHandler::OnSetMediaRemotingEnabled(
+    const base::ListValue* args) {
+  const base::DictionaryValue* args_dict = nullptr;
+  bool enabled;
+  if (!args->GetDictionary(0, &args_dict) ||
+      !args_dict->GetBoolean("enabled", &enabled)) {
+    DVLOG(1) << "Unable to extract enabled";
+    return;
+  }
+
+  PrefService* pref_service = Profile::FromWebUI(web_ui())->GetPrefs();
+  pref_service->SetBoolean(prefs::kMediaRouterMediaRemotingEnabled, enabled);
 }
 
 void MediaRouterWebUIMessageHandler::OnSetHangoutsLocalPresent(

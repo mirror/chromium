@@ -79,6 +79,11 @@ struct StructTraits<media_router::mojom::MediaStatusDataView,
     return status.can_seek;
   }
 
+  static bool can_set_media_remoting_enabled(
+      const media_router::MediaStatus& status) {
+    return status.can_set_media_remoting_enabled;
+  }
+
   static media_router::MediaStatus::PlayState play_state(
       const media_router::MediaStatus& status) {
     return status.play_state;
