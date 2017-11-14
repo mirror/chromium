@@ -55938,6 +55938,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PageLoad.Clients.Memory.OomReloadChain" units="reloads">
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    For a given page that OOMs in the foreground, this metric trakcs how many
+    times the user reloaded the page and hit another OOM. The metric will log a
+    count of 0 for a single OOM, 1 for an OOM followed by a reload, etc. Logged
+    as soon as a new navigation commits that is not a reload, or whose previous
+    page did not OOM.
+  </summary>
+</histogram>
+
 <histogram name="PageLoad.Clients.SubresourceFilter.ActivationDecision"
     enum="SubresourceFilterActivationDecision">
   <owner>bmcquade@chromium.org</owner>

@@ -30,6 +30,7 @@
 #include "chrome/browser/page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/no_state_prefetch_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/omnibox_suggestion_used_page_load_metrics_observer.h"
+#include "chrome/browser/page_load_metrics/observers/oom_page_load_metrics_observer_factory.h"
 #include "chrome/browser/page_load_metrics/observers/prerender_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/previews_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/previews_ukm_observer.h"
@@ -158,6 +159,10 @@ void PageLoadMetricsEmbedder::RegisterObservers(
       base::MakeUnique<OmniboxSuggestionUsedMetricsObserver>(IsPrerendering()));
   tracker->AddObserver(
       base::MakeUnique<DelayNavigationPageLoadMetricsObserver>());
+
+  auto* oom_observer_factory =
+      OomPageLoadMetricsObserverFactory::FromWebContents(web_contents_);
+  tracker->AddObserver(oom_observer_factory->CreateObserver());
 }
 
 bool PageLoadMetricsEmbedder::IsPrerendering() const {
@@ -183,6 +188,7 @@ void InitializePageLoadMetricsForWebContents(
     content::WebContents* web_contents) {
   page_load_metrics::MetricsWebContentsObserver::CreateForWebContents(
       web_contents, base::MakeUnique<PageLoadMetricsEmbedder>(web_contents));
+  OomPageLoadMetricsObserverFactory::CreateForWebContents(web_contents);
 }
 
 }  // namespace chrome
