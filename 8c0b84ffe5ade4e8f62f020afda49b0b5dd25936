@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c929bab_2c32479f",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-14T23:17:37Z",
+      "side": 1,
+      "message": "Should we add a teardown handler to reset the timeout to the initial value, to not affect other tests?",
+      "revId": "8c0b84ffe5ade4e8f62f020afda49b0b5dd25936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
