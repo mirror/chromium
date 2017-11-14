@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0c7e7b48_f92994e8",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-14T21:58:16Z",
+      "side": 1,
+      "message": "Added a comment. Note: The iteration in ShouldBlockRequest was O(n) earlier as well (iterating over map/set is O(n)). However, we do improve over ShouldRedirectRequest implementation, since we don\u0027t evaluate redundant rulesets now.\n\nFor containers of small size, flat_set is still preferred over std::set/map. See https://cs.chromium.org/chromium/src/base/containers/README.md?sq\u003dpackage:chromium\u0026dr\u003dCSs",
+      "parentUuid": "9a62d0e6_7a549b70",
+      "revId": "b3a483a1e2ed46b5b7805f8dd57fd6bbcf13c50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cfad57b_3f200ab2",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
         "patchSetId": 1
