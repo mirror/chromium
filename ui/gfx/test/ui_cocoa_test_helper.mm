@@ -209,7 +209,8 @@ std::set<NSWindow*> CocoaTest::ApplicationWindows() {
   base::mac::ScopedNSAutoreleasePool pool;
   NSArray *appWindows = [NSApp windows];
   for (NSWindow *window in appWindows) {
-    windows.insert(window);
+    if (![window isKindOfClass:[NSColorPanel class]])
+      windows.insert(window);
   }
   return windows;
 }
