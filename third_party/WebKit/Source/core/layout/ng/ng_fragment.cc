@@ -10,20 +10,20 @@
 namespace blink {
 
 LayoutUnit NGFragment::InlineSize() const {
-  return writing_mode_ == kHorizontalTopBottom
+  return WritingMode() == WritingMode::kHorizontalTb
              ? physical_fragment_.Size().width
              : physical_fragment_.Size().height;
 }
 
 LayoutUnit NGFragment::BlockSize() const {
-  return writing_mode_ == kHorizontalTopBottom
+  return WritingMode() == WritingMode::kHorizontalTb
              ? physical_fragment_.Size().height
              : physical_fragment_.Size().width;
 }
 
 NGLogicalSize NGFragment::Size() const {
   return physical_fragment_.Size().ConvertToLogical(
-      static_cast<NGWritingMode>(writing_mode_));
+      static_cast<enum WritingMode>(writing_mode_));
 }
 
 NGBorderEdges NGFragment::BorderEdges() const {

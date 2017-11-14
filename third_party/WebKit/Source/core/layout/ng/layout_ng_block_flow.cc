@@ -78,8 +78,7 @@ void LayoutNGBlockFlow::UpdateOutOfFlowBlockLayout() {
       NGConstraintSpace::CreateFromLayoutObject(*this);
   NGFragmentBuilder container_builder(
       container, scoped_refptr<const ComputedStyle>(container_style),
-      FromPlatformWritingMode(container_style->GetWritingMode()),
-      container_style->Direction());
+      container_style->GetWritingMode(), container_style->Direction());
 
   // Compute ContainingBlock logical size.
   // OverrideContainingBlockLogicalWidth/Height are used by grid layout.
@@ -161,9 +160,9 @@ void LayoutNGBlockFlow::UpdateOutOfFlowBlockLayout() {
       container_style->IsHorizontalWritingMode()
           ? NGPhysicalOffset(static_inline, static_block)
           : NGPhysicalOffset(static_block, static_inline);
-  NGStaticPosition static_position = NGStaticPosition::Create(
-      FromPlatformWritingMode(parent_style->GetWritingMode()),
-      parent_style->Direction(), static_location);
+  NGStaticPosition static_position =
+      NGStaticPosition::Create(parent_style->GetWritingMode(),
+                               parent_style->Direction(), static_location);
 
   container_builder.AddOutOfFlowLegacyCandidate(NGBlockNode(this),
                                                 static_position);

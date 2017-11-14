@@ -50,7 +50,7 @@ LayoutUnit ResolveInlineLength(const NGConstraintSpace& constraint_space,
             LayoutUnit());
   // TODO(layout-dev) enable this DCHECK
   // DCHECK_EQ(constraint_space.WritingMode(),
-  //          FromPlatformWritingMode(style.GetWritingMode()));
+  //          style.GetWritingMode());
 
   if (constraint_space.IsAnonymous())
     return constraint_space.AvailableSize().inline_size;
@@ -133,7 +133,7 @@ LayoutUnit ResolveBlockLength(const NGConstraintSpace& constraint_space,
   DCHECK_NE(type, LengthResolveType::kMarginBorderPaddingSize);
   // TODO(layout-dev) enable this DCHECK
   // DCHECK_EQ(constraint_space.WritingMode(),
-  //          FromPlatformWritingMode(style.GetWritingMode()));
+  //          style.GetWritingMode());
 
   if (constraint_space.IsAnonymous())
     return content_size;
@@ -200,7 +200,7 @@ MinMaxSize ComputeMinAndMaxContentContribution(
     const WTF::Optional<MinMaxSize>& min_and_max) {
   // Synthesize a zero-sized constraint space for passing to
   // ResolveInlineLength.
-  NGWritingMode writing_mode = FromPlatformWritingMode(style.GetWritingMode());
+  WritingMode writing_mode = style.GetWritingMode();
   NGConstraintSpaceBuilder builder(
       writing_mode,
       /* icb_size */ {NGSizeIndefinite, NGSizeIndefinite});
@@ -479,8 +479,7 @@ NGBoxStrut ComputeMarginsForVisualContainer(
 NGBoxStrut ComputeMarginsForSelf(const NGConstraintSpace& constraint_space,
                                  const ComputedStyle& style) {
   return ComputePhysicalMargins(constraint_space, style)
-      .ConvertToLogical(FromPlatformWritingMode(style.GetWritingMode()),
-                        style.Direction());
+      .ConvertToLogical(style.GetWritingMode(), style.Direction());
 }
 
 NGBoxStrut ComputeBorders(const NGConstraintSpace& constraint_space,
