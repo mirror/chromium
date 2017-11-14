@@ -36,12 +36,12 @@
 
 using std::string;
 using testing::CreateFunctor;
+using testing::_;
 using testing::AtLeast;
 using testing::InSequence;
 using testing::Invoke;
 using testing::Return;
 using testing::StrictMock;
-using testing::_;
 
 namespace net {
 namespace test {
@@ -230,8 +230,8 @@ class TestSession : public QuicSpdySession {
     return WritevData(stream, stream->id(), bytes, 0, FIN);
   }
 
-  using QuicSession::PostProcessAfterData;
   using QuicSession::closed_streams;
+  using QuicSession::PostProcessAfterData;
   using QuicSession::zombie_streams;
 
  private:
@@ -815,6 +815,30 @@ TEST_P(QuicSessionTestServer, SendGoAway) {
               SendRstStream(kTestStreamId, QUIC_STREAM_PEER_GOING_AWAY, 0))
       .Times(0);
   EXPECT_TRUE(session_.GetOrCreateDynamicStream(kTestStreamId));
+}
+
+// Test that server session will send a connectivity probing in response to a
+// connectivity probing on the same path.
+TEST_P(QuicSessionTestServer, ServerReplyToConnecitivityProbing) {
+  QuicSocketAddress old_peer_address =
+      QuicSocketAddress(QuicIpAddress::Loopback4(), kTestPort);
+  EXPECT_EQ(old_peer_address, session_.peer_address());
+
+  QuicSocketAddress new_peer_address =
+      QuicSocketAddress(QuicIpAddress::Loopback4(), kTestPort + 1);
+
+  MockPacketWriter* writer = static_cast<MockPacketWriter*>(
+      QuicConnectionPeer::GetWriter(session_.connection()));
+  EXPECT_CALL(*writer, WritePacket(_, _, _, new_peer_address, _))
+      .WillOnce(Return(WriteResult(WRITE_STATUS_OK, 0)));
+  EXPECT_CALL(*connection_,
+              SendConnectivityProbingPacket(nullptr, new_peer_address))
+      .WillOnce(
+          Invoke(connection_,
+                 &MockQuicConnection::ReallySendConnectivityProbingPacket));
+  session_.OnConnectivityProbingReceived(session_.self_address(),
+                                         new_peer_address);
+  EXPECT_EQ(old_peer_address, session_.peer_address());
 }
 
 TEST_P(QuicSessionTestServer, IncreasedTimeoutAfterCryptoHandshake) {
