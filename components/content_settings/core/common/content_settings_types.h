@@ -99,6 +99,15 @@ enum ContentSettingsType {
   // technology.
   CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS,
 
+  // Content setting which stores whether or not the user has granted the site
+  // full (read/write without a gesture) permission to access the system
+  // clipboard.
+  CONTENT_SETTINGS_TYPE_CLIPBOARD_READ,
+
+  // Content setting which stores whether or not the user has granted the site
+  // write (with a gesture) permission to access the system clipboard.
+  CONTENT_SETTINGS_TYPE_CLIPBOARD_WRITE,
+
   CONTENT_SETTINGS_NUM_TYPES,
 };
 
