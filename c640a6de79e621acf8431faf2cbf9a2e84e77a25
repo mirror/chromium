@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "314823f8_5267fd18",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-14T19:14:48Z",
+      "side": 1,
+      "message": "Since these are always set below, I don\u0027t think you need to set them to nullptr here",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 30
+      },
+      "revId": "c640a6de79e621acf8431faf2cbf9a2e84e77a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa287be2_573aa780",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-14T19:14:48Z",
+      "side": 1,
+      "message": "hidden_ starts out as true, and I don\u0027t see it being set to false anywhere. Since we\u0027re displaying it here, shouldn\u0027t we be setting hidden_ to false?",
+      "range": {
+        "startLine": 84,
+        "startChar": 14,
+        "endLine": 84,
+        "endChar": 0
+      },
+      "revId": "c640a6de79e621acf8431faf2cbf9a2e84e77a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83dc184f_eccb1c43",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-14T19:14:48Z",
+      "side": 1,
+      "message": "remove \"and rules\"",
+      "range": {
+        "startLine": 135,
+        "startChar": 58,
+        "endLine": 135,
+        "endChar": 67
+      },
+      "revId": "c640a6de79e621acf8431faf2cbf9a2e84e77a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630b325e_008427c3",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-14T19:14:48Z",
+      "side": 1,
+      "message": "These should be last_arrow_ and svg_container_",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 33
+      },
+      "revId": "c640a6de79e621acf8431faf2cbf9a2e84e77a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
