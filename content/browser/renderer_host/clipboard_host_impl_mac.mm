@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/renderer_host/clipboard_message_filter.h"
+#include "content/browser/renderer_host/clipboard_host_impl.h"
 
 #import <Cocoa/Cocoa.h>
 #include <stddef.h>
@@ -25,12 +25,9 @@ static const size_t kMaxFindPboardStringLength = 4096;
 
 class WriteFindPboardWrapper {
  public:
-  explicit WriteFindPboardWrapper(NSString* text)
-      : text_([text retain]) {}
+  explicit WriteFindPboardWrapper(NSString* text) : text_([text retain]) {}
 
-  void Run() {
-    [[FindPasteboard sharedInstance] setFindText:text_];
-  }
+  void Run() { [[FindPasteboard sharedInstance] setFindText:text_]; }
 
  private:
   base::scoped_nsobject<NSString> text_;
@@ -40,17 +37,12 @@ class WriteFindPboardWrapper {
 
 }  // namespace
 
-// Called on the IO thread.
-void ClipboardMessageFilter::OnFindPboardWriteString(
-    const base::string16& text) {
+void ClipboardHostImpl::WriteStrongToFindPboard(const base::string16& text) {
   if (text.length() <= kMaxFindPboardStringLength) {
     NSString* nsText = base::SysUTF16ToNSString(text);
     if (nsText) {
-      // FindPasteboard must be used on the UI thread.
-      BrowserThread::PostTask(
-          BrowserThread::UI, FROM_HERE, base::Bind(
-              &WriteFindPboardWrapper::Run,
-              base::Owned(new WriteFindPboardWrapper(nsText))));
+      WriteFindPboardWrapper wrapper(nsText);
+      wrapper.Run();
     }
   }
 }
