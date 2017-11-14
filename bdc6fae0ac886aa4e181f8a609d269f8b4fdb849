@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6caf6bbd_ab6c947c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/generic/policy-inherited-correctly-778658.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-14T20:25:25Z",
+      "side": 1,
+      "message": "Nit: Whitespace.",
+      "range": {
+        "startLine": 6,
+        "startChar": 70,
+        "endLine": 6,
+        "endChar": 71
+      },
+      "revId": "bdc6fae0ac886aa4e181f8a609d269f8b4fdb849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb11cbd2_4aa724ee",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/generic/policy-inherited-correctly-778658.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-14T20:25:25Z",
+      "side": 1,
+      "message": "I\u0027d suggest dropping the bug number from the filename. It\u0027s not going to mean anything to anyone else who uses WPT.",
+      "revId": "bdc6fae0ac886aa4e181f8a609d269f8b4fdb849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0cc03b_c33aee25",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/generic/policy-inherited-correctly-778658.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-14T20:25:25Z",
+      "side": 1,
+      "message": "You don\u0027t need the `+` inside `\u003cscript\u003e`, just inside `\u003c/script\u003e`. Because HTML parsing is weird.",
+      "revId": "bdc6fae0ac886aa4e181f8a609d269f8b4fdb849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
