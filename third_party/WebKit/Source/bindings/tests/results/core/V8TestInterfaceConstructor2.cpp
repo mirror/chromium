@@ -20,7 +20,7 @@
 #include "core/frame/LocalDOMWindow.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/wtf/GetPtr.h"
-#include "platform/wtf/RefPtr.h"
+#include "base/memory/scoped_refptr.h"
 
 namespace blink {
 
