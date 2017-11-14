@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8befc648_2ce4ea5f",
+        "filename": "ios/web/web_state/favicon_callbacks_inttest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T18:17:27Z",
+      "side": 1,
+      "message": "No need for making this private per Style Guide:\nhttps://google.github.io/styleguide/cppguide.html#Access_Control\n\nFeel free to land this however, because I don\u0027t think that encapsulation makes test fixture any worse.",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 20
+      },
+      "revId": "8deeb5b008cf9d8378c74130f96a8357c0888c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264bf455_f328e54a",
+        "filename": "ios/web/web_state/favicon_callbacks_inttest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T18:17:27Z",
+      "side": 1,
+      "message": "Do we need this for a test fixture? I can\u0027t imagine the code which would call an assignment operator or a copy constructor. To me this like looks like unnecessary noise, but maybe we have a rule in Chromium that \"requires\" DISALLOW_COPY_AND_ASSIGN everywhere?",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 26
+      },
+      "revId": "8deeb5b008cf9d8378c74130f96a8357c0888c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
