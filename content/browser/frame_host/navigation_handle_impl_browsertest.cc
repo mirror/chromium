@@ -38,6 +38,18 @@ namespace {
 // Text to place in an HTML body. Should not contain any markup.
 const char kBodyTextContent[] = "some plain text content";
 
+const content::NavigationThrottle::ThrottleCheckResult kBlockResult = {
+    content::NavigationThrottle::BLOCK_REQUEST, net::ERR_BLOCKED_BY_CLIENT,
+    base::StringPrintf("<html><body>%s</body><html>", kBodyTextContent)};
+
+void CheckBodyTextContent(content::RenderFrameHost* rfh) {
+  std::string result;
+  const std::string javascript =
+      "domAutomationController.send(document.body.textContent)";
+  ASSERT_TRUE(content::ExecuteScriptAndExtractString(rfh, javascript, &result));
+  EXPECT_EQ(kBodyTextContent, result);
+}
+
 }  // namespace
 
 namespace content {
@@ -2021,35 +2033,65 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplDownloadBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
-                       ThrottleFailureWithErrorPageContent) {
+                       BlockStartWithErrorPageContent) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
+
+  GURL url(embedded_test_server()->GetURL("/download-test1.lib"));
+  NavigationHandleObserver observer(shell()->web_contents(), url);
+  TestNavigationThrottleInstaller installer(
+      shell()->web_contents(), kBlockResult, NavigationThrottle::PROCEED,
+      NavigationThrottle::PROCEED, NavigationThrottle::PROCEED);
+
+  EXPECT_FALSE(NavigateToURL(shell(), url));
+  EXPECT_TRUE(observer.has_committed());
+  EXPECT_TRUE(observer.is_error());
+  ASSERT_NO_FATAL_FAILURE(
+      CheckBodyTextContent(shell()->web_contents()->GetMainFrame()));
+}
+
+IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
+                       BlockRedirectWithErrorPageContent) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
+
+  GURL redirect_url(
+      embedded_test_server()->GetURL("/cross-site/bar.com/download-test1.lib"));
+  NavigationHandleObserver observer(shell()->web_contents(), redirect_url);
+  TestNavigationThrottleInstaller installer(
+      shell()->web_contents(), NavigationThrottle::PROCEED, kBlockResult,
+      NavigationThrottle::PROCEED, NavigationThrottle::PROCEED);
+
+  EXPECT_FALSE(NavigateToURL(shell(), redirect_url));
+  EXPECT_TRUE(observer.has_committed());
+  EXPECT_TRUE(observer.is_error());
+  ASSERT_NO_FATAL_FAILURE(
+      CheckBodyTextContent(shell()->web_contents()->GetMainFrame()));
+}
+
+IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
+                       CancelFailureWithErrorPageContent) {
   if (!IsBrowserSideNavigationEnabled())
     return;
 
   net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
   https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_MISMATCHED_NAME);
   ASSERT_TRUE(https_server.Start());
+
   GURL url(https_server.GetURL("/title1.html"));
-
-  NavigationThrottle::ThrottleCheckResult cancel_result = {
-      NavigationThrottle::CANCEL, net::ERR_CERT_COMMON_NAME_INVALID,
-      base::StringPrintf("<html><body>%s</body><html>", kBodyTextContent)};
-
-  NavigationHandleObserver observer(shell()->web_contents(), url);
+  NavigationHandleObserver observer(shell()->web_contents(), url);;
+  content::NavigationThrottle::ThrottleCheckResult kCancelResult = {
+      content::NavigationThrottle::CANCEL, net::ERR_CERT_COMMON_NAME_INVALID,
+      base::StringPrintf("<html><body>%s</body><html>", kBodyTextContent)}
   TestNavigationThrottleInstaller installer(
       shell()->web_contents(), NavigationThrottle::PROCEED,
-      NavigationThrottle::PROCEED, cancel_result, NavigationThrottle::PROCEED);
+      NavigationThrottle::PROCEED, kCancelResult, NavigationThrottle::PROCEED);
 
   EXPECT_FALSE(NavigateToURL(shell(), url));
-
   EXPECT_TRUE(observer.has_committed());
   EXPECT_TRUE(observer.is_error());
-
-  std::string result;
-  const std::string javascript =
-      "domAutomationController.send(document.body.textContent)";
-  content::RenderFrameHost* rfh = shell()->web_contents()->GetMainFrame();
-  ASSERT_TRUE(content::ExecuteScriptAndExtractString(rfh, javascript, &result));
-  EXPECT_EQ(kBodyTextContent, result);
+  ASSERT_NO_FATAL_FAILURE(
+      CheckBodyTextContent(shell()->web_contents()->GetMainFrame()));
 }
 
 }  // namespace content
