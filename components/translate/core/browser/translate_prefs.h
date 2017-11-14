@@ -77,6 +77,25 @@ class DenialTimeUpdate {
   base::ListValue* time_list_;  // Weak, owned by the containing prefs service.
 };
 
+// This class holds various info about a language, that are related to Translate
+// Preferences and Language Settings.
+class TranslateLanguageInfo {
+ public:
+  TranslateLanguageInfo();
+  TranslateLanguageInfo(const TranslateLanguageInfo&);
+
+  // This ISO code of the language.
+  std::string code;
+  // The display name of the language in the current locale.
+  std::string display_name;
+  // The display name of the language in the language locale.
+  std::string native_display_name;
+  // Whether the display name is RTL text.
+  bool display_name_rtl;
+  // Whether we support translate for this language.
+  bool supports_translate;
+};
+
 // The wrapper of PrefService object for Translate.
 //
 // It is assumed that |prefs_| is alive while this instance is alive.
@@ -149,6 +168,14 @@ class TranslatePrefs {
   void RearrangeLanguage(const std::string& language,
                          RearrangeSpecifier where,
                          const std::vector<std::string>& enabled_languages);
+
+  // Returns the list of TranslateLanguageInfo for all languages that are
+  // available in the given locale.
+  // The list returned in |languages| is sorted alphabetically based on the
+  // display names in the given locale.
+  static void GetLanguageInfoList(
+      const std::string& app_locale,
+      std::vector<TranslateLanguageInfo>* languages);
 
   bool IsSiteBlacklisted(const std::string& site) const;
   void BlacklistSite(const std::string& site);
