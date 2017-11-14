@@ -22,6 +22,30 @@
       "revId": "41a19c1a55e832bf1f6d2e5e2c41561efec448bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91fa63dd_660b4264",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T01:56:51Z",
+      "side": 1,
+      "message": "Yes I believe that Mount should return an error because it looks like GetProvidingExtensionInfo returns false before setting the values in provider_info so they remain uninitialized and unreliable",
+      "parentUuid": "1d16aaf3_108dd11f",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 73
+      },
+      "revId": "41a19c1a55e832bf1f6d2e5e2c41561efec448bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
