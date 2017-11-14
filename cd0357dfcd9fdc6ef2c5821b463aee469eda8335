@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe898b3e_5ff46c84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-14T17:08:39Z",
+      "side": 1,
+      "message": "Convert BeginNavigation to a mojo method?\n\nWe tend to write commit messages in the present tense rather than the past tense.",
+      "revId": "cd0357dfcd9fdc6ef2c5821b463aee469eda8335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f67db6f_8d36093a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-14T17:08:39Z",
+      "side": 1,
+      "message": "I just filed crbug.com/784904 for this. Please add the bug number to the commit message.",
+      "revId": "cd0357dfcd9fdc6ef2c5821b463aee469eda8335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd24a3a0_7035944c",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-14T17:08:39Z",
+      "side": 1,
+      "message": "This block can be replaced by a call to TestRenderFrameHost::SendRendererInitiatedNavigationRequest with has user_gesture set to false. And then I don\u0027t think we need to introduce the new function in TestRenderFrameHost anymore.",
+      "revId": "cd0357dfcd9fdc6ef2c5821b463aee469eda8335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9527b1c2_992d033c",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2936,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-14T17:08:39Z",
+      "side": 1,
+      "message": "Note: this early return leaves the renderer process in a loading state. We should send a FrameMsg_DroppedNavigation here.",
+      "revId": "cd0357dfcd9fdc6ef2c5821b463aee469eda8335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58116d0c_baf5d49c",
+        "filename": "content/test/test_render_frame_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-14T17:08:39Z",
+      "side": 1,
+      "message": "Not needed in fact, see comment in unittest file. Which is nice, avoids introducing already deprecated methods :).",
+      "revId": "cd0357dfcd9fdc6ef2c5821b463aee469eda8335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
