@@ -17,6 +17,7 @@
 #include "base/win/scoped_hstring.h"
 #include "base/win/windows_version.h"
 #include "chrome/browser/notifications/mock_notification_image_retainer.h"
+#include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_template_builder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/message_center/notification.h"
@@ -52,8 +53,9 @@ class NotificationPlatformBridgeWinTest : public testing::Test {
         message_center::RichNotificationData(), nullptr /* delegate */);
     MockNotificationImageRetainer image_retainer;
     std::unique_ptr<NotificationTemplateBuilder> builder =
-        NotificationTemplateBuilder::Build(&image_retainer, kProfileId,
-                                           *notification);
+        NotificationTemplateBuilder::Build(&image_retainer,
+                                           NotificationCommon::PERSISTENT,
+                                           kProfileId, false, *notification);
 
     return notification_platform_bridge_win_->GetToastNotificationForTesting(
         *notification, *builder, toast);
