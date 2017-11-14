@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db607ef0_e135a7af",
+        "filename": "cc/paint/transfer_cache_entry.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-14T00:27:34Z",
+      "side": 1,
+      "message": "Where is this used?",
+      "revId": "1d6b472618ca1e6b27f572fdab16828e9bb16bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4278bc_67cb6258",
+        "filename": "gpu/command_buffer/build_gles2_cmd_buffer.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 4649,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-14T00:27:34Z",
+      "side": 1,
+      "message": "nit: both of these could just keep a default type and specify \u0027decoder_func\u0027 and leverage the ever-so-tiny bit of autogen code to extract the param out of the shared memory.",
+      "revId": "1d6b472618ca1e6b27f572fdab16828e9bb16bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36389964_20c5de34",
+        "filename": "gpu/command_buffer/build_gles2_cmd_buffer.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 4651,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-14T00:27:34Z",
+      "side": 1,
+      "message": "Also, I think \u0027True\u0027 would work here (and below)?",
+      "revId": "1d6b472618ca1e6b27f572fdab16828e9bb16bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9024d145_426fd90c",
+        "filename": "gpu/command_buffer/common/discardable_handle.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-14T00:27:34Z",
+      "side": 1,
+      "message": "What is the test meant to defend against? If the client unlocks too many times, it\u0027s behaving wrong, but it just gets to keep both pieces?\n\nI worry slightly that the comment is wrong/misleading for a malicious client (which can just write kHandleDeleted directly anyway).",
+      "revId": "1d6b472618ca1e6b27f572fdab16828e9bb16bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac5fd27_de7797fa",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 20408,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-14T00:27:34Z",
+      "side": 1,
+      "message": "We need to check the enum here, otherwise a malicious client could craft an invalid type.",
+      "revId": "1d6b472618ca1e6b27f572fdab16828e9bb16bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42d463a_4885eb28",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 20419,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-14T00:27:34Z",
+      "side": 1,
+      "message": "nit: you can combine both of these into GetAddressAndCheckSize(data_shm_id, data_shm_offset, data_size), or even GetSharedMemoryAs\u003cuint8_t*\u003e to pass typed data into CreateLockedEntry (saves a cast).",
+      "revId": "1d6b472618ca1e6b27f572fdab16828e9bb16bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93efd837_d57c7bd7",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2808,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-14T00:27:34Z",
+      "side": 1,
+      "message": "nit: NOTIMPLEMENTED() here and below.",
+      "revId": "1d6b472618ca1e6b27f572fdab16828e9bb16bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
