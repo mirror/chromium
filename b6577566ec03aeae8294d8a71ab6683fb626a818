@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64b67bc3_482d4cae",
+        "filename": "content/browser/renderer_host/input/mouse_wheel_phase_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-14T19:40:24Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem right to me to update the last_mouse_wheel_event_ here... Why is this here?",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "b6577566ec03aeae8294d8a71ab6683fb626a818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3cef3b_223a5fd9",
+        "filename": "ui/events/blink/blink_event_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-14T19:40:24Z",
+      "side": 1,
+      "message": "Probably should use the class name \"MouseWheelPhaseHandler\"",
+      "range": {
+        "startLine": 289,
+        "startChar": 7,
+        "endLine": 289,
+        "endChar": 32
+      },
+      "revId": "b6577566ec03aeae8294d8a71ab6683fb626a818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20bf6d02_0cd832f2",
+        "filename": "third_party/WebKit/public/platform/WebMouseWheelEvent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-14T19:40:24Z",
+      "side": 1,
+      "message": "I thought you\u0027d remove this one too.",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 27
+      },
+      "revId": "6b08f926514f3f823e64060a808a0986727d7b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
