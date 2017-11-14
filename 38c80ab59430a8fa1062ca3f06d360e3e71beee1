@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3cd8ae68_ff4ac7d0",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-iframe.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-14T23:38:54Z",
+      "side": 1,
+      "message": "Thank you, I didn\u0027t realize that this was redundant.",
+      "parentUuid": "5641f621_0dc85ca1",
+      "revId": "38c80ab59430a8fa1062ca3f06d360e3e71beee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dd5884e_722a8834",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/requestDevice-in-iframe.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "38c80ab59430a8fa1062ca3f06d360e3e71beee1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f375bb8_8b41d6a8",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/requestDevice-in-iframe.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-14T23:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dd5884e_722a8834",
+      "revId": "38c80ab59430a8fa1062ca3f06d360e3e71beee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
