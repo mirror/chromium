@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b022b20_250f1cf0",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-14T04:52:17Z",
+      "side": 1,
+      "message": "You could replace this method\u0027s body with\n\u003d default;",
+      "range": {
+        "startLine": 182,
+        "startChar": 1,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2242fb9e_7404730a",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-14T04:52:17Z",
+      "side": 1,
+      "message": "You could avoid this extra work (/ memory consumption) by directly populating |language_list| in one pass, then sorting it before returning.",
+      "range": {
+        "startLine": 386,
+        "startChar": 18,
+        "endLine": 386,
+        "endChar": 0
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2682f555_6407bffc",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-14T04:52:17Z",
+      "side": 1,
+      "message": "Can you please use a bool expression here?\ntranslate_language_set.count(suppports_translate_code) \u003e 0;",
+      "range": {
+        "startLine": 441,
+        "startChar": 62,
+        "endLine": 441,
+        "endChar": 0
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce8de39_ae94f997",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-14T04:52:17Z",
+      "side": 1,
+      "message": "Could this be static? i.e. what instance state does it use?",
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1066c1f7_34ace851",
+        "filename": "components/translate/core/browser/translate_prefs_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-14T04:52:17Z",
+      "side": 1,
+      "message": "I haven\u0027t seen prefix :: used in Chromium before.",
+      "range": {
+        "startLine": 25,
+        "startChar": 43,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4364717_54d46d82",
+        "filename": "components/translate/core/browser/translate_prefs_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-14T04:52:17Z",
+      "side": 1,
+      "message": "Maybe check a RTL language?\n\nAlso maybe check a case that uses the \"improved logic\" flag. In either case, consider using a scoped feature flag to keep tested behaviour consistent.",
+      "range": {
+        "startLine": 624,
+        "startChar": 1,
+        "endLine": 624,
+        "endChar": 0
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
