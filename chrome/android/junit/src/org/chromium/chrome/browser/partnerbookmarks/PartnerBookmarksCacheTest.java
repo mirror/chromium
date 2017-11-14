@@ -11,17 +11,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowSystemClock;
 
+import org.chromium.chrome.browser.ntp.snippets.FaviconFetchResult;
 import org.chromium.testing.local.LocalRobolectricTestRunner;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Unit tests for {@link PartnerBookmarksCache}.
  */
 @RunWith(LocalRobolectricTestRunner.class)
-@Config(manifest = Config.NONE)
+@Config(manifest = Config.NONE, shadows = {ShadowSystemClock.class})
 public class PartnerBookmarksCacheTest {
     private static final String TEST_PREFERENCES_NAME = "partner_bookmarks_favicon_cache_test";
 
@@ -30,6 +29,7 @@ public class PartnerBookmarksCacheTest {
     @Before
     public void setUp() throws Exception {
         mCache = new PartnerBookmarksCache(RuntimeEnvironment.application, TEST_PREFERENCES_NAME);
+        mCache.init();
     }
 
     @After
@@ -38,36 +38,65 @@ public class PartnerBookmarksCacheTest {
     }
 
     @Test
-    public void testReadEmptyCache() {
-        Assert.assertTrue(mCache.read().isEmpty());
+    public void testInitEmptyCache() {
+        Assert.assertEquals(mCache.numEntries(), 0);
     }
 
     @Test
     public void testReadWrite() {
-        Map<String, Long> inMap = new HashMap<String, Long>();
-        inMap.put("url1", 1L);
-        inMap.put("url2", 2L);
-        mCache.write(inMap);
+        mCache.onFaviconFetched("url1", FaviconFetchResult.FAILURE_SERVER_ERROR);
+        mCache.onFaviconFetched("url2", FaviconFetchResult.FAILURE_SERVER_ERROR);
+        mCache.commit();
 
-        Map<String, Long> readMap = mCache.read();
-        Assert.assertEquals(readMap.keySet().size(), 2);
-        Assert.assertTrue(readMap.keySet().containsAll(inMap.keySet()));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testWriteNull() {
-        mCache.write(null);
+        mCache.init();
+        Assert.assertFalse(mCache.shouldFetchFromServerIfNecessary("url1"));
+        Assert.assertFalse(mCache.shouldFetchFromServerIfNecessary("url2"));
+        Assert.assertTrue(mCache.shouldFetchFromServerIfNecessary("url3"));
     }
 
     @Test
-    public void testWriteEmptyMap() {
-        Map<String, Long> inMap = new HashMap<String, Long>();
-        inMap.put("url1", 1L);
-        inMap.put("url2", 2L);
-        mCache.write(inMap);
+    public void testOnlySuccessRemovesUrlFromCache() {
+        mCache.onFaviconFetched("url1", FaviconFetchResult.FAILURE_SERVER_ERROR);
+        mCache.commit();
 
-        mCache.write(new HashMap<String, Long>());
-        Map<String, Long> readMap = mCache.read();
-        Assert.assertEquals(readMap.keySet().size(), 0);
+        mCache.init();
+        Assert.assertFalse(mCache.shouldFetchFromServerIfNecessary("url1"));
+        mCache.onFaviconFetched("url1", FaviconFetchResult.FAILURE_ICON_SERVICE_UNAVAILABLE);
+        mCache.commit();
+
+        mCache.init();
+        Assert.assertFalse(mCache.shouldFetchFromServerIfNecessary("url1"));
+        mCache.onFaviconFetched("url1", FaviconFetchResult.FAILURE_NOT_IN_CACHE);
+        mCache.commit();
+
+        mCache.init();
+        Assert.assertFalse(mCache.shouldFetchFromServerIfNecessary("url1"));
+        mCache.onFaviconFetched("url1", FaviconFetchResult.FAILURE_CONNECTION_ERROR);
+        mCache.commit();
+
+        mCache.init();
+        Assert.assertFalse(mCache.shouldFetchFromServerIfNecessary("url1"));
+        mCache.onFaviconFetched("url1", FaviconFetchResult.SUCCESS);
+        mCache.commit();
+
+        mCache.init();
+        Assert.assertTrue(mCache.shouldFetchFromServerIfNecessary("url1"));
+    }
+
+    @Test
+    public void testShouldFetchFromServerIfNecessaryTrueIfUrlNotInCache() {
+        Assert.assertTrue(mCache.shouldFetchFromServerIfNecessary("unused_url"));
+    }
+
+    // TODO(thildebr): Test the code path for #shouldFetchFromServerIfNecessary where the timeout
+    //                 has expired. This requires mocking out System.currentTimeMillis() somehow.
+
+    @Test
+    public void testShouldFetchFromServerIfNecessaryFalseIfNotExpired() {
+        mCache.onFaviconFetched("url1", FaviconFetchResult.FAILURE_SERVER_ERROR);
+        mCache.commit();
+
+        mCache.init();
+        Assert.assertFalse(mCache.shouldFetchFromServerIfNecessary("url1"));
     }
 }
