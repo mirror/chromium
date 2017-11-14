@@ -105,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "64bdc713_d10e417a",
+        "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T01:13:50Z",
+      "side": 1,
+      "message": "I lost my gerrit comments and forgot to explain. base::test::ios::WaitUntilCondition DCHECKs on timeout and brings down all test suite.",
+      "parentUuid": "b384cc61_e6b0b6cb",
+      "revId": "22366266596423d91d0dbe82110911f295124aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75370f2a_1490bf64",
         "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
         "patchSetId": 28
