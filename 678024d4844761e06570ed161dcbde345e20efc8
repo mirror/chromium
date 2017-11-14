@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "0dd24054_b147d9f6",
+        "filename": "net/http/http_server_properties_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-14T00:10:56Z",
+      "side": 1,
+      "message": "Thanks for doing this. I don\u0027t think it\u0027s worth doing for the QuicServerInfoMap.",
+      "parentUuid": "293c82c7_d065de72",
+      "range": {
+        "startLine": 154,
+        "startChar": 19,
+        "endLine": 154,
+        "endChar": 31
+      },
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d3965fc_49adb9a0",
         "filename": "net/http/http_server_properties_impl.h",
         "patchSetId": 5
