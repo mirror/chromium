@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f240c22a_16a86f1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T21:38:33Z",
+      "side": 1,
+      "message": "It\u0027s still unclear whether this describes the current state or the state with the fix. I would suggest:\nDo not hide the focus rectangle on the user card when it is focused.",
+      "revId": "9c670571e6aad38f1c87574082517369b46decf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6044e053_3ea10952",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T21:38:33Z",
+      "side": 1,
+      "message": "s/,//",
+      "revId": "9c670571e6aad38f1c87574082517369b46decf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cbb0c65_54d95555",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T21:38:33Z",
+      "side": 1,
+      "message": "(multi user can be used to test this)",
+      "revId": "9c670571e6aad38f1c87574082517369b46decf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
