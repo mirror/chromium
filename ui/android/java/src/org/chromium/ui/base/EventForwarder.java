@@ -317,6 +317,15 @@ public class EventForwarder {
         return true;
     }
 
+    public boolean onGestureEvent(int type, long timeMs, float delta) {
+        nativeOnGestureEvent(mNativeEventForwarder, type, timeMs, delta);
+        return true;
+    }
+
+    public boolean canZoom(float delta) {
+        return nativeCanZoom(mNativeEventForwarder, delta);
+    }
+
     // All touch events (including flings, scrolls etc) accept coordinates in physical pixels.
     private native boolean nativeOnTouchEvent(long nativeEventForwarder, MotionEvent event,
             long timeMs, int action, int pointerCount, int historySize, int actionIndex, float x0,
@@ -332,4 +341,7 @@ public class EventForwarder {
             float y, float ticksX, float ticksY, float pixelsPerTick);
     private native void nativeOnDragEvent(long nativeEventForwarder, int action, int x, int y,
             int screenX, int screenY, String[] mimeTypes, String content);
+    private native boolean nativeCanZoom(long nativeEventForwarder, float delta);
+    private native void nativeOnGestureEvent(
+            long nativeEventForwarder, int type, long timeMs, float delta);
 }

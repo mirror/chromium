@@ -18,6 +18,7 @@
 #include "content/browser/frame_host/navigation_controller_android.h"
 #include "content/browser/renderer_host/render_widget_host_view_android.h"
 #include "content/common/content_export.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
 
 class GURL;
 
@@ -253,8 +254,20 @@ class CONTENT_EXPORT WebContentsAndroid
                        float content_height,
                        const gfx::SizeF& viewport_size,
                        float page_scale_factor,
-                       const gfx::Vector2dF& page_scale_factor_limits,
+                       float max_page_scale,
+                       float min_page_scale,
                        const float top_shown_pix);
+
+  void PinchBegin(JNIEnv* env,
+                  const base::android::JavaParamRef<jobject>& obj,
+                  jlong time_ms);
+  void PinchEnd(JNIEnv* env,
+                const base::android::JavaParamRef<jobject>& obj,
+                jlong time_ms);
+  void PinchBy(JNIEnv* env,
+               const base::android::JavaParamRef<jobject>& obj,
+               jlong time_ms,
+               jfloat delta);
 
  private:
   RenderWidgetHostViewAndroid* GetRenderWidgetHostViewAndroid();
@@ -271,6 +284,13 @@ class CONTENT_EXPORT WebContentsAndroid
                              const GURL& url,
                              const std::vector<SkBitmap>& bitmaps,
                              const std::vector<gfx::Size>& sizes);
+
+  blink::WebGestureEvent MakeGestureEvent(blink::WebInputEvent::Type type,
+                                          int64_t time_ms,
+                                          float x,
+                                          float y) const;
+
+  void SendGestureEvent(const blink::WebGestureEvent& event);
 
   WebContentsImpl* web_contents_;
   NavigationControllerAndroid navigation_controller_;

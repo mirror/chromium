@@ -827,4 +827,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
     private native void nativeAddJavascriptInterface(
             long nativeWebContentsAndroid, Object object, String name, Class requiredAnnotation);
     private native void nativeRemoveJavascriptInterface(long nativeWebContentsAndroid, String name);
+    private native void nativePinchBegin(long nativeWebContentsAndroid, long timeMs);
+    private native void nativePinchEnd(long nativeWebContentsAndroid, long timeMs);
+    private native void nativePinchBy(long nativeWebContentsAndroid, long timeMs, float deltaScale);
 }
