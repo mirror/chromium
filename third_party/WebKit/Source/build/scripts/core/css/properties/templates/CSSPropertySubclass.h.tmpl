@@ -196,6 +196,9 @@ void ApplyValue(StyleResolverState& state, const CSSValue& value) const override
   }
     {% endif %}
   {% endif %}
+  {% if property.compositable %}
+  bool IsCompositableProperty() const override { return true; }
+  {% endif %}
 };
 
 }  // namespace CSS{{property.superclass}}
