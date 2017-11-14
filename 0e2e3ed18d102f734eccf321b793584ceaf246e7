@@ -257,6 +257,24 @@
     },
     {
       "key": {
+        "uuid": "e413e5eb_00bf3f0f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/network-xhr-async-response-type-blob.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-14T01:00:47Z",
+      "side": 1,
+      "message": "network_test_runner declares it as a dep",
+      "parentUuid": "d41dd25d_cb882798",
+      "revId": "0e2e3ed18d102f734eccf321b793584ceaf246e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "601782cc_abd6e8f1",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/network-xhr-async.js",
         "patchSetId": 5
@@ -747,6 +765,24 @@
       "revId": "0e2e3ed18d102f734eccf321b793584ceaf246e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "241bd1f6_375e4015",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/x-frame-options-deny.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-14T01:00:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f74ead7_868283e6",
+      "revId": "0e2e3ed18d102f734eccf321b793584ceaf246e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
