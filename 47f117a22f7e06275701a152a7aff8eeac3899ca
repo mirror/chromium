@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "702265e2_4306422c",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "The mojom::TimeDiff cherry pick to Android is in the works. If it\u0027s not feasinle I\u0027d move to nanoseconds.\n\nWrapping mojom to 80.",
+      "parentUuid": "8624ffe7_1c8e44f8",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40055afb_2eed37bd",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 9
@@ -48,6 +66,24 @@
       "writtenOn": "2017-11-13T00:06:43Z",
       "side": 1,
       "message": "ArcTimerResult is returned by Start rather than by this method, right? can this fail or is it guaranteed to succeed?",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf21ca8_88fcb147",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "updated comment to reflect behavior",
+      "parentUuid": "40055afb_2eed37bd",
       "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "51842cd9_531401c2",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b0cac87_ba6f869c",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb0ee8b5_2efd3935",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 9
@@ -82,6 +136,24 @@
       "writtenOn": "2017-11-13T00:06:43Z",
       "side": 1,
       "message": "delete this",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e921f2_a651e8da",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb0ee8b5_2efd3935",
       "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "4c7322b5_66b08bf4",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d0dd483_7d1640d7",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31eeb8de_55a5943a",
         "filename": "components/arc/timer/arc_timer_bridge.h",
         "patchSetId": 9
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "b4fa79c4_a325a606",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31eeb8de_55a5943a",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbe7274a_cc2e0f23",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 9
@@ -133,6 +241,30 @@
       "writtenOn": "2017-11-13T23:46:03Z",
       "side": 1,
       "message": "nit: be consistent with \"expiration\".",
+      "range": {
+        "startLine": 24,
+        "startChar": 39,
+        "endLine": 24,
+        "endChar": 45
+      },
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6820ba5b_916d10e9",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbe7274a_cc2e0f23",
       "range": {
         "startLine": 24,
         "startChar": 39,
@@ -168,6 +300,30 @@
     },
     {
       "key": {
+        "uuid": "61125c5f_73ad7bfc",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c785b71e_1c509e46",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8fd1b21_34ae3aee",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 9
@@ -179,6 +335,24 @@
       "writtenOn": "2017-11-13T00:06:43Z",
       "side": 1,
       "message": "can you delete this method? was it just for debugging?",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d588ac_4ee548ee",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8fd1b21_34ae3aee",
       "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -208,6 +382,30 @@
     },
     {
       "key": {
+        "uuid": "f01e3729_a5c500df",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c56f926_ae61c27b",
+      "range": {
+        "startLine": 61,
+        "startChar": 10,
+        "endLine": 61,
+        "endChar": 15
+      },
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3280270b_4f96250d",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 9
@@ -219,6 +417,24 @@
       "writtenOn": "2017-11-13T00:06:43Z",
       "side": 1,
       "message": "do you need this check? Start has a DCHECK that assumes that timer_ is non-null.",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e6671d_73fa4f87",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3280270b_4f96250d",
       "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -242,6 +458,24 @@
     },
     {
       "key": {
+        "uuid": "7508a0e9_33f91671",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "I just like to keep it generic enough if we want to move more clocks here. A set lookup (logn) isn\u0027t that bad in the overall scheme of things.",
+      "parentUuid": "92958fdf_709a969b",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "600a4ff2_cf2fa836",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 9
@@ -253,6 +487,24 @@
       "writtenOn": "2017-11-13T00:06:43Z",
       "side": 1,
       "message": "CreateArcTimers can only be called once? is this something that you plan to change later?",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0611b8_9b8f2010",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "It can be only called once per instance session. So if the instance goes down and is spawned again it will call CreateTimers. Note the instance going down SHOULD cause a deletion of timers by the OnInstanceClosed method in arc_timer_bridge.cc .",
+      "parentUuid": "600a4ff2_cf2fa836",
       "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -276,6 +528,24 @@
     },
     {
       "key": {
+        "uuid": "58e1219d_e5e356eb",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "I move the fd from this so const isn\u0027t possible",
+      "parentUuid": "bb3126ef_6375acfb",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f018803_5e893a8b",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 9
@@ -287,6 +557,24 @@
       "writtenOn": "2017-11-13T00:06:43Z",
       "side": 1,
       "message": "should you also clear arc_timers_ in all of these error cases?",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f6f9da_a65f6d31",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f018803_5e893a8b",
       "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -310,6 +598,24 @@
     },
     {
       "key": {
+        "uuid": "077a2632_9e66178f",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "I do that in L97",
+      "parentUuid": "82620d4d_951f6313",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff3df20d_3e794a23",
         "filename": "components/arc/timer/arc_timer_impl.h",
         "patchSetId": 9
@@ -327,6 +633,24 @@
     },
     {
       "key": {
+        "uuid": "9bc520c3_cd64a59a",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "There are two interfaces in the mojom file. The one that is the first layer to interact with the instance\u0027s calls is in the other file. In 99% cases it\u0027s the only interface present. In this case there is another one and I have decided to keep it in a separate file for cleaner separation.",
+      "parentUuid": "ff3df20d_3e794a23",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c1cf557_a2cb0255",
         "filename": "components/arc/timer/arc_timer_impl.h",
         "patchSetId": 9
@@ -338,6 +662,24 @@
       "writtenOn": "2017-11-13T00:06:43Z",
       "side": 1,
       "message": "this should be in the .cc file since it\u0027s a non-trivial d\u0027tor: https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Stop-inlining-constructors-and-destructors",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa20c92_af680963",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c1cf557_a2cb0255",
       "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -367,6 +709,30 @@
     },
     {
       "key": {
+        "uuid": "57b202d8_2d1bdcf4",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "I think if anything I should pass in clock_id. Since, I am not using that I just instantiate the timer inside. It\u0027s an implementation detail of ArcTimer. How it achieves the interface is up to it and shouldn\u0027t leak out.",
+      "parentUuid": "0a7eafa6_7c966bc8",
+      "range": {
+        "startLine": 26,
+        "startChar": 20,
+        "endLine": 26,
+        "endChar": 61
+      },
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d828e7f_a3eb378e",
         "filename": "components/arc/timer/arc_timer_impl.h",
         "patchSetId": 9
@@ -378,6 +744,24 @@
       "writtenOn": "2017-11-13T00:06:43Z",
       "side": 1,
       "message": "override",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af5203e_ce90a5b8",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d828e7f_a3eb378e",
       "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -419,6 +803,24 @@
     },
     {
       "key": {
+        "uuid": "21a9005e_89ed3bc0",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72952899_ea53fcc8",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "238beb1a_bf047bfa",
         "filename": "components/arc/timer/arc_timer_impl.h",
         "patchSetId": 9
@@ -430,6 +832,24 @@
       "writtenOn": "2017-11-13T00:06:43Z",
       "side": 1,
       "message": "nit: OnExpiration?",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187df271_77e9bdaa",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "238beb1a_bf047bfa",
       "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -453,6 +873,24 @@
     },
     {
       "key": {
+        "uuid": "bc50d9a6_4e3e4f94",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fffc408d_b79ec3cf",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e28d79a_374cf243",
         "filename": "components/arc/timer/arc_timer_impl.h",
         "patchSetId": 9
@@ -470,6 +908,24 @@
     },
     {
       "key": {
+        "uuid": "62fdb891_23666fac",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "I was thinking this would be a little easier for unit testing separately rather than muck with more mojo stuff in the bridge class.",
+      "parentUuid": "6e28d79a_374cf243",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b50bf6d_a751c530",
         "filename": "components/arc/timer/arc_timer_impl.h",
         "patchSetId": 9
@@ -481,6 +937,24 @@
       "writtenOn": "2017-11-13T00:06:43Z",
       "side": 1,
       "message": "DISALOW_COPY_AND_ASSIGN",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b35a93_8735d933",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-14T01:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b50bf6d_a751c530",
       "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
