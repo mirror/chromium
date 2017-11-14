@@ -1151,6 +1151,87 @@ TEST_P(FrameProcessorTest,
   CheckReadsThenReadStalls(video_.get(), "50 60 40");
 }
 
+TEST_P(FrameProcessorTest, LargeTimestampOffsetJumpForward) {
+  // Verifies that jumps forward in buffers emitted from the coded frame
+  // processing algorithm create discontinuous buffered ranges if those jumps
+  // are large enough, even in sequence mode.
+  InSequence s;
+  AddTestTracks(HAS_AUDIO);
+  frame_processor_->SetSequenceMode(use_sequence_mode_);
+
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(10)));
+  EXPECT_TRUE(ProcessFrames("0K", ""));
+
+  SetTimestampOffset(Milliseconds(5000));
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(5010)));
+
+  // Along with the new timestampOffset set above, this should cause a net 0
+  // timestampOffset and a large jump forward in both PTS and DTS for both
+  // sequence and segments append modes.
+  EXPECT_TRUE(ProcessFrames("5000|100K", ""));
+  EXPECT_EQ(Milliseconds(0), timestamp_offset_);
+
+  if (range_api_ == ChunkDemuxerStream::RangeApi::kLegacyByDts) {
+    CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,10) [100,110) }");
+    CheckReadsThenReadStalls(audio_.get(), "0");
+    SeekStream(audio_.get(), Milliseconds(100));
+    CheckReadsThenReadStalls(audio_.get(), "5000");  // Util verifies PTS.
+  } else {
+    CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,10) [5000,5010) }");
+    CheckReadsThenReadStalls(audio_.get(), "0");
+    SeekStream(audio_.get(), Milliseconds(5000));
+    CheckReadsThenReadStalls(audio_.get(), "5000");
+  }
+}
+
+// BIG TODO
+TEST_P(FrameProcessorTest, OOOKeyframePts_1) {
+  InSequence s;
+  AddTestTracks(HAS_AUDIO);
+  frame_processor_->SetSequenceMode(use_sequence_mode_);
+
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(1010)));
+  // Note that the following does not contain a DTS continuity, but *does*
+  // contain a PTS discontinuity (keyframe at 0.1s after keyframe at 1s).
+  EXPECT_TRUE(ProcessFrames("0K 1000|10K 100|20K", ""));
+
+  // Force sequence mode to place the next frames where segments mode would put
+  // them, to simplify this test case.
+  if (use_sequence_mode_)
+    SetTimestampOffset(Milliseconds(500));
+
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(510)));
+  // If only signalling discontinuity by DTS, yet there's a PTS *keyframe*
+  // discontinuity (versus prior keyframe) and buffering by PTS, then the
+  // following breaks SBRByPts |keyframe_map_| sanity (when done on top of
+  // similarly non-signalled processing, above). See https://crbug.com/771482.
+  EXPECT_TRUE(ProcessFrames("500|100K", ""));
+
+  // BIG TODO add buffered range and buffer read expectations
+  // BIG TODO EXPECT this: Note that timestampOffset is expected to be 0 after
+  // that last append, regardless of Sequence vs Segments mode.
+}
+
+// BIG TODO
+TEST_P(FrameProcessorTest, OOOKeyframePts_2) {
+  InSequence s;
+  AddTestTracks(HAS_AUDIO);
+  frame_processor_->SetSequenceMode(use_sequence_mode_);
+
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(1010)));
+  EXPECT_TRUE(ProcessFrames("0K 1000|10K", ""));
+
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(1010)));
+  // If only signalling discontinuity by DTS, yet there's a PTS *keyframe*
+  // discontinuity (versus prior keyframe) and buffering by PTS, then the
+  // following breaks SBRByPts |keyframe_map_| sanity (when done on top
+  // of similarly non-signalled processing, above). See
+  // https://crbug.com/771482.
+  EXPECT_TRUE(ProcessFrames("100|20K", ""));
+
+  // BIG TODO add buffered range and buffer read expectations
+}
+
 TEST_P(FrameProcessorTest, AudioNonKeyframeChangedToKeyframe) {
   // Verifies that an audio non-keyframe is changed to a keyframe with a media
   // log warning. An exact overlap append of the preceding keyframe is also done
