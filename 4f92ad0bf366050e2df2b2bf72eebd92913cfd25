@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "935361b4_7ef7d16b",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-14T01:02:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea424f8_a443fc4a",
+      "revId": "4f92ad0bf366050e2df2b2bf72eebd92913cfd25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81ea9362_24083f40",
         "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-11T22:22:47Z",
       "side": 1,
       "message": "I wonder if we shouldn\u0027t just remove this parameter and have a single fixed message here. That would prevent there from ever being a different message (as there was at old line 325 below). I don\u0027t know whether there are legit cases for different strings on the Chromium side, though.",
+      "revId": "4f92ad0bf366050e2df2b2bf72eebd92913cfd25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1691a64b_e6124698",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-14T01:02:45Z",
+      "side": 1,
+      "message": "That makes sense. Generally we don\u0027t want to have a different message anyways. I\u0027ll look into it and have a separate CL on that if I don\u0027t find any reason not to do it.",
+      "parentUuid": "81ea9362_24083f40",
       "revId": "4f92ad0bf366050e2df2b2bf72eebd92913cfd25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
