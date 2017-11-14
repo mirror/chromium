@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cba278b8_e8035add",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-14T00:03:59Z",
+      "side": 1,
+      "message": "Yes if we assume the source rect is opaque.",
+      "parentUuid": "83b36c25_23c63437",
+      "revId": "5f3e3972e8c3ce5674d835ca101e1b114c2cad36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f4d1a50_14130a14",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
         "patchSetId": 11
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "I\u0027m really unsure what should be the semantics of the function when there is any pixel-moving effects, and I think any caller not explicitly handling that is doing it wrong.\n\nCan we make it a DCHECK that none of the intermediate effect moves pixel, then do the fast path only? If not, what will break?",
       "parentUuid": "2f4d1a50_14130a14",
+      "revId": "5f3e3972e8c3ce5674d835ca101e1b114c2cad36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1332446_e5f29b95",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-14T00:03:59Z",
+      "side": 1,
+      "message": "I think the semantics of the function should be \"applying the clip in ancestor state won\u0027t clip out anything that should not be clip out\" (which need to be more precise though). For the case of pixel-moving filters, the semantics is similar to the case when there are transforms: the result clip rect is a bounding box of transformed clip rect when a transform is applied.\n\nIt looks like a burden for the caller to check for pixel-moving effects before calling this method, like in https://chromium-review.googlesource.com/c/chromium/src/+/753540.\n\nActually the method is named slow, but it\u0027s not very slow in normal cases. It\u0027s just slower than the fast LocalToAncestorClipRectInternal() by times of number of effect nodes from local_state to ancestor_state (not included).\n\nIt seems that not only pixel-moving effects make a clip rect not tight. A clip-path doesn\u0027t move pixel but it also makes the clip rect which is the bounding rect of the clip-path not tight.",
+      "parentUuid": "3b4b1fc6_a650c71b",
       "revId": "5f3e3972e8c3ce5674d835ca101e1b114c2cad36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
