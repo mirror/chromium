@@ -28,6 +28,7 @@
 #import "ios/chrome/browser/ui/settings/sync_settings_collection_view_controller.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
+#import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/public/provider/chrome/browser/chrome_browser_provider.h"
 #import "ios/public/provider/chrome/browser/user_feedback/user_feedback_provider.h"
@@ -56,6 +57,27 @@
   } else {
     return [super childViewControllerForStatusBarHidden];
   }
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  UILayoutGuide* safeAreaLayoutGuide = SafeAreaLayoutGuideForView(self.view);
+  self.contentViewController.view.translatesAutoresizingMaskIntoConstraints =
+      NO;
+  CGFloat appBarHeight =
+      self.appBar.headerViewController.headerView.frame.size.height;
+  [NSLayoutConstraint activateConstraints:@[
+    [self.contentViewController.view.topAnchor
+        constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor
+                       constant:appBarHeight - self.topLayoutGuide.length],
+    [self.contentViewController.view.leadingAnchor
+        constraintEqualToAnchor:safeAreaLayoutGuide.leadingAnchor],
+    [self.contentViewController.view.trailingAnchor
+        constraintEqualToAnchor:safeAreaLayoutGuide.trailingAnchor],
+    [self.contentViewController.view.bottomAnchor
+        constraintEqualToAnchor:safeAreaLayoutGuide.bottomAnchor],
+  ]];
 }
 
 - (UIViewController*)childViewControllerForStatusBarStyle {
@@ -575,16 +597,8 @@ initWithRootViewController:(UIViewController*)rootViewController
             initWithContentViewController:controller];
 
     // Configure the style.
+    appBarContainer.view.backgroundColor = [UIColor whiteColor];
     ConfigureAppBarWithCardStyle(appBarContainer.appBar);
-
-    // Adjust the frame of the contained view controller's view to be below the
-    // app bar.
-    CGRect contentFrame = controller.view.frame;
-    CGSize headerSize = [appBarContainer.appBar.headerViewController.headerView
-        sizeThatFits:contentFrame.size];
-    contentFrame = UIEdgeInsetsInsetRect(
-        contentFrame, UIEdgeInsetsMake(headerSize.height, 0, 0, 0));
-    controller.view.frame = contentFrame;
 
     // Register the app bar container and return it.
     [self registerAppBarContainer:appBarContainer];
