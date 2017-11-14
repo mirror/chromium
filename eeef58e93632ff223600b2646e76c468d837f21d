@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c2eeb5ad_fa3dc32c",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T03:17:19Z",
+      "side": 1,
+      "message": "I agree the second way is preferable but want to avoid adding *Internal for every function if possible. Could we use the same function?\n\nvoid FindRegistrationForDocument(std::string url, base::OnceCallback callback) {\n  if (state_ \u003d\u003d DISABLED) {\n     std::move(callback).Run(ABORT);\n  }\n  if (state_ \u003d\u003d UNITIALIZED || state_ \u003d\u003d INITIALIZING) {\n    LazyInitialize(BindOnce(\u0026FindRegistrationForDocument, this, url, std::move(callback)));\n    return;\n  }\n  // state_ \u003d\u003d INITIALIZED\n  ....\n  std::move(callback).Run(OK);\n}",
+      "parentUuid": "0b6550df_0ae414c7",
+      "revId": "eeef58e93632ff223600b2646e76c468d837f21d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1acbe1ac_195e010f",
         "filename": "content/browser/service_worker/service_worker_storage.h",
         "patchSetId": 3
