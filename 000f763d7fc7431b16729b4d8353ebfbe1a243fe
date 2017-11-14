@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89a384b3_ec3f09da",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-14T00:57:41Z",
+      "side": 1,
+      "message": "Nit: Please update this comment as it\u0027s misleading. Mirror mode ended because we explicitly set it to false below. (probably add a note that you are doing this to simulate what happens on the device and differences between the code paths).",
+      "range": {
+        "startLine": 548,
+        "startChar": 2,
+        "endLine": 548,
+        "endChar": 48
+      },
+      "revId": "000f763d7fc7431b16729b4d8353ebfbe1a243fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d20f83_6145b271",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-14T00:57:41Z",
+      "side": 1,
+      "message": "Also here. On a real device, this should re-enter mirror mode if it\u0027s the same display from before, correct? But UpdateDisplay() in tests creates a completely new display with a different ID, correct?",
+      "range": {
+        "startLine": 563,
+        "startChar": 2,
+        "endLine": 563,
+        "endChar": 43
+      },
+      "revId": "000f763d7fc7431b16729b4d8353ebfbe1a243fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
