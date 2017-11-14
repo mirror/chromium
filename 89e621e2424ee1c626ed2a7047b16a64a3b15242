@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6eb5e4a7_7d4d61b4",
+        "filename": "chrome/common/extensions/api/_api_features.json",
+        "patchSetId": 24
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-14T18:49:22Z",
+      "side": 1,
+      "message": "I thought that the permission:webrtcLoggingPrivate whitelist brought in as a dependency wasn\u0027t overridden by the whitelist specified here, but it turns out it was an issue with component extensions automatically being granted access.",
+      "parentUuid": "c3c7567e_385950dd",
+      "revId": "89e621e2424ee1c626ed2a7047b16a64a3b15242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffdc70e9_320f79f8",
         "filename": "chrome/common/extensions/api/_permission_features.json",
         "patchSetId": 24
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "92645304_5815f449",
+        "filename": "chrome/common/extensions/api/_permission_features.json",
+        "patchSetId": 24
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-14T18:49:22Z",
+      "side": 1,
+      "message": "Went back to depending on this from api features, since I found out how to make that work as needed.",
+      "parentUuid": "ffdc70e9_320f79f8",
+      "revId": "89e621e2424ee1c626ed2a7047b16a64a3b15242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ce75f21_b9bdca05",
         "filename": "chrome/test/data/extensions/api_test/webrtc_logging_private/no_get_logs_directory_permissions/test.js",
         "patchSetId": 24
@@ -50,6 +86,24 @@
       "revId": "89e621e2424ee1c626ed2a7047b16a64a3b15242",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "137340d2_43223fc4",
+        "filename": "chrome/test/data/extensions/api_test/webrtc_logging_private/no_get_logs_directory_permissions/test.js",
+        "patchSetId": 24
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-14T18:49:22Z",
+      "side": 1,
+      "message": "Done here and in the other test app.",
+      "parentUuid": "8ce75f21_b9bdca05",
+      "revId": "89e621e2424ee1c626ed2a7047b16a64a3b15242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
