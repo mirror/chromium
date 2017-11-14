@@ -144,6 +144,7 @@ class CONTENT_EXPORT CacheStorageCache {
       const std::vector<CacheStorageBatchOperation>& operations,
       ErrorCallback callback,
       int64_t space_required,
+      int64_t side_data_size,
       storage::QuotaStatusCode status_code,
       int64_t usage,
       int64_t quota);
@@ -337,7 +338,9 @@ class CONTENT_EXPORT CacheStorageCache {
   // Puts the request and response object in the cache. The response body (if
   // present) is stored in the cache, but not the request body. Returns OK on
   // success.
-  void Put(const CacheStorageBatchOperation& operation, ErrorCallback callback);
+  void Put(const CacheStorageBatchOperation& operation,
+           ErrorCallback callback,
+           bool skip_side_data);
   void PutImpl(std::unique_ptr<PutContext> put_context);
   void PutDidDeleteEntry(std::unique_ptr<PutContext> put_context,
                          blink::mojom::CacheStorageError error);
@@ -355,6 +358,11 @@ class CONTENT_EXPORT CacheStorageCache {
                               BlobToDiskCacheIDMap::KeyType blob_to_cache_key,
                               disk_cache::ScopedEntryPtr entry,
                               bool success);
+  void PutDidWriteSideDataBlobToCache(
+      std::unique_ptr<PutContext> put_context,
+      BlobToDiskCacheIDMap::KeyType blob_to_cache_key,
+      disk_cache::ScopedEntryPtr entry,
+      bool success);
 
   // Asynchronously calculates the current cache size, notifies the quota
   // manager of any change from the last report, and sets cache_size_ to the new
