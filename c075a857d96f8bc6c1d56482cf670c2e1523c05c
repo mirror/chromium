@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f90d5434_3d2d5ea2",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2397,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-14T20:19:44Z",
+      "side": 1,
+      "message": "FWIW, is_guest_view_hack_, along with all things GuestView, will go away in the near future. GetFocusedViewForTextSelection() should be unnecessary after that.",
+      "parentUuid": "773cec34_49fb049d",
+      "revId": "c075a857d96f8bc6c1d56482cf670c2e1523c05c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "985829fe_958329d5",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 1
