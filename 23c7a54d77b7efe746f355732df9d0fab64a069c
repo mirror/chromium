@@ -16,6 +16,24 @@
       "revId": "23c7a54d77b7efe746f355732df9d0fab64a069c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c72a8b_80a74749",
+        "filename": "ios/build/bots/chromium.fyi/EarlGreyiOS.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-11-14T23:09:27Z",
+      "side": 0,
+      "message": "Thanks for the suggestion! You are correct, so today I probably need try to land this CL as the same time as the master restarting if possible... I will follow the process as you mentioned to avoid making bots red in the next time!",
+      "parentUuid": "fbbdb026_4196714d",
+      "revId": "23c7a54d77b7efe746f355732df9d0fab64a069c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
