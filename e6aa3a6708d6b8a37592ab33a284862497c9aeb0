@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e6915c76_c25d2795",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathMax.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-14T05:51:31Z",
+      "side": 1,
+      "message": "Yeah, lets.",
+      "parentUuid": "8d5505cf_9634477b",
+      "revId": "e6aa3a6708d6b8a37592ab33a284862497c9aeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfa766fd_863d33b2",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValueType.h",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "e6aa3a6708d6b8a37592ab33a284862497c9aeb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "164608f7_ba78910b",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValueType.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-14T05:51:31Z",
+      "side": 1,
+      "message": "I think that\u0027s fine, I just think the addition of kNullPercentHint with the same value as kPercent is the part that\u0027s confusing.",
+      "parentUuid": "171f678f_7f7896a4",
+      "revId": "e6aa3a6708d6b8a37592ab33a284862497c9aeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
