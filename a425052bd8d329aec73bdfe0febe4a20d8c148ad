@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "0f0e459d_b752e77b",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-14T00:14:31Z",
+      "side": 1,
+      "message": "Consider using the `schema` package, available in //third_party/depot_tools/third_party/schema. I\u0027ve had good results with this for other structured files (like DEPS and the //testing/buildbot/*.json files).",
+      "parentUuid": "8bc76cd3_bdcbba35",
+      "revId": "a425052bd8d329aec73bdfe0febe4a20d8c148ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cd842a4_001e4e7b",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 7
