@@ -22,6 +22,30 @@
       "revId": "6026387c4e070b54dc3b4d283d0cb87f65f0e500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e647b7_60693e58",
+        "filename": "net/proxy/proxy_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-14T20:41:56Z",
+      "side": 1,
+      "message": "This should report success but my proxy list wasn\u0027t specified correctly.",
+      "parentUuid": "3d6a616d_ab5b3bfe",
+      "range": {
+        "startLine": 431,
+        "startChar": 22,
+        "endLine": 431,
+        "endChar": 23
+      },
+      "revId": "6026387c4e070b54dc3b4d283d0cb87f65f0e500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
