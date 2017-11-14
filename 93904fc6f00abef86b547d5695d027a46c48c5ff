@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e07d972b_f38bf41d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-14T23:24:45Z",
+      "side": 1,
+      "message": "Oops, thanks for catching this!",
+      "parentUuid": "2b84c239_eff5235c",
+      "revId": "93904fc6f00abef86b547d5695d027a46c48c5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc9fa52f_3e1fc927",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 1
