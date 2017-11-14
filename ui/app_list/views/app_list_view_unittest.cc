@@ -32,6 +32,7 @@
 #include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/expand_arrow_view.h"
 #include "ui/app_list/views/folder_header_view.h"
+#include "base/test/icu_test_util.h"
 #include "ui/app_list/views/search_box_view.h"
 #include "ui/app_list/views/search_result_answer_card_view.h"
 #include "ui/app_list/views/search_result_list_view.h"
@@ -448,7 +449,8 @@ class AppListViewFocusTest : public views::ViewsTestBase,
   std::unique_ptr<AppListTestViewDelegate> delegate_;
   base::test::ScopedFeatureList scoped_feature_list_;
   std::unique_ptr<AppsGridViewTestApi> test_api_;
-
+  // Restores the locale to default when destructor is called.
+  base::test::ScopedRestoreICUDefaultLocale restore_locale_;
   DISALLOW_COPY_AND_ASSIGN(AppListViewFocusTest);
 };
 
