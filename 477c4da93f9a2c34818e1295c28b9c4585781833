@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4298923e_ffa1ff32",
+        "filename": "media/filters/vpx_video_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-11-14T18:44:58Z",
+      "side": 1,
+      "message": "Should this be .release()? If not, can you add a comment? Should we be using a custom deleter?",
+      "range": {
+        "startLine": 121,
+        "startChar": 31,
+        "endLine": 121,
+        "endChar": 37
+      },
+      "revId": "477c4da93f9a2c34818e1295c28b9c4585781833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae781097_b6cfd734",
+        "filename": "media/filters/vpx_video_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-11-14T18:44:58Z",
+      "side": 1,
+      "message": "Should the case were PostTask returns false be handled? It would be impossible for the event to be signaled in that case.",
+      "range": {
+        "startLine": 631,
+        "startChar": 4,
+        "endLine": 631,
+        "endChar": 34
+      },
+      "revId": "477c4da93f9a2c34818e1295c28b9c4585781833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
