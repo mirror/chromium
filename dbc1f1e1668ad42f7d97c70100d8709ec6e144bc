@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "37213ff5_713eba18",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T21:33:01Z",
+      "side": 1,
+      "message": "All of those ~14 call sites assume that Ethernet is *always* connected or connecting. I was unaware that it could *ever* be idle.\n\nSo, let\u0027s fix Get*NetworkByType in NSH to only break if type !\u003d Ethernet. Duplicating logic like this makes maintaining the code much harder in the long run.",
+      "parentUuid": "78cda3b2_b18fd1b0",
+      "revId": "dbc1f1e1668ad42f7d97c70100d8709ec6e144bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c6b27b0_9b4cdc2f",
         "filename": "components/arc/net/arc_net_host_impl.cc",
         "patchSetId": 2
