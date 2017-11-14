@@ -78,16 +78,32 @@ iframe.fill {
     contain: layout style;
 }
 
+hbox,
 .hbox {
     display: flex;
     flex-direction: row !important;
     position: relative;
 }
 
+hbox-stretch {
+    display: flex;
+    flex-direction: row !important;
+    position: relative;
+    align-items: stretch;
+}
+
+vbox,
 .vbox {
     display: flex;
     flex-direction: column !important;
     position: relative;
+}
+
+vbox-stretch {
+    display: flex;
+    flex-direction: column !important;
+    position: relative;
+    align-items: stretch;
 }
 
 .view-container > .toolbar {
