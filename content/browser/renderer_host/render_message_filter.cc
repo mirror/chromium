@@ -44,7 +44,6 @@
 #include "content/common/child_process_messages.h"
 #include "content/common/content_constants_internal.h"
 #include "content/common/render_message_filter.mojom.h"
-#include "content/common/render_process_messages.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_child_process_host.h"
 #include "content/public/browser/browser_context.h"
@@ -164,14 +163,6 @@ bool RenderMessageFilter::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ChildProcessHostMsg_SetThreadPriority,
                         OnSetThreadPriority)
 #endif
-    IPC_MESSAGE_HANDLER(RenderProcessHostMsg_DidGenerateCacheableMetadata,
-                        OnCacheableMetadataAvailable)
-    IPC_MESSAGE_HANDLER(
-        RenderProcessHostMsg_DidGenerateCacheableMetadataInCacheStorage,
-        OnCacheableMetadataAvailableForCacheStorage)
-#if defined(OS_MACOSX)
-    IPC_MESSAGE_HANDLER_DELAY_REPLY(RenderProcessHostMsg_LoadFont, OnLoadFont)
-#endif
     IPC_MESSAGE_HANDLER(ViewHostMsg_MediaLogEvents, OnMediaLogEvents)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
@@ -215,24 +206,25 @@ void RenderMessageFilter::CreateFullscreenWidget(
   std::move(callback).Run(route_id);
 }
 
+void RenderMessageFilter::LoadFont(mojom::FontDescriptorPtr font_to_load,
+                                   LoadFontCallback callback) {
 #if defined(OS_MACOSX)
-
-void RenderMessageFilter::OnLoadFont(const FontDescriptor& font,
-                                     IPC::Message* reply_msg) {
   FontLoader::LoadFont(
-      font,
-      base::BindOnce(&RenderMessageFilter::SendLoadFontReply, this, reply_msg));
+      FontDescriptor(font_to_load->font_name, font_to_load->font_point_size),
+      base::BindOnce(&RenderMessageFilter::SendLoadFontReply, this,
+                     std::move(callback)));
+#endif  // defined(OS_MACOSX)
 }
 
-void RenderMessageFilter::SendLoadFontReply(IPC::Message* reply,
+#if defined(OS_MACOSX)
+void RenderMessageFilter::SendLoadFontReply(LoadFontCallback reply,
                                             uint32_t data_size,
                                             base::SharedMemoryHandle handle,
                                             uint32_t font_id) {
-  RenderProcessHostMsg_LoadFont::WriteReplyParams(reply, data_size, handle,
-                                                  font_id);
-  Send(reply);
+  std::move(reply).Run(data_size,
+                       mojo::WrapSharedMemoryHandle(handle, data_size, true),
+                       font_id);
 }
-
 #endif  // defined(OS_MACOSX)
 
 #if defined(OS_LINUX)
@@ -267,10 +259,10 @@ void RenderMessageFilter::OnSetThreadPriority(base::PlatformThreadId ns_tid,
 }
 #endif
 
-void RenderMessageFilter::OnCacheableMetadataAvailable(
+void RenderMessageFilter::DidGenerateCacheableMetadata(
     const GURL& url,
     base::Time expected_response_time,
-    const std::vector<char>& data) {
+    const std::vector<uint8_t>& data) {
   net::HttpCache* cache = request_context_->GetURLRequestContext()->
       http_transaction_factory()->GetCache();
   if (!cache)
@@ -289,10 +281,10 @@ void RenderMessageFilter::OnCacheableMetadataAvailable(
                        data.size());
 }
 
-void RenderMessageFilter::OnCacheableMetadataAvailableForCacheStorage(
+void RenderMessageFilter::DidGenerateCacheableMetadataInCacheStorage(
     const GURL& url,
     base::Time expected_response_time,
-    const std::vector<char>& data,
+    const std::vector<uint8_t>& data,
     const url::Origin& cache_storage_origin,
     const std::string& cache_storage_cache_name) {
   scoped_refptr<net::IOBuffer> buf(new net::IOBuffer(data.size()));
