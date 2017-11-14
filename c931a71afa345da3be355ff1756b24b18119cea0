@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3178094d_cba86918",
+        "filename": "chrome/browser/ui/views/chrome_views_delegate_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-14T19:39:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6e7b75ea_c7878e98",
+      "revId": "c931a71afa345da3be355ff1756b24b18119cea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c7cad11_cdb22158",
         "filename": "chrome/installer/linux/rpm/additional_deps",
         "patchSetId": 3
