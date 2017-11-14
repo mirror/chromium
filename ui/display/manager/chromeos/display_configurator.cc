@@ -98,22 +98,33 @@ class DisplayConfigurator::DisplayLayoutManagerImpl
 
   const DisplayMode* GetUserSelectedMode(const DisplaySnapshot& display) const;
 
-  // Helper method for ParseDisplays() that initializes the passed-in
-  // displays' |mirror_mode| fields by looking for a mode in |internal_display|
-  // and |external_display| having the same resolution. Returns false if a
-  // shared mode wasn't found or created.
-  //
-  // |try_panel_fitting| allows creating a panel-fitting mode for
-  // |internal_display| instead of only searching for a matching mode (note that
-  // it may lead to a crash if |internal_display| is not capable of panel
-  // fitting).
-  //
-  // |preserve_aspect| limits the search/creation only to the modes having the
-  // native aspect ratio of |external_display|.
-  bool FindMirrorMode(DisplayState* internal_display,
-                      DisplayState* external_display,
-                      bool try_panel_fitting,
-                      bool preserve_aspect) const;
+  // Return true if all displays are on the same device.
+  bool AllDisplaysOnSameDevice(
+      const std::vector<DisplayState*>& displays) const;
+
+  // Return true if all displays have native mode.
+  bool AllDisplaysHaveNativeMode(
+      const std::vector<DisplayState*>& displays) const;
+
+  // Return true if |mode| has the same aspect ratio as |native_mode|.
+  bool IsNativeAspectRatio(const DisplayMode* native_mode,
+                           const DisplayMode* mode) const;
+
+  // Find internal displays from |displays| and store them in
+  // |intenral_displays|.
+  void FindInternalDisplays(
+      const std::vector<DisplayState*>& displays,
+      std::vector<DisplayState*>& internal_displays) const;
+
+  // Helper method for ParseDisplays() that initializes the passed-in displays'
+  // |mirror_mode| fields by looking for a matching mode among these displays'
+  // mode list. |preserve_aspect| limits the search only to the modes having
+  // the native aspect ratio of each external display. If |is_first_internal|
+  // is true, the first display in |displays| is a internal display. Otherwise,
+  // all displays are external displays.
+  bool FindExactMatchingMirrorMode(const std::vector<DisplayState*>& displays,
+                                   bool preserve_aspect,
+                                   bool is_first_internal) const;
 
   DisplayConfigurator* configurator_;  // Not owned.
 
@@ -158,45 +169,51 @@ DisplayConfigurator::DisplayLayoutManagerImpl::ParseDisplays(
     cached_displays.push_back(display_state);
   }
 
-  // Set |mirror_mode| fields.
-  if (cached_displays.size() == 2) {
-    bool one_is_internal =
-        cached_displays[0].display->type() == DISPLAY_CONNECTION_TYPE_INTERNAL;
-    bool two_is_internal =
-        cached_displays[1].display->type() == DISPLAY_CONNECTION_TYPE_INTERNAL;
-    int internal_displays =
-        (one_is_internal ? 1 : 0) + (two_is_internal ? 1 : 0);
-    DCHECK_LT(internal_displays, 2);
-    LOG_IF(WARNING, internal_displays >= 2)
-        << "At least two internal displays detected.";
+  if (cached_displays.size() <= 1)
+    return cached_displays;
 
-    bool can_mirror = false;
-    for (int attempt = 0; !can_mirror && attempt < 2; ++attempt) {
-      // Try preserving external display's aspect ratio on the first attempt.
-      // If that fails, fall back to the highest matching resolution.
-      bool preserve_aspect = attempt == 0;
-
-      if (internal_displays == 1) {
-        can_mirror = FindMirrorMode(&cached_displays[one_is_internal ? 0 : 1],
-                                    &cached_displays[one_is_internal ? 1 : 0],
-                                    configurator_->is_panel_fitting_enabled_,
-                                    preserve_aspect);
-      } else {  // if (internal_displays == 0)
-        // No panel fitting for external displays, so fall back to exact match.
-        can_mirror = FindMirrorMode(&cached_displays[0], &cached_displays[1],
-                                    false, preserve_aspect);
-        if (!can_mirror && preserve_aspect) {
-          // FindMirrorMode() will try to preserve aspect ratio of what it
-          // thinks is external display, so if it didn't succeed with one, maybe
-          // it will succeed with the other.  This way we will have the correct
-          // aspect ratio on at least one of them.
-          can_mirror = FindMirrorMode(&cached_displays[1], &cached_displays[0],
-                                      false, preserve_aspect);
-        }
-      }
+  std::vector<DisplayState*> displays;
+  int num_internal_displays = 0;
+  DisplayState* internal_display = nullptr;
+  for (auto& display : cached_displays) {
+    if (display.display->type() == DISPLAY_CONNECTION_TYPE_INTERNAL) {
+      internal_display = &display;
+      ++num_internal_displays;
+    } else {
+      displays.emplace_back(&display);
     }
   }
+  DCHECK_LT(num_internal_displays, 2);
+  LOG_IF(WARNING, num_internal_displays >= 2)
+      << "At least two internal displays detected.";
 
+  // Make sure internal display is the first element in |displays|.
+  if (internal_display)
+    displays.insert(displays.begin(), internal_display);
+
+  // Hardware mirroring doesn't work among displays on different devices. In
+  // this case we revert to software mirroring.
+  if (!AllDisplaysOnSameDevice(displays))
+    return cached_displays;
+
+  // Hardware mirroring doesn't work for displays that do not have native
+  // mode. In this case we revert to software mirroring.
+  if (!AllDisplaysHaveNativeMode(displays))
+    return cached_displays;
+
+  bool can_mirror = false;
+  for (int attempt = 0; !can_mirror && attempt < 2; ++attempt) {
+    // Try preserving external display's aspect ratio on the first attempt.
+    // If that fails, fall back to the highest matching resolution.
+    bool preserve_aspect = attempt == 0;
+
+    if (num_internal_displays == 1) {
+      can_mirror = FindExactMatchingMirrorMode(displays, preserve_aspect, true);
+    } else {  // if (internal_displays == 0)
+      can_mirror =
+          FindExactMatchingMirrorMode(displays, preserve_aspect, false);
+    }
+  }
   return cached_displays;
 }
 
@@ -267,8 +284,13 @@ bool DisplayConfigurator::DisplayLayoutManagerImpl::GetDisplayLayout(
       break;
     }
     case MULTIPLE_DISPLAY_STATE_DUAL_MIRROR: {
-      if (states.size() != 2 ||
-          (num_on_displays != 0 && num_on_displays != 2)) {
+      bool can_set_mirror_mode =
+          configurator_->is_multi_mirroring_enabled_
+              ? (states.size() > 1 &&
+                 (num_on_displays == 0 || num_on_displays > 1))
+              : (states.size() == 2 &&
+                 (num_on_displays == 0 || num_on_displays == 2));
+      if (!can_set_mirror_mode) {
         LOG(WARNING) << "Ignoring request to enter mirrored mode with "
                      << states.size() << " connected display(s) and "
                      << num_on_displays << " turned on";
@@ -353,63 +375,82 @@ DisplayConfigurator::DisplayLayoutManagerImpl::GetUserSelectedMode(
   return selected_mode ? selected_mode : display.native_mode();
 }
 
-bool DisplayConfigurator::DisplayLayoutManagerImpl::FindMirrorMode(
-    DisplayState* internal_display,
-    DisplayState* external_display,
-    bool try_panel_fitting,
-    bool preserve_aspect) const {
-  if (internal_display->display->sys_path() !=
-      external_display->display->sys_path()) {
-    // Hardware mirroring doesn't work between displays on different devices. In
-    // this case we revert to software mirroring.
-    return false;
+bool DisplayConfigurator::DisplayLayoutManagerImpl::AllDisplaysOnSameDevice(
+    const std::vector<DisplayState*>& displays) const {
+  DisplayState* first_display = displays.front();
+  for (auto it = displays.begin() + 1; it != displays.end(); ++it) {
+    if (first_display->display->sys_path() != (*it)->display->sys_path())
+      return false;
   }
+  return true;
+}
 
-  const DisplayMode* internal_native_info =
-      internal_display->display->native_mode();
-  const DisplayMode* external_native_info =
-      external_display->display->native_mode();
-  if (!internal_native_info || !external_native_info)
-    return false;
+bool DisplayConfigurator::DisplayLayoutManagerImpl::AllDisplaysHaveNativeMode(
+    const std::vector<DisplayState*>& displays) const {
+  for (const auto* display : displays) {
+    if (!display->display->native_mode())
+      return false;
+  }
+  return true;
+}
 
-  // Check if some external display resolution can be mirrored on internal.
-  // Prefer the modes in the order they're present in DisplaySnapshot, assuming
-  // this is the order in which they look better on the monitor.
-  for (const auto& external_mode : external_display->display->modes()) {
-    bool is_native_aspect_ratio =
-        external_native_info->size().width() * external_mode->size().height() ==
-        external_native_info->size().height() * external_mode->size().width();
-    if (preserve_aspect && !is_native_aspect_ratio)
-      continue;  // Allow only aspect ratio preserving modes for mirroring.
+bool DisplayConfigurator::DisplayLayoutManagerImpl::IsNativeAspectRatio(
+    const DisplayMode* native_mode,
+    const DisplayMode* mode) const {
+  return native_mode->size().width() * mode->size().height() ==
+         native_mode->size().height() * mode->size().width();
+}
 
-    // Try finding an exact match.
-    for (const auto& internal_mode : internal_display->display->modes()) {
-      if (internal_mode->size() == external_mode->size() &&
-          internal_mode->is_interlaced() == external_mode->is_interlaced()) {
-        internal_display->mirror_mode = internal_mode.get();
-        external_display->mirror_mode = external_mode.get();
-        return true;  // Mirror mode found.
+void DisplayConfigurator::DisplayLayoutManagerImpl::FindInternalDisplays(
+    const std::vector<DisplayState*>& displays,
+    std::vector<DisplayState*>& internal_displays) const {
+  for (auto* display : displays) {
+    if (display->display->type() == DISPLAY_CONNECTION_TYPE_INTERNAL)
+      internal_displays.push_back(display);
+  }
+}
+
+bool DisplayConfigurator::DisplayLayoutManagerImpl::FindExactMatchingMirrorMode(
+    const std::vector<DisplayState*>& displays,
+    bool preserve_aspect,
+    bool is_first_internal) const {
+  DCHECK(displays.size() > 0);
+
+  DisplayState* first_display = displays.front();
+
+  for (const auto& first_mode : first_display->display->modes()) {
+    // Only preserve aspect ratio for external display.
+    if (!is_first_internal && preserve_aspect &&
+        !IsNativeAspectRatio(first_display->display->native_mode(),
+                             first_mode.get())) {
+      continue;
+    }
+
+    size_t matching_count = 0;
+    for (auto it = displays.begin() + 1; it != displays.end(); ++it) {
+      for (const auto& mode : (*it)->display->modes()) {
+        if (preserve_aspect &&
+            !IsNativeAspectRatio((*it)->display->native_mode(), mode.get())) {
+          continue;
+        }
+        if (first_mode->size() == mode->size() &&
+            first_mode->is_interlaced() == mode->is_interlaced()) {
+          (*it)->mirror_mode = mode.get();
+          ++matching_count;
+          break;
+        }
       }
     }
 
-    // Try to create a matching internal display mode by panel fitting.
-    if (try_panel_fitting) {
-      // We can downscale by 1.125, and upscale indefinitely. Downscaling looks
-      // ugly, so, can fit == can upscale. Also, internal panels don't support
-      // fitting interlaced modes.
-      bool can_fit = internal_native_info->size().width() >=
-                         external_mode->size().width() &&
-                     internal_native_info->size().height() >=
-                         external_mode->size().height() &&
-                     !external_mode->is_interlaced();
-      if (can_fit) {
-        internal_display->display->add_mode(external_mode.get());
-        internal_display->mirror_mode =
-            internal_display->display->modes().back().get();
-        external_display->mirror_mode = external_mode.get();
-        return true;  // Mirror mode created.
-      }
+    if (matching_count + 1 == displays.size()) {
+      // We have found a matching mode among all displays.
+      first_display->mirror_mode = first_mode.get();
+      return true;
     }
+
+    // Clean up if no matching mode is found.
+    for (auto it = displays.begin() + 1; it != displays.end(); ++it)
+      (*it)->mirror_mode = nullptr;
   }
 
   return false;
@@ -475,6 +516,9 @@ DisplayConfigurator::DisplayConfigurator()
       display_control_changing_(false),
       displays_suspended_(false),
       layout_manager_(new DisplayLayoutManagerImpl(this)),
+      is_multi_mirroring_enabled_(
+          base::CommandLine::ForCurrentProcess()->HasSwitch(
+              ::switches::kEnableMultiMirroring)),
       weak_ptr_factory_(this) {}
 
 DisplayConfigurator::~DisplayConfigurator() {
