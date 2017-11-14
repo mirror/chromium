@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8f4db28d_83983b61",
+        "filename": "chrome/browser/accessibility/accessibility_extension_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-14T00:59:26Z",
+      "side": 1,
+      "message": "Thanks for the examples, I\u0027ve got this working now using the generated extension conversion code.",
+      "parentUuid": "310c581a_840e78d4",
+      "revId": "af3033c1730d820f666aba6239c1557009ec13fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a6b4d7b_5b0f19c0",
         "filename": "chrome/common/extensions/api/accessibility_private.json",
         "patchSetId": 7
