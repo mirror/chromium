@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c197ff9_d5e646ae",
+        "filename": "components/history/core/browser/visitsegment_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-14T23:31:29Z",
+      "side": 1,
+      "message": "absorbing/absorbed is hard for me to keep straight. How about \"from_id\" and \"to_id\"? from_segment_id would also be fine if you prefer.",
+      "revId": "36badf9870018b3cfaf377c217b50aaa68eca7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
