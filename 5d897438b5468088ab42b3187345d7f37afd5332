@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c35d6eff_0105d672",
+        "filename": "chrome/browser/extensions/extension_error_reporter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T23:48:16Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right?",
+      "range": {
+        "startLine": 64,
+        "startChar": 60,
+        "endLine": 64,
+        "endChar": 75
+      },
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "320b7696_39b78f70",
         "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar.cc",
         "patchSetId": 2
@@ -19,6 +42,138 @@
         "endLine": 617,
         "endChar": 32
       },
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff563bfe_b7ea452b",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T23:48:16Z",
+      "side": 1,
+      "message": "Please do :)  We shouldn\u0027t have arguments that aren\u0027t necessary.",
+      "parentUuid": "320b7696_39b78f70",
+      "range": {
+        "startLine": 617,
+        "startChar": 4,
+        "endLine": 617,
+        "endChar": 32
+      },
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e1716e_d3243025",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar_unittest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T23:48:16Z",
+      "side": 1,
+      "message": "That\u0027s a pretty tenuous relationship.  Could we just use a base::RunLoop().RunUntilIdle() call instead?",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 15
+      },
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8febce1f_dafd3ad3",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar_unittest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T23:48:16Z",
+      "side": 1,
+      "message": "Could we have this object instantiated on the stack closer to its use, and then define the class in an anonymous namespace in the .cc file?",
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fdc5f3f_320f1264",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar_unittest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T23:48:16Z",
+      "side": 1,
+      "message": "Fun fact: you can call RunLoop::Quit() before RunLoop::Run(), and it will quit pseudo-immediately.  So we can actually just call run_loop_.Run() here and get rid of the observed_ variable.",
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33496e25_85d3b839",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T23:48:16Z",
+      "side": 1,
+      "message": "This should already be called in \"real\" code - what prompted this change?  If it was test-only, can we move it to a test?",
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0564e32_a04fa8b3",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T23:48:16Z",
+      "side": 1,
+      "message": "nit: add comments",
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20181de_191fa7af",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T23:48:16Z",
+      "side": 1,
+      "message": "Hmm... any reason to not just have the ToolbarActionsModel be the observer instead?",
       "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
