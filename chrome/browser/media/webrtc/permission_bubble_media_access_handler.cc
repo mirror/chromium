@@ -100,6 +100,7 @@ void PermissionBubbleMediaAccessHandler::HandleRequest(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
 #if defined(OS_ANDROID)
+
   if (request.video_type == content::MEDIA_DESKTOP_VIDEO_CAPTURE &&
       !base::FeatureList::IsEnabled(
           chrome::android::kUserMediaScreenCapturing)) {
