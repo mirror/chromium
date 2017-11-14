@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64e3d40a_c19501f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-14T20:55:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2da51f9c_46c96e44",
+      "revId": "6480ca592d4dedf91db38f46d4315352fe5c06bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b95dd73_d6218f80",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "6480ca592d4dedf91db38f46d4315352fe5c06bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1d7d9a_28dea24e",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1839,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-14T20:55:35Z",
+      "side": 1,
+      "message": "Good point. I think I structured the logic that way just to avoid changing the comment :-). Fixed.",
+      "parentUuid": "9b95dd73_d6218f80",
+      "revId": "6480ca592d4dedf91db38f46d4315352fe5c06bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
