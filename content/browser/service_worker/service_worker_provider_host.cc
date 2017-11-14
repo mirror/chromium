@@ -22,7 +22,7 @@
 #include "content/browser/service_worker/service_worker_controllee_request_handler.h"
 #include "content/browser/service_worker/service_worker_dispatcher_host.h"
 #include "content/browser/service_worker/service_worker_handle.h"
-#include "content/browser/service_worker/service_worker_registration_handle.h"
+#include "content/browser/service_worker/service_worker_registration_object_host.h"
 #include "content/browser/service_worker/service_worker_script_url_loader_factory.h"
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/browser/url_loader_factory_getter.h"
@@ -487,15 +487,15 @@ blink::mojom::ServiceWorkerRegistrationObjectInfoPtr
 ServiceWorkerProviderHost::CreateServiceWorkerRegistrationObjectInfo(
     ServiceWorkerRegistration* registration) {
   DCHECK(dispatcher_host_);
-  ServiceWorkerRegistrationHandle* existing_handle =
-      dispatcher_host_->FindServiceWorkerRegistrationHandle(provider_id(),
-                                                            registration->id());
+  ServiceWorkerRegistrationObjectHost* existing_handle =
+      dispatcher_host_->FindServiceWorkerRegistrationObjectHost(
+          provider_id(), registration->id());
   if (existing_handle) {
     return existing_handle->CreateObjectInfo();
   }
-  // ServiceWorkerRegistrationHandle ctor will register itself into
+  // ServiceWorkerRegistrationObjectHost ctor will register itself into
   // |dispatcher_host_->registration_handles_|.
-  auto* new_handle = new ServiceWorkerRegistrationHandle(
+  auto* new_handle = new ServiceWorkerRegistrationObjectHost(
       context_, dispatcher_host_.get(), AsWeakPtr(), registration);
   return new_handle->CreateObjectInfo();
 }

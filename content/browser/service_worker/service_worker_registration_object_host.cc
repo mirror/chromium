@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/service_worker/service_worker_registration_handle.h"
+#include "content/browser/service_worker/service_worker_registration_object_host.h"
 
 #include "content/browser/service_worker/service_worker_consts.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
@@ -23,7 +23,7 @@
 
 namespace content {
 
-ServiceWorkerRegistrationHandle::ServiceWorkerRegistrationHandle(
+ServiceWorkerRegistrationObjectHost::ServiceWorkerRegistrationObjectHost(
     base::WeakPtr<ServiceWorkerContextCore> context,
     ServiceWorkerDispatcherHost* dispatcher_host,
     base::WeakPtr<ServiceWorkerProviderHost> provider_host,
@@ -41,19 +41,19 @@ ServiceWorkerRegistrationHandle::ServiceWorkerRegistrationHandle(
   DCHECK(registration_.get());
   registration_->AddListener(this);
   bindings_.set_connection_error_handler(
-      base::Bind(&ServiceWorkerRegistrationHandle::OnConnectionError,
+      base::Bind(&ServiceWorkerRegistrationObjectHost::OnConnectionError,
                  base::Unretained(this)));
 
-  dispatcher_host_->RegisterServiceWorkerRegistrationHandle(this);
+  dispatcher_host_->RegisterServiceWorkerRegistrationObjectHost(this);
 }
 
-ServiceWorkerRegistrationHandle::~ServiceWorkerRegistrationHandle() {
+ServiceWorkerRegistrationObjectHost::~ServiceWorkerRegistrationObjectHost() {
   DCHECK(registration_.get());
   registration_->RemoveListener(this);
 }
 
 blink::mojom::ServiceWorkerRegistrationObjectInfoPtr
-ServiceWorkerRegistrationHandle::CreateObjectInfo() {
+ServiceWorkerRegistrationObjectHost::CreateObjectInfo() {
   DCHECK(provider_host_);
   auto info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New();
   info->handle_id = handle_id_;
@@ -73,18 +73,17 @@ ServiceWorkerRegistrationHandle::CreateObjectInfo() {
   return info;
 }
 
-void ServiceWorkerRegistrationHandle::OnVersionAttributesChanged(
+void ServiceWorkerRegistrationObjectHost::OnVersionAttributesChanged(
     ServiceWorkerRegistration* registration,
     ChangedVersionAttributesMask changed_mask,
     const ServiceWorkerRegistrationInfo& info) {
   DCHECK_EQ(registration->id(), registration_->id());
-  SetVersionAttributes(changed_mask,
-                       registration->installing_version(),
+  SetVersionAttributes(changed_mask, registration->installing_version(),
                        registration->waiting_version(),
                        registration->active_version());
 }
 
-void ServiceWorkerRegistrationHandle::OnRegistrationFailed(
+void ServiceWorkerRegistrationObjectHost::OnRegistrationFailed(
     ServiceWorkerRegistration* registration) {
   DCHECK_EQ(registration->id(), registration_->id());
   ChangedVersionAttributesMask changed_mask(
@@ -94,13 +93,13 @@ void ServiceWorkerRegistrationHandle::OnRegistrationFailed(
   SetVersionAttributes(changed_mask, nullptr, nullptr, nullptr);
 }
 
-void ServiceWorkerRegistrationHandle::OnUpdateFound(
+void ServiceWorkerRegistrationObjectHost::OnUpdateFound(
     ServiceWorkerRegistration* registration) {
   DCHECK(remote_registration_);
   remote_registration_->UpdateFound();
 }
 
-void ServiceWorkerRegistrationHandle::Update(UpdateCallback callback) {
+void ServiceWorkerRegistrationObjectHost::Update(UpdateCallback callback) {
   if (!CanServeRegistrationObjectHostMethods(&callback,
                                              kServiceWorkerUpdateErrorPrefix)) {
     return;
@@ -120,11 +119,12 @@ void ServiceWorkerRegistrationHandle::Update(UpdateCallback callback) {
       registration_.get(), false /* force_bypass_cache */,
       false /* skip_script_comparison */, provider_host_.get(),
       base::AdaptCallbackForRepeating(
-          base::BindOnce(&ServiceWorkerRegistrationHandle::UpdateComplete,
+          base::BindOnce(&ServiceWorkerRegistrationObjectHost::UpdateComplete,
                          weak_ptr_factory_.GetWeakPtr(), std::move(callback))));
 }
 
-void ServiceWorkerRegistrationHandle::Unregister(UnregisterCallback callback) {
+void ServiceWorkerRegistrationObjectHost::Unregister(
+    UnregisterCallback callback) {
   if (!CanServeRegistrationObjectHostMethods(
           &callback, kServiceWorkerUnregisterErrorPrefix)) {
     return;
@@ -133,11 +133,11 @@ void ServiceWorkerRegistrationHandle::Unregister(UnregisterCallback callback) {
   context_->UnregisterServiceWorker(
       registration_->pattern(),
       base::AdaptCallbackForRepeating(base::BindOnce(
-          &ServiceWorkerRegistrationHandle::UnregistrationComplete,
+          &ServiceWorkerRegistrationObjectHost::UnregistrationComplete,
           weak_ptr_factory_.GetWeakPtr(), std::move(callback))));
 }
 
-void ServiceWorkerRegistrationHandle::EnableNavigationPreload(
+void ServiceWorkerRegistrationObjectHost::EnableNavigationPreload(
     bool enable,
     EnableNavigationPreloadCallback callback) {
   if (!CanServeRegistrationObjectHostMethods(
@@ -157,11 +157,12 @@ void ServiceWorkerRegistrationHandle::EnableNavigationPreload(
   context_->storage()->UpdateNavigationPreloadEnabled(
       registration_->id(), registration_->pattern().GetOrigin(), enable,
       base::AdaptCallbackForRepeating(base::BindOnce(
-          &ServiceWorkerRegistrationHandle::DidUpdateNavigationPreloadEnabled,
+          &ServiceWorkerRegistrationObjectHost::
+              DidUpdateNavigationPreloadEnabled,
           weak_ptr_factory_.GetWeakPtr(), enable, std::move(callback))));
 }
 
-void ServiceWorkerRegistrationHandle::GetNavigationPreloadState(
+void ServiceWorkerRegistrationObjectHost::GetNavigationPreloadState(
     GetNavigationPreloadStateCallback callback) {
   if (!CanServeRegistrationObjectHostMethods(
           &callback, ServiceWorkerConsts::kGetNavigationPreloadStateErrorPrefix,
@@ -174,7 +175,7 @@ void ServiceWorkerRegistrationHandle::GetNavigationPreloadState(
                           registration_->navigation_preload_state().Clone());
 }
 
-void ServiceWorkerRegistrationHandle::SetNavigationPreloadHeader(
+void ServiceWorkerRegistrationObjectHost::SetNavigationPreloadHeader(
     const std::string& value,
     SetNavigationPreloadHeaderCallback callback) {
   if (!CanServeRegistrationObjectHostMethods(
@@ -203,11 +204,12 @@ void ServiceWorkerRegistrationHandle::SetNavigationPreloadHeader(
   context_->storage()->UpdateNavigationPreloadHeader(
       registration_->id(), registration_->pattern().GetOrigin(), value,
       base::AdaptCallbackForRepeating(base::BindOnce(
-          &ServiceWorkerRegistrationHandle::DidUpdateNavigationPreloadHeader,
+          &ServiceWorkerRegistrationObjectHost::
+              DidUpdateNavigationPreloadHeader,
           weak_ptr_factory_.GetWeakPtr(), value, std::move(callback))));
 }
 
-void ServiceWorkerRegistrationHandle::UpdateComplete(
+void ServiceWorkerRegistrationObjectHost::UpdateComplete(
     UpdateCallback callback,
     ServiceWorkerStatusCode status,
     const std::string& status_message,
@@ -226,7 +228,7 @@ void ServiceWorkerRegistrationHandle::UpdateComplete(
                           base::nullopt);
 }
 
-void ServiceWorkerRegistrationHandle::UnregistrationComplete(
+void ServiceWorkerRegistrationObjectHost::UnregistrationComplete(
     UnregisterCallback callback,
     ServiceWorkerStatusCode status) {
   if (status != SERVICE_WORKER_OK) {
@@ -243,7 +245,7 @@ void ServiceWorkerRegistrationHandle::UnregistrationComplete(
                           base::nullopt);
 }
 
-void ServiceWorkerRegistrationHandle::DidUpdateNavigationPreloadEnabled(
+void ServiceWorkerRegistrationObjectHost::DidUpdateNavigationPreloadEnabled(
     bool enable,
     EnableNavigationPreloadCallback callback,
     ServiceWorkerStatusCode status) {
@@ -261,7 +263,7 @@ void ServiceWorkerRegistrationHandle::DidUpdateNavigationPreloadEnabled(
                           base::nullopt);
 }
 
-void ServiceWorkerRegistrationHandle::DidUpdateNavigationPreloadHeader(
+void ServiceWorkerRegistrationObjectHost::DidUpdateNavigationPreloadHeader(
     const std::string& value,
     SetNavigationPreloadHeaderCallback callback,
     ServiceWorkerStatusCode status) {
@@ -280,7 +282,7 @@ void ServiceWorkerRegistrationHandle::DidUpdateNavigationPreloadHeader(
                           base::nullopt);
 }
 
-void ServiceWorkerRegistrationHandle::SetVersionAttributes(
+void ServiceWorkerRegistrationObjectHost::SetVersionAttributes(
     ChangedVersionAttributesMask changed_mask,
     ServiceWorkerVersion* installing_version,
     ServiceWorkerVersion* waiting_version,
@@ -307,16 +309,16 @@ void ServiceWorkerRegistrationHandle::SetVersionAttributes(
       std::move(active));
 }
 
-void ServiceWorkerRegistrationHandle::OnConnectionError() {
+void ServiceWorkerRegistrationObjectHost::OnConnectionError() {
   // If there are still bindings, |this| is still being used.
   if (!bindings_.empty())
     return;
   // Will destroy |this|.
-  dispatcher_host_->UnregisterServiceWorkerRegistrationHandle(handle_id_);
+  dispatcher_host_->UnregisterServiceWorkerRegistrationObjectHost(handle_id_);
 }
 
 template <typename CallbackType, typename... Args>
-bool ServiceWorkerRegistrationHandle::CanServeRegistrationObjectHostMethods(
+bool ServiceWorkerRegistrationObjectHost::CanServeRegistrationObjectHostMethods(
     CallbackType* callback,
     const char* error_prefix,
     Args... args) {

@@ -235,7 +235,7 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
       bool skip_service_worker);
 
   // Returns an object info representing |registration|. The object info holds a
-  // Mojo connection to the ServiceWorkerRegistrationHandle for the
+  // Mojo connection to the ServiceWorkerRegistrationObjectHost for the
   // |registration| to ensure the handle stays alive while the object info is
   // alive. A new handle is created if one does not already exist.
   blink::mojom::ServiceWorkerRegistrationObjectInfoPtr

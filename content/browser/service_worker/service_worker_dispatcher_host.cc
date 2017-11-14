@@ -22,7 +22,7 @@
 #include "content/browser/service_worker/service_worker_handle.h"
 #include "content/browser/service_worker/service_worker_navigation_handle_core.h"
 #include "content/browser/service_worker/service_worker_registration.h"
-#include "content/browser/service_worker/service_worker_registration_handle.h"
+#include "content/browser/service_worker/service_worker_registration_object_host.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_messages.h"
@@ -170,13 +170,13 @@ void ServiceWorkerDispatcherHost::RegisterServiceWorkerHandle(
   handles_.AddWithID(std::move(handle), handle_id);
 }
 
-void ServiceWorkerDispatcherHost::RegisterServiceWorkerRegistrationHandle(
-    ServiceWorkerRegistrationHandle* handle) {
+void ServiceWorkerDispatcherHost::RegisterServiceWorkerRegistrationObjectHost(
+    ServiceWorkerRegistrationObjectHost* handle) {
   int handle_id = handle->handle_id();
   registration_handles_.AddWithID(base::WrapUnique(handle), handle_id);
 }
 
-void ServiceWorkerDispatcherHost::UnregisterServiceWorkerRegistrationHandle(
+void ServiceWorkerDispatcherHost::UnregisterServiceWorkerRegistrationObjectHost(
     int handle_id) {
   registration_handles_.Remove(handle_id);
 }
@@ -448,13 +448,13 @@ void ServiceWorkerDispatcherHost::ReleaseSourceInfo(
     handles_.Remove(source_info.handle_id);
 }
 
-ServiceWorkerRegistrationHandle*
-ServiceWorkerDispatcherHost::FindServiceWorkerRegistrationHandle(
+ServiceWorkerRegistrationObjectHost*
+ServiceWorkerDispatcherHost::FindServiceWorkerRegistrationObjectHost(
     int provider_id,
     int64_t registration_id) {
   for (RegistrationHandleMap::iterator iter(&registration_handles_);
        !iter.IsAtEnd(); iter.Advance()) {
-    ServiceWorkerRegistrationHandle* handle = iter.GetCurrentValue();
+    ServiceWorkerRegistrationObjectHost* handle = iter.GetCurrentValue();
     if (handle->provider_id() == provider_id &&
         handle->registration()->id() == registration_id) {
       return handle;

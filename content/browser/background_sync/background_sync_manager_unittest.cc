@@ -28,7 +28,7 @@
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/service_worker/service_worker_dispatcher_host.h"
-#include "content/browser/service_worker/service_worker_registration_handle.h"
+#include "content/browser/service_worker/service_worker_registration_object_host.h"
 #include "content/browser/service_worker/service_worker_storage.h"
 #include "content/browser/storage_partition_impl.h"
 #include "content/public/browser/background_sync_parameters.h"
@@ -475,10 +475,10 @@ TEST_F(BackgroundSyncManagerTest, RegisterWithoutLiveSWRegistration) {
   // Remove the registration handle registered on the dispatcher host.
   ServiceWorkerDispatcherHost* dispatcher_host =
       helper_->context()->GetDispatcherHost(process_id);
-  ServiceWorkerRegistrationHandle* handle =
-      dispatcher_host->FindServiceWorkerRegistrationHandle(
+  ServiceWorkerRegistrationObjectHost* handle =
+      dispatcher_host->FindServiceWorkerRegistrationObjectHost(
           provider_id, sw_registration_1_->id());
-  dispatcher_host->UnregisterServiceWorkerRegistrationHandle(
+  dispatcher_host->UnregisterServiceWorkerRegistrationObjectHost(
       handle->handle_id());
 
   // Ensure |sw_registration_1_| is the last reference to the registration.

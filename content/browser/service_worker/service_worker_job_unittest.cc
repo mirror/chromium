@@ -24,7 +24,7 @@
 #include "content/browser/service_worker/service_worker_handle.h"
 #include "content/browser/service_worker/service_worker_job_coordinator.h"
 #include "content/browser/service_worker/service_worker_registration.h"
-#include "content/browser/service_worker/service_worker_registration_handle.h"
+#include "content/browser/service_worker/service_worker_registration_object_host.h"
 #include "content/browser/service_worker/service_worker_registration_status.h"
 #include "content/browser/service_worker/service_worker_test_utils.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
@@ -53,7 +53,7 @@ namespace content {
 namespace {
 
 // A dispatcher host that holds on to all registered ServiceWorkerHandles and
-// ServiceWorkerRegistrationHandles.
+// ServiceWorkerRegistrationObjectHosts.
 class KeepHandlesDispatcherHost : public ServiceWorkerDispatcherHost {
  public:
   KeepHandlesDispatcherHost(int render_process_id,
@@ -63,11 +63,11 @@ class KeepHandlesDispatcherHost : public ServiceWorkerDispatcherHost {
       std::unique_ptr<ServiceWorkerHandle> handle) override {
     handles_.push_back(std::move(handle));
   }
-  void RegisterServiceWorkerRegistrationHandle(
-      ServiceWorkerRegistrationHandle* handle) override {
+  void RegisterServiceWorkerRegistrationObjectHost(
+      ServiceWorkerRegistrationObjectHost* handle) override {
     registration_handles_.push_back(base::WrapUnique(handle));
   }
-  void UnregisterServiceWorkerRegistrationHandle(int handle_id) override {
+  void UnregisterServiceWorkerRegistrationObjectHost(int handle_id) override {
     auto iter = registration_handles_.begin();
     for (; iter != registration_handles_.end(); ++iter) {
       if ((*iter)->handle_id() == handle_id)
@@ -86,7 +86,7 @@ class KeepHandlesDispatcherHost : public ServiceWorkerDispatcherHost {
     return handles_;
   }
 
-  const std::vector<std::unique_ptr<ServiceWorkerRegistrationHandle>>&
+  const std::vector<std::unique_ptr<ServiceWorkerRegistrationObjectHost>>&
   registration_handles() {
     return registration_handles_;
   }
@@ -95,7 +95,7 @@ class KeepHandlesDispatcherHost : public ServiceWorkerDispatcherHost {
   ~KeepHandlesDispatcherHost() override {}
 
   std::vector<std::unique_ptr<ServiceWorkerHandle>> handles_;
-  std::vector<std::unique_ptr<ServiceWorkerRegistrationHandle>>
+  std::vector<std::unique_ptr<ServiceWorkerRegistrationObjectHost>>
       registration_handles_;
   DISALLOW_COPY_AND_ASSIGN(KeepHandlesDispatcherHost);
 };
