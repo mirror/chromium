@@ -22,6 +22,30 @@
       "revId": "6137613facaf39327b1219197ca760af2a978be3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1baeec3c_2386dcbd",
+        "filename": "device/geolocation/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-14T23:22:41Z",
+      "side": 0,
+      "message": "yes, we need this to make Android trybot happy :)",
+      "parentUuid": "11ac950d_c8f7895b",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 36
+      },
+      "revId": "6137613facaf39327b1219197ca760af2a978be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

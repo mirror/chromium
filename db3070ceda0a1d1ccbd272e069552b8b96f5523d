@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48ed496b_d76435dc",
+        "filename": "services/device/geolocation/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-14T23:22:41Z",
+      "side": 1,
+      "message": "removed +net under services/device/DEPS",
+      "parentUuid": "0f7609ae_80de73df",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 1
+      },
+      "revId": "db3070ceda0a1d1ccbd272e069552b8b96f5523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b94fe699_668f5eef",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "db3070ceda0a1d1ccbd272e069552b8b96f5523d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43d0440b_e3731cdb",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-14T23:22:41Z",
+      "side": 1,
+      "message": "thanks for the catch!",
+      "parentUuid": "b94fe699_668f5eef",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 38
+      },
+      "revId": "db3070ceda0a1d1ccbd272e069552b8b96f5523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "351b6dbc_0db42e4d",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-14T23:22:41Z",
+      "side": 1,
+      "message": "thanks for the advice!",
+      "parentUuid": "d732f0c3_954ad6ce",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 59
+      },
+      "revId": "db3070ceda0a1d1ccbd272e069552b8b96f5523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e673b2d_75afeb0f",
         "filename": "services/device/geolocation/public_ip_address_location_notifier_unittest.cc",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "db3070ceda0a1d1ccbd272e069552b8b96f5523d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8b3dcc_fe446cd8",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-14T23:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e673b2d_75afeb0f",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 313,
+        "endChar": 15
+      },
+      "revId": "db3070ceda0a1d1ccbd272e069552b8b96f5523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
