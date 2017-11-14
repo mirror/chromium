@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "777d490f_65deabb5",
+        "filename": "ios/chrome/browser/ui/main_content/main_content_ui_state.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-14T14:13:31Z",
+      "side": 1,
+      "message": "Since panGesture here is only used to make sure that the same scroll event is being handled, I don\u0027t think it\u0027s really part of the state object; it should just be a property of this Updater object.",
+      "range": {
+        "startLine": 93,
+        "startChar": 35,
+        "endLine": 93,
+        "endChar": 45
+      },
+      "revId": "f0b49c0b02e513727846ad80e38390cc50b742a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
