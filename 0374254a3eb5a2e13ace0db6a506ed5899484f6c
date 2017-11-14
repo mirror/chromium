@@ -16,6 +16,24 @@
       "revId": "0374254a3eb5a2e13ace0db6a506ed5899484f6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e57140_c00283ca",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-14T20:07:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a400f94_2bb51d75",
+      "revId": "0374254a3eb5a2e13ace0db6a506ed5899484f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
