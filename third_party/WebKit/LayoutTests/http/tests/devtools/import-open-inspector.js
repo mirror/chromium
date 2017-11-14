@@ -5,10 +5,8 @@
 (async function() {
   TestRunner.addResult(
       `This tests that reloading a page with the inspector opened does not crash (rewritten test from r156199).\n`);
-  await TestRunner.loadHTML(`
-      <!DOCTYPE html>
-      <link rel="import" href="${TestRunner.url('resources/import-open-inspector-linked.html')}">
-    `);
+
+  await TestRunner.addHTMLImportTag('resources/import-open-inspector-linked.html');
 
   await TestRunner.evaluateInPagePromise(`
       function getGreeting()
