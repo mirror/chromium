@@ -419,6 +419,10 @@ class ImeActivityTestRule extends ContentShellActivityTestRule {
         return runBlockingOnImeThread(new Callable<Boolean>() {
             @Override
             public Boolean call() {
+                try {
+                    Thread.sleep(500);
+                } catch (Exception e) {
+                }
                 return connection.setSelection(start, end);
             }
         });
