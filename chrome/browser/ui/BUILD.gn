@@ -485,6 +485,8 @@ split_static_library("ui") {
     "//ppapi/features",
     "//printing/features",
     "//rlz/features",
+    "//services/identity/public/cpp:cpp_types",
+    "//services/identity/public/interfaces",
     "//services/service_manager/runner/common",
     "//skia",
     "//storage/browser",
