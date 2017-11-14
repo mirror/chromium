@@ -26,7 +26,6 @@ class LanguageSettingsPrivateGetLanguageListFunction
   // ExtensionFunction overrides.
   ResponseAction Run() override;
 
- private:
   DISALLOW_COPY_AND_ASSIGN(LanguageSettingsPrivateGetLanguageListFunction);
 };
 
