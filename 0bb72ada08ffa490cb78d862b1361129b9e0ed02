@@ -161,6 +161,30 @@
       "revId": "0bb72ada08ffa490cb78d862b1361129b9e0ed02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55294e52_2bc19128",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2501,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-11-14T15:41:13Z",
+      "side": 1,
+      "message": "FYI, I was thinking of JS inserting text before the new text.",
+      "parentUuid": "5162bb98_e4fe7c72",
+      "range": {
+        "startLine": 2501,
+        "startChar": 7,
+        "endLine": 2501,
+        "endChar": 68
+      },
+      "revId": "0bb72ada08ffa490cb78d862b1361129b9e0ed02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
