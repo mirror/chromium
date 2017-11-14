@@ -9,6 +9,7 @@
 
 #include "base/logging.h"
 #include "components/viz/service/display/display.h"
+#include "components/viz/service/display_embedder/display_data.h"
 #include "components/viz/service/display_embedder/display_provider.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_impl.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
@@ -112,14 +113,12 @@ void FrameSinkManagerImpl::CreateRootCompositorFrameSink(
   DCHECK_EQ(0u, compositor_frame_sinks_.count(frame_sink_id));
   DCHECK(display_provider_);
 
-  std::unique_ptr<BeginFrameSource> begin_frame_source;
-  auto display = display_provider_->CreateDisplay(
-      frame_sink_id, surface_handle, renderer_settings, &begin_frame_source);
+  DisplayData display_data = display_provider_->CreateDisplay(
+      frame_sink_id, surface_handle, renderer_settings);
 
   auto frame_sink = std::make_unique<RootCompositorFrameSinkImpl>(
-      this, frame_sink_id, std::move(display), std::move(begin_frame_source),
-      std::move(request), std::move(client),
-      std::move(display_private_request));
+      this, frame_sink_id, std::move(display_data), std::move(request),
+      std::move(client), std::move(display_private_request));
   SinkAndSupport& entry = compositor_frame_sinks_[frame_sink_id];
   entry.support = frame_sink->support();
   entry.sink = std::move(frame_sink);

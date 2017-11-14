@@ -16,6 +16,7 @@
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display/display_scheduler.h"
 #include "components/viz/service/display/texture_mailbox_deleter.h"
+#include "components/viz/service/display_embedder/display_data.h"
 #include "components/viz/service/display_embedder/display_output_surface.h"
 #include "components/viz/service/display_embedder/in_process_gpu_memory_buffer_manager.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
@@ -53,20 +54,19 @@ GpuDisplayProvider::GpuDisplayProvider(
 
 GpuDisplayProvider::~GpuDisplayProvider() = default;
 
-std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
+DisplayData GpuDisplayProvider::CreateDisplay(
     const FrameSinkId& frame_sink_id,
     gpu::SurfaceHandle surface_handle,
-    const RendererSettings& renderer_settings,
-    std::unique_ptr<BeginFrameSource>* begin_frame_source) {
-  auto synthetic_begin_frame_source =
+    const RendererSettings& renderer_settings) {
+  DisplayData data;
+
+  data.synthetic_begin_frame_source =
       base::MakeUnique<DelayBasedBeginFrameSource>(
           base::MakeUnique<DelayBasedTimeSource>(task_runner_.get()));
 
-  scoped_refptr<InProcessContextProvider> context_provider =
-      new InProcessContextProvider(gpu_service_, surface_handle,
-                                   gpu_memory_buffer_manager_.get(),
-                                   image_factory_, gpu::SharedMemoryLimits(),
-                                   nullptr /* shared_context */);
+  auto context_provider = base::MakeRefCounted<InProcessContextProvider>(
+      gpu_service_, surface_handle, gpu_memory_buffer_manager_.get(),
+      image_factory_, gpu::SharedMemoryLimits(), nullptr /* shared_context */);
 
   // TODO(rjkroege): If there is something better to do than CHECK, add it.
   // TODO(danakj): Should retry if the result is kTransientFailure.
@@ -78,14 +78,14 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
 #if defined(USE_OZONE)
     display_output_surface = base::MakeUnique<DisplayOutputSurfaceOzone>(
         std::move(context_provider), surface_handle,
-        synthetic_begin_frame_source.get(), gpu_memory_buffer_manager_.get(),
-        GL_TEXTURE_2D, GL_RGB);
+        data.synthetic_begin_frame_source.get(),
+        gpu_memory_buffer_manager_.get(), GL_TEXTURE_2D, GL_RGB);
 #else
     NOTREACHED();
 #endif
   } else {
     display_output_surface = base::MakeUnique<DisplayOutputSurface>(
-        std::move(context_provider), synthetic_begin_frame_source.get());
+        std::move(context_provider), data.synthetic_begin_frame_source.get());
   }
 
   int max_frames_pending =
@@ -93,17 +93,16 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
   DCHECK_GT(max_frames_pending, 0);
 
   auto scheduler = base::MakeUnique<DisplayScheduler>(
-      synthetic_begin_frame_source.get(), task_runner_.get(),
+      data.synthetic_begin_frame_source.get(), task_runner_.get(),
       max_frames_pending);
 
-  // The ownership of the BeginFrameSource is transfered to the caller.
-  *begin_frame_source = std::move(synthetic_begin_frame_source);
-
-  return base::MakeUnique<Display>(
+  data.display = base::MakeUnique<Display>(
       ServerSharedBitmapManager::current(), gpu_memory_buffer_manager_.get(),
       renderer_settings, frame_sink_id, std::move(display_output_surface),
       std::move(scheduler),
       base::MakeUnique<TextureMailboxDeleter>(task_runner_.get()));
+
+  return data;
 }
 
 }  // namespace viz
