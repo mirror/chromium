@@ -98,12 +98,4 @@ void Settings::SetTextAutosizingWindowSizeOverride(
   Invalidate(SettingsDelegate::kTextAutosizingChange);
 }
 
-void Settings::SetMockScrollbarsEnabled(bool flag) {
-  ScrollbarTheme::SetMockScrollbarsEnabled(flag);
-}
-
-bool Settings::MockScrollbarsEnabled() {
-  return ScrollbarTheme::MockScrollbarsEnabled();
-}
-
 }  // namespace blink

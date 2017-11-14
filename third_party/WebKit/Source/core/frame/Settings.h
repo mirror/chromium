@@ -78,10 +78,6 @@ class CORE_EXPORT Settings {
 
   SETTINGS_GETTERS_AND_SETTERS
 
-  // FIXME: This does not belong here.
-  static void SetMockScrollbarsEnabled(bool flag);
-  static bool MockScrollbarsEnabled();
-
   void SetDelegate(SettingsDelegate*);
 
  private:
