@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b209cadc_bbc8f5d1",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-14T02:27:19Z",
+      "side": 1,
+      "message": "Right, I was wondering if transition-delay had any effect, since I\u0027ve only ever seen it being used along with a transition. Trying this locally (https://jsfiddle.net/b03oL8jm/), I see that it still has an effect even without transition.\n\nHaving said that, do we need to do anything about opacity at all? By looking at the demos [1], it seems that a fade-out transition is baked into the spinner itself, as well as a spinner with no [active] attribute has zero opacity anyway.\n\n[1] https://www.webcomponents.org/element/PolymerElements/paper-spinner/demo/demo/index.html\n[2] https://github.com/PolymerElements/paper-spinner/blob/master/paper-spinner-styles.html#L77",
+      "parentUuid": "9d6ecd7e_c4c56e4a",
+      "revId": "2fd0cb161db23215229749806a66590c2245ca9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef5eb64f_c09c1e4b",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
         "patchSetId": 2
