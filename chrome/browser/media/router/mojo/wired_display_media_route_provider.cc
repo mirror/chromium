@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/i18n/number_formatting.h"
+#include "chrome/browser/media/router/media_router_metrics.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/media_router/media_source_helper.h"
 #include "chrome/common/media_router/route_request_result.h"
@@ -265,6 +266,7 @@ void WiredDisplayMediaRouteProvider::NotifyRouteObservers() const {
 
 void WiredDisplayMediaRouteProvider::NotifySinkObservers() const {
   std::vector<MediaSinkInternal> sinks = GetSinks();
+  MediaRouterMetrics::RecordWiredDisplaySinkCount(sinks.size());
   for (const auto& sink_query : sink_queries_)
     media_router_->OnSinksReceived(kProviderId, sink_query, sinks, {});
 }
