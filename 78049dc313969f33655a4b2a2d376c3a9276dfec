@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3183eff_45cf2cce",
+        "filename": "net/http/http_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-14T17:41:47Z",
+      "side": 0,
+      "message": "FYI At this point, StringPiece(begin + charset_val, begin + charset_end) does not contain a semicolon, because |tokenizer| uses that as a delimiter.",
+      "range": {
+        "startLine": 136,
+        "startChar": 70,
+        "endLine": 136,
+        "endChar": 71
+      },
+      "revId": "78049dc313969f33655a4b2a2d376c3a9276dfec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c87699b0_0795546b",
+        "filename": "net/http/http_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-14T17:41:47Z",
+      "side": 0,
+      "message": "FYI Trailing whitespace is already trimmed.",
+      "range": {
+        "startLine": 124,
+        "startChar": 24,
+        "endLine": 124,
+        "endChar": 43
+      },
+      "revId": "78049dc313969f33655a4b2a2d376c3a9276dfec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
