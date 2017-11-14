@@ -185,11 +185,22 @@ void NotificationChannelsProviderAndroid::MigrateToChannelsIfNecessary(
     return;
   }
   InitCachedChannels();
+  std::vector<content_settings::Rule> rules;
   std::unique_ptr<content_settings::RuleIterator> it(
       pref_provider->GetRuleIterator(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
                                      std::string(), false /* incognito */));
-  while (it && it->HasNext())
-    CreateChannelForRule(it->Next());
+  while (it && it->HasNext()) {
+    const content_settings::Rule& rule = it->Next();
+    rules.push_back(rule);
+    CreateChannelForRule(rule);
+  }
+  it.reset();
+  for (const auto& rule : rules) {
+    pref_provider->SetWebsiteSetting(
+        rule.primary_pattern, rule.secondary_pattern,
+        CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
+        content_settings::ResourceIdentifier(), nullptr);
+  }
   prefs->SetBoolean(prefs::kMigratedToSiteNotificationChannels, true);
 }
 
