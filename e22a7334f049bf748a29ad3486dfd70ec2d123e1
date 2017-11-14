@@ -16,6 +16,24 @@
       "revId": "e22a7334f049bf748a29ad3486dfd70ec2d123e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c676aed0_98cae2e4",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-14T18:46:10Z",
+      "side": 1,
+      "message": "I just checked and it seems Orca never uses it. Accerciser could show some information, and maybe orca in the future, but it seems right now there is no use of this.\n\nIt would be more interesting to add get_localized_name (which we provide), but I am right now trying to mimic the existing behavior in BrowserAccessibilityAuraLinux without adding much functionality yet. So that would come later.",
+      "parentUuid": "b66201b1_c36e266f",
+      "revId": "e22a7334f049bf748a29ad3486dfd70ec2d123e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
