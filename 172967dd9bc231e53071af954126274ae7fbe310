@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "68785292_5ba335ee",
+        "filename": "extensions/renderer/dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T22:06:42Z",
+      "side": 1,
+      "message": "Thanks for the info!",
+      "parentUuid": "6a4f20c5_ce9ff465",
+      "revId": "172967dd9bc231e53071af954126274ae7fbe310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4a214d6_2d6d78f7",
         "filename": "extensions/renderer/resource_bundle_source_map.cc",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I wrote a testing CL to call ResourceBundleSourceMap::GetSource() for mojo_bindings.js, which is the only compressed resource and its uncompressed size is 159.2KB.\n\nThe testing CL is: https://chromium-review.googlesource.com/c/chromium/src/+/769163\n\nWith a Linux release build on my Z840, the test completed about 1600 GetSource() for mojo_bindings.js per second.\n\nI think that is acceptable, given that:\n- mojo_bindings.js is only used by two private extensions API: mimeHandlerPrivate and mojoPrivate.\n- Eventually we are going to move away from JS bindings for extensions.\n- WebUI is doing exactly the same thing of uncompressing mojo_bindings.js.\n\n\nWDYT? Thanks!",
       "parentUuid": "f4a214d6_2d6d78f7",
+      "revId": "172967dd9bc231e53071af954126274ae7fbe310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ebe7934_94988aa4",
+        "filename": "extensions/renderer/resource_bundle_source_map.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T22:06:42Z",
+      "side": 1,
+      "message": "It\u0027s not bad, but I wonder if we can make it better. :) (mostly because I\u0027m dubious of measurements on a z840 - it\u0027s hard to say what that would mean on a less beefy machine)  What if we add a `std::unique_ptr\u003cstd::string\u003e cached` field to ResourceBundleSourceMap::ResourceInfo, and then here, starting at line 58:\n\nResourceInfo\u0026 info \u003d resource_iter-\u003esecond;\nif (info.gzipped) {\n  if (!info.cached) {\n    info.cached.reset(new std::string());\n    uint32_t size \u003d compression::GetUncompressedSize(resource);\n    info.cached-\u003eresize(size);\n    if (!compression::GzipUncompress(resource, info.cached.get()))\n      return v8::Local\u003cv8::String\u003e();\n  }\n  resource \u003d base::StringPiece(info.cached);\n}\n\nreturn ConvertString(isolate, resource);\n\nWDYT?  Then we only perform the conversion once per process, and we can reuse the same string (even for v8 conversions, since the storage is constant).",
+      "parentUuid": "cb3919cd_1a4794ea",
       "revId": "172967dd9bc231e53071af954126274ae7fbe310",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
