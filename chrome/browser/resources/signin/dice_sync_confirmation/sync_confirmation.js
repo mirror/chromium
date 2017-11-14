@@ -21,13 +21,7 @@ cr.define('sync.confirmation', function() {
     document.addEventListener('keydown', onKeyDown);
     $('confirmButton').addEventListener('click', onConfirm);
     $('undoButton').addEventListener('click', onUndo);
-    if (loadTimeData.getBoolean('isSyncAllowed')) {
-      $('settingsLink').addEventListener('click', onGoToSettings);
-      $('profile-picture').addEventListener('load', onPictureLoaded);
-      $('syncDisabledDetails').hidden = true;
-    } else {
-      $('syncConfirmationDetails').hidden = true;
-    }
+    $('settingsLink').addEventListener('click', onGoToSettings);
 
     // Prefer using |document.body.offsetHeight| instead of
     // |document.body.scrollHeight| as it returns the correct height of the
@@ -40,15 +34,7 @@ cr.define('sync.confirmation', function() {
   }
 
   function setUserImageURL(url) {
-    if (loadTimeData.getBoolean('isSyncAllowed')) {
-      $('profile-picture').src = url;
-    }
-  }
-
-  function onPictureLoaded(e) {
-    if (loadTimeData.getBoolean('isSyncAllowed')) {
-      $('picture-container').classList.add('loaded');
-    }
+    // TODO: remove c++'s dependency on this?'
   }
 
   function onKeyDown(e) {
