@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<body>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+
+<script>
+async_test(function (t) {
+    const iframe = document.createElement('iframe');
+    iframe.id = 'listening-iframe';
+    iframe.src = 'resources/subframe-sending-paint.html';
+    document.body.appendChild(iframe);
+    let hasListened = 0;
+    window.addEventListener('message', t.step_func(e => {
+        if (!hasListened) {
+            // Check paint-timing entries from the painting iframe.
+            assert_equals(e.data, '2 paint first-paint paint first-contentful-paint');
+            hasListened = 1;
+            // Ask the listening iframe to send its paint-timing entries.
+            document.getElementById('listening-iframe').
+                contentWindow.postMessage('', '*');
+            return;
+        }
+        // Check the paint-timing entries from the listening iframe.
+        assert_equals(e.data, '0');
+        // Check paint-timing entries of the current frame.
+        const bufferedEntries = performance.getEntriesByType('paint');
+        assert_equals(bufferedEntries.length, 1);
+        assert_equals(bufferedEntries[0].entryType, 'paint');
+        assert_equals(bufferedEntries[0].name, 'first-paint');
+        t.done();
+    }));
+    const otherIframe = document.createElement('iframe');
+    otherIframe.id = 'painting-iframe';
+    otherIframe.src = 'resources/subframe-painting.html';
+    document.body.appendChild(otherIframe);
+}, 'Frame ignores paint-timing events fired from sibling frame image rendering.');
+</script>
+</body>
+</html>
