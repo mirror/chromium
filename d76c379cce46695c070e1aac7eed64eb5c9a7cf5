@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "76828296_234bdf3b",
+        "filename": "chrome/test/mini_installer/config/chrome_beta_installed.prop",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-14T20:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd003b2b_1a90f682",
+      "revId": "d76c379cce46695c070e1aac7eed64eb5c9a7cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3310265c_24724550",
         "filename": "chrome/test/mini_installer/registry_verifier.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-14T13:46:33Z",
       "side": 1,
       "message": "how about making this mapping a class member so it isn\u0027t built up each time through the function? i think the proper style would be:\n  _REGISTRY_VIEW_MAPPING \u003d {...}\nnear the top of the class. (https://google.github.io/styleguide/pyguide.html?showone\u003dNaming#Naming)",
+      "revId": "d76c379cce46695c070e1aac7eed64eb5c9a7cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3dabfe_785bf664",
+        "filename": "chrome/test/mini_installer/registry_verifier.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-14T20:42:17Z",
+      "side": 1,
+      "message": "Done. Then shall we make root_key_mapping and value_type_mapping class members as well? I think using another CL makes sense if we want to update those two mappings.",
+      "parentUuid": "3310265c_24724550",
       "revId": "d76c379cce46695c070e1aac7eed64eb5c9a7cf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "d76c379cce46695c070e1aac7eed64eb5c9a7cf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d04e3e5_e0250211",
+        "filename": "chrome/test/mini_installer/variable_expander.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-14T20:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa4f2b6d_d9450efd",
+      "revId": "d76c379cce46695c070e1aac7eed64eb5c9a7cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
