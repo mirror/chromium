@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f89f1ab_25e0724a",
+        "filename": "ui/ozone/platform/wayland/wayland_pointer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-14T16:54:39Z",
+      "side": 1,
+      "message": "nit: you could be be extremely defensive and compile-time assert sizeof(flags_) \u003d\u003d sizeof(keyboard_modifiers_)",
+      "revId": "8a6fdece9cecba2351773f4e0c8fc45d206ec490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
