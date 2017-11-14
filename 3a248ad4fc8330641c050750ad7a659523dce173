@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "419e61ec_c7fb380a",
+        "filename": "net/spdy/chromium/spdy_session_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-14T02:35:17Z",
+      "side": 1,
+      "message": "We\u0027re trying to reduce the OSCertHandle dependency - but we also have an easier path :)\n\nJust use net::X509Certificate::CreateFromBytes ( https://cs.chromium.org/chromium/src/net/cert/x509_certificate.h?rcl\u003ded6a1c0ddd26fff0ce52d6e1b89799ca0f6906d0\u0026l\u003d136 )",
+      "revId": "3a248ad4fc8330641c050750ad7a659523dce173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
