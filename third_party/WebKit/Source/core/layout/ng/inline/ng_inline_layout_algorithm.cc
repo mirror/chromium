@@ -38,10 +38,13 @@ namespace {
 inline bool ShouldCreateBoxFragment(const NGInlineItem& item,
                                     const NGInlineItemResult& item_result) {
   DCHECK(item.Style());
-  const ComputedStyle& style = *item.Style();
-  // TODO(kojii): We might need more conditions to create box fragments.
-  return style.HasBoxDecorationBackground() || style.HasOutline() ||
-         item_result.needs_box_when_empty;
+  // TODO(layout-dev): We want to find the condition not to create box
+  // fragments.
+  // Note: We should have a box fragment for SPAN in DIV, e.g.
+  //    <div><span>foo</span></div>
+  // Note: Legacy layout utilizes "Culled InlineBox" and search InlineBox
+  // in descendants.
+  return true;
 }
 
 }  // namespace
