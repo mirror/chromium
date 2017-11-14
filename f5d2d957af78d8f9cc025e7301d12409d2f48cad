@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abadc856_8782bb2f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-14T20:04:47Z",
+      "side": 0,
+      "message": "Feel free to ignore. Since we have 5 data members to pass around, I think it\u0027s better to use a struct to hold them. This makes several methods here to take 4 less parameters, which is more neat.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "f5d2d957af78d8f9cc025e7301d12409d2f48cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

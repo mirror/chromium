@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "c8166f22_e9d94555",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-14T20:04:47Z",
+      "side": 1,
+      "message": "nit: I don\u0027t see the return value is modified, so please return const-ref.",
+      "range": {
+        "startLine": 300,
+        "startChar": 2,
+        "endLine": 300,
+        "endChar": 13
+      },
+      "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc2add18_525cdbe4",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win_unittest.cc",
         "patchSetId": 3
@@ -64,6 +87,29 @@
       "writtenOn": "2017-11-14T18:07:19Z",
       "side": 1,
       "message": "The message_center is a component that lives in //ui, which has nothing to do with this work other than being the data-container for the notification (the message_center::Notification type). These should just be part of the common namespace, or perhaps public members of one of the classes.",
+      "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c014da1_bf53e6fd",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-14T20:04:47Z",
+      "side": 1,
+      "message": "nit: I feel like there are too many hand-crafted numbers inside the method, which makes it error prone. Maybe define int kStrVecMinSize \u003d 4, and then change to \"if (split.size() \u003c\u003d kStrVecMinSize)\". You can use kStrVecMinSize to replace \"4\" in the for-loop below.",
+      "range": {
+        "startLine": 161,
+        "startChar": 21,
+        "endLine": 161,
+        "endChar": 22
+      },
       "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +207,29 @@
     },
     {
       "key": {
+        "uuid": "752439a1_ca28afb6",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-14T20:04:47Z",
+      "side": 1,
+      "message": "nit: In NotificationTemplateBuilder::Build, |notification_type| is passed with const, and |incognito| below is passed without const. I don\u0027t think const are needed for them here. Maybe remove it to make it consistent across this file?",
+      "range": {
+        "startLine": 74,
+        "startChar": 31,
+        "endLine": 74,
+        "endChar": 48
+      },
+      "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f9757fe_5fcf2c5f",
         "filename": "chrome/browser/notifications/notification_template_builder.h",
         "patchSetId": 3
@@ -172,6 +241,29 @@
       "writtenOn": "2017-11-14T18:07:19Z",
       "side": 1,
       "message": "nit: const\u0026, you\u0027re making a copy now.",
+      "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "423dacdd_dea1f8cf",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-14T20:04:47Z",
+      "side": 1,
+      "message": "nit: const ref for GURL as well.",
+      "range": {
+        "startLine": 78,
+        "startChar": 17,
+        "endLine": 78,
+        "endChar": 27
+      },
       "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
