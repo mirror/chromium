@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fe8727e_2342232e",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 2325,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T22:07:07Z",
+      "side": 1,
+      "message": "Would be nice if we could distinguish between 32- and 64-bit in the short names. Not sure what\u0027s possible.",
+      "range": {
+        "startLine": 2325,
+        "startChar": 21,
+        "endLine": 2325,
+        "endChar": 0
+      },
+      "revId": "6c365888a65ed2894fc494f602a4ce74f0bb097e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
