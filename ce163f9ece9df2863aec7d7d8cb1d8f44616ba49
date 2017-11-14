@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77629a52_aa233837",
+        "filename": "chrome/browser/ui/cocoa/first_run_dialog_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-14T19:18:21Z",
+      "side": 1,
+      "message": "Is this still a useful comment?",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 40
+      },
+      "revId": "ce163f9ece9df2863aec7d7d8cb1d8f44616ba49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b0c7c0_4c0dcb01",
+        "filename": "chrome/browser/ui/cocoa/first_run_dialog_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-14T19:18:21Z",
+      "side": 1,
+      "message": "There has to be a \"long view is long\" joke in here somewhere.",
+      "range": {
+        "startLine": 67,
+        "startChar": 10,
+        "endLine": 67,
+        "endChar": 18
+      },
+      "revId": "ce163f9ece9df2863aec7d7d8cb1d8f44616ba49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fca26e7_a9b1898b",
+        "filename": "ui/base/resource/resource_bundle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-14T19:18:21Z",
+      "side": 1,
+      "message": "... _for_test?\n\nSurely this shouldn\u0027t be allowed to be called from non-test code.",
+      "range": {
+        "startLine": 297,
+        "startChar": 7,
+        "endLine": 297,
+        "endChar": 35
+      },
+      "revId": "ce163f9ece9df2863aec7d7d8cb1d8f44616ba49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38737546_a1e17690",
+        "filename": "ui/base/test/cocoa_test_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-14T19:18:21Z",
+      "side": 1,
+      "message": "Even partially outside?\n\nAs per the implementation, you could phrase this as\n\n|view_a| (the child view) is not entirely contained within the bounds of |view_b| (the parent view)\n\nwhich is less ambiguous.",
+      "range": {
+        "startLine": 16,
+        "startChar": 36,
+        "endLine": 16,
+        "endChar": 43
+      },
+      "revId": "ce163f9ece9df2863aec7d7d8cb1d8f44616ba49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2be29a1_3909a62a",
+        "filename": "ui/base/test/cocoa_test_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-14T19:18:21Z",
+      "side": 1,
+      "message": "I wrote code the other day where overlapping views was the only way to achieve what I wanted. (The blue dot in the bottom-right corner of the favicon.)\n\nWill this trigger too much? Do we need to restrict this to things that have text and therefore may be different lengths? Or will this expose real problems and thus the false positives will be ignored?",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "ce163f9ece9df2863aec7d7d8cb1d8f44616ba49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "258f8aa5_bfc7ee21",
+        "filename": "ui/base/test/cocoa_test_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-14T19:18:21Z",
+      "side": 1,
+      "message": "base::nullopt_t",
+      "range": {
+        "startLine": 58,
+        "startChar": 9,
+        "endLine": 58,
+        "endChar": 49
+      },
+      "revId": "ce163f9ece9df2863aec7d7d8cb1d8f44616ba49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
