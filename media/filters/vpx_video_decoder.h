@@ -8,6 +8,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+
 #include "base/threading/thread_checker.h"
 #include "media/base/demuxer_stream.h"
 #include "media/base/video_decoder.h"
@@ -19,7 +20,7 @@ struct vpx_codec_ctx;
 struct vpx_image;
 
 namespace base {
-class SingleThreadTaskRunner;
+class SequencedTaskRunner;
 class TickClock;
 }
 
@@ -111,8 +112,8 @@ class MEDIA_EXPORT VpxVideoDecoder : public VideoDecoder {
 
   VideoDecoderConfig config_;
 
-  vpx_codec_ctx* vpx_codec_;
-  vpx_codec_ctx* vpx_codec_alpha_;
+  std::unique_ptr<vpx_codec_ctx> vpx_codec_;
+  std::unique_ptr<vpx_codec_ctx> vpx_codec_alpha_;
 
   // |memory_pool_| is a single-threaded memory pool used for VP9 decoding
   // with no alpha. |frame_pool_| is used for all other cases.
@@ -121,7 +122,7 @@ class MEDIA_EXPORT VpxVideoDecoder : public VideoDecoder {
 
   // High resolution vp9 may block the media thread for too long, in such cases
   // we share a per-process thread to avoid overly long blocks.
-  scoped_refptr<base::SingleThreadTaskRunner> offload_task_runner_;
+  scoped_refptr<base::SequencedTaskRunner> offload_task_runner_;
 
   VideoFramePool frame_pool_;
 
