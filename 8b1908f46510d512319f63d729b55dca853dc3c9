@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56f0f356_eb7777da",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/profiler/cpu-profiler-profiling.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-14T01:12:15Z",
+      "side": 1,
+      "message": "crbug and bugs.webkit.org are different.",
+      "revId": "8b1908f46510d512319f63d729b55dca853dc3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d657ac_526219ab",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler_test_runner/ProfilerTestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-14T01:12:15Z",
+      "side": 1,
+      "message": "I know there\u0027s some re-use in front-end implementation, but from a user / functional testing perspective, they\u0027re two independent panels.\n\nIdeally, CPU Profiler tests only know about ProfilerTestRunner\nand Heap Profiler tests only know about HeapSnapshotTestRunner",
+      "revId": "8b1908f46510d512319f63d729b55dca853dc3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
