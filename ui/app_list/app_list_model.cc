@@ -65,6 +65,8 @@ void AppListModel::SetState(State state) {
 
 void AppListModel::SetStateFullscreen(AppListView::AppListState state) {
   state_fullscreen_ = state;
+  if (state_fullscreen_ == AppListView::CLOSED)
+    ComputeAndRecordUserJourneyMetric();
 }
 
 void AppListModel::SetTabletMode(bool started) {
@@ -346,6 +348,31 @@ void AppListModel::RecordFolderMetrics() {
   UMA_HISTOGRAM_COUNTS_100(kNumberOfFoldersHistogram, number_of_folders);
   UMA_HISTOGRAM_COUNTS_100(kNumberOfAppsInFoldersHistogram,
                            number_of_apps_in_folders);
+}
+
+void AppListModel::RecordUserJourneyStartTime() {
+  user_journey_start_ = base::Time::Now();
+  user_journey_end_ = base::Time();
+}
+
+void AppListModel::RecordUserJourneyEndTime() {
+  user_journey_end_ = base::Time::Now();
+}
+
+void AppListModel::SetUserJourneyStartAndEndTimeForTest(base::Time start,
+                                                        base::Time end) {
+  user_journey_start_ = start;
+  user_journey_end_ = end;
+}
+
+void AppListModel::ComputeAndRecordUserJourneyMetric() {
+  if (user_journey_end_ != base::Time()) {
+    UMA_HISTOGRAM_TIMES(kAppListUserJourneyTimeHistogram,
+                        user_journey_end_ - user_journey_start_);
+    // Set |user_journey_end_| to base::Time() after recording the metric to
+    // avoid double-counting.
+    user_journey_end_ = base::Time();
+  }
 }
 
 void AppListModel::SetCustomLauncherPageEnabled(bool enabled) {

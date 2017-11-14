@@ -11,6 +11,7 @@
 #include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "extensions/common/extension.h"
+#include "ui/app_list/app_list_model.h"
 #include "ui/app_list/presenter/app_list_presenter_impl.h"
 #include "ui/app_list/views/app_list_view.h"
 #include "ui/display/types/display_constants.h"
@@ -116,6 +117,10 @@ void AppListControllerDelegateAsh::LaunchApp(
       ash::ShelfID(extension->id()), AppListSourceToLaunchSource(source),
       event_flags, display_id);
   DismissView();
+}
+
+app_list::AppListModel* AppListControllerDelegateAsh::GetAppListModel() {
+  return app_list_presenter_->GetView()->GetAppListModel();
 }
 
 ash::ShelfLaunchSource

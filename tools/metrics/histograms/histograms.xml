@@ -2040,6 +2040,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Apps.AppListUserJourneyTime" units="ms">
+  <owner>newcomer@chromium.org</owner>
+  <summary>
+    The time it takes a user to get meaningful information from the app list. If
+    the user sees an answer card and then closes the launcher, we record the
+    time it took to present them with a card. If the user sees an answer card
+    and then opens an app or search result, we record the time it takes them to
+    open the app or search result.
+  </summary>
+</histogram>
+
 <histogram name="Apps.AppListWarmupDuration" units="ms">
   <obsolete>
     Deprecated 07/2016 in Issue 600915 with the removal of the app list on

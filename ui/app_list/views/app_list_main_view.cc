@@ -151,6 +151,7 @@ void AppListMainView::ActivateApp(AppListItem* item, int event_flags) {
     UMA_HISTOGRAM_ENUMERATION(kAppListFolderOpenedHistogram, kOldFolders,
                               kMaxFolderOpened);
   } else {
+    model_->RecordUserJourneyEndTime();
     item->Activate(event_flags);
     UMA_HISTOGRAM_BOOLEAN(features::IsFullscreenAppListEnabled()
                               ? kAppListAppLaunchedFullscreen
