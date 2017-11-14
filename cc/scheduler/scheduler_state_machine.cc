@@ -231,6 +231,7 @@ void SchedulerStateMachine::AsValueInto(
                     needs_impl_side_invalidation_);
   state->SetBoolean("current_pending_tree_is_impl_side",
                     current_pending_tree_is_impl_side_);
+  state->SetBoolean("pause_invalidate", pause_invalidate_);
   state->SetBoolean("previous_pending_tree_was_impl_side",
                     previous_pending_tree_was_impl_side_);
   state->EndDictionary();
@@ -545,6 +546,13 @@ bool SchedulerStateMachine::ShouldPrepareTiles() const {
 }
 
 bool SchedulerStateMachine::ShouldInvalidateLayerTreeFrameSink() const {
+  if (!can_draw_)
+    return false;
+
+  // Do not invalidate until DidBeginFrame.
+  if (pause_invalidate_)
+    return false;
+
   // Do not invalidate more than once per begin frame.
   if (did_invalidate_layer_tree_frame_sink_)
     return false;
@@ -1023,6 +1031,8 @@ void SchedulerStateMachine::OnBeginImplFrame(uint32_t source_id,
   did_commit_during_frame_ = false;
   did_invalidate_layer_tree_frame_sink_ = false;
   did_perform_impl_side_invalidation_ = false;
+
+  pause_invalidate_ = true;
 }
 
 void SchedulerStateMachine::OnBeginImplFrameDeadline() {

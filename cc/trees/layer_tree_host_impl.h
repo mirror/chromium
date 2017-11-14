@@ -444,6 +444,7 @@ class CC_EXPORT LayerTreeHostImpl
   }
 
   virtual void WillBeginImplFrame(const viz::BeginFrameArgs& args);
+  virtual bool DidBeginImplFrame();
   virtual void DidFinishImplFrame();
   void DidNotProduceFrame(const viz::BeginFrameAck& ack);
   void DidModifyTilePriorities();
