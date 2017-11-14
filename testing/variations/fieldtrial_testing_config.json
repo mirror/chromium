@@ -2016,6 +2016,28 @@
             ]
         }
     ],
+    "NTPPopularSitesWithShortNames": [
+        {
+            "platforms": [
+                "android",
+                "ios"
+            ],
+            "experiments": [
+                {
+                    "name": "UseShortNames",
+                    "params": {
+                        "version": "5_shortname"
+                    }
+                },
+                {
+                    "name": "Control",
+                    "params": {
+                        "version": "5_shortname-control"
+                    }
+                }
+            ]
+        }
+    ],
     "NTPRecentForeignTabs": [
         {
             "platforms": [
