@@ -7,7 +7,7 @@
 namespace viz {
 
 PrimaryBeginFrameSource::PrimaryBeginFrameSource()
-    : begin_frame_source_(this) {}
+    : BeginFrameSource(kNoRestartProcessRestartId), begin_frame_source_(this) {}
 
 PrimaryBeginFrameSource::~PrimaryBeginFrameSource() = default;
 
