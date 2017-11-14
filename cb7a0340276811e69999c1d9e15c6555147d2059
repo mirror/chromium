@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "01f470ea_f0d00053",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T13:07:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef32ba2f_684cd157",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0180049_c7441810",
         "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
         "patchSetId": 1
@@ -140,6 +158,24 @@
       "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd05c381_14eb849b",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T13:07:46Z",
+      "side": 1,
+      "message": "Well, okay, let\u0027s piggyback.",
+      "parentUuid": "fe2d2945_2ea9b556",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -193,6 +229,24 @@
       "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed7f3ff_2bffc59c",
+        "filename": "content/renderer/media/peer_connection_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T13:07:46Z",
+      "side": 1,
+      "message": "1. We (Björn and I) are aware, thanks. But we\u0027re *not* uploading yet. That CL will be reviewed. In the meantime, Björn, who is in charge of the content of what we\u0027re uploading, is aware of avoiding PII. (To be clear - this CL does *not* allow remote configuration to trigger the saving of information to a file. There is no change in function yet.)\n\n2. I\u0027ll let Björn answer this one.",
+      "parentUuid": "e1b44d2e_b6934da2",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
