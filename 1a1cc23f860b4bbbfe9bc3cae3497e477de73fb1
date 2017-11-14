@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3af0a751_8d72b406",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 3437,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-14T23:18:17Z",
+      "side": 1,
+      "message": "nit: Perhaps explicitly mention what it was changed to?",
+      "range": {
+        "startLine": 3437,
+        "startChar": 38,
+        "endLine": 3437,
+        "endChar": 45
+      },
+      "revId": "1a1cc23f860b4bbbfe9bc3cae3497e477de73fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
