@@ -708,6 +708,7 @@ crbug.com/714962 virtual/layout_ng_paint/fast/inline/positioned-object-between-r
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/positionedLifetime.html [ Failure ]
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/vertical-align-text-bottom.html [ Failure ]
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/vertical-align-with-fallback-fonts.html [ Failure ]
+crbug.com/714962 virtual/layout_ng_paint/fast/inline/vertical-align-text-inherit.html [ Failure ]
 
 ### Image/text failures also on LayoutNG
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/absolute-positioned-inline-in-centred-block.html [ Failure ]
