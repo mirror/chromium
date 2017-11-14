@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "022847dd_bfb10339",
+        "filename": "chrome/browser/resources/chromeos/chromevox/strings/chromevox_strings.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-14T06:11:31Z",
+      "side": 1,
+      "message": "I\u0027ve never seen a meaning attribute.\nDo you have a pointer to a document or information about how meaning attribute is used?",
+      "revId": "92f5f0d1f10aa697b72828f44f4c586c9d234e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
