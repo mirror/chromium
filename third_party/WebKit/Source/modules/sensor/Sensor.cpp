@@ -152,7 +152,7 @@ void Sensor::InitSensorProxyIfNeeded() {
     return;
 
   Document* document = ToDocument(GetExecutionContext());
-  if (!document || !document->GetFrame())
+  if (!IsSameSecurityOriginAsMainFrame(document))
     return;
 
   auto provider = SensorProviderProxy::From(document->GetFrame());
@@ -349,6 +349,26 @@ void Sensor::NotifyError(DOMException* error) {
   DCHECK_NE(state_, SensorState::kIdle);
   state_ = SensorState::kIdle;
   DispatchEvent(SensorErrorEvent::Create(EventTypeNames::error, error));
+}
+
+bool Sensor::IsSameSecurityOriginAsMainFrame(Document* document) const {
+  if (!document || !document->GetFrame() || !document->GetPage())
+    return false;
+
+  if (document->GetFrame()->IsMainFrame())
+    return true;
+
+  SecurityOrigin* main_security_origin = document->GetPage()
+                                             ->MainFrame()
+                                             ->GetSecurityContext()
+                                             ->GetSecurityOrigin();
+
+  if (main_security_origin &&
+      document->GetSecurityOrigin()->CanAccess(main_security_origin)) {
+    return true;
+  }
+
+  return false;
 }
 
 bool Sensor::IsIdleOrErrored() const {
