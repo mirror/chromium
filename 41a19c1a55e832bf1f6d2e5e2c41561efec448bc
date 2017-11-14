@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d16aaf3_108dd11f",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-14T01:47:50Z",
+      "side": 1,
+      "message": "IIUC this worked before, as in case of a failure, we\u0027d simply get default values in ProvidingExtensionInfo.\n\nShould we just return an error? This situation can legally happen.",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 73
+      },
+      "revId": "41a19c1a55e832bf1f6d2e5e2c41561efec448bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
