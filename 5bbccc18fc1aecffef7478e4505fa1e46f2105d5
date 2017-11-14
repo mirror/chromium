@@ -88,6 +88,24 @@
       "revId": "5bbccc18fc1aecffef7478e4505fa1e46f2105d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f765e93b_2dd81915",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T05:20:45Z",
+      "side": 1,
+      "message": "Thank you very much for detailed explanation.\n\nSo, I\u0027m happy to take a look into it. However, because the work sounds like a bit more wider change which looks conceptually isolated from this change, I\u0027d like to split it from this CL.\nAs you said you\u0027re ok with updating comments, please let me land this so, first.\n\nI\u0027ll give it a try to make another CL for AddServiceToProfile().",
+      "parentUuid": "92ff234a_0cc3ccb8",
+      "revId": "5bbccc18fc1aecffef7478e4505fa1e46f2105d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
