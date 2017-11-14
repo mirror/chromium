@@ -637,7 +637,8 @@ public class UrlBar extends AutocompleteEditText {
         if (mFocused) return;
 
         // Ensure any selection from the focus state is cleared.
-        setSelection(0);
+        // Note that we select at the end to accept the inline autocomplete. crbug.com/783165
+        setSelection(getText().length());
 
         String previousTldScrollText = mPreviousTldScrollText;
         int previousTldScrollViewWidth = mPreviousTldScrollViewWidth;
