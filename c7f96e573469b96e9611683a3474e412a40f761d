@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc0b2f3b_30af2ba9",
+        "filename": "ash/accessibility/accessibility_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-14T21:24:02Z",
+      "side": 0,
+      "message": "Hooray for fewer delegate methods!",
+      "revId": "c7f96e573469b96e9611683a3474e412a40f761d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ff0b2b_cbac65e3",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-14T21:24:02Z",
+      "side": 0,
+      "message": "nit: Put this bug in CL description",
+      "revId": "c7f96e573469b96e9611683a3474e412a40f761d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
