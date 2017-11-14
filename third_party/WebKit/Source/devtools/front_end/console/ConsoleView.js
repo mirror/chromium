@@ -893,8 +893,11 @@ Console.ConsoleView = class extends UI.VBox {
    * @param {!Event} event
    */
   _promptKeyDown(event) {
+    console.log('keyDown')
     var keyboardEvent = /** @type {!KeyboardEvent} */ (event);
     if (keyboardEvent.key === 'PageUp') {
+      console.log('keyDown PageUp onWheel')
+
       this._updateStickToBottomOnWheel();
       return;
     }
@@ -1117,6 +1120,7 @@ Console.ConsoleView = class extends UI.VBox {
   _updateStickToBottomOnMouseUp() {
     if (!this._muteViewportUpdates)
       return;
+    console.log('mouseup while muted')
 
     // Delay querying isScrolledToBottom to give time for smooth scroll
     // events to arrive. The value for the longest timeout duration is
@@ -1127,6 +1131,9 @@ Console.ConsoleView = class extends UI.VBox {
      * @this {!Console.ConsoleView}
      */
     function updateViewportState() {
+      console.log('no more mute after timeout')
+      console.log('scrollTop? ' + this._messagesElement.scrollTop)
+      console.log('scrolled to bottom ' + this._messagesElement.isScrolledToBottom())
       this._muteViewportUpdates = false;
       this._viewport.setStickToBottom(this._messagesElement.isScrolledToBottom());
       if (this._maybeDirtyWhileMuted) {
@@ -1143,6 +1150,7 @@ Console.ConsoleView = class extends UI.VBox {
   }
 
   _updateStickToBottomOnWheel() {
+    console.log('_muteViewportUpdates and setting sTB false')
     this._updateStickToBottomOnMouseDown();
     this._updateStickToBottomOnMouseUp();
   }
