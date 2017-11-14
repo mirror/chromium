@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0518fa80_ed0b5b6a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/csp-tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-14T20:22:38Z",
+      "side": 1,
+      "message": "I think this whole block could be extracted into something like:\n\n```\nfunction openWindowAndExpectResult(winURL, scriptURL, type, result) {\n    return openWindow(winURL).then(win \u003d\u003e {\n        const promise \u003d new Promise(r \u003d\u003e window.onmessage \u003d r);\n        win.postMessage({ type: type,\n                          script_url: scriptURL }, \u0027*\u0027);\n        return promise;\n    })\n    .then(msg_event \u003d\u003e assert_equals(msg_event.data, result));\n}\n```\n\nand then reused in each of the blocks below. That might make things a little more clear?",
+      "revId": "47f2fef5720ec5d6ab063ffdafd20b704b5a1616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
