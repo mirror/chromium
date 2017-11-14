@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "42ebfe6f_6f9a4193",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T17:43:06Z",
+      "side": 1,
+      "message": "nit: no need for base::Passed with base::BindOnce",
+      "revId": "b0ea5364ad3cbac831e2a1e4e365826567d28df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e0fe85_e477e619",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T17:43:06Z",
+      "side": 1,
+      "message": "nit: no need for base::Passed with base::BindOnce",
+      "revId": "b0ea5364ad3cbac831e2a1e4e365826567d28df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4631efa3_1017ba60",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T17:43:06Z",
+      "side": 1,
+      "message": "nit: no need for base::Passed with base::BindOnce",
+      "revId": "b0ea5364ad3cbac831e2a1e4e365826567d28df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60a91852_8f521020",
         "filename": "third_party/WebKit/public/platform/WebScopedVirtualTimePauser.h",
         "patchSetId": 21
