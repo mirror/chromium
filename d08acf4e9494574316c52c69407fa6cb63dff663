@@ -1,0 +1,214 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27344a3b_e9b7ff45",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:41:44Z",
+      "side": 1,
+      "message": "nit: the \"(c)\" is supposed to be omitted in new files",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23da881_543fa3dd",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:41:44Z",
+      "side": 1,
+      "message": "nit: maybe put this in chromeos.power.ml?",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14499cf6_30bcf06d",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:41:44Z",
+      "side": 1,
+      "message": "maybe \"Proto buffer for events used in predicting user activity.\"?",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb82558_7e1e86ee",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:41:44Z",
+      "side": 1,
+      "message": "can you add a bit more documentation here about what these will hold?\n\nalso, it\u0027s not obvious to me what the \"1.\", \"2.\", and \"3.\" headings on some of the comments refer to. are they still relevant?",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57827a22_7db9581d",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:41:44Z",
+      "side": 1,
+      "message": "maybe just Type and type?",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5cb8f3_6dc0907f",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:41:44Z",
+      "side": 1,
+      "message": "maybe just Reason and reason?",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "423b3e51_f2968043",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:41:44Z",
+      "side": 1,
+      "message": "instead of \"local time of the day\", maybe \"as seconds since midnight in the local time zone\"?\n\nalso, what will these store if the last activity was before midnight, i.e. on the previous day?",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ddca192_4b4d5eac",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:41:44Z",
+      "side": 1,
+      "message": "does this correspond to the current day of week at the time that this proto is created? if so, do you also need to store the current seconds-since-midnight?",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892c1223_2ec90354",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:41:44Z",
+      "side": 1,
+      "message": "\"Extension IDs of active and recently-closed Chrome apps.\"?\n\nalso note that the focus is on android apps instead of chrome apps now; see e.g. https://blog.chromium.org/2016/08/from-chrome-apps-to-web.html. do you plan to report android apps?\n\nand just as an aside, are you already talking to someone on the privacy team about this? go/newChromeFeature talks about the process for launching a new chrome feature, which i think you\u0027ll probably need to follow in order to report this data. (maybe michael has already been thinking about this.)",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f1aa3f1_e9cc4ed7",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:41:44Z",
+      "side": 1,
+      "message": "can you hold off on adding this until you\u0027re sure about what it\u0027ll contain?",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d7f8b8_e8e1948a",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:41:44Z",
+      "side": 1,
+      "message": "optional bool is_chromebook?\n\nbut if you\u0027re only going to log events for chromebooks, do you even need this? or do you plan to add more devices later?\n\nif so, i\u0027d rename this to FormFactor or DeviceType or something similar.",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283e71b4_890960f1",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:41:44Z",
+      "side": 1,
+      "message": "we usually track two things here: lid state and tablet mode. lid state can be open, closed, or not present, and tablet mode can be on, off, or unsupported.\n\nif you just want to track the mode the device is in, i\u0027d use LID_CLOSED (lid state is closed), CLAMSHELL (lid state open, tablet mode off), and TABLET (lid state open, tablet mode on).",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

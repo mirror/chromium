@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "11e920d0_b4eff7e1",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:41:44Z",
+      "side": 1,
+      "message": "thanks for the explanation. UserActivityEvent seems okay to me as long as it\u0027s in an \"ml\" sub-namespace (per comment on PS4)",
+      "parentUuid": "e576c9bb_53a3b106",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02427f85_61603b63",
         "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
         "patchSetId": 3
