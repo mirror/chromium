@@ -136,7 +136,7 @@ ServiceWorkerRegisterJob::RegistrationCallback SaveRegistration(
       &SaveRegistrationCallback, expected_status, called, registration);
 }
 
-ServiceWorkerStorage::FindRegistrationCallback SaveFoundRegistration(
+ServiceWorkerStorage::LegacyFindRegistrationCallback SaveFoundRegistration(
     ServiceWorkerStatusCode expected_status,
     bool* called,
     scoped_refptr<ServiceWorkerRegistration>* registration) {

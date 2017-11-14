@@ -51,12 +51,12 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   using StatusCallback = base::Callback<void(ServiceWorkerStatusCode)>;
   using BoolCallback = base::Callback<void(bool)>;
   using FindRegistrationCallback =
-      ServiceWorkerStorage::FindRegistrationCallback;
+      ServiceWorkerStorage::LegacyFindRegistrationCallback;
   using GetRegistrationsInfosCallback =
-      ServiceWorkerStorage::GetRegistrationsInfosCallback;
-  using GetUserDataCallback = ServiceWorkerStorage::GetUserDataCallback;
+      ServiceWorkerStorage::LegacyGetRegistrationsInfosCallback;
+  using GetUserDataCallback = ServiceWorkerStorage::LegacyGetUserDataCallback;
   using GetUserDataForAllRegistrationsCallback =
-      ServiceWorkerStorage::GetUserDataForAllRegistrationsCallback;
+      ServiceWorkerStorage::LegacyGetUserDataForAllRegistrationsCallback;
 
   explicit ServiceWorkerContextWrapper(BrowserContext* browser_context);
 

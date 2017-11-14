@@ -157,7 +157,7 @@ void ReceiveFindRegistrationStatus(
     BrowserThread::PostTask(run_quit_thread, FROM_HERE, quit);
 }
 
-ServiceWorkerStorage::FindRegistrationCallback CreateFindRegistrationReceiver(
+ServiceWorkerStorage::LegacyFindRegistrationCallback CreateFindRegistrationReceiver(
     BrowserThread::ID run_quit_thread,
     const base::Closure& quit,
     ServiceWorkerStatusCode* status) {
