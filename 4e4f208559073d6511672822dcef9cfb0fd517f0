@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08f88018_09d8b45d",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-14T13:08:19Z",
+      "side": 1,
+      "message": "Not in this patch, but at some point, I think we should split this into two methods:\n1: WasStartedInForeground\n2: InForegroundUntil\n\nI find this method name really hard to parse.",
+      "range": {
+        "startLine": 503,
+        "startChar": 6,
+        "endLine": 503,
+        "endChar": 53
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3cbafe7_e8cf06cb",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-14T13:08:19Z",
+      "side": 1,
+      "message": "Can you add a comment about when this is called?",
+      "range": {
+        "startLine": 696,
+        "startChar": 34,
+        "endLine": 696,
+        "endChar": 56
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db90eedb_3c80df34",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-14T13:08:19Z",
+      "side": 1,
+      "message": "I assume this should be removed?",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 31
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa74e18_f39b7b42",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-14T13:08:19Z",
+      "side": 1,
+      "message": "just \"the first time\" is a bit clearer.",
+      "range": {
+        "startLine": 88,
+        "startChar": 9,
+        "endLine": 88,
+        "endChar": 20
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35230196_bf3887ff",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2026,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-14T13:08:19Z",
+      "side": 1,
+      "message": "Should FMP exclude enter and leave as well?\nSeems like aligning would make sense.",
+      "range": {
+        "startLine": 2026,
+        "startChar": 31,
+        "endLine": 2026,
+        "endChar": 56
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbda8856_66a150ab",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-14T13:08:19Z",
+      "side": 1,
+      "message": "Should we store this in a local variable, to share it with FMP?",
+      "range": {
+        "startLine": 2036,
+        "startChar": 34,
+        "endLine": 2036,
+        "endChar": 78
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60773d9_3defe6bf",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-14T13:08:19Z",
+      "side": 1,
+      "message": "Invalidating input is different from FMP \u0026 TTI, making this a bit confusing.",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 32
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8f9ba1_2d14b8c1",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceTiming.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-14T13:08:19Z",
+      "side": 1,
+      "message": "The first time the page",
+      "range": {
+        "startLine": 102,
+        "startChar": 9,
+        "endLine": 102,
+        "endChar": 20
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b56a261_bdc046f1",
+        "filename": "third_party/WebKit/common/metrics/time_to_interactive_status.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-14T13:08:19Z",
+      "side": 1,
+      "message": "Long term, it would be nice to see abort times for some of these metrics.\nFor example, how long after FMP are users interacting with the page when we abort.",
+      "range": {
+        "startLine": 10,
+        "startChar": 35,
+        "endLine": 10,
+        "endChar": 72
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b8a40b_f4e13717",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-14T13:08:19Z",
+      "side": 1,
+      "message": "I assume the newline was accidental?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 6
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
