@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "839946e6_f1dcc0b9",
+        "filename": "cc/layers/video_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-14T16:40:44Z",
+      "side": 1,
+      "message": "Oops, we shouldn\u0027t DCHECK and handle it. Can you remove the if?",
+      "revId": "79ff48e079a7cb4afb93ea6f8cd3537c2eaa4214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c6d2709_15cbce29",
+        "filename": "cc/layers/video_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-14T16:40:44Z",
+      "side": 1,
+      "message": "this can be a DCHECK? or just remove it entirely",
+      "revId": "79ff48e079a7cb4afb93ea6f8cd3537c2eaa4214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a29cf0_b34e57ff",
+        "filename": "components/viz/common/resources/resource_id.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-14T16:40:44Z",
+      "side": 1,
+      "message": "0 would work too, and is maybe nicer.\n\nCan you DCHECK that next_id \u003e kInvalidResourceId in cc::ResourceProvider constructor?",
+      "revId": "79ff48e079a7cb4afb93ea6f8cd3537c2eaa4214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
