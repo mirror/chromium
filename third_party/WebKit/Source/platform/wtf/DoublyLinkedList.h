@@ -72,6 +72,7 @@ inline T* DoublyLinkedListNode<T>::Next() const {
 template <typename T>
 class DoublyLinkedList {
   USING_FAST_MALLOC(DoublyLinkedList);
+  WTF_MAKE_NONCOPYABLE(DoublyLinkedList);
 
  public:
   DoublyLinkedList();
@@ -89,13 +90,23 @@ class DoublyLinkedList {
   void Append(T*);
   void Remove(T*);
 
+  template <typename U = T>
+  std::enable_if_t<IsGarbageCollectedType<U>::value, void> Trace(
+      blink::Visitor* visitor) {
+    visitor->Trace(head_);
+    visitor->Trace(tail_);
+  }
+
  private:
-  T* head_;
-  T* tail_;
+  using PointerType = std::
+      conditional_t<IsGarbageCollectedType<T>::value, blink::Member<T>, T*>;
+  PointerType head_;
+  PointerType tail_;
 };
 
 template <typename T>
-inline DoublyLinkedList<T>::DoublyLinkedList() : head_(0), tail_(0) {}
+inline DoublyLinkedList<T>::DoublyLinkedList()
+    : head_(nullptr), tail_(nullptr) {}
 
 template <typename T>
 inline bool DoublyLinkedList<T>::IsEmpty() const {
