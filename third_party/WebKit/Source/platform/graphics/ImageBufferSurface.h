@@ -69,6 +69,7 @@ class PLATFORM_EXPORT ImageBufferSurface {
   virtual bool Restore() { return false; }
   virtual WebLayer* Layer() { return nullptr; }
   virtual bool IsAccelerated() const { return false; }
+  virtual bool IsComposited() const { return false; }
   virtual bool IsRecording() const { return false; }
   virtual bool IsExpensiveToPaint() { return false; }
   virtual void SetFilterQuality(SkFilterQuality) {}

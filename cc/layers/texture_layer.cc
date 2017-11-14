@@ -172,7 +172,7 @@ bool TextureLayer::Update() {
     if (client_->PrepareTextureMailbox(&mailbox, &release_callback)) {
       // Already within a commit, no need to do another one immediately.
       bool requires_commit = false;
-      bool allow_mailbox_reuse = false;
+      bool allow_mailbox_reuse = true;
       SetTextureMailboxInternal(mailbox, std::move(release_callback),
                                 requires_commit, allow_mailbox_reuse);
       updated = true;
