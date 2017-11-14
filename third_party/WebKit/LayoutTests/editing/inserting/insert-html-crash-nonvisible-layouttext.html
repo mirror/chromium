@@ -1,0 +1,37 @@
+<!doctype html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../assert_selection.js"></script>
+<script>
+
+selection_test(
+    [
+      '<div>^abcf|</div>',
+    ],
+    selection=> {
+        const document = selection.document;
+        document.designMode = "on";
+        // non visible content at the end inserting html
+        document.execCommand("InsertHTML", false, "<div>ab</div> ");
+    },
+    [
+      '<div>ab</div>|<br>'
+    ],
+    'InsertHTML crash with trailing non visible text on current selection');
+
+selection_test(
+    [
+      '|',
+    ],
+    selection=> {
+        const document = selection.document;
+        document.designMode = "on";
+        // non visible content at the end inserting html
+        document.execCommand("InsertHTML", false, "<div>ab</div> ");
+    },
+    [
+      '|<div>ab</div>'
+    ],
+    'InsertHTML crash with trailing non visible text on empty selection');
+</script>
+
