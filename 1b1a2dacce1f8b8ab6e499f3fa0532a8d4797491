@@ -2,6 +2,138 @@
   "comments": [
     {
       "key": {
+        "uuid": "5f1ea364_4f919254",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T20:57:33Z",
+      "side": 1,
+      "message": "nit: don\u0027t elide the braces.",
+      "range": {
+        "startLine": 47,
+        "startChar": 11,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc7895b_276be56d",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T20:57:33Z",
+      "side": 1,
+      "message": "FYI: https://chromium-review.googlesource.com/c/chromium/src/+/742309/6/components/arc/arc_session.cc",
+      "range": {
+        "startLine": 206,
+        "startChar": 13,
+        "endLine": 206,
+        "endChar": 42
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dae32d6_b00ade4e",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T20:57:33Z",
+      "side": 1,
+      "message": "Is now a good time to switch to \"container\"? Or will that be done later?",
+      "range": {
+        "startLine": 32,
+        "startChar": 17,
+        "endLine": 32,
+        "endChar": 30
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472ff55a_8e2ea916",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T20:57:33Z",
+      "side": 1,
+      "message": "Hooray!",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c576402b_63188a05",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T20:57:33Z",
+      "side": 1,
+      "message": "Maybe just make this\n\n void Suspend() {  suspend_ \u003d suspend; }\n\n. You don\u0027t use set_suspend(false), and it increases symmetry with Resume().",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 18
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe25902_2a1d4543",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T20:57:33Z",
+      "side": 1,
+      "message": "Can this be RunCallbackAsynchronously()?",
+      "range": {
+        "startLine": 123,
+        "startChar": 7,
+        "endLine": 123,
+        "endChar": 18
+      },
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f375306_d7bb18bf",
         "filename": "components/arc/arc_session_impl_unittest.cc",
         "patchSetId": 1
@@ -13,6 +145,47 @@
       "writtenOn": "2017-11-14T15:40:30Z",
       "side": 1,
       "message": "Note: it looks like default arg value is allowed for simple case like this?\nhttps://google.github.io/styleguide/cppguide.html#Default_Arguments",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba9932a_e21753fc",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T20:57:33Z",
+      "side": 1,
+      "message": "This does not \"evaluate to the same value depending on when it was evaluated\" (since every time you call it you get a different std::unique_ptr\u003c\u003e), but I think it\u0027s fine since it\u0027s a) in a unit test and b) localized to this one .cc file.",
+      "parentUuid": "0f375306_d7bb18bf",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ab6d2a9_f9d8bd6d",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T20:57:33Z",
+      "side": 1,
+      "message": "nit: start",
+      "range": {
+        "startLine": 215,
+        "startChar": 59,
+        "endLine": 215,
+        "endChar": 60
+      },
       "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
