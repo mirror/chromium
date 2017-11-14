@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20883fdc_8c18551f",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-14T00:49:23Z",
+      "side": 1,
+      "message": "nit: constexpr\nditto below",
+      "range": {
+        "startLine": 562,
+        "startChar": 2,
+        "endLine": 562,
+        "endChar": 7
+      },
+      "revId": "1e6a4c65b1aaf473715f0eab32fbfb0e579c3569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca18496_71894006",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-14T00:49:23Z",
+      "side": 1,
+      "message": "nit: consider making this a variable in the function.  (It\u0027s used twice.)",
+      "revId": "1e6a4c65b1aaf473715f0eab32fbfb0e579c3569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
