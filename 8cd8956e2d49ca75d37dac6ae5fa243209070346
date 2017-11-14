@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "3f6a15e8_8c858002",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-14T21:08:32Z",
+      "side": 1,
+      "message": "Good point about the accessibility group. I guess we could make two groups for that purpose, one for user and one for device. As long as the caption is the same it should look the same in ADMX.\n\nI think the most important thing about grouping is to have a clear concept. Right now, everybody who works on policies has their own idea of grouping. Since there are so many people, this leads to groups only containing one or two policies (we have of those 8 if I counted correctly) and many other policies aren\u0027t grouped at all.\n\nTying grouping to the help center is a consistent concept that\u0027s easy to understand and to communicate. That\u0027s why we think it\u0027s a good idea, even though it might not lead to the best possible grouping in certain situations. For admins it has the advantage that they can search online and answers that point to help center articles should also apply to ADMX policies.",
+      "parentUuid": "0d268f63_dcfd9e66",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad684de6_e4e8221f",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -178,6 +196,24 @@
       "side": 1,
       "message": "Roman, could you please add DeviceOffHours and other policies that are not referenced in any group currently?\n\nPolicies like CastReceiverName and SupervisedUsersEnabled are probably of a different question, as they are already present in the existing topic-based groups (\"CastReceiver\" and \"LocallyManagedUsers\" accordingly). But I\u0027m still not quite understanding your plan about them - do you want to eventually split those old topic-based groups into pairs of device-level and user-level groups? Or you want to touch only those that are referenced in the Help Article, making only those level+topic-grouped and keeping some policies topic-grouped? The latter sounds a bit inconsistent, although you maybe have a good argument for doing this :)",
       "parentUuid": "73f4ce31_c1d2781b",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd44d5b6_423dfbf8",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-14T21:08:32Z",
+      "side": 1,
+      "message": "I think you have a very valid point that we have to think about. If I understand correctly, your concern is that you\u0027d end up with different group hierarchies for device and corresponding user policies?\n\nThis wouldn\u0027t be a problem for ADMX templates, where user and device policies are separated, anyway. Even if user and device policies are in the same group, they show up in different locations in the GPO editor. Then there\u0027s the doc file, i.e. chrome_policy_list.html, where the policies would show up in different groups. I\u0027m not sure how bad this is. Given that the two types apply to very different areas (e.g. sign-in accessibility vs in-session accessibility), it seems OK to me. Are groups used anywhere else?\n\nI was hoping that the help center would touch most policies and the rest could just be grouped  in a similar fashion however it makes sense. TBH with 400 policies I don\u0027t see all implications, though.",
+      "parentUuid": "0e440e56_25341e0c",
       "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
