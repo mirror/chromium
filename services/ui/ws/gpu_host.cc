@@ -26,6 +26,10 @@
 #include "ui/gfx/win/rendering_window_manager.h"
 #endif
 
+#if defined(OS_CHROMEOS)
+#include "services/ui/ws/arc_client.h"
+#endif
+
 namespace ui {
 namespace ws {
 
@@ -108,6 +112,13 @@ void DefaultGpuHost::CreateFrameSinkManager(
     viz::mojom::FrameSinkManagerClientPtr client) {
   viz_main_->CreateFrameSinkManager(std::move(request), std::move(client));
 }
+
+#if defined(OS_CHROMEOS)
+void DefaultGpuHost::AddArc(mojom::ArcRequest request) {
+  arc_bindings_.AddBinding(std::make_unique<ArcClient>(gpu_service_.get()),
+                           std::move(request));
+}
+#endif  // defined(OS_CHROMEOS)
 
 GpuClient* DefaultGpuHost::AddInternal(mojom::GpuRequest request) {
   auto client(base::MakeUnique<GpuClient>(

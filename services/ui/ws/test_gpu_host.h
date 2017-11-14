@@ -24,6 +24,9 @@ class TestGpuHost : public GpuHost {
   void CreateFrameSinkManager(
       viz::mojom::FrameSinkManagerRequest request,
       viz::mojom::FrameSinkManagerClientPtr client) override;
+#if defined(OS_CHROMEOS)
+  void AddArc(mojom::ArcRequest request) override {}
+#endif  // defined(OS_CHROMEOS)
 
   std::unique_ptr<viz::TestFrameSinkManagerImpl> frame_sink_manager_;
 
