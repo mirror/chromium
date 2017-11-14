@@ -82,19 +82,17 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
 #else
   PrintHostMsg_DidPrintPage_Params printed_page_params;
 
-  if (!CopyMetafileDataToSharedMem(metafile,
-                                   &printed_page_params.metafile_data_handle)) {
+  if (!CopyMetafileDataToSharedMem(metafile, &printed_page_params.content)) {
     return false;
   }
 
-  printed_page_params.data_size = metafile.GetDataSize();
   printed_page_params.document_cookie = params.params.document_cookie;
 
   for (size_t i = 0; i < printed_pages.size(); ++i) {
     printed_page_params.page_number = printed_pages[i];
     Send(new PrintHostMsg_DidPrintPage(routing_id(), printed_page_params));
     // Send the rest of the pages with an invalid metafile handle.
-    printed_page_params.metafile_data_handle.Release();
+    printed_page_params.content.metafile_data_handle.Release();
   }
   return true;
 #endif  // defined(OS_ANDROID)

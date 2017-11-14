@@ -57,22 +57,20 @@ void PrintRenderFrameHelper::PrintPagesInternal(
   metafile.FinishDocument();
 
   PrintHostMsg_DidPrintPage_Params page_params;
-  page_params.data_size = metafile.GetDataSize();
   page_params.document_cookie = params.document_cookie;
   page_params.page_size = page_size_in_dpi;
   page_params.content_area = content_area_in_dpi;
 
   // Ask the browser to create the shared memory for us.
-  if (!CopyMetafileDataToSharedMem(metafile,
-                                   &page_params.metafile_data_handle)) {
+  if (!CopyMetafileDataToSharedMem(metafile, &page_params.content)) {
     // TODO(thestig): Fail and return false instead.
-    page_params.data_size = 0;
+    page_params.content.data_size = 0;
   }
 
   for (int page_number : printed_pages) {
     page_params.page_number = page_number;
     Send(new PrintHostMsg_DidPrintPage(routing_id(), page_params));
-    page_params.metafile_data_handle = base::SharedMemoryHandle();
+    page_params.content.metafile_data_handle = base::SharedMemoryHandle();
   }
 }
 
