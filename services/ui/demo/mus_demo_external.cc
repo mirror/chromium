@@ -50,7 +50,7 @@ MusDemoExternal::~MusDemoExternal() {}
 
 std::unique_ptr<aura::WindowTreeClient>
 MusDemoExternal::CreateWindowTreeClient() {
-  return base::MakeUnique<aura::WindowTreeClient>(
+  return std::make_unique<aura::WindowTreeClient>(
       context()->connector(), this, nullptr,
       MakeRequest(&window_tree_client_mojo_));
 }
@@ -91,7 +91,7 @@ void MusDemoExternal::OpenNewWindow() {
   // window_tree_host_factory_ and window_tree_client_mojo_. Currently
   // window_tree_client_mojo_ is only initialized once so this is incorrect when
   // kNumberOfWindows > 1.
-  AppendWindowTreeData(base::MakeUnique<WindowTreeDataExternal>(
+  AppendWindowTreeData(std::make_unique<WindowTreeDataExternal>(
       window_tree_host_factory_.get(), std::move(window_tree_client_mojo_),
       GetSquareSizeForWindow(initialized_windows_count_)));
 }

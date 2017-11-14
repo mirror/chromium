@@ -55,7 +55,7 @@ EventDispatcher::EventDispatcher(EventDispatcherDelegate* delegate)
     : delegate_(delegate),
       capture_window_(nullptr),
       capture_window_client_id_(kInvalidClientId),
-      event_targeter_(base::MakeUnique<EventTargeter>(this)),
+      event_targeter_(std::make_unique<EventTargeter>(this)),
       mouse_button_down_(false),
       mouse_cursor_source_window_(nullptr),
       mouse_cursor_in_non_client_area_(false) {}
@@ -157,7 +157,7 @@ void EventDispatcher::SetDragDropSourceWindow(
     const std::unordered_map<std::string, std::vector<uint8_t>>& mime_data,
     uint32_t drag_operations) {
   CancelImplicitCaptureExcept(nullptr, kInvalidClientId);
-  drag_controller_ = base::MakeUnique<DragController>(
+  drag_controller_ = std::make_unique<DragController>(
       this, drag_source, window, source_connection, drag_pointer, mime_data,
       drag_operations);
 }
@@ -498,7 +498,7 @@ void EventDispatcher::ProcessPointerEventOnFoundTargetImpl(
 
   std::unique_ptr<DeepestWindowAndTarget> result;
   if (found_target) {
-    result = base::MakeUnique<DeepestWindowAndTarget>();
+    result = std::make_unique<DeepestWindowAndTarget>();
     result->deepest_window = AdjustTargetForModal(*found_target);
     result->pointer_target.is_mouse_event = is_mouse_event;
     result->pointer_target.window = result->deepest_window.window;
