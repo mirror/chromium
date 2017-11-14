@@ -34,6 +34,24 @@
       "revId": "17e6370054b08aa8710091dbd5144e179d6376cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd382a0_791ed5bb",
+        "filename": "testing/android/native_test/java/src/org/chromium/native_test/NativeUnitTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-14T18:51:52Z",
+      "side": 1,
+      "message": "I wrote this comment after changing this patchset to do basically the same thing as PS1 \u0026 having it work locally. The difference appears to be ErrnoException in PS1 vs Exception here. I think that, if you switch the exception type, it should work without reflection.",
+      "parentUuid": "d5dbd0a9_6847fc56",
+      "revId": "17e6370054b08aa8710091dbd5144e179d6376cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
