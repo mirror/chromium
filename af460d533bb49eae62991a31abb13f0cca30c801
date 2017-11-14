@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44033d55_b9ac8236",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-14T18:35:59Z",
+      "side": 1,
+      "message": "Need include guards.",
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea3b104d_3ac67938",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-14T18:35:59Z",
+      "side": 1,
+      "message": "Provide documentation for the difference between Open and the constructor?",
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68556685_250b1cb6",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-14T18:35:59Z",
+      "side": 1,
+      "message": "\u003d colorChangeWasNonUserChange_",
+      "range": {
+        "startLine": 23,
+        "startChar": 39,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7132bd_f35dce1f",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-14T18:35:59Z",
+      "side": 1,
+      "message": "Hold this in a scoped_nsobject\u003c\u003e?",
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9fc1fd_7853b725",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-14T18:35:59Z",
+      "side": 1,
+      "message": "EXPECT_EQ here, and throughout this test, so that the failure messages provide more information.",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 13
+      },
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba564e2_9a07b074",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-14T18:35:59Z",
+      "side": 1,
+      "message": "EXPECT_NSEQ (from testing/gtest_mac.h) will provide better failure messages.",
+      "range": {
+        "startLine": 97,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 13
+      },
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e00322fc_5610c126",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-14T18:35:59Z",
+      "side": 1,
+      "message": "Hold this in a scoped_nsobject\u003c\u003e? (Is this currently leaked?)",
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11871a69_e999d9d6",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-14T18:35:59Z",
+      "side": 1,
+      "message": "Hold this in a scoped_nsobject\u003c\u003e? (Is this currently leaked?)",
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42bc80f6_f7c220c5",
+        "filename": "ui/gfx/test/ui_cocoa_test_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-14T18:35:59Z",
+      "side": 1,
+      "message": "I think it is intentional to not be part of SetUp(). By switching to SetUp rather than the ctor-called Init(), it is possible for tests to leak windows in the SetUp method. I think it would be better to just exclude the NSColorPanel window when checking the list of application windows in TearDown.",
+      "range": {
+        "startLine": 62,
+        "startChar": 55,
+        "endLine": 64,
+        "endChar": 34
+      },
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
