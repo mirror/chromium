@@ -1009,6 +1009,7 @@ FileTasks.prototype.showTaskPicker = function(
 FileTasks.getDefaultTask = function(tasks, opt_taskToUseIfNoDefault) {
   for (var i = 0; i < tasks.length; i++) {
     if (tasks[i].isDefault) {
+      console.log(tasks[i].taskId + " chosen as default due to isDefault flag.");
       return tasks[i];
     }
   }
@@ -1016,8 +1017,10 @@ FileTasks.getDefaultTask = function(tasks, opt_taskToUseIfNoDefault) {
   // which is not generic file handler.
   for (var i = 0; i < tasks.length; i++) {
     if (!tasks[i].isGenericFileHandler) {
+      console.log(tasks[i].taskId + " chosen as default due to first non-generic.");
       return tasks[i];
     }
   }
+  console.log("No default app chosen.");
   return opt_taskToUseIfNoDefault || null;
 };
