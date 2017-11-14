@@ -46,6 +46,30 @@
       "revId": "ddcbb682188337b198673e18c8b4703154238cde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39043e40_0cacb2ae",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-14T19:38:00Z",
+      "side": 0,
+      "message": "The reason I bring this up is that I just added a use of it in https://crrev.com/c/767748. If you can simplify this insanity so that I don\u0027t need it in that CL I\u0027ll be happy to see it go.",
+      "parentUuid": "4942cda0_4ba22039",
+      "range": {
+        "startLine": 521,
+        "startChar": 5,
+        "endLine": 521,
+        "endChar": 54
+      },
+      "revId": "ddcbb682188337b198673e18c8b4703154238cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
