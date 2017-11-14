@@ -16,6 +16,24 @@
       "revId": "8179ef96e9d68554c9848b2c6a887af13549ebab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56cf7248_c2b72845",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7218,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-14T19:20:54Z",
+      "side": 1,
+      "message": "Added a check for this.",
+      "parentUuid": "07fda475_4a59a04d",
+      "revId": "8179ef96e9d68554c9848b2c6a887af13549ebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
