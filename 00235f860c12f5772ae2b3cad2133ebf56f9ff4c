@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c308e9b4_e8a2b406",
+        "filename": "content/browser/download/resource_downloader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-14T23:16:38Z",
+      "side": 1,
+      "message": "nit: no null check needed, since WebContents::FromRenderFromHost already has a null check to save all the callers from having to do it",
+      "revId": "00235f860c12f5772ae2b3cad2133ebf56f9ff4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40855676_8ac83f65",
+        "filename": "content/browser/download/resource_downloader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-14T23:16:38Z",
+      "side": 1,
+      "message": "what\u0027s the point of this dcheck? i.e. in the case where there\u0027s a FTN ID, we don\u0027t care what this value is.\n\nI think it\u0027s clearer to remove the dcheck",
+      "revId": "00235f860c12f5772ae2b3cad2133ebf56f9ff4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
