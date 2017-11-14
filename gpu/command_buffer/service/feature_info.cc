@@ -44,11 +44,10 @@ namespace {
 
 class ScopedPixelUnpackBufferOverride {
  public:
-  explicit ScopedPixelUnpackBufferOverride(
-      bool enable_es3,
-      GLuint binding_override)
+  explicit ScopedPixelUnpackBufferOverride(bool has_pixel_buffers,
+                                           GLuint binding_override)
       : orig_binding_(-1) {
-    if (enable_es3) {
+    if (has_pixel_buffers) {
       GLint orig_binding = 0;
       glGetIntegerv(GL_PIXEL_UNPACK_BUFFER_BINDING, &orig_binding);
       if (static_cast<GLuint>(orig_binding) != binding_override) {
@@ -398,9 +397,14 @@ void FeatureInfo::InitializeFeatures() {
   gl_version_info_.reset(
       new gl::GLVersionInfo(version_str, renderer_str, extensions));
 
-  bool enable_es3 = IsWebGL2OrES3Context();
+  // Really it's part of core OpenGL 2.1 and up, but let's assume the
+  // extension is still advertised.
+  bool has_pixel_buffers =
+      gl_version_info_->is_es3 || gl_version_info_->is_desktop_core_profile ||
+      gl::HasExtension(extensions, "GL_ARB_pixel_buffer_object") ||
+      gl::HasExtension(extensions, "GL_NV_pixel_buffer_object");
 
-  ScopedPixelUnpackBufferOverride scoped_pbo_override(enable_es3, 0);
+  ScopedPixelUnpackBufferOverride scoped_pbo_override(has_pixel_buffers, 0);
 
   AddExtensionString("GL_ANGLE_translated_shader_source");
   AddExtensionString("GL_CHROMIUM_async_pixel_transfers");
@@ -1197,13 +1201,6 @@ void FeatureInfo::InitializeFeatures() {
       gl::HasExtension(extensions, "GL_ARB_map_buffer_range") ||
       gl::HasExtension(extensions, "GL_EXT_map_buffer_range");
 
-  // Really it's part of core OpenGL 2.1 and up, but let's assume the
-  // extension is still advertised.
-  bool has_pixel_buffers =
-      gl_version_info_->is_es3 || gl_version_info_->is_desktop_core_profile ||
-      gl::HasExtension(extensions, "GL_ARB_pixel_buffer_object") ||
-      gl::HasExtension(extensions, "GL_NV_pixel_buffer_object");
-
   // We will use either glMapBuffer() or glMapBufferRange() for async readbacks.
   if (has_pixel_buffers && ui_gl_fence_works &&
       !workarounds_.disable_async_readpixels) {
@@ -1332,6 +1329,8 @@ void FeatureInfo::InitializeFeatures() {
   UMA_HISTOGRAM_ENUMERATION(
       "GPU.TextureR16Ext_LuminanceF16", GpuTextureUMAHelper(),
       static_cast<int>(GpuTextureResultR16_L16::kMax) + 1);
+
+  bool enable_es3 = IsWebGL2OrES3Context();
 
   if (enable_es3 && gl::HasExtension(extensions, "GL_EXT_window_rectangles")) {
     AddExtensionString("GL_EXT_window_rectangles");
