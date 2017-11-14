@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e649eb17_d292f23d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-14T04:38:26Z",
+      "side": 1,
+      "message": "Oops, I recognized around it wrongly.\nI thought they were set, in v8ContextSnapshot::ConstructPlainType, but not.\nI fix their behavior in V8ContextSnapshot::InstallRuntimeEnabledFeatures().",
+      "parentUuid": "1b441c0c_43907c98",
+      "revId": "51524958b9cf7d1e900984a4540f5f1e51ccbd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c2770a0_f402b70e",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.cpp",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "51524958b9cf7d1e900984a4540f5f1e51ccbd31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62647920_d0c8ec34",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-14T04:38:26Z",
+      "side": 1,
+      "message": "ConstructPlainType() is called in TakeSnapshot(), so no conditional features should be installed here.\nRemoved.",
+      "parentUuid": "1c2770a0_f402b70e",
+      "revId": "51524958b9cf7d1e900984a4540f5f1e51ccbd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2da99cba_0776d0d7",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 10
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-14T04:38:26Z",
+      "side": 1,
+      "message": "This is the main focus of this CL.\n[SecureContext] attributes of Window interface should be defined on window wrapper,\nand this change enables it.",
+      "parentUuid": "c8d0b12c_38964eac",
+      "revId": "51524958b9cf7d1e900984a4540f5f1e51ccbd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63af1e63_1637df75",
         "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.cpp",
         "patchSetId": 10
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "fdbaffe7_793b992f",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-14T04:38:26Z",
+      "side": 1,
+      "message": "No, we don\u0027t.\nThis method is to create a prototype chain, and not for a wrapper itself.\n\nIf we want to install on instance objects in general, we should call it in CreateWrapperFromCacheSlowCase (#83-84 in this file).\nIn this CL, however, I call it in V8ContextSnapshot::IntallConditionalFeaturesOnObjects(), because now we have no on-instance conditional features, and we are introducing few features only on Window wrapper.",
+      "parentUuid": "63af1e63_1637df75",
+      "revId": "51524958b9cf7d1e900984a4540f5f1e51ccbd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1a5e194_5f5b83e9",
         "filename": "third_party/WebKit/Source/platform/bindings/WrapperTypeInfo.h",
         "patchSetId": 10
@@ -84,6 +156,24 @@
       "revId": "51524958b9cf7d1e900984a4540f5f1e51ccbd31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1893cf0_ac8e9cb8",
+        "filename": "third_party/WebKit/Source/platform/bindings/WrapperTypeInfo.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-14T04:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1a5e194_5f5b83e9",
+      "revId": "51524958b9cf7d1e900984a4540f5f1e51ccbd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
