@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4adb5d36_14fcb88a",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T20:59:44Z",
+      "side": 1,
+      "message": "Can you explan this in more detail (or ping me directly)? We assume that Shill always provides connected or connecting networks first; the UI relies on it. If that is not true we have problems elsewhere.",
+      "revId": "dbc1f1e1668ad42f7d97c70100d8709ec6e144bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6b27b0_9b4cdc2f",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-14T20:59:44Z",
+      "side": 1,
+      "message": "\"default_network\" ? \"net\" is kind of confusing when we use \"network\u0027 everywhere else.",
+      "revId": "dbc1f1e1668ad42f7d97c70100d8709ec6e144bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
