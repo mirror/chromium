@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ae46fd6_169d693c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-14T14:33:11Z",
+      "side": 1,
+      "message": "Explain the effect of calling this:\n\n// Notify the controller that its associated sequence has immediate work\n// to run. Shortly after this is called, the thread associated with this\n// controller will run a task returned by sequence-\u003eTakeTask().\n//\n// TODO(altimin): Change this to \"the thread associated with this\n// controller will run tasks returned by sequence-\u003eTakeTask() until it\n// returns null or sequence-\u003eDidRunTask() returns false\" once the\n// code is changed to work that way.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 70
+      },
+      "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c27e21_10b6e528",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-14T14:33:11Z",
+      "side": 1,
+      "message": "Explain the effect of calling this:\n\n// Notify the controller that its associated sequence will have\n// delayed work to run when |delay| expires. When |delay| expires,\n// the thread associated with this controller will run a task\n// returned by sequence-\u003eTakeTask(). This call cancels any previously\n// scheduled delayed work.\n//\n// TODO(altimin): Change this to \"the thread associated with this\n// controller will run tasks returned by sequence-\u003eTakeTask() until\n// it returns null or sequence-\u003eDidRunTask() returns false\" once the\n// code is changed to work that way.",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 55
+      },
+      "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc890e2c_3bd31231",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-14T14:33:11Z",
+      "side": 1,
+      "message": "// Sets the sequence from which to take tasks after a Schedule*Work() call is made. Must be called before the first call to Schedule*Work().",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 25
+      },
+      "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c6594a_b72e6243",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-14T14:33:11Z",
+      "side": 1,
+      "message": "base::OnceClosure\n\nPrefer using OnceClosure whenever possible. https://chromium.googlesource.com/chromium/src/+/lkcr/docs/callback.md#oncecallback_and-repeatingcallback",
+      "range": {
+        "startLine": 52,
+        "startChar": 35,
+        "endLine": 52,
+        "endChar": 48
+      },
+      "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d75810_04f37770",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-14T14:33:11Z",
+      "side": 1,
+      "message": "#include \"base/bind.h\"",
+      "range": {
+        "startLine": 28,
+        "startChar": 31,
+        "endLine": 28,
+        "endChar": 50
+      },
+      "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a47bce2_b30df2c3",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-14T14:33:11Z",
+      "side": 1,
+      "message": "What\u0027s the benefit of having a static Create() method vs. allowing direct calls to the constructor? I don\u0027t see any special work being done in Create().",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 51
+      },
+      "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7df82ee_c5ef138d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/test/lazy_thread_controller_for_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-14T14:33:11Z",
+      "side": 1,
+      "message": "Why not allow direct calls to the constructor?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 1
+      },
+      "revId": "5d30cfb1dee161511111f473a16c4ccdaa4ed4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
