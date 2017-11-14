@@ -38,7 +38,6 @@
 #endif
 
 class GURL;
-struct FontDescriptor;
 
 namespace media {
 struct MediaLogEvent;
@@ -96,15 +95,6 @@ class CONTENT_EXPORT RenderMessageFilter
 
   void OnGetProcessMemorySizes(size_t* private_bytes, size_t* shared_bytes);
 
-#if defined(OS_MACOSX)
-  // Messages for OOP font loading.
-  void OnLoadFont(const FontDescriptor& font, IPC::Message* reply_msg);
-  void SendLoadFontReply(IPC::Message* reply,
-                         uint32_t data_size,
-                         base::SharedMemoryHandle handle,
-                         uint32_t font_id);
-#endif
-
   // mojom::RenderMessageFilter:
   void GenerateRoutingID(GenerateRoutingIDCallback routing_id) override;
   void CreateNewWidget(int32_t opener_id,
@@ -114,6 +104,24 @@ class CONTENT_EXPORT RenderMessageFilter
   void CreateFullscreenWidget(int opener_id,
                               mojom::WidgetPtr widget,
                               CreateFullscreenWidgetCallback callback) override;
+  void DidGenerateCacheableMetadata(const GURL& url,
+                                    base::Time expected_response_time,
+                                    const std::vector<uint8_t>& data) override;
+  void DidGenerateCacheableMetadataInCacheStorage(
+      const GURL& url,
+      base::Time expected_response_time,
+      const std::vector<uint8_t>& data,
+      const url::Origin& cache_storage_origin,
+      const std::string& cache_storage_cache_name) override;
+  // Messages for OOP font loading.  Only used for MACOSX.
+  void LoadFont(mojom::FontDescriptorPtr font_to_load,
+                LoadFontCallback callback) override;
+#if defined(OS_MACOSX)
+  void SendLoadFontReply(LoadFontCallback reply,
+                         uint32_t data_size,
+                         base::SharedMemoryHandle handle,
+                         uint32_t font_id);
+#endif  // defined(OS_MACOSX)
 
   // Message handlers called on the browser IO thread:
   void OnHasGpuProcess(IPC::Message* reply);
@@ -129,15 +137,6 @@ class CONTENT_EXPORT RenderMessageFilter
                            base::ThreadPriority priority);
 #endif
 
-  void OnCacheableMetadataAvailable(const GURL& url,
-                                    base::Time expected_response_time,
-                                    const std::vector<char>& data);
-  void OnCacheableMetadataAvailableForCacheStorage(
-      const GURL& url,
-      base::Time expected_response_time,
-      const std::vector<char>& data,
-      const url::Origin& cache_storage_origin,
-      const std::string& cache_storage_cache_name);
   void OnCacheStorageOpenCallback(const GURL& url,
                                   base::Time expected_response_time,
                                   scoped_refptr<net::IOBuffer> buf,
