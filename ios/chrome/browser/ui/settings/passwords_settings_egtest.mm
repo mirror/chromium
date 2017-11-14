@@ -9,6 +9,7 @@
 #include "base/callback.h"
 #include "base/mac/foundation_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/time/time.h"
@@ -250,19 +251,24 @@ class TestStoreConsumer : public password_manager::PasswordStoreConsumer {
     results_.clear();
     ResetObtained();
     GetPasswordStore()->GetAutofillableLogins(this);
-    bool responded = testing::WaitUntilConditionOrTimeout(1.0, ^bool {
+    bool responded = testing::WaitUntilConditionOrTimeout(timeout_, ^bool {
       return !AreObtainedReset();
     });
     GREYAssert(responded, @"Obtaining fillable items took too long.");
     AppendObtainedToResults();
     GetPasswordStore()->GetBlacklistLogins(this);
-    responded = testing::WaitUntilConditionOrTimeout(1.0, ^bool {
+    responded = testing::WaitUntilConditionOrTimeout(timeout_, ^bool {
       return !AreObtainedReset();
     });
     GREYAssert(responded, @"Obtaining blacklisted items took too long.");
     AppendObtainedToResults();
     return results_;
   }
+
+  // For tests with a handful of stored passwords the default value should be
+  // fine. However, tests with more passwords might need more and should set it
+  // appropriately.
+  static void set_timeout(double timeout) { timeout_ = timeout; }
 
  private:
   // Puts |obtained_| in a known state not corresponding to any PasswordStore
@@ -282,12 +288,18 @@ class TestStoreConsumer : public password_manager::PasswordStoreConsumer {
     ResetObtained();
   }
 
+  // TestStoreConsumer will wait up to this many seconds for background tasks
+  // of the PasswordStore to finish.
+  static double timeout_;
+
   // Temporary cache of obtained store results.
   std::vector<std::unique_ptr<autofill::PasswordForm>> obtained_;
 
   // Combination of fillable and blacklisted credentials from the store.
   std::vector<autofill::PasswordForm> results_;
 };
+
+double TestStoreConsumer::timeout_ = 1.0;
 
 // Saves |form| to the password store and waits until the async processing is
 // done.
@@ -341,6 +353,19 @@ void TapEdit() {
       selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
                                    IDS_IOS_NAVIGATION_BAR_EDIT_BUTTON)]
       performAction:grey_tap()];
+}
+
+// Creates a PasswordForm with |index| being part of the username, password,
+// origin and realm.
+PasswordForm CreateSampleFormWithIndex(int index) {
+  PasswordForm form;
+  form.username_value =
+      base::ASCIIToUTF16(base::StringPrintf("concrete username %03d", index));
+  form.password_value =
+      base::ASCIIToUTF16(base::StringPrintf("concrete password %03d", index));
+  form.origin = GURL(base::StringPrintf("https://www%03d.example.com", index));
+  form.signon_realm = form.origin.spec();
+  return form;
 }
 
 }  // namespace
@@ -1221,6 +1246,80 @@ void TapEdit() {
       assertWithMatcher:grey_notNil()
                   error:&error];
   GREYAssertTrue(error, @"The settings page is still displayed");
+}
+
+// Test that even with many passwords the settings are still usable. In
+// particular, ensure that password entries "below the fold" are reachable and
+// their detail view is shown on tapping.
+// There are two bottlenecks potentially affecting the runtime of the test:
+// (1) Storing passwords on initialisation.
+// (2) Speed of EarlGrey UI operations such as scrolling.
+// To keep the test duration reasonable, the delay from (1) is eliminated in
+// storing just about enough passwords to ensure filling more than one page on
+// any device, and slightly increasing the timeout for PasswordStore
+// asynchronous processing.  To limit the effect of (2), custom large scrolling
+// steps are added to the usual scrolling actions.
+//
+// An alternative approach to address (1) would be to replace the production
+// PasswordStore with a TestPasswordStore instance, which only keeps data
+// in-memory and is thus faster. However, because (2) would still remain a
+// constraint and the introduced timeouts are not exceeding the common duration
+// of an EG test, the effort spent on instantiating TestPasswordStore and
+// setting it up inside the EG test app does not seem worth it. Also note that
+// slow bulk-adding of passwords itself is not a bug of PasswordStore --
+// bulk-adding is not what happens during normal usage and PasswordStore is on
+// purpose not optimised towards it.
+- (void)testManyPasswords {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kViewPasswords);
+
+  // Enough just to ensure filling more than one page on all devices.
+  constexpr int kPasswordsCount = 25;
+  // The usual store operations may now take longer, so set up a 3 second
+  // timeout. Note that the overall timeout for the test is not affected.
+  TestStoreConsumer::set_timeout(3);
+
+  // Send the passwords to the queue to be added to the PasswordStore.
+  for (int i = 1; i <= kPasswordsCount; ++i) {
+    GetPasswordStore()->AddLogin(CreateSampleFormWithIndex(i));
+  }
+
+  // Use TestStoreConsumer::GetStoreResults to wait for the background storing
+  // task to complete and to verify that the passwords have been stored.
+  TestStoreConsumer consumer;
+  GREYAssertEqual(kPasswordsCount, consumer.GetStoreResults().size(),
+                  @"Unexpected PasswordStore results.");
+
+  OpenPasswordSettings();
+
+  // Aim at an entry almost at the end of the list.
+  constexpr int kRemoteIndex = kPasswordsCount - 2;
+  // The scrolling in GetInteractionForPasswordEntry has too fine steps to
+  // reach the desired part of the list quickly. The following gives it a head
+  // start of almost the desired position, counting 30 points per entry and
+  // aiming 3 entries before |kRemoteIndex|.
+  constexpr int kJump = (kRemoteIndex - 3) * 30;
+  [[EarlGrey
+      selectElementWithMatcher:grey_accessibilityID(
+                                   @"SavePasswordsCollectionViewController")]
+      performAction:grey_scrollInDirection(kGREYDirectionDown, kJump)];
+  [GetInteractionForPasswordEntry([NSString
+      stringWithFormat:@"www%03d.example.com, concrete username %03d",
+                       kRemoteIndex, kRemoteIndex]) performAction:grey_tap()];
+
+  // Check that the detail view loaded correctly by verifying the site content.
+  id<GREYMatcher> siteCell = grey_accessibilityLabel([NSString
+      stringWithFormat:@"https://www%03d.example.com/", kRemoteIndex]);
+  [GetInteractionForPasswordDetailItem(siteCell)
+      assertWithMatcher:grey_notNil()];
+
+  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
+      performAction:grey_tap()];
+  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
+      performAction:grey_tap()];
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
 }
 
 @end
