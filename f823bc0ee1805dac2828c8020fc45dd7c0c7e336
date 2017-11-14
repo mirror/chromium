@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7a42e66c_69ce4be5",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2465,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T16:51:40Z",
+      "side": 1,
+      "message": "What is the call path to this function that you need to special case the already in closing list?",
+      "range": {
+        "startLine": 2465,
+        "startChar": 14,
+        "endLine": 2465,
+        "endChar": 33
+      },
+      "revId": "f823bc0ee1805dac2828c8020fc45dd7c0c7e336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "101706fa_29b5b082",
         "filename": "chrome/browser/ui/browser.cc",
         "patchSetId": 4
@@ -13,6 +36,29 @@
       "writtenOn": "2017-11-14T14:12:21Z",
       "side": 1,
       "message": "OnWindowClosing() can be called several times for the same browser. \nSo prior to checking open browsers count we need to check if current browser is not already closing.",
+      "revId": "f823bc0ee1805dac2828c8020fc45dd7c0c7e336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2466e916_a5c651e3",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2471,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T16:51:40Z",
+      "side": 1,
+      "message": "I think this would be more readable with an IsBrowsingClosing() function.",
+      "range": {
+        "startLine": 2466,
+        "startChar": 2,
+        "endLine": 2471,
+        "endChar": 80
+      },
       "revId": "f823bc0ee1805dac2828c8020fc45dd7c0c7e336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
