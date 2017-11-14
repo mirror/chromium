@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1dff3f78_a5509fb3",
+        "filename": "media/base/decode_capabilities.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Done. AV1 is always configured with high bit depth too, so no need for the profile check here; though one may be required in the future for hardware decoders, arm, etc.",
+      "parentUuid": "8ca6a49d_53eac004",
+      "range": {
+        "startLine": 167,
+        "startChar": 25,
+        "endLine": 167,
+        "endChar": 64
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "140566af_10a90eb4",
         "filename": "media/base/video_codecs.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6aa1eea7_21ff7938",
+        "filename": "media/base/video_codecs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Not sure yet, filed a bug for this and moved this comment to StringToVideoCodec().",
+      "parentUuid": "140566af_10a90eb4",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 70
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60ad6d5b_28fc192d",
         "filename": "media/ffmpeg/ffmpeg_common.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-11T02:25:57Z",
       "side": 1,
       "message": "TODO(me) - make ffmpeg better. You shouldnt need an h264 decoder to read the profile info out of the appropriate mp4 box",
+      "range": {
+        "startLine": 474,
+        "startChar": 7,
+        "endLine": 474,
+        "endChar": 38
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6dbcfcf_a0e5b888",
+        "filename": "media/ffmpeg/ffmpeg_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Filed http://crbug.com/784610",
+      "parentUuid": "60ad6d5b_28fc192d",
       "range": {
         "startLine": 474,
         "startChar": 7,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "672d5e27_01d1a5f3",
+        "filename": "media/ffmpeg/ffmpeg_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e417b475_0bd46c4b",
+      "range": {
+        "startLine": 491,
+        "startChar": 6,
+        "endLine": 491,
+        "endChar": 65
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f07749d_5e59e278",
         "filename": "media/ffmpeg/ffmpeg_common_unittest.cc",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2739ca53_bb3171dc",
+        "filename": "media/ffmpeg/ffmpeg_common_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "They change every ffmpeg roll, but just hadn\u0027t been updated in a while. Sometimes ffmpeg deletes codecs or changes their hashed identifiers. Since we\u0027re logging these to UMA we can\u0027t remove them.",
+      "parentUuid": "5f07749d_5e59e278",
+      "range": {
+        "startLine": 269,
+        "startChar": 11,
+        "endLine": 269,
+        "endChar": 48
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "80db1859_0fd5622d",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88a9fa13_57226598",
+      "range": {
+        "startLine": 28,
+        "startChar": 21,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47e6cf4d_bfa6ba7f",
         "filename": "media/filters/aom_video_decoder.cc",
         "patchSetId": 6
@@ -151,6 +295,30 @@
       "writtenOn": "2017-11-11T02:25:57Z",
       "side": 1,
       "message": "I guess the number of tiles increments by powers of 2 in this fashion? i.e. you wouldn\u0027t want width \u003d 2047 \u003d\u003e 7 threads?",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1338b864_78836f4b",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Changed to threads \u003d width / 256, since this seems reasonable. +tomfinegan for commentary.",
+      "parentUuid": "47e6cf4d_bfa6ba7f",
       "range": {
         "startLine": 45,
         "startChar": 4,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "fd82d715_d52f2fea",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Done. Filed http://crbug.com/784627 too.",
+      "parentUuid": "0b3909f5_13f9b51e",
+      "range": {
+        "startLine": 66,
+        "startChar": 13,
+        "endLine": 66,
+        "endChar": 30
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8b2db00_ca774a91",
         "filename": "media/filters/aom_video_decoder.cc",
         "patchSetId": 6
@@ -206,6 +398,30 @@
       "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522c66db_ad9f23fe",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8b2db00_ca774a91",
+      "range": {
+        "startLine": 68,
+        "startChar": 13,
+        "endLine": 68,
+        "endChar": 30
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "57046cfa_2d420ebf",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "648aad49_0e195398",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 30
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9015f31_0524b9bd",
         "filename": "media/filters/aom_video_decoder.cc",
         "patchSetId": 6
@@ -252,6 +492,30 @@
       "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4905cc_59690c50",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Added some comments. It just refers to the number of bits per pixel.",
+      "parentUuid": "c9015f31_0524b9bd",
+      "range": {
+        "startLine": 81,
+        "startChar": 17,
+        "endLine": 81,
+        "endChar": 39
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "57611922_9496b550",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b6ca1ce_6fda7a78",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 40
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd96d7ae_44a26094",
         "filename": "media/filters/aom_video_decoder.cc",
         "patchSetId": 6
@@ -298,6 +586,30 @@
       "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "802cbc2b_481bc89d",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd96d7ae_44a26094",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 55
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "7188c4d4_345c3301",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Eh, not going to change this in this CL. It\u0027s the same as VPX.",
+      "parentUuid": "64595742_c2345b47",
+      "range": {
+        "startLine": 192,
+        "startChar": 2,
+        "endLine": 192,
+        "endChar": 67
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f1c9a9a_dfc8bb19",
         "filename": "media/filters/aom_video_decoder.cc",
         "patchSetId": 6
@@ -344,6 +680,30 @@
       "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78864c65_ca9ae689",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "It\u0027s implicit in the sense that we\u0027ve created the frame with size \u003d\u003d coded size. So there\u0027s always enough room barring any technical failures in VideoFrame itself.",
+      "parentUuid": "3f1c9a9a_dfc8bb19",
+      "range": {
+        "startLine": 203,
+        "startChar": 12,
+        "endLine": 203,
+        "endChar": 21
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -370,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "ac838d0a_2163ad03",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "This is created on the render thread. See DefaultRendererFactory.",
+      "parentUuid": "e29a680c_8a2e9552",
+      "range": {
+        "startLine": 222,
+        "startChar": 2,
+        "endLine": 222,
+        "endChar": 20
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a331a3c_ecfeec6d",
         "filename": "media/filters/aom_video_decoder.cc",
         "patchSetId": 6
@@ -393,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "3cf19b9c_d8d48285",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a331a3c_ecfeec6d",
+      "range": {
+        "startLine": 263,
+        "startChar": 4,
+        "endLine": 263,
+        "endChar": 8
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b262616_f5d2fddc",
         "filename": "media/filters/aom_video_decoder.cc",
         "patchSetId": 6
@@ -413,6 +821,30 @@
       "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454ccfbe_ab613b5f",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Hmmm, it can happen if multiple decodes are in flight, but that should only happen with hardware decoding, so removed. It also happened with unittests, but fixed that.",
+      "parentUuid": "2b262616_f5d2fddc",
+      "range": {
+        "startLine": 291,
+        "startChar": 2,
+        "endLine": 294,
+        "endChar": 3
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -462,6 +894,54 @@
     },
     {
       "key": {
+        "uuid": "9c67c3d8_99c15bdd",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "443f6656_4f1c40f5",
+      "range": {
+        "startLine": 315,
+        "startChar": 49,
+        "endLine": 315,
+        "endChar": 56
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "316aea9f_f52bad5b",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "I thought so too, but tomfinegan said no.",
+      "parentUuid": "87fb034b_45897bc0",
+      "range": {
+        "startLine": 315,
+        "startChar": 22,
+        "endLine": 315,
+        "endChar": 27
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "296551cc_ca56bbd7",
         "filename": "media/filters/aom_video_decoder.cc",
         "patchSetId": 6
@@ -482,6 +962,30 @@
       "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a129f6_6bcde12f",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "296551cc_ca56bbd7",
+      "range": {
+        "startLine": 375,
+        "startChar": 19,
+        "endLine": 375,
+        "endChar": 36
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -508,6 +1012,30 @@
     },
     {
       "key": {
+        "uuid": "a1623216_36dcb4ea",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Copied this from tom\u0027s decoder, but I don\u0027t think it\u0027s something we should be checking; it\u0027s a decoder bug if this happens. Deleted.",
+      "parentUuid": "c22e5e74_ef50b5fa",
+      "range": {
+        "startLine": 383,
+        "startChar": 5,
+        "endLine": 385,
+        "endChar": 24
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de06f091_4e77ce89",
         "filename": "media/filters/aom_video_decoder.cc",
         "patchSetId": 6
@@ -519,6 +1047,30 @@
       "writtenOn": "2017-11-11T02:25:57Z",
       "side": 1,
       "message": "I don\u0027t follow why it was previously true",
+      "range": {
+        "startLine": 393,
+        "startChar": 0,
+        "endLine": 393,
+        "endChar": 52
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a485c2_86cecca4",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Generally these buffers are padded; the actual w, h values include this padding, so if we\u0027re going to make a copy anyways, might as well not copy as much.\n\n+tomefinegan, what\u0027s the right amount to copy here? Just d_h, d_w?",
+      "parentUuid": "de06f091_4e77ce89",
       "range": {
         "startLine": 393,
         "startChar": 0,
@@ -554,6 +1106,30 @@
     },
     {
       "key": {
+        "uuid": "6ac23836_4163b33c",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6e35612_65b37785",
+      "range": {
+        "startLine": 397,
+        "startChar": 53,
+        "endLine": 397,
+        "endChar": 65
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40286255_9e7748af",
         "filename": "media/filters/aom_video_decoder.cc",
         "patchSetId": 6
@@ -574,6 +1150,30 @@
       "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf06973_e7093a26",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-14T00:30:50Z",
+      "side": 1,
+      "message": "No way to extend the lifetime of frames like we do with ffmpeg unfortunately. The only way to do zero copy will be to add support for external framebuffer functions like we do in VpxVideoDecoder. I\u0027ll implement that later after I refactor it out of VpxVideoDecoder.",
+      "parentUuid": "40286255_9e7748af",
+      "range": {
+        "startLine": 409,
+        "startChar": 4,
+        "endLine": 409,
+        "endChar": 10
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
