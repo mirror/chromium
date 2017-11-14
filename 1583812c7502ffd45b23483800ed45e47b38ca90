@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ca08f4d_35364a75",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-14T19:38:50Z",
+      "side": 1,
+      "message": "nit: count uint32_t words, make swizzed a std::unique_ptr\u003cuint32_t\u003e, and save math+cast?",
+      "revId": "1583812c7502ffd45b23483800ed45e47b38ca90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
