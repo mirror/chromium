@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ac2ad25_82fdd072",
+        "filename": "chrome/browser/chromeos/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-14T02:11:02Z",
+      "side": 1,
+      "message": "This is duplicated.",
+      "range": {
+        "startLine": 1921,
+        "startChar": 5,
+        "endLine": 1921,
+        "endChar": 39
+      },
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "029a808b_2a137e32",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-14T02:11:02Z",
+      "side": 1,
+      "message": "I think this should be some constant. We keep reusing it in many places.",
+      "range": {
+        "startLine": 30,
+        "startChar": 37,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c66332e1_63c9386b",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-14T02:11:02Z",
+      "side": 1,
+      "message": "We have MountSmb but CreateSambaFileSystem.\nSmb is protocol. So MountSmb doesn\u0027t make sense, as we don\u0027t mount a protocol.\n\nMaybe just Mount?",
+      "range": {
+        "startLine": 35,
+        "startChar": 30,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6552ee62_77d8a589",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-14T02:11:02Z",
+      "side": 1,
+      "message": "If the test is not ready, let\u0027s land it in a separate CL when it\u0027s ready, unless there is a strong reason to do otherwise.",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 71
+      },
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
