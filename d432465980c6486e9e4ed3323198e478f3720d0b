@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c08b0250_5ae4b710",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2017-11-14T23:43:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "194d2837_99d29d25",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 31
+      },
+      "revId": "d432465980c6486e9e4ed3323198e478f3720d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "904c89af_de60fdda",
         "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "d432465980c6486e9e4ed3323198e478f3720d0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b19d76c9_efaee85e",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2017-11-14T23:43:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "904c89af_de60fdda",
+      "range": {
+        "startLine": 91,
+        "startChar": 12,
+        "endLine": 91,
+        "endChar": 28
+      },
+      "revId": "d432465980c6486e9e4ed3323198e478f3720d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
