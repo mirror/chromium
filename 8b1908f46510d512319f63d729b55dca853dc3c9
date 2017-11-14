@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba1f9231_7102f704",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/profiler/cpu-profiler-profiling.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-14T02:11:37Z",
+      "side": 1,
+      "message": "Indeed. Fixed",
+      "parentUuid": "56f0f356_eb7777da",
+      "revId": "8b1908f46510d512319f63d729b55dca853dc3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54d657ac_526219ab",
         "filename": "third_party/WebKit/Source/devtools/front_end/profiler_test_runner/ProfilerTestRunner.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "8b1908f46510d512319f63d729b55dca853dc3c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d315b351_f9e83536",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler_test_runner/ProfilerTestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-14T02:11:37Z",
+      "side": 1,
+      "message": "1. Profiler is too generic name. It\u0027s not clear that it is about CPU profiler only.\n2. The test has nothing to do with heap snapshots. It tests sampling heap profile feature. \n\nAnyway I changed it to use HeapSnaphotTestRunner. We should eventually rename it to HeapProfileTestRunner.",
+      "parentUuid": "54d657ac_526219ab",
+      "revId": "8b1908f46510d512319f63d729b55dca853dc3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
