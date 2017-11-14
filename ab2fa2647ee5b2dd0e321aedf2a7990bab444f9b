@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3ef0795_f17a08db",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-11-14T23:30:29Z",
+      "side": 0,
+      "message": "Should we keep this function?\nIt\u0027s definition would be icc_profile_id_ \u003d\u003d 0, right?",
+      "range": {
+        "startLine": 205,
+        "startChar": 31,
+        "endLine": 205,
+        "endChar": 32
+      },
+      "revId": "ab2fa2647ee5b2dd0e321aedf2a7990bab444f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17318e70_071a33e6",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-11-14T23:30:29Z",
+      "side": 0,
+      "message": "Don\u0027t we still need this?\nI\u0027m thinking for things like attaching color spaces to video frames on mac.",
+      "range": {
+        "startLine": 498,
+        "startChar": 63,
+        "endLine": 498,
+        "endChar": 0
+      },
+      "revId": "ab2fa2647ee5b2dd0e321aedf2a7990bab444f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
