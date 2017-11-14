@@ -317,9 +317,12 @@ void RenderFrameProxy::SetChildFrameSurface(
   if (!web_frame()->Parent())
     return;
 
-  if (!enable_surface_synchronization_)
-    compositing_helper_->SetPrimarySurfaceInfo(surface_info);
-  compositing_helper_->SetFallbackSurfaceInfo(surface_info, sequence);
+  if (!enable_surface_synchronization_) {
+    compositing_helper_->SetPrimarySurfaceId(surface_info.id(),
+                                             frame_rect().size());
+  }
+  compositing_helper_->SetFallbackSurfaceId(surface_info.id(),
+                                            frame_rect().size(), sequence);
 }
 
 bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
@@ -504,11 +507,8 @@ void RenderFrameProxy::WasResized() {
     local_surface_id_ = local_surface_id_allocator_.GenerateId();
 
   if (enable_surface_synchronization_ && frame_sink_id_.is_valid()) {
-    float device_scale_factor = screen_info().device_scale_factor;
-    viz::SurfaceInfo surface_info(
-        viz::SurfaceId(frame_sink_id_, local_surface_id_), device_scale_factor,
-        gfx::ScaleToCeiledSize(frame_rect().size(), device_scale_factor));
-    compositing_helper_->SetPrimarySurfaceInfo(surface_info);
+    compositing_helper_->SetPrimarySurfaceId(
+        viz::SurfaceId(frame_sink_id_, local_surface_id_), frame_rect().size());
   }
 
   bool rect_changed =
