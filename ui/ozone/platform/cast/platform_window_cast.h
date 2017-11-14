@@ -39,6 +39,9 @@ class PlatformWindowCast : public PlatformWindow,
   void MoveCursorTo(const gfx::Point& location) override {}
   void ConfineCursorToBounds(const gfx::Rect& bounds) override {}
   PlatformImeController* GetPlatformImeController() override;
+  bool IsMinimized() const override { return false; }
+  bool IsMaximized() const override { return false; }
+  bool IsFullscreen() const override { return false; }
 
   // PlatformEventDispatcher implementation:
   bool CanDispatchEvent(const PlatformEvent& event) override;
