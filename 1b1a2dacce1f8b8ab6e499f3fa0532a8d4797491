@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f375306_d7bb18bf",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T15:40:30Z",
+      "side": 1,
+      "message": "Note: it looks like default arg value is allowed for simple case like this?\nhttps://google.github.io/styleguide/cppguide.html#Default_Arguments",
+      "revId": "1b1a2dacce1f8b8ab6e499f3fa0532a8d4797491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
