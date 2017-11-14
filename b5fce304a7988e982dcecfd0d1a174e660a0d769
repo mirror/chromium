@@ -46,6 +46,30 @@
       "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f996224_8041edb2",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-14T22:03:07Z",
+      "side": 1,
+      "message": "I just double checked. This line actually fixes it somehow. GrContext and GLHelper share the same GLES2Interface*. \n\nRe your suggestionss, what reset method should I use to do them? Just to be clear, ReadbackYUV() causes both the source canvas and captured stream to be rendered corruptly. I think ReadbackYUV() sets a state which isnt cleared.\n\n[0] https://cs.chromium.org/chromium/src/services/ui/public/cpp/gpu/context_provider_command_buffer.cc?rcl\u003d0951256184bfbf3bb7c4b23ee01c24d84841abb7\u0026l\u003d378",
+      "parentUuid": "d890bc30_2e4dd891",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 51
+      },
+      "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
