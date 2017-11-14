@@ -234,8 +234,11 @@ void ExtensionActionStorageManager::OnExtensionActionUpdated(
     content::WebContents* web_contents,
     content::BrowserContext* browser_context) {
   if (browser_context_ == browser_context &&
-      extension_action->action_type() == ActionInfo::TYPE_BROWSER)
+      extension_action->action_type() == ActionInfo::TYPE_BROWSER &&
+      !web_contents) {
+    LOG(WARNING) << "Writing Values";
     WriteToStorage(extension_action);
+  }
 }
 
 void ExtensionActionStorageManager::OnExtensionActionAPIShuttingDown() {

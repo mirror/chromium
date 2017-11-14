@@ -1,0 +1,10 @@
+{
+  "name": "Extension",
+  "description": "An extension",
+  "manifest_version": 2,
+  "version": "0.1",
+  "browser_action": {},
+  "background": {
+    "scripts": ["background.js"]
+  }
+}

@@ -23,6 +23,7 @@ namespace browsertest_util {
 std::string ExecuteScriptInBackgroundPage(Profile* profile,
                                           const std::string& extension_id,
                                           const std::string& script) {
+  LOG(WARNING) << "Trying";
   extensions::ProcessManager* manager =
       extensions::ProcessManager::Get(profile);
   extensions::ExtensionHost* host =
@@ -31,12 +32,15 @@ std::string ExecuteScriptInBackgroundPage(Profile* profile,
     ADD_FAILURE() << "Extension " << extension_id << " has no background page.";
     return "";
   }
+  LOG(WARNING) << "Found ze host";
   std::string result;
   if (!content::ExecuteScriptAndExtractString(
            host->host_contents(), script, &result)) {
+    LOG(WARNING) << "Extract";
     ADD_FAILURE() << "Executing script failed: " << script;
     result.clear();
   }
+  LOG(WARNING) << "And done";
   return result;
 }
 
