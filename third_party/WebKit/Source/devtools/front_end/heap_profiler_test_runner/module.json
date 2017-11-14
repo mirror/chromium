@@ -1,8 +1,6 @@
 {
     "dependencies": [
         "heap_snapshot_worker",
-        "profiler",
-        "data_grid",
         "test_runner"
     ],
     "scripts": [
