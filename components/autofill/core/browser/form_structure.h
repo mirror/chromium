@@ -245,11 +245,6 @@ class FormStructure {
   // unlikely to be correct, the function will override that prediction.
   void RationalizeCreditCardFieldPredictions();
 
-  // A function that detects if predictions suggest there are more phone fields
-  // than one valid phone number can fill, then mark those extranous fields
-  // as fill-only-when-user-highlight.
-  void RationalizePhoneNumberFieldPredictions();
-
   // A helper function to review the predictions and do appropriate adjustments
   // when it considers neccessary.
   void RationalizeFieldTypePredictions();
