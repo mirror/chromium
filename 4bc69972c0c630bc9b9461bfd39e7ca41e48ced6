@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b6b3121_5b7eabda",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 6966,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-14T03:51:20Z",
+      "side": 1,
+      "message": "I\u0027d strongly encourage incrementally switching media classes to take a pointer to a delegate interface rather than binding multiple callbacks like this. This one would be easy enough to switch.",
+      "revId": "4bc69972c0c630bc9b9461bfd39e7ca41e48ced6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
