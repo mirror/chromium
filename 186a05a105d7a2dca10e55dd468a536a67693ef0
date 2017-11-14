@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c03838ac_49a03f83",
+        "filename": "ash/mus/window_manager_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-14T21:12:20Z",
+      "side": 1,
+      "message": "optional idea: WDYT of taking this class out of namespace mus in this CL? You\u0027re touching all the lines mentioning WindowManagerApplication, so it would save one step in the blame lists. This file could use \"using ash::mus::Foo;\" etc temporarily as needed for the classes still in ash::mus.",
+      "revId": "186a05a105d7a2dca10e55dd468a536a67693ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7126dc_a9f0d3a2",
+        "filename": "chrome/utility/mash_service_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-14T21:12:20Z",
+      "side": 1,
+      "message": "nit: std::make_unique since you\u0027re touching it",
+      "revId": "186a05a105d7a2dca10e55dd468a536a67693ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
