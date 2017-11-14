@@ -16,6 +16,24 @@
       "revId": "bdbae340b2e139f0b098cc4a0c8335739568d2c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8f6f6c0_b52d789f",
+        "filename": "third_party/WebKit/Source/core/page/CreateWindow.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-14T09:56:13Z",
+      "side": 0,
+      "message": "The initiator is set in the FrameLoadRequest constructor (6 lines above)\nIt is set to SecurityOrigin::Create(calling_window.document().Url()).\n\nAFAIU, calling_window.document() \u003d\u003d active_frame-\u003eGetDocument(). So I removed this line because we would have set the same RequestorOrigin twice.\n\nI put a DCHECK to detect if someone is assigning a RequestorOrigin twice.",
+      "parentUuid": "854714e1_d900d300",
+      "revId": "bdbae340b2e139f0b098cc4a0c8335739568d2c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "bead99874c0f63f1ddf66963cd1af613b4a6531e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f784d27_2c919b75",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-14T09:56:13Z",
+      "side": 0,
+      "message": "The initiator is null when the navigation is not initiated by a document. The navigating frame can be a main-frame and a sub-frame.\n\nI thought I was in ResourceDispatcherHostImpl::BeginNavigationRequest(), but I am in ResourceDispatcherHostImpl::ContinuePendingBeginRequest(), so it still make sense to adapt this DCHECK.",
+      "parentUuid": "d78d3786_a031651f",
+      "revId": "bead99874c0f63f1ddf66963cd1af613b4a6531e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

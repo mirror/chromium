@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb275d1d_080d7c8e",
+        "filename": "chrome/renderer/net/net_error_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-14T09:56:13Z",
+      "side": 1,
+      "message": "Yes, I wanted to ask them.\n\nI hesitate between no-initiators and initiator\u003d\u003dpage_url\n\nI would like to avoid no-initiators. The navigation is renderer-initiated and I have a CHECK that ensures that there is always an initiator.",
+      "parentUuid": "191e186f_47da3d4c",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "816300ea_cc22c4e4",
         "filename": "content/browser/loader/resource_dispatcher_host_browsertest.cc",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "8118a91467a77969e70f7c508110897f1f18178c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625a680e_b7cf6e4c",
+        "filename": "content/browser/loader/resource_dispatcher_host_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-14T09:56:13Z",
+      "side": 1,
+      "message": "We talk about this together. There are no issue since no checks were removed but 4 were added. ( request(old_code) \u003d image_request(new_code))",
+      "parentUuid": "816300ea_cc22c4e4",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "49e8a729_35254c57",
+        "filename": "content/browser/loader/resource_dispatcher_host_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-14T09:56:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "296f6502_edb78727",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f40bae8_a9037db0",
         "filename": "content/browser/loader/resource_dispatcher_host_browsertest.cc",
         "patchSetId": 16
@@ -67,6 +121,24 @@
       "revId": "8118a91467a77969e70f7c508110897f1f18178c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b82cd2a_2cca88ca",
+        "filename": "content/browser/loader/resource_dispatcher_host_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-14T09:56:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f40bae8_a9037db0",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "526c4fac_115cbe3a",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-14T09:56:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9d92b70_78b31159",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e3a11fa_c45609dd",
         "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
         "patchSetId": 16
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-08T16:26:51Z",
       "side": 1,
       "message": "When do we hit this case for subframes? History navigations?",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "142f7f8c_b5506ab5",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-14T09:56:13Z",
+      "side": 1,
+      "message": "Yes exactly. For instance NavigationControllerBrowserTest.NavigationTypeClassification_NewAndAutoSubframe if I remember correctly.",
+      "parentUuid": "9e3a11fa_c45609dd",
       "revId": "8118a91467a77969e70f7c508110897f1f18178c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "3d422b5d_d738a8de",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 6668,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-14T09:56:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27139394_77636807",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f80e22f_31445e24",
         "filename": "third_party/WebKit/Source/core/loader/NavigationScheduler.cpp",
         "patchSetId": 16
@@ -132,6 +258,24 @@
       "writtenOn": "2017-11-08T16:26:51Z",
       "side": 1,
       "message": "Are we sure that this will still be valid when the navigation is finally scheduled?",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a9de06f_fea35d60",
+        "filename": "third_party/WebKit/Source/core/loader/NavigationScheduler.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-14T09:56:13Z",
+      "side": 1,
+      "message": "AFAIK, we are not sure.\nThere are 5 final childs of ScheduledNavigation that store the |origin_document| and it was not an issue for all of them.\n\nI think the safest solution is:\n1) In ::Fire() DCHECK that frame-\u003eGetDocument() \u003d\u003d OriginDocument(). The goal is to detect if this assumption was wrong.\n2) Use frame-\u003eGetDocument() instead of OriginDocument() in ::Fire() for the release build.\n\nWhat do you think?\n\n-----\n\nedit: Instead of what I am saying above, I removed the origin_document. It caused the error message \"Not allowed to navigate top frame to data URL\" \n to happen before the OnBeforeUnLoad dialog in an Android test (rg.chromium.chrome.browser.ModalDialogTest#testBeforeUnloadOnReloadDialog).\n\nIt is probably not an issue, but I prefer to keep the existing behavior.",
+      "parentUuid": "9f80e22f_31445e24",
       "revId": "8118a91467a77969e70f7c508110897f1f18178c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
