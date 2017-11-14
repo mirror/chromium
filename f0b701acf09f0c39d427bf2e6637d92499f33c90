@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "3c4d27d0_3a317943",
+        "filename": "chrome/browser/resources/welcome/welcome_win10.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-11-14T19:29:44Z",
+      "side": 1,
+      "message": "All good.",
+      "parentUuid": "39e7b867_db06b6af",
+      "range": {
+        "startLine": 240,
+        "startChar": 17,
+        "endLine": 240,
+        "endChar": 33
+      },
+      "revId": "f0b701acf09f0c39d427bf2e6637d92499f33c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f58a785_e9cd8847",
         "filename": "chrome/browser/resources/welcome/welcome_win10.js",
         "patchSetId": 2
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Could you actually use the ES6 `const` for these? If it\u0027s used in (non-iOS) Chrome, you know that the browser is going to support it :)\n\n(See https://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md#const-Block_Scoped-Constants)",
       "parentUuid": "8c0371b2_8674003c",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 7
+      },
+      "revId": "f0b701acf09f0c39d427bf2e6637d92499f33c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31a354bc_e1278077",
+        "filename": "chrome/browser/resources/welcome/welcome_win10.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-11-14T19:29:44Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "44d1cda8_caafbd72",
       "range": {
         "startLine": 38,
         "startChar": 4,
