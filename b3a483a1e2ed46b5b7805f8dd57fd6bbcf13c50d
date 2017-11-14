@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9a62d0e6_7a549b70",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-14T21:28:03Z",
+      "side": 1,
+      "message": "Ah, that\u0027s flat_set from base and not part of flat buffers. My main point was add/remove used to be O(lgn) before, and now it\u0027s O(n) then. I wanted to make sure we recognize this.\n\nCan we put a comment over |rulesets_| about our assumption over # of extensions and why we think it\u0027s OK to have linear complexity? add/remove probably isn\u0027t the bottleneck, but we might still want to improve it for searching, e.g. from ShouldBlockRequest (ShouldBlockRequest is arguably better now that it is guranteed to be O(n)).",
+      "parentUuid": "63e3504d_3e3453f9",
+      "revId": "b3a483a1e2ed46b5b7805f8dd57fd6bbcf13c50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cfad57b_3f200ab2",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
         "patchSetId": 1
