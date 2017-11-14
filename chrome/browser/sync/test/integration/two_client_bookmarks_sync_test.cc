@@ -2020,6 +2020,7 @@ IN_PROC_BROWSER_TEST_F(TwoClientBookmarksSyncTest, ManagedBookmarks) {
   // Make sure the first Profile has an overridden policy provider.
   EXPECT_CALL(policy_provider_, IsInitializationComplete(testing::_))
       .WillRepeatedly(testing::Return(true));
+  policy_provider_.SetAutoRefresh();
   policy::ProfilePolicyConnectorFactory::GetInstance()->PushProviderForTesting(
       &policy_provider_);
 
