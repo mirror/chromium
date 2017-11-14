@@ -334,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "394d067b_5ab14f4a",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3871,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:36:48Z",
+      "side": 1,
+      "message": "I think that\u0027s undefined behavior and we usually don\u0027t use DCHECK to guard against out of range enum values.",
+      "parentUuid": "54c6d0cf_122ecd2b",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50ed4b00_0bf19dcc",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 5
