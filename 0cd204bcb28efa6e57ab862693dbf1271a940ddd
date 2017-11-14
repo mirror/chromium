@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68ba7948_f3bcbc44",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-14T00:07:38Z",
+      "side": 1,
+      "message": "style: use {}",
+      "revId": "0cd204bcb28efa6e57ab862693dbf1271a940ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da8edf5_e9eea6d9",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-14T00:07:38Z",
+      "side": 1,
+      "message": "Is it even possible? Should this be a CHECK()?",
+      "revId": "0cd204bcb28efa6e57ab862693dbf1271a940ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f911f9_f82bbb1e",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-14T00:07:38Z",
+      "side": 1,
+      "message": "I\u0027d rather have swap() here instead of move assignment, give we use pending_messages_ after that.",
+      "revId": "0cd204bcb28efa6e57ab862693dbf1271a940ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec33ad1_098c6621",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-14T00:07:38Z",
+      "side": 1,
+      "message": "CreateSessionHost()? Also, return value is never used apparently.",
+      "revId": "0cd204bcb28efa6e57ab862693dbf1271a940ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1854bfaa_f94e5b80",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-14T00:07:38Z",
+      "side": 1,
+      "message": "I think this shouldn\u0027t be explicit, just delete it on the correct thread.",
+      "revId": "0cd204bcb28efa6e57ab862693dbf1271a940ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e690cb85_28a999bf",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-14T00:07:38Z",
+      "side": 1,
+      "message": "style: {}",
+      "revId": "0cd204bcb28efa6e57ab862693dbf1271a940ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed774497_25c21ad9",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-14T00:07:38Z",
+      "side": 1,
+      "message": "BindOnce",
+      "revId": "0cd204bcb28efa6e57ab862693dbf1271a940ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd88620f_4c06d817",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-14T00:07:38Z",
+      "side": 1,
+      "message": "Let\u0027s nuke lines 248-258. Just do substr conditionally in L267  perhaps?",
+      "revId": "0cd204bcb28efa6e57ab862693dbf1271a940ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ecd8de5_e4b8e31a",
+        "filename": "content/renderer/devtools/devtools_agent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-14T00:07:38Z",
+      "side": 1,
+      "message": "perhaps, flat_map\u003cint, std::unique_ptr\u003cSessionProxy, OnTaskRunnerDeleter\u003e\u003e?",
+      "revId": "0cd204bcb28efa6e57ab862693dbf1271a940ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fcf49c8_00054eef",
+        "filename": "content/renderer/service_worker/embedded_worker_devtools_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-14T00:07:38Z",
+      "side": 1,
+      "message": "As above, let\u0027s just have one code path for both chunked and unchunked cases.",
+      "revId": "0cd204bcb28efa6e57ab862693dbf1271a940ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a9c150_21fb00b0",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 5
+      },
+      "lineNbr": 3629,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-14T00:07:38Z",
+      "side": 1,
+      "message": "Bad rebase?",
+      "revId": "0cd204bcb28efa6e57ab862693dbf1271a940ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
