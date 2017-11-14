@@ -22,6 +22,30 @@
       "revId": "e546621784e47eb7c4427ba58dd3d376fc436e57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a5fc2a_602eeffe",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-11-14T15:50:55Z",
+      "side": 1,
+      "message": "Are you saying that the policy, being cached on the device, will reset the setting, therefore making it a change? That\u0027s interesting and something that nobody pointed out. I\u0027ll test for this for sure. If so, we should keep whether we have uploaded an EID or not  in a different place (e.g. local storage). I\u0027ll also consider your offline suggestion to add metadata to the policy fetch response instead of this policy, too, something that also didn\u0027t come up during design and code reviews.",
+      "parentUuid": "14645cf2_7eb80356",
+      "range": {
+        "startLine": 172,
+        "startChar": 18,
+        "endLine": 172,
+        "endChar": 28
+      },
+      "revId": "e546621784e47eb7c4427ba58dd3d376fc436e57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
