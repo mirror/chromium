@@ -70,6 +70,30 @@
       "revId": "8c4f7739302435821f1b73da7c267a826240541c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf5cb36_3b56d46a",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-14T12:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44b02ace_8d864f15",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "8c4f7739302435821f1b73da7c267a826240541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
