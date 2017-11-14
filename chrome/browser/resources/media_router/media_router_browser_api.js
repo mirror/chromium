@@ -302,7 +302,6 @@ cr.define('media_router.browserApi', function() {
   function setCurrentMediaVolume(volume) {
     chrome.send('setCurrentMediaVolume', [{volume: volume}]);
   }
-
   /**
    * Sets the local present mode of the Hangouts associated with the current
    * route.
@@ -310,6 +309,16 @@ cr.define('media_router.browserApi', function() {
    */
   function setHangoutsLocalPresent(localPresent) {
     chrome.send('hangouts.setLocalPresent', [localPresent]);
+  }
+
+  /**
+   * Sends a command to change the Media Remoting enabled value associated with
+   * current rout.
+   *
+   * @param {boolean} enabled
+   */
+  function setMediaRemotingEnabled(enabled) {
+    chrome.send('setMediaRemotingEnabled', [{enabled: enabled}]);
   }
 
   return {
@@ -344,6 +353,7 @@ cr.define('media_router.browserApi', function() {
     selectLocalMediaFile: selectLocalMediaFile,
     setCurrentMediaMute: setCurrentMediaMute,
     setCurrentMediaVolume: setCurrentMediaVolume,
-    setHangoutsLocalPresent: setHangoutsLocalPresent
+    setHangoutsLocalPresent: setHangoutsLocalPresent,
+    setMediaRemotingEnabled: setMediaRemotingEnabled
   };
 });

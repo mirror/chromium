@@ -244,12 +244,15 @@ cr.define('media_router', function() {
    * @param {boolean} canSetVolume Whether the route volume can be changed.
    * @param {boolean} canSeek Whether the route's playback position can be
    *     changed.
+   * @param {boolean} canSetMediaRemotingEnabled Whether Media Remoting can be
+   *     enabled / disabled. True for mirroring routes.
    * @param {boolean} isPaused Whether the route is paused.
    * @param {boolean} isMuted Whether the route is muted.
    * @param {number} volume The route's volume, between 0 and 1.
    * @param {number} duration The route's duration in seconds.
    * @param {number} currentTime The route's current position in seconds.
    *     Must not be greater than |duration|.
+   * @param {boolean} mediaRemotingEnabled Whether Media Remoting is enabled.
    * @param {!{localPresent: boolean}=} hangoutsExtraData Only set for Hangouts
    *     routes.
    * @constructor
@@ -257,10 +260,10 @@ cr.define('media_router', function() {
    */
   var RouteStatus = function(
       title = '', description = '', canPlayPause = false, canMute = false,
-      canSetVolume = false, canSeek = false,
+      canSetVolume = false, canSeek = false, canSetMediaRemotingEnabled = false,
       playState = media_router.PlayState.PLAYING, isPaused = false,
       isMuted = false, volume = 0, duration = 0, currentTime = 0,
-      hangoutsExtraData = undefined) {
+      mediaRemotingEnabled = true, hangoutsExtraData = undefined) {
 
     /** @type {string} */
     this.title = title;
@@ -280,6 +283,9 @@ cr.define('media_router', function() {
     /** @type {boolean} */
     this.canSeek = canSeek;
 
+    /** @type {boolean} */
+    this.canSetMediaRemotingEnabled = canSetMediaRemotingEnabled;
+
     /** @type {media_router.PlayState} */
     this.playState = playState;
 
@@ -294,6 +300,9 @@ cr.define('media_router', function() {
 
     /** @type {number} */
     this.currentTime = currentTime;
+
+    /** @type {boolean} */
+    this.mediaRemotingEnabled = mediaRemotingEnabled;
 
     /** @type {!{localPresent: boolean}|undefined} */
     this.hangoutsExtraData = hangoutsExtraData;

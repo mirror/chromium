@@ -47,12 +47,14 @@ cr.define('route_controls', function() {
             params.title ? params.title : '',
             params.status ? params.status : '', !!params.canPlayPause,
             !!params.canMute, !!params.canSetVolume, !!params.canSeek,
+            !!params.canSetMediaRemotingEnabled,
             params.playState ? params.playState :
                                media_router.PlayState.PLAYING,
             !!params.isPaused, !!params.isMuted,
             params.volume ? params.volume : 0,
             params.duration ? params.duration : 0,
-            params.currentTime ? params.currentTime : 0);
+            params.currentTime ? params.currentTime : 0,
+            !!params.mediaRemotingEnabled);
       };
 
       // Import route_controls.html before running suite.
@@ -276,6 +278,28 @@ cr.define('route_controls', function() {
             done();
           }, 1000);
         }, 1000);
+      });
+
+      test('set media remoting enabled', function(done) {
+        assertElementHidden('media-remoting-enabled-controls');
+        let routeStatus = createRouteStatus();
+        controls.routeStatus = routeStatus;
+        assertElementHidden('media-remoting-enabled-controls');
+
+        routeStatus = createRouteStatus();
+        routeStatus.canSetMediaRemotingEnabled = true;
+        routeStatus.mediaRemotingEnabled = true;
+        controls.routeStatus = routeStatus;
+        assertElementShown('media-remoting-enabled-controls');
+        assertFalse(controls.$$('#always-use-mirroring-checkbox').checked);
+
+        document.addEventListener('mock-set-media-remoting-enabled',
+            function(e) {
+              done();
+            });
+
+        MockInteractions.tap(controls.$$('#always-use-mirroring-checkbox'));
+        assertTrue(controls.$$('#always-use-mirroring-checkbox').checked);
       });
 
       test('hangouts local present mode', function(done) {
