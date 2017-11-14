@@ -1,0 +1,160 @@
+Name
+
+    CHROMIUM_gpu_fence
+
+Name Strings
+
+    GL_CHROMIUM_gpu_fence
+
+Version
+
+    Last Modifed Date: November 8, 2017
+
+Dependencies
+
+    OpenGL ES 2.0 is required.
+
+Overview
+
+    This extension supports cross-process GL context synchronization.
+
+    A "gpu fence" represents a synchronization point in a GL stream that can be
+    duplicated into a paired gpu fence in another unrelated GL stream. A server
+    wait on the duplicate ensures that the commands on the source stream have
+    executed. The gpu fence is a reference to a platform-dependent native GL
+    fence object.
+
+    This supports two use cases:
+
+    * Create a client-side gpu fence from a native GL fence object, duplicate
+      it into a service-side gpu fence, and issue a server wait on the service
+      side.
+
+    * Create a new service-side gpu fence, request a duplicated client-side gpu
+      fence via callback, create a native GL fence object from that and do a
+      server wait on the client.
+
+    IPC transport is based on a "gpu fence handle" which can be converted
+    to/from a gpu fence, but the details of this are out of scope for this
+    extension.
+
+    See also the ANDROID_native_fence_sync extension which is used to
+    implement the GLFenceEGLNativeSync class on Android.
+
+Issues
+
+    None
+
+New Procedures and Functions
+
+    The command
+
+        GLuint gl->CreateGpuFenceCHROMIUM()
+
+    creates a new service side gpu fence and inserts a matching synchronization
+    point into the command stream. It returns a gpu fence ID that is used for
+    subsequent operations.
+
+    The command
+
+        ContextSupport()->GetGpuFenceHandle(
+            GLuint gpu_fence_id,
+            const base::Callback<void(const gfx::GpuFenceHandle&)>&)
+
+    extracts a gpu fence handle from the service-side gpu fence and passes
+    it to the provided callback function asynchronously. The callback can use
+    this handle to create a paired client-side gpu fence. Use this on
+    a service side gpu fence that was created with CreateGpuFenceCHROMIUM. (I
+    think it'll actually work in the Android implementation even if ignoring
+    this restriction, but not sure if it's a good idea to assume that. 3-way
+    synchronization or similar seems out of scope.)
+
+    The command
+
+        GLuint gl->DuplicateGpuFenceCHROMIUM(ClientGpuFence source)
+
+    creates a service-side gpu fence that is synchronized with the supplied
+    client-side gpu fence. It returns a gpu fence ID.
+
+    The command
+
+        void gl->WaitGpuFenceCHROMIUM(EGLint gpu_fence_id)
+
+    issues a server wait. Use this on a gpu fence that was duplicated from a
+    client GPU fence to ensure that operations are synchronized with the source
+    gpu fence that provided the gpu fence handle.
+
+    The command
+
+        void gl->DestroyGpuFenceCHROMIUM(EGLint gpu_fence_id)
+
+    destroys the specified service side gpu fence and invalidates the
+    gpu_fence_id. A gpu fence that was duplicated from it remains valid, and it
+    is not necessary to wait for the asynchronous callback to execute before
+    destroying the service side gpu fence.
+
+    A usage example for two-process synchronization is to sequence access to a
+    globally shared drawable such as an AHardwareBuffer on Android, where the
+    writer uses a local GL context and the reader is a command buffer context
+    in the GPU process. The writer process draws into an AHardwareBuffer-backed
+    GLImage in the local GL context, then creates a gpu fence to mark the end
+    of drawing operations:
+
+        // ... write to the shared drawable in local context, then create
+        // a local fence.
+        gl::GLFenceEGLNativeSync local_fence;
+
+        // Get a GpuFence from it via handle.
+        gpu::GpuFence gpu_fence(
+            local_fence->GetGpuFenceHandle());
+        // It's ok for local_fence to be destroyed at this point.
+
+        // Create a matching gpu fence on the command buffer context, issue
+        // server wait, and destroy it.
+        EGLint id = gl->DuplicateGpuFenceCHROMIUM(&gpu_fence);
+        gl->WaitGpuFenceCHROMIUM(id);
+        gl->DestroyGpuFenceCHROMIUM(id);
+
+        // ... read from the shared drawable via command buffer. These reads
+        // will happen after the local_fence has signalled. The local
+        // fence doesn't need to remain alive for this.
+
+    If a process wants to consume a drawable that was produced through a
+    command buffer context in the GPU process, the sequence is as follows:
+
+        // Set up callback that's waiting for the drawable to be ready.
+        void callback(const gpu::GpuFenceHandle& handle) {
+            // Create a local context GL fence from the GpuFence.
+            std::unique_ptr<gl::GLFence> local_fence =
+                gl::GLFence::CreateFromGpuFenceHandle(handle);
+            local_fence->ServerWait();
+            // ... read from the shared drawable in the local context.
+        }
+
+        // ... write to the shared drawable via command buffer, then
+        // create a gpu fence:
+        EGLint id = gl->CreateGpuFenceCHROMIUM();
+        ContextSupport()->GetGpuFenceDuplicate(id, callback);
+        gl->DestroyGpuFenceCHROMIUM(id);
+
+    It is legal to create the GpuFence on a separate command buffer context
+    instead of on the command buffer channel that did the drawing operations,
+    but in that case gl->WaitSyncTokenCHROMIUM() or equivalent must be used to
+    sequence the operations between the distinct command buffer contexts as
+    usual.
+
+New Tokens
+
+    None.
+
+Errors
+
+    None.
+
+New State
+
+    None.
+
+Revision History
+
+    11/8/2017    Documented the extension

@@ -646,8 +646,11 @@ bool GLSurfaceEGL::InitializeOneOff(EGLNativeDisplayType native_display) {
   // function. See crbug.com/775707 for details. In short, if the symbol is
   // present and we're on Android N or newer, assume that it's usable even if
   // the extension wasn't reported.
+  LOG(INFO) << __FUNCTION__
+            << ";;; Checking EGL_ANDROID_native_fence_sync support, extensions="
+            << g_egl_extensions;
   g_egl_android_native_fence_sync_supported =
-      g_driver_egl.ext.b_EGL_ANDROID_native_fence_sync;
+      HasEGLExtension("EGL_ANDROID_native_fence_sync");
 #if defined(OS_ANDROID)
   if (base::android::BuildInfo::GetInstance()->sdk_int() >=
           base::android::SDK_VERSION_NOUGAT &&
@@ -755,6 +758,8 @@ bool GLSurfaceEGL::IsCreateContextClientArraysSupported() {
 }
 
 bool GLSurfaceEGL::IsAndroidNativeFenceSyncSupported() {
+  LOG(INFO) << __FUNCTION__ << ";;; g_egl_android_native_fence_sync_supported="
+            << g_egl_android_native_fence_sync_supported;
   return g_egl_android_native_fence_sync_supported;
 }
 

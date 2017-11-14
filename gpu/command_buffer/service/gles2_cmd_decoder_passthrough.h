@@ -200,6 +200,9 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
   // Gets the QueryManager for this context.
   QueryManager* GetQueryManager() override;
 
+  // Gets the GpuFenceManager for this context.
+  GpuFenceManager* GetGpuFenceManager() override;
+
   // Gets the FramebufferManager for this context.
   FramebufferManager* GetFramebufferManager() override;
 

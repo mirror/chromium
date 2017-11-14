@@ -42,4 +42,31 @@ TEST_P(GLES2DecoderTest4, SetEnableDCLayersCHROMIUMValidArgs) {
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
   EXPECT_EQ(GL_NO_ERROR, GetGLError());
 }
+
+TEST_P(GLES2DecoderTest4, CreateGpuFenceINTERNALValidArgs) {
+  EXPECT_CALL(*gl_, CreateGpuFenceINTERNAL(1, 2));
+  SpecializedSetup<cmds::CreateGpuFenceINTERNAL, 0>(true);
+  cmds::CreateGpuFenceINTERNAL cmd;
+  cmd.Init(1, 2);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_NO_ERROR, GetGLError());
+}
+
+TEST_P(GLES2DecoderTest4, WaitGpuFenceCHROMIUMValidArgs) {
+  EXPECT_CALL(*gl_, WaitGpuFenceCHROMIUM(1));
+  SpecializedSetup<cmds::WaitGpuFenceCHROMIUM, 0>(true);
+  cmds::WaitGpuFenceCHROMIUM cmd;
+  cmd.Init(1);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_NO_ERROR, GetGLError());
+}
+
+TEST_P(GLES2DecoderTest4, DestroyGpuFenceCHROMIUMValidArgs) {
+  EXPECT_CALL(*gl_, DestroyGpuFenceCHROMIUM(1));
+  SpecializedSetup<cmds::DestroyGpuFenceCHROMIUM, 0>(true);
+  cmds::DestroyGpuFenceCHROMIUM cmd;
+  cmd.Init(1);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_NO_ERROR, GetGLError());
+}
 #endif  // GPU_COMMAND_BUFFER_SERVICE_GLES2_CMD_DECODER_UNITTEST_4_AUTOGEN_H_
