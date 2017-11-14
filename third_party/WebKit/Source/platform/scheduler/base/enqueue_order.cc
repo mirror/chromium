@@ -8,16 +8,15 @@ namespace blink {
 namespace scheduler {
 namespace internal {
 
-// Note we set the first |enqueue_order_| to a specific non-zero value, because
-// first N values of EnqueueOrder have special meaning (see EnqueueOrderValues).
-EnqueueOrderGenerator::EnqueueOrderGenerator()
-    : enqueue_order_(static_cast<EnqueueOrder>(EnqueueOrderValues::FIRST)) {}
-
-EnqueueOrderGenerator::~EnqueueOrderGenerator() {}
-
 EnqueueOrder EnqueueOrderGenerator::GenerateNext() {
-  base::AutoLock lock(lock_);
-  return enqueue_order_++;
+  EnqueueOrder generated = reinterpret_cast<EnqueueOrderValueType>(
+      base::subtle::NoBarrier_AtomicIncrement(&next_, 1));
+#if defined(ARCH_CPU_32_BITS)
+  // Make sure overflow skips special EnqueueOrder values on 32-bit.
+  while (generated < EnqueueOrderValues::FIRST)
+    generated = GenerateNext();
+#endif  // defined(ARCH_CPU_32_BITS)
+  return generated;
 }
 
 }  // namespace internal
