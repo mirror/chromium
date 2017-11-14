@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "631ceb35_1b47ee41",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-14T22:31:25Z",
+      "side": 1,
+      "message": "Related to comment above, can this be done in Stop()?",
+      "revId": "f537d0df0b15ffe3e5978d32672c447e0999637b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6be973e_fe4e7431",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
