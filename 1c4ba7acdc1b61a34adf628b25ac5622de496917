@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d93c4899_d846afb0",
+        "filename": "components/variations/android/java/src/org/chromium/components/variations/firstrun/VariationsSeedFetcher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2017-11-14T18:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67b0943f_42ce8781",
+      "range": {
+        "startLine": 190,
+        "startChar": 37,
+        "endLine": 190,
+        "endChar": 41
+      },
+      "revId": "1c4ba7acdc1b61a34adf628b25ac5622de496917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e45c2af_da0845d7",
         "filename": "components/variations/android/junit/src/org/chromium/components/variations/firstrun/VariationsSeedFetcherTest.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "1c4ba7acdc1b61a34adf628b25ac5622de496917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3dc2e4_83206228",
+        "filename": "components/variations/android/junit/src/org/chromium/components/variations/firstrun/VariationsSeedFetcherTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2017-11-14T18:57:04Z",
+      "side": 1,
+      "message": "Only checking that param values are in the URL, but no formatting is checked.",
+      "parentUuid": "8e45c2af_da0845d7",
+      "range": {
+        "startLine": 153,
+        "startChar": 50,
+        "endLine": 153,
+        "endChar": 0
+      },
+      "revId": "1c4ba7acdc1b61a34adf628b25ac5622de496917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2d60cd32_00a9b98c",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2017-11-14T18:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef33ec2b_04727bba",
+      "range": {
+        "startLine": 349,
+        "startChar": 35,
+        "endLine": 349,
+        "endChar": 0
+      },
+      "revId": "1c4ba7acdc1b61a34adf628b25ac5622de496917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "302ab51e_fed7f009",
         "filename": "components/variations/service/variations_service.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "1c4ba7acdc1b61a34adf628b25ac5622de496917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58818b63_24976e3a",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2017-11-14T18:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "302ab51e_fed7f009",
+      "range": {
+        "startLine": 360,
+        "startChar": 6,
+        "endLine": 360,
+        "endChar": 9
+      },
+      "revId": "1c4ba7acdc1b61a34adf628b25ac5622de496917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
