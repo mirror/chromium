@@ -1,0 +1,378 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "817e2551_b47a0822",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "Is this borrowed from the extension?  It may be time to reconsider whether we should have a timeout at all.\n\n- For background use, the availability status of an app will almost certainly never change, except possibly for a couple of corner cases I could live with.\n- For foreground use (launch / dialog) we always want the latest status.\n\nIt seems worth it to eliminate another source of wasteful background polling.",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3b1e34_de1773bb",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "This has been turned off on the Netflix side and doesn\u0027t need to be ported.",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d98659_1d58a362",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "What about pending callbacks?",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884ebba9_aff6a651",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "Background requests should respect the cache but foreground requests should always query the device to get the current state (and update the cache)",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9770a55d_551bedf7",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "If the app_url changes for a device, the cached availability won\u0027t go with it.",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad6a6b0_32c57166",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "Can you include |mojo_parsing_error| here?",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da5c0f7_452a9fb4",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "Do we want to evict the oldest entry?",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c46e3ab9_12d7f3a0",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "There are a few error cases here that need to be handled somewhere.\n\nTransient error:\n1. Fallback on cached availability, if set\n2. Otherwise, set availability as UNKNOWN, which is a signal to try again later\n\nUnavailable response: (404, 5XX)\n1. Cache UNAVAILABLE\n2. Apps may become available in the future (AKA \"in-app DIAL\") so let future requests override this\n\nParse error (permanent):\n1. Cache UNAVAILABLE forever as future requests are pointless",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "524af7e9_25aea696",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "Please put definitions in declaration order in the .h (so these would go at the top of the file)",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb6f404_98cbdd08",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "Does this class get instantiated once per device, per app, or per fetch?",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e9f7f5_a8b42756",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "Can you document what happens during shutdown?\n- Does this class abort pending requests or is the caller responsible for that?\n- Does the DialAppInfoParseErrorCallback get invoked for pending requests?",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "288eb956_bffa4af3",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "I am not sure it makes sense to implement caching for app info.  See my top level comments.",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe652e8_740ce2cc",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "base::RepeatingCallback, or base::OnceCallback if this is a one-shot object?",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399f0ee4_e736f0dd",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "Same comment applies here.",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd0376a_27f8fc2d",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "Can an example URL be documented?  In particular note which part comes from discovery (the app_url base) and which part is specific to an app (the e.g. YouTube suffix).",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0224197_0d7c1836",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "What verifies that app_url belongs to the device that was discovered by DIAL?\n(By checking IP addresses.)",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d9b3eef_7653a464",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "It looks like the tests are already friends of this class.   Can these be made private?",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae4357e8_7e97fb33",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "How does the caller keep track of which device\u0027s callback was invoked?  The app_url is specific to a particular request.",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d431db7_ef897c10",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "If the fetch fails with an HTTP 404 (or maybe HTTP 5XX), we know the app is not available on the device.  Or if the app info is invalid, we also show the app as unavailable.  Both of those are different from a transient problem fetching the app info.\n\nIt seems like it\u0027s hard to tell the difference with just an error message return value.",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d20bd75_aeba1884",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "Would it make sense for DialAppInfoFetcher to be a member of CacheEntry and for the CacheEntry to be bound in the callbacks, so the callbacks could update the entry directly?\n\nMaybe it gets a little complicated for the first time fetch (where there may not be a previous entry).  I don\u0027t feel strongly.",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c157fcc_da2301f2",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "It\u0027s possible that the caller will have a list of URLs to fetch (for example, when a new sink query for a DIAL app comes along).  Would it make sense to have an API that takes a list?",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72fb67b_c501a022",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_info_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-14T01:11:38Z",
+      "side": 1,
+      "message": "Does this have to be defined anew for every request?",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
