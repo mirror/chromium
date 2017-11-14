@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fc48710_af8a6a19",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1767,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-14T08:49:20Z",
+      "side": 1,
+      "message": "Please update layout in call sites, we should not use deprecated API in\nnew code.\n\nExample call of update layout:\n  // TODO(editing-dev): Hoist updateStyleAndLayoutIgnorePendingStylesheets\n  // to caller. See http://crbug.com/590369 for more details.\n  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();",
+      "revId": "d91782c1c58cb32c6965d7d46d586b0e2c5d8ca0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e621a181_c9a83cb9",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-14T08:49:20Z",
+      "side": 1,
+      "message": "Since we can use Editor::GetFrame(), we don\u0027t need to make |FrameSelection|\nas parameter.",
+      "revId": "d91782c1c58cb32c6965d7d46d586b0e2c5d8ca0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcbbf199_7053dcaf",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1938,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-14T08:49:20Z",
+      "side": 1,
+      "message": "Note: L1935 make layout up-to-date. So, we don\u0027t need to call update layout\nhere.",
+      "revId": "d91782c1c58cb32c6965d7d46d586b0e2c5d8ca0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
