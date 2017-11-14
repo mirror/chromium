@@ -13,7 +13,7 @@ class RtcEventLogOutputSink {
  public:
   virtual ~RtcEventLogOutputSink() = default;
 
-  virtual void OnRtcEventLogWrite(const std::string& output) = 0;
+  virtual void OnWebRtcEventLogWrite(const std::string& output) = 0;
 };
 
 }  // namespace content

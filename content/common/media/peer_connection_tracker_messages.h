@@ -41,7 +41,7 @@ IPC_MESSAGE_CONTROL5(PeerConnectionTrackerHost_GetUserMedia,
                      // not be parsed by the browser for security reasons.
                      std::string /* audio_constraints */,
                      std::string /* video_constraints */)
-IPC_MESSAGE_CONTROL2(PeerConnectionTrackerHost_RtcEventLogWrite,
+IPC_MESSAGE_CONTROL2(PeerConnectionTrackerHost_WebRtcEventLogWrite,
                      int /* lid */,
                      std::string /* output */)
 
