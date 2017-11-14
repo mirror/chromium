@@ -22,6 +22,30 @@
       "revId": "a34de1adaf2d59808a298b37d9eedc661579a9cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a23d61e_fde257e8",
+        "filename": "media/formats/mp2t/ts_packet.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-11-14T21:46:42Z",
+      "side": 1,
+      "message": "I too am less familiar; damienv@ did this originally. But looking closer, l.80,99,114,115 could indeed lead to 0 payload_size_ here, so I\u0027ll move the RCHECK to the triggered DCHECK with a comment as best I understand.",
+      "parentUuid": "a45bc528_df90fa00",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 28
+      },
+      "revId": "a34de1adaf2d59808a298b37d9eedc661579a9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
