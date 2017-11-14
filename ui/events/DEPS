@@ -1,4 +1,5 @@
 include_rules = [
+  "+third_party/WebKit/public/platform/WebGestureEvent.h",
   "+ui/display",
   "+ui/gfx",
   "+ui/latency",
