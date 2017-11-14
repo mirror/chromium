@@ -893,12 +893,15 @@ extern const char kPrefetchUsageMixedCount[];
 #endif
 
 extern const char kMediaEngagementSchemaVersion[];
+extern const char kAccountConsistencyRequired[];
 
 // Preferences for recording metrics about tab and window usage.
 extern const char kTabStatsTotalTabCountMax[];
 extern const char kTabStatsMaxTabsPerWindow[];
 extern const char kTabStatsWindowCountMax[];
 extern const char kTabStatsDailySample[];
+
+extern const char kAccountConsistencyRequired[];
 
 }  // namespace prefs
 
