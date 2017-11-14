@@ -16,6 +16,24 @@
       "revId": "e1bacfb39730264586bacd2c2840911efb46c883",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c3c35b_c2fc3e22",
+        "filename": "build/linux/sysroot_scripts/sysroot-creator.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-14T23:28:09Z",
+      "side": 0,
+      "message": "lol",
+      "parentUuid": "f0e3ae01_6f253ff6",
+      "revId": "e1bacfb39730264586bacd2c2840911efb46c883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
