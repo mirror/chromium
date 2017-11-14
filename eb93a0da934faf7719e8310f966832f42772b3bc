@@ -136,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "48bcb2ff_499b8b4a",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/controls-video-keynav.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-14T15:31:35Z",
+      "side": 1,
+      "message": "This is likely a real issue. How the test is structured now, it will stop running when `oncanplaytrough` is fired. In other words, if you fail other checks on purpose, it will most likely be ignored. I think this needs to be fixed.",
+      "parentUuid": "b6acdc4d_7ead933e",
+      "range": {
+        "startLine": 22,
+        "startChar": 29,
+        "endLine": 22,
+        "endChar": 45
+      },
+      "revId": "eb93a0da934faf7719e8310f966832f42772b3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c222ee9_2f9aa8fa",
         "filename": "third_party/WebKit/LayoutTests/media/controls/controls-video-keynav.html",
         "patchSetId": 2
