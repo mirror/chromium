@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "403d2a2c_438cc7b7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encrypted-media/encrypted-media-default-feature-policy.https.sub.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1247458
+      },
+      "writtenOn": "2017-11-14T11:56:53Z",
+      "side": 1,
+      "message": "We\u0027ll rename it after this change.",
+      "parentUuid": "071c92ab_61d8ea28",
+      "range": {
+        "startLine": 12,
+        "startChar": 7,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "6e2b72cf47115b53fa8fdef8ab702e4a336ce183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad87498_b33630e4",
         "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-getConstraints.html",
         "patchSetId": 17
@@ -39,6 +63,24 @@
       "revId": "6e2b72cf47115b53fa8fdef8ab702e4a336ce183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d74981_a087a6bc",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-getConstraints.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1247458
+      },
+      "writtenOn": "2017-11-14T11:56:53Z",
+      "side": 1,
+      "message": "The test was broken, and this is fixing it. The fake media device doesn\u0027t support those exact values.\nI noticed it when the failed expectation changed.",
+      "parentUuid": "5ad87498_b33630e4",
+      "revId": "6e2b72cf47115b53fa8fdef8ab702e4a336ce183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
