@@ -192,7 +192,7 @@ bool LayoutNGMixin<Base>::NodeAtPoint(
                                                accumulated_offset, action);
 }
 
-template class LayoutNGMixin<LayoutTableCell>;
-template class LayoutNGMixin<LayoutBlockFlow>;
+template class CORE_TEMPLATE_EXPORT LayoutNGMixin<LayoutTableCell>;
+template class CORE_TEMPLATE_EXPORT LayoutNGMixin<LayoutBlockFlow>;
 
 }  // namespace blink
