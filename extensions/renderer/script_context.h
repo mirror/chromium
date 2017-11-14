@@ -225,7 +225,11 @@ class ScriptContext : public RequestSender::Source {
   v8::Local<v8::Value> RunScript(
       v8::Local<v8::String> name,
       v8::Local<v8::String> code,
-      const RunScriptExceptionHandler& exception_handler);
+      const RunScriptExceptionHandler& exception_handler,
+      v8::ScriptCompiler::CompileOptions options =
+          v8::ScriptCompiler::kNoCompileOptions,
+      v8::ScriptCompiler::NoCacheReason no_cache_reason =
+          v8::ScriptCompiler::NoCacheReason::kNoCacheNoReason);
 
  private:
   // DEPRECATED.
