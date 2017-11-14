@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c618b921_2f9e71ce",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-11-14T22:23:29Z",
+      "side": 1,
+      "message": "I recommended \"querySafeBrowsingSetting\" on the downstream one, to match \"queryMetricsSetting\". \"fetchSafeBrowsing...\" and \"fetchMetrics...\" would also be fine. \"OptIn\" wouldn\u0027t work for metrics because metrics is opt-out. Is Safe Browsing opt in?",
+      "parentUuid": "cd1422ce_eb602805",
+      "range": {
+        "startLine": 73,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 38
+      },
+      "revId": "6ff29842130f0677714de51a30b43ba3a3ba28ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d83d8626_1bc14e8d",
         "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
         "patchSetId": 5
