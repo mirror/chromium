@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b94fe699_668f5eef",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-14T12:23:39Z",
+      "side": 1,
+      "message": "nit: please update the names (QueryNextPosition(), time_of_prev_position).",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 38
+      },
+      "revId": "db3070ceda0a1d1ccbd272e069552b8b96f5523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
