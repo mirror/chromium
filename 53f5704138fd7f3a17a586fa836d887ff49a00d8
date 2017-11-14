@@ -16,6 +16,24 @@
       "revId": "53f5704138fd7f3a17a586fa836d887ff49a00d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7f936e_44682426",
+        "filename": "third_party/WebKit/Source/core/page/Page.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-14T16:20:58Z",
+      "side": 1,
+      "message": "That\u0027s a historical name I moved from deleted class. Not sure what that means, but judging by the code around, this is rather a global flag, not field-specific one. Removed.",
+      "parentUuid": "c246716c_1cce3bb6",
+      "revId": "53f5704138fd7f3a17a586fa836d887ff49a00d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
