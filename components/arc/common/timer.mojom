@@ -1,0 +1,53 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Next min version: 1
+
+module arc.mojom;
+
+[Extensible]
+enum ArcTimerResult {
+  SUCCESS = 0,
+  FAILURE = 1,
+};
+
+[Extensible]
+enum ClockId {
+  REALTIME_ALARM = 0,
+  BOOTTIME_ALARM = 1,
+};
+
+struct ArcTimerRequest {
+  // Type of the clock for which a timer needs to be created. This value
+  // corresponds to the clock ids used by timerfd_create.
+  ClockId clock_id;
+
+  // File descriptor to write to when the timer is expired. This indicates to
+  // the instance that the timer is expired. This fd is owned by the host.
+  handle expiration_fd;
+};
+
+// Next method ID: 1
+interface Timer {
+  // Start the timer to run at |seconds_from_now| + |nanoseconds_from_now|
+  // seconds from now. If the timer is already running, it will be replaced.
+  // Notification will be performed as an 8-byte write to the associated
+  // expiration fd.
+  Start@0(int64 seconds_from_now, int64 nanoseconds_from_now)
+    => (ArcTimerResult result);
+};
+
+// Next method ID: 1
+interface TimerHost {
+  // Creates timers with the given arguments. Returns an array of size zero on
+  // failure. On success, returns a non-empty array of |Timer| objects.
+  CreateTimers@0(array<ArcTimerRequest> arc_timer_requests)
+    => (array<Timer>? timers);
+};
+
+// Next method ID: 1
+interface TimerInstance {
+  // Establishes full-duplex communication with the host.
+  Init@0(TimerHost host_ptr);
+};
