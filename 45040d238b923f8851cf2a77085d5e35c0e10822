@@ -46,6 +46,30 @@
       "revId": "45040d238b923f8851cf2a77085d5e35c0e10822",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd3a520_e4d5341d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/enqueue_order.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-14T20:52:49Z",
+      "side": 1,
+      "message": "This is one of those classes that feels perf sensitive but it probably really isn\u0027t.  Lets keep the lock :)",
+      "parentUuid": "c7a1919d_5c5c15fc",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 11
+      },
+      "revId": "45040d238b923f8851cf2a77085d5e35c0e10822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
