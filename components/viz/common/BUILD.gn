@@ -62,6 +62,7 @@ viz_component("common") {
     "gpu/vulkan_context_provider.h",
     "gpu/vulkan_in_process_context_provider.cc",
     "gpu/vulkan_in_process_context_provider.h",
+    "hit_test/aggregated_hit_test_region.cc",
     "hit_test/aggregated_hit_test_region.h",
     "quads/compositor_frame.cc",
     "quads/compositor_frame.h",
