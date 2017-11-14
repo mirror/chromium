@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2612c565_f3c7bf55",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T01:04:50Z",
+      "side": 1,
+      "message": "Last I checked closures are only for the case when it ends up being synchronous. That isn\u0027t the case here. That said, can you supply an empty callback here? By that I mean CookieManager::DeleteCookiesCallback() (I no doubt have the exact name wrong here, the mojom bindings generate a \u0027using\u0027 for the callback type, use it).?",
+      "range": {
+        "startLine": 84,
+        "startChar": 27,
+        "endLine": 84,
+        "endChar": 58
+      },
+      "revId": "2d39ac7129f4eac2315b7b0c6cb0121a044f3b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9262ccb_1370bd68",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T01:04:50Z",
+      "side": 1,
+      "message": "Same comment here as above.",
+      "range": {
+        "startLine": 122,
+        "startChar": 8,
+        "endLine": 122,
+        "endChar": 38
+      },
+      "revId": "2d39ac7129f4eac2315b7b0c6cb0121a044f3b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
