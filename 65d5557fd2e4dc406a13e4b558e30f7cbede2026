@@ -22,6 +22,30 @@
       "revId": "65d5557fd2e4dc406a13e4b558e30f7cbede2026",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12167c3_309338dd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-log-linkify-stack-in-errors-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-14T01:16:16Z",
+      "side": 1,
+      "message": "thumbs up",
+      "parentUuid": "f247ea6b_1ee6bc75",
+      "range": {
+        "startLine": 10,
+        "startChar": 48,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "65d5557fd2e4dc406a13e4b558e30f7cbede2026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
