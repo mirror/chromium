@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c68f15c_a3bff0a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-11-14T15:33:06Z",
+      "side": 1,
+      "message": "... them just as today ...?",
+      "range": {
+        "startLine": 12,
+        "startChar": 57,
+        "endLine": 12,
+        "endChar": 62
+      },
+      "revId": "ac22154a9127c901e9af5b2d3d4d1e9faafb636a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be6cebbf_c5427718",
+        "filename": "base/debug/activity_analyzer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-11-14T15:33:06Z",
+      "side": 1,
+      "message": "nit: maybe a quick comment on where it\u0027s appropriate to use this. Is there a uniquifying naming scheme that\u0027ll make sure there aren\u0027t any file name collisions?",
+      "range": {
+        "startLine": 150,
+        "startChar": 14,
+        "endLine": 150,
+        "endChar": 24
+      },
+      "revId": "ac22154a9127c901e9af5b2d3d4d1e9faafb636a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
