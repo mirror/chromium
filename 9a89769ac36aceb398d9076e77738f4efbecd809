@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69cc7729_6f48062f",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-14T20:19:47Z",
+      "side": 1,
+      "message": "remove indentation",
+      "revId": "9a89769ac36aceb398d9076e77738f4efbecd809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b50052b_38be715f",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-14T20:19:47Z",
+      "side": 1,
+      "message": "Let\u0027s go ahead and see if we can move to the new test api here.  Use getHealthThermometerDevice().",
+      "revId": "9a89769ac36aceb398d9076e77738f4efbecd809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2497d926_d93b75ff",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-14T20:19:47Z",
+      "side": 1,
+      "message": "I\u0027d prefer you just use iframe.addEventListener(\u0027load\u0027, resolve));",
+      "revId": "9a89769ac36aceb398d9076e77738f4efbecd809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed597c3c_9e4bce87",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-14T20:19:47Z",
+      "side": 1,
+      "message": "Since it\u0027s just a dom object and not actually doing anything just yet, I\u0027d move this line outside of the test body, up top.",
+      "revId": "9a89769ac36aceb398d9076e77738f4efbecd809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744a15df_ebae0744",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-14T20:19:47Z",
+      "side": 1,
+      "message": "Order this before the other code and then add a comment so it\u0027s clear what is happening first.\n// 1. Add the iframe.",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 40
+      },
+      "revId": "9a89769ac36aceb398d9076e77738f4efbecd809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
