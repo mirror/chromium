@@ -519,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "3517bd04_6cb3fb2b",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-14T04:29:59Z",
+      "side": 1,
+      "message": "One possibility is to not use default parameters and simply make two versions of String16VectorFromString16(), one with (string16, bool, bool, WordStarts)\nand one with (string16, bool, WordStarts)\nwhere the latter simply calls the former with break_on_underscore as false.\n\nI.e., function overloading\n\nP.S.  Come to think of it, this parameter is an experiment override.  I think you should call it something like |force_break_on_underscore| because the function will sometimes break on underscores even if that parameter is false.  If it\u0027s true, it definitely will break on underscores.",
+      "parentUuid": "0bbfa9fa_540a2007",
+      "range": {
+        "startLine": 136,
+        "startChar": 9,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "05230e7eaa522cb4454d51fb3a90bd9938f23d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aebf424e_b5fec804",
         "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
         "patchSetId": 9
