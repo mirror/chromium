@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/app_list/test/test_app_list_controller_delegate.h"
 
+#include "ui/app_list/app_list_model.h"
 #include "ui/gfx/image/image_skia.h"
 
 namespace test {
@@ -73,6 +74,10 @@ void TestAppListControllerDelegate::LaunchApp(
     AppListSource source,
     int event_flags,
     int64_t display_id) {
+}
+
+app_list::AppListModel* TestAppListControllerDelegate::GetAppListModel() {
+  return nullptr;
 }
 
 }  // namespace test

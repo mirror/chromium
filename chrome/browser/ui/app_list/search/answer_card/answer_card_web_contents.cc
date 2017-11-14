@@ -9,6 +9,8 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/app_list/app_list_controller_delegate.h"
+#include "chrome/browser/ui/app_list/app_list_service.h"
 #include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "content/public/browser/navigation_handle.h"
@@ -20,6 +22,7 @@
 #include "net/http/http_response_headers.h"
 #include "net/http/http_status_code.h"
 #include "ui/app_list/app_list_features.h"
+#include "ui/app_list/app_list_model.h"
 #include "ui/app_list/views/app_list_view.h"
 #include "ui/aura/window.h"
 #include "ui/views/controls/native/native_view_host.h"
@@ -273,6 +276,13 @@ void AnswerCardWebContents::RenderViewHostChanged(
     DetachFromHost();
     AttachToHost(new_host->GetWidget());
   }
+}
+
+void AnswerCardWebContents::DidFirstVisuallyNonEmptyPaint() {
+  AppListService::Get()
+      ->GetControllerDelegate()
+      ->GetAppListModel()
+      ->RecordUserJourneyEndTime();
 }
 
 void AnswerCardWebContents::AttachToHost(content::RenderWidgetHost* host) {

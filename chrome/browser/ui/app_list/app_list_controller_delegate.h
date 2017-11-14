@@ -17,6 +17,10 @@
 
 class Profile;
 
+namespace app_list {
+class AppListModel;
+}
+
 namespace extensions {
 class Extension;
 class ExtensionSet;
@@ -110,6 +114,8 @@ class AppListControllerDelegate {
                          AppListSource source,
                          int event_flags,
                          int64_t display_id) = 0;
+
+  virtual app_list::AppListModel* GetAppListModel() = 0;
 
   static std::string AppListSourceToString(AppListSource source);
 

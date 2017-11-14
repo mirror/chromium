@@ -49,6 +49,7 @@ class AnswerCardWebContents : public AnswerCardContents,
   void RenderViewDeleted(content::RenderViewHost* host) override;
   void RenderViewHostChanged(content::RenderViewHost* old_host,
                              content::RenderViewHost* new_host) override;
+  void DidFirstVisuallyNonEmptyPaint() override;
 
  private:
   void AttachToHost(content::RenderWidgetHost* host);

@@ -7,6 +7,10 @@
 
 #include "chrome/browser/ui/app_list/app_list_controller_delegate.h"
 
+namespace app_list {
+class AppListModel;
+}
+
 namespace test {
 
 class TestAppListControllerDelegate : public AppListControllerDelegate {
@@ -38,6 +42,7 @@ class TestAppListControllerDelegate : public AppListControllerDelegate {
                  AppListSource source,
                  int event_flags,
                  int64_t display_id) override;
+  app_list::AppListModel* GetAppListModel() override;
 
   const GURL& last_opened_url() const { return last_opened_url_; }
 
