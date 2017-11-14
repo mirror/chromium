@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd53c41a_2c8dd77a",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-14T02:35:29Z",
+      "side": 1,
+      "message": "I can still find bugs\nhttps://drive.google.com/file/d/10pPolAX2su7o3ohC68Kp9qtoQsbMrP4K/view?usp\u003dsharing\n\nI think you are trying to change is_placeholder_visible_ without changing placeholder element display property here.\n\nBut I don\u0027t think calling SetPlaceholderVisibility adhoc is a good idea as it tends to make actual visibility and internal visibility flag out of sync.\n\nAs I explained above in https://chromium-review.googlesource.com/c/chromium/src/+/752429#message-9f62c2588d9fbfcdf278012f762e8bca490603ae I think the meaning of placeholder visibility needs to be made clear.",
+      "range": {
+        "startLine": 997,
+        "startChar": 4,
+        "endLine": 997,
+        "endChar": 28
+      },
+      "revId": "dc09afc478fd55bac2932245b79a46618ed19e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
