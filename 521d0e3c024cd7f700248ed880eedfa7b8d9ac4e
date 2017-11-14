@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af2b2d8_5d8436e0",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-14T14:12:53Z",
+      "side": 1,
+      "message": "Could we avoid using nested ternary conditionals? It\u0027s a bit hard to follow.",
+      "revId": "521d0e3c024cd7f700248ed880eedfa7b8d9ac4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90c1610_253efe81",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-14T14:12:53Z",
+      "side": 1,
+      "message": "nit: PrepareCrossOriginRequest while you\u0027re here",
+      "revId": "521d0e3c024cd7f700248ed880eedfa7b8d9ac4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3da51d_fb8e36e0",
+        "filename": "third_party/WebKit/Source/platform/loader/DEPS",
+        "patchSetId": 19
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-14T14:12:53Z",
+      "side": 1,
+      "message": "This is done by specific_include_rules?",
+      "revId": "521d0e3c024cd7f700248ed880eedfa7b8d9ac4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca67a63d_e936709c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceError.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-14T14:12:53Z",
+      "side": 1,
+      "message": "nit: So many ternary conditionals, could we remove some of them, e.g.\n\nif (cors_error_status_)\n  return WebURLError(....);\n\nreturn WebURLError(...);",
+      "revId": "521d0e3c024cd7f700248ed880eedfa7b8d9ac4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
