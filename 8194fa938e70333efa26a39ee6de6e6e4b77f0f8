@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "84be5c8c_4849c681",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-14T00:39:21Z",
+      "side": 1,
+      "message": "Thank you for the clarification! That solved my problem perfectly.",
+      "parentUuid": "30b4f58e_6a5267c5",
+      "revId": "8194fa938e70333efa26a39ee6de6e6e4b77f0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a34930c_7f4f2420",
         "filename": "content/browser/network_service_restart_browsertest.cc",
         "patchSetId": 5
@@ -119,6 +137,48 @@
     },
     {
       "key": {
+        "uuid": "7ddcf153_f885d4fd",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-14T00:39:21Z",
+      "side": 1,
+      "message": "Thank you for the clarification! That\u0027s exactly what I was wondering.",
+      "parentUuid": "636da2af_08b402a9",
+      "revId": "8194fa938e70333efa26a39ee6de6e6e4b77f0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e170c1a_425ff0d5",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-14T00:39:21Z",
+      "side": 1,
+      "message": "Changed to FlushForTesting to avoid confusion.\n\nThe URL request will fail even if the request was initiated before NetworkContextPtr has received the error notification (as long as |SimulateNetworkServiceCrash()| has finished).\nI was trying to do a drive-by test on this, but that\u0027s probably too confusing since we cannot ASSERT a state at this point.",
+      "parentUuid": "3f97bd9a_00fcfe08",
+      "range": {
+        "startLine": 93,
+        "startChar": 31,
+        "endLine": 93,
+        "endChar": 32
+      },
+      "revId": "8194fa938e70333efa26a39ee6de6e6e4b77f0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "510069b2_39b6c4cf",
         "filename": "content/browser/network_service_restart_browsertest.cc",
         "patchSetId": 5
@@ -142,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "9a3df426_05fc61a7",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-14T00:39:21Z",
+      "side": 1,
+      "message": "Removed |LoadBasicRequest()| above so this line will make sure |network_context| is dead.\n\nThis line does the similar thing as the |EXPECT_TRUE(network_context.encountered_error())| above, or do you want me to remove it?",
+      "parentUuid": "510069b2_39b6c4cf",
+      "range": {
+        "startLine": 98,
+        "startChar": 46,
+        "endLine": 98,
+        "endChar": 61
+      },
+      "revId": "8194fa938e70333efa26a39ee6de6e6e4b77f0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3895f8f_e9303e3e",
         "filename": "content/browser/network_service_restart_browsertest.cc",
         "patchSetId": 5
@@ -153,6 +237,30 @@
       "writtenOn": "2017-11-13T19:20:52Z",
       "side": 1,
       "message": "I don\u0027t think this is guaranteed to succeed, is it?  The NetworkContext may or may not have been notified of the crash.  To fix this, I think we need to call FlushForTesting on the NetworkContext first.",
+      "range": {
+        "startLine": 124,
+        "startChar": 30,
+        "endLine": 124,
+        "endChar": 47
+      },
+      "revId": "8194fa938e70333efa26a39ee6de6e6e4b77f0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6bc20fc_d4ccee8a",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-14T00:39:21Z",
+      "side": 1,
+      "message": "Yes. This URL request could ended up with either |net::OK| or |net::ERR_FAILED|.\nI was using this URL request as an alternative to |FlushForTesting| since Chrome browser_tests doesn\u0027t have access to \"storage_partition_impl.h\".\nAdded testing API |StoragePartition::FlushNetworkInterfaceForTesting()| to avoid confusion.",
+      "parentUuid": "b3895f8f_e9303e3e",
       "range": {
         "startLine": 124,
         "startChar": 30,
