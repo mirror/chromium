@@ -1,0 +1,5 @@
+
+# This directory cannot depend on anything else in chromium
+include_rules = [
+# TODO negative rules for all of chromium?
+]
