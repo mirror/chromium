@@ -35,7 +35,7 @@ BeginFrameArgs::BeginFrameArgs()
       type(BeginFrameArgs::INVALID),
       on_critical_path(true) {}
 
-BeginFrameArgs::BeginFrameArgs(uint32_t source_id,
+BeginFrameArgs::BeginFrameArgs(uint64_t source_id,
                                uint64_t sequence_number,
                                base::TimeTicks frame_time,
                                base::TimeTicks deadline,
@@ -52,7 +52,7 @@ BeginFrameArgs::BeginFrameArgs(uint32_t source_id,
 }
 
 BeginFrameArgs BeginFrameArgs::Create(BeginFrameArgs::CreationLocation location,
-                                      uint32_t source_id,
+                                      uint64_t source_id,
                                       uint64_t sequence_number,
                                       base::TimeTicks frame_time,
                                       base::TimeTicks deadline,
@@ -112,7 +112,7 @@ BeginFrameAck::BeginFrameAck()
       source_id(0),
       has_damage(false) {}
 
-BeginFrameAck::BeginFrameAck(uint32_t source_id,
+BeginFrameAck::BeginFrameAck(uint64_t source_id,
                              uint64_t sequence_number,
                              bool has_damage)
     : sequence_number(sequence_number),
