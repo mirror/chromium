@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29845a7a_f52089d7",
+        "filename": "components/sync/model/entity_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-14T16:57:05Z",
+      "side": 1,
+      "message": "Why did this need to be changed? And why aren\u0027t you using the ADD_TO_DICT macro to set it?",
+      "revId": "038aab7d4792c16b62aeb00da1543778485eaafa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
