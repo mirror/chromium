@@ -16,6 +16,24 @@
       "revId": "92f5f0d1f10aa697b72828f44f4c586c9d234e33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef318716_569f0f93",
+        "filename": "chrome/browser/resources/chromeos/chromevox/strings/chromevox_strings.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-14T07:19:38Z",
+      "side": 1,
+      "message": "Sent a link to a document in a separate email.\nmeaning attribute is used in the same file in some places.\nhttps://cs.chromium.org/chromium/src/chrome/app/chromeos_strings.grdp?q\u003dchromeos_strings.grdp+meaning\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d1551\nSome of such contains longer description (full sentence), whereas others just say like \"UI element\" just for disambiguation. This revision is following the latter, but I could change it to a longer one.",
+      "parentUuid": "022847dd_bfb10339",
+      "revId": "92f5f0d1f10aa697b72828f44f4c586c9d234e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
