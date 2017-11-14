@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99f519c1_cb976d07",
+        "filename": "third_party/WebKit/Source/core/html/canvas/ImageElementBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-14T21:00:34Z",
+      "side": 1,
+      "message": "Why not use the same method as HTMLImageElement::ImageContents() uses. That is, pull from the image loader alone and ignore the cached image?",
+      "range": {
+        "startLine": 123,
+        "startChar": 7,
+        "endLine": 123,
+        "endChar": 39
+      },
+      "revId": "90a6c9c5cdce33356bf999f608a898909e999906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
