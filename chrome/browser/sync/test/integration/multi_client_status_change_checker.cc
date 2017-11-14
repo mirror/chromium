@@ -18,5 +18,6 @@ MultiClientStatusChangeChecker::MultiClientStatusChangeChecker(
 MultiClientStatusChangeChecker::~MultiClientStatusChangeChecker() {}
 
 void MultiClientStatusChangeChecker::OnStateChanged(syncer::SyncService* sync) {
+  LOG(INFO) << "MultiClientStatusChangeChecker::OnStateChanged()";
   CheckExitCondition();
 }

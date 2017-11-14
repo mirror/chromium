@@ -112,6 +112,7 @@ IN_PROC_BROWSER_TEST_F(TwoClientBookmarksSyncTest, Sanity) {
   ASSERT_TRUE(GetClient(0)->AwaitMutualSyncCycleCompletion(GetClient(1)));
   ASSERT_NE(nullptr, AddURL(1, "Yahoo", GURL("http://www.yahoo.com")));
   ASSERT_TRUE(BookmarksMatchVerifierChecker().Wait());
+  LOG(INFO) << "*******1";
 
   const BookmarkNode* new_folder = AddFolder(0, 2, "New Folder");
   Move(0, GetUniqueNodeByURL(0, google_url), new_folder, 0);
@@ -122,12 +123,16 @@ IN_PROC_BROWSER_TEST_F(TwoClientBookmarksSyncTest, Sanity) {
 
   ASSERT_NE(nullptr, AddURL(1, "Facebook", GURL("http://www.facebook.com")));
 
+  LOG(INFO) << "*******2";
   ASSERT_TRUE(BookmarksMatchVerifierChecker().Wait());
+  LOG(INFO) << "*******3";
 
   SortChildren(1, GetBookmarkBarNode(1));
   ASSERT_TRUE(BookmarksMatchVerifierChecker().Wait());
+  LOG(INFO) << "*******4";
 
   DisableVerifier();
+  LOG(INFO) << "*******5";
   SetTitle(0, GetUniqueNodeByURL(0, google_url), "Google++");
   SetTitle(1, GetUniqueNodeByURL(1, google_url), "Google--");
   ASSERT_TRUE(BookmarksMatchChecker().Wait());
