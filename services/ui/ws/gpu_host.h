@@ -15,6 +15,7 @@
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "mojo/public/cpp/bindings/strong_binding_set.h"
+#include "services/ui/public/interfaces/arc.mojom.h"
 #include "services/ui/public/interfaces/gpu.mojom.h"
 #include "services/viz/privileged/interfaces/gl/gpu_host.mojom.h"
 #include "services/viz/privileged/interfaces/gl/gpu_service.mojom.h"
@@ -54,6 +55,10 @@ class GpuHost {
   virtual void CreateFrameSinkManager(
       viz::mojom::FrameSinkManagerRequest request,
       viz::mojom::FrameSinkManagerClientPtr client) = 0;
+
+#if defined(OS_CHROMEOS)
+  virtual void AddArc(mojom::ArcRequest request) = 0;
+#endif  // defined(OS_CHROMEOS)
 };
 
 class DefaultGpuHost : public GpuHost, public viz::mojom::GpuHost {
@@ -78,6 +83,9 @@ class DefaultGpuHost : public GpuHost, public viz::mojom::GpuHost {
   void CreateFrameSinkManager(
       viz::mojom::FrameSinkManagerRequest request,
       viz::mojom::FrameSinkManagerClientPtr client) override;
+#if defined(OS_CHROMEOS)
+  void AddArc(mojom::ArcRequest request) override;
+#endif  // defined(OS_CHROMEOS)
 
   // viz::mojom::GpuHost:
   void DidInitialize(const gpu::GPUInfo& gpu_info,
@@ -117,6 +125,9 @@ class DefaultGpuHost : public GpuHost, public viz::mojom::GpuHost {
   base::WaitableEvent viz_main_wait_;
 
   mojo::StrongBindingSet<mojom::Gpu> gpu_bindings_;
+#if defined(OS_CHROMEOS)
+  mojo::StrongBindingSet<mojom::Arc> arc_bindings_;
+#endif  // defined(OS_CHROMEOS)
 
   DISALLOW_COPY_AND_ASSIGN(DefaultGpuHost);
 };
