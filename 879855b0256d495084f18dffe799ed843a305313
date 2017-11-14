@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "7b358f1e_7ea4961c",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-14T08:30:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ba205452_ba0b74e0",
+      "revId": "879855b0256d495084f18dffe799ed843a305313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f8c5e6f_86f58ff8",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableRow.h",
         "patchSetId": 1
