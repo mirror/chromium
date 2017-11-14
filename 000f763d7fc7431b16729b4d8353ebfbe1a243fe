@@ -93,6 +93,30 @@
       "revId": "000f763d7fc7431b16729b4d8353ebfbe1a243fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb7361b_f7bb38fd",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-14T17:09:51Z",
+      "side": 1,
+      "message": "Ack. I\u0027m glad you removed that manual SetSoftwareMirroring(false).",
+      "parentUuid": "5e211542_bed4c8f3",
+      "range": {
+        "startLine": 563,
+        "startChar": 2,
+        "endLine": 563,
+        "endChar": 43
+      },
+      "revId": "000f763d7fc7431b16729b4d8353ebfbe1a243fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
