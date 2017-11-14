@@ -87,7 +87,6 @@ namespace ui {
 
 CocoaTest::CocoaTest() : called_tear_down_(false), test_window_(nil) {
   ForceSystemLeaks();
-  Init();
 }
 
 CocoaTest::~CocoaTest() {
@@ -95,7 +94,7 @@ CocoaTest::~CocoaTest() {
   DCHECK(called_tear_down_);
 }
 
-void CocoaTest::Init() {
+void CocoaTest::SetUp() {
   // Set the duration of AppKit-evaluated animations (such as frame changes)
   // to zero for testing purposes. That way they take effect immediately.
   [[NSAnimationContext currentContext] setDuration:0.0];

@@ -10,8 +10,6 @@
 
 CocoaTest::CocoaTest() {
   BootstrapCocoa();
-
-  Init();
 }
 
 void CocoaTest::BootstrapCocoa() {
