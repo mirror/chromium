@@ -16,6 +16,24 @@
       "revId": "732d1b58d9aef59c60079ec17f27c116e0689d38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6707f465_0a54d553",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-14T00:40:26Z",
+      "side": 1,
+      "message": "Thanks for catching it! Please add a TODO.\n\nWe shouldn\u0027t have a null selection at such a deep level in SelectionModifier. We should either have SelectionModifier aborted earlier for null selection, or do not allow null selection in SelectionModifier at all.",
+      "parentUuid": "56399d73_7204929d",
+      "revId": "732d1b58d9aef59c60079ec17f27c116e0689d38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
