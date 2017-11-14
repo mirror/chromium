@@ -1776,6 +1776,10 @@ void Document::DidChangeVisibilityState() {
     canvas_font_cache_->PruneAll();
 }
 
+int Document::originSerializationCount() const {
+  return GetSecurityOrigin()->SerializationCount();
+}
+
 String Document::nodeName() const {
   return "#document";
 }

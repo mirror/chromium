@@ -272,6 +272,8 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   // if we need it for something more general.
   static String CanonicalizeHost(const String& host, bool* success);
 
+  int SerializationCount() const { return serialization_count; }
+
  private:
   friend class SecurityOriginTest;
   FRIEND_TEST_ALL_PREFIXES(SecurityOriginTest, Suborigins);
@@ -308,6 +310,8 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   bool can_load_local_resources_;
   bool block_local_access_from_local_origin_;
   bool is_unique_origin_potentially_trustworthy_;
+
+  mutable int serialization_count = 0;
 };
 
 }  // namespace blink

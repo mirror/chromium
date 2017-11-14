@@ -403,6 +403,7 @@ class CORE_EXPORT Document : public ContainerNode,
   PageVisibilityState GetPageVisibilityState() const;
   bool hidden() const;
   void DidChangeVisibilityState();
+  int originSerializationCount() const;
 
   // If the document is "prefetch only", it will not be fully contstructed,
   // and should never be displayed. Only a few resources will be loaded and

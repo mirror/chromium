@@ -514,6 +514,7 @@ AtomicString SecurityOrigin::ToRawAtomicString() const {
 
 void SecurityOrigin::BuildRawString(StringBuilder& builder,
                                     bool include_suborigin) const {
+  ++serialization_count;
   builder.Append(protocol_);
   if (include_suborigin && HasSuborigin()) {
     builder.Append("-so://");
