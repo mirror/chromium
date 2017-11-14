@@ -50,11 +50,11 @@ struct VIZ_COMMON_EXPORT BeginFrameArgs {
   };
   static const char* TypeToString(BeginFrameArgsType type);
 
-  static constexpr uint32_t kStartingSourceId = 0;
+  static constexpr uint64_t kStartingSourceId = 0;
   // |source_id| for BeginFrameArgs not created by a BeginFrameSource. Used to
   // avoid sequence number conflicts of BeginFrameArgs manually fed to an
   // observer with those fed to the observer by the its BeginFrameSource.
-  static constexpr uint32_t kManualSourceId = UINT32_MAX;
+  static constexpr uint64_t kManualSourceId = UINT32_MAX;
 
   static constexpr uint64_t kInvalidFrameNumber = 0;
   static constexpr uint64_t kStartingFrameNumber = 1;
@@ -73,7 +73,7 @@ struct VIZ_COMMON_EXPORT BeginFrameArgs {
   // created by searching for "BeginFrameArgs::Create".
   // The location argument should **always** be BEGINFRAME_FROM_HERE macro.
   static BeginFrameArgs Create(CreationLocation location,
-                               uint32_t source_id,
+                               uint64_t source_id,
                                uint64_t sequence_number,
                                base::TimeTicks frame_time,
                                base::TimeTicks deadline,
@@ -102,13 +102,13 @@ struct VIZ_COMMON_EXPORT BeginFrameArgs {
   // BeginFrameArgs. When |source_id| of consecutive BeginFrameArgs changes,
   // observers should expect the continuity of |sequence_number| to break.
   uint64_t sequence_number;
-  uint32_t source_id;  // |source_id| after |sequence_number| for packing.
+  uint64_t source_id;  // |source_id| after |sequence_number| for packing.
 
   BeginFrameArgsType type;
   bool on_critical_path;
 
  private:
-  BeginFrameArgs(uint32_t source_id,
+  BeginFrameArgs(uint64_t source_id,
                  uint64_t sequence_number,
                  base::TimeTicks frame_time,
                  base::TimeTicks deadline,
@@ -119,7 +119,7 @@ struct VIZ_COMMON_EXPORT BeginFrameArgs {
 // Sent by a BeginFrameObserver as acknowledgment of completing a BeginFrame.
 struct VIZ_COMMON_EXPORT BeginFrameAck {
   BeginFrameAck();
-  BeginFrameAck(uint32_t source_id, uint64_t sequence_number, bool has_damage);
+  BeginFrameAck(uint64_t source_id, uint64_t sequence_number, bool has_damage);
 
   // Creates a BeginFrameAck for a manual BeginFrame. Used when clients produce
   // a CompositorFrame without prior BeginFrame, e.g. for synchronous drawing.
@@ -133,7 +133,7 @@ struct VIZ_COMMON_EXPORT BeginFrameAck {
   // BeginFrameAcks for BeginFrames sent by a different source. Such a situation
   // may occur when the BeginFrameSource of the observer changes while a
   // BeginFrame from the old source is still in flight.
-  uint32_t source_id;  // |source_id| after above fields for packing.
+  uint64_t source_id;  // |source_id| after above fields for packing.
 
   // |true| if the observer has produced damage (e.g. sent a CompositorFrame or
   // damaged a surface) as part of responding to the BeginFrame.
