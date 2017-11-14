@@ -22,6 +22,30 @@
       "revId": "2da65291cf670cb928c1c74e3cfb40ce4a6b4650",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d4438f4_0f79e2f5",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-14T19:59:24Z",
+      "side": 1,
+      "message": "Done\nWas on the fence a little toward to provide some kind of precaution. For example, if a future change breaks \u0027can_make_payment_result_ \u003d\u003d true\u0027 before using this interface doesn\u0027t get caught, then IsValidForCanMakePayment returns false will make it a little less likely to be used.\n\nBut might look a little more clean to return true directly.",
+      "parentUuid": "10830fa3_9f93b50b",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 34
+      },
+      "revId": "2da65291cf670cb928c1c74e3cfb40ce4a6b4650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
