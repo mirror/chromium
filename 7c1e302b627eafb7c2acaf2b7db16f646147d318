@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e4f8bd5_beaf3efd",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-14T19:30:46Z",
+      "side": 1,
+      "message": "nit: would it be shorter to just use *media_route? Similarly for other base::Optionals below.",
+      "revId": "7c1e302b627eafb7c2acaf2b7db16f646147d318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2795bcbe_858fd8bc",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-14T19:30:46Z",
+      "side": 1,
+      "message": "would it make sense for AddRouteForProvider to return a bool to indicate whether the route list was updated?",
+      "revId": "7c1e302b627eafb7c2acaf2b7db16f646147d318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
