@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0c606e8_f762fcaa",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ActiveScriptWrappable.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-14T07:50:22Z",
+      "side": 1,
+      "message": "nit: Seems like a forward declaration of ScriptWrappable works.",
+      "revId": "04bbea4e5b3824c9bee0f1be834487c48bf77aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0696a2d_5d6b3a7a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ActiveScriptWrappable.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-14T07:50:22Z",
+      "side": 1,
+      "message": "nit: \u003d default; is preferred.",
+      "revId": "04bbea4e5b3824c9bee0f1be834487c48bf77aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
