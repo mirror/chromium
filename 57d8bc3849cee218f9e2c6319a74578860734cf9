@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fc54f40_0fe1b35f",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAnimationAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-14T19:47:01Z",
+      "side": 1,
+      "message": "These offsets are never NaN or Infinity, are they? If so, just a plain String::NumberToStringECMAScript() should do the trick (i.e. drop usage of Decimal).",
+      "revId": "57d8bc3849cee218f9e2c6319a74578860734cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65ebdb13_1fa8f69c",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAnimationAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-14T19:47:01Z",
+      "side": 1,
+      "message": "const scoped_refptr\u003c\u003e\u0026 is weird, just \"const KeyFrame* \u003d model-\u003eGetFrames().at(i).get()\"",
+      "revId": "57d8bc3849cee218f9e2c6319a74578860734cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
