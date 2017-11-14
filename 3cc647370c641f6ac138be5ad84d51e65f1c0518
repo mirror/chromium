@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "f43c628d_fb991108",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-11-14T22:43:33Z",
+      "side": 1,
+      "message": "I think we could use a separate instance of SkBitmap.  Now the change is localized here.  Let me know what do you think.",
+      "parentUuid": "9356fa86_6f6c90b5",
+      "range": {
+        "startLine": 172,
+        "startChar": 10,
+        "endLine": 172,
+        "endChar": 26
+      },
+      "revId": "3cc647370c641f6ac138be5ad84d51e65f1c0518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5d64933_1583db84",
         "filename": "ui/snapshot/snapshot_aura.cc",
         "patchSetId": 2
