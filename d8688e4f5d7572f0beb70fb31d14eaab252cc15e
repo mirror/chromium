@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4a901a90_342aff4f",
+        "filename": "ios/chrome/browser/prerender/preload_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-14T10:16:17Z",
+      "side": 1,
+      "message": "I plan to create them only when the pre-rendering WebState is promoted to a tab. This mean that they can check on creation that the WebState already has a LastCommittedItem and the navigation is complete.\n\nIf this is the case, then they can take the proper action. It is IMO the cleanest way to do it. For history, I\u0027m thinking of moving the logic out of the tab helper, and create two tab helpers, and have the \"delayed\" implementation save the data when informed by the PreloadController (it will be a private implementation of the tab helper).",
+      "parentUuid": "27ebb4d9_0b170e10",
+      "revId": "d8688e4f5d7572f0beb70fb31d14eaab252cc15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1a6e242_83c7db64",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 2
@@ -69,6 +87,24 @@
       "revId": "d8688e4f5d7572f0beb70fb31d14eaab252cc15e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c287b53_4325f676",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-14T10:16:17Z",
+      "side": 1,
+      "message": "Tab -discardRenderer just call [_delegate discardRenderer] after doing a DCHECK that self.isPrerender is YES, so those changes should be no-op. It also make it easier to reason about how _delegate is used (as there is now just one use of it).",
+      "parentUuid": "e1a6e242_83c7db64",
+      "revId": "d8688e4f5d7572f0beb70fb31d14eaab252cc15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
