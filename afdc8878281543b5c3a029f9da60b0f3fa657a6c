@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b4260e42_e6bf522c",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-14T14:07:12Z",
+      "side": 1,
+      "message": "Created a default version instead that doesn\u0027t take a callback.",
+      "parentUuid": "53900bc3_e81159c2",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d4aebdd_d382e7bd",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7aa577fe_77d5e039",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-14T14:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d4aebdd_d382e7bd",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec9eeb08_d45891a9",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcddb536_162cdae0",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-14T14:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec9eeb08_d45891a9",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "3a23f7c2_a1f26dd6",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-14T14:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "853200ff_7d607b70",
+      "range": {
+        "startLine": 701,
+        "startChar": 37,
+        "endLine": 701,
+        "endChar": 40
+      },
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22011b08_b6df964d",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 9
@@ -90,6 +168,24 @@
       "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049f0614_de52e50b",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-14T14:07:12Z",
+      "side": 1,
+      "message": "Done. The destructor is already private.",
+      "parentUuid": "22011b08_b6df964d",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "dad43fce_276153b5",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-14T14:07:12Z",
+      "side": 1,
+      "message": "ScopedClosureRunner::Release has a WARN_UNUSED_RESULT annotation. Even though I prefer not to duplicate API documentation in places where its functions are used, this looks odd enough to deserve a comment.",
+      "parentUuid": "4aa73108_846b957d",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5225c8bb_d2028733",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 9
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "aa2e2ce2_df144213",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-14T14:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5225c8bb_d2028733",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02ffc241_cd9cab37",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 9
@@ -141,6 +273,24 @@
       "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5803d70_390e1afd",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-14T14:07:12Z",
+      "side": 1,
+      "message": "I agree. It doesn\u0027t bring any benefit, and adds a new abstraction layer that makes reasoning harder. Removed.",
+      "parentUuid": "02ffc241_cd9cab37",
+      "revId": "afdc8878281543b5c3a029f9da60b0f3fa657a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
