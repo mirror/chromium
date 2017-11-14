@@ -250,6 +250,24 @@
     },
     {
       "key": {
+        "uuid": "f32ce90f_937ca378",
+        "filename": "content/renderer/media/peer_connection_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-11-14T15:49:49Z",
+      "side": 1,
+      "message": "As discussed offline, starting via JS will be done in a future CL. It won\u0027t use or be related to RTCConfiguration, but rather use an extension API. Details TBD.",
+      "parentUuid": "fed7f3ff_2bffc59c",
+      "revId": "cb7a0340276811e69999c1d9e15c6555147d2059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3aac8ee_b501bbde",
         "filename": "content/renderer/media/rtc_event_log_output_sink_proxy.cc",
         "patchSetId": 1
