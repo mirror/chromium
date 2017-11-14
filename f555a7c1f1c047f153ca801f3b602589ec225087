@@ -16,6 +16,70 @@
       "revId": "f555a7c1f1c047f153ca801f3b602589ec225087",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae87d2c_485cb483",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-14T13:08:08Z",
+      "side": 1,
+      "message": "Should this be consistent with ::SetVisible above?\n\nif (visible \u003d\u003d (GetTargetOpacity() \u003d\u003d opacity_when_visible()))\n  return\n// Do rest",
+      "parentUuid": "98457cfa_af482f01",
+      "revId": "f555a7c1f1c047f153ca801f3b602589ec225087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce06b44_0cc60afc",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-14T13:08:08Z",
+      "side": 1,
+      "message": "nit: add braces for consistency with other one-liners in the file.",
+      "range": {
+        "startLine": 135,
+        "startChar": 44,
+        "endLine": 135,
+        "endChar": 53
+      },
+      "revId": "f555a7c1f1c047f153ca801f3b602589ec225087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b2611a_26ee56d6",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-14T13:08:08Z",
+      "side": 1,
+      "message": "Is this animation tied to the speech recognition animation solely? If not, should we rename to something more generic?",
+      "range": {
+        "startLine": 205,
+        "startChar": 6,
+        "endLine": 205,
+        "endChar": 50
+      },
+      "revId": "f555a7c1f1c047f153ca801f3b602589ec225087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
