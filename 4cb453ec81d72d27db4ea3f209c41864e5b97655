@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bff8119b_fad41465",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-11-14T06:09:42Z",
+      "side": 1,
+      "message": "Use ntp_controller to select home panel instead of typing url.\nThis is to prevent typing of symbol \":\" which will bring out the quick keyboard in\niPad iOS 11 and that will break testTapFakeOmnibox and many more tests later.",
+      "revId": "4cb453ec81d72d27db4ea3f209c41864e5b97655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
