@@ -22,6 +22,30 @@
       "revId": "e5eb05504799b583e8aa2dbc44bf81b0ba37eaf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a96cbb8_9a9e14de",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLFramebuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-14T00:06:37Z",
+      "side": 1,
+      "message": "I\u0027ve got these here because in the current usage we\u0027re not using the usual attachment tracking when attaching textures and renderbuffers to the opaque framebuffer. (Since those attachments will never be exposed to WebGL it seems like a waste to allocate the ScriptWrappable variants of those objects, plus that would lead to more special casing in texture and renderbuffer code.)",
+      "parentUuid": "d887049c_2010e273",
+      "range": {
+        "startLine": 370,
+        "startChar": 6,
+        "endLine": 370,
+        "endChar": 13
+      },
+      "revId": "e5eb05504799b583e8aa2dbc44bf81b0ba37eaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
