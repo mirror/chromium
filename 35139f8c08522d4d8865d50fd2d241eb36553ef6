@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0f64e387_f7ca0f5b",
+        "filename": "ios/web/download/download_controller_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-14T09:37:30Z",
+      "side": 1,
+      "message": "nit: since the task is created and then deleted if delegate_ is null, why not check this first to avoid unnecessary work:\n\n  if (!delegate_)\n    return;\n\n  auto task \u003d ...\n  alive_tasks_.insert(task.get());\n  delegate_-\u003eOnDownloadCreated(this, web_state, std::move(task));",
+      "revId": "35139f8c08522d4d8865d50fd2d241eb36553ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7c64375_cf45f685",
         "filename": "ios/web/public/download/download_controller.h",
         "patchSetId": 5
@@ -13,6 +30,46 @@
       "writtenOn": "2017-11-14T06:56:50Z",
       "side": 1,
       "message": "Just a note that that this needs to be updated so that the file writer is given in Start(). You may want to do this in the other CL.",
+      "revId": "35139f8c08522d4d8865d50fd2d241eb36553ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c028f0e1_3375722e",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-14T09:37:30Z",
+      "side": 1,
+      "message": "Remove this sentence as the method no longer return a value.",
+      "range": {
+        "startLine": 99,
+        "startChar": 5,
+        "endLine": 99,
+        "endChar": 69
+      },
+      "revId": "35139f8c08522d4d8865d50fd2d241eb36553ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0facef00_af09b35c",
+        "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-14T09:37:30Z",
+      "side": 1,
+      "message": "You need to call erase here:\n\n  DCHECK(iterator !\u003d alive_download_tasks_.end());\n  alive_download_tasks.erase(iterator);",
       "revId": "35139f8c08522d4d8865d50fd2d241eb36553ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
