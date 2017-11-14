@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5796b43a_cf2b56c3",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-14T16:42:17Z",
+      "side": 1,
+      "message": "Looks like this is failing in tests at least.",
+      "revId": "293b144314ef58e3507a59e6eb3b035704f43a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2462535_df22f64f",
+        "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-14T16:42:17Z",
+      "side": 1,
+      "message": "Why this change?",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 66
+      },
+      "revId": "293b144314ef58e3507a59e6eb3b035704f43a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
