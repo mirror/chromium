@@ -110,6 +110,7 @@ class FakeSchedulerClient : public SchedulerClient,
     if (will_begin_impl_frame_causes_redraw_)
       scheduler_->SetNeedsRedraw();
   }
+  bool DidBeginImplFrame() override { return true; }
   void DidFinishImplFrame() override {
     EXPECT_TRUE(inside_begin_impl_frame_);
     inside_begin_impl_frame_ = false;

@@ -2064,6 +2064,17 @@ void LayerTreeHostImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
   impl_thread_phase_ = ImplThreadPhase::INSIDE_IMPL_FRAME;
 }
 
+bool LayerTreeHostImpl::DidBeginImplFrame() {
+  if (active_tree()->UpdateDrawProperties()) {
+    DamageTracker::UpdateDamageTracking(active_tree_.get(),
+                                        active_tree_->GetRenderSurfaceList());
+    bool handle_visibility_changed =
+        active_tree_->GetAndResetHandleVisibilityChanged();
+    return HasDamage(handle_visibility_changed);
+  }
+  return true;
+}
+
 void LayerTreeHostImpl::DidFinishImplFrame() {
   impl_thread_phase_ = ImplThreadPhase::IDLE;
   current_begin_frame_tracker_.Finish();
