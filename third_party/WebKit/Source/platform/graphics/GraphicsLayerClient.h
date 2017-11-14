@@ -61,9 +61,10 @@ enum {
   kLayerTreeIncludesRootLayer = 1 << 3,
   kLayerTreeIncludesClipAndScrollParents = 1 << 4,
   kLayerTreeIncludesCompositingReasons = 1 << 5,
+  kLayerTreeIncludesPaintRecords = 1 << 6,
   // Outputs all layers as a layer tree. The default is output children
   // (excluding the root) as a layer list, in paint (preorder) order.
-  kOutputAsLayerTree = 1 << 6,
+  kOutputAsLayerTree = 0x40000000,
 };
 typedef unsigned LayerTreeFlags;
 
