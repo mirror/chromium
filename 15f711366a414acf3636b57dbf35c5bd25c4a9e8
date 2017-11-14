@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "499a5d80_2a5dc9fc",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-14T15:18:34Z",
+      "side": 1,
+      "message": "Remove empty line",
+      "revId": "15f711366a414acf3636b57dbf35c5bd25c4a9e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
