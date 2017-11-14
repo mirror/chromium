@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "eea0236b_e0c350c6",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-14T21:17:25Z",
+      "side": 1,
+      "message": "\u003e // Works the same as a base::i18n::BreakIterator except that it separates\n\u003e // words from the underscore.\n\nHow about this? \nBreaks on an underscore. Otherwise, it behaves like its parent class with breaktype\u003dWord.\n\nBTW, the comment above Advance() just explains what your implementation does. I don\u0027t think it\u0027s necessary.",
+      "parentUuid": "4b0bad24_e7c1b698",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 59
+      },
+      "revId": "05230e7eaa522cb4454d51fb3a90bd9938f23d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ec0e05f_1a4cd692",
         "filename": "components/omnibox/browser/break_iterator_adapter.h",
         "patchSetId": 9
