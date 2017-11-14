@@ -16,6 +16,24 @@
       "revId": "6f5f014b8097aac1c7b558e94509606ffeca97c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033b9b35_56ad8b96",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-14T22:27:39Z",
+      "side": 1,
+      "message": "Ugh. Good point. That\u0027s what I get for patching up code without thinking about it enough.",
+      "parentUuid": "4267f480_33fa5414",
+      "revId": "6f5f014b8097aac1c7b558e94509606ffeca97c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
