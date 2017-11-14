@@ -342,7 +342,10 @@ void Image::DrawPattern(GraphicsContext& context,
                                    adjusted_y + tile_size.Height());
 
   PaintFlags flags = context.FillFlags();
-  flags.setColor(SK_ColorBLACK);
+  // If the shader will not be instantiated (e.g. non-invertible matrix) below,
+  // we want to fallback to draw transparent.
+  // Note: we can't simply bail in that case, because of arbitrary blend mode.
+  flags.setColor(SK_ColorTRANSPARENT);
   flags.setBlendMode(composite_op);
   flags.setFilterQuality(
       context.ComputeFilterQuality(this, dest_rect, norm_src_rect));
@@ -352,11 +355,6 @@ void Image::DrawPattern(GraphicsContext& context,
                           FloatSize(repeat_spacing.Width() / scale.Width(),
                                     repeat_spacing.Height() / scale.Height()),
                           tmx, tmy));
-  // If the shader could not be instantiated (e.g. non-invertible matrix),
-  // draw transparent.
-  // Note: we can't simply bail, because of arbitrary blend mode.
-  if (!flags.HasShader())
-    flags.setColor(SK_ColorTRANSPARENT);
 
   context.DrawRect(dest_rect, flags);
 
