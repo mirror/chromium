@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d0366e9_e1a4f0de",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-14T23:18:37Z",
+      "side": 1,
+      "message": "Hmm, should we care about other NavEntries that reference this frame?  e.g., Add a dynamic frame, do a pushState (cloning the FNE tree), and then remove the frame.  We can\u0027t ever restore it.  I don\u0027t know if there\u0027s a good way to identify the affected NavEntries, though.  Maybe that would get solved if we finished https://crbug.com/373041 and shared FNEs between NavEntries, though.\n\nThere\u0027s a similar question when doing any cross-document navigation in any frame.  We could safely remove all FNEs for dynamic subframes of that frame.  But maybe that\u0027s best left for the cleanup phase being discussed in https://chromium-review.googlesource.com/c/chromium/src/+/713474?",
+      "revId": "e1bc289482e27c66da5624270921155b857cee8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "121a6a2a_216c5156",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-14T23:18:37Z",
+      "side": 1,
+      "message": "nit: We try to avoid operating on TreeNodes directly outside of NavigationEntry.  Can you add a method to NavEntryImpl to take care of the TreeNode removal internally (or use the existing method)?",
+      "revId": "e1bc289482e27c66da5624270921155b857cee8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1721185c_a391b0f7",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7240,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-14T23:18:37Z",
+      "side": 1,
+      "message": "nit: FrameNavigationEntries, perhaps?  (It\u0027s easy to misread this as NavigationEntries.)",
+      "range": {
+        "startLine": 7240,
+        "startChar": 31,
+        "endLine": 7240,
+        "endChar": 46
+      },
+      "revId": "e1bc289482e27c66da5624270921155b857cee8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534b06f5_e8e83321",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-14T23:18:37Z",
+      "side": 1,
+      "message": "Could we just use ClearStaleFrameEntriesForNewFrame instead, possibly renaming it to RemoveFrameEntriesForFrame?",
+      "revId": "e1bc289482e27c66da5624270921155b857cee8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
