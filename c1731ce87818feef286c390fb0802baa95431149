@@ -16,6 +16,57 @@
       "revId": "c1731ce87818feef286c390fb0802baa95431149",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1eaaa3a_14903621",
+        "filename": "components/user_manager/known_user.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-14T17:27:21Z",
+      "side": 1,
+      "message": "nit drop {}",
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9146018_4a38779a",
+        "filename": "components/user_manager/known_user.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-14T17:27:21Z",
+      "side": 1,
+      "message": "I think we prefer enum classes?\nhttps://chromium-cpp.appspot.com/ (look for enumerated type)",
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e49cab_41c6342e",
+        "filename": "components/user_manager/known_user.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-14T17:27:21Z",
+      "side": 1,
+      "message": "We should probably use constant-style naming here, so kUnknown, kPolicyRequired, etc. There\u0027s a chance UNKNOWN may conflict with a macro",
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
