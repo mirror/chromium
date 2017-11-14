@@ -539,9 +539,8 @@ void RendererBlinkPlatformImpl::SuddenTerminationChanged(bool enabled) {
       return;
   }
 
-  RenderThread* thread = RenderThread::Get();
-  if (thread)  // NULL in unittests.
-    thread->Send(new RenderProcessHostMsg_SuddenTerminationChanged(enabled));
+  RenderThreadImpl::current()->GetRendererHost()->SuddenTerminationChanged(
+      enabled);
 }
 
 void RendererBlinkPlatformImpl::AddRefProcess() {
