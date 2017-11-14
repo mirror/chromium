@@ -22,6 +22,30 @@
       "revId": "5b4410e59b62eea4449fdb3e8b00f94af02ae9ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98591108_4c1d8520",
+        "filename": "content/public/browser/render_process_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-14T20:06:51Z",
+      "side": 0,
+      "message": "Nice!  Thanks for removing it from the public interface.\n\n(I don\u0027t see discussion about whether GetExistingProcessHost is needed?  Your other comment was about the confusingly similarly-named GetProcessHostForSite.)  :)",
+      "parentUuid": "c9b98c8f_44bc14fd",
+      "range": {
+        "startLine": 492,
+        "startChar": 28,
+        "endLine": 492,
+        "endChar": 50
+      },
+      "revId": "5b4410e59b62eea4449fdb3e8b00f94af02ae9ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
