@@ -16,6 +16,24 @@
       "revId": "20a0ac2282b517a92b6775383a341d78fa78ccc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf77818_e77953e3",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-14T19:15:08Z",
+      "side": 1,
+      "message": "Mmmh yeah ok. I guess OffscreenCanvasFrameDispatcherImpl needs to do the same then. Thanks for the SkSwapRB pointer.",
+      "parentUuid": "13fe42ff_5849ccb2",
+      "revId": "20a0ac2282b517a92b6775383a341d78fa78ccc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
