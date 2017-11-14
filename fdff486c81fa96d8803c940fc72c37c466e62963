@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2065ed2_f3e4b8e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63b3d7d6_959fa6e0",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9c24708_33b552c2",
         "filename": "content/browser/webauth/cbor/BUILD.gn",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a329a70_2b162b8d",
+        "filename": "content/browser/webauth/cbor/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Fuzzer test code moved to directory fuzzer/BUILD.gn and content/browser/webauth/cbor/BUILD.gn removed since it\u0027s no longer needed.",
+      "parentUuid": "d9c24708_33b552c2",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ccfc5edf_e25bf009",
+        "filename": "content/browser/webauth/cbor/cbor_binary.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9603d818_b200faf8",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6165d19b_28db6387",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b8593061_1c00fe59",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6165d19b_28db6387",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7909e0c9_e0f63259",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-13T22:47:33Z",
       "side": 1,
       "message": "Is this an error condition? Or just additional info whenever there are trailing bytes?",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f60e52_c37999a8",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "This is an error condition only when |strict_mode| is set to true. If not, it serves as an additional info for the caller.",
+      "parentUuid": "7909e0c9_e0f63259",
       "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "185424ea_e5a6a59e",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b53569c5_ec708604",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef756b15_ff486750",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24eb7020_9f0cafce",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef756b15_ff486750",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "bb69ff2d_658bad92",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c42f779c_524162e8",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8a9e5cb_c7e7b9c3",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 3
@@ -152,6 +296,24 @@
       "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376a4ef3_2ec3a1db",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8a9e5cb_c7e7b9c3",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "8a837601_1bc58bec",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a63a7e8f_1fcba328",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "012f5637_59d8f79d",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 3
@@ -186,6 +366,24 @@
       "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244a0777_3fec0261",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "012f5637_59d8f79d",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "7ebc9558_dae7ea88",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f6ab166_51817f0e",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "622e1401_53293e6a",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 3
@@ -220,6 +436,24 @@
       "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f842e37c_966e4dd5",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "622e1401_53293e6a",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "b78d1129_a93f1733",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56110da8_6e7a7461",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28825e19_cae95e6c",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 3
@@ -254,6 +506,24 @@
       "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289e2711_17a0aeb9",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28825e19_cae95e6c",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "9ad743db_d7ee3540",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "841e9474_52a2ce6f",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16d028ae_f3e4a2bd",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 3
@@ -288,6 +576,24 @@
       "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028777b1_89ba8330",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16d028ae_f3e4a2bd",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "0ec773bb_80929112",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77c186fb_6d0d2c42",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82da34a0_13230792",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 3
@@ -322,6 +646,24 @@
       "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc72e33_902a3541",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82da34a0_13230792",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +701,24 @@
     },
     {
       "key": {
+        "uuid": "785d2ea9_6ab26877",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a07a143b_8ec0cd79",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c06292e6_d49cca5d",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 3
@@ -373,6 +733,24 @@
       "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18744b1e_a7fe4a59",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c06292e6_d49cca5d",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +771,24 @@
     },
     {
       "key": {
+        "uuid": "0b444e4b_651039e0",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c0c8237_38cb112e",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b368b3d8_2ee7bd29",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 3
@@ -407,6 +803,24 @@
       "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "747ddf97_5313add9",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b368b3d8_2ee7bd29",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
