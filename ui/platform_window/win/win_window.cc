@@ -129,6 +129,18 @@ PlatformImeController* WinWindow::GetPlatformImeController() {
   return nullptr;
 }
 
+bool WinWindow::IsMinimized() const {
+  return false;
+}
+
+bool WinWindow::IsMaximized() const {
+  return false;
+}
+
+bool WinWindow::IsFullscreen() const {
+  return false;
+}
+
 LRESULT WinWindow::OnMouseRange(UINT message, WPARAM w_param, LPARAM l_param) {
   MSG msg = { hwnd(), message, w_param, l_param,
               static_cast<DWORD>(GetMessageTime()),

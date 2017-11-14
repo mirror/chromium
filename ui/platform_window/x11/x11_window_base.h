@@ -7,6 +7,10 @@
 
 #include <stdint.h>
 
+#include <X11/X.h>
+
+#include <set>
+
 #include "base/callback.h"
 #include "base/macros.h"
 #include "ui/gfx/geometry/rect.h"
@@ -60,6 +64,23 @@ class X11_WINDOW_EXPORT X11WindowBase : public PlatformWindow {
   void ProcessXWindowEvent(XEvent* xev);
 
  private:
+  // Sends a message to the x11 window manager, enabling or disabling the
+  // states |state1| and |state2|.
+  // TODO(msisov, tonikitoo): share this with DesktopWindowTreeHostX11.
+  void SetWMSpecState(bool enabled, ::Atom state1, ::Atom state2);
+
+  // Called when WM_STATE property is changed.
+  void OnWMStateUpdated();
+
+  // Checks if the window manager has set a specific state.
+  // TODO(msisov, tonikitoo): share this with DesktopWindowTreeHostX11.
+  bool HasWMSpecProperty(const char* property) const;
+
+  // PlatformWindow overrides:
+  bool IsMinimized() const override;
+  bool IsMaximized() const override;
+  bool IsFullscreen() const override;
+
   PlatformWindowDelegate* delegate_;
 
   XDisplay* xdisplay_;
@@ -72,7 +93,11 @@ class X11_WINDOW_EXPORT X11WindowBase : public PlatformWindow {
   // The bounds of |xwindow_|.
   gfx::Rect bounds_;
 
+  // The window manager state bits.
+  std::set<::Atom> window_properties_;
+
   bool window_mapped_ = false;
+  bool is_fullscreen_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(X11WindowBase);
 };

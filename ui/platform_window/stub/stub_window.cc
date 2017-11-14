@@ -78,4 +78,16 @@ PlatformImeController* StubWindow::GetPlatformImeController() {
   return nullptr;
 }
 
+bool StubWindow::IsMinimized() const {
+  return false;
+}
+
+bool StubWindow::IsMaximized() const {
+  return false;
+}
+
+bool StubWindow::IsFullscreen() const {
+  return false;
+}
+
 }  // namespace ui
