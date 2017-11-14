@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "efad86d7_fc085770",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfae1c20_8233b0a5",
+      "revId": "62f6018dc8b5f798eab8e7e5e72fc6a8654412f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c6670c5_46cc9862",
         "filename": "chrome/browser/chromeos/file_system_provider/fake_registry.h",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "62f6018dc8b5f798eab8e7e5e72fc6a8654412f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6a1b520_81e68f86",
+        "filename": "chrome/browser/chromeos/file_system_provider/fake_registry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:42:50Z",
+      "side": 1,
+      "message": "I created a .cc with that just included this file and added it to the BUILD.gn file. I was able to compile without any errors- is this the correct way to check for the proper includes?",
+      "parentUuid": "4c6670c5_46cc9862",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 8,
+        "endChar": 8
+      },
+      "revId": "62f6018dc8b5f798eab8e7e5e72fc6a8654412f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
