@@ -175,6 +175,14 @@ gfx::Rect BrowserNonClientFrameViewAsh::GetBoundsForTabStrip(
 }
 
 int BrowserNonClientFrameViewAsh::GetTopInset(bool restored) const {
+  int inset_tab_strip_not_visible = 0;
+  if (!browser_view()->IsTabStripVisible()) {
+    inset_tab_strip_not_visible =
+        (UsePackagedAppHeaderStyle())
+            ? header_painter_->GetHeaderHeight()
+            : caption_button_container_->bounds().bottom();
+  }
+
   if (!ShouldPaint()) {
     // When immersive fullscreen unrevealed, tabstrip is offscreen with normal
     // tapstrip bounds, the top inset should reach this topmost edge.
@@ -184,14 +192,19 @@ int BrowserNonClientFrameViewAsh::GetTopInset(bool restored) const {
         !immersive_controller->IsRevealed()) {
       return (-1) * browser_view()->GetTabStripHeight();
     }
-    return 0;
+
+    if (frame()->IsFullscreen())
+      return 0;
+
+    // For the case of !browser_view()->IsBrowserTypeNormal() &&
+    // in_overview_mode_: the top view inset value should be
+    // inset_tab_strip_not_visible as the browser_view()->IsTabStripVisible() is
+    // false.
+    return inset_tab_strip_not_visible;
   }
 
-  if (!browser_view()->IsTabStripVisible()) {
-    return (UsePackagedAppHeaderStyle())
-        ? header_painter_->GetHeaderHeight()
-        : caption_button_container_->bounds().bottom();
-  }
+  if (!browser_view()->IsTabStripVisible())
+    return inset_tab_strip_not_visible;
 
   const int header_height = restored
       ? GetAshLayoutSize(
@@ -378,11 +391,25 @@ void BrowserNonClientFrameViewAsh::ChildPreferredSizeChanged(
 void BrowserNonClientFrameViewAsh::OnOverviewModeStarting() {
   frame()->GetNativeWindow()->SetProperty(aura::client::kTopViewColor,
                                           GetFrameColor());
+  in_overview_mode_ = true;
   caption_button_container_->SetVisible(false);
+  if (window_icon_)
+    window_icon_->SetVisible(false);
+  if (back_button_)
+    back_button_->SetVisible(false);
+  // Schedule a paint to hide the header.
+  SchedulePaint();
 }
 
 void BrowserNonClientFrameViewAsh::OnOverviewModeEnded() {
+  in_overview_mode_ = false;
   caption_button_container_->SetVisible(true);
+  if (window_icon_)
+    window_icon_->SetVisible(true);
+  if (back_button_)
+    back_button_->SetVisible(true);
+  // Schedule a paint to show the header.
+  SchedulePaint();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -504,5 +531,9 @@ bool BrowserNonClientFrameViewAsh::ShouldPaint() const {
   if (immersive_mode_controller->IsEnabled())
     return immersive_mode_controller->IsRevealed();
 
-  return !frame()->IsFullscreen();
+  if (frame()->IsFullscreen())
+    return false;
+
+  // Do not paint for V1 apps in overview mode.
+  return browser_view()->IsBrowserTypeNormal() || !in_overview_mode_;
 }
