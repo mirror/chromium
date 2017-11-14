@@ -87,6 +87,23 @@
     },
     {
       "key": {
+        "uuid": "9ff42005_09591c6c",
+        "filename": "third_party/WebKit/Source/core/dom/SecurityContext.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-14T20:12:57Z",
+      "side": 1,
+      "message": "Perhaps `ShareSecurityOriginWithExecutionContext(...)`?",
+      "revId": "33e97b7c177929fe346b233e5b255152d0e53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "882a5a29_09e73d01",
         "filename": "third_party/WebKit/Source/core/xml/DOMParser.cpp",
         "patchSetId": 8
@@ -115,6 +132,41 @@
       "writtenOn": "2017-11-08T22:21:14Z",
       "side": 1,
       "message": "Not covered by tests.",
+      "revId": "33e97b7c177929fe346b233e5b255152d0e53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ac4246_2d5294f7",
+        "filename": "third_party/WebKit/Source/core/xml/XSLTProcessor.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-14T20:12:57Z",
+      "side": 1,
+      "message": "When is this called? I\u0027m not familiar enough with XSLTProcessor to know whether this is correct, though it certainly looks intentional.",
+      "parentUuid": "e261aa1a_52fb9250",
+      "revId": "33e97b7c177929fe346b233e5b255152d0e53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc5001f_03e34f17",
+        "filename": "third_party/WebKit/Source/core/xml/XSLTProcessor.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-14T20:12:57Z",
+      "side": 1,
+      "message": "It seems like any time we share the origin, we\u0027re also going to want to share things like the sandbox flags, content security policy, referrer policy, etc. Would it be reasonable to expand the sharing mechanism to include those kinds of calls?",
       "revId": "33e97b7c177929fe346b233e5b255152d0e53cce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
