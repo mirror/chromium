@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12a8ad88_91fc5269",
+        "filename": "content/browser/service_worker/service_worker_database.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T11:10:14Z",
+      "side": 1,
+      "message": "Maybe it\u0027s obvious but suggest adding \"from the database and writes them to |user_data_map|\" to make the second sentence more clear.",
+      "revId": "a8102aa1e20ac0c1e18a57a3d56740de901d9f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
