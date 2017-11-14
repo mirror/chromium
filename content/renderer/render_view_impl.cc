@@ -189,6 +189,7 @@
 #endif
 
 #if BUILDFLAG(ENABLE_PLUGINS)
+#include "content/renderer/pepper/pepper_media_device_manager.h"
 #include "content/renderer/pepper/pepper_plugin_instance_impl.h"
 #include "content/renderer/pepper/pepper_plugin_registry.h"
 #endif
@@ -2417,6 +2418,16 @@ void RenderViewImpl::SuspendVideoCaptureDevices(bool suspend) {
 
   MediaStreamDevices video_devices =
       media_stream_dispatcher->GetNonScreenCaptureDevices();
+
+#if BUILDFLAG(ENABLE_PLUGINS)
+  PepperMediaDeviceManager* device_manager =
+      PepperMediaDeviceManager::GetForRenderFrame(main_render_frame_).get();
+  if (device_manager) {
+    MediaStreamDevices devices = device_manager->GetNonScreenCaptureDevices();
+    video_devices.insert(video_devices.end(), devices.begin(), devices.end());
+  }
+#endif
+
   RenderThreadImpl::current()->video_capture_impl_manager()->SuspendDevices(
       video_devices, suspend);
 #endif  // BUILDFLAG(ENABLE_WEBRTC)

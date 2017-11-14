@@ -747,6 +747,8 @@ target(link_target_type, "renderer") {
       "media/media_stream_dispatcher.cc",
       "media/media_stream_dispatcher.h",
       "media/media_stream_dispatcher_eventhandler.h",
+      "media/media_stream_label_map.cc",
+      "media/media_stream_label_map.h",
       "media/media_stream_registry_interface.h",
       "media/media_stream_renderer_factory_impl.cc",
       "media/media_stream_renderer_factory_impl.h",
