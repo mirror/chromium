@@ -1012,3 +1012,7 @@ error::Error DoBeginRasterCHROMIUM(GLuint texture_id,
                                    GLboolean use_distance_field_text,
                                    GLint pixel_config);
 error::Error DoEndRasterCHROMIUM();
+
+error::Error DoCreateGpuFenceINTERNAL(GLuint gpu_fence_id, bool from_external);
+error::Error DoWaitGpuFenceCHROMIUM(GLuint gpu_fence_id);
+error::Error DoDestroyGpuFenceCHROMIUM(GLuint gpu_fence_id);

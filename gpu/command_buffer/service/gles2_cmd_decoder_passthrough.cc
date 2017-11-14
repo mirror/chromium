@@ -1236,6 +1236,10 @@ gpu::gles2::QueryManager* GLES2DecoderPassthroughImpl::GetQueryManager() {
   return nullptr;
 }
 
+gpu::gles2::GpuFenceManager* GLES2DecoderPassthroughImpl::GetGpuFenceManager() {
+  return nullptr;
+}
+
 gpu::gles2::FramebufferManager*
 GLES2DecoderPassthroughImpl::GetFramebufferManager() {
   return nullptr;

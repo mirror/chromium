@@ -414,6 +414,41 @@ void GLES2Implementation::SignalQuery(uint32_t query,
                  callback));
 }
 
+GLuint GLES2Implementation::CreateGpuFenceCHROMIUM() {
+  GLuint client_id;
+  GetIdHandler(SharedIdNamespaces::kGpuFences)->MakeIds(this, 0, 1, &client_id);
+  DVLOG(3) << __FUNCTION__ << ";;; gpu_fence_id=" << client_id;
+  helper_->CreateGpuFenceINTERNAL(client_id, false);
+  GPU_CLIENT_LOG("returned " << client_id);
+  CheckGLError();
+  return client_id;
+}
+
+GLuint GLES2Implementation::DuplicateGpuFenceCHROMIUM(ClientGpuFence source) {
+  GLuint client_id;
+  GetIdHandler(SharedIdNamespaces::kGpuFences)->MakeIds(this, 0, 1, &client_id);
+  DVLOG(3) << __FUNCTION__ << ";;; gpu_fence_id=" << client_id;
+
+  // TODO(klausw): is the gpu_control_ message guaranteed to arrive before the
+  // helper_ call and any following GL commands on this stream? I don't want to
+  // force a flush here, and it's ok if the GL calls happen later, but having
+  // the order be reversed would require some rather nasty
+  // deschedule/reschedule logic to make a ServerWait on the fence work right.
+  gpu_control_->SendGpuFence(client_id, source);
+  helper_->CreateGpuFenceINTERNAL(client_id, true);  // is this needed?
+
+  GPU_CLIENT_LOG("returned " << client_id);
+  CheckGLError();
+  return client_id;
+}
+
+void GLES2Implementation::GetGpuFenceHandle(
+    uint32_t gpu_fence_id,
+    const base::Callback<void(const gfx::GpuFenceHandle&)>& callback) {
+  DVLOG(3) << __FUNCTION__ << ";;; gpu_fence_id=" << gpu_fence_id;
+  gpu_control_->GetGpuFenceHandle(gpu_fence_id, callback);
+}
+
 void GLES2Implementation::SetAggressivelyFreeResources(
     bool aggressively_free_resources) {
   TRACE_EVENT1("gpu", "GLES2Implementation::SetAggressivelyFreeResources",

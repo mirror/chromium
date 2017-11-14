@@ -4621,6 +4621,46 @@ _FUNCTION_INFO = {
                 'GLsizei color_space_size',
     'extension': 'CHROMIUM_color_space_metadata',
   },
+  'CreateGpuFenceCHROMIUM': {
+    'type': 'NoCommand',
+    'impl_func': False,
+    'cmd_args': 'void',
+    'result': ['GLuint'],
+    'extension': 'CHROMIUM_fence',
+    'client_test': False,
+    'unit_test': False,
+  },
+  'CreateGpuFenceINTERNAL': {
+    'decoder_func': 'DoCreateGpuFenceINTERNAL',
+    'cmd_args': 'GLuint gpu_fence_id, bool from_external',
+    'extension': 'CHROMIUM_fence',
+    'internal': True,
+    'client_test': False,
+    'unit_test': False,
+  },
+  'DuplicateGpuFenceCHROMIUM': {
+    'type': 'NoCommand',
+    'impl_func': False,
+    'cmd_args': 'ClientGpuFence source',
+    'result': ['GLuint'],
+    'extension': 'CHROMIUM_fence',
+    'client_test': False,
+    'unit_test': False,
+  },
+  'WaitGpuFenceCHROMIUM': {
+    'decoder_func': 'DoWaitGpuFenceCHROMIUM',
+    'cmd_args': 'GLuint gpu_fence_id',
+    'extension': 'CHROMIUM_fence',
+    'client_test': False,
+    'unit_test': False,
+  },
+  'DestroyGpuFenceCHROMIUM': {
+    'decoder_func': 'DoDestroyGpuFenceCHROMIUM',
+    'cmd_args': 'GLuint gpu_fence_id',
+    'extension': 'CHROMIUM_fence',
+    'client_test': False,
+    'unit_test': False,
+  },
 }
 
 

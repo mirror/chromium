@@ -15,6 +15,7 @@ class DisplayItemList;
 
 extern "C" typedef struct _ClientBuffer* ClientBuffer;
 extern "C" typedef struct _GLColorSpace* GLColorSpace;
+extern "C" typedef struct _ClientGpuFence* ClientGpuFence;
 
 namespace gpu {
 namespace gles2 {

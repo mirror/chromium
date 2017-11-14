@@ -387,3 +387,10 @@ GL_APICALL void         GL_APIENTRY glTexStorage2DImageCHROMIUM (GLenumTextureBi
 
 // Extension CHROMIUM_color_space_metadata
 GL_APICALL void         GL_APIENTRY glSetColorSpaceMetadataCHROMIUM (GLuint texture_id, GLColorSpace color_space);
+
+// Extension CHROMIUM_fence
+GL_APICALL GLuint       GL_APIENTRY glCreateGpuFenceCHROMIUM (void);
+GL_APICALL void         GL_APIENTRY glCreateGpuFenceINTERNAL (GLuint gpu_fence_id, bool from_external);
+GL_APICALL GLuint       GL_APIENTRY glDuplicateGpuFenceCHROMIUM (ClientGpuFence source);
+GL_APICALL void         GL_APIENTRY glWaitGpuFenceCHROMIUM (GLuint gpu_fence_id);
+GL_APICALL void         GL_APIENTRY glDestroyGpuFenceCHROMIUM (GLuint gpu_fence_id);

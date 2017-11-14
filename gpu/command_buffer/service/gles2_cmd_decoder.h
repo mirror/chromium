@@ -32,6 +32,7 @@ class GLImage;
 }
 
 namespace gfx {
+struct GpuFenceHandle;
 class Size;
 }
 
@@ -47,6 +48,7 @@ class ErrorState;
 class FeatureInfo;
 class FramebufferManager;
 class GLES2Util;
+class GpuFenceManager;
 class ImageManager;
 class Logger;
 class Outputter;
@@ -243,6 +245,9 @@ class GPU_EXPORT GLES2Decoder : public CommonDecoder, public AsyncAPIInterface {
 
   // Gets the QueryManager for this context.
   virtual QueryManager* GetQueryManager() = 0;
+
+  // Gets the GpuFenceManager for this context.
+  virtual GpuFenceManager* GetGpuFenceManager() = 0;
 
   // Gets the FramebufferManager for this context.
   virtual FramebufferManager* GetFramebufferManager() = 0;
