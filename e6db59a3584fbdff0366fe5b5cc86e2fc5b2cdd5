@@ -46,6 +46,30 @@
       "revId": "e6db59a3584fbdff0366fe5b5cc86e2fc5b2cdd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a97b96_f5277609",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 4004,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-14T16:06:58Z",
+      "side": 1,
+      "message": "That would be wonderful! For example, do we even need both DidCommitProvisionalLoad and DidClearWindowObject? IIUC, provisional load will go away with PlzNavigate cleanup, so would there be an entirely different callback (or at least, named differently)?",
+      "parentUuid": "c6520b9f_b11ba197",
+      "range": {
+        "startLine": 4004,
+        "startChar": 4,
+        "endLine": 4004,
+        "endChar": 31
+      },
+      "revId": "e6db59a3584fbdff0366fe5b5cc86e2fc5b2cdd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
