@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea1c7e77_53d04bbb",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-14T01:48:06Z",
+      "side": 1,
+      "message": "The whole Toolbar refactoring is based on reducing the number of public interface methods and properties and using protocols instead. Could we use a delegate instead of this?",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "74ccdf0aee346441adad70f1d2a380826aa18211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1169d2_f4514ee0",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-14T01:48:06Z",
+      "side": 1,
+      "message": "Same thing as previous comment, please don\u0027t add any new public interface to the ToolbarController. Conforming to new protocols is good!",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 99,
+        "endChar": 47
+      },
+      "revId": "74ccdf0aee346441adad70f1d2a380826aa18211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14963e26_5291e8e0",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-14T01:48:06Z",
+      "side": 1,
+      "message": "I think this whole method can move to the ToolsMenuCoordinator, right? That way ToolbarController won\u0027t even listen to this notification. \n\nThe ideal is that ToolsMenuCoordinator dismisses the toolsMenu after hearing this notification, and then calls a toolsMenuWasDismissed on the new protocol/delegate we are creating (which this toolbarController will conform to) where we make any related UI updates like updating the button visibility.",
+      "revId": "74ccdf0aee346441adad70f1d2a380826aa18211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c2b41a7_09dd3cb3",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-14T01:48:06Z",
+      "side": 1,
+      "message": "Returning the Button is not great and we are trying to avoid that but using some global layout guides that we can use for positioning. In this case I think we need it for the toolsMenuConfiguration, no?\n\nWe don\u0027t need to change this on this CL though, we can do that in a follow up tasks that need to use layoutguides for all \"positioner\" delegates from all boxed components.",
+      "range": {
+        "startLine": 739,
+        "startChar": 9,
+        "endLine": 739,
+        "endChar": 25
+      },
+      "revId": "74ccdf0aee346441adad70f1d2a380826aa18211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d4f290_0990fcf1",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-14T01:48:06Z",
+      "side": 1,
+      "message": "Since the ToolbarController will now be a delegate of the ToolsMenuCoordinator, we can make these calls directly from the ToolsMenuCoordinator when it presents/dismiss. That way this coordinator can completely stop hearing these notifications :)",
+      "revId": "74ccdf0aee346441adad70f1d2a380826aa18211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
