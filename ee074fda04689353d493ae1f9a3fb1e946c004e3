@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "05fe2e54_ee800eda",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/NearOomMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-14T06:13:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27327e8e_69462712",
+      "range": {
+        "startLine": 14,
+        "startChar": 19,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "ee074fda04689353d493ae1f9a3fb1e946c004e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3d31eaf_048fac1b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/NearOomMonitor.java",
         "patchSetId": 2
@@ -107,6 +131,30 @@
       "writtenOn": "2017-11-14T01:08:50Z",
       "side": 1,
       "message": "Aren\u0027t trivial getters usually placed in .h files inline?",
+      "range": {
+        "startLine": 104,
+        "startChar": 21,
+        "endLine": 104,
+        "endChar": 47
+      },
+      "revId": "ee074fda04689353d493ae1f9a3fb1e946c004e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28c4e65a_5443d742",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-14T06:13:40Z",
+      "side": 1,
+      "message": "Our compiler options doesn\u0027t allow inlining virtual getters. This is a virtual getter for testing purpose.",
+      "parentUuid": "d4a71acb_673608ca",
       "range": {
         "startLine": 104,
         "startChar": 21,
