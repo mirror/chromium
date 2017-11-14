@@ -22,6 +22,30 @@
       "revId": "935eb7f1e3a2df00226f7a9bd8267cbf35bda025",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b627bdb_36b6f0ac",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/BindingManagerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-14T17:34:52Z",
+      "side": 1,
+      "message": "\u003e so is there not some raciness here between us actually unbinding the strong binding and then re-binding with moderate?\n\nWell... this isn\u0027t a race, if moderate always comes after removing strong binding :p And this problem exists even before this CL.\n\nAlso this isn\u0027t the race that\u0027s mentioned in the CL description. The race in the CL description was between strong being added to \"lastForegroundConnection\" when app is sent to background, and strong binding being removed (here) when that same connection loses visibility. lastForegroundConnection doesn\u0027t exist anymore, and is replaced by ChildProcessImportance, so that race is just completely gone.\n\nThis problem is between dropping visibility on tabs and adding it to the moderate pool. I can flip the order if you want, but this is like another tangent change.",
+      "parentUuid": "648ab863_089dbc4a",
+      "range": {
+        "startLine": 201,
+        "startChar": 16,
+        "endLine": 201,
+        "endChar": 50
+      },
+      "revId": "935eb7f1e3a2df00226f7a9bd8267cbf35bda025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
