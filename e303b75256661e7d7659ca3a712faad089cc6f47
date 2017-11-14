@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48ead240_fcc8dde4",
+        "filename": "chrome/browser/clipboard/clipboard_permission_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-14T03:00:03Z",
+      "side": 1,
+      "message": "I added one modeled after the OWNERS file in ../geolocation",
+      "parentUuid": "c4330d80_59c6106a",
+      "revId": "e303b75256661e7d7659ca3a712faad089cc6f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a511d518_f461a609",
         "filename": "chrome/browser/permissions/permission_manager.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-13T06:07:58Z",
       "side": 1,
       "message": "This is going to gate both read and write on the clipboard setting, which I don\u0027t think we want, right? I think we may unfortunately have to add a CONTENT_SETTINGS_TYPE_CLIPBOARD_READ and WRITE and a related PermissionContext subclass (there isn\u0027t really another simple way to auto-grant perimission right now). \n\nYou can look at midi_permission_context.cc which is similar to write in the sense that it\u0027s always granted. Actually, please just rename midi_permission_context.cc to always_granted_permission_context.cc (and related class names etc.). It can simply take a ContentSettingsType as an argument to the constructor. It can then be used for both write and midi.",
+      "revId": "e303b75256661e7d7659ca3a712faad089cc6f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c77b0a1_5b708f18",
+        "filename": "chrome/browser/permissions/permission_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-14T03:00:03Z",
+      "side": 1,
+      "message": "midi_permission_context is not restricted to Secure Contexts, so it\u0027s not a complete match for the Clipboard permissions.",
+      "parentUuid": "a511d518_f461a609",
       "revId": "e303b75256661e7d7659ca3a712faad089cc6f47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0fa75e9c_2d8c3b6c",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-14T03:00:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "723d3aa8_d08f0c50",
+      "revId": "e303b75256661e7d7659ca3a712faad089cc6f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7652e8af_b0841fb3",
         "filename": "content/browser/permissions/permission_service_impl.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "e303b75256661e7d7659ca3a712faad089cc6f47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b10b66_f2b2fc90",
+        "filename": "content/browser/permissions/permission_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-11-14T03:00:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7652e8af_b0841fb3",
+      "revId": "e303b75256661e7d7659ca3a712faad089cc6f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
