@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec7d1b37_ec2e5066",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/livelocation-main-frame-navigated.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-14T02:36:32Z",
+      "side": 1,
+      "message": "drop",
+      "revId": "097017f5c16cc6213fc1a81e5f4b040a84ee5be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
