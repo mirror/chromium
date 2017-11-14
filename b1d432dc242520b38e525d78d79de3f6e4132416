@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab216a6e_e7a3c723",
+        "filename": "chrome/browser/ui/webui/signin/signin_email_confirmation_dialog.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-14T09:10:43Z",
+      "side": 1,
+      "message": "Nit: Please revert changes to this function (I strongly prefer early return instead of positive if to).",
+      "range": {
+        "startLine": 116,
+        "startChar": 6,
+        "endLine": 116,
+        "endChar": 25
+      },
+      "revId": "b1d432dc242520b38e525d78d79de3f6e4132416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
