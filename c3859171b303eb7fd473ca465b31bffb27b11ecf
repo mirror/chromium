@@ -46,6 +46,30 @@
       "revId": "c3859171b303eb7fd473ca465b31bffb27b11ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055ba2f7_fbf68f3f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-14T23:50:14Z",
+      "side": 1,
+      "message": "I was hoping for more fine-grained detail, but I expect a vast majority of the samples to be at the lower end; iiuc the exponential increments in the histogram will handle that. Done.",
+      "parentUuid": "d8cc96d5_ac1ddb0d",
+      "range": {
+        "startLine": 540,
+        "startChar": 80,
+        "endLine": 540,
+        "endChar": 83
+      },
+      "revId": "c3859171b303eb7fd473ca465b31bffb27b11ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
