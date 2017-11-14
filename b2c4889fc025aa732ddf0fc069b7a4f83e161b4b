@@ -52,6 +52,24 @@
       "revId": "b2c4889fc025aa732ddf0fc069b7a4f83e161b4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6927e4ff_31263cb2",
+        "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-14T00:07:20Z",
+      "side": 1,
+      "message": "\u003e Hang on, wasn\u0027t this already broken before?\n\u003e \n\u003e I\u0027m possibly missing something, but it looks like even before this CL, Blink ended up invoking DidClearWindowObject after DidCommitProvisionalLoad for normal navigations, but before DidCommitProvisionalLoad for cross-site navigations (when a frame is swapped (back) in).\n\u003e \n\u003e Lukasz, can you please double check?\n\nYes, before and after this CL, for cross-process navigations RFO::DidClearWindowObject is invoked *before* RFO::DidCommitProvisionalLoad as illustrated by the following callstack:\n\n#4 0x7f214468655f content::DevToolsFrontendImpl::DidClearWindowObject()\n#5 0x7f21448890a8 content::RenderFrameImpl::DidClearWindowObject()\n#6 0x7f2138f4d5e1 blink::LocalFrameClientImpl::DispatchDidClearWindowObjectInMainWorld()\n#7 0x7f2139892bfb blink::FrameLoader::DispatchDidClearWindowObjectInMainWorld()\n#8 0x7f213869b40b blink::LocalWindowProxy::Initialize()\n#9 0x7f213873146a blink::WindowProxy::SetGlobalProxy()\n#10 0x7f213873213b blink::WindowProxyManager::SetGlobalProxies()\n#11 0x7f2138f80d13 blink::WebFrame::Swap()\n#12 0x7f21448762ff content::RenderFrameImpl::SwapIn()\n#13 0x7f21448856da content::RenderFrameImpl::DidCommitProvisionalLoad()\n\n\nSomewhat unrelated - I\u0027ve noticed that all RFO/RVO::DidClearWindowObject overrides were only installing new bindings (e.g. window.chrome, window.internals, etc.), but *only* DevToolsFrontendImpl would end up executing a script.  So - in the latest patchset I\u0027ve made DevToolsFrontendImpl override DidCommitProvisionalLoad instead of DidClearWindowObject.  Unfortunately, this doesn\u0027t help much - this makes the tests pass and possibly makes this CL landable (by undoing the rightfully frowned upon PostTask in DevToolsFrontendImpl), but the problems will come back when after https://crrev.com/c/739746 DevToolsFrontendImpl won\u0027t anymore by a subclass of RenderFrameObserver.  After https://crrev.com/c/739746, DevToolsFrontendImpl will be executing scripts from the following callstack (not an actual callstack, this is based on my reading of the other CL / of the code):\n\n- DevToolsFrontendImpl::DidClearWindowObject (moved/new in the other CL)\n- BlinkInitializer::OnClearWindowObjectInMainWorld (new in the other CL)\n- LocalFrameClientImpl::DispatchDidClearWindowObjectInMainWorld\n- ...\n\nQUESTION: How can I make sure that DevToolsFrontendImpl::DidClearWindowObject executes *after* DidCommitProvisionalLoad IPC after https://crrev.com/c/739746 lands (e.g. after DevToolsFrontendImpl is NOT a RenderFrameObserver)?  Is there some other Blink-internal method that can call into DevToolsFrontendImpl::DidClearWindowObject^H^HExecuteInitializationScripts?  So far I haven\u0027t found anything suitable in blink::CoreInitializer, but maybe I should be looking somewhere else?",
+      "parentUuid": "f0470313_93d8427c",
+      "revId": "b2c4889fc025aa732ddf0fc069b7a4f83e161b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

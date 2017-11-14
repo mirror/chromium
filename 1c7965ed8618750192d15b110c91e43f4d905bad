@@ -128,6 +128,30 @@
       "revId": "1c7965ed8618750192d15b110c91e43f4d905bad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4936727e_52192452",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 4014,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-14T00:07:20Z",
+      "side": 1,
+      "message": "Good idea.  Not yet done - I\u0027ll leave this comment as unresolved.  I might try to work on this tomorrow, but I hope that first we would reach a conclusion on what to do with DidClearWindowObject.",
+      "parentUuid": "856aa77d_9daeea8a",
+      "range": {
+        "startLine": 4012,
+        "startChar": 0,
+        "endLine": 4014,
+        "endChar": 56
+      },
+      "revId": "1c7965ed8618750192d15b110c91e43f4d905bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
