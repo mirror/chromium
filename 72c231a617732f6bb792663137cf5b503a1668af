@@ -22,6 +22,30 @@
       "revId": "72c231a617732f6bb792663137cf5b503a1668af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd04d03f_d0862ba1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1247458
+      },
+      "writtenOn": "2017-11-14T17:29:04Z",
+      "side": 1,
+      "message": "Thanks! 3rd CL, I need to remember those details.",
+      "parentUuid": "41f80005_71c3eae7",
+      "range": {
+        "startLine": 9,
+        "startChar": 23,
+        "endLine": 9,
+        "endChar": 29
+      },
+      "revId": "72c231a617732f6bb792663137cf5b503a1668af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
