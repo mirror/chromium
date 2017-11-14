@@ -7,6 +7,8 @@
 #include "chrome/installer/setup/uninstall.h"
 
 #include <windows.h>
+
+#include <objbase.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -637,6 +639,15 @@ bool DeleteChromeRegistrationKeys(const InstallerState& installer_state,
   // would otherwise try to figure out the currently installed suffix).
   reg_app_id.append(install_static::GetBaseAppId() + browser_entry_suffix);
   InstallUtil::DeleteRegistryKey(root, reg_app_id, WorkItem::kWow64Default);
+
+  // Delete Software\Classes\CLSID\|toast_activator_clsid|.
+  base::string16 toast_activator_reg_path = GetToastActivatorRegistryPath();
+  if (toast_activator_reg_path.size() != 0) {
+    InstallUtil::DeleteRegistryKey(root, toast_activator_reg_path,
+                                   WorkItem::kWow64Default);
+  } else {
+    LOG(DFATAL) << "Cannot retrieve the toast activator registry path";
+  }
 
   // Delete all Start Menu Internet registrations that refer to this Chrome.
   {
