@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e61e3ec5_c9a0b0f0",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T06:43:48Z",
+      "side": 1,
+      "message": "this was triggering\n\n[FATAL:observer_list.h(276)] Check failed: false. Observers can only be added once!\n\nunder Backtrace:\n\tbase::ObserverListBase\u003c\u003e::AddObserver [0x01732564+170]\n\tviews::DialogClientView::ViewHierarchyChanged [0x0120D588+72]\n\n\nBut *only* if the DialogClientView allocated during initialization happened to be allocated at the exact same memory address as the DialogClientView destroyed when |w0| was closed.",
+      "revId": "f18b2142c2381f9bd90f14c1641bf68713b9bc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
