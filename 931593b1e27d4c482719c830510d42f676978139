@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "f3dbede3_ca01d4e6",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasResourceProvider.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-14T21:07:26Z",
+      "side": 1,
+      "message": "Pepper has layout tests that failed without the swizzling. Canvas apparently didn\u0027t but there\u0027s no reason why it would be different. See also https://chromium-review.googlesource.com/c/chromium/src/+/692999/16/content/renderer/pepper/pepper_graphics_2d_host.cc#666",
+      "parentUuid": "8da4c887_f83479fa",
+      "range": {
+        "startLine": 161,
+        "startChar": 6,
+        "endLine": 161,
+        "endChar": 14
+      },
+      "revId": "931593b1e27d4c482719c830510d42f676978139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da0905e2_8dad3420",
         "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasResourceProvider.cpp",
         "patchSetId": 20
@@ -59,6 +83,30 @@
       "writtenOn": "2017-11-14T20:58:51Z",
       "side": 1,
       "message": "Do we have tests for this? This looks incorrect to me and no tests seem to be failing.  Hmmm...  IMHO, this line should be:\nGLenum format \u003d (bitmap_is_bgra \u0026\u0026 texture_can_be_bgra) ? GL_BGRA_EXT : GL_RGBA;",
+      "range": {
+        "startLine": 167,
+        "startChar": 20,
+        "endLine": 167,
+        "endChar": 39
+      },
+      "revId": "931593b1e27d4c482719c830510d42f676978139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63dc9a04_a792aefc",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasResourceProvider.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-14T21:07:26Z",
+      "side": 1,
+      "message": "There are no offscreencanvas tests that required swizzling but there is 1 pepper test: plugins/webview-plugin-type-change.html\n\nOh, you\u0027re right it should be bitmap_is_bgra \u0026\u0026 texture_can_be_bgra. If they are both true, then we will have a BGRA input. Else we have an RGBA input either originally or by swizzling.",
+      "parentUuid": "da0905e2_8dad3420",
       "range": {
         "startLine": 167,
         "startChar": 20,

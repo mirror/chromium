@@ -16,6 +16,24 @@
       "revId": "1583812c7502ffd45b23483800ed45e47b38ca90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741ec410_caafbecd",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-14T21:07:26Z",
+      "side": 1,
+      "message": "Oh.. ya ok. If i new uint32s then that works, thanks.",
+      "parentUuid": "4ca08f4d_35364a75",
+      "revId": "1583812c7502ffd45b23483800ed45e47b38ca90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
