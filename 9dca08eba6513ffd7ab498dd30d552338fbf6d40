@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21d37241_7471ba94",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-14T21:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48eeb8cc_9a651418",
+      "revId": "9dca08eba6513ffd7ab498dd30d552338fbf6d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c22b6dea_7c51bcae",
         "filename": "base/test/android/java_handler_thread_helpers.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-07T15:15:26Z",
       "side": 1,
       "message": "Not sure i\u0027m following this right, but the event here is going to be signalled *before* the exception is thrown (since it\u0027s not thrown until we return to the VM immediately afterward).. the test waits for the event and then assumes the uncaught exception will already have happened, which seems like a race? Am I missing something there?",
+      "revId": "9dca08eba6513ffd7ab498dd30d552338fbf6d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a32ea5a_c55a5c46",
+        "filename": "base/test/android/java_handler_thread_helpers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-14T21:16:10Z",
+      "side": 1,
+      "message": "The WaitableEvent is just so we don\u0027t stop the thread before the delayed task executes. This isn\u0027t racy because we do call thread-\u003eStop(), and the exception will definitely have happened after Stop() returns.",
+      "parentUuid": "c22b6dea_7c51bcae",
       "revId": "9dca08eba6513ffd7ab498dd30d552338fbf6d40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
