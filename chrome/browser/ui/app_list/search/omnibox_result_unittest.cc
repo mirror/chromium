@@ -93,7 +93,6 @@ class OmniboxResultTest : public AppListTestBase {
 TEST_F(OmniboxResultTest, Basic) {
   // TODO(newcomer): this test needs to be reevaluated for the fullscreen app
   // list (http://crbug.com/759779).
-  if (app_list::features::IsFullscreenAppListEnabled())
     return;
 
   std::unique_ptr<OmniboxResult> result = CreateOmniboxResult(

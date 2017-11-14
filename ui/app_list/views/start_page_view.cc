@@ -48,7 +48,7 @@ constexpr int kInstantContainerSpacing = 24;
 constexpr int kSearchBoxAndTilesSpacing = 35;
 constexpr int kStartPageSearchBoxWidth = 480;
 constexpr int kStartPageSearchBoxWidthFullscreen = 544;
-constexpr int kPreferredHeightFullscreen = 272;
+constexpr int kPreferredHeight = 272;
 
 // WebView constants.
 constexpr int kWebViewWidth = 700;
@@ -161,12 +161,12 @@ gfx::Rect StartPageView::GetPageBoundsForState(
   if (state == AppListModel::STATE_START) {
     if (app_list_view_->is_fullscreen()) {
       // Make this view vertically centered in fullscreen mode.
-      onscreen_bounds.Offset(
-          0, (onscreen_bounds.height() - kPreferredHeightFullscreen) / 2);
+      onscreen_bounds.Offset(0,
+                             (onscreen_bounds.height() - kPreferredHeight) / 2);
     }
     return onscreen_bounds;
   }
-  onscreen_bounds.set_height(kPreferredHeightFullscreen);
+  onscreen_bounds.set_height(kPreferredHeight);
 
   return GetAboveContentsOffscreenBounds(onscreen_bounds.size());
 }

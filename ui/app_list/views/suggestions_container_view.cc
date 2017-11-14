@@ -133,7 +133,7 @@ void SuggestionsContainerView::CreateAppsGrid(int apps_num) {
   for (; i < apps_num; ++i) {
     SearchResultTileItemView* tile_item = new SearchResultTileItemView(
         this, view_delegate_, pagination_model_, true,
-        true /* is_fullscreen_app_list_enabled */,
+
         is_play_store_app_search_enabled);
     tiles_layout_manager->AddView(tile_item);
     AddChildView(tile_item);

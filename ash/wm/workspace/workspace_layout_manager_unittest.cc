@@ -1415,7 +1415,6 @@ TEST_F(WorkspaceLayoutManagerBackdropTest,
        BackdropIgnoresNonFullscreenAppListVisibilityNotification) {
   // TODO(newcomer): this test needs to be reevaluated for the fullscreen app
   // list (http://crbug.com/759779).
-  if (app_list::features::IsFullscreenAppListEnabled())
     return;
 
   WorkspaceController* wc = ShellTestApi(Shell::Get()).workspace_controller();
@@ -1428,7 +1427,6 @@ TEST_F(WorkspaceLayoutManagerBackdropTest,
   // Turn the top window backdrop on.
   ShowTopWindowBackdropForContainer(default_container(), true);
   EXPECT_TRUE(test_helper.GetBackdropWindow());
-  EXPECT_FALSE(app_list::features::IsFullscreenAppListEnabled());
 
   // Showing the non-fullscreen app list should have no effect for the backdrop.
   TestAppListPresenterImpl app_list_presenter_impl;
@@ -1456,7 +1454,6 @@ TEST_F(WorkspaceLayoutManagerBackdropTest,
   EXPECT_TRUE(test_helper.GetBackdropWindow());
 
   EXPECT_TRUE(test_helper.GetBackdropWindow());
-  EXPECT_TRUE(app_list::features::IsFullscreenAppListEnabled());
   // Showing the fullscreen app list should hide the backdrop.
   TestAppListPresenterImpl app_list_presenter_impl;
   app_list_presenter_impl.ShowAndRunLoop(GetPrimaryDisplay().id());

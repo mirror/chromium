@@ -152,11 +152,11 @@ bool FolderHeaderView::IsFolderNameEnabledForTest() const {
 }
 
 gfx::Size FolderHeaderView::CalculatePreferredSize() const {
-  const int preferred_height =
-      is_fullscreen_app_list_enabled_
-          ? kPreferredHeight + kBottomSeparatorBottomPaddingFullScreen +
-                AppsGridView::GetTilePadding().top()
-          : kPreferredHeight;
+  const int preferred_height = is_fullscreen_app_list_enabled_
+                                   ? kPreferredHeight +
+                                         kBottomSeparatorBottomPadding +
+                                         AppsGridView::GetTilePadding().top()
+                                   : kPreferredHeight;
   return gfx::Size(kPreferredWidth, preferred_height);
 }
 
@@ -220,20 +220,19 @@ void FolderHeaderView::OnPaint(gfx::Canvas* canvas) {
 
   // Draw bottom separator line.
   rect.Inset(is_fullscreen_app_list_enabled_
-                 ? kAppsGridLeftRightPaddingFullscreen +
+                 ? kAppsGridLeftRightPadding +
                        (-AppsGridView::GetTilePadding().left()) +
-                       kBottomSeparatorLeftRightPaddingFullScreen
+                       kBottomSeparatorLeftRightPadding
                  : kAppsGridPadding,
              0);
-  int extra_bottom_padding = is_fullscreen_app_list_enabled_
-                                 ? kBottomSeparatorBottomPaddingFullScreen +
-                                       AppsGridView::GetTilePadding().top()
-                                 : 0;
+  int extra_bottom_padding =
+      is_fullscreen_app_list_enabled_
+          ? kBottomSeparatorBottomPadding + AppsGridView::GetTilePadding().top()
+          : 0;
   rect.set_y(rect.bottom() - kBottomSeparatorHeight - extra_bottom_padding);
   rect.set_height(kBottomSeparatorHeight);
-  SkColor color = is_fullscreen_app_list_enabled_
-                      ? kBottomSeparatorColorFullScreen
-                      : kBottomSeparatorColor;
+  SkColor color = is_fullscreen_app_list_enabled_ ? kBottomSeparatorColor
+                                                  : kBottomSeparatorColor;
   canvas->FillRect(rect, color);
 }
 

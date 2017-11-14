@@ -137,7 +137,6 @@ TEST_F(AppListPresenterDelegateTest,
 TEST_F(AppListPresenterDelegateTest, ClickOutsideBubbleClosesBubble) {
   // TODO(newcomer): this test needs to be reevaluated for the fullscreen app
   // list (http://crbug.com/759779).
-  if (app_list::features::IsFullscreenAppListEnabled())
     return;
 
   app_list_presenter_impl()->Show(GetPrimaryDisplayId());
@@ -164,7 +163,6 @@ TEST_F(AppListPresenterDelegateTest, ClickOutsideBubbleClosesBubble) {
 TEST_F(AppListPresenterDelegateTest, TapOutsideBubbleClosesBubble) {
   // TODO(newcomer): this test needs to be reevaluated for the fullscreen app
   // list (http://crbug.com/759779).
-  if (app_list::features::IsFullscreenAppListEnabled())
     return;
 
   app_list_presenter_impl()->Show(GetPrimaryDisplayId());
@@ -209,7 +207,6 @@ TEST_F(AppListPresenterDelegateTest, NonPrimaryDisplay) {
 TEST_F(AppListPresenterDelegateTest, TinyDisplay) {
   // TODO(newcomer): this test needs to be reevaluated for the fullscreen app
   // list (http://crbug.com/759779).
-  if (app_list::features::IsFullscreenAppListEnabled())
     return;
 
   // Set up a screen with a tiny display (height smaller than the app list).
@@ -749,7 +746,6 @@ TEST_F(AppListPresenterDelegateTest,
   // should show.
   GetPrimaryShelf()->SetAlignment(ShelfAlignment::SHELF_ALIGNMENT_LEFT);
   app_list_presenter_impl()->ShowAndRunLoop(GetPrimaryDisplayId());
-  EXPECT_TRUE(app_list::features::IsFullscreenAppListEnabled());
   EXPECT_FALSE(GetPrimaryShelf()->IsHorizontalAlignment());
   EXPECT_EQ(GetPrimaryShelf()->shelf_layout_manager()->GetShelfBackgroundType(),
             SHELF_BACKGROUND_APP_LIST);
