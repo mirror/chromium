@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52a7d5a0_a4244ac5",
+        "filename": "chrome/browser/ui/app_list/app_list_controller_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-14T17:59:41Z",
+      "side": 1,
+      "message": "nit: can we use instead of this something like:\n\napp_list::AppListSyncableServiceFactory::GetForProfile(profile_)\n               -\u003eGetModel();\n\nwhen it is required\n\nWDYT?",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 56
+      },
+      "revId": "cbe3e7cb141d5f13e3df60985215f507e64d8fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
