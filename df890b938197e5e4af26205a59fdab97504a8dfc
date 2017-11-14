@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cbcc13f_1ee7d069",
+        "filename": "ash/wm/overview/overview_window_drag_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-14T15:51:24Z",
+      "side": 1,
+      "message": "ActivateSelectedWindow, or something like that, since there\u0027s no input param?",
+      "revId": "df890b938197e5e4af26205a59fdab97504a8dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c587417_0888e361",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2641,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-14T15:51:24Z",
+      "side": 1,
+      "message": "You can also look into actually generating the tap/scroll etc. gesture events using a ui::test::EventGenerator.",
+      "revId": "df890b938197e5e4af26205a59fdab97504a8dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
