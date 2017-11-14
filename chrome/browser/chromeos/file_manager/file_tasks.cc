@@ -123,6 +123,8 @@ void KeepOnlyFileManagerInternalTasks(std::vector<FullTaskDescriptor>* tasks) {
 // Returns true if the given task is a handler by built-in apps like the Files
 // app itself or QuickOffice etc. They are used as the initial default app.
 bool IsFallbackFileHandler(const file_tasks::TaskDescriptor& task) {
+  // Stop defaulting to built-in apps to help testing with text files or image files.
+  return false;
   if (task.task_type != file_tasks::TASK_TYPE_FILE_BROWSER_HANDLER &&
       task.task_type != file_tasks::TASK_TYPE_FILE_HANDLER)
     return false;
@@ -353,6 +355,7 @@ void FindDriveAppTasks(const drive::DriveAppRegistry& drive_app_registry,
                        const std::vector<extensions::EntryInfo>& entries,
                        std::vector<FullTaskDescriptor>* result_list) {
   DCHECK(result_list);
+  LOG(ERROR) << "FindDriveAppTasks";
 
   bool is_first = true;
   typedef std::map<std::string, drive::DriveAppInfo> DriveAppInfoMap;
@@ -408,6 +411,7 @@ void FindDriveAppTasks(const drive::DriveAppRegistry& drive_app_registry,
     result_list->push_back(FullTaskDescriptor(
         descriptor, app_info.app_name, Verb::VERB_OPEN_WITH, icon_url,
         false /* is_default */, false /* is_generic_file_handler */));
+    LOG(ERROR) << "Added OPEN_WITH task: " << app_info.app_id;
   }
 }
 
@@ -442,6 +446,7 @@ void FindFileHandlerTasks(Profile* profile,
   DCHECK(!entries.empty());
   DCHECK(result_list);
 
+  LOG(ERROR) << "FindFileHandlerTasks";
   const extensions::ExtensionSet& enabled_extensions =
       extensions::ExtensionRegistry::Get(profile)->enabled_extensions();
 
@@ -526,6 +531,7 @@ void FindFileHandlerTasks(Profile* profile,
                          handler->id),
           extension->name(), verb, best_icon, false /* is_default */,
           is_generic_file_handler));
+          LOG(ERROR) << "Added " << extension->id();
     }
   }
 }
@@ -537,6 +543,7 @@ void FindFileBrowserHandlerTasks(
   DCHECK(!file_urls.empty());
   DCHECK(result_list);
 
+  LOG(ERROR) << "FindFileBrowserHandlerTasks";
   file_browser_handlers::FileBrowserHandlerList common_tasks =
       file_browser_handlers::FindFileBrowserHandlers(profile, file_urls);
   if (common_tasks.empty())
@@ -565,6 +572,7 @@ void FindFileBrowserHandlerTasks(
                        handler->id()),
         handler->title(), Verb::VERB_NONE /* no verb for FileBrowserHandler */,
         icon_url, false /* is_default */, false /* is_generic_file_handler */));
+    LOG(ERROR) << "Added " << extension->id();
   }
 }
 
@@ -625,8 +633,10 @@ void ChooseAndSetDefaultTask(const PrefService& pref_service,
     FullTaskDescriptor* task = &tasks->at(i);
     DCHECK(!task->is_default());
     const std::string task_id = TaskDescriptorToId(task->task_descriptor());
+    LOG(ERROR) << "task_id=" << task_id;
     if (base::ContainsKey(default_task_ids, task_id)) {
       task->set_is_default(true);
+      LOG(ERROR) << task_id << " was chosen as default by default task";
       return;
     }
   }
@@ -638,9 +648,15 @@ void ChooseAndSetDefaultTask(const PrefService& pref_service,
     DCHECK(!task->is_default());
     if (IsFallbackFileHandler(task->task_descriptor())) {
       task->set_is_default(true);
+      const std::string task_id = TaskDescriptorToId(task->task_descriptor());
+      LOG(ERROR) << task_id << "(" << task->task_title()
+                 << ") was chosen as first fallback handler.";
+      LOG(ERROR) << "is_generic_file_handler="
+                 << task->is_generic_file_handler();
       return;
     }
   }
+  LOG(ERROR) << "No default task";
 }
 
 }  // namespace file_tasks
