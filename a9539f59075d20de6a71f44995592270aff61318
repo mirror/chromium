@@ -34,6 +34,24 @@
       "revId": "a9539f59075d20de6a71f44995592270aff61318",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a55eb18_57c8130b",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-14T19:05:38Z",
+      "side": 1,
+      "message": "\u003e Done, because IFaceDetector initialization can take a long time.\n\nThis will just make IFaceDetector initialization take longer since it becomes serialized so I\u0027m unsure of the benefit unless you also think that it is resource intensive and so we should avoid doing it multiple times. If the latter is true then we should do something to try to reuse the IFaceDetector interface between multiple clients but we can save that for a later patch.\n\n\u003e Do you mean we should set a connector error handler to |binding_| and resume call processing in the callback if the pipe attached to |binding_| is closed before OnFaceDetectorCreated() is called?\n\nMy point was that we won\u0027t get the pipe close notification if call processing is paused. There\u0027s nothing you can do about that if you want to use this mechanism to queue requests.\n\n\u003e I don\u0027t get it. It\u0027s basic usage in here[1], do we need comment something?\n\nIn [1] we only ever create a single FaceDetection instance from a FaceDetectionProvider so we don\u0027t need to handle the case where there are multiple simultaneous requests, or even any follow-up requests. At the top of this function we can just say:\n\nif (async_create_detector_ops_) {\n  mojo::ReportBadMessage(\"FaceDetectionProvider client may only create one FaceDetection at a time.\");\n  return;\n}",
+      "parentUuid": "d8d55f90_583e91d5",
+      "revId": "a9539f59075d20de6a71f44995592270aff61318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
