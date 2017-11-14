@@ -22,6 +22,30 @@
       "revId": "25f40120755381035077c35763cb72e21a3475b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47faea9c_4be10a80",
+        "filename": "ui/base/x/x11_pointer_grab.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-14T16:43:06Z",
+      "side": 1,
+      "message": "fwiw: if it\u0027s a move only, I\u0027d expect the Copyright to stay the same.",
+      "parentUuid": "1ca92de7_bed002f1",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "25f40120755381035077c35763cb72e21a3475b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
