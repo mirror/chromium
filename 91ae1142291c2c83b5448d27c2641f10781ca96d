@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6106475a_5eb18ac8",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-14T07:24:32Z",
+      "side": 1,
+      "message": "I don\u0027t know the answer to that question. I guess it depends on the UI platform.\n\nHowever, from my manual checks, it seems like all display names are RTL when the given locale is RTL. So the UI have no issues because all languages have the same RTL as the UI.",
+      "parentUuid": "fe48e175_c6e7919b",
+      "range": {
+        "startLine": 431,
+        "startChar": 13,
+        "endLine": 431,
+        "endChar": 29
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2682f555_6407bffc",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 3
