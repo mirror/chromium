@@ -53,7 +53,32 @@
 
 namespace content {
 namespace protocol {
+
 namespace {
+
+struct NetErrorToErrorReasonTuple {
+  NetErrorToErrorReasonTuple(net::Error net_error, const char* error_reason)
+      : net_error(net_error), error_reason(error_reason) {}
+
+  net::Error net_error;
+  const char* error_reason;
+};
+
+static NetErrorToErrorReasonTuple net_error_to_error_reason_[] = {
+    {net::ERR_FAILED, Network::ErrorReasonEnum::Failed},
+    {net::ERR_ABORTED, Network::ErrorReasonEnum::Aborted},
+    {net::ERR_TIMED_OUT, Network::ErrorReasonEnum::TimedOut},
+    {net::ERR_ACCESS_DENIED, Network::ErrorReasonEnum::AccessDenied},
+    {net::ERR_CONNECTION_CLOSED, Network::ErrorReasonEnum::ConnectionClosed},
+    {net::ERR_CONNECTION_RESET, Network::ErrorReasonEnum::ConnectionReset},
+    {net::ERR_CONNECTION_REFUSED, Network::ErrorReasonEnum::ConnectionRefused},
+    {net::ERR_CONNECTION_ABORTED, Network::ErrorReasonEnum::ConnectionAborted},
+    {net::ERR_CONNECTION_FAILED, Network::ErrorReasonEnum::ConnectionFailed},
+    {net::ERR_NAME_NOT_RESOLVED, Network::ErrorReasonEnum::NameNotResolved},
+    {net::ERR_INTERNET_DISCONNECTED,
+     Network::ErrorReasonEnum::InternetDisconnected},
+    {net::ERR_ADDRESS_UNREACHABLE,
+     Network::ErrorReasonEnum::AddressUnreachable}};
 
 using ProtocolCookieArray = Array<Network::Cookie>;
 using GetCookiesCallback = Network::Backend::GetCookiesCallback;
@@ -461,34 +486,33 @@ String securityState(const GURL& url, const net::CertStatus& cert_status) {
   return Security::SecurityStateEnum::Secure;
 }
 
+DevToolsURLRequestInterceptor::InterceptionStage ToInterceptorStage(
+    const protocol::Network::InterceptionStage& interceptor_stage) {
+  if (interceptor_stage == protocol::Network::InterceptionStageEnum::Request)
+    return DevToolsURLRequestInterceptor::REQUEST;
+  if (interceptor_stage ==
+      protocol::Network::InterceptionStageEnum::HeadersReceived)
+    return DevToolsURLRequestInterceptor::RESPONSE;
+  NOTREACHED();
+  return DevToolsURLRequestInterceptor::REQUEST;
+}
+
 net::Error NetErrorFromString(const std::string& error, bool* ok) {
   *ok = true;
-  if (error == Network::ErrorReasonEnum::Failed)
-    return net::ERR_FAILED;
-  if (error == Network::ErrorReasonEnum::Aborted)
-    return net::ERR_ABORTED;
-  if (error == Network::ErrorReasonEnum::TimedOut)
-    return net::ERR_TIMED_OUT;
-  if (error == Network::ErrorReasonEnum::AccessDenied)
-    return net::ERR_ACCESS_DENIED;
-  if (error == Network::ErrorReasonEnum::ConnectionClosed)
-    return net::ERR_CONNECTION_CLOSED;
-  if (error == Network::ErrorReasonEnum::ConnectionReset)
-    return net::ERR_CONNECTION_RESET;
-  if (error == Network::ErrorReasonEnum::ConnectionRefused)
-    return net::ERR_CONNECTION_REFUSED;
-  if (error == Network::ErrorReasonEnum::ConnectionAborted)
-    return net::ERR_CONNECTION_ABORTED;
-  if (error == Network::ErrorReasonEnum::ConnectionFailed)
-    return net::ERR_CONNECTION_FAILED;
-  if (error == Network::ErrorReasonEnum::NameNotResolved)
-    return net::ERR_NAME_NOT_RESOLVED;
-  if (error == Network::ErrorReasonEnum::InternetDisconnected)
-    return net::ERR_INTERNET_DISCONNECTED;
-  if (error == Network::ErrorReasonEnum::AddressUnreachable)
-    return net::ERR_ADDRESS_UNREACHABLE;
+  for (const auto it : net_error_to_error_reason_) {
+    if (it.error_reason == error)
+      return it.net_error;
+  }
   *ok = false;
   return net::ERR_FAILED;
+}
+
+String NetErrorToString(int net_error) {
+  for (const auto it : net_error_to_error_reason_) {
+    if (it.net_error == net_error)
+      return it.error_reason;
+  }
+  return Network::ErrorReasonEnum::Failed;
 }
 
 bool AddInterceptedResourceType(
@@ -1083,7 +1107,9 @@ DispatchResponse NetworkHandler::SetRequestInterception(
         }
       }
       interceptor_patterns.push_back(DevToolsURLRequestInterceptor::Pattern(
-          patterns->get(i)->GetUrlPattern("*"), std::move(resource_types)));
+          patterns->get(i)->GetUrlPattern("*"), std::move(resource_types),
+          ToInterceptorStage(patterns->get(i)->GetInterceptionStage(
+              protocol::Network::InterceptionStageEnum::Request))));
     }
 
     interceptor->StartInterceptingRequests(frame_tree_node,
@@ -1127,7 +1153,6 @@ bool GetPostData(const net::URLRequest* request, std::string* post_data) {
 }
 }  // namespace
 
-// TODO(alexclarke): Support structured data as well as |base64_raw_response|.
 void NetworkHandler::ContinueInterceptedRequest(
     const std::string& interception_id,
     Maybe<std::string> error_reason,
@@ -1176,6 +1201,20 @@ void NetworkHandler::ContinueInterceptedRequest(
           std::move(method), std::move(post_data), std::move(headers),
           std::move(auth_challenge_response), mark_as_canceled),
       std::move(callback));
+}
+
+void NetworkHandler::GetResponseBodyForInterception(
+    const String& interception_id,
+    std::unique_ptr<GetResponseBodyForInterceptionCallback> callback) {
+  DevToolsInterceptorController* interceptor =
+      DevToolsInterceptorController::FromBrowserContext(
+          process_->GetBrowserContext());
+
+  if (!interceptor) {
+    callback->sendFailure(Response::InternalError());
+    return;
+  }
+  interceptor->GetResponseBody(interception_id, std::move(callback));
 }
 
 // static
@@ -1290,12 +1329,16 @@ const char* ResourceTypeToString(ResourceType resource_type) {
 
 void NetworkHandler::RequestIntercepted(
     std::unique_ptr<InterceptedRequestInfo> info) {
+  protocol::Maybe<protocol::Network::ErrorReason> error_reason;
+  if (info->response_error_code < 0)
+    error_reason = NetErrorToString(info->response_error_code);
   frontend_->RequestIntercepted(
       info->interception_id, std::move(info->network_request),
       info->frame_id.ToString(), ResourceTypeToString(info->resource_type),
-      info->is_navigation, std::move(info->headers_object),
-      std::move(info->http_status_code), std::move(info->redirect_url),
-      std::move(info->auth_challenge));
+      info->is_navigation, std::move(info->redirect_url),
+      std::move(info->auth_challenge), std::move(error_reason),
+      std::move(info->http_response_status_code),
+      std::move(info->response_headers));
 }
 
 void NetworkHandler::SetNetworkConditions(
