@@ -117,6 +117,30 @@
       "revId": "3569ccf786592369aefc1efe73f66f1c5398f49d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da90551_2bdfcf8b",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-14T06:06:10Z",
+      "side": 1,
+      "message": "As SequenceChecker is non-movable, and its base::Lock is hard to convert to movable, IMO, we can\u0027t make CallbackWrapper movable.",
+      "parentUuid": "4a6ae090_fefc1c97",
+      "range": {
+        "startLine": 379,
+        "startChar": 18,
+        "endLine": 379,
+        "endChar": 47
+      },
+      "revId": "3569ccf786592369aefc1efe73f66f1c5398f49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
