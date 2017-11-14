@@ -204,6 +204,48 @@ TEST_F(NetworkSessionConfiguratorTest,
   EXPECT_EQ(10, params_.quic_reduced_ping_timeout_seconds);
 }
 
+TEST_F(NetworkSessionConfiguratorTest,
+       QuicMaxTimeBeforeCryptoHandshakeSeconds) {
+  std::map<std::string, std::string> field_trial_params;
+  field_trial_params["max_time_before_crypto_handshake_seconds"] = "7";
+  variations::AssociateVariationParams("QUIC", "Enabled", field_trial_params);
+  base::FieldTrialList::CreateFieldTrial("QUIC", "Enabled");
+  ParseFieldTrials();
+  EXPECT_EQ(7, params_.quic_max_time_before_crypto_handshake_seconds);
+}
+
+TEST_F(NetworkSessionConfiguratorTest,
+       NegativeQuicMaxTimeBeforeCryptoHandshakeSeconds) {
+  std::map<std::string, std::string> field_trial_params;
+  field_trial_params["max_time_before_crypto_handshake_seconds"] = "-1";
+  variations::AssociateVariationParams("QUIC", "Enabled", field_trial_params);
+  base::FieldTrialList::CreateFieldTrial("QUIC", "Enabled");
+  ParseFieldTrials();
+  EXPECT_EQ(net::kMaxTimeForCryptoHandshakeSecs,
+            params_.quic_max_time_before_crypto_handshake_seconds);
+}
+
+TEST_F(NetworkSessionConfiguratorTest,
+       QuicMaxIdleTimeBeforeCryptoHandshakeSeconds) {
+  std::map<std::string, std::string> field_trial_params;
+  field_trial_params["max_idle_time_before_crypto_handshake_seconds"] = "11";
+  variations::AssociateVariationParams("QUIC", "Enabled", field_trial_params);
+  base::FieldTrialList::CreateFieldTrial("QUIC", "Enabled");
+  ParseFieldTrials();
+  EXPECT_EQ(11, params_.quic_max_idle_time_before_crypto_handshake_seconds);
+}
+
+TEST_F(NetworkSessionConfiguratorTest,
+       NegativeQuicMaxIdleTimeBeforeCryptoHandshakeSeconds) {
+  std::map<std::string, std::string> field_trial_params;
+  field_trial_params["max_idle_time_before_crypto_handshake_seconds"] = "-1";
+  variations::AssociateVariationParams("QUIC", "Enabled", field_trial_params);
+  base::FieldTrialList::CreateFieldTrial("QUIC", "Enabled");
+  ParseFieldTrials();
+  EXPECT_EQ(net::kInitialIdleTimeoutSecs,
+            params_.quic_max_idle_time_before_crypto_handshake_seconds);
+}
+
 TEST_F(NetworkSessionConfiguratorTest, QuicRaceCertVerification) {
   std::map<std::string, std::string> field_trial_params;
   field_trial_params["race_cert_verification"] = "true";
