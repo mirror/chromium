@@ -23,10 +23,6 @@ namespace content {
 class WebContents;
 }
 
-namespace gfx {
-class FontList;
-}
-
 namespace views {
 class BubbleDialogDelegateView;
 }
@@ -38,7 +34,7 @@ class ContentSettingImageView : public IconLabelBubbleView {
  public:
   ContentSettingImageView(std::unique_ptr<ContentSettingImageModel> image_model,
                           LocationBarView* parent,
-                          const gfx::FontList& font_list);
+                          views::style::TextContext text_context);
   ~ContentSettingImageView() override;
 
   // Updates the decoration from the shown WebContents.
