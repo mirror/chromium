@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fed960e0_139e00c0",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-14T16:39:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "08f88018_09d8b45d",
+      "range": {
+        "startLine": 503,
+        "startChar": 6,
+        "endLine": 503,
+        "endChar": 53
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3cbafe7_e8cf06cb",
         "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa7a4560_550b8be0",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-14T16:39:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3cbafe7_e8cf06cb",
+      "range": {
+        "startLine": 696,
+        "startChar": 34,
+        "endLine": 696,
+        "endChar": 56
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0c3b991f_43a0fe3b",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-14T16:39:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db90eedb_3c80df34",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 31
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfa74e18_f39b7b42",
         "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d9d311f8_be3f2504",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-14T16:39:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfa74e18_f39b7b42",
+      "range": {
+        "startLine": 88,
+        "startChar": 9,
+        "endLine": 88,
+        "endChar": 20
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35230196_bf3887ff",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 6
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-14T13:08:19Z",
       "side": 1,
       "message": "Should FMP exclude enter and leave as well?\nSeems like aligning would make sense.",
+      "range": {
+        "startLine": 2026,
+        "startChar": 31,
+        "endLine": 2026,
+        "endChar": 56
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9010e84c_ca29601f",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2026,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-14T16:39:29Z",
+      "side": 1,
+      "message": "I think so. Will do in a follow up patch so it\u0027s easier for ksakamoto to review.",
+      "parentUuid": "35230196_bf3887ff",
       "range": {
         "startLine": 2026,
         "startChar": 31,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "8d4a2b95_6d9fe293",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-14T16:39:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbda8856_66a150ab",
+      "range": {
+        "startLine": 2036,
+        "startChar": 34,
+        "endLine": 2036,
+        "endChar": 78
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b60773d9_3defe6bf",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
         "patchSetId": 6
@@ -151,6 +295,30 @@
       "writtenOn": "2017-11-14T13:08:19Z",
       "side": 1,
       "message": "Invalidating input is different from FMP \u0026 TTI, making this a bit confusing.",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 32
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4096a0d_3418ff1b",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-14T16:39:29Z",
+      "side": 1,
+      "message": "Changed to SimulateInteractiveInvalidingInput, although future patch should align invalidating input for FMP and TTI.",
+      "parentUuid": "b60773d9_3defe6bf",
       "range": {
         "startLine": 89,
         "startChar": 7,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "745f66af_85fe55e0",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceTiming.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-14T16:39:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f8f9ba1_2d14b8c1",
+      "range": {
+        "startLine": 102,
+        "startChar": 9,
+        "endLine": 102,
+        "endChar": 20
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b56a261_bdc046f1",
         "filename": "third_party/WebKit/common/metrics/time_to_interactive_status.cc",
         "patchSetId": 6
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "18da8ec2_83fc2883",
+        "filename": "third_party/WebKit/common/metrics/time_to_interactive_status.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-14T16:39:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9b56a261_bdc046f1",
+      "range": {
+        "startLine": 10,
+        "startChar": 35,
+        "endLine": 10,
+        "endChar": 72
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57b8a40b_f4e13717",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
@@ -229,6 +445,30 @@
       "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc43f9b_ff92d095",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-14T16:39:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57b8a40b_f4e13717",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 6
+      },
+      "revId": "4e4f208559073d6511672822dcef9cfb0fd517f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
