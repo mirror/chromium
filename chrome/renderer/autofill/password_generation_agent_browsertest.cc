@@ -122,7 +122,7 @@ class PasswordGenerationAgentTest : public ChromeRenderViewTest {
   }
 
   void ShowGenerationPopUpManually(const char* element_id) {
-    FocusField(element_id);
+    SimulateElementRightClick(element_id);
     password_generation_->UserTriggeredGeneratePassword();
   }
 
