@@ -1345,6 +1345,23 @@ InlineFlowBox* LayoutInline::CreateAndAppendInlineFlowBox() {
   return flow_box;
 }
 
+void LayoutInline::DirtyLinesFromChangedChild(
+    LayoutObject* child,
+    MarkingBehavior marking_behavior) {
+  if (EnclosingNGBlockFlow()) {
+    // TODO(layout-dev): Once we supports box fragment level dirtiness,
+    // we should mark box fragments for |child| node only.
+    SelfNeedsLayout();
+    // TODO(layout-dev): We are not sure why do we need to tell ancestors
+    // line dirtiness. See also |LineLayoutItem::SetAncestorLineBoxDirty()|.
+    SetAncestorLineBoxDirty();
+    return;
+  }
+  line_boxes_.DirtyLinesFromChangedChild(
+      LineLayoutItem(this), LineLayoutItem(child),
+      marking_behavior == kMarkContainerChain);
+}
+
 LayoutUnit LayoutInline::LineHeight(
     bool first_line,
     LineDirectionMode /*direction*/,
