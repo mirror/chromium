@@ -24,6 +24,14 @@ bool MockSpecialStoragePolicy::IsStorageSessionOnly(const GURL& origin) {
   return base::ContainsKey(session_only_, origin);
 }
 
+bool MockSpecialStoragePolicy::IsStorageAccessAllowed(const GURL& origin) {
+  return true;
+}
+
+bool MockSpecialStoragePolicy::HasSessionOnlySubdomains(const GURL& origin) {
+  return false;
+}
+
 bool MockSpecialStoragePolicy::HasIsolatedStorage(const GURL& origin) {
   return base::ContainsKey(isolated_, origin);
 }
