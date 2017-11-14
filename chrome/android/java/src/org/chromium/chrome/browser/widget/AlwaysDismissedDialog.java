@@ -5,10 +5,10 @@
 package org.chromium.chrome.browser.widget;
 
 import android.app.Activity;
-import android.app.Dialog;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
+import org.chromium.chrome.browser.ChromeDialog;
 
 /**
  * Dialog subclass that ensures that dismiss() is called, even if the dialog is implicitly dismissed
@@ -17,7 +17,7 @@ import org.chromium.base.ApplicationStatus;
  * DialogFragments ensure that dismiss() is called as well.
  */
 public class AlwaysDismissedDialog
-        extends Dialog implements ApplicationStatus.ActivityStateListener {
+        extends ChromeDialog implements ApplicationStatus.ActivityStateListener {
     public AlwaysDismissedDialog(Activity ownerActivity, int theme) {
         super(ownerActivity, theme);
         ApplicationStatus.registerStateListenerForActivity(this, ownerActivity);

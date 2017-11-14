@@ -73,9 +73,12 @@ void PermissionDialogDelegate::CreateJavaDelegate(JNIEnv* env,
 void PermissionDialogDelegate::Accept(JNIEnv* env,
                                       const JavaParamRef<jobject>& obj,
                                       jboolean persist) {
+  LOG(ERROR) << "VRP native 1";
   if (permission_prompt_->ShouldShowPersistenceToggle())
     permission_prompt_->TogglePersist(persist);
+  LOG(ERROR) << "VRP native 2";
   permission_prompt_->Accept();
+  LOG(ERROR) << "VRP native 3";
 }
 
 void PermissionDialogDelegate::Cancel(JNIEnv* env,

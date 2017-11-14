@@ -73,10 +73,13 @@ class Ui : public BrowserUiInterface {
   void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) override;
   void SetSpeechRecognitionEnabled(bool enabled) override;
   void OnSpeechRecognitionStateChanged(int new_state) override;
+  void SetAlertDialogEnabled(bool enabled,
+                             ContentInputDelegate* delegate) override;
 
   bool ShouldRenderWebVr();
   void OnGlInitialized(unsigned int content_texture_id,
-                       UiElementRenderer::TextureLocation content_location);
+                       UiElementRenderer::TextureLocation content_location,
+                       unsigned int ui_texture_id);
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(
       PlatformController::SwipeDirection direction);

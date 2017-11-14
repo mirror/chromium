@@ -532,7 +532,6 @@ public class ChromeTabbedActivity
             refreshSignIn();
 
             initializeUI();
-
             // The dataset has already been created, we need to initialize our state.
             mTabModelSelectorImpl.notifyChanged();
 
