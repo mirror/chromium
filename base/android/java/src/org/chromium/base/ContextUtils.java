@@ -123,6 +123,7 @@ public class ContextUtils {
             throw new RuntimeException("Global application context cannot be set to null.");
         }
         sApplicationContext = appContext;
+        ApplicationStatus.initialize((BaseChromiumApplication) appContext);
     }
 
     /**
