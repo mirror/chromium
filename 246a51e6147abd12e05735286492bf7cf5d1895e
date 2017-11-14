@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "b1f79097_490235ee",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:29:18Z",
+      "side": 1,
+      "message": "You are already declaring |timers| to be optional, so how about you return a null array on failure and an actual array with the same size of |arc_timer_requests|?",
+      "range": {
+        "startLine": 43,
+        "startChar": 54,
+        "endLine": 44,
+        "endChar": 12
+      },
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a79fed97_f50188b9",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 10
@@ -110,6 +133,29 @@
       "writtenOn": "2017-11-14T13:57:49Z",
       "side": 1,
       "message": "IIUC, this runs on blocking thread, while ArcTimer object lives on UI thread?\nThen, using WeakPtr is unsafe.\nThe object may be destruct while this method is running.\nYou\u0027d need to introduce a thread safer approach here.",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cdf8193_0f4001c7",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:29:18Z",
+      "side": 1,
+      "message": "ping:\n\nIf you get rid of the LogExpirationIndicationStatus(), would it be possible to use base::PostDelayedTaskWithTraits to directly post it to the blocking thread? That\u0027ll save you one threadhop. Alternatively, create the timer on the blocking thread and when ArcTimer::Start() is called, you post to that thread immediately and then call timer_-\u003eStart() from there.",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 14
+      },
       "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -242,6 +288,29 @@
     },
     {
       "key": {
+        "uuid": "1961a45b_defbfff6",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:29:18Z",
+      "side": 1,
+      "message": "Remember not to add the docstring when overriding. Instead, just use the override comment.",
+      "range": {
+        "startLine": 36,
+        "startChar": 37,
+        "endLine": 36,
+        "endChar": 45
+      },
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d27fa031_8e2a0d83",
         "filename": "components/arc/timer/arc_timer_impl.h",
         "patchSetId": 10
@@ -277,6 +346,47 @@
     },
     {
       "key": {
+        "uuid": "5b77a6bb_4c8311f5",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:29:18Z",
+      "side": 1,
+      "message": "+1. I think you should be able to both merge it into ArcTimerBridge _and_ make it testable at the same time.",
+      "parentUuid": "a97b60e9_828ab5a2",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "486a34d9_405c9400",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:29:18Z",
+      "side": 1,
+      "message": "make this be base::Optional\u003cstd::vector\u003cmojom::TimerPtr\u003e\u003e",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 30
+      },
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9d662bb_a7f4699f",
         "filename": "components/arc/timer/arc_timer_request.h",
         "patchSetId": 10
@@ -288,6 +398,47 @@
       "writtenOn": "2017-11-14T13:57:49Z",
       "side": 1,
       "message": "nit: Could you use \"\" instead of \u003c\u003e?",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dd5bd31_ee88b516",
+        "filename": "components/arc/timer/arc_timer_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:29:18Z",
+      "side": 1,
+      "message": "Also, it should be \"base/files/scoped_file.h\".",
+      "parentUuid": "d9d662bb_a7f4699f",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809d0772_b288f617",
+        "filename": "components/arc/timer/arc_timer_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:29:18Z",
+      "side": 1,
+      "message": "Can this use the enum type?",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 9
+      },
       "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

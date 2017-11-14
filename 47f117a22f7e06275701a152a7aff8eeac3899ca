@@ -476,6 +476,24 @@
     },
     {
       "key": {
+        "uuid": "27ea69fd_a6b45d40",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:29:18Z",
+      "side": 1,
+      "message": "O(n) is actually significantly faster than O(log n) for small values of n: there\u0027s less code to perform the check (yay! code locality!), and you need a lot less space to store the data (yay! cache locality).",
+      "parentUuid": "7508a0e9_33f91671",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "600a4ff2_cf2fa836",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 9
