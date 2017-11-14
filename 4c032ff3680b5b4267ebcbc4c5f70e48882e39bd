@@ -16,6 +16,24 @@
       "revId": "4c032ff3680b5b4267ebcbc4c5f70e48882e39bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "738f698a_f27e7008",
+        "filename": "ui/chromeos/user_activity_power_manager_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-14T00:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20c1e4d1_2e914493",
+      "revId": "4c032ff3680b5b4267ebcbc4c5f70e48882e39bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
