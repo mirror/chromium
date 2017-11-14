@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "260e1390_7637a963",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-14T09:37:16Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure I understand the connection between putting the form in |deletedForms_| and the entry being displayed in UI. Having said that, there is no reason for |deletedForms_| to exist at all -- I just filed https://crbug.com/784788 for that.",
+      "range": {
+        "startLine": 535,
+        "startChar": 7,
+        "endLine": 537,
+        "endChar": 23
+      },
+      "revId": "0c2e8fccba1b790c15f369a47e8a632688001367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
