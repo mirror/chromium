@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f40dd081_b6f6e7bb",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-14T20:45:12Z",
+      "side": 1,
+      "message": "Renamed. If it\u0027s false, there\u0027s no autorun at all (James added that to use -d --no-autorun to just copy stuff to the device but let you run it after the fact.)",
+      "parentUuid": "1a5ee522_a3a14eeb",
+      "range": {
+        "startLine": 200,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 15
+      },
+      "revId": "1d5ddd75c82df1871624de3cbf1bbc17efd6ccc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8b608f7_c6972754",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-14T19:41:08Z",
       "side": 1,
       "message": "nit: This \u0027+\u0027 syntax is Fun Fun Fun - can we add a brief comment to explain it?\n\nAlso, having this duplicated between the |use_device| and qemu cases is a little unfortunate.  Could we collate a kernel_args list and have the device and qemu cases just update and then join() or map() that as necessary to match the syntax they need?",
+      "range": {
+        "startLine": 507,
+        "startChar": 18,
+        "endLine": 507,
+        "endChar": 71
+      },
+      "revId": "1d5ddd75c82df1871624de3cbf1bbc17efd6ccc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e261648_70ca0b28",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-14T20:45:12Z",
+      "side": 1,
+      "message": "Comment added for +.\n\nI mostly kept them separate because the kernel args were distinct other than autorun. But looking at them, I\u0027m don\u0027t think there\u0027s any good reason for that, so I homogenized them. Hopefully that doesn\u0027t cause any trouble.\n\nAnd then I was trying to diagnose why there seemed to be a spurious \u0027-o\u0027 being passed to the kernel for device mode, and it turns out bootserver doesn\u0027t (any more?) want -o, just everything after the -- is a kernel arg, so I removed my clever formulation of inserting -o as every second thing in a list, and it got simpler.\n\nIt also looks like \"kernel.halt_on_panic\" is supposed to be spelled \"kernel.halt-on-panic\" (docs/hacking.md mentions the _ version, but the code only tries to retrieve a - version), but I\u0027m going to leave that for now and follow up on the Fuchsia side to confirm/fix the docs first.\n\nIn summary:\n- added the autorun;\n- made qemu also get the nodename and epoch;\n- halt_on_panic is probably a no-op either way.",
+      "parentUuid": "f8b608f7_c6972754",
       "range": {
         "startLine": 507,
         "startChar": 18,
