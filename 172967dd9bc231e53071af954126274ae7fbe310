@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a4f20c5_ce9ff465",
+        "filename": "extensions/renderer/dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-14T18:35:53Z",
+      "side": 1,
+      "message": "This CL is part of the work to remove it (and also all the other IDR_MOJO_.*_JS resources except the newly added IDR_MOJO_BINDINGS_JS).\n\nOther than that, I will need a few more CLs:\n- one CL to convert keep_alive.mojom;\n- one CL to convert mojoPrivate extensions API and its usage by the media router extension;\n- then I can remove the old JS bindings from the extensions system.",
+      "parentUuid": "03e72ccf_fdeae88d",
+      "revId": "172967dd9bc231e53071af954126274ae7fbe310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4a214d6_2d6d78f7",
         "filename": "extensions/renderer/resource_bundle_source_map.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-14T15:57:08Z",
       "side": 1,
       "message": "What\u0027s the performance overhead of this like?",
+      "revId": "172967dd9bc231e53071af954126274ae7fbe310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3919cd_1a4794ea",
+        "filename": "extensions/renderer/resource_bundle_source_map.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-14T18:35:53Z",
+      "side": 1,
+      "message": "I wrote a testing CL to call ResourceBundleSourceMap::GetSource() for mojo_bindings.js, which is the only compressed resource and its uncompressed size is 159.2KB.\n\nThe testing CL is: https://chromium-review.googlesource.com/c/chromium/src/+/769163\n\nWith a Linux release build on my Z840, the test completed about 1600 GetSource() for mojo_bindings.js per second.\n\nI think that is acceptable, given that:\n- mojo_bindings.js is only used by two private extensions API: mimeHandlerPrivate and mojoPrivate.\n- Eventually we are going to move away from JS bindings for extensions.\n- WebUI is doing exactly the same thing of uncompressing mojo_bindings.js.\n\n\nWDYT? Thanks!",
+      "parentUuid": "f4a214d6_2d6d78f7",
       "revId": "172967dd9bc231e53071af954126274ae7fbe310",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
