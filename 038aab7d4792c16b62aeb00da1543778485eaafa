@@ -16,6 +16,24 @@
       "revId": "038aab7d4792c16b62aeb00da1543778485eaafa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307d441e_f6bfe501",
+        "filename": "components/sync/model/entity_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-11-14T17:01:32Z",
+      "side": 1,
+      "message": "This is artifact of rebase, not part of my change. ADD_TO_DICT calls SetString, here we need to set dictionary.",
+      "parentUuid": "29845a7a_f52089d7",
+      "revId": "038aab7d4792c16b62aeb00da1543778485eaafa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
