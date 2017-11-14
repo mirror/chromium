@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b95abda8_b36d2ba3",
+        "filename": "chrome/browser/ui/app_list/app_list_controller_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-11-14T21:25:16Z",
+      "side": 1,
+      "message": "I didn\u0027t know this was an option! Sounds good to me.",
+      "parentUuid": "52a7d5a0_a4244ac5",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 56
+      },
+      "revId": "cbe3e7cb141d5f13e3df60985215f507e64d8fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5784b62_0ab488de",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-14T18:41:27Z",
       "side": 1,
       "message": "from when?  The first click on the launcher?  The first keystroke?  The last keystroke?",
+      "range": {
+        "startLine": 2046,
+        "startChar": 76,
+        "endLine": 2046,
+        "endChar": 77
+      },
+      "revId": "cbe3e7cb141d5f13e3df60985215f507e64d8fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "073bd283_3573e7ae",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-11-14T21:25:16Z",
+      "side": 1,
+      "message": "Thanks, I updated the comment to clarify this.",
+      "parentUuid": "d5784b62_0ab488de",
       "range": {
         "startLine": 2046,
         "startChar": 76,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "95218068_6c41e6a7",
+        "filename": "ui/app_list/app_list_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-11-14T21:25:16Z",
+      "side": 1,
+      "message": "This function gets called when the AppList closes.\n\nThis can happen if RecordUserJourneyEndTime() isn\u0027t called, and the AppList then closes. (so if a user opens the launcher, does nothing, and closes it.)",
+      "parentUuid": "fa642b45_2b34ee38",
+      "revId": "cbe3e7cb141d5f13e3df60985215f507e64d8fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5c49970_0ae7ffae",
         "filename": "ui/app_list/app_list_model.cc",
         "patchSetId": 1
@@ -76,6 +142,24 @@
       "writtenOn": "2017-11-14T18:41:27Z",
       "side": 1,
       "message": "Why would this ComputeAndRecord be called twice without a new user journey?  That seems odd to me.",
+      "revId": "cbe3e7cb141d5f13e3df60985215f507e64d8fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01cdfa4_cf8f1eac",
+        "filename": "ui/app_list/app_list_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-11-14T21:25:16Z",
+      "side": 1,
+      "message": "You\u0027re right, it should only be called once. \n\nThis is me being defensive, and ensuring that it can only be called once.\n\nI\u0027ve had histograms regress before, and I want to lean in the \"more defensive\" side. I don\u0027t think it has any negative effects here, what do you think?",
+      "parentUuid": "f5c49970_0ae7ffae",
       "revId": "cbe3e7cb141d5f13e3df60985215f507e64d8fbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
