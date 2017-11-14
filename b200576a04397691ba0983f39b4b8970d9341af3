@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae231d2d_1ed6b190",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-14T21:02:51Z",
+      "side": 1,
+      "message": "_CRT_ERROR also has _CRTDBG_MODE_WNDW by default. Should we deal with that too?",
+      "range": {
+        "startLine": 332,
+        "startChar": 20,
+        "endLine": 332,
+        "endChar": 31
+      },
+      "revId": "b200576a04397691ba0983f39b4b8970d9341af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5369679f_8ffee60a",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-14T21:02:51Z",
+      "side": 1,
+      "message": "Safer to _CrtSetReportFile() to have the file established before _CrtSetReportMode(…, _CRTDBG_MODE_FILE)?",
+      "revId": "b200576a04397691ba0983f39b4b8970d9341af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

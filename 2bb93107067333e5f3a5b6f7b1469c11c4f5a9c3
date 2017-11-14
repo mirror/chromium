@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e178277a_57ed4b06",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-14T21:02:51Z",
+      "side": 0,
+      "message": "I’m surprised by this and wonder whether it was intended to be a proxy for some other condition.",
+      "range": {
+        "startLine": 328,
+        "startChar": 23,
+        "endLine": 328,
+        "endChar": 50
+      },
+      "revId": "2bb93107067333e5f3a5b6f7b1469c11c4f5a9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
