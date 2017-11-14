@@ -17,6 +17,7 @@
 #include "mojo/public/cpp/system/buffer.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "services/ui/ws/arc_client.h"
 #include "services/ui/ws/gpu_client.h"
 #include "services/ui/ws/gpu_host_delegate.h"
 #include "services/viz/public/interfaces/constants.mojom.h"
@@ -108,6 +109,13 @@ void DefaultGpuHost::CreateFrameSinkManager(
     viz::mojom::FrameSinkManagerClientPtr client) {
   viz_main_->CreateFrameSinkManager(std::move(request), std::move(client));
 }
+
+#if defined(OS_CHROMEOS)
+void DefaultGpuHost::AddArc(mojom::ArcRequest request) {
+  arc_bindings_.AddBinding(std::make_unique<ArcClient>(gpu_service_.get()),
+                           std::move(request));
+}
+#endif  // defined(OS_CHROMEOS)
 
 GpuClient* DefaultGpuHost::AddInternal(mojom::GpuRequest request) {
   auto client(base::MakeUnique<GpuClient>(
