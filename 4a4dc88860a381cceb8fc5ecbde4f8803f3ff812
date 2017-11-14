@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "447281f9_f505d3ec",
+        "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-14T08:45:43Z",
+      "side": 1,
+      "message": "This doesn\u0027t test what it previously did. Calling OnMessageReceived synchronously dispatches the IPC, but sending a mojo IPC via an InterfacePtr in this case is equivalent to posting a task to dispatch the message. Further, this requests a RendererHost from the renderer.\n\nTo replicate the previous test you need to do something like\n\nstatic_cast\u003cmojom::RendererHost*\u003e(static_cast\u003cRenderProcessHostImpl*\u003e(rph))\n    -\u003eShutdownRequest();",
+      "revId": "4a4dc88860a381cceb8fc5ecbde4f8803f3ff812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c17cab_c78ec1e7",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8918,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-14T08:45:43Z",
+      "side": 1,
+      "message": "This should be called on the UI thread so the PostTask shouldn\u0027t be necessary.",
+      "revId": "4a4dc88860a381cceb8fc5ecbde4f8803f3ff812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "071014e5_1310ace3",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8972,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-14T08:45:43Z",
+      "side": 1,
+      "message": "ShutdownObserver shutdown_observer;",
+      "revId": "4a4dc88860a381cceb8fc5ecbde4f8803f3ff812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
