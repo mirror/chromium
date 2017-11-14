@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a8489d1_32a6ee49",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-14T21:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e27f8000_12b4f901",
+      "revId": "66a9defa31af1cc4e4f7a6d5dff1fa8bdf3caec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe2ac44f_4c29d4ac",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6a5bca16_0730e104",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-14T21:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe2ac44f_4c29d4ac",
+      "revId": "66a9defa31af1cc4e4f7a6d5dff1fa8bdf3caec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c739e11_25f790f5",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.h",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-14T20:02:58Z",
       "side": 1,
       "message": "Wdyt about making these private?",
+      "revId": "66a9defa31af1cc4e4f7a6d5dff1fa8bdf3caec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23518808_bc133cc1",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-14T21:38:14Z",
+      "side": 1,
+      "message": "I\u0027d prefer to leave as public but I can switch to private if you like.\n\nThere was a discussion on this a while back at https://groups.google.com/a/chromium.org/forum/?utm_medium\u003demail\u0026utm_source\u003dfooter#!msg/chromium-dev/XdsXTHy9lis/jyKzYlA1BgAJ",
+      "parentUuid": "9c739e11_25f790f5",
       "revId": "66a9defa31af1cc4e4f7a6d5dff1fa8bdf3caec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "276d0dcf_f7101c5c",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-14T21:38:14Z",
+      "side": 1,
+      "message": "I\u0027ve seen a bunch of examples for both. Either one is fine with me, I\u0027d prefer to leave as-is though.",
+      "parentUuid": "85943c1f_ad192c24",
+      "revId": "66a9defa31af1cc4e4f7a6d5dff1fa8bdf3caec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c5fd0ec_3ae6131d",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.cc",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "66a9defa31af1cc4e4f7a6d5dff1fa8bdf3caec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc37d3f_44c3cdb9",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-14T21:38:14Z",
+      "side": 1,
+      "message": "That CL depends on this one and it fixes this change up.",
+      "parentUuid": "3c5fd0ec_3ae6131d",
+      "revId": "66a9defa31af1cc4e4f7a6d5dff1fa8bdf3caec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
