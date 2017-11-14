@@ -195,14 +195,86 @@ class AddRemoveThread : public PlatformThread::Delegate,
 
 TEST(ObserverListTest, BasicTest) {
   ObserverList<Foo> observer_list;
+  const ObserverList<Foo>& const_observer_list = observer_list;
+
+  {
+    const ObserverList<Foo>::const_iterator it1 = const_observer_list.begin();
+    EXPECT_EQ(it1, const_observer_list.end());
+    // Iterator copy.
+    const ObserverList<Foo>::const_iterator it2 = it1;
+    EXPECT_EQ(it2, it1);
+    // Iterator assignment.
+    ObserverList<Foo>::const_iterator it3;
+    it3 = it2;
+    EXPECT_EQ(it3, it1);
+    EXPECT_EQ(it3, it2);
+    // Self assignment.
+    it3 = it3;
+    EXPECT_EQ(it3, it1);
+    EXPECT_EQ(it3, it2);
+  }
+
+  {
+    const ObserverList<Foo>::iterator it1 = observer_list.begin();
+    EXPECT_EQ(it1, observer_list.end());
+    // Iterator copy.
+    const ObserverList<Foo>::iterator it2 = it1;
+    EXPECT_EQ(it2, it1);
+    // Iterator assignment.
+    ObserverList<Foo>::iterator it3;
+    it3 = it2;
+    EXPECT_EQ(it3, it1);
+    EXPECT_EQ(it3, it2);
+    // Self assignment.
+    it3 = it3;
+    EXPECT_EQ(it3, it1);
+    EXPECT_EQ(it3, it2);
+  }
+
   Adder a(1), b(-1), c(1), d(-1), e(-1);
   Disrupter evil(&observer_list, &c);
 
   observer_list.AddObserver(&a);
   observer_list.AddObserver(&b);
 
-  EXPECT_TRUE(observer_list.HasObserver(&a));
-  EXPECT_FALSE(observer_list.HasObserver(&c));
+  EXPECT_TRUE(const_observer_list.HasObserver(&a));
+  EXPECT_FALSE(const_observer_list.HasObserver(&c));
+
+  {
+    const ObserverList<Foo>::const_iterator it1 = const_observer_list.begin();
+    EXPECT_NE(it1, const_observer_list.end());
+    // Iterator copy.
+    const ObserverList<Foo>::const_iterator it2 = it1;
+    EXPECT_EQ(it2, it1);
+    EXPECT_NE(it2, const_observer_list.end());
+    // Iterator assignment.
+    ObserverList<Foo>::const_iterator it3;
+    it3 = it2;
+    EXPECT_EQ(it3, it1);
+    EXPECT_EQ(it3, it2);
+    // Self assignment.
+    it3 = it3;
+    EXPECT_EQ(it3, it1);
+    EXPECT_EQ(it3, it2);
+  }
+
+  {
+    const ObserverList<Foo>::iterator it1 = observer_list.begin();
+    EXPECT_NE(it1, observer_list.end());
+    // Iterator copy.
+    const ObserverList<Foo>::iterator it2 = it1;
+    EXPECT_EQ(it2, it1);
+    EXPECT_NE(it2, observer_list.end());
+    // Iterator assignment.
+    ObserverList<Foo>::iterator it3;
+    it3 = it2;
+    EXPECT_EQ(it3, it1);
+    EXPECT_EQ(it3, it2);
+    // Self assignment.
+    it3 = it3;
+    EXPECT_EQ(it3, it1);
+    EXPECT_EQ(it3, it2);
+  }
 
   for (auto& observer : observer_list)
     observer.Observe(10);
