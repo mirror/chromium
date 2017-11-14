@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c872c00b_4c07798d",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-14T00:18:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb03bd71_f39043de",
+      "revId": "01266d825180f0197725a91b7da9d6215c5fa4f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dc6d333_7aa7a594",
         "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-13T04:54:03Z",
       "side": 1,
       "message": "what\u0027s needed to get a non-empty title in the test as well?",
+      "revId": "01266d825180f0197725a91b7da9d6215c5fa4f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f4974d_6b56f132",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-14T00:18:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0dc6d333_7aa7a594",
       "revId": "01266d825180f0197725a91b7da9d6215c5fa4f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
