@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2922bc9_2c3703d9",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-14T23:03:27Z",
+      "side": 1,
+      "message": "I\u0027\u0027m not sure what the guidelines are, but \"Security exception may be thrown by some browsers.\" is a little odd since this is only used on one browser. \"Security exception may be thrown\" might be better.",
+      "revId": "1ab9b35f03eb3c9c02b81e38a1c754b1d99ae120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
