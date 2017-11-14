@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3585ed78_7060d3f4",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T00:10:28Z",
+      "side": 1,
+      "message": "Does this result in any visible \"flicker\" of the window?  If so, we might be able to avoid this by exposing a ShowWindowWithState() function, or similar.  If not, maybe then this is probably fine. :)",
+      "revId": "f215b37ac292e57c7c394a2cc60576a4d3525e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c34be12f_d42a2538",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T00:10:28Z",
+      "side": 1,
+      "message": "nit: let\u0027s use a raw string literal to avoid escaping:\nR\"([{\"focused\": false, \"state\": \"minimized\"}])\"",
+      "revId": "f215b37ac292e57c7c394a2cc60576a4d3525e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
