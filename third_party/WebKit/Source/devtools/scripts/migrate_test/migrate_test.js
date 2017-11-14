@@ -68,7 +68,7 @@ function migrateTest(inputPath, identifierMap) {
   const inputFilename = path.basename(inputPath);
   const inputExpectationsPath = inputPath.replace('.js', '-expected.txt').replace('.html', '-expected.txt');
   const bodyText = $('body').text().trim();
-  const prologue = getPrologue(inputExpectationsPath, bodyText);
+  const prologue = getPrologue(inputExpectationsPath, bodyText) || '';
 
   const stylesheetPaths = $('link').toArray().filter(l => l.attribs.rel === 'stylesheet').map(l => l.attribs.href);
   const onloadFunctionName = $('body')[0].attribs.onload ? $('body')[0].attribs.onload.slice(0, -2) : '';
