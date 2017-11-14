@@ -46,6 +46,108 @@
       "revId": "dec29f6b4216a04c533c8d81016ec7a20080280b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc4c9d3_f30fae6d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-14T15:33:53Z",
+      "side": 1,
+      "message": "Don\u0027t need \u0027RWHVB::\u0027 here.",
+      "revId": "dec29f6b4216a04c533c8d81016ec7a20080280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78feb735_894c9d18",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-14T15:33:53Z",
+      "side": 1,
+      "message": "Should not be virtual",
+      "revId": "dec29f6b4216a04c533c8d81016ec7a20080280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e4415fe_9b91b09e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-14T15:33:53Z",
+      "side": 1,
+      "message": "Don\u0027t need RWHVB::",
+      "revId": "dec29f6b4216a04c533c8d81016ec7a20080280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796edc9e_02a112ef",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-14T15:33:53Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "dec29f6b4216a04c533c8d81016ec7a20080280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17bc868_ceacc535",
+        "filename": "content/test/test_render_view_host.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-14T15:33:53Z",
+      "side": 1,
+      "message": "same",
+      "revId": "dec29f6b4216a04c533c8d81016ec7a20080280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85a6324_a9f589e6",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-14T15:33:53Z",
+      "side": 1,
+      "message": "Can there be a crbug here?",
+      "revId": "dec29f6b4216a04c533c8d81016ec7a20080280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
