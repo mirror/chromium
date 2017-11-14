@@ -93,6 +93,30 @@
       "revId": "84ed42472779157039ad552506980e691acfae97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "545e165f_63c2c3d7",
+        "filename": "android_webview/browser/aw_media_url_interceptor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-14T22:46:46Z",
+      "side": 1,
+      "message": "*size \u003d static_cast\u003cint32_t\u003e(region.size)\n\nshould fix the test because signed to signed assignment would have sign extension, but I guess we are not going to use this approach.",
+      "parentUuid": "8d23dc4c_10a3eaee",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 23
+      },
+      "revId": "84ed42472779157039ad552506980e691acfae97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
