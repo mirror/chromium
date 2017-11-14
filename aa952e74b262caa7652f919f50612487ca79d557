@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3621f7eb_6c59b4bf",
+        "filename": "chrome/browser/chromeos/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ac2ad25_82fdd072",
+      "range": {
+        "startLine": 1921,
+        "startChar": 5,
+        "endLine": 1921,
+        "endChar": 39
+      },
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfbe6f8d_35bc6295",
         "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
         "patchSetId": 1
@@ -39,6 +63,42 @@
       "revId": "aa952e74b262caa7652f919f50612487ca79d557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3292e850_50ac5ce0",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfbe6f8d_35bc6295",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efbcd537_000f25b8",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfbe6f8d_35bc6295",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "7e04a646_0c1f1cbe",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a90c9a4_b4e3c357",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "029a808b_2a137e32",
         "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
         "patchSetId": 1
@@ -70,6 +148,30 @@
       "writtenOn": "2017-11-14T02:11:02Z",
       "side": 1,
       "message": "I think this should be some constant. We keep reusing it in many places.",
+      "range": {
+        "startLine": 30,
+        "startChar": 37,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d496980_50d98014",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "029a808b_2a137e32",
       "range": {
         "startLine": 30,
         "startChar": 37,
@@ -129,6 +231,30 @@
     },
     {
       "key": {
+        "uuid": "268ad9c1_f6f24211",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a9f9fbd_0934c5fc",
+      "range": {
+        "startLine": 35,
+        "startChar": 30,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f427ce68_952cb9ce",
         "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
         "patchSetId": 1
@@ -143,6 +269,24 @@
       "revId": "aa952e74b262caa7652f919f50612487ca79d557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a859a96_3d3d52b0",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f427ce68_952cb9ce",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,24 @@
     },
     {
       "key": {
+        "uuid": "f691e224_73ad1f0b",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb5f8c1f_041c37e8",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09d2d56f_7ceb97cb",
         "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
         "patchSetId": 1
@@ -177,6 +339,24 @@
       "revId": "aa952e74b262caa7652f919f50612487ca79d557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d4897f_eebba9eb",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09d2d56f_7ceb97cb",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +377,24 @@
     },
     {
       "key": {
+        "uuid": "b95bec98_e56d1031",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "779a1b43_f22ca6c7",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f590894_a88c2599",
         "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
         "patchSetId": 1
@@ -211,6 +409,24 @@
       "revId": "aa952e74b262caa7652f919f50612487ca79d557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d42707_8a2c01eb",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f590894_a88c2599",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +447,24 @@
     },
     {
       "key": {
+        "uuid": "6c4a9254_987e2d8c",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7966158_3890746b",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bd66595_b25e269b",
         "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
         "patchSetId": 1
@@ -245,6 +479,24 @@
       "revId": "aa952e74b262caa7652f919f50612487ca79d557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c07a079_f333d062",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "It looks like there were some changes to service_unittest since I rebased yesterday so I mirrored those updates here.",
+      "parentUuid": "6bd66595_b25e269b",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -265,6 +517,24 @@
     },
     {
       "key": {
+        "uuid": "1543c634_e89362b7",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d50e77dc_8b0e2ce6",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60883813_2721716c",
         "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
         "patchSetId": 1
@@ -279,6 +549,24 @@
       "revId": "aa952e74b262caa7652f919f50612487ca79d557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e4075f_187846ea",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60883813_2721716c",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -299,6 +587,24 @@
     },
     {
       "key": {
+        "uuid": "049f92c0_c4740804",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7828198c_22f39a9c",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "457a64e5_fd9136d4",
         "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
         "patchSetId": 1
@@ -316,6 +622,24 @@
     },
     {
       "key": {
+        "uuid": "ca9b5620_244f435b",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "457a64e5_fd9136d4",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d516f9f7_ec6e4093",
         "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
         "patchSetId": 1
@@ -330,6 +654,24 @@
       "revId": "aa952e74b262caa7652f919f50612487ca79d557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d5e789_8e254edb",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "This has to be a member variable of the class in order for tests to run w/o crashing. (https://cs.chromium.org/chromium/src/content/public/test/test_browser_thread_bundle.h?rcl\u003d9b9a86df3a6c72200f61065de82c6b45ed20bbab\u0026l\u003d7)",
+      "parentUuid": "d516f9f7_ec6e4093",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -368,6 +710,24 @@
     },
     {
       "key": {
+        "uuid": "d3f58bdb_923e8c81",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "91029713_ad24e29d",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fce6e459_9ad4d946",
         "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
         "patchSetId": 1
@@ -382,6 +742,24 @@
       "revId": "aa952e74b262caa7652f919f50612487ca79d557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47cc95da_09a505d9",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fce6e459_9ad4d946",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -402,6 +780,24 @@
     },
     {
       "key": {
+        "uuid": "6f71204d_30c1162b",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efde0045_bb81732a",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6552ee62_77d8a589",
         "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
         "patchSetId": 1
@@ -413,6 +809,30 @@
       "writtenOn": "2017-11-14T02:11:02Z",
       "side": 1,
       "message": "If the test is not ready, let\u0027s land it in a separate CL when it\u0027s ready, unless there is a strong reason to do otherwise.",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 71
+      },
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab00d18c_eb3ed87e",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6552ee62_77d8a589",
       "range": {
         "startLine": 84,
         "startChar": 0,

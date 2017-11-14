@@ -22,6 +22,30 @@
       "revId": "c5d345c93695a33f81c929a831503001cda49cf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "308b94e5_a6912472",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-14T22:11:56Z",
+      "side": 0,
+      "message": "Yes- I had to remove this NOTIMPLEMENTED() in order to test Mount() since Service::MountFileSystemInternal calls GetWatchers and hitting the NOTIMPLEMENTED() when in fact it is able to mount without having watchers.",
+      "parentUuid": "babe90a2_20d9a15b",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 16
+      },
+      "revId": "c5d345c93695a33f81c929a831503001cda49cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
