@@ -20,7 +20,6 @@ class Profile;
 namespace base {
 class DictionaryValue;
 class ListValue;
-class Value;
 }
 
 namespace extensions {
@@ -95,29 +94,6 @@ class SearchEnginesHandler : public SettingsPageUIHandler,
   // Returns a dictionary to pass to WebUI representing the extension.
   base::DictionaryValue* CreateDictionaryForExtension(
       const extensions::Extension& extension);
-
-  // WebUI call to request a dictionary of hotword related properties.
-  void HandleGetHotwordInfo(const base::ListValue* args);
-
-  // Constructs a SearchPageHotwordInfo dictionary.
-  std::unique_ptr<base::DictionaryValue> GetHotwordInfo();
-
-  // Callback for HotwordService::AudioHistoryHandler::GetAudioHistoryEnabled.
-  void OnGetHotwordAudioHistoryEnabled(
-      std::unique_ptr<base::Value> callback_id,
-      std::unique_ptr<base::DictionaryValue> status,
-      bool success,
-      bool logging_enabled);
-
-  // Calls either ResolveJavascriptCallback or CallJavascriptFunction.
-  void HotwordInfoComplete(const base::Value* callback_id,
-                           const base::DictionaryValue& status);
-
-  // Calls WebUI to send hotword search info updates.
-  void SendHotwordInfo();
-
-  // WebUI call to enable hotword search.
-  void HandleSetHotwordSearchEnabled(const base::ListValue* args);
 
   Profile* const profile_;
 

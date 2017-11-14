@@ -20728,6 +20728,9 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
 </enum>
 
 <enum name="HotwordAvailability">
+  <obsolete>
+    Deprecated as of 10/2017. Feature removed with crbug/761426.
+  </obsolete>
   <int value="0" label="Unavailable -- reason may be unknown"/>
   <int value="1" label="Available"/>
   <int value="2" label="Pending download"/>
@@ -20735,6 +20738,9 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
 </enum>
 
 <enum name="HotwordError">
+  <obsolete>
+    Deprecated as of 10/2017. Feature removed with crbug/761426.
+  </obsolete>
   <int value="0" label="No error"/>
   <int value="1" label="Generic error"/>
   <int value="2" label="NaCl error"/>
@@ -20742,6 +20748,9 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
 </enum>
 
 <enum name="HotwordMediaStreamResult">
+  <obsolete>
+    Deprecated as of 10/2017. Feature removed with crbug/761426.
+  </obsolete>
   <int value="0" label="Success"/>
   <int value="1" label="Unknown error"/>
   <int value="2" label="NotSupportedError"/>
@@ -20758,6 +20767,9 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
 </enum>
 
 <enum name="HotwordNaClMessageTimeout">
+  <obsolete>
+    Deprecated as of 10/2017. Feature removed with crbug/761426.
+  </obsolete>
   <int value="0" label="REQUEST_MODEL"/>
   <int value="1" label="MODEL_LOADED"/>
   <int value="2" label="READY_FOR_AUDIO"/>
@@ -20767,6 +20779,9 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
 </enum>
 
 <enum name="HotwordNaClPluginLoadResult">
+  <obsolete>
+    Deprecated as of 10/2017. Feature removed with crbug/761426.
+  </obsolete>
   <int value="0" label="Success"/>
   <int value="1" label="Unknown error"/>
   <int value="2" label="Module crash"/>
@@ -20774,6 +20789,9 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
 </enum>
 
 <enum name="HotwordPrefState">
+  <obsolete>
+    Deprecated as of 10/2017. Feature removed with crbug/761426.
+  </obsolete>
   <int value="0" label="Preference not set"/>
   <int value="1" label="'Classic' hotwording enabled"/>
   <int value="2" label="Hotwording disabled"/>
@@ -20781,6 +20799,9 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
 </enum>
 
 <enum name="HotwordTriggerSource">
+  <obsolete>
+    Deprecated as of 10/2017. Feature removed with crbug/761426.
+  </obsolete>
   <int value="0" label="Launcher (except when always-on is enabled)"/>
   <int value="1" label="NTP or google.com"/>
   <int value="2" label="Always-On"/>
