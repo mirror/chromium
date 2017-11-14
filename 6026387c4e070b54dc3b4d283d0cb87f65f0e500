@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d6a616d_ab5b3bfe",
+        "filename": "net/proxy/proxy_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T16:52:28Z",
+      "side": 1,
+      "message": "IsError(ERR_FAILED)",
+      "range": {
+        "startLine": 431,
+        "startChar": 22,
+        "endLine": 431,
+        "endChar": 23
+      },
+      "revId": "6026387c4e070b54dc3b4d283d0cb87f65f0e500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
