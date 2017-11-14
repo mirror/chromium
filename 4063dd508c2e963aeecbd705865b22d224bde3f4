@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "81b0b2ab_4751ecef",
+        "filename": "cc/test/test_context_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-14T19:45:51Z",
+      "side": 1,
+      "message": "Taking it back. If I actually try to compile it (oops), doesn\u0027t work because constructor is protected. Making constructor public seems meh, and friending a template function doesn\u0027t seem worth it.",
+      "parentUuid": "8dca117c_340f124a",
+      "revId": "4063dd508c2e963aeecbd705865b22d224bde3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bea94de1_10ceeb04",
         "filename": "services/ui/public/cpp/gpu/context_provider_command_buffer.cc",
         "patchSetId": 3
