@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c0277ae_bb5e3b09",
+        "filename": "components/payments/content/payment_request_state.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-14T19:05:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "439c5019_7fdb9a91",
+      "range": {
+        "startLine": 244,
+        "startChar": 7,
+        "endLine": 244,
+        "endChar": 37
+      },
+      "revId": "3f753a8db0b1e0140086dd84212d217c2c9b60f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fe506cf_46d85683",
         "filename": "components/payments/content/service_worker_payment_instrument.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "3f753a8db0b1e0140086dd84212d217c2c9b60f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf997ded_3d41669b",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-14T19:05:03Z",
+      "side": 1,
+      "message": "Done. Good catch!",
+      "parentUuid": "9fe506cf_46d85683",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 61
+      },
+      "revId": "3f753a8db0b1e0140086dd84212d217c2c9b60f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3d76e9dd_770c3571",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-14T19:05:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34111481_17dc5975",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 76
+      },
+      "revId": "3f753a8db0b1e0140086dd84212d217c2c9b60f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2f68107_7fa482f3",
         "filename": "components/payments/content/service_worker_payment_instrument.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "3f753a8db0b1e0140086dd84212d217c2c9b60f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "842dd8cd_2d5478ec",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-14T19:05:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2f68107_7fa482f3",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 195,
+        "endChar": 35
+      },
+      "revId": "3f753a8db0b1e0140086dd84212d217c2c9b60f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4b6ba0d6_edff9e14",
+        "filename": "components/payments/content/service_worker_payment_instrument.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-14T19:05:03Z",
+      "side": 1,
+      "message": "Done. Thought CanMakePayment will confuse reader with below IsValidForCanMakePayment. Changed it to \u0027ValidateCanMakePaymentCallback\u0027.",
+      "parentUuid": "2c30eb8d_b1226cc4",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "3f753a8db0b1e0140086dd84212d217c2c9b60f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f9e11f7_699152f0",
         "filename": "components/payments/content/service_worker_payment_instrument.h",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "3f753a8db0b1e0140086dd84212d217c2c9b60f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8c8645_3f41421d",
+        "filename": "components/payments/content/service_worker_payment_instrument.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-14T19:05:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f9e11f7_699152f0",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 15
+      },
+      "revId": "3f753a8db0b1e0140086dd84212d217c2c9b60f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
