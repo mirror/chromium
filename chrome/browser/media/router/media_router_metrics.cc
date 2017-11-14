@@ -60,6 +60,8 @@ const char MediaRouterMetrics::kHistogramUiFirstAction[] =
     "MediaRouter.Ui.FirstAction";
 const char MediaRouterMetrics::kHistogramPresentationUrlType[] =
     "MediaRouter.PresentationRequest.AvailabilityUrlType";
+const char MediaRouterMetrics::kHistogramWiredDisplaySinkCount[] =
+    "MediaRouter.WiredDisplay.SinkCount";
 
 // static
 void MediaRouterMetrics::RecordMediaRouterDialogOrigin(
@@ -133,6 +135,10 @@ void MediaRouterMetrics::RecordPresentationUrlType(const GURL& url) {
   PresentationUrlType type = GetPresentationUrlType(url);
   UMA_HISTOGRAM_ENUMERATION(kHistogramPresentationUrlType, type,
                             PresentationUrlType::kPresentationUrlTypeCount);
+}
+
+void MediaRouterMetrics::RecordWiredDisplaySinkCount(int count) {
+  UMA_HISTOGRAM_COUNTS_100(kHistogramWiredDisplaySinkCount, count);
 }
 
 }  // namespace media_router
