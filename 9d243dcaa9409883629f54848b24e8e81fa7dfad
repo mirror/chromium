@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b3aa318_869f5e76",
+        "filename": "third_party/WebKit/Source/platform/fonts/opentype/OpenTypeVerticalData.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-11-14T17:27:58Z",
+      "side": 1,
+      "message": "Instead of having each table allocate a new buffer on the stack I don\u0027t suppose we could share one across all given that we only access one table at a time?\nOr are the expected sizes small enough for that not to matter?",
+      "revId": "9d243dcaa9409883629f54848b24e8e81fa7dfad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0751288_24dbb4e8",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzFontCache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-11-14T17:27:58Z",
+      "side": 1,
+      "message": "This only appears to be called from HarfBuzzFace::GetScaledFont. How about changing the signature to also take a SkPaint argument and have it set paint_? That way paint_ can be marked private and this method won\u0027y need the scary comment above.",
+      "revId": "9d243dcaa9409883629f54848b24e8e81fa7dfad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
