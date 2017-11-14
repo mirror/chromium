@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "112ceca8_cd3a3c48",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-14T14:01:02Z",
+      "side": 1,
+      "message": "nit: nullptr /* provider_context */",
+      "revId": "323548184c2a4a85efea7f255e512cbbfadc2343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69ce66c_73eb520e",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-14T14:01:02Z",
+      "side": 1,
+      "message": "nit: since \u0027context\u0027 is so generic term I prefer using \u0027provider_context\u0027 if possible",
+      "revId": "323548184c2a4a85efea7f255e512cbbfadc2343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91448604_a266b5b0",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-14T14:01:02Z",
+      "side": 1,
+      "message": "I know we prefixed this with client_ as we wanted to make it clear that it\u0027s for clients, while this also felt a bit confusing to me because we have, like, \u0027ServiceWorkerContextClient\u0027... what do you (you all) think if we rename it to |provider_context_for_client_|?",
+      "revId": "323548184c2a4a85efea7f255e512cbbfadc2343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
