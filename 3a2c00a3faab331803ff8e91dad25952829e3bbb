@@ -16,6 +16,24 @@
       "revId": "3a2c00a3faab331803ff8e91dad25952829e3bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be623cc9_25aefda3",
+        "filename": "chrome/browser/resources/md_extensions/toolbar.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-14T00:31:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a25621d4_623e910f",
+      "revId": "3a2c00a3faab331803ff8e91dad25952829e3bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
