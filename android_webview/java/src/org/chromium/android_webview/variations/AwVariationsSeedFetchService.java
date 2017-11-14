@@ -88,7 +88,8 @@ public class AwVariationsSeedFetchService extends JobService {
         assert !ThreadUtils.runningOnUiThread();
         try {
             SeedInfo seedInfo = VariationsSeedFetcher.get().downloadContent(
-                    VariationsSeedFetcher.VariationsPlatform.ANDROID_WEBVIEW, "");
+                    VariationsSeedFetcher.VariationsPlatform.ANDROID_WEBVIEW, "",
+                    Integer.toString(AwContentsStatics.getProductMajorVersion()), "");
             transferFetchedSeed(seedInfo);
         } catch (IOException e) {
             // Exceptions are handled and logged in the downloadContent method, so we don't

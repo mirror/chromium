@@ -81,6 +81,10 @@ public class AwContentsStatics {
         return nativeGetProductVersion();
     }
 
+    public static String getProductMajorVersion() {
+        return nativeGetProductMajorVersion();
+    }
+
     public static void setServiceWorkerIoThreadClient(AwContentsIoThreadClient ioThreadClient,
             AwBrowserContext browserContext) {
         nativeSetServiceWorkerIoThreadClient(ioThreadClient, browserContext);
@@ -161,6 +165,7 @@ public class AwContentsStatics {
     private static native void nativeClearClientCertPreferences(Runnable callback);
     private static native String nativeGetUnreachableWebDataUrl();
     private static native String nativeGetProductVersion();
+    private static native String nativeGetProductMajorVersion();
     private static native void nativeSetServiceWorkerIoThreadClient(
             AwContentsIoThreadClient ioThreadClient, AwBrowserContext browserContext);
     private static native boolean nativeGetSafeBrowsingEnabledByManifest();
