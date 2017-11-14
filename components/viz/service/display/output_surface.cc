@@ -38,4 +38,14 @@ OutputSurface::OutputSurface(
 
 OutputSurface::~OutputSurface() = default;
 
+OutputSurface::SwapLatencyInfo::SwapLatencyInfo(
+    uint64_t id,
+    std::vector<ui::LatencyInfo>&& info)
+    : swap_id(id), latency_info(std::move(info)) {}
+
+OutputSurface::SwapLatencyInfo::SwapLatencyInfo(SwapLatencyInfo&& src) =
+    default;
+
+OutputSurface::SwapLatencyInfo::~SwapLatencyInfo() = default;
+
 }  // namespace viz
