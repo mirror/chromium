@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cbebf52d_887731c0",
+        "filename": "chrome/browser/ui/cocoa/first_run_dialog_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-14T20:33:28Z",
+      "side": 1,
+      "message": "Probably not, now that many of them have been hacked up.",
+      "parentUuid": "77629a52_aa233837",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 40
+      },
+      "revId": "ce163f9ece9df2863aec7d7d8cb1d8f44616ba49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69b0c7c0_4c0dcb01",
         "filename": "chrome/browser/ui/cocoa/first_run_dialog_controller_unittest.mm",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-14T19:18:21Z",
       "side": 1,
       "message": "There has to be a \"long view is long\" joke in here somewhere.",
+      "range": {
+        "startLine": 67,
+        "startChar": 10,
+        "endLine": 67,
+        "endChar": 18
+      },
+      "revId": "ce163f9ece9df2863aec7d7d8cb1d8f44616ba49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d332179c_99b7f3fb",
+        "filename": "chrome/browser/ui/cocoa/first_run_dialog_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-14T20:33:28Z",
+      "side": 1,
+      "message": "Probably, yeah, but I left it out :)",
+      "parentUuid": "69b0c7c0_4c0dcb01",
       "range": {
         "startLine": 67,
         "startChar": 10,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b8fb7c02_4c2f7acd",
+        "filename": "ui/base/resource/resource_bundle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-14T20:33:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fca26e7_a9b1898b",
+      "range": {
+        "startLine": 297,
+        "startChar": 7,
+        "endLine": 297,
+        "endChar": 35
+      },
+      "revId": "ce163f9ece9df2863aec7d7d8cb1d8f44616ba49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38737546_a1e17690",
         "filename": "ui/base/test/cocoa_test_util.h",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "ce163f9ece9df2863aec7d7d8cb1d8f44616ba49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e82429_e61ef482",
+        "filename": "ui/base/test/cocoa_test_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-14T20:33:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38737546_a1e17690",
+      "range": {
+        "startLine": 16,
+        "startChar": 36,
+        "endLine": 16,
+        "endChar": 43
+      },
+      "revId": "ce163f9ece9df2863aec7d7d8cb1d8f44616ba49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "29b535b7_1a7230bc",
+        "filename": "ui/base/test/cocoa_test_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-14T20:33:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2be29a1_3909a62a",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "ce163f9ece9df2863aec7d7d8cb1d8f44616ba49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "258f8aa5_bfc7ee21",
         "filename": "ui/base/test/cocoa_test_util.mm",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "ce163f9ece9df2863aec7d7d8cb1d8f44616ba49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12a3426_7318581b",
+        "filename": "ui/base/test/cocoa_test_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-14T20:33:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "258f8aa5_bfc7ee21",
+      "range": {
+        "startLine": 58,
+        "startChar": 9,
+        "endLine": 58,
+        "endChar": 49
+      },
+      "revId": "ce163f9ece9df2863aec7d7d8cb1d8f44616ba49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
