@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcec924d_b6ac829a",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-14T18:28:10Z",
+      "side": 1,
+      "message": "let\u0027s also record the delta between interactive and interaction_detection, in a PageLoad.Internal metric, just so we better understand what these deltas look like in the wild",
+      "revId": "967cef8f380086b40fcf3743d63b92100d8890cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf477e42_b450600c",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-14T18:28:10Z",
+      "side": 1,
+      "message": "let\u0027s just note what these times are relative to (navigation_start?) in the comments.",
+      "revId": "967cef8f380086b40fcf3743d63b92100d8890cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fecb8064_2cee88c3",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2038,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-14T18:28:10Z",
+      "side": 1,
+      "message": "optional: to be sure we\u0027re filtering all input events that we want to ignore above, do we want to also report the event type, and log it via UMA (so we can see invalidating input event frequencies by event type)?",
+      "revId": "967cef8f380086b40fcf3743d63b92100d8890cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10cade3e_f37e326e",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-14T18:28:10Z",
+      "side": 1,
+      "message": "i see that some of these are recorded in the browser process, and others in the render process.\n\nthe pages where we report in the render process, vs record in the browser process, can be different.\n\ni think that could lead to misleading results, where our \u0027denominator\u0027 in the browser process isn\u0027t really directly comparable to this enum counter recorded here.\n\nso i suggest having 2 totally separate enums, one for render process, and another in browser process.\n\nif you want to be able to compute a ratio of pages that reach TIME_TO_INTERACTIVE_USER_INTERACTION_BEFORE_INTERACTIVE in the render process, i\u0027d suggest recording this as you have it here, as well as an enum in the else case below.\n\nthen for any counters we\u0027re interested in in the browser process, those should be totally separate from the ones recorded here.\n\ndo you see any issues with that?",
+      "revId": "967cef8f380086b40fcf3743d63b92100d8890cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674ff074_485ed5b8",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-14T18:28:10Z",
+      "side": 1,
+      "message": "our convention for PageLoad metrics recorded in the render process has been to use PageLoad.Internal.Renderer.*. Could we use that convention here and for any other histos recorded in the render process?",
+      "revId": "967cef8f380086b40fcf3743d63b92100d8890cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
