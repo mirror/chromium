@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "6e7aeed1_debf199b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/csspaint/hidpi/geometry-with-hidpi-zoom.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-14T17:40:19Z",
+      "side": 1,
+      "message": "\"Currently\" is more accurate.",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 21
+      },
+      "revId": "32e5081f792017b24e5f245fe896a63ddc409261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c542bc_6e858edf",
+        "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-14T17:40:19Z",
+      "side": 1,
+      "message": "This can also be removed now.",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 19
+      },
+      "revId": "32e5081f792017b24e5f245fe896a63ddc409261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a71dadfc_b7c635e5",
         "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
         "patchSetId": 9
@@ -30,6 +76,24 @@
       "writtenOn": "2017-11-14T16:31:35Z",
       "side": 1,
       "message": "The image backing should have size equal to |container_size|, which is the device pixel\nsize, no? Then all drawing commands into the custom paint buffer should be multiplied\nback up by the ratio between container_size and specified_size.",
+      "revId": "32e5081f792017b24e5f245fe896a63ddc409261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a3421a_7df254fe",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-14T17:40:19Z",
+      "side": 1,
+      "message": "Will need to be consistent in the handling of device scale factor.",
+      "parentUuid": "ce7ab8ad_0b13e310",
       "revId": "32e5081f792017b24e5f245fe896a63ddc409261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
