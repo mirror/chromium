@@ -42,7 +42,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nullable;
 
@@ -85,8 +84,8 @@ public class InvalidationClientService extends AndroidListener {
      */
     @Nullable private static byte[] sClientId;
 
-    private static AtomicReference<Class<? extends InvalidationClientService>> sServiceClass =
-            new AtomicReference<>();
+    private static final Class<? extends InvalidationClientService> sServiceClass =
+            findRegisteredInvalidationClientService();
 
     private static Class<? extends InvalidationClientService>
             findRegisteredInvalidationClientService() {
@@ -116,10 +115,7 @@ public class InvalidationClientService extends AndroidListener {
      *         interacting with the service.
      */
     public static Class<? extends InvalidationClientService> getRegisteredClass() {
-        if (sServiceClass.get() == null) {
-            sServiceClass.compareAndSet(null, findRegisteredInvalidationClientService());
-        }
-        return sServiceClass.get();
+        return sServiceClass;
     }
 
     @Override
