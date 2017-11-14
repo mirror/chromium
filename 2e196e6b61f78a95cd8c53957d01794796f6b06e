@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a415c7c8_c0ea1709",
+        "filename": "net/cert/x509_certificate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-14T21:41:02Z",
+      "side": 1,
+      "message": "HttpResponseInfo would still pass them if it read an older type entry. However, that code could be cleaned up too. Done.",
+      "parentUuid": "f7a88c9f_e9e1f355",
+      "revId": "2e196e6b61f78a95cd8c53957d01794796f6b06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2a90900_420dbb15",
         "filename": "net/cert/x509_certificate.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "2e196e6b61f78a95cd8c53957d01794796f6b06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb84bc2_79c86f2c",
+        "filename": "net/cert/x509_certificate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-14T21:41:02Z",
+      "side": 1,
+      "message": "(see previous comment)",
+      "parentUuid": "e2a90900_420dbb15",
+      "revId": "2e196e6b61f78a95cd8c53957d01794796f6b06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
