@@ -294,6 +294,10 @@ class CC_EXPORT SchedulerStateMachine {
     return previous_pending_tree_was_impl_side_;
   }
 
+  void SetPauseInvalidate(bool pause_invalidate) {
+    pause_invalidate_ = pause_invalidate;
+  }
+
  protected:
   bool BeginFrameRequiredForAction() const;
   bool BeginFrameNeededForVideo() const;
@@ -396,6 +400,8 @@ class CC_EXPORT SchedulerStateMachine {
   // If set to true, the pending tree must be drawn at least once after
   // activation before a new tree can be activated.
   bool pending_tree_needs_first_draw_on_activation_ = false;
+
+  bool pause_invalidate_ = false;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SchedulerStateMachine);

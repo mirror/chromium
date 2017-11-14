@@ -625,6 +625,10 @@ void SingleThreadProxy::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
   host_impl_->WillBeginImplFrame(args);
 }
 
+bool SingleThreadProxy::DidBeginImplFrame() {
+  return true;
+}
+
 void SingleThreadProxy::ScheduledActionSendBeginMainFrame(
     const viz::BeginFrameArgs& begin_frame_args) {
   TRACE_EVENT0("cc", "SingleThreadProxy::ScheduledActionSendBeginMainFrame");
