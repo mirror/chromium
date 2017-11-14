@@ -4,6 +4,8 @@
 
 #include "components/ukm/ukm_recorder_impl.h"
 
+#include <limits>
+
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
@@ -113,6 +115,46 @@ void UkmRecorderImpl::StoreRecordingsInReport(Report* report) {
     Entry* proto_entry = report->add_entries();
     StoreEntryProto(*entry, proto_entry);
   }
+  for (const auto& event_aggregation : event_aggregations_) {
+    if (event_aggregation.second.empty())
+      continue;
+    Aggregate* proto_aggregate = report->add_aggregates();
+    proto_aggregate->set_event_hash(event_aggregation.first);
+    // First pass: Get minimum count values to use as "normal".
+    uint64_t min_total_count = std::numeric_limits<uint64_t>::max();
+    uint64_t min_dropped_due_to_limits = std::numeric_limits<uint64_t>::max();
+    uint64_t min_dropped_due_to_sampling = std::numeric_limits<uint64_t>::max();
+    for (const auto& metric_and_aggregate : event_aggregation.second) {
+      const MetricAggregate& aggregate = metric_and_aggregate.second;
+      min_total_count = std::min(min_total_count, aggregate.total_count);
+      min_dropped_due_to_limits =
+          std::min(min_dropped_due_to_limits, aggregate.dropped_due_to_limits);
+      min_dropped_due_to_sampling = std::min(min_dropped_due_to_sampling,
+                                             aggregate.dropped_due_to_sampling);
+    }
+    proto_aggregate->set_total_count(min_total_count);
+    proto_aggregate->set_dropped_due_to_limits(min_dropped_due_to_limits);
+    proto_aggregate->set_dropped_due_to_sampling(min_dropped_due_to_sampling);
+    // Second pass: Encode protobuf.
+    for (const auto& metric_and_aggregate : event_aggregation.second) {
+      const MetricAggregate& aggregate = metric_and_aggregate.second;
+      Aggregate::Metric* proto_metric = proto_aggregate->add_metrics();
+      proto_metric->set_metric_hash(metric_and_aggregate.first);
+      proto_metric->set_value_sum(aggregate.value_sum);
+      proto_metric->set_value_square_sum(aggregate.value_square_sum);
+      if (aggregate.total_count != min_total_count) {
+        proto_metric->set_total_count(aggregate.total_count);
+      }
+      if (aggregate.dropped_due_to_limits != min_dropped_due_to_limits) {
+        proto_metric->set_dropped_due_to_limits(
+            aggregate.dropped_due_to_limits);
+      }
+      if (aggregate.dropped_due_to_sampling != min_dropped_due_to_sampling) {
+        proto_metric->set_dropped_due_to_sampling(
+            aggregate.dropped_due_to_sampling);
+      }
+    }
+  }
 
   UMA_HISTOGRAM_COUNTS_1000("UKM.Sources.SerializedCount", sources_.size());
   UMA_HISTOGRAM_COUNTS_1000("UKM.Entries.SerializedCount", entries_.size());
@@ -154,14 +196,26 @@ void UkmRecorderImpl::AddEntry(mojom::UkmEntryPtr entry) {
     RecordDroppedEntry(DroppedDataReason::RECORDING_DISABLED);
     return;
   }
-  if (entries_.size() >= GetMaxEntries()) {
-    RecordDroppedEntry(DroppedDataReason::MAX_HIT);
-    return;
-  }
 
   if (!whitelisted_entry_hashes_.empty() &&
       !base::ContainsKey(whitelisted_entry_hashes_, entry->event_hash)) {
     RecordDroppedEntry(DroppedDataReason::NOT_WHITELISTED);
+    return;
+  }
+
+  MetricAggregateMap& aggregates = event_aggregations_[entry->event_hash];
+  for (const auto& metric : entry->metrics) {
+    MetricAggregate& aggregate = aggregates[metric->metric_hash];
+    double value = metric->value;
+    aggregate.total_count++;
+    aggregate.value_sum += value;
+    aggregate.value_square_sum += value * value;
+  }
+
+  if (entries_.size() >= GetMaxEntries()) {
+    RecordDroppedEntry(DroppedDataReason::MAX_HIT);
+    for (auto& metric : entry->metrics)
+      aggregates[metric->metric_hash].dropped_due_to_limits++;
     return;
   }
 
