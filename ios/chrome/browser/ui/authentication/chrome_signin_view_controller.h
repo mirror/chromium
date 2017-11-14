@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "base/ios/block_types.h"
 #include "components/signin/core/browser/signin_metrics.h"
 #import "ios/chrome/browser/signin/constants.h"
 
@@ -83,7 +84,7 @@ class ChromeBrowserState;
 
 // Cancels the on-going authentication operation (if any). |delegate| will be
 // called with |didFailSignIn|.
-- (void)cancel;
+- (void)cancelWithCompletion:(ProceduralBlock)completion;
 
 @end
 

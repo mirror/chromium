@@ -202,7 +202,7 @@ enum AuthenticationState {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)cancel {
+- (void)cancelWithCompletion:(ProceduralBlock)completion {
   if (_alertCoordinator) {
     DCHECK(!_authenticationFlow && !_interactionManager);
     [_alertCoordinator executeCancelHandler];
@@ -218,13 +218,26 @@ enum AuthenticationState {
   }
   if (!_didAcceptSignIn && _didSignIn) {
     AuthenticationServiceFactory::GetForBrowserState(_browserState)
-        ->SignOut(signin_metrics::ABORT_SIGNIN, nil);
-    _didSignIn = NO;
+        ->SignOut(signin_metrics::ABORT_SIGNIN, ^{
+          [self didSignOutWithCompletion:completion];
+        });
+  } else {
+    [self finishCancelWithCompletion:completion];
   }
+}
+
+- (void)didSignOutWithCompletion:(ProceduralBlock)completion {
+  _didSignIn = NO;
+  [self finishCancelWithCompletion:completion];
+}
+
+- (void)finishCancelWithCompletion:(ProceduralBlock)completion {
   if (!_didFinishSignIn) {
     _didFinishSignIn = YES;
     [_delegate didFailSignIn:self];
   }
+  if (completion)
+    completion();
 }
 
 - (void)acceptSignInAndShowAccountsSettings:(BOOL)showAccountsSettings {
