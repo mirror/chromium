@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+FAIL Updating a StylePropertyMap with an unsupported property name throws TypeError assert_throws: function "() => styleMap.update(property, () => value)" did not throw
+FAIL Updating a StylePropertyMap with an null property name throws TypeError assert_throws: function "() => styleMap.update(property, () => value)" did not throw
+FAIL Updating a StylePropertyMap with an invalid CSSStyleValue throws TypeError assert_throws: function "() => styleMap.update(property, () => value)" did not throw
+FAIL Updating a StylePropertyMap with an invalid String throws TypeError assert_throws: function "() => styleMap.update(property, () => value)" did not throw
+FAIL Updating a valid CSSStyleValue on an empty StylePropertyMap adds the entry assert_equals: expected 1 but got 0
+FAIL Updating a valid String on an empty StylePropertyMap adds the entry assert_equals: expected 1 but got 0
+FAIL Updating a valid CSSStyleValue on an existing property replaces the entry assert_equals: value expected 20 but got 10
+FAIL Updating a valid String on an existing property replaces the entry assert_equals: expected 1 but got 0
+PASS Calling StylePropertyMap.update on an empty property model calls update function with null
+PASS Calling StylePropertyMap.update on an existing property calls update function with old value
+FAIL StylePropertyMap.update is case-insensitive Failed to execute 'update' on 'StylePropertyMap': The callback provided as parameter 2 is not a function.
+Harness: the test ran to completion.
+

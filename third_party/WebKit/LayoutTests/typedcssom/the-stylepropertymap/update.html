@@ -1,0 +1,90 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>StylePropertyMap.update tests</title>
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#update-a-value-in-a-stylepropertymap">
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../resources/testhelper.js"></script>
+<script>
+'use strict';
+
+const gInvalidTestCases = [
+  { property: 'lemon', value: 'ade', desc: 'an unsupported property name' },
+  { property: null, value: 'foo', desc: 'an null property name' },
+  { property: 'width', value: CSS.deg(0), desc: 'an invalid CSSStyleValue' },
+  { property: 'width', value: '10s', desc: 'an invalid String' },
+];
+
+for (const {property, value, desc} of gInvalidTestCases) {
+  test(() => {
+    let styleMap = newDivWithStyle('').styleMap;
+    assert_throws(new TypeError(), () => styleMap.update(property, () => value));
+  }, 'Updating a StylePropertyMap with ' + desc + ' throws TypeError');
+}
+
+const gValidTestCases = [
+  {
+    style: '',
+    property: 'width',
+    value: CSS.px(20),
+    expected: [CSS.px(20)],
+    desc: 'a valid CSSStyleValue on an empty StylePropertyMap adds the entry'
+  },
+  {
+    style: '',
+    property: 'width',
+    value: '20px',
+    expected: [CSS.px(20)],
+    desc: 'a valid String on an empty StylePropertyMap adds the entry'
+  },
+  {
+    style: 'width: 10px',
+    property: 'width',
+    value: CSS.px(20),
+    expected: [CSS.px(20)],
+    desc: 'a valid CSSStyleValue on an existing property replaces the entry'
+  },
+  {
+    style: 'width: 10px',
+    property: 'transition-duration',
+    value: '20px',
+    expected: [CSS.px(20)],
+    desc: 'a valid String on an existing property replaces the entry'
+  },
+];
+
+for (const {style, property, value, expected, desc} of gValidTestCases) {
+  test(() => {
+    let styleMap = newDivWithStyle(style).styleMap;
+    styleMap.update(property, () => value);
+
+    const result = styleMap.getAll(property);
+    assert_style_value_array_equals(result, expected);
+  }, 'Updating ' + desc);
+}
+
+test(() => {
+  let styleMap = newDivWithStyle('').styleMap;
+  styleMap.update('width', oldValue => assert_equals(oldValue, null));
+}, 'Calling StylePropertyMap.update on an empty property model calls update function with null');
+
+test(() => {
+  let styleMap = newDivWithStyle('width: 10px').styleMap;
+  styleMap.update('width', oldValue => assert_style_value_equals(oldValue, CSS.px(10)));
+}, 'Calling StylePropertyMap.update on an existing property calls update function with old value');
+
+test(() => {
+  let styleMap = newDivWithStyle('transition-duration: 1s, 2s').styleMap;
+  styleMap.update('transition-duration', oldValue => assert_style_value_equals(oldValue, CSS.s(1)));
+}, 'Calling StylePropertyMap.update on an existing list-valued property calls update function with first value');
+
+test(() => {
+  let styleMap = newDivWithStyle('transition-duration: 5s, 10s').styleMap;
+
+  styleMap.update('tRaNsItIoN-dUrAtIoN', ['1s', CSS.s(2)]);
+  const result = styleMap.getAll('transition-duration');
+  assert_style_value_array_equals(result, [CSS.s(1), CSS.s(2)]);
+}, 'StylePropertyMap.update is case-insensitive');
+
+</script>
+</script>

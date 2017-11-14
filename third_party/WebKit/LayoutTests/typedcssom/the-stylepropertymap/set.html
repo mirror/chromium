@@ -1,0 +1,81 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>StylePropertyMap.set</title>
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#set-a-value-on-a-stylepropertymap">
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../resources/testhelper.js"></script>
+<script>
+'use strict';
+
+const gInvalidTestCases = [
+  { property: 'lemon', values: ['ade'], desc: 'an unsupported property name' },
+  { property: null, values: ['foo'], desc: 'an null property name' },
+  { property: 'width', values: [CSS.deg(0)], desc: 'an invalid CSSStyleValue' },
+  { property: 'width', values: ['10s'], desc: 'an invalid String' },
+];
+
+for (const {property, values, desc} of gInvalidTestCases) {
+  test(() => {
+    let styleMap = newDivWithStyle('').styleMap;
+    assert_throws(new TypeError(), () => styleMap.set(property, ...values));
+  }, 'Setting a StylePropertyMap with ' + desc + ' throws TypeError');
+}
+
+const gValidTestCases = [
+  {
+    style: '',
+    property: 'width',
+    values: [CSS.px(20)],
+    expected: [CSS.px(20)],
+    desc: 'a valid CSSStyleValue on an empty StylePropertyMap adds the entry'
+  },
+  {
+    style: '',
+    property: 'width',
+    values: ['20px'],
+    expected: [CSS.px(20)],
+    desc: 'a valid String on an empty StylePropertyMap adds the entry'
+  },
+  {
+    style: 'width: 10px',
+    property: 'width',
+    values: [CSS.px(20)],
+    expected: [CSS.px(20)],
+    desc: 'a valid CSSStyleValue on an existing property replaces the entry'
+  },
+  {
+    style: 'width: 10px',
+    property: 'width',
+    values: ['20px'],
+    expected: [CSS.px(20)],
+    desc: 'a valid String on an existing property replaces the entry'
+  },
+  {
+    style: 'transition-duration: 1s, 2s, 3s',
+    property: 'transition-duration',
+    values: [CSS.s(5), '10s'],
+    expected: [CSS.s(5), CSS.s(10)],
+    desc: 'a valid list-valued CSSStyleValue on an existing property replaces the entry'
+  },
+];
+
+for (const {style, property, values, expected, desc} of gValidTestCases) {
+  test(() => {
+    let styleMap = newDivWithStyle(style).styleMap;
+    styleMap.set(property, ...values);
+
+    const result = styleMap.getAll(property);
+    assert_style_value_array_equals(result, expected);
+  }, 'Setting ' + desc);
+}
+
+test(() => {
+  let styleMap = newDivWithStyle('transition-duration: 5s, 10s').styleMap;
+
+  styleMap.set('tRaNsItIoN-dUrAtIoN', '1s', CSS.s(2));
+  const result = styleMap.getAll('transition-duration');
+  assert_style_value_array_equals(result, [CSS.s(1), CSS.s(2)]);
+}, 'StylePropertyMap.set is case-insensitive');
+
+</script>
