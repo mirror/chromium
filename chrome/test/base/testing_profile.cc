@@ -846,6 +846,10 @@ const PrefService* TestingProfile::GetPrefs() const {
   return prefs_.get();
 }
 
+policy::PolicyService* TestingProfile::GetPolicy() {
+  return nullptr;
+}
+
 #if !defined(OS_ANDROID)
 ChromeZoomLevelPrefs* TestingProfile::GetZoomLevelPrefs() {
   return static_cast<ChromeZoomLevelPrefs*>(
