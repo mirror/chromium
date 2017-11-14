@@ -69,6 +69,24 @@
       "revId": "9dca08eba6513ffd7ab498dd30d552338fbf6d40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8fd363c_5606970e",
+        "filename": "base/test/android/java_handler_thread_helpers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-11-14T23:36:03Z",
+      "side": 1,
+      "message": "Thanks for the explanation, I get it now :)",
+      "parentUuid": "4a32ea5a_c55a5c46",
+      "revId": "9dca08eba6513ffd7ab498dd30d552338fbf6d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
