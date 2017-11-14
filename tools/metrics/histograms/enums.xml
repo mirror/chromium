@@ -25092,6 +25092,7 @@ from previous Chrome versions.
   <int value="546710806" label="disable-easy-signin"/>
   <int value="550378029" label="reset-app-list-install-state"/>
   <int value="550387510" label="NTPAssetDownloadSuggestions:disabled"/>
+  <int value="556261662" label="EnableAv1Decoder:enabled"/>
   <int value="558873715" label="SiteDetails:disabled"/>
   <int value="562979188" label="DesktopIOSPromotion:enabled"/>
   <int value="567368307" label="enable-experimental-canvas-features"/>
@@ -25575,6 +25576,7 @@ from previous Chrome versions.
   <int value="1865963858" label="tls13-variant"/>
   <int value="1866079109" label="team-drives"/>
   <int value="1867085340" label="brotli-encoding:enabled"/>
+  <int value="1869127579" label="EnableAv1Decoder:disabled"/>
   <int value="1872185826" label="LocationHardReload:enabled"/>
   <int value="1874604540" label="UseSuggestionsEvenIfFew:disabled"/>
   <int value="1878331098" label="GuestViewCrossProcessFrames:enabled"/>
