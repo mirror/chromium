@@ -25,6 +25,7 @@ import org.chromium.chrome.browser.compositor.layouts.LayoutUpdateHost;
 import org.chromium.chrome.browser.compositor.scene_layer.ContextualSearchSceneLayer;
 import org.chromium.chrome.browser.compositor.scene_layer.SceneOverlayLayer;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchManagementDelegate;
+import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.ui.base.LocalizationUtils;
 import org.chromium.ui.resources.ResourceManager;
@@ -193,8 +194,11 @@ public class ContextualSearchPanel extends OverlayPanel {
     public void setPanelState(PanelState toState, StateChangeReason reason) {
         PanelState fromState = getPanelState();
 
-        mPanelMetrics.onPanelStateChanged(
-                fromState, toState, reason, mActivity.getActivityTab().getProfile());
+        Profile profile = null;
+        if (mActivity != null && mActivity.getActivityTab() != null) {
+            profile = mActivity.getActivityTab().getProfile();
+        }
+        mPanelMetrics.onPanelStateChanged(fromState, toState, reason, profile);
 
         if (toState == PanelState.PEEKED
                 && (fromState == PanelState.CLOSED || fromState == PanelState.UNDEFINED)) {

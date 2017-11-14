@@ -13,6 +13,8 @@ import org.chromium.chrome.browser.contextualsearch.ContextualSearchUma;
 import org.chromium.chrome.browser.contextualsearch.QuickActionCategory;
 import org.chromium.chrome.browser.profiles.Profile;
 
+import javax.annotation.Nullable;
+
 /**
  * This class is responsible for all the logging related to Contextual Search.
  */
@@ -66,8 +68,8 @@ public class ContextualSearchPanelMetrics {
      * @param reason The reason for the state change.
      * @param profile The current {@link Profile}.
      */
-    public void onPanelStateChanged(
-            PanelState fromState, PanelState toState, StateChangeReason reason, Profile profile) {
+    public void onPanelStateChanged(PanelState fromState, PanelState toState,
+            StateChangeReason reason, @Nullable Profile profile) {
         // Note: the logging within this function includes the promo, unless specifically
         // excluded.
         boolean isStartingSearch = isStartingNewContextualSearch(toState, reason);
@@ -171,9 +173,12 @@ public class ContextualSearchPanelMetrics {
             if (mRankerLogger != null) mRankerLogger.writeLogAndReset();
             mRankerLogger = null;
 
-            // Notifications to Feature Engagement.
-            ContextualSearchIPH.doSearchFinishedNotifications(profile, mWasSearchContentViewSeen,
-                    mWasActivatedByTap, mWasContextualCardsDataShown);
+            if (profile != null) {
+                // Notifications to Feature Engagement.
+                ContextualSearchIPH.doSearchFinishedNotifications(profile,
+                        mWasSearchContentViewSeen, mWasActivatedByTap,
+                        mWasContextualCardsDataShown);
+            }
         }
 
         if (isStartingSearch) {
