@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a773ef24_77b5bcf0",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-14T20:44:23Z",
+      "side": 1,
+      "message": "Ack.  This method is gone now.",
+      "parentUuid": "7d4758eb_2fb2b6d0",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 44
+      },
+      "revId": "12d15bbe5e6143b40006b07ac11ad54d4a89a4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5660ae7b_771a29aa",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "12d15bbe5e6143b40006b07ac11ad54d4a89a4c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159c235c_308483bb",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-14T20:44:23Z",
+      "side": 1,
+      "message": "constructor is private",
+      "parentUuid": "5660ae7b_771a29aa",
+      "range": {
+        "startLine": 82,
+        "startChar": 9,
+        "endLine": 82,
+        "endChar": 25
+      },
+      "revId": "12d15bbe5e6143b40006b07ac11ad54d4a89a4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
