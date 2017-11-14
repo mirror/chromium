@@ -22,6 +22,30 @@
       "revId": "b1d432dc242520b38e525d78d79de3f6e4132416",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e610250f_12c2113d",
+        "filename": "chrome/browser/ui/webui/signin/signin_email_confirmation_dialog.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-14T19:44:23Z",
+      "side": 1,
+      "message": "Put it back as if (!dialog_web_contents)\n\nI do too, but this function sort of mixes the two, as the code below does if (...) { if (...) {}}, so I tried to make it lean that way.",
+      "parentUuid": "ab216a6e_e7a3c723",
+      "range": {
+        "startLine": 116,
+        "startChar": 6,
+        "endLine": 116,
+        "endChar": 25
+      },
+      "revId": "b1d432dc242520b38e525d78d79de3f6e4132416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
