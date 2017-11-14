@@ -2,11 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#ifndef UI_BASE_X_X11_POINTER_GRAB_H_
+#define UI_BASE_X_X11_POINTER_GRAB_H_
+
+#include "ui/base/x/ui_base_x_export.h"
 #include "ui/gfx/x/x11_types.h"
 
 typedef unsigned long Cursor;
 
-namespace views {
+namespace ui {
 
 // Grabs the pointer. It is unnecessary to ungrab the pointer prior to grabbing
 // it.
@@ -18,4 +22,6 @@ void ChangeActivePointerGrabCursor(::Cursor cursor);
 // Ungrabs the pointer.
 void UngrabPointer();
 
-}  // namespace views
+}  // namespace ui
+
+#endif  // UI_BASE_X_X11_POINTER_GRAB_H_
