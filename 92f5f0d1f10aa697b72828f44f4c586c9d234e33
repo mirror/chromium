@@ -34,6 +34,24 @@
       "revId": "92f5f0d1f10aa697b72828f44f4c586c9d234e33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a4d5004_cb9de679",
+        "filename": "chrome/browser/resources/chromeos/chromevox/strings/chromevox_strings.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-14T08:23:21Z",
+      "side": 1,
+      "message": "If we change the meaning of this, we also need to change IDS_CHROMEVOX_DESCRIBE_INDEX as well.\nHowever we got that it\u0027d be enough just to change the description for this issue.",
+      "parentUuid": "ef318716_569f0f93",
+      "revId": "92f5f0d1f10aa697b72828f44f4c586c9d234e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
