@@ -6398,6 +6398,7 @@ Called by update_net_error_codes.py.-->
   <int value="37" label="Client hints setting"/>
   <int value="38" label="Sensors setting"/>
   <int value="39" label="Accessibility events setting"/>
+  <int value="40" label="Heavy memory site setting"/>
 </enum>
 
 <enum name="ContentTypeParseableResult">
