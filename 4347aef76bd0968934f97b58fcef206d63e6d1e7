@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e316a67e_237238c6",
+        "filename": "third_party/WebKit/public/platform/WebMouseWheelEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-14T16:57:30Z",
+      "side": 1,
+      "message": "not needed, struct is memset to 0 in ctor.",
+      "revId": "4347aef76bd0968934f97b58fcef206d63e6d1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf73c82_a82ecdb9",
+        "filename": "ui/events/blink/blink_event_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-14T16:57:30Z",
+      "side": 1,
+      "message": "We should probably assert that momentum_phases are equal or check that if they aren\u0027t return false.",
+      "range": {
+        "startLine": 281,
+        "startChar": 23,
+        "endLine": 281,
+        "endChar": 40
+      },
+      "revId": "4347aef76bd0968934f97b58fcef206d63e6d1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df480f05_17011bff",
+        "filename": "ui/events/blink/blink_event_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-14T16:57:30Z",
+      "side": 1,
+      "message": "Can we add a comment here why this is being done?",
+      "revId": "4347aef76bd0968934f97b58fcef206d63e6d1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089114e7_90c65b73",
+        "filename": "ui/events/blink/blink_event_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-14T16:57:30Z",
+      "side": 1,
+      "message": "Please assert that the type is kPhaseChanged.",
+      "revId": "4347aef76bd0968934f97b58fcef206d63e6d1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
