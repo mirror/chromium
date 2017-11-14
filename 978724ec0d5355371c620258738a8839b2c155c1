@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c519af98_7cd869be",
+        "filename": "mojo/edk/embedder/scoped_platform_handle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-14T06:55:51Z",
+      "side": 1,
+      "message": "An operator-\u003e wouldn\u0027t be the worst thing in the world to add if we\u0027re really going to pass around lots of const refs to SPH",
+      "revId": "978724ec0d5355371c620258738a8839b2c155c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0548b055_6f86d13f",
+        "filename": "mojo/edk/embedder/scoped_platform_handle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-14T06:55:51Z",
+      "side": 1,
+      "message": "I\u0027d kind of prefer that we just didn\u0027t use an alias at all for this. It only makes code less readable in this case, IMHO.",
+      "revId": "978724ec0d5355371c620258738a8839b2c155c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1bb023_5e9b74bb",
+        "filename": "mojo/edk/system/channel_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-14T06:55:51Z",
+      "side": 1,
+      "message": "yes but it\u0027s not necessarily easier to read (and therefore not necessarily better) imho. something like:\n\n handles_to_close_.insert(handles_to_close_.end(),\n                          std::make_move_iterator(handles.begin()),\n                          std::make_move_iterator(handles.end()));",
+      "revId": "978724ec0d5355371c620258738a8839b2c155c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99970af5_14743167",
+        "filename": "mojo/edk/system/channel_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-14T06:55:51Z",
+      "side": 1,
+      "message": "I think this is pointless now?",
+      "revId": "978724ec0d5355371c620258738a8839b2c155c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

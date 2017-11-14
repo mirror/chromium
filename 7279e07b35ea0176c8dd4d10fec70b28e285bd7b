@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "553632ea_70d20ce8",
+        "filename": "mojo/edk/embedder/platform_channel_utils_posix.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-14T06:55:51Z",
+      "side": 0,
+      "message": "I don\u0027t know, I\u0027m still really not convinced that this is better. It feels kind of like passing a const std::unique_ptr\u003cFoo\u003e\u0026 instead of a const Foo\u0026 or Foo*. The idiomatic thing to seems to be to treat unscoped references as unowned by convention rather than to pass references to their scoping wrappers. In that regard interpreting PlatformHandle as an unowned handle seems completely natural to me.",
+      "revId": "7279e07b35ea0176c8dd4d10fec70b28e285bd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
