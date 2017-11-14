@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c67afd6_219227ac",
+        "filename": "third_party/metrics_proto/ukm/aggregate.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-14T20:11:45Z",
+      "side": 1,
+      "message": "I don\u0027t think it makes sense to compute aggregates per Source, since most events will only occur a small number of times per Source.  I think we only want overall aggregates (at least for most metrics).",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "e6b2c1f946d11039d026b2b9652289e77ec67db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
