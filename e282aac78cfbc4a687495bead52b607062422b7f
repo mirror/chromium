@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8b4ad8e_d717bb94",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-14T19:40:11Z",
+      "side": 1,
+      "message": "This is the biggest change I had to make. Note that unprovision_bytes can only be set by the code inside of \"if (truncated_slots)\". Therefore it is more logical (and also allows us to reduce the scope of three variables) to move \"if (unprovisioned_bytes \u0026\u0026 discard) {\" into the same block. This then avoids variable shadowing on begin_ptr and end_ptr.",
+      "revId": "e282aac78cfbc4a687495bead52b607062422b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

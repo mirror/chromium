@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2328d92d_4b4e5f91",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-14T19:40:11Z",
+      "side": 0,
+      "message": "This technique of zeroing an object is risky (can accidentally be applied to something with a constructor, can specify the wrong size, etc.) and is inconsistent with how the *other* stats object is initialized.",
+      "revId": "25dae021e3dc9f7e46f7098e65e3277fbdca5477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
