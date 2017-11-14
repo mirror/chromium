@@ -44,6 +44,10 @@ namespace net {
 class SSLConfigService;
 }
 
+namespace policy {
+class PolicyService;
+}
+
 namespace user_prefs {
 class PrefRegistrySyncable;
 }
@@ -182,6 +186,8 @@ class Profile : public content::BrowserContext {
   // preferences for this user profile.
   virtual PrefService* GetPrefs() = 0;
   virtual const PrefService* GetPrefs() const = 0;
+
+  virtual policy::PolicyService* GetPolicy() = 0;
 
 #if !defined(OS_ANDROID)
   // Retrieves a pointer to the PrefService that manages the default zoom

@@ -22,6 +22,7 @@
 #include "base/time/clock.h"
 #include "components/google/core/browser/google_url_tracker.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "components/policy/core/common/policy_service.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "components/search_engines/default_search_manager.h"
 #include "components/search_engines/keyword_web_data_service.h"
@@ -105,6 +106,7 @@ class TemplateURLService : public WebDataServiceConsumer,
 
   TemplateURLService(
       PrefService* prefs,
+      policy::PolicyService* policy_service,
       std::unique_ptr<SearchTermsData> search_terms_data,
       const scoped_refptr<KeywordWebDataService>& web_data_service,
       std::unique_ptr<TemplateURLServiceClient> client,
@@ -521,6 +523,9 @@ class TemplateURLService : public WebDataServiceConsumer,
   // Transitions to the loaded state.
   void ChangeToLoadedState();
 
+  // Called after Policies are updated when loading.
+  void OnPoliciesUpdated();
+
   // Called by DefaultSearchManager when the effective default search engine has
   // changed.
   void OnDefaultSearchChange(const TemplateURLData* new_dse_data,
@@ -727,6 +732,7 @@ class TemplateURLService : public WebDataServiceConsumer,
 
   // ---------- Browser state related members ---------------------------------
   PrefService* prefs_;
+  policy::PolicyService* policy_service_;
 
   std::unique_ptr<SearchTermsData> search_terms_data_;
 
