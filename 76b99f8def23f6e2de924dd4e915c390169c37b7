@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "a78726e3_6afb2a94",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002431
+      },
+      "writtenOn": "2017-11-14T03:49:35Z",
+      "side": 1,
+      "message": "Please nag me about this: there is concern that threading does not work at all in the test branch of libaom. (is ignored/runs singlethreaded, not breaks the decode)",
+      "parentUuid": "1338b864_78836f4b",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b3909f5_13f9b51e",
         "filename": "media/filters/aom_video_decoder.cc",
         "patchSetId": 6
@@ -1071,6 +1095,30 @@
       "side": 1,
       "message": "Generally these buffers are padded; the actual w, h values include this padding, so if we\u0027re going to make a copy anyways, might as well not copy as much.\n\n+tomefinegan, what\u0027s the right amount to copy here? Just d_h, d_w?",
       "parentUuid": "de06f091_4e77ce89",
+      "range": {
+        "startLine": 393,
+        "startChar": 0,
+        "endLine": 393,
+        "endChar": 52
+      },
+      "revId": "76b99f8def23f6e2de924dd4e915c390169c37b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b18ba270_23f78267",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002431
+      },
+      "writtenOn": "2017-11-14T03:49:35Z",
+      "side": 1,
+      "message": "yeah, you want the d_ prefixed ones. It means displayable_.",
+      "parentUuid": "f6a485c2_86cecca4",
       "range": {
         "startLine": 393,
         "startChar": 0,

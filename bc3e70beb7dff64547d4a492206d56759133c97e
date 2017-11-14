@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f917847a_82610db4",
+        "filename": "content/browser/gpu/gpu_internals_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1002431
+      },
+      "writtenOn": "2017-11-14T03:49:35Z",
+      "side": 1,
+      "message": "AV1 profile numbering starts at 1. (in all proposals I\u0027ve seen, including the most recent from earlier this month)\n\nBut! In this magical unicorn that we\u0027re using presently defined profiles are 0, 1, 2, and 3. Anything profile related probably needs a TODO about them being a moving target until the bitstream is finalized.",
+      "range": {
+        "startLine": 440,
+        "startChar": 0,
+        "endLine": 449,
+        "endChar": 28
+      },
+      "revId": "bc3e70beb7dff64547d4a492206d56759133c97e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832aaaf4_dc2487ba",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002431
+      },
+      "writtenOn": "2017-11-14T03:49:35Z",
+      "side": 1,
+      "message": "I think we\u0027re only going to see AOM_IMG_FMT_I42016 coming out of libaom for this run. Maybe AOM_IMG_FMT_I420 as well if https://bugs.chromium.org/p/aomedia/issues/detail?id\u003d999 is fixed in time for the E2E test.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "bc3e70beb7dff64547d4a492206d56759133c97e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da97311_ae1e352a",
+        "filename": "media/filters/aom_video_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1002431
+      },
+      "writtenOn": "2017-11-14T03:49:35Z",
+      "side": 1,
+      "message": "Agreed on silliness point, but this is considered a bug and is on the must fix hot list (https://bugs.chromium.org/p/aomedia/issues/detail?id\u003d999).",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 353,
+        "endChar": 61
+      },
+      "revId": "bc3e70beb7dff64547d4a492206d56759133c97e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
