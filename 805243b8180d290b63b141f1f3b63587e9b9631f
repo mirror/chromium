@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b763f60b_bd7d74c4",
+        "filename": "content/browser/frame_host/frame_tree_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-14T15:54:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7728fef5_9399fd1a",
+      "range": {
+        "startLine": 832,
+        "startChar": 2,
+        "endLine": 832,
+        "endChar": 17
+      },
+      "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1053f694_ff53acd2",
         "filename": "content/browser/frame_host/frame_tree_node.cc",
         "patchSetId": 16
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "98b1e297_ae171368",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-14T15:54:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1053f694_ff53acd2",
+      "range": {
+        "startLine": 655,
+        "startChar": 0,
+        "endLine": 655,
+        "endChar": 49
+      },
+      "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8840cf53_a75eff59",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 16
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-14T01:54:57Z",
       "side": 1,
       "message": "Why did we need to change this from a CHECK?",
+      "range": {
+        "startLine": 545,
+        "startChar": 0,
+        "endLine": 547,
+        "endChar": 11
+      },
+      "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f385ea_dab9d578",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-14T15:54:43Z",
+      "side": 1,
+      "message": "Not necesssary; accidentally left in from a brief period where I was using this instead of the new OnDidSetActiveSandboxFlags to send updates to all frames. Thanks for catching.",
+      "parentUuid": "8840cf53_a75eff59",
       "range": {
         "startLine": 545,
         "startChar": 0,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d9cca68c_850071aa",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-14T15:54:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9de5e0b_279a5b4e",
+      "range": {
+        "startLine": 274,
+        "startChar": 46,
+        "endLine": 274,
+        "endChar": 72
+      },
+      "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bc5077a_6bd5efb5",
         "filename": "content/renderer/render_frame_proxy.cc",
         "patchSetId": 16
@@ -114,6 +210,30 @@
       "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ed78ec_bc8dad19",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-14T15:54:43Z",
+      "side": 1,
+      "message": "Done. I\u0027ve tried to clearly describe the separation of responsibilities; Let me know if you think there\u0027s additional info that needs to be conveyed.",
+      "parentUuid": "9bc5077a_6bd5efb5",
+      "range": {
+        "startLine": 287,
+        "startChar": 22,
+        "endLine": 287,
+        "endChar": 37
+      },
+      "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -160,6 +280,54 @@
       "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7762f210_707f96c8",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-14T15:54:43Z",
+      "side": 1,
+      "message": "No longer necessary.",
+      "parentUuid": "c36b6a26_4c343b45",
+      "range": {
+        "startLine": 305,
+        "startChar": 28,
+        "endLine": 305,
+        "endChar": 0
+      },
+      "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc9bb94b_857f544d",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-14T15:54:43Z",
+      "side": 1,
+      "message": "Thanks -- same issue as in RFHM; left over from when I *did* send everything to every frame for a while.",
+      "parentUuid": "a1ec6f35_2eabcba5",
+      "range": {
+        "startLine": 305,
+        "startChar": 2,
+        "endLine": 305,
+        "endChar": 28
+      },
+      "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
