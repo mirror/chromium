@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee875229_80c63da0",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-14T17:52:03Z",
+      "side": 1,
+      "message": "nit: Please keep it sorted. Move it to L 18, before #include \"base/test/scoped_feature_list.h",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "1bc4149971f21cc679110b5707cccb3e83bb32b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
