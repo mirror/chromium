@@ -28,7 +28,7 @@ bool AwMediaUrlInterceptor::Intercept(const std::string& url,
         base::MemoryMappedFile::Region::kWholeFile;
     *fd = base::android::OpenApkAsset(filename, &region);
     *offset = region.offset;
-    *size = region.size;
+    *size = static_cast<int64_t>(region.size);
     return *fd != -1;
   }
 
