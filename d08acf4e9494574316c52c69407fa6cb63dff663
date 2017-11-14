@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c015829c_ddf95f2c",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T23:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27344a3b_e9b7ff45",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b23da881_543fa3dd",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f8f27a_d24c4680",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T23:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b23da881_543fa3dd",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "fb135644_cc607101",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T23:38:28Z",
+      "side": 1,
+      "message": "Done, this is better, thanks!",
+      "parentUuid": "14499cf6_30bcf06d",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdb82558_7e1e86ee",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2cfc70_b83558b8",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T23:38:28Z",
+      "side": 1,
+      "message": "Done. I\u0027ve added more descriptions to these model params. I\u0027ve also updated the headings. As there are many fields, I think it\u0027d be clearer if we have three separate sections.",
+      "parentUuid": "bdb82558_7e1e86ee",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "8a38431e_f7be457e",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T23:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57827a22_7db9581d",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f5cb8f3_6dc0907f",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
         "patchSetId": 4
@@ -107,6 +203,24 @@
       "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0119405e_732d2255",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T23:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f5cb8f3_6dc0907f",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "2f795060_3d87ccf2",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T23:38:28Z",
+      "side": 1,
+      "message": "Done.\n\nIf the last activity was before midnight, I\u0027ll store the previous day\u0027s time stamp, and the day_of_week will be previous day.",
+      "parentUuid": "423b3e51_f2968043",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ddca192_4b4d5eac",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
         "patchSetId": 4
@@ -138,6 +270,24 @@
       "writtenOn": "2017-11-14T16:41:44Z",
       "side": 1,
       "message": "does this correspond to the current day of week at the time that this proto is created? if so, do you also need to store the current seconds-since-midnight?",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b14cf850_2cf4894f",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T23:38:28Z",
+      "side": 1,
+      "message": "This field will represent the day of week of last activity. I\u0027ve renamed it to avoid confusion. :)",
+      "parentUuid": "7ddca192_4b4d5eac",
       "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "d908702e_ea054261",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T23:38:28Z",
+      "side": 1,
+      "message": "No problem, we won\u0027t exclude android apps, and I\u0027ve modified the comment too. :)\n\nMichael and I are working on getting privacy approval to store these data in UKM. So it should be ok to store these fields in the logs, after hashing them to ints.",
+      "parentUuid": "892c1223_2ec90354",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f1aa3f1_e9cc4ed7",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
         "patchSetId": 4
@@ -175,6 +343,24 @@
       "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21abc67c_b6cc5191",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T23:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f1aa3f1_e9cc4ed7",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "b964effb_12356f33",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T23:38:28Z",
+      "side": 1,
+      "message": "Done. \nIndeed, we should log for chromebook, tablets and phones, but at the moment I can only find Chromebook from DeviceType (https://cs.chromium.org/chromium/src/chromeos/system/devicetype.h?q\u003dChromebox\u0026dr\u003dC\u0026l\u003d12). It doesn\u0027t seem kChromebook already includes tablets/phones, so would new fields be added later?",
+      "parentUuid": "62d7f8b8_e8e1948a",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "283e71b4_890960f1",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
         "patchSetId": 4
@@ -209,6 +413,24 @@
       "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c66127b_19d1fcb1",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T23:38:28Z",
+      "side": 1,
+      "message": "Done. \n\nThanks for the suggestions! I made a couple of changes to what you\u0027ve suggested\n\n(i). CLAMSHELL: lid is open and tablet mode is off or unsupported.\n- We don\u0027t really care about whether tablet mode is off or unsupported, so I bundle the two modes together. \n\n(ii). TABLET: lid is open and tablet is on or no lid at all.\n- Again, if it\u0027s a tablet, then we won\u0027t really care if it\u0027s a really a chromebook or a simple tablet.\n\n(iii). Changed LID_CLOSED to CLOSED_LID (as the former is already used in another enum in this proto).\n\nI realise this changes the standard terminologies a bit. Please let me know your thoughts. Thanks.",
+      "parentUuid": "283e71b4_890960f1",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
