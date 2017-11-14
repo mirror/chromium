@@ -168,4 +168,23 @@ TEST(MediaRouterMetricsTest, RecordPresentationUrlType) {
           Bucket(static_cast<int>(PresentationUrlType::kRemotePlayback), 1)));
 }
 
+TEST(MediaRouterMetricsTest, RecordWiredDisplaySinkCount) {
+  base::HistogramTester tester;
+  tester.ExpectTotalCount(MediaRouterMetrics::kHistogramWiredDisplaySinkCount,
+                          0);
+  MediaRouterMetrics::RecordWiredDisplaySinkCount(1);
+  MediaRouterMetrics::RecordWiredDisplaySinkCount(200);
+  MediaRouterMetrics::RecordWiredDisplaySinkCount(0);
+  MediaRouterMetrics::RecordWiredDisplaySinkCount(25);
+  MediaRouterMetrics::RecordWiredDisplaySinkCount(1);
+
+  tester.ExpectTotalCount(MediaRouterMetrics::kHistogramWiredDisplaySinkCount,
+                          5);
+  EXPECT_THAT(
+      tester.GetAllSamples(MediaRouterMetrics::kHistogramWiredDisplaySinkCount),
+      ElementsAre(
+          Bucket(0, 1), Bucket(1, 2), Bucket(25, 1),
+          Bucket(100, 1)));  // Counts over 100 are all put in the 100 bucket.
+}
+
 }  // namespace media_router

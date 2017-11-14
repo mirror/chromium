@@ -35540,6 +35540,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="MediaRouter.WiredDisplay.SinkCount">
+  <owner>takumif@chromium.org</owner>
+  <summary>
+    The number of Media Sinks available for Casting a Presentation API URL to
+    local screens.
+  </summary>
+</histogram>
+
 <histogram name="MemCache.WriteResult" enum="MemCacheWriteResult">
   <owner>jkarlin@chromium.org</owner>
   <summary>The outcome of Entry::WriteData in the memory cache.</summary>
