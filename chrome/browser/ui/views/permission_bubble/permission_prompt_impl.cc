@@ -5,6 +5,8 @@
 #include "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.h"
 
 #include <stddef.h>
+#include <memory>
+#include <utility>
 
 #include "base/strings/string16.h"
 #include "build/build_config.h"
@@ -80,6 +82,7 @@ class PermissionsBubbleDialogDelegateView
   bool Cancel() override;
   bool Accept() override;
   bool Close() override;
+  void AddedToWidget() override;
   int GetDefaultDialogButton() const override;
   int GetDialogButtons() const override;
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
@@ -166,6 +169,18 @@ PermissionsBubbleDialogDelegateView::~PermissionsBubbleDialogDelegateView() {
 void PermissionsBubbleDialogDelegateView::CloseBubble() {
   owner_ = nullptr;
   GetWidget()->Close();
+}
+
+void PermissionsBubbleDialogDelegateView::AddedToWidget() {
+  // Languages where the string is "want to URL" rather than "URL wants to" will
+  // have the leading "wants to" truncated in the case where the URL is too
+  // long. However, the head truncation behaviour is important to ensure that
+  // URLs which are too long cannot be used for spoofing. See crbug.com/774438.
+  std::unique_ptr<views::Label> title =
+      views::BubbleFrameView::CreateDefaultTitleLabel(GetWindowTitle());
+  title->SetElideBehavior(gfx::ELIDE_HEAD);
+  title->SetMultiLine(false);
+  GetBubbleFrameView()->SetTitleView(std::move(title));
 }
 
 ui::AXRole PermissionsBubbleDialogDelegateView::GetAccessibleWindowRole()
