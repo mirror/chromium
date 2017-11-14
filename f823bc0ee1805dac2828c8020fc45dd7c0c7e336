@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "101706fa_29b5b082",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2471,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-11-14T14:12:21Z",
+      "side": 1,
+      "message": "OnWindowClosing() can be called several times for the same browser. \nSo prior to checking open browsers count we need to check if current browser is not already closing.",
+      "revId": "f823bc0ee1805dac2828c8020fc45dd7c0c7e336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
