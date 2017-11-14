@@ -11,7 +11,6 @@
       {
           let css = document.querySelector('link');
           css.parentNode.removeChild(css);
-          window.getComputedStyle(document.body).color;
       }
   `);
 
