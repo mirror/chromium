@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eabbb0fc_4cb6edee",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptCompilerPlugin.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-14T02:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf208788_2aad5a90",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "078f43a2f1ef1082765b820d96d9509fc4eb2bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5a5632_49dfe4ec",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptCompilerPlugin.js",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "078f43a2f1ef1082765b820d96d9509fc4eb2bbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1056de95_69273ace",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptCompilerPlugin.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-14T02:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e5a5632_49dfe4ec",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 19
+      },
+      "revId": "078f43a2f1ef1082765b820d96d9509fc4eb2bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "04554977_a6fc5092",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptCompilerPlugin.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-14T02:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6190f6a_f8af41fd",
+      "range": {
+        "startLine": 87,
+        "startChar": 25,
+        "endLine": 87,
+        "endChar": 38
+      },
+      "revId": "078f43a2f1ef1082765b820d96d9509fc4eb2bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf59d67b_4d1c457e",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptCompilerPlugin.js",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "809f72b5_d117ac43",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptCompilerPlugin.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-14T02:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf59d67b_4d1c457e",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 9
+      },
+      "revId": "078f43a2f1ef1082765b820d96d9509fc4eb2bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4ae26d0_f3eb6612",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/UISourceCodeFrame.js",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-11T01:02:04Z",
       "side": 1,
       "message": "Brief explanation of why these 2 lines change?  I\u0027m not very familiar with Persistence/bindings, so I\u0027ll defer to lushnikov@ here.",
+      "range": {
+        "startLine": 257,
+        "startChar": 8,
+        "endLine": 257,
+        "endChar": 26
+      },
+      "revId": "078f43a2f1ef1082765b820d96d9509fc4eb2bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbfa71ee_68ff422c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/UISourceCodeFrame.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-14T02:03:48Z",
+      "side": 1,
+      "message": "Previously we were just checking the contentType of the file, so the network and filesystem uisourcecodes should always match. Now that we are adding messages and querying the debugger, it is important to always use the network uisourcecode if it exists.",
+      "parentUuid": "a4ae26d0_f3eb6612",
       "range": {
         "startLine": 257,
         "startChar": 8,
