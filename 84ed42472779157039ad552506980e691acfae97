@@ -45,6 +45,54 @@
       "revId": "84ed42472779157039ad552506980e691acfae97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506aa380_3f4d7e28",
+        "filename": "android_webview/browser/aw_media_url_interceptor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-14T22:07:32Z",
+      "side": 1,
+      "message": "Oh yes, of course, sorry my bad (signed vs unsigned..), thanks for noticing. In that case it\u0027s probably better to change the signature and use a different \u0027sentinel\u0027 value for size in tests (like max value instead of -1). I\u0027ll upload a follow-up patch.",
+      "parentUuid": "39f0628f_89ba8294",
+      "range": {
+        "startLine": 31,
+        "startChar": 24,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "84ed42472779157039ad552506980e691acfae97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d23dc4c_10a3eaee",
+        "filename": "android_webview/browser/aw_media_url_interceptor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-14T22:07:32Z",
+      "side": 1,
+      "message": "My reasoning here was that in the test size is initialized to -1 (as int64_t) which is all bits 1 in 2-complement representation. Pointer dereference assignment *(int64_t*) \u003d size_t would \u0027erase\u0027 part of it because region.size is zero (and unit32_t) yielding the unsigned max value for 32 bits (4294967295).\n\nHaven\u0027t tested it properly though, I\u0027ve run it on my phone, but then realized that the phone is 64bit...",
+      "parentUuid": "c54c4e4d_cf4ae807",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 23
+      },
+      "revId": "84ed42472779157039ad552506980e691acfae97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
