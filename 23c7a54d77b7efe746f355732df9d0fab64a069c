@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbbdb026_4196714d",
+        "filename": "ios/build/bots/chromium.fyi/EarlGreyiOS.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-11-14T22:55:46Z",
+      "side": 0,
+      "message": "BTW, I just realized, removing this file before https://crrev.com/c/769659 lands will cause the bot to go very red. But restarting the master before this CL lands will make the new bot red. Since it\u0027s FYI, it\u0027s probably OK (except possibly for some confused developers), but ideally we should add a new config, restart the master, then remove the old config in another CL, to avoid downtime.\n\nAgain, this time it\u0027s probably OK to do it all at once, because it\u0027s FYI.",
+      "revId": "23c7a54d77b7efe746f355732df9d0fab64a069c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
