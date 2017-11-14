@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "384cdf6a_b3d0d1bf",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-14T00:20:39Z",
+      "side": 1,
+      "message": "Can you change \"at the end of\" to \"on the OnActiveTabChanged() call in\"?  The comment is still there but it took me a bit to find it.",
+      "revId": "2951462c4210c7a535a3f2723718f04aa812266f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
