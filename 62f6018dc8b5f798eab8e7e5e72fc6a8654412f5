@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cfae1c20_8233b0a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:04:44Z",
+      "side": 1,
+      "message": "The second line seems redundant here? Was this from squashing changes?\n\nAs the additional information in the commit I\u0027d put something like below. The commit message is also important in the future for when people are trying to understand the history. In this case it\u0027s relevant to point out that this didn\u0027t change any code (so if I\u0027m trying to find the cause of a bug in the future I can deprioritize looking at this CL initially as a cause). Also including a class name in an easily read one line statement means that if I go grepping git history trying to understand the history of a class, I\u0027ll get a useful piece of information if I get a match.\n\n- Moves FakeRegistry to separate files.\n- Moves LoggingObserver to separate files.\n- Doesn\u0027t change any code in the moved classes.",
+      "revId": "62f6018dc8b5f798eab8e7e5e72fc6a8654412f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c6670c5_46cc9862",
         "filename": "chrome/browser/chromeos/file_system_provider/fake_registry.h",
         "patchSetId": 4
