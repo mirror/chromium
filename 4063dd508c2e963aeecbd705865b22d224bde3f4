@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8cffe98_d5ff0369",
+        "filename": "cc/test/test_context_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-14T18:51:37Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "6c0192cc_285366ff",
+      "revId": "4063dd508c2e963aeecbd705865b22d224bde3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92bf3dbe_dc1c615a",
         "filename": "cc/test/test_context_provider.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8dca117c_340f124a",
+        "filename": "cc/test/test_context_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-14T18:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92bf3dbe_dc1c615a",
+      "revId": "4063dd508c2e963aeecbd705865b22d224bde3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bea94de1_10ceeb04",
         "filename": "services/ui/public/cpp/gpu/context_provider_command_buffer.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-14T16:11:27Z",
       "side": 1,
       "message": "Can you leave a comment why this is here? (It\u0027s to avoid binding the thread checker right?) Or maybe it\u0027d be more foolproof to just detach it at the end?",
+      "revId": "4063dd508c2e963aeecbd705865b22d224bde3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2d428d_d1d38012",
+        "filename": "services/ui/public/cpp/gpu/context_provider_command_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-14T18:51:37Z",
+      "side": 1,
+      "message": "It\u0027s actually about the lock, added comment. The thread checker is bound, but nobody has acquired the lock. I don\u0027t think it makes much sense to acquire it here just to silence the assert, since we\u0027re still at initialization phase and there\u0027s no other concurrent user.",
+      "parentUuid": "bea94de1_10ceeb04",
       "revId": "4063dd508c2e963aeecbd705865b22d224bde3f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
