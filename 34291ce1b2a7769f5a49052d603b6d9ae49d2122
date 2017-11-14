@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "882c5b0f_62c0407a",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-14T16:27:36Z",
+      "side": 1,
+      "message": "Haha, okay, I\u0027m convinced this is definitely no worse in principle. (I can\u0027t rule out it breaking some extension somewhere, but I trust your judgment about that.)\n\nI think in my ideal world these would both be data properties that would always have the same initial value (as though they were created eagerly, even if we actually do it lazily). Implementing that might involve stashing references to them by the first one to create it somewhere (e.g. with a global reference or a private property), but I can live with this.",
+      "parentUuid": "f15b4a71_dc543a28",
+      "revId": "34291ce1b2a7769f5a49052d603b6d9ae49d2122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2936ab46_2d7b5f37",
         "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
         "patchSetId": 8
@@ -69,6 +87,24 @@
       "revId": "34291ce1b2a7769f5a49052d603b6d9ae49d2122",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a85054_764d9c47",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-14T16:27:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "07dfbe3d_3aa59e73",
+      "revId": "34291ce1b2a7769f5a49052d603b6d9ae49d2122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
