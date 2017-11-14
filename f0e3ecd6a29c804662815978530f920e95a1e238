@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbc3bf48_6d8469c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-14T23:13:23Z",
+      "side": 1,
+      "message": "Let\u0027s add \nmActivity !\u003d null \u0026\u0026\nhere, since that\u0027s done elsewhere in this file.",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 49
+      },
+      "revId": "f0e3ecd6a29c804662815978530f920e95a1e238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f5574e6_121121db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanelMetrics.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-14T23:13:23Z",
+      "side": 1,
+      "message": "Add @Nullable before Profile.",
+      "range": {
+        "startLine": 70,
+        "startChar": 80,
+        "endLine": 70,
+        "endChar": 87
+      },
+      "revId": "f0e3ecd6a29c804662815978530f920e95a1e238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
