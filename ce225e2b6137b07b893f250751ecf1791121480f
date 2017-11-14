@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d389f601_89d42e94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-14T20:05:26Z",
+      "side": 1,
+      "message": "I changed the units of these two metrics in histograms.xml from seconds to minutes, line 3423 and 3456. Since I think the old units is wrong. These two metrics use UMA_HISTOGRAM_CUSTOM_COUNTS and the minimum is 1 minutes and maximum is 1 week \u003d 10080 minutes. From the actual histogram I checked at https://uma.googleplex.com/p/chrome/histograms?endDate\u003d20171113\u0026dayCount\u003d7\u0026histograms\u003dAsh.TouchView.TouchViewActiveTotal\u0026fixupData\u003dtrue\u0026showMax\u003dtrue\u0026filters\u003dplatform%2Ceq%2CC%2Cchannel%2Ceq%2C4%2Cisofficial%2Ceq%2CTrue\u0026implicitFilters\u003disofficial\nI think the units should be minutes. Am I in the right understanding.",
+      "parentUuid": "df897723_f792d2a3",
+      "revId": "ce225e2b6137b07b893f250751ecf1791121480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "483a9b06_995f4a3d",
         "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-14T18:41:00Z",
       "side": 1,
       "message": "you can just use the display size to tell the orientation.",
+      "revId": "ce225e2b6137b07b893f250751ecf1791121480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaadb654_d184cedb",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-14T20:05:26Z",
+      "side": 1,
+      "message": "Do you mean that I can\u0027t use the GetCurrentOrientation() here? Should get the display size and compare the current width and height of the display to determine the orientation?",
+      "parentUuid": "483a9b06_995f4a3d",
       "revId": "ce225e2b6137b07b893f250751ecf1791121480f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
