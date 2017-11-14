@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b537a54d_dc5db99c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-14T04:20:42Z",
+      "side": 1,
+      "message": "if the main resource is http://www.google.com/ or http://www.google.com/hello/",
+      "parentUuid": "f25c8e18_0e275f83",
+      "revId": "2823ab71d9cbae060414e0deac9abeb027a4528a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e56bbcd3_208fa297",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-14T02:14:13Z",
       "side": 1,
       "message": "could it be that there are multiple UISourceCodes with urls equal up to hashes?",
+      "revId": "2823ab71d9cbae060414e0deac9abeb027a4528a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888ce9fa_9a6f7b08",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-14T04:20:42Z",
+      "side": 1,
+      "message": "yes, but if this becomes an issue we can address it later. I will bet that it\u0027s extremely rare for someone to get multiple resources with hashes, it wouldn\u0027t make any sense.",
+      "parentUuid": "e56bbcd3_208fa297",
       "revId": "2823ab71d9cbae060414e0deac9abeb027a4528a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
