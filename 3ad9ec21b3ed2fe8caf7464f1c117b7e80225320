@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fcdffe5_9b2f12d0",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-14T19:12:57Z",
+      "side": 1,
+      "message": "this is new to me. what\u0027s the difference between this and SetDeviceScaleFactor above? Looking at the code, this is only used to populate frame metadata? Does this always have to match renderer compositor frames?\n\nOn android, GetDipScale can actually change at run time (although not very frequently). If we do decide to use this here, should also add a TODO to listen to display density change events.",
+      "revId": "3ad9ec21b3ed2fe8caf7464f1c117b7e80225320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
