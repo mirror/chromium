@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "768cfb39_d8307431",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-14T18:22:50Z",
+      "side": 1,
+      "message": "nit: enum class?",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 4
+      },
+      "revId": "b81f365cae2529f5f426f1b62c2f6a446e32664d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941d93b4_71965219",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-14T18:22:50Z",
+      "side": 1,
+      "message": "nit: Please omit this case, so that the compiler can enforce that the switch stmt covers all possible cases.",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 19
+      },
+      "revId": "b81f365cae2529f5f426f1b62c2f6a446e32664d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f08e78_6958d1ef",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 32283,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-14T18:22:50Z",
+      "side": 1,
+      "message": "nit: The formatting seems off here.  We should have a presubmit warning in place for this – did you see one?  If not, I probably need to fix up the presubmit script.",
+      "range": {
+        "startLine": 32274,
+        "startChar": 0,
+        "endLine": 32283,
+        "endChar": 92
+      },
+      "revId": "b81f365cae2529f5f426f1b62c2f6a446e32664d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
