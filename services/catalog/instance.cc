@@ -27,7 +27,14 @@ void AddEntry(const Entry& entry, std::vector<mojom::EntryPtr>* ary) {
 Instance::Instance(EntryCache* system_cache,
                    ManifestProvider* service_manifest_provider)
     : system_cache_(system_cache),
-      service_manifest_provider_(service_manifest_provider) {}
+      service_manifest_provider_(service_manifest_provider) {
+  std::vector<std::string> names;
+  service_manifest_provider_->GetInitNames(&names);
+  for (const auto& name : names) {
+    LOG(WARNING) << "::::: SEEDING: " << name;
+    Resolve(name);
+  }
+}
 
 Instance::~Instance() {}
 
