@@ -99,6 +99,11 @@ class EventDispatcherDelegate {
   // value is used for coordinate conversion.
   virtual ServerWindow* GetRootWindowForEventDispatch(ServerWindow* window) = 0;
 
+  // Returns true if |window| is in a display root. This is invoked when the
+  // window moves from one root to another root (which may not be a display
+  // root).
+  virtual bool IsWindowInDisplayRoot(const ServerWindow* window) = 0;
+
   // Called when event dispatch could not find a target. OnAccelerator may still
   // be called.
   virtual void OnEventTargetNotFound(const ui::Event& event,
