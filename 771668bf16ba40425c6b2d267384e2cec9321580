@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "fa216651_5a1e9b2c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-14T23:10:55Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "25fbf385_075a4caf",
+      "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30ca8da1_61862104",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
         "patchSetId": 1
