@@ -737,6 +737,24 @@
     },
     {
       "key": {
+        "uuid": "6f98acd8_d2759b4a",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-14T09:34:57Z",
+      "side": 1,
+      "message": "In that case I agree with using \u0027strict mode\u0027.",
+      "parentUuid": "419a3268_952555d2",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f2065b0_38c40fd6",
         "filename": "content/browser/webauth/cbor/cbor_values.cc",
         "patchSetId": 1

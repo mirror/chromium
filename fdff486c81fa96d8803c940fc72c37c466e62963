@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "f3799f78_7570bb6d",
+        "filename": "content/browser/webauth/cbor/cbor_binary.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-14T09:34:57Z",
+      "side": 1,
+      "message": "Although note that the entire CBOR thing is in content/webauth/* :)",
+      "parentUuid": "ccfc5edf_e25bf009",
+      "revId": "fdff486c81fa96d8803c940fc72c37c466e62963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6165d19b_28db6387",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 3
