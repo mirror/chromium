@@ -254,17 +254,27 @@ bool IsValidStateForWindowsCreateFunction(
   return true;
 }
 
-bool HasLockedFullscreenPermissionIfNeeded(const Extension* extension,
-                                           windows::WindowState state) {
 #if defined(OS_CHROMEOS)
-  if (state == windows::WINDOW_STATE_LOCKED_FULLSCREEN &&
-      !extension->permissions_data()->HasAPIPermission(
-          APIPermission::kLockWindowFullscreenPrivate)) {
-    return false;
-  }
-#endif
-  return true;
+bool IsWindowTrustedPinned(ui::BaseWindow* base_window) {
+  aura::Window* window = base_window->GetNativeWindow();
+  ash::mojom::WindowPinType type = window->GetProperty(ash::kWindowPinTypeKey);
+  return type == ash::mojom::WindowPinType::TRUSTED_PINNED;
 }
+
+void SetWindowTrustedPinned(ui::BaseWindow* base_window, bool trusted_pinned) {
+  aura::Window* window = base_window->GetNativeWindow();
+  // TRUSTED_PINNED is used here because that one locks the window fullscreen
+  // without allowing the user to exit (as opposed to regular PINNED).
+  window->SetProperty(ash::kWindowPinTypeKey,
+                      trusted_pinned ? ash::mojom::WindowPinType::TRUSTED_PINNED
+                                     : ash::mojom::WindowPinType::NONE);
+}
+
+bool ExtensionHasLockedFullscreenPermission(const Extension* extension) {
+  return extension->permissions_data()->HasAPIPermission(
+      APIPermission::kLockWindowFullscreenPrivate);
+}
+#endif  // defined(OS_CHROMEOS)
 
 }  // namespace
 
@@ -580,11 +590,13 @@ ExtensionFunction::ResponseAction WindowsCreateFunction::Run() {
   }
   create_params.initial_show_state = ui::SHOW_STATE_NORMAL;
   if (create_data && create_data->state) {
-    if (!HasLockedFullscreenPermissionIfNeeded(extension(),
-                                               create_data->state)) {
+#if defined(OS_CHROMEOS)
+    if (create_data->state == windows::WINDOW_STATE_LOCKED_FULLSCREEN &&
+        !ExtensionHasLockedFullscreenPermission(extension())) {
       return RespondNow(
           Error(keys::kMissingLockWindowFullscreenPrivatePermission));
     }
+#endif
     create_params.initial_show_state =
         ConvertToWindowShowState(create_data->state);
   }
@@ -594,11 +606,7 @@ ExtensionFunction::ResponseAction WindowsCreateFunction::Run() {
 #if defined(OS_CHROMEOS)
   if (create_data &&
       create_data->state == windows::WINDOW_STATE_LOCKED_FULLSCREEN) {
-    aura::Window* window = new_window->window()->GetNativeWindow();
-    // TRUSTED_PINNED is used here because that one locks the window fullscreen
-    // without allowing the user to exit (as opposed to regular PINNED).
-    window->SetProperty(ash::kWindowPinTypeKey,
-                        ash::mojom::WindowPinType::TRUSTED_PINNED);
+    SetWindowTrustedPinned(new_window->window(), true);
   }
 #endif
 
@@ -677,11 +685,25 @@ ExtensionFunction::ResponseAction WindowsUpdateFunction::Run() {
   // state (crbug.com/703733).
   ReportRequestedWindowState(params->update_info.state);
 
-  if (!HasLockedFullscreenPermissionIfNeeded(extension(),
-                                             params->update_info.state)) {
+#if defined(OS_CHROMEOS)
+  // Don't allow locked fullscreen operations on a window without the proper
+  // permission.
+  if ((params->update_info.state == windows::WINDOW_STATE_LOCKED_FULLSCREEN ||
+       IsWindowTrustedPinned(controller->window())) &&
+      !ExtensionHasLockedFullscreenPermission(extension())) {
     return RespondNow(
         Error(keys::kMissingLockWindowFullscreenPrivatePermission));
   }
+  if (IsWindowTrustedPinned(controller->window()) &&
+      params->update_info.state != windows::WINDOW_STATE_LOCKED_FULLSCREEN &&
+      params->update_info.state != windows::WINDOW_STATE_NONE) {
+    SetWindowTrustedPinned(controller->window(), false);
+  } else if (!IsWindowTrustedPinned(controller->window()) &&
+             params->update_info.state ==
+                 windows::WINDOW_STATE_LOCKED_FULLSCREEN) {
+    SetWindowTrustedPinned(controller->window(), true);
+  }
+#endif
 
   ui::WindowShowState show_state =
       ConvertToWindowShowState(params->update_info.state);
@@ -701,15 +723,6 @@ ExtensionFunction::ResponseAction WindowsUpdateFunction::Run() {
       if (controller->window()->IsMinimized() ||
           controller->window()->IsMaximized())
         controller->window()->Restore();
-#if defined(OS_CHROMEOS)
-      if (params->update_info.state ==
-          windows::WINDOW_STATE_LOCKED_FULLSCREEN) {
-        aura::Window* window = controller->window()->GetNativeWindow();
-        window->SetProperty(ash::kWindowPinTypeKey,
-                            ash::mojom::WindowPinType::TRUSTED_PINNED);
-        break;
-      }
-#endif
       controller->SetFullscreenMode(true, extension()->url());
       break;
     case ui::SHOW_STATE_NORMAL:
@@ -792,11 +805,8 @@ ExtensionFunction::ResponseAction WindowsRemoveFunction::Run() {
   }
 
 #if defined(OS_CHROMEOS)
-  aura::Window* window = controller->window()->GetNativeWindow();
-  ash::mojom::WindowPinType type = window->GetProperty(ash::kWindowPinTypeKey);
-  if (type == ash::mojom::WindowPinType::TRUSTED_PINNED &&
-      !extension()->permissions_data()->HasAPIPermission(
-          APIPermission::kLockWindowFullscreenPrivate)) {
+  if (IsWindowTrustedPinned(controller->window()) &&
+      !ExtensionHasLockedFullscreenPermission(extension())) {
     return RespondNow(
         Error(keys::kMissingLockWindowFullscreenPrivatePermission));
   }
