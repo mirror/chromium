@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74fc880a_36541dba",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-11-14T21:54:21Z",
+      "side": 1,
+      "message": "It\u0027s odd to mark callback @NonNull, but then immediately check callback !\u003d null. What\u0027s your intention here?",
+      "revId": "0f8a76764659ea5e4a18e135528ff02ff78d666f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
