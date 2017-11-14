@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4957adf_dbebed43",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-14T14:26:50Z",
+      "side": 1,
+      "message": "Can you post task a callback which was reset?",
+      "revId": "b9a819137afeff1acccdb55def0598896a677116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0027434_12c0fdc1",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-14T14:26:50Z",
+      "side": 1,
+      "message": "Move this line closer to usage.",
+      "revId": "b9a819137afeff1acccdb55def0598896a677116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3237079c_a1ca46a9",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-14T14:26:50Z",
+      "side": 1,
+      "message": "Why not void* or even better FilterEntry* ?",
+      "range": {
+        "startLine": 185,
+        "startChar": 46,
+        "endLine": 185,
+        "endChar": 53
+      },
+      "revId": "b9a819137afeff1acccdb55def0598896a677116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad051c4_33f6e0fb",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-14T14:26:50Z",
+      "side": 1,
+      "message": "Can you just inline this?",
+      "revId": "b9a819137afeff1acccdb55def0598896a677116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
