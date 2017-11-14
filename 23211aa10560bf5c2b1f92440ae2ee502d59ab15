@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4f8d9873_8bf2d263",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1601fbef_57a74d83",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b0b9e71_ea3d8712",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 15
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6982a088_9200b249",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Got it, this was a bug. Changed to !IsMapLoaded() || IsMapUpgradeNeeded(). Adding a test here as well.",
+      "parentUuid": "7b0b9e71_ea3d8712",
+      "range": {
+        "startLine": 214,
+        "startChar": 7,
+        "endLine": 214,
+        "endChar": 18
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d6e485b_2eece725",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 15
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "c057a629_a90f2142",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d6e485b_2eece725",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "122ffc69_4a07167f",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 15
@@ -73,6 +133,24 @@
       "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f150a6b_5486b072",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "122ffc69_4a07167f",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "15458f16_fcb2cfcf",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "It might have changed due to my BindOnce change here.",
+      "parentUuid": "0799f095_e879b543",
+      "range": {
+        "startLine": 371,
+        "startChar": 22,
+        "endLine": 371,
+        "endChar": 23
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51ea11f5_aad2a61b",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 15
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "2fd1eb47_bed5b43b",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51ea11f5_aad2a61b",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bade1176_cc478005",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 15
@@ -130,6 +250,24 @@
       "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56bddad3_cf6cf934",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "map_state_ is set to MapState::LOADING_FROM_DATABASE right below - it is replacing load_state_.  I\u0027ll re-order this a little bit to make it make more sense.",
+      "parentUuid": "bade1176_cc478005",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "94751f61_6412a35e",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "I understand - I\u0027d rather have it all in one spot to prevent accidental bugs \u0026 keep the code a little more tidy.",
+      "parentUuid": "34ea04e9_864ed7f7",
+      "range": {
+        "startLine": 533,
+        "startChar": 2,
+        "endLine": 533,
+        "endChar": 31
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e4a8eb2_6f5255fa",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 15
@@ -179,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "f32f8e8c_b9fa96a6",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e4a8eb2_6f5255fa",
+      "range": {
+        "startLine": 744,
+        "startChar": 16,
+        "endLine": 744,
+        "endChar": 19
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "572ff981_8d96e3f5",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 15
@@ -190,6 +376,30 @@
       "writtenOn": "2017-11-10T00:42:34Z",
       "side": 1,
       "message": "Why don\u0027t we clear the keys-only map when desired_cache_mode is keys and values?\nThe memory usage of the map will be unnecessary",
+      "range": {
+        "startLine": 748,
+        "startChar": 6,
+        "endLine": 748,
+        "endChar": 52
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42898e3a_fd5f1a24",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "We clear it when we finish loading the keys-and-values map in the OnMapLoaded method.",
+      "parentUuid": "572ff981_8d96e3f5",
       "range": {
         "startLine": 748,
         "startChar": 6,
@@ -219,6 +429,24 @@
     },
     {
       "key": {
+        "uuid": "854bd889_9d8551cb",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "I\u0027m planning on giving all \u0027forking responsibility\u0027 to the parent, where new delegate hooks will be put in place for (probably)\n* post-fork changes in parent\n* post-fork changes in fork\n\nBut this will be a future patch. Main idea is that it will all be in one commit batch, so it has some level of atomic-ness.",
+      "parentUuid": "5711000d_848baf7d",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4e86479_ff10eb5d",
         "filename": "content/browser/leveldb_wrapper_impl.h",
         "patchSetId": 15
@@ -233,6 +461,24 @@
       "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d733f163_b1fef9fe",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4e86479_ff10eb5d",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -259,6 +505,30 @@
     },
     {
       "key": {
+        "uuid": "f48c0832_0ddb29f5",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d21894b_ccb60ae9",
+      "range": {
+        "startLine": 110,
+        "startChar": 48,
+        "endLine": 110,
+        "endChar": 50
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99a39c68_551efee8",
         "filename": "content/browser/leveldb_wrapper_impl.h",
         "patchSetId": 15
@@ -273,6 +543,24 @@
       "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53414718_0001477b",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99a39c68_551efee8",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -299,6 +587,30 @@
     },
     {
       "key": {
+        "uuid": "723b30b5_229ee36a",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95dcf34a_f6a0bce2",
+      "range": {
+        "startLine": 269,
+        "startChar": 7,
+        "endLine": 269,
+        "endChar": 17
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "120d262f_35a7d892",
         "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
         "patchSetId": 15
@@ -316,6 +628,24 @@
     },
     {
       "key": {
+        "uuid": "2131ea24_cf453ae6",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "120d262f_35a7d892",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6edf4076_261d1033",
         "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
         "patchSetId": 15
@@ -330,6 +660,24 @@
       "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8144ee61_5fcc6b2e",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6edf4076_261d1033",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -356,6 +704,30 @@
     },
     {
       "key": {
+        "uuid": "d703df48_12ab2f0d",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Thought it was better \u0026 more descriptive. changed back.",
+      "parentUuid": "9977c145_87f58145",
+      "range": {
+        "startLine": 107,
+        "startChar": 24,
+        "endLine": 107,
+        "endChar": 31
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b56baf5_421d1161",
         "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
         "patchSetId": 15
@@ -373,6 +745,24 @@
     },
     {
       "key": {
+        "uuid": "3eb33730_b5bc3d7f",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b56baf5_421d1161",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0858e8c2_bd8f0b6c",
         "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
         "patchSetId": 15
@@ -384,6 +774,24 @@
       "writtenOn": "2017-11-14T01:13:17Z",
       "side": 1,
       "message": "not sure I see the benefit of any of these async wrapping methods? All they do is hide the \"BindOnce\" call, but I\u0027m not sure if calling these many-argument methods (as opposed to having half the argument passed to BindOnce and half to the \"real\" methods) makes the tests any easier to read.",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd15d049_f4d6da46",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "It hides the conversion callback. I think it makes it easier.",
+      "parentUuid": "0858e8c2_bd8f0b6c",
       "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -413,6 +821,30 @@
     },
     {
       "key": {
+        "uuid": "9c793fc0_09151c21",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ef5418c_51ea1263",
+      "range": {
+        "startLine": 475,
+        "startChar": 40,
+        "endLine": 475,
+        "endChar": 54
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71e874fd_dd6b7d6c",
         "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
         "patchSetId": 15
@@ -430,6 +862,24 @@
     },
     {
       "key": {
+        "uuid": "37b6f571_02c5587d",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71e874fd_dd6b7d6c",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a12627f_f241fc39",
         "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
         "patchSetId": 15
@@ -441,6 +891,30 @@
       "writtenOn": "2017-11-14T01:13:17Z",
       "side": 1,
       "message": "Did anything actually change in this test? Or is this just code-churn/subjective reformatting? Since this is already such a big change it might be nice to not mix otherwise unrelated changes in the same CL, as now it becomes so much harder to separate out the mechanical changes from changes that are actually supposed to change behavior. (same comment also for some of the other tests/changes below).",
+      "range": {
+        "startLine": 553,
+        "startChar": 0,
+        "endLine": 560,
+        "endChar": 1
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141c6ca1_45cdca1f",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 1,
+      "message": "Hmm... ok I can split the renames into a different cl.",
+      "parentUuid": "0a12627f_f241fc39",
       "range": {
         "startLine": 553,
         "startChar": 0,

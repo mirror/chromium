@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0eddbd3_6d4cdaf8",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 0,
+      "message": "This function is gone, as the reload is dependent on which operation is calling. The class also doesn\u0027t use a desired load state idea, and instead has a desired cache mode.\n\nLet me know where you want me to put this DCHECK - it\u0027s meant to be impossible for the on_load_callbacks to be populated when the map is loaded. I can add more comments around this, and dchecks where it makes sense.",
+      "parentUuid": "69cc5f1e_25ebf61b",
+      "range": {
+        "startLine": 699,
+        "startChar": 42,
+        "endLine": 704,
+        "endChar": 70
+      },
+      "revId": "74759e42a0f78442c9ad8366d4e73dd46b40deee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1c909d1_66c036f4",
         "filename": "content/browser/leveldb_wrapper_impl.h",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "74759e42a0f78442c9ad8366d4e73dd46b40deee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce91128_7a90f7ae",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-14T22:23:42Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "b1c909d1_66c036f4",
+      "range": {
+        "startLine": 191,
+        "startChar": 33,
+        "endLine": 193,
+        "endChar": 38
+      },
+      "revId": "74759e42a0f78442c9ad8366d4e73dd46b40deee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
