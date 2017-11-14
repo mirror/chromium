@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "593d833c_334f3e61",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/elements-hide-html-comments.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-14T01:47:40Z",
+      "side": 1,
+      "message": "Leave a comment? \"// so \u003cbase\u003e doesn\u0027t get automatically inserted\"\nCould also just do an empty base tag without href.",
+      "revId": "4216ecfe690a70aa6a2fdfb0969929c12e163ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f70357b0_2a1c274d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/elements-panel-correct-case.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-14T01:47:40Z",
+      "side": 1,
+      "message": "Let\u0027s include the original two divs with original casing:\n```\n\u003cDIv\u003e\u003c/DIv\u003e\n\u003cDIV\u003e\u003c/DIV\u003e\n```",
+      "revId": "4216ecfe690a70aa6a2fdfb0969929c12e163ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c22970_2a49dbbf",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/elements-panel-structure.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-14T01:47:40Z",
+      "side": 1,
+      "message": "my script has trouble with escaping characters :/\n\nLet\u0027s copy-and-paste from original: \n```\n\u003cdiv id\u003d\"level2\"\u003e\"Quoted Text\". Special\u0026nbsp;characters: \u0026gt;\u0026lt;\u0026quot;\u0026apos;\u0026nbsp;\u0026ensp;\u0026emsp;\u0026thinsp;\u0026#8202;\u0026#8203;\u0026zwnj;\u0026zwj;\u0026lrm;\u0026rlm; \u0026#8234;\u0026#8235;\u0026#8236;\u0026#8237;\u0026#8238;\u0026shy;\u003cdiv id\u003d\"level3\"\u003e\u003c/div\u003e\n```",
+      "revId": "4216ecfe690a70aa6a2fdfb0969929c12e163ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380cc77f_1e9e217d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-14T01:47:40Z",
+      "side": 1,
+      "message": "yay! a real bug",
+      "revId": "4216ecfe690a70aa6a2fdfb0969929c12e163ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778f0a9f_eb4c2ff7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-14T01:47:40Z",
+      "side": 1,
+      "message": "thanks!",
+      "revId": "4216ecfe690a70aa6a2fdfb0969929c12e163ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af42f2c_3442d03f",
+        "filename": "third_party/WebKit/Source/devtools/scripts/migrate_test/migrate_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-14T01:47:40Z",
+      "side": 1,
+      "message": "nice.",
+      "revId": "4216ecfe690a70aa6a2fdfb0969929c12e163ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
