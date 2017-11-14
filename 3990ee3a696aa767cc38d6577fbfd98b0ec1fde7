@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "464dc7aa_63aefd57",
+        "filename": "ui/gl/gl_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T23:13:53Z",
+      "side": 1,
+      "message": "If an attacker manages to call SetGLGetProcAddressProc (instead of just poking a value into g_get_proc_address), it looks like they\u0027ll successfully overwrite it. For best security should this be locked down irrevocably after it\u0027s been set, or similar?",
+      "revId": "3990ee3a696aa767cc38d6577fbfd98b0ec1fde7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
