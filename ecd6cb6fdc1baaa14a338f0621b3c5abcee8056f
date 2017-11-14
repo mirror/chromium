@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cca00d9f_29b97397",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-14T16:48:44Z",
+      "side": 1,
+      "message": "\"Chrome%x\" -\u003e \"AXPlatformNodeAuraLinux%x\"",
+      "revId": "ecd6cb6fdc1baaa14a338f0621b3c5abcee8056f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4200af18_b543d48c",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-14T16:48:44Z",
+      "side": 1,
+      "message": "You can delete this comment now",
+      "revId": "ecd6cb6fdc1baaa14a338f0621b3c5abcee8056f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
