@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41ce8c3e_d895fae0",
+        "filename": "base/observer_list.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-14T14:12:55Z",
+      "side": 1,
+      "message": "Rename notify_depth_ to live_iterator_count_ or something along those lines.",
+      "revId": "466c5b35454765133a1a4002da520c8d69e34e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09824270_31b4f8e8",
+        "filename": "base/observer_list.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-14T14:12:55Z",
+      "side": 1,
+      "message": "Nit: might be slightly better to write\nusing std::swap;\nswap(...);\n\nIf the members ever change and have swap() overloads that need to be found via adl, this will Just Work.",
+      "revId": "466c5b35454765133a1a4002da520c8d69e34e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
