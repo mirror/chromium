@@ -93,6 +93,30 @@
       "revId": "3569ccf786592369aefc1efe73f66f1c5398f49d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a6ae090_fefc1c97",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-14T04:29:17Z",
+      "side": 1,
+      "message": "What I meant was \"Is it possible to make CallbackWrapper itself a movable object and omit a dynamic allocation here?\" That seems possible to me. (But I\u0027m no base::Callback expert so may be wrong.)",
+      "parentUuid": "e35b6df0_325eabc7",
+      "range": {
+        "startLine": 379,
+        "startChar": 18,
+        "endLine": 379,
+        "endChar": 47
+      },
+      "revId": "3569ccf786592369aefc1efe73f66f1c5398f49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
