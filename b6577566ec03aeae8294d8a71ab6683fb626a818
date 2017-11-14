@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0567a827_85cb99dd",
+        "filename": "content/browser/renderer_host/input/mouse_wheel_phase_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-11-14T20:01:08Z",
+      "side": 1,
+      "message": "In the beginning of the function I assign mouse_wheel_event to last_mouse_wheel_event_ but there I don\u0027t know if it has synthetic phase or not, I need to update the synthetic phase information for last_mouse_wheel_event_ because this is the event that is sent with phase ended after the timer expires.\nI changed the code to the assignment at the end of the function to avoid the update.",
+      "parentUuid": "64b67bc3_482d4cae",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "b6577566ec03aeae8294d8a71ab6683fb626a818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc3cef3b_223a5fd9",
         "filename": "ui/events/blink/blink_event_util.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "b6577566ec03aeae8294d8a71ab6683fb626a818",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abaf6dd5_f6254853",
+        "filename": "ui/events/blink/blink_event_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-11-14T20:01:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc3cef3b_223a5fd9",
+      "range": {
+        "startLine": 289,
+        "startChar": 7,
+        "endLine": 289,
+        "endChar": 32
+      },
+      "revId": "b6577566ec03aeae8294d8a71ab6683fb626a818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
