@@ -13,6 +13,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/scoped_observer.h"
 #include "base/values.h"
+#include "components/signin/core/browser/account_info.h"
 #include "components/sync/driver/sync_service_observer.h"
 #include "components/sync/engine/cycle/type_debug_info_observer.h"
 #include "components/sync/engine/events/protocol_event_observer.h"
@@ -20,6 +21,8 @@
 #include "components/sync/js/js_event_handler.h"
 #include "components/version_info/channel.h"
 #include "content/public/browser/web_ui_message_handler.h"
+#include "services/identity/public/cpp/account_state.h"
+#include "services/identity/public/interfaces/identity_manager.mojom.h"
 
 namespace browser_sync {
 class ProfileSyncService;
@@ -103,6 +106,7 @@ class SyncInternalsMessageHandler : public content::WebUIMessageHandler,
   using AboutSyncDataDelegate =
       base::RepeatingCallback<std::unique_ptr<base::DictionaryValue>(
           syncer::SyncService* service,
+          AccountInfo primary_account_info,
           version_info::Channel channel)>;
 
   // Constructor used for unit testing to override dependencies.
@@ -110,9 +114,20 @@ class SyncInternalsMessageHandler : public content::WebUIMessageHandler,
       AboutSyncDataDelegate about_sync_data_delegate);
 
  private:
-  // Fetches updated aboutInfo and sends it to the page in the form of an
-  // onAboutInfoUpdated event.
+  // Asynchronously fetches updated aboutInfo and sends it to the page in the
+  // form of an onAboutInfoUpdated event.
   void SendAboutInfo();
+
+  // Called in response to invoking IdentityManager::GetPrimaryAccountInfo().
+  void ReceivedPrimaryAccountInfo(
+      const base::Optional<AccountInfo>& account_info,
+      const identity::AccountState& account_state);
+
+  // Called when there is a connection error with the Identity Manager.
+  void OnIdentityManagerError();
+
+  // Completes the sending of updated aboutInfo.
+  void CompleteSendAboutInfo(const AccountInfo& account_info);
 
   // Gets the ProfileSyncService of the underlying original profile. May return
   // nullptr (e.g., if sync is disabled on the command line).
@@ -124,6 +139,11 @@ class SyncInternalsMessageHandler : public content::WebUIMessageHandler,
   // Unregisters for notifications from all notifications coming from the sync
   // machinery. Leaves notifications hooked into the UI alone.
   void UnregisterModelNotifications();
+
+  // Gets the Identity Manager, lazily binding it. Returns nullptr if there has
+  // been a connection error since initial binding (and does not attempt to
+  // reconnect in this case).
+  identity::mojom::IdentityManager* GetIdentityManager();
 
   base::WeakPtr<syncer::JsController> js_controller_;
 
@@ -140,6 +160,12 @@ class SyncInternalsMessageHandler : public content::WebUIMessageHandler,
 
   // An abstraction of who creates the about sync info value map.
   AboutSyncDataDelegate about_sync_data_delegate_;
+
+  // Whether this instance is waiting for the Identity Manager to send primary
+  // account information.
+  bool waiting_for_account_info_;
+
+  identity::mojom::IdentityManagerPtr identity_manager_;
 
   base::WeakPtrFactory<SyncInternalsMessageHandler> weak_ptr_factory_;
 

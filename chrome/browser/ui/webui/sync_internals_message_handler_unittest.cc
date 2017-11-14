@@ -126,6 +126,7 @@ class SyncInternalsMessageHandlerTest : public ::testing::Test {
 
   std::unique_ptr<DictionaryValue> ConstructAboutInformation(
       SyncService* service,
+      AccountInfo primary_account_info,
       version_info::Channel channel) {
     ++about_sync_data_delegate_call_count_;
     last_delegate_sync_service_ = service;
