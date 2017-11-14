@@ -66,6 +66,9 @@ class CheckClientDownloadRequest
   friend struct BrowserThread::DeleteOnThread<BrowserThread::UI>;
   friend class base::DeleteHelper<CheckClientDownloadRequest>;
 
+  using ArchivedBinaries =
+      google::protobuf::RepeatedPtrField<ClientDownloadRequest_ArchivedBinary>;
+
   ~CheckClientDownloadRequest() override;
   // Performs file feature extraction and SafeBrowsing ping for downloads that
   // don't match the URL whitelist.
@@ -75,6 +78,9 @@ class CheckClientDownloadRequest
   void ExtractFileFeatures(const base::FilePath& file_path);
   void StartExtractZipFeatures();
   void OnZipAnalysisFinished(const ArchiveAnalyzerResults& results);
+
+  static void CopyArchivedBinaries(const ArchivedBinaries& src_binaries,
+                                   ArchivedBinaries* dest_binaries);
 
 #if defined(OS_MACOSX)
   void StartExtractDmgFeatures();
@@ -123,8 +129,7 @@ class CheckClientDownloadRequest
 
   ClientDownloadRequest_SignatureInfo signature_info_;
   std::unique_ptr<ClientDownloadRequest_ImageHeaders> image_headers_;
-  google::protobuf::RepeatedPtrField<ClientDownloadRequest_ArchivedBinary>
-      archived_binary_;
+  ArchivedBinaries archived_binary_;
   CheckDownloadCallback callback_;
   // Will be NULL if the request has been canceled.
   DownloadProtectionService* service_;
