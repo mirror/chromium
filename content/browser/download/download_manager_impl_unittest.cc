@@ -169,6 +169,8 @@ class MockDownloadItemFactory
       const std::string& mime_type,
       std::unique_ptr<DownloadRequestHandleInterface> request_handle) override;
 
+  void SetHasObserverCalls(bool observer_calls);
+
  private:
   std::map<uint32_t, MockDownloadItemImpl*> items_;
   DownloadItemImplDelegate item_delegate_;
@@ -288,6 +290,10 @@ DownloadItemImpl* MockDownloadItemFactory::CreateSavePageItem(
   items_[download_id] = result;
 
   return result;
+}
+
+void MockDownloadItemFactory::SetHasObserverCalls(bool has_observer_calls) {
+  has_observer_calls_ = has_observer_calls;
 }
 
 class MockDownloadFileFactory
@@ -462,7 +468,9 @@ class DownloadManagerTest : public testing::Test {
     uint32_t id = next_download_id_;
     ++next_download_id_;
     info.request_handle.reset(new DownloadRequestHandle);
+
     download_manager_->CreateActiveItem(id, info);
+
     DCHECK(mock_download_item_factory_->GetItem(id));
     MockDownloadItemImpl& item(*mock_download_item_factory_->GetItem(id));
     // Satisfy expectation.  If the item is created in StartDownload(),
