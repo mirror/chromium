@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2f6427e7_1ae35a39",
+        "filename": "third_party/WebKit/Source/core/animation/css/CSSAnimations.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-14T19:01:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42582b51_491e40e8",
+      "range": {
+        "startLine": 249,
+        "startChar": 6,
+        "endLine": 251,
+        "endChar": 61
+      },
+      "revId": "e624ac04d86b87e8f78cbc415f570214f84e36a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7926d9ff_364eeff5",
         "filename": "third_party/WebKit/Source/core/svg/SVGStopElement.cpp",
         "patchSetId": 6
@@ -69,6 +93,30 @@
       "revId": "e624ac04d86b87e8f78cbc415f570214f84e36a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec22b41_e3802aad",
+        "filename": "third_party/WebKit/Source/core/svg/SVGStopElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-14T19:01:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7926d9ff_364eeff5",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 31
+      },
+      "revId": "e624ac04d86b87e8f78cbc415f570214f84e36a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "5d7172d7_50fe04c6",
+        "filename": "third_party/WebKit/Source/core/svg/SVGStopElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-14T19:01:11Z",
+      "side": 1,
+      "message": "I was getting ahead of myself: for mesh gradients, we can also skip meshRow \u0026 meshPatch layout objects, hence the walk.\n\nBut you\u0027re right, no need to add this prematurely -- done.",
+      "parentUuid": "24e42606_02c9b6b6",
+      "range": {
+        "startLine": 52,
+        "startChar": 59,
+        "endLine": 53,
+        "endChar": 56
+      },
+      "revId": "e624ac04d86b87e8f78cbc415f570214f84e36a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1244cb99_fa71230c",
         "filename": "third_party/WebKit/Source/core/svg/SVGStopElement.cpp",
         "patchSetId": 6
@@ -115,6 +187,30 @@
       "revId": "e624ac04d86b87e8f78cbc415f570214f84e36a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccdd9472_d456d9a5",
+        "filename": "third_party/WebKit/Source/core/svg/SVGStopElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-11-14T19:01:11Z",
+      "side": 1,
+      "message": "Seems to pass the tests, so probably correct :)\n\nUpdated.",
+      "parentUuid": "1244cb99_fa71230c",
+      "range": {
+        "startLine": 59,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 24
+      },
+      "revId": "e624ac04d86b87e8f78cbc415f570214f84e36a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
