@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3cb0e1a_ef80ad53",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/change-clip-composited-layer.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-14T03:48:57Z",
+      "side": 1,
+      "message": "Please also create a reference html for this test.",
+      "revId": "6ef36c35254b6e2138f73fc286356a56fc685f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
