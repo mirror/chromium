@@ -738,9 +738,10 @@ static NSString* kHtmlWithMultiplePasswordForms =
      "<input id=\"un6'\" type='text' name=\"u6'\">"
      "<input id=\"pw6'\" type='password' name=\"p6'\">"
      "</form>"
-     "<iframe name='pf'></iframe>"
-     "<script>"
-     "  var doc = frames['pf'].document.open();"
+     "<iframe name='pf'></iframe>";
+
+static NSString* kHtmlWithMultiplePasswordFormsInitScript =
+    @"  var doc = frames['pf'].document.open();"
      // Add a form inside iframe. It should also be matched and autofilled.
      "  doc.write('<form><input id=\\'un7\\' type=\\'text\\' name=\\'u4\\'>');"
      "  doc.write('<input id=\\'pw7\\' type=\\'password\\' name=\\'p4\\'>');"
@@ -749,8 +750,7 @@ static NSString* kHtmlWithMultiplePasswordForms =
      "  doc.write('<form><input id=\\'un8\\' type=\\'text\\' name=\\'u4\\'>');"
      "  doc.write('<input id=\\'pw8\\' type=\\'text\\' name=\\'p4\\'>');"
      "  doc.write('</form>');"
-     "  doc.close();"
-     "</script>";
+     "  doc.close();";
 
 // A script that resets all text fields, including those in iframes.
 static NSString* kClearInputFieldsScript =
@@ -800,6 +800,7 @@ struct FillPasswordFormTestData {
 // Tests that filling password forms works correctly.
 TEST_F(PasswordControllerTest, FillPasswordForm) {
   LoadHtml(kHtmlWithMultiplePasswordForms);
+  ExecuteJavaScript(kHtmlWithMultiplePasswordFormsInitScript);
 
   const std::string base_url = BaseUrl();
   // clang-format off
