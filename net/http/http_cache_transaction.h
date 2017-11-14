@@ -190,6 +190,11 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   // entry has finished writing.
   void WriteModeTransactionAboutToBecomeReader();
 
+  // Returns true if this transaction can join other transactions for writing to
+  // the cache simultaneously. It is only supported for GET requests and
+  // non-range requests.
+  bool CanJoinExistingWriters();
+
  private:
   static const size_t kNumValidationHeaders = 2;
   // Helper struct to pair a header name with its value, for
