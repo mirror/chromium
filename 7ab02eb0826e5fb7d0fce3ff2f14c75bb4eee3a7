@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8511e3bc_ef154483",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3591,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-14T04:49:01Z",
+      "side": 1,
+      "message": "I\u0027m always curious about how much of it to hide behind a flag. Seems like constants are OK to not guard?",
+      "parentUuid": "824d24d7_042a38ed",
+      "revId": "7ab02eb0826e5fb7d0fce3ff2f14c75bb4eee3a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d753aca_7f7a15e8",
         "filename": "content/renderer/media_recorder/vpx_encoder.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-14T01:30:42Z",
       "side": 1,
       "message": "Why? This is the encoder, not decoder?",
+      "revId": "7ab02eb0826e5fb7d0fce3ff2f14c75bb4eee3a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe7e8f1_a2e3a34c",
+        "filename": "content/renderer/media_recorder/vpx_encoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-14T04:49:01Z",
+      "side": 1,
+      "message": "just a quick test that it compiles",
+      "parentUuid": "1d753aca_7f7a15e8",
       "revId": "7ab02eb0826e5fb7d0fce3ff2f14c75bb4eee3a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ccdd4d7a_d1987fd6",
+        "filename": "content/renderer/media_recorder/vpx_encoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-14T04:49:01Z",
+      "side": 1,
+      "message": "testing to see if the flag worked. moved it to .cc and didn\u0027t clean this up",
+      "parentUuid": "7122373b_75e41f1e",
+      "revId": "7ab02eb0826e5fb7d0fce3ff2f14c75bb4eee3a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c93d653c_478fdea5",
         "filename": "media/base/media_switches.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "baba862a_2281b877",
+        "filename": "media/base/media_switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-14T04:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c93d653c_478fdea5",
+      "revId": "7ab02eb0826e5fb7d0fce3ff2f14c75bb4eee3a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbc8c06e_7f130d81",
         "filename": "media/base/media_switches.h",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "7ab02eb0826e5fb7d0fce3ff2f14c75bb4eee3a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f1dcef_bcb5950c",
+        "filename": "media/base/media_switches.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-14T04:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbc8c06e_7f130d81",
+      "revId": "7ab02eb0826e5fb7d0fce3ff2f14c75bb4eee3a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
