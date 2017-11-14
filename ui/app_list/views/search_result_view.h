@@ -27,7 +27,7 @@ namespace views {
 class ImageView;
 class MenuRunner;
 class ProgressBar;
-}
+}  // namespace views
 
 namespace app_list {
 namespace test {
@@ -132,8 +132,6 @@ class APP_LIST_EXPORT SearchResultView
 
   // Whether this view is selected.
   bool selected_ = false;
-
-  const bool is_fullscreen_app_list_enabled_;
 
   // Whether the app list focus is enabled.
   const bool is_app_list_focus_enabled_;

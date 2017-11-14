@@ -21,7 +21,7 @@ class ImageSkia;
 namespace views {
 class ImageView;
 class Label;
-}
+}  // namespace views
 
 namespace app_list {
 
@@ -101,8 +101,6 @@ class APP_LIST_EXPORT TileItemView : public views::Button,
   // TODO(warx): It is not needed once TileItemView class is merged to
   // SearchResultTileItemVIew.
   bool is_recommendation_ = false;
-
-  const bool is_fullscreen_app_list_enabled_;
 
   DISALLOW_COPY_AND_ASSIGN(TileItemView);
 };
