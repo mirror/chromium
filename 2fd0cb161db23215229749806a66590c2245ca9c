@@ -188,6 +188,30 @@
       "revId": "2fd0cb161db23215229749806a66590c2245ca9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9feef174_30371978",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-14T21:32:31Z",
+      "side": 1,
+      "message": "We can use the iron-a11y-announcer to surface this for a11y. See example:\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings_main/settings_main.js?rcl\u003dc3c48528bba261dddc1550c3f8c6d3ffa0f4ff5e\u0026l\u003d282\n\nWe may also want to announce when the items are fully loaded so people on screen readers aren\u0027t waiting indefinitely.",
+      "parentUuid": "bac217f9_e616826f",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "2fd0cb161db23215229749806a66590c2245ca9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
