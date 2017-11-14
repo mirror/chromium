@@ -660,6 +660,8 @@ bool ArgumentSpec::ParseArgumentToAny(v8::Local<v8::Context> context,
     std::unique_ptr<content::V8ValueConverter> converter =
         content::V8ValueConverter::Create();
     converter->SetStripNullFromObjects(!preserve_null_);
+    converter->SetFunctionAllowed(true);
+    converter->SetConvertNegativeZeroToInt(true);
     std::unique_ptr<base::Value> converted =
         converter->FromV8Value(value, context);
     if (!converted) {
