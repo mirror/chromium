@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "ui/aura/client/drag_drop_delegate.h"
+#include "ui/aura/client/focus_change_observer.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/compositor/compositor_vsync_manager.h"
 
@@ -20,7 +21,6 @@ namespace aura {
 class Window;
 namespace client {
 class CursorClientObserver;
-class FocusChangeObserver;
 }  // namespace client
 }  // namespace aura
 
@@ -46,7 +46,8 @@ class ActivationChangeObserver;
 namespace exo {
 
 // A helper class for accessing WindowManager related features.
-class WMHelper : public aura::client::DragDropDelegate {
+class WMHelper : public aura::client::DragDropDelegate,
+                 public aura::client::FocusChangeObserver {
  public:
   class DragDropObserver {
    public:
@@ -68,6 +69,8 @@ class WMHelper : public aura::client::DragDropDelegate {
 
   void AddActivationObserver(wm::ActivationChangeObserver* observer);
   void RemoveActivationObserver(wm::ActivationChangeObserver* observer);
+  void AddPreFocusObserver(aura::client::FocusChangeObserver* observer);
+  void RemovePreFocusObserver(aura::client::FocusChangeObserver* observer);
   void AddFocusObserver(aura::client::FocusChangeObserver* observer);
   void RemoveFocusObserver(aura::client::FocusChangeObserver* observer);
   void AddCursorObserver(aura::client::CursorClientObserver* observer);
@@ -109,8 +112,15 @@ class WMHelper : public aura::client::DragDropDelegate {
   void OnDragExited() override;
   int OnPerformDrop(const ui::DropTargetEvent& event) override;
 
+  // Overridden from aura::client::FocusChangeObserver:
+  void OnWindowFocused(aura::Window* gained_focus,
+                       aura::Window* lost_focus) override;
+
  private:
   base::ObserverList<DragDropObserver> drag_drop_observers_;
+  base::ObserverList<aura::client::FocusChangeObserver>
+      pre_focus_change_observers_;
+  base::ObserverList<aura::client::FocusChangeObserver> focus_change_observers_;
 
   // The most recently cached VSync parameters, sent to observers on addition.
   base::TimeTicks vsync_timebase_;
