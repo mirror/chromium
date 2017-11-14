@@ -4,6 +4,7 @@
 
 #include "services/shape_detection/face_detection_impl_win.h"
 
+#include "base/test/scoped_task_environment.h"
 #include "base/win/scoped_com_initializer.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -19,10 +20,8 @@ class FaceDetectionImplWinTest : public testing::Test {
 
  private:
   std::unique_ptr<base::win::ScopedCOMInitializer> scoped_com_initializer_;
-};
 
-TEST_F(FaceDetectionImplWinTest, CreateAndDestroy) {
-  auto impl = FaceDetectionImplWin::Create();
-}
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
+};
 
 }  // namespace shape_detection
