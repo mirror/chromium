@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82d0b81b_56ebda7b",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-14T22:37:06Z",
+      "side": 1,
+      "message": "We could still use GetSupportedDecodeSize here, since it would return the first larger size that it can decode to. This doesn\u0027t have to be the full size. I\u0027m not sure if you intentionally don\u0027t want this?",
+      "revId": "f0dac78a0a07bada08049fad12acb6479db13762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc24205b_0b244c1c",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-14T22:37:06Z",
+      "side": 1,
+      "message": "As far as I remember, the decode function would do a color conversion as well. Is that not something we want to do here?",
+      "revId": "f0dac78a0a07bada08049fad12acb6479db13762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
