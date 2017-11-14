@@ -16,6 +16,24 @@
       "revId": "4bc69972c0c630bc9b9461bfd39e7ca41e48ced6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885eed4e_752826a4",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 6966,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-14T18:40:26Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. Historically media/ code uses a lot of callbacks, and I agree for a lot of cases, we should have a delegate/client interface. In this case it\u0027s only two callbacks, and I am not sure whether it\u0027s worth it.",
+      "parentUuid": "5b6b3121_5b7eabda",
+      "revId": "4bc69972c0c630bc9b9461bfd39e7ca41e48ced6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
