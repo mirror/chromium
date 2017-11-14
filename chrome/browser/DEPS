@@ -149,6 +149,7 @@ include_rules = [
 
   # Allow mojo generated files in WebKit. These files use STL types and
   # don't use WTF types.
+  "+third_party/WebKit/common/page_visibility_state.mojom.h",
   "+third_party/WebKit/public/platform/web_feature.mojom.h",
   "+third_party/WebKit/public/platform/media_engagement.mojom.h",
   "+third_party/WebKit/public/platform/modules/app_banner/app_banner.mojom.h",

@@ -55,6 +55,9 @@ include_rules = [
   "+storage/common",
   "+third_party/metrics_proto",
   "-components/spellcheck/browser",  # Allow all spellcheck but browser.
+
+  # Allow mojo generated files in WebKit.
+  "+third_party/WebKit/common/page_visibility_state.mojom.h",
 ]
 
 specific_include_rules = {

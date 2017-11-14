@@ -20,5 +20,8 @@ include_rules = [
   "+storage/common/fileapi",
 
   "+services/service_manager/public/cpp",
+
+  # Allow mojo generated files in WebKit.
+  "+third_party/WebKit/common/page_visibility_state.mojom.h",
 ]
 
