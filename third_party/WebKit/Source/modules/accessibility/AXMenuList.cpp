@@ -142,6 +142,9 @@ void AXMenuList::DidHidePopup() {
   AXMenuListPopup* popup = ToAXMenuListPopup(Children()[0].Get());
   popup->DidHide();
 
+  if (Children().size() != 1)
+    return;
+
   if (GetNode() && GetNode()->IsFocused())
     AxObjectCache().PostNotification(
         this, AXObjectCacheImpl::kAXFocusedUIElementChanged);
