@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32180043_b3abd76c",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-14T12:25:23Z",
+      "side": 1,
+      "message": "Nit: line-...",
+      "range": {
+        "startLine": 719,
+        "startChar": 53,
+        "endLine": 719,
+        "endChar": 64
+      },
+      "revId": "d5699ddc29350be7d55c3bf95486b7c0ffd27f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b98424_b7a5a4bd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutVTTCue.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-14T12:25:23Z",
+      "side": 1,
+      "message": "Nit: It\u0027d be great if you could drop this comment entirely, because it no longer applies. (Scoring was removed.)",
+      "range": {
+        "startLine": 239,
+        "startChar": 7,
+        "endLine": 241,
+        "endChar": 11
+      },
+      "revId": "d5699ddc29350be7d55c3bf95486b7c0ffd27f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04bb9e57_446f1304",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutVTTCue.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-14T12:25:23Z",
+      "side": 1,
+      "message": "Nit: bounding_box",
+      "range": {
+        "startLine": 294,
+        "startChar": 15,
+        "endLine": 294,
+        "endChar": 26
+      },
+      "revId": "d5699ddc29350be7d55c3bf95486b7c0ffd27f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
