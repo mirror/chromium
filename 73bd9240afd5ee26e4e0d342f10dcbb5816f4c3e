@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dbf3c1b_94ec6c81",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:11:32Z",
+      "side": 1,
+      "message": "common in already included in line 148.",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "214265c8_5c6c6927",
+        "filename": "chrome/renderer/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:11:32Z",
+      "side": 1,
+      "message": "Would move to +third_party above and remove the comment.",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b24ba4_7f05e546",
+        "filename": "components/plugins/renderer/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:11:32Z",
+      "side": 1,
+      "message": "Don\u0027t think you need this comment.",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1d3809_544fe518",
+        "filename": "components/plugins/renderer/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:11:32Z",
+      "side": 1,
+      "message": "Would move to +third_party/WebKit above",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148578a5_c7376390",
+        "filename": "content/browser/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:11:32Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this because of line 123 already includes common/.",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df4db77_7d53410b",
+        "filename": "content/browser/loader/async_resource_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:11:32Z",
+      "side": 1,
+      "message": "ditto about aligning with the previous line unless git-cl format wants this",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aedcbc9_94e3687d",
+        "filename": "content/browser/loader/resource_request_info_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:11:32Z",
+      "side": 1,
+      "message": "did git-cl format do this? Seems should be aligned with the previous line as the original code has",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "661fa8fd_a7c3245e",
+        "filename": "content/common/service_worker/service_worker_client_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:11:32Z",
+      "side": 1,
+      "message": "This seems kind of weird by the way...... kLast is still a valid value that happens to be the last in the enum. It\u0027d be the same to just choose the first value as the default. Anyway I guess we can keep it as the original code is doing this.",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "750d0b5f_5a95796f",
+        "filename": "extensions/renderer/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:11:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure this comment is useful, and the rule should probably move to line 14?",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831186f5_5c523b2b",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3871,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:11:32Z",
+      "side": 1,
+      "message": "This DCHECK looks redundant... these are all the values in the enum.",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ed4b00_0bf19dcc",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3875,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:11:32Z",
+      "side": 1,
+      "message": "Don\u0027t need any of these static_casts?",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55039c9_03733072",
+        "filename": "third_party/WebKit/common/page_visibility_state.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:11:32Z",
+      "side": 1,
+      "message": "Would be nice to have some sort of documentation here. Maybe say these are the types for Document#visibilityState and (ServiceWorker)WindowClient#visibilityState?",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
