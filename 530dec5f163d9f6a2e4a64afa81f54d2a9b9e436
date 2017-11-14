@@ -16,6 +16,24 @@
       "revId": "530dec5f163d9f6a2e4a64afa81f54d2a9b9e436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "056f3318_5425c224",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-14T10:22:10Z",
+      "side": 1,
+      "message": "They probably weren\u0027t written at the same time? Either way, buffer overflows should be much less common due to the overflow handling, so I guess it kinda makes sense that the log cap is lower.",
+      "parentUuid": "9376adcf_6796a304",
+      "revId": "530dec5f163d9f6a2e4a64afa81f54d2a9b9e436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
