@@ -16,6 +16,24 @@
       "revId": "17e6370054b08aa8710091dbd5144e179d6376cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5dbd0a9_6847fc56",
+        "filename": "testing/android/native_test/java/src/org/chromium/native_test/NativeUnitTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-14T18:34:00Z",
+      "side": 1,
+      "message": "That didn\u0027t work when I tried it -- see this tryjob run on K devices with patchset 1, which did not use reflection.\nhttps://build.chromium.org/p/tryserver.chromium.android/builders/linux_android_rel_ng/builds/426754\n\nI was able to reproduce the same result locally on a K device.",
+      "parentUuid": "6c8248b4_3a48d490",
+      "revId": "17e6370054b08aa8710091dbd5144e179d6376cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
