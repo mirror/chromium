@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1cc8938_88f6eed4",
+        "filename": "third_party/WebKit/Source/core/animation/css/CSSAnimations.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-14T16:57:04Z",
+      "side": 1,
+      "message": "This sequence should be pretty much equivalent to Node::GetComputedStyle() I think. (Makes it a bit more manageable if so.)",
+      "range": {
+        "startLine": 249,
+        "startChar": 6,
+        "endLine": 251,
+        "endChar": 61
+      },
+      "revId": "e624ac04d86b87e8f78cbc415f570214f84e36a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7926d9ff_364eeff5",
+        "filename": "third_party/WebKit/Source/core/svg/SVGStopElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-14T16:57:04Z",
+      "side": 1,
+      "message": "SVGElement does this already, so just DCHECKing should be enough here I think?",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 31
+      },
+      "revId": "e624ac04d86b87e8f78cbc415f570214f84e36a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e42606_02c9b6b6",
+        "filename": "third_party/WebKit/Source/core/svg/SVGStopElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-14T16:57:04Z",
+      "side": 1,
+      "message": "Should be no need to walk the ancestor chain - either it\u0027s the direct ancestor or the \u003cstop\u003e is not part of a gradient.",
+      "range": {
+        "startLine": 52,
+        "startChar": 59,
+        "endLine": 53,
+        "endChar": 56
+      },
+      "revId": "e624ac04d86b87e8f78cbc415f570214f84e36a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1244cb99_fa71230c",
+        "filename": "third_party/WebKit/Source/core/svg/SVGStopElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-14T16:57:04Z",
+      "side": 1,
+      "message": "I think the first line should be enough - a gradient does not contribute to its ancestors in any interesting way.",
+      "range": {
+        "startLine": 59,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 24
+      },
+      "revId": "e624ac04d86b87e8f78cbc415f570214f84e36a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
