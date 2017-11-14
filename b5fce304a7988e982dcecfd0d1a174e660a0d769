@@ -22,6 +22,30 @@
       "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d890bc30_2e4dd891",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-14T15:43:53Z",
+      "side": 1,
+      "message": "This will reset state that the GrContext changed, not that other things changed. GLHelper doesn\u0027t have such a method, and it doesn\u0027t use GrContext, so this looks like a no-op roughly.\n\nSome choices are..\n1. When returning from this, canvas code can\u0027t assume any state and must reset anything it expects?\n2. Write the code here explicitly instead of GLHelper, then we can see what changed and reset it?\n3. Add some sort of Reset method to ReadbackYUVInterface?\n\nWhat would #1 look like?",
+      "parentUuid": "81d4f999_ad6c3d9d",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 51
+      },
+      "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
