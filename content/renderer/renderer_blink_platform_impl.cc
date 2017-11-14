@@ -33,7 +33,6 @@
 #include "content/common/gpu_stream_constants.h"
 #include "content/common/origin_trials/trial_policy_impl.h"
 #include "content/common/render_message_filter.mojom.h"
-#include "content/common/render_process_messages.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/service_manager_connection.h"
@@ -624,8 +623,8 @@ bool RendererBlinkPlatformImpl::SandboxSupport::LoadFont(NSFont* src_font,
   uint32_t font_data_size;
   FontDescriptor src_font_descriptor(src_font);
   base::SharedMemoryHandle font_data;
-  if (!RenderThread::Get()->Send(new RenderProcessHostMsg_LoadFont(
-        src_font_descriptor, &font_data_size, &font_data, font_id))) {
+  if (!RenderThreadImpl::current()->render_message_filter()->LoadFont(
+          src_font_descriptor, &font_data_size, &font_data, font_id)) {
     *out = NULL;
     *font_id = 0;
     return false;

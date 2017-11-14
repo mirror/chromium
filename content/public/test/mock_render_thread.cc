@@ -77,6 +77,14 @@ class MockRenderMessageFilterImpl : public mojom::RenderMessageFilter {
     NOTREACHED();
   }
 
+  void LoadFont(mojom::FontDescriptorPtr font_to_load,
+                uint32_t buffer_size,
+                mojo::ScopedSharedBufferHandle font_data,
+                uint32_t font_id,
+                LoadFontCallback callback) override {
+    NOTREACHED();
+  }
+
  private:
   MockRenderThread* const thread_;
 };
