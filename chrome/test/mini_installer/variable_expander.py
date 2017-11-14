@@ -7,6 +7,7 @@ import hashlib
 import os
 import string
 import win32api
+import win32file
 import win32com.client
 from win32com.shell import shell, shellcon
 import win32security
@@ -17,6 +18,9 @@ def _GetFileVersion(file_path):
   return win32com.client.Dispatch('Scripting.FileSystemObject').GetFileVersion(
       file_path)
 
+def _GetBinaryType(file_path):
+  """Returns the binary type (including bitness) of the given file."""
+  return win32file.GetBinaryType(file_path)
 
 def _GetProductName(file_path):
   """Returns the product name of the given file.
@@ -90,6 +94,7 @@ class VariableExpander:
         * $LOCAL_APPDATA: the unquoted path to the Local Application Data
             folder.
         * $MINI_INSTALLER: the unquoted path to the mini_installer.
+        * $MINI_INSTALLER_BITNESS: the bitness of the mini_installer.
         * $MINI_INSTALLER_FILE_VERSION: the file version of $MINI_INSTALLER.
         * $NEXT_VERSION_MINI_INSTALLER: the unquoted path to a mini_installer
             whose version is higher than $MINI_INSTALLER.
@@ -132,6 +137,15 @@ class VariableExpander:
         'VERSION_XP': '(5, 1)',
         'WINDOWS_VERSION': '(%s, %s)' % (windows_major_ver, windows_minor_ver)
     }
+
+    if _GetBinaryType(mini_installer_abspath) == win32file.SCS_32BIT_BINARY:
+      self._variable_mapping.update({
+          'MINI_INSTALLER_BITNESS': '32'
+      })
+    else:
+      self._variable_mapping.update({
+          'MINI_INSTALLER_BITNESS': '64'
+      })
 
     mini_installer_product_name = _GetProductName(mini_installer_abspath)
     if mini_installer_product_name == 'Google Chrome Installer':

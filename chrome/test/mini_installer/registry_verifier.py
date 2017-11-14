@@ -22,6 +22,16 @@ class RegistryVerifier(verifier.Verifier):
       raise KeyError("Unknown root registry key '%s'" % root_key)
     return root_key_mapping[root_key]
 
+  def _RegistryViewConstant(self, registry_view):
+    """Converts a registry view string into a _winreg.KEY_WOW64* constant."""
+    registry_view_mapping = {
+        'KEY_WOW64_32KEY': _winreg.KEY_WOW64_32KEY,
+        'KEY_WOW64_64KEY': _winreg.KEY_WOW64_64KEY,
+    }
+    if registry_view not in registry_view_mapping:
+      raise KeyError("Unknown registry view '%s'" % registry_view)
+    return registry_view_mapping[registry_view]
+
   def _ValueTypeConstant(self, value_type):
     """Converts a registry value type string into a _winreg.REG_* constant."""
     value_type_mapping = {
@@ -60,6 +70,10 @@ class RegistryVerifier(verifier.Verifier):
                       to be absent in the registry.
                   'data' the associated data of the registry value if 'type' is
                       specified. If it is a string, it is expanded using Expand.
+          'wow_key' (optional) a string indicating whether the view of the
+              registry is KEY_WOW64_32KEY or KEY_WOW64_64KEY. If not present,
+              the view of registry is determined by the bitness of the installer
+              binary.
       variable_expander: A VariableExpander object.
     """
     key = variable_expander.Expand(expectation_name)
@@ -67,8 +81,14 @@ class RegistryVerifier(verifier.Verifier):
     try:
       # Query the Windows registry for the registry key. It will throw a
       # WindowsError if the key doesn't exist.
+      registry_view = _winreg.KEY_WOW64_32KEY
+      if 'wow_key' in expectation:
+        registry_view = self._RegistryViewConstant(expectation['wow_key'])
+      elif variable_expander.Expand('$MINI_INSTALLER_BITNESS') == '64':
+        registry_view = _winreg.KEY_WOW64_64KEY
+
       key_handle = _winreg.OpenKey(self._RootKeyConstant(root_key), sub_key, 0,
-                                   _winreg.KEY_QUERY_VALUE)
+                                   _winreg.KEY_QUERY_VALUE | registry_view)
     except WindowsError:
       # Key doesn't exist. See that it matches the expectation.
       assert expectation['exists'] != 'required', ('Registry key %s is '
