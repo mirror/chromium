@@ -94,6 +94,30 @@
       "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d1b47f_576a21e7",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-14T23:08:02Z",
+      "side": 1,
+      "message": "\u003e This will reset state that the GrContext changed\n\nThat is not what resetContext does.  The way it works is that GrContext maintains a cache of what it knows the current state of the GL context is.  This allows skia to optimize-out unnecessary state changing calls to the GL interface.  However, when the GL context is used directly, without going through skia, the state cached inside of GrContext falls out of sync.  GrContext::resetContext is used to tell skia that its cache is no longer valid, which is exectly what you need to do in this situation. Also, in order to help performance, you should avoid calling resetContext with no arguments.  You should pass it a bit mask that identifies exactly whick parts of the GL state were altered without going through skia. In this case, I think all you need is resetContext(kTextureBinding_GrGLBackendState)",
+      "parentUuid": "5db06cfd_42067871",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 51
+      },
+      "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
