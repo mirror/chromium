@@ -732,7 +732,8 @@ PDFiumEngine::PDFiumEngine(PDFEngine::Client* client)
       most_visible_page_(-1),
       called_do_document_action_(false),
       render_grayscale_(false),
-      render_annots_(true) {
+      render_annots_(true),
+      edit_mode_(false) {
   find_factory_.Initialize(this);
   password_factory_.Initialize(this);
 
@@ -3920,6 +3921,13 @@ void PDFiumEngine::SetSelecting(bool selecting) {
     client_->IsSelectingChanged(selecting);
 }
 
+void PDFiumEngine::SetEditMode(bool edit_mode) {
+  if (edit_mode_ != edit_mode) {
+    edit_mode_ = edit_mode;
+    client_->IsEditModeChanged(edit_mode_);
+  }
+}
+
 void PDFiumEngine::SetInFormTextArea(bool in_form_text_area) {
   // If focus was previously in form text area, clear form text selection.
   // Clearing needs to be done before changing focus to ensure the correct
@@ -4049,7 +4057,8 @@ FPDF_SYSTEMTIME PDFiumEngine::Form_GetLocalTime(FPDF_FORMFILLINFO* param) {
 }
 
 void PDFiumEngine::Form_OnChange(FPDF_FORMFILLINFO* param) {
-  // Don't care about.
+  PDFiumEngine* engine = static_cast<PDFiumEngine*>(param);
+  engine->SetEditMode(true);
 }
 
 FPDF_PAGE PDFiumEngine::Form_GetPage(FPDF_FORMFILLINFO* param,
