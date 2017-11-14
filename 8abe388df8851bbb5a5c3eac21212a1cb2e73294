@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "e0819df7_f98048f0",
+        "filename": "third_party/WebKit/Source/core/html/forms/FormController.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-14T22:45:44Z",
+      "side": 1,
+      "message": "Ok done! Also made it non-copyable.",
+      "parentUuid": "a3496d7b_4f5c4f8a",
+      "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0e1faae_cdc5bf48",
         "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElementWithState.cpp",
         "patchSetId": 5
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "eefd7a59_ce210139",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElementWithState.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-14T22:45:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef5d3ab7_0fb32f5a",
+      "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89e925fe_cce69813",
         "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElementWithState.h",
         "patchSetId": 5
@@ -189,6 +225,24 @@
       "side": 1,
       "message": "Double-check that the HistoryItem reference to DocumentState doesn\u0027t break this. I don\u0027t *think* it does, but I\u0027m not 100% certain I understand it properly.",
       "parentUuid": "60f0c1aa_bf6f2ae8",
+      "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8266483f_aab80f6f",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElementWithState.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-14T22:45:44Z",
+      "side": 1,
+      "message": "Ok looked at HistoryItem, and I think it still holds that each form control element is held in one list.",
+      "parentUuid": "2c70fc9b_e07dd4c2",
       "revId": "8abe388df8851bbb5a5c3eac21212a1cb2e73294",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
