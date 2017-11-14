@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b441c0c_43907c98",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-14T03:27:04Z",
+      "side": 1,
+      "message": "Don\u0027t we need to pass in a prototype object and an interface object?",
+      "revId": "51524958b9cf7d1e900984a4540f5f1e51ccbd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c2770a0_f402b70e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-14T03:27:04Z",
+      "side": 1,
+      "message": "Don\u0027t we need to pass in an instance object?",
+      "revId": "51524958b9cf7d1e900984a4540f5f1e51ccbd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d0b12c_38964eac",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 10
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-14T03:27:04Z",
+      "side": 1,
+      "message": "Why do we want to allow instanceObject.IsEmpty()?",
+      "revId": "51524958b9cf7d1e900984a4540f5f1e51ccbd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63af1e63_1637df75",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-14T03:27:04Z",
+      "side": 1,
+      "message": "Don\u0027t we need to pass an instance object?",
+      "revId": "51524958b9cf7d1e900984a4540f5f1e51ccbd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a5e194_5f5b83e9",
+        "filename": "third_party/WebKit/Source/platform/bindings/WrapperTypeInfo.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-14T03:27:04Z",
+      "side": 1,
+      "message": "InstallConditionalFeaturesOnObjects",
+      "revId": "51524958b9cf7d1e900984a4540f5f1e51ccbd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
