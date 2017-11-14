@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eb797cf_099225b9",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-14T22:57:11Z",
+      "side": 1,
+      "message": "nit: It might be useful to add a comment about why we are doing a PostTask instead of posting an IPC here directly.",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 28
+      },
+      "revId": "ca132e1c4225709c7f3e22ab0f66d16ab46141b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
