@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe0d853c_7621496b",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1193,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-14T15:59:38Z",
+      "side": 1,
+      "message": "You actually need to specify enable_features here. The name param specifies the name of the FieldTrial\u0027s group, which is a different thing than the Feature API.\n\nAlso, we don\u0027t usually suffix the feature names with \"Experiment\". Perhaps you can clean that up at the same time in this CL? (i.e. remove the \"Experiment\" name suffix from the feature name while specifying \"enable_features\": [\"DownloadableStrings\"] here.)",
+      "range": {
+        "startLine": 1193,
+        "startChar": 29,
+        "endLine": 1193,
+        "endChar": 58
+      },
+      "revId": "448558a2fa564531063182d4b7d4acafb5f1da00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
