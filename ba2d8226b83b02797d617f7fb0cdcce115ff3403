@@ -46,6 +46,30 @@
       "revId": "ba2d8226b83b02797d617f7fb0cdcce115ff3403",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be51f1a5_0f906709",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/csspaint/hidpi/geometry-with-hidpi-zoom.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-14T17:53:22Z",
+      "side": 1,
+      "message": "I just updated the comments.",
+      "parentUuid": "dad74a27_fd7c5b6d",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "ba2d8226b83b02797d617f7fb0cdcce115ff3403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

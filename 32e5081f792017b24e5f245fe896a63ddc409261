@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c264bad2_4ff53032",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/csspaint/hidpi/geometry-with-hidpi-zoom.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-14T17:53:22Z",
+      "side": 1,
+      "message": "I have updated the comments here.",
+      "parentUuid": "6e7aeed1_debf199b",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 21
+      },
+      "revId": "32e5081f792017b24e5f245fe896a63ddc409261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27c542bc_6e858edf",
         "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "88c90abc_8689c4e7",
+        "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-14T17:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27c542bc_6e858edf",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 19
+      },
+      "revId": "32e5081f792017b24e5f245fe896a63ddc409261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a71dadfc_b7c635e5",
         "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
         "patchSetId": 9
@@ -59,6 +107,24 @@
       "writtenOn": "2017-11-14T16:31:35Z",
       "side": 1,
       "message": "For devices without --use-zoom-for-dsf, I think you should also\ndivide by the device scale factor.",
+      "revId": "32e5081f792017b24e5f245fe896a63ddc409261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc4891d_5af7a7de",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-14T17:53:22Z",
+      "side": 1,
+      "message": "No, the reason is that without --use-zoom-for-dsf (such as a mac retina device), the geometry.TileSize() that we got from BoxPainterBase doesn\u0027t multiply the device scale factor, so in here we should not divide that by the device scale factor. Does that make sense?\n\nThis is tested in virtual/scalefactor200/http/tests/csspaint/hidpi/geometry-with-hidpi-zoom.html",
+      "parentUuid": "a71dadfc_b7c635e5",
       "revId": "32e5081f792017b24e5f245fe896a63ddc409261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -97,6 +163,24 @@
       "revId": "32e5081f792017b24e5f245fe896a63ddc409261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d81e4d_b3692c01",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-11-14T17:53:22Z",
+      "side": 1,
+      "message": "I think Chris is right, the size that passed to PaintGeneratedImage should match the size of the rendering context, which should be the device pixel size. I changed it to |container_size| in the new patch.",
+      "parentUuid": "25a3421a_7df254fe",
+      "revId": "32e5081f792017b24e5f245fe896a63ddc409261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
