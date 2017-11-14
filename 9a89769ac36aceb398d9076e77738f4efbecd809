@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe7c63e7_af6b8525",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-14T22:30:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69cc7729_6f48062f",
+      "revId": "9a89769ac36aceb398d9076e77738f4efbecd809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b50052b_38be715f",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "9a89769ac36aceb398d9076e77738f4efbecd809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c15cce7_c04d2a04",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-14T22:30:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b50052b_38be715f",
+      "revId": "9a89769ac36aceb398d9076e77738f4efbecd809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d86c7f27_c88acfe1",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-14T22:30:56Z",
+      "side": 1,
+      "message": "Thank you for helping me to convert this to use addEventListener instead.",
+      "parentUuid": "2497d926_d93b75ff",
+      "revId": "9a89769ac36aceb398d9076e77738f4efbecd809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed597c3c_9e4bce87",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "9a89769ac36aceb398d9076e77738f4efbecd809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f52f66_a5fcf293",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-14T22:30:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed597c3c_9e4bce87",
+      "revId": "9a89769ac36aceb398d9076e77738f4efbecd809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "9a89769ac36aceb398d9076e77738f4efbecd809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a953aae_8a1bd38c",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-sandboxed-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-14T22:30:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "744a15df_ebae0744",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 40
+      },
+      "revId": "9a89769ac36aceb398d9076e77738f4efbecd809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
