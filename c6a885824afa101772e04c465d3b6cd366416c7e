@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eae81dec_d2c08623",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-14T02:55:13Z",
+      "side": 1,
+      "message": "Done. IsTabStripVisible() should cover both popup and app windows.\n\nWhat is the window called when \"tabbed browser windows showing a V1 app\"? How can I create an example to test? I think we probably treat is as normal type browser and we are good with current code.",
+      "parentUuid": "8cac1efd_ed16a658",
+      "revId": "c6a885824afa101772e04c465d3b6cd366416c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26460d72_3b54ee1f",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "c6a885824afa101772e04c465d3b6cd366416c7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c350d96_d1a2dcc4",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-14T02:55:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26460d72_3b54ee1f",
+      "revId": "c6a885824afa101772e04c465d3b6cd366416c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
