@@ -755,6 +755,24 @@
     },
     {
       "key": {
+        "uuid": "8865bad6_8368a259",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-14T18:33:25Z",
+      "side": 1,
+      "message": "Changed to \u0027strict_mode\u0027 and changed comments in header file for consistency.",
+      "parentUuid": "6f98acd8_d2759b4a",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f2065b0_38c40fd6",
         "filename": "content/browser/webauth/cbor/cbor_values.cc",
         "patchSetId": 1
