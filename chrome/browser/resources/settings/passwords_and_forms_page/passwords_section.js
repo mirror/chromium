@@ -270,6 +270,7 @@ Polymer({
   listeners: {
     'show-password': 'showPassword_',
     'password-menu-tap': 'onPasswordMenuTap_',
+    'export-passwords': 'onExportPasswords_',
   },
 
   keyBindings: {
@@ -467,11 +468,25 @@ Polymer({
   },
 
   /**
-   * Fires an event that should trigger the password export process.
+   * Opens the export passwords dialog.
    * @private
    */
   onExportTap_: function() {
+    this.showPasswordsExportDialog_ = true;
+    this.$.exportImportMenu.close();
+  },
+
+  /**
+   * Notifies to start the export logic.
+   * @private
+   */
+  onExportPasswords_: function() {
     this.passwordManager_.exportPasswords();
+  },
+
+  /** @private */
+  onPasswordsExportDialogClosed_: function() {
+    this.showPasswordsExportDialog_ = false;
   },
 
   /**
