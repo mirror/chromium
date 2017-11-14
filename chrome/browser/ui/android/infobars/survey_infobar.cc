@@ -27,12 +27,14 @@ class SurveyInfoBarDelegate : public infobars::InfoBarDelegate {
                         const std::string& siteId,
                         bool showAsBottomSheet,
                         int displayLogoResourceId,
-                        jobject surveyInfoBarDelegate)
+                        jobject surveyInfoBarDelegate,
+                        TabAndroid* tab)
       : site_id_(siteId),
         show_as_bottom_sheet_(showAsBottomSheet),
         display_logo_resource_id_(displayLogoResourceId),
         survey_info_bar_delegate_(
-            ScopedJavaGlobalRef<jobject>(env, surveyInfoBarDelegate)) {}
+            ScopedJavaGlobalRef<jobject>(env, surveyInfoBarDelegate)),
+        tab_(tab) {}
 
   ~SurveyInfoBarDelegate() override {}
 
@@ -58,11 +60,14 @@ class SurveyInfoBarDelegate : public infobars::InfoBarDelegate {
     return survey_info_bar_delegate_;
   }
 
+  TabAndroid* GetTab() { return tab_; }
+
  private:
   std::string site_id_;
   bool show_as_bottom_sheet_;
   int display_logo_resource_id_;
   ScopedJavaGlobalRef<jobject> survey_info_bar_delegate_;
+  TabAndroid* tab_;
 };
 
 SurveyInfoBar::SurveyInfoBar(std::unique_ptr<SurveyInfoBarDelegate> delegate)
@@ -95,7 +100,8 @@ ScopedJavaLocalRef<jobject> SurveyInfoBar::CreateRenderInfoBar(JNIEnv* env) {
       base::android::ConvertUTF8ToJavaString(env, survey_delegate->GetSiteId()),
       survey_delegate->GetShowAsBottomSheet(),
       survey_delegate->GetDisplayLogoResourceId(),
-      survey_delegate->GetSurveyInfoBarDelegate());
+      survey_delegate->GetSurveyInfoBarDelegate(),
+      survey_delegate->GetTab()->GetJavaObject());
 }
 
 void Create(JNIEnv* env,
@@ -112,5 +118,7 @@ void Create(JNIEnv* env,
       base::MakeUnique<SurveyInfoBar>(base::MakeUnique<SurveyInfoBarDelegate>(
           env, base::android::ConvertJavaStringToUTF8(env, j_site_id),
           j_show_as_bottom_sheet, j_display_logo_resource_id,
-          j_survey_info_bar_delegate.obj())));
+          j_survey_info_bar_delegate.obj(),
+          TabAndroid::FromWebContents(
+              content::WebContents::FromJavaWebContents(j_web_contents)))));
 }
