@@ -43,6 +43,7 @@
 #include "core/timing/PerformanceObserver.h"
 #include "core/timing/PerformanceResourceTiming.h"
 #include "core/timing/PerformanceUserTiming.h"
+#include "platform/Histogram.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/runtime_enabled_features.h"
@@ -72,6 +73,47 @@ DOMHighResTimeStamp GetUnixAtZeroMonotonic() {
   return unix_at_zero_monotonic;
 }
 
+// This enum is used to index different possible strings for for UMA enum
+// histogram. New enum values can be added, but existing enums must never be
+// renumbered or deleted and reused.
+// This enum should be consistent with SinglePageAppNavigationType in
+// tools/metrics/histograms/enums.xml.
+enum PerformanceMeasurePassedInParameterType {
+  kObjectObject = 0,
+  kUnloadEventStart = 1,
+  kUnloadEventEnd = 2,
+  kDomInteractive = 3,
+  kDomContentLoadedEventStart = 4,
+  kDomContentLoadedEventEnd = 5,
+  kDomComplete = 6,
+  kLoadEventStart = 7,
+  kLoadEventEnd = 8,
+  kOther = 9,
+  kPerformanceMeasurePassedInParameterCount
+};
+
+PerformanceMeasurePassedInParameterType
+ToPerformanceMeasurePassedInParameterType(const String& s) {
+  if (s == "[object Object]")
+    return kObjectObject;
+  if (s == "unloadEventStart")
+    return kUnloadEventStart;
+  if (s == "unloadEventEnd")
+    return kUnloadEventEnd;
+  if (s == "domInteractive")
+    return kDomInteractive;
+  if (s == "domContentLoadedEventStart")
+    return kDomContentLoadedEventStart;
+  if (s == "domContentLoadedEventEnd")
+    return kDomContentLoadedEventEnd;
+  if (s == "domComplete")
+    return kDomComplete;
+  if (s == "loadEventStart")
+    return kLoadEventStart;
+  if (s == "loadEventEnd")
+    return kLoadEventEnd;
+  return kOther;
+}
 }  // namespace
 
 using PerformanceObserverVector = HeapVector<Member<PerformanceObserver>>;
@@ -451,6 +493,14 @@ void PerformanceBase::measure(const String& measure_name,
                               const String& start_mark,
                               const String& end_mark,
                               ExceptionState& exception_state) {
+  UMA_HISTOGRAM_ENUMERATION(
+      "Performance.PerformanceMeasurePassedInParameter.StartMark",
+      ToPerformanceMeasurePassedInParameterType(start_mark),
+      kPerformanceMeasurePassedInParameterCount);
+  UMA_HISTOGRAM_ENUMERATION(
+      "Performance.PerformanceMeasurePassedInParameter.EndMark",
+      ToPerformanceMeasurePassedInParameterType(end_mark),
+      kPerformanceMeasurePassedInParameterCount);
   if (!user_timing_)
     user_timing_ = UserTiming::Create(*this);
   if (PerformanceEntry* entry = user_timing_->Measure(
