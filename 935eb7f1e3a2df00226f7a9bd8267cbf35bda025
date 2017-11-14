@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "648ab863_089dbc4a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/BindingManagerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-14T15:40:03Z",
+      "side": 1,
+      "message": "so is there not some raciness here between us actually unbinding the strong binding and then re-binding with moderate?",
+      "range": {
+        "startLine": 201,
+        "startChar": 16,
+        "endLine": 201,
+        "endChar": 50
+      },
+      "revId": "935eb7f1e3a2df00226f7a9bd8267cbf35bda025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
