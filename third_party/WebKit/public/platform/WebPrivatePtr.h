@@ -36,7 +36,7 @@
 
 #if INSIDE_BLINK
 #include "platform/heap/Handle.h"
-#include "platform/wtf/RefPtr.h"
+#include "base/memory/scoped_refptr.h"
 #include "platform/wtf/TypeTraits.h"
 #endif
 
