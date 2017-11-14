@@ -18,14 +18,9 @@
                      animated:(BOOL)animated
                    completion:(ProceduralBlock)completion;
 
-// Presents |viewController| at the top of the presentation hierarchy.
-- (void)presentTopViewController:(UIViewController*)viewController
-                        animated:(BOOL)animated
-                      completion:(ProceduralBlock)completion;
-
-// Dismisses the presented view controller.
-- (void)dismissViewControllerAnimated:(BOOL)animated
-                           completion:(ProceduralBlock)completion;
+// Dismisses all view controllers presented via this protocol.
+- (void)dismissAllViewControllersAnimated:(BOOL)animated
+                               completion:(ProceduralBlock)completion;
 
 // Presents a dialog for |error| at the top of the presentation hierarchy.
 // |dismissAction| is run when the dialog is dismissed. This method should not
