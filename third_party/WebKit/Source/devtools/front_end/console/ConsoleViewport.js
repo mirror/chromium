@@ -477,6 +477,7 @@ Console.ConsoleViewport = class {
    * @param {!Event} event
    */
   _onScroll(event) {
+    console.context().log('onScroll', this.element.isScrolledToBottom());
     this.refresh();
   }
 
