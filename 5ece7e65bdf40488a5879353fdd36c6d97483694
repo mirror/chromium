@@ -312,6 +312,24 @@
       "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f167b931_9257aea6",
+        "filename": "ui/display/manager/chromeos/display_configurator_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-14T00:02:42Z",
+      "side": 1,
+      "message": "Oh yeah, you\u0027re definitely right! I added a temporary test fixture locally that just constructs a DisplayConfigurator (to cache the undesired IsRunningAsSystemCompositor value), and ran that with all the DisplayConfiguratorTest* fixtures; the fixtures that ran in the same group as the temp fixture failed...\n\nI think we have to avoid the static return value, or find some other DisplayConfigurator check/workaround. It doesn\u0027t seem like IsRunningAsSystemCompositor is called in too many places (mostly inits/ctors), and it could still cache the value of base::SysInfo::IsRunningOnChromeOS() to a static local for performance, just checking the commandline switch on each call, thoughts? (I\u0027d still need to keep these test file changes, or move DisplayConfigurator\u0027s call to Init)\n\nbool IsRunningAsSystemCompositor() {\n  static bool is_running_on_chrome_os \u003d base::SysInfo::IsRunningOnChromeOS();\n  return is_running_on_chrome_os ||\n      base::CommandLine::ForCurrentProcess()-\u003eHasSwitch(\n          switches::kForceSystemCompositorMode);\n}",
+      "parentUuid": "ea9a0dc0_d5e9be20",
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
