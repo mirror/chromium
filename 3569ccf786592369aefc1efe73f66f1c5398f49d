@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d5591aec_fdd98107",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-14T09:03:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd04fdc5_fa1838ce",
+      "range": {
+        "startLine": 217,
+        "startChar": 6,
+        "endLine": 217,
+        "endChar": 21
+      },
+      "revId": "3569ccf786592369aefc1efe73f66f1c5398f49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a923cf62_2b29eab8",
         "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
         "patchSetId": 1
@@ -165,6 +189,30 @@
       "revId": "3569ccf786592369aefc1efe73f66f1c5398f49d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4747af52_94d298fc",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-11-14T09:03:01Z",
+      "side": 1,
+      "message": "OK thanks. I wasn\u0027t aware sequence checker wasn\u0027t movable. Using \"new\" here makes sense.",
+      "parentUuid": "d6b979a7_9f4cc9de",
+      "range": {
+        "startLine": 379,
+        "startChar": 18,
+        "endLine": 379,
+        "endChar": 47
+      },
+      "revId": "3569ccf786592369aefc1efe73f66f1c5398f49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
