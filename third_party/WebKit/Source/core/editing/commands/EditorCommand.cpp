@@ -825,8 +825,11 @@ static bool ExecuteDeleteToMark(LocalFrame& frame,
         SetSelectionOptions::Builder().SetShouldCloseTyping(true).Build());
   }
   frame.GetEditor().PerformDelete();
-  frame.GetEditor().SetMark(
-      frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated());
+
+  // TODO(editing-dev): Hoist updateStyleAndLayoutIgnorePendingStylesheets
+  // to caller. See http://crbug.com/590369 for more details.
+  frame.GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+  frame.GetEditor().SetMark();
   return true;
 }
 
@@ -1876,8 +1879,10 @@ static bool ExecuteSetMark(LocalFrame& frame,
                            Event*,
                            EditorCommandSource,
                            const String&) {
-  frame.GetEditor().SetMark(
-      frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated());
+  // TODO(editing-dev): Hoist updateStyleAndLayoutIgnorePendingStylesheets
+  // to caller. See http://crbug.com/590369 for more details.
+  frame.GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+  frame.GetEditor().SetMark();
   return true;
 }
 
@@ -1932,13 +1937,13 @@ static bool ExecuteSwapWithMark(LocalFrame& frame,
                                 Event*,
                                 EditorCommandSource,
                                 const String&) {
-  const VisibleSelection& mark = frame.GetEditor().Mark();
+  const VisibleSelection mark(frame.GetEditor().Mark());
   const VisibleSelection& selection =
       frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
   if (mark.IsNone() || selection.IsNone())
     return false;
+  frame.GetEditor().SetMark();
   frame.Selection().SetSelection(mark.AsSelection());
-  frame.GetEditor().SetMark(selection);
   return true;
 }
 
