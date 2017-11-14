@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d6ecd7e_c4c56e4a",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-14T02:07:21Z",
+      "side": 1,
+      "message": "There\u0027s a transition-delay, not a transition.\nIs a transition desired?\n\n(Are ya asking if the transition-delay works without a transition)?",
+      "parentUuid": "81bc5015_f01531bb",
+      "revId": "2fd0cb161db23215229749806a66590c2245ca9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef5eb64f_c09c1e4b",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
         "patchSetId": 2
