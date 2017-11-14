@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b013e5d1_197fb8e6",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-14T01:51:27Z",
+      "side": 1,
+      "message": "Discussed offline and moving to SoundContentSettingObserver",
+      "parentUuid": "f29ec550_250edfdc",
+      "revId": "bdd7cc613888d4c47a270bb07a27685f17bed7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d94d894_61e32716",
         "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
         "patchSetId": 5
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "62dde1d4_6f9a6e2d",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-14T01:51:27Z",
+      "side": 1,
+      "message": "Discussed offline and adding DCHECK",
+      "parentUuid": "9d94d894_61e32716",
+      "revId": "bdd7cc613888d4c47a270bb07a27685f17bed7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58988e57_f601fdf4",
         "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
         "patchSetId": 5
@@ -68,6 +104,24 @@
       "revId": "bdd7cc613888d4c47a270bb07a27685f17bed7c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610a4fe6_de81c612",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-14T01:51:27Z",
+      "side": 1,
+      "message": "Moved",
+      "parentUuid": "58988e57_f601fdf4",
+      "revId": "bdd7cc613888d4c47a270bb07a27685f17bed7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
