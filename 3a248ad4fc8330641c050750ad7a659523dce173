@@ -16,6 +16,24 @@
       "revId": "3a248ad4fc8330641c050750ad7a659523dce173",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cbbea09_1cce8216",
+        "filename": "net/spdy/chromium/spdy_session_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-14T13:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "419e61ec_c7fb380a",
+      "revId": "3a248ad4fc8330641c050750ad7a659523dce173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
