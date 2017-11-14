@@ -1,0 +1,121 @@
+<h1>User Interface</h1>
+
+<p>
+  Extension user interface should be purposeful and minimal.
+  Just like the extensions themselves,
+  the UI should customize or enhance the browsing experience,
+  not distract from it.
+</p>
+
+<p>
+  While there are several different ways to implement a UI within an extension,
+  only one or a few may be relevant to its functionality.
+</p>
+
+<h2 id="icons">Icons</h2>
+<p>
+  Extensions require at least one icon to represent it.
+  For the best visual results,
+  it should be provided as a png in at least the following sizes:
+  <ul>
+    <li>
+      16x16 - this will be used as the favicon for the extensions pages
+    </li>
+    <li>
+      32 x 32 - Windows computers often require this size.
+      Providing this option will prevent size distortion when shrinking
+      the 48 x 48 option.
+    </li>
+    <li>
+      48 x 48 - displayed in the extension management page
+    </li>
+    <li>
+      128 x 128 - used to display during installation and in the Chrome Web Store
+    </li>
+  </ul>
+</p>
+<p>
+  They are registered in the manifest under the icons field:
+</p>
+
+<pre data-filename="manifest.json">
+  {
+    ...
+    "icons": {
+      "16": "extension_icon16.png",
+      "32": "extension_icon32.png",
+      "48": "extension_icon48.png",
+      "128": "extension_icon128.png"
+    }
+    ...
+  }
+</pre>
+
+<p>
+  Additional <a href="https://developer.chrome.com/webstore/images">images</a>
+  such as screenshots and promotional material are provided
+  when uploading to the developer dashboard,
+  but these will not need to be registered in the manifest.
+</p>
+
+<h2 id="badge">Badge</h2>
+<p>
+  Badges display up to four characters on top of the browser icon.
+  Use them to indicate the state of the extension.
+  The
+  <a href="https://developer.chrome.com/extensions/samples#search:drink">
+  Drink Water Event</a> sample has no badge when there is not an alarm set,
+  but shows "ON" to let the user know they haven't missed the notification.
+</p>
+<img src="{{static}}/images/user_interface/badge_off_example.png"
+  width="72" height="72"
+  alt="Badge Off" />
+<img src="{{static}}/images/user_interface/badge_on_example.png"
+  width="72" height="72"
+  alt="Badge On" />
+</p>
+  Set the text of the badge by calling
+  <a href="/browserAction#method-setBadgeText">
+    <code>chrome.browserAction.setBadgeText</code>
+  </a>
+  and the background color by calling
+  <a href="/browserAction#method-setBadgeBackgroundColor">
+    <code>chrome.browserAction.setBadgeBackgroundColor</code>
+  </a>.
+</p>
+<pre data-filename="background.js">
+  chrome.browserAction.setBadgeText({text: 'ON'});
+  chrome.browserAction.setBadgeBackgroundColor({color: "#4688F1"});
+</pre>
+
+<h2 id="action">Browser Action and Page Action</h2>
+
+<p>
+  Declare either browser_action or page_action in the manifest
+  to specify how the extension icon is displayed.
+</p>
+<p>
+  If the extension is only usable in certain situation, use page_action.
+  Using page_action will grey out the toolbar icon
+  when the extension is unusable.
+</p>
+<pre data-filename="manifest.json">
+  Example
+</pre>
+<p>
+  Declare browser_action if the user can always interact with the extension
+</p>
+<pre data-filename="manifest.json">
+  Example
+</pre>
+<p>
+  Register the browser toolbar icon under the chosen action.
+  Multiple sizes are encourage to help scale for the 16-dip space.
+  At minimum, 16x16 and 32x32 are recommended.
+</p>
+<pre data-filename="manifest.json">
+  Example
+</pre>
+<p>
+  Any additional sizes are allowed, but ensure that all of your icons are square or they may be distorted.
+</p>
