@@ -219,6 +219,24 @@
     },
     {
       "key": {
+        "uuid": "a97b60e9_828ab5a2",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T16:00:45Z",
+      "side": 1,
+      "message": "yes, this is why i was confused as well (and wondering whether this class could just be moved into the bridge).\n\ni still think it\u0027s probably a good idea to add test coverage of the mojo code as well. i added this recently for ArcPowerBridge, in case you want to see some example code.",
+      "parentUuid": "d27fa031_8e2a0d83",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9d662bb_a7f4699f",
         "filename": "components/arc/timer/arc_timer_request.h",
         "patchSetId": 10
