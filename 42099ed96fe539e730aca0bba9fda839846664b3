@@ -1,0 +1,215 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f4ba215_673b53b2",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-14T06:46:37Z",
+      "side": 1,
+      "message": "This description/naming of the properties block isn\u0027t quite clear to me. Which properties are changed?\n\nLooks like it is called after the session completes and after a range of data is downloaded. Why should this block be called after those moments in particular?",
+      "range": {
+        "startLine": 71,
+        "startChar": 37,
+        "endLine": 72,
+        "endChar": 40
+      },
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a916be7c_1dc06cfe",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-14T06:46:37Z",
+      "side": 1,
+      "message": "Is there a reason not to typedef for the file? It is odd that GetBuffer takes in a const void*, but it is typedef\u0027d just for this function.",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ebb865_1eb3344e",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-14T06:46:37Z",
+      "side": 1,
+      "message": "A comment explaining return early because code below is for download completion only would help clarify",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef653f3_203f1e31",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-14T06:46:37Z",
+      "side": 1,
+      "message": "I don\u0027t follow this comment. This is a completion handler for the task of writing this particular buffer, not the overall write operation. How would this completion handler relate to the idea that the data will be eventually written?",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8103b78_77b7a1d8",
+        "filename": "ios/web/download/download_task_impl_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-14T06:46:37Z",
+      "side": 1,
+      "message": "Should you just use std::make_unique?",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c6025b_8e718153",
+        "filename": "ios/web/download/download_task_impl_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-14T06:46:37Z",
+      "side": 1,
+      "message": "Overall, I think the tests could be clearer if they could be split up into arrange, act, and assert blocks. This would mean that there would be no further calls to the DownloadTaskImpl after an Expect. If further tests need to be done, then they could be done in a separate test case. Also, the correllary is that if an earlier stage was tested elsewhere, then it wouldn\u0027t need to be tested again.\n\nWhat do you think?",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c19ccd_b1afcab9",
+        "filename": "ios/web/download/download_task_impl_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-14T06:46:37Z",
+      "side": 1,
+      "message": "Is there a way to factor out the state change and the didCompleteWithError call. It seems odd to see the test directly do these things.",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80012b8d_eaecc176",
+        "filename": "ios/web/download/download_task_impl_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-14T06:46:37Z",
+      "side": 1,
+      "message": "I think it would also be good to factor out the sending of data. So, this includes the setting of the session_task, the creation of the data object, and the call of the delegate.\n\nFor LargeResponseDownload, this new API could then be called once for the first chunk, once for the second chunk, and then verify.",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5a8e45_4c86635d",
+        "filename": "ios/web/download/download_task_impl_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-14T06:46:37Z",
+      "side": 1,
+      "message": "s/of/if",
+      "range": {
+        "startLine": 419,
+        "startChar": 52,
+        "endLine": 419,
+        "endChar": 54
+      },
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e2820ae_843f4962",
+        "filename": "ios/web/download/download_task_impl_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-14T06:46:37Z",
+      "side": 1,
+      "message": "std::make_unique?",
+      "range": {
+        "startLine": 429,
+        "startChar": 12,
+        "endLine": 429,
+        "endChar": 22
+      },
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6bf6b4_9a6a115c",
+        "filename": "ios/web/test/fakes/crw_fake_nsurl_session_task.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-14T06:46:37Z",
+      "side": 1,
+      "message": "Typo",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
