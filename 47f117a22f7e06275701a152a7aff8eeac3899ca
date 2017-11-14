@@ -616,6 +616,24 @@
     },
     {
       "key": {
+        "uuid": "73d3532f_82a98411",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T05:09:44Z",
+      "side": 1,
+      "message": "i meant that you don\u0027t actually pass clock_id to ArcTimer right now, so you\u0027re presumably just supporting a single type of clock right now. you should probably return an error for the time being if the other type is requested, right?",
+      "parentUuid": "077a2632_9e66178f",
+      "revId": "47f117a22f7e06275701a152a7aff8eeac3899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff3df20d_3e794a23",
         "filename": "components/arc/timer/arc_timer_impl.h",
         "patchSetId": 9
