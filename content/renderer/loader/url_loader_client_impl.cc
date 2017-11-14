@@ -20,6 +20,7 @@ URLLoaderClientImpl::URLLoaderClientImpl(
     : request_id_(request_id),
       resource_dispatcher_(resource_dispatcher),
       task_runner_(std::move(task_runner)),
+      url_loader_client_binding_(this),
       weak_factory_(this) {}
 
 URLLoaderClientImpl::~URLLoaderClientImpl() {
@@ -101,6 +102,13 @@ void URLLoaderClientImpl::FlushDeferredMessages() {
 
     resource_dispatcher_->DispatchMessage(messages.back());
   }
+}
+
+void URLLoaderClientImpl::Bind(
+    mojom::URLLoaderPtr url_loader,
+    mojom::URLLoaderClientRequest url_loader_client) {
+  url_loader_ = std::move(url_loader);
+  url_loader_client_binding_.Bind(std::move(url_loader_client));
 }
 
 void URLLoaderClientImpl::OnReceiveResponse(
