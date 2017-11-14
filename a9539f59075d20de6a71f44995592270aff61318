@@ -16,6 +16,24 @@
       "revId": "a9539f59075d20de6a71f44995592270aff61318",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d55f90_583e91d5",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-11-14T07:13:06Z",
+      "side": 1,
+      "message": "\u003e Is there a reason to prevent more than one IFaceDetector from being initialized \n\u003e simultaneously? If so please document it here.\n\nDone, because IFaceDetector initialization can take a long time.\n\n\u003e It\u0027s important to note that by pausing method call processing if the pipe attached to \n\u003e |binding_| is closed before OnFaceDetectorCreated() is called that event won\u0027t be handled \n\u003e until method call processing is resumed so this will not allow us to cancel the operation\n\u003e early (not that AsyncOperation appears to support canceling the operation destruction \n\u003e anyways) if the result is not needed.\n\nDo you mean we should set a connector error handler to |binding_| and resume call processing in the callback if the pipe attached to |binding_| is closed before OnFaceDetectorCreated() is called?\n\n\u003e Alternatively, given how this interface is used by actual clients, it is reasonable to simply \u003e fail any FaceDetectionRequest if the creation of an instance is in progress. In geolocation we \u003e actually treat this as a violation of the Mojo interface contract since there\u0027s no good reason \u003e for a renderer to do it.\n\nI don\u0027t get it. It\u0027s basic usage in here[1], do we need comment something?\nauto request \u003d mojo::MakeRequest(\u0026provider);\nprovider-\u003eCreateFaceDetection(mojo::MakeRequest(\u0026face_service_),\n                                std::move(face_detector_options));\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/shapedetection/FaceDetector.cpp?type\u003dcs\u0026l\u003d36",
+      "parentUuid": "d5d98af8_6566126a",
+      "revId": "a9539f59075d20de6a71f44995592270aff61318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
