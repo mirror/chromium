@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fa60644_6fc807da",
+        "filename": "components/offline_pages/core/model/clear_legacy_temporary_pages_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-11-14T02:03:08Z",
+      "side": 1,
+      "message": "Drive by:  This might be better as a constant at the top of the file.  (Same for all the other uses of the same string in this changelist.)",
+      "range": {
+        "startLine": 44,
+        "startChar": 29,
+        "endLine": 44,
+        "endChar": 44
+      },
+      "revId": "c542ce388c3a53584bf7c74d6e0f2e8c37892404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd6a1aad_1c55fe5e",
+        "filename": "components/offline_pages/core/model/clear_legacy_temporary_pages_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-11-14T02:03:08Z",
+      "side": 1,
+      "message": "Drive by:  Should we retry this if the database operation fails?",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 30
+      },
+      "revId": "c542ce388c3a53584bf7c74d6e0f2e8c37892404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
