@@ -523,6 +523,23 @@ TestRunner.addStylesheetTag = function(path) {
     })();
   `);
 };
+
+/**
+ * @param {string} path
+ * @return {!Promise<!SDK.RemoteObject|undefined>}
+ */
+TestRunner.addHTMLImport = function(path) {
+  return TestRunner.evaluateInPageAsync(`
+    (function(){
+      var link = document.createElement('link');
+      link.rel = 'import';
+      link.href = '${path}';
+      document.head.append(link);
+      return new Promise(f => link.onload = f);
+    })();
+  `);
+};
+
 /**
  * @param {string} path
  * @param {!Object|undefined} options
