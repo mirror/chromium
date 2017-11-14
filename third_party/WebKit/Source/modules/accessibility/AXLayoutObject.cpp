@@ -579,10 +579,17 @@ bool AXLayoutObject::ComputeAccessibilityIsIgnored(
     return false;
 
   if (layout_object_->IsText()) {
-    if (CanIgnoreTextAsEmpty()) {
-      if (ignored_reasons)
-        ignored_reasons->push_back(IgnoredReason(kAXEmptyText));
-      return true;
+    AXObject* parent = this->ParentObject();
+    AccessibilityRole aria_role = parent->RoleValue();
+    if (parent && (aria_role == kMenuItemRole ||
+                   aria_role == kMenuButtonRole ||
+                   aria_role == kMenuItemRadioRole ||
+                   aria_role == kMenuItemCheckBoxRole)) {
+      if (CanIgnoreTextAsEmpty()) {
+        if (ignored_reasons)
+          ignored_reasons->push_back(IgnoredReason(kAXEmptyText));
+        return true;
+      }
     }
     return false;
   }
