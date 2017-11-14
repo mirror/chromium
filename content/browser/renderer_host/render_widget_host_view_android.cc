@@ -90,6 +90,7 @@
 #include "ui/android/window_android_compositor.h"
 #include "ui/base/layout.h"
 #include "ui/base/ui_base_types.h"
+#include "ui/events/android/gesture_event_android.h"
 #include "ui/events/android/motion_event_android.h"
 #include "ui/events/blink/blink_event_util.h"
 #include "ui/events/blink/did_overscroll_params.h"
@@ -965,6 +966,12 @@ RenderWidgetHostViewAndroid::GetWeakPtrAndroid() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
+bool RenderWidgetHostViewAndroid::OnGestureEvent(
+    const ui::GestureEventAndroid& event) {
+  SendGestureEvent(ui::CreateWebGestureEventFromGestureEventAndroid(event));
+  return true;
+}
+
 bool RenderWidgetHostViewAndroid::OnTouchEvent(
     const ui::MotionEventAndroid& event) {
   RecordToolTypeForActionDown(event);
@@ -1530,6 +1537,8 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
                                        : frame_metadata.root_background_color);
 
   view_.UpdateFrameInfo({frame_metadata.scrollable_viewport_size,
+                         frame_metadata.max_page_scale_factor,
+                         frame_metadata.min_page_scale_factor,
                          frame_metadata.page_scale_factor, top_content_offset});
 
   bool top_changed = !FloatEquals(top_shown_pix, prev_top_shown_pix_);
@@ -1552,10 +1561,10 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   // All offsets and sizes are in CSS pixels.
   content_view_core_->UpdateFrameInfo(
       frame_metadata.root_scroll_offset, frame_metadata.page_scale_factor,
-      gfx::Vector2dF(frame_metadata.min_page_scale_factor,
-                     frame_metadata.max_page_scale_factor),
-      frame_metadata.root_layer_size, frame_metadata.scrollable_viewport_size,
-      top_content_offset, top_shown_pix, top_changed, is_mobile_optimized);
+      frame_metadata.min_page_scale_factor,
+      frame_metadata.max_page_scale_factor, frame_metadata.root_layer_size,
+      frame_metadata.scrollable_viewport_size, top_content_offset,
+      top_shown_pix, top_changed, is_mobile_optimized);
 
   EvictFrameIfNecessary();
 }
