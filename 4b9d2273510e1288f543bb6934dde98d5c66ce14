@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0333d05_0c0f0034",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyBlockElementCommand.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-14T08:50:21Z",
+      "side": 0,
+      "message": "To reduce patch size, we can keep SelectionInDOMTree::Builder::SetIsDirectional() and remove SelectionInDOMTree::IsDirectional().\n\nIn this way, we can have smaller patch and make sure we don\u0027t use\nSelectionInDOMTree::IsDirectional().",
+      "revId": "4b9d2273510e1288f543bb6934dde98d5c66ce14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

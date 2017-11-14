@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "289a409f_d00d2783",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-14T08:50:21Z",
+      "side": 1,
+      "message": "Please change |Editor::SetMark()| to take |FrameSelection| instead of \nintroducing |SetMarkWithDirectionality()| because of all call sites\npassed |VisualSelection| from |FrameSelection|.",
+      "revId": "66e04a02ac89517ab8d7ca22ea6f69b73201fc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1fd0a4f_c47e810e",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-14T08:50:21Z",
+      "side": 1,
+      "message": "nit: s/bool/const bool/",
+      "range": {
+        "startLine": 372,
+        "startChar": 2,
+        "endLine": 372,
+        "endChar": 7
+      },
+      "revId": "66e04a02ac89517ab8d7ca22ea6f69b73201fc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac88f07f_16845966",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-14T08:50:21Z",
+      "side": 1,
+      "message": "Because |SelectionInDOMTree| is always collapsed and non-null,\ncould you change this ctor to take |Position| and get |LocalFrame|\nfrom |Position::GetDocument()| and make |SelectionInDOMTree| from\n|Position|?\n\nIt is better to restrict API to make code simpler.",
+      "revId": "66e04a02ac89517ab8d7ca22ea6f69b73201fc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f70f2a36_85ff6050",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-14T08:50:21Z",
+      "side": 1,
+      "message": "nit: s/bool/const bool/",
+      "range": {
+        "startLine": 1249,
+        "startChar": 2,
+        "endLine": 1249,
+        "endChar": 7
+      },
+      "revId": "66e04a02ac89517ab8d7ca22ea6f69b73201fc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f07d5f_b73bcac9",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-14T08:50:21Z",
+      "side": 1,
+      "message": "nit: s/directional/is_directional/",
+      "range": {
+        "startLine": 1249,
+        "startChar": 7,
+        "endLine": 1249,
+        "endChar": 18
+      },
+      "revId": "66e04a02ac89517ab8d7ca22ea6f69b73201fc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
