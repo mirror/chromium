@@ -829,7 +829,7 @@ void CSSParserImpl::ConsumeApplyRule(CSSParserTokenRange prelude) {
   if (!prelude.AtEnd() || !CSSVariableParser::IsValidVariableName(ident))
     return;  // Parse error, expected a single custom property name
   parsed_properties_.push_back(CSSPropertyValue(
-      CSSPropertyApplyAtRule,
+      GetCSSPropertyApplyAtRule(),
       *CSSCustomIdentValue::Create(ident.Value().ToAtomicString())));
 }
 
@@ -1035,7 +1035,7 @@ void CSSParserImpl::ConsumeVariableValue(CSSParserTokenRange range,
           CSSVariableParser::ParseDeclarationValue(variable_name, range,
                                                    is_animation_tainted)) {
     parsed_properties_.push_back(
-        CSSPropertyValue(CSSPropertyVariable, *value, important));
+        CSSPropertyValue(GetCSSPropertyVariable(), *value, important));
     context_->Count(context_->Mode(), CSSPropertyVariable);
   }
 }
