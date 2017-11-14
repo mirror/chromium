@@ -252,6 +252,57 @@
       "revId": "05230e7eaa522cb4454d51fb3a90bd9938f23d4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebf424e_b5fec804",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-14T00:18:18Z",
+      "side": 1,
+      "message": "nit: Please add braces to this multi-line if-then statement.",
+      "revId": "05230e7eaa522cb4454d51fb3a90bd9938f23d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd902a09_6ce18792",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-14T00:18:18Z",
+      "side": 1,
+      "message": "Please duplicate this comment by line 742.",
+      "revId": "05230e7eaa522cb4454d51fb3a90bd9938f23d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94273ff_f539b9f1",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-14T00:18:18Z",
+      "side": 1,
+      "message": "Please duplicate this comment by line 744.",
+      "revId": "05230e7eaa522cb4454d51fb3a90bd9938f23d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
