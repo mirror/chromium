@@ -393,7 +393,7 @@ TEST_F(WebNotificationTrayTest, PopupAndSystemTrayMultiDisplay) {
 
 TEST_F(WebNotificationTrayTest, VisibleSmallIcon) {
   EXPECT_EQ(0u, GetTray()->visible_small_icons_.size());
-  EXPECT_EQ(2, GetTray()->tray_container()->child_count());
+  EXPECT_EQ(3, GetTray()->tray_container()->child_count());
   std::unique_ptr<message_center::Notification> notification =
       std::make_unique<message_center::Notification>(
           message_center::NOTIFICATION_TYPE_SIMPLE, "test",
@@ -408,7 +408,7 @@ TEST_F(WebNotificationTrayTest, VisibleSmallIcon) {
   GetMessageCenter()->AddNotification(std::move(notification));
   RunAllPendingInMessageLoop();
   EXPECT_EQ(1u, GetTray()->visible_small_icons_.size());
-  EXPECT_EQ(3, GetTray()->tray_container()->child_count());
+  EXPECT_EQ(4, GetTray()->tray_container()->child_count());
 }
 
 // Makes sure that the system tray bubble closes when another window is

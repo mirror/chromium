@@ -153,6 +153,7 @@ class ASH_EXPORT WebNotificationTray
   std::unique_ptr<WebNotificationBubbleWrapper> message_center_bubble_;
   std::unique_ptr<message_center::MessagePopupCollection> popup_collection_;
   std::unique_ptr<WebNotificationImage> bell_icon_;
+  std::unique_ptr<WebNotificationImage> quiet_mode_icon_;
   std::unique_ptr<WebNotificationLabel> counter_;
 
   scoped_refptr<gfx::AnimationContainer> animation_container_ =
