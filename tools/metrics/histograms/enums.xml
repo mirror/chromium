@@ -24165,7 +24165,6 @@ from previous Chrome versions.
   <int value="-2063014275" label="enable-web-bluetooth"/>
   <int value="-2062872298" label="market-url-for-testing"/>
   <int value="-2062373123" label="WebPaymentsModifiers:enabled"/>
-  <int value="-2059771509" label="NTPTilesLowerResolutionFavicons:disabled"/>
   <int value="-2058656447" label="ContextualSearchUrlActions:enabled"/>
   <int value="-2054501930" label="NativeSamba:enabled"/>
   <int value="-2053860791" label="XGEOVisibleNetworks:enabled"/>
@@ -25516,7 +25515,6 @@ from previous Chrome versions.
   <int value="1705724232" label="use-android-midi-api"/>
   <int value="1713230497" label="ColorCorrectRendering:disabled"/>
   <int value="1716104463" label="enable-fullscreen-app-list"/>
-  <int value="1717987538" label="NTPTilesLowerResolutionFavicons:enabled"/>
   <int value="1719189460" label="EnablePasswordSelection:disabled"/>
   <int value="1723601083" label="enable-app-window-controls"/>
   <int value="1724800383" label="AsmJsToWebAssembly:disabled"/>
