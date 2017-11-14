@@ -741,7 +741,7 @@ TEST_F(ServiceWorkerStorageTest, StoreFindUpdateDeleteRegistration) {
       std::vector<GURL>(1, kForeignFetchScope));
   live_version->set_foreign_fetch_origins(
       std::vector<url::Origin>(1, kForeignFetchOrigin));
-  live_version->set_used_features(used_features);
+  live_version->SetUsedFeatures(used_features);
   live_registration->SetWaitingVersion(live_version);
   live_registration->set_last_update_check(kYesterday);
   EXPECT_EQ(SERVICE_WORKER_OK,

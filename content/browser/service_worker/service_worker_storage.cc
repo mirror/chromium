@@ -1427,7 +1427,7 @@ ServiceWorkerStorage::GetOrCreateRegistration(
     version->set_foreign_fetch_origins(data.foreign_fetch_origins);
     if (data.origin_trial_tokens)
       version->SetValidOriginTrialTokens(*data.origin_trial_tokens);
-    version->set_used_features(data.used_features);
+    version->SetUsedFeatures(data.used_features);
   }
 
   if (version->status() == ServiceWorkerVersion::ACTIVATED)

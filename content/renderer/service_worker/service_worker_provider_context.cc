@@ -57,7 +57,7 @@ struct ServiceWorkerProviderContext::ControlleeState {
   scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter;
 
   // Tracks feature usage for UseCounter.
-  std::set<uint32_t> used_features;
+  std::set<blink::mojom::WebFeature> used_features;
 
   // Corresponds to a ServiceWorkerContainer. We notify it when
   // ServiceWorkerContainer#controller should be changed.
@@ -102,7 +102,6 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     ServiceWorkerProviderType provider_type,
     mojom::ServiceWorkerContainerAssociatedRequest request,
     mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info,
-    ServiceWorkerDispatcher* dispatcher,
     scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter)
     : provider_type_(provider_type),
       provider_id_(provider_id),
@@ -115,20 +114,9 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     controllee_state_ = std::make_unique<ControlleeState>(
         std::move(default_loader_factory_getter));
   }
-
-  // |dispatcher| may be null in tests.
-  // TODO(falken): Figure out how to make a dispatcher in tests.
-  if (dispatcher)
-    dispatcher->AddProviderContext(this);
 }
 
-ServiceWorkerProviderContext::~ServiceWorkerProviderContext() {
-  if (ServiceWorkerDispatcher* dispatcher =
-          ServiceWorkerDispatcher::GetThreadSpecificInstance()) {
-    // Remove this context from the dispatcher living on the main thread.
-    dispatcher->RemoveProviderContext(this);
-  }
-}
+ServiceWorkerProviderContext::~ServiceWorkerProviderContext() = default;
 
 void ServiceWorkerProviderContext::SetRegistrationForServiceWorkerGlobalScope(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration,
@@ -200,15 +188,8 @@ ServiceWorkerProviderContext::container_host() const {
   return container_host_.get();
 }
 
-void ServiceWorkerProviderContext::CountFeature(uint32_t feature) {
-  // ServiceWorkerProviderContext keeps track of features in order to propagate
-  // it to WebServiceWorkerProviderClient, which actually records the
-  // UseCounter.
-  DCHECK(controllee_state_);
-  controllee_state_->used_features.insert(feature);
-}
-
-const std::set<uint32_t>& ServiceWorkerProviderContext::used_features() const {
+const std::set<blink::mojom::WebFeature>&
+ServiceWorkerProviderContext::used_features() const {
   DCHECK(controllee_state_);
   return controllee_state_->used_features;
 }
@@ -277,7 +258,7 @@ void ServiceWorkerProviderContext::SetController(
     }
   }
   for (blink::mojom::WebFeature feature : used_features)
-    state->used_features.insert(static_cast<uint32_t>(feature));
+    state->used_features.insert(feature);
 
   // S13nServiceWorker
   // Set up the URL loader factory for sending URL requests to the controller.
@@ -323,6 +304,21 @@ void ServiceWorkerProviderContext::PostMessageToClient(
   if (state->web_service_worker_provider) {
     state->web_service_worker_provider->PostMessageToClient(
         std::move(source), message, std::move(message_pipes));
+  }
+}
+
+void ServiceWorkerProviderContext::CountFeature(
+    blink::mojom::WebFeature feature) {
+  DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(controllee_state_);
+  ControlleeState* state = controllee_state_.get();
+
+  // ServiceWorkerProviderContext keeps track of features in order to propagate
+  // it to WebServiceWorkerProviderClient, which actually records the
+  // UseCounter.
+  state->used_features.insert(feature);
+  if (state->web_service_worker_provider) {
+    state->web_service_worker_provider->CountFeature(feature);
   }
 }
 

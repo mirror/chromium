@@ -419,9 +419,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
   }
 
   void CountFeature(uint32_t feature);
-  void set_used_features(const std::set<uint32_t>& used_features) {
-    used_features_ = used_features;
-  }
+  void SetUsedFeatures(const std::set<uint32_t>& used_features);
   const std::set<uint32_t>& used_features() const { return used_features_; }
 
   static bool IsInstalled(ServiceWorkerVersion::Status status);

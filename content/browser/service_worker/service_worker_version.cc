@@ -48,6 +48,7 @@
 #include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
+#include "third_party/WebKit/public/platform/web_feature.mojom.h"
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
 
 namespace content {
@@ -1106,6 +1107,20 @@ void ServiceWorkerVersion::CountFeature(uint32_t feature) {
     return;
   for (auto provider_host_by_uuid : controllee_map_)
     provider_host_by_uuid.second->CountFeature(feature);
+}
+
+void ServiceWorkerVersion::SetUsedFeatures(
+    const std::set<uint32_t>& used_features) {
+  used_features_ = used_features;
+  for (const uint32_t feature : used_features_) {
+    // TODO: version->used_features() should never have a feature outside the
+    // known feature range. But there is special case, see the details in
+    // crbug.com/758419.
+    if (feature >=
+        static_cast<uint32_t>(blink::mojom::WebFeature::kNumberOfFeatures)) {
+      used_features_.erase(feature);
+    }
+  }
 }
 
 bool ServiceWorkerVersion::IsInstalled(ServiceWorkerVersion::Status status) {
