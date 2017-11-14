@@ -1,0 +1,254 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "788cd15d_b04e36e5",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T13:57:49Z",
+      "side": 1,
+      "message": "nit: Starts",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 10
+      },
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79fed97_f50188b9",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T13:57:49Z",
+      "side": 1,
+      "message": "Could you add completion callback?\nNow, Android side CLs are under review, already. (You can search my CLs).\n\ncf) crbug.com/750563",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bfde15d_0cc4a981",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T13:57:49Z",
+      "side": 1,
+      "message": "It looks PostTaskWithTraits is just enough, as you don\u0027t use reply?",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac853d9_b6360739",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T13:57:49Z",
+      "side": 1,
+      "message": "nit: Could you use BindOnce?",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7101ec_58409212",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T13:57:49Z",
+      "side": 1,
+      "message": "IIUC, this runs on blocking thread, while ArcTimer object lives on UI thread?\nThen, using WeakPtr is unsafe.\nThe object may be destruct while this method is running.\nYou\u0027d need to introduce a thread safer approach here.",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86784e77_200e08e2",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T13:57:49Z",
+      "side": 1,
+      "message": "This is done by Timer\u0027s dtor. So you can just use \"\u003d default;\"",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234a29be_ab15e89c",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T13:57:49Z",
+      "side": 1,
+      "message": "To me, this looks confusing because in case of error, all timers *including already established ones* _looks_ deleted. (Though, I understand, it is not officially supported way).\nCould you implement this in slightly better way, e.g.;\n- Keep the set\u003cunique_ptr\u003cArcTimer\u003e\u003e in local var, and use it in the loop.\n- Move all the elements to the set\u003c\u003e member at L128.\nI believe it is not that huge work here.",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20775cf_db14ba6f",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T13:57:49Z",
+      "side": 1,
+      "message": "Clarification: I think we can allow this, and there\u0027s no reason to restrict creating two or more timers for the same clock_id, here? If so, could you remove?",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c628e11_82a082c8",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T13:57:49Z",
+      "side": 1,
+      "message": "Clarification: So the timer is kept even after FD /MojoChannel is closed in container side?\nShould these timers be removed at that timing?",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77f03c9_09c25d59",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T13:57:49Z",
+      "side": 1,
+      "message": "nit: Starts",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27fa031_8e2a0d83",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T13:57:49Z",
+      "side": 1,
+      "message": "Style: ArcTimer / ArcTimerImpl implies that ArcTimer is an interface, and ArcTimerImpl inherits it for concrete implementation, practically in Chrome.\n\nCould you rename?",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d662bb_a7f4699f",
+        "filename": "components/arc/timer/arc_timer_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T13:57:49Z",
+      "side": 1,
+      "message": "nit: Could you use \"\" instead of \u003c\u003e?",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d817cb_a9e52e99",
+        "filename": "components/arc/timer/arc_timer_traits.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T13:57:49Z",
+      "side": 1,
+      "message": "nit: include sys/timerfd.h for enums?",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2434d0ad_56132271",
+        "filename": "components/arc/timer/arc_timer_traits.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T13:57:49Z",
+      "side": 1,
+      "message": "nit: NOTREACHED()/NOTIMPLEMENTED() is nice to have in this kind of case. Ditto for below.",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
