@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "582f6870_8f3c19fc",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-14T06:52:40Z",
+      "side": 1,
+      "message": "We did lseek in the previous implementation. So it should be allowed.\nhttps://cs.chromium.org/chromium/src/components/arc/video_accelerator/chrome_arc_video_decode_accelerator.cc?dr\u003dSs\u0026q\u003dchrome_arc_vide\u0026sq\u003dpackage:chromium\u0026l\u003d288\nThe thread is GPU child(main) thread.\nDo you think lseek should not be allowed in the thread?",
+      "parentUuid": "69cf398e_99b60f5c",
+      "range": {
+        "startLine": 575,
+        "startChar": 0,
+        "endLine": 577,
+        "endChar": 32
+      },
+      "revId": "4f6428255e2a8020a1c9b5fd0747f4ebee35ef86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2f3ae5f_97055cc9",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
         "patchSetId": 16
@@ -468,6 +492,30 @@
       "revId": "4f6428255e2a8020a1c9b5fd0747f4ebee35ef86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c2d35a_42794e80",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-14T06:52:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2f11294_f6facf6f",
+      "range": {
+        "startLine": 76,
+        "startChar": 50,
+        "endLine": 76,
+        "endChar": 56
+      },
+      "revId": "4f6428255e2a8020a1c9b5fd0747f4ebee35ef86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

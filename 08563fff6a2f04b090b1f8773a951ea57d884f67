@@ -317,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "129aa217_cfb5d9a9",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-14T06:52:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92de9f61_5d1b06f2",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6122140d_162793c8",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 14
