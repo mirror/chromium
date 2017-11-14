@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a45bc528_df90fa00",
+        "filename": "media/formats/mp2t/ts_packet.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-11-14T21:06:59Z",
+      "side": 1,
+      "message": "Why handle this here and not closer to the originally triggered DCHECK in TsSectionPsi::Parse? TBH I\u0027m not that familiar with mpeg2ts stream format and I\u0027m a bit concerned that a zero payload size might be a valid value here.\nSo could you please either explain (in a comment or CL description) why this needs to be done here, or move it to TsSectionPsi::Parse?",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 28
+      },
+      "revId": "a34de1adaf2d59808a298b37d9eedc661579a9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
