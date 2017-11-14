@@ -70,6 +70,30 @@
       "revId": "ddcbb682188337b198673e18c8b4703154238cde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5916720a_ce653c7e",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-14T21:56:49Z",
+      "side": 0,
+      "message": "Got it. I restored isIconShowing_ to this cl because it seems like you are close to landing 767748? I will wait for that to land, rebase my other cl and do more cleanup there (or let me know if you want me to land the remainder of my changes, which make the world more sane).",
+      "parentUuid": "39043e40_0cacb2ae",
+      "range": {
+        "startLine": 521,
+        "startChar": 5,
+        "endLine": 521,
+        "endChar": 54
+      },
+      "revId": "ddcbb682188337b198673e18c8b4703154238cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
