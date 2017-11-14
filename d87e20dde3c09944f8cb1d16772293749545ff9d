@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c2504ad_498798ad",
+        "filename": "ui/arc/notification/arc_notification_content_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-11-14T17:48:05Z",
+      "side": 1,
+      "message": "\"Hide\" may be better since it\u0027s opposite to Show.",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 14
+      },
+      "revId": "d87e20dde3c09944f8cb1d16772293749545ff9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6950a64d_dd4bee74",
+        "filename": "ui/message_center/views/message_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-11-14T17:48:05Z",
+      "side": 1,
+      "message": "nit: could you add comments for these methods?",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 45
+      },
+      "revId": "d87e20dde3c09944f8cb1d16772293749545ff9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
