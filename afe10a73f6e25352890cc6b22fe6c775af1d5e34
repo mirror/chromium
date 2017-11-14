@@ -142,6 +142,30 @@
       "revId": "afe10a73f6e25352890cc6b22fe6c775af1d5e34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943620c3_8bf4ea02",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T08:11:34Z",
+      "side": 1,
+      "message": "That\u0027s probably right that it\u0027d be better to have a generic mechanism to detect profile downgrade but it seems like it doesn\u0027t exist yet.\n\nWe also originally imagined the following scenario:\n1) Chrome 63.0.5555.0 ships ShinyFeature which is feature #1234.\n2) Uh-oh, Chrome 63.0.6666.0 decides to unship ShinyFeature by reverting, and now feature #1234 is past the number of features.\n3) Chrome 63.0.6666.0 has to do deal with feature #1234 which is out of range.\n\nBut now I see step 2) should have not changed the number of features when unshipping.\n\nAnyway, profile downgrade apparently happens frequently, we got several reports for https://bugs.chromium.org/p/chromium/issues/detail?id\u003d758419. I think it\u0027s because people are running Stable/Beta/Dev on the same profile directory?",
+      "parentUuid": "24297108_7181fe3b",
+      "range": {
+        "startLine": 559,
+        "startChar": 0,
+        "endLine": 562,
+        "endChar": 17
+      },
+      "revId": "afe10a73f6e25352890cc6b22fe6c775af1d5e34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
