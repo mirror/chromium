@@ -621,6 +621,8 @@ int ResourceDispatcher::StartAsync(
     blink::WebURLRequest::LoadingIPCType ipc_type,
     mojom::URLLoaderFactory* url_loader_factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
+    mojom::URLLoaderPtr url_loader,
+    mojom::URLLoaderClientRequest url_loader_client,
     mojo::ScopedDataPipeConsumerHandle consumer_handle) {
   CheckSchemeForReferrerPolicy(*request);
 
@@ -638,14 +640,16 @@ int ResourceDispatcher::StartAsync(
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
       loading_task_runner ? loading_task_runner : thread_task_runner_;
 
-  if (consumer_handle.is_valid()) {
+  if (consumer_handle.is_valid() || url_loader_client.is_pending()) {
     pending_requests_[request_id]->url_loader_client =
         std::make_unique<URLLoaderClientImpl>(request_id, this, task_runner);
 
     task_runner->PostTask(
-        FROM_HERE, base::BindOnce(&ResourceDispatcher::ContinueForNavigation,
-                                  weak_factory_.GetWeakPtr(), request_id,
-                                  base::Passed(std::move(consumer_handle))));
+        FROM_HERE,
+        base::BindOnce(&ResourceDispatcher::ContinueForNavigation,
+                       weak_factory_.GetWeakPtr(), request_id,
+                       std::move(url_loader), std::move(url_loader_client),
+                       std::move(consumer_handle)));
 
     return request_id;
   }
@@ -748,6 +752,8 @@ base::TimeTicks ResourceDispatcher::ConsumeIOTimestamp() {
 
 void ResourceDispatcher::ContinueForNavigation(
     int request_id,
+    mojom::URLLoaderPtr url_loader,
+    mojom::URLLoaderClientRequest url_loader_client,
     mojo::ScopedDataPipeConsumerHandle consumer_handle) {
   PendingRequestInfo* request_info = GetPendingRequestInfo(request_id);
   if (!request_info)
@@ -765,6 +771,11 @@ void ResourceDispatcher::ContinueForNavigation(
   // Abort if the request is cancelled.
   if (!GetPendingRequestInfo(request_id))
     return;
+
+  if (url_loader_client.is_pending()) {
+    client_ptr->Bind(std::move(url_loader), std::move(url_loader_client));
+    return;
+  }
 
   // Start streaming now.
   client_ptr->OnStartLoadingResponseBody(std::move(consumer_handle));
