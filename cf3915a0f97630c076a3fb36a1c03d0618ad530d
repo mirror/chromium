@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26fb1298_69e85184",
+        "filename": "content/common/content_switches_internal.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-14T22:18:15Z",
+      "side": 1,
+      "message": "this is still not ok. what if nothing actually checks this early enough?",
+      "revId": "cf3915a0f97630c076a3fb36a1c03d0618ad530d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77ec3a0_3ec7927f",
+        "filename": "content/common/content_switches_internal.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-14T22:18:15Z",
+      "side": 1,
+      "message": "this is on the edge of being not thread safe. probably should use a LazyInstance for good measure",
+      "revId": "cf3915a0f97630c076a3fb36a1c03d0618ad530d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb2a6ba_5b90dafd",
+        "filename": "content/renderer/render_view_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-14T22:18:15Z",
+      "side": 1,
+      "message": "That can\u0027t be right.. DIP, which is css * page zoom scale but not device scale, doesn\u0027t exist anymore with use-zoom-for-dsf, since page zoom includes device scale. Which means CSS pixels probably isn\u0027t right either",
+      "range": {
+        "startLine": 355,
+        "startChar": 13,
+        "endLine": 355,
+        "endChar": 16
+      },
+      "revId": "cf3915a0f97630c076a3fb36a1c03d0618ad530d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

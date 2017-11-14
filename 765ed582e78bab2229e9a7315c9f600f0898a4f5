@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b25b818a_330fe3e7",
+        "filename": "chrome/browser/ui/autofill/autofill_popup_layout_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-14T22:18:15Z",
+      "side": 1,
+      "message": "\u003e \u003e put this below\n\u003e \n\u003e Done\n\u003e \n\u003e \u003e \n\u003e \u003e also mac is not aura? and what does happen on android?\n\u003e \n\u003e I cannot understand your question clearly ..\n\u003e \n\u003e As far as I know, Mac is Aura.\n\u003e The reason why I used \"#if !defined(OS_ANDROID)\" here is that this header file is needed by line 156 (i.e., gfx::NativeView) and the code is wrapped by \"#if !defined(OS_ANDROID)\" (See line 96).\n\nHmm, I don\u0027t know anymore. I thought mac wasn\u0027t use aura, but maybe that was years ago...",
+      "parentUuid": "ddd33b0c_fec815fd",
+      "revId": "765ed582e78bab2229e9a7315c9f600f0898a4f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cecb931_3eccf91b",
         "filename": "chrome/browser/ui/autofill/popup_view_common.cc",
         "patchSetId": 2
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "\u003e Hmm, I can\u0027t tell if this is correct. There\u0027s a whole bunch of interaction with Display, which certainly are in physical pixels already, so seeing the scale *after* all of that manipulation seems wrong.\n\u003e \n\nI agree. I also thought it is weird because of the case there are multiple displays.\nI am curious which display\u0027s device scale factor is applied in the initial code.\n\nIf I must choose one display in this code, I wonder which display must be chosen for desired_width and element_bounds.\n\n\u003e Also should IsUseZoomForDSFEnabled, since that checks a whole bunch of other things. You can move it from content_switches_internal to content_switches\n\u003e \n\u003e also speaking of which.. I think that java check in the last CL is wrong?\n\nYes, I agree.\nI will create another CL to fix the last CL.",
       "parentUuid": "2cecb931_3eccf91b",
+      "range": {
+        "startLine": 132,
+        "startChar": 40,
+        "endLine": 132,
+        "endChar": 60
+      },
+      "revId": "765ed582e78bab2229e9a7315c9f600f0898a4f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbce6fbd_d57778be",
+        "filename": "chrome/browser/ui/autofill/popup_view_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-14T22:18:15Z",
+      "side": 1,
+      "message": "\u003e \u003e Hmm, I can\u0027t tell if this is correct. There\u0027s a whole bunch of interaction with Display, which certainly are in physical pixels already, so seeing the scale *after* all of that manipulation seems wrong.\n\u003e \u003e \n\u003e \n\u003e I agree. I also thought it is weird because of the case there are multiple displays.\n\nThere is nothing weird about multiple displays on desktop. It\u0027s doing a bunch of heuristics to see where the displays are so that the pop up is placed entirely inside a single display I think.\n\n\u003e I am curious which display\u0027s device scale factor is applied in the initial code.\n\u003e \n\u003e If I must choose one display in this code, I wonder which display must be chosen for desired_width and element_bounds.\n\u003e \n\u003e \u003e Also should IsUseZoomForDSFEnabled, since that checks a whole bunch of other things. You can move it from content_switches_internal to content_switches\n\u003e \u003e \n\u003e \u003e also speaking of which.. I think that java check in the last CL is wrong?\n\u003e \n\u003e Yes, I agree.\n\u003e I will create another CL to fix the last CL.",
+      "parentUuid": "97035771_e8ac23a1",
       "range": {
         "startLine": 132,
         "startChar": 40,
