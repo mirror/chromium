@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d6f9a15_2475d03b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T12:51:04Z",
+      "side": 1,
+      "message": "This is much more than a rename - perhaps\n\n\"Refactor EditableProfilePhoto into BadgedProfilePhoto\"\n\nedit: actually it\u0027s a lot more than just a refactor. Perhaps \"Replace .. with..\"",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6af09d9_2a93f9b9",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T12:51:04Z",
+      "side": 1,
+      "message": "remove? - these aren\u0027t really helpers",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3110775e_7d7cdf02",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T12:51:04Z",
+      "side": 1,
+      "message": "outer parens not needed",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a85627_c69acbe4",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T12:51:04Z",
+      "side": 1,
+      "message": "gfx::Point(0, 0) -\u003e gfx::Point(). Or just remove? I don\u0027t think this does anything.",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce94522_b6747a41",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T12:51:04Z",
+      "side": 1,
+      "message": "it\u0027s odd to take references, only to dereference below, when it can be avoided. I\u0027d do something like\n\nconst gfx::VectorIcon\u0026 badge_icon \u003d badge_type \u003d\u003d BADGE_TYPE_CHILD\n    ? ..\n    : ..\n\nor add a helper\n\nconst gfx::VectorIcon\u0026 VectorIconForBadgeType(..) {\n ..",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e27e5d0_dd9b15c4",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T12:51:04Z",
+      "side": 1,
+      "message": "GetClassName overrides should always return a reference to a public static const char[] on the class -- this allows pointer comparisons rather than having to use strcmp.",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc13d935_f0e4c314",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T12:51:04Z",
+      "side": 1,
+      "message": "nit: comment",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fcbf8ea_9e624a52",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T12:51:04Z",
+      "side": 1,
+      "message": "private: before this",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec47d8c_288c150d",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T12:51:04Z",
+      "side": 1,
+      "message": "constexpr? and please mention this change in the CL description",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5eaf2ea_170b8717",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T12:51:04Z",
+      "side": 1,
+      "message": "nit: const Profile* ? (it\u0027s just really rare to see Profile passed this way)",
+      "range": {
+        "startLine": 169,
+        "startChar": 50,
+        "endLine": 169,
+        "endChar": 72
+      },
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b42948a_6e403e66",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-14T12:51:04Z",
+      "side": 1,
+      "message": "needs curlies. But I\u0027d probably write this as\n\nif (!profile.IsSupervised())\n  return BadgedProfilePhoto::BADGE_TYPE_NONE;\nreturn profile.IsChild() ? .. : ..;",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
