@@ -13,6 +13,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "components/crash/core/common/crash_key.h"
 
 namespace crash_keys {
 
@@ -139,8 +140,13 @@ void SetSwitchesFromCommandLine(const base::CommandLine& command_line,
   const base::CommandLine::StringVector& argv = command_line.argv();
 
   // Set the number of switches in case size > kNumSwitches.
-  base::debug::SetCrashKeyValue(kNumSwitches,
-      base::StringPrintf("%" PRIuS, argv.size() - 1));
+  auto num_switches = base::StringPrintf("%" PRIuS, argv.size() - 1);
+  base::debug::SetCrashKeyValue(kNumSwitches, num_switches);
+
+  // num-switches is capped at 15 entries, so only two digits are stored.
+  static crash_reporter::CrashKeyString<2> num_switches_key(
+      "num-switches-test");
+  num_switches_key.Set(num_switches.c_str());
 
   size_t key_i = 1;  // Key names are 1-indexed.
 
