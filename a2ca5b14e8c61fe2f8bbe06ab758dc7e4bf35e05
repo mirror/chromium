@@ -22,6 +22,30 @@
       "revId": "a2ca5b14e8c61fe2f8bbe06ab758dc7e4bf35e05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cfa11e9_81d34c05",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-14T21:24:48Z",
+      "side": 1,
+      "message": "I\u0027m not entirely clear right now about what those cases are, and I wanted to get in a fix to stop crashing.\n\nIs this a useful API if you can get a null entry, so you know the title was changed but can\u0027t find out anything about the change? I\u0027d like to see if I can clean up this API further, maybe to guarantee a non-null entry, in a subsequent CL.",
+      "parentUuid": "4252cd6b_b2afd10d",
+      "range": {
+        "startLine": 342,
+        "startChar": 36,
+        "endLine": 342,
+        "endChar": 0
+      },
+      "revId": "a2ca5b14e8c61fe2f8bbe06ab758dc7e4bf35e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
