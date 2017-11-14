@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "base/bind.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -129,6 +130,7 @@ class DiceResponseHandlerTest : public testing::Test,
     AccountTrackerService::RegisterPrefs(pref_service_.registry());
     SigninManager::RegisterProfilePrefs(pref_service_.registry());
     signin::RegisterAccountConsistencyProfilePrefs(pref_service_.registry());
+    signin::SetGaiaOriginIsolatedCallback(base::Bind([] { return true; }));
     account_reconcilor_ = base::MakeUnique<AccountReconcilor>(
         &token_service_, &signin_manager_, &signin_client_, nullptr, false);
     dice_response_handler_ = base::MakeUnique<DiceResponseHandler>(
