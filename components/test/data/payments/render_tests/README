@@ -20,3 +20,4 @@ If you don't have a Nexus 5 running KitKat, then follow these steps instead:
   6) Click on the file names of failed renders in the "logs" column.
   7) Right click on the "Failure" image to save it in
      components/test/data/payments/render_tests. This is the new golden image.
+
