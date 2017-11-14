@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a18ba6a_dde3d343",
+        "filename": "tools/perf/contrib/leak_detection/OWNERS",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-14T09:44:10Z",
+      "side": 1,
+      "message": "contrib directory needs at least 2 owners (see https://cs.chromium.org/chromium/src/tools/perf/contrib/README.md).\n\nCan you find another one (probably should be in your timezone :)",
+      "revId": "db65fd4659b6933d76da96dd6b1ca6156abe5a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6430cd_07e97e59",
+        "filename": "tools/perf/contrib/leak_detection/leak_detection_page.py",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-14T09:44:10Z",
+      "side": 1,
+      "message": "nits: you can just name this files story_set since it\u0027s already in \"leak_detection\" folder.",
+      "revId": "db65fd4659b6933d76da96dd6b1ca6156abe5a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d202d87_62c82f70",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 25
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-14T09:44:10Z",
+      "side": 1,
+      "message": "You no longer need to change this here if all these files are placed in contrib/",
+      "revId": "db65fd4659b6933d76da96dd6b1ca6156abe5a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
