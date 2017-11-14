@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "7c09baef_7e69182e",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-14T01:01:50Z",
+      "side": 1,
+      "message": "\u003e I\u0027ve made the suggested revisions. Just one thing though, with regards to DeleteMatch(), should the check to make sure the keyword is an extension be embedded in the IsKeywordEnabled? For example:\n\u003e \n\u003e return (template_url-\u003etype() !\u003d TemplateURL::OMNIBOX_API_EXTENSION) ||\n\u003e        (template_url-\u003etype() \u003d\u003d TemplateURL::OMNIBOX_API_EXTENSION \u0026\u0026\n\u003e         extensions_delegate_ \u0026\u0026\n\u003e         extensions_delegate_-\u003eIsEnabledExtension(\n\u003e               template_url-\u003eGetExtensionId()));\n\nJudging by the list of Types():\n  enum Type {\n    // Regular search engine.\n    NORMAL,\n    // Installed by extension through Override Settings API.\n    NORMAL_CONTROLLED_BY_EXTENSION,\n    // The keyword associated with an extension that uses the Omnibox API.\n    OMNIBOX_API_EXTENSION,\n    // Installed only on this device. Should not be synced.\n    LOCAL,\n  };\nhttps://cs.chromium.org/chromium/src/components/search_engines/template_url.h?l\u003d469-478\n\nI\u0027m not sure.  The distinction only matters for the second and fourth types on that list.  I don\u0027t know enough about the differences between those four types and whether control can reach the code that uses this function for non-NORMAL, non-OMNIBOX_API_EXTENSION extensions.\n\nIn other words, it\u0027s up to you; I\u0027ll trust your judgment.",
+      "parentUuid": "c5194b74_6c01b483",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe39066e_8d9addcc",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 5
@@ -192,6 +210,24 @@
       "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6dd5913_825fa38c",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-14T01:01:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ca304ccb_39003d55",
+      "revId": "03591f2786436bc2cc17368c4e32fc37e3bbc4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

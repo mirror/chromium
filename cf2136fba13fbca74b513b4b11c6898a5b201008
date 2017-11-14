@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6318b48d_e5d214de",
+        "filename": "chrome/test/data/extensions/api_test/omnibox/test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-14T01:01:50Z",
+      "side": 1,
+      "message": "nit: it appears the rest of this file puts spaces before open parentheses in if statements.",
+      "revId": "cf2136fba13fbca74b513b4b11c6898a5b201008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25554e1f_860ecbb1",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-14T01:01:50Z",
+      "side": 1,
+      "message": "I know I said to move this function to be near the other keyword functions above.  What I meant was to move it near related functions but leave it in the private section as there\u0027s no reason to make it public.  Oops, sorry for the precision.  Please move it near keyword functions in the private section.",
+      "revId": "cf2136fba13fbca74b513b4b11c6898a5b201008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

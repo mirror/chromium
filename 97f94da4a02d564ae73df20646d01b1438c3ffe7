@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87db531a_8c59b5f0",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 13968,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-14T01:01:50Z",
+      "side": 0,
+      "message": "I don\u0027t know what happened with your local checkout.  Please make sure to restore this entry.",
+      "revId": "97f94da4a02d564ae73df20646d01b1438c3ffe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
