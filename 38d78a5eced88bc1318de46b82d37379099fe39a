@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "053fd9b9_0f0640aa",
+        "filename": "chrome/browser/ui/app_list/search/search_resource_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-14T05:08:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "861b72d7_6f4a50ec",
+      "revId": "38d78a5eced88bc1318de46b82d37379099fe39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1ec636a_9b7a9e23",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 3
@@ -116,6 +134,24 @@
       "revId": "38d78a5eced88bc1318de46b82d37379099fe39a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f6626c_ceb19f2f",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-14T05:08:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "babddb2d_aafb9190",
+      "revId": "38d78a5eced88bc1318de46b82d37379099fe39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
