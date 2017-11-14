@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9f58c806_6a061862",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-14T21:28:11Z",
+      "side": 1,
+      "message": "I was trying to describe the fix. I reworded it a bit, hopefully that makes more senses.",
+      "parentUuid": "9a69d952_ae5a69a1",
+      "revId": "b792627442b5279073a4707db5b49b744620705b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f622cab1_5d99d696",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "b792627442b5279073a4707db5b49b744620705b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4af9fc1_6278e922",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-14T21:28:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f622cab1_5d99d696",
+      "revId": "b792627442b5279073a4707db5b49b744620705b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
