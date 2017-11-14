@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "048b454d_56686244",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-14T17:02:18Z",
+      "side": 1,
+      "message": "Now we are calling it only from the browser process right? So if there is an error, we probably cannot collect anything useful, and hence we should better fail early with PLOG(ERROR)?\n\nIt would also be nice to avoid polluting the log with warnings from renderers.\n\nAnother way: detecting whether we are in browser process is easy:\n\nhttps://codesearch.chromium.org/chromium/src/chrome/common/stack_sampling_configuration.cc?type\u003dcs\u0026q\u003dIsBrowserProcess\u0026sq\u003dpackage:chromium\u0026l\u003d42",
+      "range": {
+        "startLine": 139,
+        "startChar": 27,
+        "endLine": 139,
+        "endChar": 45
+      },
+      "revId": "8e24e29c2666c7f69c9389e0fdcd01d8fe00bbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff9ea77_9a27f97c",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-14T17:02:18Z",
+      "side": 1,
+      "message": "Something like \"Cannot open file to dump page residency.\" would be more grep friendly.",
+      "range": {
+        "startLine": 141,
+        "startChar": 4,
+        "endLine": 141,
+        "endChar": 16
+      },
+      "revId": "8e24e29c2666c7f69c9389e0fdcd01d8fe00bbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd375f9_13a6f176",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-14T17:02:18Z",
+      "side": 1,
+      "message": "Please output the file name as well.",
+      "range": {
+        "startLine": 141,
+        "startChar": 20,
+        "endLine": 141,
+        "endChar": 42
+      },
+      "revId": "8e24e29c2666c7f69c9389e0fdcd01d8fe00bbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3324bf_04fa03a1",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-14T17:02:18Z",
+      "side": 1,
+      "message": "This description is not precise. As we know, a range in /proc/self/maps may cover multiple sections, in particular, it can cover .text and .rodata with one segment.\n\nI think making it clearer would be enough to get an l-g-t-m from me. Ideally, we should find the executable range and check that we only have one (for the DSO), but I do not remember why we did not do it in the library prefetcher before, and relied on \u0027private\u0027 bit instead. If you remind me, I\u0027d be grateful.\n\nAlso, this reminds me that PathMatchesSuffix() would return false for \u0027libmonochrome.so\u0027. It is the expected behavior for prefetcher, but would dump no residency info, right? I guess we need to parametrise FindRanges() .. probably better be done in a future change.",
+      "range": {
+        "startLine": 282,
+        "startChar": 12,
+        "endLine": 282,
+        "endChar": 41
+      },
+      "revId": "8e24e29c2666c7f69c9389e0fdcd01d8fe00bbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06dd9a41_c8c3e627",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-14T17:02:18Z",
+      "side": 1,
+      "message": "nit: s/r/R/",
+      "range": {
+        "startLine": 282,
+        "startChar": 5,
+        "endLine": 282,
+        "endChar": 6
+      },
+      "revId": "8e24e29c2666c7f69c9389e0fdcd01d8fe00bbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25feca9d_edf836a5",
+        "filename": "base/android/library_loader/library_prefetcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-14T17:02:18Z",
+      "side": 1,
+      "message": "the type alias definition moved from private to public, can you explain the reasons?",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 55
+      },
+      "revId": "8e24e29c2666c7f69c9389e0fdcd01d8fe00bbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
