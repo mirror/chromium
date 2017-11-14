@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12e315c6_79fc4d33",
+        "filename": "content/test/test_render_frame_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-14T19:16:48Z",
+      "side": 1,
+      "message": "Why not use a covariant override of GetRenderWidgetHost() here (as happens with GetRenderViewHost()).\n\nThis works great in these test classes, with one exception: either TestRVH gets to know that TestRFH is an RFHImpl, or TestRFH gets to know that TestRVH is a RVHImpl, but you can\u0027t have both classes doing mutual covariant overrides using the derived type of the other -- one of TestRFH, TestRVH (and now TestRWH) has to be declared first, and you can\u0027t forward-declare the inheritance relationship.\n\nSo what we did, was to put the TestRFH at the bottom of these dependencies, so that it can use TestRVH and TestRWH for covariant overrides.",
+      "revId": "773f37cfa0d8100dc16a6c4be3387486c50c6ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
