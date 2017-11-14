@@ -1850,7 +1850,8 @@ void Element::AttachLayoutTree(AttachContext& context) {
 
   AddCallbackSelectors();
 
-  if (HasRareData() && !GetLayoutObject()) {
+  if (HasRareData() && !GetLayoutObject() &&
+      !GetElementRareData()->GetComputedStyle()) {
     if (ElementAnimations* element_animations =
             GetElementRareData()->GetElementAnimations()) {
       element_animations->CssAnimations().Cancel();
@@ -3510,7 +3511,8 @@ bool Element::ShouldStoreNonLayoutObjectComputedStyle(
 #endif
 
   return style.Display() == EDisplay::kContents ||
-         IsHTMLOptGroupElement(*this) || IsHTMLOptionElement(*this);
+         IsHTMLOptGroupElement(*this) || IsHTMLOptionElement(*this) ||
+         IsSVGStopElement(*this);
 }
 
 void Element::StoreNonLayoutObjectComputedStyle(

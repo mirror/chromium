@@ -31,7 +31,6 @@
 #include "core/layout/LayoutTreeAsText.h"
 #include "core/layout/api/LineLayoutSVGInlineText.h"
 #include "core/layout/line/InlineTextBox.h"
-#include "core/layout/svg/LayoutSVGGradientStop.h"
 #include "core/layout/svg/LayoutSVGImage.h"
 #include "core/layout/svg/LayoutSVGInline.h"
 #include "core/layout/svg/LayoutSVGResourceClipper.h"
@@ -65,7 +64,6 @@
 #include "core/svg/SVGPolyElement.h"
 #include "core/svg/SVGRadialGradientElement.h"
 #include "core/svg/SVGRectElement.h"
-#include "core/svg/SVGStopElement.h"
 #include "core/svg/graphics/filters/SVGFilterBuilder.h"
 #include "platform/graphics/DashArray.h"
 #include "platform/graphics/GraphicsTypes.h"
@@ -711,19 +709,6 @@ void Write(TextStream& ts, const LayoutSVGShape& shape, int indent) {
   WriteStandardPrefix(ts, shape, indent);
   ts << shape << "\n";
   WriteResources(ts, shape, indent);
-}
-
-void WriteSVGGradientStop(TextStream& ts,
-                          const LayoutSVGGradientStop& stop,
-                          int indent) {
-  WriteStandardPrefix(ts, stop, indent);
-
-  SVGStopElement* stop_element = ToSVGStopElement(stop.GetNode());
-  DCHECK(stop_element);
-  DCHECK(stop.Style());
-
-  ts << " [offset=" << stop_element->offset()->CurrentValue()->Value()
-     << "] [color=" << stop_element->StopColorIncludingOpacity() << "]\n";
 }
 
 void WriteResources(TextStream& ts, const LayoutObject& object, int indent) {
