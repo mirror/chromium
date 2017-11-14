@@ -162,6 +162,30 @@
     },
     {
       "key": {
+        "uuid": "c58de6f1_b2d34be0",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-14T01:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63b2507e_29c490ac",
+      "range": {
+        "startLine": 132,
+        "startChar": 21,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "15db659f016667976827ff3f9e57312b1d5cd918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00eca535_3eb3c4aa",
         "filename": "chrome/browser/ui/cocoa/color_chooser_mac.mm",
         "patchSetId": 1
@@ -182,6 +206,30 @@
       "revId": "15db659f016667976827ff3f9e57312b1d5cd918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3869738d_075e2510",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-14T01:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00eca535_3eb3c4aa",
+      "range": {
+        "startLine": 135,
+        "startChar": 71,
+        "endLine": 135,
+        "endChar": 79
+      },
+      "revId": "15db659f016667976827ff3f9e57312b1d5cd918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
