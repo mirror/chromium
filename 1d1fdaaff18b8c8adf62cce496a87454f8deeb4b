@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63fcdb30_72497d18",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 11
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-14T05:20:55Z",
+      "side": 1,
+      "message": "I\u0027m still confused.\n\nWhen do we need to pass in the instance object?\n\nWhen do we need to pass in all of the instance object, the prototype object and the interface object?",
+      "revId": "1d1fdaaff18b8c8adf62cce496a87454f8deeb4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
