@@ -50,6 +50,24 @@
       "revId": "323548184c2a4a85efea7f255e512cbbfadc2343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f2ef3e_a6e9ff50",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T21:36:22Z",
+      "side": 1,
+      "message": "Sure. I tend to err on the side of longer names when we have terminology collisions, but I seem to be in the minority there so didn\u0027t push it (same with line 91 above). It\u0027d also has nice symmetry with |host_for_client_| above.\n\nIf we grow more of these, we should consider doing the ClientState/ServiceWorkerGlobalScopeState struct thing, or using subclasses.",
+      "parentUuid": "91448604_a266b5b0",
+      "revId": "323548184c2a4a85efea7f255e512cbbfadc2343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
