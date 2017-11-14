@@ -92,6 +92,23 @@ class ObserverListBase
     explicit Iter(ContainerType* list);
     ~Iter();
 
+    // Copy constructor.
+    Iter(const Iter& other)
+        : list_(other.list_),
+          index_(other.index_),
+          max_index_(other.max_index_) {
+      if (list_)
+        ++list_->notify_depth_;
+    }
+
+    // Unified assignment operator.
+    Iter& operator=(Iter other) {
+      std::swap(list_, other.list_);
+      std::swap(index_, other.index_);
+      std::swap(max_index_, other.max_index_);
+      return *this;
+    }
+
     // A workaround for C2244. MSVC requires fully qualified type name for
     // return type on a function definition to match a function declaration.
     using ThisType =
@@ -200,7 +217,11 @@ ObserverListBase<ObserverType>::Iter<ContainerType>::Iter(ContainerType* list)
 template <class ObserverType>
 template <class ContainerType>
 ObserverListBase<ObserverType>::Iter<ContainerType>::~Iter() {
-  if (list_ && --list_->notify_depth_ == 0)
+  if (!list_)
+    return;
+
+  DCHECK_GT(list_->notify_depth_, 0);
+  if (--list_->notify_depth_ == 0)
     list_->Compact();
 }
 
