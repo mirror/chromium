@@ -128,7 +128,7 @@ bool IsFallbackFileHandler(const file_tasks::TaskDescriptor& task) {
     return false;
 
   const char* const kBuiltInApps[] = {
-      kFileManagerAppId, kVideoPlayerAppId, kGalleryAppId, kTextEditorAppId,
+      kFileManagerAppId, kVideoPlayerAppId, kGalleryAppId, // kTextEditorAppId,
   };
 
   for (size_t i = 0; i < arraysize(kBuiltInApps); ++i) {
@@ -625,8 +625,10 @@ void ChooseAndSetDefaultTask(const PrefService& pref_service,
     FullTaskDescriptor* task = &tasks->at(i);
     DCHECK(!task->is_default());
     const std::string task_id = TaskDescriptorToId(task->task_descriptor());
+    LOG(ERROR) << "task_id=" << task_id;
     if (base::ContainsKey(default_task_ids, task_id)) {
       task->set_is_default(true);
+      LOG(ERROR) << task_id << " is chosen as default by default task";
       return;
     }
   }
@@ -638,9 +640,12 @@ void ChooseAndSetDefaultTask(const PrefService& pref_service,
     DCHECK(!task->is_default());
     if (IsFallbackFileHandler(task->task_descriptor())) {
       task->set_is_default(true);
+      LOG(ERROR) << task->task_title() << " is chosen as first fallback handler";
+      LOG(ERROR) << "is_generic_file_handler=" << task->is_generic_file_handler();
       return;
     }
   }
+  LOG(ERROR) << "No default task";
 }
 
 }  // namespace file_tasks
