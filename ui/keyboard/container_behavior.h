@@ -67,6 +67,8 @@ class KEYBOARD_EXPORT ContainerBehavior {
   virtual ContainerType GetType() const = 0;
 
   virtual bool TextBlurHidesKeyboard() const = 0;
+
+  virtual bool BoundsAffectWorkspaceLayout() const = 0;
 };
 
 }  // namespace keyboard
