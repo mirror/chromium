@@ -4,6 +4,7 @@
 
 #include "ash/system/power/power_button_test_base.h"
 
+#include "ash/lock_screen_action/lock_screen_note_display_state_handler.h"
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/config.h"
 #include "ash/session/session_controller.h"
@@ -11,7 +12,9 @@
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
 #include "ash/system/power/power_button_controller.h"
+#include "ash/system/power/power_button_display_controller.h"
 #include "ash/system/power/tablet_power_button_controller_test_api.h"
+#include "ash/tray_action/tray_action.h"
 #include "ash/wm/lock_state_controller.h"
 #include "ash/wm/lock_state_controller_test_api.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
@@ -21,6 +24,7 @@
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_power_manager_client.h"
 #include "chromeos/dbus/fake_session_manager_client.h"
+#include "ui/events/devices/stylus_state.h"
 #include "ui/events/event.h"
 #include "ui/events/test/event_generator.h"
 
@@ -157,6 +161,27 @@ void PowerButtonTestBase::LockScreen() {
 void PowerButtonTestBase::UnlockScreen() {
   lock_state_controller_->OnLockStateChanged(false);
   GetSessionControllerClient()->UnlockScreen();
+}
+
+void PowerButtonTestBase::RemoveStylus() {
+  Shell::Get()->tray_action()->OnStylusStateChanged(ui::StylusState::REMOVED);
+  power_button_controller_->display_controller_for_test()->OnStylusStateChanged(
+      ui::StylusState::REMOVED);
+}
+
+bool PowerButtonTestBase::TriggerLockScreenNoteLaunchTimeout() {
+  base::Timer* timer = Shell::Get()
+                           ->tray_action()
+                           ->lock_screen_note_display_state_handler_for_test()
+                           ->launch_timer_for_test();
+
+  if (!timer->IsRunning())
+    return false;
+
+  base::Closure task = timer->user_task();
+  timer->Stop();
+  task.Run();
+  return true;
 }
 
 void PowerButtonTestBase::EnableTabletMode(bool enable) {
