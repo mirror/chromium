@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0592bd9_8e9495d1",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-14T16:48:11Z",
+      "side": 1,
+      "message": "This also needs similar logic.  Or are you planning on doing that in a followup CL?",
+      "range": {
+        "startLine": 612,
+        "startChar": 22,
+        "endLine": 612,
+        "endChar": 58
+      },
+      "revId": "2c6da39049bf571019ed88f47bfe4f374c926734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
