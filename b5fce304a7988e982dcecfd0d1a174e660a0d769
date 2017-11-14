@@ -70,6 +70,30 @@
       "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db06cfd_42067871",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-14T22:20:06Z",
+      "side": 1,
+      "message": "\u003e I just double checked. This line actually fixes it somehow. GrContext and GLHelper share the same GLES2Interface*. \n\nThen I guess resetContext() is doing some work unconditoinally even tho it\u0027s not being used, but its not aware of what GLHelper is doing and just happens to overlap and reset the right things (for now) and maybe other additional things which may or may not be expected, and may or may not be what canvas would want.\n\n\u003e Just to be clear, ReadbackYUV() causes both the source canvas and captured stream to be rendered corruptly\n\nI\u0027m not sure what you mean here I guess. I think you\u0027re just saying that any gl commands we run after are depending on some state that ReadbackYUV has changed.\n\nThen I guess what I\u0027m saying for #1 is that after canvas does this readback, both canvas and the captured stream generating code should not assume these GL states and should be setting them.\n\nFor #2/3 there is no such Reset method, it would be adding one that un-sets the things ReadbackYUV sets essentially. A reset method kinda feels more fragile to me fwiw which is why i asked about what #1 would look like first.",
+      "parentUuid": "3f996224_8041edb2",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 51
+      },
+      "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
