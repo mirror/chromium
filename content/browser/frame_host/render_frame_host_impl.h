@@ -558,6 +558,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // process, e.g. by AppCache etc.
   void CommitNavigation(
       ResourceResponse* response,
+      mojom::URLLoaderPtr url_loader,
+      mojom::URLLoaderClientRequest url_loader_client,
       std::unique_ptr<StreamHandle> body,
       mojo::ScopedDataPipeConsumerHandle handle,
       const CommonNavigationParams& common_params,
