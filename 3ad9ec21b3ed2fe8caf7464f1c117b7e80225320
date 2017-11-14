@@ -16,6 +16,24 @@
       "revId": "3ad9ec21b3ed2fe8caf7464f1c117b7e80225320",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b941d01_a69fec56",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-14T19:19:02Z",
+      "side": 1,
+      "message": "It is now being used for relative scaling of clients at aggregation time. If it\u0027s not reported to Viz then scaling will be incorrect. I\u0027ll add a TODO. When does display density change on android?",
+      "parentUuid": "3fcdffe5_9b2f12d0",
+      "revId": "3ad9ec21b3ed2fe8caf7464f1c117b7e80225320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
