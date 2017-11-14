@@ -1756,6 +1756,18 @@ void RenderThreadImpl::OnChannelError() {
   ChildThreadImpl::OnChannelError();
 }
 
+void RenderThreadImpl::OnProcessFinalRelease() {
+  if (on_channel_error_called())
+    return;
+  // The child process shutdown sequence is a request response based mechanism,
+  // where we send out an initial feeler request to the child process host
+  // instance in the browser to verify if it's ok to shutdown the child process.
+  // The browser then sends back a response if it's ok to shutdown. This avoids
+  // race conditions if the process refcount is 0 but there's an IPC message
+  // inflight that would addref it.
+  GetRendererHost()->ShutdownRequest();
+}
+
 bool RenderThreadImpl::OnControlMessageReceived(const IPC::Message& msg) {
   for (auto& observer : observers_) {
     if (observer.OnControlMessageReceived(msg))

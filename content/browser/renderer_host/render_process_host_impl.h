@@ -455,6 +455,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
       mojom::RendererHost::GetBrowserHistogramCallback;
   void GetBrowserHistogram(const std::string& name,
                            BrowserHistogramCallback callback) override;
+  void ShutdownRequest() override;
 
   void BindRouteProvider(mojom::RouteProviderAssociatedRequest request);
 
@@ -472,7 +473,6 @@ class CONTENT_EXPORT RenderProcessHostImpl
   void CreateURLLoaderFactory(mojom::URLLoaderFactoryRequest request);
 
   // Control message handlers.
-  void OnShutdownRequest();
   void SuddenTerminationChanged(bool enabled);
   void OnUserMetricsRecordAction(const std::string& action);
   void OnCloseACK(int old_route_id);
