@@ -66,7 +66,6 @@ INTERFACE_CPP_INCLUDES = frozenset([
     'platform/bindings/V8ObjectConstructor.h',
     'core/dom/ExecutionContext.h',
     'platform/wtf/GetPtr.h',
-    'platform/wtf/RefPtr.h',
 ])
 
 
