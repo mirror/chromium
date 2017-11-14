@@ -402,6 +402,10 @@ bool WebURLRequest::IsExternalRequest() const {
   return resource_request_->IsExternalRequest();
 }
 
+network::mojom::CORSPreflightPolicy WebURLRequest::CORSPreflightPolicy() const {
+  return resource_request_->CORSPreflightPolicy();
+}
+
 WebURLRequest::LoadingIPCType WebURLRequest::GetLoadingIPCType() const {
   return resource_request_->GetLoadingIPCType();
 }

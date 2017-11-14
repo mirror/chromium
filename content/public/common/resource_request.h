@@ -89,6 +89,13 @@ struct CONTENT_EXPORT ResourceRequest {
   // True if corresponding AppCache group should be resetted.
   bool should_reset_appcache = false;
 
+  // https://wicg.github.io/cors-rfc1918/#external-request
+  bool is_external_request = false;
+
+  // Policy to decide if CORS preflight check is performed.
+  network::mojom::CORSPreflightPolicy cors_preflight_policy =
+      network::mojom::CORSPreflightPolicy::kConsiderPreflight;
+
   // Indicates which frame (or worker context) the request is being loaded into,
   // or kInvalidServiceWorkerProviderId.
   int service_worker_provider_id = kInvalidServiceWorkerProviderId;
