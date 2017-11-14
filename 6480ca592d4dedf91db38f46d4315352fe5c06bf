@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2da51f9c_46c96e44",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003006
+      },
+      "writtenOn": "2017-11-14T17:09:55Z",
+      "side": 1,
+      "message": "It sounds like this part got reverted, so make sure to update the commit message.",
+      "revId": "6480ca592d4dedf91db38f46d4315352fe5c06bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b95dd73_d6218f80",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1839,
+      "author": {
+        "id": 1003006
+      },
+      "writtenOn": "2017-11-14T17:09:55Z",
+      "side": 1,
+      "message": "Why not standardize on passing /Z7 to clang? The fact that clang aliases /Z7 to /Zi is kind of a lie for compatibility with existing build systems. If someone was trying to read and understand a clang compilation command, I think it would be clearer if we had /Z7 instead of /Zi.",
+      "revId": "6480ca592d4dedf91db38f46d4315352fe5c06bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
