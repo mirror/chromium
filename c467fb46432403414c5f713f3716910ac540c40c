@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "625901db_1eea7e37",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-14T17:41:13Z",
+      "side": 1,
+      "message": "This can be a bool now? Ie, HasLayerThatIsHitByPointInTouchHandleRegion as opposed to FindLayer...",
+      "range": {
+        "startLine": 647,
+        "startChar": 2,
+        "endLine": 647,
+        "endChar": 42
+      },
+      "revId": "c467fb46432403414c5f713f3716910ac540c40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5939864c_dd2f5c51",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-14T17:41:13Z",
+      "side": 1,
+      "message": "the code above implies that out_touch_action always exists. If that\u0027s true, then this if is unnecessary. Also, since we initialize it to Auto now, I think we can remove the next line as well?",
+      "range": {
+        "startLine": 652,
+        "startChar": 8,
+        "endLine": 652,
+        "endChar": 24
+      },
+      "revId": "c467fb46432403414c5f713f3716910ac540c40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e869f914_d133c0f0",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1795,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-14T17:41:13Z",
+      "side": 1,
+      "message": "This function only has one callsite and you pass the point in there unconditionally, I don\u0027t think you need this if.",
+      "revId": "c467fb46432403414c5f713f3716910ac540c40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57346ca_6ec3746c",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1956,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-14T17:41:13Z",
+      "side": 1,
+      "message": "nit: not needed",
+      "range": {
+        "startLine": 1956,
+        "startChar": 43,
+        "endLine": 1956,
+        "endChar": 49
+      },
+      "revId": "c467fb46432403414c5f713f3716910ac540c40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d25f918_baefc5fe",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1969,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-14T17:41:13Z",
+      "side": 1,
+      "message": "Leave a comment here, please. Also, here I think here tests can pass nullptr right? If not then this if might not be needed either.",
+      "revId": "c467fb46432403414c5f713f3716910ac540c40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f344e0d4_0d9f4d02",
+        "filename": "cc/trees/layer_tree_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-14T17:41:13Z",
+      "side": 1,
+      "message": "Can you leave a comment here document what the inputs/outputs are?\n\nAlso, is the default value because this is called in tests?",
+      "revId": "c467fb46432403414c5f713f3716910ac540c40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
