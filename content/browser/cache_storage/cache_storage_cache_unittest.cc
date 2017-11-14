@@ -427,12 +427,7 @@ class CacheStorageCacheTest : public testing::Test {
     for (int i = 0; i < 100; ++i)
       expected_blob_data_ += kTestData;
 
-    std::unique_ptr<storage::BlobDataBuilder> blob_data(
-        new storage::BlobDataBuilder("blob-id:myblob"));
-    blob_data->AppendData(expected_blob_data_);
-
-    blob_handle_ =
-        blob_storage_context->context()->AddFinishedBlob(blob_data.get());
+    blob_handle_ = BuildBlobHandle("blob-id:myblob", expected_blob_data_);
 
     scoped_refptr<storage::BlobHandle> blob;
     if (features::IsMojoBlobsEnabled()) {
@@ -479,6 +474,29 @@ class CacheStorageCacheTest : public testing::Test {
         false /* is_in_cache_storage */,
         std::string() /* cache_storage_cache_name */,
         std::move(cors_exposed_header_names));
+  }
+
+  std::unique_ptr<storage::BlobDataHandle> BuildBlobHandle(
+      const std::string& uuid,
+      const std::string& data) {
+    std::unique_ptr<storage::BlobDataBuilder> builder =
+        std::make_unique<storage::BlobDataBuilder>(uuid);
+    builder->AppendData(data);
+    return blob_storage_context_->AddFinishedBlob(builder.get());
+  }
+
+  void SetSideDataToResponse(storage::BlobDataHandle* side_data_blob_handle,
+                             ServiceWorkerResponse* response) {
+    response->side_data_blob_uuid = side_data_blob_handle->uuid();
+    response->side_data_blob_size = side_data_blob_handle->size();
+    if (features::IsMojoBlobsEnabled()) {
+      blink::mojom::BlobPtr blob_ptr;
+      storage::BlobImpl::Create(
+          std::make_unique<storage::BlobDataHandle>(*side_data_blob_handle),
+          MakeRequest(&blob_ptr));
+      response->side_data_blob =
+          base::MakeRefCounted<storage::BlobHandle>(std::move(blob_ptr));
+    }
   }
 
   std::unique_ptr<ServiceWorkerFetchRequest> CopyFetchRequest(
@@ -1447,6 +1465,60 @@ TEST_P(CacheStorageCacheTestP, PutResponseType) {
   EXPECT_TRUE(TestResponseType(network::mojom::FetchResponseType::kOpaque));
   EXPECT_TRUE(
       TestResponseType(network::mojom::FetchResponseType::kOpaqueRedirect));
+}
+
+TEST_P(CacheStorageCacheTestP, PutWithSideData) {
+  ServiceWorkerResponse response(body_response_);
+
+  const std::string expected_side_data = "SideData";
+  std::unique_ptr<storage::BlobDataHandle> side_data_blob_handle =
+      BuildBlobHandle("blob-id:mysideblob", expected_side_data);
+
+  SetSideDataToResponse(side_data_blob_handle.get(), &response);
+  EXPECT_TRUE(Put(body_request_, response));
+
+  EXPECT_TRUE(Match(body_request_));
+  EXPECT_TRUE(callback_response_data_);
+  EXPECT_TRUE(
+      ResponseBodiesEqual(expected_blob_data_, *callback_response_data_));
+  EXPECT_TRUE(
+      ResponseSideDataEqual(expected_side_data, *callback_response_data_));
+}
+
+TEST_P(CacheStorageCacheTestP, PutWithSideData_QuotaExceeded) {
+  mock_quota_manager_->SetQuota(GURL(kOrigin), storage::kStorageTypeTemporary,
+                                expected_blob_data_.size() - 1);
+  ServiceWorkerResponse response(body_response_);
+  const std::string expected_side_data = "SideData";
+  std::unique_ptr<storage::BlobDataHandle> side_data_blob_handle =
+      BuildBlobHandle("blob-id:mysideblob", expected_side_data);
+
+  SetSideDataToResponse(side_data_blob_handle.get(), &response);
+  // When the available space is not enough for the body, Put operation must
+  // fail.
+  EXPECT_FALSE(Put(body_request_, response));
+  EXPECT_EQ(CacheStorageError::kErrorQuotaExceeded, callback_error_);
+}
+
+TEST_P(CacheStorageCacheTestP, PutWithSideData_QuotaExceededSkipSideData) {
+  mock_quota_manager_->SetQuota(GURL(kOrigin), storage::kStorageTypeTemporary,
+                                expected_blob_data_.size());
+  ServiceWorkerResponse response(body_response_);
+  const std::string expected_side_data = "SideData";
+  std::unique_ptr<storage::BlobDataHandle> side_data_blob_handle =
+      BuildBlobHandle("blob-id:mysideblob", expected_side_data);
+
+  SetSideDataToResponse(side_data_blob_handle.get(), &response);
+  // When the available space is enough for the body but not enough for the side
+  // data, Put operation must succeed.
+  EXPECT_TRUE(Put(body_request_, response));
+
+  EXPECT_TRUE(Match(body_request_));
+  EXPECT_TRUE(callback_response_data_);
+  EXPECT_TRUE(
+      ResponseBodiesEqual(expected_blob_data_, *callback_response_data_));
+  // The side data should not be written.
+  EXPECT_TRUE(ResponseSideDataEqual("", *callback_response_data_));
 }
 
 TEST_P(CacheStorageCacheTestP, WriteSideData) {
