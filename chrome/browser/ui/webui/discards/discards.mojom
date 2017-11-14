@@ -1,0 +1,29 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module mojom;
+
+// Discard related information about a single tab in a browser.
+struct TabDiscardsInfo {
+  string tab_url;
+  string favicon_url;
+  string title;
+  bool is_app;
+  bool is_internal;
+  bool is_media;
+  bool is_pinned;
+  bool is_discarded;
+  int32 discard_count;
+  int32 utility_rank;
+  int32 last_active_seconds;
+  int32 id;
+  bool is_auto_discardable;
+};
+
+interface DiscardsDetailsProvider {
+  GetTabDiscardsInfo() => (array<TabDiscardsInfo> infos);
+  SetAutoDiscardable(int32 tab_id, bool is_auto_discardable) => ();
+  DiscardById(int32 tab_id, bool urgent) => ();
+  Discard(bool urgent) => ();
+};

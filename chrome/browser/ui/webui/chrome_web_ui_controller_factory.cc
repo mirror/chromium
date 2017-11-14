@@ -28,6 +28,7 @@
 #include "chrome/browser/ui/webui/constrained_web_dialog_ui.h"
 #include "chrome/browser/ui/webui/crashes_ui.h"
 #include "chrome/browser/ui/webui/device_log_ui.h"
+#include "chrome/browser/ui/webui/discards/discards_ui.h"
 #include "chrome/browser/ui/webui/domain_reliability_internals_ui.h"
 #include "chrome/browser/ui/webui/download_internals/download_internals_ui.h"
 #include "chrome/browser/ui/webui/engagement/site_engagement_ui.h"
@@ -288,9 +289,6 @@ bool IsAboutUI(const GURL& url) {
 #endif
 #if defined(OS_CHROMEOS)
           || url.host_piece() == chrome::kChromeUIOSCreditsHost
-#endif
-#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
-          || url.host_piece() == chrome::kChromeUIDiscardsHost
 #endif
           );  // NOLINT
 }
@@ -594,6 +592,10 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
   if (url.host_piece() == chrome::kChromeUISandboxHost) {
     return &NewWebUI<SandboxInternalsUI>;
   }
+#endif
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
+  if (url.host_piece() == chrome::kChromeUIDiscardsHost)
+    return &NewWebUI<DiscardsUI>;
 #endif
   if (IsAboutUI(url))
     return &NewWebUI<AboutUI>;
