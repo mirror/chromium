@@ -261,7 +261,7 @@ class BookmarkItemsAdapter
 
     // BookmarkUIObserver implementations.
 
-    @Override
+    //@Override
     public void onBookmarkDelegateInitialized(BookmarkDelegate delegate) {
         mDelegate = delegate;
         mDelegate.addUIObserver(this);

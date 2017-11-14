@@ -141,7 +141,7 @@ public class BookmarkActionBar extends SelectableListToolbar<BookmarkId>
 
     // BookmarkUIObserver implementations.
 
-    @Override
+    //@Override
     public void onBookmarkDelegateInitialized(BookmarkDelegate delegate) {
         mDelegate = delegate;
         mDelegate.addUIObserver(this);
