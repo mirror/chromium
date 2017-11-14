@@ -168,11 +168,13 @@ class SubresourceLoader : public mojom::URLLoader,
   void OnReceiveResponse(
       const ResourceResponseHead& response_head,
       const base::Optional<net::SSLInfo>& ssl_info,
-      mojom::DownloadedTempFilePtr downloaded_file) override {
+      mojom::DownloadedTempFilePtr downloaded_file,
+      mojom::URLLoaderNavigationDataPtr navigation_data) override {
     // Don't MaybeFallback for appcache produced responses.
     if (appcache_loader_ || !handler_) {
       remote_client_->OnReceiveResponse(response_head, ssl_info,
-                                        std::move(downloaded_file));
+                                        std::move(downloaded_file),
+                                        mojom::URLLoaderNavigationDataPtr());
       return;
     }
 
@@ -192,7 +194,8 @@ class SubresourceLoader : public mojom::URLLoader,
       CreateAndStartAppCacheLoader(std::move(start_function));
     } else {
       remote_client_->OnReceiveResponse(response_head, ssl_info,
-                                        std::move(downloaded_file));
+                                        std::move(downloaded_file),
+                                        mojom::URLLoaderNavigationDataPtr());
     }
   }
 

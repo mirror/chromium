@@ -32,7 +32,8 @@ class TestURLLoaderFactory : public mojom::URLLoaderFactory {
         "Content-Type: text/html; charset=utf-8\n");
 
     client_ptr_->OnReceiveResponse(response, base::nullopt /* ssl_info */,
-                                   nullptr /* downloaded_file */);
+                                   nullptr /* downloaded_file */,
+                                   mojom::URLLoaderNavigationDataPtr());
   }
 
   void NotifyClientOnComplete(int error_code) {
