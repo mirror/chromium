@@ -569,11 +569,21 @@ Console.ConsoleView = class extends UI.VBox {
 
     var lastMessage = this._visibleViewMessages.peekLast();
     if (viewMessage.consoleMessage().type === ConsoleModel.ConsoleMessage.MessageType.EndGroup) {
-      if (lastMessage && !this._currentGroup.messagesHidden())
-        lastMessage.incrementCloseGroupDecorationCount();
+      if (lastMessage) {
+        if (!this._currentGroup._childMessageCount) {
+          if (this._currentGroup.titleMessage() === lastMessage)
+            this._visibleViewMessages.pop();
+          if (this._currentGroup.parentGroup() && this._currentGroup.parentGroup()._childMessageCount)
+            this._currentGroup.parentGroup()._childMessageCount--;
+        } else if (!this._currentGroup.messagesHidden()) {
+          lastMessage.incrementCloseGroupDecorationCount();
+        }
+      }
       this._currentGroup = this._currentGroup.parentGroup() || this._currentGroup;
       return;
     }
+
+    this._currentGroup._childMessageCount++;
     if (!this._currentGroup.messagesHidden()) {
       var originatingMessage = viewMessage.consoleMessage().originatingMessage();
       if (lastMessage && originatingMessage && lastMessage.consoleMessage() === originatingMessage)
@@ -755,6 +765,7 @@ Console.ConsoleView = class extends UI.VBox {
   _updateMessageList() {
     this._topGroup = Console.ConsoleGroup.createTopGroup();
     this._currentGroup = this._topGroup;
+    this._currentGroup._childMessageCount = 0;
     this._regexMatchRanges = [];
     this._hiddenByFilterCount = 0;
     for (var i = 0; i < this._visibleViewMessages.length; ++i) {
@@ -1458,6 +1469,8 @@ Console.ConsoleGroup = class {
     this._nestingLevel = parentGroup ? parentGroup.nestingLevel() + 1 : 0;
     this._messagesHidden =
         groupMessage && groupMessage.collapsed() || this._parentGroup && this._parentGroup.messagesHidden();
+    this._titleMessage = groupMessage;
+    this._childMessageCount = 0;
   }
 
   /**
@@ -1486,6 +1499,13 @@ Console.ConsoleGroup = class {
    */
   parentGroup() {
     return this._parentGroup;
+  }
+
+  /**
+   * @return {?Console.ConsoleViewMessage}
+   */
+  titleMessage() {
+    return this._titleMessage;
   }
 };
 
