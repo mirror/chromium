@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "ab9c989b_191f8da3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/overrides/files-save-without-hash.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-14T21:35:15Z",
+      "side": 1,
+      "message": "will the throwing terminate test? In old testing framework, this wasn\u0027t the case, so a common pattern was something like:\n\nif (!networkUISourceCode) {\n  testRunner.addResult(\u0027ERROR: ...\u0027);\n  testRunner.completeTest();\n  return;\n}\n\nIn protocol tests, we also had a \"die\" command with a message that was doing this.",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 11
+      },
+      "revId": "2823ab71d9cbae060414e0deac9abeb027a4528a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11ca9bf_97885c0f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/overrides/files-save-without-hash.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-14T21:35:15Z",
+      "side": 1,
+      "message": "ditto about throwing vs completing test",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 11
+      },
+      "revId": "2823ab71d9cbae060414e0deac9abeb027a4528a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f25c8e18_0e275f83",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
         "patchSetId": 1
