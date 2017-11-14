@@ -43,9 +43,11 @@ class CORE_EXPORT V8ContextSnapshot {
       v8::ExtensionConfiguration*,
       v8::Local<v8::Object> global_proxy,
       Document*);
-  // Install runtime enabled features on some v8::Object's in a context
+
+  // Install conditionally enabled features on some v8::Object's in a context
   // created from a snapshot.
-  static void InstallRuntimeEnabledFeatures(v8::Local<v8::Context>, Document*);
+  static void InstallConditionalFeaturesOnObjects(v8::Local<v8::Context>,
+                                                  Document*);
 
   static void EnsureInterfaceTemplates(v8::Isolate*);
 
