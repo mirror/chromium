@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eb2229d_8e5362a7",
+        "filename": "content/renderer/media/webrtc/media_stream_remote_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-14T05:30:56Z",
+      "side": 1,
+      "message": "nit: Will there ever be other formats supporting alpha that are not I420A but still allow invocation of buffer-\u003eGetI420A()? That seems unlikely, and if that is not the case, the const bool |has_alpha| is misleading (too general). Would be better to either name it |is_i420a| or just replace it directly with the equality expression.",
+      "revId": "59b0c0c0947ee1ccf27e901382060b3a856fac76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1137854_89208cce",
+        "filename": "content/renderer/media/webrtc/media_stream_remote_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-14T05:30:56Z",
+      "side": 1,
+      "message": "Two nits:\n1. There doesn\u0027t seem to be a |frame| in this scope. Does it mean |incoming_frame|?\n2. This comment seems to apply to the newly added alpha code path above as well. If it is not needed above, can we maybe remove it from here, too? Or if it is needed for both, can we move it up one scope?",
+      "revId": "59b0c0c0947ee1ccf27e901382060b3a856fac76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda10456_c2bcf45c",
+        "filename": "content/renderer/media/webrtc/webrtc_video_capturer_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-14T05:30:56Z",
+      "side": 1,
+      "message": "nit: Here, we essentially implemented a libyuv::I420AScale(), which seems like something that may be useful in other contexts as well (if not today, then maybe soon). It would be great to move this to a more reusable and discoverable location to avoid duplication when that day comes.",
+      "revId": "59b0c0c0947ee1ccf27e901382060b3a856fac76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2eca6d8_67e8a005",
+        "filename": "content/renderer/media/webrtc/webrtc_video_frame_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-14T05:30:56Z",
+      "side": 1,
+      "message": "Considering the FrameAdapterWithA is only ever used with \u003cwebrtc::I420ABufferInterface\u003e and FrameAdapter with \u003cwebrtc::I420BufferInterface\u003e using this template approach seems overly complicated. Also, this way FrameAdapterWithA contains two scoped_refptr\u003cmedia::VideoFrame\u003e, one directly and one in its base class.\n\nMy recommendation would be to keep the class I420Adapter, make |frame_| protected instead of private (or use a protected getter for the raw pointer), and then do:\n\nclass FrameAdapterWithA : public I420Adapter, public webrtc::I420ABufferInterface {\n public:\n   FrameAdapterWithA(scoped_refptr\u003cmedia::VideoFrame\u003e frame)\n      : I420Adapter(std::move(frame)) {}\n\n  // webrtc::I420ABufferInterface implementation.\n  using I420Adapter::width;\n  using I420Adapter::height;\n  using I420Adapter::DataY;\n  ...\n  const uint8_t* DataA() const override {\n    return frame_-\u003evisible_data(media::VideoFrame::kAPlane);\n  }\n\n  int StrideA() const override {\n    return frame_-\u003estride(media::VideoFrame::kAPlane);\n  }  \n};\n\nNot sure if the \"using\" statements are enough to tell C++ that we want to delegate the implementation to the base class. If not, we\u0027d have to explicitly write those delegations out.",
+      "revId": "59b0c0c0947ee1ccf27e901382060b3a856fac76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
