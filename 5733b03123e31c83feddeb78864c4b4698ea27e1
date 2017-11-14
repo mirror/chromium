@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5df9e9d8_6eaf6a5d",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-14T20:51:38Z",
+      "side": 1,
+      "message": "nit: is there any downside to setting this in the device case?",
+      "range": {
+        "startLine": 500,
+        "startChar": 17,
+        "endLine": 500,
+        "endChar": 49
+      },
+      "revId": "5733b03123e31c83feddeb78864c4b4698ea27e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
