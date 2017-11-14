@@ -24,6 +24,7 @@
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/cryptohome/key.pb.h"
 #include "chromeos/dbus/cryptohome/rpc.pb.h"
+#include "components/policy/proto/install_attributes.pb.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 #include "third_party/protobuf/src/google/protobuf/io/coded_stream.h"
 #include "third_party/protobuf/src/google/protobuf/io/zero_copy_stream.h"
@@ -51,6 +52,8 @@ FakeCryptohomeClient::FakeCryptohomeClient()
   base::FilePath cache_path;
   locked_ = PathService::Get(chromeos::FILE_INSTALL_ATTRIBUTES, &cache_path) &&
             base::PathExists(cache_path);
+  if (locked_)
+    LoadInstallAttributes();
 }
 
 FakeCryptohomeClient::~FakeCryptohomeClient() {}
@@ -289,42 +292,16 @@ bool FakeCryptohomeClient::InstallAttributesFinalize(bool* successful) {
   if (!PathService::Get(chromeos::FILE_INSTALL_ATTRIBUTES, &cache_path))
     return false;
 
-  std::string result;
-  {
-    // |result| can be used only after the StringOutputStream goes out of
-    // scope.
-    google::protobuf::io::StringOutputStream result_stream(&result);
-    google::protobuf::io::CodedOutputStream result_output(&result_stream);
-
-    // These tags encode a variable-length value on the wire, which can be
-    // used to encode strings, bytes and messages. We only needs constants
-    // for tag numbers 1 and 2 (see install_attributes.proto).
-    const int kVarLengthTag1 = (1 << 3) | 0x2;
-    const int kVarLengthTag2 = (2 << 3) | 0x2;
-
-    typedef std::map<std::string, std::vector<uint8_t>>::const_iterator Iter;
-    for (Iter it = install_attrs_.begin(); it != install_attrs_.end(); ++it) {
-      std::string attr;
-      {
-        google::protobuf::io::StringOutputStream attr_stream(&attr);
-        google::protobuf::io::CodedOutputStream attr_output(&attr_stream);
-
-        attr_output.WriteVarint32(kVarLengthTag1);
-        attr_output.WriteVarint32(it->first.size());
-        attr_output.WriteString(it->first);
-        attr_output.WriteVarint32(kVarLengthTag2);
-        attr_output.WriteVarint32(it->second.size());
-        attr_output.WriteRaw(it->second.data(), it->second.size());
-      }
-
-      // Two CodedOutputStreams are needed because inner messages must be
-      // prefixed by their total length, which can't be easily computed before
-      // writing their tags and values.
-      result_output.WriteVarint32(kVarLengthTag2);
-      result_output.WriteVarint32(attr.size());
-      result_output.WriteRaw(attr.data(), attr.size());
-    }
+  cryptohome::SerializedInstallAttributes install_attrs_proto;
+  for (const auto& it : install_attrs_) {
+    auto* entry = install_attrs_proto.add_attributes();
+    entry->set_name(it.first);
+    entry->mutable_value()->assign(it.second.data(),
+                                   it.second.data() + it.second.size());
   }
+
+  std::string result;
+  install_attrs_proto.SerializeToString(&result);
 
   // The real implementation does a blocking wait on the dbus call; the fake
   // implementation must have this file written before returning.
@@ -802,6 +779,32 @@ void FakeCryptohomeClient::NotifyDircryptoMigrationProgress(
     uint64_t total) {
   for (auto& observer : observer_list_)
     observer.DircryptoMigrationProgress(status, current, total);
+}
+
+bool FakeCryptohomeClient::LoadInstallAttributes() {
+  base::FilePath cache_file;
+  PathService::Get(chromeos::FILE_INSTALL_ATTRIBUTES, &cache_file) &&
+      base::PathExists(cache_file);
+  // Mostly copied from chrome/browser/chromeos/settings/install_attributes.cc.
+  char buf[16384];
+  int len = base::ReadFile(cache_file, buf, sizeof(buf));
+  if (len == -1 || len >= static_cast<int>(sizeof(buf))) {
+    PLOG(ERROR) << "Failed to read " << cache_file.value();
+    return false;
+  }
+
+  cryptohome::SerializedInstallAttributes install_attrs_proto;
+  if (!install_attrs_proto.ParseFromArray(buf, len)) {
+    LOG(ERROR) << "Failed to parse install attributes cache.";
+    return false;
+  }
+
+  for (const auto& entry : install_attrs_proto.attributes()) {
+    install_attrs_[entry.name()].assign(
+        entry.value().data(), entry.value().data() + entry.value().size());
+  }
+
+  return true;
 }
 
 }  // namespace chromeos
