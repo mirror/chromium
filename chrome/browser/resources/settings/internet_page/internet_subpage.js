@@ -62,6 +62,15 @@ Polymer({
     },
 
     /**
+     * List of GUIDs corresponding to all currently-available networks.
+     * @type {!Array<string>|undefined}
+     */
+    currentNetworkGuids: {
+      type: Array,
+      notify: true,
+    },
+
+    /**
      * List of all network state data for the network type.
      * @private {!Array<!CrOnc.NetworkStateProperties>}
      */
@@ -197,9 +206,12 @@ Polymer({
 
   /**
    * networkingPrivate.onNetworkListChanged event callback.
+   * @param {!Array<string>} guids
    * @private
    */
-  onNetworkListChangedEvent_: function() {
+  onNetworkListChangedEvent_: function(guids) {
+    this.currentNetworkGuids = guids;
+    console.log('sub', this.currentNetworkGuids);
     this.getNetworkStateList_();
   },
 

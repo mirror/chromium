@@ -23,6 +23,15 @@ Polymer({
     guid: String,
 
     /**
+     * List of GUIDs corresponding to all currently-available networks.
+     * @type {!Array<string>|undefined}
+     */
+    currentNetworkGuids: {
+      type: Array,
+      observer: 'currentNetworkGuidsChanged_',
+    },
+
+    /**
      * The current properties for the network matching |guid|.
      * @type {!CrOnc.NetworkProperties|undefined}
      */
@@ -127,6 +136,9 @@ Polymer({
    */
   networksChangedListener_: null,
 
+  /** @private {boolean } */
+  isDetailPageShown_: false,
+
   /** @private {boolean} */
   didSetFocus_: false,
 
@@ -158,6 +170,7 @@ Polymer({
             this.networksChangedListener_);
         this.networksChangedListener_ = null;
       }
+      this.isDetailPageShown_ = false;
       return;
     }
     if (!this.networksChangedListener_) {
@@ -165,6 +178,7 @@ Polymer({
       this.networkingPrivate.onNetworksChanged.addListener(
           this.networksChangedListener_);
     }
+    this.isDetailPageShown_ = true;
     var queryParams = settings.getQueryParameters();
     this.guid = queryParams.get('guid') || '';
     if (!this.guid) {
@@ -193,6 +207,8 @@ Polymer({
 
   /** @private */
   close_: function() {
+    this.isDetailPageShown_ = false;
+
     // Delay navigating to allow other subpages to load first.
     requestAnimationFrame(function() {
       settings.navigateToPreviousRoute();
@@ -270,6 +286,18 @@ Polymer({
   onNetworksChangedEvent_: function(networkIds) {
     if (networkIds.indexOf(this.guid) != -1)
       this.getNetworkDetails_();
+  },
+
+  /**
+   * Observer callback for this.currentNetworkGuids.
+   * @private
+   */
+  currentNetworkGuidsChanged_: function() {
+    console.log('detail', this.currentNetworkGuids);
+    if (this.isDetailPageShown_ && !!this.currentNetworkGuids &&
+        this.currentNetworkGuids.indexOf(this.guid) == -1) {
+      this.close_();
+    }
   },
 
   /**
