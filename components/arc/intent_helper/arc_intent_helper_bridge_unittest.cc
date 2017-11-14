@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
+#include "base/strings/string_util.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/common/intent_helper.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -314,6 +315,23 @@ TEST_F(ArcIntentHelperTest, TestOnOpenChromeSettings) {
   instance_->OnOpenChromeSettings(mojom::SettingsPage::WIFI);
   EXPECT_EQ(GURL("chrome://settings/networks/?type=WiFi"),
             test_open_url_delegate_->TakeLastOpenedUrl());
+}
+
+// Tests that AppendStringToIntentHelperPackageName works.
+TEST_F(ArcIntentHelperTest, TestAppendStringToIntentHelperPackageName) {
+  std::string fake_activity = "this_is_a_fake_activity";
+  std::string expected_fake_activity = base::JoinString(
+      {ArcIntentHelperBridge::kArcIntentHelperPackageName, fake_activity}, ".");
+  EXPECT_EQ(ArcIntentHelperBridge::AppendStringToIntentHelperPackageName(
+                fake_activity),
+            expected_fake_activity);
+
+  std::string empty_string = "";
+  std::string expected_empty_string = base::JoinString(
+      {ArcIntentHelperBridge::kArcIntentHelperPackageName, empty_string}, ".");
+  EXPECT_EQ(ArcIntentHelperBridge::AppendStringToIntentHelperPackageName(
+                empty_string),
+            expected_empty_string);
 }
 
 }  // namespace arc
