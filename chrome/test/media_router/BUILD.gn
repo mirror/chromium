@@ -77,6 +77,7 @@ source_set("media_router_browsertests") {
     "media_router_integration_browsertest.h",
     "media_router_integration_ui_browsertest.cc",
     "media_router_one_ua_integration_browsertest.cc",
+    "presentation_receiver_window_browsertest.cc",
     "test_media_sinks_observer.cc",
     "test_media_sinks_observer.h",
   ]

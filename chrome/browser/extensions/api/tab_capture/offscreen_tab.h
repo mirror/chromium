@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -19,6 +20,10 @@
 #include "ui/gfx/geometry/size.h"
 
 class Profile;
+
+namespace media_router {
+class NavigationPolicy;
+}  // namespace media_router
 
 namespace extensions {
 
@@ -56,10 +61,9 @@ class OffscreenTabsOwner
   // If |optional_presentation_id| is non-empty, the offscreen tab is registered
   // for use by the Media Router (chrome/browser/media/router/...) as the
   // receiving browsing context for the W3C Presentation API.
-  OffscreenTab* OpenNewTab(
-      const GURL& start_url,
-      const gfx::Size& initial_size,
-      const std::string& optional_presentation_id);
+  OffscreenTab* OpenNewTab(const GURL& start_url,
+                           const gfx::Size& initial_size,
+                           const std::string& optional_presentation_id);
 
  protected:
   friend class OffscreenTab;
@@ -180,23 +184,7 @@ class OffscreenTab : protected content::WebContentsDelegate,
   void DidStartNavigation(content::NavigationHandle* navigation_handle) final;
 
  private:
-  bool in_fullscreen_mode() const {
-    return !non_fullscreen_size_.IsEmpty();
-  }
-
-  // Selected calls to the navigation methods in WebContentsObserver are
-  // delegated to this object to determine a navigation is allowed.  If any
-  // call returns false, the offscreen tab is destroyed.  The default policy
-  // allows all navigations.
-  class NavigationPolicy {
-   public:
-    NavigationPolicy();
-    virtual ~NavigationPolicy();
-    virtual bool DidStartNavigation(
-        content::NavigationHandle* navigation_handle);
-  };
-
-  class PresentationNavigationPolicy;  // Forward declaration
+  bool in_fullscreen_mode() const { return !non_fullscreen_size_.IsEmpty(); }
 
   // Called by |capture_poll_timer_| to automatically destroy this OffscreenTab
   // when the capturer count returns to zero.
@@ -236,7 +224,7 @@ class OffscreenTab : protected content::WebContentsDelegate,
   bool content_capture_was_detected_;
 
   // Object consulted to determine which offscreen tab navigations are allowed.
-  std::unique_ptr<NavigationPolicy> navigation_policy_;
+  std::unique_ptr<media_router::NavigationPolicy> navigation_policy_;
 
   DISALLOW_COPY_AND_ASSIGN(OffscreenTab);
 };
