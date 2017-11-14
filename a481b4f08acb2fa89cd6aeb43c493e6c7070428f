@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e4d37660_52483ef9",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-14T00:21:08Z",
+      "side": 1,
+      "message": "Currently we use alpha filter to clip the window header in overview mode. Alpha filter is slow (what we believe so, do we have UMA?) and does not work with the optimization of tri-linear filter implemented by reveman@. So we plant to achieve the same effect, but not using alpha filter or mask layer.\n\nAs described in crbug.com/775627#c17, this cl is the fifth method we tried so far and was originally proposed by oshima@. It is exact as you can imagine, the header size needs to be retained but left unpainted to appear \"clipped\". In this way, we can avoid re-layout the windows to make it more efficient. Otherwise, what we can do is really expensive that to do the real clip, re-layout view/contents, and then transform the client-view back to the old position to make animation smooth. In this way, we hope the re-layout will not cause any visual movement of the webcontents or UI components.\n\nWith this cl, it looks work pretty well but definitely requires some polish later. E.g. due to the deferring painting applied in overview mode animation, the hide/show headers is deferred to update on the end of the animation. In the follow up cls, we need to wait the finishes of draw/swap events of hide/show header and then start the animation.",
+      "parentUuid": "6c4ee30e_eeab1428",
+      "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4e4d655_5b32c8e6",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 6
