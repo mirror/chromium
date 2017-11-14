@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1e88c133_345b7e12",
+        "filename": "chrome/browser/android/download/intercept_download_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-14T07:04:46Z",
+      "side": 1,
+      "message": "ctor is private, only WrapUnique apply",
+      "parentUuid": "240fdc3a_b8371a07",
+      "range": {
+        "startLine": 40,
+        "startChar": 9,
+        "endLine": 40,
+        "endChar": 75
+      },
+      "revId": "2062123e76e129d5c6f1a19d1f1d249f45a56806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09a0197a_e6e20d32",
         "filename": "chrome/browser/android/download/intercept_download_navigation_throttle.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2062123e76e129d5c6f1a19d1f1d249f45a56806",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b24e22e_10715cf5",
+        "filename": "chrome/browser/android/download/intercept_download_navigation_throttle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-14T07:04:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09a0197a_e6e20d32",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "2062123e76e129d5c6f1a19d1f1d249f45a56806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
