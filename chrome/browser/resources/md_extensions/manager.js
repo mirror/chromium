@@ -308,6 +308,7 @@ cr.define('extensions', function() {
 
       this.apps_ = apps;
       this.extensions_ = extensions;
+      console.log(this.extensions_);
     },
 
     /**
