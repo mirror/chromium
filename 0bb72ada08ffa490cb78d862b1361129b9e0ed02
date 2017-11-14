@@ -137,6 +137,30 @@
       "revId": "0bb72ada08ffa490cb78d862b1361129b9e0ed02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5162bb98_e4fe7c72",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2501,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-11-14T00:16:10Z",
+      "side": 1,
+      "message": "We have plenty of those already. Every other test case for CommitText() and SetComposition() expects that the cursor update be applied properly.",
+      "parentUuid": "fc25fdde_e1c5afe4",
+      "range": {
+        "startLine": 2501,
+        "startChar": 7,
+        "endLine": 2501,
+        "endChar": 68
+      },
+      "revId": "0bb72ada08ffa490cb78d862b1361129b9e0ed02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
