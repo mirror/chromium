@@ -58,12 +58,21 @@ class MockDeviceFactory : public video_capture::mojom::DeviceFactory {
                     CreateDeviceCallback callback) override {
     DoCreateDevice(device_id, &device_request, callback);
   }
+  void AddVirtualDevice(
+      const media::VideoCaptureDeviceInfo& device_info,
+      video_capture::mojom::VirtualDeviceRequest virtual_device_request) {
+    DoAddVirtualDevice(device_info, &virtual_device_request);
+  }
 
   MOCK_METHOD1(DoGetDeviceInfos, void(GetDeviceInfosCallback& callback));
   MOCK_METHOD3(DoCreateDevice,
                void(const std::string& device_id,
                     video_capture::mojom::DeviceRequest* device_request,
                     CreateDeviceCallback& callback));
+  MOCK_METHOD2(
+      DoAddVirtualDevice,
+      void(const media::VideoCaptureDeviceInfo& device_info,
+           video_capture::mojom::VirtualDeviceRequest* virtual_device_request));
 };
 
 class MockVideoCaptureDeviceLauncherCallbacks
