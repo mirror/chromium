@@ -18,6 +18,10 @@
 #include "ui/accessibility/ax_tree_serializer.h"
 #include "ui/views/accessibility/ax_aura_obj_cache.h"
 
+namespace aura {
+class Window;
+}  // namespace aura
+
 namespace base {
 template <typename T>
 struct DefaultSingletonTraits;
@@ -99,6 +103,9 @@ class AutomationManagerAura : public ui::AXHostDelegate,
   bool processing_events_;
 
   std::vector<std::pair<views::AXAuraObjWrapper*, ui::AXEvent>> pending_events_;
+
+  // Caches the window that handles the AX event.
+  aura::Window* window_;
 
   DISALLOW_COPY_AND_ASSIGN(AutomationManagerAura);
 };
