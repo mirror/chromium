@@ -118,6 +118,30 @@
       "revId": "afe10a73f6e25352890cc6b22fe6c775af1d5e34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24297108_7181fe3b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-14T08:03:02Z",
+      "side": 1,
+      "message": "One thing that I\u0027m not sure about here: it seems like this scenario can only happen from a Chrome downgrade right? For session state, we just throw away the data completely in that case. Maybe we should have a more generic mechanism for that rather than relying on individual features to catch this...\n\n(I suspect that in general, profile downgrade is simply not feasible.)",
+      "parentUuid": "7607732b_8383169b",
+      "range": {
+        "startLine": 559,
+        "startChar": 0,
+        "endLine": 562,
+        "endChar": 17
+      },
+      "revId": "afe10a73f6e25352890cc6b22fe6c775af1d5e34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
