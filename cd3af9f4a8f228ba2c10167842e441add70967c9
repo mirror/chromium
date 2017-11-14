@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41ee826b_16f1d8dd",
+        "filename": "android_webview/browser/aw_permission_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-14T15:40:03Z",
+      "side": 1,
+      "message": "Please, do not add `default`. There is none on purpose so additions will break compilation.",
+      "revId": "cd3af9f4a8f228ba2c10167842e441add70967c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b469a5a_5c240c58",
+        "filename": "android_webview/browser/aw_permission_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-14T15:40:03Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "cd3af9f4a8f228ba2c10167842e441add70967c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "172ff243_0ddb0051",
+        "filename": "chrome/browser/permissions/permission_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-14T15:40:03Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "cd3af9f4a8f228ba2c10167842e441add70967c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8521e08_7a007ccf",
+        "filename": "chrome/browser/permissions/permission_request.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-14T15:40:03Z",
+      "side": 1,
+      "message": "Commenting out the value and assigning all of them instead of assuming auto-increment would be better than having \"UNUSED\"..",
+      "revId": "cd3af9f4a8f228ba2c10167842e441add70967c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566134d7_49d3b3d7",
+        "filename": "content/browser/permissions/permission_service_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-14T15:40:03Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "cd3af9f4a8f228ba2c10167842e441add70967c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff1ef734_b6a65c5a",
+        "filename": "content/public/browser/permission_type.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-14T15:40:03Z",
+      "side": 1,
+      "message": "Feel free to leave this field commented out. No need to link to the bug, it will be in blame.",
+      "revId": "cd3af9f4a8f228ba2c10167842e441add70967c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
