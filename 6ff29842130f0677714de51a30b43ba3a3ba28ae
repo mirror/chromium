@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7f4f5549_cf405f5c",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-14T22:31:25Z",
+      "side": 1,
+      "message": "Was just about to comment on the downstream one :) Perhaps I use \"Optin\" a bit liberally... I intend \"opt-in\" to mean \"the user has consented\" and \"opt-out\" to mean \"the user has not consented.\"\n\nAndroid doesn\u0027t have clear definitions of which check boxes are checked by default vs. unchecked. For Safe Browsing, most devices have Google Play Protect enabled, yet it\u0027s not considered \"on by default,\" since the user isn\u0027t presented with the (checked) checkbox until they open the Play Store, side-load an app, etc.\n\nSo my usage of \"opt-in\" would apply to any feature, but maybe we can agree on a better term if that\u0027s confusing for metrics. How \"querySafeBrowsingUserConsent\"?",
+      "parentUuid": "c618b921_2f9e71ce",
+      "range": {
+        "startLine": 73,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 38
+      },
+      "revId": "6ff29842130f0677714de51a30b43ba3a3ba28ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d83d8626_1bc14e8d",
         "filename": "android_webview/java/src/org/chromium/android_webview/PlatformServiceBridge.java",
         "patchSetId": 5
