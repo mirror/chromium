@@ -149,6 +149,8 @@ class URLIndexPrivateData
   friend class InMemoryURLIndexTest;
   FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, CacheSaveRestore);
   FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, CalculateWordStartsOffsets);
+  FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest,
+                           CalculateWordStartsOffsetsUnderscore);
   FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, HugeResultSet);
   FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, ReadVisitsFromHistory);
   FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, RebuildFromHistoryIfCacheOld);
@@ -235,7 +237,13 @@ class URLIndexPrivateData
 
   // Fills in |terms_to_word_starts_offsets| according to where the word starts
   // in each term.  For example, in the term "-foo" the word starts at offset 1.
+  // |break_on_underscore| is only used for unit test.
   static void CalculateWordStartsOffsets(
+      const String16Vector& terms,
+      WordStarts* terms_to_word_starts_offsets);
+
+  // Used only for unit test which tests TailoredWordBreakIterator.
+  static void CalculateWordStartsOffsetsForTest(
       const String16Vector& terms,
       WordStarts* terms_to_word_starts_offsets);
 

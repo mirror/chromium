@@ -145,6 +145,11 @@ const base::Feature kSpeculativeServiceWorkerStartOnQueryInput{
     "OmniboxSpeculativeServiceWorkerStartOnQueryInput",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Feature used to allow breaking words at underscores in building
+// URLIndexPrivateData.
+const base::Feature kBreakWordsAtUnderscores{"OmniboxBreakWordsAtUnderscores",
+                                             base::FEATURE_DISABLED_BY_DEFAULT};
+
 }  // namespace omnibox
 
 namespace {
