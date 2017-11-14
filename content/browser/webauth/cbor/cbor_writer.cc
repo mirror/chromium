@@ -23,21 +23,21 @@ CBORWriter::CBORWriter(std::vector<uint8_t>* cbor) : encoded_cbor_(cbor) {}
 void CBORWriter::EncodeCBOR(const CBORValue& node) {
   switch (node.type()) {
     case CBORValue::Type::NONE: {
-      StartItem(CborMajorType::kByteString, 0);
+      StartItem(CBORValue::Type::BYTE_STRING, 0);
       return;
     }
 
     // Represents unsigned integers.
     case CBORValue::Type::UNSIGNED: {
       uint64_t value = node.GetUnsigned();
-      StartItem(CborMajorType::kUnsigned, value);
+      StartItem(CBORValue::Type::UNSIGNED, value);
       return;
     }
 
     // Represents a byte string.
-    case CBORValue::Type::BYTESTRING: {
+    case CBORValue::Type::BYTE_STRING: {
       const CBORValue::BinaryValue& bytes = node.GetBytestring();
-      StartItem(CborMajorType::kByteString,
+      StartItem(CBORValue::Type::BYTE_STRING,
                 base::strict_cast<uint64_t>(bytes.size()));
       // Add the bytes.
       encoded_cbor_->insert(encoded_cbor_->end(), bytes.begin(), bytes.end());
@@ -46,7 +46,7 @@ void CBORWriter::EncodeCBOR(const CBORValue& node) {
 
     case CBORValue::Type::STRING: {
       base::StringPiece string = node.GetString();
-      StartItem(CborMajorType::kString,
+      StartItem(CBORValue::Type::STRING,
                 base::strict_cast<uint64_t>(string.size()));
 
       // Add the characters.
@@ -57,7 +57,7 @@ void CBORWriter::EncodeCBOR(const CBORValue& node) {
     // Represents an array.
     case CBORValue::Type::ARRAY: {
       const CBORValue::ArrayValue& array = node.GetArray();
-      StartItem(CborMajorType::kArray, array.size());
+      StartItem(CBORValue::Type::ARRAY, array.size());
       for (const auto& value : array) {
         EncodeCBOR(value);
       }
@@ -67,30 +67,32 @@ void CBORWriter::EncodeCBOR(const CBORValue& node) {
     // Represents a map.
     case CBORValue::Type::MAP: {
       const CBORValue::MapValue& map = node.GetMap();
-      StartItem(CborMajorType::kMap, map.size());
+      StartItem(CBORValue::Type::MAP, map.size());
       for (const auto& value : map) {
         EncodeCBOR(CBORValue(value.first));
         EncodeCBOR(value.second);
       }
       return;
     }
+    default:
+      break;
   }
   NOTREACHED();
   return;
 }
 
-void CBORWriter::StartItem(CborMajorType type, uint64_t size) {
-  encoded_cbor_->push_back(
-      base::checked_cast<uint8_t>(static_cast<unsigned>(type) << 5));
+void CBORWriter::StartItem(CBORValue::Type type, uint64_t size) {
+  encoded_cbor_->push_back(base::checked_cast<uint8_t>(
+      static_cast<unsigned>(type) << impl::kMajorTypeBitShift));
   SetUint(size);
 }
 
 void CBORWriter::SetAdditionalInformation(uint8_t additional_information) {
   DCHECK(!encoded_cbor_->empty());
-  DCHECK_EQ(additional_information & kAdditionalInformationDataMask,
+  DCHECK_EQ(additional_information & impl::kAdditionalInformationDataMask,
             additional_information);
   encoded_cbor_->back() |=
-      (additional_information & kAdditionalInformationDataMask);
+      (additional_information & impl::kAdditionalInformationDataMask);
 }
 
 void CBORWriter::SetUint(uint64_t value) {
@@ -104,19 +106,19 @@ void CBORWriter::SetUint(uint64_t value) {
       SetAdditionalInformation(base::checked_cast<uint8_t>(value));
       break;
     case 1:
-      SetAdditionalInformation(kAdditionalInformation1Byte);
+      SetAdditionalInformation(impl::kAdditionalInformation1Byte);
       shift = 0;
       break;
     case 2:
-      SetAdditionalInformation(kAdditionalInformation2Bytes);
+      SetAdditionalInformation(impl::kAdditionalInformation2Bytes);
       shift = 1;
       break;
     case 4:
-      SetAdditionalInformation(kAdditionalInformation4Bytes);
+      SetAdditionalInformation(impl::kAdditionalInformation4Bytes);
       shift = 3;
       break;
     case 8:
-      SetAdditionalInformation(kAdditionalInformation8Bytes);
+      SetAdditionalInformation(impl::kAdditionalInformation8Bytes);
       shift = 7;
       break;
     default:
