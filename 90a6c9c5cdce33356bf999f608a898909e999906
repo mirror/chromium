@@ -22,6 +22,30 @@
       "revId": "90a6c9c5cdce33356bf999f608a898909e999906",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb8334c_d184bd55",
+        "filename": "third_party/WebKit/Source/core/html/canvas/ImageElementBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-14T21:21:58Z",
+      "side": 1,
+      "message": "It does - it only happens to be \"hidden\" within CachedImage() (whose implementation is GetImageLoader().GetContent().) It could probably be argued that ImageElementBase should just use GetImageLoader() and drop the CachedImage() \"helper\", i.e making this something like:\n\nImageLoader\u0026 image_loader \u003d GetImageLoader();\nif (!image_loader.ImageComplete() || !image_loader.GetContent())\n  return false;\nImage* image \u003d image_loader.GetContent()-\u003eGetImage();\n...\n\nor so.",
+      "parentUuid": "99f519c1_cb976d07",
+      "range": {
+        "startLine": 123,
+        "startChar": 7,
+        "endLine": 123,
+        "endChar": 39
+      },
+      "revId": "90a6c9c5cdce33356bf999f608a898909e999906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
