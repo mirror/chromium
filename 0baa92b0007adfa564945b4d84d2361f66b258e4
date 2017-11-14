@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36dfdfd5_37410ac5",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-14T00:57:31Z",
+      "side": 1,
+      "message": "I don\u0027t like haven\u0027t all these friends, and I\u0027m not sure it\u0027s worth the trouble. It\u0027s just to enforce that ResourceClients aren\u0027t doing unexpected management of the Resource.\n\nResourceFetcher is the primary case (in RequestResource())\nCSSStyleSheetResource and ScriptResource are for their respective CreateForTest() functions.\nCSSFontFaceSrcValue is for its quasi-cache behavior in FontResource handling.",
+      "revId": "0baa92b0007adfa564945b4d84d2361f66b258e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
