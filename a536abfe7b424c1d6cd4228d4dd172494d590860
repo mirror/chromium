@@ -16,6 +16,24 @@
       "revId": "a536abfe7b424c1d6cd4228d4dd172494d590860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e6882c_bcbe70cb",
+        "filename": "third_party/WebKit/Source/platform/Supplementable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-14T20:32:38Z",
+      "side": 1,
+      "message": "Oops, that\u0027s what I get for compiling in release.",
+      "parentUuid": "56bf91ba_9936f26b",
+      "revId": "a536abfe7b424c1d6cd4228d4dd172494d590860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
