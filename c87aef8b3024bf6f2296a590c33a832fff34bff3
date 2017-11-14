@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e4c0a59_7c6914b7",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-14T07:44:07Z",
+      "side": 1,
+      "message": "I like having the logic here a bit better (since this is sound-specific code) but to avoid duplication I wonder if we should just call \n\nTabSpecificContentSettings::FromWebContents(web_contents())-\u003eUpdateSoundContentSetting(...) \n\nhere? Then I think we could remove the duplication? The annoying bit would be updating the unit tests though.. But perhaps you would want to add tests for the UKM anyway?\n\nIf all hat is too much trouble I\u0027m ok to go back to your last patch (with the logic just in TabSpecificContentSettings) and go ahead with that.",
+      "revId": "c87aef8b3024bf6f2296a590c33a832fff34bff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
