@@ -80,6 +80,7 @@ void FakeLevelDBDatabase::Write(
   for (const auto& op : operations) {
     switch (op->type) {
       case leveldb::mojom::BatchOperationType::PUT_KEY:
+        DCHECK(op->value);
         mock_data_[op->key] = *op->value;
         break;
       case leveldb::mojom::BatchOperationType::DELETE_KEY:
@@ -88,6 +89,9 @@ void FakeLevelDBDatabase::Write(
       case leveldb::mojom::BatchOperationType::DELETE_PREFIXED_KEY:
         mock_data_.erase(mock_data_.lower_bound(op->key),
                          mock_data_.lower_bound(successor(op->key)));
+        break;
+      case leveldb::mojom::BatchOperationType::COPY_PREFIXED_KEY:
+        CopyPrefixedHelper(op->key, *op->value);
         break;
     }
   }
@@ -113,6 +117,14 @@ void FakeLevelDBDatabase::GetPrefixed(const std::vector<uint8_t>& key_prefix,
     }
   }
   std::move(callback).Run(leveldb::mojom::DatabaseError::OK, std::move(data));
+}
+
+void FakeLevelDBDatabase::CopyPrefixed(
+    const std::vector<uint8_t>& source_key_prefix,
+    const std::vector<uint8_t>& destination_key_prefix,
+    CopyPrefixedCallback callback) {
+  CopyPrefixedHelper(source_key_prefix, destination_key_prefix);
+  std::move(callback).Run(leveldb::mojom::DatabaseError::OK);
 }
 
 void FakeLevelDBDatabase::GetSnapshot(GetSnapshotCallback callback) {
@@ -173,4 +185,27 @@ void FakeLevelDBDatabase::IteratorPrev(const base::UnguessableToken& iterator,
                                        IteratorPrevCallback callback) {
   NOTREACHED();
 }
+
+void FakeLevelDBDatabase::CopyPrefixedHelper(
+    const std::vector<uint8_t>& source_key_prefix,
+    const std::vector<uint8_t>& destination_key_prefix) {
+  size_t source_key_prefix_size = source_key_prefix.size();
+  size_t destination_key_prefix_size = destination_key_prefix.size();
+  std::vector<std::pair<std::vector<uint8_t>, std::vector<uint8_t>>>
+      write_batch;
+  for (const auto& row : mock_data_) {
+    if (!StartsWith(row.first, source_key_prefix))
+      continue;
+    size_t excess_key = row.first.size() - source_key_prefix_size;
+    std::vector<uint8_t> new_key(destination_key_prefix_size + excess_key);
+    std::copy(destination_key_prefix.begin(), destination_key_prefix.end(),
+              new_key.begin());
+    std::copy(row.first.begin() + source_key_prefix_size, row.first.end(),
+              new_key.begin() + destination_key_prefix_size);
+    write_batch.emplace_back(std::move(new_key), row.second);
+  }
+
+  mock_data_.insert(write_batch.begin(), write_batch.end());
+}
+
 }  // namespace content
