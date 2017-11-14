@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8427bc9c_3d812df2",
+        "filename": "ios/chrome/browser/web/print_tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T16:24:36Z",
+      "side": 1,
+      "message": "nit: s/user_interaction/user_initiated ?",
+      "range": {
+        "startLine": 40,
+        "startChar": 27,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "3d6a7300df08ca007a3d39440bc1c84cfb165a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c2733f2_40ffee07",
         "filename": "ios/chrome/browser/web/print_tab_helper.mm",
         "patchSetId": 1
@@ -13,6 +36,23 @@
       "writtenOn": "2017-11-14T15:49:48Z",
       "side": 1,
       "message": "It is safe to use base::Unretained() for both those pointer as the callback will be invoked by the WebState (so the web_state can never be invalid) and this is owned by WebState and the callback is unregistered before the destruction of the WebState.",
+      "revId": "3d6a7300df08ca007a3d39440bc1c84cfb165a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "382a1f82_12d8c164",
+        "filename": "ios/chrome/browser/web/print_tab_helper.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T16:24:36Z",
+      "side": 1,
+      "message": "ditto",
       "revId": "3d6a7300df08ca007a3d39440bc1c84cfb165a03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
