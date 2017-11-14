@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d0a301c_c3084788",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T18:43:34Z",
+      "side": 1,
+      "message": "I slightly prefer the previous way. What about explicitly converting package name to string?\n\n std::string(ArcIntentHelperBridge::kArcIntentHelperPackageName) + \".\" + fake_activity);",
+      "revId": "f3736243822ffc1ebfe6434bdc2b2db757a82e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76aa06c_c8dead82",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-14T18:43:34Z",
+      "side": 1,
+      "message": "same",
+      "revId": "f3736243822ffc1ebfe6434bdc2b2db757a82e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
