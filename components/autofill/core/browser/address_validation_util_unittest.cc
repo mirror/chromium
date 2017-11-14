@@ -225,6 +225,21 @@ TEST_F(AutofillAddressValidationTest, ValidateAddress_AdminAreaSpecialLetter) {
   EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
 
+TEST_F(AutofillAddressValidationTest, ValidateAddress_AdminAreaNonDefault) {
+  const std::string admin_area = "Nouveau-Brunswick";
+  const std::string postal_code = "E1A 8R5";  // A valid postal code for NB.
+  AutofillProfile profile(autofill::test::GetFullValidProfileForCanada());
+  profile.SetRawInfo(ADDRESS_HOME_STATE, base::UTF8ToUTF16(admin_area));
+  profile.SetRawInfo(ADDRESS_HOME_ZIP, base::UTF8ToUTF16(postal_code));
+
+  EXPECT_EQ(AutofillProfile::VALID, ValidateAddressTest(&profile));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_COUNTRY));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_STATE));
+  EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
+}
+
 TEST_F(AutofillAddressValidationTest, ValidateAddress_ValidZipNoSpace) {
   const std::string postal_code = "H3C6S3";
   AutofillProfile profile(autofill::test::GetFullValidProfileForCanada());
@@ -385,20 +400,23 @@ TEST_F(AutofillAddressValidationTest, ValidateFullValidProfile_MisplacedCity) {
 }
 
 TEST_F(AutofillAddressValidationTest,
-       ValidateFullValidProfile_LatinNameForCity) {
-  // TODO(crbug/782331): Latin version of fields should be considered as VALID.
-  // Now, they are considered as INVALID.
-
+       ValidateFullValidProfile_LatinNameForFields) {
+  const std::string admin_area = "Guizhou Sheng";
   const std::string city = "Bijie Diqu";
-  AutofillProfile profile(autofill::test::GetFullValidProfileForChina());
-  profile.SetRawInfo(ADDRESS_HOME_CITY, base::UTF8ToUTF16(city));
+  const std::string district = "Weining Xian";
 
-  EXPECT_EQ(AutofillProfile::INVALID, ValidateAddressTest(&profile));
+  AutofillProfile profile(autofill::test::GetFullValidProfileForChina());
+  profile.SetRawInfo(ADDRESS_HOME_STATE, base::UTF8ToUTF16(admin_area));
+  profile.SetRawInfo(ADDRESS_HOME_CITY, base::UTF8ToUTF16(city));
+  profile.SetRawInfo(ADDRESS_HOME_DEPENDENT_LOCALITY,
+                     base::UTF8ToUTF16(district));
+
+  EXPECT_EQ(AutofillProfile::VALID, ValidateAddressTest(&profile));
   EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(ADDRESS_HOME_COUNTRY));
   EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(ADDRESS_HOME_STATE));
-  EXPECT_EQ(AutofillProfile::INVALID,
+  EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(ADDRESS_HOME_CITY));
   EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
