@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f247ea6b_1ee6bc75",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-log-linkify-stack-in-errors-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-14T01:05:16Z",
+      "side": 1,
+      "message": "Based on the name of this test and the codereview where this was introduced, it seems like this ^ was the intended expectation.  Currently the `TypeError` is a JS error while this one is an actual DOM error.\n\nhttps://codereview.chromium.org/674513002",
+      "range": {
+        "startLine": 10,
+        "startChar": 48,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "65d5557fd2e4dc406a13e4b558e30f7cbede2026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
