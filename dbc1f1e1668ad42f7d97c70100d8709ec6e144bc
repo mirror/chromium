@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78cda3b2_b18fd1b0",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-11-14T21:20:06Z",
+      "side": 1,
+      "message": "One issue may be that inactive ethernet networks are sorted above active wifi networks:\n\nhttps://cs.chromium.org/chromium/src/chromeos/network/network_state_handler.cc?rcl\u003d0e81bc3aae1951de94a572195a4e8b13247f1df0\u0026l\u003d1320\n\nWhen I added debug prints to NetworkStateHandler::ConnectedNetworkByType() I saw a number of cases where the ARC VPN was in the top spot, an idle/disconnected ethernet or wifi network was in the #2 spot, and a connected wifi or ethernet network was in the #3 spot.  Since at least some of this was intentional, I decided it would be better to implement my own logic for ARC++ rather than trying to figure out if changing the order would break any of the ~14 call sites...",
+      "parentUuid": "4adb5d36_14fcb88a",
+      "revId": "dbc1f1e1668ad42f7d97c70100d8709ec6e144bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c6b27b0_9b4cdc2f",
         "filename": "components/arc/net/arc_net_host_impl.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "dbc1f1e1668ad42f7d97c70100d8709ec6e144bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451f921b_6d2f9400",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-11-14T21:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c6b27b0_9b4cdc2f",
+      "revId": "dbc1f1e1668ad42f7d97c70100d8709ec6e144bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
