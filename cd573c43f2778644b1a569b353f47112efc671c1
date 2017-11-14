@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df7e57e0_febc8713",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-14T16:50:50Z",
+      "side": 1,
+      "message": "`const auto\u0026 row`",
+      "revId": "cd573c43f2778644b1a569b353f47112efc671c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14691575_45d43349",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-14T16:50:50Z",
+      "side": 1,
+      "message": "I think you can skip the `typedef` because you don\u0027t seem to use it anywhere else. Though, FTR, you could have done `using AudiblePlayerRow \u003d std::pair\u003cbool, ...\u003e;`. I find this new syntax easier than `typedef` ;)",
+      "revId": "cd573c43f2778644b1a569b353f47112efc671c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
