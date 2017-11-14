@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9f1ff365_e9477858",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-14T07:56:32Z",
+      "side": 1,
+      "message": "Sorry I had a question about this but my comment didn\u0027t save.\n\nIn //content, common !\u003d public. We have common for code shared between browser and renderer, and public to expose APIs for non //content consumers.\n\nShouldn\u0027t Blink be doing the same thing? Since this is used by //chrome, shouldn\u0027t following that pattern mean putting it in public/common, not just common?",
+      "parentUuid": "96085f87_024f4573",
+      "revId": "7e78da3ab068fe3d81c223f491b23b44464ec4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca8cca53_d8e2bce7",
         "filename": "third_party/WebKit/public/platform/web_page_visibility_state.mojom",
         "patchSetId": 3
