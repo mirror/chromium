@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4a061f04_9666536b",
+        "filename": "content/browser/service_worker/service_worker_database.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-14T09:30:03Z",
+      "side": 1,
+      "message": "Yes I think the original comment is wrong. \n\nI noticed this issue when writing the test for ReadUserKeysAndDataByKeyPrefix, which was just a copy of this but which returned a map. My first iteration tested for NOT_FOUND when there were no matching keys and I got a status mismatch.\n\nThere is no test for this function itself, but it\u0027s simple enough to add.\n\nAlso this comment now matches what it says for ReadUserDataForAllRegistrationsByKeyPrefix.",
+      "parentUuid": "9fac3928_56f49aeb",
+      "revId": "502f936e73e7be06f7c9b1a17b5e233fdaecf383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5cad261_f08bcfa6",
         "filename": "content/browser/service_worker/service_worker_database_unittest.cc",
         "patchSetId": 10
@@ -51,6 +69,24 @@
       "revId": "502f936e73e7be06f7c9b1a17b5e233fdaecf383",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d5793e_b262a352",
+        "filename": "content/browser/service_worker/service_worker_database_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-14T09:30:03Z",
+      "side": 1,
+      "message": "I\u0027ve changed these to EXPECT_*. As discussed elsewhere, I\u0027ll keep the EXPECT_THAT.",
+      "parentUuid": "f5cad261_f08bcfa6",
+      "revId": "502f936e73e7be06f7c9b1a17b5e233fdaecf383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
