@@ -16,6 +16,24 @@
       "revId": "2fd0cb161db23215229749806a66590c2245ca9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd93761_20ebc5ff",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-14T01:34:41Z",
+      "side": 1,
+      "message": "Ah, I was going by the cr_toolbar_search_field example\n\nhttps://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/cr_toolbar/cr_toolbar_search_field.html?type\u003dcs\u0026q\u003dcr_toolbar\u0026sq\u003dpackage:chromium\u0026l\u003d7",
+      "parentUuid": "ef5eb64f_c09c1e4b",
+      "revId": "2fd0cb161db23215229749806a66590c2245ca9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
