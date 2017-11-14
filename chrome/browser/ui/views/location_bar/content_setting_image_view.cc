@@ -34,8 +34,8 @@ const int ContentSettingImageView::kAnimationDurationMS =
 ContentSettingImageView::ContentSettingImageView(
     std::unique_ptr<ContentSettingImageModel> image_model,
     LocationBarView* parent,
-    const gfx::FontList& font_list)
-    : IconLabelBubbleView(font_list, false),
+    views::style::TextContext text_context)
+    : IconLabelBubbleView(text_context),
       parent_(parent),
       content_setting_image_model_(std::move(image_model)),
       slide_animator_(this),

@@ -221,7 +221,7 @@ void LocationBarView::Init() {
       ContentSettingImageModel::GenerateContentSettingImageModels();
   for (auto& model : models) {
     ContentSettingImageView* image_view =
-        new ContentSettingImageView(std::move(model), this, font_list);
+        new ContentSettingImageView(std::move(model), this);
     content_setting_views_.push_back(image_view);
     image_view->SetVisible(false);
     AddChildView(image_view);
