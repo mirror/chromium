@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae700288_4da28de3",
+        "filename": "chrome/browser/chrome_content_browser_manifest_overlay.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "Indeed... stray copy and paste :)",
+      "parentUuid": "06079b24_9d19d0db",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7611681c_2a4e9d9d",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2fa9163_86d397eb",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "Can definitely use GetLastCommittedURL. The UI that this drives refreshes with O(seconds), so it can be stale, but boundedly so. It also is purely informational and not used in any meaningful way beyond displaying.",
+      "parentUuid": "7611681c_2a4e9d9d",
+      "range": {
+        "startLine": 782,
+        "startChar": 32,
+        "endLine": 782,
+        "endChar": 38
+      },
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a78256b2_317fa049",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "This is documented on \"TabStats\" and \"TabData\". I added documentation to the top of the class, as its a pervasive concept.",
+      "parentUuid": "cdcc737b_e2da6063",
+      "range": {
+        "startLine": 125,
+        "startChar": 29,
+        "endLine": 125,
+        "endChar": 43
+      },
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ede782ea_5f2ded6c",
         "filename": "chrome/browser/resource_coordinator/tab_manager.h",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff432aa2_8fd51ecf",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ede782ea_5f2ded6c",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "6d9f1a3d_56164881",
+        "filename": "chrome/browser/resources/discards/discards.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "I\u0027m the furthest thing from a front end developer and have literally no idea about best practices, etc. Any helpful docs to point to?\n\nDone.",
+      "parentUuid": "a79229e5_bb35379e",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19d7c2f0_5f748053",
         "filename": "chrome/browser/resources/discards/discards.css",
         "patchSetId": 2
@@ -113,6 +215,24 @@
       "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff727e14_883de083",
+        "filename": "chrome/browser/resources/discards/discards.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "I\u0027m sure floats aren\u0027t necessary, but the last website I wrote was year 2000 vintage. Thanks for the link.\n\nReworked with flex containers.",
+      "parentUuid": "19d7c2f0_5f748053",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "15c50c75_1106bd39",
+        "filename": "chrome/browser/resources/discards/discards.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "Ooh, again with the fancy HTML/CSS stuff I\u0027ve never heard of. Looks like the web has evolved since 2000 :)\n\nDone.",
+      "parentUuid": "7e456d68_7cd5e15b",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f82d0ab8_4ef5dde9",
         "filename": "chrome/browser/resources/discards/discards.html",
         "patchSetId": 2
@@ -147,6 +285,24 @@
       "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c979c14_51761eec",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "Done.\n\n(Wasn\u0027t sure if we preferred explicit full paths vs relative or not. Is there a HTML/CSS style guide for Chrome?)",
+      "parentUuid": "f82d0ab8_4ef5dde9",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "38be00c0_c95b9985",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87191994_3fe104c0",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ce762cf_ecd77144",
         "filename": "chrome/browser/resources/discards/discards.html",
         "patchSetId": 2
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "8f101748_5cd0c05a",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "Certainly can, thanks for the pointer.",
+      "parentUuid": "4ce762cf_ecd77144",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd2adc0e_a0df8abe",
         "filename": "chrome/browser/resources/discards/discards.html",
         "patchSetId": 2
@@ -198,6 +390,24 @@
       "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac327f7_682e7e4f",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "Yes, internal only, no intent to localize. Done.",
+      "parentUuid": "fd2adc0e_a0df8abe",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +434,30 @@
     },
     {
       "key": {
+        "uuid": "bfb886cc_35acac08",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "Just aiming for feature parity for now. Happy to remove things as we get moving.\n\nisInternal I think we\u0027ll still be using, as those are highest priority for discarding given that the content can be entirely generated locally.",
+      "parentUuid": "4ea926bb_e92e5618",
+      "range": {
+        "startLine": 35,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 45
+      },
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54a5c9ab_5d5e389e",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 2
@@ -238,6 +472,24 @@
       "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da39e627_bd41981f",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54a5c9ab_5d5e389e",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +510,24 @@
     },
     {
       "key": {
+        "uuid": "ec09142d_b527dde5",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac980519_df5f07b7",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80e1a911_a40c16f8",
         "filename": "chrome/browser/resources/discards/discards.js",
         "patchSetId": 2
@@ -272,6 +542,24 @@
       "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "519ac01e_3f23afce",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "Thanks for the pointer, another modern feature I was completely unaware of :)\n\nDone.",
+      "parentUuid": "80e1a911_a40c16f8",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -298,6 +586,30 @@
     },
     {
       "key": {
+        "uuid": "065693f8_08ec1f81",
+        "filename": "chrome/browser/ui/webui/discards/discards.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "Let\u0027s wait for the TabManager refactor to land. There will be other things that have to change in here to support that (ie, favicon, urls, titles, etc).",
+      "parentUuid": "7e504321_0bad4290",
+      "range": {
+        "startLine": 8,
+        "startChar": 7,
+        "endLine": 8,
+        "endChar": 10
+      },
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5062c470_ce6bcebe",
         "filename": "chrome/browser/ui/webui/discards/discards.mojom",
         "patchSetId": 2
@@ -321,6 +633,30 @@
     },
     {
       "key": {
+        "uuid": "2fb2f3c8_66207ea2",
+        "filename": "chrome/browser/ui/webui/discards/discards.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5062c470_ce6bcebe",
+      "range": {
+        "startLine": 26,
+        "startChar": 27,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082f46b6_ea09bced",
         "filename": "chrome/browser/ui/webui/discards/discards_ui.cc",
         "patchSetId": 2
@@ -341,6 +677,30 @@
       "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba596fa8_3a9fdb99",
+        "filename": "chrome/browser/ui/webui/discards/discards_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-14T20:46:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082f46b6_ea09bced",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
