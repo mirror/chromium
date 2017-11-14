@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdd79a09_71ae2b7f",
+        "filename": "content/network/throttling/throttling_network_interceptor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-14T00:16:44Z",
+      "side": 1,
+      "message": "judging that the below code forces it to be at least 1, I think this is correct, otherwise the requests get stuck if it\u0027s 0.",
+      "revId": "dd68560ffc21028ec4cbb66ec07e1713bbb1ab24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
