@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca03922f_fd951ddf",
+        "filename": "chrome/browser/extensions/window_open_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-14T21:18:52Z",
+      "side": 1,
+      "message": "Note to self: just return this immediately without the intermediate var.",
+      "range": {
+        "startLine": 405,
+        "startChar": 0,
+        "endLine": 405,
+        "endChar": 62
+      },
+      "revId": "bc693c70510f62b0472ebee6d5846b98220d62ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
