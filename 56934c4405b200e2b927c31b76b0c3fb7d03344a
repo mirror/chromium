@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bb7837a_31c45603",
+        "filename": "testing/buildbot/filters/mojo.fyi.mash.browser_tests.filter",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-14T00:09:24Z",
+      "side": 1,
+      "message": "nit: \u0027activation\u0027, optionally remove the duplicate comment below",
+      "revId": "56934c4405b200e2b927c31b76b0c3fb7d03344a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
