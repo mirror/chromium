@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "53c6ad45_c833af56",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-14T08:53:26Z",
+      "side": 1,
+      "message": "Actually, after looking at it again, I noticed that with the map, sorting of the languages happens before with adjust for locale direction.\nIf I skip the map I\u0027ll need to sort then re-scan the list to do the adjustment, so I\u0027d rather use the map because it\u0027s clearer at the end.",
+      "parentUuid": "fa5334d4_c5d41f4b",
+      "range": {
+        "startLine": 386,
+        "startChar": 18,
+        "endLine": 386,
+        "endChar": 0
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe48e175_c6e7919b",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 3
