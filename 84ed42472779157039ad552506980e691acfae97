@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39f0628f_89ba8294",
+        "filename": "android_webview/browser/aw_media_url_interceptor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-14T19:19:28Z",
+      "side": 1,
+      "message": "size_t might contain a value greater than max int64_t on 64-bit platforms.\n\ncan size be changed to size_t in the function?\n\nalternatively you will have to test that no overflow is occurring using base::IsValueInRangeForNumericType",
+      "range": {
+        "startLine": 31,
+        "startChar": 24,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "84ed42472779157039ad552506980e691acfae97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
