@@ -171,9 +171,12 @@ public class ContextualSearchPanelMetrics {
             if (mRankerLogger != null) mRankerLogger.writeLogAndReset();
             mRankerLogger = null;
 
-            // Notifications to Feature Engagement.
-            ContextualSearchIPH.doSearchFinishedNotifications(profile, mWasSearchContentViewSeen,
-                    mWasActivatedByTap, mWasContextualCardsDataShown);
+            if (profile != null) {
+                // Notifications to Feature Engagement.
+                ContextualSearchIPH.doSearchFinishedNotifications(profile,
+                        mWasSearchContentViewSeen, mWasActivatedByTap,
+                        mWasContextualCardsDataShown);
+            }
         }
 
         if (isStartingSearch) {
