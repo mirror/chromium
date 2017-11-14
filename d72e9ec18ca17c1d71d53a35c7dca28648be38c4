@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f03c8e2_b46ef70e",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-14T18:17:25Z",
+      "side": 1,
+      "message": "I suppose here we\u0027re trusting that kPageSize matches what sysconf would return, and that the proc maps return the ranges aligned to a page (which is checked for in % of resident code, but as far as I can see if that returns false we\u0027d still continue collecting residency and so risk the buffer overflow here).",
+      "range": {
+        "startLine": 92,
+        "startChar": 41,
+        "endLine": 92,
+        "endChar": 0
+      },
+      "revId": "d72e9ec18ca17c1d71d53a35c7dca28648be38c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
