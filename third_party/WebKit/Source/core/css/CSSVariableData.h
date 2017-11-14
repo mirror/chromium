@@ -5,11 +5,11 @@
 #ifndef CSSVariableData_h
 #define CSSVariableData_h
 
+#include "base/memory/scoped_refptr.h"
 #include "core/css/CSSPropertyValueSet.h"
 #include "core/css/parser/CSSParserToken.h"
 #include "core/css/parser/CSSParserTokenRange.h"
 #include "platform/wtf/Forward.h"
-#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
