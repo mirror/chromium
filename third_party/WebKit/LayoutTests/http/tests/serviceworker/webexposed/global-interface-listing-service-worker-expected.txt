@@ -704,6 +704,11 @@ interface InstallEvent : ExtendableEvent
     attribute @@toStringTag
     method constructor
     method registerForeignFetch
+interface Lock
+    attribute @@toStringTag
+    getter mode
+    getter scope
+    method constructor
 interface MessageChannel
     attribute @@toStringTag
     getter port1
@@ -2527,6 +2532,7 @@ interface WorkerGlobalScope : EventTarget
     method createImageBitmap
     method fetch
     method importScripts
+    method requestLock
     method setInterval
     method setTimeout
     setter onerror
