@@ -25,11 +25,6 @@ cast_source_set("app") {
     "//content/public/common",
     "//ui/base",
   ]
-
-  if (!is_fuchsia) {
-    # TODO(crbug.com/753619): Enable crash reporting on Fuchsia.
-    deps += [ "//components/crash/content/app:lib" ]
-  }
 }
 
 cast_source_set("cast_crash_client") {
@@ -54,7 +49,6 @@ cast_source_set("cast_crash_client") {
     deps += [
       "//chromecast/crash",
       "//components/crash/content/app",
-      "//components/crash/content/app:lib",
     ]
   }
 
