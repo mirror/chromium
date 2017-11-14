@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e27f8000_12b4f901",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-14T20:02:58Z",
+      "side": 1,
+      "message": "\u003ddefault",
+      "revId": "66a9defa31af1cc4e4f7a6d5dff1fa8bdf3caec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2ac44f_4c29d4ac",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-14T20:02:58Z",
+      "side": 1,
+      "message": "\u003ddefault",
+      "revId": "66a9defa31af1cc4e4f7a6d5dff1fa8bdf3caec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c739e11_25f790f5",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-14T20:02:58Z",
+      "side": 1,
+      "message": "Wdyt about making these private?",
+      "revId": "66a9defa31af1cc4e4f7a6d5dff1fa8bdf3caec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85943c1f_ad192c24",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-14T20:02:58Z",
+      "side": 1,
+      "message": "Don\u0027t we usually drop () in this case?",
+      "revId": "66a9defa31af1cc4e4f7a6d5dff1fa8bdf3caec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5fd0ec_3ae6131d",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-14T20:02:58Z",
+      "side": 1,
+      "message": "I assume we don\u0027t need this with your other CL?",
+      "revId": "66a9defa31af1cc4e4f7a6d5dff1fa8bdf3caec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
