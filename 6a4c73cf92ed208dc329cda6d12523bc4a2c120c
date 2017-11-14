@@ -16,6 +16,24 @@
       "revId": "6a4c73cf92ed208dc329cda6d12523bc4a2c120c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d8c546_fff88ca8",
+        "filename": "docs/testing/using_breakpad_with_content_shell.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-14T15:27:26Z",
+      "side": 1,
+      "message": "Yeah. There\u0027s lots of breakpad references scattered throughout the codebase. Probably worth doing a scrub after Crashpad is done on all platforms.",
+      "parentUuid": "7de2bf5b_2f86bc1b",
+      "revId": "6a4c73cf92ed208dc329cda6d12523bc4a2c120c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
