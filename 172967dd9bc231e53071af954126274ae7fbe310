@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac5acd55_9de5260d",
+        "filename": "extensions/renderer/resource_bundle_source_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-14T07:05:29Z",
+      "side": 1,
+      "message": "nit: Is it too much churn to update all these similar signatures to take a const Dispatcher::JsResourceInfo\u0026 instead of unrolled args?",
+      "revId": "172967dd9bc231e53071af954126274ae7fbe310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
