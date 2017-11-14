@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bcd0155c_153e0eca",
+        "filename": "content/browser/web_contents/web_contents_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-14T01:26:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b65403f0_9d71a193",
+      "revId": "fc585b41d45a574bfd023ad2c092f6e553cf0b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90ac4ab4_143b1be4",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-13T18:46:53Z",
       "side": 1,
       "message": "Why do we need to have this method on WebContents?  GamepadList.isGamepadAPIActive(); is a public method that the embedder could call themselves?",
+      "range": {
+        "startLine": 433,
+        "startChar": 27,
+        "endLine": 433,
+        "endChar": 45
+      },
+      "revId": "fc585b41d45a574bfd023ad2c092f6e553cf0b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d86f17_8b9056c6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-14T01:26:10Z",
+      "side": 1,
+      "message": "Looks like it\u0027s doable. Will let Chrome access device/ directly.",
+      "parentUuid": "90ac4ab4_143b1be4",
       "range": {
         "startLine": 433,
         "startChar": 27,
@@ -62,6 +104,30 @@
       "revId": "fc585b41d45a574bfd023ad2c092f6e553cf0b4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea84936_e11de2ff",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-14T01:26:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5c71e947_6c47ff0f",
+      "range": {
+        "startLine": 183,
+        "startChar": 20,
+        "endLine": 183,
+        "endChar": 35
+      },
+      "revId": "fc585b41d45a574bfd023ad2c092f6e553cf0b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +165,30 @@
       "writtenOn": "2017-11-14T00:50:03Z",
       "side": 1,
       "message": "\u003e why aren\u0027t these going to ViewAndroid/EventForwarder instead?\n\u003e \n\u003e These seem very view specific.  They also don\u0027t relate to existing web_contents.h methods, so I\"m curious how/where this is handled on other platforms.  The strong preference should be to keep this class as a simple java exposed proxy of web_contents.h.  Other things should either be in separate classes where possible, or in the embedder themselves.\n\u003e \n\u003e For things that are shared between Chrome and WebView, maybe we should discuss exposing a new package of common shared code that is built upon the core components but doesn\u0027t need a full component/ entry itself.\n\u003e content/public/glue\n\u003e content/public/client\n\u003e \u003c\u003c\u003c or something \u003e\u003e\u003e\n\u003e \n\u003e In this example, I\u0027d rather see a ZoomController class that has three methods that all take a WebContents and do their work.\n\nZoomController sgtm for this.\n\nI don\u0027t think having zoomIn live on ViewAndroid makes sense, because it\u0027s effectively above the ViewAndroid layer, and should be sending simulated touch events down to ViewAndroid/EventForwarder instead.",
+      "parentUuid": "1ecb029b_c906985e",
+      "range": {
+        "startLine": 188,
+        "startChar": 12,
+        "endLine": 188,
+        "endChar": 18
+      },
+      "revId": "fc585b41d45a574bfd023ad2c092f6e553cf0b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ed64ce_4a8ae720",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-14T01:26:10Z",
+      "side": 1,
+      "message": "Did some research.. it seems that, by design, Clank doesn\u0027t have ordinary zoom control (based on a predefined set of zoom levels) like on other platforms. It relies on \u0027pinch gesture-based zoom\u0027 behind it instead, with a random point (center of the content view) as user input for pinch gesture. Ordinary zoom and pinch zoom has distinct flow in other platforms. That makes me think zoom handling in Android needs to reference how pinch zoom rather than ordinary zoom is done.\n\nSince no other embedders than Chrome uses it, I\u0027m thinking of adding a new class in org.chromium.chrome.browser that takes WebContents to relay the APIs to pinch zoom logic, as opposed to adding a new API in WebContents. \n\nFYI other platforms handles pinch zoom using ui::EventDispatcher/Handler/GestureEvent. These classes are not in used by Android. So it should be probably be done by adding a new (or extending) method in EventForwarder. Let me know if you have more suggestion.",
       "parentUuid": "1ecb029b_c906985e",
       "range": {
         "startLine": 188,
