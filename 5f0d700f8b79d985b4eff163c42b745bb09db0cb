@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "280ca605_26e7c774",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T03:45:09Z",
+      "side": 1,
+      "message": "The comments on 818-819 and 822-823 seem a bit detailed/specific... how about just:\n\n// Set ServiceWorkerGlobalScope#registration. TakeRegistrationForServiceWorkerGlobalScope() expects the dispatcher to be already created, so create it first.\nServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(\n      sender_.get(), main_thread_task_runner_.get());\nproxy_-\u003eSetRegistration(WebServiceWorkerRegistrationImpl::CreateHandle(\n      provider_context_-\u003eTakeRegistrationForServiceWorkerGlobalScope(\n          io_thread_task_runner_)));",
+      "revId": "5f0d700f8b79d985b4eff163c42b745bb09db0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53277e1f_15abe7af",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T03:45:09Z",
+      "side": 1,
+      "message": "how about just \"Map from registration id to JavaScript ServiceWorkerRegistration object.\"",
+      "range": {
+        "startLine": 83,
+        "startChar": 32,
+        "endLine": 83,
+        "endChar": 55
+      },
+      "revId": "5f0d700f8b79d985b4eff163c42b745bb09db0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ffdf504_ec4781ad",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T03:45:09Z",
+      "side": 1,
+      "message": "I don\u0027t think we need the \"against current client context\" part.",
+      "range": {
+        "startLine": 84,
+        "startChar": 50,
+        "endLine": 85,
+        "endChar": 13
+      },
+      "revId": "5f0d700f8b79d985b4eff163c42b745bb09db0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ffc950_39d037c6",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T03:45:09Z",
+      "side": 1,
+      "message": "MakeRefCounted",
+      "revId": "5f0d700f8b79d985b4eff163c42b745bb09db0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5b3403_c1b19c20",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T03:45:09Z",
+      "side": 1,
+      "message": "is the id",
+      "range": {
+        "startLine": 224,
+        "startChar": 25,
+        "endLine": 224,
+        "endChar": 29
+      },
+      "revId": "5f0d700f8b79d985b4eff163c42b745bb09db0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a16bd9f_fb3a9d66",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T03:45:09Z",
+      "side": 1,
+      "message": "Don\u0027t think we need to talk about the key here.",
+      "revId": "5f0d700f8b79d985b4eff163c42b745bb09db0cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
