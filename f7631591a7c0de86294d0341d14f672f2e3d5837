@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16241605_25a985e0",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-14T15:23:55Z",
+      "side": 1,
+      "message": "Instead of creating a bool, why not just null the side data handle?",
+      "range": {
+        "startLine": 578,
+        "startChar": 7,
+        "endLine": 578,
+        "endChar": 21
+      },
+      "revId": "f7631591a7c0de86294d0341d14f672f2e3d5837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af710ac1_0e810368",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1478,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-14T15:23:55Z",
+      "side": 1,
+      "message": "This is almost all code duplication. Can that be avoided?\n\nOne option might be to call one of the existing CacheStorageCache::WriteSideData* functions.\n\nAnother is to turn this code into reusable functions.",
+      "range": {
+        "startLine": 1444,
+        "startChar": 0,
+        "endLine": 1478,
+        "endChar": 3
+      },
+      "revId": "f7631591a7c0de86294d0341d14f672f2e3d5837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
