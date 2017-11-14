@@ -15,7 +15,9 @@ DEFINE_WEB_STATE_USER_DATA_KEY(RepostFormTabHelper);
 RepostFormTabHelper::RepostFormTabHelper(
     web::WebState* web_state,
     id<RepostFormTabHelperDelegate> delegate)
-    : web::WebStateObserver(web_state), delegate_(delegate) {}
+    : delegate_(delegate) {
+  web_state->AddObserver(this);
+}
 
 RepostFormTabHelper::~RepostFormTabHelper() = default;
 
@@ -53,6 +55,7 @@ void RepostFormTabHelper::DidStartNavigation(web::WebState* web_state,
 }
 
 void RepostFormTabHelper::WebStateDestroyed(web::WebState* web_state) {
+  web_state->RemoveObserver(this);
   if (is_presenting_dialog_)
     [delegate_ repostFormTabHelperDismissRepostFormDialog:this];
   is_presenting_dialog_ = false;
