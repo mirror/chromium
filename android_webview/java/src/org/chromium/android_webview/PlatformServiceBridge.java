@@ -4,6 +4,9 @@
 
 package org.chromium.android_webview;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import org.chromium.base.Callback;
 import org.chromium.base.Log;
 import org.chromium.base.StrictModeContext;
@@ -67,12 +70,26 @@ public class PlatformServiceBridge {
         return false;
     }
 
+    public void getUserOptInPreference(Context context, final Callback<Boolean> callback) {
+        // Cannot determine user opt in preference.
+    }
+
     // Overriding implementations may call "callback" asynchronously. For simplicity (and not
     // because of any technical limitation) we require that "queryMetricsSetting" and "callback"
     // both get called on WebView's UI thread.
     public void queryMetricsSetting(Callback<Boolean> callback) {
         ThreadUtils.assertOnUiThread();
         callback.onResult(false);
+    }
+
+    public void setSafeBrowsingHandler() {
+        // We don't have this specialized service.
+    }
+
+    public void warmUpSafeBrowsing(Context context, @NonNull final Callback<Boolean> callback) {
+        if (callback != null) {
+            callback.onResult(false);
+        }
     }
 
     // Takes an uncompressed, serialized UMA proto and logs it via a platform-specific mechanism.
