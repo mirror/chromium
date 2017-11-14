@@ -124,6 +124,7 @@ include_rules = [
 
   # Allow mojo generated files in WebKit. These files use STL types and
   # don't use WTF types.
+  "+third_party/WebKit/common/page_visibility_state.mojom.h",
   "+third_party/WebKit/public/platform/dedicated_worker_factory.mojom.h",
   "+third_party/WebKit/public/platform/input_host.mojom.h",
   "+third_party/WebKit/public/platform/input_messages.mojom.h",
@@ -157,7 +158,7 @@ include_rules = [
   "+third_party/WebKit/public/platform/modules/websockets/websocket.mojom.h",
   "+third_party/WebKit/public/platform/oom_intervention.mojom.h",
   "+third_party/WebKit/public/platform/reporting.mojom.h",
-  
+
   # DO NOT ADD ANY CHROME OR COMPONENTS INCLUDES HERE!!!
   # See https://sites.google.com/a/chromium.org/dev/developers/content-module
   # for more information.

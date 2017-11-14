@@ -12,4 +12,7 @@ include_rules = [
   "+skia",
   "+webkit/common",
   "+ui/base/webui",
+
+  # Allow mojo generated files in WebKit.
+  "+third_party/WebKit/common/page_visibility_state.mojom.h",
 ]

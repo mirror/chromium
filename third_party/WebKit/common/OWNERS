@@ -4,4 +4,8 @@ kinuko@chromium.org
 tkent@chromium.org
 jbroman@chromium.org
 
+# per-file rules:
+per-file *.mojom=set noparent
+per-file *.mojom=file://ipc/SECURITY_OWNERS
+
 # COMPONENT: Blink

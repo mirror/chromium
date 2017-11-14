@@ -263,8 +263,8 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   static void AllVisitedStateChanged(bool invalidate_visited_link_hashes);
   static void VisitedStateChanged(LinkHash visited_hash);
 
-  void SetVisibilityState(PageVisibilityState, bool);
-  PageVisibilityState VisibilityState() const;
+  void SetVisibilityState(mojom::PageVisibilityState, bool);
+  mojom::PageVisibilityState VisibilityState() const;
   bool IsPageVisible() const;
 
   void SetLifecycleState(PageLifecycleState);
@@ -382,7 +382,7 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
 
   float device_scale_factor_;
 
-  PageVisibilityState visibility_state_;
+  mojom::PageVisibilityState visibility_state_;
 
   PageLifecycleState page_lifecycle_state_;
 
