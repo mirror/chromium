@@ -21,12 +21,14 @@ class NET_EXPORT CTVerifier {
    public:
     // Called for each Signed Certificate Timestamp from a known log that vas
     // verified successfully (i.e. the signature verifies). |sct| is the
-    // Signed Certificate Timestamp, |cert| is the certificate it applies to.
+    // Signed Certificate Timestamp, |cert| is the certificate it applies to and
+    // |hostname| is the server that provided the certificate.
     // The certificate is needed to calculate the hash of the log entry,
     // necessary for checking inclusion in the log.
     // Note: The observer (whose implementation is expected to exist outside
     // net/) may store the observed |cert| and |sct|.
-    virtual void OnSCTVerified(X509Certificate* cert,
+    virtual void OnSCTVerified(base::StringPiece hostname,
+                               X509Certificate* cert,
                                const ct::SignedCertificateTimestamp* sct) = 0;
 
    protected:
@@ -45,7 +47,8 @@ class NET_EXPORT CTVerifier {
   // TLS extension was negotiated, |sct_list_from_tls_extension| should be an
   // empty string. |output_scts| will be cleared and filled with the SCTs
   // present, if any, along with their verification results.
-  virtual void Verify(X509Certificate* cert,
+  virtual void Verify(base::StringPiece hostname,
+                      X509Certificate* cert,
                       base::StringPiece stapled_ocsp_response,
                       base::StringPiece sct_list_from_tls_extension,
                       SignedCertificateTimestampAndStatusList* output_scts,

@@ -122,6 +122,16 @@ HostCache* HostResolver::GetHostCache() {
   return nullptr;
 }
 
+const HostCache::Entry* HostResolver::GetHostCacheEntry(
+    const HostCache::Key& key) {
+  HostCache* cache = GetHostCache();
+  if (cache == nullptr) {
+    return nullptr;
+  }
+
+  return cache->LookupStale(key, base::TimeTicks::Now(), nullptr);
+}
+
 std::unique_ptr<base::Value> HostResolver::GetDnsConfigAsValue() const {
   return nullptr;
 }
