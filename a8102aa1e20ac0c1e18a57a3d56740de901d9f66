@@ -16,6 +16,24 @@
       "revId": "a8102aa1e20ac0c1e18a57a3d56740de901d9f66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8cf39ad_4bb06d9a",
+        "filename": "content/browser/service_worker/service_worker_database.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-14T11:40:10Z",
+      "side": 1,
+      "message": "Done.\n\nAlso updated comments for ReadUserData and ReadUserDataByKeyPrefix which also lacked this detail.",
+      "parentUuid": "12a8ad88_91fc5269",
+      "revId": "a8102aa1e20ac0c1e18a57a3d56740de901d9f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
