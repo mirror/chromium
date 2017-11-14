@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25bddf60_28ef9c67",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-14T09:13:02Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t think this change is ok, since |callback_| may already be destructed. Maybe we don\u0027t actually have to signal this error? We\u0027ll get an error when trying to create the stream anyways. By the way, it\u0027s really confusing how we call OnRenderError on the IO thread and Render on the AudioDeviceThread.",
+      "revId": "ae6cd620df8e45f44970ef4d751d324b82bf2a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
