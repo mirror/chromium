@@ -19,6 +19,7 @@
 #include "build/build_config.h"
 #include "content/public/common/content_client.h"
 #include "media/base/decode_capabilities.h"
+#include "services/service_manager/embedder/embedded_service_info.h"
 #include "third_party/WebKit/public/platform/WebContentSettingsClient.h"
 #include "third_party/WebKit/public/platform/WebPageVisibilityState.h"
 #include "third_party/WebKit/public/web/WebNavigationPolicy.h"
@@ -68,6 +69,9 @@ class URLLoaderThrottle;
 // Embedder API for participating in renderer logic.
 class CONTENT_EXPORT ContentRendererClient {
  public:
+  using StaticServiceMap =
+      std::map<std::string, service_manager::EmbeddedServiceInfo>;
+
   virtual ~ContentRendererClient() {}
 
   // Notifies us that the RenderThread has been created.
@@ -379,6 +383,10 @@ class CONTENT_EXPORT ContentRendererClient {
       const GURL& url,
       base::Time cert_validity_start,
       std::string* console_messsage);
+
+  // Registers services to be loaded in this renderer process by the Service
+  // Manager.
+  virtual void RegisterServices(StaticServiceMap* services) {}
 };
 
 }  // namespace content

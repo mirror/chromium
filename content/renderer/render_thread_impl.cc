@@ -793,7 +793,12 @@ void RenderThreadImpl::Init(
 
   AddFilter((new ServiceWorkerContextMessageFilter())->GetFilter());
 
-// Register exported services:
+  // Register exported services:
+  ContentRendererClient::StaticServiceMap services;
+  GetContentClient()->renderer()->RegisterServices(&services);
+  for (const auto& service : services)
+    GetServiceManagerConnection()->AddEmbeddedService(service.first,
+                                                      service.second);
 
 #if defined(USE_AURA)
   if (IsRunningInMash()) {

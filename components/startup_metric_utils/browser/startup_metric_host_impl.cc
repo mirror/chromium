@@ -17,12 +17,14 @@ StartupMetricHostImpl::~StartupMetricHostImpl() = default;
 // static
 void StartupMetricHostImpl::Create(
     mojom::StartupMetricHostRequest request) {
+  LOG(ERROR) << ":::::: StartupMetricHostImpl::Create";
   mojo::MakeStrongBinding(base::MakeUnique<StartupMetricHostImpl>(),
                           std::move(request));
 }
 
 void StartupMetricHostImpl::RecordRendererMainEntryTime(
     base::TimeTicks renderer_main_entry_time) {
+  LOG(ERROR) << ":::::: StartupMetricHostImpl::RecordRendererMainEntryTime";
   startup_metric_utils::RecordRendererMainEntryTime(renderer_main_entry_time);
 }
 
