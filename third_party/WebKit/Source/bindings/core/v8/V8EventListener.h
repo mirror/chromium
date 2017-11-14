@@ -31,8 +31,8 @@
 #ifndef V8EventListener_h
 #define V8EventListener_h
 
-#include "bindings/core/v8/V8AbstractEventListener.h"
 #include "platform/wtf/RefPtr.h"
+#include "bindings/core/v8/V8AbstractEventListener.h"
 #include "v8/include/v8.h"
 
 namespace blink {

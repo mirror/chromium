@@ -31,10 +31,10 @@
 #ifndef V8CustomXPathNSResolver_h
 #define V8CustomXPathNSResolver_h
 
+#include "platform/wtf/RefPtr.h"
 #include "core/xml/XPathNSResolver.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/wtf/Forward.h"
-#include "platform/wtf/RefPtr.h"
 #include "v8/include/v8.h"
 
 namespace blink {
