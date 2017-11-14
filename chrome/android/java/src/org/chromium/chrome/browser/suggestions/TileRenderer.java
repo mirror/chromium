@@ -40,7 +40,7 @@ public class TileRenderer {
     private static final int ICON_CORNER_RADIUS_DP = 4;
     private static final int ICON_TEXT_SIZE_DP = 20;
     private static final int ICON_MIN_SIZE_PX = 48;
-    private static final int ICON_DECREASED_MIN_SIZE_PX = 32;
+    private static final int ICON_DECREASED_MIN_SIZE_PX = 24;
 
     private final Resources mResources;
     private final ImageFetcher mImageFetcher;
@@ -86,7 +86,7 @@ public class TileRenderer {
     }
 
     private static boolean useDecreasedMinSize() {
-        return ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_TILES_LOWER_RESOLUTION_FAVICONS);
+        return ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME);
     }
 
     /**
