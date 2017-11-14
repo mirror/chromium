@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "35146a24_28b79c51",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-14T18:58:09Z",
+      "side": 1,
+      "message": "If you modify the logic here, you may need to have some logic in ScopedTransformOverviewWindow::OnGestureEvent() function. Otherwise it might work for minimized window (I\u0027m not 100% sure, can you check)?",
+      "revId": "df890b938197e5e4af26205a59fdab97504a8dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c587417_0888e361",
         "filename": "ash/wm/overview/window_selector_unittest.cc",
         "patchSetId": 3
