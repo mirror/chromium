@@ -223,28 +223,22 @@ NGPhysicalOffsetRect NGPhysicalFragment::LocalVisualRect() const {
   return {{}, Size()};
 }
 
+NGPhysicalOffsetRect NGPhysicalFragment::LocalVisualRectWithContents() const {
+  switch (Type()) {
+    case NGPhysicalFragment::kFragmentBox:
+      return ToNGPhysicalBoxFragment(*this).LocalVisualRectWithContents();
+    case NGPhysicalFragment::kFragmentText:
+      return ToNGPhysicalTextFragment(*this).LocalVisualRect();
+    case NGPhysicalFragment::kFragmentLineBox:
+      return ToNGPhysicalLineBoxFragment(*this).LocalVisualRectWithContents();
+  }
+  NOTREACHED();
+  return {{}, Size()};
+}
+
 void NGPhysicalFragment::PropagateContentsVisualRect(
     NGPhysicalOffsetRect* parent_visual_rect) const {
-  NGPhysicalOffsetRect visual_rect;
-  switch (Type()) {
-    case NGPhysicalFragment::kFragmentBox: {
-      const auto& box = ToNGPhysicalBoxFragment(*this);
-      visual_rect = box.LocalVisualRect();
-      visual_rect.Unite(box.ContentsVisualRect());
-      break;
-    }
-    case NGPhysicalFragment::kFragmentText: {
-      const auto& text = ToNGPhysicalTextFragment(*this);
-      visual_rect = text.LocalVisualRect();
-      break;
-    }
-    case NGPhysicalFragment::kFragmentLineBox: {
-      const auto& line_box = ToNGPhysicalLineBoxFragment(*this);
-      for (const auto& child : line_box.Children())
-        child->PropagateContentsVisualRect(&visual_rect);
-      break;
-    }
-  }
+  NGPhysicalOffsetRect visual_rect = LocalVisualRectWithContents();
   visual_rect.offset += Offset();
   parent_visual_rect->Unite(visual_rect);
 }
