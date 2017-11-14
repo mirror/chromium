@@ -5,9 +5,12 @@
 #include "core/loader/InteractiveDetector.h"
 
 #include "core/dom/Document.h"
+#include "core/loader/DocumentLoader.h"
+#include "platform/Histogram.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/wtf/CurrentTime.h"
+#include "third_party/WebKit/common/metrics/time_to_interactive_status.h"
 
 namespace blink {
 
@@ -91,8 +94,15 @@ void InteractiveDetector::StartOrPostponeCITimer(double timer_fire_time) {
   }
 }
 
-double InteractiveDetector::GetInteractiveTime() {
-  return interactive_time_;
+double InteractiveDetector::GetInteractiveTime() const {
+  return InvalidatingInputHappenedBefore(interactive_time_) ? 0.0
+                                                            : interactive_time_;
+}
+
+double InteractiveDetector::GetInteractiveDetectionTime() const {
+  return InvalidatingInputHappenedBefore(interactive_time_)
+             ? 0.0
+             : interactive_detection_time_;
 }
 
 void InteractiveDetector::BeginNetworkQuietPeriod(double current_time) {
@@ -191,6 +201,10 @@ void InteractiveDetector::OnDomContentLoadedEnd(double dcl_end_time) {
   DCHECK(page_event_times_.dom_content_loaded_end == 0.0);
   page_event_times_.dom_content_loaded_end = dcl_end_time;
   CheckTimeToInteractiveReached();
+}
+
+void InteractiveDetector::OnInvalidatingInputEvent(double timestamp_seconds) {
+  page_event_times_.first_invalidating_user_input = timestamp_seconds;
 }
 
 void InteractiveDetector::TimeToInteractiveTimerFired(TimerBase*) {
@@ -317,6 +331,7 @@ void InteractiveDetector::CheckTimeToInteractiveReached() {
 
   interactive_time_ = std::max(
       {interactive_candidate, page_event_times_.dom_content_loaded_end});
+  interactive_detection_time_ = MonotonicallyIncreasingTime();
   OnTimeToInteractiveDetected();
 }
 
@@ -325,10 +340,40 @@ void InteractiveDetector::OnTimeToInteractiveDetected() {
   main_thread_quiet_windows_.clear();
   network_quiet_windows_.clear();
 
-  TRACE_EVENT_MARK_WITH_TIMESTAMP1(
+  bool had_user_input_before_interactive =
+      InvalidatingInputHappenedBefore(interactive_time_);
+
+  // We log the trace event even if there is user input, but annotate the event
+  // with whether that happened.
+  TRACE_EVENT_MARK_WITH_TIMESTAMP2(
       "loading,rail", "InteractiveTime",
       TraceEvent::ToTraceTimestamp(interactive_time_), "frame",
-      GetSupplementable()->GetFrame());
+      GetSupplementable()->GetFrame(), "had_user_input_before_interactive",
+      had_user_input_before_interactive);
+
+  // We want to track how often the metric is invalidated by user input.
+  if (had_user_input_before_interactive) {
+    blink::RecordTimeToInteractiveStatus(
+        blink::TIME_TO_INTERACTIVE_USER_INTERACTION_BEFORE_INTERACTIVE);
+  } else {
+    if (GetSupplementable()->Loader())
+      GetSupplementable()->Loader()->DidChangePerformanceTiming();
+  }
+}
+
+bool InteractiveDetector::InvalidatingInputHappenedBefore(
+    double timestamp) const {
+  return page_event_times_.first_invalidating_user_input != 0 &&
+         page_event_times_.first_invalidating_user_input < timestamp;
+}
+
+void InteractiveDetector::ReportUserInputHistogram(
+    HadUserInput had_user_input_before_interactive) {
+  DEFINE_STATIC_LOCAL(EnumerationHistogram, had_user_input_histogram,
+                      ("PageLoad.Internal."
+                       "HadUserInputBeforeInteractive.LowerBoundFMP",
+                       InteractiveDetector::kHadUserInputEnumMax));
+  had_user_input_histogram.Count(had_user_input_before_interactive);
 }
 
 void InteractiveDetector::Trace(Visitor* visitor) {
