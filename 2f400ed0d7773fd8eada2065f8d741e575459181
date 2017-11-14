@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1ebea2b_b4bbaa4c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-14T00:58:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5000252e_3a677fa6",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 17
+      },
+      "revId": "2f400ed0d7773fd8eada2065f8d741e575459181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "027e37ed_bf37572d",
         "filename": "content/browser/generic_sensor/sensor_provider_proxy_impl.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "2f400ed0d7773fd8eada2065f8d741e575459181",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c13de2e0_2f8853cb",
+        "filename": "content/browser/generic_sensor/sensor_provider_proxy_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-14T00:58:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "027e37ed_bf37572d",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "2f400ed0d7773fd8eada2065f8d741e575459181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
