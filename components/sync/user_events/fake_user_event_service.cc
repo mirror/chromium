@@ -4,6 +4,8 @@
 
 #include "components/sync/user_events/fake_user_event_service.h"
 
+#include <utility>
+
 using sync_pb::UserEventSpecifics;
 
 namespace syncer {
@@ -28,9 +30,10 @@ base::WeakPtr<ModelTypeSyncBridge> FakeUserEventService::GetSyncBridge() {
 }
 
 void FakeUserEventService::RegisterDependentFieldTrial(
-    const std::string& trial_name,
-    UserEventSpecifics::EventCase event_case) {
-  registered_dependent_field_trials_[trial_name].insert(event_case);
+    UserEventSpecifics::EventCase event_case,
+    const std::string& trial_name) {
+  registered_dependent_field_trials_.insert(
+      std::make_pair(event_case, trial_name));
 }
 
 const std::vector<UserEventSpecifics>&
@@ -38,7 +41,7 @@ FakeUserEventService::GetRecordedUserEvents() const {
   return recorded_user_events_;
 }
 
-const std::map<std::string, std::set<sync_pb::UserEventSpecifics::EventCase>>&
+const std::multimap<sync_pb::UserEventSpecifics::EventCase, std::string>&
 FakeUserEventService::GetRegisteredDependentFieldTrials() const {
   return registered_dependent_field_trials_;
 }
