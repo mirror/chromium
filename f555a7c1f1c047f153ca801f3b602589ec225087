@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a06e39cc_d1bee346",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-14T15:30:52Z",
+      "side": 1,
+      "message": "This is actually what we want to avoid, as it means that SetVisibleImmediately will be a noop if the element is animating to be visible. We want to avoid that. See discussion in patchset 2.",
+      "parentUuid": "bae87d2c_485cb483",
+      "revId": "f555a7c1f1c047f153ca801f3b602589ec225087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ce06b44_0cc60afc",
         "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
         "patchSetId": 3
@@ -60,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "cf86f88e_07c93681",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-14T15:30:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ce06b44_0cc60afc",
+      "range": {
+        "startLine": 135,
+        "startChar": 44,
+        "endLine": 135,
+        "endChar": 53
+      },
+      "revId": "f555a7c1f1c047f153ca801f3b602589ec225087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70b2611a_26ee56d6",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 3
@@ -71,6 +113,30 @@
       "writtenOn": "2017-11-14T13:08:08Z",
       "side": 1,
       "message": "Is this animation tied to the speech recognition animation solely? If not, should we rename to something more generic?",
+      "range": {
+        "startLine": 205,
+        "startChar": 6,
+        "endLine": 205,
+        "endChar": 50
+      },
+      "revId": "f555a7c1f1c047f153ca801f3b602589ec225087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063e7121_97a3cb97",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-14T15:30:52Z",
+      "side": 1,
+      "message": "I would think so. We have a default duration (225ms) which should serve the generic case.\nI am also creating this variable so it is easier to tweak the value without affect other UIs. If we end up not need special case this animation, I will remove it.",
+      "parentUuid": "70b2611a_26ee56d6",
       "range": {
         "startLine": 205,
         "startChar": 6,
