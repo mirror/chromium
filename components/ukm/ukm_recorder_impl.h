@@ -55,6 +55,42 @@ class UkmRecorderImpl : public UkmRecorder {
   friend ::metrics::UkmBrowserTest;
   friend ::ukm::debug::DebugPage;
 
+  // This class provides keys that uniquely identify a metric's source & event.
+  class SourceEventKey {
+   public:
+    explicit SourceEventKey(int64_t source_id)
+        : source_id_(source_id), event_hash_(0) {}
+    SourceEventKey(int64_t source_id, uint64_t event_hash)
+        : source_id_(source_id), event_hash_(event_hash) {}
+
+    bool operator<(const SourceEventKey& rhs) const {
+      if (source_id_ != rhs.source_id_)
+        return source_id_ < rhs.source_id_;
+      return event_hash_ < rhs.event_hash_;
+    }
+
+    bool operator==(const SourceEventKey& rhs) const {
+      return (source_id_ == rhs.source_id_ && event_hash_ == rhs.event_hash_);
+    }
+
+    int64_t source_id() const { return source_id_; }
+    uint64_t event_hash() const { return event_hash_; }
+
+   private:
+    const int64_t source_id_;
+    const uint64_t event_hash_;
+  };
+
+  struct MetricAggregate {
+    double value_sum = 0;
+    double value_square_sum = 0.0;
+    uint64_t total_count = 0;
+    uint64_t dropped_due_to_limits = 0;
+    uint64_t dropped_due_to_sampling = 0;
+  };
+
+  using MetricAggregateMap = std::map<uint64_t, MetricAggregate>;
+
   // UkmRecorder:
   void UpdateSourceURL(SourceId source_id, const GURL& url) override;
   void AddEntry(mojom::UkmEntryPtr entry) override;
@@ -69,6 +105,9 @@ class UkmRecorderImpl : public UkmRecorder {
 
   // Whitelisted Entry hashes, only the ones in this set will be recorded.
   std::set<uint64_t> whitelisted_entry_hashes_;
+
+  // Aggregate information for collected metrics.
+  std::map<SourceEventKey, MetricAggregateMap> metric_aggregations_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 };

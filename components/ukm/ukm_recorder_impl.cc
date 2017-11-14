@@ -113,6 +113,22 @@ void UkmRecorderImpl::StoreRecordingsInReport(Report* report) {
     Entry* proto_entry = report->add_entries();
     StoreEntryProto(*entry, proto_entry);
   }
+  for (const auto& metric_aggregation : metric_aggregations_) {
+    Aggregate* proto_aggregate = report->add_aggregates();
+    proto_aggregate->set_source_id(metric_aggregation.first.source_id());
+    proto_aggregate->set_event_hash(metric_aggregation.first.event_hash());
+    for (const auto& metric_and_aggregate : metric_aggregation.second) {
+      const MetricAggregate& aggregate = metric_and_aggregate.second;
+      Aggregate::Metric* proto_metric = proto_aggregate->add_metrics();
+      proto_metric->set_metric_hash(metric_and_aggregate.first);
+      proto_metric->set_value_sum(aggregate.value_sum);
+      proto_metric->set_value_square_sum(aggregate.value_square_sum);
+      proto_metric->set_total_count(aggregate.total_count);
+      proto_metric->set_dropped_due_to_limits(aggregate.dropped_due_to_limits);
+      proto_metric->set_dropped_due_to_sampling(
+          aggregate.dropped_due_to_sampling);
+    }
+  }
 
   UMA_HISTOGRAM_COUNTS_1000("UKM.Sources.SerializedCount", sources_.size());
   UMA_HISTOGRAM_COUNTS_1000("UKM.Entries.SerializedCount", entries_.size());
@@ -154,14 +170,27 @@ void UkmRecorderImpl::AddEntry(mojom::UkmEntryPtr entry) {
     RecordDroppedEntry(DroppedDataReason::RECORDING_DISABLED);
     return;
   }
-  if (entries_.size() >= GetMaxEntries()) {
-    RecordDroppedEntry(DroppedDataReason::MAX_HIT);
-    return;
-  }
 
   if (!whitelisted_entry_hashes_.empty() &&
       !base::ContainsKey(whitelisted_entry_hashes_, entry->event_hash)) {
     RecordDroppedEntry(DroppedDataReason::NOT_WHITELISTED);
+    return;
+  }
+
+  MetricAggregateMap& aggregates =
+      metric_aggregations_[SourceEventKey(entry->source_id, entry->event_hash)];
+  for (auto& metric : entry->metrics) {
+    MetricAggregate& aggregate = aggregates[metric->metric_hash];
+    double value = metric->value;
+    aggregate.total_count++;
+    aggregate.value_sum += value;
+    aggregate.value_square_sum += value * value;
+  }
+
+  if (entries_.size() >= GetMaxEntries()) {
+    RecordDroppedEntry(DroppedDataReason::MAX_HIT);
+    for (auto& metric : entry->metrics)
+      aggregates[metric->metric_hash].dropped_due_to_limits++;
     return;
   }
 
