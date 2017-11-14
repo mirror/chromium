@@ -2,6 +2,131 @@
   "comments": [
     {
       "key": {
+        "uuid": "5b9eca22_6db145d5",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrWebGLLayer_opaque_framebuffer.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T04:25:48Z",
+      "side": 1,
+      "message": "typo: attachment",
+      "revId": "e5eb05504799b583e8aa2dbc44bf81b0ba37eaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64fba9a_18d1a136",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrWebGLLayer_opaque_framebuffer.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T04:25:48Z",
+      "side": 1,
+      "message": "typo: attachments",
+      "range": {
+        "startLine": 81,
+        "startChar": 40,
+        "endLine": 81,
+        "endChar": 56
+      },
+      "revId": "e5eb05504799b583e8aa2dbc44bf81b0ba37eaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3865a039_287155e2",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrWebGLLayer_opaque_framebuffer.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T04:25:48Z",
+      "side": 1,
+      "message": "Same typo here",
+      "revId": "e5eb05504799b583e8aa2dbc44bf81b0ba37eaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fdaf008_d34ccc9f",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRWebGLDrawingBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T04:25:48Z",
+      "side": 1,
+      "message": "It is unfortunate that a lot of code is duplicated, but on the whole, I think it\u0027s better to keep this separate from the main DrawingBuffer class, and let\u0027s keep in sync if a bug is fixed in DrawingBuffer that needs to be ported over to this. We can also investigate better code sharing between the two. DrawingBuffer is already complicated. Refactorings to share via either composition or helpers sound reasonable. I like the idea of opaque framebuffers and think that\u0027s a pretty good way of isolating this code from the rest of the WebGLRenderingContext code.",
+      "revId": "e5eb05504799b583e8aa2dbc44bf81b0ba37eaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5602dda3_b4856a62",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRWebGLDrawingBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T04:25:48Z",
+      "side": 1,
+      "message": "This cast should not be necessary because WebGLRenderingContextBase subclasses DrawingBufferClient. Can you confirm and remove it?",
+      "revId": "e5eb05504799b583e8aa2dbc44bf81b0ba37eaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a06b1bb0_421b2ce7",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRWebGLDrawingBuffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T04:25:48Z",
+      "side": 1,
+      "message": "How are these objects destroyed? Same basic question for VRWebGLLayer. WebGL contexts tear themselves down early when the JavaScript context is destroyed; see WebGLRenderingContextBase::Stop() and how it\u0027s called from HTMLCanvasElement\u0027s ContextLifecycleObserver. Will these classes behave correctly if their underlying OpenGL resources are torn down out from under them?",
+      "revId": "e5eb05504799b583e8aa2dbc44bf81b0ba37eaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f295f7cc_db72fcf1",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRWebGLDrawingBuffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T04:25:48Z",
+      "side": 1,
+      "message": "I don\u0027t think a vanilla Member is sufficient here, since theoretically this is supposed to keep the WebGLRenderingContextBase and any JavaScript wrapper alive. I think a TraceWrapperMember is needed and that this needs to inherit from TraceWrapperBase, like WebGLContextGroup does. See https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/platform/bindings/TraceWrapperReference.md .",
+      "revId": "e5eb05504799b583e8aa2dbc44bf81b0ba37eaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d887049c_2010e273",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLFramebuffer.cpp",
         "patchSetId": 3
@@ -42,6 +167,29 @@
         "startChar": 6,
         "endLine": 370,
         "endChar": 13
+      },
+      "revId": "e5eb05504799b583e8aa2dbc44bf81b0ba37eaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14296e73_cd999f74",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLFramebuffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T04:25:48Z",
+      "side": 1,
+      "message": "Grammar: who\u0027s -\u003e whose",
+      "range": {
+        "startLine": 72,
+        "startChar": 34,
+        "endLine": 72,
+        "endChar": 39
       },
       "revId": "e5eb05504799b583e8aa2dbc44bf81b0ba37eaf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
