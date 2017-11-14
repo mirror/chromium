@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79520c13_45534625",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-14T23:48:59Z",
+      "side": 1,
+      "message": "This records a duration between 1ms and 10s.  I\u0027d guess you\u0027re actually interested in longer durations – is that accurate?",
+      "range": {
+        "startLine": 71,
+        "startChar": 28,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "7a4d89b2e82fa20e1f12d5d901435c04543bc9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20762933_9952c376",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 12059,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-14T23:48:59Z",
+      "side": 1,
+      "message": "nit: Please add the attribute base\u003d\"true\".",
+      "range": {
+        "startLine": 12059,
+        "startChar": 1,
+        "endLine": 12059,
+        "endChar": 10
+      },
+      "revId": "7a4d89b2e82fa20e1f12d5d901435c04543bc9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641b869d_02a4e8d7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 12065,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-14T23:48:59Z",
+      "side": 1,
+      "message": "Please document what exactly the starting and stopping points for this measurement are, as they\u0027re often not exactly what someone might intuit.",
+      "range": {
+        "startLine": 12065,
+        "startChar": 4,
+        "endLine": 12065,
+        "endChar": 80
+      },
+      "revId": "7a4d89b2e82fa20e1f12d5d901435c04543bc9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f298279e_6d768694",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 98713,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-14T23:48:59Z",
+      "side": 1,
+      "message": "Could you please spell out (or rephrase) acronyms used in this file?  \"CCT\" and \"TWA\" in particular.",
+      "range": {
+        "startLine": 98713,
+        "startChar": 30,
+        "endLine": 98713,
+        "endChar": 33
+      },
+      "revId": "7a4d89b2e82fa20e1f12d5d901435c04543bc9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b5e6a42_746c2c87",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 98713,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-14T23:48:59Z",
+      "side": 1,
+      "message": "nit: s/that/than",
+      "range": {
+        "startLine": 98713,
+        "startChar": 54,
+        "endLine": 98713,
+        "endChar": 58
+      },
+      "revId": "7a4d89b2e82fa20e1f12d5d901435c04543bc9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
