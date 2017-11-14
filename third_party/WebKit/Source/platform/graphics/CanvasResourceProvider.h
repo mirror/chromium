@@ -5,6 +5,7 @@
 #ifndef CanvasResourceProvider_h
 #define CanvasResourceProvider_h
 
+#include "platform/geometry/FloatRect.h"
 #include "platform/geometry/IntSize.h"
 #include "platform/graphics/CanvasColorParams.h"
 #include "platform/wtf/Noncopyable.h"
@@ -68,6 +69,7 @@ class PLATFORM_EXPORT CanvasResourceProvider {
     kSoftwareCompositedResourceUsage,
     kAcceleratedResourceUsage,
     kAcceleratedCompositedResourceUsage,
+    kLowLatencyResourceUsage,
   };
 
   static std::unique_ptr<CanvasResourceProvider> Create(
@@ -84,13 +86,17 @@ class PLATFORM_EXPORT CanvasResourceProvider {
   void SetFilterQuality(SkFilterQuality quality) { filter_quality_ = quality; }
   bool PrepareTextureMailbox(viz::TextureMailbox*,
                              std::unique_ptr<viz::SingleReleaseCallback>*);
+  void FinalizeFrame();
   const IntSize& Size() const { return size_; }
   virtual bool IsValid() const = 0;
   virtual bool IsAccelerated() const = 0;
+  virtual bool IsFlipped() const { return true; }
   virtual bool CanPrepareTextureMailbox() const = 0;
+  virtual bool SupportsRecycling() { return false; }
+  void DidDraw(const FloatRect& rect) { dirty_rect_.Unite(rect); }
   uint32_t ContentUniqueID() const;
   void ClearRecycledResources();
-  void RecycleResource(std::unique_ptr<CanvasResource>);
+  void RecycleResource(scoped_refptr<CanvasResource>);
   void SetResourceRecyclingEnabled(bool);
   SkSurface* GetSkSurface() const;
   bool IsGpuContextLost() const;
@@ -105,7 +111,8 @@ class PLATFORM_EXPORT CanvasResourceProvider {
   GLenum GetGLFilter() const;
   bool UseNearestNeighbor() const;
   void ResetSkiaTextureBinding() const;
-  std::unique_ptr<CanvasResource> NewOrRecycledResource();
+  scoped_refptr<CanvasResource> NewOrRecycledResource();
+  void ResourceToMailbox(CanvasResource*, GLenum target, viz::TextureMailbox*);
 
   // Called by subclasses when the backing resource has changed and resources
   // are not managed by skia, signaling that a new surface needs to be created.
@@ -115,13 +122,15 @@ class PLATFORM_EXPORT CanvasResourceProvider {
                          const CanvasColorParams&,
                          WeakPtr<WebGraphicsContext3DProviderWrapper>);
 
- private:
+  virtual bool IsOverlayCandidate() { return false; }
   virtual sk_sp<SkSurface> CreateSkSurface() const = 0;
   virtual scoped_refptr<StaticBitmapImage> CreateSnapshot() = 0;
-  virtual std::unique_ptr<CanvasResource> CreateResource();
-  virtual std::unique_ptr<CanvasResource> DoPrepareTextureMailbox(
+  virtual scoped_refptr<CanvasResource> CreateResource();
+  virtual scoped_refptr<CanvasResource> DoPrepareTextureMailbox(
       viz::TextureMailbox* out_mailbox) = 0;
+  virtual void DoFinalizeFrame(const IntRect& dirty_rect) {}
 
+ private:
   WeakPtrFactory<CanvasResourceProvider> weak_ptr_factory_;
   WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper_;
   IntSize size_;
@@ -129,8 +138,9 @@ class PLATFORM_EXPORT CanvasResourceProvider {
   std::unique_ptr<cc::PaintCanvas> canvas_;
   mutable sk_sp<SkSurface> surface_;  // mutable for lazy init
   std::unique_ptr<SkCanvas> xform_canvas_;
-  WTF::Vector<std::unique_ptr<CanvasResource>> recycled_resources_;
+  WTF::Vector<scoped_refptr<CanvasResource>> recycled_resources_;
   SkFilterQuality filter_quality_;
+  FloatRect dirty_rect_;
   bool resource_recycling_enabled_ = true;
 };
 
