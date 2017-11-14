@@ -335,26 +335,27 @@ void BrowserTestBase::ProxyRunTestOnMainThreadLoop() {
     if (!disable_io_checks_)
       base::ThreadRestrictions::SetIOAllowed(old_io_allowed_value);
     TearDownOnMainThread();
+
+    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kEnableTracing)) {
+      base::FilePath trace_file =
+          base::CommandLine::ForCurrentProcess()->GetSwitchValuePath(
+              switches::kEnableTracingOutput);
+      // If there was no file specified, put a hardcoded one in the current
+      // working directory.
+      if (trace_file.empty())
+        trace_file = base::FilePath().AppendASCII("trace.json");
+
+      // Wait for tracing to collect results from the renderers.
+      base::RunLoop run_loop;
+      TracingController::GetInstance()->StopTracing(
+          TracingControllerImpl::CreateFileEndpoint(
+              trace_file, base::Bind(&TraceStopTracingComplete,
+                                     run_loop.QuitClosure(), trace_file)));
+      run_loop.Run();
+    }
+
     PostRunTestOnMainThread();
-  }
-
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableTracing)) {
-    base::FilePath trace_file =
-        base::CommandLine::ForCurrentProcess()->GetSwitchValuePath(
-            switches::kEnableTracingOutput);
-    // If there was no file specified, put a hardcoded one in the current
-    // working directory.
-    if (trace_file.empty())
-      trace_file = base::FilePath().AppendASCII("trace.json");
-
-    // Wait for tracing to collect results from the renderers.
-    base::RunLoop run_loop;
-    TracingController::GetInstance()->StopTracing(
-        TracingControllerImpl::CreateFileEndpoint(
-            trace_file, base::Bind(&TraceStopTracingComplete,
-                                   run_loop.QuitClosure(), trace_file)));
-    run_loop.Run();
   }
 }
 
