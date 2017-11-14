@@ -53,8 +53,7 @@ class DisplayOutputSurface : public OutputSurface {
  private:
   // Called when a swap completion is signaled from ImageTransportSurface.
   void OnGpuSwapBuffersCompleted(
-      const std::vector<ui::LatencyInfo>& latency_info,
-      gfx::SwapResult result,
+      const gfx::SwapResponse& response,
       const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac);
   void OnVSyncParametersUpdated(base::TimeTicks timebase,
                                 base::TimeDelta interval);
@@ -67,6 +66,10 @@ class DisplayOutputSurface : public OutputSurface {
   // True if the draw rectangle has been set at all since the last resize.
   bool has_set_draw_rectangle_since_last_resize_ = false;
   gfx::Size size_;
+
+  // Incremented in sync with PassThroughImageTransportSurface::swap_id_.
+  uint64_t swap_id_ = 0;
+  base::circular_deque<SwapLatencyInfo> swap_latency_infos_;
 
   base::WeakPtrFactory<DisplayOutputSurface> weak_ptr_factory_;
 };

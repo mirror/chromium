@@ -270,13 +270,26 @@ class AndroidOutputSurface : public viz::OutputSurface {
   ~AndroidOutputSurface() override = default;
 
   void SwapBuffers(viz::OutputSurfaceFrame frame) override {
-    GetCommandBufferProxy()->AddLatencyInfo(frame.latency_info);
+    for (auto& latency : frame.latency_info) {
+      if (latency.FindLatency(ui::BROWSER_SNAPSHOT_FRAME_NUMBER_COMPONENT,
+                              nullptr)) {
+        GetCommandBufferProxy()->SetSnapshotRequested();
+        break;
+      }
+    }
+
     if (frame.sub_buffer_rect) {
       DCHECK(frame.sub_buffer_rect->IsEmpty());
       context_provider_->ContextSupport()->CommitOverlayPlanes();
     } else {
       context_provider_->ContextSupport()->Swap();
     }
+
+    // Don't grow unbounded in case of error.
+    while (swap_latency_infos_.size() >= kMaxSwapLatencyInfosToTrack) {
+      swap_latency_infos_.pop_front();
+    }
+    swap_latency_infos_.emplace_back(swap_id_++, std::move(frame.latency_info));
   }
 
   void BindToClient(viz::OutputSurfaceClient* client) override {
@@ -341,10 +354,27 @@ class AndroidOutputSurface : public viz::OutputSurface {
   }
 
   void OnSwapBuffersCompleted(
-      const std::vector<ui::LatencyInfo>& latency_info,
-      gfx::SwapResult result,
+      const gfx::SwapResponse& response,
       const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac) {
-    RenderWidgetHostImpl::OnGpuSwapBuffersCompleted(latency_info);
+    auto it =
+        std::find_if(swap_latency_infos_.begin(), swap_latency_infos_.end(),
+                     [&](const SwapLatencyInfo& sli) {
+                       return sli.swap_id == response.swap_id;
+                     });
+
+    if (it != swap_latency_infos_.end()) {
+      for (auto& latency : it->latency_info) {
+        latency.AddLatencyNumberWithTimestamp(
+            ui::INPUT_EVENT_GPU_SWAP_BUFFER_COMPONENT, 0, 0,
+            response.swap_start, 1);
+        latency.AddLatencyNumberWithTimestamp(
+            ui::INPUT_EVENT_LATENCY_TERMINATED_FRAME_SWAP_COMPONENT, 0, 0,
+            response.swap_end, 1);
+      }
+      RenderWidgetHostImpl::OnGpuSwapBuffersCompleted(it->latency_info);
+      swap_latency_infos_.erase(it);
+    }
+
     client_->DidReceiveSwapBuffersAck();
     swap_buffers_callback_.Run();
   }
@@ -353,6 +383,11 @@ class AndroidOutputSurface : public viz::OutputSurface {
   viz::OutputSurfaceClient* client_ = nullptr;
   base::Closure swap_buffers_callback_;
   std::unique_ptr<viz::OverlayCandidateValidator> overlay_candidate_validator_;
+
+  uint64_t swap_id_ = 0;
+  base::circular_deque<SwapLatencyInfo> swap_latency_infos_;
+  static constexpr size_t kMaxSwapLatencyInfosToTrack = 10;
+
   base::WeakPtrFactory<AndroidOutputSurface> weak_ptr_factory_;
 };
 

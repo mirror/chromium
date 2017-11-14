@@ -5,6 +5,8 @@
 #ifndef UI_GFX_SWAP_RESULT_H_
 #define UI_GFX_SWAP_RESULT_H_
 
+#include "base/time/time.h"
+
 namespace gfx {
 
 enum class SwapResult {
@@ -12,6 +14,15 @@ enum class SwapResult {
   SWAP_FAILED,
   SWAP_NAK_RECREATE_BUFFERS,
   SWAP_RESULT_LAST = SWAP_NAK_RECREATE_BUFFERS,
+};
+
+struct SwapResponse {
+  uint64_t swap_id;
+  SwapResult result;
+
+  // Sampled by Chrome. Supported by all platforms.
+  base::TimeTicks swap_start;
+  base::TimeTicks swap_end;
 };
 
 }  // namespace gfx
