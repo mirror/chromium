@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "2b8ca455_c3a1e317",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T04:56:00Z",
+      "side": 1,
+      "message": "Thank you for clarification.\n\nRe 1): So then could you move these lines into L733? I\u0027m ok either you\u0027ve done in this CL or in a separate CL as long as it is tested.",
+      "parentUuid": "16dc5d40_9b723c75",
+      "revId": "a8fbf5b6da5e8322087998f52dde6c5216575d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2a8f65b_33b3b5aa",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 1
