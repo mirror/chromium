@@ -60,7 +60,7 @@ void MediaRouterDesktop::OnUserGesture() {
 mojom::MediaRouteProvider* MediaRouterDesktop::GetProviderForPresentation(
     const std::string& presentation_id) {
   // TODO(takumif): Support other MRPs as well.
-  return media_route_providers_[mojom::MediaRouteProvider::Id::EXTENSION].get();
+  return media_route_providers_[MediaRouteProviderId::EXTENSION].get();
 }
 
 MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context,
@@ -78,7 +78,7 @@ MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context,
 }
 
 void MediaRouterDesktop::RegisterMediaRouteProvider(
-    mojom::MediaRouteProvider::Id provider_id,
+    MediaRouteProviderId provider_id,
     mojom::MediaRouteProviderPtr media_route_provider_ptr,
     mojom::MediaRouter::RegisterMediaRouteProviderCallback callback) {
   auto config = mojom::MediaRouteProviderConfig::New();
@@ -91,7 +91,7 @@ void MediaRouterDesktop::RegisterMediaRouteProvider(
 
   SyncStateToMediaRouteProvider(provider_id);
 
-  if (provider_id == mojom::MediaRouteProvider::Id::EXTENSION) {
+  if (provider_id == MediaRouteProviderId::EXTENSION) {
     RegisterExtensionMediaRouteProvider(std::move(media_route_provider_ptr));
   } else {
     media_route_provider_ptr.set_connection_error_handler(
@@ -188,7 +188,7 @@ void MediaRouterDesktop::InitializeMediaRouteProviders() {
   extension_provider_proxy_ =
       std::make_unique<ExtensionMediaRouteProviderProxy>(
           context(), mojo::MakeRequest(&extension_provider_proxy_ptr));
-  media_route_providers_[mojom::MediaRouteProvider::Id::EXTENSION] =
+  media_route_providers_[MediaRouteProviderId::EXTENSION] =
       std::move(extension_provider_proxy_ptr);
 }
 

@@ -69,7 +69,7 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
 
   // mojom::MediaRouter implementation.
   void RegisterMediaRouteProvider(
-      mojom::MediaRouteProvider::Id provider_id,
+      MediaRouteProviderId provider_id,
       mojom::MediaRouteProviderPtr media_route_provider_ptr,
       mojom::MediaRouter::RegisterMediaRouteProviderCallback callback) override;
 

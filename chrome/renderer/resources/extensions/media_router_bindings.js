@@ -45,6 +45,7 @@ define('media_router_bindings', [
       'domain': sink.domain,
       'sink_id': sink.id,
       'icon_type': sinkIconTypeToMojo(sink.iconType),
+      'provider_id': mediaRouterMojom.MediaRouteProvider.Id.EXTENSION,
     });
   }
 
@@ -102,7 +103,8 @@ define('media_router_bindings', [
           route.controllerType ||
               (!!route.supportsMediaRouteController ?
                   mediaRouterMojom.RouteControllerType.kGeneric :
-                  mediaRouterMojom.RouteControllerType.kNone)
+                  mediaRouterMojom.RouteControllerType.kNone),
+      'provider_id': mediaRouterMojom.MediaRouteProvider.Id.EXTENSION,
     });
   }
 

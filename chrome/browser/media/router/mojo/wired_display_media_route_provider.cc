@@ -56,9 +56,8 @@ bool CompareDisplayBounds(const Display& display1, const Display& display2) {
 }  // namespace
 
 // static
-const mojom::MediaRouteProvider::Id
-    WiredDisplayMediaRouteProvider::kProviderId =
-        mojom::MediaRouteProvider::Id::WIRED_DISPLAY;
+const MediaRouteProviderId WiredDisplayMediaRouteProvider::kProviderId =
+    MediaRouteProviderId::WIRED_DISPLAY;
 
 // static
 const char WiredDisplayMediaRouteProvider::kSinkPrefix[] = "wired_display_";
