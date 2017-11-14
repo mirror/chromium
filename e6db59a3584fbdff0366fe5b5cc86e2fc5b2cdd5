@@ -22,6 +22,30 @@
       "revId": "e6db59a3584fbdff0366fe5b5cc86e2fc5b2cdd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6520b9f_b11ba197",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 4004,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-14T14:23:32Z",
+      "side": 1,
+      "message": "It\u0027s true that the current design gives a lot of ways to mess things up, but I think the right solution is to provide better determinism around these callbacks. I\u0027ll write up a short doc on how we can do this... Once I\u0027m not limited to code reviewing by phone...",
+      "parentUuid": "ac6aae26_e826331f",
+      "range": {
+        "startLine": 4004,
+        "startChar": 4,
+        "endLine": 4004,
+        "endChar": 31
+      },
+      "revId": "e6db59a3584fbdff0366fe5b5cc86e2fc5b2cdd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
