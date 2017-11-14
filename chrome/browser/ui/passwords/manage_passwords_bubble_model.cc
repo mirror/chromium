@@ -443,7 +443,7 @@ void ManagePasswordsBubbleModel::OnOKClicked() {
   interaction_keeper_->set_dismissal_reason(metrics_util::CLICKED_OK);
 }
 
-void ManagePasswordsBubbleModel::OnManageLinkClicked() {
+void ManagePasswordsBubbleModel::OnManageClicked() {
   interaction_keeper_->set_dismissal_reason(metrics_util::CLICKED_MANAGE);
   delegate_->NavigateToPasswordManagerSettingsPage();
 }
