@@ -20,9 +20,13 @@ ContentSetting SensorPermissionContext::GetPermissionStatusInternal(
     content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
     const GURL& embedding_origin) const {
-  if (requesting_origin != embedding_origin)
-    return CONTENT_SETTING_BLOCK;
+  // TODO: We may need to add cross-origin iframes check here when we can
+  // grant permission for certain sensor types. Currently this function
+  // doesn't have any information of which sensor type requests permission.
 
+  // This is to allow DeviceMotion and DeviceOrientation Event to be
+  // able to access sensors (which are provided by generic sensor) in
+  // cross-origin iframes.
   return CONTENT_SETTING_ALLOW;
 }
 
