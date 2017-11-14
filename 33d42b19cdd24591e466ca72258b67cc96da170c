@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a817327_2c50c7fe",
+        "filename": "third_party/protobuf/proto_library.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-14T00:36:38Z",
+      "side": 1,
+      "message": "I\u0027m concerned about whether this is theoretically correct (though I imagine it\u0027s fine in practice).\n\nI thought the \"sources\" list was supposed to reflect all the input files for which changes could cause differing output on a rebuild.  Let\u0027s say one of these scripts is involved in a build step.  Shouldn\u0027t it then be in the sources list, since a change to the script ought to necessitate a rebuild?\n\nOr are \"sources\" supposed to be source code files only, and not other auxiliary files?  In which case maybe this should be a whitelist of extensions instead of a blacklist?",
+      "revId": "33d42b19cdd24591e466ca72258b67cc96da170c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
