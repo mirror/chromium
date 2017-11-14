@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df958e79_17d03221",
+        "filename": "net/data/ssl/certificates/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T17:12:24Z",
+      "side": 1,
+      "message": "I don\u0027t think //net/tools is the best place for this script. Tools tends to be more general purpose, whereas this is really just a test build support script.\n\nI would propose //net/data/ssl/scripts/ instead, which contains other scripts related to generating certificates for testing, and is also consistent with the output directory.",
+      "revId": "a527a991397325708c70d75a88ffdd7045992309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4844d914_1c17a7f4",
+        "filename": "net/spdy/chromium/spdy_session_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T17:12:24Z",
+      "side": 1,
+      "message": "Can you move this to the global scope?\n(LLVMFuzzerTestOneInput() is called repeatedly)",
+      "revId": "a527a991397325708c70d75a88ffdd7045992309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd96429_865dc907",
+        "filename": "net/tools/generate-spdy-session-fuzzer-includes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T17:12:24Z",
+      "side": 1,
+      "message": "encoding",
+      "range": {
+        "startLine": 11,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "a527a991397325708c70d75a88ffdd7045992309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1436a8a5_6b1bd0d0",
+        "filename": "net/tools/generate-spdy-session-fuzzer-includes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T17:12:24Z",
+      "side": 1,
+      "message": "nit: sort imports",
+      "revId": "a527a991397325708c70d75a88ffdd7045992309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3488e7_c373300d",
+        "filename": "net/tools/generate-spdy-session-fuzzer-includes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T17:12:24Z",
+      "side": 1,
+      "message": "The function doc goes *inside* the function body (as its first expression)",
+      "revId": "a527a991397325708c70d75a88ffdd7045992309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550f03d7_100c9035",
+        "filename": "net/tools/generate-spdy-session-fuzzer-includes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T17:12:24Z",
+      "side": 1,
+      "message": "I would suggest expressing this as a regular expression. Say like this (untested code FWIW):\n\n# Get the PEM block data.\nmatch \u003d re.search(r\u0027-----BEGIN CERTIFICATE-----(.+)-----END CERTIFICATE-----\u0027, re.DOTALL)\ntext \u003d match.group(1)\n\n# Strip whitespace and then base64 decode\ntext \u003d re.sub(re.compile(r\u0027\\s+\u0027), \u0027\u0027, text)\ndata \u003d base64.b64decode(text)",
+      "revId": "a527a991397325708c70d75a88ffdd7045992309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
