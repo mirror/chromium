@@ -34,6 +34,24 @@
       "revId": "0b01087e34ed28f3921170faa77e9ec930a4b63f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f337373_9623f48b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-11-14T16:16:14Z",
+      "side": 1,
+      "message": "The tests work now and the home tile would remain the first tile.\n\n(The problem was how to refresh the layout. Screen orientation changes did not produce a result in time but a public getter of the NTP view allowed me to use requestLayout(). Now it works)",
+      "parentUuid": "c9a3bfa2_e0e0745a",
+      "revId": "0b01087e34ed28f3921170faa77e9ec930a4b63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
