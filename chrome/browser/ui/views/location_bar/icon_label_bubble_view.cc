@@ -96,11 +96,16 @@ void IconLabelBubbleView::SeparatorView::UpdateOpacity() {
 //////////////////////////////////////////////////////////////////
 // IconLabelBubbleView class
 
-IconLabelBubbleView::IconLabelBubbleView(const gfx::FontList& font_list,
-                                         bool elide_in_middle)
+IconLabelBubbleView::IconLabelBubbleView(views::style::TextContext text_context)
+    : IconLabelBubbleView(new views::Label(base::string16(), text_context)) {}
+
+IconLabelBubbleView::IconLabelBubbleView(const gfx::FontList& font_list)
+    : IconLabelBubbleView(new views::Label(base::string16(), {font_list})) {}
+
+IconLabelBubbleView::IconLabelBubbleView(views::Label* label)
     : Button(nullptr),
       image_(new views::ImageView()),
-      label_(new views::Label(base::string16(), {font_list})),
+      label_(label),
       ink_drop_container_(new views::InkDropContainerView()),
       separator_view_(new SeparatorView(this)),
       suppress_button_release_(false) {
@@ -113,8 +118,6 @@ IconLabelBubbleView::IconLabelBubbleView(const gfx::FontList& font_list,
 
   label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
 
-  if (elide_in_middle)
-    label_->SetElideBehavior(gfx::ELIDE_MIDDLE);
   AddChildView(label_);
 
   separator_view_->SetVisible(ShouldShowLabel());

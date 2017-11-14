@@ -65,7 +65,8 @@ class IconLabelBubbleView : public views::InkDropObserver,
     DISALLOW_COPY_AND_ASSIGN(SeparatorView);
   };
 
-  IconLabelBubbleView(const gfx::FontList& font_list, bool elide_in_middle);
+  explicit IconLabelBubbleView(views::style::TextContext text_context);
+  explicit IconLabelBubbleView(const gfx::FontList& font_list);
   ~IconLabelBubbleView() override;
 
   // views::InkDropObserver:
@@ -152,6 +153,8 @@ class IconLabelBubbleView : public views::InkDropObserver,
   gfx::Size GetMaxSizeForLabelWidth(int label_width) const;
 
  private:
+  explicit IconLabelBubbleView(views::Label* label);
+
   // Amount of padding from the leading edge of the view to the leading edge of
   // the image, and from the trailing edge of the label (or image, if the label
   // is invisible) to the trailing edge of the view.

@@ -14,6 +14,7 @@
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/animation/slide_animation.h"
 #include "ui/views/painter.h"
+#include "ui/views/style/typography.h"
 #include "ui/views/view.h"
 
 class ContentSettingImageModel;
@@ -21,10 +22,6 @@ class LocationBarView;
 
 namespace content {
 class WebContents;
-}
-
-namespace gfx {
-class FontList;
 }
 
 namespace views {
@@ -36,9 +33,10 @@ class BubbleDialogDelegateView;
 // blocking, geolocation).
 class ContentSettingImageView : public IconLabelBubbleView {
  public:
-  ContentSettingImageView(std::unique_ptr<ContentSettingImageModel> image_model,
-                          LocationBarView* parent,
-                          const gfx::FontList& font_list);
+  ContentSettingImageView(
+      std::unique_ptr<ContentSettingImageModel> image_model,
+      LocationBarView* parent,
+      views::style::TextContext text_context = views::style::CONTEXT_BUTTON);
   ~ContentSettingImageView() override;
 
   // Updates the decoration from the shown WebContents.
