@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1601fbef_57a74d83",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "std::make_unique (and maybe auto to avoid having to mention the type twice)",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b0b9e71_ea3d8712",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 15
@@ -25,6 +42,40 @@
     },
     {
       "key": {
+        "uuid": "3d6e485b_2eece725",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "std::move now you\u0027re using BindOnce",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122ffc69_4a07167f",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "std::move now you\u0027re using BindOnce",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0799f095_e879b543",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 15
@@ -42,6 +93,23 @@
         "endLine": 371,
         "endChar": 23
       },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ea11f5_aad2a61b",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "std::move now you\u0027re using BindOnce",
       "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +156,29 @@
     },
     {
       "key": {
+        "uuid": "5e4a8eb2_6f5255fa",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "*no?",
+      "range": {
+        "startLine": 744,
+        "startChar": 16,
+        "endLine": 744,
+        "endChar": 19
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "572ff981_8d96e3f5",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 15
@@ -111,6 +202,23 @@
     },
     {
       "key": {
+        "uuid": "5711000d_848baf7d",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "I wonder if we should let the forked wrapper\u0027s delegate somehow get involved with this commit batch as well? (i.e. if we do something similar to localstorage where the delegate adds meta-data keys for total storage usage in that area (outside of the prefixed subset) we\u0027d probably want to have the forked_wrapper\u0027s delegate be able to do that for the new prefix as well? Although that might get rather tricky... So probably okay to leave for now.",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4e86479_ff10eb5d",
         "filename": "content/browser/leveldb_wrapper_impl.h",
         "patchSetId": 15
@@ -122,6 +230,46 @@
       "writtenOn": "2017-11-10T00:42:34Z",
       "side": 1,
       "message": "before?",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d21894b_ccb60ae9",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "*and?",
+      "range": {
+        "startLine": 110,
+        "startChar": 48,
+        "endLine": 110,
+        "endChar": 50
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a39c68_551efee8",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "nit: UNLOADED rather than INVALID? INVALID makes it sound like the state itself is invalid, i.e. should never occur. While in reality it seems to be a perfectly valid state, just one where the maps are \"invalid\".",
       "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +292,160 @@
         "startChar": 7,
         "endLine": 269,
         "endChar": 17
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "120d262f_35a7d892",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "I didn\u0027t realize there was an exception for tests for the style guide rule against non-POD globals? (well, I still can\u0027t find where such an exception would be...)",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6edf4076_261d1033",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "it took me a while to figure out what this comment was trying to say. At the very least \"needs\" seems inaccurate; done_closure doesn\u0027t need anything. It\u0027s the callbacks returned by Get that might get called after IncrmentalBarrier is destroyed, and as such should be able to invoke done_callback after IncrementalBarrier is destroyed. Not sure how to best rephrase this, but the current comment is confusing to me.",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9977c145_87f58145",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "a closure is still a callback, it just happens to be one that takes no parameters, so not sure why you did these renames?",
+      "range": {
+        "startLine": 107,
+        "startChar": 24,
+        "endLine": 107,
+        "endChar": 31
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b56baf5_421d1161",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "this name seems wrong? It blocks until the commit is done, so rather than \"ScheduleCommit\" mabe call it \"BlockingCommit\" or something that at least doesn\u0027t imply the exact opposite of what it does? (at least I would expect a \"ScheduleFoo\" method to never synchronously do Foo)",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0858e8c2_bd8f0b6c",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "not sure I see the benefit of any of these async wrapping methods? All they do is hide the \"BindOnce\" call, but I\u0027m not sure if calling these many-argument methods (as opposed to having half the argument passed to BindOnce and half to the \"real\" methods) makes the tests any easier to read.",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ef5418c_51ea1263",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "std::move? (no need for base::Passed with BindOnce)",
+      "range": {
+        "startLine": 475,
+        "startChar": 40,
+        "endLine": 475,
+        "endChar": 54
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e874fd_dd6b7d6c",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "this seems like an incredibly terrible name for something that exists in the global scope? Why the rename?",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a12627f_f241fc39",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T01:13:17Z",
+      "side": 1,
+      "message": "Did anything actually change in this test? Or is this just code-churn/subjective reformatting? Since this is already such a big change it might be nice to not mix otherwise unrelated changes in the same CL, as now it becomes so much harder to separate out the mechanical changes from changes that are actually supposed to change behavior. (same comment also for some of the other tests/changes below).",
+      "range": {
+        "startLine": 553,
+        "startChar": 0,
+        "endLine": 560,
+        "endChar": 1
       },
       "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
