@@ -46,6 +46,30 @@
       "revId": "b895f9c75d0a440c8c2c56245c0a47e7bf13090a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e813e9df_716f2131",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-14T18:58:22Z",
+      "side": 1,
+      "message": "Ok, let me switch to the method in the doc, and make sure the list is sorted. thx.",
+      "parentUuid": "6624b711_32ed975f",
+      "range": {
+        "startLine": 413,
+        "startChar": 26,
+        "endLine": 413,
+        "endChar": 79
+      },
+      "revId": "b895f9c75d0a440c8c2c56245c0a47e7bf13090a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
