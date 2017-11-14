@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ddae1a3_5480dbe0",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-11-14T19:33:25Z",
+      "side": 1,
+      "message": "I don\u0027t think we should do the deletion on the UI thread. Can we post to the blocking pool instead (using PostTaskWithTraits?)",
+      "revId": "a4f9a4ddfb70d5feb219bb4932ed3c1be190f314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630cf9ac_567c5f43",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-11-14T19:33:25Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 462,
+        "startChar": 40,
+        "endLine": 462,
+        "endChar": 0
+      },
+      "revId": "a4f9a4ddfb70d5feb219bb4932ed3c1be190f314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90854d21_919901df",
+        "filename": "components/update_client/component_unpacker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-11-14T19:33:25Z",
+      "side": 1,
+      "message": "extraneous",
+      "range": {
+        "startLine": 76,
+        "startChar": 6,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "a4f9a4ddfb70d5feb219bb4932ed3c1be190f314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92f4f18_1fd5bbbe",
+        "filename": "extensions/browser/updater/update_data_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-11-14T19:33:25Z",
+      "side": 1,
+      "message": "I think this loop might be clearer, if slightly less efficient, if you just removed this line and the disabled_reasons check in the loop condition.",
+      "range": {
+        "startLine": 71,
+        "startChar": 28,
+        "endLine": 71,
+        "endChar": 29
+      },
+      "revId": "a4f9a4ddfb70d5feb219bb4932ed3c1be190f314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dae0345_118988ab",
+        "filename": "extensions/browser/updater/update_data_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-11-14T19:33:25Z",
+      "side": 1,
+      "message": "I think you can just use PostTaskWithTraits.",
+      "revId": "a4f9a4ddfb70d5feb219bb4932ed3c1be190f314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44db5aa2_88748cb4",
+        "filename": "extensions/browser/updater/update_install_shim.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-11-14T19:33:25Z",
+      "side": 1,
+      "message": "Are you sure these NOTREACHED are correct? (Also in other files.) In this case we\u0027re posting to UI, which I assume is running if this code is running... but do we want to crash here if the UI thread is shut down?",
+      "range": {
+        "startLine": 117,
+        "startChar": 19,
+        "endLine": 117,
+        "endChar": 0
+      },
+      "revId": "a4f9a4ddfb70d5feb219bb4932ed3c1be190f314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
