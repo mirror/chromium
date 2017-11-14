@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6505514b_83c805cb",
+        "filename": "gpu/ipc/host/gpu_memory_buffer_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-11-14T06:33:20Z",
+      "side": 1,
+      "message": "I did a quick check in the Chrome OS repo, and the enable-native-gpu-memory-buffers flag is set only on x86 platforms. Does anyone know why we don\u0027t enable native GPU memory buffers on other platforms?",
+      "revId": "319133186b05feaa47c31cdb4ce65a22691e1177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
