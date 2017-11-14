@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90cf056a_5df04bd9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-14T12:54:16Z",
+      "side": 1,
+      "message": "Since dialog-layout.css is only used for this test, inlining it would be just as well I think. That\u0027s the case in the other test, after all, and a single file is easier to understand where sharing isn\u0027t involved.",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "f7d1275256a774c149b4963a0296d06574c1a741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45684f7f_e482de15",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-14T12:54:16Z",
+      "side": 1,
+      "message": "Can you rename this to checkVerticallyCentered? I got confused in the test with a very wide dialog. And maybe also add a checkHorizontallyCentered() that\u0027s called if that hold true in some of the tests.",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 22
+      },
+      "revId": "f7d1275256a774c149b4963a0296d06574c1a741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f555edd_39dff1e9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-14T12:54:16Z",
+      "side": 1,
+      "message": "What viewport size does this assume? Can you add it in a comment? https://github.com/w3c/web-platform-tests/issues/7642 is a bug about the fact that no size in particular is currently guaranteed in web-platform-tests, which will be a problem.\n\nCould you try changing this test to not assume a particular viewport size, or failing that first assert that the size is what is required so that on failure it\u0027s obvious why?",
+      "range": {
+        "startLine": 42,
+        "startChar": 42,
+        "endLine": 42,
+        "endChar": 48
+      },
+      "revId": "f7d1275256a774c149b4963a0296d06574c1a741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4430eb_c1969223",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-14T12:54:16Z",
+      "side": 1,
+      "message": "Can you add a comment here that this is the relayout trigger? It\u0027s common in LayoutTests, but probably not universally understood by people debugging failures in web-platform-tests.",
+      "range": {
+        "startLine": 61,
+        "startChar": 18,
+        "endLine": 61,
+        "endChar": 30
+      },
+      "revId": "f7d1275256a774c149b4963a0296d06574c1a741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70532196_bf3d233e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-14T12:54:16Z",
+      "side": 1,
+      "message": "If you add \u0027use strict\u0027 at the top of the script there should be an error here, because there\u0027s no var. Can you add \u0027use strict\u0027 and fix this and any other issues?",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 15
+      },
+      "revId": "f7d1275256a774c149b4963a0296d06574c1a741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ba6aba0_28372d6b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-14T12:54:16Z",
+      "side": 1,
+      "message": "It\u0027s not obvious here that the dialog is being removed from relativeContainer, and if it\u0027s not then there\u0027s nothing surprising about something changing. Can you either use relativeContainer.removeChild or assert_equals(dialog.parentNode, relativeContainer) first?",
+      "range": {
+        "startLine": 112,
+        "startChar": 11,
+        "endLine": 112,
+        "endChar": 17
+      },
+      "revId": "f7d1275256a774c149b4963a0296d06574c1a741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4415a3_0a375378",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-14T12:54:16Z",
+      "side": 1,
+      "message": "Can you do the equivalent of checkNotCentered() before showModal() to show that it\u0027s showModal() that actually cause the change?",
+      "range": {
+        "startLine": 136,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 17
+      },
+      "revId": "f7d1275256a774c149b4963a0296d06574c1a741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e52026_6f290605",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/abspos-dialog-layout.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-14T12:54:16Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of changing dialog.style.top here, just before reset()? Is it cleanup for the following test somehow?",
+      "range": {
+        "startLine": 157,
+        "startChar": 4,
+        "endLine": 157,
+        "endChar": 10
+      },
+      "revId": "f7d1275256a774c149b4963a0296d06574c1a741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e8adb3_73480269",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/dialog-scrolled-viewport.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-14T12:54:16Z",
+      "side": 1,
+      "message": "Do other browsers also round up?",
+      "range": {
+        "startLine": 27,
+        "startChar": 56,
+        "endLine": 27,
+        "endChar": 57
+      },
+      "revId": "f7d1275256a774c149b4963a0296d06574c1a741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbadb3e8_521c6dc7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/inert-does-not-match-disabled-selector.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-14T12:54:16Z",
+      "side": 1,
+      "message": "To get around possible optimizations, could this include some style? Maybe font-weight:bold or similar?",
+      "range": {
+        "startLine": 16,
+        "startChar": 21,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "f7d1275256a774c149b4963a0296d06574c1a741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
