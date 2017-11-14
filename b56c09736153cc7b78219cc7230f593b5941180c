@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f61cac1_91ad2cd1",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-14T20:06:37Z",
+      "side": 1,
+      "message": "It is possible that the tabSwitcher may be presenting UI (e.g. menu, settings) when this needs to be presented. So we\u0027ll need to add the \"VC walk\" to the tabSwitcher as well. At this point, is this CL even valuable since all code paths will do the VC walk?",
+      "range": {
+        "startLine": 2028,
+        "startChar": 2,
+        "endLine": 2036,
+        "endChar": 3
+      },
+      "revId": "b56c09736153cc7b78219cc7230f593b5941180c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
