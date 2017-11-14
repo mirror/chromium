@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef5eb64f_c09c1e4b",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-14T01:29:38Z",
+      "side": 1,
+      "message": "In Settings we already use\n - paper-spinner (in most cases), \n - chrome://resources/images/throbber_small.svg, in \"About\" page, see, https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/about_page/about_page.js?l\u003d386\n\nI am in favor of replacing paper-spinner with paper-spinner-lite (assuming the latter is lighter), but instead of introducing a 3rd spinner type, could we use the SVG throbber instead?",
+      "revId": "2fd0cb161db23215229749806a66590c2245ca9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
