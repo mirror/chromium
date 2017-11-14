@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "439c5019_7fdb9a91",
+        "filename": "components/payments/content/payment_request_state.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-14T14:43:52Z",
+      "side": 1,
+      "message": "For ease of reading the header and source file side-by-side, please keep the ordering of methods in the header and source files identical.",
+      "range": {
+        "startLine": 244,
+        "startChar": 7,
+        "endLine": 244,
+        "endChar": 37
+      },
+      "revId": "3f753a8db0b1e0140086dd84212d217c2c9b60f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe506cf_46d85683",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-14T14:43:52Z",
+      "side": 1,
+      "message": "Chrome should not fire the CanMakePaymentEvent for payment handlers that don\u0027t have any URL-based payment method identifiers, according to:\n\nhttps://rsolomakhin.github.io/payment-handler/#filtering-of-payment-instruments",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 61
+      },
+      "revId": "3f753a8db0b1e0140086dd84212d217c2c9b60f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34111481_17dc5975",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-14T14:43:52Z",
+      "side": 1,
+      "message": "Because CanMakePaymentEvent is intended only for URL-based payment method identifiers, let\u0027s filter out standardized (not URL-based) payment method identifiers. That way, a payment handler with enabled methods of \"interledger\", \"basic-card\", and \"https://bobpay.xyz\" will see only \"https://bobpay.xyz\" in the CanMakePaymentEvent. This will make clear to the web developers that CanMakePaymentEvent relates only to the \"https://bobpay.xyz\" method name, whereas the brwoser filters the standardized payment methods itself.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 76
+      },
+      "revId": "3f753a8db0b1e0140086dd84212d217c2c9b60f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f68107_7fa482f3",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-14T14:43:52Z",
+      "side": 1,
+      "message": "Please explain this DCHECK in a comment.",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 195,
+        "endChar": 35
+      },
+      "revId": "3f753a8db0b1e0140086dd84212d217c2c9b60f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c30eb8d_b1226cc4",
+        "filename": "components/payments/content/service_worker_payment_instrument.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-14T14:43:52Z",
+      "side": 1,
+      "message": "Let\u0027s call it CanMakePaymentCallback to clarify what kind of validation is happening. This avoids confusion with validation of manifests and capabilities, for example.",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "3f753a8db0b1e0140086dd84212d217c2c9b60f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f9e11f7_699152f0",
+        "filename": "components/payments/content/service_worker_payment_instrument.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-14T14:43:52Z",
+      "side": 1,
+      "message": "Ditto: void CanMakePayment(CanMakePaymentCallback callback);",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 15
+      },
+      "revId": "3f753a8db0b1e0140086dd84212d217c2c9b60f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
