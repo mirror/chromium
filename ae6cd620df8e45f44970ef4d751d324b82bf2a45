@@ -16,6 +16,24 @@
       "revId": "ae6cd620df8e45f44970ef4d751d324b82bf2a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99164a81_282bbce1",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-14T09:24:23Z",
+      "side": 1,
+      "message": "Removed this in the latest PS.",
+      "parentUuid": "25bddf60_28ef9c67",
+      "revId": "ae6cd620df8e45f44970ef4d751d324b82bf2a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
