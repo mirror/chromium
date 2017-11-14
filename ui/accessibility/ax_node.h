@@ -36,6 +36,9 @@ class AX_EXPORT AXNode {
   // Returns true if the node has any of the text related roles.
   bool IsTextNode() const;
 
+  // For debugging nodes by dumping to a stream.
+  std::string ToString() { return data_.ToString(); }
+
   // Set the node's accessibility data. This may be done during initial
   // initialization or later when the node data changes.
   void SetData(const AXNodeData& src);
