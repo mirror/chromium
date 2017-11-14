@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "232e66e8_ccbd7ceb",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-14T18:51:38Z",
+      "side": 1,
+      "message": "Unfortunately, this layout update call isn\u0027t hoistable because we need clean layout here right after DOM mutation.\n\nPlease use the more general TODO:\n\n// TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets\n// needs to be audited.  See http://crbug.com/590369 for more details.",
+      "revId": "36a361be1c1eeeff60a43d721b364bd99796359f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb9438f_15e68310",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1884,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-14T18:51:38Z",
+      "side": 1,
+      "message": "This layout update is redundant. Layout is already updated before calling ExecuteFoo() function for editor commands.\n\nSee Editor::Command::Execute().",
+      "range": {
+        "startLine": 1882,
+        "startChar": 0,
+        "endLine": 1884,
+        "endChar": 70
+      },
+      "revId": "36a361be1c1eeeff60a43d721b364bd99796359f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
