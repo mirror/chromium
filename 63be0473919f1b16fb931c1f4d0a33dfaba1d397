@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3c42224_0ce345b5",
+        "filename": "third_party/WebKit/Source/core/page/PageVisibilityState.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T06:12:49Z",
+      "side": 0,
+      "message": "Also for the record I don\u0027t understand what this comment is about or if we want to preserve it somehow in mojo type (I\u0027m guessing no.. but just want to flag it).",
+      "revId": "63be0473919f1b16fb931c1f4d0a33dfaba1d397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
