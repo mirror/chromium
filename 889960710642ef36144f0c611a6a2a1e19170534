@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "905e6b95_4131812e",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3596,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-14T01:17:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38b71568_e7066814",
+      "revId": "889960710642ef36144f0c611a6a2a1e19170534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09a241b7_b2d00560",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "889960710642ef36144f0c611a6a2a1e19170534",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd179b3_58925390",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-14T01:17:22Z",
+      "side": 1,
+      "message": "I was mentally thinking \"encoded in the av1 video format\" but that works too",
+      "parentUuid": "09a241b7_b2d00560",
+      "revId": "889960710642ef36144f0c611a6a2a1e19170534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bc081859_5df8ebaa",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-14T01:17:22Z",
+      "side": 1,
+      "message": "Where I see VP9 mentioned it\u0027s generally Vp9",
+      "parentUuid": "53982d27_f1061b47",
+      "revId": "889960710642ef36144f0c611a6a2a1e19170534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f24d941_29d9e96b",
         "filename": "chrome/common/chrome_features.h",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3a30e0fe_83d276a0",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-14T01:17:22Z",
+      "side": 1,
+      "message": "switches appears to get a command line argument, i guess we don\u0027t need it in chrome:flags?",
+      "parentUuid": "8f24d941_29d9e96b",
+      "revId": "889960710642ef36144f0c611a6a2a1e19170534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cef1321e_f42c14f5",
         "filename": "content/renderer/media_recorder/DEPS",
         "patchSetId": 1
@@ -81,6 +153,47 @@
       "writtenOn": "2017-11-13T20:54:25Z",
       "side": 1,
       "message": "Not allowed.  content can\u0027t depend on chrome/",
+      "revId": "889960710642ef36144f0c611a6a2a1e19170534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b27203e_0100f191",
+        "filename": "content/renderer/media_recorder/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-14T01:17:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cef1321e_f42c14f5",
+      "revId": "889960710642ef36144f0c611a6a2a1e19170534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43c1fd9d_5d5baa35",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 24129,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-14T01:17:22Z",
+      "side": 1,
+      "message": "I need to update these but I can\u0027t run unit_tests without an X display o_O. Need to try chromoting ...",
+      "range": {
+        "startLine": 24129,
+        "startChar": 15,
+        "endLine": 24129,
+        "endChar": 25
+      },
       "revId": "889960710642ef36144f0c611a6a2a1e19170534",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
