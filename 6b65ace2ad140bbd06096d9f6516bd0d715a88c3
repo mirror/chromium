@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa81b110_4f512a84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-14T20:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d6f9a15_2475d03b",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6af09d9_2a93f9b9",
         "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
         "patchSetId": 22
@@ -33,6 +51,24 @@
       "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d29bfa2_7aca9dff",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-14T20:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6af09d9_2a93f9b9",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "eaad54b2_98fd1cef",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-14T20:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3110775e_7d7cdf02",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4a85627_c69acbe4",
         "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
         "patchSetId": 22
@@ -67,6 +121,24 @@
       "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3082df0b_616f3f66",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-14T20:26:52Z",
+      "side": 1,
+      "message": "Yes, you are right, it does nothing. Done.",
+      "parentUuid": "f4a85627_c69acbe4",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "64c6fabc_a954f566",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-14T20:26:52Z",
+      "side": 1,
+      "message": "When we extend this part for DICE we have to deal with more badge types (that\u0027s the reason for switch()) and in addition to the vector icons there will be images.\nI now changed it and added a helper but use ImageSkia instead of VectorIcon because it will be like this for DICE.\nSince it\u0027s cheap to copy I don\u0027t use references/pointers. Also it won\u0027t let me because CreateVectorIcon returns a local temporary object.",
+      "parentUuid": "1ce94522_b6747a41",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e27e5d0_dd9b15c4",
         "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
         "patchSetId": 22
@@ -101,6 +191,24 @@
       "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78896a9d_cbdff844",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-14T20:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e27e5d0_dd9b15c4",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "62d4edba_c4374ab1",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-14T20:26:52Z",
+      "side": 1,
+      "message": "I\u0027m not sure what to add. The definition is already quite obvious (at least for me).\nDo you have anything in mind?",
+      "parentUuid": "bc13d935_f0e4c314",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fcbf8ea_9e624a52",
         "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
         "patchSetId": 22
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "c60e61a2_af404844",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-14T20:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fcbf8ea_9e624a52",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eec47d8c_288c150d",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 22
@@ -152,6 +296,24 @@
       "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89339c7_9e2e395e",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-14T20:26:52Z",
+      "side": 1,
+      "message": "This change will actually come with a different CL, so I changed it back.",
+      "parentUuid": "eec47d8c_288c150d",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +340,30 @@
     },
     {
       "key": {
+        "uuid": "41741200_7307eb9e",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-14T20:26:52Z",
+      "side": 1,
+      "message": "In the C++ style guide it says \"...it is a very strong convention in Google code that input arguments are values or const references while output arguments are pointers.\". But I it is indeed mostly handled as a pointer so I changed it. Done",
+      "parentUuid": "e5eaf2ea_170b8717",
+      "range": {
+        "startLine": 169,
+        "startChar": 50,
+        "endLine": 169,
+        "endChar": 72
+      },
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b42948a_6e403e66",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 22
@@ -192,6 +378,24 @@
       "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8736605_a72a7968",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-14T20:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b42948a_6e403e66",
+      "revId": "6b65ace2ad140bbd06096d9f6516bd0d715a88c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
