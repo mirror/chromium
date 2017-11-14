@@ -1556,9 +1556,13 @@ int SSLClientSocketImpl::VerifyCT() {
     case TransportSecurityState::CT_REQUIREMENTS_NOT_MET:
       server_cert_verify_result_.cert_status |=
           CERT_STATUS_CERTIFICATE_TRANSPARENCY_REQUIRED;
+      ct_verify_result_.cert_policy_required = true;
       return ERR_CERTIFICATE_TRANSPARENCY_REQUIRED;
     case TransportSecurityState::CT_REQUIREMENTS_MET:
+      ct_verify_result_.cert_policy_required = true;
+      return OK;
     case TransportSecurityState::CT_NOT_REQUIRED:
+      ct_verify_result_.cert_policy_required = false;
       return OK;
   }
 
