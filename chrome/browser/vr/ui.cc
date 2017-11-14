@@ -118,16 +118,22 @@ void Ui::SetOmniboxSuggestions(
   model_->omnibox_suggestions = suggestions->suggestions;
 }
 
+void Ui::SetAlertDialogEnabled(bool enabled, ContentInputDelegate* delegate) {
+  scene_manager_->SetAlertDialogEnabled(enabled, delegate);
+}
+
 bool Ui::ShouldRenderWebVr() {
   return scene_manager_->ShouldRenderWebVr();
 }
 
 void Ui::OnGlInitialized(unsigned int content_texture_id,
-                         UiElementRenderer::TextureLocation content_location) {
+                         UiElementRenderer::TextureLocation content_location,
+                         unsigned int ui_texture_id) {
   vr_shell_renderer_ = base::MakeUnique<VrShellRenderer>();
   ui_renderer_ =
       base::MakeUnique<UiRenderer>(scene_.get(), vr_shell_renderer_.get());
-  scene_manager_->OnGlInitialized(content_texture_id, content_location);
+  scene_manager_->OnGlInitialized(content_texture_id, content_location,
+                                  ui_texture_id);
 }
 
 void Ui::OnAppButtonClicked() {

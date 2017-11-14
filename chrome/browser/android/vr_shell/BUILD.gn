@@ -40,6 +40,8 @@ static_library("vr_android") {
     "vr_shell_gl.h",
     "vr_usage_monitor.cc",
     "vr_usage_monitor.h",
+    "vr_view.cc",
+    "vr_view.h",
     "vr_web_contents_observer.cc",
     "vr_web_contents_observer.h",
   ]
@@ -82,6 +84,7 @@ generate_jni("vr_shell_jni_headers") {
     "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCoreInfo.java",
     "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
     "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+    "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrView.java",
   ]
   jni_package = "vr_shell"
 }
