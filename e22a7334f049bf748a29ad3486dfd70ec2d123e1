@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b66201b1_c36e266f",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-14T16:43:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure the purpose of this interface. Is it supposed to\nreturn a localized, human-readable string?\n\nIf this is something we don\u0027t really need to implement, I\u0027d\nreplace the whole function body with this:\n\n    // Not implemented, possibly not needed.\n    return nullptr;\n\nIf we think we should add it, I\u0027d name the argument\n(gint action_index) and then add a TODO at the bottom with a\none-sentence description of why, like:\n\n    // TODO: should return a localized string, is announced to\n    // Orca users after a pause.\n    return nullptr;",
+      "revId": "e22a7334f049bf748a29ad3486dfd70ec2d123e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
