@@ -45,6 +45,18 @@ PlatformImeController* PlatformWindowCast::GetPlatformImeController() {
   return nullptr;
 }
 
+bool PlatformWindowCast::IsMinimized() const {
+  return false;
+}
+
+bool PlatformWindowCast::IsMaximized() const {
+  return false;
+}
+
+bool PlatformWindowCast::IsFullscreen() const {
+  return false;
+}
+
 bool PlatformWindowCast::CanDispatchEvent(const ui::PlatformEvent& ne) {
   return true;
 }
