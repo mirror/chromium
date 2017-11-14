@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "481e7b47_e810ade8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-11-14T02:36:34Z",
+      "side": 1,
+      "message": "Thanks for clarifying.",
+      "parentUuid": "8c3c6cc0_69508a6d",
+      "revId": "507ddbc8beec47d23345ed5999668db9310e0371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60d41ce4_b319dec3",
         "filename": "media/gpu/vaapi_wrapper.cc",
         "patchSetId": 10
