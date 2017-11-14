@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "dfbe6f8d_35bc6295",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T17:52:13Z",
+      "side": 1,
+      "message": "CreateSmbFileSystem().",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a90c9a4_b4e3c357",
         "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
         "patchSetId": 1
