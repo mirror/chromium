@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71dbaefa_308db5b9",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-14T14:03:58Z",
+      "side": 1,
+      "message": "nit: maybe drop the wrapping ()?",
+      "revId": "78f025175b26c0b3c565b072b945934504f0e99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

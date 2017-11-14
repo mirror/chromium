@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38e11c49_be14ba71",
+        "filename": "ui/ozone/platform/wayland/wayland_window.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-14T14:03:58Z",
+      "side": 1,
+      "message": "reset is_minimized too for consistency?",
+      "revId": "e5ba6de0f79ec2025d424efad2f52aaf1eb159eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31efc6fc_85910554",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-14T14:03:58Z",
+      "side": 1,
+      "message": "maybe add a TODO to share with desktop_window_tree_host_x11?",
+      "revId": "e5ba6de0f79ec2025d424efad2f52aaf1eb159eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
