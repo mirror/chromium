@@ -13,7 +13,7 @@
 
 #if defined(OS_CHROMEOS)
 #include "ash/autoclick/mus/autoclick_application.h"  // nogncheck
-#include "ash/mus/window_manager_application.h"       // nogncheck
+#include "ash/mus/window_manager_service.h"           // nogncheck
 #include "ash/public/interfaces/constants.mojom.h"    // nogncheck
 #include "ash/touch_hud/mus/touch_hud_application.h"  // nogncheck
 #endif                                                // defined(OS_CHROMEOS)
@@ -43,7 +43,7 @@ std::unique_ptr<service_manager::Service> CreateUiService() {
 #if defined(OS_CHROMEOS)
 std::unique_ptr<service_manager::Service> CreateAshService() {
   const bool show_primary_host_on_connect = true;
-  return base::MakeUnique<ash::mus::WindowManagerApplication>(
+  return base::MakeUnique<ash::mus::WindowManagerService>(
       show_primary_host_on_connect);
 }
 
