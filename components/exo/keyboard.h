@@ -57,7 +57,6 @@ class Keyboard : public ui::EventHandler,
   // Overridden from ui::EventHandler:
   void OnKeyEvent(ui::KeyEvent* event) override;
 
-
   // Overridden from SurfaceObserver:
   void OnSurfaceDestroying(Surface* surface) override;
 
@@ -70,6 +69,7 @@ class Keyboard : public ui::EventHandler,
   void OnTabletModeEnded() override;
 
   // Overridden from SeatObserver:
+  void OnSurfacePreFocused(Surface* gained_focus) override;
   void OnSurfaceFocused(Surface* gained_focus) override;
 
  private:

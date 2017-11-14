@@ -12,6 +12,10 @@ class Surface;
 // Observers can listen to various events on the Seats.
 class SeatObserver {
  public:
+  // Called when a new surface receives keyboard focus and before
+  // OnSurfaceFocused.
+  virtual void OnSurfacePreFocused(Surface* surface) = 0;
+
   // Called when a new surface receives keyboard focus.
   virtual void OnSurfaceFocused(Surface* surface) = 0;
 

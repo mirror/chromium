@@ -8,8 +8,13 @@
 #include <cstdint>
 
 #include "base/macros.h"
+#include "components/exo/data_offer.h"
 #include "components/exo/data_offer_observer.h"
+#include "components/exo/seat_observer.h"
+#include "components/exo/surface.h"
+#include "components/exo/surface_observer.h"
 #include "components/exo/wm_helper.h"
+#include "ui/base/clipboard/clipboard_observer.h"
 
 namespace ui {
 class DropTargetEvent;
@@ -18,17 +23,70 @@ class DropTargetEvent;
 namespace exo {
 
 class DataDeviceDelegate;
-class DataOffer;
 class DataSource;
 class FileHelper;
-class Surface;
+class Seat;
 
 enum class DndAction { kNone, kCopy, kMove, kAsk };
 
-// DataDevice to start drag and drop and copy and paste oprations.
-class DataDevice : public WMHelper::DragDropObserver, public DataOfferObserver {
+template <typename T, typename O>
+using RegistrationFunc = void (T::*)(O*);
+
+template <typename T,
+          typename O,
+          RegistrationFunc<T, O> ADD = &T::AddObserver,
+          RegistrationFunc<T, O> REMOVE = &T::RemoveObserver>
+class Tracker {
  public:
-  explicit DataDevice(DataDeviceDelegate* delegate, FileHelper* file_helper);
+  Tracker() : Tracker(nullptr, nullptr) {}
+  Tracker(T* target, O* observer) : target_(target), observer_(observer) {
+    Invoke(ADD);
+  }
+  ~Tracker() { reset(); }
+
+  T* get() { return target_; }
+  T* operator->() { return target_; }
+  T& operator*() { return *target_; }
+  operator bool() { return target_ != nullptr; }
+
+  void reset(T* target, O* observer) {
+    Invoke(REMOVE);
+    target_ = target;
+    observer_ = observer;
+    Invoke(ADD);
+  }
+
+  void reset() { reset(nullptr, nullptr); }
+
+ private:
+  void Invoke(RegistrationFunc<T, O> func) {
+    DCHECK(!!target_ == !!observer_);
+    if (!target_ || !observer_)
+      return;
+    (target_->*func)(observer_);
+  }
+  T* target_;
+  O* observer_;
+
+  DISALLOW_COPY_AND_ASSIGN(Tracker);
+};
+
+using DataOfferTracker = Tracker<DataOffer, DataOfferObserver>;
+using SurfaceTracker = Tracker<Surface,
+                               SurfaceObserver,
+                               &Surface::AddSurfaceObserver,
+                               &Surface::RemoveSurfaceObserver>;
+
+// DataDevice to start drag and drop and copy and paste oprations.
+class DataDevice : public WMHelper::DragDropObserver,
+                   public DataOfferObserver,
+                   public ui::ClipboardObserver,
+                   public SurfaceObserver,
+                   public SeatObserver {
+ public:
+  explicit DataDevice(DataDeviceDelegate* delegate,
+                      Seat* seat,
+                      FileHelper* file_helper);
   ~DataDevice() override;
 
   // Starts drag-and-drop operation.
@@ -54,16 +112,28 @@ class DataDevice : public WMHelper::DragDropObserver, public DataOfferObserver {
   void OnDragExited() override;
   int OnPerformDrop(const ui::DropTargetEvent& event) override;
 
+  // Overridden from ui::ClipbaordObserver:
+  void OnClipboardDataChanged() override;
+
+  // Overridden from SeatObserver:
+  void OnSurfacePreFocused(Surface* surface) override;
+  void OnSurfaceFocused(Surface* surface) override;
+
   // Overridden from DataOfferObserver:
   void OnDataOfferDestroying(DataOffer* data_offer) override;
 
+  // Overridden from SurfaceObserver:
+  void OnSurfaceDestroying(Surface* surface) override;
+
  private:
   Surface* GetEffectiveTargetForEvent(const ui::DropTargetEvent& event) const;
-  void ClearDataOffer();
+  void SendSelection();
 
   DataDeviceDelegate* const delegate_;
+  Seat* const seat_;
   FileHelper* const file_helper_;
-  DataOffer* data_offer_;
+  DataOfferTracker data_offer_;
+  SurfaceTracker focused_surface_;
 
   DISALLOW_COPY_AND_ASSIGN(DataDevice);
 };
