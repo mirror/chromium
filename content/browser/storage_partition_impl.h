@@ -94,7 +94,6 @@ class CONTENT_EXPORT StoragePartitionImpl
   void ClearDataForOrigin(uint32_t remove_mask,
                           uint32_t quota_storage_remove_mask,
                           const GURL& storage_origin,
-                          net::URLRequestContextGetter* request_context_getter,
                           const base::Closure& callback) override;
   void ClearData(uint32_t remove_mask,
                  uint32_t quota_storage_remove_mask,
@@ -210,7 +209,6 @@ class CONTENT_EXPORT StoragePartitionImpl
                      const GURL& remove_origin,
                      const OriginMatcherFunction& origin_matcher,
                      const CookieMatcherFunction& cookie_matcher,
-                     net::URLRequestContextGetter* rq_context,
                      const base::Time begin,
                      const base::Time end,
                      const base::Closure& callback);
