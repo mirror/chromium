@@ -41,13 +41,11 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
   metafile.FinishDocument();
 
   PrintHostMsg_DidPrintPage_Params printed_page_params;
-  if (!CopyMetafileDataToSharedMem(metafile,
-                                   &printed_page_params.metafile_data_handle)) {
+  if (!CopyMetafileDataToSharedMem(metafile, &printed_page_params.content)) {
     return false;
   }
 
   printed_page_params.content_area = params.params.printable_area;
-  printed_page_params.data_size = metafile.GetDataSize();
   printed_page_params.document_cookie = params.params.document_cookie;
   printed_page_params.page_size = params.params.page_size;
 
