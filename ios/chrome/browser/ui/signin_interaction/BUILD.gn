@@ -40,6 +40,8 @@ source_set("eg_tests") {
     "//ios/chrome/app/strings",
     "//ios/chrome/browser",
     "//ios/chrome/browser/bookmarks:features",
+    "//ios/chrome/browser/browser_state",
+    "//ios/chrome/browser/ntp_snippets",
     "//ios/chrome/browser/signin",
     "//ios/chrome/browser/ui",
     "//ios/chrome/browser/ui/authentication:authentication_ui",
