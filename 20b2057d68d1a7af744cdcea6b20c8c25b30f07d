@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c020a29_8112cd12",
+        "filename": "chrome/browser/sessions/tab_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T21:07:06Z",
+      "side": 1,
+      "message": "What is the expectation when this happens? The way you have it here the tab remains in tabs_loading_, should the tab be removed?\n\nI have no idea what \u0027what page almost ideal\u0027 means to suggest what should happen when the page becomes \u0027almost ideal.\u0027 Maybe the function should be renamed to better indicate what it actually means.",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "20b2057d68d1a7af744cdcea6b20c8c25b30f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
