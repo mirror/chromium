@@ -661,6 +661,14 @@ void HttpCache::Transaction::WriteModeTransactionAboutToBecomeReader() {
   }
 }
 
+bool HttpCache::Transaction::CanJoinExistingWriters() {
+  // Method should be GET and request should not be partial.
+  if (request_->method == "GET" && !partial_)
+    return true;
+
+  return false;
+}
+
 //-----------------------------------------------------------------------------
 
 // A few common patterns: (Foo* means Foo -> FooComplete)
