@@ -423,9 +423,11 @@ source_set("unit_tests") {
     "//gin:gin_test",
     "//ipc:test_support",
     "//mojo/edk/js",
+    "//mojo/public/js:resources",
     "//testing/gmock",
     "//testing/gtest",
     "//third_party/WebKit/public:blink",
+    "//third_party/zlib/google:compression_utils",
     "//ui/base",
   ]
 

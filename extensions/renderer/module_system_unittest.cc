@@ -12,6 +12,15 @@
 #include "extensions/renderer/module_system_test.h"
 #include "gin/modules/module_registry.h"
 
+#include "base/logging.h"
+#include "base/strings/string_piece.h"
+#include "extensions/renderer/static_v8_external_one_byte_string_resource.h"
+#include "extensions/renderer/v8_helpers.h"
+#include "third_party/zlib/google/compression_utils.h"
+#include "ui/base/resource/resource_bundle.h"
+#include "extensions/renderer/resource_bundle_source_map.h"
+#include "mojo/public/js/grit/mojo_bindings_resources.h"
+
 namespace extensions {
 
 class CounterNatives : public ObjectBackedNativeHandler {
@@ -526,6 +535,36 @@ TEST_F(ModuleSystemTest, TestLoadScript) {
       "requireNative('assert').AssertTrue(addFunction(3, 5) == 8);");
   env()->module_system()->Require("test");
   RunResolvedPromises();
+}
+
+TEST_F(ModuleSystemTest, TestUncompress) {
+  ExpectNoAssertionsMade();
+  ResourceBundleSourceMap source_map(&ui::ResourceBundle::GetSharedInstance());
+  source_map.RegisterSource("mojo_bindings", IDR_MOJO_BINDINGS_JS, true);
+
+  {
+  v8::HandleScope handle_scope(env()->isolate());
+
+  for (int i = 0; i < 10; i++) {
+    auto rev = source_map.GetSource(env()->isolate(), "mojo_bindings");
+    ASSERT_FALSE(rev.IsEmpty());
+  }
+  }
+
+  constexpr int kRound = 500;
+  constexpr int kCount = 100;
+  base::TimeTicks begin = base::TimeTicks::Now();
+  for (int i = 0; i < kRound; i++) {
+  v8::HandleScope handle_scope(env()->isolate());
+  for (int j = 0; j < kCount; j++) {
+    auto rev = source_map.GetSource(env()->isolate(), "mojo_bindings");
+    ASSERT_FALSE(rev.IsEmpty());
+  }
+  }
+  base::TimeDelta duration = base::TimeTicks::Now() - begin;
+
+  LOG(ERROR) << "Numbers of getting and uncompressing mojo_bindings per sec: "
+             << kCount*kRound / duration.InSecondsF();
 }
 
 }  // namespace extensions
