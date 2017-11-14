@@ -603,6 +603,10 @@ bool GLSurfaceEGL::InitializeOneOff(EGLNativeDisplayType native_display) {
       HasEGLExtension("EGL_ANGLE_flexible_surface_compatibility") &&
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableDirectComposition);
+  if (g_use_direct_composition)
+    OutputDebugStringA("Direct composition, eh?\n");
+  else
+    OutputDebugStringA("Direct composition disabled!!!\n");
 
   g_egl_display_texture_share_group_supported =
       HasEGLExtension("EGL_ANGLE_display_texture_share_group");
