@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4fc517a_77e1f14f",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-14T10:21:41Z",
+      "side": 1,
+      "message": "Just help me understand: What does this do?",
+      "revId": "60f844ee094ef1a203b66b13409f1e8426277fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
