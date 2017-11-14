@@ -124,7 +124,9 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
                                                ResourceRequest&) = 0;
   virtual void DispatchDidReceiveTitle(const String&) = 0;
   virtual void DispatchDidChangeIcons(IconType) = 0;
-  virtual void DispatchDidCommitLoad(HistoryItem*, HistoryCommitType) = 0;
+  virtual void DispatchDidCommitLoad(HistoryItem*,
+                                     HistoryCommitType,
+                                     WindowObjectInstance) = 0;
   virtual void DispatchDidFailProvisionalLoad(const ResourceError&,
                                               HistoryCommitType) = 0;
   virtual void DispatchDidFailLoad(const ResourceError&, HistoryCommitType) = 0;

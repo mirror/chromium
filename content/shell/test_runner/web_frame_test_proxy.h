@@ -118,9 +118,11 @@ class WebFrameTestProxy : public Base, public WebFrameTestProxyBase {
 
   void DidCommitProvisionalLoad(
       const blink::WebHistoryItem& item,
-      blink::WebHistoryCommitType commit_type) override {
-    test_client()->DidCommitProvisionalLoad(item, commit_type);
-    Base::DidCommitProvisionalLoad(item, commit_type);
+      blink::WebHistoryCommitType commit_type,
+      blink::WebWindowObjectInstance window_object_instance) override {
+    test_client()->DidCommitProvisionalLoad(item, commit_type,
+                                            window_object_instance);
+    Base::DidCommitProvisionalLoad(item, commit_type, window_object_instance);
   }
 
   void DidReceiveTitle(const blink::WebString& title,

@@ -616,6 +616,7 @@ source_set("blink_headers") {
     "web/WebWidget.h",
     "web/WebWidgetClient.h",
     "web/WebWindowFeatures.h",
+    "web/WebWindowObjectInstance.h",
     "web/linux/WebFontRendering.h",
     "web/mac/WebSubstringUtil.h",
     "web/mac/WebSubstringUtil.h",

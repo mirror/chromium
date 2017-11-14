@@ -48,6 +48,7 @@
 #include "WebNavigatorContentUtilsClient.h"
 #include "WebTextDirection.h"
 #include "WebTriggeringEventInfo.h"
+#include "WebWindowObjectInstance.h"
 #include "public/platform/BlameContext.h"
 #include "public/platform/WebApplicationCacheHost.h"
 #include "public/platform/WebColor.h"
@@ -412,7 +413,8 @@ class BLINK_EXPORT WebFrameClient {
   // response body has been received, and the encoding of the response
   // body is known.
   virtual void DidCommitProvisionalLoad(const WebHistoryItem&,
-                                        WebHistoryCommitType) {}
+                                        WebHistoryCommitType,
+                                        WebWindowObjectInstance) {}
 
   // The frame's document has just been initialized.
   virtual void DidCreateNewDocument() {}

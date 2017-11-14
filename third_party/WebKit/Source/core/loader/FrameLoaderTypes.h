@@ -100,6 +100,8 @@ enum class SavePreviousDocumentResources {
   kUntilOnLoad
 };
 
+enum class WindowObjectInstance { kNewLocalDOMWindow, kReusingExisting };
+
 // This enum is used to index different kinds of single-page-application
 // navigations for UMA enum histogram. New enum values can be added, but
 // existing enums must never be renumbered or deleted and reused.

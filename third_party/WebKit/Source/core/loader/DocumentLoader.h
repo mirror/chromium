@@ -237,7 +237,7 @@ class CORE_EXPORT DocumentLoader
   enum class InstallNewDocumentReason { kNavigation, kJavascriptURL };
   void InstallNewDocument(const KURL&,
                           Document* owner_document,
-                          bool should_reuse_default_view,
+                          WindowObjectInstance,
                           const AtomicString& mime_type,
                           const AtomicString& encoding,
                           InstallNewDocumentReason,
@@ -245,7 +245,7 @@ class CORE_EXPORT DocumentLoader
                           const KURL& overriding_url);
   void DidInstallNewDocument(Document*);
   void WillCommitNavigation();
-  void DidCommitNavigation();
+  void DidCommitNavigation(WindowObjectInstance);
 
   void CommitNavigation(const AtomicString& mime_type,
                         const KURL& overriding_url = KURL());
