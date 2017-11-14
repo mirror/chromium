@@ -22,6 +22,30 @@
       "revId": "85b940be77c28918f7f2d42ddbee3ba36320f0fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0cdd82_29413c51",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-14T02:47:13Z",
+      "side": 1,
+      "message": "Oh, right, that was a deletion, not an addition.",
+      "parentUuid": "6505d0fa_67a8b3a6",
+      "range": {
+        "startLine": 7,
+        "startChar": 44,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "85b940be77c28918f7f2d42ddbee3ba36320f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
