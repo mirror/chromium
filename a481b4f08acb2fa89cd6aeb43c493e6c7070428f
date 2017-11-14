@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "55ca9d32_76930128",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-14T00:59:03Z",
+      "side": 1,
+      "message": "I don\u0027t know this area well, but I\u0027ll readily believe that if the window doesn\u0027t have a top-level ui::Layer, that \u0027clipping\u0027 is only achievable via some expensive alpha blending or similar, and there\u0027s no cheap way to actually clip the window. So, I\u0027ll go along with this approach, feel free to reply to my other comments and we can nail this CL down. Thanks for your patience.",
+      "parentUuid": "e4d37660_52483ef9",
+      "revId": "a481b4f08acb2fa89cd6aeb43c493e6c7070428f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4e4d655_5b32c8e6",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 6
