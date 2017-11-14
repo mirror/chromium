@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f15805a6_745c339b",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-14T01:48:58Z",
+      "side": 1,
+      "message": "I don\u0027t understand why you write inside the function but print to stdout outside the function. It would have a cleaner layer if lines 130-131 where in main(), then no need to pass args.test_result_file and args.rewrite_files to process_file(), making the function more functional.\n\nThe only difference is \u0027artifact_permanent_location\u0027 but I don\u0027t understand why you assign it conditionally.",
+      "revId": "e2903b22345b927c76d2873eaaa0b4e96fabffda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
