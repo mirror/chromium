@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/extensions/extension_special_storage_policy.h"
+#include "base/strings/string_util.h"
 
 #include <stddef.h>
 #include <stdint.h>
@@ -77,6 +78,19 @@ void LogHostedAppUnlimitedStorageUsage(
   }
 }
 
+bool IsSubdomainOfHost(const std::string& subdomain, const std::string& host) {
+  if (subdomain.length() <= host.length())
+    return false;
+
+  if (subdomain[subdomain.length() - host.length() - 1] != '.')
+    return false;
+
+  if (!base::EndsWith(subdomain, host, base::CompareCase::SENSITIVE))
+    return false;
+
+  return true;
+}
+
 }  // namespace
 
 ExtensionSpecialStoragePolicy::ExtensionSpecialStoragePolicy(
@@ -112,6 +126,27 @@ bool ExtensionSpecialStoragePolicy::IsStorageSessionOnly(const GURL& origin) {
   if (cookie_settings_.get() == NULL)
     return false;
   return cookie_settings_->IsCookieSessionOnly(origin);
+}
+
+bool ExtensionSpecialStoragePolicy::IsStorageAccessAllowed(const GURL& origin) {
+  if (cookie_settings_.get() == NULL)
+    return false;
+  return cookie_settings_->IsCookieAccessAllowed(origin, origin);
+}
+
+bool ExtensionSpecialStoragePolicy::HasSessionOnlySubdomains(
+    const GURL& origin) {
+  if (cookie_settings_.get() == NULL)
+    return false;
+  ContentSettingsForOneType entries;
+  cookie_settings_->GetCookieSettings(&entries);
+  for (auto& entry : entries) {
+    if (entry.GetContentSetting() == CONTENT_SETTING_SESSION_ONLY &&
+        IsSubdomainOfHost(entry.primary_pattern.GetHost(), origin.host())) {
+      return true;
+    }
+  }
+  return false;
 }
 
 bool ExtensionSpecialStoragePolicy::HasSessionOnlyOrigins() {
