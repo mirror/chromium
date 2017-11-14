@@ -81,6 +81,30 @@
       "revId": "0d8acc1e0bf48dad760791f9511c847805646a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85485fc_9285fb99",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-14T11:22:24Z",
+      "side": 1,
+      "message": "Sorry that my comment above was inaccurate.\n(A)This is the actual place where the View-in-browser is added as one of the file tasks.\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/file_manager/file_tasks.cc?type\u003dcs\u0026q\u003dFindFileBrowserHandlerTasks+FullTaskDescriptor\u0026sq\u003dpackage:chromium\u0026l\u003d563\nAs described, this view-in-browser is treated same as other non-generic tasks.\n\n(B) On the other hand, there\u0027s the other path to do view-in-browser is at the end of \nFileTasks.prototype.executeDefaultInternal_\n\n\nTo answer your question,\n\n[If there are View-in-browser by (A) and 2 other non-generic tasks, and none of these were run before]\n(old behavior): Launches the first item in the alphabetical order among the two apps that is not view-in-browser. (This is because FindExtensionAndAppTasks calls FindFileHandlerTasks before FindFileBrowserHandlerTasks.)\n(new behavior): Task picker will be shown, because there are multiple non-generic apps.\n\nThe view-in-browser by (B) will not be applied for this scenario due to rule #4 above.\n\n\nI\u0027ve created a debugging patch to see some of the processes to generate and choose tasks.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/768612\nI confirmed the old and new behaviors by applying inverse patch of https://chromium-review.googlesource.com/c/chromium/src/+/725959 .",
+      "parentUuid": "4d994f38_4e05b207",
+      "range": {
+        "startLine": 1030,
+        "startChar": 8,
+        "endLine": 1030,
+        "endChar": 29
+      },
+      "revId": "0d8acc1e0bf48dad760791f9511c847805646a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
