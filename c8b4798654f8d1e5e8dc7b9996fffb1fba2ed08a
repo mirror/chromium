@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adb16835_cb55ccfd",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_bubble_delegate_view.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "I guess the definition should be moved too to match the order.",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b586c6d_49a1b745",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "Below you don\u0027t use WrapUnique. I\u0027d omit it here.",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 22
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c34c6e59_9840258b",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "The code before used a fixed height. We needed it so the rows don\u0027t jump when you delete the first password from the list of many.\nIf we still need it then we should call StartRow with a height specified. Otherwise, please explain why we don\u0027t need it. In any case I don\u0027t see why you can\u0027t just use layout-\u003eAddView(undo_button.release()) here.",
+      "range": {
+        "startLine": 167,
+        "startChar": 10,
+        "endLine": 167,
+        "endChar": 17
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc573fe0_ce128e9a",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 184,
+        "startChar": 10,
+        "endLine": 184,
+        "endChar": 17
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52487b7d_4359700d",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "How does it magically put it into the right place without performing a layout?",
+      "range": {
+        "startLine": 215,
+        "startChar": 4,
+        "endLine": 215,
+        "endChar": 16
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b27ccb1_5d858ee3",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "Not needed.",
+      "range": {
+        "startLine": 236,
+        "startChar": 2,
+        "endLine": 236,
+        "endChar": 18
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ee5b68_4cb0f64b",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "How can it be NULL?",
+      "range": {
+        "startLine": 250,
+        "startChar": 6,
+        "endLine": 250,
+        "endChar": 24
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc7c658_9ccf9d03",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "We didn\u0027t get the close button deliberately because the designers didn\u0027t want if it\u0027s useless. Is it approved?",
+      "range": {
+        "startLine": 273,
+        "startChar": 9,
+        "endLine": 273,
+        "endChar": 13
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95a3724_a5885c52",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "If it\u0027s about all the bubbles then why isn\u0027t it in the parent class BubbleDialogDelegateView?",
+      "range": {
+        "startLine": 278,
+        "startChar": 24,
+        "endLine": 278,
+        "endChar": 55
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "235108a1_e4d8bd05",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "Why not std::vector\u003cPasswordRow\u003e? If you keep the ptr then you can move class PasswordRow definition to cc.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 43
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5abf48_d96dca9c",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_delegate_view_base.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "Don\u0027t declare a local variable.",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 17
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d0f6f2_0fa52a3f",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_delegate_view_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "I guess it\u0027s always true and won\u0027t get to false in the future.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e556d57_e1e7e0db",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_delegate_view_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "Should those to be protected if you have CreateBubble?",
+      "range": {
+        "startLine": 60,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17d99c4_4fb26bce",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_delegate_view_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "This is not true. The auto sign-in toast can appear on any window.",
+      "range": {
+        "startLine": 76,
+        "startChar": 48,
+        "endLine": 78,
+        "endChar": 34
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df011ac_efb22a77",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "{}",
+      "range": {
+        "startLine": 910,
+        "startChar": 4,
+        "endLine": 911,
+        "endChar": 46
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdfddc37_29dc951d",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-14T03:47:05Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 18
+      },
+      "revId": "c8b4798654f8d1e5e8dc7b9996fffb1fba2ed08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
