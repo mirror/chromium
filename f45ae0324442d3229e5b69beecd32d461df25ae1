@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "177b85eb_51968e6c",
+        "filename": "content/renderer/media/audio_ipc_factory.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-14T20:46:35Z",
+      "side": 1,
+      "message": "Correct, apart from removing the +1 PostTask on MaybeDeregisterRemoteFactoryOnIOThread. Fixed.",
+      "parentUuid": "554bbb21_994ad557",
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0d688b5_59b46062",
         "filename": "content/renderer/media/audio_ipc_factory.cc",
         "patchSetId": 22
@@ -33,6 +51,24 @@
       "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f97c9dd_64002005",
+        "filename": "content/renderer/media/audio_ipc_factory.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-14T20:46:35Z",
+      "side": 1,
+      "message": "Sorry about that. Removed.",
+      "parentUuid": "e0d688b5_59b46062",
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "266d1f9b_e2e479fc",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-14T20:46:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8fb9094_a0a5411e",
+      "range": {
+        "startLine": 654,
+        "startChar": 17,
+        "endLine": 654,
+        "endChar": 24
+      },
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4c9ccf4_ec6f266a",
         "filename": "content/renderer/render_frame_impl_browsertest.cc",
         "patchSetId": 22
@@ -79,6 +139,30 @@
       "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a4e340f_261448d4",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-14T20:46:35Z",
+      "side": 1,
+      "message": "Good point. :-). Done.",
+      "parentUuid": "d4c9ccf4_ec6f266a",
+      "range": {
+        "startLine": 662,
+        "startChar": 6,
+        "endLine": 662,
+        "endChar": 10
+      },
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "b299795c_51584966",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-14T20:46:35Z",
+      "side": 1,
+      "message": "We should observe that on the second InterfaceProvider, in the call below.",
+      "parentUuid": "cfe7bbfb_e00508c7",
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "739a2ea5_347ecb68",
         "filename": "content/renderer/render_frame_impl_browsertest.cc",
         "patchSetId": 22
@@ -157,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "654faf16_cfe0de5e",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-14T20:46:35Z",
+      "side": 1,
+      "message": "Yeah, it needs to keep observing the frame and send interface requests on RenderFrameObserver events. Added a comment to this effect.",
+      "parentUuid": "739a2ea5_347ecb68",
+      "range": {
+        "startLine": 853,
+        "startChar": 54,
+        "endLine": 853,
+        "endChar": 74
+      },
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2723a12b_43ff07e8",
         "filename": "content/renderer/render_frame_impl_browsertest.cc",
         "patchSetId": 22
@@ -177,6 +303,30 @@
       "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c9ba24_584cc0c8",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-14T20:46:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2723a12b_43ff07e8",
+      "range": {
+        "startLine": 913,
+        "startChar": 22,
+        "endLine": 913,
+        "endChar": 35
+      },
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

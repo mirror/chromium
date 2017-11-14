@@ -70,6 +70,30 @@
       "revId": "e6db59a3584fbdff0366fe5b5cc86e2fc5b2cdd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68b1d5a_71d2a911",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 4004,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-14T20:46:35Z",
+      "side": 1,
+      "message": "Fully agreed, but let\u0027s address those in a follow-up CL, as Daniel suggests.",
+      "parentUuid": "07a97b96_f5277609",
+      "range": {
+        "startLine": 4004,
+        "startChar": 4,
+        "endLine": 4004,
+        "endChar": 31
+      },
+      "revId": "e6db59a3584fbdff0366fe5b5cc86e2fc5b2cdd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
