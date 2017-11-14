@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91386a3f_826c3bad",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-14T17:43:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "048b454d_56686244",
+      "range": {
+        "startLine": 139,
+        "startChar": 27,
+        "endLine": 139,
+        "endChar": 45
+      },
+      "revId": "8e24e29c2666c7f69c9389e0fdcd01d8fe00bbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eff9ea77_9a27f97c",
         "filename": "base/android/library_loader/library_prefetcher.cc",
         "patchSetId": 9
@@ -68,6 +92,54 @@
       "revId": "8e24e29c2666c7f69c9389e0fdcd01d8fe00bbe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0fe1652_fe019004",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-14T17:43:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbd375f9_13a6f176",
+      "range": {
+        "startLine": 141,
+        "startChar": 20,
+        "endLine": 141,
+        "endChar": 42
+      },
+      "revId": "8e24e29c2666c7f69c9389e0fdcd01d8fe00bbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "abf8ca06_bfc60eca",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-14T17:43:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eff9ea77_9a27f97c",
+      "range": {
+        "startLine": 141,
+        "startChar": 4,
+        "endLine": 141,
+        "endChar": 16
+      },
+      "revId": "8e24e29c2666c7f69c9389e0fdcd01d8fe00bbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "b6845045_c4eab87f",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-14T17:43:50Z",
+      "side": 1,
+      "message": "Changed the code to find the range to which the code being executed belongs.\nAlso, checked, and monochrome_apk is fine, as we load from base.apk in this case.\n\nWe used the private bit as we wanted to prefetch .data as well.",
+      "parentUuid": "bf3324bf_04fa03a1",
+      "range": {
+        "startLine": 282,
+        "startChar": 12,
+        "endLine": 282,
+        "endChar": 41
+      },
+      "revId": "8e24e29c2666c7f69c9389e0fdcd01d8fe00bbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a0ee17_3d5a739b",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-14T17:43:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06dd9a41_c8c3e627",
+      "range": {
+        "startLine": 282,
+        "startChar": 5,
+        "endLine": 282,
+        "endChar": 6
+      },
+      "revId": "8e24e29c2666c7f69c9389e0fdcd01d8fe00bbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25feca9d_edf836a5",
         "filename": "base/android/library_loader/library_prefetcher.h",
         "patchSetId": 9
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-14T17:02:18Z",
       "side": 1,
       "message": "the type alias definition moved from private to public, can you explain the reasons?",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 55
+      },
+      "revId": "8e24e29c2666c7f69c9389e0fdcd01d8fe00bbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28b35bc_88219800",
+        "filename": "base/android/library_loader/library_prefetcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-14T17:43:50Z",
+      "side": 1,
+      "message": "To be able to use it from anonymous namespace functions in the .cc file. Alternatives are either to use the full type there, or move them to private static class functions, but I prefer to keep them local to the .cc file if possible.",
+      "parentUuid": "25feca9d_edf836a5",
       "range": {
         "startLine": 32,
         "startChar": 2,
