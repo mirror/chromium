@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "a1ecc54a_80aa0ba4",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-14T09:19:26Z",
+      "side": 1,
+      "message": "Perhaps, you don\u0027t need any comment for Advance() instead of explaining what\nthe implementation does in detail. \n\nThis tailored breakiterator is supposed to behave like its parent class except that \nit breaks on an underscore. So, I don\u0027t think Advance() needs any comment in the header file.",
+      "parentUuid": "2dddc29c_30f1a5ca",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 59
+      },
+      "revId": "05230e7eaa522cb4454d51fb3a90bd9938f23d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ec0e05f_1a4cd692",
         "filename": "components/omnibox/browser/break_iterator_adapter.h",
         "patchSetId": 9
