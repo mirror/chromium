@@ -215,7 +215,14 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
                        UseCaseToString),
       renderer_pause_count(0),
       navigation_task_expected_count(0),
-      expensive_task_policy(ExpensiveTaskPolicy::RUN),
+      expensive_task_policy(ExpensiveTaskPolicy::RUN,
+                            "RendererScheduler.ExpensiveTaskPolicy",
+                            renderer_scheduler_impl,
+                            ExpensiveTaskPolicyToString),
+      rail_mode_for_tracing(v8::PERFORMANCE_ANIMATION,
+                            "RendererScheduler.RAILMode",
+                            renderer_scheduler_impl,
+                            RAILModeToString),
       renderer_hidden(false),
       renderer_backgrounded(false,
                             "RendererScheduler.Backgrounded",
@@ -1248,12 +1255,6 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   // Tracing is done before the early out check, because it's quite possible we
   // will otherwise miss this information in traces.
   CreateTraceEventObjectSnapshotLocked();
-  TRACE_COUNTER1(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"), "use_case",
-                 use_case);
-  TRACE_COUNTER1(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"), "rail_mode",
-                 new_policy.rail_mode());
-  TRACE_COUNTER1(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
-                 "expensive_task_policy", expensive_task_policy);
 
   // TODO(alexclarke): Can we get rid of force update now?
   if (update_type == UpdateType::MAY_EARLY_OUT_IF_POLICY_UNCHANGED &&
@@ -1270,10 +1271,12 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
         new_policy.GetQueuePolicy(queue_class));
   }
 
-  if (main_thread_only().rail_mode_observer &&
-      new_policy.rail_mode() != main_thread_only().current_policy.rail_mode()) {
-    main_thread_only().rail_mode_observer->OnRAILModeChanged(
-        new_policy.rail_mode());
+  if (new_policy.rail_mode() != main_thread_only().current_policy.rail_mode()) {
+    main_thread_only().rail_mode_for_tracing = new_policy.rail_mode();
+    if (main_thread_only().rail_mode_observer) {
+      main_thread_only().rail_mode_observer->OnRAILModeChanged(
+          new_policy.rail_mode());
+    }
   }
 
   // TODO(skyostil): send these notifications after releasing the scheduler
@@ -2265,6 +2268,8 @@ void RendererSchedulerImpl::OnTraceLogEnabled() {
   CreateTraceEventObjectSnapshot();
 
   main_thread_only().current_use_case.OnTraceLogEnabled();
+  main_thread_only().expensive_task_policy.OnTraceLogEnabled();
+  main_thread_only().rail_mode_for_tracing.OnTraceLogEnabled();
   main_thread_only().renderer_backgrounded.OnTraceLogEnabled();
   main_thread_only().loading_tasks_seem_expensive.OnTraceLogEnabled();
   main_thread_only().timer_tasks_seem_expensive.OnTraceLogEnabled();
