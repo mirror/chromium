@@ -329,6 +329,68 @@ TEST_F(ExtensionSpecialStoragePolicyTest, HasSessionOnlyOrigins) {
   EXPECT_FALSE(policy_->HasSessionOnlyOrigins());
 }
 
+TEST_F(ExtensionSpecialStoragePolicyTest, HasSessionOnlySubdomains) {
+  TestingProfile profile;
+  content_settings::CookieSettings* cookie_settings =
+      CookieSettingsFactory::GetForProfile(&profile).get();
+  policy_ = new ExtensionSpecialStoragePolicy(cookie_settings);
+
+  GURL http_x("http://x.com");
+  GURL http_y_x("http://y.x.com");
+  GURL http_z_y_x("http://z.y.x.com");
+
+  GURL https_x("https://x.com");
+  GURL https_y_x("https://y.x.com");
+
+  GURL http_x_8080("http://x.com:8080");
+
+  // TODO:
+  // We might want to compare the ports as well? A site can't set cookies
+  // for a site on a different port.
+  // A non-secure site can't set secure cookies, so maybe we should not match
+  // cookies for https with http pattern? But usually you either have wildcard
+  // rules or https rules?
+
+  cookie_settings->SetCookieSetting(http_x, CONTENT_SETTING_SESSION_ONLY);
+
+  EXPECT_FALSE(policy_->HasSessionOnlySubdomains(http_x));
+  EXPECT_FALSE(policy_->HasSessionOnlySubdomains(http_y_x));
+  EXPECT_FALSE(policy_->HasSessionOnlySubdomains(http_z_y_x));
+  EXPECT_FALSE(policy_->HasSessionOnlySubdomains(https_x));
+  EXPECT_FALSE(policy_->HasSessionOnlySubdomains(https_y_x));
+  EXPECT_FALSE(policy_->HasSessionOnlySubdomains(http_x_8080));
+
+  cookie_settings->ResetCookieSetting(http_x);
+  cookie_settings->SetCookieSetting(http_y_x, CONTENT_SETTING_SESSION_ONLY);
+
+  EXPECT_TRUE(policy_->HasSessionOnlySubdomains(http_x));
+  EXPECT_FALSE(policy_->HasSessionOnlySubdomains(http_y_x));
+  EXPECT_FALSE(policy_->HasSessionOnlySubdomains(http_z_y_x));
+  EXPECT_TRUE(policy_->HasSessionOnlySubdomains(https_x));
+  EXPECT_FALSE(policy_->HasSessionOnlySubdomains(https_y_x));
+  EXPECT_TRUE(policy_->HasSessionOnlySubdomains(http_x_8080));  // FALSE?
+
+  cookie_settings->ResetCookieSetting(http_y_x);
+  cookie_settings->SetCookieSetting(https_y_x, CONTENT_SETTING_SESSION_ONLY);
+
+  EXPECT_TRUE(policy_->HasSessionOnlySubdomains(http_x));
+  EXPECT_FALSE(policy_->HasSessionOnlySubdomains(http_y_x));
+  EXPECT_FALSE(policy_->HasSessionOnlySubdomains(http_z_y_x));
+  EXPECT_TRUE(policy_->HasSessionOnlySubdomains(https_x));
+  EXPECT_FALSE(policy_->HasSessionOnlySubdomains(https_y_x));
+  EXPECT_TRUE(policy_->HasSessionOnlySubdomains(http_x_8080));  //  FALSE?
+
+  cookie_settings->ResetCookieSetting(https_y_x);
+  cookie_settings->SetCookieSetting(http_z_y_x, CONTENT_SETTING_SESSION_ONLY);
+
+  EXPECT_TRUE(policy_->HasSessionOnlySubdomains(http_x));
+  EXPECT_TRUE(policy_->HasSessionOnlySubdomains(http_y_x));
+  EXPECT_FALSE(policy_->HasSessionOnlySubdomains(http_z_y_x));
+  EXPECT_TRUE(policy_->HasSessionOnlySubdomains(https_x));
+  EXPECT_TRUE(policy_->HasSessionOnlySubdomains(https_y_x));
+  EXPECT_TRUE(policy_->HasSessionOnlySubdomains(http_x_8080));  //  FALSE?
+}
+
 TEST_F(ExtensionSpecialStoragePolicyTest, IsStorageDurableTest) {
   TestingProfile profile;
   content_settings::CookieSettings* cookie_settings =

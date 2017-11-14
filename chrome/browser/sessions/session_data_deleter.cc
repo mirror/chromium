@@ -152,9 +152,13 @@ void SessionDataDeleter::DeleteSessionOnlyOriginCookies(
   for (const auto& cookie : cookies) {
     GURL url =
         net::cookie_util::CookieOriginToURL(cookie.Domain(), cookie.IsSecure());
-    if (!storage_policy_->IsStorageSessionOnly(url))
-      continue;
-    cookie_store->DeleteCanonicalCookieAsync(cookie, base::Bind(CookieDeleted));
+    if (storage_policy_->IsStorageSessionOnly(url) ||
+        (!storage_policy_->IsStorageAccessAllowed(url) &&
+         !net::cookie_util::DomainIsHostOnly(cookie.Domain()) &&
+         storage_policy_->HasSessionOnlySubdomains(url))) {
+      cookie_store->DeleteCanonicalCookieAsync(cookie,
+                                               base::Bind(CookieDeleted));
+    }
   }
 }
 

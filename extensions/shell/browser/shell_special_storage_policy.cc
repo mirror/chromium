@@ -30,6 +30,14 @@ bool ShellSpecialStoragePolicy::IsStorageSessionOnly(const GURL& origin) {
   return false;
 }
 
+bool ShellSpecialStoragePolicy::IsStorageAccessAllowed(const GURL& origin) {
+  return true;
+}
+
+bool ShellSpecialStoragePolicy::HasSessionOnlySubdomains(const GURL& origin) {
+  return false;
+}
+
 bool ShellSpecialStoragePolicy::HasSessionOnlyOrigins() {
   return false;
 }
