@@ -7,6 +7,7 @@
       'target_name': 'app',
       'dependencies': [
         'header',
+	'pages_settings',
         'copies_settings',
         'layout_settings',
         'color_settings',
@@ -14,12 +15,21 @@
         'margins_settings',
         'dpi_settings',
         'scaling_settings',
+	'other_options_settings',
         'model',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
       'target_name': 'header',
+      'dependencies': [
+        'model',
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
+      ],
+      'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
+      'target_name': 'pages_settings',
       'dependencies': [
         'model',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
@@ -73,16 +83,15 @@
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
-      'target_name': 'number_settings_section',
+      'target_name': 'other_options_settings',
       'dependencies': [
-        'input_settings_behavior',
+        'model',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
-      'target_name': 'input_settings_behavior',
+      'target_name': 'number_settings_section',
       'dependencies': [
-        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
