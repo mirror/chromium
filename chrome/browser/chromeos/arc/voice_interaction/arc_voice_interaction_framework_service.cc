@@ -42,11 +42,13 @@
 #include "components/arc/instance_holder.h"
 #include "components/session_manager/core/session_manager.h"
 #include "content/public/browser/browser_thread.h"
+#include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_owner.h"
 #include "ui/compositor/layer_tree_owner.h"
+#include "ui/gfx/codec/jpeg_codec.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/image/image_util.h"
@@ -164,12 +166,12 @@ void EncodeAndReturnImage(
       FROM_HERE,
       base::TaskTraits{base::MayBlock(), base::TaskPriority::USER_BLOCKING},
       base::BindOnce(
-          [](const gfx::Image& image) -> std::vector<uint8_t> {
+          [](SkBitmap image) -> std::vector<uint8_t> {
             std::vector<uint8_t> res;
-            gfx::JPEG1xEncodedDataFromImage(image, 100, &res);
+            gfx::JPEGCodec::Encode(image, 100, &res);
             return res;
           },
-          image),
+          image.AsBitmap()),
       std::move(callback));
 }
 
