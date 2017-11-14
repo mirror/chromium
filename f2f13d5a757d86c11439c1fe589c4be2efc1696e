@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b70e728c_a0ededf9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-14T14:21:53Z",
+      "side": 1,
+      "message": "Let\u0027s avoid specifying exact value here — it may cause problems if we choose to select a different default rail mode in Policy class.\n\nLet\u0027s go with rail_mode_for_tracing(current_policy.rail_mode())",
+      "range": {
+        "startLine": 222,
+        "startChar": 28,
+        "endLine": 222,
+        "endChar": 53
+      },
+      "revId": "f2f13d5a757d86c11439c1fe589c4be2efc1696e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75dc0893_e7e20c51",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-14T14:21:53Z",
+      "side": 1,
+      "message": "We have logic inside to avoid doing anything when assigning the same value, right?\n\nLet\u0027s use it and update rail_mode_for_tracing unconditionally.",
+      "range": {
+        "startLine": 1275,
+        "startChar": 4,
+        "endLine": 1275,
+        "endChar": 70
+      },
+      "revId": "f2f13d5a757d86c11439c1fe589c4be2efc1696e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e1412c_71b7078c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1687,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-14T14:21:53Z",
+      "side": 1,
+      "message": "nit: we use hacker_style for the rest of the states. Let\u0027s keep it consistent and use \"run\", \"block\" and \"throttle\" here.",
+      "range": {
+        "startLine": 1687,
+        "startChar": 14,
+        "endLine": 1687,
+        "endChar": 17
+      },
+      "revId": "f2f13d5a757d86c11439c1fe589c4be2efc1696e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
