@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7af92558_2b3037c5",
+        "filename": "ui/webui/resources/cr_elements/cr_drawer/cr_drawer.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-14T23:47:20Z",
+      "side": 1,
+      "message": "Are both word-break and word-wrap needed?",
+      "revId": "7c4eb83a9d6a6a3672c865f01af59f750a82861d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
