@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "a5285216_12becab3",
+        "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-14T05:26:27Z",
+      "side": 1,
+      "message": "base::ThreadLocalPointer is not allowed in Blink because we have an equivalent in WTF (ThreadSpecific). base::ThreadLocalPointer is not yet used in Blink.\n\nThe rule is that if we have an equivalent in WTF, Blink should use it (regardless of platform/, core/ or whatever).\n\nWe should have the check in presubmit...",
+      "parentUuid": "97cf5f4f_a361a801",
+      "revId": "ca482420bf996d5c01db03327aa4eaebcc8022ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a330a127_9c4fa3ab",
         "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithThread.h",
         "patchSetId": 3
@@ -124,6 +142,24 @@
       "side": 1,
       "message": "This works only for threads that were created via Platform::CreateThread after instantiating this class. Since the main thread is not managed by this class, this class just asks the original Platform impl to return the WebThread instance for the main thread. If the original platform does not support it, it just won\u0027t work.\n\nIf user want to make this work even for the main thread, following code would work.\n\nScopedTestingPlatform\u003cTestingPlatformSupportWithMockScheduler\u003e platform_with_scheduler;\nScopedTestingPlatform\u003cTestingfPlatformSupportWithThread\u003e plateform_with_thread;\n\nPlatform::Current()-\u003eCurrentThread();  // TestingPlatformSupportWithThread::CurrentThread() --\u003e TestingPlatformSupportWithMockScheduler::CurrentThread() --\u003e threads_.get() [|threads_| was created via scheduler_-\u003eCreateMainThread()]",
       "parentUuid": "37dcd78c_7b45a895",
+      "revId": "ca482420bf996d5c01db03327aa4eaebcc8022ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8bc90638_a4487249",
+        "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithThread.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-14T05:26:27Z",
+      "side": 1,
+      "message": "That looks confusing...\n\nIs there any option to add CreateThread and CurrentThread to TestingPlatformSupportWithMockScheduler?",
+      "parentUuid": "fa119719_679b54a9",
       "revId": "ca482420bf996d5c01db03327aa4eaebcc8022ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
