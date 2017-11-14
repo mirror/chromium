@@ -28,6 +28,7 @@
 #include "chrome/browser/ui/views/frame/browser_header_painter_ash.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/frame/hosted_app_button_container.h"
+#include "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.h"
 #include "chrome/browser/ui/views/frame/immersive_mode_controller.h"
 #include "chrome/browser/ui/views/profiles/profile_indicator_icon.h"
 #include "chrome/browser/ui/views/tab_icon_view.h"
@@ -109,15 +110,29 @@ void BrowserNonClientFrameViewAsh::Init() {
   }
 
   if (UsePackagedAppHeaderStyle()) {
-    ash::DefaultHeaderPainter* header_painter = new ash::DefaultHeaderPainter;
+    extensions::HostedAppBrowserController* app_controller =
+        browser->hosted_app_controller();
+
+    ash::DefaultHeaderPainter* header_painter = nullptr;
+    if (extensions::HostedAppBrowserController::
+            IsForExperimentalHostedAppBrowser(browser)) {
+      header_painter = new HostedAppHeaderPainterAsh(app_controller);
+      SkColor text_color = header_painter->GetTitleColor();
+      hosted_app_button_container_ = new HostedAppButtonContainer(
+          browser_view(), text_color,
+          SkColorSetA(text_color,
+                      255 * ash::kInactiveFrameButtonIconAlphaRatio));
+      caption_button_container_->AddChildViewAt(hosted_app_button_container_,
+                                                0);
+    } else {
+      header_painter = new ash::DefaultHeaderPainter;
+    }
     header_painter_.reset(header_painter);
     header_painter->Init(frame(), this, caption_button_container_,
                          back_button_);
     if (window_icon_)
       header_painter->UpdateLeftHeaderView(window_icon_);
 
-    extensions::HostedAppBrowserController* app_controller =
-        browser->hosted_app_controller();
     if (app_controller) {
       // Hosted apps apply a theme color if specified by the extension.
       base::Optional<SkColor> theme_color = app_controller->GetThemeColor();
@@ -125,16 +140,6 @@ void BrowserNonClientFrameViewAsh::Init() {
         SkColor opaque_theme_color =
             SkColorSetA(theme_color.value(), SK_AlphaOPAQUE);
         header_painter->SetFrameColors(opaque_theme_color, opaque_theme_color);
-      }
-      if (extensions::HostedAppBrowserController::
-              IsForExperimentalHostedAppBrowser(browser)) {
-        SkColor text_color = header_painter->GetTitleColor();
-        hosted_app_button_container_ = new HostedAppButtonContainer(
-            browser_view(), text_color,
-            SkColorSetA(text_color,
-                        255 * ash::kInactiveFrameButtonIconAlphaRatio));
-        caption_button_container_->AddChildViewAt(hosted_app_button_container_,
-                                                  0);
       }
     } else if (!browser->is_app()) {
       // For non app (i.e. WebUI) windows (e.g. Settings) use MD frame color.
