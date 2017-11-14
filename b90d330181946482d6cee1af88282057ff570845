@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6b7129b_c16dec7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-14T17:55:52Z",
+      "side": 1,
+      "message": "This comment does not address the case where the original position is not on the first and only row",
+      "range": {
+        "startLine": 163,
+        "startChar": 10,
+        "endLine": 163,
+        "endChar": 74
+      },
+      "revId": "b90d330181946482d6cee1af88282057ff570845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7acc5787_755c901c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-14T17:55:52Z",
+      "side": 1,
+      "message": "this is essentially an \"else\", right?",
+      "range": {
+        "startLine": 177,
+        "startChar": 16,
+        "endLine": 177,
+        "endChar": 24
+      },
+      "revId": "b90d330181946482d6cee1af88282057ff570845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c673df63_fd71f64b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-14T17:55:52Z",
+      "side": 1,
+      "message": "nit: might be nicer as `orderedChildren.add(Math.min(i, numColumns- 1 ), view)` ? WDYT?",
+      "range": {
+        "startLine": 181,
+        "startChar": 12,
+        "endLine": 185,
+        "endChar": 13
+      },
+      "revId": "b90d330181946482d6cee1af88282057ff570845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35a5419_2bf33db1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-14T17:55:52Z",
+      "side": 1,
+      "message": "neat :)",
+      "revId": "b90d330181946482d6cee1af88282057ff570845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
