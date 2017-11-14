@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "dc858c3c_f2a91702",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-14T10:05:50Z",
+      "side": 1,
+      "message": "nit: maybe rewrite this to:\n\n  // Asynchronously returns cookies for WebState associated with this task (on iOS\n  // 10 and earlier, the array is always empty as it is not possible to access the\n  // cookies). Must be called on UI thread. The callback will be invoked on the IO\n  // thread.",
+      "range": {
+        "startLine": 78,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 25
+      },
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f4ba215_673b53b2",
         "filename": "ios/web/download/download_task_impl.mm",
         "patchSetId": 11
@@ -42,6 +65,23 @@
     },
     {
       "key": {
+        "uuid": "cff44945_8b2b36a6",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-14T10:05:50Z",
+      "side": 1,
+      "message": "Is an empty string a valid identifier? If not, maybe add DCHECK([identitifer length] !\u003d 0).",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16ebb865_1eb3344e",
         "filename": "ios/web/download/download_task_impl.mm",
         "patchSetId": 11
@@ -70,6 +110,46 @@
       "writtenOn": "2017-11-14T06:46:37Z",
       "side": 1,
       "message": "I don\u0027t follow this comment. This is a completion handler for the task of writing this particular buffer, not the overall write operation. How would this completion handler relate to the idea that the data will be eventually written?",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b46803a_05a047f4",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-14T10:05:50Z",
+      "side": 1,
+      "message": "It is kind of surprising that the callback is invoked on the IO thread. I think this should be documented, or the result should be forwarded to the invoking thread (probably using base::ThreadTaskRunnerHandle to get the queue where the callback will be invoked):\n\n  if (@available(iOS 11, *)) {\n    __block NSArray\u003cNSHTTPCookie*\u003e block_cookies \u003d nil;\n    WebThread::PostTaskAndReply(\n        WebThread::IO, FROM_HERE, base::Bind(\n            \u0026DownloadTaskImpl::GetWKCookies, weak_factory_.GetWeakPtr(),\n            base::BindBlockArc(^(NSArray\u003cNSHTTPCookie*\u003e cookies) {\n                block_cookies \u003d cookies;\n            })),\n        base::BindBlockArc(^{ callback.Run(block_cookies); }));\n  }\n\nThough if we decide to invoke the callback on invoking thread, then it is probably best to inline GetWKCookies in the base::BindBlockArc as suggested in next comment.",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c19c71e_54391d45",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-14T10:05:50Z",
+      "side": 1,
+      "message": "I think this is unsafe. It access BrowserState UserData which is not thread-safe. And AFAICT, BrowserState is an UI thread object. From browser_state.h:\n\n  // It lives on the UI thread. All these methods must only be called on the UI\n  // thread.\n\nSo I think the store should be fetched on a UI thread, and then passed to the block. Maybe the simplest would be to remove the GetWKCookie and implement GetCookies as:\n\n  void DownloadTaskImpl::GetCookies(\n      base::Callback\u003cvoid(NSArray\u003cNSHTTPCookie*\u003e*)\u003e callback) {\n    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);\n    if (@available(iOS 11, *)) {\n      auto store \u003d WKCookieStoreForBrowserState(web_state_-\u003eGetBrowserState());\n      DCHECK(store);\n      WebThread::PostTask(WebThread::IO, FROM_HERE, base::BindBlockArc(^{\n                            [store getAllCookies:^(NSArray\u003cNSHTTPCookie*\u003e* cookies) {\n                              callback.Run(cookies);\n                            }];\n                          });\n    } else {\n      WebThread::PostTask(WebThread::IO, FROM_HERE, base::BindBlockArc(^{\n                            callback.Run([NSArray array]);\n                          }));\n    }\n  }",
+      "range": {
+        "startLine": 289,
+        "startChar": 15,
+        "endLine": 289,
+        "endChar": 75
+      },
       "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

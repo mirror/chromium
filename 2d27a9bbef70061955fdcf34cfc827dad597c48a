@@ -93,6 +93,30 @@
       "revId": "2d27a9bbef70061955fdcf34cfc827dad597c48a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99530f24_2897ccde",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-14T10:05:50Z",
+      "side": 1,
+      "message": "I think you would have had to change all base::Callback to base::OnceCallback (so also change GetWKCookies) and then use base::BindOnce instead of base::Bind (otherwise you could convert a OnceCallback to a Callback by doing base::Bind(InvokeOnceCallback, std::move(once_callback))).\n\nBut I\u0027m okay if you land this CL with base::Callback. I\u0027ll see what need to be fixed to use base::OnceCallback and send a followup CL if possible (using base::OnceCallback is just an optimization, so it is not blocking).",
+      "parentUuid": "fd513410_6076e773",
+      "range": {
+        "startLine": 272,
+        "startChar": 10,
+        "endLine": 272,
+        "endChar": 18
+      },
+      "revId": "2d27a9bbef70061955fdcf34cfc827dad597c48a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
