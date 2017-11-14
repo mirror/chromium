@@ -328,21 +328,6 @@ class NET_EXPORT X509Certificate
                              const std::vector<std::string>& cert_san_ip_addrs,
                              bool allow_common_name_fallback);
 
-  // Reads a single certificate from |pickle_iter| and returns a
-  // platform-specific certificate handle. The format of the certificate
-  // stored in |pickle_iter| is not guaranteed to be the same across different
-  // underlying cryptographic libraries, nor acceptable to CreateFromBytes().
-  // Returns an invalid handle, NULL, on failure.
-  // NOTE: This should not be used for any new code. It is provided for
-  // migration purposes and should eventually be removed.
-  static OSCertHandle ReadOSCertHandleFromPickle(
-      base::PickleIterator* pickle_iter);
-
-  // Writes a single certificate to |pickle| in DER form. Returns false on
-  // failure.
-  static void WriteOSCertHandleToPickle(OSCertHandle handle,
-                                        base::Pickle* pickle);
-
   // The subject of the certificate.
   CertPrincipal subject_;
 
