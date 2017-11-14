@@ -32,6 +32,7 @@ using base::CancelableSyncSocket;
 using base::SharedMemory;
 using base::SyncSocket;
 using testing::_;
+using testing::AtLeast;
 using testing::DoAll;
 using testing::Invoke;
 using testing::Return;
@@ -215,7 +216,7 @@ void AudioOutputDeviceTest::StartAudioDevice() {
   if (device_status_ == OUTPUT_DEVICE_STATUS_OK)
     EXPECT_CALL(*audio_output_ipc_, CreateStream(audio_device_.get(), _));
   else
-    EXPECT_CALL(callback_, OnRenderError());
+    EXPECT_CALL(callback_, OnRenderError()).Times(AtLeast(1));
 
   audio_device_->Start();
   base::RunLoop().RunUntilIdle();
