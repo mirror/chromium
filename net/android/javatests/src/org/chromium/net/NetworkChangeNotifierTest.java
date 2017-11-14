@@ -954,6 +954,15 @@ public class NetworkChangeNotifierTest {
         Assert.assertFalse(NetworkChangeNotifier.isOnline());
     }
 
+    private static void bindProcessToNetwork(
+            ConnectivityManager connectivityManager, Network network) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            ConnectivityManager.setProcessDefaultNetwork(network);
+        } else {
+            connectivityManager.bindProcessToNetwork(network);
+        }
+    }
+
     /**
      * Tests NetworkChangeNotifier.isProcessBoundToNetwork().
      */
@@ -970,10 +979,10 @@ public class NetworkChangeNotifierTest {
         Network network = connectivityManager.getActiveNetwork();
         Assert.assertFalse(NetworkChangeNotifier.isProcessBoundToNetwork());
         if (network != null) {
-            ConnectivityManager.setProcessDefaultNetwork(network);
+            bindProcessToNetwork(connectivityManager, network);
             Assert.assertTrue(NetworkChangeNotifier.isProcessBoundToNetwork());
         }
-        ConnectivityManager.setProcessDefaultNetwork(null);
+        bindProcessToNetwork(connectivityManager, null);
         Assert.assertFalse(NetworkChangeNotifier.isProcessBoundToNetwork());
     }
 }
