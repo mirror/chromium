@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d4af04a_9a1e17be",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValueType.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-14T05:48:43Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused about what entries_ is here, and why we\u0027re adding the entries in a function called Multiply(). Perhaps entries_ could have a clearer name?",
+      "revId": "47c85bfabc175c0bf6d1f6e4544e5b44ca74c22e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
