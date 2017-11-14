@@ -11,6 +11,8 @@
 #include "chrome/browser/ui/toolbar/toolbar_actions_model.h"
 #include "chrome/browser/ui/toolbar/toolbar_actions_model_factory.h"
 #include "chrome/test/base/dialog_test_browser_window.h"
+#include "chrome/test/base/testing_profile_manager.h"
+#include "components/sync_preferences/pref_service_syncable.h"
 
 class MockMediaRouterUIService : public media_router::MediaRouterUIService {
  public:
@@ -46,15 +48,16 @@ MediaRouterWebUITest::MediaRouterWebUITest(bool require_mock_ui_service)
 MediaRouterWebUITest::~MediaRouterWebUITest() {}
 
 TestingProfile* MediaRouterWebUITest::CreateProfile() {
-  TestingProfile::Builder builder;
   if (require_mock_ui_service_) {
-    builder.AddTestingFactory(
-        media_router::MediaRouterUIServiceFactory::GetInstance(),
-        BuildMockMediaRouterUIService);
-    builder.AddTestingFactory(ToolbarActionsModelFactory::GetInstance(),
-                              BuildToolbarActionsModel);
+    return profile_manager()->CreateTestingProfile(
+        "testing_profile", nullptr, base::string16(), 0, std::string(),
+        {{media_router::MediaRouterUIServiceFactory::GetInstance(),
+          BuildMockMediaRouterUIService},
+         {ToolbarActionsModelFactory::GetInstance(),
+          BuildToolbarActionsModel}});
   }
-  return builder.Build().release();
+
+  return BrowserWithTestWindowTest::CreateProfile();
 }
 
 BrowserWindow* MediaRouterWebUITest::CreateBrowserWindow() {
