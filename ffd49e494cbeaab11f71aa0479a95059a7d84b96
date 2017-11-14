@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1464f1b_1702d1e4",
+        "filename": "chrome/browser/interstitials/chrome_controller_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-14T23:41:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39c28bd1_d30862df",
+      "range": {
+        "startLine": 161,
+        "startChar": 6,
+        "endLine": 161,
+        "endChar": 22
+      },
+      "revId": "ffd49e494cbeaab11f71aa0479a95059a7d84b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c52aed7_4399a40f",
         "filename": "chrome/browser/ssl/bad_clock_blocking_page.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "ffd49e494cbeaab11f71aa0479a95059a7d84b96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17be8cf_5de8f698",
+        "filename": "chrome/browser/ssl/bad_clock_blocking_page.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-14T23:41:24Z",
+      "side": 1,
+      "message": "As discussed, there doesn\u0027t seem to be a pretty way to do this. :-(",
+      "parentUuid": "8c52aed7_4399a40f",
+      "range": {
+        "startLine": 81,
+        "startChar": 26,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "ffd49e494cbeaab11f71aa0479a95059a7d84b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6061878c_5e01e7d6",
+        "filename": "chrome/browser/ssl/captive_portal_blocking_page.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-14T23:41:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e91bbf6_40fc211c",
+      "range": {
+        "startLine": 86,
+        "startChar": 16,
+        "endLine": 86,
+        "endChar": 24
+      },
+      "revId": "ffd49e494cbeaab11f71aa0479a95059a7d84b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5d31d92_e0669d53",
         "filename": "chrome/browser/ssl/mitm_software_blocking_page.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a15f7c4e_72f67536",
+        "filename": "chrome/browser/ssl/mitm_software_blocking_page.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-14T23:41:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5d31d92_e0669d53",
+      "range": {
+        "startLine": 80,
+        "startChar": 26,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "ffd49e494cbeaab11f71aa0479a95059a7d84b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05009d31_e805a97d",
         "filename": "chrome/browser/ssl/ssl_blocking_page.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "ffd49e494cbeaab11f71aa0479a95059a7d84b96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cf90c2_2a6f2c4a",
+        "filename": "chrome/browser/ssl/ssl_blocking_page.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-14T23:41:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05009d31_e805a97d",
+      "range": {
+        "startLine": 189,
+        "startChar": 26,
+        "endLine": 189,
+        "endChar": 0
+      },
+      "revId": "ffd49e494cbeaab11f71aa0479a95059a7d84b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
