@@ -7,6 +7,7 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/ng/geometry/ng_physical_offset_rect.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
+#include "core/layout/ng/ng_physical_box_fragment.h"
 #include "core/layout/ng/ng_physical_container_fragment.h"
 #include "core/layout/ng/ng_physical_fragment.h"
 #include "platform/wtf/PtrUtil.h"
@@ -19,6 +20,20 @@ NGPaintFragment::NGPaintFragment(
     : physical_fragment_(std::move(fragment)) {
   DCHECK(physical_fragment_);
   PopulateDescendants(stop_at_block_layout_root);
+}
+
+bool NGPaintFragment::HasOverflowClip() const {
+  return physical_fragment_->IsBox() &&
+         ToNGPhysicalBoxFragment(*physical_fragment_).HasOverflowClip();
+}
+
+bool NGPaintFragment::ShouldClipOverflow() const {
+  return physical_fragment_->IsBox() &&
+         ToNGPhysicalBoxFragment(*physical_fragment_).ShouldClipOverflow();
+}
+
+LayoutRect NGPaintFragment::VisualOverflowRect() const {
+  return physical_fragment_->LocalVisualRectWithContents().ToLayoutRect();
 }
 
 // Populate descendants from NGPhysicalFragment tree.

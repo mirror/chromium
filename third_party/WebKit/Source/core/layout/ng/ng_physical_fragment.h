@@ -120,6 +120,9 @@ class CORE_EXPORT NGPhysicalFragment
   // VisualRect of itself, not including contents, in the local coordinate.
   NGPhysicalOffsetRect LocalVisualRect() const;
 
+  // VisualRect of itself including contents, in the local coordinate.
+  NGPhysicalOffsetRect LocalVisualRectWithContents() const;
+
   // Unite visual rect to propagate to parent's ContentsVisualRect.
   void PropagateContentsVisualRect(NGPhysicalOffsetRect*) const;
 
