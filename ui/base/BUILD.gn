@@ -645,6 +645,8 @@ component("base") {
 static_library("test_support") {
   testonly = true
   sources = [
+    "test/cocoa_test_util.h",
+    "test/cocoa_test_util.mm",
     "test/material_design_controller_test_api.cc",
     "test/material_design_controller_test_api.h",
     "test/ui_controls.h",
@@ -780,6 +782,7 @@ test("ui_base_unittests") {
     "resource/resource_bundle_unittest.cc",
     "resource/scale_factor_unittest.cc",
     "template_expressions_unittest.cc",
+    "test/cocoa_test_util_unittest.mm",
     "test/page_transition_types_unittest.cc",
     "test/run_all_unittests.cc",
     "user_activity/user_activity_detector_unittest.cc",

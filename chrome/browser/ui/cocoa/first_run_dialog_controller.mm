@@ -68,7 +68,7 @@ void CenterVertically(NSView* view) {
   // Frame constants in this method were taken directly from the now-deleted
   // chrome/app/nibs/FirstRunDialog.xib.
   NSBox* topBox =
-      [[[NSBox alloc] initWithFrame:NSMakeRect(0, 139, 480, 55)] autorelease];
+      [[[NSBox alloc] initWithFrame:NSMakeRect(0, 137, 480, 52)] autorelease];
   [topBox setFillColor:[NSColor whiteColor]];
   [topBox setBoxType:NSBoxCustom];
   [topBox setBorderType:NSNoBorder];
@@ -104,7 +104,7 @@ void CenterVertically(NSView* view) {
   [startChromeButton setKeyEquivalent:kKeyEquivalentReturn];
 
   NSBox* topSeparator =
-      [[[NSBox alloc] initWithFrame:NSMakeRect(0, 136, 480, 5)] autorelease];
+      [[[NSBox alloc] initWithFrame:NSMakeRect(0, 136, 480, 1)] autorelease];
   [topSeparator setBoxType:NSBoxSeparator];
 
   NSBox* bottomSeparator =
