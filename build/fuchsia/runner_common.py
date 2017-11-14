@@ -265,9 +265,35 @@ def WriteAutorun(bin_name, child_args, summary_output, shutdown_machine,
   file_mapping['autorun'] = autorun_file.name
   file_mapping[os.path.basename(bin_name)] = bin_name
 
+
+def _ConfigureSSH(output_dir):
+  """Gets the public/private keypair to use for connecting to Fuchsia's SSH
+  services. Generates a new keypair if one doesn't already exist.
+
+  output_dir: The build directory which will contain the generated keys.
+  Returns: a tuple (private_key_path, public_key_path)."""
+
+  key_path = output_dir + '/ssh_key'
+  pubkey_path = key_path + '.pub'
+
+  if not os.path.isfile(key_path):
+    cmd = ['ssh-keygen', '-f', key_path, '-P', '\"\"']
+    subprocess.check_call(['ssh-keygen', '-t', 'ed25519', '-f', key_path,
+                           '-P', ''], stdout=open(os.devnull))
+
+  print 'SSH private key location: ' + key_path
+  return [
+      ('data/ssh/ssh_host_ed25519_key', key_path),
+      ('data/ssh/ssh_host_ed25519_key.pub', pubkey_path),
+      ('data/ssh/authorized_keys', pubkey_path)
+  ]
+
+
 def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run,
                 bootdata, summary_output, shutdown_machine, target_cpu,
                 use_device, wait_for_network, use_autorun):
+  runtime_deps.extend(_ConfigureSSH(output_directory + '/gen'))
+
   # |runtime_deps| already contains (target, source) pairs for the runtime deps,
   # so we can initialize |file_mapping| from it directly.
   file_mapping = dict(runtime_deps)
