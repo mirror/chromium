@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "effe55a5_4b1536d3",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T05:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f95673c2_3627298a",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daf0283e_0ad38f8f",
         "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-13T15:29:27Z",
       "side": 1,
       "message": "Activity\n\nalso, a lot of the events described by this proto don\u0027t have anything to do with user activity. would a different name (TrainingEvent?) be more appropriate?",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e576c9bb_53a3b106",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T05:30:13Z",
+      "side": 1,
+      "message": "Thanks, I do see your points. I chose this name because ultimately we will try to predict user activities. Also, the other non-user-activity fields are relevant features used to predict user activity. I feel TrainingEvent is a little too generic as it doesn\u0027t say what we\u0027re trying to predict and we could use the same proto at inference time (with labels missing of course) so it\u0027s not really just Training. \n\nAn alternative I thought about is PowerEvent, but we won\u0027t be predicting power. What do you think? Thanks.",
+      "parentUuid": "daf0283e_0ad38f8f",
       "range": {
         "startLine": 11,
         "startChar": 12,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "64f081b3_4809e400",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T05:30:13Z",
+      "side": 1,
+      "message": "Done. I\u0027ve added _sec to all other time related fields, as they\u0027re all in seconds.",
+      "parentUuid": "02427f85_61603b63",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab493e69_d968a484",
         "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
         "patchSetId": 3
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-13T15:29:27Z",
       "side": 1,
       "message": "how will this handle days containing transitions to or from daylight saving time?",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be6bcf4a_c29e5072",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T05:30:13Z",
+      "side": 1,
+      "message": "This is a good point, thanks. I\u0027d like to record daylight-saving-adjusted local time. As different countries have different start and end time (e.g. 2am standard time in Australia, but 2am local time in the US), we will have to check the clock that is adjusted with DST when recording the time. Do you think there\u0027ll be any issue with this approach?",
+      "parentUuid": "ab493e69_d968a484",
       "revId": "4272730c97f128046c74bd006111780282256605",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "f4cee031_ed43510d",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T05:30:13Z",
+      "side": 1,
+      "message": "This the active duration up until the last activity point. I\u0027ve added more descriptions.\n\nI think cumulative time throughout the whole day will be a good feature as well, but it would be hard to measure actually. For example, user may log out, computer may shutdown/reboot etc. So we\u0027d have to track across multiple sessions. If there\u0027s another way to get this more easily, I\u0027d love to know. :)",
+      "parentUuid": "646d7874_9cbf1574",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "560a2b3a_2c23a969",
         "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
         "patchSetId": 3
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "f974ac41_5769a483",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T05:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "560a2b3a_2c23a969",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "671eec84_4611abdd",
         "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
         "patchSetId": 3
@@ -121,6 +235,24 @@
       "writtenOn": "2017-11-13T15:29:27Z",
       "side": 1,
       "message": "why does this need to be three different things? what\u0027s \"content type of the URL\" -- like, \"text/html\"?",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b482067b_ea9c3b61",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T05:30:13Z",
+      "side": 1,
+      "message": "It doesn\u0027t have to be three different things, and which one we\u0027ll ultimately use will depend on privacy review and our experiments. \n\nI understand we can find the content category of a tab (e.g. mail), which may (or may not) be more useful than the URL itself. We\u0027ll explore to find out more.",
+      "parentUuid": "671eec84_4611abdd",
       "revId": "4272730c97f128046c74bd006111780282256605",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "dbdd4527_016c0aa8",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T05:30:13Z",
+      "side": 1,
+      "message": "Yes, this field should describe the lid position, so I put OPEN and flipped. I think clamshell and tablet describe the type of devices. What standard terminology do you use to describe lid positions? \n\nI\u0027ve added more fields.",
+      "parentUuid": "7c84d634_d526954c",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9bfa61a_9b656f02",
         "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
         "patchSetId": 3
@@ -155,6 +305,24 @@
       "writtenOn": "2017-11-13T15:29:27Z",
       "side": 1,
       "message": "UNKNOWN?",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c202e4_a224ea10",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T05:30:13Z",
+      "side": 1,
+      "message": "As I can\u0027t use UNKNOWN for both DeviceState and ManagementType, I\u0027d have to add a suffix (or prefix) to at least one of them, so I think it\u0027d be consistent to use the same format on another one.",
+      "parentUuid": "c9bfa61a_9b656f02",
       "revId": "4272730c97f128046c74bd006111780282256605",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "bc421db4_6f01db51",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T05:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db418fc9_d4757d16",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a59f0ac4_952dcaf0",
         "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
         "patchSetId": 3
@@ -192,6 +378,24 @@
       "revId": "4272730c97f128046c74bd006111780282256605",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4694413_3765da2c",
+        "filename": "chrome/browser/chromeos/power/user_activity_event.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-14T05:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a59f0ac4_952dcaf0",
+      "revId": "4272730c97f128046c74bd006111780282256605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
