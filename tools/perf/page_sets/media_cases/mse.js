@@ -79,9 +79,6 @@
       FailTest("Test timed out waiting for a mediaElement timeupdate event.");
     }, 10000);
 
-    for (const media_file of testParams.media) {
-      appenders.push(new BufferAppender(media_file, MEDIA_MIMES[media_file]));
-    }
     mediaSource.addEventListener('sourceopen', (open_event) => {
       let mediaSource = open_event.target;
       for (let i = 0; i < appenders.length; ++i) {
@@ -93,15 +90,21 @@
       mediaElement.play();
     });
 
-    // Fire off XHRs to get media data.
-    for (var i = 0; i < appenders.length; ++i) {
-      appenders[i].requestMediaBytes();
+    let number_of_appenders_with_data = 0;
+    for (const media_file of testParams.media) {
+      appender = new BufferAppender(media_file, MEDIA_MIMES[media_file]);
+      appender.requestMediaBytes(() => {
+        number_of_appenders_with_data++;
+        if (number_of_appenders_with_data === testParams.media.length) {
+          // This attaches the mediaSource object to the mediaElement. Once this
+          // operation has completed internally, the mediaSource object
+          // readyState will transition from closed to open, and the sourceopen
+          // event will fire.
+          mediaElement.src = URL.createObjectURL(mediaSource);
+        }
+      });
+      appenders.push(appender);
     }
-
-    // This attaches the mediaSource object to the mediaElement. Once this
-    // operation has completed internally, the mediaSource object readyState
-    // will transition from closed to open, and the sourceopen event will fire.
-    mediaElement.src = URL.createObjectURL(mediaSource);
   }
 
   class BufferAppender {
@@ -111,8 +114,8 @@
       this.xhr = new XMLHttpRequest();
       this.sourceBuffer = null;
     }
-    requestMediaBytes() {
-      this.xhr.addEventListener('loadend', this.attemptAppend.bind(this));
+    requestMediaBytes(callback) {
+      this.xhr.addEventListener('loadend', callback);
       this.xhr.open('GET', this.media_file);
       this.xhr.setRequestHeader(
           'Range', 'bytes=' + testParams.startOffset + '-' +
