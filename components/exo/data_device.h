@@ -27,8 +27,9 @@ class Surface;
 enum class DndAction { kNone, kCopy, kMove, kAsk };
 
 // DataDevice to start drag and drop and copy and paste oprations.
-class DataDevice : public WMHelper::DragDropObserver, public DataOfferObserver,
-  public ui::ClipboardObserver {
+class DataDevice : public WMHelper::DragDropObserver,
+                   public DataOfferObserver,
+                   public ui::ClipboardObserver {
  public:
   explicit DataDevice(DataDeviceDelegate* delegate, FileHelper* file_helper);
   ~DataDevice() override;
