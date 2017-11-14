@@ -19,7 +19,16 @@ html, body { margin: 0; padding: 0; }
 <script id="code" type="text/worklet">
 registerPaint('geometry', class {
     paint(ctx, geom) {
-        if (geom.width == 187 && geom.height == 187)
+        // Apparently on Mac and Android, we do not use zoom-for-devicescale. That is, we apply
+        // the device scale factor to the layout zoom on other platforms but not Mac and Android.
+        // So when we call the CSSPaintDefinition::Paint(), the tile size we got doesn't
+        // have the device scale factor applied. When we retrieve the zoom for the layout
+        // object, there is no device scale factor applied. This is why we need a special
+        // size for mac and android.
+        var expected_size = Math.round(187 * 0.33 * devicePixelRatio) / (0.33 * devicePixelRatio);
+        var expected_size_mac_android = Math.round(187 * 0.33) / 0.33;
+        if ((Math.abs(geom.width - expected_size) < 0.001 && Math.abs(geom.height - expected_size) < 0.001) ||
+            (Math.abs(geom.width - expected_size_mac_android) < 0.001 && Math.abs(geom.height - expected_size_mac_android) < 0.001))
             ctx.fillStyle = 'green';
         else
             ctx.fillStyle = 'red';
