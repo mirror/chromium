@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1b85d39_c3c1ee7f",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-14T21:55:18Z",
+      "side": 1,
+      "message": "hbos, this is the only reason I see to wait for a reply at the moment, but I don\u0027t think it\u0027s worth it to go to all that trouble just to accommodate one unit-test.\n\n(Note that the test is not really flaky - it does not produce false positives. Rather, it is in danger of producing false negatives - passing when it should have failed. That\u0027s not too big a problem, since once it starts failing, even if rarely, we\u0027ll know we have a bug. Also, I highly doubt we\u0027re going to see this bug...)",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 49
+      },
+      "revId": "0d4fa9ffa7b62219adb175a2411a36904981a45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
