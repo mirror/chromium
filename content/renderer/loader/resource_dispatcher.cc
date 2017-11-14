@@ -766,7 +766,8 @@ void ResourceDispatcher::ContinueForNavigation(
   // pull the StreamOverride's one in
   // WebURLLoaderImpl::Context::OnReceivedResponse.
   client_ptr->OnReceiveResponse(ResourceResponseHead(), base::nullopt,
-                                mojom::DownloadedTempFilePtr());
+                                mojom::DownloadedTempFilePtr(),
+                                mojom::URLLoaderNavigationDataPtr());
 
   // Abort if the request is cancelled.
   if (!GetPendingRequestInfo(request_id))

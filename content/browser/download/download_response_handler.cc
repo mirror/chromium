@@ -74,7 +74,8 @@ DownloadResponseHandler::~DownloadResponseHandler() = default;
 void DownloadResponseHandler::OnReceiveResponse(
     const ResourceResponseHead& head,
     const base::Optional<net::SSLInfo>& ssl_info,
-    mojom::DownloadedTempFilePtr downloaded_file) {
+    mojom::DownloadedTempFilePtr downloaded_file,
+    mojom::URLLoaderNavigationDataPtr navigation_data) {
   create_info_ = CreateDownloadCreateInfo(head);
 
   if (ssl_info)

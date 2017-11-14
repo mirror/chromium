@@ -119,9 +119,11 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
   void StopDeferringForThrottle(URLLoaderThrottle* throttle);
 
   // mojom::URLLoaderClient implementation:
-  void OnReceiveResponse(const ResourceResponseHead& response_head,
-                         const base::Optional<net::SSLInfo>& ssl_info,
-                         mojom::DownloadedTempFilePtr downloaded_file) override;
+  void OnReceiveResponse(
+      const ResourceResponseHead& response_head,
+      const base::Optional<net::SSLInfo>& ssl_info,
+      mojom::DownloadedTempFilePtr downloaded_file,
+      mojom::URLLoaderNavigationDataPtr navigation_data) override;
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
                          const ResourceResponseHead& response_head) override;
   void OnDataDownloaded(int64_t data_len, int64_t encoded_data_len) override;
@@ -215,6 +217,9 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
   };
   // Set if response is deferred.
   std::unique_ptr<ResponseInfo> response_info_;
+
+  // Set if response is deferred
+  mojom::URLLoaderNavigationDataPtr navigation_data_;
 
   struct RedirectInfo {
     RedirectInfo(const net::RedirectInfo& in_redirect_info,
