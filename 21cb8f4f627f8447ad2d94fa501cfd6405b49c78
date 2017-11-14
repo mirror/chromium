@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94e791a4_8849ca1d",
+        "filename": "media/mojo/clients/mojo_video_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-14T23:03:58Z",
+      "side": 1,
+      "message": "The documentation is confusing here, but the implementation supports your interpretation. Done.\n\n(Looks like we get to be the second user of ThreadSafeAssociatedPtr.)",
+      "parentUuid": "3a12f7e6_6e0eb740",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e60a3635_20deb8a7",
         "filename": "media/mojo/clients/mojo_video_decoder.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-10T23:01:07Z",
       "side": 1,
       "message": "optional naming nit: This class doesn\u0027t release a video frame; rather, it release some resources used by a video frame. How about *VideoFrameResourceReleaser? It\u0027s longer (which I don\u0027t like) but seems more accurate.",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19febbbd_542929b1",
+        "filename": "media/mojo/clients/mojo_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-14T23:03:58Z",
+      "side": 1,
+      "message": "That\u0027s not quite accurate; there really is a complete VideoFrame held by MojoVideoFrameReleaserService, which will be remotely released by OnVideoFrameReleased().\n\nI suppose that in some sense, the remote VideoFrame is a resource owned by the local VideoFrame.\n\nThe term \"Release\" as I have used it is meant to cover both the UpdateReleaseSyncToken() and delete operations, and the implementation does this by proxying the ReleaseMailboxCB callback. Perhaps there is a better overall term to describe that?\n\nI\u0027m giving MojoVideoFrameHandleReleaser a try, let me know how you feel about that.",
+      "parentUuid": "e60a3635_20deb8a7",
       "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c42cf86_d2267881",
+        "filename": "media/mojo/clients/mojo_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-14T23:03:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d0dd2ea_aa5c9827",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "38db8dba_905ce24d",
+        "filename": "media/mojo/clients/mojo_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-14T23:03:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efd1bbdc_523c6c50",
+      "range": {
+        "startLine": 110,
+        "startChar": 16,
+        "endLine": 110,
+        "endChar": 38
+      },
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b92059d6_7f7331f6",
         "filename": "media/mojo/interfaces/video_decoder.mojom",
         "patchSetId": 1
@@ -90,6 +168,24 @@
       "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a76186c_1f195dd8",
+        "filename": "media/mojo/interfaces/video_decoder.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-14T23:03:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b92059d6_7f7331f6",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "55f3d811_c3a25067",
+        "filename": "media/mojo/interfaces/video_decoder.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-14T23:03:58Z",
+      "side": 1,
+      "message": "I switched to just Release(), but that conflicted with RefCounted.\n\nLet me know what you think now that the whole interface has been renamed.",
+      "parentUuid": "aabd014b_b01b3bfd",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5dcf72_29e970fc",
         "filename": "media/mojo/services/media_service.h",
         "patchSetId": 1
@@ -124,6 +238,24 @@
       "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f299ae84_5e7f578d",
+        "filename": "media/mojo/services/media_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-14T23:03:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7e5dcf72_29e970fc",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "5285bd73_0a20eeb7",
+        "filename": "media/mojo/services/mojo_video_decoder_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-14T23:03:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "042512ac_b165e60d",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 35
+      },
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c75b03c9_a35ec5b5",
         "filename": "media/mojo/services/mojo_video_decoder_service.h",
         "patchSetId": 1
@@ -267,6 +423,24 @@
       "writtenOn": "2017-11-10T23:01:07Z",
       "side": 1,
       "message": "As discussed offline, please file a bug and add a TODO here for exploring binding the releaser to a sequence, so that we don\u0027t need this context_ref_.",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4224fa77_d039cdbb",
+        "filename": "media/mojo/services/mojo_video_decoder_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-14T23:03:58Z",
+      "side": 1,
+      "message": "My previous CL already does that, the only requirement is that we switch to a non-associated interface. This choice is merely a preference; having everything happen on the same thread is simpler. (That said, there is a case for Release() to always happen on the GPU main thread, since that\u0027s where you need to be to correctly handle a SyncToken.)\n\nI don\u0027t anticipate changing it unless and until we move the whole media service to a sequence.",
+      "parentUuid": "c75b03c9_a35ec5b5",
       "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -312,6 +486,54 @@
         "startChar": 33,
         "endLine": 108,
         "endChar": 68
+      },
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f254342c_1d38b0e9",
+        "filename": "media/mojo/services/mojo_video_decoder_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-14T23:03:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b1180ec_0c28f5fd",
+      "range": {
+        "startLine": 108,
+        "startChar": 33,
+        "endLine": 108,
+        "endChar": 68
+      },
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bec7021_eaf037d3",
+        "filename": "media/mojo/services/mojo_video_decoder_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-14T23:03:58Z",
+      "side": 1,
+      "message": "(Not attempted yet; the alternatives are all much more complicated than the current code.)",
+      "parentUuid": "133792b0_377f2e4c",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 78
       },
       "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
