@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d352013a_9c8e0073",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-14T22:50:44Z",
+      "side": 1,
+      "message": "nit: base::Time::kMicrosecondsPerSecond?",
+      "range": {
+        "startLine": 121,
+        "startChar": 40,
+        "endLine": 121,
+        "endChar": 47
+      },
+      "revId": "0b37bd2d43ff7d1bd19276501cd484c5d9f91b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9be1cd4_d1c7e97a",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-14T22:50:44Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "range": {
+        "startLine": 132,
+        "startChar": 42,
+        "endLine": 132,
+        "endChar": 49
+      },
+      "revId": "0b37bd2d43ff7d1bd19276501cd484c5d9f91b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f61cd8_56f7c716",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-14T22:50:44Z",
+      "side": 1,
+      "message": "Does this relate to this scaler bug (crbug.com/775740)? Maybe add the bug number?",
+      "revId": "0b37bd2d43ff7d1bd19276501cd484c5d9f91b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f06cb8_10b49afa",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-14T22:50:44Z",
+      "side": 1,
+      "message": "nit: make this \"final\"?",
+      "range": {
+        "startLine": 48,
+        "startChar": 25,
+        "endLine": 48,
+        "endChar": 51
+      },
+      "revId": "0b37bd2d43ff7d1bd19276501cd484c5d9f91b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1f2a3f_2f80b032",
+        "filename": "components/viz/service/frame_sinks/video_capture/in_flight_frame_delivery.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-14T22:50:44Z",
+      "side": 1,
+      "message": "nit: Add a note that this has to be called by consumer in order to re-use the buffer? Or probably the comment will be in the coming mojo IDL CL.",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 11
+      },
+      "revId": "0b37bd2d43ff7d1bd19276501cd484c5d9f91b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
