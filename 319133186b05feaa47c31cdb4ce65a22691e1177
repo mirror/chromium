@@ -16,6 +16,24 @@
       "revId": "319133186b05feaa47c31cdb4ce65a22691e1177",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15614e1e_23463085",
+        "filename": "gpu/ipc/host/gpu_memory_buffer_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-14T17:39:06Z",
+      "side": 1,
+      "message": "FYI: x86 includes AMD too.\ncrbug.com/701043 for enabling them on Rockchip. IIRC having Skia raster into a native GMB was much slower since that memory was uncached.",
+      "parentUuid": "6505514b_83c805cb",
+      "revId": "319133186b05feaa47c31cdb4ce65a22691e1177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
