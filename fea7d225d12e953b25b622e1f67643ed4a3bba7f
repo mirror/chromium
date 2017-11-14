@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "088a7c6f_e0cf29f0",
+        "filename": "chrome/browser/resources/settings/site_settings/protocol_handlers.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-14T23:53:24Z",
+      "side": 1,
+      "message": "Since we stopped checking this in line:101 we should get rid of it then I think.",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 20
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2164f3cf_cdd57205",
         "filename": "chrome/browser/resources/settings/site_settings/protocol_handlers.js",
         "patchSetId": 17
@@ -25,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "d9640d3b_8f16e36f",
+        "filename": "chrome/browser/resources/settings/site_settings/protocol_handlers.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-14T23:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2164f3cf_cdd57205",
+      "range": {
+        "startLine": 101,
+        "startChar": 14,
+        "endLine": 101,
+        "endChar": 30
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "243cba6f_f45bc68b",
         "filename": "chrome/browser/resources/settings/site_settings/protocol_handlers.js",
         "patchSetId": 17
@@ -41,6 +88,53 @@
         "startChar": 4,
         "endLine": 112,
         "endChar": 13
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4b66e6_9d8c68ea",
+        "filename": "chrome/browser/resources/settings/site_settings/protocol_handlers.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-14T23:53:24Z",
+      "side": 1,
+      "message": "Since this gets triggered only when \u0027android-apps-info-update\u0027 occurs, I think this may not be necessary.",
+      "parentUuid": "243cba6f_f45bc68b",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 13
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc1a5bf_f6bf9244",
+        "filename": "chrome/browser/resources/settings/site_settings/protocol_handlers.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-14T23:53:24Z",
+      "side": 1,
+      "message": "this can be replaced with settingsAppAvailable then if you want.",
+      "range": {
+        "startLine": 116,
+        "startChar": 37,
+        "endLine": 116,
+        "endChar": 47
       },
       "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -71,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "fcbfb954_66f77b70",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-14T23:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ca0c6d7_4e2ec5d1",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 10
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6a0a441_c8800c36",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 17
@@ -91,6 +209,30 @@
       "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f2b2d3_d2118c60",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-14T23:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6a0a441_c8800c36",
+      "range": {
+        "startLine": 293,
+        "startChar": 2,
+        "endLine": 293,
+        "endChar": 13
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "40196e76_13522627",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-14T23:53:24Z",
+      "side": 1,
+      "message": "android_apps_handler.cc needs at least the second string.",
+      "parentUuid": "1b5bef1a_e6c2a2ef",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 50
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f648bde_9c97a41e",
         "filename": "chrome/browser/ui/webui/settings/chromeos/android_apps_handler.cc",
         "patchSetId": 17
@@ -137,6 +303,30 @@
       "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d87eb118_f46cd000",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/android_apps_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-14T23:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f648bde_9c97a41e",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 10
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "f27bd974_4adde547",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/android_apps_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-14T23:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd63849e_e1e8c046",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 7
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d66d749_05936c21",
         "filename": "chrome/browser/ui/webui/settings/chromeos/android_apps_handler.cc",
         "patchSetId": 17
@@ -183,6 +397,30 @@
       "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c2b115_cb58b64e",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/android_apps_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-14T23:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d66d749_05936c21",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 16
+      },
+      "revId": "fea7d225d12e953b25b622e1f67643ed4a3bba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

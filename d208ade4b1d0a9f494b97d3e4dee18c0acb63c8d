@@ -16,6 +16,24 @@
       "revId": "d208ade4b1d0a9f494b97d3e4dee18c0acb63c8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af80ea6_ef8ef8bc",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 17
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-14T23:53:24Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "cd6edcdc_4ebb22d1",
+      "revId": "d208ade4b1d0a9f494b97d3e4dee18c0acb63c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
