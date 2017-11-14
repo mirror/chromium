@@ -8,6 +8,7 @@
 
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/metrics/user_metrics.h"
 #include "base/time/time.h"
 
 namespace signin_metrics {
@@ -250,6 +251,112 @@ void LogAccountRelation(const AccountRelation relation,
 
 void LogIsShared(const bool is_shared, const ReportingType type) {
   INVESTIGATOR_HISTOGRAM_BOOLEAN("Signin.IsShared", type, is_shared);
+}
+
+// --------------------------------------------------------------
+// User actions
+// --------------------------------------------------------------
+
+void RecordSigninUserActionForAccessPoint(
+    signin_metrics::AccessPoint access_point) {
+  switch (access_point) {
+    case signin_metrics::AccessPoint::ACCESS_POINT_START_PAGE:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromStartPage"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_NTP_LINK:
+      base::RecordAction(base::UserMetricsAction("Signin_Signin_FromNTP"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_MENU:
+      base::RecordAction(base::UserMetricsAction("Signin_Signin_FromMenu"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS:
+      base::RecordAction(base::UserMetricsAction("Signin_Signin_FromSettings"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_SUPERVISED_USER:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromSupervisedUser"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_EXTENSION_INSTALL_BUBBLE:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromExtensionInstallBubble"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_EXTENSIONS:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromExtensions"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_APPS_PAGE_LINK:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromAppsPageLink"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_BUBBLE:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromBookmarkBubble"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromBookmarkManager"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_AVATAR_BUBBLE_SIGN_IN:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromAvatarBubbleSignin"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_USER_MANAGER:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromUserManager"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_DEVICES_PAGE:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromDevicesPage"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_CLOUD_PRINT:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromCloudPrint"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_CONTENT_AREA:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromContentArea"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_SIGNIN_PROMO:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromSigninPromo"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_RECENT_TABS:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromRecentTabs"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromUnknownAccessPoint"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_PASSWORD_BUBBLE:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromPasswordBubble"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_AUTOFILL_DROPDOWN:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromAutofillDropdown"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_NTP_CONTENT_SUGGESTIONS:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromNTPContentSuggestions"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_RESIGNIN_INFOBAR:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromReSigninInfobar"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_TAB_SWITCHER:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromTabSwitcher"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_FORCE_SIGNIN_WARNING:
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Signin_FromForceSigninWarning"));
+      break;
+    case signin_metrics::AccessPoint::ACCESS_POINT_MAX:
+      NOTREACHED();
+      break;
+  }
 }
 
 }  // namespace signin_metrics

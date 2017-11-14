@@ -42,6 +42,9 @@ void ProcessDiceHeaderObserverImpl::DidFinishRefreshTokenFetch(
   if (!signin::IsDicePrepareMigrationEnabled())
     return;
 
+  DiceTabHelper* tab_helper = DiceTabHelper::FromWebContents(web_contents);
+  DCHECK(tab_helper);
+
   Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
   DCHECK(browser);
   Profile* profile = browser->profile();
@@ -56,6 +59,8 @@ void ProcessDiceHeaderObserverImpl::DidFinishRefreshTokenFetch(
   // OneClickSigninSyncStarter is suicidal (it will kill itself once it finishes
   // enabling sync).
   VLOG(1) << "Start sync after web sign-in.";
-  new OneClickSigninSyncStarter(profile, browser, gaia_id, email, web_contents,
+  new OneClickSigninSyncStarter(profile, browser, gaia_id, email,
+                                tab_helper->signin_access_point(),
+                                tab_helper->signin_reason(), web_contents,
                                 OneClickSigninSyncStarter::Callback());
 }

@@ -391,6 +391,17 @@ void LogAccountRelation(const AccountRelation relation,
 // between multiple users.
 void LogIsShared(const bool is_shared, const ReportingType type);
 
+// --------------------------------------------------------------
+// User actions
+// --------------------------------------------------------------
+// Records corresponding sign in user action for an access point.
+void RecordSigninUserActionForAccessPoint(
+    signin_metrics::AccessPoint access_point);
+
+// --------------------------------------------------------------
+// Investigator histograms
+// --------------------------------------------------------------
+
 // These intermediate macros are necessary when we may emit to different
 // histograms from the same logical place in the code. The base histogram macros
 // expand in a way that can only work for a single histogram name, so these

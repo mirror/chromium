@@ -308,8 +308,9 @@ void InlineSigninHelper::CreateSyncStarter(
   // OneClickSigninSyncStarter will delete itself once the job is done.
   new OneClickSigninSyncStarter(
       profile_, browser, gaia_id_, email_, password_, refresh_token,
-      profile_mode, start_mode, contents, confirmation_required, current_url,
-      continue_url,
+      signin::GetAccessPointForPromoURL(current_url),
+      signin::GetSigninReasonForPromoURL(current_url), profile_mode, start_mode,
+      contents, confirmation_required,
       base::Bind(&InlineLoginHandlerImpl::SyncStarterCallback, handler_));
 }
 
