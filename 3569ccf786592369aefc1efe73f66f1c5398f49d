@@ -141,6 +141,30 @@
       "revId": "3569ccf786592369aefc1efe73f66f1c5398f49d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b979a7_9f4cc9de",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-14T08:07:34Z",
+      "side": 1,
+      "message": "Hm, actually it\u0027s possible if we don\u0027t touch |sequence_checker_| in the move ctor.\nThough I\u0027m not sure we should reduce the allocation as it\u0027s only when DCHECK_IS_ON.",
+      "parentUuid": "5da90551_2bdfcf8b",
+      "range": {
+        "startLine": 379,
+        "startChar": 18,
+        "endLine": 379,
+        "endChar": 47
+      },
+      "revId": "3569ccf786592369aefc1efe73f66f1c5398f49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
