@@ -52,6 +52,24 @@
       "revId": "17e6370054b08aa8710091dbd5144e179d6376cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd68dae5_a00b90c8",
+        "filename": "testing/android/native_test/java/src/org/chromium/native_test/NativeUnitTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-14T19:24:05Z",
+      "side": 1,
+      "message": "Yes, that seems to work locally, thanks.",
+      "parentUuid": "ddd382a0_791ed5bb",
+      "revId": "17e6370054b08aa8710091dbd5144e179d6376cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
