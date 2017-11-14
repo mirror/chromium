@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6cd3c18c_3e7f3e94",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-14T02:55:26Z",
+      "side": 1,
+      "message": "got it",
+      "parentUuid": "f658fbd7_5e37ef98",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 28
+      },
+      "revId": "3b4e2dbf5aee2c56f114ece1d82300d4897a4127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e3cc5fa_fae13924",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b03028ab_695431df",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-14T02:55:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e3cc5fa_fae13924",
+      "range": {
+        "startLine": 46,
+        "startChar": 44,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "3b4e2dbf5aee2c56f114ece1d82300d4897a4127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf97619e_5ba2c0f8",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "3b4e2dbf5aee2c56f114ece1d82300d4897a4127",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96fc2f91_5a841b2e",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-14T02:55:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf97619e_5ba2c0f8",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 9
+      },
+      "revId": "3b4e2dbf5aee2c56f114ece1d82300d4897a4127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
