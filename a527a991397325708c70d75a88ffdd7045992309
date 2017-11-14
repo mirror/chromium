@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9def2bb_d6388f3e",
+        "filename": "net/data/ssl/certificates/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-14T20:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df958e79_17d03221",
+      "revId": "a527a991397325708c70d75a88ffdd7045992309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4844d914_1c17a7f4",
         "filename": "net/spdy/chromium/spdy_session_fuzzer.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "a527a991397325708c70d75a88ffdd7045992309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b2ec3e_c6ba58e7",
+        "filename": "net/spdy/chromium/spdy_session_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-14T20:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4844d914_1c17a7f4",
+      "revId": "a527a991397325708c70d75a88ffdd7045992309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "381d2e6a_96d027c0",
+        "filename": "net/tools/generate-spdy-session-fuzzer-includes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-14T20:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dd96429_865dc907",
+      "range": {
+        "startLine": 11,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "a527a991397325708c70d75a88ffdd7045992309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1436a8a5_6b1bd0d0",
         "filename": "net/tools/generate-spdy-session-fuzzer-includes.py",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "a527a991397325708c70d75a88ffdd7045992309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3cc718_33f268af",
+        "filename": "net/tools/generate-spdy-session-fuzzer-includes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-14T20:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1436a8a5_6b1bd0d0",
+      "revId": "a527a991397325708c70d75a88ffdd7045992309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "294e6c02_4f2c9a7c",
+        "filename": "net/tools/generate-spdy-session-fuzzer-includes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-14T20:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd3488e7_c373300d",
+      "revId": "a527a991397325708c70d75a88ffdd7045992309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "550f03d7_100c9035",
         "filename": "net/tools/generate-spdy-session-fuzzer-includes.py",
         "patchSetId": 5
@@ -107,6 +203,24 @@
       "revId": "a527a991397325708c70d75a88ffdd7045992309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f3d971_0f44a1dc",
+        "filename": "net/tools/generate-spdy-session-fuzzer-includes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-14T20:00:05Z",
+      "side": 1,
+      "message": "Done.\n\nTurns out whitespace stripping is not necessary.",
+      "parentUuid": "550f03d7_100c9035",
+      "revId": "a527a991397325708c70d75a88ffdd7045992309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
