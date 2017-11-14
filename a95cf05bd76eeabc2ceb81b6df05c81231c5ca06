@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b79a2c08_ccf3b819",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-14T18:14:23Z",
+      "side": 1,
+      "message": "nit: I\u0027d slightly prefer this to be based on RAII principles and have slightly more documentation:\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n  InitCachedChannels();\n\n  std::vector\u003ccontent_settings::Rule\u003e rules;\n\n  // Collect the existing rules and create channels for them.\n  {\n    std::unique_ptr\u003ccontent_settings::RuleIterator\u003e it(\n        pref_provider-\u003eGetRuleIterator(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,\n                                       std::string(), false /* incognito */));\n\n    while (it \u0026\u0026 it-\u003eHasNext()) {\n      content_settings::Rule rule \u003d it-\u003eNext();\n      rules.push_back(rule);\n\n      CreateChannelForRule(rule);\n    }\n  }\n\n  // Remove the existing |rules| from the preference provider.\n  for (const auto\u0026 rule : rules) {\n    pref_provider-\u003eSetWebsiteSetting(\n        rule.primary_pattern, rule.secondary_pattern,\n        CONTENT_SETTINGS_TYPE_NOTIFICATIONS,\n        content_settings::ResourceIdentifier(), nullptr);\n  }\n\n  prefs-\u003eSetBoolean(prefs::kMigratedToSiteNotificationChannels, true);\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d",
+      "revId": "a95cf05bd76eeabc2ceb81b6df05c81231c5ca06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cfa3b87_cc995447",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-14T18:14:23Z",
+      "side": 1,
+      "message": "RuleIterator::Next() returns a value, not a reference, so we shouldn\u0027t use const\u0026 for its type.",
+      "revId": "a95cf05bd76eeabc2ceb81b6df05c81231c5ca06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caee7e5c_747436d8",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-14T18:14:23Z",
+      "side": 1,
+      "message": "Raymes can we pleaaaaaaaaase add ClearWebsiteSetting() that doesn\u0027t need the `nullptr` attribute and just calls through to SetWebsiteSetting()? That\u0027d be so much clearer.",
+      "revId": "a95cf05bd76eeabc2ceb81b6df05c81231c5ca06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
