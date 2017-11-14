@@ -70,6 +70,30 @@
       "revId": "45040d238b923f8851cf2a77085d5e35c0e10822",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c3fccd4_0e6b4891",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/enqueue_order.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-14T21:33:09Z",
+      "side": 1,
+      "message": "Fair enough, at least now we know how to make it atomic on 32-bit if it ever turns out to matter :)",
+      "parentUuid": "5dd3a520_e4d5341d",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 11
+      },
+      "revId": "45040d238b923f8851cf2a77085d5e35c0e10822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
