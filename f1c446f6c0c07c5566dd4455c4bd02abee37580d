@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42f5e8b1_a30946e5",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T22:00:42Z",
+      "side": 1,
+      "message": "I don\u0027t really like abbreviations in names (like StrToVec/VecToStr), and they\u0027re generally against the style guide, but I guess in this case it\u0027s probably okay... it does perhaps make the code easier to read... \n\nAlthough maybe we can come up with names that are similarly short but don\u0027t use abbreviations? AsVector/AsBytes and AsString (or ToVector/ToBytes and ToString)? Or even just ToUint8Vector and ToStdString (although that might already be too long again for your taste?)",
+      "revId": "f1c446f6c0c07c5566dd4455c4bd02abee37580d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0456c3ca_c829602b",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-14T22:00:42Z",
+      "side": 1,
+      "message": "I think I\u0027d prefer spelling out vector completely in these names. I know it\u0027s three more characters, but I don\u0027t think it\u0027ll make that much of a difference for readability.",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 0
+      },
+      "revId": "f1c446f6c0c07c5566dd4455c4bd02abee37580d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
