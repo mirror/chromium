@@ -422,6 +422,23 @@
     },
     {
       "key": {
+        "uuid": "5d270d5c_2ca9c6d2",
+        "filename": "third_party/WebKit/common/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-14T15:39:58Z",
+      "side": 1,
+      "message": "Can we create a dedicated directory for this file? I want to avoid scattering random files under WebKit/common/.",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b55039c9_03733072",
         "filename": "third_party/WebKit/common/page_visibility_state.mojom",
         "patchSetId": 5
@@ -454,6 +471,23 @@
       "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cbd1ac5_b842475d",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerClientsInfo.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-14T15:39:58Z",
+      "side": 1,
+      "message": "kinuko@, dcheng@: Another option would be to include mojom-blink.h and use mojom::blink::PageVisibilityState::kLast.\n\nWhich do we prefer?",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
