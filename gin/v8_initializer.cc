@@ -341,13 +341,6 @@ void V8Initializer::Initialize(IsolateHolder::ScriptMode mode,
   natives.data = reinterpret_cast<const char*>(g_mapped_natives->data());
   natives.raw_size = static_cast<int>(g_mapped_natives->length());
   v8::V8::SetNativesDataBlob(&natives);
-
-  if (g_mapped_snapshot) {
-    v8::StartupData snapshot;
-    snapshot.data = reinterpret_cast<const char*>(g_mapped_snapshot->data());
-    snapshot.raw_size = static_cast<int>(g_mapped_snapshot->length());
-    v8::V8::SetSnapshotDataBlob(&snapshot);
-  }
 #endif  // V8_USE_EXTERNAL_STARTUP_DATA
 
   v8::V8::SetEntropySource(&GenerateEntropy);
@@ -410,8 +403,26 @@ void V8Initializer::LoadV8ContextSnapshotFromFD(base::PlatformFile snapshot_pf,
 }
 
 // static
-void V8Initializer::GetV8ContextSnapshotData(v8::StartupData* snapshot) {
-  GetMappedFileData(g_mapped_v8_context_snapshot, snapshot);
+IsolateHolder::SnapshotType V8Initializer::GetV8ContextSnapshotData(
+    v8::StartupData* snapshot) {
+  CHECK(snapshot);
+
+  static struct {
+    base::MemoryMappedFile* mapped_file;
+    IsolateHolder::SnapshotType type;
+  } file_types[] = {
+      {g_mapped_v8_context_snapshot,
+       IsolateHolder::SnapshotType::kV8ContextSnapshot},
+      {g_mapped_snapshot, IsolateHolder::SnapshotType::kV8Snapshot},
+  };
+
+  for (const auto& file_type : file_types) {
+    GetMappedFileData(file_type.mapped_file, snapshot);
+    if (snapshot->data) {
+      return file_type.type;
+    }
+  }
+  return IsolateHolder::SnapshotType::kNone;
 }
 
 }  // namespace gin
