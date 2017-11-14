@@ -134,6 +134,7 @@ bool TsPacket::ParseHeader(const uint8_t* buf) {
   bool status = ParseAdaptationField(&bit_reader, adaptation_field_length);
   payload_ += adaptation_field_length;
   payload_size_ -= adaptation_field_length;
+  RCHECK(payload_size_ > 0);
   return status;
 }
 
