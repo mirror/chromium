@@ -1015,4 +1015,16 @@ bool BrowserAccessibility::ShouldIgnoreHoveredStateForTesting() {
   return accessibility_state->disable_hot_tracking_for_testing();
 }
 
+std::ostream& operator<<(std::ostream& stream,
+                         const BrowserAccessibility& node) {
+  return stream << node.ToString();
+}
+
+std::ostream& operator<<(std::ostream& stream,
+                         const BrowserAccessibility* node) {
+  if (!node)
+    return stream << "null";
+  return stream << *node;
+}
+
 }  // namespace content

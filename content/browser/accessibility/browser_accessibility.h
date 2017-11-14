@@ -210,6 +210,8 @@ class CONTENT_EXPORT BrowserAccessibility : public ui::AXPlatformNodeDelegate {
   bool instance_active() const { return node_ && manager_; }
   ui::AXNode* node() const { return node_; }
 
+  std::string ToString() const { return node_ ? node_->ToString() : "null"; }
+
   // These access the internal accessibility tree, which doesn't necessarily
   // reflect the accessibility tree that should be exposed on each platform.
   // Use PlatformChildCount and PlatformGetChild to implement platform
@@ -373,6 +375,9 @@ class CONTENT_EXPORT BrowserAccessibility : public ui::AXPlatformNodeDelegate {
 
   DISALLOW_COPY_AND_ASSIGN(BrowserAccessibility);
 };
+
+std::ostream& operator<<(std::ostream&, const BrowserAccessibility&);
+std::ostream& operator<<(std::ostream&, const BrowserAccessibility*);
 
 }  // namespace content
 
