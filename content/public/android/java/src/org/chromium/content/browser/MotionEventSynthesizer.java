@@ -10,6 +10,8 @@ import android.view.MotionEvent.PointerCoords;
 import android.view.MotionEvent.PointerProperties;
 import android.view.View;
 
+import org.chromium.base.Log;
+
 /**
  * Injects synthetic touch events. All the coordinates are of physical unit.
  */
@@ -74,57 +76,54 @@ public class MotionEventSynthesizer {
     public void inject(int action, int pointerCount, long timeInMs) {
         switch (action) {
             case MotionEventAction.START: {
+                Log.e("VRP", "Motion-> STart");
                 mDownTimeInMs = timeInMs;
-                MotionEvent event = MotionEvent.obtain(
-                        mDownTimeInMs, timeInMs, MotionEvent.ACTION_DOWN, 1,
-                        mPointerProperties, mPointerCoords,
-                        0, 0, 1, 1, 0, 0, 0, 0);
+                MotionEvent event = MotionEvent.obtain(mDownTimeInMs, timeInMs,
+                        MotionEvent.ACTION_DOWN, 1, mPointerProperties, mPointerCoords, 0, 0, 1, 1,
+                        8, 0, 0x00001002, 0);
                 mTarget.dispatchTouchEvent(event);
                 event.recycle();
 
                 if (pointerCount > 1) {
-                    event = MotionEvent.obtain(
-                            mDownTimeInMs, timeInMs,
-                            MotionEvent.ACTION_POINTER_DOWN, pointerCount,
-                            mPointerProperties, mPointerCoords,
-                            0, 0, 1, 1, 0, 0, 0, 0);
+                    event = MotionEvent.obtain(mDownTimeInMs, timeInMs,
+                            MotionEvent.ACTION_POINTER_DOWN, pointerCount, mPointerProperties,
+                            mPointerCoords, 0, 0, 1, 1, 8, 0, 0x00001002, 0);
                     mTarget.dispatchTouchEvent(event);
                     event.recycle();
                 }
                 break;
             }
             case MotionEventAction.MOVE: {
+                Log.e("VRP", "Motion-> Move");
                 MotionEvent event = MotionEvent.obtain(mDownTimeInMs, timeInMs,
-                        MotionEvent.ACTION_MOVE,
-                        pointerCount, mPointerProperties, mPointerCoords,
-                        0, 0, 1, 1, 0, 0, 0, 0);
+                        MotionEvent.ACTION_MOVE, pointerCount, mPointerProperties, mPointerCoords,
+                        0, 0, 1, 1, 8, 0, 0x00001002, 0);
                 mTarget.dispatchTouchEvent(event);
                 event.recycle();
                 break;
             }
             case MotionEventAction.CANCEL: {
-                MotionEvent event = MotionEvent.obtain(
-                        mDownTimeInMs, timeInMs, MotionEvent.ACTION_CANCEL, 1,
-                        mPointerProperties, mPointerCoords,
-                        0, 0, 1, 1, 0, 0, 0, 0);
+                Log.e("VRP", "Motion-> Cancel");
+                MotionEvent event = MotionEvent.obtain(mDownTimeInMs, timeInMs,
+                        MotionEvent.ACTION_CANCEL, 1, mPointerProperties, mPointerCoords, 0, 0, 1,
+                        1, 8, 0, 0x00001002, 0);
                 mTarget.dispatchTouchEvent(event);
                 event.recycle();
                 break;
             }
             case MotionEventAction.END: {
                 if (pointerCount > 1) {
-                    MotionEvent event = MotionEvent.obtain(
-                            mDownTimeInMs, timeInMs, MotionEvent.ACTION_POINTER_UP,
-                            pointerCount, mPointerProperties, mPointerCoords,
-                            0, 0, 1, 1, 0, 0, 0, 0);
+                    MotionEvent event = MotionEvent.obtain(mDownTimeInMs, timeInMs,
+                            MotionEvent.ACTION_POINTER_UP, pointerCount, mPointerProperties,
+                            mPointerCoords, 0, 0, 1, 1, 8, 0, 0x00001002, 0);
                     mTarget.dispatchTouchEvent(event);
                     event.recycle();
                 }
 
-                MotionEvent event = MotionEvent.obtain(
-                        mDownTimeInMs, timeInMs, MotionEvent.ACTION_UP, 1,
-                        mPointerProperties, mPointerCoords,
-                        0, 0, 1, 1, 0, 0, 0, 0);
+                Log.e("VRP", "Motion-> UP");
+                MotionEvent event = MotionEvent.obtain(mDownTimeInMs, timeInMs,
+                        MotionEvent.ACTION_UP, 1, mPointerProperties, mPointerCoords, 0, 0, 1, 1, 8,
+                        0, 0x00001002, 0);
                 mTarget.dispatchTouchEvent(event);
                 event.recycle();
                 break;
@@ -133,7 +132,7 @@ public class MotionEventSynthesizer {
                 assert pointerCount == 1;
                 MotionEvent event = MotionEvent.obtain(mDownTimeInMs, timeInMs,
                         MotionEvent.ACTION_SCROLL, pointerCount, mPointerProperties, mPointerCoords,
-                        0, 0, 1, 1, 0, 0, InputDevice.SOURCE_CLASS_POINTER, 0);
+                        0, 0, 1, 1, 8, 0, InputDevice.SOURCE_CLASS_POINTER, 0);
                 mTarget.dispatchGenericMotionEvent(event);
                 event.recycle();
                 break;

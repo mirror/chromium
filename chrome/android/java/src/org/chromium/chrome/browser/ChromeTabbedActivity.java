@@ -524,6 +524,16 @@ public class ChromeTabbedActivity
         super.onNewIntent(intent);
     }
 
+    /*    @Override
+        public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+           return super.onCreateView(parent, name, context, attrs);
+        }
+
+        @Override
+        public View onCreateView(String name, Context context, AttributeSet attrs) {
+           return super.onCreateView(name, context, attrs);
+        }
+    */
     @Override
     public void finishNativeInitialization() {
         try {
@@ -532,7 +542,26 @@ public class ChromeTabbedActivity
             refreshSignIn();
 
             initializeUI();
+            /*            ViewParent vp = (mContentContainer.getParent() == null)? mContentContainer
+               : mControlContainer.getParent(); while (vp.getParent() != null){ Log.e(TAG, "VRP
+               Going up!!"); if (vp.getParent() instanceof ViewGroup) vp = vp.getParent(); else
+                             break;
+                        }
 
+                        ((ViewGroup)vp).getViewTreeObserver()
+                           .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+               {
+                              @Override public void onGlobalLayout() {
+                              }
+                           });
+
+                        mControlContainer.getViewTreeObserver()
+                           .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+               {
+                              @Override public void onGlobalLayout() {
+                              }
+                           });
+            */
             // The dataset has already been created, we need to initialize our state.
             mTabModelSelectorImpl.notifyChanged();
 
