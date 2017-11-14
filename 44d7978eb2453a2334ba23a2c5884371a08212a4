@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35fc535c_7763d7d8",
+        "filename": "services/ui/ws/threaded_image_cursors.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T21:17:04Z",
+      "side": 1,
+      "message": "Is it safe to use CursorFactoryOzone on multiple threads like this? Perhaps add a comment as to why it needs to be obtained here.",
+      "range": {
+        "startLine": 177,
+        "startChar": 3,
+        "endLine": 178,
+        "endChar": 46
+      },
+      "revId": "44d7978eb2453a2334ba23a2c5884371a08212a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2af1665_9ae21c67",
+        "filename": "services/ui/ws/threaded_image_cursors.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T21:17:04Z",
+      "side": 1,
+      "message": "Would a better name for these be FooOnUiServiceThread (or OnUiServiceTaskRunner), which matches the member (ui_service_task_runner_)?",
+      "range": {
+        "startLine": 181,
+        "startChar": 20,
+        "endLine": 181,
+        "endChar": 51
+      },
+      "revId": "44d7978eb2453a2334ba23a2c5884371a08212a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
