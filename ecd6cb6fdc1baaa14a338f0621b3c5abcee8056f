@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ea8f8c42_915d6a61",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-14T18:20:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cca00d9f_29b97397",
+      "revId": "ecd6cb6fdc1baaa14a338f0621b3c5abcee8056f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4200af18_b543d48c",
         "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "ecd6cb6fdc1baaa14a338f0621b3c5abcee8056f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e04e60_bd51411c",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-14T18:20:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4200af18_b543d48c",
+      "revId": "ecd6cb6fdc1baaa14a338f0621b3c5abcee8056f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
