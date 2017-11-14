@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "52d96eea_3adc51a2",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasResourceProvider.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-14T22:47:25Z",
+      "side": 1,
+      "message": "Nevermind this comment. I looked it up. Vanilla GLES2 does not support BGRA as an external format. And both formats (int/ext) have to be equal it seems.",
+      "parentUuid": "8da4c887_f83479fa",
+      "range": {
+        "startLine": 161,
+        "startChar": 6,
+        "endLine": 161,
+        "endChar": 14
+      },
+      "revId": "931593b1e27d4c482719c830510d42f676978139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da0905e2_8dad3420",
         "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasResourceProvider.cpp",
         "patchSetId": 20
