@@ -111,6 +111,8 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   void Drag(WindowSelectorItem* item, const gfx::Point& location_in_screen);
   void CompleteDrag(WindowSelectorItem* item,
                     const gfx::Point& location_in_screen);
+  void ActivateDraggedWindow(WindowSelectorItem* item);
+  void ResetDraggedWindowGesture(WindowSelectorItem* item);
 
   // Positions all of the windows in the overview.
   void PositionWindows(bool animate);
