@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3459c7e0_6c3bdab7",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-14T20:55:04Z",
+      "side": 1,
+      "message": "What is the recommended way to achieve this?  What I want to do is handle failure in product code (hence the if), but break/crash when I\u0027m testing debug builds (hence the DCHECK).\n\nIt is probably an error if this hits, but a slow machine could cause a timeout.",
+      "parentUuid": "5cad21c2_4e17acb0",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 4
+      },
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ef27858_d1b28d8c",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-14T00:48:38Z",
       "side": 1,
       "message": "If I understand this and the GpuMemoryBufferImageCopy class, this might overwrite the GMB while it\u0027s still being displayed. To avoid tearing, won\u0027t it be necessary to do some sort of multi-buffering and re-use the GMBs once the vr_presentation_provider_ isn\u0027t referring to them any more?",
+      "range": {
+        "startLine": 712,
+        "startChar": 9,
+        "endLine": 712,
+        "endChar": 26
+      },
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3693f777_f94b2171",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-14T20:55:04Z",
+      "side": 1,
+      "message": "The underlying d3d11 texture implements IDXGIKeyedMutex for synchronization - we are either writing to the texture or reading from it, but not both simultaneously.\n\nIf we wanted to use this code on other platforms, we could have multiple GpuMemoryBufferImageCopy objects, and use some kind of fence synchronization to indicate that the writing/reading is done, but that ins\u0027t necessary in this Windows-only codepath.",
+      "parentUuid": "2ef27858_d1b28d8c",
       "range": {
         "startLine": 712,
         "startChar": 9,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9c424f90_16ab2207",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-14T20:55:04Z",
+      "side": 1,
+      "message": "The underlying image uses IDXGIKeyedMutex for synchronization.  If we need to support cross-platform here, we can add a fence in the command buffer stream, and move some wait logic into the vr_presentation_provider\u0027s process.  This would require the vr_presentation_provider to have a command buffer/some way to wait on the fence.",
+      "parentUuid": "c7611d80_633f4f9f",
+      "range": {
+        "startLine": 724,
+        "startChar": 28,
+        "endLine": 724,
+        "endChar": 44
+      },
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3f36868_5f92485b",
         "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
         "patchSetId": 8
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "824fcb9c_b91db1ac",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-14T20:55:04Z",
+      "side": 1,
+      "message": "Binding the GpuMemoryBuffer is the notification to the GPU process that the buffer is in use, so that triggers taking the IDXGIKeyedMutex in the GPU process.  If this feels too implicit, we can add extra commands to the command buffer to be more explicit about taking the keyed mutex.\n\nThat extension looks interesting, but may not be useful since we require the handle to send cross-process.",
+      "parentUuid": "b3f36868_5f92485b",
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0b086d9_fc9ba64a",
         "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
         "patchSetId": 8
@@ -99,6 +189,24 @@
       "writtenOn": "2017-11-14T00:48:38Z",
       "side": 1,
       "message": "Per above, I think you should reuse this work frame after frame, if the GMB is reused.",
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f976b4_84ed6dad",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-14T20:55:04Z",
+      "side": 1,
+      "message": "I can keep the texture, but I have to bind/release it each frame for synchronization/IDXGIKeyedMutex.",
+      "parentUuid": "c0b086d9_fc9ba64a",
       "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
