@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "f0c3e0d0_6f627305",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-14T23:52:23Z",
+      "side": 1,
+      "message": "Would that be accomplished by renaming INVALID to GENERAL, NON_BROWSER or something? Or are you talking about something more granular?",
+      "parentUuid": "cccd65c2_4765b102",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 28
+      },
+      "revId": "1df24aae481746d42612fcd979bd56558e570b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "043017db_d52854ae",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
         "patchSetId": 7
