@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b65403f0_9d71a193",
+        "filename": "content/browser/web_contents/web_contents_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-14T00:50:03Z",
+      "side": 1,
+      "message": "as suggested the other place, this can probably go through EventForwarder if possible (meaning this doesn\u0027t even need to go to native code on in content.",
+      "revId": "fc585b41d45a574bfd023ad2c092f6e553cf0b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90ac4ab4_143b1be4",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 3
@@ -59,6 +76,30 @@
       "writtenOn": "2017-11-13T18:46:53Z",
       "side": 1,
       "message": "why aren\u0027t these going to ViewAndroid/EventForwarder instead?\n\nThese seem very view specific.  They also don\u0027t relate to existing web_contents.h methods, so I\"m curious how/where this is handled on other platforms.  The strong preference should be to keep this class as a simple java exposed proxy of web_contents.h.  Other things should either be in separate classes where possible, or in the embedder themselves.\n\nFor things that are shared between Chrome and WebView, maybe we should discuss exposing a new package of common shared code that is built upon the core components but doesn\u0027t need a full component/ entry itself.\ncontent/public/glue\ncontent/public/client\n\u003c\u003c\u003c or something \u003e\u003e\u003e\n\nIn this example, I\u0027d rather see a ZoomController class that has three methods that all take a WebContents and do their work.",
+      "range": {
+        "startLine": 188,
+        "startChar": 12,
+        "endLine": 188,
+        "endChar": 18
+      },
+      "revId": "fc585b41d45a574bfd023ad2c092f6e553cf0b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e743e89c_0df73372",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-14T00:50:03Z",
+      "side": 1,
+      "message": "\u003e why aren\u0027t these going to ViewAndroid/EventForwarder instead?\n\u003e \n\u003e These seem very view specific.  They also don\u0027t relate to existing web_contents.h methods, so I\"m curious how/where this is handled on other platforms.  The strong preference should be to keep this class as a simple java exposed proxy of web_contents.h.  Other things should either be in separate classes where possible, or in the embedder themselves.\n\u003e \n\u003e For things that are shared between Chrome and WebView, maybe we should discuss exposing a new package of common shared code that is built upon the core components but doesn\u0027t need a full component/ entry itself.\n\u003e content/public/glue\n\u003e content/public/client\n\u003e \u003c\u003c\u003c or something \u003e\u003e\u003e\n\u003e \n\u003e In this example, I\u0027d rather see a ZoomController class that has three methods that all take a WebContents and do their work.\n\nZoomController sgtm for this.\n\nI don\u0027t think having zoomIn live on ViewAndroid makes sense, because it\u0027s effectively above the ViewAndroid layer, and should be sending simulated touch events down to ViewAndroid/EventForwarder instead.",
+      "parentUuid": "1ecb029b_c906985e",
       "range": {
         "startLine": 188,
         "startChar": 12,
