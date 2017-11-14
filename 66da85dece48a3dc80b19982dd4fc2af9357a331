@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2a17bec_e5829a72",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-14T18:07:19Z",
+      "side": 1,
+      "message": "Unrelated? This should only be true for close events when IToastDismissedEventArgs-\u003etype is set to UserCanceled, which most likely should be done in a follow-up. (It\u0027s correct that we don\u0027t invoke the JavaScript `notificationclose` event in cases where it\u0027s not set to true.)",
+      "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d5fb220_b5d7edc5",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-14T18:07:19Z",
+      "side": 1,
+      "message": "Hmm. Since this currently only services the Chrome-is-still-alive case, I wonder if you have considered an alternative approach of using mswr::ComPtr\u003c\u003es reference counting semantics?\n\nIn short, instead of parsing the XML, we could do something like what\u0027s documented here:\nhttps://code.msdn.microsoft.com/Sending-toast-notifications-71e230a2/sourcecode?fileId\u003d51046\u0026pathId\u003d1859297009\n\nWhat sort of details do we get when Chrome\u0027s woken up as a result of a notification interaction? Do we get the entire IToastNotification* as well?",
+      "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2add18_525cdbe4",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-14T18:07:19Z",
+      "side": 1,
+      "message": "micro nit: please always document random booleans like \"false\", it\u0027s unclear what it means reading this code",
+      "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff8929bb_b3f1ee4b",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-14T18:07:19Z",
+      "side": 1,
+      "message": "The message_center is a component that lives in //ui, which has nothing to do with this work other than being the data-container for the notification (the message_center::Notification type). These should just be part of the common namespace, or perhaps public members of one of the classes.",
+      "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77788713_bccb6fd6",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-14T18:07:19Z",
+      "side": 1,
+      "message": "nit: unfortunately it\u0027s fine to notifications to have invalid URLs. This usually is only the case for notification types other than extension and web notifications.",
+      "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba29e2f_49a2f0b1",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-14T18:07:19Z",
+      "side": 1,
+      "message": "nit: bound checks?",
+      "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a6deb66_5549efd9",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-14T18:07:19Z",
+      "side": 1,
+      "message": "nit: notification_id-\u003eclear();",
+      "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f205f28_5256ec7e",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-14T18:07:19Z",
+      "side": 1,
+      "message": "These two should be members of the NotificationPlatformBridgeWin, and be passed in to NotificationTemplateBuilder as a std::string\u0026. Semantically you shouldn\u0027t need to talk to a template builder when responding to an interaction event.",
+      "range": {
+        "startLine": 65,
+        "startChar": 36,
+        "endLine": 65,
+        "endChar": 43
+      },
+      "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc10017_0c06cb1c",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-14T18:07:19Z",
+      "side": 1,
+      "message": "WARN_UNUSED_RESULT, since assuming that it worked fine can lead to using uninitialised memory.",
+      "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9757fe_5fcf2c5f",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-14T18:07:19Z",
+      "side": 1,
+      "message": "nit: const\u0026, you\u0027re making a copy now.",
+      "revId": "66da85dece48a3dc80b19982dd4fc2af9357a331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
