@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75d3c659_dd4c7096",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-14T16:07:05Z",
+      "side": 1,
+      "message": "I guess it is unclear why there are multiple calls to the client now for left mouse down. Will that cause more work?\n\nie; left down is called here...\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/input/EventHandler.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d717\n\nWould it make sense to change this to fire it always even without the left modifier?",
+      "range": {
+        "startLine": 398,
+        "startChar": 19,
+        "endLine": 398,
+        "endChar": 26
+      },
+      "revId": "c32db39d10b87ed5a6570b34802d3b3636fa0dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
