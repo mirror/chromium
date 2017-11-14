@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "ash/public/cpp/app_list/app_list_constants.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
@@ -20,7 +21,6 @@
 #include "components/arc/common/app.mojom.h"
 #include "components/crx_file/id_util.h"
 #include "content/public/browser/browser_thread.h"
-#include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/vector_icons/vector_icons.h"
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/geometry/size.h"

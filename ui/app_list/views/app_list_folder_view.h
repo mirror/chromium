@@ -7,8 +7,8 @@
 
 #include <string>
 
+#include "ash/public/cpp/app_list/app_list_item_list_observer.h"
 #include "base/macros.h"
-#include "ui/app_list/app_list_item_list_observer.h"
 #include "ui/app_list/views/apps_grid_view.h"
 #include "ui/app_list/views/apps_grid_view_folder_delegate.h"
 #include "ui/app_list/views/folder_header_view.h"

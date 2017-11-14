@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "ash/public/cpp/app_list/app_list_features.h"
 #include "ash/public/cpp/shelf_item_delegate.h"
 #include "ash/public/cpp/shelf_model.h"
 #include "ash/shelf/shelf.h"
@@ -29,7 +30,6 @@
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller_test_util.h"
 #include "components/arc/arc_util.h"
 #include "content/public/test/browser_test_utils.h"
-#include "ui/app_list/app_list_features.h"
 #include "ui/display/types/display_constants.h"
 #include "ui/events/event_constants.h"
 #include "ui/events/test/event_generator.h"
