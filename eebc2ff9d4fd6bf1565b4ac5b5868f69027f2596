@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cfde9026_51e4b539",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2269,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-14T23:04:08Z",
+      "side": 1,
+      "message": "Probably makes sense",
+      "parentUuid": "0d2e1231_5bd3f544",
+      "revId": "eebc2ff9d4fd6bf1565b4ac5b5868f69027f2596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b05d504f_d4edea01",
         "filename": "content/renderer/render_view_impl.cc",
         "patchSetId": 7
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "dbed6f6c_5e1e46be",
+        "filename": "mojo/public/cpp/bindings/tests/union_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-14T23:04:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cb7c533_579909f4",
+      "revId": "eebc2ff9d4fd6bf1565b4ac5b5868f69027f2596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3460f346_7dd09b4c",
         "filename": "mojo/public/tools/bindings/generators/cpp_templates/wrapper_class_definition.tmpl",
         "patchSetId": 7
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "48076725_eca98787",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/wrapper_class_definition.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-14T23:04:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3460f346_7dd09b4c",
+      "revId": "eebc2ff9d4fd6bf1565b4ac5b5868f69027f2596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d24ef9a5_c420f92f",
         "filename": "mojo/public/tools/bindings/generators/cpp_templates/wrapper_union_class_definition.tmpl",
         "patchSetId": 7
@@ -101,6 +155,24 @@
       "revId": "eebc2ff9d4fd6bf1565b4ac5b5868f69027f2596",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cdf6b3b_4e279b33",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/wrapper_union_class_definition.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-14T23:04:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d24ef9a5_c420f92f",
+      "revId": "eebc2ff9d4fd6bf1565b4ac5b5868f69027f2596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
