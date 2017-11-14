@@ -8,7 +8,7 @@
 #include <memory>
 #include <string>
 
-#include "ash/login/lock_screen_controller.h"
+#include "ash/login/login_screen_controller.h"
 #include "ash/login/ui/layout_util.h"
 #include "ash/login/ui/lock_contents_view.h"
 #include "ash/login/ui/lock_screen.h"
@@ -327,7 +327,7 @@ void LockDebugView::ButtonPressed(views::Button* sender,
     toggle_auth_->SetText(base::ASCIIToUTF16(
         force_fail_auth_ ? "Allow auth" : "Force fail auth"));
     Shell::Get()
-        ->lock_screen_controller()
+        ->login_screen_controller()
         ->set_force_fail_auth_for_debug_overlay(force_fail_auth_);
     return;
   }
