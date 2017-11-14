@@ -56,6 +56,11 @@ namespace internal {
 // Returns the string equivalent of |source|.
 const char* GetNameForObservationSource(NetworkQualityObservationSource source);
 
+enum ObservationCategory {
+  OBSERVATION_CATEGORY_HTTP = 0,
+  OBSERVATION_CATEGORY_TRANSPORT = 1
+};
+
 }  // namespace internal
 
 }  // namespace nqe
