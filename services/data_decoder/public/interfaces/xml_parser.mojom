@@ -1,0 +1,51 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Interface used to parse simple XML files.
+// Ignores namespaces and node attributes. Note also that all elements text
+// contents is returned as base::Value of type STRING: no effort is made by the
+// parser to parse numeric values, it's up to the caller do do so.
+// If you need this outside of chrome/ consider moving it to services/
+
+module data_decoder.mojom;
+
+import "mojo/common/values.mojom";
+
+interface XmlParser {
+  // Example of 
+  //
+  // <library>
+  //   <book id="k123">
+  //     <author>Isaac Newton</author>
+  //     <title>Philosophiae Naturalis Principia Mathematica</title>
+  //   </book>
+  //   <book id="k456">
+  //     <author>Dr. Seuss</author>
+  //     <author>Theodor Seuss Geisel</author>
+  //     <title>Green Eggs and Ham</title>
+  //     <kids/>
+  //   </book>
+  // </library>
+  //
+  // becomes (base::Value's represented as JSON):
+  //
+  // {
+  //   "library":
+  //   [{
+  //     "book":
+  //     [
+  //       {
+  //         "author": [ "Isaac Newton" ],
+  //         "title": [ "Philosophiae Naturalis Principia Mathematica" ],
+  //       },
+  //       {
+  //         "author": [ "Dr. Seuss", "Theodor Seuss Geisel" ],
+  //         "title": [ "Green Eggs and Ham" ],
+  //         "kids": []
+  //       }
+  //     ]
+  //   }]
+  // }
+  Parse(string xml) => (mojo.common.mojom.Value? result, string? error);
+};
