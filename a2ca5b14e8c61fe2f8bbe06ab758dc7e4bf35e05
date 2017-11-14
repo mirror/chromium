@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4252cd6b_b2afd10d",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-14T21:20:46Z",
+      "side": 1,
+      "message": "Oh wow, that\u0027s a weird API.\nIf possible, it might be helpful to list the scenarios where this happens, e.g. does it happen for downloads, or for \"open in new tab\", or ...?",
+      "range": {
+        "startLine": 342,
+        "startChar": 36,
+        "endLine": 342,
+        "endChar": 0
+      },
+      "revId": "a2ca5b14e8c61fe2f8bbe06ab758dc7e4bf35e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
