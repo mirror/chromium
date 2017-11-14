@@ -182,76 +182,6 @@ void StyledLabel::SizeToFit(int max_width) {
   SetSize(CalculateAndDoLayout(max_width, true));
 }
 
-const char* StyledLabel::GetClassName() const {
-  return kViewClassName;
-}
-
-gfx::Insets StyledLabel::GetInsets() const {
-  gfx::Insets insets = View::GetInsets();
-  if (Link::GetDefaultFocusStyle() != Link::FocusStyle::RING)
-    return insets;
-
-  // We need a focus border iff we contain a link that will have a focus border.
-  // That in turn will be true only if the link is non-empty.
-  for (StyleRanges::const_iterator i(style_ranges_.begin());
-        i != style_ranges_.end(); ++i) {
-    if (i->style_info.IsLink() && !i->range.is_empty()) {
-      insets += gfx::Insets(Link::kFocusBorderPadding);
-      break;
-    }
-  }
-
-  return insets;
-}
-
-gfx::Size StyledLabel::CalculatePreferredSize() const {
-  return calculated_size_;
-}
-
-int StyledLabel::GetHeightForWidth(int w) const {
-  // TODO(erg): Munge the const-ness of the style label. CalculateAndDoLayout
-  // doesn't actually make any changes to member variables when |dry_run| is
-  // set to true. In general, the mutating and non-mutating parts shouldn't
-  // be in the same codepath.
-  return const_cast<StyledLabel*>(this)->CalculateAndDoLayout(w, true).height();
-}
-
-void StyledLabel::Layout() {
-  CalculateAndDoLayout(GetLocalBounds().width(), false);
-}
-
-void StyledLabel::PreferredSizeChanged() {
-  calculated_size_ = gfx::Size();
-  width_at_last_size_calculation_ = 0;
-  width_at_last_layout_ = 0;
-  View::PreferredSizeChanged();
-}
-
-void StyledLabel::LinkClicked(Link* source, int event_flags) {
-  if (listener_)
-    listener_->StyledLabelLinkClicked(this, link_targets_[source], event_flags);
-}
-
-int StyledLabel::GetDefaultLineHeight() const {
-  return specified_line_height_ > 0
-             ? specified_line_height_
-             : std::max(
-                   style::GetLineHeight(text_context_, default_text_style_),
-                   GetDefaultFontList().GetHeight());
-}
-
-gfx::FontList StyledLabel::GetFontListForRange(
-    const StyleRanges::const_iterator& range) const {
-  if (range == style_ranges_.end())
-    return GetDefaultFontList();
-
-  return range->style_info.custom_font
-             ? range->style_info.custom_font.value()
-             : style::GetFont(
-                   text_context_,
-                   range->style_info.text_style.value_or(default_text_style_));
-}
-
 gfx::Size StyledLabel::CalculateAndDoLayout(int width, bool dry_run) {
   if (width == width_at_last_size_calculation_ &&
       (dry_run || width == width_at_last_layout_))
@@ -408,11 +338,11 @@ gfx::Size StyledLabel::CalculateAndDoLayout(int width, bool dry_run) {
     if (!dry_run)
       AddChildView(label.release());
 
-    // If |gfx::ElideRectangleText| returned more than one substring, that
-    // means the whole text did not fit into remaining line width, with text
-    // after |susbtring[0]| spilling into next line. If whole |substring[0]|
-    // was added to the current line (this may not be the case if part of the
-    // substring has different style), proceed to the next line.
+    // If |gfx::ElideRectangleText| returned more than one substring, that means
+    // the whole text did not fit into remaining line width, i.e. text after
+    // |substring[0]| is spilling into the next line. If the whole of
+    // |substring[0]| was added to the current line (this may not be the case if
+    // part of the substring has a different style), proceed to the next line.
     if (substrings.size() > 1 && chunk.size() == substrings[0].size()) {
       x = 0;
       ++line;
@@ -424,6 +354,76 @@ gfx::Size StyledLabel::CalculateAndDoLayout(int width, bool dry_run) {
   DCHECK_LE(used_width, width);
   calculated_size_ = gfx::Size(used_width + GetInsets().width(), total_height);
   return calculated_size_;
+}
+
+const char* StyledLabel::GetClassName() const {
+  return kViewClassName;
+}
+
+gfx::Insets StyledLabel::GetInsets() const {
+  gfx::Insets insets = View::GetInsets();
+  if (Link::GetDefaultFocusStyle() != Link::FocusStyle::RING)
+    return insets;
+
+  // We need a focus border iff we contain a link that will have a focus border.
+  // That in turn will be true only if the link is non-empty.
+  for (StyleRanges::const_iterator i(style_ranges_.begin());
+       i != style_ranges_.end(); ++i) {
+    if (i->style_info.IsLink() && !i->range.is_empty()) {
+      insets += gfx::Insets(Link::kFocusBorderPadding);
+      break;
+    }
+  }
+
+  return insets;
+}
+
+gfx::Size StyledLabel::CalculatePreferredSize() const {
+  return calculated_size_;
+}
+
+int StyledLabel::GetHeightForWidth(int w) const {
+  // TODO(erg): Munge the const-ness of the style label. CalculateAndDoLayout
+  // doesn't actually make any changes to member variables when |dry_run| is
+  // set to true. In general, the mutating and non-mutating parts shouldn't
+  // be in the same codepath.
+  return const_cast<StyledLabel*>(this)->CalculateAndDoLayout(w, true).height();
+}
+
+void StyledLabel::Layout() {
+  CalculateAndDoLayout(GetLocalBounds().width(), false);
+}
+
+void StyledLabel::PreferredSizeChanged() {
+  calculated_size_ = gfx::Size();
+  width_at_last_size_calculation_ = 0;
+  width_at_last_layout_ = 0;
+  View::PreferredSizeChanged();
+}
+
+void StyledLabel::LinkClicked(Link* source, int event_flags) {
+  if (listener_)
+    listener_->StyledLabelLinkClicked(this, link_targets_[source], event_flags);
+}
+
+int StyledLabel::GetDefaultLineHeight() const {
+  return specified_line_height_ > 0
+             ? specified_line_height_
+             : std::max(
+                   style::GetLineHeight(text_context_, default_text_style_),
+                   GetDefaultFontList().GetHeight());
+}
+
+gfx::FontList StyledLabel::GetFontListForRange(
+    const StyleRanges::const_iterator& range) const {
+  if (range == style_ranges_.end())
+    return GetDefaultFontList();
+
+  return range->style_info.custom_font
+             ? range->style_info.custom_font.value()
+             : style::GetFont(
+                   text_context_,
+                   range->style_info.text_style.value_or(default_text_style_));
 }
 
 }  // namespace views

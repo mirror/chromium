@@ -114,6 +114,13 @@ class VIEWS_EXPORT StyledLabel : public View, public LinkListener {
   // wrapped). If 0, no maximum width is enforced.
   void SizeToFit(int max_width);
 
+  // Calculates how to layout child views, creates them and sets their size and
+  // position. |width| is the horizontal space, in pixels, that the view has to
+  // work with. If |dry_run| is true, the view hierarchy is not touched. Caches
+  // the results in |calculated_size_|, |width_at_last_layout_|, and
+  // |width_at_last_size_calculation_|. Returns the needed size.
+  gfx::Size CalculateAndDoLayout(int width, bool dry_run);
+
   // View:
   const char* GetClassName() const override;
   gfx::Insets GetInsets() const override;
@@ -147,13 +154,6 @@ class VIEWS_EXPORT StyledLabel : public View, public LinkListener {
   // Returns the FontList that should be used for |range|.
   gfx::FontList GetFontListForRange(
       const StyleRanges::const_iterator& range) const;
-
-  // Calculates how to layout child views, creates them and sets their size and
-  // position. |width| is the horizontal space, in pixels, that the view has to
-  // work with. If |dry_run| is true, the view hierarchy is not touched. Caches
-  // the results in |calculated_size_|, |width_at_last_layout_|, and
-  // |width_at_last_size_calculation_|. Returns the needed size.
-  gfx::Size CalculateAndDoLayout(int width, bool dry_run);
 
   // The text to display.
   base::string16 text_;
