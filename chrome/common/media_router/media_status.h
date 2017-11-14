@@ -50,6 +50,9 @@ struct MediaStatus {
   // If this is true, the media's current playback position can be changed.
   bool can_seek = false;
 
+  // If this is true, Media Remoting can be enabled / disabled.
+  bool can_set_media_remoting_enabled = false;
+
   PlayState play_state = PlayState::PLAYING;
 
   bool is_muted = false;
