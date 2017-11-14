@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7728fef5_9399fd1a",
+        "filename": "content/browser/frame_host/frame_tree_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-14T01:54:57Z",
+      "side": 1,
+      "message": "nit: OpenPopup already does WaitForLoadStop, so this one shouldn\u0027t be necessary.",
+      "range": {
+        "startLine": 832,
+        "startChar": 2,
+        "endLine": 832,
+        "endChar": 17
+      },
+      "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1053f694_ff53acd2",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-14T01:54:57Z",
+      "side": 1,
+      "message": "Could we only do that when replication_state_.active_sandbox_flags changes?  Otherwise, seems like we\u0027ll unnecessarily send a bunch of these IPCs in the common case where the sandbox flags remain at 0 through a navigation.",
+      "range": {
+        "startLine": 655,
+        "startChar": 0,
+        "endLine": 655,
+        "endChar": 49
+      },
+      "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8840cf53_a75eff59",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-14T01:54:57Z",
+      "side": 1,
+      "message": "Why did we need to change this from a CHECK?",
+      "range": {
+        "startLine": 545,
+        "startChar": 0,
+        "endLine": 547,
+        "endChar": 11
+      },
+      "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9de5e0b_279a5b4e",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-14T01:54:57Z",
+      "side": 1,
+      "message": "Should this one now also use state.active_sandbox_flags, which includes CSP sandbox flags?  Seems that we\u0027ve decided that frame_policy.sandbox_flags should only be updating FrameOwner properties now, so probably not what we want here.  I don\u0027t think this matters much in practice, since if active_sandbox_flags change, we\u0027ll now send DidSetActiveSandboxFlags to proxies, which will overwrite this.  But good for consistency. :)",
+      "range": {
+        "startLine": 274,
+        "startChar": 46,
+        "endLine": 274,
+        "endChar": 72
+      },
+      "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc5077a_6bd5efb5",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-14T01:54:57Z",
+      "side": 1,
+      "message": "Update this comment?  It probably makes sense to move the bits about SecurityContext to a comment on OnDidSetActiveSandboxFlags below.",
+      "range": {
+        "startLine": 287,
+        "startChar": 22,
+        "endLine": 287,
+        "endChar": 37
+      },
+      "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ec6f35_2eabcba5",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-14T01:54:57Z",
+      "side": 1,
+      "message": "Any need to check this?  From RenderFrameHostManager::CommitPendingFramePolicy, seems like we should never send this when there\u0027s no parent, so I\u0027d replace this with a CHECK(web_frame()-\u003eParent()).",
+      "range": {
+        "startLine": 305,
+        "startChar": 2,
+        "endLine": 305,
+        "endChar": 28
+      },
+      "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c36b6a26_4c343b45",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-14T01:54:57Z",
+      "side": 1,
+      "message": "nit: { }",
+      "range": {
+        "startLine": 305,
+        "startChar": 28,
+        "endLine": 305,
+        "endChar": 0
+      },
+      "revId": "805243b8180d290b63b141f1f3b63587e9b9631f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
