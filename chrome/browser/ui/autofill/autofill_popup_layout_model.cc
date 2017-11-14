@@ -29,6 +29,7 @@
 #if !defined(OS_ANDROID)
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "components/toolbar/vector_icons.h"  // nogncheck
+#include "ui/aura/window.h"
 #endif
 
 namespace autofill {
@@ -146,9 +147,11 @@ void AutofillPopupLayoutModel::UpdatePopupBounds() {
   int popup_width = GetDesiredPopupWidth();
   int popup_height = GetDesiredPopupHeight();
 
+  gfx::NativeView native_view = delegate_->container_view();
   popup_bounds_ = view_common_.CalculatePopupBounds(
-      popup_width, popup_height, RoundedElementBounds(),
-      delegate_->container_view(), delegate_->IsRTL());
+                      popup_width, popup_height, RoundedElementBounds(),
+                      native_view, delegate_->IsRTL()) +
+                  native_view->GetBoundsInScreen().OffsetFromOrigin();
 }
 
 const gfx::FontList& AutofillPopupLayoutModel::GetValueFontListForRow(

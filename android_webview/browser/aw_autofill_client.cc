@@ -108,14 +108,8 @@ void AwAutofillClient::ShowAutofillPopup(
   suggestions_ = suggestions;
   delegate_ = delegate;
 
-  // Convert element_bounds to be in screen space.
-  gfx::Rect client_area = web_contents_->GetContainerBounds();
-  gfx::RectF element_bounds_in_screen_space =
-      element_bounds + client_area.OffsetFromOrigin();
-
-  ShowAutofillPopupImpl(element_bounds_in_screen_space,
-                        text_direction == base::i18n::RIGHT_TO_LEFT,
-                        suggestions);
+  ShowAutofillPopupImpl(
+      element_bounds, text_direction == base::i18n::RIGHT_TO_LEFT, suggestions);
 }
 
 void AwAutofillClient::ShowAutofillPopupImpl(

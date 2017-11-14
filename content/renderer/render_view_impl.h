@@ -351,7 +351,11 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
                                   bool animate) override;
 #endif
   void ConvertViewportToWindowViaWidget(blink::WebRect* rect) override;
+
+  // Returns DIP scale RectF if --use-zoom-for-dsf is enalbed.
+  // Otherwise, returns CSS scale RectF.
   gfx::RectF ElementBoundsInWindow(const blink::WebElement& element) override;
+
   bool HasAddedInputHandler() const override;
 
   bool uses_temporary_zoom_level() const { return uses_temporary_zoom_level_; }

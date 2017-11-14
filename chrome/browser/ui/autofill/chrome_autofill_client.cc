@@ -261,19 +261,10 @@ void ChromeAutofillClient::ShowAutofillPopup(
     base::i18n::TextDirection text_direction,
     const std::vector<autofill::Suggestion>& suggestions,
     base::WeakPtr<AutofillPopupDelegate> delegate) {
-  // Convert element_bounds to be in screen space.
-  gfx::Rect client_area = web_contents()->GetContainerBounds();
-  gfx::RectF element_bounds_in_screen_space =
-      element_bounds + client_area.OffsetFromOrigin();
-
   // Will delete or reuse the old |popup_controller_|.
-  popup_controller_ =
-      AutofillPopupControllerImpl::GetOrCreate(popup_controller_,
-                                               delegate,
-                                               web_contents(),
-                                               web_contents()->GetNativeView(),
-                                               element_bounds_in_screen_space,
-                                               text_direction);
+  popup_controller_ = AutofillPopupControllerImpl::GetOrCreate(
+      popup_controller_, delegate, web_contents(),
+      web_contents()->GetNativeView(), element_bounds, text_direction);
 
   popup_controller_->Show(suggestions);
 }

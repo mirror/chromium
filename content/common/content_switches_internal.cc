@@ -19,6 +19,7 @@
 
 #if defined(OS_ANDROID)
 #include "base/debug/debugger.h"
+#include "ui/android/view_android.h"
 #endif
 
 #if defined(OS_POSIX) && !defined(OS_ANDROID)
@@ -106,7 +107,7 @@ V8CacheOptions GetV8CacheOptions() {
   }
 }
 
-bool IsUseZoomForDSFEnabled() {
+bool IsUseZoomForDSFEnabledInternal() {
   static bool use_zoom_for_dsf_enabled_by_default =
       IsUseZoomForDSFEnabledByDefault();
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
@@ -116,6 +117,15 @@ bool IsUseZoomForDSFEnabled() {
       command_line->GetSwitchValueASCII(
           switches::kEnableUseZoomForDSF) != "false";
 
+#if defined(OS_ANDROID)
+  ui::ViewAndroid::SetIsUseZoomForDSFEnabled(enabled);
+#endif
+
+  return enabled;
+}
+
+bool IsUseZoomForDSFEnabled() {
+  static bool enabled = IsUseZoomForDSFEnabledInternal();
   return enabled;
 }
 
