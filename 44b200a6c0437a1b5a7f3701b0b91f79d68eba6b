@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45a69ee2_0d67eb9b",
+        "filename": "components/arc/common/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-14T18:11:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb6677de_31603dc7",
+      "range": {
+        "startLine": 58,
+        "startChar": 16,
+        "endLine": 58,
+        "endChar": 23
+      },
+      "revId": "44b200a6c0437a1b5a7f3701b0b91f79d68eba6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bc044d8_418b9296",
         "filename": "services/ui/public/interfaces/gpu.mojom",
         "patchSetId": 16
@@ -39,6 +63,24 @@
       "revId": "44b200a6c0437a1b5a7f3701b0b91f79d68eba6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ff1c2d_73d295ce",
+        "filename": "services/ui/public/interfaces/gpu.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-14T18:11:11Z",
+      "side": 1,
+      "message": "Done\n\nWith a different interface, we don\u0027t need changes in //content/browser/gpu folder anymore.",
+      "parentUuid": "4bc044d8_418b9296",
+      "revId": "44b200a6c0437a1b5a7f3701b0b91f79d68eba6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
