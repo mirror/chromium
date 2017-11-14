@@ -70,6 +70,30 @@
       "revId": "e34a65c87d92b6851c3100c54041cdb0985394d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef02664_ddc96908",
+        "filename": "chrome/browser/resources/md_extensions/toggle_row.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-14T17:47:26Z",
+      "side": 1,
+      "message": "I\u0027m not sure where we could add a tap stop because it\u0027ll create a new place for keyboard users to stop as well. Let\u0027s wait for dmazzonni@ to weigh in before we add a new tab stop.",
+      "parentUuid": "ea1a0174_c4b6f265",
+      "range": {
+        "startLine": 43,
+        "startChar": 53,
+        "endLine": 43,
+        "endChar": 12
+      },
+      "revId": "e34a65c87d92b6851c3100c54041cdb0985394d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

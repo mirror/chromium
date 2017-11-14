@@ -70,6 +70,30 @@
       "revId": "c1acbc5f3785df50787c8af6aa40c49b45ce6431",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7267a0_3ae46317",
+        "filename": "ui/webui/resources/cr_elements/policy/cr_tooltip_icon.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-14T17:47:26Z",
+      "side": 0,
+      "message": "Let\u0027s leave the `for` in for now. If we want to remove it, I\u0027m ok with that, as long as it\u0027s its own CL",
+      "parentUuid": "fde23cf4_287616b8",
+      "range": {
+        "startLine": 28,
+        "startChar": 32,
+        "endLine": 28,
+        "endChar": 48
+      },
+      "revId": "c1acbc5f3785df50787c8af6aa40c49b45ce6431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
