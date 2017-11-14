@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "03e72ccf_fdeae88d",
+        "filename": "extensions/renderer/dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T15:57:08Z",
+      "side": 1,
+      "message": "What\u0027s the plan to remove this?",
+      "revId": "172967dd9bc231e53071af954126274ae7fbe310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a214d6_2d6d78f7",
+        "filename": "extensions/renderer/resource_bundle_source_map.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T15:57:08Z",
+      "side": 1,
+      "message": "What\u0027s the performance overhead of this like?",
+      "revId": "172967dd9bc231e53071af954126274ae7fbe310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac5acd55_9de5260d",
         "filename": "extensions/renderer/resource_bundle_source_map.h",
         "patchSetId": 1
