@@ -15,6 +15,10 @@ class EventForwarder {
  public:
   ~EventForwarder();
 
+  // Used to avoid enabling zooming in / out if resulting zooming will
+  // produce little visible difference.
+  static constexpr float kZoomControlsEpsilon = 0.007f;
+
   jboolean OnTouchEvent(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
@@ -79,6 +83,15 @@ class EventForwarder {
                    jint screen_y,
                    const base::android::JavaParamRef<jobjectArray>& j_mimeTypes,
                    const base::android::JavaParamRef<jstring>& j_content);
+
+  bool CanZoom(JNIEnv* env,
+               const base::android::JavaParamRef<jobject>& jobj,
+               jfloat delta);
+  void OnGestureEvent(JNIEnv* env,
+                      const base::android::JavaParamRef<jobject>& jobj,
+                      jint type,
+                      jlong time_ms,
+                      jfloat delta);
 
  private:
   friend class ViewAndroid;
