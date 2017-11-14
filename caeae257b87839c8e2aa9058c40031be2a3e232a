@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1106d5a2_b6ab511d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 63496,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-14T23:40:31Z",
+      "side": 1,
+      "message": "nit: Please add a units attribute for each of the added histograms.  For this one, perhaps units\u003d\"dims\" or even a generic units\u003d\"count\" would be appropriate.  Ultimately, we want to get to a point where all histograms specify units, so that we can display the most appropriate text on the dashboards.",
+      "range": {
+        "startLine": 63496,
+        "startChar": 47,
+        "endLine": 63496,
+        "endChar": 48
+      },
+      "revId": "caeae257b87839c8e2aa9058c40031be2a3e232a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58dcb7a7_a7220903",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 63500,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-14T23:40:31Z",
+      "side": 1,
+      "message": "It might be useful to document how daily reporting is implemented.  In particular, what happens if the user reboots their machine multiple times per day – is the metric still reported daily?  What if the user powers the machine off for a week – does the code backfill zeroes?  What if the user powers off the machine briefly, but overlapping the reporting period?\n\nBasically, it\u0027s hard to implement daily reporting \"perfectly\", so it\u0027s often helpful to describe in more detail what the actual reporting schedule is in practice, in addition to the idealized target schedule.\n\nAnother thought: It might be a bit hard to interpret these numbers reported on a daily basis, since that hides how much users actually used their devices over a day.  Perhaps it makes sense to report this type of metric normalized by usage somehow?  If you describe how you\u0027re hoping to analyze the data, I might be able to provide better/clearer guidance.",
+      "range": {
+        "startLine": 63499,
+        "startChar": 0,
+        "endLine": 63500,
+        "endChar": 47
+      },
+      "revId": "caeae257b87839c8e2aa9058c40031be2a3e232a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
