@@ -89,9 +89,8 @@ WebTouchPoint CreateWebTouchPointFromWebPointerEvent(
   WebTouchPoint web_touch_point(web_pointer_event);
   web_touch_point.state =
       TouchPointStateFromPointerEventType(web_pointer_event.GetType(), stale);
-  // TODO(crbug.com/731725): This mapping needs a division by 2.
-  web_touch_point.radius_x = web_pointer_event.width;
-  web_touch_point.radius_y = web_pointer_event.height;
+  web_touch_point.radius_x = web_pointer_event.width / 2.0;
+  web_touch_point.radius_y = web_pointer_event.height / 2.0;
   web_touch_point.rotation_angle = web_pointer_event.rotation_angle;
   return web_touch_point;
 }
