@@ -314,4 +314,51 @@ void ServiceWorkerGlobalScope::ExceptionThrown(ErrorEvent* event) {
     debugger->ExceptionThrown(GetThread(), event);
 }
 
+void ServiceWorkerGlobalScope::CountInstalledPWAScript(
+    uint64_t script_size,
+    uint64_t script_cached_metadata_size) {
+  ++pwa_script_count_;
+  pwa_script_total_size_ += script_size;
+  pwa_script_cached_metadata_total_size_ += script_cached_metadata_size;
+
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      CustomCountHistogram, pwa_script_size_histogram,
+      ("ServiceWorker.InstalledPWAScript.ScriptSize", 1000, 5000000, 50));
+  pwa_script_size_histogram.Count(script_size);
+
+  if (script_cached_metadata_size) {
+    DEFINE_THREAD_SAFE_STATIC_LOCAL(
+        CustomCountHistogram, pwa_script_cached_metadata_size_histogram,
+        ("ServiceWorker.InstalledPWAScript.CachedMetadataSize", 1000, 50000000,
+         50));
+    pwa_script_cached_metadata_size_histogram.Count(
+        script_cached_metadata_size);
+  }
+}
+
+void ServiceWorkerGlobalScope::SetIsInstalling(bool is_installing) {
+  is_installing_ = is_installing;
+  if (is_installing)
+    return;
+
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      CustomCountHistogram, pwa_script_count_histogram,
+      ("ServiceWorker.InstalledPWAScript.Count", 1, 1000, 50));
+  pwa_script_count_histogram.Count(pwa_script_count_);
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      CustomCountHistogram, pwa_script_total_size_histogram,
+      ("ServiceWorker.InstalledPWAScript.ScriptTotalSize", 1000, 5000000, 50));
+  pwa_script_total_size_histogram.Count(pwa_script_total_size_);
+  if (pwa_script_cached_metadata_total_size_) {
+    DEFINE_THREAD_SAFE_STATIC_LOCAL(
+        CustomCountHistogram, pwa_cached_metadata_histogram,
+        ("ServiceWorker.InstalledPWAScript.CachedMetadataTotalSize", 1000,
+         50000000, 50));
+    pwa_cached_metadata_histogram.Count(pwa_script_cached_metadata_total_size_);
+  }
+  LOG(ERROR) << "pwa_script_total_size_: " << pwa_script_total_size_;
+  LOG(ERROR) << "pwa_script_cached_metadata_total_size_: "
+             << pwa_script_cached_metadata_total_size_;
+}
+
 }  // namespace blink

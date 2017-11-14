@@ -95,7 +95,12 @@ class BLINK_PLATFORM_EXPORT WebServiceWorkerResponse {
 
   void SetBlobDataHandle(scoped_refptr<BlobDataHandle>);
   scoped_refptr<BlobDataHandle> GetBlobDataHandle() const;
+
+  void SetSideDataBlobDataHandle(scoped_refptr<BlobDataHandle>);
 #endif
+  WebString SideDataBlobUUID() const;
+  uint64_t SideDataBlobSize() const;
+  mojo::ScopedMessagePipeHandle CloneSideDataBlobPtr() const;
 
  private:
   WebPrivatePtr<WebServiceWorkerResponsePrivate> private_;
