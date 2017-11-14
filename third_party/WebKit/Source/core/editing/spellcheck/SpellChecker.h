@@ -42,9 +42,9 @@ class HTMLElement;
 class SpellCheckMarker;
 class SpellCheckRequest;
 class SpellCheckRequester;
-class TextCheckerClient;
 struct TextCheckingResult;
 class WebSpellCheckPanelHostClient;
+class WebTextCheckClient;
 
 class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
   WTF_MAKE_NONCOPYABLE(SpellChecker);
@@ -55,7 +55,7 @@ class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
   void Trace(blink::Visitor*);
 
   WebSpellCheckPanelHostClient& SpellCheckPanelHostClient() const;
-  TextCheckerClient& TextChecker() const;
+  WebTextCheckClient* GetTextCheckerClient() const;
 
   static bool IsSpellCheckingEnabledAt(const Position&);
   bool IsSpellCheckingEnabled() const;
@@ -118,6 +118,10 @@ class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
   // proposed in this issue. We should also retrieve "spellcheck" attributes
   // for text fields and create a flag to over-write the default behavior.
   bool ShouldSpellcheckByDefault() const;
+
+  void CheckSpellingOfString(const String&,
+                             int* misspelling_location,
+                             int* misspelling_length);
 
   // Helper functions for advanceToNextMisspelling()
   Vector<TextCheckingResult> FindMisspellings(const String&);

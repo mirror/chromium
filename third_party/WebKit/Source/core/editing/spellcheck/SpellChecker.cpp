@@ -58,10 +58,10 @@
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 #include "platform/text/TextBreakIterator.h"
-#include "platform/text/TextCheckerClient.h"
 #include "platform/wtf/Assertions.h"
 #include "public/platform/WebSpellCheckPanelHostClient.h"
 #include "public/platform/WebString.h"
+#include "public/web/WebTextCheckClient.h"
 #include "public/web/WebTextDecorationType.h"
 
 namespace blink {
@@ -93,7 +93,7 @@ WebSpellCheckPanelHostClient& SpellChecker::SpellCheckPanelHostClient() const {
   return *spell_check_panel_host_client;
 }
 
-TextCheckerClient& SpellChecker::TextChecker() const {
+WebTextCheckClient* SpellChecker::GetTextCheckerClient() const {
   return GetFrame().Client()->GetTextCheckerClient();
 }
 
@@ -697,6 +697,31 @@ bool SpellChecker::ShouldSpellcheckByDefault() const {
   return true;
 }
 
+void SpellChecker::CheckSpellingOfString(const String& text,
+                                         int* misspelling_location,
+                                         int* misspelling_length) {
+  // SpellCheckWord will write (0, 0) into the output vars, which is what our
+  // caller expects if the word is spelled correctly.
+  int spell_location = -1;
+  int spell_length = 0;
+
+  // Check to see if the provided text is spelled correctly.
+  if (WebTextCheckClient* text_checker_client = GetTextCheckerClient()) {
+    text_checker_client->CheckSpelling(text, spell_location, spell_length,
+                                       nullptr);
+  } else {
+    spell_location = 0;
+    spell_length = 0;
+  }
+
+  // Note: the Mac code checks if the pointers are null before writing to them,
+  // so we do too.
+  if (misspelling_location)
+    *misspelling_location = spell_location;
+  if (misspelling_length)
+    *misspelling_length = spell_length;
+}
+
 Vector<TextCheckingResult> SpellChecker::FindMisspellings(const String& text) {
   Vector<UChar> characters;
   text.AppendTo(characters);
@@ -715,9 +740,8 @@ Vector<TextCheckingResult> SpellChecker::FindMisspellings(const String& text) {
     int word_length = word_end - word_start;
     int misspelling_location = -1;
     int misspelling_length = 0;
-    TextChecker().CheckSpellingOfString(
-        String(characters.data() + word_start, word_length),
-        &misspelling_location, &misspelling_length);
+    CheckSpellingOfString(String(characters.data() + word_start, word_length),
+                          &misspelling_location, &misspelling_length);
     if (misspelling_length > 0) {
       DCHECK_GE(misspelling_location, 0);
       DCHECK_LE(misspelling_location + misspelling_length, word_length);
