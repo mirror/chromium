@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "de70a016_04d94c24",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-14T02:42:55Z",
+      "side": 1,
+      "message": "Yeah, transition-delay is its own thing. Formally transition-property could be set, but it\u0027s not necessary.\n\nThose opacity settings are on the .spinner-layer. Do ya see a way to transition on those? I think we\u0027d need to add @apply vars or similar.",
+      "parentUuid": "b209cadc_bbc8f5d1",
+      "revId": "2fd0cb161db23215229749806a66590c2245ca9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef5eb64f_c09c1e4b",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
         "patchSetId": 2
