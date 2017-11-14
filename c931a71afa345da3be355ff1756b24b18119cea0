@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f7a1d42_47df9189",
+        "filename": "chrome/browser/ui/views/chrome_views_delegate_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-14T02:28:40Z",
+      "side": 1,
+      "message": "What is the actual requirement here? Whatever version of Unity Ubuntu 16.04 ships with?",
+      "revId": "c931a71afa345da3be355ff1756b24b18119cea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7cad11_cdb22158",
+        "filename": "chrome/installer/linux/rpm/additional_deps",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-14T02:28:40Z",
+      "side": 1,
+      "message": "https://bugs.chromium.org/p/chromium/issues/detail?id\u003d750947#c3 says this is being worked on upstream in RHEL. So it could just depend on a RHEL 7 update, and it\u0027s not really related to Jessie / Trusty deprecation.",
+      "revId": "c931a71afa345da3be355ff1756b24b18119cea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
