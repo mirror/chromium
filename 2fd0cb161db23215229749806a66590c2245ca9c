@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "81bc5015_f01531bb",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-14T01:53:36Z",
+      "side": 1,
+      "message": "Are you able to see the opacity transitioning? I would expect that without the following line there would be no transition happening:\ntransition: opacity 200ms;\n\nCan you verify by setting the animation/transitions to 10% in the DevTools?\n\nSee, https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/cr_toolbar/cr_toolbar_search_field.html?l\u003d56-58",
+      "revId": "2fd0cb161db23215229749806a66590c2245ca9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef5eb64f_c09c1e4b",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
         "patchSetId": 2
@@ -34,6 +51,24 @@
       "revId": "2fd0cb161db23215229749806a66590c2245ca9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f20eb0_da60b8c5",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-14T01:53:36Z",
+      "side": 1,
+      "message": "Ok. If paper-spinner-lite is a drop-in replacement of paper-spinner, perhaps we should file a bug to convert all instances in Settings (and eventually remove paper-spinner from our third_party).",
+      "parentUuid": "ccd93761_20ebc5ff",
+      "revId": "2fd0cb161db23215229749806a66590c2245ca9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
