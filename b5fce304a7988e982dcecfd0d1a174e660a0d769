@@ -142,6 +142,30 @@
       "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33db487b_7365fd43",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-14T23:20:12Z",
+      "side": 1,
+      "message": "Exactly, canvas rasterization uses GrContext (for now, OOP canvas raster will change this. yay!).\nFor maintainability, the call to resetContext should be moved.  Better to put it right next to the GL calls that are changing the state.",
+      "parentUuid": "84752cc4_d0600a36",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 51
+      },
+      "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
