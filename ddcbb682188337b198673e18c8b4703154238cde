@@ -22,6 +22,30 @@
       "revId": "ddcbb682188337b198673e18c8b4703154238cde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4942cda0_4ba22039",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-14T19:30:49Z",
+      "side": 0,
+      "message": "isIconShowing is not defined as an @property and the value of isIconShowing_ is not used anywhere that I can see? In other words it appears to be dead code, but if you see a spot where this ivar is used it should of course not be deleted.",
+      "parentUuid": "cc97fc0a_df937621",
+      "range": {
+        "startLine": 521,
+        "startChar": 5,
+        "endLine": 521,
+        "endChar": 54
+      },
+      "revId": "ddcbb682188337b198673e18c8b4703154238cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
