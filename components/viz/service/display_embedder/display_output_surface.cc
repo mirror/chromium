@@ -19,6 +19,13 @@
 
 namespace viz {
 
+namespace {
+// We only expect a couple swap acks outstanding, but there are cases where
+// we will get timestamps for swaps from several frames ago when using
+// platform extensions like eglGetFrameTimestampsANDROID.
+constexpr size_t kMaxSwapLatencyInfosToTrack = 10;
+}  // namespace
+
 DisplayOutputSurface::DisplayOutputSurface(
     scoped_refptr<InProcessContextProvider> context_provider,
     SyntheticBeginFrameSource* synthetic_begin_frame_source)
@@ -82,8 +89,13 @@ void DisplayOutputSurface::Reshape(const gfx::Size& size,
 void DisplayOutputSurface::SwapBuffers(OutputSurfaceFrame frame) {
   DCHECK(context_provider_);
 
-  if (frame.latency_info.size() > 0)
-    context_provider_->ContextSupport()->AddLatencyInfo(frame.latency_info);
+  for (auto& latency : frame.latency_info) {
+    if (latency.FindLatency(ui::BROWSER_SNAPSHOT_FRAME_NUMBER_COMPONENT,
+                            nullptr)) {
+      context_provider_->ContextSupport()->SetSnapshotRequested();
+      break;
+    }
+  }
 
   set_draw_rectangle_for_frame_ = false;
   if (frame.sub_buffer_rect) {
@@ -92,6 +104,12 @@ void DisplayOutputSurface::SwapBuffers(OutputSurfaceFrame frame) {
   } else {
     context_provider_->ContextSupport()->Swap();
   }
+
+  // Don't grow unbounded in case of error.
+  while (swap_latency_infos_.size() >= kMaxSwapLatencyInfosToTrack) {
+    swap_latency_infos_.pop_front();
+  }
+  swap_latency_infos_.emplace_back(swap_id_++, std::move(frame.latency_info));
 }
 
 uint32_t DisplayOutputSurface::GetFramebufferCopyTextureFormat() {
@@ -133,14 +151,27 @@ void DisplayOutputSurface::DidReceiveSwapBuffersAck(gfx::SwapResult result) {
 }
 
 void DisplayOutputSurface::OnGpuSwapBuffersCompleted(
-    const std::vector<ui::LatencyInfo>& latency_info,
-    gfx::SwapResult result,
+    const gfx::SwapResponse& response,
     const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac) {
-  for (const auto& latency : latency_info) {
-    if (latency.latency_components().size() > 0)
+  auto it = std::find_if(swap_latency_infos_.begin(), swap_latency_infos_.end(),
+                         [&](const SwapLatencyInfo& sli) {
+                           return sli.swap_id == response.swap_id;
+                         });
+
+  if (it != swap_latency_infos_.end()) {
+    for (auto& latency : it->latency_info) {
+      latency.AddLatencyNumberWithTimestamp(
+          ui::INPUT_EVENT_GPU_SWAP_BUFFER_COMPONENT, 0, 0, response.swap_start,
+          1);
+      latency.AddLatencyNumberWithTimestamp(
+          ui::INPUT_EVENT_LATENCY_TERMINATED_FRAME_SWAP_COMPONENT, 0, 0,
+          response.swap_end, 1);
       latency_tracker_.OnGpuSwapBuffersCompleted(latency);
+    }
+    swap_latency_infos_.erase(it);
   }
-  DidReceiveSwapBuffersAck(result);
+
+  DidReceiveSwapBuffersAck(response.result);
 }
 
 void DisplayOutputSurface::OnVSyncParametersUpdated(base::TimeTicks timebase,
