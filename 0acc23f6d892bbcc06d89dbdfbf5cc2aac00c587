@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1928edb0_806fd398",
+        "filename": "device/u2f/u2f_ble_frames.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-14T14:34:32Z",
+      "side": 1,
+      "message": "While this cast should never really have an effect (see the DCHECK above), it is necessary to fix the fuzzer error in the linked bug. Do you think it makes sense to simply silently ignore the high bits here?",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 73
+      },
+      "revId": "0acc23f6d892bbcc06d89dbdfbf5cc2aac00c587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "350f2941_160a182e",
+        "filename": "device/u2f/u2f_ble_frames.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-14T14:34:32Z",
+      "side": 1,
+      "message": "I changed this to a base::span in order to reduce to the amount of index computations and increase robustness. Also this arguably makes the API easier to use.",
+      "range": {
+        "startLine": 105,
+        "startChar": 31,
+        "endLine": 105,
+        "endChar": 56
+      },
+      "revId": "0acc23f6d892bbcc06d89dbdfbf5cc2aac00c587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

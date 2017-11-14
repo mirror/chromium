@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66be1b9a_48e34736",
+        "filename": "device/u2f/u2f_ble_frames.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-14T14:34:32Z",
+      "side": 0,
+      "message": "Relying on capacity here was not a good idea, as it is not guaranteed that reserve(n) results in a capacity of n. It only is guaranteed that capacity will be at least n, implementations are allowed to e.g. round up to the nearest power of 2.",
+      "range": {
+        "startLine": 140,
+        "startChar": 33,
+        "endLine": 140,
+        "endChar": 57
+      },
+      "revId": "bc6fe9d09c5c3286c8397ff3841a4aa994986739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
