@@ -16,6 +16,24 @@
       "revId": "5146ac22816ae2c5541071e7f548bbca6bf9edfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c22adf_56495e21",
+        "filename": "chromeos/dbus/modem_messaging_client_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T05:02:43Z",
+      "side": 1,
+      "message": "Yes, it will soon switch to BindOnce.",
+      "parentUuid": "c037448f_901c0823",
+      "revId": "5146ac22816ae2c5541071e7f548bbca6bf9edfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
