@@ -32,9 +32,13 @@ aura::Window* GetPrimaryRoot() {
 
 WMHelper::WMHelper()
     : vsync_manager_(
-          GetPrimaryRoot()->layer()->GetCompositor()->vsync_manager()) {}
+          GetPrimaryRoot()->layer()->GetCompositor()->vsync_manager()) {
+  aura::client::GetFocusClient(GetPrimaryRoot())->AddObserver(this);
+}
 
-WMHelper::~WMHelper() {}
+WMHelper::~WMHelper() {
+  aura::client::GetFocusClient(GetPrimaryRoot())->RemoveObserver(this);
+}
 
 // static
 void WMHelper::SetInstance(WMHelper* helper) {
@@ -62,13 +66,23 @@ void WMHelper::RemoveActivationObserver(
   ash::Shell::Get()->activation_client()->RemoveObserver(observer);
 }
 
+void WMHelper::AddPreFocusObserver(
+    aura::client::FocusChangeObserver* observer) {
+  pre_focus_change_observers_.AddObserver(observer);
+}
+
+void WMHelper::RemovePreFocusObserver(
+    aura::client::FocusChangeObserver* observer) {
+  pre_focus_change_observers_.RemoveObserver(observer);
+}
+
 void WMHelper::AddFocusObserver(aura::client::FocusChangeObserver* observer) {
-  aura::client::GetFocusClient(GetPrimaryRoot())->AddObserver(observer);
+  focus_change_observers_.AddObserver(observer);
 }
 
 void WMHelper::RemoveFocusObserver(
     aura::client::FocusChangeObserver* observer) {
-  aura::client::GetFocusClient(GetPrimaryRoot())->RemoveObserver(observer);
+  focus_change_observers_.RemoveObserver(observer);
 }
 
 void WMHelper::AddCursorObserver(aura::client::CursorClientObserver* observer) {
@@ -160,6 +174,16 @@ int WMHelper::OnPerformDrop(const ui::DropTargetEvent& event) {
   // TODO(hirono): Return the correct result instead of always returning
   // DRAG_MOVE.
   return ui::DragDropTypes::DRAG_MOVE;
+}
+
+void WMHelper::OnWindowFocused(aura::Window* gained_focus,
+                               aura::Window* lost_focus) {
+  for (auto& observer : pre_focus_change_observers_) {
+    observer.OnWindowFocused(gained_focus, lost_focus);
+  }
+  for (auto& observer : focus_change_observers_) {
+    observer.OnWindowFocused(gained_focus, lost_focus);
+  }
 }
 
 const display::ManagedDisplayInfo& WMHelper::GetDisplayInfo(
