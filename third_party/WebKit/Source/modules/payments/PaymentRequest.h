@@ -25,6 +25,8 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/modules/payments/payment_request.mojom-blink.h"
 
+#include "components/payments/mojom/payment_request_data.mojom-blink.h"
+
 namespace blink {
 
 class ExceptionState;
