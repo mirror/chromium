@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a7bde_22d46b1b",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/option-text-setter.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-14T12:23:46Z",
+      "side": 1,
+      "message": "Can you move this into web-platform-tests? As html/semantics/forms/the-option-element/option-text-setter.html seems like a good place.",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 16
+      },
+      "revId": "d4cf72fc4828ac5f304512c186af6b60f001f4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ecfa8f_52bfc4bd",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/option-text-setter.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-14T12:23:46Z",
+      "side": 1,
+      "message": "I think what follows (with added asserts) will be easier to read if you have a `var option \u003d document.getElementById(\u0027sel\u0027).options[0]` first. (Or just use document.querySelector(\u0027option\u0027) and remove the id.)",
+      "range": {
+        "startLine": 11,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "d4cf72fc4828ac5f304512c186af6b60f001f4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22d491df_c17b1710",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/option-text-setter.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-14T12:23:46Z",
+      "side": 1,
+      "message": "For completeness, also verify that the new text node has \u0027baz\u0027 as its value and assert_equals(option.text, \u0027baz\u0027)?\n\nAlso, to cover the \"If the given value is not the empty string\" bit in https://dom.spec.whatwg.org/#dom-node-textcontent, assert that after setting to the empty string, there are no child nodes, as opposed to an empty text node?",
+      "range": {
+        "startLine": 17,
+        "startChar": 17,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "d4cf72fc4828ac5f304512c186af6b60f001f4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
