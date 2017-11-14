@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "df6aa200_742e9ed7",
+        "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithThread.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-14T04:24:20Z",
+      "side": 1,
+      "message": "AFAIK, the grand plan of the platform unit test is to run each module tests without Platform implementation, and use a specific TestingPlatformSupport that support limited functionalities if something are needed. So, I feel it would be better not to have this by default. But threading maybe a very basic function that we want to have it by defualt.",
+      "parentUuid": "a330a127_9c4fa3ab",
+      "revId": "ca482420bf996d5c01db03327aa4eaebcc8022ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37dcd78c_7b45a895",
         "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithThread.h",
         "patchSetId": 3
@@ -73,6 +91,24 @@
       "revId": "ca482420bf996d5c01db03327aa4eaebcc8022ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa119719_679b54a9",
+        "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithThread.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-14T04:24:20Z",
+      "side": 1,
+      "message": "This works only for threads that were created via Platform::CreateThread after instantiating this class. Since the main thread is not managed by this class, this class just asks the original Platform impl to return the WebThread instance for the main thread. If the original platform does not support it, it just won\u0027t work.\n\nIf user want to make this work even for the main thread, following code would work.\n\nScopedTestingPlatform\u003cTestingPlatformSupportWithMockScheduler\u003e platform_with_scheduler;\nScopedTestingPlatform\u003cTestingfPlatformSupportWithThread\u003e plateform_with_thread;\n\nPlatform::Current()-\u003eCurrentThread();  // TestingPlatformSupportWithThread::CurrentThread() --\u003e TestingPlatformSupportWithMockScheduler::CurrentThread() --\u003e threads_.get() [|threads_| was created via scheduler_-\u003eCreateMainThread()]",
+      "parentUuid": "37dcd78c_7b45a895",
+      "revId": "ca482420bf996d5c01db03327aa4eaebcc8022ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
