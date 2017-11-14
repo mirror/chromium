@@ -259,12 +259,7 @@ enum SnapAxis {
 
 enum class SnapStrictness { kProximity, kMandatory };
 
-enum SnapAlignment {
-  kSnapAlignmentNone,
-  kSnapAlignmentStart,
-  kSnapAlignmentEnd,
-  kSnapAlignmentCenter
-};
+enum class SnapAlignment : unsigned { kNone, kStart, kEnd, kCenter };
 
 enum TextEmphasisPosition {
   kOverRight,
