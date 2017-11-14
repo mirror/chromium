@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb34845c_035c3512",
+        "filename": "chrome/browser/ui/extensions/extension_enable_flow.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-14T02:24:41Z",
+      "side": 1,
+      "message": "nit: does !extension not compile?",
+      "range": {
+        "startLine": 92,
+        "startChar": 6,
+        "endLine": 92,
+        "endChar": 15
+      },
+      "revId": "c207ed63f09683ff1fd4fc8e9a440c083c3988a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
