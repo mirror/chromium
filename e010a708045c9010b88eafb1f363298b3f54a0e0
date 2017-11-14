@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f0a127f_6d892efd",
+        "filename": "content/test/mock_widget_input_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-14T00:49:35Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 167,
+        "endChar": 26
+      },
+      "revId": "e010a708045c9010b88eafb1f363298b3f54a0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
