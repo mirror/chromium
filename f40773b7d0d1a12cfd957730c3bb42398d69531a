@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "80a11ddd_1e46ebc5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/media-capabilities/decodingInfo.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-14T22:01:09Z",
+      "side": 1,
+      "message": "Hmm don\u0027t remember what exactly prevented us from moving\nencodingInfo.html layout test to wpt- maybe other browsers\nwould fail 100% of those cases? But that shouldn\u0027t prevent\nupstreaming them. IOW no blocking from my side now :-)",
+      "parentUuid": "1073ca43_52af2b29",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 11
+      },
+      "revId": "f40773b7d0d1a12cfd957730c3bb42398d69531a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5afd26fb_845f846d",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/media-capabilities/decodingInfo.html",
         "patchSetId": 2
