@@ -42,9 +42,11 @@ class KeywordExtensionsDelegate {
                      const TemplateURL* template_url,
                      const base::string16& remaining_input);
 
-  // Tells the extension with |extension_id| that the user typed the omnibox
-  // keyword.
-  virtual void EnterExtensionKeywordMode(const std::string& extension_id);
+  // Called when the user enters keyword mode for an extension keyword.
+  virtual void OnKeywordEntered(const TemplateURL* template_url);
+
+  // Called when the user enters input after keyword mode has begun.
+  virtual void OnInputStarted(const std::string& extension_id);
 
   // If an extension previously entered extension keyword mode, exits extension
   // keyword mode. This happens when the user has cleared the keyword or closed

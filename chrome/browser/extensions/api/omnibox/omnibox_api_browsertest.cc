@@ -26,7 +26,7 @@ using metrics::OmniboxEventProto;
 
 // http://crbug.com/167158
 IN_PROC_BROWSER_TEST_F(OmniboxApiTest, DISABLED_Basic) {
-  ASSERT_TRUE(RunExtensionTest("omnibox")) << message_;
+  ASSERT_TRUE(RunExtensionTest("omnibox/basic")) << message_;
 
   // The results depend on the TemplateURLService being loaded. Make sure it is
   // loaded so that the autocomplete results are consistent.
@@ -158,7 +158,7 @@ IN_PROC_BROWSER_TEST_F(OmniboxApiTest, DISABLED_Basic) {
 }
 
 IN_PROC_BROWSER_TEST_F(OmniboxApiTest, OnInputEntered) {
-  ASSERT_TRUE(RunExtensionTest("omnibox")) << message_;
+  ASSERT_TRUE(RunExtensionTest("omnibox/basic")) << message_;
   Profile* profile = browser()->profile();
   search_test_utils::WaitForTemplateURLServiceToLoad(
       TemplateURLServiceFactory::GetForProfile(profile));
@@ -211,7 +211,7 @@ IN_PROC_BROWSER_TEST_F(OmniboxApiTest, DISABLED_IncognitoSplitMode) {
   ResultCatcher catcher_incognito;
   catcher_incognito.RestrictToBrowserContext(profile->GetOffTheRecordProfile());
 
-  ASSERT_TRUE(RunExtensionTestIncognito("omnibox")) << message_;
+  ASSERT_TRUE(RunExtensionTestIncognito("omnibox/basic")) << message_;
 
   // Open an incognito window and wait for the incognito extension process to
   // respond.
