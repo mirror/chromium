@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "879feb36_9c6e8b2d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/persistence/ensure-filesystem-create-files-doesnt-emit-change-first.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-14T02:11:27Z",
+      "side": 1,
+      "message": "afaiu this is not needed?",
+      "revId": "32b3502938b8757f91aec445498d0d37f71eabcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
