@@ -24,8 +24,7 @@ PresentationUrlType GetPresentationUrlType(const GURL& url) {
     return PresentationUrlType::kCastDial;
   if (url.SchemeIs(kRemotePlaybackPresentationUrlScheme))
     return PresentationUrlType::kRemotePlayback;
-  if (base::StartsWith(url.spec(), kLegacyCastPresentationUrlPrefix,
-                       base::CompareCase::INSENSITIVE_ASCII))
+  if (IsLegacyCastPresentationUrl(url))
     return PresentationUrlType::kCastLegacy;
   if (url.SchemeIs(url::kHttpsScheme))
     return PresentationUrlType::kHttps;

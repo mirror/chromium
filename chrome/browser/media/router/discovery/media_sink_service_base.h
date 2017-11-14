@@ -8,6 +8,7 @@
 #include <memory>
 #include <set>
 
+#include "base/containers/flat_map.h"
 #include "base/gtest_prod_util.h"
 #include "base/timer/timer.h"
 #include "chrome/common/media_router/discovery/media_sink_internal.h"
@@ -46,7 +47,7 @@ class MediaSinkServiceBase : public MediaSinkService {
   int fetch_complete_timeout_secs_;
 
   // Sorted sinks from current round of discovery.
-  std::set<MediaSinkInternal> current_sinks_;
+  base::flat_map<MediaSink::Id, MediaSinkInternal> current_sinks_;
 
  private:
   friend class MediaSinkServiceBaseTest;
@@ -54,7 +55,7 @@ class MediaSinkServiceBase : public MediaSinkService {
                            TestFetchCompleted_SameSink);
 
   // Sorted sinks sent to Media Router Provider in last FetchCompleted().
-  std::set<MediaSinkInternal> mrp_sinks_;
+  base::flat_map<MediaSink::Id, MediaSinkInternal> mrp_sinks_;
 
   // Timer for finishing fetching.
   std::unique_ptr<base::Timer> finish_timer_;

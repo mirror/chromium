@@ -8,13 +8,17 @@
 #include <memory>
 #include <vector>
 
+#include "base/containers/flat_map.h"
+#include "base/containers/flat_set.h"
 #include "base/gtest_prod_util.h"
 #include "base/memory/ref_counted.h"
+#include "chrome/browser/media/router/cast/parsed_media_source.h"
 #include "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h"
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_delegate.h"
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_registry.h"
 #include "chrome/common/media_router/discovery/media_sink_internal.h"
 #include "chrome/common/media_router/discovery/media_sink_service.h"
+#include "chrome/common/media_router/media_source.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace content {
@@ -55,6 +59,8 @@ class CastMediaSinkService
   void Stop() override;
   void ForceSinkDiscoveryCallback() override;
   void OnUserGesture() override;
+  void RegisterMediaSinksObserver(MediaSinksObserver* observer) override;
+  void UnregisterMediaSinksObserver(MediaSinksObserver* observer) override;
 
   void SetDnsSdRegistryForTest(DnsSdRegistry* registry);
 
@@ -98,6 +104,33 @@ class CastMediaSinkService
 
   content::BrowserContext* browser_context_;
 
+  // For sink queries.
+  struct MediaSinksObserverEntry {
+    MediaSinksObserverEntry(MediaSinksObserver* observer,
+                            ParsedMediaSource parsed_source);
+    ~MediaSinksObserverEntry();
+
+    MediaSinksObserver* observer;
+    ParsedMediaSource parsed_source;
+  };
+
+  void AddSinkForApp(const MediaSink& sink, CastAppId app_id);
+  void RemoveSinkForApp(const MediaSink& sink, CastAppId app_id);
+  void OnSinkAppAvailabilityUpdatedOnIOThread(const MediaSink& sink,
+                                              CastAppId app_id,
+                                              bool available);
+  void OnSinkAppAvailabilityUpdated(const MediaSink& sink,
+                                    CastAppId app_id,
+                                    bool available);
+  void NotifyOfExistingSinksIfRegistered(const MediaSource::Id& source_id,
+                                         MediaSinksObserver* observer);
+  std::vector<MediaSink> GetSinksForSource(
+      const std::vector<CastAppInfo>& app_infos);
+
+  base::flat_map<MediaSource::Id, MediaSinksObserverEntry> sinks_observers_;
+  base::flat_map<CastAppId, int> observer_count_by_app_id_;
+  base::flat_map<CastAppId, base::flat_map<MediaSink::Id, MediaSink>>
+      available_sinks_by_app_id_;
   DISALLOW_COPY_AND_ASSIGN(CastMediaSinkService);
 };
 

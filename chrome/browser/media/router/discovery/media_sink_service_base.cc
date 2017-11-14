@@ -61,8 +61,12 @@ void MediaSinkServiceBase::RestartTimer() {
 
 void MediaSinkServiceBase::ForceSinkDiscoveryCallback() {
   DVLOG(2) << "Send sinks to media router, [size]: " << current_sinks_.size();
-  sink_discovery_callback_.Run(std::vector<MediaSinkInternal>(
-      current_sinks_.begin(), current_sinks_.end()));
+  std::vector<MediaSinkInternal> sink_vector;
+  sink_vector.reserve(current_sinks_.size());
+  for (const auto& id_and_sink : current_sinks_)
+    sink_vector.push_back(id_and_sink.second);
+
+  sink_discovery_callback_.Run(std::move(sink_vector));
   mrp_sinks_ = current_sinks_;
 }
 

@@ -95,6 +95,11 @@ const CastSinkExtraData& MediaSinkInternal::cast_data() const {
   return cast_data_;
 }
 
+CastSinkExtraData& MediaSinkInternal::cast_data() {
+  DCHECK(is_cast_sink());
+  return cast_data_;
+}
+
 // static
 bool MediaSinkInternal::IsValidSinkId(const std::string& sink_id) {
   if (sink_id.empty() || !base::IsStringASCII(sink_id)) {
@@ -154,7 +159,8 @@ bool CastSinkExtraData::operator==(const CastSinkExtraData& other) const {
   return ip_endpoint == other.ip_endpoint && model_name == other.model_name &&
          capabilities == other.capabilities &&
          cast_channel_id == other.cast_channel_id &&
-         discovered_by_dial == other.discovered_by_dial;
+         discovered_by_dial == other.discovered_by_dial &&
+         app_availabilities == other.app_availabilities;
 }
 
 }  // namespace media_router
