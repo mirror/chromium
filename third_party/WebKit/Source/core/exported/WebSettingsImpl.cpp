@@ -33,6 +33,7 @@
 #include "core/frame/Settings.h"
 #include "core/inspector/DevToolsEmulator.h"
 #include "platform/graphics/DeferredImageDecoder.h"
+#include "platform/testing/UseMockScrollbarSettings.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 
@@ -481,11 +482,11 @@ void WebSettingsImpl::SetAcceleratedCompositingEnabled(bool enabled) {
 }
 
 void WebSettingsImpl::SetMockScrollbarsEnabled(bool enabled) {
-  settings_->SetMockScrollbarsEnabled(enabled);
+  UseMockScrollbarSettings::set_mock_scrollbars_enabled(enabled);
 }
 
 void WebSettingsImpl::SetHideScrollbars(bool enabled) {
-  settings_->SetHideScrollbars(enabled);
+  UseMockScrollbarSettings::set_mock_scrollbars_enabled(enabled);
 }
 
 void WebSettingsImpl::SetMockGestureTapHighlightsEnabled(bool enabled) {

@@ -54,7 +54,7 @@ class PrePaintTreeWalkTest : public PaintControllerPaintTest {
 
  private:
   void SetUp() override {
-    Settings::SetMockScrollbarsEnabled(true);
+    UseMockScrollbarSettings::set_mock_scrollbars_enabled(true);
 
     RenderingTest::SetUp();
     EnableCompositing();
@@ -63,7 +63,7 @@ class PrePaintTreeWalkTest : public PaintControllerPaintTest {
   void TearDown() override {
     RenderingTest::TearDown();
 
-    Settings::SetMockScrollbarsEnabled(false);
+    UseMockScrollbarSettings::set_mock_scrollbars_enabled(false);
   }
 };
 
