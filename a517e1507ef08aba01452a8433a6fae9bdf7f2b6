@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e45bc1ea_1e45180c",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-14T15:15:55Z",
+      "side": 1,
+      "message": "Do I need to do something now for this ?",
+      "parentUuid": "30aa1fee_bd63add3",
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42ab48e0_0d423609",
         "filename": "components/arc/usb/usb_host_bridge.cc",
         "patchSetId": 10
@@ -51,6 +69,24 @@
       "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c92238ff_10c1c682",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-14T15:15:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42ab48e0_0d423609",
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +113,30 @@
     },
     {
       "key": {
+        "uuid": "6a65345e_f826d1fc",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-14T15:15:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4bcbb98_611e0cc1",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 24
+      },
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f92e3eb_42974364",
         "filename": "components/arc/usb/usb_host_bridge.cc",
         "patchSetId": 10
@@ -97,6 +157,30 @@
       "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd864c3e_fb7a570c",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-14T15:15:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f92e3eb_42974364",
+      "range": {
+        "startLine": 75,
+        "startChar": 10,
+        "endLine": 75,
+        "endChar": 22
+      },
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +207,30 @@
     },
     {
       "key": {
+        "uuid": "5c5b40d6_416354e1",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-14T15:15:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0246fc6b_19a2535c",
+      "range": {
+        "startLine": 112,
+        "startChar": 1,
+        "endLine": 112,
+        "endChar": 56
+      },
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca350ef9_83cca6f0",
         "filename": "components/arc/usb/usb_host_bridge.cc",
         "patchSetId": 10
@@ -134,6 +242,24 @@
       "writtenOn": "2017-11-10T17:27:05Z",
       "side": 1,
       "message": "Can you file a bug about this?",
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1036b95b_98f00d15",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-14T15:15:55Z",
+      "side": 1,
+      "message": "I have filed b/69295049\nand put it in the comment above.",
+      "parentUuid": "ca350ef9_83cca6f0",
       "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -157,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "99b7d376_faa5cce8",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-14T15:15:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1626a827_ab996594",
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d14fd6fe_ab44cd48",
         "filename": "components/arc/usb/usb_host_bridge.h",
         "patchSetId": 10
@@ -177,6 +321,30 @@
       "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141b02fe_d0d3c5f2",
+        "filename": "components/arc/usb/usb_host_bridge.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-14T15:15:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d14fd6fe_ab44cd48",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 34
+      },
+      "revId": "a517e1507ef08aba01452a8433a6fae9bdf7f2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
