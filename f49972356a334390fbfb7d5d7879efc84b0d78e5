@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76ae54d8_1535a5b9",
+        "filename": "chrome/browser/active_use_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-14T19:10:05Z",
+      "side": 1,
+      "message": "First time reading this, I had a bit of trouble understanding what return result maps to \"shouldn\u0027t do anything\". Then I saw the OrdinaryCommand test above and it all made sense. Can you change the comment to end with \"... do anything, just like the OrdinaryCommand case.\"",
+      "range": {
+        "startLine": 22,
+        "startChar": 32,
+        "endLine": 22,
+        "endChar": 53
+      },
+      "revId": "f49972356a334390fbfb7d5d7879efc84b0d78e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bb0713_6407cf7d",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-14T19:10:05Z",
+      "side": 1,
+      "message": "Side question, why do we use CommandLine::ForCurrentProcess() here and |command_line_| on line 344 below?",
+      "revId": "f49972356a334390fbfb7d5d7879efc84b0d78e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
