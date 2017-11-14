@@ -1,0 +1,324 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da8fb367_2f9a7a24",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "what is the significance of is_pending() here?",
+      "range": {
+        "startLine": 228,
+        "startChar": 60,
+        "endLine": 228,
+        "endChar": 69
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50cdec13_574ecd14",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "Can you speak more to the goals of this command line processing? For Chrome there are a zillion other flags that control the proxy configuration beyond --proxy-server:\n  --proxy-auto-detect\n  --proxy-bypass-list\n  --proxy-pac-url\n  --winhttp-proxy-resolver\n  --no-proxy-server\n  --unsafe-pac-url",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f74d90_80dd7f78",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "This is odd that MakeURLRequestContext() would be modifying |network_context_params|. Can this be moved to the caller and only set the builder in her?",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1445bab4_3da5ac2b",
+        "filename": "content/network/network_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "that",
+      "range": {
+        "startLine": 541,
+        "startChar": 74,
+        "endLine": 541,
+        "endChar": 78
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e445911c_7286e81c",
+        "filename": "content/network/network_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "require",
+      "range": {
+        "startLine": 542,
+        "startChar": 70,
+        "endLine": 542,
+        "endChar": 78
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b3a975_86288b0f",
+        "filename": "content/network/network_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "PAC script",
+      "range": {
+        "startLine": 543,
+        "startChar": 16,
+        "endLine": 543,
+        "endChar": 19
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c78bf8_8605c05b",
+        "filename": "content/network/network_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "request",
+      "range": {
+        "startLine": 619,
+        "startChar": 49,
+        "endLine": 619,
+        "endChar": 58
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3489469a_bfdc069f",
+        "filename": "content/network/proxy_config_service_mojo.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "of activity",
+      "range": {
+        "startLine": 62,
+        "startChar": 31,
+        "endLine": 62,
+        "endChar": 41
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54cea81_4ebf8a98",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "Can we just use DIRECT in this case?",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 71
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9687eb0f_f287cb8f",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "Practically speaking the Windows implementation is not amenable to notifications and will require polling to detect changes.\n\nThe other option is to poll continuously irrespective of network activity (which means burning additional resources while idle, which perhaps is acceptable?). Using a different means of activity is fine, it doesn\u0027t have to be tied to use of the ProxyService specifically.",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4dcef1_516b36b5",
+        "filename": "content/public/common/proxy_config.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "Why use the string form?",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1cc655_928e7d46",
+        "filename": "content/public/common/proxy_config.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "Why use the string representation rather than an array\u003c\u003e ?",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b22443d_4230465c",
+        "filename": "content/public/common/proxy_config.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "ProxyConfig is a poor historical abstraction. It would be more aptly named SystemProxySettings, since it tries to represent the intersection of how platforms define their proxy settings, and intermixes assumptions about prioritization and fallback ordering.\n\nIf this gets exposed to Mojo as is, how hard will it be to change later?",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35292d2_d6f560a5",
+        "filename": "content/public/common/proxy_config.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "We should get rid of |id| both here, and in the underlying ProxyConfig. It is a historical wart and already a bad thing, which becomes more confusing now with the split.",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 10
+      },
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71aa1247_a8a0caf5",
+        "filename": "content/public/common/proxy_config_traits.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "Is there any expectation of stability in the serialized format?\nHopefully not, or I will have more comments on this.\n\nWould we ever have the proxy config mojo service running different code than the proxy service consuming it?",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f35e471_62ae2c7c",
+        "filename": "content/public/common/proxy_config_traits.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-14T22:21:16Z",
+      "side": 1,
+      "message": "optional nit: reverse this and do:\n  return A \u0026\u0026 B \u0026\u0026 C \u0026\u0026 .... ;",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
