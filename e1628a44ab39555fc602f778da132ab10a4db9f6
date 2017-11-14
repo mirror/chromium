@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d0da358_6cac861a",
+        "filename": "chrome/browser/extensions/dev_mode_bubble_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T21:45:13Z",
+      "side": 1,
+      "message": "Let\u0027s give this a default definition of an empty body in parent class.",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0aad2a4_c7fd58b3",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T21:45:13Z",
+      "side": 1,
+      "message": "We should check this first, so that Delegate::ShouldShow() doesn\u0027t have to deal with an empty extension set.  (I think this is causing a bunch of tests to fail, too?)",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c96284a_6c43090b",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T21:45:13Z",
+      "side": 1,
+      "message": "Why is this change needed?",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e78910d_659cb205",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T21:45:13Z",
+      "side": 1,
+      "message": "here, too, why needed?  (These don\u0027t seem wrong, per se, but I\u0027m curious as to the motivation - especially since can have implications for other cleanup in the destructor)",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e65174e_f6d4440c",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T21:45:13Z",
+      "side": 1,
+      "message": "nit: add \"Called if and only if there is at least one extension in |extensions|.",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8050ae36_70e4e650",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T21:45:13Z",
+      "side": 1,
+      "message": "We should probably add something like \"so that the bubble can do any additional cleanup. The action, if any, will be handled separately (through e.g. AcknowledgeExtension()).",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc2fe69_cbd751b9",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T21:45:13Z",
+      "side": 1,
+      "message": "This is a bit strange.  Prefer:\nEXPECT_EQ(extension_name, base::UTF8ToUTF16(override_extensions[0]));",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d81a052_63b4f72a",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T21:45:13Z",
+      "side": 1,
+      "message": "nullptr in new code",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f527ee_a4f51053",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1376,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T21:45:13Z",
+      "side": 1,
+      "message": "why this change?",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081570ae_227466a7",
+        "filename": "chrome/browser/extensions/proxy_overridden_bubble_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T21:45:13Z",
+      "side": 1,
+      "message": "Might be worth a comment why we do this?",
+      "revId": "e1628a44ab39555fc602f778da132ab10a4db9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
