@@ -59,6 +59,12 @@ class CocoaTest : public PlatformTest {
   CocoaTest();
   ~CocoaTest() override;
 
+  // Must be called by subclasses that override SetUp. SetUp stores a list of
+  // currently-open windows for comparison at TearDown, to confirm the test has
+  // closed all windows it opened. Also disables window resize and other
+  // animations that would slow test execution.
+  void SetUp() override;
+
   // Must be called by subclasses that override TearDown. We verify that it
   // is called in our destructor. Takes care of making sure that all windows
   // are closed off correctly. If your tests open windows, they must be sure
@@ -72,11 +78,6 @@ class CocoaTest : public PlatformTest {
   // in CocoaTest::TearDown. Note that it is a CocoaTestHelperWindow which
   // has special handling for being Key.
   CocoaTestHelperWindow* test_window();
-
- protected:
-  // Allows subclasses to do initialization before calling through to the base
-  // class's initialization.
-  void Init();
 
  private:
   // Return a set of currently open windows. Avoiding NSArray so
