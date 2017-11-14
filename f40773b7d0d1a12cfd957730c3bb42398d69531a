@@ -70,6 +70,30 @@
       "revId": "f40773b7d0d1a12cfd957730c3bb42398d69531a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e9792d_7fc2e94f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/media-capabilities/decodingInfo.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-14T10:53:29Z",
+      "side": 1,
+      "message": "These tests are Web Platform Tests. I think mcasas@ had reasons to not have the encodingInfo.html as part of WPT. We could attempt to move encodingInfo.html to WPT.",
+      "parentUuid": "fad082f9_584646bd",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 11
+      },
+      "revId": "f40773b7d0d1a12cfd957730c3bb42398d69531a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
