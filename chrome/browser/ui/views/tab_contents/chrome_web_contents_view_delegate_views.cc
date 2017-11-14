@@ -34,7 +34,7 @@ ChromeWebContentsViewDelegateViews::~ChromeWebContentsViewDelegateViews() =
     default;
 
 gfx::NativeWindow ChromeWebContentsViewDelegateViews::GetNativeWindow() {
-  Browser* browser = chrome::FindBrowserWithWebContents(web_contents_);
+  Browser* browser = FindBrowserWithWebContents(web_contents_);
   return browser ? browser->window()->GetNativeWindow() : nullptr;
 }
 
