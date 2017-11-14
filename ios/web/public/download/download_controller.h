@@ -71,8 +71,7 @@ class WebState;
 //       info.totalBytes,
 //       info.MIMEType);
 //   );
-//   task->SetResponseWriter(GetURLFetcherFileWriter(info.fileName));
-//   task->Start();
+//   task->Start(GetURLFetcherFileWriter(info.fileName));
 // }
 // - (void)applicationWillTerminate:(UIApplication *)application {
 //   for (DownloadTask* task : self.downloadTasks) {
