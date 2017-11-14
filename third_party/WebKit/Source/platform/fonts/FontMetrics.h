@@ -25,9 +25,12 @@
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/MathExtras.h"
 
+#include <SkPaint.h>
+
 namespace blink {
 
 const unsigned kGDefaultUnitsPerEm = 1000;
+class FontPlatformData;
 
 class FontMetrics {
   DISALLOW_NEW();
@@ -154,6 +157,15 @@ class FontMetrics {
   void SetUnderlinePosition(float underline_position) {
     underline_position_ = underline_position;
   }
+
+  static void AscentDescentWithHacks(
+      float& ascent,
+      float& descent,
+      unsigned& visual_overflow_inflation_for_ascent,
+      unsigned& visual_overflow_inflation_for_descent,
+      const FontPlatformData&,
+      const SkPaint&,
+      bool subpixel_ascent_descent = false);
 
  private:
   friend class SimpleFontData;
