@@ -39,6 +39,13 @@
         "Version": {"type": "SZ", "data": "$MINI_INSTALLER_FILE_VERSION"}
       }
     },
+    "HKEY_LOCAL_MACHINE\\Software\\Classes\\CLSID\\$CHROME_TOAST_ACTIVATOR_KEY\\LocalServer32": {
+      "exists": "required",
+      "values": {
+        "type": "SZ",
+        "data": "$PROGRAM_FILES\\$CHROME_DIR\\Application\\chrome.exe"
+      }
+    },
     "HKEY_LOCAL_MACHINE\\Software\\Classes\\$CHROME_SHORT_NAME": {
       "exists": "forbidden"
     },
