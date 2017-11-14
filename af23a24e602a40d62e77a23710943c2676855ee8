@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd98dc4f_849ee349",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-14T18:44:59Z",
+      "side": 1,
+      "message": "nit: add a comment like: \"// Helps hide the header as needed when overview mode starts or ends.\"",
+      "revId": "af23a24e602a40d62e77a23710943c2676855ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

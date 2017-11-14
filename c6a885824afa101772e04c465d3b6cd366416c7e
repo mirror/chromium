@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d7bd7f63_b381f780",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-14T18:44:59Z",
+      "side": 1,
+      "message": "Yeah, I think it\u0027ll be treated as a normal browser window, but it\u0027s worth testing: (1) right click a V1 app (like Chrome Web Store) on the shelf or in the app list. (2) Make sure \"Open as window\" is *not* checked (3) Click the app shortcut to open (it should open in a tab in a normal tabbed browser window) (4) Test all the new code with that window, while the \u0027app\u0027 tab is active.",
+      "parentUuid": "eae81dec_d2c08623",
+      "revId": "c6a885824afa101772e04c465d3b6cd366416c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26460d72_3b54ee1f",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 7
