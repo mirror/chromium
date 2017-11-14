@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "97cf5f4f_a361a801",
+        "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-14T04:29:58Z",
+      "side": 1,
+      "message": "Even in the platform?\nI may be wrong, but ThreadSpecific does not have a public setter? Because of this, I decided to use base versions of TLS, and WaitableEvent in this class.",
+      "parentUuid": "009d00e6_ef36ed7e",
+      "revId": "ca482420bf996d5c01db03327aa4eaebcc8022ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a330a127_9c4fa3ab",
         "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupportWithThread.h",
         "patchSetId": 3
