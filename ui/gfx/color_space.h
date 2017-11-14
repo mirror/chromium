@@ -85,11 +85,7 @@ class COLOR_SPACE_EXPORT ColorSpace {
     LINEAR_HDR,
     // A parametric transfer function defined by |custom_transfer_params_|.
     CUSTOM,
-    // For color spaces defined by an ICC profile which cannot be represented
-    // parametrically. Any ColorTransform using this color space will use the
-    // ICC profile directly to compute a transform LUT.
-    ICC_BASED,
-    LAST = ICC_BASED,
+    LAST = CUSTOM,
   };
 
   enum class MatrixID : uint8_t {
@@ -169,9 +165,6 @@ class COLOR_SPACE_EXPORT ColorSpace {
   // Returns true if the encoded values can be outside of the 0.0-1.0 range.
   bool FullRangeEncodedValues() const;
 
-  // Returns true if this color space can be represented parametrically.
-  bool IsParametric() const;
-
   // Return a parametric approximation of this color space (if it is not already
   // parametric).
   ColorSpace GetParametricApproximation() const;
@@ -226,10 +219,11 @@ class COLOR_SPACE_EXPORT ColorSpace {
   // order.
   float custom_transfer_params_[7] = {0, 0, 0, 0, 0, 0, 0};
 
-  // This is used to look up the ICCProfile from which this ColorSpace was
-  // created, if possible.
+  // This is set if and only if this color space is to represent an ICC profile
+  // that cannot be represented with a custom primary matrix and transfer
+  // function. It can be used to look up the original ICCProfile to create a
+  // LUT based transform.
   uint64_t icc_profile_id_ = 0;
-  sk_sp<SkColorSpace> icc_profile_sk_color_space_;
 
   friend class ICCProfile;
   friend class ICCProfileCache;
