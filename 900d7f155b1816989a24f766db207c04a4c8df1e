@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "accdd002_dcd9bd56",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-14T18:51:40Z",
+      "side": 1,
+      "message": "I was wondering whether we still need this line, given that we\u0027ll call UpdateActiveSandboxFlags from OnDidSetFramePolicyHeaders right after for a navigation that sets sandbox flags.  \n\nI think we might still need it because of the no-redundant-IPC optimization, but I think we should change it to UpdateActiveSandboxFlags() so we can notify proxies if needed.\n\nHere\u0027s the case I\u0027m thinking of where this would matter:\n\n- \u003ciframe sandbox\u003dframeowner_flags\u003e has a document with csp_flags\n- we remove the sandbox attribute from the \u003ciframe\u003e element\n- we navigate the \u003ciframe\u003e to a document with no csp flags\n\nWhat will happen is:\n1. UpdateActiveSandboxFlags(None) from DidNavigate, setting active_sandbox_flags to frameowner_flags, and send that to proxies.\n2. CommitPendingFramePolicy(), which will update effective frame policy flags to None, and also update active_sandbox_flags to None on this line, but not send it to proxies.\n3.  We won\u0027t send DidSetFramePolicyHeaders because the new doc\u0027s flags are None, so we won\u0027t get another UpdateActiveSandboxFlags().\n\nDoing UpdateActiveSandboxFlags() in step 2 would correctly send the None flags update to proxies, and not doing it would leave them with the stale frameowner_flags.  Do you agree?",
+      "range": {
+        "startLine": 439,
+        "startChar": 0,
+        "endLine": 439,
+        "endChar": 80
+      },
+      "revId": "900d7f155b1816989a24f766db207c04a4c8df1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
