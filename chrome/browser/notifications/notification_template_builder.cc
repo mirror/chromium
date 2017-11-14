@@ -8,6 +8,7 @@
 #include "base/i18n/time_formatting.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -54,9 +55,7 @@ const char kSilent[] = "silent";
 const char kSrc[] = "src";
 const char kText[] = "text";
 const char kTextElement[] = "text";
-const char kToastElement[] = "toast";
 const char kToastElementDisplayTimestamp[] = "displayTimestamp";
-const char kToastElementLaunchAttribute[] = "launch";
 const char kTrue[] = "true";
 const char kUserResponse[] = "userResponse";
 const char kVisualElement[] = "visual";
@@ -69,18 +68,30 @@ const char kXmlVersionHeader[] = "<?xml version=\"1.0\"?>\n";
 
 }  // namespace
 
+namespace message_center {
+
+const char kNotificationToastElement[] = "toast";
+const char kNotificationLaunchAttribute[] = "launch";
+
+}  // namespace message_center
+
 // static
 const char* NotificationTemplateBuilder::context_menu_label_override_ = nullptr;
 
 // static
 std::unique_ptr<NotificationTemplateBuilder> NotificationTemplateBuilder::Build(
     NotificationImageRetainer* notification_image_retainer,
+    const NotificationCommon::Type type,
     const std::string& profile_id,
+    bool incognito,
     const message_center::Notification& notification) {
   std::unique_ptr<NotificationTemplateBuilder> builder = base::WrapUnique(
       new NotificationTemplateBuilder(notification_image_retainer, profile_id));
 
-  builder->StartToastElement(notification.id(), notification);
+  std::string encodedId =
+      builder->EncodeTemplateId(type, notification.id(), profile_id, incognito,
+                                notification.origin_url());
+  builder->StartToastElement(encodedId, notification);
   builder->StartVisualElement();
 
   builder->StartBindingElement(kDefaultTemplate);
@@ -137,6 +148,47 @@ base::string16 NotificationTemplateBuilder::GetNotificationTemplate() const {
   return base::UTF8ToUTF16(template_xml.substr(sizeof(kXmlVersionHeader) - 1));
 }
 
+bool NotificationTemplateBuilder::DecodeTemplateId(
+    std::string encoded,
+    NotificationCommon::Type* notification_type,
+    std::string* notification_id,
+    std::string* profile_id,
+    bool* incognito,
+    GURL* origin_url) {
+  std::vector<std::string> split = base::SplitString(
+      encoded, "$", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+  if (split.size() < 5)
+    return false;
+
+  GURL url(split[3]);
+  if (!url.is_valid())
+    return false;
+
+  int type = -1;
+  if (!base::StringToInt(split[0], &type))
+    return false;
+  *notification_type = static_cast<NotificationCommon::Type>(type);
+
+  *origin_url = url;
+  *profile_id = split[1];
+  *incognito = split[2] == "1" ? true : false;
+  *notification_id = split[4];
+  return true;
+}
+
+// static
+std::string NotificationTemplateBuilder::EncodeTemplateId(
+    NotificationCommon::Type notification_type,
+    const std::string notification_id,
+    const std::string profile_id,
+    const bool incognito,
+    const GURL origin_url) {
+  return base::StringPrintf("%d$%s$%d$%s$%s", notification_type,
+                            profile_id.c_str(), incognito,
+                            origin_url.spec().c_str(), notification_id.c_str());
+}
+
+// static
 std::string NotificationTemplateBuilder::FormatOrigin(
     const GURL& origin) const {
   base::string16 origin_string = url_formatter::FormatOriginForSecurityDisplay(
@@ -150,8 +202,10 @@ std::string NotificationTemplateBuilder::FormatOrigin(
 void NotificationTemplateBuilder::StartToastElement(
     const std::string& notification_id,
     const message_center::Notification& notification) {
-  xml_writer_->StartElement(kToastElement);
-  xml_writer_->AddAttribute(kToastElementLaunchAttribute, notification_id);
+  xml_writer_->StartElement(message_center::kNotificationToastElement);
+  xml_writer_->AddAttribute(message_center::kNotificationLaunchAttribute,
+                            notification_id);
+
   // Note: If the notification doesn't include a button, then Windows will
   // ignore the Reminder flag.
   if (notification.never_timeout())

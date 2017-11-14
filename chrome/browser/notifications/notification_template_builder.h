@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "chrome/browser/notifications/notification_common.h"
 
 class GURL;
 class XmlWriter;
@@ -22,7 +23,11 @@ class Image;
 namespace message_center {
 struct ButtonInfo;
 class Notification;
-}
+
+extern const char kNotificationToastElement[];
+extern const char kNotificationLaunchAttribute[];
+
+}  // namespace message_center
 
 class NotificationImageRetainer;
 
@@ -38,7 +43,9 @@ class NotificationTemplateBuilder {
   // Builds the notification template for the given |notification|.
   static std::unique_ptr<NotificationTemplateBuilder> Build(
       NotificationImageRetainer* notification_image_retainer,
+      const NotificationCommon::Type type,
       const std::string& profile_id,
+      bool incognito,
       const message_center::Notification& notification);
 
   // Set label for the context menu item in testing. The caller owns |label| and
@@ -49,6 +56,21 @@ class NotificationTemplateBuilder {
 
   // Gets the XML template that was created by this builder.
   base::string16 GetNotificationTemplate() const;
+
+  // TODO doc and visibility private?
+  static bool DecodeTemplateId(std::string encoded,
+                               NotificationCommon::Type* notification_type,
+                               std::string* notification_id,
+                               std::string* profile_id,
+                               bool* incognito,
+                               GURL* origin_url);
+
+  static std::string EncodeTemplateId(
+      NotificationCommon::Type notification_type,
+      const std::string notification_id,
+      const std::string profile_id,
+      const bool incognito,
+      const GURL origin_url);
 
  private:
   // The different types of text nodes to output.
