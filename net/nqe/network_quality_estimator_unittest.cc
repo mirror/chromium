@@ -2245,6 +2245,63 @@ TEST(NetworkQualityEstimatorTest, TestRttThroughputObservers) {
       estimator.GetRecentTransportRTT(base::TimeTicks(), &rtt, nullptr));
 }
 
+TEST(NetworkQualityEstimatorTest, TestGlobalSocketWatcherThrottle) {
+  std::unique_ptr<base::SimpleTestTickClock> tick_clock(
+      new base::SimpleTestTickClock());
+  base::SimpleTestTickClock* tick_clock_ptr = tick_clock.get();
+  tick_clock_ptr->Advance(base::TimeDelta::FromSeconds(1));
+
+  std::map<std::string, std::string> variation_params;
+  variation_params["add_default_platform_observations"] = "false";
+  TestNetworkQualityEstimator estimator(variation_params);
+  estimator.SetTickClockForTesting(std::move(tick_clock));
+
+  TestRTTObserver rtt_observer;
+  estimator.AddRTTObserver(&rtt_observer);
+
+  const base::TimeDelta tcp_rtt(base::TimeDelta::FromMilliseconds(1));
+
+  TestDelegate test_delegate;
+  TestURLRequestContext context(true);
+  context.set_network_quality_estimator(&estimator);
+  context.Init();
+
+  // Use a public IP address so that the socket watcher runs the RTT callback.
+  IPAddressList ip_list;
+  IPAddress ip_address;
+  ASSERT_TRUE(ip_address.AssignFromIPLiteral("157.0.0.1"));
+  ip_list.push_back(ip_address);
+  AddressList address_list =
+      AddressList::CreateFromIPAddressList(ip_list, "canonical.example.com");
+  std::unique_ptr<SocketPerformanceWatcher> tcp_watcher =
+      estimator.GetSocketPerformanceWatcherFactory()
+          ->CreateSocketPerformanceWatcher(
+              SocketPerformanceWatcherFactory::PROTOCOL_TCP, address_list);
+
+  EXPECT_EQ(0U, rtt_observer.observations().size());
+  EXPECT_TRUE(tcp_watcher->ShouldNotifyUpdatedRTT());
+  std::unique_ptr<URLRequest> request(
+      context.CreateRequest(estimator.GetEchoURL(), DEFAULT_PRIORITY,
+                            &test_delegate, TRAFFIC_ANNOTATION_FOR_TESTS));
+  request->SetLoadFlags(request->load_flags() | LOAD_MAIN_FRAME_DEPRECATED);
+  request->Start();
+  base::RunLoop().Run();
+  EXPECT_EQ(1U, rtt_observer.observations().size());
+  EXPECT_TRUE(tcp_watcher->ShouldNotifyUpdatedRTT());
+
+  tcp_watcher->OnUpdatedRTTAvailable(tcp_rtt);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(tcp_watcher->ShouldNotifyUpdatedRTT());
+  EXPECT_EQ(2U, rtt_observer.observations().size());
+  tick_clock_ptr->Advance(base::TimeDelta::FromMilliseconds(200));
+  EXPECT_TRUE(tcp_watcher->ShouldNotifyUpdatedRTT());
+
+  EXPECT_EQ(tcp_rtt.InMilliseconds(), rtt_observer.observations().at(1).rtt_ms);
+  base::TimeDelta rtt;
+  EXPECT_TRUE(
+      estimator.GetRecentTransportRTT(base::TimeTicks(), &rtt, nullptr));
+}
+
 // TestTCPSocketRTT requires kernel support for tcp_info struct, and so it is
 // enabled only on certain platforms.
 #if defined(TCP_INFO) || defined(OS_LINUX)
