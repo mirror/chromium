@@ -3588,6 +3588,11 @@ const FeatureEntry kFeatureEntries[] = {
      SINGLE_VALUE_TYPE(switches::kEnableMultiMirroring)},
 #endif  // defined(OS_CHROMEOS)
 
+    {"enable-av1-decoder",
+     flag_descriptions::kAv1DecoderName,
+     flag_descriptions::kAv1DecoderDescription, kOsDesktop,
+     SINGLE_VALUE_TYPE(switches::kAv1Decoder)},
+
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
     // Histograms" in tools/metrics/histograms/README.md (run the
