@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6be973e_fe4e7431",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-14T22:15:30Z",
+      "side": 1,
+      "message": "nit: braces not required.",
+      "revId": "f537d0df0b15ffe3e5978d32672c447e0999637b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5f1011_860c5ef5",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-14T22:15:30Z",
+      "side": 1,
+      "message": "Can this happen as part of Start()? That way you don\u0027t need to post another task from ctor.",
+      "revId": "f537d0df0b15ffe3e5978d32672c447e0999637b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
