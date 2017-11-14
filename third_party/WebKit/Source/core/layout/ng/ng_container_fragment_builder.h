@@ -11,8 +11,8 @@
 #include "core/layout/ng/geometry/ng_margin_strut.h"
 #include "core/layout/ng/ng_base_fragment_builder.h"
 #include "core/layout/ng/ng_out_of_flow_positioned_descendant.h"
-#include "core/layout/ng/ng_writing_mode.h"
 #include "platform/text/TextDirection.h"
+#include "platform/text/WritingMode.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/RefPtr.h"
 
@@ -146,7 +146,7 @@ class CORE_EXPORT NGContainerFragmentBuilder : public NGBaseFragmentBuilder {
   };
 
   NGContainerFragmentBuilder(scoped_refptr<const ComputedStyle>,
-                             NGWritingMode,
+                             enum WritingMode,
                              TextDirection);
 
   LayoutUnit inline_size_;

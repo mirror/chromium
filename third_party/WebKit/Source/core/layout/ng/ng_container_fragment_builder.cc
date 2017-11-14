@@ -14,7 +14,7 @@ namespace blink {
 
 NGContainerFragmentBuilder::NGContainerFragmentBuilder(
     scoped_refptr<const ComputedStyle> style,
-    NGWritingMode writing_mode,
+    enum WritingMode writing_mode,
     TextDirection direction)
     : NGBaseFragmentBuilder(std::move(style), writing_mode, direction) {}
 
@@ -62,15 +62,15 @@ NGContainerFragmentBuilder& NGContainerFragmentBuilder::AddChild(
     NGLogicalOffset top_left_offset;
     NGPhysicalSize child_size = child->PhysicalFragment()->Size();
     switch (WritingMode()) {
-      case kHorizontalTopBottom:
+      case WritingMode::kHorizontalTb:
         top_left_offset =
             (IsRtl(Direction()))
                 ? NGLogicalOffset{child_offset.inline_offset + child_size.width,
                                   child_offset.block_offset}
                 : child_offset;
         break;
-      case kVerticalRightLeft:
-      case kSidewaysRightLeft:
+      case WritingMode::kVerticalRl:
+      case WritingMode::kSidewaysRl:
         top_left_offset =
             (IsRtl(Direction()))
                 ? NGLogicalOffset{child_offset.inline_offset +
@@ -79,8 +79,8 @@ NGContainerFragmentBuilder& NGContainerFragmentBuilder::AddChild(
                 : NGLogicalOffset{child_offset.inline_offset,
                                   child_offset.block_offset + child_size.width};
         break;
-      case kVerticalLeftRight:
-      case kSidewaysLeftRight:
+      case WritingMode::kVerticalLr:
+      case WritingMode::kSidewaysLr:
         top_left_offset = (IsRtl(Direction()))
                               ? NGLogicalOffset{child_offset.inline_offset +
                                                     child_size.height,

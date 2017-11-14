@@ -74,8 +74,7 @@ WTF::Optional<LayoutUnit> CalculateFragmentationOffset(
     const NGUnpositionedFloat& unpositioned_float,
     const NGConstraintSpace& parent_space) {
   const ComputedStyle& style = unpositioned_float.node.Style();
-  DCHECK(FromPlatformWritingMode(style.GetWritingMode()) ==
-         parent_space.WritingMode());
+  DCHECK(style.GetWritingMode() == parent_space.WritingMode());
 
   if (parent_space.HasBlockFragmentation()) {
     return parent_space.FragmentainerSpaceAtBfcStart() - origin_block_offset;
@@ -105,7 +104,7 @@ scoped_refptr<NGConstraintSpace> CreateConstraintSpaceForFloat(
       .SetIsNewFormattingContext(true)
       .SetIsShrinkToFit(true)
       .SetTextDirection(style.Direction())
-      .ToConstraintSpace(FromPlatformWritingMode(style.GetWritingMode()));
+      .ToConstraintSpace(style.GetWritingMode());
 }
 
 }  // namespace
@@ -117,8 +116,8 @@ LayoutUnit ComputeInlineSizeForUnpositionedFloat(
 
   const ComputedStyle& style = unpositioned_float->node.Style();
 
-  bool is_same_writing_mode = FromPlatformWritingMode(style.GetWritingMode()) ==
-                              parent_space.WritingMode();
+  bool is_same_writing_mode =
+      style.GetWritingMode() == parent_space.WritingMode();
 
   // If we've already performed layout on the unpositioned float, just return
   // the cached value.
@@ -179,8 +178,7 @@ NGPositionedFloat PositionFloat(LayoutUnit origin_block_offset,
 
 #if DCHECK_IS_ON()
   bool is_same_writing_mode =
-      FromPlatformWritingMode(
-          unpositioned_float->node.Style().GetWritingMode()) ==
+      unpositioned_float->node.Style().GetWritingMode() ==
       parent_space.WritingMode();
 #endif
 

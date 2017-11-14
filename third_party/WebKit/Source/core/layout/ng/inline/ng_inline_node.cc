@@ -590,7 +590,7 @@ scoped_refptr<NGLayoutResult> NGInlineNode::Layout(
 static LayoutUnit ComputeContentSize(NGInlineNode node,
                                      LayoutUnit available_inline_size) {
   const ComputedStyle& style = node.Style();
-  NGWritingMode writing_mode = FromPlatformWritingMode(style.GetWritingMode());
+  WritingMode writing_mode = style.GetWritingMode();
 
   scoped_refptr<NGConstraintSpace> space =
       NGConstraintSpaceBuilder(

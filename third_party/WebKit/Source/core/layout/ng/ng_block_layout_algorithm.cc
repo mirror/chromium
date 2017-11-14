@@ -76,7 +76,7 @@ bool IsEmptyBlock(const NGLayoutInputNode child,
   // This just checks that the fragments block size is actually zero. We can
   // assume that its in the same writing mode as its parent, as a different
   // writing mode child will be caught by the CreatesNewFormattingContext check.
-  NGFragment fragment(FromPlatformWritingMode(child.Style().GetWritingMode()),
+  NGFragment fragment(child.Style().GetWritingMode(),
                       *layout_result.PhysicalFragment());
   DCHECK_EQ(LayoutUnit(), fragment.BlockSize());
 #endif
@@ -471,9 +471,8 @@ bool NGBlockLayoutAlgorithm::HandleNewFormattingContext(
       (IsHorizontalWritingMode(ConstraintSpace().WritingMode())
            ? child_style.Width().IsAuto()
            : child_style.Height().IsAuto()) &&
-      IsParallelWritingMode(
-          ConstraintSpace().WritingMode(),
-          FromPlatformWritingMode(child_style.GetWritingMode())) &&
+      IsParallelWritingMode(ConstraintSpace().WritingMode(),
+                            child_style.GetWritingMode()) &&
       !child.ShouldBeConsideredAsReplaced();
 
   NGInflowChildData child_data =
@@ -1177,8 +1176,7 @@ NGBoxStrut NGBlockLayoutAlgorithm::CalculateMargins(
       NGConstraintSpaceBuilder(ConstraintSpace())
           .SetAvailableSize(child_available_size_)
           .SetPercentageResolutionSize(child_percentage_size_)
-          .ToConstraintSpace(
-              FromPlatformWritingMode(child_style.GetWritingMode()));
+          .ToConstraintSpace(child_style.GetWritingMode());
 
   NGBoxStrut margins =
       ComputeMarginsFor(*space, child_style, ConstraintSpace());
@@ -1255,8 +1253,7 @@ NGBlockLayoutAlgorithm::CreateConstraintSpaceForChild(
   if (child.IsInline()) {
     // TODO(kojii): Setup space_builder appropriately for inline child.
     space_builder.SetClearanceOffset(ConstraintSpace().ClearanceOffset());
-    return space_builder.ToConstraintSpace(
-        FromPlatformWritingMode(Style().GetWritingMode()));
+    return space_builder.ToConstraintSpace(Style().GetWritingMode());
   }
 
   const ComputedStyle& child_style = child.Style();
@@ -1282,8 +1279,7 @@ NGBlockLayoutAlgorithm::CreateConstraintSpaceForChild(
   space_builder.SetFragmentationType(
       ConstraintSpace().BlockFragmentationType());
 
-  return space_builder.ToConstraintSpace(
-      FromPlatformWritingMode(child_style.GetWritingMode()));
+  return space_builder.ToConstraintSpace(child_style.GetWritingMode());
 }
 
 // Add a baseline from a child box fragment.

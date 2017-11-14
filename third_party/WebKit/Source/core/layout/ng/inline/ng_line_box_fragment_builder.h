@@ -25,7 +25,7 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
  public:
   NGLineBoxFragmentBuilder(NGInlineNode,
                            scoped_refptr<const ComputedStyle>,
-                           NGWritingMode,
+                           enum WritingMode,
                            TextDirection);
   ~NGLineBoxFragmentBuilder() override;
 

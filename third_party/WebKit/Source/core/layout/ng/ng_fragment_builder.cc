@@ -18,7 +18,7 @@ namespace blink {
 
 NGFragmentBuilder::NGFragmentBuilder(NGLayoutInputNode node,
                                      scoped_refptr<const ComputedStyle> style,
-                                     NGWritingMode writing_mode,
+                                     enum WritingMode writing_mode,
                                      TextDirection direction)
     : NGContainerFragmentBuilder(style, writing_mode, direction),
       node_(node),
@@ -28,7 +28,7 @@ NGFragmentBuilder::NGFragmentBuilder(NGLayoutInputNode node,
 
 NGFragmentBuilder::NGFragmentBuilder(LayoutObject* layout_object,
                                      scoped_refptr<const ComputedStyle> style,
-                                     NGWritingMode writing_mode,
+                                     enum WritingMode writing_mode,
                                      TextDirection direction)
     : NGContainerFragmentBuilder(style, writing_mode, direction),
       node_(nullptr),
@@ -111,21 +111,21 @@ void NGFragmentBuilder::AddOutOfFlowLegacyCandidate(
   // is stored as logical, must convert physical 0,0 to logical.
   NGLogicalOffset zero_offset;
   switch (WritingMode()) {
-    case kHorizontalTopBottom:
+    case WritingMode::kHorizontalTb:
       if (IsLtr(Direction()))
         zero_offset = NGLogicalOffset();
       else
         zero_offset = NGLogicalOffset(inline_size_, LayoutUnit());
       break;
-    case kVerticalRightLeft:
-    case kSidewaysRightLeft:
+    case WritingMode::kVerticalRl:
+    case WritingMode::kSidewaysRl:
       if (IsLtr(Direction()))
         zero_offset = NGLogicalOffset(LayoutUnit(), block_size_);
       else
         zero_offset = NGLogicalOffset(inline_size_, block_size_);
       break;
-    case kVerticalLeftRight:
-    case kSidewaysLeftRight:
+    case WritingMode::kVerticalLr:
+    case WritingMode::kSidewaysLr:
       if (IsLtr(Direction()))
         zero_offset = NGLogicalOffset();
       else
