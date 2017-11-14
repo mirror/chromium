@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1972d622_c0701334",
+        "filename": "chrome/browser/resources/print_preview/new/input_settings_behavior.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-14T20:20:31Z",
+      "side": 0,
+      "message": "Had hoped to use this for pages as well, but when I actually started implementing the pages section it turned out that very little of this code was useful, so I merged this behavior into the number settings section.",
+      "revId": "c6c5569ef455ce2b0111f400568f4d9480149a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
