@@ -15,6 +15,7 @@
 #include "chrome/installer/util/google_update_settings.h"
 #include "chrome_elf/chrome_elf_main.h"
 #include "components/crash/content/app/crash_export_thunks.h"
+#include "components/crash/core/common/crash_key.h"
 #include "components/metrics/client_info.h"
 
 namespace child_process_logging {
@@ -48,6 +49,8 @@ void Init() {
 #if !defined(COMPONENT_BUILD)
   crash_keys::RegisterChromeCrashKeys();
 #endif
+
+  crash_reporter::InitializeCrashKeys();
 
   // Set the client id chrome_elf (in tests this is stubbed).
   SetMetricsClientId(client_info ? client_info->client_id.c_str() : nullptr);
