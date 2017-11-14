@@ -38,6 +38,9 @@ class TestUkmRecorder : public UkmRecorderImpl {
     return sources();
   }
 
+  // Returns the UKM source for the given URL. If there are multiple sources for
+  // the given URL, this returns the first source that is created. If there is
+  // no source for the given URL, this returns nullptr.
   const UkmSource* GetSourceForUrl(const char* url) const;
   const UkmSource* GetSourceForUrl(const GURL& url) const {
     return GetSourceForUrl(url.spec().c_str());
