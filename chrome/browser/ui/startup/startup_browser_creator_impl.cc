@@ -330,8 +330,9 @@ bool StartupBrowserCreatorImpl::Launch(Profile* profile,
   if (OpenApplicationWindow(profile)) {
     RecordLaunchModeHistogram(LM_AS_WEBAPP);
   } else {
-    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-            switches::kTryChromeAgain)) {
+    if (!base::CommandLine::ForCurrentProcess()
+             ->GetSwitchValueNative(switches::kTryChromeAgain)
+             .empty()) {
       RecordLaunchModeHistogram(LM_USER_EXPERIMENT);
     } else {
       RecordLaunchModeHistogram(urls_to_open.empty() ? LM_TO_BE_DECIDED
