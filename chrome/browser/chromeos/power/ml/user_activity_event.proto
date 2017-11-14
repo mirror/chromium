@@ -1,0 +1,123 @@
+// Copyright (c) 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+syntax = "proto2";
+
+package chromeos.power;
+
+// Proto buffer for user activity events. This proto will represent one training
+// example and will contain both features and labels. At inference time, the
+// only missing fields will be the labels.
+message UserActivityEvent {
+  // 1. Model params and additional info not necessarily used as features.
+  optional int32 model_start_delay_sec = 1;
+  optional int32 model_timeout_delay_sec = 2;
+
+  // 2. Event type as training label.
+  enum EventType {
+    REACTIVATE = 1;
+    OFF = 2;
+    TIMEOUT = 3;
+  }
+
+  optional EventType event_type = 3;
+
+  // Trigger of the event. Currently not used as labels and stored for analysis
+  // only.
+  enum EventReason {
+    USER_ACTIVITY = 1;
+    VIDEO_ACTIVITY = 2;
+    POWER_CHANGED = 3;
+    LID_CLOSED = 4;
+    SHUTDOWN = 5;
+    SESSION_STOPPED = 6;
+    SCREEN_OFF = 7;
+    SCREEN_LOCK = 8;
+    IDLE_SLEEP = 9;
+  }
+
+  optional EventReason event_reason = 4;
+
+  // 3. Features
+  // Time taken to transition between states.
+  optional int32 on_to_dim_sec = 5;
+  optional int32 dim_to_screen_off_sec = 6;
+
+  // Last activity and last user activity's local time of the day.
+  optional int32 last_activity_time_sec = 7;
+  optional int32 last_user_activity_time_sec = 8;
+
+  enum DayOfWeek {
+    MON = 1;
+    TUE = 2;
+    WED = 3;
+    THU = 4;
+    FRI = 5;
+    SAT = 6;
+    SUN = 7;
+  }
+  optional DayOfWeek day_of_week = 9;
+
+  // Time since the last mouse and key events. This may not be the
+  // same as model_start_delay_sec, depending on what the last activity is.
+  optional int32 time_since_last_mouse_sec = 10;
+  optional int32 time_since_last_key_sec = 11;
+
+  // Duration of activity (user or video) up to last_activity_time_sec.
+  // If activity starts at time t1, then recent_time_active_sec =
+  // |last_activity_time_sec - t1|. We ignore short periods of idle time, and
+  // the short periods must be shorter than model_start_delay_sec.
+  // TODO(jiameng): we may consider a different way of measuring continued
+  // activity following experiments.
+  optional int32 recent_time_active_sec = 12;
+
+  // IDs of Chrome apps that are active and recently closed. The ids are those
+  // found from Extension, but only if the apps are platform apps.
+  repeated string active_apps = 13;
+  repeated string closed_apps = 14;
+
+  // Identifier of tabs, either in the form of URL or domain of URL or content
+  // type of the URL.
+  repeated string active_tabs = 15;
+  repeated string closed_tabs = 16;
+
+  // We only log events when device is Chromebook, hence we ignore types such as
+  // Chromebase, Chromebit and Chromebox.
+  enum Device {
+    UNKNOWN_DEVICE = 0;
+    CHROMEBOOK = 1;
+  }
+
+  optional Device device = 17;
+
+  // It is the state of the lid: openned, flipped or no lid.
+  enum DeviceState {
+    UNKNOWN_STATE = 0;
+    NO_LID = 1;
+    OPEN = 2;
+    FLIPPED = 3;
+  }
+  optional DeviceState device_state = 18;
+
+  optional float battery_level = 19;
+  optional bool on_battery = 20;
+
+  // Region and languages. We will use country code for region and IETF language
+  // tags for languages.
+  // TODO(jiameng): we may revise this after experimentations.
+  optional string region = 21;
+  repeated string languages = 22;
+
+  // Whether user/device is managed.
+  enum ManagementType {
+    UNKNOWN_TYPE = 0;
+    MANAGED = 1;
+    UNMANAGED = 2;
+  }
+  optional ManagementType user_management = 23;
+  optional ManagementType device_management = 24;
+
+  // Whether network is connected.
+  optional bool is_online = 25;
+}
