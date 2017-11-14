@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "188b4e2b_e8ec83b1",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-14T10:06:42Z",
+      "side": 1,
+      "message": "Thanks for the clarification -- totally sounds reasonable.",
+      "parentUuid": "b8d56ee1_3e23f852",
+      "revId": "2ef3c527ed6e04b9899806bc606eda97a52e61c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b44c048c_ccd55403",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
         "patchSetId": 6
