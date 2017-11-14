@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ce4f9f2_208a274b",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:12:30Z",
+      "side": 1,
+      "message": "Argh, I forgot about this: can you make it\n\n Init@0(UsbHost host_ptr) \u003d\u003e ();\n\n? (see crbug.com/750563 for more details).",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "2b1c2c10346386067c75261f44dfe752767223b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52fee891_b7f1fde4",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:12:30Z",
+      "side": 1,
+      "message": "Would it be possible to add a unit test?",
+      "revId": "2b1c2c10346386067c75261f44dfe752767223b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c0b8757_a0be14d0",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:12:30Z",
+      "side": 1,
+      "message": "nit: headers included from the .h don\u0027t need to be present here. Same for all the base, device, mojo headers.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "2b1c2c10346386067c75261f44dfe752767223b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f4b8b4_daa7820c",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:12:30Z",
+      "side": 1,
+      "message": "nit: no empty line.",
+      "revId": "2b1c2c10346386067c75261f44dfe752767223b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37000b1b_511b7abf",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:12:30Z",
+      "side": 1,
+      "message": "nit: RepeatingCallbacks are usually passed by const-reference.",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 19
+      },
+      "revId": "2b1c2c10346386067c75261f44dfe752767223b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36fd6f50_247eef61",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:12:30Z",
+      "side": 1,
+      "message": "nit: you can elide braces since both the for-loop and the body are one-liners.",
+      "range": {
+        "startLine": 84,
+        "startChar": 66,
+        "endLine": 84,
+        "endChar": 0
+      },
+      "revId": "2b1c2c10346386067c75261f44dfe752767223b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692f9781_71401a0c",
+        "filename": "components/arc/usb/usb_host_bridge.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:12:30Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be used.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "2b1c2c10346386067c75261f44dfe752767223b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e27a762_f5f19496",
+        "filename": "components/arc/usb/usb_host_bridge.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-14T22:12:30Z",
+      "side": 1,
+      "message": "nit: callback_forward",
+      "range": {
+        "startLine": 13,
+        "startChar": 15,
+        "endLine": 13,
+        "endChar": 23
+      },
+      "revId": "2b1c2c10346386067c75261f44dfe752767223b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
