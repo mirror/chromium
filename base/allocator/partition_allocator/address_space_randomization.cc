@@ -79,7 +79,10 @@ void* GetRandomPageBase() {
   random <<= 32ULL;
   random |= static_cast<uintptr_t>(ranval(s_ranctx.Pointer()));
 
-#if defined(OS_WIN)
+#if defined(MEMORY_TOOL_REPLACES_ALLOCATOR)
+  random &= internal::kASLRMask;
+  random += internal::kASLROffset;
+#elif defined(OS_WIN)
   // Windows >= 8.1 has the full 47 bits. Use them where available.
   static bool windows_81 = false;
   static bool windows_81_initialized = false;
