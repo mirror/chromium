@@ -17,6 +17,7 @@ class Display;
 }
 
 namespace ui {
+class CursorData;
 class ImageCursors;
 class ImageCursorsSet;
 class PlatformWindow;
@@ -53,10 +54,10 @@ class ThreadedImageCursors {
   // Asynchronously sets the size of the mouse cursor icon.
   void SetCursorSize(CursorSize cursor_size);
 
-  // Asynchronously sets the cursor type and then sets the corresponding
+  // Asynchronously sets the cursor and then sets the corresponding
   // PlatformCursor on the provided |platform_window|.
   // |platform_window| pointer needs to be valid while this object is alive.
-  void SetCursor(ui::CursorType cursor_type,
+  void SetCursor(const ui::CursorData& cursor_data,
                  ui::PlatformWindow* platform_window);
 
   // Helper method. Sets |platform_cursor| on the |platform_window|.
