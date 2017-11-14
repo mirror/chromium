@@ -19,6 +19,7 @@ template <typename Interface>
 class InterfacePtrInfo {
  public:
   InterfacePtrInfo() : version_(0u) {}
+  InterfacePtrInfo(decltype(nullptr)) : InterfacePtrInfo() {}
 
   InterfacePtrInfo(ScopedMessagePipeHandle handle, uint32_t version)
       : handle_(std::move(handle)), version_(version) {}
@@ -50,6 +51,9 @@ class InterfacePtrInfo {
 
   uint32_t version() const { return version_; }
   void set_version(uint32_t version) { version_ = version; }
+
+  // Allow InterfacePtrInfo<> to be used in boolean expressions.
+  explicit operator bool() const { return handle_.is_valid(); }
 
  private:
   ScopedMessagePipeHandle handle_;
