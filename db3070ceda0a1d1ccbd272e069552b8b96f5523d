@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0f7609ae_80de73df",
+        "filename": "services/device/geolocation/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-14T16:01:33Z",
+      "side": 1,
+      "message": "This added DEPS file should render the changes in \n//services/device/DEPS unnecessary, correct?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 1
+      },
+      "revId": "db3070ceda0a1d1ccbd272e069552b8b96f5523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b94fe699_668f5eef",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
         "patchSetId": 9
@@ -18,6 +41,52 @@
         "startChar": 7,
         "endLine": 54,
         "endChar": 38
+      },
+      "revId": "db3070ceda0a1d1ccbd272e069552b8b96f5523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d732f0c3_954ad6ce",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-14T16:01:33Z",
+      "side": 1,
+      "message": "nit: Use EXPECT_FLOAT_EQ(expected, actual) because\nit\u0027ll produce an easier to read output in case of\nfailure.",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 59
+      },
+      "revId": "db3070ceda0a1d1ccbd272e069552b8b96f5523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e673b2d_75afeb0f",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-14T16:01:33Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think we need to put the whole thing\nin an unnamed namespace. Not having string opinions\nagainst it either.",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 313,
+        "endChar": 15
       },
       "revId": "db3070ceda0a1d1ccbd272e069552b8b96f5523d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
