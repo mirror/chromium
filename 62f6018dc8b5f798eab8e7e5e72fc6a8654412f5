@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c6670c5_46cc9862",
+        "filename": "chrome/browser/chromeos/file_system_provider/fake_registry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-14T01:59:44Z",
+      "side": 1,
+      "message": "nit: A lot of includes seem missing.",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 8,
+        "endChar": 8
+      },
+      "revId": "62f6018dc8b5f798eab8e7e5e72fc6a8654412f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
