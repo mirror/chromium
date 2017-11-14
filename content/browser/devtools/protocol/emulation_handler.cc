@@ -245,22 +245,29 @@ Response EmulationHandler::SetDeviceMetricsOverride(
                                params.viewport_scale);
   }
 
+  bool size_changed = false;
   if (!dont_set_visible_size.fromMaybe(false) && width > 0 && height > 0) {
     gfx::Size new_size(width, height);
     if (widget_host->GetView()->GetViewBounds().size() != new_size) {
       if (original_view_size_.IsEmpty())
         original_view_size_ = widget_host->GetView()->GetViewBounds().size();
       widget_host->GetView()->SetSize(new_size);
+      size_changed = true;
     }
   }
 
-  if (device_emulation_enabled_ && params == device_emulation_params_)
+  if (device_emulation_enabled_ && params == device_emulation_params_) {
+    // Renderer should answer after size was changed.
+    if (size_changed)
+      return Response::FallThrough();
     return Response::OK();
+  }
 
   device_emulation_enabled_ = true;
   device_emulation_params_ = params;
   UpdateDeviceEmulationState();
-  return Response::OK();
+  // Renderer should answer after emulation params were updated.
+  return Response::FallThrough();
 }
 
 Response EmulationHandler::ClearDeviceMetricsOverride() {
