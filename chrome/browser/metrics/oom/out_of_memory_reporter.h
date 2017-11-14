@@ -8,6 +8,8 @@
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/scoped_observer.h"
+#include "base/time/tick_clock.h"
+#include "base/time/time.h"
 #include "build/build_config.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
@@ -18,6 +20,8 @@
 #if defined(OS_ANDROID)
 #include "components/crash/content/browser/crash_dump_manager_android.h"
 #endif
+
+class OutOfMemoryReporterTest;
 
 // This class listens for OOM notifications from WebContentsObserver and
 // breakpad::CrashDumpManager::Observer methods. It forwards foreground OOM
@@ -43,9 +47,13 @@ class OutOfMemoryReporter
 
  private:
   friend class content::WebContentsUserData<OutOfMemoryReporter>;
+  friend class OutOfMemoryReporterTest;
 
   OutOfMemoryReporter(content::WebContents* web_contents);
   void OnForegroundOOMDetected(const GURL& url, ukm::SourceId source_id);
+
+  // Used by tests to deterministically control time.
+  void SetTickClockForTest(std::unique_ptr<base::TickClock> tick_clock);
 
   // content::WebContentsObserver:
   void DidFinishNavigation(content::NavigationHandle* handle) override;
@@ -64,6 +72,8 @@ class OutOfMemoryReporter
   base::ObserverList<Observer> observers_;
 
   base::Optional<ukm::SourceId> last_committed_source_id_;
+  base::TimeTicks last_navigation_timestamp_;
+  std::unique_ptr<base::TickClock> tick_clock_;
   int crashed_render_process_id_ = content::ChildProcessHost::kInvalidUniqueID;
 
   DISALLOW_COPY_AND_ASSIGN(OutOfMemoryReporter);
