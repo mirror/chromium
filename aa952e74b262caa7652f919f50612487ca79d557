@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "9a90c9a4_b4e3c357",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "Don\u0027t use base::MakeUnique any more. It only existed before chrome supported C++ 11. std::make_unique is the standard way to do this.",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "029a808b_2a137e32",
         "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
         "patchSetId": 1
@@ -68,6 +85,261 @@
       "revId": "aa952e74b262caa7652f919f50612487ca79d557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f427ce68_952cb9ce",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "Add a helper method GetFspService() then below return GetFspService()-\u003eMountFileSystem(...)",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5f8c1f_041c37e8",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "For consistency with the other implementation since this should probably be an smb url, ie smb://samba/home (though technically as far as FSP is concerned this is just an arbitrary unique string).",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d2d56f_7ceb97cb",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "Even though it is not consistently done in the code base. Usually what goes in Setup really can/should go in the constructor. See https://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#should-i-use-the-constructordestructor-of-the-test-fixture-or-the-set-uptear-down-function",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779a1b43_f22ca6c7",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "Use std::make_unique",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f590894_a88c2599",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "Add a comment here and on the member delcaration that this class does not own this pointer (since the profile manager is responsible for cleaning it up)",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7966158_3890746b",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "This can leak if line 44 throws an exception. Since I presume ScopeUserManagerEnabler is going to be responsible for deleting this, then...\n\nIf you can access it via a member on user_manager_enabler_ (or you never need to use it directly) then create into a local unique_ptr with make_unique, and .release() it when passing to ScopedUserManagerEnabler",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd66595_b25e269b",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "Use std::make_unique",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50e77dc_8b0e2ce6",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "Use std::make_unique",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60883813_2721716c",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "Use std::make_unique",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7828198c_22f39a9c",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "If you don\u0027t need to access registry_ directly for anything then use std::make_unique below instead of WrapUnique.\n\nTechnically this pattern can also cause a memory leak if SetRegistryForTesting throws. Ideal situation where you need a unique_ptr to own a ptr but need also have another reference to it would be that you make_unique it into the owner, then access it via a getter. ie. GetRegistryForTesting returns the raw pointer owned by service.\n\nAt the least comment on the member of registry that it is owned by service_",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457a64e5_fd9136d4",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d516f9f7_ec6e4093",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like anything uses this.",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed895521_f0f8f5cc",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "Is there a reason these 2 members are raw pointers?",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce6e459_9ad4d946",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "What does the comment mean?",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efde0045_bb81732a",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-14T16:52:29Z",
+      "side": 1,
+      "message": "Maybe disambiguate the name to be explicit since there is more than one service here? fsp_service_ maybe.",
+      "revId": "aa952e74b262caa7652f919f50612487ca79d557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
