@@ -5,6 +5,8 @@
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 
 #include <memory>
+
+#include "base/process/process.h"
 #include "base/bind.h"
 #include "base/debug/stack_trace.h"
 #include "base/logging.h"
@@ -2163,6 +2165,22 @@ void RendererSchedulerImpl::OnTaskCompleted(MainThreadTaskQueue* queue,
   seqlock_queueing_time_estimator_.seqlock.WriteEnd();
 
   task_queue_throttler()->OnTaskRunTimeReported(queue, start, end);
+
+  if (queue->queue_type() == MainThreadTaskQueue::QueueType::DEFAULT ||
+      queue->queue_type() == MainThreadTaskQueue::QueueType::DEFAULT_LOADING) {
+    char filename[100] = "";
+    sprintf(filename, "/tmp/1/tasks_%d.txt", base::Process::Current().Pid());
+    FILE* f = fopen(filename, "a+");
+    fprintf(f, "### %d %s %s:%s %s:%s %d\n",
+        base::Process::Current().Pid(),
+        MainThreadTaskQueue::NameForQueueType(queue->queue_type()),
+        task.posted_from.file_name(),
+        task.posted_from.function_name(),
+        task.task_runner_obtained_from ? task.task_runner_obtained_from->file_name() : "unknown",
+        task.task_runner_obtained_from ? task.task_runner_obtained_from->function_name() : "unknown",
+        static_cast<int>((end-start).InMicroseconds()));
+    fclose(f);
+  }
 
   // TODO(altimin): Per-page metrics should also be considered.
   main_thread_only().metrics_helper.RecordTaskMetrics(queue, start, end);
