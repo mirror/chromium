@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4f6a52c0_4759a3eb",
+        "filename": "ios/chrome/browser/open_url_util.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-14T02:33:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a60ec716_3ae468cb",
+      "revId": "22366266596423d91d0dbe82110911f295124aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "496da685_50d8a874",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 28
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-13T17:43:37Z",
       "side": 1,
       "message": "why not add Nonnull ?",
+      "range": {
+        "startLine": 588,
+        "startChar": 32,
+        "endLine": 588,
+        "endChar": 33
+      },
+      "revId": "22366266596423d91d0dbe82110911f295124aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0edaae0a_78ebafe0",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-14T02:33:18Z",
+      "side": 1,
+      "message": "If one pointer is annotated, then clang expects all pointers to be annotated. This creates a lot of code churn in crw_web_delegate.h.",
+      "parentUuid": "496da685_50d8a874",
       "range": {
         "startLine": 588,
         "startChar": 32,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "d2c7f505_ede0d313",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-14T02:33:18Z",
+      "side": 1,
+      "message": "Moved check earlier. Keep in mind that completionHandler still need to be called.",
+      "parentUuid": "fc49fdf0_c4efcc75",
+      "range": {
+        "startLine": 643,
+        "startChar": 23,
+        "endLine": 643,
+        "endChar": 26
+      },
+      "revId": "22366266596423d91d0dbe82110911f295124aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddb947a3_6bff3dcc",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 28
@@ -76,6 +142,30 @@
       "writtenOn": "2017-11-13T17:43:37Z",
       "side": 1,
       "message": "Should we have a local copy of the parent method params to use in here as they may be deleted/changed",
+      "range": {
+        "startLine": 653,
+        "startChar": 10,
+        "endLine": 653,
+        "endChar": 19
+      },
+      "revId": "22366266596423d91d0dbe82110911f295124aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a9cad99_624f3390",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-14T02:33:18Z",
+      "side": 1,
+      "message": "Added copyOfSourceURL. Thanks for catching this.",
+      "parentUuid": "ddb947a3_6bff3dcc",
       "range": {
         "startLine": 653,
         "startChar": 10,
@@ -123,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "1b993eac_debb5e68",
+        "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-14T02:33:18Z",
+      "side": 1,
+      "message": "Thanks. I didn\u0027t know that testing::WaitUntilConditionOrTimeout() exists.",
+      "parentUuid": "64bdc713_d10e417a",
+      "revId": "22366266596423d91d0dbe82110911f295124aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75370f2a_1490bf64",
         "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
         "patchSetId": 28
@@ -146,6 +254,30 @@
     },
     {
       "key": {
+        "uuid": "5f6ea916_975cda9c",
+        "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-14T02:33:18Z",
+      "side": 1,
+      "message": "Done. Taken care of by previous comment.",
+      "parentUuid": "75370f2a_1490bf64",
+      "range": {
+        "startLine": 363,
+        "startChar": 16,
+        "endLine": 363,
+        "endChar": 33
+      },
+      "revId": "22366266596423d91d0dbe82110911f295124aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36a7faf1_988a4626",
         "filename": "ios/chrome/browser/web/external_app_launcher.h",
         "patchSetId": 28
@@ -157,6 +289,30 @@
       "writtenOn": "2017-11-13T17:47:01Z",
       "side": 1,
       "message": "nit: s/main/UI",
+      "range": {
+        "startLine": 23,
+        "startChar": 67,
+        "endLine": 23,
+        "endChar": 71
+      },
+      "revId": "22366266596423d91d0dbe82110911f295124aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25fd0826_ddae42dc",
+        "filename": "ios/chrome/browser/web/external_app_launcher.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-14T02:33:18Z",
+      "side": 1,
+      "message": "Done. Thank you (again).",
+      "parentUuid": "36a7faf1_988a4626",
       "range": {
         "startLine": 23,
         "startChar": 67,
