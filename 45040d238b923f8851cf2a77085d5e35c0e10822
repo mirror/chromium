@@ -22,6 +22,30 @@
       "revId": "45040d238b923f8851cf2a77085d5e35c0e10822",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a1919d_5c5c15fc",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/enqueue_order.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-11-14T20:48:27Z",
+      "side": 1,
+      "message": "If we keep the lock on 32bit, I think we should also keep it on 64bit. Otherwise there won\u0027t be a lock in our development environnements and we won\u0027t know if it causes problems in practice (and I assume 32bit systems only have it worse on average when it comes to performance capabilities).",
+      "parentUuid": "990ea2a7_4b82d5a7",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 11
+      },
+      "revId": "45040d238b923f8851cf2a77085d5e35c0e10822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
