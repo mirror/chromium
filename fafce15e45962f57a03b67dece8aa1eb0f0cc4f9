@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e071d5dc_598ae7f7",
+        "filename": "ui/app_list/views/contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-11-14T19:54:15Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "a1163d70_da39dec5",
+      "range": {
+        "startLine": 303,
+        "startChar": 37,
+        "endLine": 303,
+        "endChar": 56
+      },
+      "revId": "fafce15e45962f57a03b67dece8aa1eb0f0cc4f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05041ca2_096e103c",
         "filename": "ui/app_list/views/search_result_tile_item_list_view.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "34120b34_78ad747f",
+        "filename": "ui/app_list/views/search_result_tile_item_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-11-14T19:54:15Z",
+      "side": 0,
+      "message": "Thanks! It\u0027s a shame tests didn\u0027t catch this, but it looks like this code is about to be removed and is already dead (due to the AppListFocus changes) so I\u0027ve fixed this but I don\u0027t think it\u0027s worth adding test coverage.",
+      "parentUuid": "05041ca2_096e103c",
+      "revId": "fafce15e45962f57a03b67dece8aa1eb0f0cc4f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df756431_7f285b6c",
         "filename": "ui/app_list/views/search_result_tile_item_list_view.cc",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-14T17:46:45Z",
       "side": 0,
       "message": "Keep |cursor_at_end_of_searchbox| test.",
+      "revId": "fafce15e45962f57a03b67dece8aa1eb0f0cc4f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa2de593_f3fa5373",
+        "filename": "ui/app_list/views/search_result_tile_item_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-11-14T19:54:15Z",
+      "side": 0,
+      "message": "See above comment.",
+      "parentUuid": "df756431_7f285b6c",
       "revId": "fafce15e45962f57a03b67dece8aa1eb0f0cc4f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
