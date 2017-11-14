@@ -40,6 +40,9 @@ struct MediaStatus {
   // through its MediaController.
   bool can_seek;
 
+  // If this is true, Media Remoting can be enabled / disabled.
+  bool can_set_media_remoting_enabled;
+
   // Whether the media is playing, paused, or buffering.
   PlayState play_state;
 

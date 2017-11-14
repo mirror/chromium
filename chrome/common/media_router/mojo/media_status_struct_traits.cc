@@ -26,6 +26,7 @@ bool StructTraits<media_router::mojom::MediaStatusDataView,
   out->can_mute = data.can_mute();
   out->can_set_volume = data.can_set_volume();
   out->can_seek = data.can_seek();
+  out->can_set_media_remoting_enabled = data.can_set_media_remoting_enabled();
 
   if (!data.ReadPlayState(&out->play_state))
     return false;
