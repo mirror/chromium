@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_NETWORK_NETWORK_CONTEXT_H_
-#define CONTENT_NETWORK_NETWORK_CONTEXT_H_
+#ifndef CONTENT_PUBLIC_NETWORK_NETWORK_CONTEXT_H_
+#define CONTENT_PUBLIC_NETWORK_NETWORK_CONTEXT_H_
 
 #include <stdint.h>
 
@@ -15,7 +15,6 @@
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "content/common/content_export.h"
-#include "content/network/cookie_manager_impl.h"
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -26,10 +25,10 @@ class PrefService;
 namespace net {
 class URLRequestContext;
 class URLRequestContextBuilder;
-class HttpServerPropertiesManager;
-}
+}  // namespace net
 
 namespace content {
+class CookieManagerImpl;
 class NetworkServiceImpl;
 class URLLoaderImpl;
 
@@ -167,4 +166,4 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
 
 }  // namespace content
 
-#endif  // CONTENT_NETWORK_NETWORK_CONTEXT_H_
+#endif  // CONTENT_PUBLIC_NETWORK_NETWORK_CONTEXT_H_
