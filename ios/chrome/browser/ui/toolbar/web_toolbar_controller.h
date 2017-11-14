@@ -7,8 +7,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "ios/chrome/browser/ui/history_popup/requirements/tab_history_positioner.h"
-#import "ios/chrome/browser/ui/history_popup/requirements/tab_history_ui_updater.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_popup_positioner.h"
 #include "ios/chrome/browser/ui/qr_scanner/requirements/qr_scanner_result_loading.h"
 #import "ios/chrome/browser/ui/toolbar/omnibox_focuser.h"
@@ -19,6 +17,7 @@
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
 @class Tab;
+@class ToolbarButtonsUpdater;
 @protocol UrlLoader;
 @protocol WebToolbarDelegate;
 
@@ -31,12 +30,13 @@ class ChromeBrowserState;
 @interface WebToolbarController
     : ToolbarController<OmniboxFocuser,
                         QRScannerResultLoading,
-                        TabHistoryPositioner,
-                        TabHistoryUIUpdater,
                         VoiceSearchControllerDelegate>
 
 @property(nonatomic, weak) id<WebToolbarDelegate> delegate;
 @property(nonatomic, weak, readonly) id<UrlLoader> urlLoader;
+
+// Object handling the updates of the buttons.
+@property(nonatomic, strong) ToolbarButtonsUpdater* buttonUpdater;
 
 // Mark inherited initializer as unavailable.
 - (instancetype)initWithStyle:(ToolbarControllerStyle)style
