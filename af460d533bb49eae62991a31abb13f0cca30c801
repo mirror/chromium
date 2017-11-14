@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d9c4ca1_2f313c56",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-14T19:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44033d55_b9ac8236",
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea3b104d_3ac67938",
         "filename": "chrome/browser/ui/cocoa/color_chooser_mac.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-14T18:35:59Z",
       "side": 1,
       "message": "Provide documentation for the difference between Open and the constructor?",
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86810cc7_eb2699dd",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-14T19:25:00Z",
+      "side": 1,
+      "message": "Even though this is a new file I didn\u0027t actually write any of this code. I needed to move these definitions from a .mm to a .h in order to include them in my test .mm. So, I\u0027m not sure what the difference is.",
+      "parentUuid": "ea3b104d_3ac67938",
       "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "82a11f16_9129aac8",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-14T19:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68556685_250b1cb6",
+      "range": {
+        "startLine": 23,
+        "startChar": 39,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed7132bd_f35dce1f",
         "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
         "patchSetId": 6
@@ -73,6 +133,24 @@
       "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8492ea_6723cb2a",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-14T19:25:00Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "ed7132bd_f35dce1f",
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "10c0e344_f42e3f4f",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-14T19:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec9fc1fd_7853b725",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 13
+      },
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bba564e2_9a07b074",
         "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
         "patchSetId": 6
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "574edcb7_88bf6ab5",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-14T19:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bba564e2_9a07b074",
+      "range": {
+        "startLine": 97,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 13
+      },
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e00322fc_5610c126",
         "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
         "patchSetId": 6
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "682f44fe_0466156a",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-14T19:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e00322fc_5610c126",
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11871a69_e999d9d6",
         "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
         "patchSetId": 6
@@ -153,6 +297,24 @@
       "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f19953_fb8424ef",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-14T19:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11871a69_e999d9d6",
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -176,6 +338,30 @@
       "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04deaff9_1495c648",
+        "filename": "ui/gfx/test/ui_cocoa_test_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-14T19:25:00Z",
+      "side": 1,
+      "message": "OK, I will do that.",
+      "parentUuid": "42bc80f6_f7c220c5",
+      "range": {
+        "startLine": 62,
+        "startChar": 55,
+        "endLine": 64,
+        "endChar": 34
+      },
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
