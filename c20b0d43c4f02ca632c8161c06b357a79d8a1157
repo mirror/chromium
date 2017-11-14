@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "23c6d9eb_82240a97",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-14T00:30:56Z",
+      "side": 1,
+      "message": "nit: call this local \"type\" or \"type_id\" (and below)",
+      "range": {
+        "startLine": 44,
+        "startChar": 61,
+        "endLine": 44,
+        "endChar": 69
+      },
+      "revId": "c20b0d43c4f02ca632c8161c06b357a79d8a1157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b34ecc6_6b9bfc59",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 15
@@ -64,6 +87,29 @@
       "writtenOn": "2017-11-12T23:45:05Z",
       "side": 1,
       "message": "nit: blank line before",
+      "revId": "c20b0d43c4f02ca632c8161c06b357a79d8a1157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa7bddf_0253847d",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_delegate_view_base.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-14T00:30:56Z",
+      "side": 1,
+      "message": "nit: comment \"static\" here and on CreateBubble below",
+      "range": {
+        "startLine": 26,
+        "startChar": 44,
+        "endLine": 26,
+        "endChar": 54
+      },
       "revId": "c20b0d43c4f02ca632c8161c06b357a79d8a1157",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
