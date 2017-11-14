@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "159d76f2_dbb76d5e",
+        "filename": "content/common/render_message_filter.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-11-14T06:08:55Z",
+      "side": 1,
+      "message": "I think this isn\u0027t right. The original IPC has one input and 3 output params.\nLoadFont(FontDescriptor font_to_load) \u003d\u003e (handle\u003cshared_buffer\u003e font_data, uint32 font_id, bool error);",
+      "range": {
+        "startLine": 44,
+        "startChar": 58,
+        "endLine": 44,
+        "endChar": 65
+      },
+      "revId": "f6155559cc00b75e80e4028a5409c56ce4464a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
