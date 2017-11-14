@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07fda475_4a59a04d",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7218,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-14T19:01:46Z",
+      "side": 1,
+      "message": "nit: can post_scale be 0? If so we would generate infinities which sounds bad, but we\u0027ll end up with no pixel drawn, so we could just early-out.",
+      "revId": "8179ef96e9d68554c9848b2c6a887af13549ebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
