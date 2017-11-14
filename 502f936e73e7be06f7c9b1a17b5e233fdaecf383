@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "741202d7_eaf871c6",
+        "filename": "content/browser/service_worker/service_worker_database.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T01:49:12Z",
+      "side": 1,
+      "message": "Was the original comment wrong?",
+      "revId": "502f936e73e7be06f7c9b1a17b5e233fdaecf383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5cad261_f08bcfa6",
+        "filename": "content/browser/service_worker/service_worker_database_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T01:49:12Z",
+      "side": 1,
+      "message": "ASSERT is used instead of EXPECT when there is a fatal error in the test that means you can\u0027t continue, which doesn\u0027t seem generally true here.\n\nASSERT_THAT and EXPECT_THAT are not commonly used in code I\u0027ve seen. Prefer EXPECT_EQ and EXPECT_TRUE when possible. Eg, EXPECT_EQ(STATUS_OK, ...), EXPECT_TRUE(user_data_map.empty()).",
+      "revId": "502f936e73e7be06f7c9b1a17b5e233fdaecf383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6352c2_e5672f52",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T01:49:12Z",
+      "side": 1,
+      "message": "Could you add comments here too?",
+      "revId": "502f936e73e7be06f7c9b1a17b5e233fdaecf383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b95528_55ab0bef",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-14T01:49:12Z",
+      "side": 1,
+      "message": "Use `using GetUserKeysAndDataInDBCallback \u003d` in new code over typedef.",
+      "revId": "502f936e73e7be06f7c9b1a17b5e233fdaecf383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
