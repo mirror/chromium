@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10830fa3_9f93b50b",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-14T19:29:17Z",
+      "side": 1,
+      "message": "IMHO, you can just \"return true;\" here, because this instrument will be available only if the payment handler responds to CanMakePaymentEvent with true. Otherwise, this instrument is deleted from memory.",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 34
+      },
+      "revId": "2da65291cf670cb928c1c74e3cfb40ce4a6b4650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
