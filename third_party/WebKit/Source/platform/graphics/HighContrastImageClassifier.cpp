@@ -5,6 +5,7 @@
 #include "platform/graphics/HighContrastImageClassifier.h"
 
 #include "base/rand_util.h"
+#include "platform/graphics/highcontrast/highcontrast_classifier.h"
 #include "third_party/WebKit/Source/platform/geometry/IntRect.h"
 #include "third_party/skia/include/utils/SkNullCanvas.h"
 
@@ -40,6 +41,10 @@ float ColorDifference(const SkColor& color1, const SkColor4f& color2) {
 const int kPixelsToSample = 1000;
 const int kBlocksCount1D = 10;
 const int kMinImageSizeForClassification1D = 24;
+
+// Decision tree lower and upper thresholds for grayscale and color images.
+const float kLowColorCountThreshold[2] = {0.8125, 0.014893};
+const float kHighColorCountThreshold[2] = {1, 0.018311};
 
 }  // namespace
 
@@ -186,6 +191,31 @@ void HighContrastImageClassifier::GetSamples(
                              block_samples.end());
     }
   }
+  LOG(ERROR) << "RAND: " << GetRandomInt(0, 1000);
+  LOG(ERROR) << "SIZE: " << bitmap.width() << "x" << bitmap.height();
+  int R = 0;
+  int G = 0;
+  int B = 0;
+  int A = 0;
+  for (int x = 0; x < bitmap.width(); x++) {
+    for (int y = 0; y < bitmap.height(); y++) {
+      SkColor color = bitmap.getColor(x, y);
+      R += SkColorGetR(color);
+      G += SkColorGetG(color);
+      B += SkColorGetB(color);
+      A += SkColorGetA(color);
+    }
+  }
+  LOG(ERROR) << "IMAGE: " << R << "," << G << "," << B << "," << A;
+
+  R = G = B = A = 0;
+  for (auto& color : *sampled_pixels) {
+    R += SkColorGetR(color);
+    G += SkColorGetG(color);
+    B += SkColorGetB(color);
+    A += SkColorGetA(color);
+  }
+  LOG(ERROR) << "SAMPLES: " << R << "," << G << "," << B << "," << A;
 }
 
 // Selects random samples from a block of the image. Returns the opaque sampled
@@ -316,18 +346,50 @@ float HighContrastImageClassifier::ComputeColorBucketsRatio(
          max_buckets[color_mode == ColorMode::kColor];
 }
 
+HighContrastClassification
+HighContrastImageClassifier::ClassifyImageUsingDecisionTree(
+    const std::vector<float>& features) {
+  DCHECK_EQ(features.size(), 4u);
+  if (features.size() != 4)
+    return HighContrastClassification::kDoNotApplyHighContrastFilter;
+
+  int is_color = features[0] > 0;
+  float color_count_ratio = features[1];
+  float low_color_count_threshold = kLowColorCountThreshold[is_color];
+  float high_color_count_threshold = kHighColorCountThreshold[is_color];
+
+  // Very few colors means it's not a photo, apply the filter.
+  if (color_count_ratio < low_color_count_threshold)
+    return HighContrastClassification::kApplyHighContrastFilter;
+
+  // Too many colors means it's probably photorealistic, do not apply it.
+  if (color_count_ratio > high_color_count_threshold)
+    return HighContrastClassification::kDoNotApplyHighContrastFilter;
+
+  // In-between, decision tree cannot give a precise result.
+  return HighContrastClassification::kNotClassified;
+}
+
 HighContrastClassification HighContrastImageClassifier::ClassifyImage(
     const std::vector<float>& features) {
-  bool result = false;
+  DCHECK_EQ(features.size(), 4u);
+  if (features.size() != 4)
+    return HighContrastClassification::kDoNotApplyHighContrastFilter;
 
-  // Shallow decision tree trained by C4.5.
-  if (features.size() >= 2) {
-    float threshold = (features[0] == 0) ? 0.8125 : 0.0166;
-    result = features[1] < threshold;
+  HighContrastClassification result = ClassifyImageUsingDecisionTree(features);
+
+  // If decision tree cannot decide, we use a neural network to decide whether
+  // to filter or not based on all the features.
+  if (result == HighContrastClassification::kNotClassified) {
+    highcontrast_tfnative_model::FixedAllocations nn_temp;
+    float nn_out;
+    highcontrast_tfnative_model::Inference(&features[0], &nn_out, &nn_temp);
+    result = nn_out > 0
+                 ? HighContrastClassification::kApplyHighContrastFilter
+                 : HighContrastClassification::kDoNotApplyHighContrastFilter;
   }
 
-  return result ? HighContrastClassification::kApplyHighContrastFilter
-                : HighContrastClassification::kDoNotApplyHighContrastFilter;
+  return result;
 }
 
 }  // namespace blink
