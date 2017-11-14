@@ -22,6 +22,30 @@
       "revId": "ab0bf695f4560ec8daae858012678bf194591eb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6d08ef_8a4e992d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-14T18:20:09Z",
+      "side": 1,
+      "message": "Thanks for spotting this! It is a non-issue though since TileRenderer will not survive switching on/off CH.\n\nAs regards the second concern, we are closing the experiment and just shipping it for real with Chrome Modern.",
+      "parentUuid": "d8e1a8f3_dd1dc2d3",
+      "range": {
+        "startLine": 89,
+        "startChar": 15,
+        "endLine": 89,
+        "endChar": 74
+      },
+      "revId": "ab0bf695f4560ec8daae858012678bf194591eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
