@@ -66,8 +66,6 @@ class MenuDelegate : public ui::SimpleMenuModel::Delegate {
   base::scoped_nsobject<AlertIndicatorButton> alertIndicatorButton_;
   base::scoped_nsobject<HoverCloseButton> closeButton_;
 
-  BOOL isIconShowing_;  // last state of iconView_ in updateVisibility
-
   BOOL active_;
   BOOL selected_;
   std::unique_ptr<ui::SimpleMenuModel> contextMenuModel_;
@@ -101,11 +99,14 @@ static const CGFloat kCloseButtonSize = 16;
 static const CGFloat kInitialTabWidth = 160;
 static const CGFloat kTitleLeadingPadding = 4;
 static const CGFloat kInitialTitleWidth = 92;
+static const CGFloat kTitleHeight = 17;
 static const CGFloat kTabElementYOrigin = 6;
+static const CGFloat kDefaultTabHeight = 29;
+static const CGFloat kPinnedTabWidth = kDefaultTabHeight * 2;
 }  // namespace
 
 + (CGFloat)defaultTabHeight {
-  return 29;
+  return kDefaultTabHeight;
 }
 
 // The min widths is the smallest number at which the right edge of the right
@@ -116,7 +117,9 @@ static const CGFloat kTabElementYOrigin = 6;
 + (CGFloat)minActiveTabWidth { return 52; }
 + (CGFloat)maxTabWidth { return 246; }
 
-+ (CGFloat)pinnedTabWidth { return 58; }
++ (CGFloat)pinnedTabWidth {
+  return kPinnedTabWidth;
+}
 
 - (TabView*)tabView {
   DCHECK([[self view] isKindOfClass:[TabView class]]);
@@ -125,30 +128,42 @@ static const CGFloat kTabElementYOrigin = 6;
 
 - (id)init {
   if ((self = [super init])) {
+    // Create the TabView.
+    base::scoped_nsobject<TabView> tabView([[TabView alloc]
+        initWithFrame:NSMakeRect(0, 0, kInitialTabWidth,
+                                 [TabController defaultTabHeight])
+           controller:self
+          closeButton:closeButton_]);
+    [tabView setAutoresizingMask:NSViewMaxXMargin | NSViewMinYMargin];
+    [tabView setPostsFrameChangedNotifications:NO];
+    [tabView setPostsBoundsChangedNotifications:NO];
+    [super setView:tabView];
+
     BOOL isRTL = cocoa_l10n_util::ShouldDoExperimentalRTLLayout();
-    // Icon.
-    const CGFloat iconOrigin =
-        isRTL ? kInitialTabWidth - kTabLeadingPadding - gfx::kFaviconSize
-              : kTabLeadingPadding;
-    NSRect iconFrame = NSMakeRect(iconOrigin, kTabElementYOrigin,
-                                  gfx::kFaviconSize, gfx::kFaviconSize);
-    iconView_.reset([[SpriteView alloc] initWithFrame:iconFrame]);
+
+    // Add the favicon view.
+    NSRect iconViewFrame =
+        NSMakeRect(0, kTabElementYOrigin, gfx::kFaviconSize, gfx::kFaviconSize);
+    iconView_.reset([[SpriteView alloc] initWithFrame:iconViewFrame]);
     [iconView_ setAutoresizingMask:isRTL ? NSViewMinXMargin | NSViewMinYMargin
                                          : NSViewMaxXMargin | NSViewMinYMargin];
+    [self updateIconViewFrame];
+    [tabView addSubview:iconView_];
 
-    const CGFloat titleOrigin =
-        isRTL
-            ? NSMinX([iconView_ frame]) - kTitleLeadingPadding -
-                  kInitialTitleWidth
-            : NSMaxX([iconView_ frame]) + kTitleLeadingPadding;
-    NSRect titleFrame =
-        NSMakeRect(titleOrigin, kTabElementYOrigin, kInitialTitleWidth, 17);
+    // Set up the title.
+    const CGFloat titleXOrigin =
+        isRTL ? NSMinX([iconView_ frame]) - kTitleLeadingPadding -
+                    kInitialTitleWidth
+              : NSMaxX([iconView_ frame]) + kTitleLeadingPadding;
+    NSRect titleFrame = NSMakeRect(titleXOrigin, kTabElementYOrigin,
+                                   kInitialTitleWidth, kTitleHeight);
+    [tabView setTitleFrame:titleFrame];
 
-    // Close button.
-    const CGFloat closeButtonOrigin =
+    // Add the close button.
+    const CGFloat closeButtonXOrigin =
         isRTL ? kTabTrailingPadding
               : kInitialTabWidth - kCloseButtonSize - kTabTrailingPadding;
-    NSRect closeButtonFrame = NSMakeRect(closeButtonOrigin, kTabElementYOrigin,
+    NSRect closeButtonFrame = NSMakeRect(closeButtonXOrigin, kTabElementYOrigin,
                                          kCloseButtonSize, kCloseButtonSize);
     closeButton_.reset([[HoverCloseButton alloc] initWithFrame:
         closeButtonFrame]);
@@ -157,20 +172,8 @@ static const CGFloat kTabElementYOrigin = 6;
     [closeButton_ setTarget:self];
     [closeButton_ setAction:@selector(closeTab:)];
 
-    base::scoped_nsobject<TabView> view([[TabView alloc]
-        initWithFrame:NSMakeRect(0, 0, kInitialTabWidth,
-                                 [TabController defaultTabHeight])
-           controller:self
-          closeButton:closeButton_]);
-    [view setAutoresizingMask:NSViewMaxXMargin | NSViewMinYMargin];
-    [view setPostsFrameChangedNotifications:NO];
-    [view setPostsBoundsChangedNotifications:NO];
-    [view addSubview:iconView_];
-    [view addSubview:closeButton_];
-    [view setTitleFrame:titleFrame];
-    [super setView:view];
+    [tabView addSubview:closeButton_];
 
-    isIconShowing_ = YES;
     NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self
                       selector:@selector(themeChangedNotification:)
@@ -299,6 +302,32 @@ static const CGFloat kTabElementYOrigin = 6;
 
 - (BOOL)selected {
   return selected_ || active_;
+}
+
+- (void)setPinned:(BOOL)pinned {
+  if (pinned_ != pinned) {
+    pinned_ = pinned;
+    [self updateIconViewFrame];
+  }
+}
+
+- (void)updateIconViewFrame {
+  NSRect iconViewFrame = [iconView_ frame];
+
+  if ([self pinned]) {
+    // Center the icon.
+    iconViewFrame.origin.x =
+        std::floor(([TabController pinnedTabWidth] - gfx::kFaviconSize) / 2.0);
+  } else {
+    BOOL isRTL = cocoa_l10n_util::ShouldDoExperimentalRTLLayout();
+    iconViewFrame.origin.x =
+        isRTL ? kInitialTabWidth - kTabLeadingPadding - gfx::kFaviconSize
+              : kTabLeadingPadding;
+  }
+
+  // If the pinned status has changed, animating the view to its new
+  // location looks much better than jumping there.
+  [[iconView_ animator] setFrame:iconViewFrame];
 }
 
 - (SpriteView*)iconView {
@@ -518,13 +547,9 @@ static const CGFloat kTabElementYOrigin = 6;
 }
 
 - (void)updateVisibility {
-  // iconView_ may have been replaced or it may be nil, so [iconView_ isHidden]
-  // won't work.  Instead, the state of the icon is tracked separately in
-  // isIconShowing_.
   BOOL newShowIcon = [self shouldShowIcon];
 
   [iconView_ setHidden:!newShowIcon];
-  isIconShowing_ = newShowIcon;
 
   // If the tab is a pinned-tab, hide the title.
   TabView* tabView = [self tabView];
