@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44597d9b_3997bc5b",
+        "filename": "components/viz/service/display_embedder/display_output_surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-14T21:51:13Z",
+      "side": 1,
+      "message": "The changes to this output surface are replicated in 3 places with slight variations: DisplayOutputSurface, GpuBrowserCompositorOutputSurface, and AndroidOutputSurface.\n\nThe base OutputSurface class is currently pure virtual, so I hesitate to share the implementation there, especially since SoftwareBrowserCompositorOutputSurface and OffscreenBrowserCompositorOutputSurface would use different logic anyway.\n\nIt doesn\u0027t look like sharing the implementation in ContextProvider or GpuControl or ContextSupport make sense either.\n\nI chose to keep the logic duplicated rather than adding a helper class. Especially considering each OutputSurface would need to provide callbacks to the helper class to customize the behavior slightly.\n\nDoes that make sense? Or is there a good place to share the implementation?",
+      "range": {
+        "startLine": 169,
+        "startChar": 23,
+        "endLine": 169,
+        "endChar": 48
+      },
+      "revId": "bf0a2fbadd169bc3aa9f0b47fb2b78621879392b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f76b0e_7e600c33",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-14T21:51:13Z",
+      "side": 1,
+      "message": "Is it okay to start the swap_id at 0 in both the client and service and assume they will be synchronized - even after losing the context or other error conditions?\n\nOr will I need to explicitly coordinate the id?",
+      "revId": "bf0a2fbadd169bc3aa9f0b47fb2b78621879392b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a7c068_ef4e08b6",
+        "filename": "ui/gfx/swap_result.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-14T21:51:13Z",
+      "side": 1,
+      "message": "This is coupled with the SwapBuffersComplete IPC. Should it go somewhere in gpu instead?",
+      "revId": "bf0a2fbadd169bc3aa9f0b47fb2b78621879392b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
