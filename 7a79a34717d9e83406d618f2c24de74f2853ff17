@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7a5eb57_417813d6",
+        "filename": "ash/shelf/shelf_background_animator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-14T17:51:45Z",
+      "side": 1,
+      "message": "nit: AshTestBase -\u003e NoSessionAshTestBase since the test code would simulate the login by itself.",
+      "range": {
+        "startLine": 316,
+        "startChar": 46,
+        "endLine": 316,
+        "endChar": 57
+      },
+      "revId": "7a79a34717d9e83406d618f2c24de74f2853ff17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
