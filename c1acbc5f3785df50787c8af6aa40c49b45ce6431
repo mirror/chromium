@@ -46,6 +46,30 @@
       "revId": "c1acbc5f3785df50787c8af6aa40c49b45ce6431",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde23cf4_287616b8",
+        "filename": "ui/webui/resources/cr_elements/policy/cr_tooltip_icon.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-14T01:12:32Z",
+      "side": 0,
+      "message": "Err, that said, if having the for\u003d is still preferred (even if it\u0027s preference) I\u0027m okay with keeping it. NP either way IMO.",
+      "parentUuid": "f1c8a76b_dd5cd22a",
+      "range": {
+        "startLine": 28,
+        "startChar": 32,
+        "endLine": 28,
+        "endChar": 48
+      },
+      "revId": "c1acbc5f3785df50787c8af6aa40c49b45ce6431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
