@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5055335c_7a1e1469",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T22:35:44Z",
+      "side": 1,
+      "message": "Thinking about this more and looking at some other code in Chromium that does this, I withdraw this comment. The advice I\u0027ve seen in the past is to either use a CHECK and eliminate the if -- which I guess you don\u0027t want in the product -- or VLOG_IF or do something else upon failure.",
+      "parentUuid": "3459c7e0_6c3bdab7",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 4
+      },
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ef27858_d1b28d8c",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 8
@@ -93,6 +117,30 @@
       "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "769403bf_a8f2624d",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T22:35:44Z",
+      "side": 1,
+      "message": "I see. Thanks for the background.",
+      "parentUuid": "3693f777_f94b2171",
+      "range": {
+        "startLine": 712,
+        "startChar": 9,
+        "endLine": 712,
+        "endChar": 26
+      },
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "c5790674_73f6d49b",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T22:35:44Z",
+      "side": 1,
+      "message": "Ah, I see. Thanks for the info. Sounds fine as is.",
+      "parentUuid": "9c424f90_16ab2207",
+      "range": {
+        "startLine": 724,
+        "startChar": 28,
+        "endLine": 724,
+        "endChar": 44
+      },
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3f36868_5f92485b",
         "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
         "patchSetId": 8
@@ -178,6 +250,24 @@
     },
     {
       "key": {
+        "uuid": "4f5e1376_1036250f",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T22:35:44Z",
+      "side": 1,
+      "message": "To clarify, it\u0027s the BindTexImage2DCHROMIUM call which takes the keyed mutex, and not BindTexture of the texture which is bound to the GMB?\n\nThanks for the background. Seems fine as is given that.",
+      "parentUuid": "824fcb9c_b91db1ac",
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0b086d9_fc9ba64a",
         "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
         "patchSetId": 8
@@ -210,6 +300,24 @@
       "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135e7f1e_253a3f53",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-14T22:35:44Z",
+      "side": 1,
+      "message": "I see. Thanks.",
+      "parentUuid": "73f976b4_84ed6dad",
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
