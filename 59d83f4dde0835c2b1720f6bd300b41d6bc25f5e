@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce0380e6_75f8c3f0",
+        "filename": "content/common/render_message_filter.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-14T02:26:20Z",
+      "side": 1,
+      "message": "Requests that the browser cache...",
+      "revId": "59d83f4dde0835c2b1720f6bd300b41d6bc25f5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56762e44_3e14d9ff",
+        "filename": "content/common/render_message_filter.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-14T02:26:20Z",
+      "side": 1,
+      "message": "Can you add a TODO(https://crbug.com/779444): Verify or remove |url| and |cache_storage_origin|.",
+      "revId": "59d83f4dde0835c2b1720f6bd300b41d6bc25f5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dfe74b2_73d0945d",
+        "filename": "content/common/render_message_filter.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-14T02:26:20Z",
+      "side": 1,
+      "message": "Requests that the browser cache...",
+      "revId": "59d83f4dde0835c2b1720f6bd300b41d6bc25f5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f350384c_38c10802",
+        "filename": "content/renderer/renderer_blink_platform_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-14T02:26:20Z",
+      "side": 1,
+      "message": "Can this go in the .cc file?",
+      "revId": "59d83f4dde0835c2b1720f6bd300b41d6bc25f5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
