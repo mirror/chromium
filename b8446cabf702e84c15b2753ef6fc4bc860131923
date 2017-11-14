@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7be5867e_33dbb453",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-14T17:51:34Z",
+      "side": 1,
+      "message": "If the tests should ideally be fixed and re-enabled at some point, there should be an open bug.",
+      "parentUuid": "b21cbdcd_9a55ca09",
+      "revId": "b8446cabf702e84c15b2753ef6fc4bc860131923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72a22d81_8e0f2c42",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_browsertest.cc",
         "patchSetId": 5
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "795f9a2e_0f4839ad",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-14T17:51:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a82ab4f1_a13bc08e",
+      "revId": "b8446cabf702e84c15b2753ef6fc4bc860131923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3bcad5e_dc718f1b",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_browsertest.cc",
         "patchSetId": 5
@@ -104,6 +140,24 @@
       "revId": "b8446cabf702e84c15b2753ef6fc4bc860131923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72813743_62bd91d5",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-14T17:51:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cd0027dd_fc05c9d8",
+      "revId": "b8446cabf702e84c15b2753ef6fc4bc860131923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
