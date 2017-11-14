@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a5ee522_a3a14eeb",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-14T19:41:08Z",
+      "side": 1,
+      "message": "nit: \"has_autorun\" would seem a little clearer, given that BootfsData is just passive data. If this is false then does the BootfsData still expect someone else to provide an autorun? Or is it completely gone?",
+      "range": {
+        "startLine": 200,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 15
+      },
+      "revId": "1d5ddd75c82df1871624de3cbf1bbc17efd6ccc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b608f7_c6972754",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-14T19:41:08Z",
+      "side": 1,
+      "message": "nit: This \u0027+\u0027 syntax is Fun Fun Fun - can we add a brief comment to explain it?\n\nAlso, having this duplicated between the |use_device| and qemu cases is a little unfortunate.  Could we collate a kernel_args list and have the device and qemu cases just update and then join() or map() that as necessary to match the syntax they need?",
+      "range": {
+        "startLine": 507,
+        "startChar": 18,
+        "endLine": 507,
+        "endChar": 71
+      },
+      "revId": "1d5ddd75c82df1871624de3cbf1bbc17efd6ccc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
