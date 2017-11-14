@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4746d8f0_3e467b2a",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 4811,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-14T12:20:24Z",
+      "side": 1,
+      "message": "How will this work if the clean toolbar is in use?",
+      "range": {
+        "startLine": 4811,
+        "startChar": 48,
+        "endLine": 4811,
+        "endChar": 65
+      },
+      "revId": "0ed601234648f38749109227cd7335a768793178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acaddb5e_22d8991b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller_dependency_factory.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-14T12:20:24Z",
+      "side": 1,
+      "message": "We shouldn\u0027t name protocols \u0027protocol\u0027.",
+      "range": {
+        "startLine": 59,
+        "startChar": 6,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "0ed601234648f38749109227cd7335a768793178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7315e5_358de20a",
+        "filename": "ios/chrome/browser/ui/toolbar/public/toolbar_public_interface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-14T12:20:24Z",
+      "side": 1,
+      "message": "The BVC is an implementation detail, and one that we\u0027d like to get rid of, so I\u0027d prefer not to name anything after it. Can this be phrased as \"AbstractWebToolbar\", maybe (and \"AbstractToolbar\", below)?",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 38
+      },
+      "revId": "0ed601234648f38749109227cd7335a768793178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8acb4af3_305f33c3",
+        "filename": "ios/chrome/browser/ui/toolbar/public/toolbar_public_interface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-14T12:20:24Z",
+      "side": 1,
+      "message": "Does this protocol conform to SideSwipeToolbarInteracting? I\u0027m not sure what this pragma means.",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 40
+      },
+      "revId": "0ed601234648f38749109227cd7335a768793178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1de945_ae949458",
+        "filename": "ios/chrome/browser/ui/toolbar/public/toolbar_public_interface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-14T12:20:24Z",
+      "side": 1,
+      "message": "I\u0027d prefer to have the protocols in separate files.",
+      "range": {
+        "startLine": 52,
+        "startChar": 1,
+        "endLine": 52,
+        "endChar": 9
+      },
+      "revId": "0ed601234648f38749109227cd7335a768793178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf94be0_2f55751b",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-14T12:20:24Z",
+      "side": 1,
+      "message": "Is just \u0027Toolbar\u0027 available as a protocol name? or maybe \u0027ToolbarFeatures\u0027?",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "0ed601234648f38749109227cd7335a768793178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf30cc6_c2da4939",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-14T12:20:24Z",
+      "side": 1,
+      "message": "Should this be a UIViewController\u003c...\u003e* ?",
+      "range": {
+        "startLine": 59,
+        "startChar": 30,
+        "endLine": 59,
+        "endChar": 32
+      },
+      "revId": "0ed601234648f38749109227cd7335a768793178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
