@@ -16,6 +16,24 @@
       "revId": "bad6fc630e0b5b96a273466df0f67365e0641db5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf23041_549eb345",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2950,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-14T23:46:14Z",
+      "side": 1,
+      "message": "I read through \u003chttps://fullscreen.spec.whatwg.org/\u003e. The interpretation in this CL might still make sense, but it\u0027s not specific enough for me to be sure.\n\nBefore I get into it, I feel the need to paste in this line from the fullscreen spec:\n\n\u003e Long term CSS will define the top layer concept and its associated ::backdrop pseudo-element as part of CSS\u0027 stacking context model. Patching CSS as done here is sketchy as hell.\n\nAnyway, keeping that in mind, the fullscreen spec describes backdrops like this:\n\n\u003e Each element in a top layer has a ::backdrop pseudo-element. This pseudo-element is a box rendered immediately below the element (and above the element before the element in the set, if any), within the same top layer.\n\u003e\n\u003e The ::backdrop pseudo-element can be used to create a backdrop that hides the underlying document for an element in a top layer (such as an element that is displayed fullscreen).\n\n\"hides the underlying document\" is an important phrase. Later, it says this about how to render an element or backdrop in the top layer:\n\n\u003e It is rendered as an atomic unit as if it were a sibling of its root.\n\nGiven that, it\u0027s a stretch to apply a rule from \u003chttps://www.w3.org/TR/css-backgrounds-3/#special-backgrounds\u003e about root elements, but I kinda feel like it\u0027s an appropriate stretch:\n\n\u003e The background of the root element becomes the background of the canvas and its background painting area extends to cover the entire canvas.\n\nThe fullscreen spec references \u003chttps://www.w3.org/TR/CSS22/zindex.html\u003e instead, which states this a little bit differently, but with basically the same conclusion:\n\n\u003e The painting order for the descendants of an element generating a stacking context (see the \u0027z-index\u0027 property) is:\n\u003e\n\u003e 1. If the element is a root element:\n\u003e    1. background color of element over the entire canvas.\n\u003e    2. [snip]\n\nI would like to interpret this to mean that each element in the top layer has its background extended to cover the canvas, just like the root element, so the correct behavior would be to compute the document background color by blending the background color of each element in the top layer.\n\nI\u0027m not sure if Chrome currently allows a fullscreen element to be translucent. I haven\u0027t managed it so far with CSS. If it can\u0027t be, then just using its background color in place of the content layout object\u0027s background color is legit.\n\nWhat do you think?",
+      "parentUuid": "b855629b_c398fbf7",
+      "revId": "bad6fc630e0b5b96a273466df0f67365e0641db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
