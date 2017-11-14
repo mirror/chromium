@@ -87,8 +87,8 @@ class VIZ_SERVICE_EXPORT HitTestAggregator {
   void SetRegionAt(size_t index,
                    const FrameSinkId& frame_sink_id,
                    uint32_t flags,
-                   const gfx::Rect& rect,
                    const gfx::Transform& transform,
+                   std::vector<mojom::HitTestRectPtr> rects,
                    int32_t child_count);
   // Marks the element at the given index as the end of list.
   void MarkEndAt(size_t index);

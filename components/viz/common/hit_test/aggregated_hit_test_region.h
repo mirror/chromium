@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "components/viz/common/surfaces/surface_id.h"
+#include "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/transform.h"
 
@@ -26,14 +27,10 @@ constexpr int32_t kEndOfList = -1;
 struct AggregatedHitTestRegion {
   AggregatedHitTestRegion(FrameSinkId frame_sink_id,
                           uint32_t flags,
-                          gfx::Rect rect,
                           gfx::Transform transform,
-                          int32_t child_count)
-      : frame_sink_id(frame_sink_id),
-        flags(flags),
-        rect(rect),
-        transform(transform),
-        child_count(child_count) {}
+                          std::vector<mojom::HitTestRectPtr> rects,
+                          int32_t child_count);
+  ~AggregatedHitTestRegion();
 
   // The FrameSinkId corresponding to this region.  Events that match
   // are routed to this surface.
@@ -43,11 +40,11 @@ struct AggregatedHitTestRegion {
   // mojom::HitTestRegion
   uint32_t flags;
 
-  // The rectangle that defines the region in parent region's coordinate space.
-  gfx::Rect rect;
-
   // The transform applied to the rect in parent region's coordinate space.
   gfx::Transform transform;
+
+  // The rectangle that defines the region in parent region's coordinate space.
+  std::vector<mojom::HitTestRectPtr> rects;
 
   // The number of children including their children below this entry.
   // If this element is not matched then child_count elements can be skipped
