@@ -35,10 +35,46 @@
 #include "core/frame/Settings.h"
 #include "core/html/forms/TextControlElement.h"
 #include "platform/Histogram.h"
-#include "platform/text/TextCheckerClient.h"
 #include "public/platform/TaskType.h"
+#include "public/web/WebTextCheckClient.h"
+#include "public/web/WebTextCheckingCompletion.h"
+#include "public/web/WebTextCheckingResult.h"
 
 namespace blink {
+
+namespace {
+
+static Vector<TextCheckingResult> ToCoreResults(
+    const WebVector<WebTextCheckingResult>& results) {
+  Vector<TextCheckingResult> core_results;
+  for (size_t i = 0; i < results.size(); ++i)
+    core_results.push_back(results[i]);
+  return core_results;
+}
+
+class WebTextCheckingCompletionImpl : public WebTextCheckingCompletion {
+ public:
+  explicit WebTextCheckingCompletionImpl(TextCheckingRequest* request)
+      : request_(request) {}
+
+  void DidFinishCheckingText(
+      const WebVector<WebTextCheckingResult>& results) override {
+    request_->DidSucceed(ToCoreResults(results));
+    delete this;
+  }
+
+  void DidCancelCheckingText() override {
+    request_->DidCancel();
+    delete this;
+  }
+
+ private:
+  virtual ~WebTextCheckingCompletionImpl() {}
+
+  Persistent<TextCheckingRequest> request_;
+};
+
+}  // namespace
 
 SpellCheckRequest::SpellCheckRequest(Range* checking_range,
                                      const String& text,
@@ -135,8 +171,8 @@ SpellCheckRequester::SpellCheckRequester(LocalFrame& frame)
 
 SpellCheckRequester::~SpellCheckRequester() {}
 
-TextCheckerClient& SpellCheckRequester::Client() const {
-  return GetFrame().GetSpellChecker().TextChecker();
+WebTextCheckClient* SpellCheckRequester::GetTextCheckerClient() const {
+  return GetFrame().GetSpellChecker().GetTextCheckerClient();
 }
 
 void SpellCheckRequester::TimerFiredToProcessQueuedRequest(TimerBase*) {
@@ -201,13 +237,18 @@ void SpellCheckRequester::PrepareForLeakDetection() {
   // TextCheckerClient stores a set of WebTextCheckingCompletion objects,
   // which may store references to already invoked requests. We should clear
   // these references to prevent them from being a leak source.
-  Client().CancelAllPendingRequests();
+  if (WebTextCheckClient* text_checker_client = GetTextCheckerClient())
+    text_checker_client->CancelAllPendingRequests();
 }
 
 void SpellCheckRequester::InvokeRequest(SpellCheckRequest* request) {
   DCHECK(!processing_request_);
   processing_request_ = request;
-  Client().RequestCheckingOfString(processing_request_);
+  if (WebTextCheckClient* text_checker_client = GetTextCheckerClient()) {
+    const String& text = processing_request_->Data().GetText();
+    text_checker_client->RequestCheckingOfText(
+        text, new WebTextCheckingCompletionImpl(request));
+  }
 }
 
 void SpellCheckRequester::ClearProcessingRequest() {

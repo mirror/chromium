@@ -41,7 +41,7 @@ namespace blink {
 
 class LocalFrame;
 class SpellCheckRequester;
-class TextCheckerClient;
+class WebTextCheckClient;
 
 class CORE_EXPORT SpellCheckRequest final : public TextCheckingRequest {
  public:
@@ -104,7 +104,7 @@ class CORE_EXPORT SpellCheckRequester final
 
   explicit SpellCheckRequester(LocalFrame&);
 
-  TextCheckerClient& Client() const;
+  WebTextCheckClient* GetTextCheckerClient() const;
   void TimerFiredToProcessQueuedRequest(TimerBase*);
   void InvokeRequest(SpellCheckRequest*);
   void EnqueueRequest(SpellCheckRequest*);

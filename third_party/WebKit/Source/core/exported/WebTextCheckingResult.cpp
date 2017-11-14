@@ -30,7 +30,7 @@
 
 #include "public/web/WebTextCheckingResult.h"
 
-#include "platform/text/TextCheckerClient.h"
+#include "platform/text/TextChecking.h"
 
 namespace blink {
 
