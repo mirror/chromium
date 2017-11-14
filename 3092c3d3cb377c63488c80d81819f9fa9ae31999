@@ -16,6 +16,24 @@
       "revId": "3092c3d3cb377c63488c80d81819f9fa9ae31999",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831771d3_c35a6caf",
+        "filename": "gin/converter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-14T00:01:43Z",
+      "side": 1,
+      "message": "Hmm... I\u0027m not sure I know a good, clean alternative.  One option would be to add a Converter\u003cT\u003e::ToV8 overload that takes a context, but that would require duplicating that across all our specializations.  Another would be to introduce something like\n\nstruct ToV8Adapter {\n  ToV8Adapter(v8::Isolate* isolate);\n  ToV8Adapter(v8::Local\u003cv8::Context\u003e context);\n\n  v8::Isolate* GetIsolate();\n  v8::Local\u003cV8::Context\u003e GetContext();\n};\n\nand then update Converter\u003cT\u003e::ToV8 to take a ToV8Adapter, and use it appropriately.  But I\u0027m not sure I love that option, either.\n\nThere might be a way with templates to do this more cleanly, but my template-fu isn\u0027t strong enough to know what it is. :)  But if you have an idea, I\u0027m happy to take suggestions!",
+      "parentUuid": "419abf57_d59f16b5",
+      "revId": "3092c3d3cb377c63488c80d81819f9fa9ae31999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
