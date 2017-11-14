@@ -330,6 +330,24 @@
       "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea12d921_5391a35e",
+        "filename": "ui/display/manager/chromeos/display_configurator_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-14T00:16:25Z",
+      "side": 1,
+      "message": "That definitely sounds reasonable. Doing the same thing as |confgure_display_| with a member variable tests can change is the other thing that comes to mind. I guess it\u0027s sky or someone else with owners on that dir whose opinion really counts. :)",
+      "parentUuid": "f167b931_9257aea6",
+      "revId": "5ece7e65bdf40488a5879353fdd36c6d97483694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
