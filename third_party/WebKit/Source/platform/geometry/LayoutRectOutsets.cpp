@@ -35,6 +35,27 @@
 
 namespace blink {
 
+void LayoutRectOutsets::ClampNegativeToZero() {
+  top_ = top_.ClampNegativeToZero();
+  right_ = right_.ClampNegativeToZero();
+  bottom_ = bottom_.ClampNegativeToZero();
+  left_ = left_.ClampNegativeToZero();
+}
+
+void LayoutRectOutsets::Expand(LayoutUnit value) {
+  top_ += value;
+  right_ += value;
+  bottom_ += value;
+  left_ += value;
+}
+
+void LayoutRectOutsets::Expand(const LayoutRectOutsets& value) {
+  top_ += value.top_;
+  right_ += value.right_;
+  bottom_ += value.bottom_;
+  left_ += value.left_;
+}
+
 LayoutRectOutsets LayoutRectOutsets::LineOrientationOutsets(
     WritingMode writing_mode) const {
   if (!IsHorizontalWritingMode(writing_mode))
