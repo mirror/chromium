@@ -14,6 +14,15 @@ enum class SwapResult {
   SWAP_RESULT_LAST = SWAP_NAK_RECREATE_BUFFERS,
 };
 
+struct SwapResponse {
+  uint64_t swap_id;
+  SwapResult result;
+
+  // Sampled by Chrome. Supported by all platforms.
+  base::TimeTicks swap_start;
+  base::TimeTicks swap_end;
+};
+
 }  // namespace gfx
 
 #endif  // UI_GFX_SWAP_RESULT_H_

@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "content/browser/compositor/browser_compositor_output_surface.h"
@@ -24,7 +25,6 @@ struct GpuProcessHostedCALayerTreeParamsMac;
 
 namespace ui {
 class ContextProviderCommandBuffer;
-class LatencyInfo;
 }
 
 namespace content {
@@ -50,8 +50,7 @@ class GpuBrowserCompositorOutputSurface : public BrowserCompositorOutputSurface,
   // TODO(ccameron): Remove |params_mac| when the CALayer tree is hosted in the
   // browser process.
   virtual void OnGpuSwapBuffersCompleted(
-      const std::vector<ui::LatencyInfo>& latency_info,
-      gfx::SwapResult result,
+      const gfx::SwapResponse& response,
       const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac);
 
   // BrowserCompositorOutputSurface implementation.
@@ -94,6 +93,10 @@ class GpuBrowserCompositorOutputSurface : public BrowserCompositorOutputSurface,
   // True if the draw rectangle has been set at all since the last resize.
   bool has_set_draw_rectangle_since_last_resize_ = false;
   gfx::Size size_;
+
+  // Incremented in sync with PassThroughImageTransportSurface::swap_id_.
+  uint64_t swap_id_ = 0;
+  base::circular_deque<SwapLatencyInfo> swap_latency_infos_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(GpuBrowserCompositorOutputSurface);
