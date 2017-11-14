@@ -6,11 +6,19 @@
 
 #include "ash/public/interfaces/accessibility_controller.mojom.h"
 #include "base/macros.h"
-#include "base/test/scoped_task_environment.h"
+#include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
+#include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/test/base/testing_browser_process.h"
+#include "chrome/test/base/testing_profile_manager.h"
+#include "components/signin/core/account_id/account_id.h"
+#include "components/user_manager/scoped_user_manager.h"
+#include "content/public/test/test_browser_thread_bundle.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
+
+const char kTestUser[] = "test@test.com";
 
 class TestAccessibilityController : ash::mojom::AccessibilityController {
  public:
@@ -40,12 +48,37 @@ class TestAccessibilityController : ash::mojom::AccessibilityController {
 }  // namespace
 
 class AccessibilityControllerClientTest : public testing::Test {
- public:
+ protected:
   AccessibilityControllerClientTest() = default;
   ~AccessibilityControllerClientTest() override = default;
 
+  void SetUp() override {
+    testing::Test::SetUp();
+
+    user_manager_ = new chromeos::FakeChromeUserManager;
+    user_manager_enabler_ = std::make_unique<user_manager::ScopedUserManager>(
+        base::WrapUnique(user_manager_));
+
+    profile_manager_ = std::make_unique<TestingProfileManager>(
+        TestingBrowserProcess::GetGlobal());
+    ASSERT_TRUE(profile_manager_->SetUp());
+  }
+
+  void TearDown() override {
+    user_manager_enabler_.reset();
+    user_manager_ = nullptr;
+    profile_manager_.reset();
+    testing::Test::TearDown();
+  }
+
+  // Owned by |user_manager_enabler_|.
+  chromeos::FakeChromeUserManager* user_manager_ = nullptr;
+
+  std::unique_ptr<TestingProfileManager> profile_manager_;
+
  private:
-  base::test::ScopedTaskEnvironment scoped_task_enviroment_;
+  std::unique_ptr<user_manager::ScopedUserManager> user_manager_enabler_;
+  content::TestBrowserThreadBundle thread_bundle_;
 
   DISALLOW_COPY_AND_ASSIGN(AccessibilityControllerClientTest);
 };
@@ -59,6 +92,11 @@ TEST_F(AccessibilityControllerClientTest, TriggerAccessibilityAlert) {
   // Tests that singleton was initialized and client is set.
   EXPECT_EQ(&client, AccessibilityControllerClient::Get());
   EXPECT_TRUE(controller.was_client_set());
+
+  const AccountId account_id(AccountId::FromUserEmail(kTestUser));
+  user_manager_->AddUser(account_id);
+  user_manager_->LoginUser(account_id);
+  profile_manager_->CreateTestingProfile(kTestUser);
 
   // Tests TriggerAccessibilityAlert method call.
   const ash::mojom::AccessibilityAlert alert =
