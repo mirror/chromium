@@ -9,6 +9,8 @@
 
 namespace net {
 class URLRequestContextGetter;
+struct LoadTimingInfo;
+class HttpResponseInfo;
 
 class HTTPProtocolHandlerDelegate {
  public:
@@ -29,6 +31,23 @@ class HTTPProtocolHandlerDelegate {
   // a RequestTracker. This includes in particular the requests that are not
   // aware of the network stack. Must not return null.
   virtual URLRequestContextGetter* GetDefaultURLRequestContext() = 0;
+};
+
+// Delegate class which supplies a metrics callback that is invoked when a
+// net request is stopped.
+class MetricsDelegate {
+ public:
+  // Set the global instance of the MetricsDelegate.
+  static void SetInstance(MetricsDelegate* delegate);
+
+  virtual ~MetricsDelegate() {}
+
+  // This is invoked once metrics have been been collected by net.
+  // It will need to take a metrics object argument.
+  virtual void didFinishCollectingMetrics(
+      NSURLSessionTask* task,
+      const LoadTimingInfo& load_timing_info,
+      const HttpResponseInfo& response_info) = 0;
 };
 
 }  // namespace net
