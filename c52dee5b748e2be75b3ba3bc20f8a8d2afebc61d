@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33d9196d_43b02b7e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/base-uri/report-uri-does-not-respect-base-uri.sub.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-14T20:34:53Z",
+      "side": 1,
+      "message": "1. This should use `{{domain[nonexistent]}}` (I think. Might be `{{domain[nonexistent-origin]}}`?)\n\n2. Also HTTPS.\n\n3. Also `{{ports[https][0]}}`.\n\n:)",
+      "revId": "c52dee5b748e2be75b3ba3bc20f8a8d2afebc61d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
