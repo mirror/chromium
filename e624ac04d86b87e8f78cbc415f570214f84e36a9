@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42582b51_491e40e8",
+        "filename": "third_party/WebKit/Source/core/animation/css/CSSAnimations.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-14T17:29:29Z",
+      "side": 1,
+      "message": "The difference is that Node::GetComputedStyle checks that the node IsElementNode. I think it is so that would be the same.",
+      "parentUuid": "b1cc8938_88f6eed4",
+      "range": {
+        "startLine": 249,
+        "startChar": 6,
+        "endLine": 251,
+        "endChar": 61
+      },
+      "revId": "e624ac04d86b87e8f78cbc415f570214f84e36a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7926d9ff_364eeff5",
         "filename": "third_party/WebKit/Source/core/svg/SVGStopElement.cpp",
         "patchSetId": 6
