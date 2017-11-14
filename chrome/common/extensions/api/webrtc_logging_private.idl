@@ -26,6 +26,10 @@ namespace webrtcLoggingPrivate {
     // The guest process id for the requester, if the request is from a
     // webview.
     long? guestProcessId;
+
+    // The webview for the requester, if the request is handled by an app for a
+    // webview.
+    [instanceOf=Element] object? webview;
   };
 
   // This contains information about the result of audio debug recordings or
