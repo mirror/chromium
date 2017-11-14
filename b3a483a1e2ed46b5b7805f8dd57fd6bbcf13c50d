@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2ddf077_98922449",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-14T17:02:53Z",
+      "side": 1,
+      "message": "Isn\u0027t this becoming O(n*lgn) now?",
+      "revId": "b3a483a1e2ed46b5b7805f8dd57fd6bbcf13c50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cfad57b_3f200ab2",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-14T17:02:53Z",
+      "side": 1,
+      "message": "nit: I find this easier to read:\nif (time !\u003d other.time) return time \u003c other.time;\nreturn id \u003c other.id;",
+      "revId": "b3a483a1e2ed46b5b7805f8dd57fd6bbcf13c50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5911f9b_9e591896",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-14T17:02:53Z",
+      "side": 1,
+      "message": "nit: |extension_install_time|",
+      "range": {
+        "startLine": 90,
+        "startChar": 35,
+        "endLine": 90,
+        "endChar": 57
+      },
+      "revId": "b3a483a1e2ed46b5b7805f8dd57fd6bbcf13c50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
