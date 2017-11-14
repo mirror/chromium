@@ -16,6 +16,24 @@
       "revId": "444004e9c9b37b3a9b5b68032b5489c26865de01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356c4154_89ca58a3",
+        "filename": "third_party/WebKit/Source/core/testing/Internals.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-14T19:29:09Z",
+      "side": 1,
+      "message": "When we add a value in the LAYER_TREE_INCLUDES_XXX group, we may want to make the bits in the group adjacent to each other, so I changed this bit to use the second highest bit and leave the lower bits for the LAYER_TREE_INCLUDES_XXX group. This also reduce the chance of inconsistency when we add a bit but forget to update this value.",
+      "parentUuid": "71626474_44c445e7",
+      "revId": "444004e9c9b37b3a9b5b68032b5489c26865de01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
