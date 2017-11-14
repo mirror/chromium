@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7167558_4aa359c1",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T21:51:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc858c3c_f2a91702",
+      "range": {
+        "startLine": 78,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 25
+      },
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f4ba215_673b53b2",
         "filename": "ios/web/download/download_task_impl.mm",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5f2aa798_4024f2f3",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T21:51:34Z",
+      "side": 1,
+      "message": "Updated the comment. Not answering your here to verify that the comment fully answers your question.",
+      "parentUuid": "7f4ba215_673b53b2",
+      "range": {
+        "startLine": 71,
+        "startChar": 37,
+        "endLine": 72,
+        "endChar": 40
+      },
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a916be7c_1dc06cfe",
         "filename": "ios/web/download/download_task_impl.mm",
         "patchSetId": 11
@@ -62,6 +110,24 @@
       "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee51190_d01ae17a",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T21:51:34Z",
+      "side": 1,
+      "message": "I don\u0027t like typedefs because they make code less readable. It\u0027s like everyone know what \"const void* _Nonnull\" means, but no one knows the meaning of \"Bytes\" type.\n\nI have typedef here to improve the formatting, which looks ugly otherwise:\n\n  [data enumerateByteRangesUsingBlock:^(const void* _Nonnull bytes,\n                                        NSRange range, BOOL*) {\n    auto buffer \u003d GetBuffer(bytes, range.length);\n    _dataBlock(std::move(buffer));\n  }];\n\nSo I did not typedef for the file, because it would make the code less readable.",
+      "parentUuid": "a916be7c_1dc06cfe",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "25a4b967_fe761168",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T21:51:34Z",
+      "side": 1,
+      "message": "Empty string is not a valid identifier. Added DCHECK.",
+      "parentUuid": "cff44945_8b2b36a6",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16ebb865_1eb3344e",
         "filename": "ios/web/download/download_task_impl.mm",
         "patchSetId": 11
@@ -96,6 +180,24 @@
       "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae997643_ce949f4e",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T21:51:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16ebb865_1eb3344e",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "f19adec9_7cf60759",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T21:51:34Z",
+      "side": 1,
+      "message": "Updated the comment. Not answering here to validate that the comment actually answers your question.",
+      "parentUuid": "3ef653f3_203f1e31",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b46803a_05a047f4",
         "filename": "ios/web/download/download_task_impl.mm",
         "patchSetId": 11
@@ -127,6 +247,24 @@
       "writtenOn": "2017-11-14T10:05:50Z",
       "side": 1,
       "message": "It is kind of surprising that the callback is invoked on the IO thread. I think this should be documented, or the result should be forwarded to the invoking thread (probably using base::ThreadTaskRunnerHandle to get the queue where the callback will be invoked):\n\n  if (@available(iOS 11, *)) {\n    __block NSArray\u003cNSHTTPCookie*\u003e block_cookies \u003d nil;\n    WebThread::PostTaskAndReply(\n        WebThread::IO, FROM_HERE, base::Bind(\n            \u0026DownloadTaskImpl::GetWKCookies, weak_factory_.GetWeakPtr(),\n            base::BindBlockArc(^(NSArray\u003cNSHTTPCookie*\u003e cookies) {\n                block_cookies \u003d cookies;\n            })),\n        base::BindBlockArc(^{ callback.Run(block_cookies); }));\n  }\n\nThough if we decide to invoke the callback on invoking thread, then it is probably best to inline GetWKCookies in the base::BindBlockArc as suggested in next comment.",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f45d60de_39a0d864",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T21:51:34Z",
+      "side": 1,
+      "message": "I will enforce stricter threading API contracts. See my next comment as explanation.",
+      "parentUuid": "7b46803a_05a047f4",
       "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "aa5d2ef4_30f2c71f",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T21:51:34Z",
+      "side": 1,
+      "message": "At this point I think that we should not use SEQUENCE_CHECKER. In practice I can\u0027t think of any scenario where DownloadTask and DownloadController are used on a background thread, simply because BrowserState is UI thread only. Also DownloadTask and DownloadController API contract tells that objects can only be used on UI thread (because of BrowserState restrictions). I don\u0027t think there is much value in allowing DownloadTaskImpl or DownloadControllerImpl to run on any thread. Making Impl objects UI thread only will force existing API contracts and will make the implementation simpler. \n\nIt would be possible to use SEQUENCE_CHECKER, but it will make the implementation much more complex without clear benefits. If you disagree, then could you please schedule a VC meeting. It will be easier to find a common ground via VC and avoid longer code review.",
+      "parentUuid": "3c19c71e_54391d45",
+      "range": {
+        "startLine": 289,
+        "startChar": 15,
+        "endLine": 289,
+        "endChar": 75
+      },
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8103b78_77b7a1d8",
         "filename": "ios/web/download/download_task_impl_unittest.mm",
         "patchSetId": 11
@@ -167,6 +329,24 @@
       "writtenOn": "2017-11-14T06:46:37Z",
       "side": 1,
       "message": "Should you just use std::make_unique?",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "056793bb_bd59477e",
+        "filename": "ios/web/download/download_task_impl_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T21:51:34Z",
+      "side": 1,
+      "message": "Done. Thank you for catching this!",
+      "parentUuid": "e8103b78_77b7a1d8",
       "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "9e377cba_8edb444c",
+        "filename": "ios/web/download/download_task_impl_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T21:51:34Z",
+      "side": 1,
+      "message": "I agree in abstract. But I don\u0027t think that \"no further calls to the DownloadTaskImpl after an Expect\" part is possible for these tests. Some tests need arrange-\u003eact-\u003eassert-\u003eact-\u003eassert-\u003eact-\u003eassert sequence because DownloadItem is a state machine. And those tests need to call act-\u003eassert for every state (first chunk was downloaded, second chunk was downloaded, download has been completed).",
+      "parentUuid": "d5c6025b_8e718153",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15c19ccd_b1afcab9",
         "filename": "ios/web/download/download_task_impl_unittest.mm",
         "patchSetId": 11
@@ -207,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "b7591cca_92292cb0",
+        "filename": "ios/web/download/download_task_impl_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T21:51:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15c19ccd_b1afcab9",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80012b8d_eaecc176",
         "filename": "ios/web/download/download_task_impl_unittest.mm",
         "patchSetId": 11
@@ -221,6 +437,24 @@
       "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3f7bc7_2f2885fa",
+        "filename": "ios/web/download/download_task_impl_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T21:51:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80012b8d_eaecc176",
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -247,6 +481,30 @@
     },
     {
       "key": {
+        "uuid": "2c54597d_ff7474b5",
+        "filename": "ios/web/download/download_task_impl_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T21:51:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa5a8e45_4c86635d",
+      "range": {
+        "startLine": 419,
+        "startChar": 52,
+        "endLine": 419,
+        "endChar": 54
+      },
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e2820ae_843f4962",
         "filename": "ios/web/download/download_task_impl_unittest.mm",
         "patchSetId": 11
@@ -270,6 +528,30 @@
     },
     {
       "key": {
+        "uuid": "26ebb5b7_ca910d88",
+        "filename": "ios/web/download/download_task_impl_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T21:51:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e2820ae_843f4962",
+      "range": {
+        "startLine": 429,
+        "startChar": 12,
+        "endLine": 429,
+        "endChar": 22
+      },
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c6bf6b4_9a6a115c",
         "filename": "ios/web/test/fakes/crw_fake_nsurl_session_task.mm",
         "patchSetId": 11
@@ -290,6 +572,30 @@
       "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7520f87_daa2936a",
+        "filename": "ios/web/test/fakes/crw_fake_nsurl_session_task.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-14T21:51:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c6bf6b4_9a6a115c",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "42099ed96fe539e730aca0bba9fda839846664b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
