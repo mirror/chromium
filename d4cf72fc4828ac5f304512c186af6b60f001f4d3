@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3d3efe88_73c42f01",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/option-text-setter.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-11-14T16:23:04Z",
+      "side": 1,
+      "message": "I am not sure we can do that. I think this is more of an implementation detail. I don\u0027t think there is anything for or against choosing to reuse an existing text node or removing the old one and adding a new one.\nDo you think there is anything in the spec indicating which way to go? I can make it a wpt test but fear it would fail in other implementations for no good reason.",
+      "parentUuid": "9a6a7bde_22d46b1b",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 16
+      },
+      "revId": "d4cf72fc4828ac5f304512c186af6b60f001f4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53ecfa8f_52bfc4bd",
         "filename": "third_party/WebKit/LayoutTests/fast/dom/option-text-setter.html",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cfd6a9ee_06d667c3",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/option-text-setter.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-11-14T16:23:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53ecfa8f_52bfc4bd",
+      "range": {
+        "startLine": 11,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "d4cf72fc4828ac5f304512c186af6b60f001f4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22d491df_c17b1710",
         "filename": "third_party/WebKit/LayoutTests/fast/dom/option-text-setter.html",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "d4cf72fc4828ac5f304512c186af6b60f001f4d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c356a899_7435d8f3",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/option-text-setter.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-11-14T16:23:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22d491df_c17b1710",
+      "range": {
+        "startLine": 17,
+        "startChar": 17,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "d4cf72fc4828ac5f304512c186af6b60f001f4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
