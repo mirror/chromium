@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "27327e8e_69462712",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/NearOomMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-14T01:08:50Z",
+      "side": 1,
+      "message": "nit: We should have a better description here explaining that this collects Java signals to apply to the OOM intervention.",
+      "range": {
+        "startLine": 14,
+        "startChar": 19,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "ee074fda04689353d493ae1f9a3fb1e946c004e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3d31eaf_048fac1b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/NearOomMonitor.java",
         "patchSetId": 2
@@ -42,6 +65,53 @@
         "startChar": 6,
         "endLine": 16,
         "endChar": 20
+      },
+      "revId": "ee074fda04689353d493ae1f9a3fb1e946c004e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39fbfabb_8008a377",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/NearOomMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-14T01:08:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "305d5bb0_fd14e381",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "ee074fda04689353d493ae1f9a3fb1e946c004e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4a71acb_673608ca",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-14T01:08:50Z",
+      "side": 1,
+      "message": "Aren\u0027t trivial getters usually placed in .h files inline?",
+      "range": {
+        "startLine": 104,
+        "startChar": 21,
+        "endLine": 104,
+        "endChar": 47
       },
       "revId": "ee074fda04689353d493ae1f9a3fb1e946c004e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
