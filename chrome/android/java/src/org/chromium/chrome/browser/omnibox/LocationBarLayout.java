@@ -77,6 +77,7 @@ import org.chromium.chrome.browser.page_info.PageInfoPopup;
 import org.chromium.chrome.browser.preferences.privacy.PrivacyPreferencesManager;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
+import org.chromium.chrome.browser.search_engines.TemplateUrlService.LoadListener;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.toolbar.ToolbarActionModeCallback;
 import org.chromium.chrome.browser.toolbar.ToolbarDataProvider;
@@ -110,9 +111,10 @@ import java.util.List;
  * This class represents the location bar where the user types in URLs and
  * search terms.
  */
-public class LocationBarLayout extends FrameLayout
-        implements OnClickListener, OnSuggestionsReceivedListener, LocationBar, FakeboxDelegate,
-                   WindowAndroid.IntentCallback, FadingBackgroundView.FadingViewObserver {
+public class LocationBarLayout
+        extends FrameLayout implements OnClickListener, OnSuggestionsReceivedListener, LocationBar,
+                                       FakeboxDelegate, WindowAndroid.IntentCallback,
+                                       FadingBackgroundView.FadingViewObserver, LoadListener {
     private static final String TAG = "cr_LocationBar";
 
     // Delay triggering the omnibox results upon key press to allow the location bar to repaint
@@ -167,8 +169,9 @@ public class LocationBarLayout extends FrameLayout
     private ObserverList<UrlFocusChangeListener> mUrlFocusChangeListeners = new ObserverList<>();
 
     protected boolean mNativeInitialized;
+    private boolean mTemplateServiceInitialized;
 
-    private final List<Runnable> mDeferredNativeRunnables = new ArrayList<Runnable>();
+    private final List<Runnable> mDeferredTemplateServiceRunnables = new ArrayList<Runnable>();
 
     // The type of the navigation button currently showing.
     private NavigationButtonType mNavigationButtonType;
@@ -342,10 +345,10 @@ public class LocationBarLayout extends FrameLayout
                     && LocationBarLayout.this.getVisibility() == VISIBLE) {
                 UiUtils.hideKeyboard(mUrlBar);
                 final String urlText = mUrlBar.getTextWithAutocomplete();
-                if (mNativeInitialized) {
+                if (mTemplateServiceInitialized) {
                     findMatchAndLoadUrl(urlText);
                 } else {
-                    mDeferredNativeRunnables.add(new Runnable() {
+                    mDeferredTemplateServiceRunnables.add(new Runnable() {
                         @Override
                         public void run() {
                             findMatchAndLoadUrl(urlText);
@@ -846,6 +849,15 @@ public class LocationBarLayout extends FrameLayout
         return mWindowDelegate;
     }
 
+    @Override
+    public void onTemplateUrlServiceLoaded() {
+        mTemplateServiceInitialized = true;
+        for (Runnable deferredRunnable : mDeferredTemplateServiceRunnables) {
+            post(deferredRunnable);
+        }
+        mDeferredTemplateServiceRunnables.clear();
+    }
+
     /**
      * Handles native dependent initialization for this class.
      */
@@ -862,13 +874,10 @@ public class LocationBarLayout extends FrameLayout
 
         mOmniboxPrerender = new OmniboxPrerender();
 
-        for (Runnable deferredRunnable : mDeferredNativeRunnables) {
-            post(deferredRunnable);
-        }
-        mDeferredNativeRunnables.clear();
-
         mUrlBar.onNativeLibraryReady();
         updateVisualsForState();
+
+        TemplateUrlService.getInstance().registerLoadListener(this);
     }
 
     /**
@@ -1067,7 +1076,7 @@ public class LocationBarLayout extends FrameLayout
                     && TemplateUrlService.getInstance().isDefaultSearchEngineGoogle()) {
                 GeolocationHeader.primeLocationForGeoHeader();
             } else {
-                mDeferredNativeRunnables.add(new Runnable() {
+                mDeferredTemplateServiceRunnables.add(new Runnable() {
                     @Override
                     public void run() {
                         if (TemplateUrlService.getInstance().isDefaultSearchEngineGoogle()) {
@@ -1078,10 +1087,10 @@ public class LocationBarLayout extends FrameLayout
             }
         }
 
-        if (mNativeInitialized) {
+        if (mTemplateServiceInitialized) {
             startZeroSuggest();
         } else {
-            mDeferredNativeRunnables.add(new Runnable() {
+            mDeferredTemplateServiceRunnables.add(new Runnable() {
                 @Override
                 public void run() {
                     if (TextUtils.isEmpty(mUrlBar.getTextWithAutocomplete())) {
@@ -1190,10 +1199,10 @@ public class LocationBarLayout extends FrameLayout
                             preventAutocomplete, mUrlFocusedFromFakebox);
                 }
             };
-            if (mNativeInitialized) {
+            if (mTemplateServiceInitialized) {
                 postDelayed(mRequestSuggestions, OMNIBOX_SUGGESTION_START_DELAY_MS);
             } else {
-                mDeferredNativeRunnables.add(mRequestSuggestions);
+                mDeferredTemplateServiceRunnables.add(mRequestSuggestions);
             }
         }
     }
@@ -1876,7 +1885,7 @@ public class LocationBarLayout extends FrameLayout
         if (mRequestSuggestions != null) {
             // There is a request for suggestions either waiting for the native side
             // to start, or on the message queue. Remove it from wherever it is.
-            if (!mDeferredNativeRunnables.remove(mRequestSuggestions)) {
+            if (!mDeferredTemplateServiceRunnables.remove(mRequestSuggestions)) {
                 removeCallbacks(mRequestSuggestions);
             }
             mRequestSuggestions = null;
@@ -1918,8 +1927,8 @@ public class LocationBarLayout extends FrameLayout
     public void setSearchQuery(final String query) {
         if (TextUtils.isEmpty(query)) return;
 
-        if (!mNativeInitialized) {
-            mDeferredNativeRunnables.add(new Runnable() {
+        if (!mTemplateServiceInitialized) {
+            mDeferredTemplateServiceRunnables.add(new Runnable() {
                 @Override
                 public void run() {
                     setSearchQuery(query);
