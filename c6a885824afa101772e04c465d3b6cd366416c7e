@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "969f45e2_16663299",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-14T21:17:25Z",
+      "side": 1,
+      "message": "Tested. It behaviors as normal type browser window. Thank you for the detailed steps.",
+      "parentUuid": "d7bd7f63_b381f780",
+      "revId": "c6a885824afa101772e04c465d3b6cd366416c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26460d72_3b54ee1f",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 7
