@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20c1e4d1_2e914493",
+        "filename": "ui/chromeos/user_activity_power_manager_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-14T00:16:19Z",
+      "side": 1,
+      "message": "nit: rename to MaybeNotifyUserActivity to indicate that we won\u0027t necessarily notify probably also worthwhile to add a comment here documenting what it does.",
+      "revId": "4c032ff3680b5b4267ebcbc4c5f70e48882e39bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
