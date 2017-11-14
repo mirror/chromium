@@ -258,6 +258,7 @@ AppListView::AppListView(AppListViewDelegate* delegate)
           std::make_unique<StateAnimationMetricsReporter>()) {
   CHECK(delegate);
   delegate_->GetSpeechUI()->AddObserver(this);
+  model_->RecordUserJourneyStartTime();
 
   if (is_fullscreen_app_list_enabled_) {
     display_observer_.Add(display::Screen::GetScreen());
