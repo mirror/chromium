@@ -16,6 +16,24 @@
       "revId": "b1a15a5e0b3aedb045c99d9ae4db73bcd29ea169",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c63c8be_eb561be5",
+        "filename": "chromeos/dbus/gsm_sms_client_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T04:04:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dd9ae6a_cbf2212a",
+      "revId": "b1a15a5e0b3aedb045c99d9ae4db73bcd29ea169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

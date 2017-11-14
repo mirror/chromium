@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92c035b5_4d65daca",
+        "filename": "chromeos/dbus/gsm_sms_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-14T04:04:38Z",
+      "side": 1,
+      "message": "Note: Hmm, ATM, there seems no simpler way to take the number of keys (maybe yet)...",
+      "revId": "3b1fced3a72d002bfc1e8e00ea8ecfa7df66dfe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
