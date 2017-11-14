@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f658fbd7_5e37ef98",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-14T02:14:53Z",
+      "side": 1,
+      "message": "I believe this call still needs to be bound to GetWeakPtr(), so we still need to keep the WeakPtrFactory in this class. Because we don\u0027t have any guarantees about if/when an invocation of request_context_producer_ will conclude relative to destruction of this object.",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 28
+      },
+      "revId": "3b4e2dbf5aee2c56f114ece1d82300d4897a4127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e3cc5fa_fae13924",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-14T02:14:53Z",
+      "side": 1,
+      "message": "Would you be able to shuffle these *bullet points to start on new lines / indented?",
+      "range": {
+        "startLine": 46,
+        "startChar": 44,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "3b4e2dbf5aee2c56f114ece1d82300d4897a4127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf97619e_5ba2c0f8",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-14T02:14:53Z",
+      "side": 1,
+      "message": "hmm remove this \"*\" character, seems not to be the start of a bullet point",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 9
+      },
+      "revId": "3b4e2dbf5aee2c56f114ece1d82300d4897a4127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
