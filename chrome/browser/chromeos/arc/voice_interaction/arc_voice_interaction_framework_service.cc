@@ -158,18 +158,18 @@ std::unique_ptr<ui::LayerTreeOwner> CreateLayerTreeForSnapshot(
 void EncodeAndReturnImage(
     ArcVoiceInteractionFrameworkService::CaptureFullscreenCallback callback,
     std::unique_ptr<ui::LayerTreeOwner> old_layer_owner,
-    const gfx::Image& image) {
+    gfx::Image image) {
   old_layer_owner.reset();
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE,
       base::TaskTraits{base::MayBlock(), base::TaskPriority::USER_BLOCKING},
       base::BindOnce(
-          [](const gfx::Image& image) -> std::vector<uint8_t> {
+          [](gfx::Image image) -> std::vector<uint8_t> {
             std::vector<uint8_t> res;
             gfx::JPEG1xEncodedDataFromImage(image, 100, &res);
             return res;
           },
-          image),
+          std::move(image)),
       std::move(callback));
 }
 
