@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fa0101f_c01f356c",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-14T23:35:21Z",
+      "side": 1,
+      "message": "This might be a question for Charlie and/or Camille, but these DCHECKs seem overly strict to me. A throttle can call CancelDeferredNavigation with an error code of its choice, so why shouldn\u0027t we accept an error code and error page content of the throttle\u0027s choice here? That is, it seems to me that the only DCHECK necessary should be to enforce that there is no error content for ERR_ABORTED:\n\nif (result.net_error_code() \u003d\u003d net::ERR_ABORTED)\n  DCHECK(!result.error_page_content().has_value());",
+      "range": {
+        "startLine": 963,
+        "startChar": 4,
+        "endLine": 969,
+        "endChar": 66
+      },
+      "revId": "93a8ecb35fa16cf2a10364d64dcbe8901044545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea01988_60628369",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-14T23:35:21Z",
+      "side": 1,
+      "message": "Same here, this seems overly strict and it seems like we should accept other error codes along with error page HTML for them.",
+      "range": {
+        "startLine": 1074,
+        "startChar": 4,
+        "endLine": 1075,
+        "endChar": 57
+      },
+      "revId": "93a8ecb35fa16cf2a10364d64dcbe8901044545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
