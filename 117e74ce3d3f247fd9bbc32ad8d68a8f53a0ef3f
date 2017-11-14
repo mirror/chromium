@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "806a3d1b_d1876c01",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-processor-state.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-14T23:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54ee7045_da489a20",
+      "revId": "117e74ce3d3f247fd9bbc32ad8d68a8f53a0ef3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3298a70e_f1530249",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-processor-state.html",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-14T21:50:10Z",
       "side": 1,
       "message": "Isn\u0027t this a bit flaky? Could the construction be super fast and be finished by now?",
+      "revId": "117e74ce3d3f247fd9bbc32ad8d68a8f53a0ef3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "158bf8aa_374a39eb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-processor-state.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-14T23:13:53Z",
+      "side": 1,
+      "message": "Okay, do you have any suggestion? Since we can\u0027t suspend the rendering thread and check the state of the node, I am not sure it is a solvable problem.",
+      "parentUuid": "3298a70e_f1530249",
       "revId": "117e74ce3d3f247fd9bbc32ad8d68a8f53a0ef3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "84435c83_274d4701",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-processor-state.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-14T23:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26ffd367_6e4ea699",
+      "revId": "117e74ce3d3f247fd9bbc32ad8d68a8f53a0ef3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e090b936_2a37a96e",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b5974120_5d276b55",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-14T23:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e090b936_2a37a96e",
+      "revId": "117e74ce3d3f247fd9bbc32ad8d68a8f53a0ef3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e105db8_62b001f0",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "117e74ce3d3f247fd9bbc32ad8d68a8f53a0ef3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8577ae7_72926bf6",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-14T23:13:53Z",
+      "side": 1,
+      "message": "Removed from this CL.",
+      "parentUuid": "3e105db8_62b001f0",
+      "revId": "117e74ce3d3f247fd9bbc32ad8d68a8f53a0ef3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
