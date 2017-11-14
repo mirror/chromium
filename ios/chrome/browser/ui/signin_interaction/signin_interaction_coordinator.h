@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "base/ios/block_types.h"
 #include "components/signin/core/browser/signin_metrics.h"
 #include "ios/chrome/browser/signin/constants.h"
 
@@ -73,11 +74,11 @@ class ChromeBrowserState;
                        completion:(signin_ui::CompletionCallback)completion;
 
 // Cancels any current process. Calls the completion callback when done.
-- (void)cancel;
+- (void)cancelWithCompletion:(ProceduralBlock)completion;
 
 // Cancels any current process and dismisses any UI. Calls the completion
 // callback when done.
-- (void)cancelAndDismiss;
+- (void)cancelAndDismissWithCompletion:(ProceduralBlock)completion;
 
 // Indicates whether this coordinator is currently presenting UI.
 @property(nonatomic, assign, readonly, getter=isActive) BOOL active;

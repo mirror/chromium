@@ -80,7 +80,7 @@ using signin_ui::CompletionCallback;
   return self;
 }
 
-- (void)cancel {
+- (void)cancelWithCompletion:(ProceduralBlock)completion {
 // Cancelling and dismissing the |identityInteractionManager_| may call the
 // |completionCallback_| which could lead to |self| being released before the
 // end of this method. |self| is retained here to prevent this from happening.
@@ -93,14 +93,20 @@ using signin_ui::CompletionCallback;
   isCancelling_ = YES;
   [self.presenter dismissError];
   [identityInteractionManager_ cancelAndDismissAnimated:NO];
-  [signinViewController_ cancel];
-  isCancelling_ = NO;
+  [signinViewController_ cancelWithCompletion:^{
+    isCancelling_ = NO;
+    if (completion)
+      completion();
+  }];
 }
 
-- (void)cancelAndDismiss {
+- (void)cancelAndDismissWithCompletion:(ProceduralBlock)completion {
   isDismissing_ = YES;
-  [self cancel];
-  isDismissing_ = NO;
+  [self cancelWithCompletion:^{
+    isDismissing_ = NO;
+    if (completion)
+      completion();
+  }];
 }
 
 - (void)signInWithIdentity:(ChromeIdentity*)identity

@@ -14,7 +14,6 @@
 @class DeviceSharingManager;
 class GURL;
 @class SettingsNavigationController;
-@class SigninInteractionController;
 @class TabModel;
 @protocol TabSwitcher;
 
