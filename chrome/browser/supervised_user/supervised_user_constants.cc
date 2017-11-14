@@ -31,4 +31,6 @@ const char kChromeOSAvatarIndex[] = "chromeos-avatar-index";
 
 const char kChromeOSPasswordData[] = "chromeos-password-data";
 
+const char kAccountConsistencyRequired[] = "AccountConsistencyRequired";
+
 }  // namespace supervised_users
