@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0ade9ba_065c3b0f",
+        "filename": "tools/clang/scripts/download_objdump.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-14T17:07:07Z",
+      "side": 1,
+      "message": "Hmm, lld isn\u0027t part of this objdump package, so the check won\u0027t work. (E.g. lld would be upated by update.py, and we\u0027d never update objdump because lld is already up to date.)\n\nIt doesn\u0027t look like any of the tools in the package provide the exact version. I think the better way to do this is to include a \"stamp file\" in the tarball which includes the version, and the script would then check that file. That\u0027s how we do it for the clang package.",
+      "revId": "b5a0ceaab297928aff894320a38fa2fc9aca8499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
