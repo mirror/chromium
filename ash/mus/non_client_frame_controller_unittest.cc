@@ -6,7 +6,7 @@
 
 #include "ash/ash_layout_constants.h"
 #include "ash/mus/top_level_window_factory.h"
-#include "ash/mus/window_manager_application.h"
+#include "ash/mus/window_manager_service.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/ash_test_helper.h"
 #include "cc/base/math_util.h"
@@ -22,7 +22,6 @@
 #include "ui/views/widget/widget.h"
 
 namespace ash {
-namespace mus {
 
 namespace {
 
@@ -106,8 +105,8 @@ class NonClientFrameControllerTest : public AshTestBase {
 
 TEST_F(NonClientFrameControllerTest, ContentRegionNotDrawnForClient) {
   std::map<std::string, std::vector<uint8_t>> properties;
-  std::unique_ptr<aura::Window> window(mus::CreateAndParentTopLevelWindow(
-      ash_test_helper()->window_manager_app()->window_manager(),
+  std::unique_ptr<aura::Window> window(CreateAndParentTopLevelWindow(
+      ash_test_helper()->window_manager_service()->window_manager(),
       ui::mojom::WindowType::WINDOW, &properties));
   ASSERT_TRUE(window);
 
@@ -180,5 +179,4 @@ TEST_F(NonClientFrameControllerTest, ContentRegionNotDrawnForClient) {
   }
 }
 
-}  // namespace mus
 }  // namespace ash

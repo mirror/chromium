@@ -68,7 +68,6 @@
 #include "ui/wm/public/activation_client.h"
 
 namespace ash {
-namespace mus {
 
 struct WindowManager::DragState {
   // An image representation of the contents of the current drag and drop
@@ -301,8 +300,7 @@ void WindowManager::OnLostConnection(aura::WindowTreeClient* client) {
     return;
   }
   Shutdown();
-  // TODO(sky): this case should trigger shutting down WindowManagerApplication
-  // too.
+  // TODO(sky): this case should trigger shutting down WindowManagerService too.
 }
 
 void WindowManager::OnPointerEventObserved(const ui::PointerEvent& event,
@@ -529,5 +527,4 @@ void WindowManager::OnEventBlockedByModalWindow(aura::Window* window) {
   AnimateWindow(window, ::wm::WINDOW_ANIMATION_TYPE_BOUNCE);
 }
 
-}  // namespace mus
 }  // namespace ash

@@ -11,7 +11,6 @@
 #include "base/macros.h"
 
 namespace ash {
-namespace mus {
 
 // DragWindowResizer is a decorator of WindowResizer and adds the ability to
 // drag windows across displays.
@@ -32,7 +31,6 @@ class DragWindowResizer : public WindowResizer {
   DISALLOW_COPY_AND_ASSIGN(DragWindowResizer);
 };
 
-}  // namespace mus
 }  // namespace ash
 
 #endif  // ASH_MUS_DRAG_WINDOW_RESIZER_H_
