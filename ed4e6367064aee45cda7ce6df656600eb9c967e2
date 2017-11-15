@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94464227_aa7b4f6a",
+        "filename": "chrome/browser/resources/chromeos/input_method/google_xkb_manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2017-11-15T05:55:20Z",
+      "side": 1,
+      "message": "no need to add de-LI here?",
+      "range": {
+        "startLine": 432,
+        "startChar": 11,
+        "endLine": 432,
+        "endChar": 12
+      },
+      "revId": "ed4e6367064aee45cda7ce6df656600eb9c967e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
