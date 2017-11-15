@@ -16,11 +16,32 @@ SecurityStyleExplanation::SecurityStyleExplanation(
       mixed_content_type(blink::WebMixedContentContextType::kNotMixedContent) {}
 
 SecurityStyleExplanation::SecurityStyleExplanation(
+    const std::string& title,
+    const std::string& summary,
+    const std::string& description)
+    : title(title),
+      summary(summary),
+      description(description),
+      mixed_content_type(blink::WebMixedContentContextType::kNotMixedContent) {}
+
+SecurityStyleExplanation::SecurityStyleExplanation(
     const std::string& summary,
     const std::string& description,
     scoped_refptr<net::X509Certificate> certificate,
     blink::WebMixedContentContextType mixed_content_type)
     : summary(summary),
+      description(description),
+      certificate(certificate),
+      mixed_content_type(mixed_content_type) {}
+
+SecurityStyleExplanation::SecurityStyleExplanation(
+    const std::string& title,
+    const std::string& summary,
+    const std::string& description,
+    scoped_refptr<net::X509Certificate> certificate,
+    blink::WebMixedContentContextType mixed_content_type)
+    : title(title),
+      summary(summary),
       description(description),
       certificate(certificate),
       mixed_content_type(mixed_content_type) {}

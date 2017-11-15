@@ -22,7 +22,16 @@ struct CONTENT_EXPORT SecurityStyleExplanation {
   SecurityStyleExplanation();
   SecurityStyleExplanation(const std::string& summary,
                            const std::string& description);
+  SecurityStyleExplanation(const std::string& title,
+                           const std::string& summary,
+                           const std::string& description);
   SecurityStyleExplanation(
+      const std::string& summary,
+      const std::string& description,
+      scoped_refptr<net::X509Certificate> certificate,
+      blink::WebMixedContentContextType mixed_content_type);
+  SecurityStyleExplanation(
+      const std::string& title,
       const std::string& summary,
       const std::string& description,
       scoped_refptr<net::X509Certificate> certificate,
@@ -31,6 +40,7 @@ struct CONTENT_EXPORT SecurityStyleExplanation {
   SecurityStyleExplanation& operator=(const SecurityStyleExplanation& other);
   ~SecurityStyleExplanation();
 
+  std::string title;
   std::string summary;
   std::string description;
   // |certificate| indicates that this explanation has an associated
