@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f938aac1_3d0d4f15",
+        "filename": "build/android/pylib/junit/junit_test_instance.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-15T23:10:45Z",
+      "side": 1,
+      "message": "nit: please alphabetize both this and the property.",
+      "revId": "a8041efbaa9e10421655871a4342a05b93024e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6105c877_f4f49542",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-15T23:10:45Z",
+      "side": 1,
+      "message": "If this is going to behave differently from --wait-for-java-debugger for instrumentation tests and gtest tests, I\u0027d prefer if the flag itself was different (--debug-socket?) to minimize confusion.",
+      "revId": "a8041efbaa9e10421655871a4342a05b93024e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf1a1c2_fc5d03c6",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-15T23:10:45Z",
+      "side": 1,
+      "message": "nit: Prefer enclosing parens to \\ continuation.",
+      "revId": "a8041efbaa9e10421655871a4342a05b93024e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6ef3f8_a756992b",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-15T23:10:45Z",
+      "side": 1,
+      "message": "super nit: remove this",
+      "revId": "a8041efbaa9e10421655871a4342a05b93024e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
