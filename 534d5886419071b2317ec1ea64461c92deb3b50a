@@ -2,6 +2,246 @@
   "comments": [
     {
       "key": {
+        "uuid": "32be7123_db93b989",
+        "filename": "chrome/renderer/autofill/form_autocomplete_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "By looking at the tests, do you see opportunities to add more test cases based on what you\u0027ve written?",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e95f9b4a_3432f0ba",
+        "filename": "chrome/renderer/autofill/form_autocomplete_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "Disabling tests is not great if we want to keep the existing functionality, no?",
+      "range": {
+        "startLine": 235,
+        "startChar": 29,
+        "endLine": 235,
+        "endChar": 38
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c8cd3b3_2f18305f",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "nit: if (is_same_document_navigation)\n       return;\n\nand perhaps combine with early return above",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90fe5a0e_316d7b91",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "curlies",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56547be_77bc98c5",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "curlies",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70d051a_41147eda",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "?? Should be TODO in the least",
+      "range": {
+        "startLine": 778,
+        "startChar": 4,
+        "endLine": 783,
+        "endChar": 8
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a066dad4_bc383bc6",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "FRAME_DETACHED",
+      "range": {
+        "startLine": 789,
+        "startChar": 28,
+        "endLine": 789,
+        "endChar": 41
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9d2135_3ced7cc9",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "not needed",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b519fd1b_79bc4eda",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "where is this used?",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bebeddb_3a9d2598",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "interacted_form_tracker_for_testing",
+      "range": {
+        "startLine": 113,
+        "startChar": 25,
+        "endLine": 113,
+        "endChar": 59
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7fef21_2998eefc",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "nit: \"Fires Mojo messages to the embedder for a given form submission.\"",
+      "range": {
+        "startLine": 164,
+        "startChar": 11,
+        "endLine": 164,
+        "endChar": 14
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d457dd4_a8701828",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "The format for TODO is TODO(crbug.com/xxxxxx). Helps keep track of work",
+      "range": {
+        "startLine": 246,
+        "startChar": 10,
+        "endLine": 246,
+        "endChar": 20
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18daac5e_9fa580e8",
         "filename": "components/autofill/content/renderer/autofill_agent.h",
         "patchSetId": 1
@@ -19,6 +259,201 @@
         "endLine": 279,
         "endChar": 0
       },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f2379c_6fe9e63a",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "No problem. In the case of \u003cform\u003e-less there is a multitude of \u003cinput\u003e elements to keep track of. We wouldn\u0027t want to assume submission if only one \u003cinput\u003e element disappears?",
+      "parentUuid": "18daac5e_9fa580e8",
+      "range": {
+        "startLine": 279,
+        "startChar": 51,
+        "endLine": 279,
+        "endChar": 0
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b02c1c_cfe9e069",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "Does this need to be a std::unique_ptr? I think it could be a straight member.",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f10f64_88bb3a30",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "we should have a todo to possibly move this out of \"password_manager\"",
+      "range": {
+        "startLine": 14,
+        "startChar": 48,
+        "endLine": 14,
+        "endChar": 64
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "342d078e_59e34bcf",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "I think it\u0027s fine to inline this below",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f03eba_20e1b5ab",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "can this be in the anonymous namespace?",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1433d39d_d46b8e07",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "I would initialize these in the .h file\n\nignore_text_changes_ \u003d false;\netc.",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 55,
+        "endChar": 38
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf6e74b_85cd17cd",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "curlies",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c70b795_05a92a12",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "add comment for this block",
+      "range": {
+        "startLine": 135,
+        "startChar": 6,
+        "endLine": 135,
+        "endChar": 31
+      },
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6400d2a8_af845977",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003cFormElementObserverCallback\u003e callback \u003d std::make_unique\u003cFormElementObserverCallback\u003e(this);",
+      "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6feb44f_7cbb9206",
+        "filename": "components/autofill/content/renderer/interacted_form_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T15:49:16Z",
+      "side": 1,
+      "message": "need?",
       "revId": "534d5886419071b2317ec1ea64461c92deb3b50a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
