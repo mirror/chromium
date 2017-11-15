@@ -132,7 +132,8 @@ using ::showcase_utils::Close;
 
 // Tests that the Menu will be closed on rotation from portrait to landscape and
 // viceversa.
-- (void)testRotation {
+// crbug.com/785351: Reenable this test.
+- (void)DISABLED_testRotation {
   // TODO(crbug.com/652464): Enable the test for iPad when rotation bug is
   // fixed.
   if (IsIPadIdiom()) {
@@ -165,7 +166,8 @@ using ::showcase_utils::Close;
 // Tests that the Regular SizeClass buttons appear when a rotation causes a
 // SizeClass change from Compact to Regular. E.g. iPhone Plus rotation from
 // portrait to landscape and viceversa.
-- (void)testRotationSizeClassChange {
+// crbug.com/785351: Reenable this test.
+- (void)DISABLED_testRotationSizeClassChange {
   // TODO(crbug.com/652464): Enable the test for iPad when rotation bug is
   // fixed.
   if (IsIPadIdiom()) {
