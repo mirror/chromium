@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "026b2f31_3ad19010",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-15T00:09:08Z",
+      "side": 1,
+      "message": "nit: Use a * or - or even just an indent to make it easier to read.",
+      "revId": "0865ad0701133d12d1717565a5c1d57079e9a30b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
