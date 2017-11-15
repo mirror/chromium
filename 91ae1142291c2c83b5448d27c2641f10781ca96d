@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9e43fa1_b21b587a",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-15T03:36:34Z",
+      "side": 1,
+      "message": "That was my initial code, but it won\u0027t compile because of this: https://www.chromium.org/developers/coding-style/chromium-style-checker-errors#TOC-Constructor-Destructor-Errors\n\nI must define an out-of-line constructor and copy-constructor for this class.",
+      "parentUuid": "a17bde62_ee17d85b",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 27
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b022b20_250f1cf0",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Or just omit the method from the class definition entirely (don\u0027t declare or define it a copy constructor): it\u0027s a trivially copyable class so bytewise copy is fine. http://en.cppreference.com/w/cpp/language/copy_constructor#Trivial_copy_constructor",
       "parentUuid": "0b2aa6f3_acc6123a",
+      "range": {
+        "startLine": 182,
+        "startChar": 1,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "263eab69_081dca1e",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-15T03:36:34Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "d7838470_07ac5796",
       "range": {
         "startLine": 182,
         "startChar": 1,
@@ -238,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "f84f1962_40d9f99a",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-15T03:36:34Z",
+      "side": 1,
+      "message": "You\u0027re right it\u0027s not even used in the codebase.\nI had a chat with Leo and it won\u0027t be used by mobile either. So I can remove it.",
+      "parentUuid": "ecb6851a_e92501c7",
+      "range": {
+        "startLine": 431,
+        "startChar": 13,
+        "endLine": 431,
+        "endChar": 29
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2682f555_6407bffc",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 3
@@ -308,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "f751ad14_8c3a76e2",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-15T03:36:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "875b0cee_452c3cd7",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 6
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0220ace4_b5247d1c",
         "filename": "components/translate/core/browser/translate_prefs.h",
         "patchSetId": 3
@@ -331,6 +427,30 @@
     },
     {
       "key": {
+        "uuid": "0051b0b2_1ee4bd67",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-15T03:36:34Z",
+      "side": 1,
+      "message": "Member variable has been removed.",
+      "parentUuid": "0220ace4_b5247d1c",
+      "range": {
+        "startLine": 94,
+        "startChar": 23,
+        "endLine": 94,
+        "endChar": 24
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4b51cf9_94469e4f",
         "filename": "components/translate/core/browser/translate_prefs.h",
         "patchSetId": 3
@@ -351,6 +471,30 @@
       "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f30971_790385ea",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-15T03:36:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d4b51cf9_94469e4f",
+      "range": {
+        "startLine": 96,
+        "startChar": 25,
+        "endLine": 96,
+        "endChar": 26
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
