@@ -42,3 +42,11 @@ interface AudioOutputStreamProvider {
   Acquire(AudioOutputStream& output_stream, AudioOutputStreamClient client, AudioParameters params)
   => (handle<shared_buffer> shared_buffer, handle socket_descriptor);
 };
+
+interface AudioOutputStreamObserver {
+  // An AudioOutputStreamObserver gets notifications about events related to an
+  // AudioOutputStream
+  DidChangeAudibleState(bool is_audible);
+  DidStartPlaying();
+  DidStopPlaying();
+};
