@@ -238,6 +238,30 @@
       "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "104c9294_4c5c4a11",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-15T15:53:23Z",
+      "side": 1,
+      "message": "\u003e We can call |context_provider-\u003eGetGrContext()-\u003eresetContext()| here or add |blink::WebGraphicsContext3DProvider::InvalidateGrContext()|. WDYT?\n\nPlease feel free to add the method to WGC3DProvider. It is just a blink wrapper of the other type, not meant to be different.\n\nAre you sure that DCHECK is from this patch? Were the tests just not starting a compositor before this patch? If it is this CL I\u0027m afraid you may need to bisect what is causing it by reconstructing the patch in bits until it occurs, perhaps with prints along the way to see where things differ.",
+      "parentUuid": "6ea5bd18_e4068c80",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 51
+      },
+      "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
