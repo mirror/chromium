@@ -104,6 +104,24 @@
       "revId": "a35f0a0dc43956808fab7415377095819968a139",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b85a93d_47d2ca13",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-15T21:32:35Z",
+      "side": 1,
+      "message": "The DCHECK is fine, but the if statement is not needed. In general we shouldn\u0027t have\ndefensive code that runs in production when possible.",
+      "parentUuid": "4e2e8dc6_deb30826",
+      "revId": "a35f0a0dc43956808fab7415377095819968a139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
