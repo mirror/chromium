@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ea2ee42c_c0566b7f",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-15T00:29:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ddae1a3_5480dbe0",
+      "revId": "a4f9a4ddfb70d5feb219bb4932ed3c1be190f314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "630cf9ac_567c5f43",
         "filename": "chrome/browser/extensions/extension_system_impl.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-14T19:33:25Z",
       "side": 1,
       "message": "Same as above.",
+      "range": {
+        "startLine": 462,
+        "startChar": 40,
+        "endLine": 462,
+        "endChar": 0
+      },
+      "revId": "a4f9a4ddfb70d5feb219bb4932ed3c1be190f314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3b7268_625eaed5",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-15T00:29:48Z",
+      "side": 1,
+      "message": "Why would we want to run this callback on the blocking pool?",
+      "parentUuid": "630cf9ac_567c5f43",
       "range": {
         "startLine": 462,
         "startChar": 40,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "4f247278_1229516c",
+        "filename": "components/update_client/component_unpacker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-15T00:29:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90854d21_919901df",
+      "range": {
+        "startLine": 76,
+        "startChar": 6,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "a4f9a4ddfb70d5feb219bb4932ed3c1be190f314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e92f4f18_1fd5bbbe",
         "filename": "extensions/browser/updater/update_data_provider.cc",
         "patchSetId": 2
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "51ae8b90_310ac27b",
+        "filename": "extensions/browser/updater/update_data_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-15T00:29:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e92f4f18_1fd5bbbe",
+      "range": {
+        "startLine": 71,
+        "startChar": 28,
+        "endLine": 71,
+        "endChar": 29
+      },
+      "revId": "a4f9a4ddfb70d5feb219bb4932ed3c1be190f314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dae0345_118988ab",
         "filename": "extensions/browser/updater/update_data_provider.cc",
         "patchSetId": 2
@@ -102,6 +192,24 @@
       "revId": "a4f9a4ddfb70d5feb219bb4932ed3c1be190f314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959ef93b_1b14ec93",
+        "filename": "extensions/browser/updater/update_data_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-15T00:29:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dae0345_118988ab",
+      "revId": "a4f9a4ddfb70d5feb219bb4932ed3c1be190f314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -125,6 +233,30 @@
       "revId": "a4f9a4ddfb70d5feb219bb4932ed3c1be190f314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b987d061_40839184",
+        "filename": "extensions/browser/updater/update_install_shim.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-15T00:29:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44db5aa2_88748cb4",
+      "range": {
+        "startLine": 117,
+        "startChar": 19,
+        "endLine": 117,
+        "endChar": 0
+      },
+      "revId": "a4f9a4ddfb70d5feb219bb4932ed3c1be190f314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
