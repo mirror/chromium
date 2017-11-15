@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcfd4e8e_079d3eb0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-15T19:30:41Z",
+      "side": 1,
+      "message": "recognition",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 24
+      },
+      "revId": "5f1f99daa1d91ec28e83b6ae25ded784580c98cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e5a800a_163326c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-15T19:30:41Z",
+      "side": 1,
+      "message": "UX specs?",
+      "range": {
+        "startLine": 7,
+        "startChar": 41,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "5f1f99daa1d91ec28e83b6ae25ded784580c98cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb76f114_eb5c6caf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-15T19:30:41Z",
+      "side": 1,
+      "message": "Is it at the bottom or below?",
+      "revId": "5f1f99daa1d91ec28e83b6ae25ded784580c98cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494ec136_dd207813",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-15T19:30:41Z",
+      "side": 1,
+      "message": "rotate?\nOr to be more rotated?",
+      "range": {
+        "startLine": 10,
+        "startChar": 45,
+        "endLine": 10,
+        "endChar": 52
+      },
+      "revId": "5f1f99daa1d91ec28e83b6ae25ded784580c98cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efedfd26_21ed04e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-15T19:30:41Z",
+      "side": 1,
+      "message": "Changed how? Is it larger, smaller, wider, etc.?",
+      "revId": "5f1f99daa1d91ec28e83b6ae25ded784580c98cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
