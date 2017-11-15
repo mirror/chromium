@@ -126,14 +126,15 @@ bool IsReservedAccelerator(const ui::KeyEvent* event) {
 ////////////////////////////////////////////////////////////////////////////////
 // Keyboard, public:
 
-Keyboard::Keyboard(KeyboardDelegate* delegate)
+Keyboard::Keyboard(KeyboardDelegate* delegate, Seat* seat)
     : delegate_(delegate),
+      seat_(seat),
       expiration_delay_for_pending_key_acks_(base::TimeDelta::FromMilliseconds(
           kExpirationDelayForPendingKeyAcksMs)),
       weak_ptr_factory_(this) {
   auto* helper = WMHelper::GetInstance();
   AddEventHandler();
-  helper->AddFocusObserver(this);
+  seat_->AddKeyboard(this);
   helper->AddTabletModeObserver(this);
   helper->AddInputDeviceEventObserver(this);
   OnWindowFocused(helper->GetFocusedWindow(), nullptr);
@@ -146,7 +147,7 @@ Keyboard::~Keyboard() {
     focus_->RemoveSurfaceObserver(this);
   auto* helper = WMHelper::GetInstance();
   RemoveEventHandler();
-  helper->RemoveFocusObserver(this);
+  seat_->RemoveKeyboard(this);
   helper->RemoveTabletModeObserver(this);
   helper->RemoveInputDeviceEventObserver(this);
 }

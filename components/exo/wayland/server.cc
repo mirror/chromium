@@ -73,6 +73,7 @@
 #include "components/exo/pointer.h"
 #include "components/exo/pointer_delegate.h"
 #include "components/exo/pointer_gesture_pinch_delegate.h"
+#include "components/exo/seat.h"
 #include "components/exo/shared_memory.h"
 #include "components/exo/shell_surface.h"
 #include "components/exo/sub_surface.h"
@@ -3342,43 +3343,69 @@ const struct wl_touch_interface touch_implementation = {touch_release};
 ////////////////////////////////////////////////////////////////////////////////
 // wl_seat_interface:
 
-void seat_get_pointer(wl_client* client, wl_resource* resource, uint32_t id) {
-  wl_resource* pointer_resource = wl_resource_create(
-      client, &wl_pointer_interface, wl_resource_get_version(resource), id);
+class WaylandSeatDelegate {
+ public:
+  WaylandSeatDelegate(wl_resource* resource)
+      : resource_(resource), seat_(new Seat()) {}
+  // Create new keybaord
+  void GetKeyboard(wl_client* client, uint32_t id) {
+#if BUILDFLAG(USE_XKBCOMMON)
+    uint32_t version = wl_resource_get_version(resource_);
+    wl_resource* keyboard_resource =
+        wl_resource_create(client, &wl_keyboard_interface, version, id);
 
-  SetImplementation(
-      pointer_resource, &pointer_implementation,
-      std::make_unique<Pointer>(new WaylandPointerDelegate(pointer_resource)));
+    WaylandKeyboardDelegate* delegate =
+        new WaylandKeyboardDelegate(keyboard_resource);
+    std::unique_ptr<Keyboard> keyboard =
+        std::make_unique<Keyboard>(delegate, seat_.get());
+    keyboard->AddObserver(delegate);
+    SetImplementation(keyboard_resource, &keyboard_implementation,
+                      std::move(keyboard));
+
+    // TODO(reveman): Keep repeat info synchronized with chromium and the host
+    // OS.
+    if (version >= WL_KEYBOARD_REPEAT_INFO_SINCE_VERSION)
+      wl_keyboard_send_repeat_info(keyboard_resource, 40, 500);
+#else
+    NOTIMPLEMENTED();
+#endif
+  }
+
+  // Create new pointer
+  void GetPointer(wl_client* client, uint32_t id) {
+    wl_resource* pointer_resource = wl_resource_create(
+        client, &wl_pointer_interface, wl_resource_get_version(resource_), id);
+
+    SetImplementation(pointer_resource, &pointer_implementation,
+                      std::make_unique<Pointer>(
+                          new WaylandPointerDelegate(pointer_resource)));
+  }
+
+  // Create new touch
+  void GetTouch(wl_client* client, uint32_t id) {
+    wl_resource* touch_resource = wl_resource_create(
+        client, &wl_touch_interface, wl_resource_get_version(resource_), id);
+
+    SetImplementation(
+        touch_resource, &touch_implementation,
+        std::make_unique<Touch>(new WaylandTouchDelegate(touch_resource)));
+  }
+
+ private:
+  wl_resource* const resource_;
+  scoped_refptr<Seat> seat_;
+};
+
+void seat_get_pointer(wl_client* client, wl_resource* resource, uint32_t id) {
+  GetUserDataAs<WaylandSeatDelegate>(resource)->GetPointer(client, id);
 }
 
 void seat_get_keyboard(wl_client* client, wl_resource* resource, uint32_t id) {
-#if BUILDFLAG(USE_XKBCOMMON)
-  uint32_t version = wl_resource_get_version(resource);
-  wl_resource* keyboard_resource =
-      wl_resource_create(client, &wl_keyboard_interface, version, id);
-
-  WaylandKeyboardDelegate* delegate =
-      new WaylandKeyboardDelegate(keyboard_resource);
-  std::unique_ptr<Keyboard> keyboard = std::make_unique<Keyboard>(delegate);
-  keyboard->AddObserver(delegate);
-  SetImplementation(keyboard_resource, &keyboard_implementation,
-                    std::move(keyboard));
-
-  // TODO(reveman): Keep repeat info synchronized with chromium and the host OS.
-  if (version >= WL_KEYBOARD_REPEAT_INFO_SINCE_VERSION)
-    wl_keyboard_send_repeat_info(keyboard_resource, 40, 500);
-#else
-  NOTIMPLEMENTED();
-#endif
+  GetUserDataAs<WaylandSeatDelegate>(resource)->GetKeyboard(client, id);
 }
 
 void seat_get_touch(wl_client* client, wl_resource* resource, uint32_t id) {
-  wl_resource* touch_resource = wl_resource_create(
-      client, &wl_touch_interface, wl_resource_get_version(resource), id);
-
-  SetImplementation(
-      touch_resource, &touch_implementation,
-      std::make_unique<Touch>(new WaylandTouchDelegate(touch_resource)));
+  GetUserDataAs<WaylandSeatDelegate>(resource)->GetTouch(client, id);
 }
 
 void seat_release(wl_client* client, wl_resource* resource) {
@@ -3394,7 +3421,8 @@ void bind_seat(wl_client* client, void* data, uint32_t version, uint32_t id) {
   wl_resource* resource = wl_resource_create(
       client, &wl_seat_interface, std::min(version, seat_version), id);
 
-  wl_resource_set_implementation(resource, &seat_implementation, data, nullptr);
+  SetImplementation(resource, &seat_implementation,
+                    std::make_unique<WaylandSeatDelegate>(resource));
 
   if (version >= WL_SEAT_NAME_SINCE_VERSION)
     wl_seat_send_name(resource, "default");
