@@ -1217,8 +1217,7 @@ void ProfileManager::DoFinalInitForServices(Profile* profile,
       chromeos::ProfileHelper::IsSigninProfile(profile)) {
     extensions_enabled = true;
   }
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          chromeos::switches::kDisableLockScreenApps) &&
+  if (chromeos::switches::LockScreenAppsEnabled() &&
       chromeos::ProfileHelper::IsLockScreenAppProfile(profile)) {
     extensions_enabled = true;
   }

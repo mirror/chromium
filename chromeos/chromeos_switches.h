@@ -61,6 +61,7 @@ CHROMEOS_EXPORT extern const char kDisableEncryptionMigration[];
 CHROMEOS_EXPORT extern const char kDisableEolNotification[];
 CHROMEOS_EXPORT extern const char kDisableGaiaServices[];
 CHROMEOS_EXPORT extern const char kDisableHIDDetectionOnOOBE[];
+CHROMEOS_EXPORT extern const char kDisableLockScreenApps[];
 CHROMEOS_EXPORT extern const char kDisableLoginAnimations[];
 CHROMEOS_EXPORT extern const char kDisableMachineCertRequest[];
 CHROMEOS_EXPORT extern const char kDisableMtpWriteSupport[];
@@ -87,7 +88,7 @@ CHROMEOS_EXPORT extern const char kEnableExperimentalAccessibilityFeatures[];
 CHROMEOS_EXPORT extern const char kEnableExtensionAssetsSharing[];
 CHROMEOS_EXPORT extern const char kEnableExternalDriveRename[];
 CHROMEOS_EXPORT extern const char kEnableFirstRunUITransitions[];
-CHROMEOS_EXPORT extern const char kDisableLockScreenApps[];
+CHROMEOS_EXPORT extern const char kEnableLockScreenApps[];
 CHROMEOS_EXPORT extern const char kTetherStub[];
 CHROMEOS_EXPORT extern const char kDisableMdOobe[];
 CHROMEOS_EXPORT extern const char kDisableMdErrorScreen[];
@@ -179,6 +180,9 @@ CHROMEOS_EXPORT bool IsVoiceInteractionEnabled();
 
 // Returns true if Zip Archiver is enabled for unpacking files.
 CHROMEOS_EXPORT bool IsZipArchiverUnpackerEnabled();
+
+// Returns trus if lock screen apps are enabled.
+CHROMEOS_EXPORT bool LockScreenAppsEnabled();
 
 }  // namespace switches
 }  // namespace chromeos

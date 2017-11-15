@@ -3322,9 +3322,9 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(features::kCaptureThumbnailOnNavigatingAway)},
 
 #if defined(OS_CHROMEOS)
-    {"disable-lock-screen-apps", flag_descriptions::kDisableLockScreenAppsName,
-     flag_descriptions::kDisableLockScreenAppsDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(chromeos::switches::kDisableLockScreenApps)},
+    {"enable-lock-screen-apps", flag_descriptions::kEnableLockScreenAppsName,
+     flag_descriptions::kEnableLockScreenAppsDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(chromeos::switches::kEnableLockScreenApps)},
 #endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_ANDROID)

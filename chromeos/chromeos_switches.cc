@@ -197,6 +197,9 @@ const char kDisableGaiaServices[] = "disable-gaia-services";
 // Disables HID-detection OOBE screen.
 const char kDisableHIDDetectionOnOOBE[] = "disable-hid-detection-on-oobe";
 
+// Disables action handler apps (e.g. creating new notes) on lock screen.
+const char kDisableLockScreenApps[] = "disable-lock-screen-apps";
+
 // Avoid doing expensive animations upon login.
 const char kDisableLoginAnimations[] = "disable-login-animations";
 
@@ -282,8 +285,10 @@ const char kEnableFileManagerTouchMode[] = "enable-file-manager-touch-mode";
 // Enables animated transitions during first-run tutorial.
 const char kEnableFirstRunUITransitions[] = "enable-first-run-ui-transitions";
 
-// Enables action handler apps (e.g. creating new notes) on lock screen.
-const char kDisableLockScreenApps[] = "disable-lock-screen-apps";
+// Enables action handler apps (e.g. creating new notes) on lock screen - this
+// flag has precedence over kDisableLockScreenApps - if both flags are present,
+// lock screen apps will be enabled.
+const char kEnableLockScreenApps[] = "enable-lock-screen-apps";
 
 // Overrides Tether with stub service. Provide integer arguments for the number
 // of fake networks desired, e.g. 'tether-stub=2'.
@@ -627,6 +632,13 @@ bool IsZipArchiverUnpackerEnabled() {
   // Enabled by default.
   return !base::CommandLine::ForCurrentProcess()->HasSwitch(
       kDisableZipArchiverUnpacker);
+}
+
+bool LockScreenAppsEnabled() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+             kEnableLockScreenApps) ||
+         !base::CommandLine::ForCurrentProcess()->HasSwitch(
+             kDisableLockScreenApps);
 }
 
 }  // namespace switches
