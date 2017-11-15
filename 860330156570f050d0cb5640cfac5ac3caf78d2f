@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cb27d2d0_4669ba06",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T21:28:05Z",
+      "side": 1,
+      "message": "I don\u0027t believe this is true. When I navigate to a new domain in my browser, TabStripModelImpl::ReplaceWebContentsAt() isn\u0027t called.",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 32
+      },
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f71b7dd5_2dc9b4d2",
         "filename": "chrome/browser/resources/discards/discards.css",
         "patchSetId": 5
