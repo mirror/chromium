@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2880c9d0_68e0cb5b",
+        "filename": "components/viz/service/display/output_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-15T23:39:53Z",
+      "side": 1,
+      "message": "nit: you shouldn\u0027t need \u0026\u0026 here (and we disallow it in the style guide), just std::vector\u003cui::LatencyInfo\u003e info should be good enough provided you move at the callsite (which you need to anyway for this).",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f175b7_a15d3f3d",
+        "filename": "components/viz/service/display/output_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-15T23:39:53Z",
+      "side": 1,
+      "message": "nit: please add SwapLatencyInfo\u0026 operator\u003d(SwapLatencyInfo\u0026\u0026)  (rule-of-3).",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e914866_600d875a",
+        "filename": "components/viz/service/display_embedder/display_output_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-15T23:39:53Z",
+      "side": 1,
+      "message": "nit: const auto\u0026",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2929edd_726f492a",
+        "filename": "components/viz/service/display_embedder/display_output_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-15T23:39:53Z",
+      "side": 1,
+      "message": "Should we call latency_tracker_.OnGpuSwapBuffersCompleted (without the swap timing components) if we\u0027re going to discard it here?",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a6bad71_1fc392b5",
+        "filename": "components/viz/service/display_embedder/display_output_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-15T23:39:53Z",
+      "side": 1,
+      "message": "Mac doesn\u0027t use PassThroughImageTransportSurface (ImageTransportSurfaceOverlayMac instead), I think it needs to handle the swap_id_ logic there too",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c62baccb_bb4ed81a",
+        "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-15T23:39:53Z",
+      "side": 1,
+      "message": "nit: const auto\u0026",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096d9aa4_95e31642",
+        "filename": "content/browser/compositor/gpu_browser_compositor_output_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-15T23:39:53Z",
+      "side": 1,
+      "message": "Should we call RenderWidgetHostImpl::OnGpuSwapBuffersCompleted (without the swap timing components) if we\u0027re going to discard it here?",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a8f3d6_6cb1135e",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-15T23:39:53Z",
+      "side": 1,
+      "message": "nit: const auto\u0026",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cabe47b_77f75c62",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-15T23:39:53Z",
+      "side": 1,
+      "message": "Because this and l.1034 run on different threads without synchronization, this would be a data race. I think you want to pass a bool to this function, the same way you would have passed the LatencyInfo before.",
+      "revId": "1b5f0fd231d766ce02d8b38cea4590738fddd40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
