@@ -8,6 +8,7 @@
 #include <jni.h>
 
 #include "base/feature_list.h"
+#include "device/vr/features/features.h"
 
 namespace chrome {
 namespace android {
@@ -71,12 +72,14 @@ extern const base::Feature kTabReparenting;
 extern const base::Feature kTrustedWebActivity;
 extern const base::Feature kUserMediaScreenCapturing;
 extern const base::Feature kVideoPersistence;
-extern const base::Feature kVrBrowsingFeedback;
-extern const base::Feature kVrCustomTabBrowsing;
-extern const base::Feature kVrLaunchIntent;
 extern const base::Feature kWebPaymentsSingleAppUiSkip;
-extern const base::Feature kWebVrAutopresent;
+#if BUILDFLAG(ENABLE_VR)
+extern const base::Feature kVrBrowsingFeedback;
+extern const base::Feature kVrBrowsingInCustomTab;
+extern const base::Feature kVrLaunchIntents;
+extern const base::Feature kWebVrAutopresentFromIntent;
 extern const base::Feature kWebVRCardboardSupport;
+#endif
 
 }  // namespace android
 }  // namespace chrome
