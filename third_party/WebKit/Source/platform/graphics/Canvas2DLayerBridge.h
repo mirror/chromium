@@ -76,6 +76,7 @@ class PLATFORM_EXPORT Canvas2DLayerBridge : public cc::TextureLayerClient,
     kDisableAcceleration,
     kEnableAcceleration,
     kForceAccelerationForTesting,
+    kLowLatency,
   };
 
   Canvas2DLayerBridge(const IntSize&,
@@ -101,6 +102,7 @@ class PLATFORM_EXPORT Canvas2DLayerBridge : public cc::TextureLayerClient,
   bool Restore() override;
   WebLayer* Layer() override;
   bool IsAccelerated() const override;
+  bool IsComposited() const override;
   void SetFilterQuality(SkFilterQuality) override;
   void SetIsHidden(bool) override;
   void SetImageBuffer(ImageBuffer*) override;

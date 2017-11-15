@@ -25,6 +25,8 @@ class PLATFORM_EXPORT CanvasMetrics {
     kDisplayList2DCanvasFallbackToRaster = 7,
     kGPUAccelerated2DCanvasDeferralDisabled = 8,
     kGPUAccelerated2DCanvasSurfaceCreationFailed = 9,
+    kLowLatency2DCanvasImageBufferCreated = 10,
+    kLowLatency2DCanvasImageBufferCreationFailed = 11,
     kNumberOfUsages
   };
 

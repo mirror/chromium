@@ -73,7 +73,7 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
       destruction_in_progress_(false),
       filter_quality_(kLow_SkFilterQuality),
       is_hidden_(false),
-      is_deferral_enabled_(true),
+      is_deferral_enabled_(acceleration_mode != kLowLatency),
       software_rendering_while_hidden_(false),
       acceleration_mode_(acceleration_mode),
       color_params_(color_params) {
@@ -81,7 +81,9 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
   TRACE_EVENT_INSTANT0("test_gpu", "Canvas2DLayerBridgeCreation",
                        TRACE_EVENT_SCOPE_GLOBAL);
 
-  StartRecording();
+  if (is_deferral_enabled_)
+    StartRecording();
+
   Clear();
 }
 
@@ -138,8 +140,6 @@ bool Canvas2DLayerBridge::ShouldAccelerate(AccelerationHint hint) const {
 }
 
 bool Canvas2DLayerBridge::IsAccelerated() const {
-  if (acceleration_mode_ == kDisableAcceleration)
-    return false;
   if (IsHibernating())
     return false;
   if (software_rendering_while_hidden_)
@@ -151,6 +151,22 @@ bool Canvas2DLayerBridge::IsAccelerated() const {
   // immediate presentation of the canvas would result in the canvas being
   // accelerated. Presentation is assumed to be a 'PreferAcceleration'
   // operation.
+  return ShouldAccelerate(kPreferAcceleration);
+}
+
+bool Canvas2DLayerBridge::IsComposited() const {
+  if (IsHibernating())
+    return false;
+  if (software_rendering_while_hidden_)
+    return false;
+  if (resource_provider_)
+    return resource_provider_->CanPrepareTextureMailbox();
+
+  // If the exact rendering mode is not yet resolved, attempt to predict whether
+  // the resource provider is likely to be composited.
+  if (acceleration_mode_ == kLowLatency &&
+      SharedGpuContext::IsGpuCompositingEnabled())
+    return true;
   return ShouldAccelerate(kPreferAcceleration);
 }
 
@@ -259,17 +275,21 @@ CanvasResourceProvider* Canvas2DLayerBridge::GetOrCreateResourceProvider(
     return nullptr;  // re-creation will happen through restore()
   }
 
-  bool want_acceleration = ShouldAccelerate(hint);
-  if (CANVAS2D_BACKGROUND_RENDER_SWITCH_TO_CPU && IsHidden() &&
-      want_acceleration) {
-    want_acceleration = false;
-    software_rendering_while_hidden_ = true;
-  }
-
   CanvasResourceProvider::ResourceUsage usage =
-      want_acceleration
-          ? CanvasResourceProvider::kAcceleratedCompositedResourceUsage
-          : CanvasResourceProvider::kSoftwareCompositedResourceUsage;
+      CanvasResourceProvider::kSoftwareCompositedResourceUsage;
+  if (acceleration_mode_ == kLowLatency) {
+    usage = CanvasResourceProvider::kLowLatencyResourceUsage;
+  } else {
+    bool want_acceleration = ShouldAccelerate(hint);
+    if (CANVAS2D_BACKGROUND_RENDER_SWITCH_TO_CPU && IsHidden() &&
+        want_acceleration) {
+      want_acceleration = false;
+      software_rendering_while_hidden_ = true;
+    }
+    if (want_acceleration) {
+      usage = CanvasResourceProvider::kAcceleratedCompositedResourceUsage;
+    }
+  }
 
   resource_provider_ = CanvasResourceProvider::Create(
       Size(), msaa_sample_count_, color_params_, usage,
@@ -285,7 +305,8 @@ CanvasResourceProvider* Canvas2DLayerBridge::GetOrCreateResourceProvider(
     ReportResourceProviderCreationFailure();
   }
 
-  if (resource_provider_ && resource_provider_->IsAccelerated() && !layer_) {
+  if (resource_provider_ && resource_provider_->CanPrepareTextureMailbox() &&
+      !layer_) {
     layer_ =
         Platform::Current()->CompositorSupport()->CreateExternalTextureLayer(
             this);
@@ -293,6 +314,8 @@ CanvasResourceProvider* Canvas2DLayerBridge::GetOrCreateResourceProvider(
     layer_->SetBlendBackgroundColor(ColorParams().GetOpacityMode() != kOpaque);
     GraphicsLayer::RegisterContentsLayer(layer_->Layer());
     layer_->SetNearestNeighbor(filter_quality_ == kNone_SkFilterQuality);
+    layer_->SetFlipped(resource_provider_->IsFlipped());
+    layer_->SetAllowMailboxReuse(resource_provider_->ReusesMailboxes());
   }
 
   if (resource_provider_ && IsHibernating()) {
@@ -647,8 +670,8 @@ bool Canvas2DLayerBridge::PrepareTextureMailbox(
   if (!GetOrCreateResourceProvider())
     return false;
 
-  if (!resource_provider_->IsAccelerated()) {
-  }
+  if (!resource_provider_->CanPrepareTextureMailbox())
+    return false;
 
   FlushRecording();
   if (resource_provider_->PrepareTextureMailbox(out_mailbox,
@@ -688,6 +711,8 @@ void Canvas2DLayerBridge::DidDraw(const FloatRect& rect) {
       DisableDeferral(kDisableDeferralReasonExpensiveOverdrawHeuristic);
     }
   }
+  if (resource_provider_)
+    resource_provider_->DidDraw(rect);
 }
 
 void Canvas2DLayerBridge::FinalizeFrame() {
@@ -714,6 +739,8 @@ void Canvas2DLayerBridge::FinalizeFrame() {
   if (rate_limiter_) {
     rate_limiter_->Tick();
   }
+
+  GetOrCreateResourceProvider()->FinalizeFrame();
 }
 
 void Canvas2DLayerBridge::DoPaintInvalidation(const FloatRect& dirty_rect) {

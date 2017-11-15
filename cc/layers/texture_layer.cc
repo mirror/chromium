@@ -102,11 +102,10 @@ void TextureLayer::SetBlendBackgroundColor(bool blend) {
 void TextureLayer::SetTextureMailboxInternal(
     const viz::TextureMailbox& mailbox,
     std::unique_ptr<viz::SingleReleaseCallback> release_callback,
-    bool requires_commit,
-    bool allow_mailbox_reuse) {
+    bool requires_commit) {
   DCHECK(!mailbox.IsValid() || !holder_ref_ ||
          !mailbox.Equals(holder_ref_->holder()->mailbox()) ||
-         allow_mailbox_reuse);
+         allow_mailbox_reuse_);
   DCHECK_EQ(mailbox.IsValid(), !!release_callback);
 
   // If we never commited the mailbox, we need to release it here.
@@ -133,9 +132,8 @@ void TextureLayer::SetTextureMailbox(
     const viz::TextureMailbox& mailbox,
     std::unique_ptr<viz::SingleReleaseCallback> release_callback) {
   bool requires_commit = true;
-  bool allow_mailbox_reuse = false;
   SetTextureMailboxInternal(mailbox, std::move(release_callback),
-                            requires_commit, allow_mailbox_reuse);
+                            requires_commit);
 }
 
 void TextureLayer::SetNeedsDisplayRect(const gfx::Rect& dirty_rect) {
@@ -172,9 +170,8 @@ bool TextureLayer::Update() {
     if (client_->PrepareTextureMailbox(&mailbox, &release_callback)) {
       // Already within a commit, no need to do another one immediately.
       bool requires_commit = false;
-      bool allow_mailbox_reuse = false;
       SetTextureMailboxInternal(mailbox, std::move(release_callback),
-                                requires_commit, allow_mailbox_reuse);
+                                requires_commit);
       updated = true;
     }
   }
@@ -288,6 +285,12 @@ void TextureLayer::TextureMailboxHolder::ReturnAndReleaseOnImplThread(
   Return(sync_token, is_lost);
   main_thread_task_runner->PostTask(
       FROM_HERE, base::Bind(&TextureMailboxHolder::InternalRelease, this));
+}
+
+void TextureLayer::SetAllowMailboxReuse(bool allow) {
+#if DCHECK_IS_ON()
+  allow_mailbox_reuse_ = allow;
+#endif
 }
 
 }  // namespace cc
