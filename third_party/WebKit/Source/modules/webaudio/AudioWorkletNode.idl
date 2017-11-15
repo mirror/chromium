@@ -13,8 +13,8 @@
     RuntimeEnabled=AudioWorklet
 ] interface AudioWorkletNode : AudioNode {
     readonly attribute AudioParamMap parameters;
+    readonly attribute MessagePort port;
     // TODO(hongchan): Implement the following.
-    // readonly attribute MessagePort port;
     // readonly attribute AudioWorkletProcessorState processorState;
     // attribute EventHandler onprocessorstatechange;
 };
