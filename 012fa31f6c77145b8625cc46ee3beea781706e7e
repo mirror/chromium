@@ -330,6 +330,24 @@
     },
     {
       "key": {
+        "uuid": "573c9d9d_f2bb598d",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T01:17:20Z",
+      "side": 1,
+      "message": "There is the Google JS styleguide at [1] and the Chromium specific one at [2] and the Chromium ES6 at [3].\n\n[1] https://google.github.io/styleguide/jsguide.html\n[2] https://chromium.googlesource.com/chromium/src/+/master/styleguide/web/web.md\n[3] https://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md",
+      "parentUuid": "5c979c14_51761eec",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87191994_3fe104c0",
         "filename": "chrome/browser/resources/discards/discards.html",
         "patchSetId": 2

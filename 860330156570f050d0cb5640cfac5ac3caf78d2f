@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f71b7dd5_2dc9b4d2",
+        "filename": "chrome/browser/resources/discards/discards.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T01:17:20Z",
+      "side": 1,
+      "message": "This is the default value, so not needed.",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858a0ca2_c03990e3",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T01:17:20Z",
+      "side": 1,
+      "message": "Did you mean \u003ca is\u003d\"action-link\"...\u003e\nI don\u0027t think you can make a div inherit from action-link.",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16f5681_b48a6157",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T01:17:20Z",
+      "side": 1,
+      "message": "This ID and many others in this file are unnecessary. It seems that they are only added such that the helper $(id) method can be called in JS. Instead can you switch to adding IDs only where needed, and use compound selectors otherwise?\n\n$(\u0027tab-discards-info-table-header\u0027) \u003d\u003e document.querySelector(\u0027table thead tr\u0027)\n$(\u0027tab-discards-info-table-body\u0027) \u003d\u003e document.querySelector(\u0027tbody\u0027)\netc",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13960dce_4c346ee3",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T01:17:20Z",
+      "side": 1,
+      "message": "Can we avoid having everything inside this initialize method? The usual pattern is something as follows:\n\n// Wrapper IIFE just to create a non-global scope\n(function() {\n\n// Define variables/constants used throughout this file.\nlet foo;\nlet bar;\nconst BAZ \u003d \u0027BAZ\u0027;\n\n// Define functions used throughout this file.\nfunction doFoo() {\n  ...\n}\n\nfunction doBar() {\n...\n}\n\nfunction initialize() {\n  //Start doing things here.\n}\n\ndocument.addEventListener(\u0027DOMContentLoaded\u0027, initialize);\n})();",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c564ec3d_df127577",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T01:17:20Z",
+      "side": 1,
+      "message": "Instead of calling of scheduling a timer every single time, how about using setInterval() instead? See https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval.",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e22874c_e88b3a0c",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T01:17:20Z",
+      "side": 1,
+      "message": "HTML data-* attributes are more appropriate for storing information on an HTML element, without having to use non-standard attributes like \"row-index\", see https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes.",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ec6a50_403502b6",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T01:17:20Z",
+      "side": 1,
+      "message": "@param {number}",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee295eba_6d1660fe",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T01:17:20Z",
+      "side": 1,
+      "message": "This method makes heavy usage of number literals. Can you pull those out to constants with meaningful names instead? It would make the code much more readable I think. For example\n\nconst MINUTE_IN_SECONDS \u003d 60;\nconst HOURS_IN_DAY \u003d 24;\ncost DAYS_IN_WEEK \u003d 7;\netc...",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289ec03a_a3045ea3",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T01:17:20Z",
+      "side": 1,
+      "message": "@param {boolean} bool A boolean value\n@return A string representing the bool.\n\nPlease see https://github.com/google/closure-compiler/wiki/Annotating-Types for valid syntax.",
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "386bfd88_ed7fa380",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T01:17:20Z",
+      "side": 1,
+      "message": "Equivalent to:\nrow.querySelector(\u0027img\u0027).src \u003d info.faviconUrl;",
+      "range": {
+        "startLine": 287,
+        "startChar": 23,
+        "endLine": 287,
+        "endChar": 31
+      },
+      "revId": "860330156570f050d0cb5640cfac5ac3caf78d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
