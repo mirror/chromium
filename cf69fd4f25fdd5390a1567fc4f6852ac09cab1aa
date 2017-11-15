@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b1b24ea1_5edcf29e",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "261d60c6_3f64d72e",
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "894578ff_3f512bae",
         "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-09T21:55:58Z",
       "side": 1,
       "message": "These fields appear to be per \"gesture\" and not per \"scroll sequence\".\n\nScroll customization uses scroll sequence to talk about the chain of all scrollers\nfor a single scroll update.\n\nBut in this case these field care about if any scroll was consumed for scroll sequence\nduring the *whole scroll gesture* (and not just a single update). I believe the \nemphasis should be on the latter and not the former.",
+      "range": {
+        "startLine": 465,
+        "startChar": 2,
+        "endLine": 465,
+        "endChar": 35
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aba703f_b4892924",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "For a valid *whole scroll gesture* they are only cleared after GestureScrollEnd so I think these care about the whole gesture, or should I change their names?",
+      "parentUuid": "894578ff_3f512bae",
       "range": {
         "startLine": 465,
         "startChar": 2,
@@ -82,6 +124,48 @@
     },
     {
       "key": {
+        "uuid": "e237f46d_87d47db0",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6dcb138_77fe4070",
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab9104c7_39960104",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "scroll_gesture_handling_node_ here refers to the target node the where GestureScrollEnd happens, which is usually one of the nodes inside the scroller. previous_gesture_scrolled_element_ is what we\u0027ve actually scrolled on the scroll_chain in the previous GestureScrollUpdate.",
+      "parentUuid": "2c5ca602_b819466b",
+      "range": {
+        "startLine": 504,
+        "startChar": 8,
+        "endLine": 504,
+        "endChar": 42
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd6ab9b3_75b63c42",
         "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
         "patchSetId": 4
@@ -96,6 +180,24 @@
       "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4d0969_95172b8d",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd6ab9b3_75b63c42",
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "4c0d4d6a_e18d3b6c",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c0d4bd8_7363d06a",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 525,
+        "endChar": 78
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bffbffc_b7e67e77",
         "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
         "patchSetId": 4
@@ -142,6 +268,30 @@
       "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "799cfa0b_d067dfc5",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bffbffc_b7e67e77",
+      "range": {
+        "startLine": 530,
+        "startChar": 4,
+        "endLine": 530,
+        "endChar": 36
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "6fc72109_ffaa0231",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e7f7cff_afb179fa",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 38
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6faa202d_29ada5a1",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 4
@@ -179,6 +353,30 @@
       "writtenOn": "2017-11-09T21:55:58Z",
       "side": 1,
       "message": "Only need to do these updates if new_container !\u003d old_container",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 1
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78518753_81a176c2",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "We still need to do one update if the container didn\u0027t change. Because the area\u0027s alignment changes.",
+      "parentUuid": "6faa202d_29ada5a1",
       "range": {
         "startLine": 64,
         "startChar": 2,
@@ -214,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "88988979_a1bccf8d",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f58b4255_296feb25",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 77
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a206f1e_640bf67f",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 4
@@ -234,6 +456,30 @@
       "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "348b5a8f_8cc66601",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a206f1e_640bf67f",
+      "range": {
+        "startLine": 131,
+        "startChar": 27,
+        "endLine": 131,
+        "endChar": 55
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "2ea6c109_e5a18e97",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1559c6ca_d542e8ac",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 74
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23a0084b_90f8474f",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 4
@@ -280,6 +550,30 @@
       "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f7007c6_17caf167",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23a0084b_90f8474f",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 56
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -306,6 +600,30 @@
     },
     {
       "key": {
+        "uuid": "b6b1dfcc_54bd02af",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb625749_a723174c",
+      "range": {
+        "startLine": 45,
+        "startChar": 48,
+        "endLine": 45,
+        "endChar": 61
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffc387e6_cac12758",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
         "patchSetId": 4
@@ -317,6 +635,30 @@
       "writtenOn": "2017-11-09T21:55:58Z",
       "side": 1,
       "message": "Shouldn\u0027t these all be private?",
+      "range": {
+        "startLine": 62,
+        "startChar": 1,
+        "endLine": 65,
+        "endChar": 12
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495d4e1d_f80e6740",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "I\u0027m thinking testing FindSnapOffsetOn... is easier and clearer than testing GetSnapPosition?",
+      "parentUuid": "ffc387e6_cac12758",
       "range": {
         "startLine": 62,
         "startChar": 1,
@@ -349,6 +691,30 @@
       "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2273dae_fe5f4899",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-15T16:30:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53ddc29a_411e7e0a",
+      "range": {
+        "startLine": 142,
+        "startChar": 9,
+        "endLine": 142,
+        "endChar": 19
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
