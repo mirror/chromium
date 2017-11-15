@@ -743,7 +743,7 @@ void PeerConnectionTracker::TrackRtcEventLogWrite(
   if (id == -1)
     return;
   SendTarget()->Send(
-      new PeerConnectionTrackerHost_RtcEventLogWrite(id, output));
+      new PeerConnectionTrackerHost_WebRtcEventLogWrite(id, output));
 }
 
 int PeerConnectionTracker::GetNextLocalID() {
