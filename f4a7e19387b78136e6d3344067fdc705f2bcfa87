@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "508d594e_07c7b9e9",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-15T18:32:16Z",
+      "side": 1,
+      "message": "This seems to duplicate ShouldFullyInvalidateBackgroundOnLayoutOverflowChange(). Can you combine them?",
+      "revId": "f4a7e19387b78136e6d3344067fdc705f2bcfa87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af90e5c1_6061db46",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-15T18:32:16Z",
+      "side": 1,
+      "message": "Can you just use box_.PreviousLayoutOverflowRect() here?",
+      "revId": "f4a7e19387b78136e6d3344067fdc705f2bcfa87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
