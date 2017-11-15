@@ -69,6 +69,30 @@
       "revId": "60288443d7cf21ae78ead1dfad64c4f2980a7d62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5afffde7_fd29deec",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-15T01:39:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5a4bd14_53555535",
+      "range": {
+        "startLine": 833,
+        "startChar": 14,
+        "endLine": 833,
+        "endChar": 17
+      },
+      "revId": "60288443d7cf21ae78ead1dfad64c4f2980a7d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
