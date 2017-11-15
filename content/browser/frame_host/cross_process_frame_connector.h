@@ -77,7 +77,6 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   void RenderProcessGone() override;
   void SetChildFrameSurface(const viz::SurfaceInfo& surface_info,
                             const viz::SurfaceSequence& sequence) override;
-  gfx::Rect ChildFrameRect() override;
   void UpdateCursor(const WebCursor& cursor) override;
   gfx::PointF TransformPointToRootCoordSpace(
       const gfx::PointF& point,
@@ -111,6 +110,8 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   // is |view_|.
   void SetVisibilityForChildViews(bool visible) const override;
 
+  void SetRect(const gfx::Rect& frame_rect_in_pixels) override;
+
   // Exposed for tests.
   RenderWidgetHostViewBase* GetRootRenderWidgetHostViewForTesting() {
     return GetRootRenderWidgetHostView();
@@ -124,7 +125,7 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   void ResetFrameRect();
 
   // Handlers for messages received from the parent frame.
-  void OnUpdateResizeParams(const gfx::Rect& frame_rect,
+  void OnUpdateResizeParams(const gfx::Rect& frame_rect_in_pixels,
                             const ScreenInfo& screen_info,
                             uint64_t sequence_number,
                             const viz::LocalSurfaceId& local_surface_id);
@@ -135,8 +136,6 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   void OnRequireSequence(const viz::SurfaceId& id,
                          const viz::SurfaceSequence& sequence);
 
-  void SetRect(const gfx::Rect& frame_rect);
-
   // The RenderFrameProxyHost that routes messages to the parent frame's
   // renderer process.
   RenderFrameProxyHost* frame_proxy_in_parent_renderer_;
@@ -144,8 +143,6 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   // The RenderWidgetHostView for the frame. Initially NULL.
   RenderWidgetHostViewChildFrame* view_;
 
-  gfx::Rect frame_rect_;
-  gfx::Rect frame_rect_in_dip_;
   bool is_inert_ = false;
 
   // Visibility state of the corresponding frame owner element in parent process
