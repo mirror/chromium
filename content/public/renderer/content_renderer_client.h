@@ -19,6 +19,8 @@
 #include "build/build_config.h"
 #include "content/public/common/content_client.h"
 #include "media/base/decode_capabilities.h"
+#include "services/service_manager/embedder/embedded_service_info.h"
+#include "services/service_manager/public/interfaces/service.mojom.h"
 #include "third_party/WebKit/public/platform/WebContentSettingsClient.h"
 #include "third_party/WebKit/public/platform/WebPageVisibilityState.h"
 #include "third_party/WebKit/public/web/WebNavigationPolicy.h"
@@ -68,6 +70,9 @@ class URLLoaderThrottle;
 // Embedder API for participating in renderer logic.
 class CONTENT_EXPORT ContentRendererClient {
  public:
+  using StaticServiceMap =
+      std::map<std::string, service_manager::EmbeddedServiceInfo>;
+
   virtual ~ContentRendererClient() {}
 
   // Notifies us that the RenderThread has been created.
@@ -379,6 +384,10 @@ class CONTENT_EXPORT ContentRendererClient {
       const GURL& url,
       base::Time cert_validity_start,
       std::string* console_messsage);
+
+  // ...
+  virtual void CreateRendererService(
+      service_manager::mojom::ServiceRequest service_request) {}
 };
 
 }  // namespace content

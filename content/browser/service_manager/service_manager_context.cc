@@ -194,6 +194,11 @@ class BuiltinManifestProvider : public catalog::ManifestProvider {
 
  private:
   // catalog::ManifestProvider:
+  void GetInitNames(std::vector<std::string>* names) override {
+    DCHECK(names);
+    for (const auto& entry : manifests_)
+      names->push_back(entry.first);
+  }
   std::unique_ptr<base::Value> GetManifest(const std::string& name) override {
     auto it = manifests_.find(name);
     return it != manifests_.end() ? it->second->CreateDeepCopy() : nullptr;

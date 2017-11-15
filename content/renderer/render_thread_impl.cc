@@ -793,8 +793,6 @@ void RenderThreadImpl::Init(
 
   AddFilter((new ServiceWorkerContextMessageFilter())->GetFilter());
 
-// Register exported services:
-
 #if defined(USE_AURA)
   if (IsRunningInMash()) {
     CreateRenderWidgetWindowTreeClientFactory(GetServiceManagerConnection());
@@ -2236,6 +2234,12 @@ gpu::GpuChannelHost* RenderThreadImpl::GetGpuChannel() {
   if (gpu_channel_->IsLost())
     return nullptr;
   return gpu_channel_.get();
+}
+
+void RenderThreadImpl::CreateEmbedderRendererService(
+    service_manager::mojom::ServiceRequest service_request) {
+  GetContentClient()->renderer()->CreateRendererService(
+      std::move(service_request));
 }
 
 void RenderThreadImpl::CreateView(mojom::CreateViewParamsPtr params) {

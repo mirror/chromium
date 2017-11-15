@@ -19,6 +19,9 @@ class ManifestProvider {
  public:
   virtual ~ManifestProvider() {}
 
+  // ...
+  virtual void GetInitNames(std::vector<std::string>* names) {}
+
   // Retrieves the raw contents of the manifest for application named |name|.
   // Returns true if |name| is known and |*manifest_contents| is populated.
   // returns false otherwise.

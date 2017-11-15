@@ -32,6 +32,7 @@
 #include "net/cookies/canonical_cookie.h"
 #include "services/service_manager/embedder/embedded_service_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/interfaces/service.mojom.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "storage/browser/fileapi/file_system_context.h"
 #include "storage/browser/quota/quota_manager.h"
@@ -200,7 +201,10 @@ class CONTENT_EXPORT ContentBrowserClient {
   // Notifies that a render process will be created. This is called before
   // the content layer adds its own BrowserMessageFilters, so that the
   // embedder's IPC filters have priority.
-  virtual void RenderProcessWillLaunch(RenderProcessHost* host) {}
+  // ...
+  virtual void RenderProcessWillLaunch(
+      RenderProcessHost* host,
+      service_manager::mojom::ServiceRequest* service_request) {}
 
   // Notifies that a BrowserChildProcessHost has been created.
   virtual void BrowserChildProcessHostCreated(BrowserChildProcessHost* host) {}
