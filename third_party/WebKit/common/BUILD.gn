@@ -41,6 +41,8 @@ component("blink_common") {
     "message_port/transferable_message.h",
     "message_port/transferable_message_struct_traits.cc",
     "message_port/transferable_message_struct_traits.h",
+    "metrics/time_to_interactive_status.cc",
+    "metrics/time_to_interactive_status.h",
     "mime_util/mime_util.cc",
     "mime_util/mime_util.h",
     "origin_manifest/origin_manifest.cc",
