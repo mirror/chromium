@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "148847e3_a649f612",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-15T01:19:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "112ceca8_cd3a3c48",
+      "revId": "323548184c2a4a85efea7f255e512cbbfadc2343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d69ce66c_73eb520e",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "323548184c2a4a85efea7f255e512cbbfadc2343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d20be93_044aa607",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-15T01:19:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d69ce66c_73eb520e",
+      "revId": "323548184c2a4a85efea7f255e512cbbfadc2343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -68,6 +104,24 @@
       "revId": "323548184c2a4a85efea7f255e512cbbfadc2343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cea9100_53ede3bc",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-15T01:19:43Z",
+      "side": 1,
+      "message": "Done. I see, I also prefer longer names with more information ;)",
+      "parentUuid": "f7f2ef3e_a6e9ff50",
+      "revId": "323548184c2a4a85efea7f255e512cbbfadc2343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
