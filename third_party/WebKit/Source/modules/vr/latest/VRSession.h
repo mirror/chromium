@@ -65,6 +65,11 @@ class VRSession final : public EventTargetWithInlineData {
   // provides a good balance between quality and performance.
   double DefaultFramebufferScale() const { return 1.0; }
 
+  // Describes the ideal dimensions of layer framebuffers, preferrably defined
+  // as the size which gives 1:1 pixel ratio at the center of the user's view.
+  double IdealFramebufferWidth() const;
+  double IdealFramebufferHeight() const;
+
   // EventTarget overrides.
   ExecutionContext* GetExecutionContext() const override;
   const AtomicString& InterfaceName() const override;

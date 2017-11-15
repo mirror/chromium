@@ -177,6 +177,16 @@ void VRSession::ForceEnd() {
   DispatchEvent(VRSessionEvent::Create(EventTypeNames::end, this));
 }
 
+double VRSession::IdealFramebufferWidth() const {
+  return device_->vrDisplayInfoPtr()->leftEye->renderWidth +
+         device_->vrDisplayInfoPtr()->rightEye->renderWidth;
+}
+
+double VRSession::IdealFramebufferHeight() const {
+  return std::max(device_->vrDisplayInfoPtr()->leftEye->renderHeight,
+                  device_->vrDisplayInfoPtr()->rightEye->renderHeight);
+}
+
 void VRSession::OnFocus() {
   if (!blurred_)
     return;
@@ -211,11 +221,17 @@ void VRSession::OnFrame(
   if (pending_frame_) {
     pending_frame_ = false;
 
+    // Cache the base layer, since it could change during the frame callback.
+    VRLayer* frame_base_layer = base_layer_;
+    frame_base_layer->OnFrameStart();
+
     // Resolve the queued requestFrame callbacks. All VR rendering will happen
     // within these calls. resolving_frame_ will be true for the duration of the
     // callbacks.
     AutoReset<bool> resolving(&resolving_frame_, true);
     callback_collection_.ExecuteCallbacks(this, presentation_frame);
+
+    frame_base_layer->OnFrameEnd();
   }
 }
 
