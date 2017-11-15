@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "22c4fdff_b2c8ba57",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T01:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e439d239_9e60ea3f",
+      "range": {
+        "startLine": 9,
+        "startChar": 49,
+        "endLine": 9,
+        "endChar": 63
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8634a932_65c3cade",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -402,6 +426,24 @@
     },
     {
       "key": {
+        "uuid": "51e95ef1_038b1024",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T01:47:17Z",
+      "side": 1,
+      "message": "Done.  This file was just a placeholder... but just today I think we decided that this will be the official shared .h file.",
+      "parentUuid": "f3c29c0c_c7921f34",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc8e6d69_6c1a00c2",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -619,6 +661,24 @@
     },
     {
       "key": {
+        "uuid": "905c1476_4e94b1c3",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T01:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63c3e4fd_451156bc",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18421bc8_a3f62717",
         "filename": "chrome_elf/whitelist/whitelist_component.cc",
         "patchSetId": 5
@@ -666,6 +726,24 @@
       "side": 1,
       "message": "\u003e It\u0027s a good comment.  I\u0027m still considering this.  Do we think the cost of the is_sorted check at startup is worth it?\n\nis it possible to defer the check until later? maybe hope the data is sorted to begin with, but then do something after startup if it isn\u0027t sorted (e.g., UMA, delete the file, force a component update, etc)?\n\n\u003e The legitimate component files will be sorted.  And a check in the unittests (once I change the tests to actually use the latest database) will catch if that gets broken.\n\nthis will tell you that the files you produce are sorted, which is good, but it doesn\u0027t help in this case.\n\n\u003e If I maliciously replace/edit the component update file locally in the chrome UserDataDir, what\u0027s the result?\n\u003e - While reading in the file, if the metadata is corrupt, the format version might not be supported (failed initialization, but chrome will still startup at least for now).\n\u003e - A massive value for module_count can only result in max DWORD, and ReadFile would probably fail.\n\u003e - If the metadata is good, but the array is somehow not sorted, or has goobledegook contents, the lookups will just fail.  This does require a local edit.  **This is the scenario that a call to is_sorted() would catch.  Is the cost worth it?\n\u003e \n\u003e In the end though, we don\u0027t try to really secure our on-client files.  Someone local can mangle the file (or our binaries).  We\u0027ll be able to signal if the component initialization fails, and higher level component updater code can raise a red flag about bad state.\n\u003e \n\u003e **I\u0027ve adjusted this to always do the check... with a TODO to calculate the time cost once I have a real database file to test with.\n\nsounds good. from experience, local files will not be what you expect them to be some of the time. i think the v8 and l10n folks have seen this with v8_context_snapshot.bin and icudtl.dat, respectively. whether by malicious intent, flaky disks, or folks who try to craft up their own magical Chrome pony installs, expect there to be cases where the file isn\u0027t what you think it is. especially if there\u0027s any advantage at all in tampering with it to any party.",
       "parentUuid": "a9e24b91_5de7d65d",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "318b4e23_1375b563",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T01:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ce86a11_0292bfb5",
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -1077,6 +1155,24 @@
     },
     {
       "key": {
+        "uuid": "5d8690eb_1f568a5f",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T01:47:17Z",
+      "side": 1,
+      "message": "SIGH.  Yes.  If using constexpr for the whole thing, the second \"const\" needs to come before the type, not after.... apparently.\n\nI do not understand this in any way.  And it won\u0027t help if anyone tries to explain why this has to be in c++.  I\u0027m just going to let it disappear from my mind now that I\u0027ve \"fixed\" it.  \u003cshoulder shrug\u003e",
+      "parentUuid": "d368d3e0_e3c330c7",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e0b9b88_73f6d209",
         "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
         "patchSetId": 5
@@ -1177,6 +1273,24 @@
     },
     {
       "key": {
+        "uuid": "9079812e_94d92c28",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T01:47:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d7834eb0_efbbb21f",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e8cb94a_660ab30b",
         "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
         "patchSetId": 5
@@ -1271,6 +1385,24 @@
       "side": 1,
       "message": "RAII, TearDown, and the fixture\u0027s dtor are all fine places to do cleanup, though none help in case of crash. delete-on-close is for the paranoid like me, although it won\u0027t result in the dir itself being deleted on crash.",
       "parentUuid": "b01749ff_f34301e3",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ff0c879_4462b798",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-15T01:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6946a68a_4bccb8ed",
       "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
