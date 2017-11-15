@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45db3f30_a103ad69",
+        "filename": "components/exo/file_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-15T05:17:33Z",
+      "side": 1,
+      "message": "Does it really make sense to have two different APIs for this? I prefer to see the current ConvertPathToUrl logic generalized so it can be used for all apps and not only arc. If we need to special case arc for now then I\u0027d add a \"const char* app_id\" argument to ConvertPathToUrl for now.",
+      "revId": "dc959d5f49b9bc45003e6444177971e7026c4452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
