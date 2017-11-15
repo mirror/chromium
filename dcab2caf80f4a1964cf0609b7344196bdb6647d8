@@ -34,6 +34,24 @@
       "revId": "dcab2caf80f4a1964cf0609b7344196bdb6647d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb6221e_0f71613a",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-15T19:31:22Z",
+      "side": 1,
+      "message": "I don\u0027t think history navigations would ever send post data because redirects don\u0027t carry post data anyway. We would also be ok having it not send post data for history navigations if I\u0027m wrong, since it\u0027s an edge case and we have plans on fixing it for all cases in the long term.",
+      "parentUuid": "647201ad_f5cf4a97",
+      "revId": "dcab2caf80f4a1964cf0609b7344196bdb6647d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
