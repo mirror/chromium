@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d5123c3_0b679f3a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-15T00:07:10Z",
+      "side": 1,
+      "message": "Improve the description body a bit. And always generally use capitalization and punctuation (though don\u0027t need period on subject or arguably at end of dot-point phrases). Often a - or * list with dot points describing the highlights of the change. Also sometime relevant is how this relates to the bigger picture. Either design doc link, what it will be used for, what problem it fixes, etc.\n\n* Adds SmbService and factory.\n* Implements Mount method on service.\n* etc...\n\nAlso class name is better in description that partial file name. ie. SmbService.",
+      "revId": "7c156f862bbc5e6139f1020e142a94292a84547b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f6a7ab_7463b5bb",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-15T00:07:10Z",
+      "side": 1,
+      "message": "For good measure lets DCHECK(profile) since we claim it must not be null.",
+      "revId": "7c156f862bbc5e6139f1020e142a94292a84547b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ae05cb_797a16db",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-15T00:07:10Z",
+      "side": 1,
+      "message": "nit: I think this method could be const.",
+      "revId": "7c156f862bbc5e6139f1020e142a94292a84547b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ecc63c0_7932b9b7",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-15T00:07:10Z",
+      "side": 1,
+      "message": "Create FSP service.",
+      "revId": "7c156f862bbc5e6139f1020e142a94292a84547b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0232419e_7c7aa97d",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-15T00:07:10Z",
+      "side": 1,
+      "message": "Now that you removed the registry_ member, this comment isn\u0027t really needed.",
+      "revId": "7c156f862bbc5e6139f1020e142a94292a84547b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75edb396_f8e15cee",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-15T00:07:10Z",
+      "side": 1,
+      "message": "You don\u0027t need this method any more.",
+      "revId": "7c156f862bbc5e6139f1020e142a94292a84547b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed608336_b86ad1a3",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-15T00:07:10Z",
+      "side": 1,
+      "message": "nit: Put profile above profile_manager_ purely for aesthetic reasons :)\n\nAlso just \"Not owned.\" is good enough. Technically I think most people would say \"Not owned by \u003cclass_name\u003e/\u0027this class\u0027.\" if they were being explicit.",
+      "revId": "7c156f862bbc5e6139f1020e142a94292a84547b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687136eb_298b930c",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-11-15T00:07:10Z",
+      "side": 1,
+      "message": "nit: don\u0027t need the blank line.",
+      "revId": "7c156f862bbc5e6139f1020e142a94292a84547b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
