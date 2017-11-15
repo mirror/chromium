@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbbc2500_f63297f8",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-15T03:24:35Z",
+      "side": 1,
+      "message": "Drive-by nit: To match loadNow(), call this \"preloadNowOverrideApplicationContext\"",
+      "revId": "34355e0d969f5d577614b197f9102ef63cf7fde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa13efc_b1615c5e",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-15T03:24:35Z",
+      "side": 1,
+      "message": "nit: add comment saying why this should be true.",
+      "revId": "34355e0d969f5d577614b197f9102ef63cf7fde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d762f87_13bc348d",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-15T03:24:35Z",
+      "side": 1,
+      "message": "nit: This is used only in bind(), which I don\u0027t think is called often. Maybe just inline it so that it can be GC\u0027ed in-between.\n\nAlso - just double-checking: Does this do the right thing for webview, which can have a different \"UI thread\"? If so, might want to explicitly comment that it needs the main thread, as opposed to the webview might-not-be-the-main UI thread.",
+      "revId": "34355e0d969f5d577614b197f9102ef63cf7fde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09738182_21a7fe93",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-15T03:24:35Z",
+      "side": 1,
+      "message": "drive-by nit: use a lambda: \n  post(() -\u003e mDelegate.preloadNativeLibrary(mHostContext))",
+      "revId": "34355e0d969f5d577614b197f9102ef63cf7fde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
