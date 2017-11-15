@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "18f16511_aa6333f8",
+        "filename": "third_party/WebKit/Source/bindings/templates/attributes.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-15T11:28:36Z",
+      "side": 1,
+      "message": "Considering of Window interface, there must be no properties on the prototype object, as all the properties must be defined on the global object (\u003d instance of Window).\n\nThis is true for all [Global] interfaces including Workers.\n\nSo, this must be no behavioral change.  But I\u0027m on the fence (passing prototype_object might be good, too), and I don\u0027t know a performance impact (I guess it\u0027s small).",
+      "parentUuid": "dfd3009e_0d7150e4",
+      "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a905969c_9cebafb7",
         "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
         "patchSetId": 12
