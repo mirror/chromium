@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1e6a578_7e7d0128",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-15T15:46:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b0619f6_a5fbd7c1",
+      "range": {
+        "startLine": 1074,
+        "startChar": 7,
+        "endLine": 1074,
+        "endChar": 32
+      },
+      "revId": "5abb684bf5d82e87c7c0dd2f2dde7dddc09470d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b62f99b_c9891583",
         "filename": "net/http/http_cache.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cafcc05f_df455af8",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-15T15:46:18Z",
+      "side": 1,
+      "message": "Since Transaction is a private class of HttpCache, it won\u0027t be accessible in an anonymous namespace function.",
+      "parentUuid": "9b62f99b_c9891583",
+      "range": {
+        "startLine": 478,
+        "startChar": 0,
+        "endLine": 482,
+        "endChar": 0
+      },
+      "revId": "5abb684bf5d82e87c7c0dd2f2dde7dddc09470d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baec75b5_464d5442",
         "filename": "net/http/http_cache_unittest.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "5abb684bf5d82e87c7c0dd2f2dde7dddc09470d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9483782_c6093915",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2794,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-15T15:46:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baec75b5_464d5442",
+      "range": {
+        "startLine": 2794,
+        "startChar": 2,
+        "endLine": 2794,
+        "endChar": 25
+      },
+      "revId": "5abb684bf5d82e87c7c0dd2f2dde7dddc09470d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
