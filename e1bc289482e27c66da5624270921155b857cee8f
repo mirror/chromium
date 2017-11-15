@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6943e8b5_cf60ae33",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-15T23:22:53Z",
+      "side": 1,
+      "message": "\u003e Hmm, should we care about other NavEntries that reference this frame?  e.g., Add a dynamic frame, do a pushState (cloning the FNE tree), and then remove the frame.  We can\u0027t ever restore it.  I don\u0027t know if there\u0027s a good way to identify the affected NavEntries, though.  Maybe that would get solved if we finished https://crbug.com/373041 and shared FNEs between NavEntries, though.\n\nThat is a good point.  I think removing FNEs just on the *current* NavEntry is sufficient for now.  WDYT?  \n\nI agree that sharing of FNEs between NavEntries would help, but I also note that in this CL we are deleting TreeNodes (and only transitively deleting FNEs) - I assume that sharing will just help identify all the TreeNodes that refer to the FNE.  Based on this, I think this requires extra work on top of sharing, so I\u0027ve opened a bug to track this: https://crbug.com/785534\n\nWe can discuss further on the new bug, but I am a bit hesitant to walk *all* NavEntries when a dynamically created frame is removed.  Please let me know if you have other ideas (other than walking *all* NavEntries of a given WebContents) for identifying FNEs that can be pruned.\n\n\u003e There\u0027s a similar question when doing any cross-document navigation in any frame.  We could safely remove all FNEs for dynamic subframes of that frame.  But maybe that\u0027s best left for the cleanup phase being discussed in https://chromium-review.googlesource.com/c/chromium/src/+/713474?\n\nI am not sure if I understood, but I think you are talking about a scenario where\n1. a parent frame has some dynamic subframes\n2. the parent gets navigated away (which means the subframes are deleted)\n3. we no longer need FNEs for the deleted dynamic subframes\n\nI\u0027ve tried adding a browser test for this scenario (PruningOfEntriesForDynamicFrames_ParentNavigatedAway) and this test is passing.  The fact that the test passes surprises me a little bit (I initially thought that I might have to move the pruning somewhere else - maybe to the destructor of FrameTreeNode), but I guess is a good thing.  FWIW, the pruning happens in the following callstack (the same callstack as in the previous browser test added by this CL):\n\n#2 0x7f307531ef7b content::NavigationEntryImpl::RemoveTreeNode()\n#3 0x7f307531eebb content::NavigationEntryImpl::RemoveTreeNode()\n#4 0x7f30752dc67d content::FrameTreeNode::RemoveChild()\n#5 0x7f30752d58bd content::FrameTree::RemoveFrame()\n#6 0x7f307535ad76 content::RenderFrameHostImpl::OnDetach()",
+      "parentUuid": "1d0366e9_e1a4f0de",
+      "revId": "e1bc289482e27c66da5624270921155b857cee8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "121a6a2a_216c5156",
         "filename": "content/browser/frame_host/frame_tree_node.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "e1bc289482e27c66da5624270921155b857cee8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ef24b3_fcce4c24",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-15T23:22:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "121a6a2a_216c5156",
+      "revId": "e1bc289482e27c66da5624270921155b857cee8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9ff1e611_c958700e",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7240,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-15T23:22:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1721185c_a391b0f7",
+      "range": {
+        "startLine": 7240,
+        "startChar": 31,
+        "endLine": 7240,
+        "endChar": 46
+      },
+      "revId": "e1bc289482e27c66da5624270921155b857cee8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "534b06f5_e8e83321",
         "filename": "content/browser/frame_host/navigation_entry_impl.h",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "e1bc289482e27c66da5624270921155b857cee8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e02e84d_442068c6",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-15T23:22:53Z",
+      "side": 1,
+      "message": "I don\u0027t think so.  There are differences:\n1. NEI::RemoveTreeNode(tree_node) *unconditionally* removes tree node\n2. FTN::RemoveChild(child) looks up tree node with unique name matching |child| and unconditionally removes the tree node\n3. ClearStaleFrameEntriesForNewFrame(ftn) looks up tree node with unique name matching |ftn| and only removes such tree node is it is NOT in the same tree position as |ftn|.\n\nI guess the \"looks up tree node with unique name matching |ftn|\" is shared across 2 and 3.  I\u0027ll tweak 3 so that it calls GetTreeNode instead of reimplementing the lookup.",
+      "parentUuid": "534b06f5_e8e83321",
+      "revId": "e1bc289482e27c66da5624270921155b857cee8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
