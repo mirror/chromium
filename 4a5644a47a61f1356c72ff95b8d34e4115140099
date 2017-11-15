@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43765d94_3174bd5e",
+        "filename": "ios/chrome/browser/voice/text_to_speech_listener.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-15T15:48:54Z",
+      "side": 1,
+      "message": "From Style Guide: \"Avoid Messaging the Current Object Within Initializers and -dealloc\"\n\nhttp://go/objc-style#avoid-messaging-the-current-object-within-initializers-and-dealloc\n\nHow about this?:\n\n- (void)dealloc {\n  if (_webState)\n    _webState-\u003eRemoveObserver(_webStateObserver.get());\n}\n\n- (void)webStateDestroyed:(web::WebState*)webState {\n  _webState-\u003eRemoveObserver(_webStateObserver.get());\n  _webStateObserver.reset();\n  _webState \u003d nullptr;\n}",
+      "revId": "4a5644a47a61f1356c72ff95b8d34e4115140099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
