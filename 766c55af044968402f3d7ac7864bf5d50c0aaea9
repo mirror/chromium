@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51809812_beb24c19",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-11-15T17:51:29Z",
+      "side": 1,
+      "message": "Just FYI: This excludes PSL matching, right? I wonder whether that could be permitted for mediated access. I am not sure, maybe we should be conservative.",
+      "revId": "766c55af044968402f3d7ac7864bf5d50c0aaea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68984a2_d3b5de1c",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-11-15T17:51:29Z",
+      "side": 1,
+      "message": "Add test for this?",
+      "revId": "766c55af044968402f3d7ac7864bf5d50c0aaea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
