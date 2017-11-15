@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8eb6e58f_33fb027a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T01:43:47Z",
+      "side": 1,
+      "message": "nit: How about the description below?\n\n\"WPT: Rename async_cookies directory to cookie-store.\n\nThe directory name now reflects the spec\u0027s repository.\"",
+      "revId": "ee3ba877cfb22458958050134e663a386da6c027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
