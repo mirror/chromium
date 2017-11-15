@@ -419,11 +419,10 @@ bool SupervisedUserURLFilter::GetFilteringBehaviorForURLWithAsyncChecks(
     const FilteringBehaviorCallback& callback) const {
   supervised_user_error_page::FilteringBehaviorReason reason =
       supervised_user_error_page::DEFAULT;
-  FilteringBehavior behavior = GetFilteringBehaviorForURL(url, false, &reason);
+  FilteringBehavior behavior = BLOCK;//GetFilteringBehaviorForURL(url, false, &reason);
   // Any non-default reason trumps the async checker.
   // Also, if we're blocking anyway, then there's no need to check it.
-  if (reason != supervised_user_error_page::DEFAULT || behavior == BLOCK ||
-      !async_url_checker_) {
+  if (true) {
     callback.Run(behavior, reason, false);
     for (Observer& observer : observers_)
       observer.OnURLChecked(url, behavior, reason, false);

@@ -122,10 +122,10 @@ SupervisedUserNavigationThrottle::MaybeCreateThrottleFor(
     content::NavigationHandle* navigation_handle) {
   if (!navigation_handle->IsInMainFrame())
     return nullptr;
-  Profile* profile = Profile::FromBrowserContext(
-      navigation_handle->GetWebContents()->GetBrowserContext());
-  if (!profile->IsSupervised())
-    return nullptr;
+  // Profile* profile = Profile::FromBrowserContext(
+  //     navigation_handle->GetWebContents()->GetBrowserContext());
+  // if (!profile->IsSupervised())
+  //   return nullptr;
   // Can't use base::MakeUnique because the constructor is private.
   return base::WrapUnique(
       new SupervisedUserNavigationThrottle(navigation_handle));
@@ -192,6 +192,7 @@ void SupervisedUserNavigationThrottle::ShowInterstitialAsync(
 
 content::NavigationThrottle::ThrottleCheckResult
 SupervisedUserNavigationThrottle::WillStartRequest() {
+  LOG(ERROR) << "SupervisedUserNavigationThrottle::WillStartRequest";
   return CheckURL();
 }
 
@@ -209,6 +210,7 @@ void SupervisedUserNavigationThrottle::OnCheckDone(
     SupervisedUserURLFilter::FilteringBehavior behavior,
     supervised_user_error_page::FilteringBehaviorReason reason,
     bool uncertain) {
+  LOG(ERROR) << "SupervisedUserNavigationThrottle::OnCheckDone";
   DCHECK_EQ(SupervisedUserURLFilter::INVALID, behavior_);
   // If we got a result synchronously, pass it back to ShowInterstitialIfNeeded.
   if (!deferred_)
@@ -233,9 +235,9 @@ void SupervisedUserNavigationThrottle::OnCheckDone(
 }
 
 void SupervisedUserNavigationThrottle::OnInterstitialResult(
-    bool continue_request) {
-  if (continue_request)
+    std::string error_page_content) {
+  if (error_page_content == std::string())
     Resume();
   else
-    CancelDeferredNavigation(CANCEL);
+    CancelDeferredNavigation(content::NavigationThrottle::ThrottleCheckResult(CANCEL, net::ERR_BLOCKED_BY_CLIENT, error_page_content));
 }

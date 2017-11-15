@@ -38,7 +38,7 @@ class SupervisedUserInterstitial : public content::InterstitialPageDelegate,
                    const GURL& url,
                    supervised_user_error_page::FilteringBehaviorReason reason,
                    bool initial_page_load,
-                   const base::Callback<void(bool)>& callback);
+                   const base::Callback<void(std::string)>& callback);
 
   static std::string GetHTMLContents(
       Profile* profile,
@@ -50,7 +50,7 @@ class SupervisedUserInterstitial : public content::InterstitialPageDelegate,
       const GURL& url,
       supervised_user_error_page::FilteringBehaviorReason reason,
       bool initial_page_load,
-      const base::Callback<void(bool)>& callback);
+      const base::Callback<void(std::string)>& callback);
 
   void Init();
 
@@ -95,7 +95,7 @@ class SupervisedUserInterstitial : public content::InterstitialPageDelegate,
   // Interstitials behave very differently in those cases.
   bool initial_page_load_;
 
-  base::Callback<void(bool)> callback_;
+  base::Callback<void(std::string)> callback_;
 
   base::WeakPtrFactory<SupervisedUserInterstitial> weak_ptr_factory_;
 

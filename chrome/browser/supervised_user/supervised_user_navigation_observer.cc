@@ -46,13 +46,13 @@ void SupervisedUserNavigationObserver::OnRequestBlocked(
     content::WebContents* web_contents,
     const GURL& url,
     supervised_user_error_page::FilteringBehaviorReason reason,
-    const base::Callback<void(bool)>& callback) {
+    const base::Callback<void(std::string)>& callback) {
   SupervisedUserNavigationObserver* navigation_observer =
       SupervisedUserNavigationObserver::FromWebContents(web_contents);
 
   // Cancel the navigation if there is no navigation observer.
   if (!navigation_observer) {
-    callback.Run(false);
+    callback.Run(std::string());
     return;
   }
 
@@ -87,7 +87,7 @@ void SupervisedUserNavigationObserver::OnURLFilterChanged() {
 void SupervisedUserNavigationObserver::OnRequestBlockedInternal(
     const GURL& url,
     supervised_user_error_page::FilteringBehaviorReason reason,
-    const base::Callback<void(bool)>& callback) {
+    const base::Callback<void(std::string)>& callback) {
   Time timestamp = Time::Now();  // TODO(bauerb): Use SaneTime when available.
   // Create a history entry for the attempt and mark it as such.
   history::HistoryAddPageArgs add_page_args(
@@ -132,7 +132,7 @@ void SupervisedUserNavigationObserver::URLFilterCheckCallback(
   if (behavior == SupervisedUserURLFilter::FilteringBehavior::BLOCK) {
     const bool initial_page_load = false;
     MaybeShowInterstitial(url, reason, initial_page_load,
-                          base::Callback<void(bool)>());
+                          base::Callback<void(std::string)>());
   }
 }
 
@@ -140,12 +140,12 @@ void SupervisedUserNavigationObserver::MaybeShowInterstitial(
     const GURL& url,
     supervised_user_error_page::FilteringBehaviorReason reason,
     bool initial_page_load,
-    const base::Callback<void(bool)>& callback) {
+    const base::Callback<void(std::string)>& callback) {
   if (is_showing_interstitial_)
     return;
 
   is_showing_interstitial_ = true;
-  base::Callback<void(bool)> wrapped_callback =
+  base::Callback<void(std::string)> wrapped_callback =
       base::Bind(&SupervisedUserNavigationObserver::OnInterstitialResult,
                  weak_ptr_factory_.GetWeakPtr(), callback);
   SupervisedUserInterstitial::Show(web_contents(), url, reason,
@@ -153,8 +153,8 @@ void SupervisedUserNavigationObserver::MaybeShowInterstitial(
 }
 
 void SupervisedUserNavigationObserver::OnInterstitialResult(
-    const base::Callback<void(bool)>& callback,
-    bool result) {
+    const base::Callback<void(std::string)>& callback,
+    std::string result) {
   is_showing_interstitial_ = false;
   if (callback)
     callback.Run(result);

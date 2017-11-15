@@ -40,7 +40,7 @@ class SupervisedUserNavigationObserver
       content::WebContents* web_contents,
       const GURL& url,
       supervised_user_error_page::FilteringBehaviorReason reason,
-      const base::Callback<void(bool)>& callback);
+      const base::Callback<void(std::string)>& callback);
 
   // WebContentsObserver implementation.
   void DidFinishNavigation(
@@ -57,7 +57,7 @@ class SupervisedUserNavigationObserver
   void OnRequestBlockedInternal(
       const GURL& url,
       supervised_user_error_page::FilteringBehaviorReason reason,
-      const base::Callback<void(bool)>& callback);
+      const base::Callback<void(std::string)>& callback);
 
   void URLFilterCheckCallback(
       const GURL& url,
@@ -69,10 +69,10 @@ class SupervisedUserNavigationObserver
       const GURL& url,
       supervised_user_error_page::FilteringBehaviorReason reason,
       bool initial_page_load,
-      const base::Callback<void(bool)>& callback);
+      const base::Callback<void(std::string)>& callback);
 
-  void OnInterstitialResult(const base::Callback<void(bool)>& callback,
-                            bool result);
+  void OnInterstitialResult(const base::Callback<void(std::string)>& callback,
+                            std::string result);
 
   // Owned by SupervisedUserService.
   const SupervisedUserURLFilter* url_filter_;

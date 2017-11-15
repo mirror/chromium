@@ -50,7 +50,7 @@ class SupervisedUserNavigationThrottle : public content::NavigationThrottle {
                    supervised_user_error_page::FilteringBehaviorReason reason,
                    bool uncertain);
 
-  void OnInterstitialResult(bool continue_request);
+  void OnInterstitialResult(std::string continue_request);
 
   const SupervisedUserURLFilter* url_filter_;
   bool deferred_;

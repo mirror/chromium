@@ -116,12 +116,14 @@ void SupervisedUserInterstitial::Show(
     const GURL& url,
     supervised_user_error_page::FilteringBehaviorReason reason,
     bool initial_page_load,
-    const base::Callback<void(bool)>& callback) {
+    const base::Callback<void(std::string)>& callback) {
   SupervisedUserInterstitial* interstitial = new SupervisedUserInterstitial(
       web_contents, url, reason, initial_page_load, callback);
 
+  // interstitial->Init();
+  callback.Run(interstitial->GetHTMLContents());
+
   // |interstitial_page_| is responsible for deleting the interstitial.
-  interstitial->Init();
 }
 
 SupervisedUserInterstitial::SupervisedUserInterstitial(
@@ -129,7 +131,7 @@ SupervisedUserInterstitial::SupervisedUserInterstitial(
     const GURL& url,
     supervised_user_error_page::FilteringBehaviorReason reason,
     bool initial_page_load,
-    const base::Callback<void(bool)>& callback)
+    const base::Callback<void(std::string)>& callback)
     : web_contents_(web_contents),
       profile_(Profile::FromBrowserContext(web_contents->GetBrowserContext())),
       interstitial_page_(NULL),
@@ -351,7 +353,8 @@ void SupervisedUserInterstitial::DispatchContinueRequest(
       SupervisedUserServiceFactory::GetForProfile(profile_);
   supervised_user_service->RemoveObserver(this);
 
-  callback_.Run(continue_request);
+  // if (continue_request)
+  //   callback_.Run(continue_request);
 
   // After this, the WebContents may be destroyed. Make sure we don't try to use
   // it again.
