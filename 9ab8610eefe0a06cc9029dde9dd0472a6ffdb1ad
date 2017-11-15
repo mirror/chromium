@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40cdcd12_b16ff8b1",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-11-15T20:12:37Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "9ab8610eefe0a06cc9029dde9dd0472a6ffdb1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
