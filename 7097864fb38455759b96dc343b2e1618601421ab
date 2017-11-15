@@ -16,6 +16,24 @@
       "revId": "7097864fb38455759b96dc343b2e1618601421ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "019e08c8_99252fa2",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1820,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-15T14:28:51Z",
+      "side": 1,
+      "message": "fyi: autofill desktop implementation currently covers Windows,Linux,CrOS",
+      "parentUuid": "70bc89c0_48bb68f1",
+      "revId": "7097864fb38455759b96dc343b2e1618601421ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
