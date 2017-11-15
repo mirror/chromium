@@ -48,9 +48,10 @@ class BackgroundProfilingTriggers {
   // Virtual for testing. Called when a memory report needs to be send.
   virtual void TriggerMemoryReportForProcess(base::ProcessId pid);
 
+  ProfilingProcessHost* host_;
+
   // Timer to periodically check memory consumption and upload a slow-report.
   base::RepeatingTimer timer_;
-  ProfilingProcessHost* host_;
 
   base::WeakPtrFactory<BackgroundProfilingTriggers> weak_ptr_factory_;
 

@@ -16,7 +16,7 @@ namespace profiling {
 namespace {
 // Check memory usage every hour. Trigger slow report if needed.
 const int kRepeatingCheckMemoryDelayInHours = 1;
-const int kSecondReportRepeatingCheckMemoryDelayInHours = 12;
+const int kThrottledReportRepeatingCheckMemoryDelayInHours = 12;
 
 #if defined(OS_ANDROID)
 const size_t kBrowserProcessMallocTriggerKb = 100 * 1024;    // 100 MB
@@ -70,11 +70,10 @@ void BackgroundProfilingTriggers::StartTimer() {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
 
   // Register a repeating timer to check memory usage periodically.
-  base::RepeatingClosure timer_action =
   timer_.Start(
       FROM_HERE, base::TimeDelta::FromHours(kRepeatingCheckMemoryDelayInHours),
       base::Bind(&BackgroundProfilingTriggers::PerformMemoryUsageChecks,
-                 weak_ptr_factory_.GetWeakPtr());
+                 weak_ptr_factory_.GetWeakPtr()));
 }
 
 bool BackgroundProfilingTriggers::IsOverTriggerThreshold(
@@ -114,22 +113,29 @@ void BackgroundProfilingTriggers::OnReceivedMemoryDump(
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
 
   if (success) {
-    for (const auto& proc : dump->process_dumps) {
-      if (IsOverTriggerThreshold(GetContentProcessType(proc->process_type),
-                                 proc->os_dump->private_footprint_kb)) {
-        TriggerMemoryReportForProcess(proc->pid);
-      }
+    return;
+  }
+
+  bool report_was_sent = false;
+  for (const auto& proc : dump->process_dumps) {
+    if (IsOverTriggerThreshold(GetContentProcessType(proc->process_type),
+                               proc->os_dump->private_footprint_kb)) {
+      TriggerMemoryReportForProcess(proc->pid);
+      report_was_sent = true;
     }
   }
 
-  // Reset the timer after processing as opposed to having the timer
-  // automatically repeat avoid queueing up too many reports if the processing
-  // is slow.
-  timer_.Start(
-      FROM_HERE,
-      base::TimeDelta::FromHours(kSecondReportRepeatingCheckMemoryDelayInHours),
-      base::Bind(&BackgroundProfilingTriggers::PerformMemoryUsageChecks,
-                 weak_ptr_factory_.GetWeakPtr()));
+  if (report_was_sent) {
+    // If a report was sent, throttle the memory data collection rate to
+    // kThrottledReportRepeatingCheckMemoryDelayInHours to avoid sending too
+    // many reports from a known problematic client.
+    timer_.Start(
+        FROM_HERE,
+        base::TimeDelta::FromHours(
+            kThrottledReportRepeatingCheckMemoryDelayInHours),
+        base::Bind(&BackgroundProfilingTriggers::PerformMemoryUsageChecks,
+                   weak_ptr_factory_.GetWeakPtr()));
+  }
 }
 
 void BackgroundProfilingTriggers::TriggerMemoryReportForProcess(
