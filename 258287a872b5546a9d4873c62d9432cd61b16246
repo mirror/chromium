@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f736e5c_b47e6bca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-15T19:42:08Z",
+      "side": 1,
+      "message": "A quick note: I don\u0027t know how ExternalWTHF works. But I think it would not be a good idea to support both WindowTreeHostFactory and ExternalWindowTreeHostFactory. mus should have only a single run-time mode (internal or external), and it\u0027d be easier for clients if they didn\u0027t have to worry about which API to use.",
+      "revId": "258287a872b5546a9d4873c62d9432cd61b16246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
