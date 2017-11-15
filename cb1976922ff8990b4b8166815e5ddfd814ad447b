@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "362a3cc9_062e9e1d",
+        "filename": "ui/aura/window_event_dispatcher_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2820,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-15T20:35:10Z",
+      "side": 1,
+      "message": "*hidden\n\nSomething like the following would be more helpful:\n\nCursor is hidden when locked. But a synthetic move event should still be dispatched when cursor is moved.",
+      "revId": "cb1976922ff8990b4b8166815e5ddfd814ad447b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
