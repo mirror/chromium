@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "062ca95f_7c4ea133",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T23:51:08Z",
+      "side": 1,
+      "message": "nit: iron-flex-alignment is only needed for justified/stretch/aligned. \u0027center\u0027 is included in iron-flex.",
+      "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d96f157_cd6c6688",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T23:51:08Z",
+      "side": 1,
+      "message": "Is this div wrapper needed?",
+      "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387f2070_5b4dfa4d",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T23:51:08Z",
+      "side": 1,
+      "message": "nit: one line \u003cdiv\u003e$i18n{foo}\u003c/div\u003e",
+      "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6304014e_d6beda62",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T23:51:08Z",
+      "side": 1,
+      "message": "Is this div needed?",
+      "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7c0074_b502d35f",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T23:51:08Z",
+      "side": 1,
+      "message": "\u0027cancel\u0027 shouldn\u0027t trigger \u0027onActionButtonTap_\u0027...",
+      "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d2511f_3d734da8",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T23:51:08Z",
+      "side": 1,
+      "message": "Fix or remove comment.",
+      "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1c46bb_89c069eb",
+        "filename": "chrome/test/data/webui/settings/settings_passwords_section_browsertest.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T23:51:08Z",
+      "side": 1,
+      "message": ";",
+      "revId": "aa331c984b06c7896e9d4b09a161ae8bf283a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
