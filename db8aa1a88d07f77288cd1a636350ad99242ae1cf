@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "91fc779f_d8185698",
+        "filename": "third_party/WebKit/Source/bindings/templates/attributes.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-15T11:33:05Z",
+      "side": 1,
+      "message": "Makes sense. Then shall we add a comment?",
+      "parentUuid": "18f16511_aa6333f8",
+      "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a905969c_9cebafb7",
         "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
         "patchSetId": 12
