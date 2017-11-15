@@ -4,15 +4,12 @@
 
 package org.chromium.chrome.browser.bookmarks;
 
-import android.support.test.annotation.UiThreadTest;
 import android.support.test.filters.SmallTest;
-import android.support.test.rule.UiThreadTestRule;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
@@ -37,8 +34,7 @@ import java.util.List;
 @RunWith(BaseJUnit4ClassRunner.class)
 public class BookmarkBridgeTest {
     @Rule
-    public final RuleChain mChain =
-            RuleChain.outerRule(new ChromeBrowserTestRule()).around(new UiThreadTestRule());
+    public final ChromeBrowserTestRule mRule = new ChromeBrowserTestRule();
 
     private BookmarkBridge mBookmarkBridge;
     private BookmarkId mMobileNode;
@@ -69,25 +65,27 @@ public class BookmarkBridgeTest {
 
     @Test
     @SmallTest
-    @UiThreadTest
     @Feature({"Bookmark"})
     public void testAddBookmarksAndFolders() throws Throwable {
-        BookmarkId bookmarkA = mBookmarkBridge.addBookmark(mDesktopNode, 0, "a", "http://a.com");
-        verifyBookmark(bookmarkA, "a", "http://a.com/", false, mDesktopNode);
-        BookmarkId bookmarkB = mBookmarkBridge.addBookmark(mOtherNode, 0, "b", "http://b.com");
-        verifyBookmark(bookmarkB, "b", "http://b.com/", false, mOtherNode);
-        BookmarkId bookmarkC = mBookmarkBridge.addBookmark(mMobileNode, 0, "c", "http://c.com");
-        verifyBookmark(bookmarkC, "c", "http://c.com/", false, mMobileNode);
-        BookmarkId folderA = mBookmarkBridge.addFolder(mOtherNode, 0, "fa");
-        verifyBookmark(folderA, "fa", null, true, mOtherNode);
-        BookmarkId folderB = mBookmarkBridge.addFolder(mDesktopNode, 0, "fb");
-        verifyBookmark(folderB, "fb", null, true, mDesktopNode);
-        BookmarkId folderC = mBookmarkBridge.addFolder(mMobileNode, 0, "fc");
-        verifyBookmark(folderC, "fc", null, true, mMobileNode);
-        BookmarkId bookmarkAA = mBookmarkBridge.addBookmark(folderA, 0, "aa", "http://aa.com");
-        verifyBookmark(bookmarkAA, "aa", "http://aa.com/", false, folderA);
-        BookmarkId folderAA = mBookmarkBridge.addFolder(folderA, 0, "faa");
-        verifyBookmark(folderAA, "faa", null, true, folderA);
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            BookmarkId bookmarkA =
+                    mBookmarkBridge.addBookmark(mDesktopNode, 0, "a", "http://a.com");
+            verifyBookmark(bookmarkA, "a", "http://a.com/", false, mDesktopNode);
+            BookmarkId bookmarkB = mBookmarkBridge.addBookmark(mOtherNode, 0, "b", "http://b.com");
+            verifyBookmark(bookmarkB, "b", "http://b.com/", false, mOtherNode);
+            BookmarkId bookmarkC = mBookmarkBridge.addBookmark(mMobileNode, 0, "c", "http://c.com");
+            verifyBookmark(bookmarkC, "c", "http://c.com/", false, mMobileNode);
+            BookmarkId folderA = mBookmarkBridge.addFolder(mOtherNode, 0, "fa");
+            verifyBookmark(folderA, "fa", null, true, mOtherNode);
+            BookmarkId folderB = mBookmarkBridge.addFolder(mDesktopNode, 0, "fb");
+            verifyBookmark(folderB, "fb", null, true, mDesktopNode);
+            BookmarkId folderC = mBookmarkBridge.addFolder(mMobileNode, 0, "fc");
+            verifyBookmark(folderC, "fc", null, true, mMobileNode);
+            BookmarkId bookmarkAA = mBookmarkBridge.addBookmark(folderA, 0, "aa", "http://aa.com");
+            verifyBookmark(bookmarkAA, "aa", "http://aa.com/", false, folderA);
+            BookmarkId folderAA = mBookmarkBridge.addFolder(folderA, 0, "faa");
+            verifyBookmark(folderAA, "faa", null, true, folderA);
+        });
     }
 
     private void verifyBookmark(BookmarkId idToVerify, String expectedTitle,
@@ -102,114 +100,116 @@ public class BookmarkBridgeTest {
 
     @Test
     @SmallTest
-    @UiThreadTest
     @Feature({"Bookmark"})
     public void testGetAllFoldersWithDepths() throws Throwable {
-        BookmarkId folderA = mBookmarkBridge.addFolder(mMobileNode, 0, "a");
-        BookmarkId folderB = mBookmarkBridge.addFolder(mDesktopNode, 0, "b");
-        BookmarkId folderC = mBookmarkBridge.addFolder(mOtherNode, 0, "c");
-        BookmarkId folderAA = mBookmarkBridge.addFolder(folderA, 0, "aa");
-        BookmarkId folderBA = mBookmarkBridge.addFolder(folderB, 0, "ba");
-        BookmarkId folderAAA = mBookmarkBridge.addFolder(folderAA, 0, "aaa");
-        BookmarkId folderAAAA = mBookmarkBridge.addFolder(folderAAA, 0, "aaaa");
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            BookmarkId folderA = mBookmarkBridge.addFolder(mMobileNode, 0, "a");
+            BookmarkId folderB = mBookmarkBridge.addFolder(mDesktopNode, 0, "b");
+            BookmarkId folderC = mBookmarkBridge.addFolder(mOtherNode, 0, "c");
+            BookmarkId folderAA = mBookmarkBridge.addFolder(folderA, 0, "aa");
+            BookmarkId folderBA = mBookmarkBridge.addFolder(folderB, 0, "ba");
+            BookmarkId folderAAA = mBookmarkBridge.addFolder(folderAA, 0, "aaa");
+            BookmarkId folderAAAA = mBookmarkBridge.addFolder(folderAAA, 0, "aaaa");
 
-        mBookmarkBridge.addBookmark(mMobileNode, 0, "ua", "http://www.google.com");
-        mBookmarkBridge.addBookmark(mDesktopNode, 0, "ua", "http://www.google.com");
-        mBookmarkBridge.addBookmark(mOtherNode, 0, "ua", "http://www.google.com");
-        mBookmarkBridge.addBookmark(folderA, 0, "ua", "http://www.medium.com");
+            mBookmarkBridge.addBookmark(mMobileNode, 0, "ua", "http://www.google.com");
+            mBookmarkBridge.addBookmark(mDesktopNode, 0, "ua", "http://www.google.com");
+            mBookmarkBridge.addBookmark(mOtherNode, 0, "ua", "http://www.google.com");
+            mBookmarkBridge.addBookmark(folderA, 0, "ua", "http://www.medium.com");
 
-        // Map folders to depths as expected results
-        HashMap<BookmarkId, Integer> idToDepth = new HashMap<BookmarkId, Integer>();
-        idToDepth.put(mMobileNode, 0);
-        idToDepth.put(folderA, 1);
-        idToDepth.put(folderAA, 2);
-        idToDepth.put(folderAAA, 3);
-        idToDepth.put(folderAAAA, 4);
-        idToDepth.put(mDesktopNode, 0);
-        idToDepth.put(folderB, 1);
-        idToDepth.put(folderBA, 2);
-        idToDepth.put(mOtherNode, 0);
-        idToDepth.put(folderC, 1);
+            // Map folders to depths as expected results
+            HashMap<BookmarkId, Integer> idToDepth = new HashMap<BookmarkId, Integer>();
+            idToDepth.put(mMobileNode, 0);
+            idToDepth.put(folderA, 1);
+            idToDepth.put(folderAA, 2);
+            idToDepth.put(folderAAA, 3);
+            idToDepth.put(folderAAAA, 4);
+            idToDepth.put(mDesktopNode, 0);
+            idToDepth.put(folderB, 1);
+            idToDepth.put(folderBA, 2);
+            idToDepth.put(mOtherNode, 0);
+            idToDepth.put(folderC, 1);
 
-        List<BookmarkId> folderList = new ArrayList<BookmarkId>();
-        List<Integer> depthList = new ArrayList<Integer>();
-        mBookmarkBridge.getAllFoldersWithDepths(folderList, depthList);
-        verifyFolderDepths(folderList, depthList, idToDepth);
+            List<BookmarkId> folderList = new ArrayList<BookmarkId>();
+            List<Integer> depthList = new ArrayList<Integer>();
+            mBookmarkBridge.getAllFoldersWithDepths(folderList, depthList);
+            verifyFolderDepths(folderList, depthList, idToDepth);
+        });
     }
 
     @Test
     @SmallTest
-    @UiThreadTest
     @Feature({"Bookmark"})
     public void testGetMoveDestinations() throws Throwable {
-        BookmarkId folderA = mBookmarkBridge.addFolder(mMobileNode, 0, "a");
-        BookmarkId folderB = mBookmarkBridge.addFolder(mDesktopNode, 0, "b");
-        BookmarkId folderC = mBookmarkBridge.addFolder(mOtherNode, 0, "c");
-        BookmarkId folderAA = mBookmarkBridge.addFolder(folderA, 0, "aa");
-        BookmarkId folderBA = mBookmarkBridge.addFolder(folderB, 0, "ba");
-        BookmarkId folderAAA = mBookmarkBridge.addFolder(folderAA, 0, "aaa");
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            BookmarkId folderA = mBookmarkBridge.addFolder(mMobileNode, 0, "a");
+            BookmarkId folderB = mBookmarkBridge.addFolder(mDesktopNode, 0, "b");
+            BookmarkId folderC = mBookmarkBridge.addFolder(mOtherNode, 0, "c");
+            BookmarkId folderAA = mBookmarkBridge.addFolder(folderA, 0, "aa");
+            BookmarkId folderBA = mBookmarkBridge.addFolder(folderB, 0, "ba");
+            BookmarkId folderAAA = mBookmarkBridge.addFolder(folderAA, 0, "aaa");
 
-        mBookmarkBridge.addBookmark(mMobileNode, 0, "ua", "http://www.google.com");
-        mBookmarkBridge.addBookmark(mDesktopNode, 0, "ua", "http://www.google.com");
-        mBookmarkBridge.addBookmark(mOtherNode, 0, "ua", "http://www.google.com");
-        mBookmarkBridge.addBookmark(folderA, 0, "ua", "http://www.medium.com");
+            mBookmarkBridge.addBookmark(mMobileNode, 0, "ua", "http://www.google.com");
+            mBookmarkBridge.addBookmark(mDesktopNode, 0, "ua", "http://www.google.com");
+            mBookmarkBridge.addBookmark(mOtherNode, 0, "ua", "http://www.google.com");
+            mBookmarkBridge.addBookmark(folderA, 0, "ua", "http://www.medium.com");
 
-        // Map folders to depths as expected results
-        HashMap<BookmarkId, Integer> idToDepth = new HashMap<BookmarkId, Integer>();
+            // Map folders to depths as expected results
+            HashMap<BookmarkId, Integer> idToDepth = new HashMap<BookmarkId, Integer>();
 
-        List<BookmarkId> folderList = new ArrayList<BookmarkId>();
-        List<Integer> depthList = new ArrayList<Integer>();
+            List<BookmarkId> folderList = new ArrayList<BookmarkId>();
+            List<Integer> depthList = new ArrayList<Integer>();
 
-        mBookmarkBridge.getMoveDestinations(folderList, depthList, Arrays.asList(folderA));
-        idToDepth.put(mMobileNode, 0);
-        idToDepth.put(mDesktopNode, 0);
-        idToDepth.put(folderB, 1);
-        idToDepth.put(folderBA, 2);
-        idToDepth.put(mOtherNode, 0);
-        idToDepth.put(folderC, 1);
-        verifyFolderDepths(folderList, depthList, idToDepth);
+            mBookmarkBridge.getMoveDestinations(folderList, depthList, Arrays.asList(folderA));
+            idToDepth.put(mMobileNode, 0);
+            idToDepth.put(mDesktopNode, 0);
+            idToDepth.put(folderB, 1);
+            idToDepth.put(folderBA, 2);
+            idToDepth.put(mOtherNode, 0);
+            idToDepth.put(folderC, 1);
+            verifyFolderDepths(folderList, depthList, idToDepth);
 
-        mBookmarkBridge.getMoveDestinations(folderList, depthList, Arrays.asList(folderB));
-        idToDepth.put(mMobileNode, 0);
-        idToDepth.put(folderA, 1);
-        idToDepth.put(folderAA, 2);
-        idToDepth.put(folderAAA, 3);
-        idToDepth.put(mDesktopNode, 0);
-        idToDepth.put(mOtherNode, 0);
-        idToDepth.put(folderC, 1);
-        verifyFolderDepths(folderList, depthList, idToDepth);
+            mBookmarkBridge.getMoveDestinations(folderList, depthList, Arrays.asList(folderB));
+            idToDepth.put(mMobileNode, 0);
+            idToDepth.put(folderA, 1);
+            idToDepth.put(folderAA, 2);
+            idToDepth.put(folderAAA, 3);
+            idToDepth.put(mDesktopNode, 0);
+            idToDepth.put(mOtherNode, 0);
+            idToDepth.put(folderC, 1);
+            verifyFolderDepths(folderList, depthList, idToDepth);
 
-        mBookmarkBridge.getMoveDestinations(folderList, depthList, Arrays.asList(folderC));
-        idToDepth.put(mMobileNode, 0);
-        idToDepth.put(folderA, 1);
-        idToDepth.put(folderAA, 2);
-        idToDepth.put(folderAAA, 3);
-        idToDepth.put(mDesktopNode, 0);
-        idToDepth.put(folderB, 1);
-        idToDepth.put(folderBA, 2);
-        idToDepth.put(mOtherNode, 0);
-        verifyFolderDepths(folderList, depthList, idToDepth);
+            mBookmarkBridge.getMoveDestinations(folderList, depthList, Arrays.asList(folderC));
+            idToDepth.put(mMobileNode, 0);
+            idToDepth.put(folderA, 1);
+            idToDepth.put(folderAA, 2);
+            idToDepth.put(folderAAA, 3);
+            idToDepth.put(mDesktopNode, 0);
+            idToDepth.put(folderB, 1);
+            idToDepth.put(folderBA, 2);
+            idToDepth.put(mOtherNode, 0);
+            verifyFolderDepths(folderList, depthList, idToDepth);
 
-        mBookmarkBridge.getMoveDestinations(folderList, depthList, Arrays.asList(folderBA));
-        idToDepth.put(mMobileNode, 0);
-        idToDepth.put(folderA, 1);
-        idToDepth.put(folderAA, 2);
-        idToDepth.put(folderAAA, 3);
-        idToDepth.put(mDesktopNode, 0);
-        idToDepth.put(folderB, 1);
-        idToDepth.put(mOtherNode, 0);
-        idToDepth.put(folderC, 1);
-        verifyFolderDepths(folderList, depthList, idToDepth);
+            mBookmarkBridge.getMoveDestinations(folderList, depthList, Arrays.asList(folderBA));
+            idToDepth.put(mMobileNode, 0);
+            idToDepth.put(folderA, 1);
+            idToDepth.put(folderAA, 2);
+            idToDepth.put(folderAAA, 3);
+            idToDepth.put(mDesktopNode, 0);
+            idToDepth.put(folderB, 1);
+            idToDepth.put(mOtherNode, 0);
+            idToDepth.put(folderC, 1);
+            verifyFolderDepths(folderList, depthList, idToDepth);
 
-        mBookmarkBridge.getMoveDestinations(
-                folderList, depthList, Arrays.asList(folderAA, folderC));
-        idToDepth.put(mMobileNode, 0);
-        idToDepth.put(folderA, 1);
-        idToDepth.put(mDesktopNode, 0);
-        idToDepth.put(folderB, 1);
-        idToDepth.put(folderBA, 2);
-        idToDepth.put(mOtherNode, 0);
-        verifyFolderDepths(folderList, depthList, idToDepth);
+            mBookmarkBridge.getMoveDestinations(
+                    folderList, depthList, Arrays.asList(folderAA, folderC));
+            idToDepth.put(mMobileNode, 0);
+            idToDepth.put(folderA, 1);
+            idToDepth.put(mDesktopNode, 0);
+            idToDepth.put(folderB, 1);
+            idToDepth.put(folderBA, 2);
+            idToDepth.put(mOtherNode, 0);
+            verifyFolderDepths(folderList, depthList, idToDepth);
+        });
     }
 
     private void verifyFolderDepths(List<BookmarkId> folderList, List<Integer> depthList,

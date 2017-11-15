@@ -22,6 +22,7 @@
 #include "base/time/clock.h"
 #include "components/google/core/browser/google_url_tracker.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "components/policy/core/common/policy_service.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "components/search_engines/default_search_manager.h"
 #include "components/search_engines/keyword_web_data_service.h"
@@ -105,6 +106,7 @@ class TemplateURLService : public WebDataServiceConsumer,
 
   TemplateURLService(
       PrefService* prefs,
+      policy::PolicyService* policy_service,
       std::unique_ptr<SearchTermsData> search_terms_data,
       const scoped_refptr<KeywordWebDataService>& web_data_service,
       std::unique_ptr<TemplateURLServiceClient> client,
@@ -521,6 +523,9 @@ class TemplateURLService : public WebDataServiceConsumer,
   // Transitions to the loaded state.
   void ChangeToLoadedState();
 
+  // Called after Policies are updated when loading.
+  void OnPoliciesUpdated();
+
   // Called by DefaultSearchManager when the effective default search engine has
   // changed.
   void OnDefaultSearchChange(const TemplateURLData* new_dse_data,
@@ -727,6 +732,7 @@ class TemplateURLService : public WebDataServiceConsumer,
 
   // ---------- Browser state related members ---------------------------------
   PrefService* prefs_;
+  policy::PolicyService* policy_service_;
 
   std::unique_ptr<SearchTermsData> search_terms_data_;
 
@@ -774,18 +780,21 @@ class TemplateURLService : public WebDataServiceConsumer,
   std::unique_ptr<SearchHostToURLsMap> provider_map_;
 
   // Whether the keywords have been loaded.
-  bool loaded_;
+  bool loaded_ = false;
+
+  // Whether loading has already been started.
+  bool load_pending_ = false;
 
   // Set when the web data service fails to load properly.  This prevents
   // further communication with sync or writing to prefs, so we don't persist
   // inconsistent state data anywhere.
-  bool load_failed_;
+  bool load_failed_ = false;
 
   // Whether Load() is disabled. True only in testing contexts.
-  bool disable_load_;
+  bool disable_load_ = false;
 
   // If non-zero, we're waiting on a load.
-  KeywordWebDataService::Handle load_handle_;
+  KeywordWebDataService::Handle load_handle_ = 0;
 
   // All visits that occurred before we finished loading. Once loaded
   // UpdateKeywordSearchTermsForURL is invoked for each element of the vector.
@@ -793,7 +802,7 @@ class TemplateURLService : public WebDataServiceConsumer,
 
   // Once loaded, the default search provider.  This is a pointer to a
   // TemplateURL owned by |template_urls_|.
-  TemplateURL* default_search_provider_;
+  TemplateURL* default_search_provider_ = nullptr;
 
   // A temporary location for the DSE until Web Data has been loaded and it can
   // be merged into |template_urls_|.
@@ -804,7 +813,7 @@ class TemplateURLService : public WebDataServiceConsumer,
 
   // ID assigned to next TemplateURL added to this model. This is an ever
   // increasing integer that is initialized from the database.
-  TemplateURLID next_id_;
+  TemplateURLID next_id_ = kInvalidTemplateURLID + 1;
 
   // Used to retrieve the current time, in base::Time units.
   std::unique_ptr<base::Clock> clock_;
@@ -813,11 +822,11 @@ class TemplateURLService : public WebDataServiceConsumer,
   // Set in MergeDataAndStartSyncing, reset in StopSyncing. While this is not
   // set, we ignore any local search engine changes (when we start syncing we
   // will look up the most recent values anyways).
-  bool models_associated_;
+  bool models_associated_ = false;
 
   // Whether we're currently processing changes from the syncer. While this is
   // true, we ignore any local search engine changes, since we triggered them.
-  bool processing_syncer_changes_;
+  bool processing_syncer_changes_ = false;
 
   // Sync's syncer::SyncChange handler. We push all our changes through this.
   std::unique_ptr<syncer::SyncChangeProcessor> sync_processor_;
@@ -835,7 +844,7 @@ class TemplateURLService : public WebDataServiceConsumer,
   // This is used to log the origin of changes to the default search provider.
   // We set this value to increasingly specific values when we know what is the
   // cause/origin of a default search change.
-  DefaultSearchChangeOrigin dsp_change_origin_;
+  DefaultSearchChangeOrigin dsp_change_origin_ = DSP_CHANGE_OTHER;
 
   // Stores a list of callbacks to be run after TemplateURLService has loaded.
   base::CallbackList<void(void)> on_loaded_callbacks_;

@@ -51,13 +51,11 @@ class SystemMessageHandler extends Handler {
         nativeDoRunLoopOnce(mNativeMessagePumpForUI, delayed);
     }
 
-    @SuppressWarnings("unused")
     @CalledByNative
     private void scheduleWork() {
         sendMessage(obtainAsyncMessage(SCHEDULED_WORK));
     }
 
-    @SuppressWarnings("unused")
     @CalledByNative
     private void scheduleDelayedWork(long millis) {
         if (mScheduledDelayedWork) removeMessages(DELAYED_SCHEDULED_WORK);
@@ -65,7 +63,6 @@ class SystemMessageHandler extends Handler {
         sendMessageDelayed(obtainAsyncMessage(DELAYED_SCHEDULED_WORK), millis);
     }
 
-    @SuppressWarnings("unused")
     @CalledByNative
     private void shutdown() {
         // No need to perform a slow removeMessages call, we should have executed all of the
