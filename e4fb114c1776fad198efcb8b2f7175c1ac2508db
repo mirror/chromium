@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32fa6e09_810cc1f9",
+        "filename": "media/filters/frame_buffer_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-15T01:15:39Z",
+      "side": 1,
+      "message": "I don\u0027t know how you feel about iterator arithmetic, but if you want to avoid it you can use:\n\n  it \u003d frame_buffers_.insert(it, std::make_unique\u003cFrameBuffer\u003e());",
+      "range": {
+        "startLine": 59,
+        "startChar": 19,
+        "endLine": 59,
+        "endChar": 28
+      },
+      "revId": "e4fb114c1776fad198efcb8b2f7175c1ac2508db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
