@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35a14128_e55c2d68",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-11-15T17:57:01Z",
+      "side": 1,
+      "message": "General comment: these huge parameter lists are getting really cumbersome to pass around \u0026 keep consistent across methods. Could we pass them around as a class object, or maybe even a dict?",
+      "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cdd3b55_70370e49",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-11-15T17:57:01Z",
+      "side": 1,
+      "message": "Add a comment for this method?",
+      "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0161b0a_b108dca0",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-11-15T17:57:01Z",
+      "side": 1,
+      "message": "Can we retain the original manifest data and use that, instead of opening and parsing it from a file?",
+      "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4208c0f4_e88cebc4",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-11-15T17:57:01Z",
+      "side": 1,
+      "message": "Add a comment for what you\u0027re doing from lines 335-339",
+      "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40774692_e11a3ec7",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-11-15T17:57:01Z",
+      "side": 1,
+      "message": "Can we use Python\u0027s \"tarfile\" package? That way we can add each file to the archive without the need to copy the structure into a staging dir.",
+      "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5853a52_fff181eb",
+        "filename": "build/fuchsia/tar_builder.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-11-15T17:57:01Z",
+      "side": 1,
+      "message": "nit: \"tar builder\" emphasizes the data format but not the purpose of the data. What about \"archive_builder\", \"archiver\"?",
+      "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1669b45f_c4353846",
+        "filename": "build/fuchsia/tar_builder.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-11-15T17:57:01Z",
+      "side": 1,
+      "message": "a binary",
+      "range": {
+        "startLine": 7,
+        "startChar": 32,
+        "endLine": 7,
+        "endChar": 38
+      },
+      "revId": "a480ec9409399d3f4f8c9db0fabc7a1baf886e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
