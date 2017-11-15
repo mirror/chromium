@@ -272,14 +272,24 @@ static SelectionInFlatTree ExtendSelectionAsNonDirectional(
 // doesn't impact the handled state.
 bool SelectionController::HandleSingleClick(
     const MouseEventWithHitTestResults& event) {
+  LOG(INFO) << "SelectionController::HandleSingleClick()";
   TRACE_EVENT0("blink",
                "SelectionController::handleMousePressEventSingleClick");
 
   DCHECK(!frame_->GetDocument()->NeedsLayoutTreeUpdate());
   Node* inner_node = event.InnerNode();
   if (!(inner_node && inner_node->GetLayoutObject() &&
-        mouse_down_may_start_select_))
+        mouse_down_may_start_select_)) {
+    LOG(INFO) << "inner_node: " << inner_node;
+    if (inner_node) {
+      LOG(INFO) << "inner_node->GetLayoutObject(): "
+                << inner_node->GetLayoutObject();
+      LOG(INFO) << "mouse_down_may_start_select_: "
+                << mouse_down_may_start_select_;
+    }
+    LOG(INFO) << "return false 1";
     return false;
+  }
 
   // Extend the selection if the Shift key is down, unless the click is in a
   // link or image.
@@ -287,6 +297,7 @@ bool SelectionController::HandleSingleClick(
 
   const VisiblePositionInFlatTree& visible_hit_position =
       VisiblePositionOfHitTestResult(event.GetHitTestResult());
+  LOG(INFO) << "Hit test position: " << visible_hit_position;
   const PositionInFlatTreeWithAffinity& position_to_use =
       visible_hit_position.IsNull()
           ? CreateVisiblePosition(
@@ -295,6 +306,8 @@ bool SelectionController::HandleSingleClick(
           : visible_hit_position.ToPositionWithAffinity();
   const VisibleSelectionInFlatTree& selection =
       this->Selection().ComputeVisibleSelectionInFlatTree();
+  LOG(INFO) << "Starting selection: " << selection.Start() << " to "
+            << selection.End();
 
   // Don't restart the selection when the mouse is pressed on an
   // existing selection so we can allow for text dragging.
@@ -303,11 +316,15 @@ bool SelectionController::HandleSingleClick(
         FlooredIntPoint(event.Event().PositionInRootFrame()));
     if (!extend_selection && this->Selection().Contains(v_point)) {
       mouse_down_was_single_click_in_selection_ = true;
-      if (!event.Event().FromTouch())
+      if (!event.Event().FromTouch()) {
+        LOG(INFO) << "return false 2";
         return false;
+      }
 
-      if (HandleTapInsideSelection(event, selection.AsSelection()))
+      if (HandleTapInsideSelection(event, selection.AsSelection())) {
+        LOG(INFO) << "return false 3";
         return false;
+      }
     }
   }
 
@@ -323,6 +340,7 @@ bool SelectionController::HandleSingleClick(
       UpdateSelectionForMouseDownDispatchingSelectStart(
           inner_node, selection.AsSelection(), granularity,
           HandleVisibility::kNotVisible);
+      LOG(INFO) << "return false 4";
       return false;
     }
     UpdateSelectionForMouseDownDispatchingSelectStart(
@@ -333,6 +351,7 @@ bool SelectionController::HandleSingleClick(
             : ExtendSelectionAsNonDirectional(
                   adjusted_position, selection.AsSelection(), granularity),
         granularity, HandleVisibility::kNotVisible);
+    LOG(INFO) << "return false 5";
     return false;
   }
 
@@ -340,6 +359,7 @@ bool SelectionController::HandleSingleClick(
     UpdateSelectionForMouseDownDispatchingSelectStart(
         inner_node, selection.AsSelection(), TextGranularity::kCharacter,
         HandleVisibility::kNotVisible);
+    LOG(INFO) << "return false 6";
     return false;
   }
 
@@ -347,6 +367,7 @@ bool SelectionController::HandleSingleClick(
     UpdateSelectionForMouseDownDispatchingSelectStart(
         inner_node, SelectionInFlatTree(), TextGranularity::kCharacter,
         HandleVisibility::kNotVisible);
+    LOG(INFO) << "return false 7";
     return false;
   }
 
@@ -375,6 +396,7 @@ bool SelectionController::HandleSingleClick(
     // UpdateSelectionForMouseDownDispatchingSelectStart() returns false when
     // the selectstart handler has prevented the default selection behavior from
     // occurring.
+    LOG(INFO) << "return false 8";
     return false;
   }
 
@@ -386,6 +408,13 @@ bool SelectionController::HandleSingleClick(
         position_to_use.GetPosition());
   }
 
+  const VisibleSelectionInFlatTree& end_selection =
+      this->Selection().ComputeVisibleSelectionInFlatTree();
+
+  LOG(INFO) << "End selection: " << end_selection.Start() << " to "
+            << end_selection.End();
+
+  LOG(INFO) << "return false 9";
   return false;
 }
 
@@ -984,6 +1013,8 @@ bool SelectionController::HandleTripleClick(
 
 bool SelectionController::HandleMousePressEvent(
     const MouseEventWithHitTestResults& event) {
+  LOG(INFO) << "SelectionController::HandleMousePressEvent()";
+  LOG(INFO) << "click count: " << event.Event().click_count;
   TRACE_EVENT0("blink", "SelectionController::handleMousePressEvent");
 
   // If we got the event back, that must mean it wasn't prevented,

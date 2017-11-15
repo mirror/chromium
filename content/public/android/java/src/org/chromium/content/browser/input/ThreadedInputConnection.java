@@ -1,3 +1,4 @@
+
 // Copyright 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -39,7 +40,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 class ThreadedInputConnection extends BaseInputConnection implements ChromiumBaseInputConnection {
     private static final String TAG = "cr_Ime";
-    private static final boolean DEBUG_LOGS = false;
+    private static final boolean DEBUG_LOGS = true;
 
     private static final TextInputState UNBLOCKER = new TextInputState(
             "", new Range(0, 0), new Range(-1, -1), false, false /* notFromIme */) {
@@ -569,8 +570,10 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
             @Override
             public void run() {
                 mImeAdapter.setEditableSelectionOffsets(start, end);
+                Log.i(TAG, "ImeAdapter#setEditableSelectionOffsets finished [%d %d]", start, end);
             }
         });
+        Log.i(TAG, "ThreadedInputConnection#setSelection [%d %d] returning", start, end);
         return true;
     }
 
@@ -584,8 +587,10 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
             @Override
             public void run() {
                 mImeAdapter.setComposingRegion(start, end);
+                Log.i(TAG, "ImeAdapter#setComposingRegion finished [%d %d]", start, end);
             }
         });
+        Log.i(TAG, "ThreadedInputConnection#setComposingRegion [%d %d] returning", start, end);
         return true;
     }
 

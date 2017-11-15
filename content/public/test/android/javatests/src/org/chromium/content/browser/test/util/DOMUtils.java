@@ -1,3 +1,4 @@
+
 // Copyright 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -11,6 +12,7 @@ import android.util.JsonReader;
 
 import org.junit.Assert;
 
+import org.chromium.base.Log;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.content.browser.webcontents.WebContentsImpl;
@@ -231,10 +233,13 @@ public class DOMUtils {
      */
     public static boolean clickNode(final ContentViewCore viewCore, String nodeId)
             throws InterruptedException, TimeoutException {
+      Log.i("DOMUtils", "clickNode: " + nodeId);
         scrollNodeIntoView(viewCore.getWebContents(), nodeId);
         int[] clickTarget = getClickTargetForNode(viewCore, nodeId);
-        return TouchCommon.singleClickView(
+        boolean result = TouchCommon.singleClickView(
                 viewCore.getContainerView(), clickTarget[0], clickTarget[1]);
+        Log.i("DOMUtils", "clickNode: " + nodeId + " finished");
+        return result;
     }
 
     /**

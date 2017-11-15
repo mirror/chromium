@@ -1,3 +1,4 @@
+
 // Copyright 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -73,7 +74,7 @@ import java.util.List;
 @JNINamespace("content")
 public class ImeAdapter {
     private static final String TAG = "cr_Ime";
-    private static final boolean DEBUG_LOGS = false;
+    private static final boolean DEBUG_LOGS = true;
 
     private static final float SUGGESTION_HIGHLIGHT_BACKGROUND_TRANSPARENCY = 0.4f;
 
