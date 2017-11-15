@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3e8fbf34_1735e102",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-15T01:45:36Z",
+      "side": 1,
+      "message": "Not quite -- if icc_profile_id_ is non-zero, then transfer_ and matrix_ store the best approximation that we were able to come up with.\n\nIf we want to use this space in Skia, we can\u0027t do that directly, but we can use that approximation (and then do the final conversion in GLRenderer with a LUT)",
+      "parentUuid": "3cf2d5aa_6f5066f7",
+      "range": {
+        "startLine": 228,
+        "startChar": 46,
+        "endLine": 228,
+        "endChar": 0
+      },
+      "revId": "76bf5f2fb3902c19c63c9ad720ac86d21e5ec917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a05088e_d83a988c",
         "filename": "ui/gfx/color_space.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-14T23:30:29Z",
       "side": 1,
       "message": "cannot be represented -\u003e cannot be represented accurately enough",
+      "range": {
+        "startLine": 223,
+        "startChar": 19,
+        "endLine": 223,
+        "endChar": 20
+      },
+      "revId": "76bf5f2fb3902c19c63c9ad720ac86d21e5ec917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6076ba3c_c5a15cbc",
+        "filename": "ui/gfx/color_space.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-15T01:45:36Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "5a05088e_d83a988c",
       "range": {
         "startLine": 223,
         "startChar": 19,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "0fc1c278_c681116f",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-15T01:45:36Z",
+      "side": 1,
+      "message": "Good point -- done.",
+      "parentUuid": "4aafc400_78404f36",
+      "revId": "76bf5f2fb3902c19c63c9ad720ac86d21e5ec917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2554d907_80c38535",
         "filename": "ui/gfx/icc_profile.cc",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2017-11-14T23:30:29Z",
       "side": 1,
       "message": "This function would seem to be in the wrong file?\nIf you want it to be here for some reason, a comment explaining why would be a good idea.",
+      "range": {
+        "startLine": 219,
+        "startChar": 10,
+        "endLine": 219,
+        "endChar": 11
+      },
+      "revId": "76bf5f2fb3902c19c63c9ad720ac86d21e5ec917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4984d973_5e0baf43",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-15T01:45:36Z",
+      "side": 1,
+      "message": "This would more reasonably be ICCProfile::FromColorSpace -- I\u0027ve added a TODO for that.\n\n(I\u0027d rather not do that in this patch, since it involves touching lots of callsites).",
+      "parentUuid": "2554d907_80c38535",
       "range": {
         "startLine": 219,
         "startChar": 10,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "d61c6ec5_59836088",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-15T01:45:36Z",
+      "side": 1,
+      "message": "Updated the wording.",
+      "parentUuid": "8d99dc3c_c81b033c",
+      "range": {
+        "startLine": 302,
+        "startChar": 47,
+        "endLine": 302,
+        "endChar": 54
+      },
+      "revId": "76bf5f2fb3902c19c63c9ad720ac86d21e5ec917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ca8ee97_c6112998",
         "filename": "ui/gfx/icc_profile_unittest.cc",
         "patchSetId": 1
@@ -122,6 +236,30 @@
       "writtenOn": "2017-11-14T23:30:29Z",
       "side": 1,
       "message": "It would seem to make more intuitive sense for them to be equal, but I\u0027m not sure when that matters.  Maybe we need an isEquivialent() or something?\nOnly place that would be useful is when creating a color transform and the input and output are the same, but not equal.",
+      "range": {
+        "startLine": 221,
+        "startChar": 53,
+        "endLine": 221,
+        "endChar": 0
+      },
+      "revId": "76bf5f2fb3902c19c63c9ad720ac86d21e5ec917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "005518de_7affc434",
+        "filename": "ui/gfx/icc_profile_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-15T01:45:36Z",
+      "side": 1,
+      "message": "There ultimately won\u0027t be any place where we will want to test for equivalence.\n\nIf two representations of the same data end up in the same ColorTransform, then the SkiaColorTransform ColorTransformStep will perform a comparison in its \"isNull\" step.",
+      "parentUuid": "2ca8ee97_c6112998",
       "range": {
         "startLine": 221,
         "startChar": 53,
