@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d28e5ca_1a849838",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-15T15:22:33Z",
+      "side": 1,
+      "message": "Also mention wanting to identify references to navigationTiming strings.",
+      "range": {
+        "startLine": 11,
+        "startChar": 72,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "0c1da8db0807deb95ed78f0793e2a0a85ceef5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86591aed_22530127",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-15T15:22:33Z",
+      "side": 1,
+      "message": "Link the spec where these names came from.",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 41
+      },
+      "revId": "0c1da8db0807deb95ed78f0793e2a0a85ceef5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89be58d0_e9ac99db",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-15T15:22:33Z",
+      "side": 1,
+      "message": "Call this out as a special case - it isn\u0027t from NavigationTiming, but the rest are.",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 97,
+        "endChar": 27
+      },
+      "revId": "0c1da8db0807deb95ed78f0793e2a0a85ceef5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
