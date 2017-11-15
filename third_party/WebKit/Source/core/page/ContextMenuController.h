@@ -32,6 +32,7 @@
 #include "core/layout/HitTestResult.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Noncopyable.h"
+#include "public/platform/WebMenuSourceType.h"
 
 namespace blink {
 
@@ -75,6 +76,13 @@ class CORE_EXPORT ContextMenuController final
   std::unique_ptr<ContextMenu> CreateContextMenu(LocalFrame*,
                                                  const LayoutPoint&);
   void ShowContextMenu(MouseEvent*);
+
+  // Returns whether a Context Menu was actually shown.
+  bool ShowContextMenu(const ContextMenu*, WebMenuSourceType);
+  void ClearContextMenu();
+  void PopulateCustomMenuItems(const ContextMenu*, WebContextMenuData*);
+  static int ComputeEditFlags(Document&, Editor&);
+  bool ShouldShowContextMenuFromTouch(const blink::WebContextMenuData&);
 
   ContextMenuClient* client_;
   std::unique_ptr<ContextMenu> context_menu_;
