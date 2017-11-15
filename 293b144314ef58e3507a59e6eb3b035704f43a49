@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b4361eaa_4981840a",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-15T12:47:14Z",
+      "side": 1,
+      "message": "It looked like web_contents_ was never used, so I removed it entirely.",
+      "parentUuid": "360c69c0_9ce7cd1b",
+      "revId": "293b144314ef58e3507a59e6eb3b035704f43a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2462535_df22f64f",
         "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_handler.cc",
         "patchSetId": 5
