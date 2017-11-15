@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb15a832_734f3622",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-15T22:08:01Z",
+      "side": 1,
+      "message": "xlai: would moving this into SetContentsLayer() work?  i\u0027m wondering if we can get rid of OnWebLayerUpdated entirely.\n\nit would be about the same, except it would be called for the solid color layer too.",
+      "revId": "e8a398fa5eb6ce6292dadb8c6f622f25202b1a0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897057c9_7b6585c2",
+        "filename": "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-15T22:08:01Z",
+      "side": 1,
+      "message": "these need more documentation.",
+      "revId": "e8a398fa5eb6ce6292dadb8c6f622f25202b1a0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d115af67_4560f4c7",
+        "filename": "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-15T22:08:01Z",
+      "side": 1,
+      "message": "Register/UnregisterContentsLayer might better describe these.\n\nalso, might want to pass in the WebLayer* for convenience.  not everybody would agree with me about that.",
+      "revId": "e8a398fa5eb6ce6292dadb8c6f622f25202b1a0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
