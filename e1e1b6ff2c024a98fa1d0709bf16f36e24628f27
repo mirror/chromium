@@ -69,6 +69,30 @@
       "revId": "e1e1b6ff2c024a98fa1d0709bf16f36e24628f27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee262513_e155ba39",
+        "filename": "media/gpu/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2012,
+      "author": {
+        "id": 1250517
+      },
+      "writtenOn": "2017-11-15T14:16:37Z",
+      "side": 1,
+      "message": "It seems that your idea about using WeakPtr works quite well. I wasn\u0027t aware of how this class works, so I wouldn\u0027t have thought of this before. The latest patchset implements this solution. I have done manual testing and it seems to work equally well.",
+      "parentUuid": "6002c377_7c1723f9",
+      "range": {
+        "startLine": 2011,
+        "startChar": 28,
+        "endLine": 2012,
+        "endChar": 61
+      },
+      "revId": "e1e1b6ff2c024a98fa1d0709bf16f36e24628f27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
