@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "9f5857c2_1b9a5857",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-15T15:03:03Z",
+      "side": 1,
+      "message": "Shouldn’t this be safeAreaLayoutGuide.topAnchor?",
+      "range": {
+        "startLine": 72,
+        "startChar": 32,
+        "endLine": 72,
+        "endChar": 64
+      },
+      "revId": "9dea21ada062a37a952566b36b18f981ef7fb1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44531b32_d132f4ba",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-15T15:03:03Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you use safeAreaInsets?",
+      "range": {
+        "startLine": 73,
+        "startChar": 47,
+        "endLine": 73,
+        "endChar": 73
+      },
+      "revId": "9dea21ada062a37a952566b36b18f981ef7fb1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32509216_96cc4b6e",
         "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
         "patchSetId": 2
@@ -13,6 +59,24 @@
       "writtenOn": "2017-11-14T19:52:42Z",
       "side": 1,
       "message": "This feels wrong.  Do any other views still use this wrappedController stuff?  If it\u0027s just ReportAnIssue this probably needs removal.  White works for ReportAnIssue, not sure about everything else...",
+      "revId": "9dea21ada062a37a952566b36b18f981ef7fb1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b234f98_36ff6e7d",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-15T15:03:03Z",
+      "side": 1,
+      "message": "crbug.com/620361 tracks the removal when iOS 9 is dropped. I think nowadays, this is only used with Report an issue.\n\nWhy is setting the color now needed?",
+      "parentUuid": "32509216_96cc4b6e",
       "revId": "9dea21ada062a37a952566b36b18f981ef7fb1ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
