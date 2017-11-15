@@ -59,6 +59,7 @@ extern const base::Feature kSpeculativeServiceWorkerStartOnQueryInput;
 #if defined(OS_IOS)
 extern const base::Feature kZeroSuggestProviderIOS;
 #endif
+extern const base::Feature kBreakWordsAtUnderscores;
 }  // namespace omnibox
 
 // The set of parameters customizing the HUP scoring.

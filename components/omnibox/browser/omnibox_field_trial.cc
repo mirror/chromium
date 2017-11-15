@@ -172,6 +172,11 @@ const base::Feature kZeroSuggestProviderIOS{"ZeroSuggestProviderIOS",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
+// Feature used to allow breaking words at underscores in building
+// URLIndexPrivateData.
+const base::Feature kBreakWordsAtUnderscores{"OmniboxBreakWordsAtUnderscores",
+                                             base::FEATURE_DISABLED_BY_DEFAULT};
+
 }  // namespace omnibox
 
 namespace {
