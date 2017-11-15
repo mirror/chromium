@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e7e0459_87829b6a",
+        "filename": "chrome/browser/permissions/permission_request.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-15T12:02:50Z",
+      "side": 1,
+      "message": "Instead of doing this, can you change the enum to be:\n```\nenum class PermissionRequestType {\n  UNKNOWN \u003d 0,\n  MULTIPLE \u003d 1,\n  UNUSED_PERMISSION \u003d 2,\n  QUOTA \u003d 3,\n  DOWNLOAD \u003d 4,\n  MEDIA_STREAM \u003d 5,\n  REGISTER_PROTOCAL_HANDLER \u003d 6,\n  PERMISSION_GEOLOCATION \u003d 7,\n  PERMISSION_MIDI_SYSEX \u003d 8,\n  PERMISSION_NOTIFICATIONS \u003d 9,\n  PERMISSION_PROTECTED_MEDIA_IDENTIFIER \u003d 10,\n  // PERMISSISSION_PUSH_MESSAGING \u003d 11,\n  PERMISSION_FLASH \u003d 12,\n  [...]\n};\n```",
+      "revId": "cad0f3ae2f93ab0208b31bb1076159d9455fb27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
