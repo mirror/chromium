@@ -973,6 +973,10 @@ const PrefService* ProfileImpl::GetPrefs() const {
   return prefs_.get();
 }
 
+policy::PolicyService* ProfileImpl::GetPolicy() {
+  return profile_policy_connector_->policy_service();
+}
+
 #if !defined(OS_ANDROID)
 ChromeZoomLevelPrefs* ProfileImpl::GetZoomLevelPrefs() {
   return static_cast<ChromeZoomLevelPrefs*>(

@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
@@ -24,6 +25,7 @@ import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.TabModelUtils;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
+import org.chromium.chrome.test.util.ChromeTabUtils;
 import org.chromium.chrome.test.util.OmniboxTestUtils;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
@@ -45,6 +47,12 @@ public class MainIntentBehaviorMetricsIntegrationTest {
     public void testFocusOmnibox() {
         startActivity(true);
         assertMainIntentBehavior(null);
+        try {
+            ChromeTabUtils.waitForTabPageLoaded(mActivityTestRule.getActivity().getActivityTab(),
+                    () -> {}, CallbackHelper.WAIT_TIMEOUT_SECONDS);
+        } catch (InterruptedException e) {
+            Assert.fail("Interrupted while waiting for page to load.");
+        }
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
@@ -52,6 +60,7 @@ public class MainIntentBehaviorMetricsIntegrationTest {
                 OmniboxTestUtils.toggleUrlBarFocus(urlBar, true);
             }
         });
+
         assertMainIntentBehavior(MainIntentBehaviorMetrics.FOCUS_OMNIBOX);
     }
 
