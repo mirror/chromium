@@ -568,7 +568,21 @@ bool GLSurfaceEGL::InitializeOneOff(EGLNativeDisplayType native_display) {
   // Must be called after InitializeDisplay().
   g_driver_egl.InitializeExtensionBindings();
 
+  return InitializeOneOffCommon();
+}
+
+// static
+bool GLSurfaceEGL::InitializeOneOffForTesting() {
+  g_driver_egl.InitializeClientExtensionBindings();
+  g_display = eglGetCurrentDisplay();
+  g_driver_egl.InitializeExtensionBindings();
+  return InitializeOneOffCommon();
+}
+
+// static
+bool GLSurfaceEGL::InitializeOneOffCommon() {
   g_egl_extensions = eglQueryString(g_display, EGL_EXTENSIONS);
+
   g_egl_create_context_robustness_supported =
       HasEGLExtension("EGL_EXT_create_context_robustness");
   g_egl_create_context_bind_generates_resource_supported =
@@ -647,7 +661,7 @@ bool GLSurfaceEGL::InitializeOneOff(EGLNativeDisplayType native_display) {
   // present and we're on Android N or newer, assume that it's usable even if
   // the extension wasn't reported.
   g_egl_android_native_fence_sync_supported =
-      g_driver_egl.ext.b_EGL_ANDROID_native_fence_sync;
+      HasEGLExtension("EGL_ANDROID_native_fence_sync");
 #if defined(OS_ANDROID)
   if (base::android::BuildInfo::GetInstance()->sdk_int() >=
           base::android::SDK_VERSION_NOUGAT &&
