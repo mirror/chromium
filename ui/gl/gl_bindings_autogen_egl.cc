@@ -10,6 +10,8 @@
 
 #include <string>
 
+#include "base/compiler_specific.h"
+#include "base/memory/protected_memory.h"
 #include "base/trace_event/trace_event.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
@@ -20,7 +22,10 @@
 
 namespace gl {
 
-DriverEGL g_driver_egl;  // Exists in .bss
+// Place the driver in protected memory so that it is set
+// read-only after it is initialized, preventing it from
+// being tampered with. See crbug.com/771365 for details.
+PROTECTED_MEMORY_SECTION base::ProtectedMemory<DriverEGL> g_driver_egl;
 
 void DriverEGL::InitializeStaticBindings() {
   // Ensure struct has been zero-initialized.
@@ -341,16 +346,18 @@ void DriverEGL::ClearBindings() {
   memset(this, 0, sizeof(*this));
 }
 
-EGLBoolean EGLApiBase::eglBindAPIFn(EGLenum api) {
+NO_SANITIZE("cfi-icall") EGLBoolean EGLApiBase::eglBindAPIFn(EGLenum api) {
   return driver_->fn.eglBindAPIFn(api);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglBindTexImageFn(EGLDisplay dpy,
                                          EGLSurface surface,
                                          EGLint buffer) {
   return driver_->fn.eglBindTexImageFn(dpy, surface, buffer);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglChooseConfigFn(EGLDisplay dpy,
                                          const EGLint* attrib_list,
                                          EGLConfig* configs,
@@ -360,6 +367,7 @@ EGLBoolean EGLApiBase::eglChooseConfigFn(EGLDisplay dpy,
                                        num_config);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLint EGLApiBase::eglClientWaitSyncKHRFn(EGLDisplay dpy,
                                           EGLSyncKHR sync,
                                           EGLint flags,
@@ -367,12 +375,14 @@ EGLint EGLApiBase::eglClientWaitSyncKHRFn(EGLDisplay dpy,
   return driver_->fn.eglClientWaitSyncKHRFn(dpy, sync, flags, timeout);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglCopyBuffersFn(EGLDisplay dpy,
                                         EGLSurface surface,
                                         EGLNativePixmapType target) {
   return driver_->fn.eglCopyBuffersFn(dpy, surface, target);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLContext EGLApiBase::eglCreateContextFn(EGLDisplay dpy,
                                           EGLConfig config,
                                           EGLContext share_context,
@@ -381,6 +391,7 @@ EGLContext EGLApiBase::eglCreateContextFn(EGLDisplay dpy,
                                         attrib_list);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLImageKHR EGLApiBase::eglCreateImageKHRFn(EGLDisplay dpy,
                                             EGLContext ctx,
                                             EGLenum target,
@@ -389,22 +400,25 @@ EGLImageKHR EGLApiBase::eglCreateImageKHRFn(EGLDisplay dpy,
   return driver_->fn.eglCreateImageKHRFn(dpy, ctx, target, buffer, attrib_list);
 }
 
-EGLSurface EGLApiBase::eglCreatePbufferFromClientBufferFn(
-    EGLDisplay dpy,
-    EGLenum buftype,
-    void* buffer,
-    EGLConfig config,
-    const EGLint* attrib_list) {
+NO_SANITIZE("cfi-icall")
+EGLSurface
+    EGLApiBase::eglCreatePbufferFromClientBufferFn(EGLDisplay dpy,
+                                                   EGLenum buftype,
+                                                   void* buffer,
+                                                   EGLConfig config,
+                                                   const EGLint* attrib_list) {
   return driver_->fn.eglCreatePbufferFromClientBufferFn(dpy, buftype, buffer,
                                                         config, attrib_list);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLSurface EGLApiBase::eglCreatePbufferSurfaceFn(EGLDisplay dpy,
                                                  EGLConfig config,
                                                  const EGLint* attrib_list) {
   return driver_->fn.eglCreatePbufferSurfaceFn(dpy, config, attrib_list);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLSurface EGLApiBase::eglCreatePixmapSurfaceFn(EGLDisplay dpy,
                                                 EGLConfig config,
                                                 EGLNativePixmapType pixmap,
@@ -412,11 +426,13 @@ EGLSurface EGLApiBase::eglCreatePixmapSurfaceFn(EGLDisplay dpy,
   return driver_->fn.eglCreatePixmapSurfaceFn(dpy, config, pixmap, attrib_list);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLStreamKHR EGLApiBase::eglCreateStreamKHRFn(EGLDisplay dpy,
                                               const EGLint* attrib_list) {
   return driver_->fn.eglCreateStreamKHRFn(dpy, attrib_list);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglCreateStreamProducerD3DTextureNV12ANGLEFn(
     EGLDisplay dpy,
     EGLStreamKHR stream,
@@ -425,12 +441,14 @@ EGLBoolean EGLApiBase::eglCreateStreamProducerD3DTextureNV12ANGLEFn(
                                                                   attrib_list);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLSyncKHR EGLApiBase::eglCreateSyncKHRFn(EGLDisplay dpy,
                                           EGLenum type,
                                           const EGLint* attrib_list) {
   return driver_->fn.eglCreateSyncKHRFn(dpy, type, attrib_list);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLSurface EGLApiBase::eglCreateWindowSurfaceFn(EGLDisplay dpy,
                                                 EGLConfig config,
                                                 EGLNativeWindowType win,
@@ -438,50 +456,59 @@ EGLSurface EGLApiBase::eglCreateWindowSurfaceFn(EGLDisplay dpy,
   return driver_->fn.eglCreateWindowSurfaceFn(dpy, config, win, attrib_list);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglDestroyContextFn(EGLDisplay dpy, EGLContext ctx) {
   return driver_->fn.eglDestroyContextFn(dpy, ctx);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglDestroyImageKHRFn(EGLDisplay dpy, EGLImageKHR image) {
   return driver_->fn.eglDestroyImageKHRFn(dpy, image);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglDestroyStreamKHRFn(EGLDisplay dpy,
                                              EGLStreamKHR stream) {
   return driver_->fn.eglDestroyStreamKHRFn(dpy, stream);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglDestroySurfaceFn(EGLDisplay dpy, EGLSurface surface) {
   return driver_->fn.eglDestroySurfaceFn(dpy, surface);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglDestroySyncKHRFn(EGLDisplay dpy, EGLSyncKHR sync) {
   return driver_->fn.eglDestroySyncKHRFn(dpy, sync);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLint EGLApiBase::eglDupNativeFenceFDANDROIDFn(EGLDisplay dpy,
                                                 EGLSyncKHR sync) {
   return driver_->fn.eglDupNativeFenceFDANDROIDFn(dpy, sync);
 }
 
-EGLBoolean EGLApiBase::eglGetCompositorTimingANDROIDFn(
-    EGLDisplay dpy,
-    EGLSurface surface,
-    EGLint numTimestamps,
-    EGLint* names,
-    EGLnsecsANDROID* values) {
+NO_SANITIZE("cfi-icall")
+EGLBoolean
+    EGLApiBase::eglGetCompositorTimingANDROIDFn(EGLDisplay dpy,
+                                                EGLSurface surface,
+                                                EGLint numTimestamps,
+                                                EGLint* names,
+                                                EGLnsecsANDROID* values) {
   return driver_->fn.eglGetCompositorTimingANDROIDFn(
       dpy, surface, numTimestamps, names, values);
 }
 
-EGLBoolean EGLApiBase::eglGetCompositorTimingSupportedANDROIDFn(
-    EGLDisplay dpy,
-    EGLSurface surface,
-    EGLint timestamp) {
+NO_SANITIZE("cfi-icall")
+EGLBoolean
+    EGLApiBase::eglGetCompositorTimingSupportedANDROIDFn(EGLDisplay dpy,
+                                                         EGLSurface surface,
+                                                         EGLint timestamp) {
   return driver_->fn.eglGetCompositorTimingSupportedANDROIDFn(dpy, surface,
                                                               timestamp);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglGetConfigAttribFn(EGLDisplay dpy,
                                             EGLConfig config,
                                             EGLint attribute,
@@ -489,6 +516,7 @@ EGLBoolean EGLApiBase::eglGetConfigAttribFn(EGLDisplay dpy,
   return driver_->fn.eglGetConfigAttribFn(dpy, config, attribute, value);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglGetConfigsFn(EGLDisplay dpy,
                                        EGLConfig* configs,
                                        EGLint config_size,
@@ -496,26 +524,29 @@ EGLBoolean EGLApiBase::eglGetConfigsFn(EGLDisplay dpy,
   return driver_->fn.eglGetConfigsFn(dpy, configs, config_size, num_config);
 }
 
-EGLContext EGLApiBase::eglGetCurrentContextFn(void) {
+NO_SANITIZE("cfi-icall") EGLContext EGLApiBase::eglGetCurrentContextFn(void) {
   return driver_->fn.eglGetCurrentContextFn();
 }
 
-EGLDisplay EGLApiBase::eglGetCurrentDisplayFn(void) {
+NO_SANITIZE("cfi-icall") EGLDisplay EGLApiBase::eglGetCurrentDisplayFn(void) {
   return driver_->fn.eglGetCurrentDisplayFn();
 }
 
+NO_SANITIZE("cfi-icall")
 EGLSurface EGLApiBase::eglGetCurrentSurfaceFn(EGLint readdraw) {
   return driver_->fn.eglGetCurrentSurfaceFn(readdraw);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLDisplay EGLApiBase::eglGetDisplayFn(EGLNativeDisplayType display_id) {
   return driver_->fn.eglGetDisplayFn(display_id);
 }
 
-EGLint EGLApiBase::eglGetErrorFn(void) {
+NO_SANITIZE("cfi-icall") EGLint EGLApiBase::eglGetErrorFn(void) {
   return driver_->fn.eglGetErrorFn();
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglGetFrameTimestampsANDROIDFn(EGLDisplay dpy,
                                                       EGLSurface surface,
                                                       EGLuint64KHR frameId,
@@ -526,25 +557,29 @@ EGLBoolean EGLApiBase::eglGetFrameTimestampsANDROIDFn(EGLDisplay dpy,
       dpy, surface, frameId, numTimestamps, timestamps, values);
 }
 
-EGLBoolean EGLApiBase::eglGetFrameTimestampSupportedANDROIDFn(
-    EGLDisplay dpy,
-    EGLSurface surface,
-    EGLint timestamp) {
+NO_SANITIZE("cfi-icall")
+EGLBoolean
+    EGLApiBase::eglGetFrameTimestampSupportedANDROIDFn(EGLDisplay dpy,
+                                                       EGLSurface surface,
+                                                       EGLint timestamp) {
   return driver_->fn.eglGetFrameTimestampSupportedANDROIDFn(dpy, surface,
                                                             timestamp);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLClientBuffer EGLApiBase::eglGetNativeClientBufferANDROIDFn(
     const struct AHardwareBuffer* ahardwarebuffer) {
   return driver_->fn.eglGetNativeClientBufferANDROIDFn(ahardwarebuffer);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglGetNextFrameIdANDROIDFn(EGLDisplay dpy,
                                                   EGLSurface surface,
                                                   EGLuint64KHR* frameId) {
   return driver_->fn.eglGetNextFrameIdANDROIDFn(dpy, surface, frameId);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLDisplay EGLApiBase::eglGetPlatformDisplayEXTFn(EGLenum platform,
                                                   void* native_display,
                                                   const EGLint* attrib_list) {
@@ -552,11 +587,13 @@ EGLDisplay EGLApiBase::eglGetPlatformDisplayEXTFn(EGLenum platform,
                                                 attrib_list);
 }
 
-__eglMustCastToProperFunctionPointerType EGLApiBase::eglGetProcAddressFn(
-    const char* procname) {
+NO_SANITIZE("cfi-icall")
+__eglMustCastToProperFunctionPointerType
+    EGLApiBase::eglGetProcAddressFn(const char* procname) {
   return driver_->fn.eglGetProcAddressFn(procname);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglGetSyncAttribKHRFn(EGLDisplay dpy,
                                              EGLSyncKHR sync,
                                              EGLint attribute,
@@ -564,6 +601,7 @@ EGLBoolean EGLApiBase::eglGetSyncAttribKHRFn(EGLDisplay dpy,
   return driver_->fn.eglGetSyncAttribKHRFn(dpy, sync, attribute, value);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglGetSyncValuesCHROMIUMFn(EGLDisplay dpy,
                                                   EGLSurface surface,
                                                   EGLuint64CHROMIUM* ust,
@@ -572,19 +610,22 @@ EGLBoolean EGLApiBase::eglGetSyncValuesCHROMIUMFn(EGLDisplay dpy,
   return driver_->fn.eglGetSyncValuesCHROMIUMFn(dpy, surface, ust, msc, sbc);
 }
 
-EGLBoolean EGLApiBase::eglImageFlushExternalEXTFn(
-    EGLDisplay dpy,
-    EGLImageKHR image,
-    const EGLAttrib* attrib_list) {
+NO_SANITIZE("cfi-icall")
+EGLBoolean
+    EGLApiBase::eglImageFlushExternalEXTFn(EGLDisplay dpy,
+                                           EGLImageKHR image,
+                                           const EGLAttrib* attrib_list) {
   return driver_->fn.eglImageFlushExternalEXTFn(dpy, image, attrib_list);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglInitializeFn(EGLDisplay dpy,
                                        EGLint* major,
                                        EGLint* minor) {
   return driver_->fn.eglInitializeFn(dpy, major, minor);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglMakeCurrentFn(EGLDisplay dpy,
                                         EGLSurface draw,
                                         EGLSurface read,
@@ -592,6 +633,7 @@ EGLBoolean EGLApiBase::eglMakeCurrentFn(EGLDisplay dpy,
   return driver_->fn.eglMakeCurrentFn(dpy, draw, read, ctx);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglPostSubBufferNVFn(EGLDisplay dpy,
                                             EGLSurface surface,
                                             EGLint x,
@@ -601,11 +643,13 @@ EGLBoolean EGLApiBase::eglPostSubBufferNVFn(EGLDisplay dpy,
   return driver_->fn.eglPostSubBufferNVFn(dpy, surface, x, y, width, height);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLint EGLApiBase::eglProgramCacheGetAttribANGLEFn(EGLDisplay dpy,
                                                    EGLenum attrib) {
   return driver_->fn.eglProgramCacheGetAttribANGLEFn(dpy, attrib);
 }
 
+NO_SANITIZE("cfi-icall")
 void EGLApiBase::eglProgramCachePopulateANGLEFn(EGLDisplay dpy,
                                                 const void* key,
                                                 EGLint keysize,
@@ -615,6 +659,7 @@ void EGLApiBase::eglProgramCachePopulateANGLEFn(EGLDisplay dpy,
                                              binarysize);
 }
 
+NO_SANITIZE("cfi-icall")
 void EGLApiBase::eglProgramCacheQueryANGLEFn(EGLDisplay dpy,
                                              EGLint index,
                                              void* key,
@@ -625,16 +670,18 @@ void EGLApiBase::eglProgramCacheQueryANGLEFn(EGLDisplay dpy,
                                           binarysize);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLint EGLApiBase::eglProgramCacheResizeANGLEFn(EGLDisplay dpy,
                                                 EGLint limit,
                                                 EGLenum mode) {
   return driver_->fn.eglProgramCacheResizeANGLEFn(dpy, limit, mode);
 }
 
-EGLenum EGLApiBase::eglQueryAPIFn(void) {
+NO_SANITIZE("cfi-icall") EGLenum EGLApiBase::eglQueryAPIFn(void) {
   return driver_->fn.eglQueryAPIFn();
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglQueryContextFn(EGLDisplay dpy,
                                          EGLContext ctx,
                                          EGLint attribute,
@@ -642,6 +689,7 @@ EGLBoolean EGLApiBase::eglQueryContextFn(EGLDisplay dpy,
   return driver_->fn.eglQueryContextFn(dpy, ctx, attribute, value);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglQueryStreamKHRFn(EGLDisplay dpy,
                                            EGLStreamKHR stream,
                                            EGLenum attribute,
@@ -649,6 +697,7 @@ EGLBoolean EGLApiBase::eglQueryStreamKHRFn(EGLDisplay dpy,
   return driver_->fn.eglQueryStreamKHRFn(dpy, stream, attribute, value);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglQueryStreamu64KHRFn(EGLDisplay dpy,
                                               EGLStreamKHR stream,
                                               EGLenum attribute,
@@ -656,10 +705,12 @@ EGLBoolean EGLApiBase::eglQueryStreamu64KHRFn(EGLDisplay dpy,
   return driver_->fn.eglQueryStreamu64KHRFn(dpy, stream, attribute, value);
 }
 
+NO_SANITIZE("cfi-icall")
 const char* EGLApiBase::eglQueryStringFn(EGLDisplay dpy, EGLint name) {
   return driver_->fn.eglQueryStringFn(dpy, name);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglQuerySurfaceFn(EGLDisplay dpy,
                                          EGLSurface surface,
                                          EGLint attribute,
@@ -667,6 +718,7 @@ EGLBoolean EGLApiBase::eglQuerySurfaceFn(EGLDisplay dpy,
   return driver_->fn.eglQuerySurfaceFn(dpy, surface, attribute, value);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglQuerySurfacePointerANGLEFn(EGLDisplay dpy,
                                                      EGLSurface surface,
                                                      EGLint attribute,
@@ -675,16 +727,18 @@ EGLBoolean EGLApiBase::eglQuerySurfacePointerANGLEFn(EGLDisplay dpy,
                                                    value);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglReleaseTexImageFn(EGLDisplay dpy,
                                             EGLSurface surface,
                                             EGLint buffer) {
   return driver_->fn.eglReleaseTexImageFn(dpy, surface, buffer);
 }
 
-EGLBoolean EGLApiBase::eglReleaseThreadFn(void) {
+NO_SANITIZE("cfi-icall") EGLBoolean EGLApiBase::eglReleaseThreadFn(void) {
   return driver_->fn.eglReleaseThreadFn();
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglStreamAttribKHRFn(EGLDisplay dpy,
                                             EGLStreamKHR stream,
                                             EGLenum attribute,
@@ -692,11 +746,13 @@ EGLBoolean EGLApiBase::eglStreamAttribKHRFn(EGLDisplay dpy,
   return driver_->fn.eglStreamAttribKHRFn(dpy, stream, attribute, value);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglStreamConsumerAcquireKHRFn(EGLDisplay dpy,
                                                      EGLStreamKHR stream) {
   return driver_->fn.eglStreamConsumerAcquireKHRFn(dpy, stream);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglStreamConsumerGLTextureExternalAttribsNVFn(
     EGLDisplay dpy,
     EGLStreamKHR stream,
@@ -705,17 +761,20 @@ EGLBoolean EGLApiBase::eglStreamConsumerGLTextureExternalAttribsNVFn(
                                                                    attrib_list);
 }
 
-EGLBoolean EGLApiBase::eglStreamConsumerGLTextureExternalKHRFn(
-    EGLDisplay dpy,
-    EGLStreamKHR stream) {
+NO_SANITIZE("cfi-icall")
+EGLBoolean
+    EGLApiBase::eglStreamConsumerGLTextureExternalKHRFn(EGLDisplay dpy,
+                                                        EGLStreamKHR stream) {
   return driver_->fn.eglStreamConsumerGLTextureExternalKHRFn(dpy, stream);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglStreamConsumerReleaseKHRFn(EGLDisplay dpy,
                                                      EGLStreamKHR stream) {
   return driver_->fn.eglStreamConsumerReleaseKHRFn(dpy, stream);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglStreamPostD3DTextureNV12ANGLEFn(
     EGLDisplay dpy,
     EGLStreamKHR stream,
@@ -725,6 +784,7 @@ EGLBoolean EGLApiBase::eglStreamPostD3DTextureNV12ANGLEFn(
                                                         attrib_list);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglSurfaceAttribFn(EGLDisplay dpy,
                                           EGLSurface surface,
                                           EGLint attribute,
@@ -732,10 +792,12 @@ EGLBoolean EGLApiBase::eglSurfaceAttribFn(EGLDisplay dpy,
   return driver_->fn.eglSurfaceAttribFn(dpy, surface, attribute, value);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglSwapBuffersFn(EGLDisplay dpy, EGLSurface surface) {
   return driver_->fn.eglSwapBuffersFn(dpy, surface);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglSwapBuffersWithDamageKHRFn(EGLDisplay dpy,
                                                      EGLSurface surface,
                                                      EGLint* rects,
@@ -744,120 +806,132 @@ EGLBoolean EGLApiBase::eglSwapBuffersWithDamageKHRFn(EGLDisplay dpy,
                                                    n_rects);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLBoolean EGLApiBase::eglSwapIntervalFn(EGLDisplay dpy, EGLint interval) {
   return driver_->fn.eglSwapIntervalFn(dpy, interval);
 }
 
-EGLBoolean EGLApiBase::eglTerminateFn(EGLDisplay dpy) {
+NO_SANITIZE("cfi-icall") EGLBoolean EGLApiBase::eglTerminateFn(EGLDisplay dpy) {
   return driver_->fn.eglTerminateFn(dpy);
 }
 
-EGLBoolean EGLApiBase::eglWaitClientFn(void) {
+NO_SANITIZE("cfi-icall") EGLBoolean EGLApiBase::eglWaitClientFn(void) {
   return driver_->fn.eglWaitClientFn();
 }
 
-EGLBoolean EGLApiBase::eglWaitGLFn(void) {
+NO_SANITIZE("cfi-icall") EGLBoolean EGLApiBase::eglWaitGLFn(void) {
   return driver_->fn.eglWaitGLFn();
 }
 
-EGLBoolean EGLApiBase::eglWaitNativeFn(EGLint engine) {
+NO_SANITIZE("cfi-icall") EGLBoolean EGLApiBase::eglWaitNativeFn(EGLint engine) {
   return driver_->fn.eglWaitNativeFn(engine);
 }
 
+NO_SANITIZE("cfi-icall")
 EGLint EGLApiBase::eglWaitSyncKHRFn(EGLDisplay dpy,
                                     EGLSyncKHR sync,
                                     EGLint flags) {
   return driver_->fn.eglWaitSyncKHRFn(dpy, sync, flags);
 }
 
-EGLBoolean TraceEGLApi::eglBindAPIFn(EGLenum api) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean TraceEGLApi::eglBindAPIFn(
+    EGLenum api) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglBindAPI")
   return egl_api_->eglBindAPIFn(api);
 }
 
-EGLBoolean TraceEGLApi::eglBindTexImageFn(EGLDisplay dpy,
-                                          EGLSurface surface,
-                                          EGLint buffer) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglBindTexImageFn(EGLDisplay dpy,
+                               EGLSurface surface,
+                               EGLint buffer) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglBindTexImage")
   return egl_api_->eglBindTexImageFn(dpy, surface, buffer);
 }
 
-EGLBoolean TraceEGLApi::eglChooseConfigFn(EGLDisplay dpy,
-                                          const EGLint* attrib_list,
-                                          EGLConfig* configs,
-                                          EGLint config_size,
-                                          EGLint* num_config) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglChooseConfigFn(EGLDisplay dpy,
+                               const EGLint* attrib_list,
+                               EGLConfig* configs,
+                               EGLint config_size,
+                               EGLint* num_config) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglChooseConfig")
   return egl_api_->eglChooseConfigFn(dpy, attrib_list, configs, config_size,
                                      num_config);
 }
 
-EGLint TraceEGLApi::eglClientWaitSyncKHRFn(EGLDisplay dpy,
-                                           EGLSyncKHR sync,
-                                           EGLint flags,
-                                           EGLTimeKHR timeout) {
+__attribute__((no_sanitize("cfi-icall"))) EGLint
+TraceEGLApi::eglClientWaitSyncKHRFn(EGLDisplay dpy,
+                                    EGLSyncKHR sync,
+                                    EGLint flags,
+                                    EGLTimeKHR timeout) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglClientWaitSyncKHR")
   return egl_api_->eglClientWaitSyncKHRFn(dpy, sync, flags, timeout);
 }
 
-EGLBoolean TraceEGLApi::eglCopyBuffersFn(EGLDisplay dpy,
-                                         EGLSurface surface,
-                                         EGLNativePixmapType target) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglCopyBuffersFn(EGLDisplay dpy,
+                              EGLSurface surface,
+                              EGLNativePixmapType target) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglCopyBuffers")
   return egl_api_->eglCopyBuffersFn(dpy, surface, target);
 }
 
-EGLContext TraceEGLApi::eglCreateContextFn(EGLDisplay dpy,
-                                           EGLConfig config,
-                                           EGLContext share_context,
-                                           const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLContext
+TraceEGLApi::eglCreateContextFn(EGLDisplay dpy,
+                                EGLConfig config,
+                                EGLContext share_context,
+                                const EGLint* attrib_list) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglCreateContext")
   return egl_api_->eglCreateContextFn(dpy, config, share_context, attrib_list);
 }
 
-EGLImageKHR TraceEGLApi::eglCreateImageKHRFn(EGLDisplay dpy,
-                                             EGLContext ctx,
-                                             EGLenum target,
-                                             EGLClientBuffer buffer,
-                                             const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLImageKHR
+TraceEGLApi::eglCreateImageKHRFn(EGLDisplay dpy,
+                                 EGLContext ctx,
+                                 EGLenum target,
+                                 EGLClientBuffer buffer,
+                                 const EGLint* attrib_list) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglCreateImageKHR")
   return egl_api_->eglCreateImageKHRFn(dpy, ctx, target, buffer, attrib_list);
 }
 
-EGLSurface TraceEGLApi::eglCreatePbufferFromClientBufferFn(
-    EGLDisplay dpy,
-    EGLenum buftype,
-    void* buffer,
-    EGLConfig config,
-    const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLSurface
+TraceEGLApi::eglCreatePbufferFromClientBufferFn(EGLDisplay dpy,
+                                                EGLenum buftype,
+                                                void* buffer,
+                                                EGLConfig config,
+                                                const EGLint* attrib_list) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu",
                                 "TraceGLAPI::eglCreatePbufferFromClientBuffer")
   return egl_api_->eglCreatePbufferFromClientBufferFn(dpy, buftype, buffer,
                                                       config, attrib_list);
 }
 
-EGLSurface TraceEGLApi::eglCreatePbufferSurfaceFn(EGLDisplay dpy,
-                                                  EGLConfig config,
-                                                  const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLSurface
+TraceEGLApi::eglCreatePbufferSurfaceFn(EGLDisplay dpy,
+                                       EGLConfig config,
+                                       const EGLint* attrib_list) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglCreatePbufferSurface")
   return egl_api_->eglCreatePbufferSurfaceFn(dpy, config, attrib_list);
 }
 
-EGLSurface TraceEGLApi::eglCreatePixmapSurfaceFn(EGLDisplay dpy,
-                                                 EGLConfig config,
-                                                 EGLNativePixmapType pixmap,
-                                                 const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLSurface
+TraceEGLApi::eglCreatePixmapSurfaceFn(EGLDisplay dpy,
+                                      EGLConfig config,
+                                      EGLNativePixmapType pixmap,
+                                      const EGLint* attrib_list) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglCreatePixmapSurface")
   return egl_api_->eglCreatePixmapSurfaceFn(dpy, config, pixmap, attrib_list);
 }
 
-EGLStreamKHR TraceEGLApi::eglCreateStreamKHRFn(EGLDisplay dpy,
-                                               const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLStreamKHR
+TraceEGLApi::eglCreateStreamKHRFn(EGLDisplay dpy, const EGLint* attrib_list) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglCreateStreamKHR")
   return egl_api_->eglCreateStreamKHRFn(dpy, attrib_list);
 }
 
-EGLBoolean TraceEGLApi::eglCreateStreamProducerD3DTextureNV12ANGLEFn(
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglCreateStreamProducerD3DTextureNV12ANGLEFn(
     EGLDisplay dpy,
     EGLStreamKHR stream,
     EGLAttrib* attrib_list) {
@@ -867,335 +941,368 @@ EGLBoolean TraceEGLApi::eglCreateStreamProducerD3DTextureNV12ANGLEFn(
                                                                 attrib_list);
 }
 
-EGLSyncKHR TraceEGLApi::eglCreateSyncKHRFn(EGLDisplay dpy,
-                                           EGLenum type,
-                                           const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLSyncKHR
+TraceEGLApi::eglCreateSyncKHRFn(EGLDisplay dpy,
+                                EGLenum type,
+                                const EGLint* attrib_list) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglCreateSyncKHR")
   return egl_api_->eglCreateSyncKHRFn(dpy, type, attrib_list);
 }
 
-EGLSurface TraceEGLApi::eglCreateWindowSurfaceFn(EGLDisplay dpy,
-                                                 EGLConfig config,
-                                                 EGLNativeWindowType win,
-                                                 const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLSurface
+TraceEGLApi::eglCreateWindowSurfaceFn(EGLDisplay dpy,
+                                      EGLConfig config,
+                                      EGLNativeWindowType win,
+                                      const EGLint* attrib_list) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglCreateWindowSurface")
   return egl_api_->eglCreateWindowSurfaceFn(dpy, config, win, attrib_list);
 }
 
-EGLBoolean TraceEGLApi::eglDestroyContextFn(EGLDisplay dpy, EGLContext ctx) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglDestroyContextFn(EGLDisplay dpy, EGLContext ctx) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglDestroyContext")
   return egl_api_->eglDestroyContextFn(dpy, ctx);
 }
 
-EGLBoolean TraceEGLApi::eglDestroyImageKHRFn(EGLDisplay dpy,
-                                             EGLImageKHR image) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglDestroyImageKHRFn(EGLDisplay dpy, EGLImageKHR image) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglDestroyImageKHR")
   return egl_api_->eglDestroyImageKHRFn(dpy, image);
 }
 
-EGLBoolean TraceEGLApi::eglDestroyStreamKHRFn(EGLDisplay dpy,
-                                              EGLStreamKHR stream) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglDestroyStreamKHRFn(EGLDisplay dpy, EGLStreamKHR stream) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglDestroyStreamKHR")
   return egl_api_->eglDestroyStreamKHRFn(dpy, stream);
 }
 
-EGLBoolean TraceEGLApi::eglDestroySurfaceFn(EGLDisplay dpy,
-                                            EGLSurface surface) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglDestroySurfaceFn(EGLDisplay dpy, EGLSurface surface) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglDestroySurface")
   return egl_api_->eglDestroySurfaceFn(dpy, surface);
 }
 
-EGLBoolean TraceEGLApi::eglDestroySyncKHRFn(EGLDisplay dpy, EGLSyncKHR sync) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglDestroySyncKHRFn(EGLDisplay dpy, EGLSyncKHR sync) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglDestroySyncKHR")
   return egl_api_->eglDestroySyncKHRFn(dpy, sync);
 }
 
-EGLint TraceEGLApi::eglDupNativeFenceFDANDROIDFn(EGLDisplay dpy,
-                                                 EGLSyncKHR sync) {
+__attribute__((no_sanitize("cfi-icall"))) EGLint
+TraceEGLApi::eglDupNativeFenceFDANDROIDFn(EGLDisplay dpy, EGLSyncKHR sync) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglDupNativeFenceFDANDROID")
   return egl_api_->eglDupNativeFenceFDANDROIDFn(dpy, sync);
 }
 
-EGLBoolean TraceEGLApi::eglGetCompositorTimingANDROIDFn(
-    EGLDisplay dpy,
-    EGLSurface surface,
-    EGLint numTimestamps,
-    EGLint* names,
-    EGLnsecsANDROID* values) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglGetCompositorTimingANDROIDFn(EGLDisplay dpy,
+                                             EGLSurface surface,
+                                             EGLint numTimestamps,
+                                             EGLint* names,
+                                             EGLnsecsANDROID* values) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu",
                                 "TraceGLAPI::eglGetCompositorTimingANDROID")
   return egl_api_->eglGetCompositorTimingANDROIDFn(dpy, surface, numTimestamps,
                                                    names, values);
 }
 
-EGLBoolean TraceEGLApi::eglGetCompositorTimingSupportedANDROIDFn(
-    EGLDisplay dpy,
-    EGLSurface surface,
-    EGLint timestamp) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglGetCompositorTimingSupportedANDROIDFn(EGLDisplay dpy,
+                                                      EGLSurface surface,
+                                                      EGLint timestamp) {
   TRACE_EVENT_BINARY_EFFICIENT0(
       "gpu", "TraceGLAPI::eglGetCompositorTimingSupportedANDROID")
   return egl_api_->eglGetCompositorTimingSupportedANDROIDFn(dpy, surface,
                                                             timestamp);
 }
 
-EGLBoolean TraceEGLApi::eglGetConfigAttribFn(EGLDisplay dpy,
-                                             EGLConfig config,
-                                             EGLint attribute,
-                                             EGLint* value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglGetConfigAttribFn(EGLDisplay dpy,
+                                  EGLConfig config,
+                                  EGLint attribute,
+                                  EGLint* value) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglGetConfigAttrib")
   return egl_api_->eglGetConfigAttribFn(dpy, config, attribute, value);
 }
 
-EGLBoolean TraceEGLApi::eglGetConfigsFn(EGLDisplay dpy,
-                                        EGLConfig* configs,
-                                        EGLint config_size,
-                                        EGLint* num_config) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglGetConfigsFn(EGLDisplay dpy,
+                             EGLConfig* configs,
+                             EGLint config_size,
+                             EGLint* num_config) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglGetConfigs")
   return egl_api_->eglGetConfigsFn(dpy, configs, config_size, num_config);
 }
 
-EGLContext TraceEGLApi::eglGetCurrentContextFn(void) {
+__attribute__((no_sanitize("cfi-icall"))) EGLContext
+TraceEGLApi::eglGetCurrentContextFn(void) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglGetCurrentContext")
   return egl_api_->eglGetCurrentContextFn();
 }
 
-EGLDisplay TraceEGLApi::eglGetCurrentDisplayFn(void) {
+__attribute__((no_sanitize("cfi-icall"))) EGLDisplay
+TraceEGLApi::eglGetCurrentDisplayFn(void) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglGetCurrentDisplay")
   return egl_api_->eglGetCurrentDisplayFn();
 }
 
-EGLSurface TraceEGLApi::eglGetCurrentSurfaceFn(EGLint readdraw) {
+__attribute__((no_sanitize("cfi-icall"))) EGLSurface
+TraceEGLApi::eglGetCurrentSurfaceFn(EGLint readdraw) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglGetCurrentSurface")
   return egl_api_->eglGetCurrentSurfaceFn(readdraw);
 }
 
-EGLDisplay TraceEGLApi::eglGetDisplayFn(EGLNativeDisplayType display_id) {
+__attribute__((no_sanitize("cfi-icall"))) EGLDisplay
+TraceEGLApi::eglGetDisplayFn(EGLNativeDisplayType display_id) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglGetDisplay")
   return egl_api_->eglGetDisplayFn(display_id);
 }
 
-EGLint TraceEGLApi::eglGetErrorFn(void) {
+__attribute__((no_sanitize("cfi-icall"))) EGLint TraceEGLApi::eglGetErrorFn(
+    void) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglGetError")
   return egl_api_->eglGetErrorFn();
 }
 
-EGLBoolean TraceEGLApi::eglGetFrameTimestampsANDROIDFn(
-    EGLDisplay dpy,
-    EGLSurface surface,
-    EGLuint64KHR frameId,
-    EGLint numTimestamps,
-    EGLint* timestamps,
-    EGLnsecsANDROID* values) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglGetFrameTimestampsANDROIDFn(EGLDisplay dpy,
+                                            EGLSurface surface,
+                                            EGLuint64KHR frameId,
+                                            EGLint numTimestamps,
+                                            EGLint* timestamps,
+                                            EGLnsecsANDROID* values) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu",
                                 "TraceGLAPI::eglGetFrameTimestampsANDROID")
   return egl_api_->eglGetFrameTimestampsANDROIDFn(
       dpy, surface, frameId, numTimestamps, timestamps, values);
 }
 
-EGLBoolean TraceEGLApi::eglGetFrameTimestampSupportedANDROIDFn(
-    EGLDisplay dpy,
-    EGLSurface surface,
-    EGLint timestamp) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglGetFrameTimestampSupportedANDROIDFn(EGLDisplay dpy,
+                                                    EGLSurface surface,
+                                                    EGLint timestamp) {
   TRACE_EVENT_BINARY_EFFICIENT0(
       "gpu", "TraceGLAPI::eglGetFrameTimestampSupportedANDROID")
   return egl_api_->eglGetFrameTimestampSupportedANDROIDFn(dpy, surface,
                                                           timestamp);
 }
 
-EGLClientBuffer TraceEGLApi::eglGetNativeClientBufferANDROIDFn(
+__attribute__((no_sanitize("cfi-icall"))) EGLClientBuffer
+TraceEGLApi::eglGetNativeClientBufferANDROIDFn(
     const struct AHardwareBuffer* ahardwarebuffer) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu",
                                 "TraceGLAPI::eglGetNativeClientBufferANDROID")
   return egl_api_->eglGetNativeClientBufferANDROIDFn(ahardwarebuffer);
 }
 
-EGLBoolean TraceEGLApi::eglGetNextFrameIdANDROIDFn(EGLDisplay dpy,
-                                                   EGLSurface surface,
-                                                   EGLuint64KHR* frameId) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglGetNextFrameIdANDROIDFn(EGLDisplay dpy,
+                                        EGLSurface surface,
+                                        EGLuint64KHR* frameId) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglGetNextFrameIdANDROID")
   return egl_api_->eglGetNextFrameIdANDROIDFn(dpy, surface, frameId);
 }
 
-EGLDisplay TraceEGLApi::eglGetPlatformDisplayEXTFn(EGLenum platform,
-                                                   void* native_display,
-                                                   const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLDisplay
+TraceEGLApi::eglGetPlatformDisplayEXTFn(EGLenum platform,
+                                        void* native_display,
+                                        const EGLint* attrib_list) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglGetPlatformDisplayEXT")
   return egl_api_->eglGetPlatformDisplayEXTFn(platform, native_display,
                                               attrib_list);
 }
 
-__eglMustCastToProperFunctionPointerType TraceEGLApi::eglGetProcAddressFn(
-    const char* procname) {
+__attribute__((no_sanitize("cfi-icall")))
+__eglMustCastToProperFunctionPointerType
+TraceEGLApi::eglGetProcAddressFn(const char* procname) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglGetProcAddress")
   return egl_api_->eglGetProcAddressFn(procname);
 }
 
-EGLBoolean TraceEGLApi::eglGetSyncAttribKHRFn(EGLDisplay dpy,
-                                              EGLSyncKHR sync,
-                                              EGLint attribute,
-                                              EGLint* value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglGetSyncAttribKHRFn(EGLDisplay dpy,
+                                   EGLSyncKHR sync,
+                                   EGLint attribute,
+                                   EGLint* value) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglGetSyncAttribKHR")
   return egl_api_->eglGetSyncAttribKHRFn(dpy, sync, attribute, value);
 }
 
-EGLBoolean TraceEGLApi::eglGetSyncValuesCHROMIUMFn(EGLDisplay dpy,
-                                                   EGLSurface surface,
-                                                   EGLuint64CHROMIUM* ust,
-                                                   EGLuint64CHROMIUM* msc,
-                                                   EGLuint64CHROMIUM* sbc) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglGetSyncValuesCHROMIUMFn(EGLDisplay dpy,
+                                        EGLSurface surface,
+                                        EGLuint64CHROMIUM* ust,
+                                        EGLuint64CHROMIUM* msc,
+                                        EGLuint64CHROMIUM* sbc) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglGetSyncValuesCHROMIUM")
   return egl_api_->eglGetSyncValuesCHROMIUMFn(dpy, surface, ust, msc, sbc);
 }
 
-EGLBoolean TraceEGLApi::eglImageFlushExternalEXTFn(
-    EGLDisplay dpy,
-    EGLImageKHR image,
-    const EGLAttrib* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglImageFlushExternalEXTFn(EGLDisplay dpy,
+                                        EGLImageKHR image,
+                                        const EGLAttrib* attrib_list) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglImageFlushExternalEXT")
   return egl_api_->eglImageFlushExternalEXTFn(dpy, image, attrib_list);
 }
 
-EGLBoolean TraceEGLApi::eglInitializeFn(EGLDisplay dpy,
-                                        EGLint* major,
-                                        EGLint* minor) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglInitializeFn(EGLDisplay dpy, EGLint* major, EGLint* minor) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglInitialize")
   return egl_api_->eglInitializeFn(dpy, major, minor);
 }
 
-EGLBoolean TraceEGLApi::eglMakeCurrentFn(EGLDisplay dpy,
-                                         EGLSurface draw,
-                                         EGLSurface read,
-                                         EGLContext ctx) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglMakeCurrentFn(EGLDisplay dpy,
+                              EGLSurface draw,
+                              EGLSurface read,
+                              EGLContext ctx) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglMakeCurrent")
   return egl_api_->eglMakeCurrentFn(dpy, draw, read, ctx);
 }
 
-EGLBoolean TraceEGLApi::eglPostSubBufferNVFn(EGLDisplay dpy,
-                                             EGLSurface surface,
-                                             EGLint x,
-                                             EGLint y,
-                                             EGLint width,
-                                             EGLint height) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglPostSubBufferNVFn(EGLDisplay dpy,
+                                  EGLSurface surface,
+                                  EGLint x,
+                                  EGLint y,
+                                  EGLint width,
+                                  EGLint height) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglPostSubBufferNV")
   return egl_api_->eglPostSubBufferNVFn(dpy, surface, x, y, width, height);
 }
 
-EGLint TraceEGLApi::eglProgramCacheGetAttribANGLEFn(EGLDisplay dpy,
-                                                    EGLenum attrib) {
+__attribute__((no_sanitize("cfi-icall"))) EGLint
+TraceEGLApi::eglProgramCacheGetAttribANGLEFn(EGLDisplay dpy, EGLenum attrib) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu",
                                 "TraceGLAPI::eglProgramCacheGetAttribANGLE")
   return egl_api_->eglProgramCacheGetAttribANGLEFn(dpy, attrib);
 }
 
-void TraceEGLApi::eglProgramCachePopulateANGLEFn(EGLDisplay dpy,
-                                                 const void* key,
-                                                 EGLint keysize,
-                                                 const void* binary,
-                                                 EGLint binarysize) {
+__attribute__((no_sanitize("cfi-icall"))) void
+TraceEGLApi::eglProgramCachePopulateANGLEFn(EGLDisplay dpy,
+                                            const void* key,
+                                            EGLint keysize,
+                                            const void* binary,
+                                            EGLint binarysize) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu",
                                 "TraceGLAPI::eglProgramCachePopulateANGLE")
   egl_api_->eglProgramCachePopulateANGLEFn(dpy, key, keysize, binary,
                                            binarysize);
 }
 
-void TraceEGLApi::eglProgramCacheQueryANGLEFn(EGLDisplay dpy,
-                                              EGLint index,
-                                              void* key,
-                                              EGLint* keysize,
-                                              void* binary,
-                                              EGLint* binarysize) {
+__attribute__((no_sanitize("cfi-icall"))) void
+TraceEGLApi::eglProgramCacheQueryANGLEFn(EGLDisplay dpy,
+                                         EGLint index,
+                                         void* key,
+                                         EGLint* keysize,
+                                         void* binary,
+                                         EGLint* binarysize) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglProgramCacheQueryANGLE")
   egl_api_->eglProgramCacheQueryANGLEFn(dpy, index, key, keysize, binary,
                                         binarysize);
 }
 
-EGLint TraceEGLApi::eglProgramCacheResizeANGLEFn(EGLDisplay dpy,
-                                                 EGLint limit,
-                                                 EGLenum mode) {
+__attribute__((no_sanitize("cfi-icall"))) EGLint
+TraceEGLApi::eglProgramCacheResizeANGLEFn(EGLDisplay dpy,
+                                          EGLint limit,
+                                          EGLenum mode) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglProgramCacheResizeANGLE")
   return egl_api_->eglProgramCacheResizeANGLEFn(dpy, limit, mode);
 }
 
-EGLenum TraceEGLApi::eglQueryAPIFn(void) {
+__attribute__((no_sanitize("cfi-icall"))) EGLenum TraceEGLApi::eglQueryAPIFn(
+    void) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglQueryAPI")
   return egl_api_->eglQueryAPIFn();
 }
 
-EGLBoolean TraceEGLApi::eglQueryContextFn(EGLDisplay dpy,
-                                          EGLContext ctx,
-                                          EGLint attribute,
-                                          EGLint* value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglQueryContextFn(EGLDisplay dpy,
+                               EGLContext ctx,
+                               EGLint attribute,
+                               EGLint* value) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglQueryContext")
   return egl_api_->eglQueryContextFn(dpy, ctx, attribute, value);
 }
 
-EGLBoolean TraceEGLApi::eglQueryStreamKHRFn(EGLDisplay dpy,
-                                            EGLStreamKHR stream,
-                                            EGLenum attribute,
-                                            EGLint* value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglQueryStreamKHRFn(EGLDisplay dpy,
+                                 EGLStreamKHR stream,
+                                 EGLenum attribute,
+                                 EGLint* value) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglQueryStreamKHR")
   return egl_api_->eglQueryStreamKHRFn(dpy, stream, attribute, value);
 }
 
-EGLBoolean TraceEGLApi::eglQueryStreamu64KHRFn(EGLDisplay dpy,
-                                               EGLStreamKHR stream,
-                                               EGLenum attribute,
-                                               EGLuint64KHR* value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglQueryStreamu64KHRFn(EGLDisplay dpy,
+                                    EGLStreamKHR stream,
+                                    EGLenum attribute,
+                                    EGLuint64KHR* value) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglQueryStreamu64KHR")
   return egl_api_->eglQueryStreamu64KHRFn(dpy, stream, attribute, value);
 }
 
-const char* TraceEGLApi::eglQueryStringFn(EGLDisplay dpy, EGLint name) {
+__attribute__((no_sanitize("cfi-icall"))) const char*
+TraceEGLApi::eglQueryStringFn(EGLDisplay dpy, EGLint name) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglQueryString")
   return egl_api_->eglQueryStringFn(dpy, name);
 }
 
-EGLBoolean TraceEGLApi::eglQuerySurfaceFn(EGLDisplay dpy,
-                                          EGLSurface surface,
-                                          EGLint attribute,
-                                          EGLint* value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglQuerySurfaceFn(EGLDisplay dpy,
+                               EGLSurface surface,
+                               EGLint attribute,
+                               EGLint* value) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglQuerySurface")
   return egl_api_->eglQuerySurfaceFn(dpy, surface, attribute, value);
 }
 
-EGLBoolean TraceEGLApi::eglQuerySurfacePointerANGLEFn(EGLDisplay dpy,
-                                                      EGLSurface surface,
-                                                      EGLint attribute,
-                                                      void** value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglQuerySurfacePointerANGLEFn(EGLDisplay dpy,
+                                           EGLSurface surface,
+                                           EGLint attribute,
+                                           void** value) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu",
                                 "TraceGLAPI::eglQuerySurfacePointerANGLE")
   return egl_api_->eglQuerySurfacePointerANGLEFn(dpy, surface, attribute,
                                                  value);
 }
 
-EGLBoolean TraceEGLApi::eglReleaseTexImageFn(EGLDisplay dpy,
-                                             EGLSurface surface,
-                                             EGLint buffer) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglReleaseTexImageFn(EGLDisplay dpy,
+                                  EGLSurface surface,
+                                  EGLint buffer) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglReleaseTexImage")
   return egl_api_->eglReleaseTexImageFn(dpy, surface, buffer);
 }
 
-EGLBoolean TraceEGLApi::eglReleaseThreadFn(void) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglReleaseThreadFn(void) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglReleaseThread")
   return egl_api_->eglReleaseThreadFn();
 }
 
-EGLBoolean TraceEGLApi::eglStreamAttribKHRFn(EGLDisplay dpy,
-                                             EGLStreamKHR stream,
-                                             EGLenum attribute,
-                                             EGLint value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglStreamAttribKHRFn(EGLDisplay dpy,
+                                  EGLStreamKHR stream,
+                                  EGLenum attribute,
+                                  EGLint value) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglStreamAttribKHR")
   return egl_api_->eglStreamAttribKHRFn(dpy, stream, attribute, value);
 }
 
-EGLBoolean TraceEGLApi::eglStreamConsumerAcquireKHRFn(EGLDisplay dpy,
-                                                      EGLStreamKHR stream) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglStreamConsumerAcquireKHRFn(EGLDisplay dpy,
+                                           EGLStreamKHR stream) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu",
                                 "TraceGLAPI::eglStreamConsumerAcquireKHR")
   return egl_api_->eglStreamConsumerAcquireKHRFn(dpy, stream);
 }
 
-EGLBoolean TraceEGLApi::eglStreamConsumerGLTextureExternalAttribsNVFn(
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglStreamConsumerGLTextureExternalAttribsNVFn(
     EGLDisplay dpy,
     EGLStreamKHR stream,
     EGLAttrib* attrib_list) {
@@ -1205,87 +1312,96 @@ EGLBoolean TraceEGLApi::eglStreamConsumerGLTextureExternalAttribsNVFn(
                                                                  attrib_list);
 }
 
-EGLBoolean TraceEGLApi::eglStreamConsumerGLTextureExternalKHRFn(
-    EGLDisplay dpy,
-    EGLStreamKHR stream) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglStreamConsumerGLTextureExternalKHRFn(EGLDisplay dpy,
+                                                     EGLStreamKHR stream) {
   TRACE_EVENT_BINARY_EFFICIENT0(
       "gpu", "TraceGLAPI::eglStreamConsumerGLTextureExternalKHR")
   return egl_api_->eglStreamConsumerGLTextureExternalKHRFn(dpy, stream);
 }
 
-EGLBoolean TraceEGLApi::eglStreamConsumerReleaseKHRFn(EGLDisplay dpy,
-                                                      EGLStreamKHR stream) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglStreamConsumerReleaseKHRFn(EGLDisplay dpy,
+                                           EGLStreamKHR stream) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu",
                                 "TraceGLAPI::eglStreamConsumerReleaseKHR")
   return egl_api_->eglStreamConsumerReleaseKHRFn(dpy, stream);
 }
 
-EGLBoolean TraceEGLApi::eglStreamPostD3DTextureNV12ANGLEFn(
-    EGLDisplay dpy,
-    EGLStreamKHR stream,
-    void* texture,
-    const EGLAttrib* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglStreamPostD3DTextureNV12ANGLEFn(EGLDisplay dpy,
+                                                EGLStreamKHR stream,
+                                                void* texture,
+                                                const EGLAttrib* attrib_list) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu",
                                 "TraceGLAPI::eglStreamPostD3DTextureNV12ANGLE")
   return egl_api_->eglStreamPostD3DTextureNV12ANGLEFn(dpy, stream, texture,
                                                       attrib_list);
 }
 
-EGLBoolean TraceEGLApi::eglSurfaceAttribFn(EGLDisplay dpy,
-                                           EGLSurface surface,
-                                           EGLint attribute,
-                                           EGLint value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglSurfaceAttribFn(EGLDisplay dpy,
+                                EGLSurface surface,
+                                EGLint attribute,
+                                EGLint value) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglSurfaceAttrib")
   return egl_api_->eglSurfaceAttribFn(dpy, surface, attribute, value);
 }
 
-EGLBoolean TraceEGLApi::eglSwapBuffersFn(EGLDisplay dpy, EGLSurface surface) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglSwapBuffersFn(EGLDisplay dpy, EGLSurface surface) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglSwapBuffers")
   return egl_api_->eglSwapBuffersFn(dpy, surface);
 }
 
-EGLBoolean TraceEGLApi::eglSwapBuffersWithDamageKHRFn(EGLDisplay dpy,
-                                                      EGLSurface surface,
-                                                      EGLint* rects,
-                                                      EGLint n_rects) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglSwapBuffersWithDamageKHRFn(EGLDisplay dpy,
+                                           EGLSurface surface,
+                                           EGLint* rects,
+                                           EGLint n_rects) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu",
                                 "TraceGLAPI::eglSwapBuffersWithDamageKHR")
   return egl_api_->eglSwapBuffersWithDamageKHRFn(dpy, surface, rects, n_rects);
 }
 
-EGLBoolean TraceEGLApi::eglSwapIntervalFn(EGLDisplay dpy, EGLint interval) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglSwapIntervalFn(EGLDisplay dpy, EGLint interval) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglSwapInterval")
   return egl_api_->eglSwapIntervalFn(dpy, interval);
 }
 
-EGLBoolean TraceEGLApi::eglTerminateFn(EGLDisplay dpy) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglTerminateFn(EGLDisplay dpy) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglTerminate")
   return egl_api_->eglTerminateFn(dpy);
 }
 
-EGLBoolean TraceEGLApi::eglWaitClientFn(void) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglWaitClientFn(void) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglWaitClient")
   return egl_api_->eglWaitClientFn();
 }
 
-EGLBoolean TraceEGLApi::eglWaitGLFn(void) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean TraceEGLApi::eglWaitGLFn(
+    void) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglWaitGL")
   return egl_api_->eglWaitGLFn();
 }
 
-EGLBoolean TraceEGLApi::eglWaitNativeFn(EGLint engine) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+TraceEGLApi::eglWaitNativeFn(EGLint engine) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglWaitNative")
   return egl_api_->eglWaitNativeFn(engine);
 }
 
-EGLint TraceEGLApi::eglWaitSyncKHRFn(EGLDisplay dpy,
-                                     EGLSyncKHR sync,
-                                     EGLint flags) {
+__attribute__((no_sanitize("cfi-icall"))) EGLint
+TraceEGLApi::eglWaitSyncKHRFn(EGLDisplay dpy, EGLSyncKHR sync, EGLint flags) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglWaitSyncKHR")
   return egl_api_->eglWaitSyncKHRFn(dpy, sync, flags);
 }
 
-EGLBoolean DebugEGLApi::eglBindAPIFn(EGLenum api) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean DebugEGLApi::eglBindAPIFn(
+    EGLenum api) {
   GL_SERVICE_LOG("eglBindAPI"
                  << "(" << api << ")");
   EGLBoolean result = egl_api_->eglBindAPIFn(api);
@@ -1293,9 +1409,10 @@ EGLBoolean DebugEGLApi::eglBindAPIFn(EGLenum api) {
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglBindTexImageFn(EGLDisplay dpy,
-                                          EGLSurface surface,
-                                          EGLint buffer) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglBindTexImageFn(EGLDisplay dpy,
+                               EGLSurface surface,
+                               EGLint buffer) {
   GL_SERVICE_LOG("eglBindTexImage"
                  << "(" << dpy << ", " << surface << ", " << buffer << ")");
   EGLBoolean result = egl_api_->eglBindTexImageFn(dpy, surface, buffer);
@@ -1303,11 +1420,12 @@ EGLBoolean DebugEGLApi::eglBindTexImageFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglChooseConfigFn(EGLDisplay dpy,
-                                          const EGLint* attrib_list,
-                                          EGLConfig* configs,
-                                          EGLint config_size,
-                                          EGLint* num_config) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglChooseConfigFn(EGLDisplay dpy,
+                               const EGLint* attrib_list,
+                               EGLConfig* configs,
+                               EGLint config_size,
+                               EGLint* num_config) {
   GL_SERVICE_LOG("eglChooseConfig"
                  << "(" << dpy << ", " << static_cast<const void*>(attrib_list)
                  << ", " << static_cast<const void*>(configs) << ", "
@@ -1319,10 +1437,11 @@ EGLBoolean DebugEGLApi::eglChooseConfigFn(EGLDisplay dpy,
   return result;
 }
 
-EGLint DebugEGLApi::eglClientWaitSyncKHRFn(EGLDisplay dpy,
-                                           EGLSyncKHR sync,
-                                           EGLint flags,
-                                           EGLTimeKHR timeout) {
+__attribute__((no_sanitize("cfi-icall"))) EGLint
+DebugEGLApi::eglClientWaitSyncKHRFn(EGLDisplay dpy,
+                                    EGLSyncKHR sync,
+                                    EGLint flags,
+                                    EGLTimeKHR timeout) {
   GL_SERVICE_LOG("eglClientWaitSyncKHR"
                  << "(" << dpy << ", " << sync << ", " << flags << ", "
                  << timeout << ")");
@@ -1331,9 +1450,10 @@ EGLint DebugEGLApi::eglClientWaitSyncKHRFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglCopyBuffersFn(EGLDisplay dpy,
-                                         EGLSurface surface,
-                                         EGLNativePixmapType target) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglCopyBuffersFn(EGLDisplay dpy,
+                              EGLSurface surface,
+                              EGLNativePixmapType target) {
   GL_SERVICE_LOG("eglCopyBuffers"
                  << "(" << dpy << ", " << surface << ", " << target << ")");
   EGLBoolean result = egl_api_->eglCopyBuffersFn(dpy, surface, target);
@@ -1341,10 +1461,11 @@ EGLBoolean DebugEGLApi::eglCopyBuffersFn(EGLDisplay dpy,
   return result;
 }
 
-EGLContext DebugEGLApi::eglCreateContextFn(EGLDisplay dpy,
-                                           EGLConfig config,
-                                           EGLContext share_context,
-                                           const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLContext
+DebugEGLApi::eglCreateContextFn(EGLDisplay dpy,
+                                EGLConfig config,
+                                EGLContext share_context,
+                                const EGLint* attrib_list) {
   GL_SERVICE_LOG("eglCreateContext"
                  << "(" << dpy << ", " << config << ", " << share_context
                  << ", " << static_cast<const void*>(attrib_list) << ")");
@@ -1354,11 +1475,12 @@ EGLContext DebugEGLApi::eglCreateContextFn(EGLDisplay dpy,
   return result;
 }
 
-EGLImageKHR DebugEGLApi::eglCreateImageKHRFn(EGLDisplay dpy,
-                                             EGLContext ctx,
-                                             EGLenum target,
-                                             EGLClientBuffer buffer,
-                                             const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLImageKHR
+DebugEGLApi::eglCreateImageKHRFn(EGLDisplay dpy,
+                                 EGLContext ctx,
+                                 EGLenum target,
+                                 EGLClientBuffer buffer,
+                                 const EGLint* attrib_list) {
   GL_SERVICE_LOG("eglCreateImageKHR"
                  << "(" << dpy << ", " << ctx << ", " << target << ", "
                  << buffer << ", " << static_cast<const void*>(attrib_list)
@@ -1369,12 +1491,12 @@ EGLImageKHR DebugEGLApi::eglCreateImageKHRFn(EGLDisplay dpy,
   return result;
 }
 
-EGLSurface DebugEGLApi::eglCreatePbufferFromClientBufferFn(
-    EGLDisplay dpy,
-    EGLenum buftype,
-    void* buffer,
-    EGLConfig config,
-    const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLSurface
+DebugEGLApi::eglCreatePbufferFromClientBufferFn(EGLDisplay dpy,
+                                                EGLenum buftype,
+                                                void* buffer,
+                                                EGLConfig config,
+                                                const EGLint* attrib_list) {
   GL_SERVICE_LOG("eglCreatePbufferFromClientBuffer"
                  << "(" << dpy << ", " << buftype << ", "
                  << static_cast<const void*>(buffer) << ", " << config << ", "
@@ -1385,9 +1507,10 @@ EGLSurface DebugEGLApi::eglCreatePbufferFromClientBufferFn(
   return result;
 }
 
-EGLSurface DebugEGLApi::eglCreatePbufferSurfaceFn(EGLDisplay dpy,
-                                                  EGLConfig config,
-                                                  const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLSurface
+DebugEGLApi::eglCreatePbufferSurfaceFn(EGLDisplay dpy,
+                                       EGLConfig config,
+                                       const EGLint* attrib_list) {
   GL_SERVICE_LOG("eglCreatePbufferSurface"
                  << "(" << dpy << ", " << config << ", "
                  << static_cast<const void*>(attrib_list) << ")");
@@ -1397,10 +1520,11 @@ EGLSurface DebugEGLApi::eglCreatePbufferSurfaceFn(EGLDisplay dpy,
   return result;
 }
 
-EGLSurface DebugEGLApi::eglCreatePixmapSurfaceFn(EGLDisplay dpy,
-                                                 EGLConfig config,
-                                                 EGLNativePixmapType pixmap,
-                                                 const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLSurface
+DebugEGLApi::eglCreatePixmapSurfaceFn(EGLDisplay dpy,
+                                      EGLConfig config,
+                                      EGLNativePixmapType pixmap,
+                                      const EGLint* attrib_list) {
   GL_SERVICE_LOG("eglCreatePixmapSurface"
                  << "(" << dpy << ", " << config << ", " << pixmap << ", "
                  << static_cast<const void*>(attrib_list) << ")");
@@ -1410,8 +1534,8 @@ EGLSurface DebugEGLApi::eglCreatePixmapSurfaceFn(EGLDisplay dpy,
   return result;
 }
 
-EGLStreamKHR DebugEGLApi::eglCreateStreamKHRFn(EGLDisplay dpy,
-                                               const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLStreamKHR
+DebugEGLApi::eglCreateStreamKHRFn(EGLDisplay dpy, const EGLint* attrib_list) {
   GL_SERVICE_LOG("eglCreateStreamKHR"
                  << "(" << dpy << ", " << static_cast<const void*>(attrib_list)
                  << ")");
@@ -1420,7 +1544,8 @@ EGLStreamKHR DebugEGLApi::eglCreateStreamKHRFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglCreateStreamProducerD3DTextureNV12ANGLEFn(
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglCreateStreamProducerD3DTextureNV12ANGLEFn(
     EGLDisplay dpy,
     EGLStreamKHR stream,
     EGLAttrib* attrib_list) {
@@ -1433,9 +1558,10 @@ EGLBoolean DebugEGLApi::eglCreateStreamProducerD3DTextureNV12ANGLEFn(
   return result;
 }
 
-EGLSyncKHR DebugEGLApi::eglCreateSyncKHRFn(EGLDisplay dpy,
-                                           EGLenum type,
-                                           const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLSyncKHR
+DebugEGLApi::eglCreateSyncKHRFn(EGLDisplay dpy,
+                                EGLenum type,
+                                const EGLint* attrib_list) {
   GL_SERVICE_LOG("eglCreateSyncKHR"
                  << "(" << dpy << ", " << type << ", "
                  << static_cast<const void*>(attrib_list) << ")");
@@ -1444,10 +1570,11 @@ EGLSyncKHR DebugEGLApi::eglCreateSyncKHRFn(EGLDisplay dpy,
   return result;
 }
 
-EGLSurface DebugEGLApi::eglCreateWindowSurfaceFn(EGLDisplay dpy,
-                                                 EGLConfig config,
-                                                 EGLNativeWindowType win,
-                                                 const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLSurface
+DebugEGLApi::eglCreateWindowSurfaceFn(EGLDisplay dpy,
+                                      EGLConfig config,
+                                      EGLNativeWindowType win,
+                                      const EGLint* attrib_list) {
   GL_SERVICE_LOG("eglCreateWindowSurface"
                  << "(" << dpy << ", " << config << ", " << win << ", "
                  << static_cast<const void*>(attrib_list) << ")");
@@ -1457,7 +1584,8 @@ EGLSurface DebugEGLApi::eglCreateWindowSurfaceFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglDestroyContextFn(EGLDisplay dpy, EGLContext ctx) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglDestroyContextFn(EGLDisplay dpy, EGLContext ctx) {
   GL_SERVICE_LOG("eglDestroyContext"
                  << "(" << dpy << ", " << ctx << ")");
   EGLBoolean result = egl_api_->eglDestroyContextFn(dpy, ctx);
@@ -1465,8 +1593,8 @@ EGLBoolean DebugEGLApi::eglDestroyContextFn(EGLDisplay dpy, EGLContext ctx) {
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglDestroyImageKHRFn(EGLDisplay dpy,
-                                             EGLImageKHR image) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglDestroyImageKHRFn(EGLDisplay dpy, EGLImageKHR image) {
   GL_SERVICE_LOG("eglDestroyImageKHR"
                  << "(" << dpy << ", " << image << ")");
   EGLBoolean result = egl_api_->eglDestroyImageKHRFn(dpy, image);
@@ -1474,8 +1602,8 @@ EGLBoolean DebugEGLApi::eglDestroyImageKHRFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglDestroyStreamKHRFn(EGLDisplay dpy,
-                                              EGLStreamKHR stream) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglDestroyStreamKHRFn(EGLDisplay dpy, EGLStreamKHR stream) {
   GL_SERVICE_LOG("eglDestroyStreamKHR"
                  << "(" << dpy << ", " << stream << ")");
   EGLBoolean result = egl_api_->eglDestroyStreamKHRFn(dpy, stream);
@@ -1483,8 +1611,8 @@ EGLBoolean DebugEGLApi::eglDestroyStreamKHRFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglDestroySurfaceFn(EGLDisplay dpy,
-                                            EGLSurface surface) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglDestroySurfaceFn(EGLDisplay dpy, EGLSurface surface) {
   GL_SERVICE_LOG("eglDestroySurface"
                  << "(" << dpy << ", " << surface << ")");
   EGLBoolean result = egl_api_->eglDestroySurfaceFn(dpy, surface);
@@ -1492,7 +1620,8 @@ EGLBoolean DebugEGLApi::eglDestroySurfaceFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglDestroySyncKHRFn(EGLDisplay dpy, EGLSyncKHR sync) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglDestroySyncKHRFn(EGLDisplay dpy, EGLSyncKHR sync) {
   GL_SERVICE_LOG("eglDestroySyncKHR"
                  << "(" << dpy << ", " << sync << ")");
   EGLBoolean result = egl_api_->eglDestroySyncKHRFn(dpy, sync);
@@ -1500,8 +1629,8 @@ EGLBoolean DebugEGLApi::eglDestroySyncKHRFn(EGLDisplay dpy, EGLSyncKHR sync) {
   return result;
 }
 
-EGLint DebugEGLApi::eglDupNativeFenceFDANDROIDFn(EGLDisplay dpy,
-                                                 EGLSyncKHR sync) {
+__attribute__((no_sanitize("cfi-icall"))) EGLint
+DebugEGLApi::eglDupNativeFenceFDANDROIDFn(EGLDisplay dpy, EGLSyncKHR sync) {
   GL_SERVICE_LOG("eglDupNativeFenceFDANDROID"
                  << "(" << dpy << ", " << sync << ")");
   EGLint result = egl_api_->eglDupNativeFenceFDANDROIDFn(dpy, sync);
@@ -1509,12 +1638,12 @@ EGLint DebugEGLApi::eglDupNativeFenceFDANDROIDFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglGetCompositorTimingANDROIDFn(
-    EGLDisplay dpy,
-    EGLSurface surface,
-    EGLint numTimestamps,
-    EGLint* names,
-    EGLnsecsANDROID* values) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglGetCompositorTimingANDROIDFn(EGLDisplay dpy,
+                                             EGLSurface surface,
+                                             EGLint numTimestamps,
+                                             EGLint* names,
+                                             EGLnsecsANDROID* values) {
   GL_SERVICE_LOG("eglGetCompositorTimingANDROID"
                  << "(" << dpy << ", " << surface << ", " << numTimestamps
                  << ", " << static_cast<const void*>(names) << ", "
@@ -1525,10 +1654,10 @@ EGLBoolean DebugEGLApi::eglGetCompositorTimingANDROIDFn(
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglGetCompositorTimingSupportedANDROIDFn(
-    EGLDisplay dpy,
-    EGLSurface surface,
-    EGLint timestamp) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglGetCompositorTimingSupportedANDROIDFn(EGLDisplay dpy,
+                                                      EGLSurface surface,
+                                                      EGLint timestamp) {
   GL_SERVICE_LOG("eglGetCompositorTimingSupportedANDROID"
                  << "(" << dpy << ", " << surface << ", " << timestamp << ")");
   EGLBoolean result = egl_api_->eglGetCompositorTimingSupportedANDROIDFn(
@@ -1537,10 +1666,11 @@ EGLBoolean DebugEGLApi::eglGetCompositorTimingSupportedANDROIDFn(
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglGetConfigAttribFn(EGLDisplay dpy,
-                                             EGLConfig config,
-                                             EGLint attribute,
-                                             EGLint* value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglGetConfigAttribFn(EGLDisplay dpy,
+                                  EGLConfig config,
+                                  EGLint attribute,
+                                  EGLint* value) {
   GL_SERVICE_LOG("eglGetConfigAttrib"
                  << "(" << dpy << ", " << config << ", " << attribute << ", "
                  << static_cast<const void*>(value) << ")");
@@ -1550,10 +1680,11 @@ EGLBoolean DebugEGLApi::eglGetConfigAttribFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglGetConfigsFn(EGLDisplay dpy,
-                                        EGLConfig* configs,
-                                        EGLint config_size,
-                                        EGLint* num_config) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglGetConfigsFn(EGLDisplay dpy,
+                             EGLConfig* configs,
+                             EGLint config_size,
+                             EGLint* num_config) {
   GL_SERVICE_LOG("eglGetConfigs"
                  << "(" << dpy << ", " << static_cast<const void*>(configs)
                  << ", " << config_size << ", "
@@ -1564,7 +1695,8 @@ EGLBoolean DebugEGLApi::eglGetConfigsFn(EGLDisplay dpy,
   return result;
 }
 
-EGLContext DebugEGLApi::eglGetCurrentContextFn(void) {
+__attribute__((no_sanitize("cfi-icall"))) EGLContext
+DebugEGLApi::eglGetCurrentContextFn(void) {
   GL_SERVICE_LOG("eglGetCurrentContext"
                  << "("
                  << ")");
@@ -1573,7 +1705,8 @@ EGLContext DebugEGLApi::eglGetCurrentContextFn(void) {
   return result;
 }
 
-EGLDisplay DebugEGLApi::eglGetCurrentDisplayFn(void) {
+__attribute__((no_sanitize("cfi-icall"))) EGLDisplay
+DebugEGLApi::eglGetCurrentDisplayFn(void) {
   GL_SERVICE_LOG("eglGetCurrentDisplay"
                  << "("
                  << ")");
@@ -1582,7 +1715,8 @@ EGLDisplay DebugEGLApi::eglGetCurrentDisplayFn(void) {
   return result;
 }
 
-EGLSurface DebugEGLApi::eglGetCurrentSurfaceFn(EGLint readdraw) {
+__attribute__((no_sanitize("cfi-icall"))) EGLSurface
+DebugEGLApi::eglGetCurrentSurfaceFn(EGLint readdraw) {
   GL_SERVICE_LOG("eglGetCurrentSurface"
                  << "(" << readdraw << ")");
   EGLSurface result = egl_api_->eglGetCurrentSurfaceFn(readdraw);
@@ -1590,7 +1724,8 @@ EGLSurface DebugEGLApi::eglGetCurrentSurfaceFn(EGLint readdraw) {
   return result;
 }
 
-EGLDisplay DebugEGLApi::eglGetDisplayFn(EGLNativeDisplayType display_id) {
+__attribute__((no_sanitize("cfi-icall"))) EGLDisplay
+DebugEGLApi::eglGetDisplayFn(EGLNativeDisplayType display_id) {
   GL_SERVICE_LOG("eglGetDisplay"
                  << "(" << display_id << ")");
   EGLDisplay result = egl_api_->eglGetDisplayFn(display_id);
@@ -1598,7 +1733,8 @@ EGLDisplay DebugEGLApi::eglGetDisplayFn(EGLNativeDisplayType display_id) {
   return result;
 }
 
-EGLint DebugEGLApi::eglGetErrorFn(void) {
+__attribute__((no_sanitize("cfi-icall"))) EGLint DebugEGLApi::eglGetErrorFn(
+    void) {
   GL_SERVICE_LOG("eglGetError"
                  << "("
                  << ")");
@@ -1607,13 +1743,13 @@ EGLint DebugEGLApi::eglGetErrorFn(void) {
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglGetFrameTimestampsANDROIDFn(
-    EGLDisplay dpy,
-    EGLSurface surface,
-    EGLuint64KHR frameId,
-    EGLint numTimestamps,
-    EGLint* timestamps,
-    EGLnsecsANDROID* values) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglGetFrameTimestampsANDROIDFn(EGLDisplay dpy,
+                                            EGLSurface surface,
+                                            EGLuint64KHR frameId,
+                                            EGLint numTimestamps,
+                                            EGLint* timestamps,
+                                            EGLnsecsANDROID* values) {
   GL_SERVICE_LOG("eglGetFrameTimestampsANDROID"
                  << "(" << dpy << ", " << surface << ", " << frameId << ", "
                  << numTimestamps << ", "
@@ -1625,10 +1761,10 @@ EGLBoolean DebugEGLApi::eglGetFrameTimestampsANDROIDFn(
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglGetFrameTimestampSupportedANDROIDFn(
-    EGLDisplay dpy,
-    EGLSurface surface,
-    EGLint timestamp) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglGetFrameTimestampSupportedANDROIDFn(EGLDisplay dpy,
+                                                    EGLSurface surface,
+                                                    EGLint timestamp) {
   GL_SERVICE_LOG("eglGetFrameTimestampSupportedANDROID"
                  << "(" << dpy << ", " << surface << ", " << timestamp << ")");
   EGLBoolean result =
@@ -1637,7 +1773,8 @@ EGLBoolean DebugEGLApi::eglGetFrameTimestampSupportedANDROIDFn(
   return result;
 }
 
-EGLClientBuffer DebugEGLApi::eglGetNativeClientBufferANDROIDFn(
+__attribute__((no_sanitize("cfi-icall"))) EGLClientBuffer
+DebugEGLApi::eglGetNativeClientBufferANDROIDFn(
     const struct AHardwareBuffer* ahardwarebuffer) {
   GL_SERVICE_LOG("eglGetNativeClientBufferANDROID"
                  << "(" << static_cast<const void*>(ahardwarebuffer) << ")");
@@ -1647,9 +1784,10 @@ EGLClientBuffer DebugEGLApi::eglGetNativeClientBufferANDROIDFn(
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglGetNextFrameIdANDROIDFn(EGLDisplay dpy,
-                                                   EGLSurface surface,
-                                                   EGLuint64KHR* frameId) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglGetNextFrameIdANDROIDFn(EGLDisplay dpy,
+                                        EGLSurface surface,
+                                        EGLuint64KHR* frameId) {
   GL_SERVICE_LOG("eglGetNextFrameIdANDROID"
                  << "(" << dpy << ", " << surface << ", "
                  << static_cast<const void*>(frameId) << ")");
@@ -1659,9 +1797,10 @@ EGLBoolean DebugEGLApi::eglGetNextFrameIdANDROIDFn(EGLDisplay dpy,
   return result;
 }
 
-EGLDisplay DebugEGLApi::eglGetPlatformDisplayEXTFn(EGLenum platform,
-                                                   void* native_display,
-                                                   const EGLint* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLDisplay
+DebugEGLApi::eglGetPlatformDisplayEXTFn(EGLenum platform,
+                                        void* native_display,
+                                        const EGLint* attrib_list) {
   GL_SERVICE_LOG("eglGetPlatformDisplayEXT"
                  << "(" << platform << ", "
                  << static_cast<const void*>(native_display) << ", "
@@ -1672,8 +1811,9 @@ EGLDisplay DebugEGLApi::eglGetPlatformDisplayEXTFn(EGLenum platform,
   return result;
 }
 
-__eglMustCastToProperFunctionPointerType DebugEGLApi::eglGetProcAddressFn(
-    const char* procname) {
+__attribute__((no_sanitize("cfi-icall")))
+__eglMustCastToProperFunctionPointerType
+DebugEGLApi::eglGetProcAddressFn(const char* procname) {
   GL_SERVICE_LOG("eglGetProcAddress"
                  << "(" << procname << ")");
   __eglMustCastToProperFunctionPointerType result =
@@ -1682,10 +1822,11 @@ __eglMustCastToProperFunctionPointerType DebugEGLApi::eglGetProcAddressFn(
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglGetSyncAttribKHRFn(EGLDisplay dpy,
-                                              EGLSyncKHR sync,
-                                              EGLint attribute,
-                                              EGLint* value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglGetSyncAttribKHRFn(EGLDisplay dpy,
+                                   EGLSyncKHR sync,
+                                   EGLint attribute,
+                                   EGLint* value) {
   GL_SERVICE_LOG("eglGetSyncAttribKHR"
                  << "(" << dpy << ", " << sync << ", " << attribute << ", "
                  << static_cast<const void*>(value) << ")");
@@ -1695,11 +1836,12 @@ EGLBoolean DebugEGLApi::eglGetSyncAttribKHRFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglGetSyncValuesCHROMIUMFn(EGLDisplay dpy,
-                                                   EGLSurface surface,
-                                                   EGLuint64CHROMIUM* ust,
-                                                   EGLuint64CHROMIUM* msc,
-                                                   EGLuint64CHROMIUM* sbc) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglGetSyncValuesCHROMIUMFn(EGLDisplay dpy,
+                                        EGLSurface surface,
+                                        EGLuint64CHROMIUM* ust,
+                                        EGLuint64CHROMIUM* msc,
+                                        EGLuint64CHROMIUM* sbc) {
   GL_SERVICE_LOG("eglGetSyncValuesCHROMIUM"
                  << "(" << dpy << ", " << surface << ", "
                  << static_cast<const void*>(ust) << ", "
@@ -1711,10 +1853,10 @@ EGLBoolean DebugEGLApi::eglGetSyncValuesCHROMIUMFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglImageFlushExternalEXTFn(
-    EGLDisplay dpy,
-    EGLImageKHR image,
-    const EGLAttrib* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglImageFlushExternalEXTFn(EGLDisplay dpy,
+                                        EGLImageKHR image,
+                                        const EGLAttrib* attrib_list) {
   GL_SERVICE_LOG("eglImageFlushExternalEXT"
                  << "(" << dpy << ", " << image << ", "
                  << static_cast<const void*>(attrib_list) << ")");
@@ -1724,9 +1866,8 @@ EGLBoolean DebugEGLApi::eglImageFlushExternalEXTFn(
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglInitializeFn(EGLDisplay dpy,
-                                        EGLint* major,
-                                        EGLint* minor) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglInitializeFn(EGLDisplay dpy, EGLint* major, EGLint* minor) {
   GL_SERVICE_LOG("eglInitialize"
                  << "(" << dpy << ", " << static_cast<const void*>(major)
                  << ", " << static_cast<const void*>(minor) << ")");
@@ -1735,10 +1876,11 @@ EGLBoolean DebugEGLApi::eglInitializeFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglMakeCurrentFn(EGLDisplay dpy,
-                                         EGLSurface draw,
-                                         EGLSurface read,
-                                         EGLContext ctx) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglMakeCurrentFn(EGLDisplay dpy,
+                              EGLSurface draw,
+                              EGLSurface read,
+                              EGLContext ctx) {
   GL_SERVICE_LOG("eglMakeCurrent"
                  << "(" << dpy << ", " << draw << ", " << read << ", " << ctx
                  << ")");
@@ -1747,12 +1889,13 @@ EGLBoolean DebugEGLApi::eglMakeCurrentFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglPostSubBufferNVFn(EGLDisplay dpy,
-                                             EGLSurface surface,
-                                             EGLint x,
-                                             EGLint y,
-                                             EGLint width,
-                                             EGLint height) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglPostSubBufferNVFn(EGLDisplay dpy,
+                                  EGLSurface surface,
+                                  EGLint x,
+                                  EGLint y,
+                                  EGLint width,
+                                  EGLint height) {
   GL_SERVICE_LOG("eglPostSubBufferNV"
                  << "(" << dpy << ", " << surface << ", " << x << ", " << y
                  << ", " << width << ", " << height << ")");
@@ -1762,8 +1905,8 @@ EGLBoolean DebugEGLApi::eglPostSubBufferNVFn(EGLDisplay dpy,
   return result;
 }
 
-EGLint DebugEGLApi::eglProgramCacheGetAttribANGLEFn(EGLDisplay dpy,
-                                                    EGLenum attrib) {
+__attribute__((no_sanitize("cfi-icall"))) EGLint
+DebugEGLApi::eglProgramCacheGetAttribANGLEFn(EGLDisplay dpy, EGLenum attrib) {
   GL_SERVICE_LOG("eglProgramCacheGetAttribANGLE"
                  << "(" << dpy << ", " << attrib << ")");
   EGLint result = egl_api_->eglProgramCacheGetAttribANGLEFn(dpy, attrib);
@@ -1771,11 +1914,12 @@ EGLint DebugEGLApi::eglProgramCacheGetAttribANGLEFn(EGLDisplay dpy,
   return result;
 }
 
-void DebugEGLApi::eglProgramCachePopulateANGLEFn(EGLDisplay dpy,
-                                                 const void* key,
-                                                 EGLint keysize,
-                                                 const void* binary,
-                                                 EGLint binarysize) {
+__attribute__((no_sanitize("cfi-icall"))) void
+DebugEGLApi::eglProgramCachePopulateANGLEFn(EGLDisplay dpy,
+                                            const void* key,
+                                            EGLint keysize,
+                                            const void* binary,
+                                            EGLint binarysize) {
   GL_SERVICE_LOG("eglProgramCachePopulateANGLE"
                  << "(" << dpy << ", " << static_cast<const void*>(key) << ", "
                  << keysize << ", " << static_cast<const void*>(binary) << ", "
@@ -1784,12 +1928,13 @@ void DebugEGLApi::eglProgramCachePopulateANGLEFn(EGLDisplay dpy,
                                            binarysize);
 }
 
-void DebugEGLApi::eglProgramCacheQueryANGLEFn(EGLDisplay dpy,
-                                              EGLint index,
-                                              void* key,
-                                              EGLint* keysize,
-                                              void* binary,
-                                              EGLint* binarysize) {
+__attribute__((no_sanitize("cfi-icall"))) void
+DebugEGLApi::eglProgramCacheQueryANGLEFn(EGLDisplay dpy,
+                                         EGLint index,
+                                         void* key,
+                                         EGLint* keysize,
+                                         void* binary,
+                                         EGLint* binarysize) {
   GL_SERVICE_LOG("eglProgramCacheQueryANGLE"
                  << "(" << dpy << ", " << index << ", "
                  << static_cast<const void*>(key) << ", "
@@ -1800,9 +1945,10 @@ void DebugEGLApi::eglProgramCacheQueryANGLEFn(EGLDisplay dpy,
                                         binarysize);
 }
 
-EGLint DebugEGLApi::eglProgramCacheResizeANGLEFn(EGLDisplay dpy,
-                                                 EGLint limit,
-                                                 EGLenum mode) {
+__attribute__((no_sanitize("cfi-icall"))) EGLint
+DebugEGLApi::eglProgramCacheResizeANGLEFn(EGLDisplay dpy,
+                                          EGLint limit,
+                                          EGLenum mode) {
   GL_SERVICE_LOG("eglProgramCacheResizeANGLE"
                  << "(" << dpy << ", " << limit << ", " << mode << ")");
   EGLint result = egl_api_->eglProgramCacheResizeANGLEFn(dpy, limit, mode);
@@ -1810,7 +1956,8 @@ EGLint DebugEGLApi::eglProgramCacheResizeANGLEFn(EGLDisplay dpy,
   return result;
 }
 
-EGLenum DebugEGLApi::eglQueryAPIFn(void) {
+__attribute__((no_sanitize("cfi-icall"))) EGLenum DebugEGLApi::eglQueryAPIFn(
+    void) {
   GL_SERVICE_LOG("eglQueryAPI"
                  << "("
                  << ")");
@@ -1819,10 +1966,11 @@ EGLenum DebugEGLApi::eglQueryAPIFn(void) {
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglQueryContextFn(EGLDisplay dpy,
-                                          EGLContext ctx,
-                                          EGLint attribute,
-                                          EGLint* value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglQueryContextFn(EGLDisplay dpy,
+                               EGLContext ctx,
+                               EGLint attribute,
+                               EGLint* value) {
   GL_SERVICE_LOG("eglQueryContext"
                  << "(" << dpy << ", " << ctx << ", " << attribute << ", "
                  << static_cast<const void*>(value) << ")");
@@ -1831,10 +1979,11 @@ EGLBoolean DebugEGLApi::eglQueryContextFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglQueryStreamKHRFn(EGLDisplay dpy,
-                                            EGLStreamKHR stream,
-                                            EGLenum attribute,
-                                            EGLint* value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglQueryStreamKHRFn(EGLDisplay dpy,
+                                 EGLStreamKHR stream,
+                                 EGLenum attribute,
+                                 EGLint* value) {
   GL_SERVICE_LOG("eglQueryStreamKHR"
                  << "(" << dpy << ", " << stream << ", " << attribute << ", "
                  << static_cast<const void*>(value) << ")");
@@ -1844,10 +1993,11 @@ EGLBoolean DebugEGLApi::eglQueryStreamKHRFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglQueryStreamu64KHRFn(EGLDisplay dpy,
-                                               EGLStreamKHR stream,
-                                               EGLenum attribute,
-                                               EGLuint64KHR* value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglQueryStreamu64KHRFn(EGLDisplay dpy,
+                                    EGLStreamKHR stream,
+                                    EGLenum attribute,
+                                    EGLuint64KHR* value) {
   GL_SERVICE_LOG("eglQueryStreamu64KHR"
                  << "(" << dpy << ", " << stream << ", " << attribute << ", "
                  << static_cast<const void*>(value) << ")");
@@ -1857,7 +2007,8 @@ EGLBoolean DebugEGLApi::eglQueryStreamu64KHRFn(EGLDisplay dpy,
   return result;
 }
 
-const char* DebugEGLApi::eglQueryStringFn(EGLDisplay dpy, EGLint name) {
+__attribute__((no_sanitize("cfi-icall"))) const char*
+DebugEGLApi::eglQueryStringFn(EGLDisplay dpy, EGLint name) {
   GL_SERVICE_LOG("eglQueryString"
                  << "(" << dpy << ", " << name << ")");
   const char* result = egl_api_->eglQueryStringFn(dpy, name);
@@ -1865,10 +2016,11 @@ const char* DebugEGLApi::eglQueryStringFn(EGLDisplay dpy, EGLint name) {
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglQuerySurfaceFn(EGLDisplay dpy,
-                                          EGLSurface surface,
-                                          EGLint attribute,
-                                          EGLint* value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglQuerySurfaceFn(EGLDisplay dpy,
+                               EGLSurface surface,
+                               EGLint attribute,
+                               EGLint* value) {
   GL_SERVICE_LOG("eglQuerySurface"
                  << "(" << dpy << ", " << surface << ", " << attribute << ", "
                  << static_cast<const void*>(value) << ")");
@@ -1878,10 +2030,11 @@ EGLBoolean DebugEGLApi::eglQuerySurfaceFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglQuerySurfacePointerANGLEFn(EGLDisplay dpy,
-                                                      EGLSurface surface,
-                                                      EGLint attribute,
-                                                      void** value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglQuerySurfacePointerANGLEFn(EGLDisplay dpy,
+                                           EGLSurface surface,
+                                           EGLint attribute,
+                                           void** value) {
   GL_SERVICE_LOG("eglQuerySurfacePointerANGLE"
                  << "(" << dpy << ", " << surface << ", " << attribute << ", "
                  << value << ")");
@@ -1891,9 +2044,10 @@ EGLBoolean DebugEGLApi::eglQuerySurfacePointerANGLEFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglReleaseTexImageFn(EGLDisplay dpy,
-                                             EGLSurface surface,
-                                             EGLint buffer) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglReleaseTexImageFn(EGLDisplay dpy,
+                                  EGLSurface surface,
+                                  EGLint buffer) {
   GL_SERVICE_LOG("eglReleaseTexImage"
                  << "(" << dpy << ", " << surface << ", " << buffer << ")");
   EGLBoolean result = egl_api_->eglReleaseTexImageFn(dpy, surface, buffer);
@@ -1901,7 +2055,8 @@ EGLBoolean DebugEGLApi::eglReleaseTexImageFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglReleaseThreadFn(void) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglReleaseThreadFn(void) {
   GL_SERVICE_LOG("eglReleaseThread"
                  << "("
                  << ")");
@@ -1910,10 +2065,11 @@ EGLBoolean DebugEGLApi::eglReleaseThreadFn(void) {
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglStreamAttribKHRFn(EGLDisplay dpy,
-                                             EGLStreamKHR stream,
-                                             EGLenum attribute,
-                                             EGLint value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglStreamAttribKHRFn(EGLDisplay dpy,
+                                  EGLStreamKHR stream,
+                                  EGLenum attribute,
+                                  EGLint value) {
   GL_SERVICE_LOG("eglStreamAttribKHR"
                  << "(" << dpy << ", " << stream << ", " << attribute << ", "
                  << value << ")");
@@ -1923,8 +2079,9 @@ EGLBoolean DebugEGLApi::eglStreamAttribKHRFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglStreamConsumerAcquireKHRFn(EGLDisplay dpy,
-                                                      EGLStreamKHR stream) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglStreamConsumerAcquireKHRFn(EGLDisplay dpy,
+                                           EGLStreamKHR stream) {
   GL_SERVICE_LOG("eglStreamConsumerAcquireKHR"
                  << "(" << dpy << ", " << stream << ")");
   EGLBoolean result = egl_api_->eglStreamConsumerAcquireKHRFn(dpy, stream);
@@ -1932,7 +2089,8 @@ EGLBoolean DebugEGLApi::eglStreamConsumerAcquireKHRFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglStreamConsumerGLTextureExternalAttribsNVFn(
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglStreamConsumerGLTextureExternalAttribsNVFn(
     EGLDisplay dpy,
     EGLStreamKHR stream,
     EGLAttrib* attrib_list) {
@@ -1945,9 +2103,9 @@ EGLBoolean DebugEGLApi::eglStreamConsumerGLTextureExternalAttribsNVFn(
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglStreamConsumerGLTextureExternalKHRFn(
-    EGLDisplay dpy,
-    EGLStreamKHR stream) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglStreamConsumerGLTextureExternalKHRFn(EGLDisplay dpy,
+                                                     EGLStreamKHR stream) {
   GL_SERVICE_LOG("eglStreamConsumerGLTextureExternalKHR"
                  << "(" << dpy << ", " << stream << ")");
   EGLBoolean result =
@@ -1956,8 +2114,9 @@ EGLBoolean DebugEGLApi::eglStreamConsumerGLTextureExternalKHRFn(
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglStreamConsumerReleaseKHRFn(EGLDisplay dpy,
-                                                      EGLStreamKHR stream) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglStreamConsumerReleaseKHRFn(EGLDisplay dpy,
+                                           EGLStreamKHR stream) {
   GL_SERVICE_LOG("eglStreamConsumerReleaseKHR"
                  << "(" << dpy << ", " << stream << ")");
   EGLBoolean result = egl_api_->eglStreamConsumerReleaseKHRFn(dpy, stream);
@@ -1965,11 +2124,11 @@ EGLBoolean DebugEGLApi::eglStreamConsumerReleaseKHRFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglStreamPostD3DTextureNV12ANGLEFn(
-    EGLDisplay dpy,
-    EGLStreamKHR stream,
-    void* texture,
-    const EGLAttrib* attrib_list) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglStreamPostD3DTextureNV12ANGLEFn(EGLDisplay dpy,
+                                                EGLStreamKHR stream,
+                                                void* texture,
+                                                const EGLAttrib* attrib_list) {
   GL_SERVICE_LOG("eglStreamPostD3DTextureNV12ANGLE"
                  << "(" << dpy << ", " << stream << ", "
                  << static_cast<const void*>(texture) << ", "
@@ -1980,10 +2139,11 @@ EGLBoolean DebugEGLApi::eglStreamPostD3DTextureNV12ANGLEFn(
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglSurfaceAttribFn(EGLDisplay dpy,
-                                           EGLSurface surface,
-                                           EGLint attribute,
-                                           EGLint value) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglSurfaceAttribFn(EGLDisplay dpy,
+                                EGLSurface surface,
+                                EGLint attribute,
+                                EGLint value) {
   GL_SERVICE_LOG("eglSurfaceAttrib"
                  << "(" << dpy << ", " << surface << ", " << attribute << ", "
                  << value << ")");
@@ -1993,7 +2153,8 @@ EGLBoolean DebugEGLApi::eglSurfaceAttribFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglSwapBuffersFn(EGLDisplay dpy, EGLSurface surface) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglSwapBuffersFn(EGLDisplay dpy, EGLSurface surface) {
   GL_SERVICE_LOG("eglSwapBuffers"
                  << "(" << dpy << ", " << surface << ")");
   EGLBoolean result = egl_api_->eglSwapBuffersFn(dpy, surface);
@@ -2001,10 +2162,11 @@ EGLBoolean DebugEGLApi::eglSwapBuffersFn(EGLDisplay dpy, EGLSurface surface) {
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglSwapBuffersWithDamageKHRFn(EGLDisplay dpy,
-                                                      EGLSurface surface,
-                                                      EGLint* rects,
-                                                      EGLint n_rects) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglSwapBuffersWithDamageKHRFn(EGLDisplay dpy,
+                                           EGLSurface surface,
+                                           EGLint* rects,
+                                           EGLint n_rects) {
   GL_SERVICE_LOG("eglSwapBuffersWithDamageKHR"
                  << "(" << dpy << ", " << surface << ", "
                  << static_cast<const void*>(rects) << ", " << n_rects << ")");
@@ -2014,7 +2176,8 @@ EGLBoolean DebugEGLApi::eglSwapBuffersWithDamageKHRFn(EGLDisplay dpy,
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglSwapIntervalFn(EGLDisplay dpy, EGLint interval) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglSwapIntervalFn(EGLDisplay dpy, EGLint interval) {
   GL_SERVICE_LOG("eglSwapInterval"
                  << "(" << dpy << ", " << interval << ")");
   EGLBoolean result = egl_api_->eglSwapIntervalFn(dpy, interval);
@@ -2022,7 +2185,8 @@ EGLBoolean DebugEGLApi::eglSwapIntervalFn(EGLDisplay dpy, EGLint interval) {
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglTerminateFn(EGLDisplay dpy) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglTerminateFn(EGLDisplay dpy) {
   GL_SERVICE_LOG("eglTerminate"
                  << "(" << dpy << ")");
   EGLBoolean result = egl_api_->eglTerminateFn(dpy);
@@ -2030,7 +2194,8 @@ EGLBoolean DebugEGLApi::eglTerminateFn(EGLDisplay dpy) {
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglWaitClientFn(void) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglWaitClientFn(void) {
   GL_SERVICE_LOG("eglWaitClient"
                  << "("
                  << ")");
@@ -2039,7 +2204,8 @@ EGLBoolean DebugEGLApi::eglWaitClientFn(void) {
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglWaitGLFn(void) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean DebugEGLApi::eglWaitGLFn(
+    void) {
   GL_SERVICE_LOG("eglWaitGL"
                  << "("
                  << ")");
@@ -2048,7 +2214,8 @@ EGLBoolean DebugEGLApi::eglWaitGLFn(void) {
   return result;
 }
 
-EGLBoolean DebugEGLApi::eglWaitNativeFn(EGLint engine) {
+__attribute__((no_sanitize("cfi-icall"))) EGLBoolean
+DebugEGLApi::eglWaitNativeFn(EGLint engine) {
   GL_SERVICE_LOG("eglWaitNative"
                  << "(" << engine << ")");
   EGLBoolean result = egl_api_->eglWaitNativeFn(engine);
@@ -2056,9 +2223,8 @@ EGLBoolean DebugEGLApi::eglWaitNativeFn(EGLint engine) {
   return result;
 }
 
-EGLint DebugEGLApi::eglWaitSyncKHRFn(EGLDisplay dpy,
-                                     EGLSyncKHR sync,
-                                     EGLint flags) {
+__attribute__((no_sanitize("cfi-icall"))) EGLint
+DebugEGLApi::eglWaitSyncKHRFn(EGLDisplay dpy, EGLSyncKHR sync, EGLint flags) {
   GL_SERVICE_LOG("eglWaitSyncKHR"
                  << "(" << dpy << ", " << sync << ", " << flags << ")");
   EGLint result = egl_api_->eglWaitSyncKHRFn(dpy, sync, flags);
