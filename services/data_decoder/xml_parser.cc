@@ -8,6 +8,7 @@
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
 
+#include <map>
 #include <memory>
 #include <utility>
 
@@ -16,6 +17,8 @@
 #include "third_party/libxml/chromium/libxml_utils.h"
 
 namespace data_decoder {
+
+using AttributeMap = std::map<std::string, std::string>;
 
 namespace {
 
@@ -91,6 +94,18 @@ base::Value* AddContentToNode(base::Value* parent_node,
   return nullptr;
 }
 
+void PopulateAttributes(base::Value* node_value, XmlReader* xml_reader) {
+  DCHECK(node_value->is_dict());
+  AttributeMap attributes;
+  if (!xml_reader->GetAllNodeAttributes(&attributes))
+    return;
+  base::Value attribute_dict(base::Value::Type::DICTIONARY);
+  for (const auto& attribute : attributes)
+    attribute_dict.SetKey(attribute.first, base::Value(attribute.second));
+  node_value->SetKey(mojom::XmlParser::kAttributeKey,
+                     std::move(attribute_dict));
+}
+
 }  // namespace
 
 XmlParser::XmlParser(
@@ -134,34 +149,29 @@ void XmlParser::Parse(const std::string& xml, ParseCallback callback) {
 
     pop_element_stack = true;
     std::string text;
+    const std::string& node_name = xml_reader.NodeName();
     if (xml_reader.GetTextIfTextElement(&text)) {
       // Pop the empty Dictionary that was pushed when we parse the containing
       // node, it'll be replaced with the string.
       element_stack.pop_back();
       pop_element_stack = false;  // Don't pop element on the next close tag.
-      // Remove the empty dictionary added when the node was parsed.
-      bool success = RemoveEmptyDictionary(element_stack.back(),
-                                           element_name_stack.back());
-      DCHECK(success);
+      // Remove the dictionary added when the node was parsed if it's empty,
+      // meaning there are no attributes and we can store the string by itself.
+      RemoveEmptyDictionary(element_stack.back(), element_name_stack.back());
       // And replace it with the string.
       AddContentToNode(element_stack.back(), element_name_stack.back(),
                        base::Value(text));
-    } else if (xml_reader.IsEmptyElement()) {
-      if (element_name_stack.empty()) {
-        // Special case of self-closing root node.
-        root->SetKey(xml_reader.NodeName(),
-                     base::Value(base::Value::Type::DICTIONARY));
-      } else {
-        AddContentToNode(element_stack.back(), xml_reader.NodeName(),
-                         base::Value(base::Value::Type::DICTIONARY));
-      }
     } else {
-      const std::string& node_name = xml_reader.NodeName();
       base::Value* dictionary =
           AddContentToNode(element_stack.back(), node_name,
                            base::Value(base::Value::Type::DICTIONARY));
-      element_stack.push_back(dictionary);
-      element_name_stack.push_back(node_name);
+      PopulateAttributes(dictionary, &xml_reader);
+      // Self-closing (empty) elements don't have a close tag, so no saving
+      // state to the stack.
+      if (!xml_reader.IsEmptyElement()) {
+        element_stack.push_back(dictionary);
+        element_name_stack.push_back(node_name);
+      }
     }
   }
 

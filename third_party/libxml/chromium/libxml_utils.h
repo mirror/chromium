@@ -6,14 +6,11 @@
 #define THIRD_PARTY_LIBXML_CHROMIUM_LIBXML_UTILS_H_
 #pragma once
 
+#include <map>
 #include <string>
 
 #include "libxml/xmlreader.h"
 #include "libxml/xmlwriter.h"
-
-// Converts a libxml xmlChar* into a UTF-8 std::string.
-// NULL inputs produce an empty string.
-std::string XmlStringToStdString(const xmlChar* xmlstring);
 
 // libxml uses a global error function pointer for reporting errors.
 // A ScopedXmlErrorFunc object lets you change the global error pointer
@@ -63,15 +60,18 @@ class XmlReader {
 
   // Returns the "local" name of the current node.
   // For a tag like <foo:bar>, this is the string "foo:bar".
-  std::string NodeName() {
-    return XmlStringToStdString(xmlTextReaderConstLocalName(reader_));
-  }
+  std::string NodeName();
 
   // When pointing at a tag, retrieves the value of an attribute.
   // Returns false on failure.
   // E.g. for <foo bar:baz="a">, NodeAttribute("bar:baz", &value)
   // returns true and |value| is set to "a".
   bool NodeAttribute(const char* name, std::string* value);
+
+  // When pointing at a tag, populates |attributes| with all the attributes of
+  // the current tag and returns true.
+  // Returns false if there are no attributes.
+  bool GetAllNodeAttributes(std::map<std::string, std::string>* attributes);
 
   // Sets |content| to the content of the current node if it is a #text node.
   // Returns true if the current node is a #text node, false otherwise.
@@ -177,11 +177,7 @@ class XmlWriter {
   // Helper functions not provided by xmlTextWriter ---------------------------
 
   // Returns the string that has been written to the buffer.
-  std::string GetWrittenString() {
-    if (buffer_ == NULL)
-      return "";
-    return XmlStringToStdString(buffer_->content);
-  }
+  std::string GetWrittenString();
 
  private:
   // The underlying libxml xmlTextWriter.

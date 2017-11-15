@@ -82,4 +82,27 @@ void SafelyParseXml(service_manager::Connector* connector,
   new SafeXmlParser(connector, unsafe_xml, std::move(callback));
 }
 
+// std::string GetXmlNodeText(base::Value* node) {
+
+// }
+
+// bool GetXmlTextValues(base::Value* node, std::vector<std::string>
+// text_values) {
+
+// }
+
+std::string GetXmlNodeAttribute(base::Value* node, const std::string& key) {
+  if (!node || !node->is_dict())
+    return "";
+
+  base::Value* attributes =
+      node->FindKeyOfType(key, base::Value::Type::DICTIONARY);
+  if (!attributes)
+    return "";
+
+  base::Value* value =
+      attributes->FindKeyOfType(key, base::Value::Type::STRING);
+  return value ? value->GetString() : "";
+}
+
 }  // namespace data_decoder

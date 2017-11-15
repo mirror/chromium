@@ -4,7 +4,7 @@
 
 // Interface used to parse simple XML files.
 //
-// Ignores namespaces, node attributes, comments and white-spaces.
+// Ignores namespaces, comments and white-spaces.
 // Note also that the text content of elements is returned as base::Value of
 // type STRING: no effort is made by the parser to parse numeric values.
 
@@ -13,6 +13,9 @@ module data_decoder.mojom;
 import "mojo/common/values.mojom";
 
 interface XmlParser {
+  // Key that is associated with the attributes for a node.
+  const string kAttributeKey = "__attributes__";
+
   // Parses the input XML and returns a Value with its content. If parsing
   // failed that value is empty and an error is set:
   //
@@ -39,10 +42,12 @@ interface XmlParser {
   //     "book":
   //     [
   //       {
+  //         "__attributes__": {"id": "k123"},
   //         "author": "Isaac Newton",
   //         "title": "Philosophiae Naturalis Principia Mathematica",
   //       },
   //       {
+  //         "__attributes__": {"id": "k456"},
   //         "author": [ "Dr. Seuss", "Theodor Seuss Geisel" ],
   //         "title": "Green Eggs and Ham",
   //         "kids": {}

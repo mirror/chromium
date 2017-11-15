@@ -4,15 +4,37 @@
 
 #include "libxml_utils.h"
 
+#include <vector>
+
 #include "libxml/xmlreader.h"
 
+namespace {
+
+// Converts a libxml xmlChar* into a UTF-8 std::string.
+// NULL inputs produce an empty string.
 std::string XmlStringToStdString(const xmlChar* xmlstring) {
-  // xmlChar*s are UTF-8, so this cast is safe.
-  if (xmlstring)
-    return std::string(reinterpret_cast<const char*>(xmlstring));
-  else
+  if (!xmlstring)
     return "";
+
+  // xmlChar*s are UTF-8, so this cast is safe.
+  return std::string(reinterpret_cast<const char*>(xmlstring));
 }
+
+// Same as XmlStringToStdString but also frees |xmlstring|.
+std::string XmlStringToStdStringWithDelete(xmlChar* xmlstring) {
+  std::string result = XmlStringToStdString(xmlstring);
+  xmlFree(xmlstring);
+  return result;
+}
+
+// Returns an xmlChar* which is the content of |string|.
+// The returned value is only valid as long as |string| is valid.
+const xmlChar* stdStringToXmlString(const std::string& string) {
+  // xmlChar*s are UTF-8, so this cast is safe.
+  return reinterpret_cast<const xmlChar*>(string.data());
+}
+
+}  // namespace
 
 XmlReader::XmlReader() : reader_(NULL) {
 }
@@ -39,12 +61,43 @@ bool XmlReader::LoadFile(const std::string& file_path) {
   return reader_ != NULL;
 }
 
+std::string XmlReader::NodeName() {
+  return XmlStringToStdString(xmlTextReaderConstLocalName(reader_));
+}
+
 bool XmlReader::NodeAttribute(const char* name, std::string* out) {
   xmlChar* value = xmlTextReaderGetAttribute(reader_, BAD_CAST name);
   if (!value)
     return false;
-  *out = XmlStringToStdString(value);
-  xmlFree(value);
+  *out = XmlStringToStdStringWithDelete(value);
+  return true;
+}
+
+bool XmlReader::GetAllNodeAttributes(
+    std::map<std::string, std::string>* attributes) {
+  if (xmlTextReaderHasAttributes(reader_) <= 0)
+    return false;
+
+  if (!xmlTextReaderMoveToFirstAttribute(reader_))
+    return false;
+
+  std::vector<std::string> attribute_names;
+  do {
+    attribute_names.push_back(NodeName());
+  } while (xmlTextReaderMoveToNextAttribute(reader_) > 0);
+
+  // Move the reader from the attributes back to the containing element.
+  if (!xmlTextReaderMoveToElement(reader_))
+    return false;
+
+  // Retrieve the attribute values.
+  for (auto name : attribute_names) {
+    std::string value = XmlStringToStdStringWithDelete(
+        xmlTextReaderGetAttribute(reader_, stdStringToXmlString(name)));
+    if (!value.empty())
+      (*attributes)[name] = value;
+  }
+
   return true;
 }
 
@@ -145,4 +198,8 @@ void XmlWriter::StopWriting() {
   xmlTextWriterEndDocument(writer_);
   xmlFreeTextWriter(writer_);
   writer_ = NULL;
+}
+
+std::string XmlWriter::GetWrittenString() {
+  return buffer_ ? XmlStringToStdString(buffer_->content) : "";
 }

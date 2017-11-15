@@ -106,6 +106,19 @@ TEST_F(XmlParserTest, ParseMultipleSimilarElements) {
       "{\"a\":{\"b\":[\"b1\",\"b2\",\"b3\"],\"c\":[\"c1\",\"c2\",\"c3\"]}}");
 }
 
+TEST_F(XmlParserTest, ParseAttributes) {
+  TestParseXml("<a b=\"c\"/>", "{\"a\":{\"__attributes__\":{\"b\":\"c\"}}}");
+  TestParseXml("<a><b c=\"d\"/></a>",
+               "{\"a\":{\"b\":{\"__attributes__\":{\"c\":\"d\"}}}}");
+  TestParseXml(
+      "<hello lang=\"fr\">bonjour</hello>",
+      "{\"hello\":[{\"__attributes__\":{\"lang\":\"fr\"}},\"bonjour\"]}");
+  TestParseXml(
+      "<translate lang=\"fr\" id=\"123\"><hello>bonjour</hello></translate>",
+      "{\"translate\":{\"__attributes__\":{\"lang\":\"fr\",\"id\":\"123\"},"
+      "\"hello\":\"bonjour\"}}");
+}
+
 TEST_F(XmlParserTest, ParseTypicalXml) {
   constexpr char kXml[] =
       "<!-- This is an XML sample -->"
@@ -131,6 +144,7 @@ TEST_F(XmlParserTest, ParseTypicalXml) {
       "{\"library\":"
       "  {\"book\":"
       "   [{"
+      "      \"__attributes__\": { \"id\": \"k123\"},"
       "      \"author\":\"Isaac Newton\","
       "      \"title\":\"Philosophiae Naturalis Principia Mathematica\","
       "      \"genre\":\"Science\","
@@ -138,6 +152,7 @@ TEST_F(XmlParserTest, ParseTypicalXml) {
       "      \"publish_date\":\"1947-9-03\""
       "    },"
       "    {"
+      "      \"__attributes__\": { \"id\": \"k456\"},"
       "      \"author\":\"Dr. Seuss\","
       "      \"title\":\"Green Eggs and Ham\","
       "      \"genre\":\"Kid\","
