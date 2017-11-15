@@ -2811,6 +2811,7 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="BPG_RESIZE_PARAMS_CHANGED_LOCAL_SURFACE_ID_UNCHANGED"/>
   <int value="184" label="RFH_NEGATIVE_SELECTION_START_OFFSET"/>
   <int value="185" label="WEBUI_BAD_SCHEME_ACCESS"/>
+  <int value="186" label="CSDH_UNEXPECTED_OPERATION"/>
 </enum>
 
 <enum name="BadMessageReasonExtensions">
@@ -4112,6 +4113,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="5" label="Cache Name Not Found Error"/>
   <int value="6" label="Query Too Large Error"/>
   <int value="7" label="Not Implemented Error"/>
+  <int value="8" label="Bad message Error"/>
 </enum>
 
 <enum name="CALayerResult">
