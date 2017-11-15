@@ -6,6 +6,7 @@
 
 #include <string>
 
+#include "base/callback.h"
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -22,6 +23,8 @@
 namespace signin {
 
 namespace {
+
+base::RepeatingCallback<bool()>* g_is_gaia_isolated_callback = nullptr;
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
 const char kDiceMigrationCompletePref[] = "signin.DiceMigrationComplete";
@@ -76,6 +79,18 @@ AccountConsistencyMethod GetAccountConsistencyMethod() {
   // Mirror is always enabled on Android and iOS.
   return AccountConsistencyMethod::kMirror;
 #else
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  DCHECK(g_is_gaia_isolated_callback);
+  if (!g_is_gaia_isolated_callback->Run()) {
+    // Because of limitations in base::Feature, always return kDisabled when
+    // Gaia is not isolated, even though it's not technically a requirement for
+    // all account consistency methods (i.e. kDiceFixAuthErrors could be
+    // allowed).
+    return AccountConsistencyMethod::kDisabled;
+  }
+#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
+
   if (!base::FeatureList::IsEnabled(kAccountConsistencyFeature))
     return AccountConsistencyMethod::kDisabled;
 
@@ -93,7 +108,7 @@ AccountConsistencyMethod GetAccountConsistencyMethod() {
     return AccountConsistencyMethod::kDiceMigration;
   else if (method_value == kAccountConsistencyFeatureMethodDice)
     return AccountConsistencyMethod::kDice;
-#endif
+#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
   return AccountConsistencyMethod::kDisabled;
 #endif  // BUILDFLAG(ENABLE_MIRROR)
@@ -169,6 +184,13 @@ bool IsExtensionsMultiAccount() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
              switches::kExtensionsMultiAccount) ||
          GetAccountConsistencyMethod() == AccountConsistencyMethod::kMirror;
+}
+
+void SetGaiaOriginIsolatedCallback(
+    const base::RepeatingCallback<bool()>& is_gaia_isolated) {
+  if (!g_is_gaia_isolated_callback)
+    g_is_gaia_isolated_callback = new base::RepeatingCallback<bool()>;
+  *g_is_gaia_isolated_callback = is_gaia_isolated;
 }
 
 }  // namespace signin
