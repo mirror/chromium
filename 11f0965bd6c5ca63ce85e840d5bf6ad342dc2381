@@ -22,6 +22,30 @@
       "revId": "11f0965bd6c5ca63ce85e840d5bf6ad342dc2381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7fc3f7_f6455b61",
+        "filename": "content/browser/webui/web_ui_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T18:23:24Z",
+      "side": 1,
+      "message": "See documentation at https://chromium.googlesource.com/chromium/src/+/master/docs/webui_explainer.md#C_classes.",
+      "parentUuid": "1b1e3fe6_cf9a4882",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "11f0965bd6c5ca63ce85e840d5bf6ad342dc2381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
