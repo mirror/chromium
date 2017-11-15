@@ -7,64 +7,33 @@ import("//ios/chrome/test/earl_grey/chrome_ios_eg_test.gni")
 group("all_tests") {
   testonly = true
   deps = [
-    ":ios_chrome_bookmarks_egtests",
+    ":ios_chrome_all_egtests",
     ":ios_chrome_device_check_egtests",
-    ":ios_chrome_external_url_egtests",
     ":ios_chrome_flaky_egtests",
-    ":ios_chrome_integration_egtests",
     ":ios_chrome_multitasking_egtests",
     ":ios_chrome_perf_egtests",
-    ":ios_chrome_reading_list_egtests",
-    ":ios_chrome_settings_egtests",
     ":ios_chrome_smoke_egtests",
-    ":ios_chrome_ui_egtests",
-    ":ios_chrome_web_egtests",
   ]
 }
 
-chrome_ios_eg_test("ios_chrome_integration_egtests") {
+chrome_ios_eg_test("ios_chrome_all_egtests") {
   deps = [
+    ":test_support",
+    "//components/payments/core:payments_test_bundle_data",
     "//ios/chrome/browser/autofill:eg_tests",
     "//ios/chrome/browser/context_menu:eg_tests",
     "//ios/chrome/browser/device_sharing:eg_tests",
     "//ios/chrome/browser/metrics:eg_tests",
+    "//ios/chrome/browser/metrics:external_url_eg_tests",
     "//ios/chrome/browser/net:eg_tests",
     "//ios/chrome/browser/ntp_tiles:eg_tests",
     "//ios/chrome/browser/passwords:eg_tests",
-  ]
-}
-chrome_ios_eg_test("ios_chrome_payments_egtests") {
-  deps = [
-    ":test_support",
-    "//components/payments/core:payments_test_bundle_data",
-    "//ios/chrome/browser/ui/payments:eg_tests",
-  ]
-}
-
-chrome_ios_eg_test("ios_chrome_reading_list_egtests") {
-  deps = [
-    ":test_support",
-    "//ios/chrome/browser/ui/reading_list:eg_tests",
-  ]
-}
-
-chrome_ios_eg_test("ios_chrome_bookmarks_egtests") {
-  deps = [
-    "//ios/chrome/browser/ui/bookmarks:eg_tests",
-  ]
-}
-
-chrome_ios_eg_test("ios_chrome_settings_egtests") {
-  deps = [
-    "//ios/chrome/browser/ui/settings:eg_tests",
-  ]
-}
-
-chrome_ios_eg_test("ios_chrome_ui_egtests") {
-  deps = [
+    "//ios/chrome/browser/translate:external_url_eg_tests",
     "//ios/chrome/browser/ui:eg_tests",
+    "//ios/chrome/browser/ui:external_url_eg_tests",
     "//ios/chrome/browser/ui/activity_services:eg_tests",
     "//ios/chrome/browser/ui/alert_coordinator:eg_tests",
+    "//ios/chrome/browser/ui/bookmarks:eg_tests",
     "//ios/chrome/browser/ui/content_suggestions:eg_tests",
     "//ios/chrome/browser/ui/dialogs:eg_tests",
     "//ios/chrome/browser/ui/find_bar:eg_tests",
@@ -75,10 +44,13 @@ chrome_ios_eg_test("ios_chrome_ui_egtests") {
     "//ios/chrome/browser/ui/infobars:eg_tests",
     "//ios/chrome/browser/ui/ntp:eg_tests",
     "//ios/chrome/browser/ui/ntp/recent_tabs:eg_tests",
+    "//ios/chrome/browser/ui/payments:eg_tests",
     "//ios/chrome/browser/ui/print:eg_tests",
     "//ios/chrome/browser/ui/qr_scanner:eg_tests",
+    "//ios/chrome/browser/ui/reading_list:eg_tests",
     "//ios/chrome/browser/ui/sad_tab:eg_tests",
     "//ios/chrome/browser/ui/safe_mode:eg_tests",
+    "//ios/chrome/browser/ui/settings:eg_tests",
     "//ios/chrome/browser/ui/settings/sync_utils:eg_tests",
     "//ios/chrome/browser/ui/signin_interaction:eg_tests",
     "//ios/chrome/browser/ui/stack_view:eg_tests",
@@ -87,11 +59,6 @@ chrome_ios_eg_test("ios_chrome_ui_egtests") {
     "//ios/chrome/browser/ui/toolbar:eg_tests",
     "//ios/chrome/browser/ui/tools_menu:eg_tests",
     "//ios/chrome/browser/ui/webui:eg_tests",
-  ]
-}
-
-chrome_ios_eg_test("ios_chrome_web_egtests") {
-  deps = [
     "//ios/chrome/browser/web:eg_tests",
   ]
 }
@@ -110,11 +77,7 @@ chrome_ios_eg_test("ios_chrome_multitasking_egtests") {
     "//ios/chrome/app/application_delegate:application_delegate_internal",
 
     # Depends on all EarlGrey test suites to create multitasking tests suite.
-    ":ios_chrome_bookmarks_egtests_deps_group",
-    ":ios_chrome_integration_egtests_deps_group",
-    ":ios_chrome_settings_egtests_deps_group",
-    ":ios_chrome_ui_egtests_deps_group",
-    ":ios_chrome_web_egtests_deps_group",
+    ":ios_chrome_all_egtests_deps_group",
   ]
 
   eg_main_application_delegate = "MultitaskingTestApplicationDelegate"
@@ -145,11 +108,7 @@ chrome_ios_eg_test("ios_chrome_flaky_egtests") {
 
     # Depends on all EarlGrey test suites to run all the FLAKY_ tests found.
     # When adding a new test application, please follow the same pattern.
-    ":ios_chrome_bookmarks_egtests_deps_group",
-    ":ios_chrome_integration_egtests_deps_group",
-    ":ios_chrome_settings_egtests_deps_group",
-    ":ios_chrome_ui_egtests_deps_group",
-    ":ios_chrome_web_egtests_deps_group",
+    ":ios_chrome_all_egtests_deps_group",
   ]
 }
 
@@ -164,14 +123,6 @@ chrome_ios_eg_test("ios_chrome_smoke_egtests") {
     "//ios/third_party/earl_grey:earl_grey+link",
   ]
   libs = [ "XCTest.framework" ]
-}
-
-chrome_ios_eg_test("ios_chrome_external_url_egtests") {
-  deps = [
-    "//ios/chrome/browser/metrics:external_url_eg_tests",
-    "//ios/chrome/browser/translate:external_url_eg_tests",
-    "//ios/chrome/browser/ui:external_url_eg_tests",
-  ]
 }
 
 source_set("test_support") {

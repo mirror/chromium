@@ -414,6 +414,7 @@ class SimulatorTestRunner(TestRunner):
       retries=None,
       test_args=None,
       xctest=False,
+      onlytesting=None,
   ):
     """Initializes a new instance of this class.
 
@@ -457,6 +458,7 @@ class SimulatorTestRunner(TestRunner):
     self.platform = platform
     self.start_time = None
     self.version = version
+    self.onlytesting = onlytesting
 
   @staticmethod
   def kill_simulators():
@@ -585,6 +587,10 @@ class SimulatorTestRunner(TestRunner):
         '-d', self.platform,
         '-s', self.version,
     ]
+
+    if self.onlytesting:
+      for test in self.onlytesting.split():
+        cmd.extend(['-t', test])
 
     if test_filter:
       if self.xctest_path:

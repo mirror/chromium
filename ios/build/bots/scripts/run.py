@@ -45,6 +45,7 @@ def main(args, test_args):
         retries=args.retries,
         test_args=test_args,
         xctest=args.xctest,
+        onlytesting=args.onlytesting,
       )
     else:
       tr = test_runner.DeviceTestRunner(
@@ -110,6 +111,12 @@ if __name__ == '__main__':
     metavar='{}',
   )
   parser.add_argument(
+    '--onlytesting',
+    help='Specifies a test or test suite that should be included in test run. '\
+            'All other tests will be excluded from this run.',
+    metavar='testfilter',
+  )
+  parser.add_argument(
     '-o',
     '--out-dir',
     help='Directory to store all test data in.',
@@ -166,6 +173,7 @@ if __name__ == '__main__':
   args.env_var.extend(args_json.get('env_var', []))
   args.restart = args_json.get('restart', args.restart)
   args.xctest = args_json.get('xctest', args.xctest)
+  args.onlytesting = args_json.get('testfilter', args.onlytesting)
   test_args.extend(args_json.get('test_args', []))
 
   sys.exit(main(args, test_args))
