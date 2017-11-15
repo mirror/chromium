@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a7f44908_c587e2a1",
+        "filename": "third_party/WebKit/LayoutTests/virtual/spv175/paint/invalidation/background/viewport-gradient-background-html-resize-overflow-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-15T18:40:17Z",
+      "side": 1,
+      "message": "What does \"disappeared\" mean?  It sounds scary.",
+      "revId": "f4a7e19387b78136e6d3344067fdc705f2bcfa87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "508d594e_07c7b9e9",
         "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
         "patchSetId": 7
