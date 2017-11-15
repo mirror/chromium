@@ -1162,6 +1162,7 @@ void NavigatorImpl::RequestNavigation(
             *scoped_request.get());
     render_frame_host->CommitNavigation(
         nullptr,  // response
+        mojom::URLLoaderPtr(), mojom::URLLoaderClientRequest(),
         nullptr,  // body
         mojo::ScopedDataPipeConsumerHandle(), scoped_request->common_params(),
         scoped_request->request_params(), scoped_request->is_view_source(),
