@@ -118,4 +118,36 @@ TEST(CSSParserFastPathsTest, ParseColorWithLargeAlpha) {
   EXPECT_EQ(Color::kBlack, ToCSSColorValue(*value).Value());
 }
 
+TEST(CSSParserFastPathsTest, ParseColor) {
+  Color dummy;
+  for (int i = 0; i < 100000; ++i) {
+    bool res = CSSParser::ParseColor(dummy, "green");
+    DCHECK(res);
+  }
+}
+
+TEST(CSSParserFastPathsTest, RGBAColor) {
+  Color dummy;
+  for (int i = 0; i < 100000; ++i) {
+    bool res = CSSParser::ParseColor(dummy, "rgba(255, 0, 0, 0.3)");
+    DCHECK(res);
+  }
+}
+
+TEST(CSSParserFastPathsTest, HslaColor) {
+  Color dummy;
+  for (int i = 0; i < 100000; ++i) {
+    bool res = CSSParser::ParseColor(dummy, "hsla(120, 100%, 100%, 0.3)");
+    DCHECK(res);
+  }
+}
+
+TEST(CSSParserFastPathsTest, HexColor) {
+  Color dummy;
+  for (int i = 0; i < 100000; ++i) {
+    bool res = CSSParser::ParseColor(dummy, "#00FF00");
+    DCHECK(res);
+  }
+}
+
 }  // namespace blink

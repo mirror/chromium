@@ -212,9 +212,7 @@ bool CSSParser::ParseColor(Color& color, const String& string, bool strict) {
 
   // The regular color parsers don't resolve named colors, so explicitly
   // handle these first.
-  Color named_color;
-  if (named_color.SetNamedColor(string)) {
-    color = named_color;
+  if (color.SetFromString(string)) {
     return true;
   }
 
