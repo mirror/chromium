@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc09deed_8986f121",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-15T18:02:51Z",
+      "side": 1,
+      "message": "DURATION_PER_QUEUE_TYPE_METRIC_NAME",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "992a44fbbcee15f7ce5681d0227504816cfeffd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93865dcc_ff3ab922",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-15T18:02:51Z",
+      "side": 1,
+      "message": "Shall we plumb const TaskQueue::Task\u0026 to make it future-proof?",
+      "range": {
+        "startLine": 123,
+        "startChar": 25,
+        "endLine": 123,
+        "endChar": 59
+      },
+      "revId": "992a44fbbcee15f7ce5681d0227504816cfeffd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff58b3d3_d39ce755",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-15T18:02:51Z",
+      "side": 1,
+      "message": "Let\u0027s rename it here and elsewhere from queue_type to per_queue_type.",
+      "range": {
+        "startLine": 147,
+        "startChar": 41,
+        "endLine": 147,
+        "endChar": 51
+      },
+      "revId": "992a44fbbcee15f7ce5681d0227504816cfeffd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8cb249_2cd311f5",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-15T18:02:51Z",
+      "side": 1,
+      "message": "Let\u0027s add explicit numbers and a comment that this enum should not be renumbered.\n\nP.S. Also let\u0027s start enumerating them from 1 and reserve 0 for situations when we don\u0027t have a task type (we won\u0027t expose it as TaskType::None, but we could use inside scheduler and in enums.xml).",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 8
+      },
+      "revId": "992a44fbbcee15f7ce5681d0227504816cfeffd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
