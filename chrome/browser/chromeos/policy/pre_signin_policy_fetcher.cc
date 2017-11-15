@@ -63,12 +63,14 @@ PreSigninPolicyFetcher ::~PreSigninPolicyFetcher() {}
 void PreSigninPolicyFetcher::FetchPolicy(PolicyFetchResultCallback callback) {
   DCHECK(callback_.is_null());
   callback_ = std::move(callback);
-
+  cryptohome::AuthorizationRequest auth;
+  cryptohome::Key* key = auth.mutable_key();
+  key->set_label(auth_key_.label);
+  key->set_secret(auth_key_.secret);
   cryptohome::MountRequest mount;
   mount.set_hidden_mount(true);
   cryptohome::HomedirMethods::GetInstance()->MountEx(
-      cryptohome::Identification(account_id_),
-      cryptohome::Authorization(auth_key_), mount,
+      cryptohome::Identification(account_id_), auth, mount,
       base::Bind(&PreSigninPolicyFetcher::OnMountTemporaryUserHome,
                  weak_ptr_factory_.GetWeakPtr()));
 }

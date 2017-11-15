@@ -63,7 +63,7 @@ class CHROMEOS_EXPORT HomedirMethods {
   // callback.Run(false, kCryptohomeMountErrorUserDoesNotExist, string()).
   // Otherwise, the normal range of return codes is expected.
   virtual void MountEx(const Identification& id,
-                       const Authorization& auth,
+                       const AuthorizationRequest& auth,
                        const MountRequest& request,
                        const MountCallback& callback) = 0;
 
