@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ae28a867_4ffd5f05",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T21:46:05Z",
+      "side": 1,
+      "message": "I believe that would be less explanatory. This is not the entirety of the test name, it just serves to describe fileBaseName\u0027s source character set prior to conversion to Unicode.",
+      "parentUuid": "0ac0ee0c_b3a9a2bd",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6b27b8f_64406226",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 66
@@ -125,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "13e774b0_2db780fd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T21:46:05Z",
+      "side": 1,
+      "message": "Is it not sufficient to have the parameter named filePath? If not, what naming convention should I follow?",
+      "parentUuid": "843d6d84_abd70f7f",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "849cacfd_e0c4e48c",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 66
@@ -172,6 +208,24 @@
       "side": 1,
       "message": "same nit as above",
       "parentUuid": "610f0722_ac10aa18",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ce44035_0f17fcbe",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T21:46:05Z",
+      "side": 1,
+      "message": "Same response: in both cases they take a single named parameter, filePath",
+      "parentUuid": "fa159c27_cf1ce2d6",
       "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -266,6 +320,24 @@
     },
     {
       "key": {
+        "uuid": "47be8412_e5a9d44c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T21:46:05Z",
+      "side": 1,
+      "message": "See reply further on - I\u0027m going to try one more time to collapse to Unicode-only. If that fails I will make it brittle in the ACP-only direction instead as you suggest.",
+      "parentUuid": "8c3eaca0_9be79688",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ec41cf7_fac7c36a",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 66
@@ -319,6 +391,24 @@
     },
     {
       "key": {
+        "uuid": "1637a19c_4cf56117",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T21:46:05Z",
+      "side": 1,
+      "message": "Done, approximately: those won\u0027t be equal, thanks to c:\\fakepath\\ - but changed to the moral equivalent of that.",
+      "parentUuid": "603d27f8_54936b11",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46d77b0a_cea07435",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 66
@@ -330,6 +420,24 @@
       "writtenOn": "2017-11-15T20:50:49Z",
       "side": 1,
       "message": "This is also an opportunity to improve the test by having a single golden instead of two variants.",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22de7c80_8522d5f1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T21:46:05Z",
+      "side": 1,
+      "message": "I will make another attempt to switch the tests to a single version of the filename and update this thread once I have results. If I can convince Windows Chrome to actually work with non-ACP that would be ideal. If I can\u0027t, I\u0027ll switch to the brittle ACP-only check you imply.",
+      "parentUuid": "46d77b0a_cea07435",
       "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -386,6 +494,24 @@
       "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c178dc19_60185eac",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T21:46:05Z",
+      "side": 1,
+      "message": "Done. AFAIK the user-visible parts of this form and this target frame are not actually particularly useful in debugging - at least, I didn\u0027t find them to be useful.",
+      "parentUuid": "00f0a516_4890e378",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
