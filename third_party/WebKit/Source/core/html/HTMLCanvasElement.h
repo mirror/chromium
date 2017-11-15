@@ -201,6 +201,8 @@ class CORE_EXPORT HTMLCanvasElement final
 
   // SurfaceLayerBridgeObserver implementation
   void OnWebLayerUpdated() override;
+  void SetContentsLayer() override;
+  void UnsetContentsLayer() override;
 
   // ImageBufferClient implementation
   void NotifySurfaceInvalid() override;
