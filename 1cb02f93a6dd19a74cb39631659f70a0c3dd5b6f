@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5c7e289_fb824bab",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-15T14:40:37Z",
+      "side": 1,
+      "message": "Should this be:\n\u003cwelcome-content/\u003e",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f5b3f3_e41ec2e6",
+        "filename": "chrome/browser/ui/webui/welcome_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-15T14:40:37Z",
+      "side": 1,
+      "message": "Nit: Consider making this a const in an anonymous namespace:\n\nnamespace {\nconst bool kIsBranded \u003d \n..\n}",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 7
+      },
+      "revId": "1cb02f93a6dd19a74cb39631659f70a0c3dd5b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
