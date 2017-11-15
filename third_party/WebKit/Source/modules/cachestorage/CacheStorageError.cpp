@@ -29,6 +29,8 @@ DOMException* CacheStorageError::CreateException(
       return DOMException::Create(kAbortError, "Operation too large.");
     case mojom::CacheStorageError::kErrorStorage:
       return DOMException::Create(kUnknownError, "Unexpected internal error.");
+    case mojom::CacheStorageError::kErrorBadMessage:
+      return DOMException::Create(kUnknownError, "Unexpected operation.");
     case mojom::CacheStorageError::kSuccess:
       // This function should only be called with an error.
       break;

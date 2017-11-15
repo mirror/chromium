@@ -473,6 +473,11 @@ void CacheStorageDispatcherHost::OnCacheBatchCallback(
     int request_id,
     CacheStorageCacheHandle cache_handle,
     CacheStorageError error) {
+  if (error == CacheStorageError::kErrorBadMessage) {
+    bad_message::ReceivedBadMessage(this,
+                                    bad_message::CSDH_UNEXPECTED_OPERATION);
+    return;
+  }
   if (error != CacheStorageError::kSuccess) {
     Send(new CacheStorageMsg_CacheBatchError(thread_id, request_id, error));
     return;
