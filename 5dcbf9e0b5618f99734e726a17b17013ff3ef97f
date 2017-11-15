@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ee2489a6_4b0838c6",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-15T21:57:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4d1674f_8acc3e3a",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 47
+      },
+      "revId": "5dcbf9e0b5618f99734e726a17b17013ff3ef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4096907_11857b20",
         "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "5dcbf9e0b5618f99734e726a17b17013ff3ef97f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46012afb_1871be23",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-15T21:57:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4096907_11857b20",
+      "range": {
+        "startLine": 144,
+        "startChar": 34,
+        "endLine": 144,
+        "endChar": 42
+      },
+      "revId": "5dcbf9e0b5618f99734e726a17b17013ff3ef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f8aee7fa_fb1d019f",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-15T21:57:05Z",
+      "side": 1,
+      "message": "I\u0027ve kept this as-is since the helper core class doesn\u0027t know its task runner anymore.",
+      "parentUuid": "d50abcb9_ae902f36",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 53
+      },
+      "revId": "5dcbf9e0b5618f99734e726a17b17013ff3ef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fd02c9e_fb8f3862",
         "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "5dcbf9e0b5618f99734e726a17b17013ff3ef97f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e10ebc76_515abedf",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-15T21:57:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fd02c9e_fb8f3862",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 179,
+        "endChar": 76
+      },
+      "revId": "5dcbf9e0b5618f99734e726a17b17013ff3ef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "57398ab7_713b74ba",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-15T21:57:05Z",
+      "side": 1,
+      "message": "Ah great catch! I\u0027ve basically done your \"helper\" suggestion.",
+      "parentUuid": "b0d7fd07_1e92adec",
+      "range": {
+        "startLine": 184,
+        "startChar": 21,
+        "endLine": 184,
+        "endChar": 47
+      },
+      "revId": "5dcbf9e0b5618f99734e726a17b17013ff3ef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8458672c_9d249e95",
         "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "5dcbf9e0b5618f99734e726a17b17013ff3ef97f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38638006_8ac3c279",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-15T21:57:05Z",
+      "side": 1,
+      "message": "I\u0027ve kept this as-is since the helper core class doesn\u0027t know its task runner anymore.",
+      "parentUuid": "8458672c_9d249e95",
+      "range": {
+        "startLine": 191,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 53
+      },
+      "revId": "5dcbf9e0b5618f99734e726a17b17013ff3ef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
