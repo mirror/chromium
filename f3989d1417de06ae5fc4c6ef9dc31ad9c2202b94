@@ -16,6 +16,24 @@
       "revId": "f3989d1417de06ae5fc4c6ef9dc31ad9c2202b94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd370348_56a273c5",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-11-15T18:09:53Z",
+      "side": 1,
+      "message": "Done. Thanks",
+      "parentUuid": "07d97d92_81baea84",
+      "revId": "f3989d1417de06ae5fc4c6ef9dc31ad9c2202b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
