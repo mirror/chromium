@@ -18,6 +18,8 @@ class ChromeBrowserState;
 class TestChromeBrowserStateManager : public ios::ChromeBrowserStateManager {
  public:
   explicit TestChromeBrowserStateManager(const base::FilePath& user_data_dir);
+  explicit TestChromeBrowserStateManager(
+      ios::ChromeBrowserState* browser_state);
   ~TestChromeBrowserStateManager() override;
 
   // ChromeBrowserStateManager:
@@ -29,6 +31,8 @@ class TestChromeBrowserStateManager : public ios::ChromeBrowserStateManager {
  private:
   IOSChromeScopedTestingLocalState local_state_;
   BrowserStateInfoCache browser_state_info_cache_;
+
+  ios::ChromeBrowserState* browser_state_;
 
   DISALLOW_COPY_AND_ASSIGN(TestChromeBrowserStateManager);
 };
