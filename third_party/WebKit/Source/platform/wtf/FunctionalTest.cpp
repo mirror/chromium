@@ -27,6 +27,9 @@
 
 #include <memory>
 #include <utility>
+#include "base/test/gtest_util.h"
+#include "base/threading/thread.h"
+#include "platform/wtf/LeakAnnotations.h"
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/WTFTestHelper.h"
 #include "platform/wtf/WeakPtr.h"
@@ -148,6 +151,23 @@ TEST(FunctionalTest, WeakPtr) {
   EXPECT_EQ(1, counter);
 }
 
-}  // anonymous namespace
+void MakeClosure(Closure** closure_out) {
+  *closure_out = new Closure(WTF::Bind([] {}));
+}
 
+TEST(FunctionalTest, ThreadRestriction) {
+  Closure* closure = nullptr;
+
+  base::Thread thread("testing");
+  thread.Start();
+  thread.task_runner()->PostTask(FROM_HERE,
+                                 base::BindOnce(&MakeClosure, &closure));
+  thread.Stop();
+
+  ASSERT_TRUE(closure);
+  EXPECT_DCHECK_DEATH(closure->Run());
+  EXPECT_DCHECK_DEATH(delete closure);
+}
+
+}  // anonymous namespace
 }  // namespace WTF

@@ -215,8 +215,6 @@ class Function;
 
 template <typename R, typename... Args>
 class Function<R(Args...)> {
-  USING_FAST_MALLOC(Function);
-
  public:
   Function() {}
   explicit Function(base::Callback<R(Args...)> callback)
@@ -268,8 +266,6 @@ class CrossThreadFunction;
 
 template <typename R, typename... Args>
 class CrossThreadFunction<R(Args...)> {
-  USING_FAST_MALLOC(CrossThreadFunction);
-
  public:
   CrossThreadFunction() {}
   explicit CrossThreadFunction(base::Callback<R(Args...)> callback)
