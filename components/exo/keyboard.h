@@ -12,8 +12,8 @@
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "components/exo/keyboard_observer.h"
+#include "components/exo/seat_observer.h"
 #include "components/exo/surface_observer.h"
-#include "ui/aura/client/focus_change_observer.h"
 #include "ui/events/devices/input_device_event_observer.h"
 #include "ui/events/event.h"
 #include "ui/events/event_handler.h"
@@ -26,17 +26,18 @@ class KeyEvent;
 namespace exo {
 class KeyboardDelegate;
 class KeyboardDeviceConfigurationDelegate;
+class Seat;
 class Surface;
 
 // This class implements a client keyboard that represents one or more keyboard
 // devices.
 class Keyboard : public ui::EventHandler,
-                 public aura::client::FocusChangeObserver,
                  public ui::InputDeviceEventObserver,
                  public ash::TabletModeObserver,
-                 public SurfaceObserver {
+                 public SurfaceObserver,
+                 public SeatObserver {
  public:
-  explicit Keyboard(KeyboardDelegate* delegate);
+  Keyboard(KeyboardDelegate* delegate, Seat* seat);
   ~Keyboard() override;
 
   bool HasDeviceConfigurationDelegate() const;
@@ -56,9 +57,6 @@ class Keyboard : public ui::EventHandler,
   // Overridden from ui::EventHandler:
   void OnKeyEvent(ui::KeyEvent* event) override;
 
-  // Overridden ui::aura::client::FocusChangeObserver:
-  void OnWindowFocused(aura::Window* gained_focus,
-                       aura::Window* lost_focus) override;
 
   // Overridden from SurfaceObserver:
   void OnSurfaceDestroying(Surface* surface) override;
@@ -71,9 +69,12 @@ class Keyboard : public ui::EventHandler,
   void OnTabletModeEnding() override;
   void OnTabletModeEnded() override;
 
+  // Overridden from SeatObserver:
+  void OnSurfaceFocused(Surface* gained_focus) override;
+
  private:
-  // Returns the effective focus for |window|.
-  Surface* GetEffectiveFocus(aura::Window* window) const;
+  // Returns the effective focus for |surface|.
+  Surface* GetEffectiveFocus(Surface* surface) const;
 
   // Processes expired key state changes in |pending_key_acks_| as they have not
   // been acknowledged.
@@ -93,6 +94,9 @@ class Keyboard : public ui::EventHandler,
   // The delegate instance that all events except for events about device
   // configuration are dispatched to.
   KeyboardDelegate* const delegate_;
+
+  // Seat to register and unregister itself at the destructor.
+  Seat* const seat_;
 
   // The delegate instance that events about device configuration are dispatched
   // to.
