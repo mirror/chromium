@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "components/viz/common/display/renderer_settings.h"
+#include "components/viz/common/frame_sinks/begin_frame_source.h"
 #include "components/viz/common/surfaces/frame_sink_id_allocator.h"
 #include "content/browser/compositor/image_transport_factory.h"
 #include "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom.h"
@@ -142,6 +143,10 @@ class VizProcessTransportFactory : public ui::ContextFactory,
   viz::FrameSinkIdAllocator frame_sink_id_allocator_;
   std::unique_ptr<cc::SingleThreadTaskGraphRunner> task_graph_runner_;
   const viz::RendererSettings renderer_settings_;
+
+  // Incremented when viz process is restarted.
+  uint32_t viz_process_restart_id_ =
+      viz::BeginFrameSource::kNoRestartProcessRestartId + 1;
 
   base::WeakPtrFactory<VizProcessTransportFactory> weak_ptr_factory_;
 
