@@ -16,6 +16,24 @@
       "revId": "05e9e4c9bb8feff15284a04faceac60d9cc802a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5e216c_fcc41c8c",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-15T20:38:26Z",
+      "side": 1,
+      "message": "Thanks for the tip! I\u0027ll take a look at this tomorrow.",
+      "parentUuid": "54e776bb_44e7adcc",
+      "revId": "05e9e4c9bb8feff15284a04faceac60d9cc802a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
