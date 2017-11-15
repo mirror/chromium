@@ -169,23 +169,32 @@ public class WebApkUma {
      * Records the requests of Android runtime permissions which haven't been granted to Chrome when
      * Chrome is running in WebAPK runtime.
      */
-    public static void recordAndroidRuntimePermissionPromptInWebApkAsync(
-            final String[] permissions) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                Set<Integer> permissionGroup = new HashSet<Integer>();
-                for (String permission : permissions) {
-                    permissionGroup.add(getPermissionGroup(permission));
-                }
-                for (Integer permission : permissionGroup) {
-                    RecordHistogram.recordEnumeratedHistogram(
-                            "WebApk.Permission.ChromeWithoutPermission", permission,
-                            PERMISSION_COUNT);
-                }
-                return null;
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    public static void recordAndroidRuntimePermissionPromptInWebApk(final String[] permissions) {
+        Integer[] permissionGroups = getPermissionGroups(permissions);
+        for (Integer permission : permissionGroups) {
+            RecordHistogram.recordEnumeratedHistogram(
+                    "WebApk.Permission.ChromeWithoutPermission", permission, PERMISSION_COUNT);
+        }
+    }
+
+    /**
+     * Records the amount of requests that WekAPK runtime permissions access is deined because
+     * Chrome does not have that permission.
+     */
+    public static void recordAndroidRuntimePermissionDeniedInWebApk(final String[] permissions) {
+        Integer[] permissionGroups = getPermissionGroups(permissions);
+        for (Integer permission : permissionGroups) {
+            RecordHistogram.recordEnumeratedHistogram(
+                    "WebApk.Permission.ChromePermissionDenied", permission, PERMISSION_COUNT);
+        }
+    }
+
+    private static Integer[] getPermissionGroups(final String[] permissions) {
+        Set<Integer> permissionGroups = new HashSet<Integer>();
+        for (String permission : permissions) {
+            permissionGroups.add(getPermissionGroup(permission));
+        }
+        return permissionGroups.toArray(new Integer[permissionGroups.size()]);
     }
 
     private static int getPermissionGroup(String permission) {
