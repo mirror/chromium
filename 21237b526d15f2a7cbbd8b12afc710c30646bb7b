@@ -118,6 +118,30 @@
       "revId": "21237b526d15f2a7cbbd8b12afc710c30646bb7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9d6c1e5_7ed34263",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-15T15:42:17Z",
+      "side": 1,
+      "message": "No! We provide the size of the range, but the array is of length size_in_pages. If we overestimate the page size, or get the rounding off if we don\u0027t align to a page boundary, then we overflow.",
+      "parentUuid": "2f3917c8_3850feac",
+      "range": {
+        "startLine": 191,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 41
+      },
+      "revId": "21237b526d15f2a7cbbd8b12afc710c30646bb7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
