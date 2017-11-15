@@ -66,6 +66,7 @@ FormData::FormData(const FormData& data)
     : name(data.name),
       origin(data.origin),
       action(data.action),
+      root_origin(data.root_origin),
       is_form_tag(data.is_form_tag),
       is_formless_checkout(data.is_formless_checkout),
       fields(data.fields) {}
@@ -75,7 +76,7 @@ FormData::~FormData() {
 
 bool FormData::SameFormAs(const FormData& form) const {
   if (name != form.name || origin != form.origin || action != form.action ||
-      is_form_tag != form.is_form_tag ||
+      root_origin != form.root_origin || is_form_tag != form.is_form_tag ||
       is_formless_checkout != form.is_formless_checkout ||
       fields.size() != form.fields.size())
     return false;
@@ -88,7 +89,7 @@ bool FormData::SameFormAs(const FormData& form) const {
 
 bool FormData::SimilarFormAs(const FormData& form) const {
   if (name != form.name || origin != form.origin || action != form.action ||
-      is_form_tag != form.is_form_tag ||
+      root_origin != form.root_origin || is_form_tag != form.is_form_tag ||
       is_formless_checkout != form.is_formless_checkout ||
       fields.size() != form.fields.size())
     return false;
@@ -101,7 +102,7 @@ bool FormData::SimilarFormAs(const FormData& form) const {
 
 bool FormData::operator==(const FormData& form) const {
   return name == form.name && origin == form.origin && action == form.action &&
-         is_form_tag == form.is_form_tag &&
+         root_origin == form.root_origin && is_form_tag == form.is_form_tag &&
          is_formless_checkout == form.is_formless_checkout &&
          fields == form.fields;
 }
@@ -111,15 +112,16 @@ bool FormData::operator!=(const FormData& form) const {
 }
 
 bool FormData::operator<(const FormData& form) const {
-  return std::tie(name, origin, action, is_form_tag, is_formless_checkout,
-                  fields) < std::tie(form.name, form.origin, form.action,
-                                     form.is_form_tag,
-                                     form.is_formless_checkout, form.fields);
+  return std::tie(name, origin, action, root_origin, is_form_tag,
+                  is_formless_checkout, fields) <
+         std::tie(form.name, form.origin, form.action, form.root_origin,
+                  form.is_form_tag, form.is_formless_checkout, form.fields);
 }
 
 std::ostream& operator<<(std::ostream& os, const FormData& form) {
   os << base::UTF16ToUTF8(form.name) << " " << form.origin << " " << form.action
-     << " " << form.is_form_tag << " " << form.is_formless_checkout << " "
+     << " " << form.root_origin << " " << form.is_form_tag << " "
+     << form.is_formless_checkout << " "
      << "Fields:";
   for (size_t i = 0; i < form.fields.size(); ++i) {
     os << form.fields[i] << ",";

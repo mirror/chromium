@@ -296,6 +296,9 @@ class FormStructure {
   // The target URL.
   GURL target_url_;
 
+  // The source URL of the root frame of this form.
+  GURL root_source_url_;
+
   // The number of fields able to be auto-filled.
   size_t autofill_count_;
 
