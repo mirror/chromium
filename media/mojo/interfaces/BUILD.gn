@@ -10,6 +10,7 @@ mojom("interfaces") {
     "audio_input_stream.mojom",
     "audio_output_stream.mojom",
     "audio_parameters.mojom",
+    "cdm_proxy.mojom",
     "cdm_storage.mojom",
     "content_decryption_module.mojom",
     "decryptor.mojom",
