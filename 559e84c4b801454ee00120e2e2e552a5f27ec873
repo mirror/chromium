@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec784a34_a9abd796",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_change_picture.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T01:04:20Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "559e84c4b801454ee00120e2e2e552a5f27ec873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce30883_961d2aca",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T01:04:20Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "559e84c4b801454ee00120e2e2e552a5f27ec873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3984793_380137c3",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T01:04:20Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "559e84c4b801454ee00120e2e2e552a5f27ec873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
