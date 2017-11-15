@@ -6,6 +6,7 @@
 
 #include <string>
 
+#include "base/files/file.h"
 #include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
@@ -126,6 +127,31 @@ class FileElementReader : public net::UploadFileElementReader {
   DISALLOW_COPY_AND_ASSIGN(FileElementReader);
 };
 
+class RawFileElementReader : public net::UploadFileElementReader {
+ public:
+  RawFileElementReader(ResourceRequestBody* resource_request_body,
+                       base::TaskRunner* task_runner,
+                       const ResourceRequestBody::Element& element)
+      : net::UploadFileElementReader(
+            task_runner,
+            // TODO(mmenke): Is duplicating this necessary?
+            element.file().Duplicate(),
+            element.path(),
+            element.offset(),
+            element.length(),
+            element.expected_modification_time()),
+        resource_request_body_(resource_request_body) {
+    DCHECK_EQ(ResourceRequestBody::Element::TYPE_FILE, element.type());
+  }
+
+  ~RawFileElementReader() override {}
+
+ private:
+  scoped_refptr<ResourceRequestBody> resource_request_body_;
+
+  DISALLOW_COPY_AND_ASSIGN(RawFileElementReader);
+};
+
 // A subclass of net::UploadElementReader to read data pipes.
 class DataPipeElementReader : public net::UploadElementReader {
  public:
@@ -231,6 +257,10 @@ std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
         break;
       case ResourceRequestBody::Element::TYPE_FILE:
         element_readers.push_back(std::make_unique<FileElementReader>(
+            body, file_task_runner, element));
+        break;
+      case ResourceRequestBody::Element::TYPE_RAW_FILE:
+        element_readers.push_back(std::make_unique<RawFileElementReader>(
             body, file_task_runner, element));
         break;
       case ResourceRequestBody::Element::TYPE_FILE_FILESYSTEM:
