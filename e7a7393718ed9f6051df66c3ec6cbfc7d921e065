@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ca7128f_5d699619",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 5286,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-15T15:54:03Z",
+      "side": 1,
+      "message": "I think the old name was supposed to be RepostFormDialog :)\n\nHow about presentRepostFormDialogForWebState ?",
+      "range": {
+        "startLine": 5286,
+        "startChar": 4,
+        "endLine": 5286,
+        "endChar": 28
+      },
+      "revId": "e7a7393718ed9f6051df66c3ec6cbfc7d921e065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
