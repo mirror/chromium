@@ -251,6 +251,7 @@ source_set("unit_tests") {
     "fake_video_decoder.h",
     "fake_video_decoder_unittest.cc",
     "file_data_source_unittest.cc",
+    "frame_buffer_pool_unittest.cc",
     "frame_processor_unittest.cc",
     "ivf_parser_unittest.cc",
     "jpeg_parser_unittest.cc",

@@ -74,8 +74,8 @@ static int GetThreadCount(const VideoDecoderConfig& config) {
         decode_threads = 4;
     }
 
-    decode_threads = std::min(decode_threads,
-                              base::SysInfo::NumberOfProcessors());
+    decode_threads =
+        std::min(decode_threads, base::SysInfo::NumberOfProcessors());
     return decode_threads;
   }
 
@@ -114,6 +114,29 @@ static void DestroyHelper(std::unique_ptr<vpx_codec_ctx> vpx_codec,
 
   if (vpx_codec_alpha)
     vpx_codec_destroy(vpx_codec_alpha.get());
+}
+
+static int32_t GetVP9FrameBuffer(void* user_priv,
+                                 size_t min_size,
+                                 vpx_codec_frame_buffer* fb) {
+  DCHECK(user_priv);
+  DCHECK(fb);
+  FrameBufferPool* pool = static_cast<FrameBufferPool*>(user_priv);
+  fb->data = pool->GetFrameBuffer(min_size, &fb->priv);
+  fb->size = min_size;
+  return 0;
+}
+
+static int32_t ReleaseVP9FrameBuffer(void* user_priv,
+                                     vpx_codec_frame_buffer* fb) {
+  DCHECK(user_priv);
+  DCHECK(fb);
+  if (!fb->priv)
+    return -1;
+
+  FrameBufferPool* pool = static_cast<FrameBufferPool*>(user_priv);
+  pool->ReleaseFrameBuffer(fb->priv);
+  return 0;
 }
 
 VpxVideoDecoder::VpxVideoDecoder()
@@ -296,8 +319,8 @@ bool VpxVideoDecoder::ConfigureDecoder(const VideoDecoderConfig& config) {
     DCHECK(!memory_pool_);
     memory_pool_ = new FrameBufferPool();
     if (vpx_codec_set_frame_buffer_functions(
-            vpx_codec_.get(), &FrameBufferPool::GetVP9FrameBuffer,
-            &FrameBufferPool::ReleaseVP9FrameBuffer, memory_pool_.get())) {
+            vpx_codec_.get(), &GetVP9FrameBuffer, &ReleaseVP9FrameBuffer,
+            memory_pool_.get())) {
       DLOG(ERROR) << "Failed to configure external buffers. "
                   << vpx_codec_error(vpx_codec_.get());
       return false;
@@ -525,20 +548,6 @@ VpxVideoDecoder::AlphaDecodeStatus VpxVideoDecoder::DecodeAlphaPlane(
     return kAlphaPlaneError;
   }
 
-  if (config_.codec() == kCodecVP9) {
-    FrameBufferPool::VP9FrameBuffer* frame_buffer =
-        static_cast<FrameBufferPool::VP9FrameBuffer*>(vpx_image->fb_priv);
-    uint64_t alpha_plane_size =
-        (*vpx_image_alpha)->stride[VPX_PLANE_Y] * (*vpx_image_alpha)->d_h;
-    if (frame_buffer->alpha_data.size() < alpha_plane_size) {
-      frame_buffer->alpha_data.resize(alpha_plane_size);
-    }
-    libyuv::CopyPlane((*vpx_image_alpha)->planes[VPX_PLANE_Y],
-                      (*vpx_image_alpha)->stride[VPX_PLANE_Y],
-                      &frame_buffer->alpha_data[0],
-                      (*vpx_image_alpha)->stride[VPX_PLANE_Y],
-                      (*vpx_image_alpha)->d_w, (*vpx_image_alpha)->d_h);
-  }
   return kAlphaPlaneProcessed;
 }
 
@@ -612,18 +621,24 @@ bool VpxVideoDecoder::CopyVpxImageToVideoFrame(
   const gfx::Size coded_size(vpx_image->w, vpx_image->d_h);
   const gfx::Size visible_size(vpx_image->d_w, vpx_image->d_h);
 
-  if (memory_pool_.get()) {
+  if (memory_pool_) {
     DCHECK_EQ(kCodecVP9, config_.codec());
     if (vpx_image_alpha) {
-      FrameBufferPool::VP9FrameBuffer* frame_buffer =
-          static_cast<FrameBufferPool::VP9FrameBuffer*>(vpx_image->fb_priv);
+      size_t alpha_plane_size =
+          vpx_image_alpha->stride[VPX_PLANE_Y] * vpx_image_alpha->d_h;
+      uint8_t* alpha_plane = memory_pool_->AllocateAlphaPlaneForFrameBuffer(
+          alpha_plane_size, vpx_image->fb_priv);
+      libyuv::CopyPlane(vpx_image_alpha->planes[VPX_PLANE_Y],
+                        vpx_image_alpha->stride[VPX_PLANE_Y], alpha_plane,
+                        vpx_image_alpha->stride[VPX_PLANE_Y],
+                        vpx_image_alpha->d_w, vpx_image_alpha->d_h);
       *video_frame = VideoFrame::WrapExternalYuvaData(
           codec_format, coded_size, gfx::Rect(visible_size),
           config_.natural_size(), vpx_image->stride[VPX_PLANE_Y],
           vpx_image->stride[VPX_PLANE_U], vpx_image->stride[VPX_PLANE_V],
           vpx_image_alpha->stride[VPX_PLANE_Y], vpx_image->planes[VPX_PLANE_Y],
           vpx_image->planes[VPX_PLANE_U], vpx_image->planes[VPX_PLANE_V],
-          &frame_buffer->alpha_data[0], kNoTimestamp);
+          alpha_plane, kNoTimestamp);
     } else {
       *video_frame = VideoFrame::WrapExternalYuvData(
           codec_format, coded_size, gfx::Rect(visible_size),
