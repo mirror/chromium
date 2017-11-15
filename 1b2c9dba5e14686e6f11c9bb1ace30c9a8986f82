@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4860f81_75fa512b",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T07:32:09Z",
+      "side": 1,
+      "message": "This is kind of convoluted. How about \"The host stays alive while the WebServiceWorkerRegistration is alive, and also initiates destruction of the WebServiceWorkerRegistration once detected that it\u0027s no longer needed. See the class documentation in WebServiceWorkerRegistrationImpl for details.\"\n\nAlso this paragraph can be part of the paragraph in line 29-30.",
+      "revId": "1b2c9dba5e14686e6f11c9bb1ace30c9a8986f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
