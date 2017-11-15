@@ -356,10 +356,10 @@ void AndroidVideoEncodeAccelerator::QueueInput() {
       frame->coded_size().height());
   RETURN_ON_FAILURE(converted, "Failed to I420ToNV12!", kPlatformFailureError);
 
-  input_timestamp_ += base::TimeDelta::FromMicroseconds(
-      base::Time::kMicrosecondsPerSecond / INITIAL_FRAMERATE);
+  // input_timestamp_ += base::TimeDelta::FromMicroseconds(
+  //     base::Time::kMicrosecondsPerSecond / INITIAL_FRAMERATE);
   status = media_codec_->QueueInputBuffer(input_buf_index, nullptr, queued_size,
-                                          input_timestamp_);
+                                          frame->timestamp());
   UMA_HISTOGRAM_TIMES("Media.AVDA.InputQueueTime",
                       base::Time::Now() - std::get<2>(input));
   RETURN_ON_FAILURE(status == MEDIA_CODEC_OK,
@@ -380,9 +380,10 @@ void AndroidVideoEncodeAccelerator::DequeueOutput() {
   size_t size = 0;
   bool key_frame = false;
 
+  base::TimeDelta timestamp;
   MediaCodecStatus status =
       media_codec_->DequeueOutputBuffer(NoWaitTimeOut(), &buf_index, &offset,
-                                        &size, nullptr, nullptr, &key_frame);
+                                        &size, &timestamp, nullptr, &key_frame);
   switch (status) {
     case MEDIA_CODEC_TRY_AGAIN_LATER:
       return;
@@ -427,7 +428,7 @@ void AndroidVideoEncodeAccelerator::DequeueOutput() {
       FROM_HERE,
       base::Bind(&VideoEncodeAccelerator::Client::BitstreamBufferReady,
                  client_ptr_factory_->GetWeakPtr(), bitstream_buffer.id(), size,
-                 key_frame, base::TimeDelta()));
+                 key_frame, timestamp));
 }
 
 }  // namespace media
