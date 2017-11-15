@@ -262,6 +262,30 @@
       "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6db2af2_920a6e32",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-15T20:34:19Z",
+      "side": 1,
+      "message": "Done. I added WebGraphicsContext3DProvider::InvalidateGrContext() and passed it as RestoreContextCallback to ReadbackYUV(). miu@ can you PTAL at resetContext bits?\n\nI am bisecting Android DCHECK issue. Will let you know when I find the cause.",
+      "parentUuid": "104c9294_4c5c4a11",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 51
+      },
+      "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
