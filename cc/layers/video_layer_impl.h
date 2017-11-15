@@ -69,25 +69,18 @@ class CC_EXPORT VideoLayerImpl : public LayerImpl {
   uint32_t frame_bits_per_channel_;
 
   struct FrameResource {
-    FrameResource(viz::ResourceId id,
-                  gfx::Size size_in_pixels,
-                  bool is_overlay_candidate)
-        : id(id),
-          size_in_pixels(size_in_pixels),
-          is_overlay_candidate(is_overlay_candidate) {}
+    FrameResource(viz::ResourceId id, gfx::Size size_in_pixels)
+        : id(id), size_in_pixels(size_in_pixels) {}
     viz::ResourceId id;
     gfx::Size size_in_pixels;
-    bool is_overlay_candidate;
   };
   std::vector<FrameResource> frame_resources_;
 
   // TODO(danakj): Remove these, hide software path inside ResourceProvider and
   // ExternalResource (aka TextureMailbox) classes.
-  std::vector<unsigned> software_resources_;
-  using SoftwareReleaseCallback =
-      VideoFrameExternalResources::SoftwareReleaseCallback;
-  // Called once for software_resources_.
-  SoftwareReleaseCallback software_release_callback_;
+  unsigned software_resource_ = viz::kInvalidResourceId;
+  // Called once for the software resource.
+  viz::ReleaseCallback software_release_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(VideoLayerImpl);
 };

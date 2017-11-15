@@ -113,7 +113,8 @@ bool VideoLayerImpl::WillDraw(DrawMode draw_mode,
 
   if (external_resources.type ==
       VideoFrameExternalResources::SOFTWARE_RESOURCE) {
-    software_resources_ = external_resources.software_resources;
+    DCHECK_LT(viz::kInvalidResourceId, external_resources.software_resource);
+    software_resource_ = external_resources.software_resource;
     software_release_callback_ =
         external_resources.software_release_callback;
     return true;
@@ -122,20 +123,17 @@ bool VideoLayerImpl::WillDraw(DrawMode draw_mode,
   frame_resource_multiplier_ = external_resources.multiplier;
   frame_bits_per_channel_ = external_resources.bits_per_channel;
 
-  DCHECK_EQ(external_resources.mailboxes.size(),
+  DCHECK_EQ(external_resources.resources.size(),
             external_resources.release_callbacks.size());
   ResourceProvider::ResourceIdArray resource_ids;
-  resource_ids.reserve(external_resources.mailboxes.size());
-  for (size_t i = 0; i < external_resources.mailboxes.size(); ++i) {
-    unsigned resource_id = resource_provider->CreateResourceFromTextureMailbox(
-        external_resources.mailboxes[i],
+  resource_ids.reserve(external_resources.resources.size());
+  for (size_t i = 0; i < external_resources.resources.size(); ++i) {
+    unsigned resource_id = resource_provider->ImportResource(
+        external_resources.resources[i],
         viz::SingleReleaseCallback::Create(
-            std::move(external_resources.release_callbacks[i])),
-        external_resources.read_lock_fences_enabled,
-        external_resources.buffer_format);
-    frame_resources_.push_back(FrameResource(
-        resource_id, external_resources.mailboxes[i].size_in_pixels(),
-        external_resources.mailboxes[i].is_overlay_candidate()));
+            std::move(external_resources.release_callbacks[i])));
+    frame_resources_.push_back(
+        FrameResource(resource_id, external_resources.resources[i].size));
     resource_ids.push_back(resource_id);
   }
 
@@ -201,9 +199,7 @@ void VideoLayerImpl::AppendQuads(viz::RenderPass* render_pass,
     // TODO(danakj): Remove this, hide it in the hardware path.
     case VideoFrameExternalResources::SOFTWARE_RESOURCE: {
       DCHECK_EQ(frame_resources_.size(), 0u);
-      DCHECK_EQ(software_resources_.size(), 1u);
-      if (software_resources_.size() < 1u)
-        break;
+      DCHECK_LT(viz::kInvalidResourceId, software_resource_);
       bool premultiplied_alpha = true;
       gfx::PointF uv_top_left(0.f, 0.f);
       gfx::PointF uv_bottom_right(tex_width_scale, tex_height_scale);
@@ -212,11 +208,10 @@ void VideoLayerImpl::AppendQuads(viz::RenderPass* render_pass,
       bool nearest_neighbor = false;
       auto* texture_quad =
           render_pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
-      texture_quad->SetNew(shared_quad_state, quad_rect, visible_quad_rect,
-                           needs_blending, software_resources_[0],
-                           premultiplied_alpha, uv_top_left, uv_bottom_right,
-                           SK_ColorTRANSPARENT, opacity, flipped,
-                           nearest_neighbor, false);
+      texture_quad->SetNew(
+          shared_quad_state, quad_rect, visible_quad_rect, needs_blending,
+          software_resource_, premultiplied_alpha, uv_top_left, uv_bottom_right,
+          SK_ColorTRANSPARENT, opacity, flipped, nearest_neighbor, false);
       ValidateQuadResources(texture_quad);
       break;
     }
@@ -337,15 +332,14 @@ void VideoLayerImpl::DidDraw(LayerTreeResourceProvider* resource_provider) {
 
   if (frame_resource_type_ ==
       VideoFrameExternalResources::SOFTWARE_RESOURCE) {
-    for (size_t i = 0; i < software_resources_.size(); ++i) {
-      software_release_callback_.Run(gpu::SyncToken(), false);
-    }
+    DCHECK_LT(viz::kInvalidResourceId, software_resource_);
+    software_release_callback_.Run(gpu::SyncToken(), false);
 
-    software_resources_.clear();
+    software_resource_ = viz::kInvalidResourceId;
     software_release_callback_.Reset();
   } else {
-    for (size_t i = 0; i < frame_resources_.size(); ++i)
-      resource_provider->DeleteResource(frame_resources_[i].id);
+    for (const FrameResource& resource : frame_resources_)
+      resource_provider->RemoveImportedResource(resource.id);
     frame_resources_.clear();
   }
 
