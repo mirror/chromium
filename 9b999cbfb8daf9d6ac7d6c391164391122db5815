@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54925657_8c664626",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T04:14:38Z",
+      "side": 1,
+      "message": "This sentence gets a bit unwieldy. Maybe just:\n// Remove the registration object host.",
+      "revId": "9b999cbfb8daf9d6ac7d6c391164391122db5815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b687e33_483b7d19",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T04:14:38Z",
+      "side": 1,
+      "message": "can just be called |host| ?",
+      "revId": "9b999cbfb8daf9d6ac7d6c391164391122db5815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea5e79c9_d9d5271e",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T04:14:38Z",
+      "side": 1,
+      "message": "I think we can just call this |host| without losing clarity.",
+      "revId": "9b999cbfb8daf9d6ac7d6c391164391122db5815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc7a13c_96574c5a",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T04:14:38Z",
+      "side": 1,
+      "message": "By the way, Add/Remove/Get seem more idiomatic than Register/Unregister/Find... but we can keep it since the original code is like this.\n\nRegister should also be taking a unique_ptr since it takes ownership. Could we make that change now?",
+      "revId": "9b999cbfb8daf9d6ac7d6c391164391122db5815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d94287_f6162d0a",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T04:14:38Z",
+      "side": 1,
+      "message": "How about just Clear()",
+      "revId": "9b999cbfb8daf9d6ac7d6c391164391122db5815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57afe7e5_d6d30980",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T04:14:38Z",
+      "side": 1,
+      "message": "I think we can just do |existing_host| and |new_host|",
+      "revId": "9b999cbfb8daf9d6ac7d6c391164391122db5815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e7b181_5b061e17",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T04:14:38Z",
+      "side": 1,
+      "message": "\"...ensure the host stays alive...\"",
+      "range": {
+        "startLine": 238,
+        "startChar": 25,
+        "endLine": 239,
+        "endChar": 78
+      },
+      "revId": "9b999cbfb8daf9d6ac7d6c391164391122db5815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb9c9c3_077aaa8a",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T04:14:38Z",
+      "side": 1,
+      "message": "This seems to contradict the WebServiceWorkerRegistrationImpl documentation: \"It is owned by\ncontent::ServiceWorkerRegistrationObjectHost in the browser process\"",
+      "revId": "9b999cbfb8daf9d6ac7d6c391164391122db5815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
