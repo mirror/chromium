@@ -93,6 +93,13 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
     virtual void OnThreadStarted() {}
     virtual void OnStarted() {}
 
+    // S13nServiceWorker:
+    // Called when the worker requests termination. The worker could be
+    // terminated after the request, but also it could be ignored, for example
+    // when there are inflight events issued just before
+    // OnTerminationRequested().
+    virtual void OnTerminationRequested() {}
+
     // Called when status changed to STOPPING. The renderer has been sent a Stop
     // IPC message and OnStopped() will be called upon successful completion.
     virtual void OnStopping() {}
@@ -260,6 +267,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
 
   // Implements mojom::EmbeddedWorkerInstanceHost.
   // These functions all run on the IO thread.
+  void RequestTermination() override;
   void OnReadyForInspection() override;
   void OnScriptLoaded() override;
   // Notifies the corresponding provider host that the thread has started and is

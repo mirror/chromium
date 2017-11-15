@@ -45,6 +45,7 @@
 #include "content/renderer/service_worker/embedded_worker_instance_client_impl.h"
 #include "content/renderer/service_worker/service_worker_dispatcher.h"
 #include "content/renderer/service_worker/service_worker_event_callback.h"
+#include "content/renderer/service_worker/service_worker_event_timer.h"
 #include "content/renderer/service_worker/service_worker_fetch_context_impl.h"
 #include "content/renderer/service_worker/service_worker_handle_reference.h"
 #include "content/renderer/service_worker/service_worker_network_provider.h"
@@ -328,6 +329,24 @@ struct ServiceWorkerContextClient::WorkerContextData {
 
   explicit WorkerContextData(ServiceWorkerContextClient* owner)
       : event_dispatcher_binding(owner),
+        event_timer(std::make_unique<ServiceWorkerEventTimer>(
+            base::BindRepeating(&ServiceWorkerContextClient::OnIdle,
+                                base::Unretained(owner)))),
+        install_event_callbacks(event_timer.get()),
+        activate_event_callbacks(event_timer.get()),
+        background_fetch_abort_event_callbacks(event_timer.get()),
+        background_fetch_click_event_callbacks(event_timer.get()),
+        background_fetch_fail_event_callbacks(event_timer.get()),
+        background_fetched_event_callbacks(event_timer.get()),
+        sync_event_callbacks(event_timer.get()),
+        abort_payment_event_callbacks(event_timer.get()),
+        can_make_payment_event_callbacks(event_timer.get()),
+        payment_request_event_callbacks(event_timer.get()),
+        notification_click_event_callbacks(event_timer.get()),
+        notification_close_event_callbacks(event_timer.get()),
+        push_event_callbacks(event_timer.get()),
+        fetch_event_callbacks(event_timer.get()),
+        message_event_callbacks(event_timer.get()),
         weak_factory(owner),
         proxy_weak_factory(owner->proxy_) {}
 
@@ -336,6 +355,11 @@ struct ServiceWorkerContextClient::WorkerContextData {
   }
 
   mojo::Binding<mojom::ServiceWorkerEventDispatcher> event_dispatcher_binding;
+
+  // S13nServiceWorker
+  // Timer triggered when the service worker considers it should be stopped or
+  // an event should be aborted.
+  std::unique_ptr<ServiceWorkerEventTimer> event_timer;
 
   // Pending callbacks for GetClientDocuments().
   ClientsCallbacksMap clients_callbacks;
@@ -1758,6 +1782,14 @@ void ServiceWorkerContextClient::SetupNavigationPreload(
       fetch_event_id, url, std::move(preload_handle));
   context_->preload_requests.AddWithID(std::move(preload_request),
                                        fetch_event_id);
+}
+
+void ServiceWorkerContextClient::OnIdle() {
+  if (!ServiceWorkerUtils::IsServicificationEnabled())
+    return;
+  // TODO(crbug.com/774374): Ignore events from clients after this point until
+  // an event from the browser process or StopWorker() is received.
+  (*instance_host_)->RequestTermination();
 }
 
 base::WeakPtr<ServiceWorkerContextClient>

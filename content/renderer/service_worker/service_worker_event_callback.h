@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/time/time.h"
+#include "content/renderer/service_worker/service_worker_event_timer.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_event_status.mojom.h"
 
 namespace content {
@@ -19,12 +20,16 @@ class ServiceWorkerEventCallback {
  public:
   ServiceWorkerEventCallback() = delete;
   ServiceWorkerEventCallback(ServiceWorkerEventCallback&& other)
-      : callback_(std::move(other.callback_)),
+      : timer_(other.timer_),
+        callback_(std::move(other.callback_)),
         abort_callback_(std::move(other.abort_callback_)) {}
 
   template <typename... AbortArgs>
-  ServiceWorkerEventCallback(CallbackType callback, AbortArgs... abort_args)
-      : callback_(std::move(callback)),
+  ServiceWorkerEventCallback(ServiceWorkerEventTimer* timer,
+                             CallbackType callback,
+                             AbortArgs... abort_args)
+      : timer_(timer),
+        callback_(std::move(callback)),
         abort_callback_(
             base::BindOnce(&ServiceWorkerEventCallback<CallbackType>::Run<
                                blink::mojom::ServiceWorkerEventStatus,
@@ -33,7 +38,9 @@ class ServiceWorkerEventCallback {
                            base::Unretained(this),
                            blink::mojom::ServiceWorkerEventStatus::ABORTED,
                            abort_args...,
-                           base::Time::Now())) {}
+                           base::Time::Now())) {
+    timer_->StartEvent();
+  }
 
   ~ServiceWorkerEventCallback() {
     // Abort the event if |callback_| hasn't invoked yet.
@@ -51,9 +58,11 @@ class ServiceWorkerEventCallback {
       return;
     }
     std::move(callback_).Run(args...);
+    timer_->FinishEvent();
   }
 
  private:
+  ServiceWorkerEventTimer* timer_;
   CallbackType callback_;
   base::OnceClosure abort_callback_;
 
@@ -71,10 +80,11 @@ class ServiceWorkerEventCallbackWithResponse {
 
   template <typename... AbortArgs>
   ServiceWorkerEventCallbackWithResponse(
+      ServiceWorkerEventTimer* timer,
       CallbackType callback,
       ResponseInterfacePtr response_interface_ptr,
       AbortArgs... abort_args)
-      : internal_(std::move(callback), abort_args...),
+      : internal_(timer, std::move(callback), abort_args...),
         response_interface_ptr_(std::move(response_interface_ptr)) {}
 
   template <typename... Args>
@@ -102,7 +112,9 @@ class ServiceWorkerEventCallbackWithResponse {
 template <typename CallbackType>
 class ServiceWorkerEventCallbackMap {
  public:
-  ServiceWorkerEventCallbackMap() = default;
+  ServiceWorkerEventCallbackMap(ServiceWorkerEventTimer* timer)
+      : timer_(timer) {}
+
   ~ServiceWorkerEventCallbackMap() {
     for (auto& pair : map_)
       pair.second.Abort();
@@ -113,7 +125,7 @@ class ServiceWorkerEventCallbackMap {
     DCHECK_NE(next_id_, std::numeric_limits<int>::max());
     map_.insert(
         std::make_pair(next_id_, ServiceWorkerEventCallback<CallbackType>(
-                                     std::move(callback), args...)));
+                                     timer_, std::move(callback), args...)));
     return next_id_++;
   }
 
@@ -126,6 +138,7 @@ class ServiceWorkerEventCallbackMap {
   }
 
  private:
+  ServiceWorkerEventTimer* timer_;
   int next_id_ = 0;
   std::unordered_map<int /* id */, ServiceWorkerEventCallback<CallbackType>>
       map_;
@@ -136,7 +149,9 @@ class ServiceWorkerEventCallbackMap {
 template <typename CallbackType, typename ResponseInterfacePtr>
 class ServiceWorkerEventCallbackWithResponseMap {
  public:
-  ServiceWorkerEventCallbackWithResponseMap() = default;
+  ServiceWorkerEventCallbackWithResponseMap(ServiceWorkerEventTimer* timer)
+      : timer_(timer) {}
+
   ~ServiceWorkerEventCallbackWithResponseMap() {
     for (auto& pair : map_)
       pair.second.Abort();
@@ -148,10 +163,10 @@ class ServiceWorkerEventCallbackWithResponseMap {
           AbortArgs... args) {
     DCHECK_NE(next_id_, std::numeric_limits<int>::max());
     map_.insert(std::make_pair(
-        next_id_,
-        ServiceWorkerEventCallbackWithResponse<CallbackType,
-                                               ResponseInterfacePtr>(
-            std::move(callback), std::move(response_interface_ptr), args...)));
+        next_id_, ServiceWorkerEventCallbackWithResponse<CallbackType,
+                                                         ResponseInterfacePtr>(
+                      timer_, std::move(callback),
+                      std::move(response_interface_ptr), args...)));
     return next_id_++;
   }
 
@@ -170,6 +185,7 @@ class ServiceWorkerEventCallbackWithResponseMap {
   }
 
  private:
+  ServiceWorkerEventTimer* timer_;
   int next_id_ = 0;
   std::unordered_map<
       int /* id */,
