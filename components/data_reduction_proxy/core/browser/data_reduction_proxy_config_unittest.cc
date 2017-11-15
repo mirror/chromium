@@ -288,17 +288,18 @@ TEST_F(DataReductionProxyConfigTest,
             GetConfiguredProxiesForHttp());
 
   // Calling OnInsecureProxyWarmupURLProbeStatusChange should reload the config.
-  config()->OnInsecureProxyWarmupURLProbeStatusChange(false);
+  config()->OnInsecureProxyWarmupURLProbeStatusChange(
+      false /* insecure_proxies_allowed */, false /* is_core_proxy */);
   EXPECT_EQ(std::vector<net::ProxyServer>({kHttpsProxy}),
             GetConfiguredProxiesForHttp());
 
   // Calling OnInsecureProxyWarmupURLProbeStatusChange again with the same
   // status has no effect.
-  config()->OnInsecureProxyWarmupURLProbeStatusChange(false);
+  config()->OnInsecureProxyWarmupURLProbeStatusChange(false, false);
   EXPECT_EQ(std::vector<net::ProxyServer>({kHttpsProxy}),
             GetConfiguredProxiesForHttp());
 
-  config()->OnInsecureProxyWarmupURLProbeStatusChange(true);
+  config()->OnInsecureProxyWarmupURLProbeStatusChange(true, false);
   EXPECT_EQ(std::vector<net::ProxyServer>({kHttpsProxy, kHttpProxy}),
             GetConfiguredProxiesForHttp());
 }

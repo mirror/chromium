@@ -17,6 +17,7 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_configurator.h"
+#include "components/data_reduction_proxy/core/browser/network_properties_manager.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_event_creator.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params_test_utils.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_server.h"
@@ -217,6 +218,7 @@ TEST_F(DataReductionProxyEventStoreTest, TestEndSecureProxyCheckFailed) {
 }
 
 TEST_F(DataReductionProxyEventStoreTest, TestFeedbackMethods) {
+  NetworkPropertiesManager manager;
   DataReductionProxyConfigurator configurator(net_log(), event_creator());
   EXPECT_EQ(std::string(), event_store()->GetHttpProxyList());
   EXPECT_EQ(std::string(), event_store()->SanitizedLastBypassEvent());
@@ -230,7 +232,7 @@ TEST_F(DataReductionProxyEventStoreTest, TestFeedbackMethods) {
       net::ProxyServer(net::ProxyServer::SCHEME_HTTPS,
                        net::HostPortPair("bar.com", 443)),
       ProxyServer::CORE));
-  configurator.Enable(false, false, http_proxies);
+  configurator.Enable(manager, http_proxies);
   EXPECT_EQ("foo.com:80;https://bar.com:443",
             event_store()->GetHttpProxyList());
 
@@ -239,9 +241,10 @@ TEST_F(DataReductionProxyEventStoreTest, TestFeedbackMethods) {
 }
 
 TEST_F(DataReductionProxyEventStoreTest, TestFeedbackLastBypassEventFullURL) {
+  NetworkPropertiesManager manager;
   DataReductionProxyConfigurator configurator(net_log(), event_creator());
   std::vector<DataReductionProxyServer> http_proxies;
-  configurator.Enable(false, false, http_proxies);
+  configurator.Enable(manager, http_proxies);
 
   std::unique_ptr<base::DictionaryValue> bypass_event(
       new base::DictionaryValue());
@@ -272,9 +275,10 @@ TEST_F(DataReductionProxyEventStoreTest, TestFeedbackLastBypassEventFullURL) {
 }
 
 TEST_F(DataReductionProxyEventStoreTest, TestFeedbackLastBypassEventHostOnly) {
+  NetworkPropertiesManager manager;
   DataReductionProxyConfigurator configurator(net_log(), event_creator());
   std::vector<DataReductionProxyServer> http_proxies;
-  configurator.Enable(false, false, http_proxies);
+  configurator.Enable(manager, http_proxies);
 
   std::unique_ptr<base::DictionaryValue> bypass_event(
       new base::DictionaryValue());
