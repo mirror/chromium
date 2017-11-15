@@ -38,6 +38,7 @@ component("keyboard") {
 
   deps = [
     "//base",
+    "//services/metrics/public/cpp:ukm_builders",
     "//ui/aura",
     "//ui/base",
     "//ui/base/ime",
@@ -163,6 +164,7 @@ test("keyboard_unittests") {
     ":test_support",
     "//base",
     "//base/test:test_support",
+    "//components/ukm:test_support",
     "//mojo/edk/system",
     "//testing/gtest",
     "//ui/aura:test_support",

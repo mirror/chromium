@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_delegate.h"
@@ -35,6 +36,7 @@
 #include "ui/keyboard/keyboard_ui.h"
 #include "ui/keyboard/keyboard_util.h"
 #include "ui/wm/core/window_animations.h"
+#include "url/gurl.h"
 
 #if defined(OS_CHROMEOS)
 #include "ui/ozone/public/input_controller.h"
@@ -741,6 +743,18 @@ void KeyboardController::SetContainerType(const ContainerType type) {
     HideKeyboard(HIDE_REASON_AUTOMATIC);
   } else {
     SetContainerBehaviorInternal(type);
+  }
+}
+
+void KeyboardController::RecordUkm(const GURL& url,
+                                   const ui::TextInputClient* client) {
+  if (IsKeyboardEnabled()) {
+    auto* recorder = ukm::UkmRecorder::Get();
+    auto source_id = ukm::UkmRecorder::GetNewSourceID();
+    recorder->UpdateSourceURL(source_id, url);
+    ukm::builders::VirtualKeyboard_Open(source_id)
+        .SetTextInputType(client->GetTextInputType())
+        .Record(recorder);
   }
 }
 

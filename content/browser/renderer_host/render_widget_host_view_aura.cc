@@ -57,6 +57,7 @@
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/overscroll_configuration.h"
 #include "content/public/browser/render_view_host.h"
+#include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
 #include "gpu/ipc/common/gpu_messages.h"
 #include "media/base/video_frame.h"
@@ -98,6 +99,7 @@
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/skia_util.h"
+#include "ui/keyboard/keyboard_controller.h"
 #include "ui/touch_selection/touch_selection_controller.h"
 #include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/public/activation_client.h"
@@ -2386,6 +2388,14 @@ void RenderWidgetHostViewAura::OnUpdateTextInputStateCalled(
   if (state && state->show_ime_if_needed &&
       GetInputMethod()->GetTextInputClient() == this) {
     GetInputMethod()->ShowImeIfNeeded();
+
+#if defined(OS_CHROMEOS)
+    auto* web_contents =
+        WebContents::FromRenderViewHost(RenderViewHost::From(host_));
+    GURL url = web_contents->GetVisibleURL();
+    keyboard::KeyboardController::GetInstance()->RecordUkm(
+        web_contents->GetVisibleURL(), this);
+#endif
   }
 
   if (auto* render_widget_host =

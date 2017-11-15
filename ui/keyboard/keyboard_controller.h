@@ -162,6 +162,9 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // the ContainerBehavior change is synchronous.
   void SetContainerType(const ContainerType type);
 
+  // Record a UKM entry for virtual keyboard usage.
+  void RecordUkm(const GURL& url, const ui::TextInputClient* client);
+
  private:
   // For access to Observer methods for simulation.
   friend class KeyboardControllerTest;

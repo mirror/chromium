@@ -12,6 +12,7 @@
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
+#include "components/ukm/test_ukm_recorder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/aura/client/focus_client.h"
 #include "ui/aura/test/aura_test_helper.h"
@@ -35,6 +36,7 @@
 #include "ui/keyboard/keyboard_ui.h"
 #include "ui/keyboard/keyboard_util.h"
 #include "ui/wm/core/default_activation_client.h"
+#include "url/gurl.h"
 
 #if defined(USE_OZONE)
 #include "ui/ozone/public/ozone_platform.h"
@@ -732,6 +734,30 @@ TEST_F(KeyboardControllerTest, DisplayChangeShouldNotifyBoundsChange) {
   EXPECT_EQ(3, visible_bounds_number_of_calls());
   EXPECT_EQ(3, occluding_bounds_number_of_calls());
   EXPECT_EQ(3, is_available_number_of_calls());
+}
+
+TEST_F(KeyboardControllerTest, RecordUkm) {
+  ScopedTouchKeyboardEnabler scoped_keyboard_enabler;
+  ukm::TestAutoSetUkmRecorder recorder;
+  ui::DummyTextInputClient input_client_none(ui::TEXT_INPUT_TYPE_NONE);
+  ui::DummyTextInputClient input_client_text(ui::TEXT_INPUT_TYPE_TEXT);
+  GURL url("chrome://flags");
+
+  recorder.Purge();
+  recorder.EnableRecording();
+  ASSERT_EQ(0u, recorder.entries_count());
+  controller()->RecordUkm(url, &input_client_none);
+  EXPECT_EQ(1u, recorder.sources_count());
+  EXPECT_EQ(1u, recorder.entries_count());
+  auto* source = recorder.GetSourceForUrl(url);
+  recorder.ExpectMetric(*source, "VirtualKeyboard.Open", "TextInputType",
+                        ui::TEXT_INPUT_TYPE_NONE);
+
+  recorder.Purge();
+  controller()->RecordUkm(url, &input_client_text);
+  source = recorder.GetSourceForUrl(url);
+  recorder.ExpectMetric(*source, "VirtualKeyboard.Open", "TextInputType",
+                        ui::TEXT_INPUT_TYPE_TEXT);
 }
 
 }  // namespace keyboard
