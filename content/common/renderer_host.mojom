@@ -17,4 +17,8 @@ interface RendererHost {
   // switches::kDomAutomationController.
   [Sync]
   GetBrowserHistogram(string name) => (string histogram_json);
+
+  // Request a child_control.Shutdown message to be sent to the renderer. This
+  // may not initiate a shutdown sequence in some cases.
+  ShutdownRequest();
 };
