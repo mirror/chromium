@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "b4d9f3b9_60ae7616",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-15T17:51:34Z",
+      "side": 1,
+      "message": "I see WebGL task type in the dictionary. Can WebAudio have TaskType::WebAudio?\n\nI believe the refresh rate of video spans 30~90fps with the sweet spot of 60fps (~16ms), but WebAudio\u0027s callback needs to support \u003c3ms. The task being posted usually are supposed to happen in the \"render quantum boundary\", it has roughly 3ms of interval when the sample rate is 44.1Khz.",
+      "parentUuid": "d155f3ad_7c34d8f9",
+      "range": {
+        "startLine": 57,
+        "startChar": 56,
+        "endLine": 57,
+        "endChar": 78
+      },
+      "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4c121be_88648f1e",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 2
