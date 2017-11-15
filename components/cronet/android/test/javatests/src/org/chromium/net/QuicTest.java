@@ -21,7 +21,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.Log;
-import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
@@ -151,7 +150,6 @@ public class QuicTest {
     }
 
     // Returns whether a file contains a particular string.
-    @SuppressFBWarnings("OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE")
     private boolean fileContainsString(String filename, String content) throws IOException {
         File file = new File(getTestStorage(getContext()) + "/prefs/" + filename);
         FileInputStream fileInputStream = new FileInputStream(file);
@@ -168,7 +166,6 @@ public class QuicTest {
     @LargeTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
-    @SuppressWarnings("deprecation")
     public void testNQEWithQuic() throws Exception {
         ExperimentalCronetEngine cronetEngine = mBuilder.build();
         String quicURL = QuicTestServer.getServerURL() + "/simple.txt";
