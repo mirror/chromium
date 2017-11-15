@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db44c2e5_143f8454",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T00:06:12Z",
+      "side": 1,
+      "message": "Don\u0027t use a property for this, add a method:\n\nshowImportOrExportPasswords_(showExportPasswords, showImportPasswords)\n\nAnd in the HTML:\n\n[[\"showImportOrExportPasswords_(showExportPasswords_, showImportPasswords_)\"]]",
+      "revId": "0a80633c5987233478c0ec139ce7c21de4b62d12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
