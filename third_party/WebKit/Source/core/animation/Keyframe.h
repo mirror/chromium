@@ -6,6 +6,7 @@
 #define Keyframe_h
 
 #include "base/memory/scoped_refptr.h"
+#include "bindings/core/v8/V8ObjectBuilder.h"
 #include "core/CoreExport.h"
 #include "core/animation/AnimationEffectReadOnly.h"
 #include "core/animation/EffectModel.h"
@@ -21,6 +22,7 @@ using PropertyHandleSet = HashSet<PropertyHandle>;
 
 class Element;
 class ComputedStyle;
+class ScriptState;
 
 // A base class representing an animation keyframe.
 //
@@ -100,6 +102,12 @@ class CORE_EXPORT Keyframe : public RefCounted<Keyframe> {
     the_clone->SetOffset(offset);
     return the_clone;
   }
+
+  // Creates a javascript object representation of this Keyframe.
+  //
+  // The base class implementation handles the basic properties; subclasses
+  // should override this to add the (property, value) pairs they support.
+  virtual V8ObjectBuilder GetKeyframeJavascriptObject(ScriptState*) const;
 
   virtual bool IsStringKeyframe() const { return false; }
   virtual bool IsTransitionKeyframe() const { return false; }

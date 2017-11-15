@@ -5,10 +5,12 @@
 #include "core/animation/StringKeyframe.h"
 
 #include "core/StylePropertyShorthand.h"
+#include "core/animation/AnimationInputHelpers.h"
 #include "core/animation/css/CSSAnimations.h"
 #include "core/css/CSSCustomPropertyDeclaration.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/svg/SVGElement.h"
+#include "platform/bindings/ScriptState.h"
 
 namespace blink {
 
@@ -92,6 +94,32 @@ PropertyHandleSet StringKeyframe::Properties() const {
     properties.insert(PropertyHandle(*key));
 
   return properties;
+}
+
+V8ObjectBuilder StringKeyframe::GetKeyframeJavascriptObject(
+    ScriptState* script_state) const {
+  V8ObjectBuilder object_builder =
+      Keyframe::GetKeyframeJavascriptObject(script_state);
+
+  for (const auto& property : Properties()) {
+    String property_name =
+        AnimationInputHelpers::PropertyHandleToKeyframeAttribute(property);
+
+    String value;
+    if (property.IsCSSProperty()) {
+      value = CssPropertyValue(property).CssText();
+    } else if (property.IsPresentationAttribute()) {
+      const auto& attribute = property.PresentationAttribute();
+      value = PresentationAttributeValue(attribute).CssText();
+    } else {
+      DCHECK(property.IsSVGAttribute());
+      value = SvgPropertyValue(property.SvgAttribute());
+    }
+
+    object_builder.Add(property_name, value);
+  }
+
+  return object_builder;
 }
 
 scoped_refptr<Keyframe> StringKeyframe::Clone() const {
