@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba23fc6f_88665ed3",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-15T02:34:17Z",
+      "side": 1,
+      "message": "How does break-word look in this case? does break-all look better?",
+      "revId": "e92240af89e312602a9d389c75580fb7f6113cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
