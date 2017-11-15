@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2e6ed745_01e4a229",
+        "filename": "chrome/browser/generic_sensor/sensor_permission_context.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T17:51:17Z",
+      "side": 1,
+      "message": "Issue 598674 tracks making a decision on whether or not to block sensors for cross-origin iframes. That would require an intent to remove. This is why we are logging cross-origin access at the moment. Until that decision we need to continue to allow it.",
+      "parentUuid": "bb4883df_4ff76118",
+      "revId": "431cd05465745a5b97c0382be1539bfadd51d68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3679b3c6_0db2b5fd",
         "filename": "content/test/data/generic_sensor/ambient_light_sensor_cross_origin_iframe_test.html",
         "patchSetId": 16
