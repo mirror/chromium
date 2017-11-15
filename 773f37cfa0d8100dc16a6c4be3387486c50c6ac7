@@ -16,6 +16,24 @@
       "revId": "773f37cfa0d8100dc16a6c4be3387486c50c6ac7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88620f9d_0b6e28a8",
+        "filename": "content/test/test_render_frame_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-15T18:30:38Z",
+      "side": 1,
+      "message": "Done. Had to add this method as virtual to render_frame_host_impl since it wasn\u0027t.",
+      "parentUuid": "12e315c6_79fc4d33",
+      "revId": "773f37cfa0d8100dc16a6c4be3387486c50c6ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
