@@ -34,6 +34,24 @@
       "revId": "3633209e1d0e1e725d48f549512592c76c27276d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9af925e_2553a382",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T16:36:53Z",
+      "side": 1,
+      "message": "Thank you for bringing this up! I didn\u0027t read the renames carefully.\n\nI think we should either move the tests to WPT or leave the dirname as-is. (LayoutTest directory names have no rules, so the current name does not break any rule.)\n\nWe\u0027ll need to do the former at some point anyway, so might as well use this CL for it. Also, I think we need \".tentative\" on all files for WPT.",
+      "parentUuid": "e12678e7_7e207638",
+      "revId": "3633209e1d0e1e725d48f549512592c76c27276d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
