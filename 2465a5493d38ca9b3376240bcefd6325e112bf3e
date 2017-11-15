@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17a4ad9e_d4fb9938",
+        "filename": "chrome/browser/ui/browser_command_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-15T04:46:49Z",
+      "side": 0,
+      "message": "Do you think this test wanted this particular order (delete the profile created first before the second)?",
+      "range": {
+        "startLine": 217,
+        "startChar": 26,
+        "endLine": 217,
+        "endChar": 46
+      },
+      "revId": "2465a5493d38ca9b3376240bcefd6325e112bf3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
