@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "490cbc5e_9122d919",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-15T17:55:52Z",
+      "side": 1,
+      "message": "Okay- will switch this to GetProviderService",
+      "parentUuid": "cdf2196a_e40e28f3",
+      "range": {
+        "startLine": 41,
+        "startChar": 21,
+        "endLine": 41,
+        "endChar": 34
+      },
+      "revId": "ce74812adc5a958fdadf715ce61c12df370c0d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4e72a7d_f9240621",
         "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-15T01:34:43Z",
       "side": 1,
       "message": "tiny nit: SMB",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 18
+      },
+      "revId": "ce74812adc5a958fdadf715ce61c12df370c0d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1d12ebb_915fd4a4",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-15T17:55:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4e72a7d_f9240621",
       "range": {
         "startLine": 23,
         "startChar": 15,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1e1fb4ad_9a0caac8",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-15T17:55:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e31b8c43_bbd0a486",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "ce74812adc5a958fdadf715ce61c12df370c0d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bae703d2_fd3dd532",
         "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-15T01:25:10Z",
       "side": 1,
       "message": "Not used?",
+      "range": {
+        "startLine": 13,
+        "startChar": 55,
+        "endLine": 13,
+        "endChar": 71
+      },
+      "revId": "ce74812adc5a958fdadf715ce61c12df370c0d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50efb525_73b4d459",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-15T17:55:52Z",
+      "side": 1,
+      "message": "Will remove for now - will be used when test for mounting is added.",
+      "parentUuid": "bae703d2_fd3dd532",
       "range": {
         "startLine": 13,
         "startChar": 55,
