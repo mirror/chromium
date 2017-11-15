@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e27a7c4d_c3b672d4",
+        "filename": "ui/webui/resources/cr_elements/cr_drawer/cr_drawer.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T02:31:56Z",
+      "side": 1,
+      "message": "Per offline discussion, let\u0027s change this to break-word, because it makes the normal font size for languages with  longer strings (Greek, German for example) to look same as currently on ToT, which is a bit nicer.",
+      "range": {
+        "startLine": 26,
+        "startChar": 26,
+        "endLine": 26,
+        "endChar": 29
+      },
+      "revId": "d681b847f87ad2e0a47a0471b0e5be426997e441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
