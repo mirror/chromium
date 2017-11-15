@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb693ad5_9dce4e8f",
+        "filename": "gin/v8_background_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T21:13:38Z",
+      "side": 1,
+      "message": "Use base::BindOnce whenever possible https://chromium.googlesource.com/chromium/src/+/lkcr/docs/callback.md#oncecallback_and-repeatingcallback",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e1eb21d_c4aab079",
+        "filename": "gin/v8_background_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T21:13:38Z",
+      "side": 1,
+      "message": "std::move(task)",
+      "range": {
+        "startLine": 27,
+        "startChar": 33,
+        "endLine": 27,
+        "endChar": 60
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e2c194_82c0cb1f",
+        "filename": "gin/v8_background_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T21:13:38Z",
+      "side": 1,
+      "message": "Use base::BindOnce whenever possible https://chromium.googlesource.com/chromium/src/+/lkcr/docs/callback.md#oncecallback_and-repeatingcallback",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 16
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f1c91d_ce42598f",
+        "filename": "gin/v8_background_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T21:13:38Z",
+      "side": 1,
+      "message": "std::move(task)",
+      "range": {
+        "startLine": 34,
+        "startChar": 33,
+        "endLine": 34,
+        "endChar": 60
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4a2521_0ce6180d",
+        "filename": "gin/v8_background_task_runner.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T21:13:38Z",
+      "side": 1,
+      "message": "Can we comment that this always returns a value greater than zero, to avoid uses cases like this https://cs.chromium.org/chromium/src/v8/src/wasm/module-compiler.cc?l\u003d1498\u0026rcl\u003d0e92750fddea9014587091768ac77745d0664bec ?\n\nAlso, can we comment that it is recommended to send every work item to the TaskRunner rather than having a custom queue from which tasks sent to the TaskRunner get work? https://cs.chromium.org/chromium/src/v8/src/compiler-dispatcher/compiler-dispatcher.cc?l\u003d501\u0026rcl\u003d0e92750fddea9014587091768ac77745d0664bec and https://cs.chromium.org/chromium/src/v8/src/compiler-dispatcher/compiler-dispatcher.cc?l\u003d512\u0026rcl\u003d0e92750fddea9014587091768ac77745d0664bec\n\nLong term, I\u0027d like to remove this method.",
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ff9257_2f60f188",
+        "filename": "gin/v8_foreground_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T21:13:38Z",
+      "side": 1,
+      "message": "std::move(task_runner) avoids a ref-count bump\n\nDiscussion: https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/TlL1D-Djta0/discussion",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b06a97_6b2409e1",
+        "filename": "gin/v8_foreground_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T21:13:38Z",
+      "side": 1,
+      "message": "Use base::BindOnce whenever possible https://chromium.googlesource.com/chromium/src/+/lkcr/docs/callback.md#oncecallback_and-repeatingcallback",
+      "range": {
+        "startLine": 24,
+        "startChar": 17,
+        "endLine": 24,
+        "endChar": 27
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538cf754_08964fd5",
+        "filename": "gin/v8_foreground_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T21:13:38Z",
+      "side": 1,
+      "message": "std::move(task)",
+      "range": {
+        "startLine": 24,
+        "startChar": 44,
+        "endLine": 24,
+        "endChar": 72
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a45bc1_61ef815b",
+        "filename": "gin/v8_foreground_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T21:13:38Z",
+      "side": 1,
+      "message": "Use base::BindOnce whenever possible https://chromium.googlesource.com/chromium/src/+/lkcr/docs/callback.md#oncecallback_and-repeatingcallback",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 27
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392a55b2_0cf86e7d",
+        "filename": "gin/v8_foreground_task_runner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T21:13:38Z",
+      "side": 1,
+      "message": "std::move(task)",
+      "range": {
+        "startLine": 30,
+        "startChar": 44,
+        "endLine": 30,
+        "endChar": 71
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b986059e_0608f7b1",
+        "filename": "gin/v8_foreground_task_runner_with_locker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T21:13:38Z",
+      "side": 1,
+      "message": "std::move(task_runner) avoids a ref-count bump",
+      "range": {
+        "startLine": 18,
+        "startChar": 38,
+        "endLine": 18,
+        "endChar": 49
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb60254_999d05e8",
+        "filename": "gin/v8_foreground_task_runner_with_locker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T21:13:38Z",
+      "side": 1,
+      "message": "DCHECK(task_runner_);",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 40
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088aa587_6c399b46",
+        "filename": "gin/v8_foreground_task_runner_with_locker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T21:13:38Z",
+      "side": 1,
+      "message": "base::BindOnce",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 16
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00719afa_2f89fe0c",
+        "filename": "gin/v8_foreground_task_runner_with_locker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T21:13:38Z",
+      "side": 1,
+      "message": "std::move(task)",
+      "range": {
+        "startLine": 66,
+        "startChar": 17,
+        "endLine": 66,
+        "endChar": 44
+      },
+      "revId": "8ad1cc046388db2b7333d2270364aebac2e0bba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
