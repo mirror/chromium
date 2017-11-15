@@ -34,6 +34,24 @@
       "revId": "68f3885ccd11305478f546b46d5ea6d8837301f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ff52619_2d8678ef",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-15T18:47:08Z",
+      "side": 1,
+      "message": "I thought it\u0027d be a slightly better temporary solution than the callback.\nBut I see you already have follow up CLs to address the TODO, so LGTM.",
+      "parentUuid": "51e3e94e_b570fef4",
+      "revId": "68f3885ccd11305478f546b46d5ea6d8837301f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
