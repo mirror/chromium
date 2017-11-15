@@ -123,6 +123,24 @@
       "revId": "85cd8294de19498ddf0fc75b6a457476af39d68d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d070218_6d60e7bb",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-15T02:50:03Z",
+      "side": 1,
+      "message": "Or they wanted to maintain whatever invariant CopyOldMatches() guaranteed. But the data here does seem like it\u0027s on a one-way trip.\n\nI can try a few unit tests tomorrow; see what breaks.",
+      "parentUuid": "b253d0cd_5b9ab44d",
+      "revId": "85cd8294de19498ddf0fc75b6a457476af39d68d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
