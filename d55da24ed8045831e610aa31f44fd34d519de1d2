@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "48c40c25_7f985091",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-15T23:29:17Z",
+      "side": 1,
+      "message": "\u003e Done\n\nSorry I wasn\u0027t clear. I meant CHECK. We assume that there is at most one internal display, and if there is more, then a lot of things can go wrong,\nand it\u0027s better to fail and catch error such board.",
+      "parentUuid": "b78a7830_8be42f03",
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d9033d3_ecfbf35a",
         "filename": "ui/display/manager/chromeos/display_configurator.cc",
         "patchSetId": 5
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "The old code also checks whether the display has native mode:\nhttps://cs.chromium.org/chromium/src/ui/display/manager/chromeos/display_configurator.cc?q\u003ddisplay_configurator.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d377",
       "parentUuid": "0d9033d3_ecfbf35a",
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca49015_dfb46b42",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-15T23:29:17Z",
+      "side": 1,
+      "message": "can you check if this condition can still happen?",
+      "parentUuid": "235043a3_ce5d71fe",
       "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -186,6 +222,30 @@
       "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe013add_78769ace",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-15T23:29:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b42d0b2c_8b5b3cde",
+      "range": {
+        "startLine": 425,
+        "startChar": 31,
+        "endLine": 425,
+        "endChar": 48
+      },
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
