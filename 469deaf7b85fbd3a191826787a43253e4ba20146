@@ -288,6 +288,30 @@
     },
     {
       "key": {
+        "uuid": "55923753_d47aed1e",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-15T23:09:40Z",
+      "side": 1,
+      "message": "Done (ish). I\u0027ve changed prefix from cr_ to Cronet_ but kept the underscore to visually separate namespace / prefix. I\u0027ve also removed explicit Cronet from CronetEngine and CronetException,",
+      "parentUuid": "fcf5b534_e264355d",
+      "range": {
+        "startLine": 177,
+        "startChar": 40,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79bf3e6c_9662c14b",
         "filename": "components/cronet/native/cronet.idl_c.h",
         "patchSetId": 36
@@ -443,6 +467,30 @@
       "side": 1,
       "message": "Can we rename CreateStub to Create for abstract classes?",
       "parentUuid": "ea3029ed_4cdbaa47",
+      "range": {
+        "startLine": 202,
+        "startChar": 50,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147a00a3_6fe03dd6",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-15T23:09:40Z",
+      "side": 1,
+      "message": "We definitely could, but I\u0027d like to prototype a little more to see what usage patterns emerge. My concern is that C doesn\u0027t allow functions with same name but different parameters.",
+      "parentUuid": "5e39ed06_d2a75437",
       "range": {
         "startLine": 202,
         "startChar": 50,

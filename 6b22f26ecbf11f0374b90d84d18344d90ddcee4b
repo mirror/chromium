@@ -45,6 +45,30 @@
       "revId": "6b22f26ecbf11f0374b90d84d18344d90ddcee4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae2f549_b3c477f9",
+        "filename": "components/cronet/native/generated/cronet.idl_c.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-15T23:09:40Z",
+      "side": 1,
+      "message": "I\u0027ve added methods SetContext / GetContext to all interfaces, concrete and abstract. \nI wonder whether we should have those on structs as well.\n\nI think we also need to allow app to set OnDestroy() callback on all interfaces, so it could free resources if any are associated with that object. WDYT?",
+      "parentUuid": "05b5a790_9bca502b",
+      "range": {
+        "startLine": 162,
+        "startChar": 75,
+        "endLine": 162,
+        "endChar": 0
+      },
+      "revId": "6b22f26ecbf11f0374b90d84d18344d90ddcee4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
