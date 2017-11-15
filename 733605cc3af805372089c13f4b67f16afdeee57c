@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2600d9a3_91895311",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 5291,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T23:43:35Z",
+      "side": 1,
+      "message": "nit: ...that wants to read data from the system clipboard...",
+      "revId": "733605cc3af805372089c13f4b67f16afdeee57c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfc196bc_7fcb9b79",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 5295,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T23:43:35Z",
+      "side": 1,
+      "message": "nit: ...whenever a URL wants to read data from the system clipboard.",
+      "revId": "733605cc3af805372089c13f4b67f16afdeee57c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c74e02_7b4da07a",
+        "filename": "chrome/browser/clipboard/clipboard_write_permission_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T23:43:35Z",
+      "side": 1,
+      "message": "nit: probably missing a few #includes here for CONTENT_SETTINGS_TYPE_CLIPBOARD_WRITE blink::FeaturePolicyFeature::kNotFound and CONTENT_SETTING_ALLOW. Same for the other permission context",
+      "revId": "733605cc3af805372089c13f4b67f16afdeee57c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e91f4a3_65367451",
+        "filename": "chrome/browser/permissions/permission_request_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T23:43:35Z",
+      "side": 1,
+      "message": "nit: I think this should be CLIPBOARD_READ now or it won\u0027t compile?",
+      "revId": "733605cc3af805372089c13f4b67f16afdeee57c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8626616d_94e0e761",
+        "filename": "chrome/browser/permissions/permission_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T23:43:35Z",
+      "side": 1,
+      "message": "nit: ClipboardRead might be better here",
+      "revId": "733605cc3af805372089c13f4b67f16afdeee57c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f3279f_da9df435",
+        "filename": "chrome/browser/permissions/permission_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T23:43:35Z",
+      "side": 1,
+      "message": "nit: this won\u0027t be needed (for write)",
+      "revId": "733605cc3af805372089c13f4b67f16afdeee57c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f545f8_1dd9cabb",
+        "filename": "chrome/browser/permissions/permission_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T23:43:35Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this is needed either (for write)",
+      "revId": "733605cc3af805372089c13f4b67f16afdeee57c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed485b8_cebe1b10",
+        "filename": "chrome/browser/permissions/permission_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T23:43:35Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed either (for write)",
+      "revId": "733605cc3af805372089c13f4b67f16afdeee57c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "706dad7c_a4dd6635",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T23:43:35Z",
+      "side": 1,
+      "message": "I this needed (for write)?",
+      "revId": "733605cc3af805372089c13f4b67f16afdeee57c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
