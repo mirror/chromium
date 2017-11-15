@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "7e85d68b_1237d329",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-15T18:54:20Z",
+      "side": 1,
+      "message": "That\u0027s fine. I don\u0027t have a problem with writing a description other than I don\u0027t completely understand the intent of the method (which doesn\u0027t make a lot of sense to me).",
+      "parentUuid": "62701c61_e3d8943a",
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68556685_250b1cb6",
         "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
         "patchSetId": 6

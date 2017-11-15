@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f1ec755d_6e705455",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-15T18:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10c8d4e6_6bce3ef2",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "31b6c3f663f5141262febab31ddca6dd4f8dcd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a263f107_0f8f641d",
         "filename": "chrome/browser/ui/cocoa/color_chooser_mac.h",
         "patchSetId": 7
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "b3a8a7a9_75f4912e",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-15T18:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a263f107_0f8f641d",
+      "revId": "31b6c3f663f5141262febab31ddca6dd4f8dcd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59618610_142f8e8b",
         "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
         "patchSetId": 7
@@ -56,6 +98,24 @@
       "revId": "31b6c3f663f5141262febab31ddca6dd4f8dcd27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c45fcf_4929805a",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-15T18:54:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "59618610_142f8e8b",
+      "revId": "31b6c3f663f5141262febab31ddca6dd4f8dcd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "7032dde3_fc3d4500",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-15T18:54:20Z",
+      "side": 1,
+      "message": "The _EQ template doesn\u0027t like these spots because one object is of type \"id\" and the other is a concrete ObjC class. I could use _EQ by type casting but that seems a little ugly?",
+      "parentUuid": "6d555158_39060ec1",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 13
+      },
+      "revId": "31b6c3f663f5141262febab31ddca6dd4f8dcd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20692194_e5a2ae1d",
         "filename": "ui/gfx/test/ui_cocoa_test_helper.mm",
         "patchSetId": 7
@@ -96,6 +180,24 @@
       "revId": "31b6c3f663f5141262febab31ddca6dd4f8dcd27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a3bb3f_28937559",
+        "filename": "ui/gfx/test/ui_cocoa_test_helper.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-15T18:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20692194_e5a2ae1d",
+      "revId": "31b6c3f663f5141262febab31ddca6dd4f8dcd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
