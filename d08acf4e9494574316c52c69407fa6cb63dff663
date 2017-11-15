@@ -399,6 +399,24 @@
     },
     {
       "key": {
+        "uuid": "d75ce7cf_3eae704b",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T01:19:40Z",
+      "side": 1,
+      "message": "if new device types are released in the future, the DeviceType enum will presumably be updated to include them.",
+      "parentUuid": "b964effb_12356f33",
+      "revId": "d08acf4e9494574316c52c69407fa6cb63dff663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "283e71b4_890960f1",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_event.proto",
         "patchSetId": 4
