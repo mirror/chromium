@@ -46,6 +46,30 @@
       "revId": "20b2057d68d1a7af744cdcea6b20c8c25b30f07d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbdc05a_c10935b8",
+        "filename": "chrome/browser/sessions/tab_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-15T04:16:00Z",
+      "side": 1,
+      "message": "Can you please name the function to better match your description? Additionally that description doesn\u0027t seem specific to a WebContents but rather global state? Or am I misunderstanding?\n\nRather than adding the early out here, you should not register for the notification if enabled.",
+      "parentUuid": "994c61db_b734f663",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "20b2057d68d1a7af744cdcea6b20c8c25b30f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
