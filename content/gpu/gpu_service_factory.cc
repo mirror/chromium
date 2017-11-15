@@ -37,7 +37,8 @@ void GpuServiceFactory::RegisterServices(ServiceMap* services) {
   info.factory =
       base::Bind(&media::CreateGpuMediaService, gpu_preferences_, task_runner_,
                  media_gpu_channel_manager_, android_overlay_factory_cb_);
-  info.use_own_thread = true;
+  info.task_runner = base::CreateSingleThreadTaskRunnerWithTraits(
+      {base::TaskPriority::USER_VISIBLE});
   services->insert(std::make_pair("media", info));
 #endif
 
