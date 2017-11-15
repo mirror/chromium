@@ -9,8 +9,11 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.metrics.RecordHistogram;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A cache for storing failed favicon loads along with a timestamp determining what point we can
@@ -19,8 +22,15 @@ import java.util.Map;
  */
 public class PartnerBookmarksCache {
     private static final String PREFERENCES_NAME = "partner_bookmarks_favicon_cache";
+    private static final long FAVICON_RETRIEVAL_TIMEOUT_MS = TimeUnit.DAYS.toMillis(30);
 
     private final SharedPreferences mSharedPreferences;
+
+    // A map storing the current values in the cache at the time of initialization.
+    private Map<String, Long> mCurrentCache;
+
+    // Stores the values that need to be persisted in the cache at the end of this session.
+    private Map<String, Long> mNewCache;
 
     public PartnerBookmarksCache(Context context) {
         this(context, PREFERENCES_NAME);
@@ -29,41 +39,96 @@ public class PartnerBookmarksCache {
     @VisibleForTesting
     PartnerBookmarksCache(Context context, String cacheName) {
         mSharedPreferences = context.getSharedPreferences(cacheName, 0);
+        init();
     }
 
     /**
      * Reads the favicon retrieval timestamp information from a cache-specific
-     * {@link SharedPreferences}.
+     * {@link SharedPreferences}. Must be called before we start retrieving favicons, or
+     * {@link #getExpiryOf} will do nothing.
      *
      * Suppressing "unchecked" because we're 100% sure we're storing only <String, Long> pairs in
      * our cache.
-     *
-     * @return A map with the favicon URLs that failed retrieval and a timestamp after which we
-     *         can retry again.
      */
     @SuppressWarnings("unchecked")
-    public Map<String, Long> read() {
-        return (Map<String, Long>) mSharedPreferences.getAll();
+    @VisibleForTesting
+    void init() {
+        mCurrentCache = (Map<String, Long>) mSharedPreferences.getAll();
+        RecordHistogram.recordCountHistogram(
+                "PartnerBookmarksCache.CacheSize", mCurrentCache.size());
+        mNewCache = new HashMap<String, Long>();
     }
 
     /**
-     * Writes the provided map into the cache's {@link SharedPreferences}.
-     * This overwrites what was previously in the cache.
-     *
-     * @param inMap The favicon/timestamps to write to cache.
+     * Writes the new map that was built as a result of the calls to {@link #onFaviconFetch} to disk
+     * in our {@link SharedPreferences}. This overwrites what was previously in the cache.
      */
-    public void write(Map<String, Long> inMap) {
-        if (inMap == null) {
-            throw new IllegalArgumentException("PartnerBookmarksCache: write() "
-                    + "input cannot be null.");
+    public void commit() {
+        assert mNewCache != null;
+
+        // Save ourselves a write to disk if the two caches are identical.
+        if ((mCurrentCache.size() == mNewCache.size())
+                && mCurrentCache.entrySet().containsAll(mNewCache.entrySet())) {
+            return;
         }
 
         Editor editor = mSharedPreferences.edit();
         editor.clear();
-        for (Map.Entry<String, Long> entry : inMap.entrySet()) {
+        for (Map.Entry<String, Long> entry : mNewCache.entrySet()) {
             editor.putLong(entry.getKey(), entry.getValue());
         }
         editor.apply();
+    }
+
+    /**
+     * Calling this with each favicon fetch URL and result builds the new output cache to be
+     * written to disk when {@link #commit} is called.
+     *
+     * @param url The page URL we attempted to fetch a favicon for.
+     * @param result The {@link FaviconFetchResult} response we got for this URL.
+     */
+    public void onFaviconFetched(String url, @FaviconFetchResult int result) {
+        assert mCurrentCache != null;
+        assert mNewCache != null;
+
+        if (result == FaviconFetchResult.FAILURE_SERVER_ERROR) {
+            mNewCache.put(url, System.currentTimeMillis() + FAVICON_RETRIEVAL_TIMEOUT_MS);
+        } else if (result != FaviconFetchResult.SUCCESS && mCurrentCache.containsKey(url)) {
+            // Keep a URL in the cache if it hasn't yet expired and we get didn't just get a
+            // success response.
+            mNewCache.put(url, getExpiryOf(url));
+        }
+    }
+
+    /**
+     * Determines, based on the contents of our cache, whether or not we should even attempt to
+     * reach out to a server to retrieve a favicon that we don't currently have cached.
+     *
+     * @param url The page URL we need a favicon for.
+     * @return Whether or not we should fetch the favicon from server if necessary.
+     */
+    public boolean shouldFetchFromServerIfNecessary(String url) {
+        Long expiryTimeMs = getExpiryOf(url);
+        return expiryTimeMs == null || System.currentTimeMillis() >= expiryTimeMs;
+    }
+
+    /**
+     * Gets the expiry time in ms of a particular URL for which we're fetching a favicon. Cached
+     * URLs that have previously failed to retrieve a favicon from a server will have a value at
+     * which point we should attempt a retrieval again, otherwise we return null for entries
+     * not in the cahce.
+     *
+     * @param url The page URL we're trying to fetch a favicon for.
+     * @return The expiry time of the favicon fetching restriction in ms if the entry exists in the
+     *         cache, otherwise null.
+     */
+    private Long getExpiryOf(String url) {
+        assert mCurrentCache != null;
+
+        if (mCurrentCache.containsKey(url)) {
+            return mCurrentCache.get(url);
+        }
+        return null;
     }
 
     /**
@@ -73,5 +138,14 @@ public class PartnerBookmarksCache {
     @VisibleForTesting
     void clearCache() {
         mSharedPreferences.edit().clear().apply();
+    }
+
+    /**
+     * @return Number of entries in the cache.
+     */
+    @VisibleForTesting
+    int numEntries() {
+        assert mCurrentCache != null;
+        return mCurrentCache.size();
     }
 }
