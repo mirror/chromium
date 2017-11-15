@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7bf0c54_956bfc20",
+        "filename": "services/video_capture/public/interfaces/device_factory.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-15T05:29:17Z",
+      "side": 1,
+      "message": "Typo: devices -\u003e device",
+      "range": {
+        "startLine": 42,
+        "startChar": 41,
+        "endLine": 42,
+        "endChar": 42
+      },
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f75013_9eec1174",
+        "filename": "services/video_capture/public/interfaces/virtual_device.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-15T05:29:17Z",
+      "side": 1,
+      "message": "After reading the implementation, I now realize a limitation of this API. Sorry, I should have realized this earlier when reviewing the interface last time.\n\nThe protocol for frame delivery from the video capture service to (potentially out-of-process) consumers is designed to allow the service to \"pre-share\" several buffers with the consumers and then reusing the same buffers to publish the frames. The reasoning behind this somewhat complicated design is not just to avoid reallocation of memory, but also to allow both producer and consumers to avoid having to do a potentially expensive operation for mapping the shared buffer to memory for each frame.\n\nThe way it is implemented now, the transport of frames from a producer into a virtual device does not support this. Instead, for each frame, the producer is currently expected to call GetFrameBuffer(), map the shared memory, fill it with data, invoke OnFrameReadyInBuffer(), and then unmap the buffer again. I think we need to make the transport protocol here the same as it is between the service and consumers. \n\nThis means the producer reservers one or several buffers, maps them to memory, and holds on to them. When it calls OnFrameReadyInBuffer() it needs to wait for an event that indicates that all consumers are finished consuming it before filling it with a new frame (and in the meantime it can use one of the other buffers).\n\nPlease let me know if that explanation made sense and ping me if you\u0027d like to discuss in more detail.",
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbfced76_32f926b8",
+        "filename": "services/video_capture/virtual_device_enabled_device_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-15T05:29:17Z",
+      "side": 1,
+      "message": "This comment seems to belong inside the if() scope below.",
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c01689_40fd9ee3",
+        "filename": "services/video_capture/virtual_device_enabled_device_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-15T05:29:17Z",
+      "side": 1,
+      "message": "So, this logic for revoking and rebinding a device that is already in use by another consumer is still duplicate with the other DeviceFactory. I failed to realize that during our last discussion about the design. I guess to avoid this duplication the virtual device support really has to be added on a level below the other DeviceFactory (as opposed to on top as we do now).\n\nAs bad as this duplication is, I am leaning towards accepting it to avoid requiring the design changes needed to move the virtual device support to the level below DeviceFactory.",
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55bc084a_abed27dd",
+        "filename": "services/video_capture/virtual_device_enabled_device_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-15T05:29:17Z",
+      "side": 1,
+      "message": "nitty nit: The prefix \"real_\" here presumes that whatever |factory| was given to the constructor somehow corresponds to \"real\" devices. That may be the case in our current usage, but this class has no business knowing or presuming that.\n\nIf we really want to convey this assumption, we should do it consistently, and also rename |device_factory_| to |real_device_factory_|.",
+      "range": {
+        "startLine": 51,
+        "startChar": 56,
+        "endLine": 51,
+        "endChar": 61
+      },
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f487e3e1_6064a5b0",
+        "filename": "services/video_capture/virtual_device_mojo_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-15T05:29:17Z",
+      "side": 1,
+      "message": "The above look like duplicates with \nhttps://cs.chromium.org/chromium/src/services/video_capture/receiver_mojo_to_media_adapter.cc?dr\u003dCSs\u0026l\u003d11\nand\nhttps://cs.chromium.org/chromium/src/media/capture/video/video_capture_device_client.cc?type\u003dcs\u0026l\u003d41\n\nPlease factor these out and reuse instead of duplicating.",
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8aecf7_852f9db6",
+        "filename": "services/video_capture/virtual_device_mojo_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-15T05:29:17Z",
+      "side": 1,
+      "message": "Do we want to emit any log message to |receiver_| here?",
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2cd93b_c7f7b954",
+        "filename": "services/video_capture/virtual_device_mojo_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-11-15T05:29:17Z",
+      "side": 1,
+      "message": "I assume this is copied from the other implementation of mojom::Device.\nFor new code, the recommendation is now to use SEQUENCE_CHECKER instead of THREAD_CHECKER unless actual thread affinity is needed (which should not be the case here).",
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
