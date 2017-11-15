@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8025fb96_2298360b",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-15T00:48:10Z",
+      "side": 1,
+      "message": "I agree with szager that this shouldn\u0027t be necessary.  Are you finding that OnResize clobbers the value set by the test?  If that\u0027s the case, why doesn\u0027t it affect the non-RLS path?",
+      "range": {
+        "startLine": 2112,
+        "startChar": 11,
+        "endLine": 2112,
+        "endChar": 35
+      },
+      "revId": "2609f0b2ffb36c379a82ab6e3bb0c7b23b1379da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318bd21c_1ba68820",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-15T00:48:10Z",
+      "side": 1,
+      "message": "I understand that we need SetNeedsLayout with RLS here, and that the non-RLS path forced synchronous layout via SetScrollbarModes.\n\nBut instead of calling PerformLayout here, could we update the test to call\n\n  view()-\u003ewebview()-\u003eUpdateAllLifecyclePhases();\n\nafter EnablePreferredSizeMode?  This should force the layout to be up to date for the preferred size check.",
+      "revId": "2609f0b2ffb36c379a82ab6e3bb0c7b23b1379da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224e111b_2c8a7e82",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-15T00:48:10Z",
+      "side": 1,
+      "message": "I think we shouldn\u0027t need to check this here, since as I mentioned on the bug we are checking it in LayoutView::CalculateScrollbarModes.",
+      "revId": "2609f0b2ffb36c379a82ab6e3bb0c7b23b1379da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
