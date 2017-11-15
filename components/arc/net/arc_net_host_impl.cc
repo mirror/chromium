@@ -101,6 +101,10 @@ arc::mojom::WiFiPtr TranslateONCWifi(const base::DictionaryValue* dict) {
   // Optional; defaults to 0.
   dict->GetInteger(onc::wifi::kSignalStrength, &wifi->signal_strength);
 
+  std::string tethering_state;
+  dict->GetString(onc::wifi::kTetheringState, &tethering_state);
+  wifi->is_tethered =
+      (tethering_state == onc::tethering_state::kTetheringConfirmedState);
   return wifi;
 }
 
@@ -377,6 +381,7 @@ ArcNetHostImpl::~ArcNetHostImpl() {
 void ArcNetHostImpl::OnInstanceReady() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
+  LOG(ERROR) << "OnInstanceReady";
   mojom::NetHostPtr host;
   binding_.Bind(MakeRequest(&host));
   auto* instance =
@@ -747,6 +752,7 @@ void ArcNetHostImpl::DefaultNetworkSuccessCallback(
 
 void ArcNetHostImpl::DefaultNetworkChanged(
     const chromeos::NetworkState* network) {
+  LOG(ERROR) << "DefaultNetworkChanged";
   // If an ARC VPN is connected, the default network will point to the
   // ARC VPN but we cannot tell ARC about that.  ARC needs to continue
   // believing that the current physical network is the default network.

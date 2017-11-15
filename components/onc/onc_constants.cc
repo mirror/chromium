@@ -236,6 +236,7 @@ const char kWEP_PSK[] = "WEP-PSK";
 const char kWPA_EAP[] = "WPA-EAP";
 const char kWPA_PSK[] = "WPA-PSK";
 const char kWPA2_PSK[] = "WPA2-PSK";
+const char kTetheringState[] = "Tethering";
 }  // namespace wifi
 
 namespace wimax {
@@ -457,5 +458,11 @@ const char kDisabled[] = "Disabled";
 const char kEnabling[] = "Enabling";
 const char kEnabled[] = "Enabled";
 }  // device_state
+
+namespace tethering_state {
+const char kTetheringNotDetectedState[] = "NotDetected";
+const char kTetheringSuspectedState[] = "Suspected";
+const char kTetheringConfirmedState[] = "Confirmed";
+}  // namespace tethering_state
 
 }  // namespace onc

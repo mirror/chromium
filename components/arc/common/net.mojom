@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Next MinVersion: 8
+// Next MinVersion: 9
 
 module arc.mojom;
 
@@ -72,6 +72,7 @@ struct WiFi {
   bool hidden_ssid;
   SecurityType security;
   int32 signal_strength;
+  [MinVersion=8] bool is_tethered;
 };
 
 [Extensible]
