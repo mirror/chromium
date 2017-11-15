@@ -42,10 +42,6 @@
 -ContentScriptApiTests/ContentScriptApiTest.CannotScriptTheNewTabPage/1
 -ContentScriptApiTests/ContentScriptApiTest.ContentScriptBlockingScriptsDontRunTwice/0
 -ContentScriptApiTests/ContentScriptApiTest.ContentScriptBlockingScriptsDontRunTwice/1
--ContentScriptApiTests/ContentScriptApiTest.ContentScriptDuplicateScriptInjection/0
--ContentScriptApiTests/ContentScriptApiTest.ContentScriptDuplicateScriptInjection/1
--ContentScriptApiTests/ContentScriptApiTest.ContentScriptExtensionAPIs/0
--ContentScriptApiTests/ContentScriptApiTest.ContentScriptExtensionAPIs/1
 -ContentVerifierTest.DotSlashPaths
 -ContentVerifierTest.FailOnDone
 -ContentVerifierTest.FailOnRead
@@ -240,7 +236,6 @@
 -ProcessManagerBrowserTest.ExtensionProcessReuse
 -ProcessManagerBrowserTest.NestedURLNavigationsToExtensionAllowed
 -ProcessMemoryMetricsEmitterTest.FetchAndEmitMetricsWithExtensions
--ProcessMemoryMetricsEmitterTest.FetchAndEmitMetricsWithExtensionsAndHostReuse
 -ProfileWindowBrowserTest.GuestClearsCookies
 -ProxySettingsApiTest.ProxyEventsInvalidProxy
 -RegisterProtocolHandlerBrowserTest.CustomHandler
@@ -337,19 +332,10 @@
 -SSLUIMITMSoftwareEnabledTest.WrongCertError_NoMITMSoftwareInterstitial
 -SSLUITest.BadCertFollowedByGoodCert
 -SSLUITestCommittedInterstitials.ErrorPage
--SSLUITestCommittedInterstitials.ErrorPage
--SSLUITest.DisplayedContentWithCertErrorsClearedOnNavigation
--SSLUITestIgnoreLocalhostCertErrors.TestNoInterstitialOnLocalhost
 -SSLUITest.TestBadHTTPSDownload
 -SSLUITest.TestHTTPSOCSPOk
 -SSLUITest.TestHTTPSOCSPRevoked
--SSLUITest.TestUnsafeContentsWithUserException
--SSLUITest.TestUnsafeImageWithUserException
--SSLUIWorkerFetchTest.TestUnsafeContentsInWorkerWithUserException/0
--SSLUIWorkerFetchTest.TestUnsafeContentsInWorkerWithUserException/1
--SSLUIWorkerFetchTest.TestUnsafeContentsInWorkerWithUserException/2
--SSLUIWorkerFetchTest.TestUnsafeContentsInWorkerWithUserException/3
--SubresourceFilterBrowserTest.FailedProvisionalLoadInMainframe
+-SSLUITestIgnoreLocalhostCertErrors.TestNoInterstitialOnLocalhost
 -SuperfishSSLUITest.NoSuperfishRecorded
 -SuperfishSSLUITest.SuperfishInterstitial
 -SuperfishSSLUITest.SuperfishInterstitialDisabled
@@ -650,7 +636,6 @@
 -RestartTest.SessionCookies
 -RestartTest.SessionStorage
 -SSLUITest.MarkBlobAsNonSecure
--SSLUITest.TestWSSInvalidCertAndGoForward
 -SSLUITestHSTS.TestInterstitialOptionsNonOverridable
 
 # crbug.com/778793
@@ -687,9 +672,6 @@
 
 # crbug.com/779153 DCHECK(browser->IsActive()) fails at GetAppMenuButton().
 -IncognitoWindowTrackerBrowserTest.ShowPromo
-
-# crbug.com/779160 BrowserView::GetBrowserViewForBrowser(browser())->tabstrip()->new_tab_button()->new_tab_promo() is nullptr.
--NewTabTrackerBrowserTest.TestShowPromo
 
 # crbug.com/779210 NOTREACHED() reached at SaveFileManager::OnSaveURL().
 -SavePageBrowserTest.SavePageBrowserTest_NonMHTML
