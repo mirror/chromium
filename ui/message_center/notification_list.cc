@@ -194,7 +194,7 @@ NotificationList::PopupNotifications NotificationList::GetPopupNotifications(
       continue;
 
     if (!ShouldShowNotificationAsPopup(*notification, blockers)) {
-      if (blocked_ids)
+      if (blocked_ids && notification->IsRead())
         blocked_ids->push_back(notification->id());
       continue;
     }

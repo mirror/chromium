@@ -13,6 +13,26 @@ using session_manager::SessionState;
 
 namespace ash {
 
+namespace {
+
+// Returns true if session state is active, there is an active user and the
+// PrefService of the active user is initialized.
+bool ShouldShowNotificationForActiveUserSession() {
+  SessionController* const session_controller =
+      Shell::Get()->session_controller();
+  if (session_controller->GetSessionState() != SessionState::ACTIVE)
+    return false;
+
+  const auto* active_user_session = session_controller->GetUserSession(0);
+  if (!active_user_session)
+    return false;
+
+  return session_controller->GetUserPrefServiceForUser(
+      active_user_session->user_info->account_id);
+}
+
+}  // namespace
+
 LoginStateNotificationBlocker::LoginStateNotificationBlocker(
     message_center::MessageCenter* message_center)
     : NotificationBlocker(message_center) {
@@ -25,7 +45,7 @@ LoginStateNotificationBlocker::~LoginStateNotificationBlocker() {
 
 bool LoginStateNotificationBlocker::ShouldShowNotification(
     const message_center::Notification& notification) const {
-  return !Shell::Get()->session_controller()->IsScreenLocked();
+  return should_show_notification_;
 }
 
 bool LoginStateNotificationBlocker::ShouldShowNotificationAsPopup(
@@ -33,11 +53,25 @@ bool LoginStateNotificationBlocker::ShouldShowNotificationAsPopup(
   if (ash::system_notifier::ShouldAlwaysShowPopups(notification.notifier_id()))
     return true;
 
-  return Shell::Get()->session_controller()->GetSessionState() ==
-         SessionState::ACTIVE;
+  return should_show_notification_;
 }
 
 void LoginStateNotificationBlocker::OnSessionStateChanged(SessionState state) {
+  CheckStateAndNotifyIfChanged();
+}
+
+void LoginStateNotificationBlocker::OnActiveUserPrefServiceChanged(
+    PrefService* pref_service) {
+  CheckStateAndNotifyIfChanged();
+}
+
+void LoginStateNotificationBlocker::CheckStateAndNotifyIfChanged() {
+  const bool new_should_show_notification =
+      ShouldShowNotificationForActiveUserSession();
+  if (new_should_show_notification == should_show_notification_)
+    return;
+
+  should_show_notification_ = new_should_show_notification;
   NotifyBlockingStateChanged();
 }
 
