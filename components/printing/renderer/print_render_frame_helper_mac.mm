@@ -28,14 +28,7 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
   if (printed_pages.empty())
     return false;
 
-  if (delegate_->UseSingleMetafile()) {
-    PrintPagesInternal(print_params, printed_pages, page_count, frame);
-    return true;
-  }
-
-  for (int page_number : printed_pages)
-    PrintPagesInternal(print_params, std::vector<int>{page_number}, page_count,
-                       frame);
+  PrintPagesInternal(print_params, printed_pages, page_count, frame);
   return true;
 }
 #endif  // BUILDFLAG(ENABLE_BASIC_PRINTING)
@@ -73,6 +66,7 @@ void PrintRenderFrameHelper::PrintPagesInternal(
     page_params.page_number = page_number;
     Send(new PrintHostMsg_DidPrintPage(routing_id(), page_params));
     page_params.metafile_data_handle = base::SharedMemoryHandle();
+    page_params.data_size = 0;
   }
 }
 
