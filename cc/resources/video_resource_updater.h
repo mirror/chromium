@@ -20,6 +20,7 @@
 #include "components/viz/common/quads/texture_mailbox.h"
 #include "components/viz/common/resources/release_callback.h"
 #include "components/viz/common/resources/resource_format.h"
+#include "components/viz/common/resources/resource_id.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -60,7 +61,7 @@ class CC_EXPORT VideoFrameExternalResources {
   gfx::BufferFormat buffer_format;
 
   // TODO(danakj): Remove these too.
-  std::vector<unsigned> software_resources;
+  unsigned software_resource = viz::kInvalidResourceId;
   viz::ReleaseCallback software_release_callback;
 
   // Used by hardware textures which do not return values in the 0-1 range.

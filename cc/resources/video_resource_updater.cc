@@ -431,8 +431,8 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForSoftwarePlanes(
     }
 
     if (software_compositor) {
-      external_resources.software_resources.push_back(
-          plane_resource.resource_id());
+      DCHECK_LT(viz::kInvalidResourceId, plane_resource.resource_id());
+      external_resources.software_resource = plane_resource.resource_id();
       external_resources.software_release_callback =
           base::Bind(&RecycleResource, weak_ptr_factory_.GetWeakPtr(),
                      plane_resource.resource_id());
