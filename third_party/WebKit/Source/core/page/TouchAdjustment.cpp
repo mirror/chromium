@@ -39,11 +39,16 @@
 #include "platform/geometry/IntSize.h"
 #include "platform/text/TextBreakIterator.h"
 
+#include <cmath>
+
 namespace blink {
 
 namespace TouchAdjustment {
 
 const float kZeroTolerance = 1e-6f;
+
+const float kMaxAdjustmentRadiusDips = 16.f;
+const float kMinAdjustmentRadiusDips = 10.f;
 
 // Class for remembering absolute quads of a target node and what node they
 // represent.
@@ -572,6 +577,16 @@ bool FindBestZoomableArea(Node*& target_node,
   return TouchAdjustment::FindNodeWithLowestDistanceMetric(
       target_node, target_point, target_area, touch_hotspot, touch_area,
       subtargets, TouchAdjustment::ZoomableIntersectionQuotient);
+}
+
+LayoutSize GetHitTestRectForAdjustment(const LayoutSize& touch_area) {
+  float width = std::min(
+      std::max(touch_area.Width(), TouchAdjustment::kMinAdjustmentRadiusDips),
+      TouchAdjustment::kMaxAdjustmentRadiusDips);
+  float height = std::min(
+      std::max(touch_area.Height(), TouchAdjustment::kMinAdjustmentRadiusDips),
+      TouchAdjustment::kMaxAdjustmentRadiusDips);
+  return LayoutSize(width, height);
 }
 
 }  // namespace blink

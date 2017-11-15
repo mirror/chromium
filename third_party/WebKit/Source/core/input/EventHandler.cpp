@@ -1659,6 +1659,7 @@ GestureEventWithHitTestResults EventHandler::HitTestResultForGestureEvent(
     padding = LayoutSize(gesture_event.TapAreaInRootFrame());
     if (!padding.IsEmpty()) {
       padding.Scale(1.f / 2);
+      padding = GetHitTestRectForAdjustment(padding);
       hit_type |= HitTestRequest::kListBased;
     }
   }
