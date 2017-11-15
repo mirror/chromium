@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dcd8574_a8a366ba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-15T03:37:48Z",
+      "side": 1,
+      "message": "Link to the issue here",
+      "revId": "04a9fdc686cc3b6340df8b1e40855a3a4c91744a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf9b446_4a80f7f3",
+        "filename": "third_party/WebKit/Source/core/css/cssom/InlineStylePropertyMap.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-15T03:37:48Z",
+      "side": 1,
+      "message": "This bug links to Typed OM master bug?",
+      "revId": "04a9fdc686cc3b6340df8b1e40855a3a4c91744a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
