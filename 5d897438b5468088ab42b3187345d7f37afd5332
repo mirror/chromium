@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2abdb12_93078b93",
+        "filename": "chrome/browser/extensions/extension_error_reporter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T21:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c35d6eff_0105d672",
+      "range": {
+        "startLine": 64,
+        "startChar": 60,
+        "endLine": 64,
+        "endChar": 75
+      },
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "320b7696_39b78f70",
         "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar.cc",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "08097a19_d2458502",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T21:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff563bfe_b7ea452b",
+      "range": {
+        "startLine": 617,
+        "startChar": 4,
+        "endLine": 617,
+        "endChar": 32
+      },
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1e1716e_d3243025",
         "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar_unittest.h",
         "patchSetId": 2
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "f783105a_3d772bb1",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar_unittest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T21:38:19Z",
+      "side": 1,
+      "message": "That suggestion worked! Removing this observer.",
+      "parentUuid": "f1e1716e_d3243025",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 15
+      },
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8febce1f_dafd3ad3",
         "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar_unittest.h",
         "patchSetId": 2
@@ -109,6 +181,24 @@
       "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd1ab252_a3654e33",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar_unittest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T21:38:19Z",
+      "side": 1,
+      "message": "N/A because of comment above.",
+      "parentUuid": "8febce1f_dafd3ad3",
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -129,6 +219,24 @@
     },
     {
       "key": {
+        "uuid": "6132d874_dabff695",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar_unittest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T21:38:19Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "2fdc5f3f_320f1264",
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33496e25_85d3b839",
         "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.cc",
         "patchSetId": 2
@@ -140,6 +248,24 @@
       "writtenOn": "2017-11-14T23:48:16Z",
       "side": 1,
       "message": "This should already be called in \"real\" code - what prompted this change?  If it was test-only, can we move it to a test?",
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ecca4f8_b781829c",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T21:38:19Z",
+      "side": 1,
+      "message": "The ExtensionErrorReporter::Observer cannot be instantiated without the call to ExtensionErrorReporter::Init() occurring first.\n\nThough the Init call exists elsewhere in the codebase, when the ToolbarActionsModel is instantiated, it appears that this call has not yet been made, which was why it was added here.",
+      "parentUuid": "33496e25_85d3b839",
       "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -163,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "971be2ba_16b40ae7",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T21:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0564e32_a04fa8b3",
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a20181de_191fa7af",
         "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.h",
         "patchSetId": 2
@@ -174,6 +318,24 @@
       "writtenOn": "2017-11-14T23:48:16Z",
       "side": 1,
       "message": "Hmm... any reason to not just have the ToolbarActionsModel be the observer instead?",
+      "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c3d7b1_3d2c67ff",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-15T21:38:19Z",
+      "side": 1,
+      "message": "The reason is related to my response to https://chromium-review.googlesource.com/c/chromium/src/+/765193/2/chrome/browser/ui/toolbar/toolbar_actions_model.cc#76.\n\nThe Init() call needs to be made first. \n\nIf the ToolbarActionsModel becomes an ExtensionErrorReporter::Observer, the observer member needs to be setup and registered: \n\nScopedObserver\u003cExtensionErrorReporter, ExtensionErrorReporter::Observer\u003e extension_error_reporter_observer_\n\nHowever, ScopedObserver\u0027s can only be instantiated explicitly in the ToolbarActionsModel constructor\u0027s initialization list and this would be *before* the Init() call can be made.",
+      "parentUuid": "a20181de_191fa7af",
       "revId": "5d897438b5468088ab42b3187345d7f37afd5332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
