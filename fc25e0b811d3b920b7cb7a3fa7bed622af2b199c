@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f36b9c99_a96a36eb",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-15T16:18:30Z",
+      "side": 1,
+      "message": "Clarify this comment?",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 11
+      },
+      "revId": "fc25e0b811d3b920b7cb7a3fa7bed622af2b199c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
