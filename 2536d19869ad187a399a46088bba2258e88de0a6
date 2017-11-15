@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d36d4cc8_aa9d2973",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T14:57:59Z",
+      "side": 1,
+      "message": "nit: s/finished/ended s/not/is not",
+      "revId": "2536d19869ad187a399a46088bba2258e88de0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4177a241_ff6522d0",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T14:57:59Z",
+      "side": 1,
+      "message": "Can we std::move(NavigationUIData) here instead of cloning it? The cloning method is meant to send it to the IO thread.",
+      "revId": "2536d19869ad187a399a46088bba2258e88de0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf759379_e9aea57a",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T14:57:59Z",
+      "side": 1,
+      "message": "nit: s/embedded/embedder",
+      "revId": "2536d19869ad187a399a46088bba2258e88de0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ab1a87_bffa6648",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T14:57:59Z",
+      "side": 1,
+      "message": "nit: maybe add \"This can be null if the embedder did not provide a NavigationUIData at the beginning of the navigation.\"",
+      "revId": "2536d19869ad187a399a46088bba2258e88de0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b48d18_1c6e8d01",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T14:57:59Z",
+      "side": 1,
+      "message": "nit: remove this comment?",
+      "revId": "2536d19869ad187a399a46088bba2258e88de0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

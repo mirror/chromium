@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "8f351ae5_f148890a",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 2057,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T14:57:59Z",
+      "side": 1,
+      "message": "There are several methods in NavigationControllerImpl that get you to NavigateToPendingEntryInternal, for example GoBack, GoForward and Reload. This particular part of NavigateToPendingEntryInternal should not be reached when your call stack is the one you describe (it corresponds to a regular navigation). It is reached when you called NavigationController::GoBack and NavigationController::GoForward (history navigations). In that case you didn\u0027t pass a NavigationUIData to the NavigationController.",
+      "parentUuid": "4c650ad3_cb5fc8aa",
+      "revId": "72f9f1362f0cb621ba470517753fdf031f16de03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19ddcb78_a715c4e2",
         "filename": "content/browser/frame_host/navigation_handle_impl.cc",
         "patchSetId": 22
