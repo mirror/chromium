@@ -22,6 +22,30 @@
       "revId": "1ecc28e5f3364860508df3960924be66358b14a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4779b6b_c7616532",
+        "filename": "base/time/time_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-15T04:26:44Z",
+      "side": 1,
+      "message": "miu@ - you\u0027re welcome to do that, or get one of the iOS folks to do that. I think figuring out how to probe the ios version at runtime and disable things is more than you should ask a sheriff to do. I am not planning to revert this particular change in the meantime, I hope that makes sense.",
+      "parentUuid": "5a62f54a_5300259d",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 34
+      },
+      "revId": "1ecc28e5f3364860508df3960924be66358b14a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
