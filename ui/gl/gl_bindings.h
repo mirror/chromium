@@ -17,6 +17,16 @@
 #if defined(OS_POSIX) && !defined(__STDC_FORMAT_MACROS)
 #define __STDC_FORMAT_MACROS
 #endif
+#if defined(USE_X11)
+// Must be included before GL headers or they might pollute the global
+// namespace with X11 macros indirectly.
+#include "ui/gfx/x/x11.h"
+// GL headers expect Bool and Status this to be defined but we avoid
+// defining them since they clash with too much code. Instead we have
+// to add them temporarily here and undef them again below.
+#define Bool int
+#define Status int
+#endif  // USE_X11
 
 #include <GL/gl.h>
 #include <GL/glext.h>
@@ -41,13 +51,8 @@
 #include <GL/glx.h>
 #include <GL/glxext.h>
 #endif
-
-// Undefine some macros defined by X headers. This is why this file should only
-// be included in .cc files.
-#undef Bool
-#undef None
 #undef Status
-
+#undef Bool  // Done with it now
 
 // GLES2 defines not part of Desktop GL
 // Shader Precision-Specified Types

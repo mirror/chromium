@@ -6,13 +6,12 @@
 
 #include "base/memory/scoped_refptr.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/gfx/x/x11.h"
 #include "ui/gfx/x/x11_error_tracker.h"
 #include "ui/gfx/x/x11_types.h"
 #include "ui/gl/gl_surface_glx_x11.h"
 #include "ui/gl/init/gl_factory.h"
 #include "ui/gl/test/gl_image_test_support.h"
-
-#include <X11/Xlib.h>
 
 namespace gl {
 

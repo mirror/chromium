@@ -167,7 +167,7 @@ uint32_t NativeViewGLSurfaceEGLX11::DispatchEvent(const PlatformEvent& event) {
   x_event.xexpose.window = parent_window_;
 
   Display* x11_display = GetNativeDisplay();
-  XSendEvent(x11_display, parent_window_, False, ExposureMask, &x_event);
+  XSendEvent(x11_display, parent_window_, x11::False, ExposureMask, &x_event);
   XFlush(x11_display);
   return ui::POST_DISPATCH_STOP_PROPAGATION;
 }
