@@ -42,7 +42,7 @@ class MockDeviceDescriptionService : public DeviceDescriptionService {
  public:
   MockDeviceDescriptionService(DeviceDescriptionParseSuccessCallback success_cb,
                                DeviceDescriptionParseErrorCallback error_cb)
-      : DeviceDescriptionService(success_cb, error_cb) {}
+      : DeviceDescriptionService(/*connector=*/nullptr, success_cb, error_cb) {}
   ~MockDeviceDescriptionService() override {}
 
   MOCK_METHOD2(GetDeviceDescriptions,

@@ -15,10 +15,14 @@
 #include "base/timer/timer.h"
 #include "chrome/browser/media/router/discovery/dial/dial_device_data.h"
 #include "chrome/browser/media/router/discovery/dial/parsed_dial_device_description.h"
-#include "chrome/common/media_router/mojo/dial_device_description_parser.mojom.h"
+#include "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h"
 
 namespace net {
 class URLRequestContextGetter;
+}
+
+namespace service_manager {
+class Connector;
 }
 
 namespace media_router {
@@ -28,7 +32,7 @@ class SafeDialDeviceDescriptionParser;
 
 // This class fetches and parses device description XML for DIAL devices. Actual
 // parsing happens in a separate utility process via SafeDeviceDescriptionParser
-// (instead of in this class). This class lives on IO thread.
+// (instead of in this class). This class lives on the IO thread.
 class DeviceDescriptionService {
  public:
   // Represents cached device description data parsed from device description
@@ -63,6 +67,7 @@ class DeviceDescriptionService {
                           const std::string& error_message)>;
 
   DeviceDescriptionService(
+      service_manager::Connector* connector,
       const DeviceDescriptionParseSuccessCallback& success_cb,
       const DeviceDescriptionParseErrorCallback& error_cb);
   virtual ~DeviceDescriptionService();
@@ -120,20 +125,23 @@ class DeviceDescriptionService {
   // description XML.
   // |device_data|: Device data initiating XML parsing in utility process.
   // |app_url|: The app Url.
-  // |device_description_ptr|: Parsed device description from utility process,
-  // or nullptr if parsing failed.
+  // |device_description|: Parsed device description from utility process,
+  // empty if parsing failed.
   // |parsing_error|: error encountered while parsing DIAL device description.
   void OnParsedDeviceDescription(
       const DialDeviceData& device_data,
       const GURL& app_url,
-      chrome::mojom::DialDeviceDescriptionPtr device_description_ptr,
-      chrome::mojom::DialParsingError parsing_error);
+      ParsedDialDeviceDescription device_description,
+      SafeDialDeviceDescriptionParser::ParsingError parsing_error);
 
   // Remove expired cache entries from |description_map_|.
   void CleanUpCacheEntries();
 
   // Used by unit tests.
   virtual base::Time GetNow();
+
+  // Connector to the ServiceManager, used to retrieve the XmlParser service.
+  service_manager::Connector* connector_;
 
   // Map of current device description fetches in progress, keyed by device
   // label.

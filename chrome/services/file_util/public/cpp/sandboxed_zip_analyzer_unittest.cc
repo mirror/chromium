@@ -99,9 +99,8 @@ class SandboxedZipAnalyzerTest : public ::testing::Test {
   }
 
 #if defined(OS_WIN)
-  void ExpectPEHeaders(
-      const BinaryData& data,
-      const safe_browsing::ClientDownloadRequest_ArchivedBinary& binary) {
+  void ExpectPEHeaders(const BinaryData& data,
+                       const ClientDownloadRequest_ArchivedBinary& binary) {
     ASSERT_EQ(data.is_signed, binary.has_signature());
     if (data.is_signed) {
       ASSERT_LT(0, binary.signature().signed_data_size());
