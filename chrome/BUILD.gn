@@ -1752,7 +1752,7 @@ if (is_android) {
       "jnigraphics",
     ]
 
-    deps = [
+    public_deps = [
       "//chrome/browser",
       "//chrome/browser/ui",
       "//chrome/child",
@@ -1770,7 +1770,7 @@ if (is_android) {
     # Explicit dependency required for JNI registration to be able to
     # find the native side functions.
     if (is_android && is_component_build) {
-      deps += [
+      public_deps += [
         "//device/gamepad",
         "//device/sensors",
         "//ui/events/devices",

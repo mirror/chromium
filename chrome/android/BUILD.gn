@@ -759,12 +759,61 @@ shared_library("libchrome") {
   deps += extra_chrome_shared_library_deps
 }
 
+shared_library("libchromefortest") {
+  testonly = true
+  sources = [
+    "../app/android/chrome_main_delegate_android_initializer.cc",
+    "../browser/android/chrome_entry_point_for_test.cc",
+    "../browser/profiling_host/profiling_test_driver.cc",
+    "../browser/profiling_host/profiling_test_driver.h",
+    "../browser/profiling_host/test_android_shim.cc",
+    "../browser/profiling_host/test_android_shim.h",
+  ]
+  public_deps = [
+    ":chrome_jni_for_test_registration($default_toolchain)",
+    "//base/test:test_support",
+    "//build/config:exe_and_shlib_deps",
+    "//chrome:chrome_android_core",
+    "//chrome/browser/profiling_host:jni_headers",
+  ]
+
+  if (enable_vr) {
+    # Ensure libgvr static library appears before gcc library in linking order.
+    # See https://crbug.com/704305 for details.
+    libs =
+        [ "//third_party/gvr-android-sdk/libgvr_shim_static_${current_cpu}.a" ]
+  }
+
+  if (use_order_profiling) {
+    deps += [ "//tools/cygprofile" ]
+  }
+
+  # See crbug.com/705088, crbug.com/717815.
+  if (target_cpu == "arm" && (is_asan || use_order_profiling)) {
+    ldflags = [ "-Wl,--long-plt" ]
+  }
+
+  if (chromium_linker_supported && use_lld) {
+    configs += [ "//build/config/android:lld_pack_relocations" ]
+  }
+
+  public_configs = extra_chrome_shared_library_configs
+  public_deps += extra_chrome_shared_library_deps
+}
+
 # Ensure that .pak files are built only once (build them in the default
 # toolchain). The central header file calling JNI registration functions
 # is generated from Java code so it just needs to be generated once.
 if (current_toolchain == default_toolchain) {
   generate_jni_registration("chrome_jni_registration") {
     target = ":chrome_public_apk"
+    output = "$root_gen_dir/chrome/browser/android/${target_name}.h"
+    exception_files = jni_exception_files
+  }
+
+  generate_jni_registration("chrome_jni_for_test_registration") {
+    testonly = true
+    target = ":chrome_public_apk_for_test"
     output = "$root_gen_dir/chrome/browser/android/${target_name}.h"
     exception_files = jni_exception_files
   }
@@ -993,6 +1042,18 @@ chrome_public_apk_tmpl_shared("chrome_public_apk") {
   shared_libraries = [ ":libchrome" ]
 }
 
+chrome_public_apk_tmpl_shared("chrome_public_apk_for_test") {
+  testonly = true
+  android_manifest = chrome_public_android_manifest
+  android_manifest_dep = ":chrome_public_android_manifest"
+  apk_name = "ChromePublicForTest"
+  shared_libraries = [ ":libchromefortest" ]
+
+  # This exists here rather than in chrome_public_apk_test for JNI
+  # registration to be able to find the native side functions.
+  java_files = [ "javatests/src/org/chromium/chrome/browser/profiling_host/TestAndroidShim.java" ]
+}
+
 chrome_public_apk_tmpl_shared("chrome_modern_public_apk") {
   android_manifest = chrome_modern_public_android_manifest
   android_manifest_dep = ":chrome_modern_public_android_manifest"
@@ -1087,16 +1148,39 @@ jinja_template("chrome_sync_shell_test_apk_manifest") {
 
 instrumentation_test_apk("chrome_public_test_apk") {
   apk_name = "ChromePublicTest"
-  apk_under_test = ":chrome_public_apk"
+  apk_under_test = ":chrome_public_apk_for_test"
   android_manifest = chrome_public_test_apk_manifest
   android_manifest_dep = ":chrome_public_test_apk_manifest"
 
+  java_files = [ "javatests/src/org/chromium/chrome/browser/profiling_host/ProfilingProcessHostAndroidTest.java" ]
   deps = [
     ":chrome_test_java",
+    "//base:base_java",  # This is needed to add shared libraries.
+
+    # "//base:base_java",
+    "//base:base_java_test_support",
+    "//chrome/android:app_hooks_java",
+    "//chrome/android:chrome_java",
     "//chrome/android/webapk/libs/runtime_library:runtime_library_javatests",
     "//chrome/android/webapk/shell_apk:shell_apk_javatests",
     "//chrome/android/webapk/shell_apk:webapk_javatests",
+    "//chrome/test/android:chrome_java_test_support",
+    "//components/bookmarks/common/android:bookmarks_java",
+    "//components/policy/android:policy_java",
+    "//components/signin/core/browser/android:java",
+    "//components/signin/core/browser/android:signin_java_test_support",
+    "//components/sync:sync_java_test_support",
+    "//components/sync:test_support_proto_java",
+    "//components/sync/android:sync_java",
+    "//content/public/android:content_java",
+    "//content/public/test/android:content_java_test_support",
+    "//third_party/android_support_test_runner:rules_java",
     "//third_party/android_support_test_runner:runner_java",
+    "//third_party/android_support_test_runner:runner_java",
+    "//third_party/android_tools:android_arch_lifecycle_common_java",
+    "//third_party/android_tools:android_support_v7_appcompat_java",
+    "//third_party/junit",
+    "//ui/android:ui_java",
   ]
   additional_apks = [
     "//chrome/android/webapk/libs/runtime_library/javatests/apk_with_webapk_service:apk_with_webapk_service",
