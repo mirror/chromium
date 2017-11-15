@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4d682bc_ffe36154",
+        "filename": "components/certificate_transparency/single_tree_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-11-15T11:52:40Z",
+      "side": 1,
+      "message": "FYI, this code assumes that the cache entries will have address_family \u003d\u003d ADDRESS_FAMILY_UNSPECIFIED and host_resolver_flags \u003d\u003d 0. I\u0027m not sure for what proportion of users that assumption doesn\u0027t hold. Any idea? I could work around this by adding a Lookup(hostname) method to HostCache that ignores the address family and flags, if necessary.",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 281,
+        "endChar": 45
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
