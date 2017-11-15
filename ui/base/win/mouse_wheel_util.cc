@@ -81,8 +81,9 @@ bool RerouteMouseWheel(HWND window, WPARAM w_param, LPARAM l_param) {
   while (window != window_under_wheel) {
     // If window_under_wheel is not a valid Chrome window, then return true to
     // suppress further processing of the message.
-    if (!::IsWindow(window_under_wheel))
+    if (!::IsWindow(window_under_wheel)) {
       return true;
+    }
     DWORD wheel_window_process = 0;
     GetWindowThreadProcessId(window_under_wheel, &wheel_window_process);
     if (current_process != wheel_window_process) {
