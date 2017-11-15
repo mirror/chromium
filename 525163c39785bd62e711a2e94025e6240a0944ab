@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e970595e_370cb8f6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/worklet/import-filesystem-url.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T06:36:41Z",
+      "side": 1,
+      "message": "I think this might supposed to be called Chrome (style guide: \"“Chromium” is the name of the project, not the product, and should never appear in code, variable names, API names etc\").",
+      "revId": "525163c39785bd62e711a2e94025e6240a0944ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf8440c_89a25377",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/worklet/import-on-insecure-context.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T06:36:41Z",
+      "side": 1,
+      "message": "ditto about Chromium",
+      "revId": "525163c39785bd62e711a2e94025e6240a0944ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
