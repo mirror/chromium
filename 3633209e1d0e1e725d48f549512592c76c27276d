@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfcf15c6_32e693bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T16:20:01Z",
+      "side": 1,
+      "message": "nit: \"Async Cookies API: Move LayoutTests to WPT.\"\n\nAFAIK we call our own tests LayoutTests, and tests in the WPT project are called \"WPT tests\" (which seems redundant).",
+      "revId": "3633209e1d0e1e725d48f549512592c76c27276d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
