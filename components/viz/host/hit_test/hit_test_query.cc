@@ -15,6 +15,26 @@ bool ShouldUseTouchBounds(EventSource event_source) {
   return event_source == EventSource::TOUCH;
 }
 
+bool MatchEventSourceRegion(EventSource event_source, uint32_t flags) {
+  return ShouldUseTouchBounds(event_source)
+             ? (flags & mojom::kHitTestTouch) != 0u
+             : (flags & mojom::kHitTestMouse) != 0u;
+}
+
+bool LocationInRects(EventSource event_source,
+                     const std::vector<HitTestRect>& hit_test_rects,
+                     const gfx::Point& location,
+                     gfx::Rect* matching_rect) {
+  for (const auto& hit_test_rect : hit_test_rects) {
+    if (MatchEventSourceRegion(event_source, hit_test_rect.flags) &&
+        hit_test_rect.rect.Contains(location)) {
+      *matching_rect = hit_test_rect.rect;
+      return true;
+    }
+  }
+  return false;
+}
+
 }  // namespace
 
 HitTestQuery::HitTestQuery() = default;
@@ -89,8 +109,11 @@ bool HitTestQuery::FindTargetInRegionForLocation(
     Target* target) const {
   gfx::Point location_transformed(location_in_parent);
   region->transform.TransformPoint(&location_transformed);
-  if (!region->rect.Contains(location_transformed))
+  gfx::Rect matching_rect;
+  if (!LocationInRects(event_source, region->rects, location_transformed,
+                       &matching_rect)) {
     return false;
+  }
 
   if (region->child_count < 0 ||
       region->child_count >
@@ -101,7 +124,7 @@ bool HitTestQuery::FindTargetInRegionForLocation(
   AggregatedHitTestRegion* child_region_end =
       child_region + region->child_count;
   gfx::Point location_in_target(location_transformed);
-  location_in_target.Offset(-region->rect.x(), -region->rect.y());
+  location_in_target.Offset(-matching_rect.x(), -matching_rect.y());
   while (child_region < child_region_end) {
     if (FindTargetInRegionForLocation(event_source, location_in_target,
                                       child_region, target)) {
@@ -115,11 +138,7 @@ bool HitTestQuery::FindTargetInRegionForLocation(
     child_region = child_region + child_region->child_count + 1;
   }
 
-  bool match_touch_or_mouse_region =
-      ShouldUseTouchBounds(event_source)
-          ? (region->flags & mojom::kHitTestTouch) != 0u
-          : (region->flags & mojom::kHitTestMouse) != 0u;
-  if ((region->flags & mojom::kHitTestMine) && match_touch_or_mouse_region) {
+  if (region->flags & mojom::kHitTestMine) {
     target->frame_sink_id = region->frame_sink_id;
     target->location_in_target = location_in_target;
     target->flags = region->flags;
@@ -134,17 +153,14 @@ bool HitTestQuery::TransformLocationForTargetRecursively(
     size_t target_ancestor,
     AggregatedHitTestRegion* region,
     gfx::Point* location_in_target) const {
-  bool match_touch_or_mouse_region =
-      ShouldUseTouchBounds(event_source)
-          ? (region->flags & mojom::kHitTestTouch) != 0u
-          : (region->flags & mojom::kHitTestMouse) != 0u;
-  if ((region->flags & mojom::kHitTestChildSurface) == 0u &&
-      !match_touch_or_mouse_region) {
+  region->transform.TransformPoint(location_in_target);
+  gfx::Rect matching_rect;
+  if (!LocationInRects(event_source, region->rects, *location_in_target,
+                       &matching_rect)) {
     return false;
   }
 
-  region->transform.TransformPoint(location_in_target);
-  location_in_target->Offset(-region->rect.x(), -region->rect.y());
+  location_in_target->Offset(-matching_rect.x(), -matching_rect.y());
   if (!target_ancestor)
     return true;
 

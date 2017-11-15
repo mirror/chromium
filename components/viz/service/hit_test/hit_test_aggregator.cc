@@ -111,8 +111,12 @@ void HitTestAggregator::AppendRoot(const SurfaceId& surface_id) {
 
   DCHECK_GE(region_index, 1u);
   int32_t child_count = region_index - 1;
+  std::vector<HitTestRect> hit_test_rects;
+  hit_test_rects.push_back(
+      HitTestRect(mojom::kHitTestMouse | mojom::kHitTestTouch,
+                  hit_test_region_list->bounds));
   SetRegionAt(0, surface_id.frame_sink_id(), hit_test_region_list->flags,
-              hit_test_region_list->bounds, hit_test_region_list->transform,
+              hit_test_region_list->transform, std::move(hit_test_rects),
               child_count);
   MarkEndAt(region_index);
 }
@@ -162,16 +166,21 @@ size_t HitTestAggregator::AppendRegion(size_t region_index,
   }
   DCHECK_GE(region_index - parent_index - 1, 0u);
   int32_t child_count = region_index - parent_index - 1;
-  SetRegionAt(parent_index, region->frame_sink_id, flags, region->rect,
-              transform, child_count);
+  std::vector<HitTestRect> hit_test_rects;
+  for (const auto& hit_test_rect : region->rects) {
+    hit_test_rects.push_back(
+        HitTestRect(hit_test_rect->flags, hit_test_rect->rect));
+  }
+  SetRegionAt(parent_index, region->frame_sink_id, flags, transform,
+              std::move(hit_test_rects), child_count);
   return region_index;
 }
 
 void HitTestAggregator::SetRegionAt(size_t index,
                                     const FrameSinkId& frame_sink_id,
                                     uint32_t flags,
-                                    const gfx::Rect& rect,
                                     const gfx::Transform& transform,
+                                    std::vector<HitTestRect> rects,
                                     int32_t child_count) {
   AggregatedHitTestRegion* regions =
       static_cast<AggregatedHitTestRegion*>(write_buffer_.get());
@@ -179,8 +188,8 @@ void HitTestAggregator::SetRegionAt(size_t index,
 
   element->frame_sink_id = frame_sink_id;
   element->flags = flags;
-  element->rect = rect;
   element->transform = transform;
+  element->rects = std::move(rects);
   element->child_count = child_count;
 
   PrepareTransformForReadOnlySharedMemory(&element->transform);

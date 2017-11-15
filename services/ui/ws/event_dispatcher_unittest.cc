@@ -2391,14 +2391,23 @@ TEST_P(EventDispatcherVizTargeterTest, ProcessEvent) {
   test_event_dispatcher_delegate()->AddWindow(child.get());
   viz::AggregatedHitTestRegion* aggregated_hit_test_region_list =
       aggregated_hit_test_region();
-  aggregated_hit_test_region_list[0] = viz::AggregatedHitTestRegion(
-      root_window()->frame_sink_id(),
-      viz::mojom::kHitTestMine | viz::mojom::kHitTestMouse,
-      root_window()->bounds(), root_window()->transform(), 1);  // root_window
-  aggregated_hit_test_region_list[1] = viz::AggregatedHitTestRegion(
-      child->frame_sink_id(),
-      viz::mojom::kHitTestMine | viz::mojom::kHitTestMouse, child->bounds(),
-      child->transform(), 0);  // child
+
+  // root_window
+  aggregated_hit_test_region_list[0].frame_sink_id =
+      root_window()->frame_sink_id();
+  aggregated_hit_test_region_list[0].flags = viz::mojom::kHitTestMine;
+  aggregated_hit_test_region_list[0].transform = root_window()->transform();
+  aggregated_hit_test_region_list[0].rects.push_back(
+      viz::HitTestRect(viz::mojom::kHitTestMouse, root_window()->bounds()));
+  aggregated_hit_test_region_list[0].child_count = 1;
+
+  // child
+  aggregated_hit_test_region_list[1].frame_sink_id = child->frame_sink_id();
+  aggregated_hit_test_region_list[1].flags = viz::mojom::kHitTestMine;
+  aggregated_hit_test_region_list[1].transform = child->transform();
+  aggregated_hit_test_region_list[1].rects.push_back(
+      viz::HitTestRect(viz::mojom::kHitTestMouse, child->bounds()));
+  aggregated_hit_test_region_list[1].child_count = 0;
 
   // Send event that is over child.
   const ui::PointerEvent ui_event(ui::MouseEvent(
