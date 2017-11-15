@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75ca3c05_ca104db7",
+        "filename": "ios/build/bots/scripts/run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-11-15T23:23:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6a8b1be_a94eafe5",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7899580_6fe8dfcd",
         "filename": "ios/build/bots/scripts/run.py",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "079842be_cff8c258",
+        "filename": "ios/build/bots/scripts/run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-11-15T23:23:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7899580_6fe8dfcd",
+      "range": {
+        "startLine": 150,
+        "startChar": 37,
+        "endLine": 150,
+        "endChar": 63
+      },
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bfaed59_52966957",
         "filename": "ios/build/bots/scripts/run.py",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8993b2f_d1f20799",
+        "filename": "ios/build/bots/scripts/run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-11-15T23:23:20Z",
+      "side": 1,
+      "message": "--xcode-version was required before (line 148 in the original version). Agreed with \"exactly one\", it\u0027s cleaner. Done.",
+      "parentUuid": "2bfaed59_52966957",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "9c221ecc_cf5489c4",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-11-15T23:23:20Z",
+      "side": 1,
+      "message": "Good point, done. Also added --xcode-path for specifying where to install Xcode, so changing named cache installation path can be done in one place (in the triggering recipe).",
+      "parentUuid": "88832071_f5ef9331",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37c153a3_ec335240",
         "filename": "ios/build/bots/scripts/test_runner.py",
         "patchSetId": 5
@@ -90,6 +168,24 @@
       "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c004f5_e0ddeca5",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-11-15T23:23:20Z",
+      "side": 1,
+      "message": "I deleted this function in favor of --xcode-path argument.",
+      "parentUuid": "37c153a3_ec335240",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "4583320a_22cf9c05",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-11-15T23:23:20Z",
+      "side": 1,
+      "message": "I don\u0027t need this anymore, replaced by --xcode-path.\nAnd yes, indeed I\u0027m using a named cache to install Xcode into, so it persists across tasks. Otherwise installation is too slow, even with a local CIPD package instance cache.",
+      "parentUuid": "7a7a2653_0d728e2f",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "518f5bba_78723c57",
         "filename": "ios/build/bots/scripts/test_runner.py",
         "patchSetId": 5
@@ -124,6 +238,24 @@
       "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec94165_51db323c",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-11-15T23:23:20Z",
+      "side": 1,
+      "message": "I\u0027m planning to deprecate and eventually remove find_xcode.py. The idea is that bots shouldn\u0027t even have Xcode installed, and it\u0027ll be managed by CIPD / install_xcode().",
+      "parentUuid": "518f5bba_78723c57",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "73c07517_a7a76a92",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-11-15T23:23:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3177ec7d_1908af1f",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "382f4cff_1c30ca10",
         "filename": "ios/build/bots/scripts/test_runner.py",
         "patchSetId": 5
@@ -158,6 +308,24 @@
       "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f3a2e6_c032168b",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-11-15T23:23:20Z",
+      "side": 1,
+      "message": "This wouldn\u0027t work, because test_iossim_not_found needs to pass a check for find_app but fail find_iossim. I can\u0027t easily do that with the simple self.mock implementation. Also, I wouldn\u0027t want to rely on the fact that os.path.exists() in find_app() is called before os.path.exists() in find_iossim(), so multiple return values for os.path.exist() are also suboptimal. Therefore, I created separate functions so I can mock them separately.",
+      "parentUuid": "382f4cff_1c30ca10",
+      "revId": "bed9baf66ae906d51f241a9883a9bddac1583079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
