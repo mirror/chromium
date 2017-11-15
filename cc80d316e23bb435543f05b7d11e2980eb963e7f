@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e27b4b17_62080f9b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-15T16:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73cad316_0b56ad5b",
+      "range": {
+        "startLine": 192,
+        "startChar": 69,
+        "endLine": 192,
+        "endChar": 91
+      },
+      "revId": "cc80d316e23bb435543f05b7d11e2980eb963e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29af7916_092e3b46",
         "filename": "ui/android/java/src/org/chromium/ui/base/ActivityWindowAndroid.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "cc80d316e23bb435543f05b7d11e2980eb963e7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a3a2396_11b1c16a",
+        "filename": "ui/android/java/src/org/chromium/ui/base/ActivityWindowAndroid.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-15T16:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29af7916_092e3b46",
+      "range": {
+        "startLine": 280,
+        "startChar": 16,
+        "endLine": 280,
+        "endChar": 61
+      },
+      "revId": "cc80d316e23bb435543f05b7d11e2980eb963e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
