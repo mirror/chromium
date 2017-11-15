@@ -127,6 +127,15 @@ class GlobalDumpGraph {
     const GlobalDumpGraph::Process* dump_graph() const { return dump_graph_; }
     std::map<std::string, Entry>* entries() { return &entries_; }
 
+    uint64_t not_owning_sub_size = 0;
+    uint64_t not_owned_sub_size = 0;
+
+    double owned_coefficient = 1;
+    double owning_coefficient = 1;
+
+    double cumulative_owned_coefficient = 1;
+    double cumulative_owning_coefficient = 1;
+
    private:
     GlobalDumpGraph::Process* dump_graph_;
     Node* const parent_;
