@@ -6,6 +6,8 @@
 
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_utils.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
+#import "ios/chrome/browser/ui/tools_menu/public/tools_menu_constants.h"
+#import "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -22,6 +24,7 @@
 @synthesize tabModel = _tabModel;
 @synthesize toolbarViewController = _toolbarViewController;
 @synthesize webToolbarController = _webToolbarController;
+@synthesize toolsMenuCoordinator = _toolsMenuCoordinator;
 
 - (void)stop {
   self.webToolbarController = nil;
@@ -31,6 +34,26 @@
   _toolbarViewController =
       static_cast<UIViewController*>(self.webToolbarController);
   return _toolbarViewController;
+}
+
+- (instancetype)initWithBaseViewController:(UIViewController*)viewController
+                                dispatcher:(CommandDispatcher*)dispatcher {
+  if (self = [super initWithBaseViewController:viewController]) {
+    _toolsMenuCoordinator = [[ToolsMenuCoordinator alloc]
+        initWithBaseViewController:viewController];
+    _toolsMenuCoordinator.dispatcher = dispatcher;
+
+    NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter addObserver:self
+                      selector:@selector(toolsMenuWillShowNotification:)
+                          name:kToolsMenuWillShowNotification
+                        object:_toolsMenuCoordinator];
+    [defaultCenter addObserver:self
+                      selector:@selector(toolsMenuWillHideNotification:)
+                          name:kToolsMenuWillHideNotification
+                        object:_toolsMenuCoordinator];
+  }
+  return self;
 }
 
 - (id<VoiceSearchControllerDelegate>)voiceSearchDelegate {
@@ -55,6 +78,10 @@
 
 - (void)setWebToolbar:(WebToolbarController*)webToolbarController {
   self.webToolbarController = webToolbarController;
+  // ToolbarController needs to know about whether the tools menu is presented
+  // or not, and does so by storing a reference to the coordinator to query.
+  self.webToolbarController.toolsMenuStateProvider = _toolsMenuCoordinator;
+  _toolsMenuCoordinator.presentationProvider = webToolbarController;
 }
 
 - (void)setToolbarDelegate:(id<WebToolbarDelegate>)delegate {
@@ -107,19 +134,6 @@
 
 - (void)currentPageLoadStarted {
   [self.webToolbarController currentPageLoadStarted];
-}
-
-- (void)showToolsMenuPopupWithConfiguration:
-    (ToolsMenuConfiguration*)configuration {
-  [self.webToolbarController showToolsMenuPopupWithConfiguration:configuration];
-}
-
-- (ToolsPopupController*)toolsPopupController {
-  return [self.webToolbarController toolsPopupController];
-}
-
-- (void)dismissToolsMenuPopup {
-  [self.webToolbarController dismissToolsMenuPopup];
 }
 
 - (CGRect)visibleOmniboxFrame {
@@ -233,4 +247,21 @@
 - (CGPoint)anchorPointForToolsMenuButton:(BubbleArrowDirection)direction {
   return [self.webToolbarController anchorPointForToolsMenuButton:direction];
 }
+
+#pragma mark - ToolsMenuPresentationStateProvider
+
+- (BOOL)isShowingToolsMenu {
+  return [_toolsMenuCoordinator isShowingToolsMenu];
+}
+
+#pragma mark - Tools Menu
+
+- (void)toolsMenuWillShowNotification:(NSNotification*)note {
+  [self.webToolbarController setToolsMenuIsVisibleForToolsMenuButton:YES];
+}
+
+- (void)toolsMenuWillHideNotification:(NSNotification*)note {
+  [self.webToolbarController setToolsMenuIsVisibleForToolsMenuButton:NO];
+}
+
 @end
