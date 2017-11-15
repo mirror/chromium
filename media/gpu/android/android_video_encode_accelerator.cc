@@ -358,8 +358,11 @@ void AndroidVideoEncodeAccelerator::QueueInput() {
 
   input_timestamp_ += base::TimeDelta::FromMicroseconds(
       base::Time::kMicrosecondsPerSecond / INITIAL_FRAMERATE);
-  status = media_codec_->QueueInputBuffer(input_buf_index, nullptr, queued_size,
-                                          input_timestamp_);
+  DCHECK(frame_timestamp_map_.find(input_timestamp_) ==
+         frame_timestamp_map_.end());
+  frame_timestamp_map_[input_timestamp_] = frame->timestamp();
+  frame_timestamp_map_ status = media_codec_->QueueInputBuffer(
+      input_buf_index, nullptr, queued_size, input_timestamp_);
   UMA_HISTOGRAM_TIMES("Media.AVDA.InputQueueTime",
                       base::Time::Now() - std::get<2>(input));
   RETURN_ON_FAILURE(status == MEDIA_CODEC_OK,
@@ -380,9 +383,14 @@ void AndroidVideoEncodeAccelerator::DequeueOutput() {
   size_t size = 0;
   bool key_frame = false;
 
-  MediaCodecStatus status =
-      media_codec_->DequeueOutputBuffer(NoWaitTimeOut(), &buf_index, &offset,
-                                        &size, nullptr, nullptr, &key_frame);
+  base::TimeDelta input_timestamp;
+  MediaCodecStatus status = media_codec_->DequeueOutputBuffer(
+      NoWaitTimeOut(), &buf_index, &offset, &size, &input_timestamp, nullptr,
+      &key_frame);
+  const auto& frame_timestamp_itr = frame_timestamp_map_.find(input_timestamp);
+  DCHECK(frame_timestamp_itr != frame_timestamp_map_.end());
+  const auto frame_timestamp = frame_timestamp_itr->second;
+  frame_timestamp_map_.erase(frame_timestamp_itr);
   switch (status) {
     case MEDIA_CODEC_TRY_AGAIN_LATER:
       return;
@@ -427,7 +435,7 @@ void AndroidVideoEncodeAccelerator::DequeueOutput() {
       FROM_HERE,
       base::Bind(&VideoEncodeAccelerator::Client::BitstreamBufferReady,
                  client_ptr_factory_->GetWeakPtr(), bitstream_buffer.id(), size,
-                 key_frame, base::TimeDelta()));
+                 key_frame, frame_timestamp));
 }
 
 }  // namespace media
