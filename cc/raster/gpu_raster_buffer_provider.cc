@@ -303,19 +303,47 @@ void GpuRasterBufferProvider::PlaybackOnWorkerThread(
         100.0f * fraction_saved);
   }
 
-  if (enable_oop_rasterization_) {
+  // warmup
+  RasterizeSource(raster_source, resource_has_previous_content,
+                  resource_lock->size(), raster_full_rect, playback_rect,
+                  transform, playback_settings, worker_context_provider_,
+                  resource_lock, use_distance_field_text_, msaa_sample_count_);
+  RasterizeSourceOOP(raster_source, resource_has_previous_content,
+                     resource_lock->size(), raster_full_rect, playback_rect,
+                     transform, playback_settings, worker_context_provider_,
+                     resource_lock, use_distance_field_text_,
+                     msaa_sample_count_);
+  gl->Flush();
+
+  const int kNumRetries = 1;
+
+  auto start_oop = base::TimeTicks::Now();
+  for (size_t i = 0; i < kNumRetries; ++i) {
     RasterizeSourceOOP(raster_source, resource_has_previous_content,
                        resource_lock->size(), raster_full_rect, playback_rect,
                        transform, playback_settings, worker_context_provider_,
                        resource_lock, use_distance_field_text_,
                        msaa_sample_count_);
-  } else {
+  }
+  auto end_oop = base::TimeTicks::Now();
+  gl->Flush();
+
+  auto start_ip = base::TimeTicks::Now();
+  for (size_t i = 0; i < kNumRetries; ++i) {
     RasterizeSource(raster_source, resource_has_previous_content,
                     resource_lock->size(), raster_full_rect, playback_rect,
                     transform, playback_settings, worker_context_provider_,
                     resource_lock, use_distance_field_text_,
                     msaa_sample_count_);
   }
+  auto end_ip = base::TimeTicks::Now();
+  gl->Flush();
+
+  float oop_ms = (end_oop - start_oop).InMillisecondsF() / kNumRetries;
+  float ip_ms = (end_ip - start_ip).InMillisecondsF() / kNumRetries;
+  fprintf(stderr, "%f, %f\n", oop_ms, ip_ms);
+
+  (void)enable_oop_rasterization_;
 
   // Generate sync token for cross context synchronization.
   resource_lock->set_sync_token(ResourceProvider::GenerateSyncTokenHelper(gl));
