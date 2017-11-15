@@ -65,7 +65,7 @@
               should(
                   context.decodeAudioData(invalidArrayBuffer.slice(0)),
                   'Decoding an invalid audio file')
-                  .beRejectedWith('EncodingError'),
+                  .beRejected('EncodingError'),
               should(context.decodeAudioData(null), 'Decoding null AudioBuffer')
                   .beRejected()
             ])

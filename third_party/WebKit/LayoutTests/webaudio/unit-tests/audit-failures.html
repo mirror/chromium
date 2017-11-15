@@ -59,7 +59,7 @@
                   should(oac.startRendering(), 'Start OAC rendering')
                       .beRejected(),
                   should(oac.suspend(), 'Suspending OAC with no argument')
-                      .beRejectedWith('IndexSizeError')
+                      .beRejected('IndexSizeError')
                 ])
                 .then(task.done.bind(task));
           });

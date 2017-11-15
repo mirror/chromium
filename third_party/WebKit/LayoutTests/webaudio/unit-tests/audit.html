@@ -75,7 +75,7 @@
                       'Decoding audio data with no argument')
                       .beRejected(),
                   should(oac.suspend(), 'Suspending OAC with no argument')
-                      .beRejectedWith('TypeError')
+                      .beRejected('TypeError')
                 ])
                 .then(task.done.bind(task));
           });

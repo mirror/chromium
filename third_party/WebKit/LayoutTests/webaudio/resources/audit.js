@@ -382,7 +382,9 @@ window.Audit = (function() {
      *   "PASS   My promise rejected correctly (with _ERROR_)."
      *   "FAIL X My promise resolved *INCORRECTLY*."
      */
+    /*
     beRejected() {
+      this._processArguments(arguments);
       return this._actual.then(
           function() {
             this._assert(false, null, '${actual} resolved incorrectly.');
@@ -392,20 +394,21 @@ window.Audit = (function() {
                 true, '${actual} rejected correctly with ' + error + '.', null);
           }.bind(this));
     }
+    */
 
     /**
      * Check if |actual| promise is rejected correctly.
      *
      * @example
-     *   should(promise, 'My promise').beRejectedWith('_ERROR_').then();
+     *   should(promise, 'My promise').beRejected('_ERROR_').then();
      *
      * @result
      *   "PASS   My promise rejected correctly with _ERROR_."
      *   "FAIL X My promise rejected correctly but got _ACTUAL_ERROR instead of
-     *           _EXPECTED_ERROR_."
+     *           __ERROR_."
      *   "FAIL X My promise resolved incorrectly."
      */
-    beRejectedWith() {
+    beRejected() {
       this._processArguments(arguments);
 
       return this._actual.then(
@@ -413,7 +416,11 @@ window.Audit = (function() {
             this._assert(false, null, '${actual} resolved incorrectly.');
           }.bind(this),
           function(error) {
-            if (this._expected !== error.name) {
+            if (this._expected === null) {
+              this._assert(
+                  true,
+                  '${actual} rejected correctly with ' + error + '.', null);
+            } else if (this._expected !== error.name) {
               this._assert(
                   false, null,
                   '${actual} rejected correctly but got ' + error.name +
