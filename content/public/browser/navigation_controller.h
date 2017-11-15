@@ -198,9 +198,7 @@ class NavigationController {
     explicit LoadURLParams(const GURL& url);
     ~LoadURLParams();
 
-    // Allows copying of LoadURLParams struct.
-    LoadURLParams(const LoadURLParams& other);
-    LoadURLParams& operator=(const LoadURLParams& other);
+    DISALLOW_COPY_AND_ASSIGN(LoadURLParams);
   };
 
   // Disables checking for a repost and prompting the user. This is used during
