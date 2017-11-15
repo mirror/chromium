@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c52f9809_4c9208e6",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-15T21:55:56Z",
+      "side": 1,
+      "message": "nit: this change is unrelated?",
+      "revId": "4af931c7f9a64042d54f2f3fbb5ac4c7dfff7e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
