@@ -405,10 +405,12 @@ bool ClientBase::Init(const InitParams& params) {
     LOG(ERROR) << "Can't find seat interface";
     return false;
   }
+#if 0
   if (!globals_.aura_shell) {
     LOG(ERROR) << "Can't find aura shell interface";
     return false;
   }
+#endif
 
 #if defined(USE_GBM)
   sk_sp<const GrGLInterface> native_interface;
@@ -536,6 +538,7 @@ bool ClientBase::Init(const InitParams& params) {
 
   wl_shell_surface_set_title(shell_surface.get(), params.title.c_str());
 
+#if 0
   std::unique_ptr<zaura_surface> aura_surface(
       static_cast<zaura_surface*>(
           zaura_shell_get_aura_surface(globals_.aura_shell.get(),
@@ -546,6 +549,7 @@ bool ClientBase::Init(const InitParams& params) {
   }
 
   zaura_surface_set_frame(aura_surface.get(), ZAURA_SURFACE_FRAME_TYPE_NORMAL);
+#endif
 
   if (fullscreen_) {
     wl_shell_surface_set_fullscreen(shell_surface.get(),

@@ -72,11 +72,13 @@ void PixelTestOutputSurface::ApplyExternalStencil() {}
 void PixelTestOutputSurface::SwapBuffers(viz::OutputSurfaceFrame frame) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::BindOnce(&PixelTestOutputSurface::SwapBuffersCallback,
-                                weak_ptr_factory_.GetWeakPtr()));
+                                weak_ptr_factory_.GetWeakPtr(), ++swap_count_));
 }
 
-void PixelTestOutputSurface::SwapBuffersCallback() {
-  client_->DidReceiveSwapBuffersAck();
+void PixelTestOutputSurface::SwapBuffersCallback(uint32_t count) {
+  client_->DidReceiveSwapBuffersAck(count);
+  client_->DidPresentation(count, base::TimeTicks::Now(), base::TimeDelta(),
+                           0u);
 }
 
 viz::OverlayCandidateValidator*

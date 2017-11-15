@@ -106,8 +106,8 @@ gfx::BufferFormat DisplayOutputSurfaceOzone::GetOverlayBufferFormat() const {
   return buffer_queue_->buffer_format();
 }
 
-void DisplayOutputSurfaceOzone::DidReceiveSwapBuffersAck(
-    gfx::SwapResult result) {
+void DisplayOutputSurfaceOzone::DidReceiveSwapBuffersAck(gfx::SwapResult result,
+                                                         uint32_t count) {
   bool force_swap = false;
   if (result == gfx::SwapResult::SWAP_NAK_RECREATE_BUFFERS) {
     // Even through the swap failed, this is a fixable error so we can pretend
@@ -118,7 +118,7 @@ void DisplayOutputSurfaceOzone::DidReceiveSwapBuffersAck(
   }
 
   buffer_queue_->PageFlipComplete();
-  client()->DidReceiveSwapBuffersAck();
+  client()->DidReceiveSwapBuffersAck(count);
 
   if (force_swap)
     client()->SetNeedsRedrawRect(gfx::Rect(swap_size_));

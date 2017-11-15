@@ -123,6 +123,10 @@ class FakeDelegate : public ImageTransportSurfaceDelegate,
     // This shouldn't be called by GpuVSyncProviderWin
     NOTREACHED();
   }
+  void BufferPresented(uint32_t count,
+                       base::TimeTicks timestamp,
+                       base::TimeDelta refresh,
+                       uint32_t flags) override {}
 
   void AddFilter(IPC::MessageFilter* message_filter) override {
     channel_->AddFilter(message_filter);

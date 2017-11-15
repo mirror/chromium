@@ -193,7 +193,8 @@ void DrmThread::SchedulePageFlip(gfx::AcceleratedWidget widget,
     bool result = window->SchedulePageFlip(planes, std::move(callback));
     CHECK(result) << "DrmThread::SchedulePageFlip failed.";
   } else {
-    std::move(callback).Run(gfx::SwapResult::SWAP_ACK);
+    std::move(callback).Run(gfx::SwapResult::SWAP_ACK, base::TimeTicks(),
+                            base::TimeDelta(), 0u);
   }
 }
 

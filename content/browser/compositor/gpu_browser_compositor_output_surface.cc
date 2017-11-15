@@ -44,6 +44,8 @@ GpuBrowserCompositorOutputSurface::~GpuBrowserCompositorOutputSurface() {
       gpu::CommandBufferProxyImpl::SwapBuffersCompletionCallback());
   GetCommandBufferProxy()->SetUpdateVSyncParametersCallback(
       UpdateVSyncParametersCallback());
+  GetCommandBufferProxy()->SetPresentationCallback(
+      gpu::CommandBufferProxyImpl::PresentationCallback());
 }
 
 void GpuBrowserCompositorOutputSurface::SetNeedsVSync(bool needs_vsync) {
@@ -57,9 +59,10 @@ void GpuBrowserCompositorOutputSurface::SetNeedsVSync(bool needs_vsync) {
 void GpuBrowserCompositorOutputSurface::OnGpuSwapBuffersCompleted(
     const std::vector<ui::LatencyInfo>& latency_info,
     gfx::SwapResult result,
+    uint32_t count,
     const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac) {
   RenderWidgetHostImpl::OnGpuSwapBuffersCompleted(latency_info);
-  client_->DidReceiveSwapBuffersAck();
+  client_->DidReceiveSwapBuffersAck(count);
 }
 
 void GpuBrowserCompositorOutputSurface::OnReflectorChanged() {
@@ -84,7 +87,9 @@ void GpuBrowserCompositorOutputSurface::BindToClient(
       base::Bind(&GpuBrowserCompositorOutputSurface::OnGpuSwapBuffersCompleted,
                  base::Unretained(this)));
   GetCommandBufferProxy()->SetUpdateVSyncParametersCallback(
-      base::Bind(&GpuBrowserCompositorOutputSurface::OnVSyncParametersUpdated,
+      update_vsync_parameters_callback_);
+  GetCommandBufferProxy()->SetPresentationCallback(
+      base::Bind(&GpuBrowserCompositorOutputSurface::OnPresentation,
                  base::Unretained(this)));
 }
 
@@ -180,12 +185,13 @@ void GpuBrowserCompositorOutputSurface::SetDrawRectangle(
       rect.x(), rect.y(), rect.width(), rect.height());
 }
 
-void GpuBrowserCompositorOutputSurface::OnVSyncParametersUpdated(
-    base::TimeTicks timebase,
-    base::TimeDelta interval) {
+void GpuBrowserCompositorOutputSurface::OnPresentation(
+    uint32_t count,
+    base::TimeTicks timestamp,
+    base::TimeDelta refresh,
+    uint32_t flags) {
   DCHECK(client_);
-  client_->DidUpdateVSyncParameters(timebase, interval);
-  update_vsync_parameters_callback_.Run(timebase, interval);
+  client_->DidPresentation(count, timestamp, refresh, flags);
 }
 
 gpu::CommandBufferProxyImpl*

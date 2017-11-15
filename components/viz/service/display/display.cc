@@ -273,17 +273,11 @@ bool Display::DrawAndSwap() {
     return false;
   }
 
-  DLOG_IF(WARNING, !presented_callbacks_.empty())
-      << "DidReceiveSwapBuffersAck() is not called for the last SwapBuffers!";
   // Run callbacks early to allow pipelining and collect presented callbacks.
   for (const auto& id_entry : aggregator_->previous_contained_surfaces()) {
     Surface* surface = surface_manager_->GetSurfaceForId(id_entry.first);
-    if (surface) {
-      Surface::PresentedCallback callback;
-      if (surface->TakePresentedCallback(&callback))
-        presented_callbacks_.push_back(std::move(callback));
+    if (surface)
       surface->RunDrawCallback();
-    }
   }
 
   frame.metadata.latency_info.insert(frame.metadata.latency_info.end(),
@@ -359,9 +353,31 @@ bool Display::DrawAndSwap() {
     TRACE_EVENT_INSTANT0("viz", "Draw skipped.", TRACE_EVENT_SCOPE_THREAD);
   }
 
-  bool should_swap = should_draw && size_matches;
+  DLOG_IF(WARNING, !presented_callbacks_.empty())
+      << "DidReceiveSwapBuffersAck() is not called for the last SwapBuffers!";
+  for (const auto& id_entry : aggregator_->previous_contained_surfaces()) {
+    Surface* surface = surface_manager_->GetSurfaceForId(id_entry.first);
+    if (surface) {
+      Surface::PresentedCallback callback;
+      if (surface->TakePresentedCallback(&callback))
+        presented_callbacks_.push_back(std::move(callback));
+    }
+  }
+
+  bool should_swap =
+      (should_draw || !presented_callbacks_.empty()) && size_matches;
   if (should_swap) {
     swapped_since_resize_ = true;
+
+    DLOG_IF(WARNING, !presented_callbacks_.empty())
+        << "DidReceiveSwapBuffersAck() is not called for the last SwapBuffers!";
+    for (const auto& id_entry : aggregator_->previous_contained_surfaces()) {
+      Surface* surface = surface_manager_->GetSurfaceForId(id_entry.first);
+      Surface::PresentedCallback callback;
+      if (surface && surface->TakePresentedCallback(&callback))
+        presented_callbacks_.push_back(std::move(callback));
+    }
+
     for (auto& latency : frame.metadata.latency_info) {
       TRACE_EVENT_WITH_FLOW1(
           "input,benchmark", "LatencyInfo.Flow",
@@ -396,7 +412,7 @@ bool Display::DrawAndSwap() {
   return true;
 }
 
-void Display::DidReceiveSwapBuffersAck() {
+void Display::DidReceiveSwapBuffersAck(uint32_t count) {
   // TODO(penghuang): Remove it when we can get accurate presentation time from
   // GPU for every SwapBuffers. https://crbug.com/776877
   if (!active_presented_callbacks_.empty() ||
@@ -419,8 +435,10 @@ void Display::DidReceiveTextureInUseResponses(
     renderer_->DidReceiveTextureInUseResponses(responses);
 }
 
-void Display::DidUpdateVSyncParameters(base::TimeTicks timebase,
-                                       base::TimeDelta interval) {
+void Display::DidPresentation(uint32_t count,
+                              base::TimeTicks timebase,
+                              base::TimeDelta interval,
+                              uint32_t flags) {
   // TODO(penghuang): Remove it when we can get accurate presentation time from
   // GPU for every SwapBuffers. https://crbug.com/776877
   base::TimeTicks previous_timebase =
