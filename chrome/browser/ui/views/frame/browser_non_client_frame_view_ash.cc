@@ -76,8 +76,7 @@ BrowserNonClientFrameViewAsh::BrowserNonClientFrameViewAsh(
     : BrowserNonClientFrameView(frame, browser_view),
       caption_button_container_(nullptr),
       back_button_(nullptr),
-      window_icon_(nullptr),
-      hosted_app_button_container_(nullptr) {
+      window_icon_(nullptr) {
   ash::wm::InstallResizeHandleWindowTargeterForWindow(frame->GetNativeWindow(),
                                                       nullptr);
   ash::Shell::Get()->AddShellObserver(this);
@@ -130,11 +129,12 @@ void BrowserNonClientFrameViewAsh::Init() {
 
       // Add the container for extra hosted app buttons (e.g app menu button).
       SkColor text_color = header_painter->GetTitleColor();
-      hosted_app_button_container_ = new HostedAppButtonContainer(
-          browser_view(), text_color,
+      CreateHostedAppButtonContainer(
+          text_color,
           SkColorSetA(text_color,
-                      255 * ash::kInactiveFrameButtonIconAlphaRatio));
-      caption_button_container_->AddChildViewAt(hosted_app_button_container_,
+                      255 * ash::kInactiveFrameButtonIconAlphaRatio),
+          ash::DefaultHeaderPainter::GetTitleFontList());
+      caption_button_container_->AddChildViewAt(hosted_app_button_container(),
                                                 0);
     } else {
       header_painter = new ash::DefaultHeaderPainter;
@@ -249,11 +249,11 @@ gfx::Rect BrowserNonClientFrameViewAsh::GetWindowBoundsForClientBounds(
 }
 
 int BrowserNonClientFrameViewAsh::NonClientHitTest(const gfx::Point& point) {
-  if (hosted_app_button_container_) {
+  if (hosted_app_button_container()) {
     gfx::Point client_point(point);
-    View::ConvertPointToTarget(this, hosted_app_button_container_,
+    View::ConvertPointToTarget(this, hosted_app_button_container(),
                                &client_point);
-    if (hosted_app_button_container_->HitTestPoint(client_point))
+    if (hosted_app_button_container()->HitTestPoint(client_point))
       return HTCLIENT;
   }
 
@@ -311,8 +311,8 @@ void BrowserNonClientFrameViewAsh::OnPaint(gfx::Canvas* canvas) {
       ash::HeaderPainter::MODE_ACTIVE : ash::HeaderPainter::MODE_INACTIVE;
   header_painter_->PaintHeader(canvas, header_mode);
 
-  if (hosted_app_button_container_)
-    hosted_app_button_container_->SetPaintAsActive(should_paint_as_active);
+  if (hosted_app_button_container())
+    hosted_app_button_container()->SetPaintAsActive(should_paint_as_active);
 
   if (browser_view()->IsToolbarVisible() &&
       !browser_view()->toolbar()->GetPreferredSize().IsEmpty() &&

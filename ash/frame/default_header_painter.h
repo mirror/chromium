@@ -34,6 +34,9 @@ class FrameCaptionButtonContainerView;
 class ASH_EXPORT DefaultHeaderPainter : public HeaderPainter,
                                         public gfx::AnimationDelegate {
  public:
+  // Returns the FontList to use for the title.
+  static const gfx::FontList& GetTitleFontList();
+
   explicit DefaultHeaderPainter(
       mojom::WindowStyle window_style = mojom::WindowStyle::DEFAULT);
   ~DefaultHeaderPainter() override;
@@ -75,9 +78,6 @@ class ASH_EXPORT DefaultHeaderPainter : public HeaderPainter,
   bool ShouldUseLightImages() const;
 
  protected:
-  // Returns the FontList to use for the title.
-  static const gfx::FontList& GetTitleFontList();
-
   // Paints the title bar, primarily the title string.
   virtual void PaintTitleBar(gfx::Canvas* canvas);
 
