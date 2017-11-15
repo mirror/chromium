@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03534913_08c8b154",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-15T20:57:45Z",
+      "side": 1,
+      "message": "I\u0027d prefer not using auto in this scenario as it\u0027s not clear what the actual type is from the local context (i.e. I have to look up what keyframe.Properties() returns). It doesn\u0027t seem to fit any of the cases mentioned on the style guide: https://google.github.io/styleguide/cppguide.html#auto",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "e7bfe982f2ea0ce0f73d3b1cdebef304c5c6f935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c74b36_b61d51ae",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-15T20:57:45Z",
+      "side": 1,
+      "message": "What is BaseComputedKeyframe? Did you mean KeyframeEffectModelBase?",
+      "range": {
+        "startLine": 370,
+        "startChar": 29,
+        "endLine": 370,
+        "endChar": 49
+      },
+      "revId": "e7bfe982f2ea0ce0f73d3b1cdebef304c5c6f935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199260d6_2faa65f6",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-15T20:57:45Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it make more sense to make Keyframe able to build most of the object and just attach the keyframe effect specific piece (the computed offset) here?",
+      "revId": "e7bfe982f2ea0ce0f73d3b1cdebef304c5c6f935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8209d7_e7ca758d",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-15T20:57:45Z",
+      "side": 1,
+      "message": "Bug?",
+      "revId": "e7bfe982f2ea0ce0f73d3b1cdebef304c5c6f935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
