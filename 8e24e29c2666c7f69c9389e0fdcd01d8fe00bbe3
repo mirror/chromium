@@ -281,6 +281,30 @@
       "revId": "8e24e29c2666c7f69c9389e0fdcd01d8fe00bbe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5775b6b_4b8dc902",
+        "filename": "base/android/library_loader/library_prefetcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-15T14:03:01Z",
+      "side": 1,
+      "message": "thank you, sgtm",
+      "parentUuid": "b28b35bc_88219800",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 55
+      },
+      "revId": "8e24e29c2666c7f69c9389e0fdcd01d8fe00bbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

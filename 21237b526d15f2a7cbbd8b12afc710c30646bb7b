@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a221c1f1_a600d04a",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-15T14:03:01Z",
+      "side": 1,
+      "message": "One check in PeriodicallyCollectResidency() should be enough. Not everyone knows what sysconf is, so it is better to avoid sprinkling it too much.\n\nMore generally, I\u0027m OK with extra paranoia, but frankly, the event of sysconf blowing up on an Android platform capable of running Chrome is more likely than the event of not using 4K pages on a platform like this.",
+      "range": {
+        "startLine": 191,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 41
+      },
+      "revId": "21237b526d15f2a7cbbd8b12afc710c30646bb7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
