@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b58139db_c54dd75f",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-15T17:37:09Z",
+      "side": 1,
+      "message": "Doesn\u0027t it also imply a circular dependency now?\n\nThe SystemURLRequestContext\u0027s ct_verifier depends on ct_tree_tracker, which depends on the SystemURLRequestContext (by virtue of of host_resolver)\n\n+1 to moving this later, as that would also resolve that dependency graph issue",
+      "parentUuid": "c26221da_45668214",
+      "range": {
+        "startLine": 826,
+        "startChar": 15,
+        "endLine": 826,
+        "endChar": 26
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4d682bc_ffe36154",
         "filename": "components/certificate_transparency/single_tree_tracker.cc",
         "patchSetId": 5
@@ -90,6 +114,74 @@
         "endLine": 281,
         "endChar": 45
       },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0066e7b6_3ee4ddd3",
+        "filename": "components/certificate_transparency/single_tree_tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-15T17:37:09Z",
+      "side": 1,
+      "message": "Document",
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74223c42_313e5cce",
+        "filename": "components/certificate_transparency/tree_state_tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-15T17:37:09Z",
+      "side": 1,
+      "message": "document",
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda6dbe6_6e702c80",
+        "filename": "components/certificate_transparency/tree_state_tracker_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-15T17:37:09Z",
+      "side": 1,
+      "message": "naming",
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e639b6e_69b81ea0",
+        "filename": "net/cert/ct_verifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-15T17:37:09Z",
+      "side": 1,
+      "message": "document",
       "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
