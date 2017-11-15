@@ -105,6 +105,24 @@
       "revId": "41a19c1a55e832bf1f6d2e5e2c41561efec448bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ab560a_f3d4f2d6",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-15T01:28:56Z",
+      "side": 1,
+      "message": "This can return false also if the extension does not have the \"file_system_provider\" permission, which is legal. So it\u0027s good as it is.",
+      "parentUuid": "ef99dc75_49c184ba",
+      "revId": "41a19c1a55e832bf1f6d2e5e2c41561efec448bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
