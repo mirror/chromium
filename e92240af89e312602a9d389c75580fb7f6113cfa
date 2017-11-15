@@ -34,6 +34,40 @@
       "revId": "e92240af89e312602a9d389c75580fb7f6113cfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330158d8_325d2ed4",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-15T23:04:26Z",
+      "side": 1,
+      "message": "Internally, showPath will call ShowItemInFolder -- which I think is a much clearer name. WDYT of using the name ShowItemInFolder here?\n\n(Or ShowExtensionInFolder?)",
+      "revId": "e92240af89e312602a9d389c75580fb7f6113cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721fc40c_332dbcb9",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-15T23:04:26Z",
+      "side": 1,
+      "message": "Consider using a utf-8 string here. Since this will be converted back to utf-8. (It\u0027s not a big cpu hit, but seems cleaner to just use utf-8).",
+      "revId": "e92240af89e312602a9d389c75580fb7f6113cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
