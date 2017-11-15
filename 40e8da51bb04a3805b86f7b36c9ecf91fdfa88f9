@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "395ec565_8c9527c1",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 4591,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T05:16:50Z",
+      "side": 1,
+      "message": "I\u0027m worried translators might struggle with this.. Maybe \"Gmail\" would be a better app name to go with google.com",
+      "range": {
+        "startLine": 4591,
+        "startChar": 34,
+        "endLine": 4591,
+        "endChar": 40
+      },
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb9d40a_5528d214",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T05:16:50Z",
+      "side": 1,
+      "message": "hmmmm. what happens if the extension is uninstalled while the window is open? Maybe that\u0027s dealt with already, but it could be worth a comment here.",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c70993c8_59047fa6",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T05:16:50Z",
+      "side": 1,
+      "message": "what\u0027s a registry? Maybe provide an example.",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef50ea9a_d27841eb",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T05:16:50Z",
+      "side": 1,
+      "message": "move to tighter scope. Or make HeaderPainter::Init() virtual, override it, and derive it there.",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd71ea8_357532c0",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T05:16:50Z",
+      "side": 1,
+      "message": "The enclosing `if` is getting a bit unwieldy.\n\ncan this (and more) move into HostedAppHeaderPainterAsh::Init()?\n\nit would be good to move |hosted_app_button_container_|  in there as well, which might mean BrowserNonClientFrameViewAsh::NonClientHitTest() needs to consult the HeaderPainter - I think that\u0027s Ok.\n\nShould we rename HeaderPainter to something less Painty?",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2af350b_696d2ea9",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T05:16:50Z",
+      "side": 1,
+      "message": "it would be good to consolidate calls to this.",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb0579a_d0e2e8ec",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T05:16:50Z",
+      "side": 1,
+      "message": "hmmm there\u0027s probably localization implications around this.. are there any FOO_SEPARATOR resources already that have solved this?",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fbc594b_472d683b",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T05:16:50Z",
+      "side": 1,
+      "message": "move closer to first use",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a77a006_cbf5d0f2",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T05:16:50Z",
+      "side": 1,
+      "message": "why no subpixel?",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1d955f_d7b76b46",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T05:16:50Z",
+      "side": 1,
+      "message": "should GetTitleBounds() be called GetAvailableTitleBounds or something? this logic seems weird. \n\nCan it be done with a single call to DrawStringRectWithFlags()?\n\nMaybe an example will help. Or some more verbose names to disambiguate the various |title| strings.",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa76eb9b_46fc62a5",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_header_painter_ash.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T05:16:50Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "40e8da51bb04a3805b86f7b36c9ecf91fdfa88f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
