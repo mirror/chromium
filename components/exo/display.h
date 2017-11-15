@@ -27,6 +27,7 @@ class DataDeviceDelegate;
 class FileHelper;
 class NotificationSurface;
 class NotificationSurfaceManager;
+class Seat;
 class SharedMemory;
 class ShellSurface;
 class SubSurface;

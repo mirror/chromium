@@ -24,6 +24,7 @@ source_set("exo") {
     "display.h",
     "gaming_seat.cc",
     "gaming_seat.h",
+    "gaming_seat_delegate.h",
     "keyboard.cc",
     "keyboard.h",
     "keyboard_delegate.h",
