@@ -1596,7 +1596,6 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, DiscardWithoutId) {
   EXPECT_TRUE(api_test_utils::GetBoolean(result.get(), "discarded"));
 }
 
-#if !defined(OS_CHROMEOS)
 // Tests chrome.tabs.discard() without disabling protection time.
 IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, DiscardNoTabProtection) {
   // Create an additional tab.
@@ -1604,6 +1603,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, DiscardNoTabProtection) {
       browser(), GURL(url::kAboutBlankURL),
       WindowOpenDisposition::NEW_BACKGROUND_TAB,
       ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+
+  FastForwardAfterDiscardProtectionTime();
 
   // Set up the function with an extension.
   scoped_refptr<const Extension> extension = ExtensionBuilder("Test").Build();
@@ -1624,7 +1625,6 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, DiscardNoTabProtection) {
   // Check error message.
   EXPECT_TRUE(base::MatchPattern(error, keys::kCannotFindTabToDiscard));
 }
-#endif  // !defined(OS_CHROMEOS)
 
 IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, AutoDiscardableProperty) {
   // Create two aditional tabs.
