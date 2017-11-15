@@ -140,6 +140,15 @@ class NavigationURLLoaderTest : public testing::Test {
         switches::kEnableBrowserSideNavigation);
   }
 
+  ~NavigationURLLoaderTest() override {
+    // Outside of this tests, the ResourceDispatcherHost lives on the IO thread
+    // and the NavigationURLLoaderDelegate on the UI thread. In this test, they
+    // are both on the same one. It makes ResourceDispatcherHost destructor to
+    // be called too early. Some pending tasks need to be executed before.
+    // Typically, notifications that a request has been canceled.
+    base::RunLoop().RunUntilIdle();
+  }
+
   std::unique_ptr<NavigationURLLoader> MakeTestLoader(
       const GURL& url,
       NavigationURLLoaderDelegate* delegate) {
@@ -478,6 +487,7 @@ TEST_F(NavigationURLLoaderTest, DownloadAllowed) {
   delegate.WaitForResponseStarted();
   EXPECT_TRUE(delegate.is_download());
   loader.reset();
+  EXPECT_TRUE(net::URLRequestTestJob::ProcessOnePendingMessage());
   base::RunLoop().RunUntilIdle();
 }
 
