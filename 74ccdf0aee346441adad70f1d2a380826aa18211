@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "2e02b784_ba2405d9",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-15T07:29:50Z",
+      "side": 1,
+      "message": "Great idea, done!",
+      "parentUuid": "14963e26_5291e8e0",
+      "revId": "74ccdf0aee346441adad70f1d2a380826aa18211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c2b41a7_09dd3cb3",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
         "patchSetId": 20
@@ -85,6 +103,30 @@
       "revId": "74ccdf0aee346441adad70f1d2a380826aa18211",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667884b2_08e528f0",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-15T07:29:50Z",
+      "side": 1,
+      "message": "Yes, this just plumbs through the button to the Configuration object as currently. Let\u0027s definitely discuss next steps on improving the wider picture here, thanks!",
+      "parentUuid": "1c2b41a7_09dd3cb3",
+      "range": {
+        "startLine": 739,
+        "startChar": 9,
+        "endLine": 739,
+        "endChar": 25
+      },
+      "revId": "74ccdf0aee346441adad70f1d2a380826aa18211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
