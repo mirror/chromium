@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f234752_9c411ca8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-11-15T22:49:31Z",
+      "side": 1,
+      "message": "So now child_data.margins no longer includes the effect from auto margins -- isn\u0027t that wrong?",
+      "revId": "9d07956e00cd00f9953963ffa6eecf763812e55d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
