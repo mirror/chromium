@@ -76,6 +76,24 @@
     },
     {
       "key": {
+        "uuid": "a8a06bed_59adbf08",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-15T07:02:44Z",
+      "side": 1,
+      "message": "Yes, but the file has been using sub_request_.reset(new SubRequest... pattern, and since this patch was already so big I didn\u0027t want to go through the entire file and clean it up in this patch. Instead the best course of action was to follow the current pattern and fix it later.",
+      "parentUuid": "8b9612a2_fc89c389",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5292b3e_f8a67dc6",
         "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
         "patchSetId": 20
@@ -87,6 +105,24 @@
       "writtenOn": "2017-11-15T06:25:28Z",
       "side": 1,
       "message": "Not sure why this needs to be a CHECK(). If it\u0027s a nullptr, it\u0027s going to crash on the next line anyway.",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d741ed30_bad30a38",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-15T07:02:44Z",
+      "side": 1,
+      "message": "No reason, was done this way because the old code used CHECK... came from from copy-pasta.",
+      "parentUuid": "e5292b3e_f8a67dc6",
       "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "dffd8d2e_145abc2e",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-15T07:02:44Z",
+      "side": 1,
+      "message": "Yes, good catch.",
+      "parentUuid": "0a051495_8a831911",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfcfde8e_f3a7bb39",
         "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
         "patchSetId": 20
@@ -172,6 +226,24 @@
       "writtenOn": "2017-11-15T06:25:28Z",
       "side": 1,
       "message": "Maybe this could have been combined with the else if?",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9230f7c2_9957ce28",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-15T07:02:44Z",
+      "side": 1,
+      "message": "oops, not sure how this got through ya it should be combined.",
+      "parentUuid": "cfcfde8e_f3a7bb39",
       "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +278,24 @@
       "writtenOn": "2017-11-15T06:25:28Z",
       "side": 1,
       "message": "Not sure what protocol::Maybe is exactly, but this is definitely uninitialized in BuildRequestInfo().",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9663747f_c4f35ec1",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-15T07:02:44Z",
+      "side": 1,
+      "message": "Yep this was the one causing the bots to fail. This probably wasn\u0027t caught earlier because it was added late in this patch.",
+      "parentUuid": "8ff4bb81_65e8e146",
       "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
