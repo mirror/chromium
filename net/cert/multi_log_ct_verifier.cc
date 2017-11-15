@@ -82,6 +82,7 @@ void MultiLogCTVerifier::SetObserver(Observer* observer) {
 }
 
 void MultiLogCTVerifier::Verify(
+    base::StringPiece hostname,
     X509Certificate* cert,
     base::StringPiece stapled_ocsp_response,
     base::StringPiece sct_list_from_tls_extension,
@@ -102,7 +103,7 @@ void MultiLogCTVerifier::Verify(
     if (ct::GetPrecertSignedEntry(cert->os_cert_handle(),
                                   cert->GetIntermediateCertificates().front(),
                                   &precert_entry)) {
-      VerifySCTs(embedded_scts, precert_entry,
+      VerifySCTs(hostname, embedded_scts, precert_entry,
                  ct::SignedCertificateTimestamp::SCT_EMBEDDED, cert,
                  output_scts);
     }
@@ -127,11 +128,11 @@ void MultiLogCTVerifier::Verify(
 
   ct::SignedEntryData x509_entry;
   if (ct::GetX509SignedEntry(cert->os_cert_handle(), &x509_entry)) {
-    VerifySCTs(sct_list_from_ocsp, x509_entry,
+    VerifySCTs(hostname, sct_list_from_ocsp, x509_entry,
                ct::SignedCertificateTimestamp::SCT_FROM_OCSP_RESPONSE, cert,
                output_scts);
 
-    VerifySCTs(sct_list_from_tls_extension, x509_entry,
+    VerifySCTs(hostname, sct_list_from_tls_extension, x509_entry,
                ct::SignedCertificateTimestamp::SCT_FROM_TLS_EXTENSION, cert,
                output_scts);
   }
@@ -146,6 +147,7 @@ void MultiLogCTVerifier::Verify(
 }
 
 void MultiLogCTVerifier::VerifySCTs(
+    base::StringPiece hostname,
     base::StringPiece encoded_sct_list,
     const ct::SignedEntryData& expected_entry,
     ct::SignedCertificateTimestamp::Origin origin,
@@ -171,11 +173,12 @@ void MultiLogCTVerifier::VerifySCTs(
     }
     decoded_sct->origin = origin;
 
-    VerifySingleSCT(decoded_sct, expected_entry, cert, output_scts);
+    VerifySingleSCT(hostname, decoded_sct, expected_entry, cert, output_scts);
   }
 }
 
 bool MultiLogCTVerifier::VerifySingleSCT(
+    base::StringPiece hostname,
     scoped_refptr<ct::SignedCertificateTimestamp> sct,
     const ct::SignedEntryData& expected_entry,
     X509Certificate* cert,
@@ -205,7 +208,7 @@ bool MultiLogCTVerifier::VerifySingleSCT(
 
   AddSCTAndLogStatus(sct, ct::SCT_STATUS_OK, output_scts);
   if (observer_)
-    observer_->OnSCTVerified(cert, sct.get());
+    observer_->OnSCTVerified(hostname, cert, sct.get());
   return true;
 }
 

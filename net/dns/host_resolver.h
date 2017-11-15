@@ -187,6 +187,11 @@ class NET_EXPORT HostResolver {
   // Used primarily to clear the cache and for getting debug information.
   virtual HostCache* GetHostCache();
 
+  // Returns the HostCache::Entry created during a previously hostname
+  // resolution identified by |key|, or NULL if there isn't one.
+  // May return stale cache entries.
+  virtual const HostCache::Entry* GetHostCacheEntry(const HostCache::Key& key);
+
   // Returns the current DNS configuration |this| is using, as a Value, or
   // nullptr if it's configured to always use the system host resolver.
   virtual std::unique_ptr<base::Value> GetDnsConfigAsValue() const;
