@@ -8,10 +8,10 @@
 #include "base/command_line.h"
 #include "base/strings/stringprintf.h"
 #include "components/exo/buffer.h"
-#include "components/exo/shell_surface.h"
 #include "components/exo/sub_surface.h"
 #include "components/exo/test/exo_test_base.h"
 #include "components/exo/test/exo_test_helper.h"
+#include "components/exo/xdg_shell_surface.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
@@ -116,7 +116,7 @@ TEST_P(SurfaceTest, Damage) {
   std::unique_ptr<Buffer> buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
   std::unique_ptr<Surface> surface(new Surface);
-  auto shell_surface = std::make_unique<ShellSurface>(surface.get());
+  auto shell_surface = std::make_unique<XdgShellSurface>(surface.get());
 
   // Attach the buffer to the surface. This will update the pending bounds of
   // the surface to the buffer size.
