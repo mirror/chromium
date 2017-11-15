@@ -1766,6 +1766,7 @@ test("content_unittests") {
       "../browser/renderer_host/p2p/socket_host_test_utils.cc",
       "../browser/renderer_host/p2p/socket_host_test_utils.h",
       "../browser/renderer_host/p2p/socket_host_udp_unittest.cc",
+      "../browser/webrtc/webrtc_event_log_manager_unittest.cc",
       "../browser/webrtc/webrtc_eventlog_host_unittest.cc",
       "../browser/webrtc/webrtc_internals_unittest.cc",
       "../renderer/media/audio_repetition_detector_unittest.cc",
