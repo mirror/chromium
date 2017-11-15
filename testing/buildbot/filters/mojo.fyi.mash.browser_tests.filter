@@ -34,7 +34,6 @@
 -BrowserNonClientFrameViewAshBackButtonTest.*
 -BrowserNonClientFrameViewAshTest.*
 -BrowserTabRestoreTest.*
--BrowserTest.*
 -BrowserTestTabbedOrApp/BrowserTestParam.*
 -CaptivePortalAuthenticationIgnoresProxy/NetworkPortalDetectorImplBrowserTestIgnoreProxy.*
 -CaptivePortalWindowCtorDtorTest.*
