@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "636676f4_33592174",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T05:35:19Z",
+      "side": 1,
+      "message": "Just to be sure, \"fine to leave this\" means to not call ReceivedBadMessage() and just ignore silently, or to call ReceivedBadMessage() with some existing bad message reason?",
+      "parentUuid": "7fe56586_1f2b90aa",
+      "revId": "173302bcb5f2ff1fb50c7495d5a86c4ea8f93440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb11c4e0_0d90fc14",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 9
