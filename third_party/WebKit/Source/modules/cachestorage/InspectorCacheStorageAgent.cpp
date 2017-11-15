@@ -131,6 +131,8 @@ CString CacheStorageErrorString(mojom::CacheStorageError error) {
       return CString("operation too large.");
     case mojom::CacheStorageError::kErrorStorage:
       return CString("storage failure.");
+    case mojom::CacheStorageError::kErrorBadMessage:
+      return CString("unexpected operation.");
     case mojom::CacheStorageError::kSuccess:
       // This function should only be called upon error.
       break;
