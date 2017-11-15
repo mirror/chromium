@@ -86,6 +86,7 @@ class CORE_EXPORT ScriptController final
   void ExecuteScriptInMainWorld(
       const String&,
       ExecuteScriptPolicy = kDoNotExecuteScriptWhenScriptsDisabled);
+  void ExecuteScriptInMainWorld(const ScriptSourceCode&, ExecuteScriptPolicy);
   void ExecuteScriptInMainWorld(
       const ScriptSourceCode&,
       const ScriptFetchOptions& = ScriptFetchOptions(),

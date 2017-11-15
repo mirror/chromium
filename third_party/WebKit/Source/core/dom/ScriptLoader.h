@@ -21,6 +21,7 @@
 #ifndef ScriptLoader_h
 #define ScriptLoader_h
 
+#include "bindings/core/v8/ScriptSourceOrigin.h"
 #include "core/CoreExport.h"
 #include "core/dom/PendingScript.h"
 #include "core/dom/Script.h"
@@ -112,6 +113,7 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
   bool AlreadyStarted() const { return already_started_; }
   bool IsNonBlocking() const { return non_blocking_; }
   ScriptType GetScriptType() const { return script_type_; }
+  ScriptSourceOrigin GetSourceOrigin() const;
 
   // Helper functions used by our parent classes.
   void DidNotifySubtreeInsertionsToDocument();

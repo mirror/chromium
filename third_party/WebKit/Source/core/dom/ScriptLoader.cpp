@@ -475,8 +475,8 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
         // text, settings object, base URL, and options.
         //
         // TODO(hiroshige): Implement base URL and options.
-        prepared_pending_script_ =
-            ClassicPendingScript::CreateInline(element_, position, options);
+        prepared_pending_script_ = ClassicPendingScript::CreateInline(
+            element_, position, GetSourceOrigin(), options);
 
         // 2. Set the script's script to script.
         // 3. The script is ready.
@@ -667,6 +667,16 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
                         : KURL();
   ExecuteScriptBlock(TakePendingScript(), script_url);
   return true;
+}
+
+ScriptSourceOrigin ScriptLoader::GetSourceOrigin() const {
+  if (element_->HasSourceAttribute())
+    return ScriptSourceOrigin::kExternalFile;
+  if (!IsParserInserted())
+    return ScriptSourceOrigin::kInlineInsideGeneratedElement;
+  if (!element_->GetDocument().IsInDocumentWrite())
+    return ScriptSourceOrigin::kInlineInsideDocumentWrite;
+  return ScriptSourceOrigin::kInline;
 }
 
 // https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-classic-script

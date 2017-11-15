@@ -921,7 +921,8 @@ void InspectorOverlayAgent::EvaluateInOverlay(const String& method,
   ToLocalFrame(OverlayPage()->MainFrame())
       ->GetScriptController()
       .ExecuteScriptInMainWorld(
-          "dispatch(" + command->serialize() + ")",
+          ScriptSourceCode("dispatch(" + command->serialize() + ")",
+                           ScriptSourceOrigin::kInspector),
           ScriptController::kExecuteScriptWhenScriptsDisabled);
 }
 
@@ -935,7 +936,8 @@ void InspectorOverlayAgent::EvaluateInOverlay(
   ToLocalFrame(OverlayPage()->MainFrame())
       ->GetScriptController()
       .ExecuteScriptInMainWorld(
-          "dispatch(" + command->serialize() + ")",
+          ScriptSourceCode("dispatch(" + command->serialize() + ")",
+                           ScriptSourceOrigin::kInspector),
           ScriptController::kExecuteScriptWhenScriptsDisabled);
 }
 
@@ -946,7 +948,8 @@ String InspectorOverlayAgent::EvaluateInOverlayForTest(const String& script) {
       ToLocalFrame(OverlayPage()->MainFrame())
           ->GetScriptController()
           .ExecuteScriptInMainWorldAndReturnValue(
-              ScriptSourceCode(script), ScriptFetchOptions(),
+              ScriptSourceCode(script, ScriptSourceOrigin::kInspector),
+              ScriptFetchOptions(),
               ScriptController::kExecuteScriptWhenScriptsDisabled);
   return ToCoreStringWithUndefinedOrNullCheck(string);
 }

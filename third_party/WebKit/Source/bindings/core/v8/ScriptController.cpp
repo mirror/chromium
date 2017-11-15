@@ -249,7 +249,8 @@ bool ScriptController::ExecuteScriptIfJavaScriptURL(const KURL& url,
   ScriptFetchOptions fetch_options;
   // TODO(kouhei): set up |fetch_options| properly.
   v8::Local<v8::Value> result = EvaluateScriptInMainWorld(
-      ScriptSourceCode(script_source), fetch_options, kNotSharableCrossOrigin,
+      ScriptSourceCode(script_source, ScriptSourceOrigin::kJavascriptUrl),
+      fetch_options, kNotSharableCrossOrigin,
       kDoNotExecuteScriptWhenScriptsDisabled);
 
   // If executing script caused this frame to be removed from the page, we
@@ -278,7 +279,16 @@ bool ScriptController::ExecuteScriptIfJavaScriptURL(const KURL& url,
 void ScriptController::ExecuteScriptInMainWorld(const String& script,
                                                 ExecuteScriptPolicy policy) {
   v8::HandleScope handle_scope(GetIsolate());
-  EvaluateScriptInMainWorld(ScriptSourceCode(script), ScriptFetchOptions(),
+  EvaluateScriptInMainWorld(
+      ScriptSourceCode(script, ScriptSourceOrigin::kUnknown),
+      ScriptFetchOptions(), kNotSharableCrossOrigin, policy);
+}
+
+void ScriptController::ExecuteScriptInMainWorld(
+    const ScriptSourceCode& source_code,
+    ExecuteScriptPolicy policy) {
+  v8::HandleScope handle_scope(GetIsolate());
+  EvaluateScriptInMainWorld(source_code, ScriptFetchOptions(),
                             kNotSharableCrossOrigin, policy);
 }
 

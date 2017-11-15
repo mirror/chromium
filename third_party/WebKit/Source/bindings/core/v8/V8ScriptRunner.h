@@ -29,6 +29,7 @@
 #include <stdint.h>
 
 #include "bindings/core/v8/ReferrerScriptInfo.h"
+#include "bindings/core/v8/ScriptSourceOrigin.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "core/CoreExport.h"
@@ -65,6 +66,7 @@ class CORE_EXPORT V8ScriptRunner final {
                                                   const String& file_name,
                                                   const String& source_map_url,
                                                   const TextPosition&,
+                                                  const ScriptSourceOrigin&,
                                                   CachedMetadataHandler*,
                                                   AccessControlStatus,
                                                   V8CacheOptions,
@@ -78,6 +80,7 @@ class CORE_EXPORT V8ScriptRunner final {
                                                   const String& file_name,
                                                   const String& source_map_url,
                                                   const TextPosition&,
+                                                  const ScriptSourceOrigin&,
                                                   ScriptResource*,
                                                   ScriptStreamer*,
                                                   CachedMetadataHandler*,
