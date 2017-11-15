@@ -151,9 +151,12 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
 
   std::vector<uint8_t> received_nonce(std::begin(payload),
                                       std::begin(payload) + 8);
+
+  // Received a message from different channel. Disregard and continue reading.
   if (nonce != received_nonce) {
-    state_ = State::DEVICE_ERROR;
-    Transition(nullptr, callback);
+    ReadMessage(base::BindOnce(&U2fHidDevice::OnAllocateChannel,
+                               weak_factory_.GetWeakPtr(), nonce,
+                               std::move(command), callback));
     return;
   }
 
