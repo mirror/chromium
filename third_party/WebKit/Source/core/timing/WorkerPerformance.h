@@ -62,6 +62,9 @@ class WorkerPerformance final : public PerformanceBase {
   explicit WorkerPerformance(WorkerGlobalScope*);
 
   Member<ExecutionContext> execution_context_;
+
+ protected:
+  void CountWithUserCounter() override;
 };
 
 }  // namespace blink

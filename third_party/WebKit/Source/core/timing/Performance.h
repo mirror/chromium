@@ -90,6 +90,9 @@ class CORE_EXPORT Performance final : public PerformanceBase,
 
   mutable Member<PerformanceNavigation> navigation_;
   mutable Member<PerformanceTiming> timing_;
+
+ protected:
+  void CountWithUserCounter() override;
 };
 
 }  // namespace blink
