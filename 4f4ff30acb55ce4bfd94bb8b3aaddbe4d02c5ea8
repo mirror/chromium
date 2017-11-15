@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d98a681d_0902191a",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-15T00:18:57Z",
+      "side": 1,
+      "message": "const std::string\u0026 command",
+      "range": {
+        "startLine": 823,
+        "startChar": 54,
+        "endLine": 823,
+        "endChar": 60
+      },
+      "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83dfe1a2_14713512",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-15T00:18:57Z",
+      "side": 1,
+      "message": "Same comment as the previous CL: Is there a way to proceed without sending a command (e.g. by clicking the proceed button via ExecuteScript?)",
+      "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c7f5ec_d8a02098",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-15T00:18:57Z",
+      "side": 1,
+      "message": "The return type should be InterstitialNavType.\n\nAlternatively, just rename the method to bool IsInterstitialNavigationTransient() and use that everywhere. Then you wouldn\u0027t need the enum (I think).\n\nAlso, const method.",
+      "range": {
+        "startLine": 827,
+        "startChar": 2,
+        "endLine": 827,
+        "endChar": 6
+      },
+      "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6331dd89_3e2093a6",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-15T00:18:57Z",
+      "side": 1,
+      "message": "Drop else, it\u0027s cleaner.",
+      "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be860e6_4efed182",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-15T00:18:57Z",
+      "side": 1,
+      "message": "Optional nit: Consider renaming CommittedSSLUITest to SSLUICommittedTest so that it\u0027s still possible to run SSL browser tests with --gtest_filter\u003dSSL*.",
+      "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b0f8c7c_24affb3d",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-15T00:18:57Z",
+      "side": 1,
+      "message": "Extra semicolon",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567533c1_e4d30c3d",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-15T00:18:57Z",
+      "side": 1,
+      "message": "Long name is long! (is this a Chrome record?)",
+      "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
