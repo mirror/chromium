@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "7cf090cb_bbcdd6fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-15T12:44:38Z",
+      "side": 1,
+      "message": "Yes, it does, so this is fine, as long as we remember to not call this from a UI thread.",
+      "parentUuid": "cefc563e_920f9ea4",
+      "revId": "3c4d725927c13cc8d753a97bc88bda46e441ecb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c11a437a_435ca126",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
         "patchSetId": 1
