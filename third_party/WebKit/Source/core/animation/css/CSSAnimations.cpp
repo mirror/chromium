@@ -150,9 +150,10 @@ StringKeyframeEffectModel* CreateKeyframeEffectModel(
   size_t target_index = 0;
   for (size_t i = 1; i < keyframes.size(); i++) {
     if (keyframes[i]->Offset() == keyframes[target_index]->Offset()) {
-      for (const auto& property : keyframes[i]->Properties())
+      for (const auto& property : keyframes[i]->Properties()) {
         keyframes[target_index]->SetCSSPropertyValue(
-            property.CssProperty(), keyframes[i]->CssPropertyValue(property));
+            property.CssPropertyId(), keyframes[i]->CssPropertyValue(property));
+      }
     } else {
       target_index++;
       keyframes[target_index] = keyframes[i];
@@ -266,8 +267,8 @@ void CSSAnimations::CalculateCompositorAnimationUpdate(
 
     bool update_compositor_keyframes = false;
     if ((transform_zoom_changed || was_viewport_resized) &&
-        (keyframe_effect->Affects(PropertyHandle(CSSPropertyTransform)) ||
-         keyframe_effect->Affects(PropertyHandle(CSSPropertyTranslate))) &&
+        (keyframe_effect->Affects(PropertyHandle(GetCSSPropertyTransform())) ||
+         keyframe_effect->Affects(PropertyHandle(GetCSSPropertyTranslate()))) &&
         keyframe_effect->SnapshotAllCompositorKeyframes(element, style,
                                                         parent_style)) {
       update_compositor_keyframes = true;
@@ -614,7 +615,7 @@ void CSSAnimations::MaybeApplyPendingUpdate(Element* element) {
     if (property.IsCSSCustomProperty()) {
       animation->setId(property.CustomPropertyName());
     } else {
-      animation->setId(getPropertyName(property.CssProperty()));
+      animation->setId(getPropertyName(property.CssPropertyId()));
     }
     // Set the current time as the start time for retargeted transitions
     if (retargeted_compositor_transitions.Contains(property)) {
@@ -624,16 +625,16 @@ void CSSAnimations::MaybeApplyPendingUpdate(Element* element) {
     animation->Update(kTimingUpdateOnDemand);
     running_transition.animation = animation;
     transitions_.Set(property, running_transition);
-    DCHECK(isValidCSSPropertyID(property.CssProperty()));
+    DCHECK(isValidCSSPropertyID(property.CssPropertyId()));
     UseCounter::CountAnimatedCSS(element->GetDocument(),
-                                 property.CssProperty());
+                                 property.CssPropertyId());
 
     // TODO(crbug.com/458925): Remove legacy histogram and counts
     DEFINE_STATIC_LOCAL(SparseHistogram, property_histogram,
                         ("WebCore.Animation.CSSProperties"));
     property_histogram.Sample(
         UseCounter::MapCSSPropertyIdToCSSSampleIdForHistogram(
-            property.CssProperty()));
+            property.CssPropertyId()));
   }
   ClearPendingUpdate();
 }
@@ -800,7 +801,7 @@ void CSSAnimations::CalculateTransitionUpdateForProperty(
   end_keyframe->SetOffset(1);
   keyframes.push_back(end_keyframe);
 
-  if (CompositorAnimations::IsCompositableProperty(property.CssProperty())) {
+  if (property.CssProperty().IsCompositableProperty()) {
     scoped_refptr<AnimatableValue> from = CSSAnimatableValueFactory::Create(
         property.CssProperty(), state.old_style);
     scoped_refptr<AnimatableValue> to =
@@ -861,14 +862,16 @@ void CSSAnimations::CalculateTransitionUpdateForStandardProperty(
   for (unsigned i = 0; !i || i < property_list.length(); ++i) {
     CSSPropertyID longhand_id =
         property_list.length() ? property_list.properties()[i] : resolved_id;
-    PropertyHandle property = PropertyHandle(longhand_id);
     DCHECK_GE(longhand_id, firstCSSProperty);
+    const CSSProperty& property = CSSProperty::Get(longhand_id);
+    PropertyHandle property_handle = PropertyHandle(property);
 
-    if (!animate_all && !CSSProperty::Get(longhand_id).IsInterpolable()) {
+    if (!animate_all && !property.IsInterpolable()) {
       continue;
     }
 
-    CalculateTransitionUpdateForProperty(state, property, transition_index);
+    CalculateTransitionUpdateForProperty(state, property_handle,
+                                         transition_index);
   }
 }
 
@@ -1173,9 +1176,10 @@ void CSSAnimations::TransitionEventDelegate::OnEventCondition(
   if (current_phase == AnimationEffectReadOnly::kPhaseAfter &&
       current_phase != previous_phase_ &&
       GetDocument().HasListenerType(Document::kTransitionEndListener)) {
-    String property_name = property_.IsCSSCustomProperty()
-                               ? property_.CustomPropertyName()
-                               : getPropertyNameString(property_.CssProperty());
+    String property_name =
+        property_.IsCSSCustomProperty()
+            ? property_.CustomPropertyName()
+            : getPropertyNameString(property_.CssPropertyId());
     const Timing& timing = animation_node.SpecifiedTiming();
     double elapsed_time = timing.iteration_duration;
     const AtomicString& event_type = EventTypeNames::transitionend;
