@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fa47f030_55ffd272",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-15T00:06:03Z",
+      "side": 1,
+      "message": "May be call it:\nNetwork Quality Change Log\n?",
+      "range": {
+        "startLine": 89,
+        "startChar": 32,
+        "endLine": 89,
+        "endChar": 52
+      },
+      "revId": "148d0030a57ee6d206e7ba0bb8201d35e9f8815e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "457e0e42_ad219018",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 2
