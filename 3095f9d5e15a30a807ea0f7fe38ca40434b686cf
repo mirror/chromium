@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68f85725_979b291c",
+        "filename": "ui/android/event_forwarder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-15T00:47:25Z",
+      "side": 1,
+      "message": "Changed so that this test will be done in RWHVA after hit testing. It is combined with the handling of PINCH_BEGIN which is the first of 3 simulated events that consist of pinch zoom action.\n\nAnd removed all the page scale info from ViewAndroid.",
+      "parentUuid": "44a9353d_af7f0e59",
+      "revId": "3095f9d5e15a30a807ea0f7fe38ca40434b686cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a9a6015_4239d55f",
         "filename": "ui/android/java/src/org/chromium/ui/base/EventForwarder.java",
         "patchSetId": 6
@@ -77,6 +95,30 @@
       "writtenOn": "2017-11-14T23:44:43Z",
       "side": 1,
       "message": "what is this referring to?",
+      "range": {
+        "startLine": 22,
+        "startChar": 43,
+        "endLine": 22,
+        "endChar": 60
+      },
+      "revId": "3095f9d5e15a30a807ea0f7fe38ca40434b686cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f631cefc_a50c26a4",
+        "filename": "ui/events/android/gesture_event_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-15T00:47:25Z",
+      "side": 1,
+      "message": "Oh There is no corresponding java object. I just meant the info on gesture event. Rewrote it.",
+      "parentUuid": "7544f656_eeda5e47",
       "range": {
         "startLine": 22,
         "startChar": 43,
