@@ -215,6 +215,23 @@
     },
     {
       "key": {
+        "uuid": "8bbb9420_63cdbc44",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-15T03:24:20Z",
+      "side": 1,
+      "message": "creating an image is relatively expensive from a synchronization perspective. you might want to reuse the image when size is not changing and just ReleaseTexImage2D/BindTexImage2D for each copy operation. That\u0027s the standard usage all throughout chromium.",
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3f36868_5f92485b",
         "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
         "patchSetId": 8
@@ -268,6 +285,23 @@
     },
     {
       "key": {
+        "uuid": "e6038ca2_ef29de65",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-15T03:24:20Z",
+      "side": 1,
+      "message": "why not use CopyTextureCHROMIUM instead of manually creating FBOs here?",
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0b086d9_fc9ba64a",
         "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
         "patchSetId": 8
@@ -318,6 +352,40 @@
       "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "291ab9e5_7b9140c6",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-15T03:24:20Z",
+      "side": 1,
+      "message": "why is this flush needed?",
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1276a659_3e005d1b",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-15T03:24:20Z",
+      "side": 1,
+      "message": "can you describe what the purpose of this class is? why not fold this logic into VRDisplay class instead?",
+      "revId": "a3075ed31f885c98ca4cbc2217c7c5906dc368fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
