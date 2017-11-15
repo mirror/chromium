@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ebeded73_53954930",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-15T11:49:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebae9378_fcafc55a",
+      "revId": "e7cca2e0b22ba8b1b1c780b4512964377a3baa1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd982f12_27667811",
         "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8b87b6b3_89a0a046",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-15T11:49:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd982f12_27667811",
+      "revId": "e7cca2e0b22ba8b1b1c780b4512964377a3baa1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21c461f2_d3099bdb",
         "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-10T16:19:23Z",
       "side": 1,
       "message": "Could this be called in MaybeCommitPendingData() when trigger \u003d\u003d kVisitEnd?\n\nEdit: I see that you moved it out of the function now. Why?",
+      "revId": "e7cca2e0b22ba8b1b1c780b4512964377a3baa1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df1532f_93da4e65",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-15T11:49:29Z",
+      "side": 1,
+      "message": "There was an issue where player IDs could be reused between pages on the same origin. Therefore we need to stash the audible data between when we navigate (so we can reuse audible_players_ with the same ID) and when we commit and the end of the visit.",
+      "parentUuid": "21c461f2_d3099bdb",
       "revId": "e7cca2e0b22ba8b1b1c780b4512964377a3baa1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "38ffa598_49b845b0",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-15T11:49:29Z",
+      "side": 1,
+      "message": "Yes it is a no-op. The score is only committed if the value is changed.",
+      "parentUuid": "0a834b4c_3a49bc3b",
+      "revId": "e7cca2e0b22ba8b1b1c780b4512964377a3baa1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e5b23f2_787abecf",
         "filename": "chrome/browser/media/media_engagement_contents_observer.h",
         "patchSetId": 5
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2b9d9374_25e4e3bc",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-15T11:49:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e5b23f2_787abecf",
+      "revId": "e7cca2e0b22ba8b1b1c780b4512964377a3baa1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aae88d6_c54a0453",
         "filename": "chrome/browser/media/media_engagement_contents_observer.h",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "e7cca2e0b22ba8b1b1c780b4512964377a3baa1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59761430_bd9a6725",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-15T11:49:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aae88d6_c54a0453",
+      "revId": "e7cca2e0b22ba8b1b1c780b4512964377a3baa1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
