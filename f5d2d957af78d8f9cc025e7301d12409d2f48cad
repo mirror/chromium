@@ -22,6 +22,30 @@
       "revId": "f5d2d957af78d8f9cc025e7301d12409d2f48cad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4e279d_2e7ea634",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-15T12:52:45Z",
+      "side": 0,
+      "message": "Yeah, there\u0027s already the Notification class, which holds very similar data (but is overkill here) and there\u0027s been some confusion following the move of that between namespaces. I\u0027m a bit wary about creating yet another construct holding Notification data, as I think it will add to the confusion.",
+      "parentUuid": "abadc856_8782bb2f",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "f5d2d957af78d8f9cc025e7301d12409d2f48cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
