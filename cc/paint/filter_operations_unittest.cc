@@ -4,7 +4,8 @@
 
 #include <stddef.h>
 
-#include "cc/base/filter_operations.h"
+#include "cc/paint/filter_operations.h"
+
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/effects/SkBlurImageFilter.h"
 #include "third_party/skia/include/effects/SkDropShadowImageFilter.h"

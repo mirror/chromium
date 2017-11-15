@@ -30,8 +30,8 @@
 #include "SkLightingImageFilter.h"
 #include "SkPoint3.h"
 #include "platform/graphics/filters/DistantLightSource.h"
+#include "platform/graphics/filters/PaintFilterBuilder.h"
 #include "platform/graphics/filters/PointLightSource.h"
-#include "platform/graphics/filters/SkiaImageFilterBuilder.h"
 #include "platform/graphics/filters/SpotLightSource.h"
 
 namespace blink {
@@ -53,14 +53,14 @@ FELighting::FELighting(Filter* filter,
       specular_constant_(std::max(specular_constant, 0.0f)),
       specular_exponent_(clampTo(specular_exponent, 1.0f, 128.0f)) {}
 
-sk_sp<SkImageFilter> FELighting::CreateImageFilter() {
+sk_sp<PaintFilter> FELighting::CreateImageFilter() {
   if (!light_source_)
     return CreateTransparentBlack();
-
-  SkImageFilter::CropRect rect = GetCropRect();
+  return nullptr;
+  /*PaintFilter::CropRect rect = GetCropRect();
   Color light_color = AdaptColorToOperatingInterpolationSpace(lighting_color_);
-  sk_sp<SkImageFilter> input(SkiaImageFilterBuilder::Build(
-      InputEffect(0), OperatingInterpolationSpace()));
+  sk_sp<PaintFilter> input(
+      PaintFilterBuilder::Build(InputEffect(0), OperatingInterpolationSpace()));
   switch (light_source_->GetType()) {
     case LS_DISTANT: {
       DistantLightSource* distant_light_source =
@@ -121,7 +121,7 @@ sk_sp<SkImageFilter> FELighting::CreateImageFilter() {
     default:
       NOTREACHED();
       return nullptr;
-  }
+  }*/
 }
 
 }  // namespace blink

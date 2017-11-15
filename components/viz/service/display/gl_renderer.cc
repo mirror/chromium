@@ -29,8 +29,8 @@
 #include "build/build_config.h"
 #include "cc/base/container_util.h"
 #include "cc/base/math_util.h"
-#include "cc/base/render_surface_filters.h"
 #include "cc/debug/debug_colors.h"
+#include "cc/paint/render_surface_filters.h"
 #include "cc/raster/scoped_gpu_raster.h"
 #include "cc/resources/resource_pool.h"
 #include "cc/resources/scoped_resource.h"
@@ -959,8 +959,9 @@ sk_sp<SkImage> GLRenderer::ApplyBackgroundFilters(
       (rect.top_right() - unclipped_rect.top_right()) +
       (rect.bottom_left() - unclipped_rect.bottom_left());
   sk_sp<SkImageFilter> filter = cc::RenderSurfaceFilters::BuildImageFilter(
-      background_filters, gfx::SizeF(rect.size()),
-      gfx::Vector2dF(clipping_offset));
+                                    background_filters, gfx::SizeF(rect.size()),
+                                    gfx::Vector2dF(clipping_offset))
+                                    ->cached_sk_filter_;
 
   // TODO(senorblanco): background filters should be moved to the
   // makeWithFilter fast-path, and go back to calling ApplyImageFilter().
@@ -1284,8 +1285,10 @@ bool GLRenderer::UpdateRPDQWithSkiaFilters(
   // Apply filters to the contents texture.
   if (params->filters) {
     DCHECK(!params->filters->IsEmpty());
-    sk_sp<SkImageFilter> filter = cc::RenderSurfaceFilters::BuildImageFilter(
-        *params->filters, gfx::SizeF(params->contents_texture->size()));
+    sk_sp<SkImageFilter> filter =
+        cc::RenderSurfaceFilters::BuildImageFilter(
+            *params->filters, gfx::SizeF(params->contents_texture->size()))
+            ->cached_sk_filter_;
     if (filter) {
       SkColorFilter* colorfilter_rawptr = nullptr;
       filter->asColorFilter(&colorfilter_rawptr);
