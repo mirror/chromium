@@ -2829,7 +2829,7 @@ class DownloadHistoryWaiter : public DownloadHistory::Observer {
 
  private:
   void Wait() {
-    base::RunLoop run_loop;
+    base::RunLoop run_loop;  // TODO(eladalon): !!!
     quit_closure_ = run_loop.QuitClosure();
     run_loop.Run();
   }
