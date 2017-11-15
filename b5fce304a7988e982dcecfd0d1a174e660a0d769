@@ -214,6 +214,30 @@
       "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea5bd18_e4068c80",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-15T15:43:04Z",
+      "side": 1,
+      "message": "* A binary search (or any experimental approach for that matter) is not a reliable way to determine the bits to pass to InvalidateGrContext(). The problem is that you might be getting lucky by accident. For example, there might be a call to glTexParameteri that just happens to be a no-op in the specific context of your test case.  What you need to do is review all the GL calls that are made by reading the code attentively to determine which parts of the state are altered.  This is why it is a good idea to put the InvalidateGrContext call near the GL calls, so that the relation between the GL calls and the resetContext bits is clear.  Doing that part in a follow-up is fine IMHO.  \n* I agree with Dana that it is preferable to use WebGraphicsContext3DProvider::InvalidateGrContext()\n* Regarding the test failure, it is really not clear to me how the CL might be causing that failure.  Maybe Dana has some insight?",
+      "parentUuid": "5cf3f744_eebe16ad",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 51
+      },
+      "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
