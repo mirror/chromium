@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b69063b_cfaca238",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_features.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-15T22:38:56Z",
+      "side": 1,
+      "message": "I think you would still want to check whether or not it\u0027s negative, or maybe also zero.",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "759466efa26bfb42638e794f77807031fbb44b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024f51af_56b16952",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-15T22:38:56Z",
+      "side": 1,
+      "message": "OnNextBackgroundTabStartedLoading?",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 30
+      },
+      "revId": "759466efa26bfb42638e794f77807031fbb44b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe60901_37070060",
+        "filename": "chrome/browser/sessions/session_restore_stats_collector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-15T22:38:56Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 20
+      },
+      "revId": "759466efa26bfb42638e794f77807031fbb44b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
