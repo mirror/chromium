@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a950836_c8a93800",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T20:03:51Z",
+      "side": 1,
+      "message": "nit: proto is a lazy name...",
+      "range": {
+        "startLine": 89,
+        "startChar": 42,
+        "endLine": 89,
+        "endChar": 47
+      },
+      "revId": "08f0e157b41fec609cba29f8de495eb3279cf31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656bd92e_6df9922d",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T20:03:51Z",
+      "side": 1,
+      "message": "don\u0027t we have devices in the wild whose system clocks are reset on every power-down (no CMOS battery iirc)? I guess we\u0027d only get metrics for each full day those are kept on.",
+      "range": {
+        "startLine": 110,
+        "startChar": 37,
+        "endLine": 110,
+        "endChar": 63
+      },
+      "revId": "08f0e157b41fec609cba29f8de495eb3279cf31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef72f998_541d4bcb",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T20:03:51Z",
+      "side": 1,
+      "message": "add a comment here or somewhere that we use prefs in order to retain metrics across shutdowns",
+      "revId": "08f0e157b41fec609cba29f8de495eb3279cf31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e419969_971e6c48",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T20:03:51Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 17
+      },
+      "revId": "08f0e157b41fec609cba29f8de495eb3279cf31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf7c85be_a9fc2788",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T20:03:51Z",
+      "side": 1,
+      "message": "\"(Does not reset the underlying prefs.)\"",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "08f0e157b41fec609cba29f8de495eb3279cf31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

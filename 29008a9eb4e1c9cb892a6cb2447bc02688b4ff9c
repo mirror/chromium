@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "81722c12_c82aea1c",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T20:03:51Z",
+      "side": 1,
+      "message": "That\u0027s not what I meant but I like that better than my suggestion :-)",
+      "parentUuid": "39eaeb78_e366ea93",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "171ae0c7_3b641672",
         "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
         "patchSetId": 1
