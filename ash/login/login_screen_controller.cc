@@ -57,8 +57,13 @@ void LoginScreenController::SetClient(mojom::LoginScreenClientPtr client) {
 }
 
 void LoginScreenController::ShowLockScreen(ShowLockScreenCallback on_shown) {
-  ash::LockScreen::Show();
+  ash::LockScreen::Show(ash::LockScreen::Type::kLock);
   std::move(on_shown).Run(true);
+}
+
+void LoginScreenController::ShowLoginScreen() {
+  // TODO(jdufault): rename ash::LockScreen to ash::LoginScreen.
+  ash::LockScreen::Show(ash::LockScreen::Type::kLogin);
 }
 
 void LoginScreenController::ShowErrorMessage(int32_t login_attempts,
