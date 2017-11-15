@@ -449,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "dde87885_b8dc3470",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T23:56:21Z",
+      "side": 1,
+      "message": "Until then can you run |callback| with some sort of error to avoid replacing |u2f_request_| with a new request and getting things into any weird states.",
+      "parentUuid": "25a0e37e_4fb56059",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 14
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47b6f7de_c27d795f",
         "filename": "content/browser/webauth/authenticator_impl.h",
         "patchSetId": 20
