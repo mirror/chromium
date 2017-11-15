@@ -24,7 +24,8 @@ DEFINE_BROWSER_USER_DATA_KEY(OverlayScheduler);
 OverlayScheduler::OverlayScheduler(Browser* browser)
     : web_state_list_(&browser->web_state_list()),
       queue_manager_(nullptr),
-      paused_(false) {
+      paused_(false),
+      scoped_observer_(this) {
   // Create the OverlayQueueManager and add the scheduler as an observer to the
   // manager and all its queues.
   OverlayQueueManager::CreateForBrowser(browser);
@@ -172,15 +173,14 @@ void OverlayScheduler::TryToStartNextOverlay() {
   // - an overlay is already scheduled to be started once a specific WebState
   //   has been shown.
   if (paused_ || overlay_queues_.empty() || IsShowingOverlay() ||
-      visibility_observer_) {
+      scoped_observer_.IsObservingSources()) {
     return;
   }
   OverlayQueue* queue = overlay_queues_.front();
   web::WebState* web_state = queue->GetWebState();
-  // Create a WebStateVisibilityObserver if |web_state| needs to be activated.
+  // Track the visibility of the WebState if it needs to be activated.
   if (web_state && web_state_list_->GetActiveWebState() != web_state) {
-    visibility_observer_ =
-        base::MakeUnique<WebStateVisibilityObserver>(web_state, this);
+    scoped_observer_.Add(web_state);
   }
   // Notify the observers that an overlay will be shown for |web_state|.  If
   // |web_state| isn't nil, this callback is expected to update the active
@@ -193,16 +193,9 @@ void OverlayScheduler::TryToStartNextOverlay() {
   // for IsShowingOverlay() is to prevent calling StartNextOverlay() twice in
   // the event that OnWebStateShown() was called directly from the observer
   // callbacks above.
-  if (!visibility_observer_ && !IsShowingOverlay()) {
+  if (!scoped_observer_.IsObservingSources() && !IsShowingOverlay()) {
     queue->StartNextOverlay();
   }
-}
-
-void OverlayScheduler::OnWebStateShown(web::WebState* web_state) {
-  DCHECK(web_state);
-  DCHECK_EQ(overlay_queues_.front()->GetWebState(), web_state);
-  visibility_observer_ = nullptr;
-  overlay_queues_.front()->StartNextOverlay();
 }
 
 void OverlayScheduler::StopObservingQueue(OverlayQueue* queue) {
@@ -210,15 +203,12 @@ void OverlayScheduler::StopObservingQueue(OverlayQueue* queue) {
   queue->CancelOverlays();
 }
 
-OverlayScheduler::WebStateVisibilityObserver::WebStateVisibilityObserver(
-    web::WebState* web_state,
-    OverlayScheduler* scheduler)
-    : web::WebStateObserver(web_state), scheduler_(scheduler) {
-  DCHECK(web_state);
-  DCHECK(scheduler);
+void OverlayScheduler::WasShown(web::WebState* web_state) {
+  DCHECK_EQ(overlay_queues_.front()->GetWebState(), web_state);
+  scoped_observer_.Remove(web_state);
+  overlay_queues_.front()->StartNextOverlay();
 }
 
-void OverlayScheduler::WebStateVisibilityObserver::WasShown(
-    web::WebState* web_state) {
-  scheduler_->OnWebStateShown(web_state);
+void OverlayScheduler::WebStateDestroyed(web::WebState* web_state) {
+  scoped_observer_.Remove(web_state);
 }
