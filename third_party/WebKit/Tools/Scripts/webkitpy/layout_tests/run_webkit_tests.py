@@ -45,7 +45,7 @@ _log = logging.getLogger(__name__)
 
 def main(argv, stdout, stderr):
     options, args = parse_args(argv)
-
+    print 'This is to make sure that I have made some changes.'
     if options.platform and 'test' in options.platform and not 'browser_test' in options.platform:
         # It's a bit lame to import mocks into real code, but this allows the user
         # to run tests against the test platform interactively, which is useful for
