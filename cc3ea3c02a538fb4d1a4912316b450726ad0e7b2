@@ -22,6 +22,30 @@
       "revId": "cc3ea3c02a538fb4d1a4912316b450726ad0e7b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4527add2_2274b7cf",
+        "filename": "mojo/public/cpp/bindings/interface_ptr_info.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-15T04:05:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cbbf016_69a0386b",
+      "range": {
+        "startLine": 22,
+        "startChar": 19,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "cc3ea3c02a538fb4d1a4912316b450726ad0e7b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
