@@ -16,6 +16,24 @@
       "revId": "7279e07b35ea0176c8dd4d10fec70b28e285bd7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "677e9dd9_76745163",
+        "filename": "mojo/edk/embedder/platform_channel_utils_posix.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-15T01:03:05Z",
+      "side": 0,
+      "message": "That\u0027s fair, but we discussed off-line that it would be preferable to merge ScopedPlatformHandle and PlatformHandle, so that PlatformHandle itself is the moveable container, rather than having it sit somewhere between a container and POD.\n\nIf we merge the two then arguably the idiomatic form for these call-sites would be to pass the bare file-descriptor (since they\u0027re POSIX-only and only ever work on FD-based PlatformHandles).\n\nWDYT?",
+      "parentUuid": "553632ea_70d20ce8",
+      "revId": "7279e07b35ea0176c8dd4d10fec70b28e285bd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

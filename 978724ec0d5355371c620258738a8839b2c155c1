@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd101756_682634ed",
+        "filename": "mojo/edk/embedder/scoped_platform_handle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-15T01:03:05Z",
+      "side": 1,
+      "message": "That\u0027s a fair point; again, I\u0027d refrained from making that change mainly because of the discussion around merging ScopedPlatformHandle and PlatformHandle - if they\u0027re merged then there is no dereference-get(), only specific getters for the potential handle types, e.g. get_fd(), get_port(), get_handle(), get_zx_handle().",
+      "parentUuid": "c519af98_7cd869be",
+      "revId": "978724ec0d5355371c620258738a8839b2c155c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0548b055_6f86d13f",
         "filename": "mojo/edk/embedder/scoped_platform_handle.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "978724ec0d5355371c620258738a8839b2c155c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "166064e4_ac4fb1da",
+        "filename": "mojo/edk/embedder/scoped_platform_handle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-15T01:03:05Z",
+      "side": 1,
+      "message": "SGTM; I mainly kept this so the ScopedPlatformHandleVectorPtr-\u003eScopedPlatformHandleVector changes were easy to grok.",
+      "parentUuid": "0548b055_6f86d13f",
+      "revId": "978724ec0d5355371c620258738a8839b2c155c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9ced5bdb_7c39f989",
+        "filename": "mojo/edk/system/channel_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-15T01:03:05Z",
+      "side": 1,
+      "message": "Ah, yes, that\u0027s the syntax I had in mind, and yes, I agree that it is super ugly. :-/",
+      "parentUuid": "0b1bb023_5e9b74bb",
+      "revId": "978724ec0d5355371c620258738a8839b2c155c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99970af5_14743167",
         "filename": "mojo/edk/system/channel_posix.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "978724ec0d5355371c620258738a8839b2c155c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2e41605_dad82e40",
+        "filename": "mojo/edk/system/channel_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-15T01:03:05Z",
+      "side": 1,
+      "message": "Yeah, I think we can get rid of it - we do touch |handles| below, but only in the case of an EAGAIN failure, whereas this is the success case.",
+      "parentUuid": "99970af5_14743167",
+      "revId": "978724ec0d5355371c620258738a8839b2c155c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
