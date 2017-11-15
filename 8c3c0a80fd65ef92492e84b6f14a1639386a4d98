@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f232abbb_59db3507",
+        "filename": "content/common/render_process_messages.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-15T17:47:22Z",
+      "side": 1,
+      "message": "nit: Looks like entire file is now OS_MACOSX, maybe combine ifdef blocks.",
+      "range": {
+        "startLine": 21,
+        "startChar": 1,
+        "endLine": 21,
+        "endChar": 22
+      },
+      "revId": "8c3c0a80fd65ef92492e84b6f14a1639386a4d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
