@@ -938,10 +938,9 @@ void HttpCache::WritersDoneWritingToEntry(ActiveEntry* entry,
 
   if (success) {
     // Add any idle writers to readers.
-    for (auto* reader : make_readers) {
-      reader->WriteModeTransactionAboutToBecomeReader();
+    for (auto* reader : make_readers)
       entry->readers.insert(reader);
-    }
+
     // Reset writers here so that WriteModeTransactionAboutToBecomeReader can
     // access the network transaction.
     entry->writers.reset();
