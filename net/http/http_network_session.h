@@ -176,6 +176,8 @@ class NET_EXPORT HttpNetworkSession : public base::MemoryCoordinatorClient {
     bool quic_race_cert_verification;
     // If true, estimate the initial RTT for QUIC connections based on network.
     bool quic_estimate_initial_rtt;
+    // List of hosts for which QUIC is explicitly whitelisted.
+    std::unordered_set<std::string> quic_host_whitelist;
 
     // Enable support for Token Binding.
     bool enable_token_binding;
