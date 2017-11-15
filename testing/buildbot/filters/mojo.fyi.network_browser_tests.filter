@@ -337,19 +337,9 @@
 -SSLUIMITMSoftwareEnabledTest.WrongCertError_NoMITMSoftwareInterstitial
 -SSLUITest.BadCertFollowedByGoodCert
 -SSLUITestCommittedInterstitials.ErrorPage
--SSLUITestCommittedInterstitials.ErrorPage
--SSLUITest.DisplayedContentWithCertErrorsClearedOnNavigation
--SSLUITestIgnoreLocalhostCertErrors.TestNoInterstitialOnLocalhost
 -SSLUITest.TestBadHTTPSDownload
 -SSLUITest.TestHTTPSOCSPOk
 -SSLUITest.TestHTTPSOCSPRevoked
--SSLUITest.TestUnsafeContentsWithUserException
--SSLUITest.TestUnsafeImageWithUserException
--SSLUIWorkerFetchTest.TestUnsafeContentsInWorkerWithUserException/0
--SSLUIWorkerFetchTest.TestUnsafeContentsInWorkerWithUserException/1
--SSLUIWorkerFetchTest.TestUnsafeContentsInWorkerWithUserException/2
--SSLUIWorkerFetchTest.TestUnsafeContentsInWorkerWithUserException/3
--SubresourceFilterBrowserTest.FailedProvisionalLoadInMainframe
 -SuperfishSSLUITest.NoSuperfishRecorded
 -SuperfishSSLUITest.SuperfishInterstitial
 -SuperfishSSLUITest.SuperfishInterstitialDisabled
@@ -649,8 +639,7 @@
 -RestartTest.PostWithPassword
 -RestartTest.SessionCookies
 -RestartTest.SessionStorage
--SSLUITest.MarkBlobAsNonSecure
--SSLUITest.TestWSSInvalidCertAndGoForward
+-SSLUITest.MarkBlobAsNonSecure=
 -SSLUITestHSTS.TestInterstitialOptionsNonOverridable
 
 # crbug.com/778793
