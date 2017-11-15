@@ -190,6 +190,30 @@
       "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf3f744_eebe16ad",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-15T01:51:32Z",
+      "side": 1,
+      "message": "- junov@, kTextureBinding_GrGLBackendState doesn\u0027t work unfortunately. I did a binary search within those params and found \"kView_GrGLBackendState | kVertex_GrGLBackendState\" works.\n- I moved resetContext() next to GL calls as you asked in this patch. However, it doesn\u0027t really fit into the GLHelper design as it is since there isn\u0027t any reference to GrContext there. I would prefer leaving it as a TODO and tackle it in https://crbug.com/774297. We can call |context_provider-\u003eGetGrContext()-\u003eresetContext()| here or add |blink::WebGraphicsContext3DProvider::InvalidateGrContext()|. WDYT?\n- Android bots[0] are hitting this DCHECK[1] in the test call to loseSharedGraphicsContext3D. Is it expected or a bug? Any quick fixes?\n[0] https://logs.chromium.org/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.android%2Flinux_android_rel_ng%2F428788%2F%2B%2Frecipes%2Fsteps%2Fcontent_browsertests__with_patch__on_Android%2F0%2Flogs%2FWebRtcCaptureFromElementBrowserTest.CaptureFromCanvas2DHandlesContextLoss%2F0\n[1] https://cs.chromium.org/chromium/src/components/viz/service/frame_sinks/frame_sink_manager_impl.cc?rcl\u003daa1f040d458602c618d3caaf2d1f8f7bebc99629\u0026l\u003d251",
+      "parentUuid": "34ef8480_3da90370",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 51
+      },
+      "revId": "b5fce304a7988e982dcecfd0d1a174e660a0d769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
