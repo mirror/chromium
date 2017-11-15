@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9957ff34_43f4067b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-15T19:50:18Z",
+      "side": 1,
+      "message": "Would it be ok to just use the shared menu button class once that lands?  That should remove a lot of duplicate code!  You could add icon support to that directly which would be awesome :).",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 69
+      },
+      "revId": "69fd3c851cfdfaacb5359470897459f72928ce40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
