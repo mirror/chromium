@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "d0c3e3ab_f558c90b",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-15T04:43:28Z",
+      "side": 1,
+      "message": "And, for the record, removing this stuff in the next CL causes no problems.  I\u0027ll remove the logic to pass in the command line parameter to the network service process and do related cleanup in another CL, once all this stuff has landed.",
+      "parentUuid": "1b65b25d_e7d9a0f5",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27f74d90_80dd7f78",
         "filename": "content/network/network_context.cc",
         "patchSetId": 11
@@ -471,6 +489,24 @@
     },
     {
       "key": {
+        "uuid": "716bf043_a9a43a23",
+        "filename": "content/public/common/proxy_config.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-15T04:43:28Z",
+      "side": 1,
+      "message": "It occurs to my that you were probably thinking of an array of strings, instead of a single string.  I\u0027ve switched.",
+      "parentUuid": "23ffcd9a_b6211440",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f1cc655_928e7d46",
         "filename": "content/public/common/proxy_config.mojom",
         "patchSetId": 11
@@ -503,6 +539,24 @@
       "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a76b896_01fc17f5",
+        "filename": "content/public/common/proxy_config.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-15T04:43:28Z",
+      "side": 1,
+      "message": "Completely misunderstood.  I\u0027ve switched to an array of strings, though I\u0027m not convinced it\u0027s an improvement - this used to take a string in (basically) the format of a pac script\u0027s output, except for magic around an empty list.  Now it takes an array of single pac script entries, which is a novel format.",
+      "parentUuid": "078cfa21_22862aa9",
+      "revId": "4735ff910617acd9bc893dcf8ae59527b2922782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
