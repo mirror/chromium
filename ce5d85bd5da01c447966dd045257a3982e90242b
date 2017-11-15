@@ -69,6 +69,47 @@
       "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df80928c_d2e75d88",
+        "filename": "components/certificate_transparency/single_tree_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-11-15T16:50:51Z",
+      "side": 1,
+      "message": "The two common combinations are that one and ADDRESS_FAMILY_IPV4/HOST_RESOLVER_DEFAULT_FAMILY_SET_DUE_TO_NO_IPV6. So you could either do what you suggested, or just check those two combinations.",
+      "parentUuid": "e4d682bc_ffe36154",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 281,
+        "endChar": 45
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34c739e_218ddeaf",
+        "filename": "net/dns/host_resolver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-11-15T16:50:51Z",
+      "side": 1,
+      "message": "This implementation really belongs in the HostResolverImpl, not the HostResolver. Sorry, I know that\u0027s more work.\n\nAlso, I\u0027d like this API better if it got the source and staleness without the whole entry, similar to what ResolveStaleFromCache() does, but you\u0027re welcome to ignore that suggestion.",
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
