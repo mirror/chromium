@@ -211,7 +211,8 @@ class GLHelper::CopyTextureToImpl
 
   std::unique_ptr<ReadbackYUVInterface> CreateReadbackPipelineYUV(
       bool flip_vertically,
-      bool use_mrt);
+      bool use_mrt,
+      const RestoreContextCallback& restore_context_callback);
 
   // Returns the maximum number of draw buffers available,
   // 0 if GL_EXT_draw_buffers is not available.
@@ -289,13 +290,16 @@ class GLHelper::CopyTextureToImpl
                     GLHelperScaling* scaler_impl,
                     bool flip_vertically,
                     ReadbackSwizzle swizzle,
-                    bool use_mrt);
+                    bool use_mrt,
+                    const RestoreContextCallback& restore_context_callback);
 
     ~ReadbackYUVImpl() override;
 
     void SetScaler(std::unique_ptr<GLHelper::ScalerInterface> scaler) override;
 
     GLHelper::ScalerInterface* scaler() const override;
+
+    bool IsFlippingOutput() const override;
 
     void ReadbackYUV(const gpu::Mailbox& mailbox,
                      const gpu::SyncToken& sync_token,
@@ -314,6 +318,7 @@ class GLHelper::CopyTextureToImpl
     GLES2Interface* gl_;
     CopyTextureToImpl* copy_impl_;
     ReadbackSwizzle swizzle_;
+    const RestoreContextCallback restore_context_callback_;
 
     // May be null if no scaling is required. This can be changed between calls
     // to ReadbackYUV().
@@ -1088,7 +1093,8 @@ GLHelper::CopyTextureToImpl::ReadbackYUVImpl::ReadbackYUVImpl(
     GLHelperScaling* scaler_impl,
     bool flip_vertically,
     ReadbackSwizzle swizzle,
-    bool use_mrt)
+    bool use_mrt,
+    const RestoreContextCallback& restore_context_callback)
     : I420ConverterImpl(gl,
                         scaler_impl,
                         false,
@@ -1098,6 +1104,7 @@ GLHelper::CopyTextureToImpl::ReadbackYUVImpl::ReadbackYUVImpl(
       gl_(gl),
       copy_impl_(copy_impl),
       swizzle_(swizzle),
+      restore_context_callback_(restore_context_callback),
       y_(gl_),
       u_(gl_),
       v_(gl_),
@@ -1115,6 +1122,10 @@ void GLHelper::CopyTextureToImpl::ReadbackYUVImpl::SetScaler(
 GLHelper::ScalerInterface*
 GLHelper::CopyTextureToImpl::ReadbackYUVImpl::scaler() const {
   return scaler_.get();
+}
+
+bool GLHelper::CopyTextureToImpl::ReadbackYUVImpl::IsFlippingOutput() const {
+  return I420ConverterImpl::IsFlippingOutput();
 }
 
 void GLHelper::CopyTextureToImpl::ReadbackYUVImpl::ReadbackYUV(
@@ -1163,6 +1174,8 @@ void GLHelper::CopyTextureToImpl::ReadbackYUVImpl::ReadbackYUV(
   copy_impl_->ReadbackPlane(chroma_texture_size, v_plane_row_stride_bytes,
                             v_plane_data, 1, paste_rect, swizzle_, callback);
   gl_->BindFramebuffer(GL_FRAMEBUFFER, 0);
+  if (!restore_context_callback_.is_null())
+    restore_context_callback_.Run();
 }
 
 bool GLHelper::IsReadbackConfigSupported(SkColorType color_type) {
@@ -1188,8 +1201,10 @@ std::unique_ptr<I420Converter> GLHelper::CreateI420Converter(
 }
 
 std::unique_ptr<ReadbackYUVInterface>
-GLHelper::CopyTextureToImpl::CreateReadbackPipelineYUV(bool flip_vertically,
-                                                       bool use_mrt) {
+GLHelper::CopyTextureToImpl::CreateReadbackPipelineYUV(
+    bool flip_vertically,
+    bool use_mrt,
+    const RestoreContextCallback& restore_context_callback) {
   helper_->InitScalerImpl();
   // Just query if the best readback configuration needs a swizzle In
   // ReadbackPlane() we will choose GL_RGBA/GL_BGRA_EXT based on swizzle
@@ -1206,15 +1221,39 @@ GLHelper::CopyTextureToImpl::CreateReadbackPipelineYUV(bool flip_vertically,
 
   return base::MakeUnique<ReadbackYUVImpl>(
       gl_, this, helper_->scaler_impl_.get(), flip_vertically, swizzle,
-      use_mrt && (max_draw_buffers_ >= 2));
+      use_mrt && (max_draw_buffers_ >= 2), restore_context_callback);
 }
 
 std::unique_ptr<ReadbackYUVInterface> GLHelper::CreateReadbackPipelineYUV(
     bool flip_vertically,
-    bool use_mrt) {
+    bool use_mrt,
+    const RestoreContextCallback& restore_context_callback) {
   InitCopyTextToImpl();
-  return copy_texture_to_impl_->CreateReadbackPipelineYUV(flip_vertically,
-                                                          use_mrt);
+  return copy_texture_to_impl_->CreateReadbackPipelineYUV(
+      flip_vertically, use_mrt, restore_context_callback);
+}
+
+ReadbackYUVInterface* GLHelper::GetReadbackPipelineYUV(
+    bool vertically_flip_texture,
+    const RestoreContextCallback& restore_context_callback) {
+  ReadbackYUVInterface* yuv_reader = nullptr;
+  if (vertically_flip_texture) {
+    if (!shared_readback_yuv_flip_) {
+      shared_readback_yuv_flip_ =
+          CreateReadbackPipelineYUV(vertically_flip_texture, true /* use_mrt */,
+                                    restore_context_callback);
+    }
+    yuv_reader = shared_readback_yuv_flip_.get();
+  } else {
+    if (!shared_readback_yuv_noflip_) {
+      shared_readback_yuv_noflip_ =
+          CreateReadbackPipelineYUV(vertically_flip_texture, true /* use_mrt */,
+                                    restore_context_callback);
+    }
+    yuv_reader = shared_readback_yuv_noflip_.get();
+  }
+  DCHECK(!yuv_reader->scaler());
+  return yuv_reader;
 }
 
 GLHelperReadbackSupport* GLHelper::GetReadbackSupport() {

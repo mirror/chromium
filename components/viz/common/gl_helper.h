@@ -6,6 +6,7 @@
 #define COMPONENTS_VIZ_COMMON_GL_HELPER_H_
 
 #include <memory>
+#include <vector>
 
 #include "base/atomicops.h"
 #include "base/callback.h"
@@ -414,6 +415,7 @@ class VIZ_COMMON_EXPORT GLHelper {
                                                      bool swizzle,
                                                      bool use_mrt);
 
+  using RestoreContextCallback = base::RepeatingCallback<void()>;
   // Create a readback pipeline that will (optionally) scale a source texture,
   // then convert it to YUV420 planar form, and finally read back that. This
   // reduces the amount of memory read from GPU to CPU memory by a factor of 2.6
@@ -431,7 +433,15 @@ class VIZ_COMMON_EXPORT GLHelper {
   // CreateI420Converter().
   std::unique_ptr<ReadbackYUVInterface> CreateReadbackPipelineYUV(
       bool vertically_flip_texture,
-      bool use_mrt);
+      bool use_mrt,
+      const RestoreContextCallback& restore_context_callback =
+          RestoreContextCallback());
+
+  // Returns a ReadbackYUVInterface instance that is lazily created and owned by
+  // this class. |use_mrt| is always true for these instances.
+  ReadbackYUVInterface* GetReadbackPipelineYUV(
+      bool vertically_flip_texture,
+      const RestoreContextCallback& restore_context_callback);
 
   // Returns the maximum number of draw buffers available,
   // 0 if GL_EXT_draw_buffers is not available.
@@ -462,6 +472,8 @@ class VIZ_COMMON_EXPORT GLHelper {
   std::unique_ptr<CopyTextureToImpl> copy_texture_to_impl_;
   std::unique_ptr<GLHelperScaling> scaler_impl_;
   std::unique_ptr<GLHelperReadbackSupport> readback_support_;
+  std::unique_ptr<ReadbackYUVInterface> shared_readback_yuv_flip_;
+  std::unique_ptr<ReadbackYUVInterface> shared_readback_yuv_noflip_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(GLHelper);
@@ -538,6 +550,9 @@ class ReadbackYUVInterface {
 
   // Returns the currently-set scaler, or null.
   virtual GLHelper::ScalerInterface* scaler() const = 0;
+
+  // Returns true if the converter will vertically-flip the output.
+  virtual bool IsFlippingOutput() const = 0;
 
   // Transforms a RGBA texture into I420 planar form, and then reads it back
   // from the GPU into system memory. See the GLHelper::ScalerInterface::Scale()
