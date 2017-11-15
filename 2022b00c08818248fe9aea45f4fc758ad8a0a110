@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aa37531_064dfe26",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T22:23:50Z",
+      "side": 1,
+      "message": "DCHECK(!core_);",
+      "revId": "2022b00c08818248fe9aea45f4fc758ad8a0a110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea24fa87_dbc2e805",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T22:23:50Z",
+      "side": 1,
+      "message": "just \"{base::MayBlock(), base::TaskPriority::USER_VISIBLE}\"\nhttps://cs.chromium.org/chromium/src/base/task_scheduler/task_traits.h?l\u003d143\u0026rcl\u003d9204ed3c61c7f66db40f26ca4466fe67a116560d",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 154,
+        "endChar": 78
+      },
+      "revId": "2022b00c08818248fe9aea45f4fc758ad8a0a110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858eadb4_ee3a56ad",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T22:23:50Z",
+      "side": 1,
+      "message": "remove \"in\"",
+      "range": {
+        "startLine": 179,
+        "startChar": 59,
+        "endLine": 179,
+        "endChar": 61
+      },
+      "revId": "2022b00c08818248fe9aea45f4fc758ad8a0a110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe6512c_8c0d55f8",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T22:23:50Z",
+      "side": 1,
+      "message": "optional: base::Callback is a thin wrapper around a base::internal::BindStateBase reference. Currently, line 224 will increment the ref-count of the base::internal::BindStateBase. That could be avoided by taking URLCheckCallbackMeta by value in all methods on this file and using std::move() to move it to its destination.\n\nBenefits of not incrementing the ref-count:\n- Slightly faster.\n- The location where the base::internal::BindStateBase is destroyed is more deterministic (less hard to reproduce crashes).\n\nhttps://chromium.googlesource.com/chromium/src/+/lkcr/docs/callback.md",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 208,
+        "endChar": 40
+      },
+      "revId": "2022b00c08818248fe9aea45f4fc758ad8a0a110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a1b414_9d717a39",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T22:23:50Z",
+      "side": 1,
+      "message": "just \"sequence\" or \"SequencedTaskRunner\" or \"sequence*d* task runner\"",
+      "range": {
+        "startLine": 39,
+        "startChar": 55,
+        "endLine": 39,
+        "endChar": 75
+      },
+      "revId": "2022b00c08818248fe9aea45f4fc758ad8a0a110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
