@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d3571442_586ee32a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-15T23:42:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dcd8574_a8a366ba",
+      "revId": "04a9fdc686cc3b6340df8b1e40855a3a4c91744a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbf9b446_4a80f7f3",
         "filename": "third_party/WebKit/Source/core/css/cssom/InlineStylePropertyMap.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "04a9fdc686cc3b6340df8b1e40855a3a4c91744a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce1769a_139f6a90",
+        "filename": "third_party/WebKit/Source/core/css/cssom/InlineStylePropertyMap.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-15T23:42:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbf9b446_4a80f7f3",
+      "revId": "04a9fdc686cc3b6340df8b1e40855a3a4c91744a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
