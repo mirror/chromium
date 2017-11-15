@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "ddefbbb0_41688274",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-15T16:09:11Z",
+      "side": 1,
+      "message": "Correct. Cronet will provide concrete C++ implementation of UrlRequest::Read(), which will be called from generated public C function UrlRequest_Read(). \n\nOn related note I wonder whether public C functions and structs should have \u0027Cronet\u0027 prefix in their names, given absence of namespaces in C.",
+      "parentUuid": "800f0091_283955e2",
+      "range": {
+        "startLine": 177,
+        "startChar": 40,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79bf3e6c_9662c14b",
         "filename": "components/cronet/native/cronet.idl_c.h",
         "patchSetId": 36
@@ -251,6 +275,30 @@
       "side": 1,
       "message": "What does UrlRequestCallback_Create() do?  I don\u0027t think Cronet offers/contains a UrlRequestCallback implementation.",
       "parentUuid": "de096321_6ce568a2",
+      "range": {
+        "startLine": 202,
+        "startChar": 50,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189dcee0_823d7ced",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-15T16:09:11Z",
+      "side": 1,
+      "message": "Currently every interface gets XYZ_Create() and XYZ_CreateStub() defined for it. \nMore over, XYZ_CreateStub() implementation is also generated, but XYZ_Create() is not, so calling it will result in linker error.\n\nThe mojo IDL has a concept of attributes or somesuch that could decorate items, so maybe we should define some attributes like \u0027[Concrete]\u0027 and [Abstract] to mark interfaces that are implemented by Cronet vs consumer. WDYT?",
+      "parentUuid": "4a7ab972_cd1f0767",
       "range": {
         "startLine": 202,
         "startChar": 50,
@@ -334,6 +382,30 @@
     },
     {
       "key": {
+        "uuid": "e9ee5dce_bdf47531",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-15T16:09:11Z",
+      "side": 1,
+      "message": "Ack. I\u0027ll be happy to chat about it to see whether and how we can come up with consensus.",
+      "parentUuid": "216b7d06_a69fcbf4",
+      "range": {
+        "startLine": 323,
+        "startChar": 50,
+        "endLine": 323,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4705028_f5494315",
         "filename": "components/cronet/native/cronet.idl_c.h",
         "patchSetId": 36
@@ -345,6 +417,30 @@
       "writtenOn": "2017-11-15T14:57:41Z",
       "side": 1,
       "message": "Why is url in Params and not a required arg to InitWithParams?  I think url is required, like the other arguments of InitWithParams(), so it should go here.",
+      "range": {
+        "startLine": 325,
+        "startChar": 58,
+        "endLine": 325,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27defcc0_14e169a5",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-15T16:09:11Z",
+      "side": 1,
+      "message": "Great point! I haven\u0027t thought about it in terms of required vs optional, but I like that! \nI\u0027ll change it in next patchset.",
+      "parentUuid": "c4705028_f5494315",
       "range": {
         "startLine": 325,
         "startChar": 58,
