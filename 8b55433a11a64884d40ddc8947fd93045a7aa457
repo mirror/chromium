@@ -22,6 +22,30 @@
       "revId": "8b55433a11a64884d40ddc8947fd93045a7aa457",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb648b74_ffcad080",
+        "filename": "chrome/browser/resources/print_preview/new/number_settings_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-15T20:22:46Z",
+      "side": 0,
+      "message": "It is supposed to be removed like it was in PS 2. Somehow it got added back in in Patchset 3 when I added the new files to the closure compiler...",
+      "parentUuid": "2e68de95_11e55a3c",
+      "range": {
+        "startLine": 8,
+        "startChar": 32,
+        "endLine": 8,
+        "endChar": 53
+      },
+      "revId": "8b55433a11a64884d40ddc8947fd93045a7aa457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
