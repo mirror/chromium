@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a64452f_74348680",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-15T23:02:04Z",
+      "side": 1,
+      "message": "I\u0027d rephrase as \"...which includes external parties who ship Chromium-based products and who need to know about available bug fixes.\" or something.",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d42cc5_c4cdc3b0",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-15T23:02:04Z",
+      "side": 1,
+      "message": "I think? -SecurityEmbargo is a better choice for when the bug reporter wants to remain anonymous.",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096c1eca_72232dd4",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-15T23:02:04Z",
+      "side": 1,
+      "message": "\"...and stops Sheriffbot from publishing the bug automatically.\"",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "401ec213_18665638",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-15T23:02:04Z",
+      "side": 1,
+      "message": "Nit: Capital A in Automation (Title Case for headings)",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c59fec_50351df6",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-15T23:02:04Z",
+      "side": 1,
+      "message": "less time",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09855ec_a6b9de68",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-15T23:02:04Z",
+      "side": 1,
+      "message": "### instead of ####, since the previous heading was ##\n\nAlso, Title Case\n\n(and below)",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87590354_0e910d37",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-15T23:02:04Z",
+      "side": 1,
+      "message": "Either \"...exactly one ***Security_Impact-** label...\" or \"...exactly one security impact label...\"",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1550d6da_2d61999b",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-15T23:02:04Z",
+      "side": 1,
+      "message": "Let\u0027s standardize on **foo** for labels (bold) instead of mixing ** and * (italics). (And below)",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
