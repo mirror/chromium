@@ -2630,8 +2630,11 @@ void RenderWidgetHostImpl::RequestCompositorFrameSink(
     viz::mojom::CompositorFrameSinkRequest request,
     viz::mojom::CompositorFrameSinkClientPtr client) {
   if (enable_viz_) {
-    GetHostFrameSinkManager()->CreateCompositorFrameSink(
-        view_->GetFrameSinkId(), std::move(request), std::move(client));
+    // If we don't have a view by now, we will probably never have one.
+    if (view_) {
+      GetHostFrameSinkManager()->CreateCompositorFrameSink(
+          view_->GetFrameSinkId(), std::move(request), std::move(client));
+    }
     return;
   }
 
