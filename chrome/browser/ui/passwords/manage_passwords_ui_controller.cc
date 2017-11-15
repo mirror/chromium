@@ -575,4 +575,5 @@ void ManagePasswordsUIController::WebContentsDestroyed() {
       GetPasswordStore(web_contents());
   if (password_store)
     password_store->RemoveObserver(this);
+  TabDialogs::FromWebContents(web_contents())->HideManagePasswordsBubble();
 }
