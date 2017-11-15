@@ -103,6 +103,7 @@ const char* const kKnownSettings[] = {
     kSystemTimezonePolicy,
     kSystemUse24HourClock,
     kTargetVersionPrefix,
+    kUnaffiliatedArcAllowed,
     kUpdateDisabled,
     kVariationsRestrictParameter,
     kDeviceLoginScreenLocales,
@@ -603,6 +604,16 @@ void DecodeGenericPolicies(
     if (container.has_name()) {
       new_values_cache->SetValue(
           kCastReceiverName, base::MakeUnique<base::Value>(container.name()));
+    }
+  }
+
+  if (policy.has_unaffiliated_arc_allowed()) {
+    const em::UnaffiliatedArcAllowedProto& container(
+        policy.unaffiliated_arc_allowed());
+    if (container.has_unaffiliated_arc_allowed()) {
+      new_values_cache->SetValue(
+          kUnaffiliatedArcAllowed,
+          base::MakeUnique<base::Value>(container.unaffiliated_arc_allowed()));
     }
   }
 }

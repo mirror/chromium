@@ -289,4 +289,8 @@ const char kMinimumRequiredChromeVersion[] = "cros.min_version.chrome";
 // If the string is empty or blank the system name will be used.
 const char kCastReceiverName[] = "cros.device.cast_receiver.name";
 
+// A boolean pref that indicates whether unaffiliated users are allowed to
+// use ARC.
+const char kUnaffiliatedArcAllowed[] = "cros.device.unaffiliated_arc_allowed";
+
 }  // namespace chromeos
