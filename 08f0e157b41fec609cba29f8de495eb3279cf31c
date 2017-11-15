@@ -154,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "e512a049_6c751788",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T21:49:43Z",
+      "side": 1,
+      "message": "just to let it call PowerMetricsReporter\u0027s private ReportDailyMetrics method",
+      "parentUuid": "54203fa1_9b217902",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "08f0e157b41fec609cba29f8de495eb3279cf31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e419969_971e6c48",
         "filename": "chrome/browser/chromeos/power/power_metrics_reporter.h",
         "patchSetId": 4
