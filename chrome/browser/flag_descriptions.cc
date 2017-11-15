@@ -349,8 +349,26 @@ const char kEnableDataReductionProxyLitePageDescription[] =
     "shown instead of image placeholders when Lo-Fi is on. Data Saver and "
     "Lo-Fi must be enabled for lite pages to be shown.";
 
-const char kDataReductionProxyServerAlternative[] =
-    "Use alternative server configuration";
+const char kDataReductionProxyServerAlternative1[] =
+    "Use alternative server configuration 1";
+const char kDataReductionProxyServerAlternative2[] =
+    "Use alternative server configuration 2";
+const char kDataReductionProxyServerAlternative3[] =
+    "Use alternative server configuration 3";
+const char kDataReductionProxyServerAlternative4[] =
+    "Use alternative server configuration 4";
+const char kDataReductionProxyServerAlternative5[] =
+    "Use alternative server configuration 5";
+const char kDataReductionProxyServerAlternative6[] =
+    "Use alternative server configuration 6";
+const char kDataReductionProxyServerAlternative7[] =
+    "Use alternative server configuration 7";
+const char kDataReductionProxyServerAlternative8[] =
+    "Use alternative server configuration 8";
+const char kDataReductionProxyServerAlternative9[] =
+    "Use alternative server configuration 9";
+const char kDataReductionProxyServerAlternative10[] =
+    "Use alternative server configuration 10";
 const char kEnableDataReductionProxyServerExperimentName[] =
     "Use an alternative Data Saver back end configuration.";
 const char kEnableDataReductionProxyServerExperimentDescription[] =
