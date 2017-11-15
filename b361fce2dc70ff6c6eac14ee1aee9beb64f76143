@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5457fb31_22091083",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T00:55:50Z",
+      "side": 1,
+      "message": "nit (optional): we could just inline this since it\u0027s only used in one plaec",
+      "revId": "b361fce2dc70ff6c6eac14ee1aee9beb64f76143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275a173a_2d114072",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T00:55:50Z",
+      "side": 1,
+      "message": "nit: it looks like there\u0027s a TestAutoSetUkmRecorder which is meant to override the global instance for testing. Should we use that to avoid doing the same thing here?",
+      "revId": "b361fce2dc70ff6c6eac14ee1aee9beb64f76143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
