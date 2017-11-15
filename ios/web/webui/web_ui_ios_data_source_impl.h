@@ -6,6 +6,7 @@
 #define IOS_WEB_WEBUI_WEB_UI_IOS_DATA_SOURCE_IMPL_H_
 
 #include <map>
+#include <set>
 #include <string>
 
 #include "base/callback.h"
@@ -34,6 +35,8 @@ class WebUIIOSDataSourceImpl : public URLDataSourceIOSImpl,
   void AddResourcePath(const std::string& path, int resource_id) override;
   void SetDefaultResource(int resource_id) override;
   void DisableDenyXFrameOptions() override;
+  void UseGzip(const std::vector<std::string>& excluded_paths) override;
+  const ui::TemplateReplacements* GetReplacements() const override;
 
  protected:
   ~WebUIIOSDataSourceImpl() override;
@@ -41,12 +44,6 @@ class WebUIIOSDataSourceImpl : public URLDataSourceIOSImpl,
   // Completes a request by sending our dictionary of localized strings.
   void SendLocalizedStringsAsJSON(
       const URLDataSourceIOS::GotDataCallback& callback);
-
-  // Completes a request to |path| by sending the file specified by |idr| as the
-  // response.
-  void SendFromResourceBundle(const std::string& path,
-                              const URLDataSourceIOS::GotDataCallback& callback,
-                              int idr);
 
  private:
   class InternalDataSource;
@@ -73,6 +70,7 @@ class WebUIIOSDataSourceImpl : public URLDataSourceIOSImpl,
   int default_resource_;
   std::string json_path_;
   std::map<std::string, int> path_to_idr_map_;
+  std::set<std::string> excluded_paths_;
   // The replacements are initiallized in the main thread and then used in the
   // IO thread. The map is safe to read from multiple threads as long as no
   // further changes are made to it after initialization.
@@ -82,6 +80,7 @@ class WebUIIOSDataSourceImpl : public URLDataSourceIOSImpl,
   bool deny_xframe_options_;
   bool load_time_data_defaults_added_;
   bool replace_existing_source_;
+  bool use_gzip_;
 
   DISALLOW_COPY_AND_ASSIGN(WebUIIOSDataSourceImpl);
 };
