@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2311f2ab_d4d7b270",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/delete-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T19:36:59Z",
+      "side": 1,
+      "message": "Sort of? The shortnames are synthesized, but still useful for comparisons like this one. Some of the other APIs were returning some pathname components in shortname form when Unicode not representable in ACP was present in the component, so this seemed the simplest way to ensure the security check did not consider those non-equivalent.",
+      "parentUuid": "cbe55e94_1b6350c0",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6b27b8f_64406226",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 66
@@ -33,6 +51,24 @@
       "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96122b8_199c2acd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T19:36:59Z",
+      "side": 1,
+      "message": "Done (as baseNameOf)",
+      "parentUuid": "f6b27b8f_64406226",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "610f0722_ac10aa18",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T19:36:59Z",
+      "side": 1,
+      "message": "Done (along with the other normalization steps) as normalizeBaseNamePrefix",
+      "parentUuid": "849cacfd_e0c4e48c",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e0646eb_1330d569",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 66
@@ -67,6 +121,24 @@
       "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cff393c_e4ed6053",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T19:36:59Z",
+      "side": 1,
+      "message": "It\u0027s also used later, outside the if, to construct expectedTextAcp",
+      "parentUuid": "4e0646eb_1330d569",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ec5bcbfa_e401164f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T19:36:59Z",
+      "side": 1,
+      "message": "This check is relevant elsewhere too (e.g. Mac OS X and Linux) - it lets us know when the filename did not actually work, which is a nonzero risk due to filename Unicode support.\n\nI\u0027d rather not just check ACP - ACP is actually not the preferred version and I\u0027m optimistic Chrome (or other browsers once this is moved to WPT) will return the Unicode version instead. In any case the brittle assumption is not even all that safe for current Chrome code, given ACP variability due to windows locale defaults.",
+      "parentUuid": "a12b7896_4cdcdebd",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ec41cf7_fac7c36a",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 66
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "949e623f_46e9cb81",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T19:36:59Z",
+      "side": 1,
+      "message": "Those should match, but they are different API surfaces. This ensures they both behave as expected.",
+      "parentUuid": "7ec41cf7_fac7c36a",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "323853a8_dbe58a43",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 66
@@ -115,6 +223,24 @@
       "writtenOn": "2017-11-15T17:45:02Z",
       "side": 1,
       "message": "Is this finally block needed? I think you can remove it and the try/catch",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca31a51c_42f1d95d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T19:36:59Z",
+      "side": 1,
+      "message": "Why? I think we want to remove the script-owned DOM for this test before running the next one to avoid clutter, regardless of whether this one passed.",
+      "parentUuid": "323853a8_dbe58a43",
       "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "be165f8b_5050eda7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T19:36:59Z",
+      "side": 1,
+      "message": "the longname version is returned to the JS to make sure there wasn\u0027t catastrophic character set conversion loss in JS-\u003eCGI-\u003eJS\n(i added that after an accident in the Perl caused exactly that)\nalso it\u0027s used in case Blink chooses to use the Unicode longname when reflecting the filename back in the upload or through .files - that\u0027s entirely valid and should not cause a test failure. I think it might even happen in the real world with some registry changes to switch ACP to UTF-8 (yeah, that is possible - it\u0027s just never the default)",
+      "parentUuid": "57a54573_e09ece4b",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fcd022f_85e9fa61",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
         "patchSetId": 66
@@ -166,6 +310,24 @@
       "writtenOn": "2017-11-15T17:45:02Z",
       "side": 1,
       "message": "nit: \"LayoutTests_\" instead of \"cgi\" so the user knows where these are coming from.",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe74dc6_e13ce5ea",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T19:36:59Z",
+      "side": 1,
+      "message": "Can\u0027t, unfortunately - this is \"cgi\" instead of e.g.  \"LayoutTests_\" because it needs to fit in 8 characters for shortname comparison. Originally it was much more descriptive, but the Win32 API leaves few good options",
+      "parentUuid": "9fcd022f_85e9fa61",
       "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -186,6 +348,24 @@
       "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736b11d6_46af21a6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T19:36:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2b1839a_1ba938f3",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
