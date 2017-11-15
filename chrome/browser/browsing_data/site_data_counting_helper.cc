@@ -32,27 +32,34 @@ SiteDataCountingHelper::SiteDataCountingHelper(
     : profile_(profile),
       begin_(begin),
       completion_callback_(completion_callback),
-      tasks_(0) {}
+      tasks_(0) {
+  network::mojom::CookieManagerRequest request(
+      mojo::MakeRequest(&cookie_manager_ptr_));
+  content::BrowserContext::GetDefaultStoragePartition(profile)
+      ->GetNetworkContext()
+      ->GetCookieManager(std::move(request));
+}
 
 SiteDataCountingHelper::~SiteDataCountingHelper() {}
 
 void SiteDataCountingHelper::CountAndDestroySelfWhenFinished() {
-  content::StoragePartition* partition =
-      content::BrowserContext::GetDefaultStoragePartition(profile_);
-
   scoped_refptr<storage::SpecialStoragePolicy> special_storage_policy(
       profile_->GetSpecialStoragePolicy());
+  content::StoragePartition* default_storage_partition =
+      content::BrowserContext::GetDefaultStoragePartition(profile_);
 
-  net::URLRequestContextGetter* rq_context = partition->GetURLRequestContext();
+  net::URLRequestContextGetter* rq_context =
+      default_storage_partition->GetURLRequestContext();
 
   tasks_ += 1;
-  // Count origins with cookies.
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&SiteDataCountingHelper::GetCookiesOnIOThread,
-                     base::Unretained(this), base::WrapRefCounted(rq_context)));
+  cookie_manager_ptr_->GetAllCookies(
+      base::BindOnce(&SiteDataCountingHelper::GetCookiesCallback,
+                     // Safe as class owns itself and doesn't destruct
+                     // until all tasks return.
+                     base::Unretained(this)));
 
-  storage::QuotaManager* quota_manager = partition->GetQuotaManager();
+  storage::QuotaManager* quota_manager =
+      default_storage_partition->GetQuotaManager();
   if (quota_manager) {
     // Count origins with filesystem, websql, appcache, indexeddb,
     // serviceworkers and cachestorage using quota manager.
@@ -72,7 +79,8 @@ void SiteDataCountingHelper::CountAndDestroySelfWhenFinished() {
   }
 
   // Count origins with local storage or session storage.
-  content::DOMStorageContext* dom_storage = partition->GetDOMStorageContext();
+  content::DOMStorageContext* dom_storage =
+      default_storage_partition->GetDOMStorageContext();
   if (dom_storage) {
     tasks_ += 1;
     auto local_callback =
@@ -125,27 +133,8 @@ void SiteDataCountingHelper::GetOriginsFromHostContentSettignsMap(
   Done(std::vector<GURL>(origins.begin(), origins.end()));
 }
 
-void SiteDataCountingHelper::GetCookiesOnIOThread(
-    const scoped_refptr<net::URLRequestContextGetter>& rq_context) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  net::CookieStore* cookie_store =
-      rq_context->GetURLRequestContext()->cookie_store();
-
-  if (cookie_store) {
-    cookie_store->GetAllCookiesAsync(base::BindOnce(
-        &SiteDataCountingHelper::GetCookiesCallback, base::Unretained(this)));
-  } else {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::BindOnce(&SiteDataCountingHelper::Done, base::Unretained(this),
-                       std::vector<GURL>()));
-  }
-}
-
 void SiteDataCountingHelper::GetCookiesCallback(
     const net::CookieList& cookies) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   std::vector<GURL> origins;
   for (const net::CanonicalCookie& cookie : cookies) {
     if (cookie.CreationDate() >= begin_) {
@@ -154,9 +143,7 @@ void SiteDataCountingHelper::GetCookiesCallback(
       origins.push_back(url);
     }
   }
-  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(&SiteDataCountingHelper::Done,
-                                         base::Unretained(this), origins));
+  Done(origins);
 }
 
 void SiteDataCountingHelper::GetQuotaOriginsCallback(

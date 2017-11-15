@@ -26,7 +26,6 @@
 #include "content/browser/gpu/shader_cache_factory.h"
 #include "content/browser/notifications/platform_notification_context_impl.h"
 #include "content/common/dom_storage/dom_storage_types.h"
-#include "content/network/network_context.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
@@ -37,6 +36,7 @@
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/network/network_context.h"
 #include "net/base/completion_callback.h"
 #include "net/base/net_errors.h"
 #include "net/cookies/canonical_cookie.h"
@@ -249,7 +249,7 @@ base::WeakPtr<storage::BlobStorageContext> BlobStorageContextGetter(
 // URLRequestContext, when the ContentBrowserClient doesn't provide a
 // NetworkContext itself.
 //
-// Createdd on the UI thread, but must be initialized and destroyed on the IO
+// Created on the UI thread, but must be initialized and destroyed on the IO
 // thread.
 class StoragePartitionImpl::NetworkContextOwner {
  public:

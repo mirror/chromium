@@ -150,6 +150,21 @@ void CookieManager::SetCanonicalCookie(const net::CanonicalCookie& cookie,
       modify_http_only, std::move(callback));
 }
 
+void ConvertNumToBooleanCallback(
+    CookieManager::DeleteCanonicalCookieCallback callback,
+    uint32_t num_deleted) {
+  DCHECK_GE(1u, num_deleted);
+  std::move(callback).Run(num_deleted == 1u);
+}
+
+void CookieManager::DeleteCanonicalCookie(
+    const net::CanonicalCookie& cookie,
+    DeleteCanonicalCookieCallback callback) {
+  cookie_store_->DeleteCanonicalCookieAsync(
+      cookie,
+      base::BindOnce(&ConvertNumToBooleanCallback, std::move(callback)));
+}
+
 void CookieManager::DeleteCookies(
     network::mojom::CookieDeletionFilterPtr filter,
     DeleteCookiesCallback callback) {
