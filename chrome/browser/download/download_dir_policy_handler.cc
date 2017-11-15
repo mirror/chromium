@@ -102,8 +102,10 @@ void DownloadDirPolicyHandler::ApplyPolicySettingsWithParameters(
   // location; the default location is used instead in that case.
   // This is checked after path expansion because a non-empty policy value can
   // lead to an empty path value after expansion (e.g. "\"\"").
-  if (expanded_value.empty())
-    expanded_value = DownloadPrefs::GetDefaultDownloadDirectory().value();
+  if (expanded_value.empty()) {
+    expanded_value = policy::path_parser::ExpandPathVariables(
+        DownloadPrefs::GetDefaultDownloadDirectory().value());
+  }
   prefs->SetValue(prefs::kDownloadDefaultDirectory,
                   base::MakeUnique<base::Value>(expanded_value));
 
