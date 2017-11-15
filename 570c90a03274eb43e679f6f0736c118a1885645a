@@ -16,6 +16,24 @@
       "revId": "570c90a03274eb43e679f6f0736c118a1885645a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7959b86_82220db3",
+        "filename": "content/test/gpu/gpu_tests/maps_integration_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-15T08:12:53Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "045c04d0_af695b43",
+      "revId": "570c90a03274eb43e679f6f0736c118a1885645a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
