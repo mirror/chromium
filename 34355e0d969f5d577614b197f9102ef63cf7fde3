@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad72c821_b8638443",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-11-15T19:28:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbbc2500_f63297f8",
+      "revId": "34355e0d969f5d577614b197f9102ef63cf7fde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fa13efc_b1615c5e",
         "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "34355e0d969f5d577614b197f9102ef63cf7fde3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f067ddf8_e6d31d19",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-11-15T19:28:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fa13efc_b1615c5e",
+      "revId": "34355e0d969f5d577614b197f9102ef63cf7fde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "0e202203_e6a8f07b",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-11-15T19:28:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9e89013_134cc59d",
+      "revId": "34355e0d969f5d577614b197f9102ef63cf7fde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09738182_21a7fe93",
         "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessServiceImpl.java",
         "patchSetId": 6
@@ -85,6 +139,24 @@
       "revId": "34355e0d969f5d577614b197f9102ef63cf7fde3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32751441_478b023d",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-11-15T19:28:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09738182_21a7fe93",
+      "revId": "34355e0d969f5d577614b197f9102ef63cf7fde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

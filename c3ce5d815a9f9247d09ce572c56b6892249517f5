@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "64e35f57_283dfaf1",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-11-15T19:28:46Z",
+      "side": 1,
+      "message": "Preloading ends up calling dlopen(), which shouldn\u0027t run any Chrome code because we prohibit global objects. (There are still few global objects though, e.g. those that come from statically linked libc++).",
+      "parentUuid": "fafa35cf_acff4a49",
+      "revId": "c3ce5d815a9f9247d09ce572c56b6892249517f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a2433a0_21a5973c",
         "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessServiceImpl.java",
         "patchSetId": 5
