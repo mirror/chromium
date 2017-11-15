@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58f61e6a_1a8b1014",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-15T20:39:58Z",
+      "side": 1,
+      "message": "This probably requires a garbage-collected (and not merely traceable) element, due to use of Member. Traceable would make sense if, like most heap collections, it put the T directly into a collection buffer, in which case you\u0027d use a Collection\u003cMember\u003cT\u003e\u003e, where Member\u003cT\u003e was the traceable thing. That\u0027s not the case here, though.\n\nIf so, an assertion in the constructor might be reasonable.",
+      "revId": "eaa735a8fa47335b1359c1003d12cab657d70f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfce9f6f_8770c4fc",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-15T20:39:58Z",
+      "side": 1,
+      "message": "nit: does simply using \"head_\" and \"tail_\" not work? It seems like it would, since members of the base class are ordinarily visible.",
+      "revId": "eaa735a8fa47335b1359c1003d12cab657d70f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98477ee5_781a8fd8",
+        "filename": "third_party/WebKit/Source/platform/wtf/DoublyLinkedList.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-15T20:39:58Z",
+      "side": 1,
+      "message": "nit: saying PointerType here might be clearer than U",
+      "revId": "eaa735a8fa47335b1359c1003d12cab657d70f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
