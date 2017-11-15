@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7972b08_0eea8af7",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommandTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-15T19:35:48Z",
+      "side": 1,
+      "message": "It\u0027s better to do\n\nReplaceSelectionCommand::Create(...)-\u003eApply()\n\ndirectly like the other ReplaceSelectionCommandTests, instead of using Document.execCommand.\n\nUnit tests should be minimal.",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 49
+      },
+      "revId": "31125a7c57aead75924f87bac1cc12e311c7f27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
