@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b98faf99_ff97b095",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-15T21:03:24Z",
+      "side": 1,
+      "message": "nit: remove the comment, too.",
+      "revId": "dfc5de42f4af2ddf81df4ebcb700e5409fd2e9bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd677aeb_7efd6e16",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-15T21:03:24Z",
+      "side": 1,
+      "message": "nit: remove comment",
+      "revId": "dfc5de42f4af2ddf81df4ebcb700e5409fd2e9bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f1ea58e_765a7157",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/LGEmailActionModeWorkaround.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-15T21:03:24Z",
+      "side": 1,
+      "message": "nit: remove comment",
+      "revId": "dfc5de42f4af2ddf81df4ebcb700e5409fd2e9bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

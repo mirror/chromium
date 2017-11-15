@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bce9cd7a_4155ce5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-15T21:03:24Z",
+      "side": 0,
+      "message": "Was this unused already?",
+      "revId": "80a52dceb0bbf45827b1c2a036dda1d3884db853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b526e9cd_f96c2c9d",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/SuggestionsDependenciesRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-15T21:03:24Z",
+      "side": 0,
+      "message": "I think this can go, too.",
+      "revId": "80a52dceb0bbf45827b1c2a036dda1d3884db853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57559dd_d70b6c17",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/QuicTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-15T21:03:24Z",
+      "side": 0,
+      "message": "?",
+      "revId": "80a52dceb0bbf45827b1c2a036dda1d3884db853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
