@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0e1489b_25ef8e4e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/CountersGraph.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-15T02:30:53Z",
+      "side": 1,
+      "message": "Can we make it a proper toolbar, as in UI.Toolbar?",
+      "revId": "b429a062aee2459643cf60dbe9a38d3fac358a0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
