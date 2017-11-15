@@ -223,33 +223,32 @@ class CHROME_DBUS_EXPORT ObjectProxy
  private:
   friend class base::RefCountedThreadSafe<ObjectProxy>;
 
+  // Callback passed to CallMethod should be deleted on the original thread
+  // in any cases. Specifically on shutdown timing in Chrome, UI thread
+  // (= original thread) may be shut down before D-Bus thread, then PostTask()
+  // to just destroy ReplyTask will fail. In such a case, simply leak the
+  // instance intentionally to avoid destroying Callback (and its bound
+  // arguments) on a thread unexpected from callers.
+  struct ReplyTask;
+
   // Struct of data we'll be passing from StartAsyncMethodCall() to
   // OnPendingCallIsCompleteThunk().
-  struct OnPendingCallIsCompleteData {
-    OnPendingCallIsCompleteData(ObjectProxy* in_object_proxy,
-                                ResponseOrErrorCallback callback,
-                                base::TimeTicks start_time);
-    ~OnPendingCallIsCompleteData();
-
-    ObjectProxy* object_proxy;
-    ResponseOrErrorCallback callback;
-    base::TimeTicks start_time;
-  };
+  struct OnPendingCallIsCompleteData;
 
   // Starts the async method call. This is a helper function to implement
   // CallMethod().
   void StartAsyncMethodCall(int timeout_ms,
                             DBusMessage* request_message,
-                            ResponseOrErrorCallback callback,
+                            ReplyTask* reply_task,
                             base::TimeTicks start_time);
 
   // Called when the pending call is complete.
   void OnPendingCallIsComplete(DBusPendingCall* pending_call,
-                               ResponseOrErrorCallback callback,
+                               ReplyTask* reply_task,
                                base::TimeTicks start_time);
 
   // Runs the ResponseOrErrorCallback with the given response object.
-  void RunResponseOrErrorCallback(ResponseOrErrorCallback callback,
+  void RunResponseOrErrorCallback(ReplyTask* raw_reply_task,
                                   base::TimeTicks start_time,
                                   Response* response,
                                   ErrorResponse* error_response);
@@ -257,6 +256,9 @@ class CHROME_DBUS_EXPORT ObjectProxy
   // Redirects the function call to OnPendingCallIsComplete().
   static void OnPendingCallIsCompleteThunk(DBusPendingCall* pending_call,
                                            void* user_data);
+
+  // Deletes the given |raw_data|.
+  static void DeleteOnPendingCallIsCompleteData(void* raw_data);
 
   // Connects to NameOwnerChanged signal.
   bool ConnectToNameOwnerChangedSignal();

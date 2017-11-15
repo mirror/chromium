@@ -8,6 +8,8 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
+#include "base/debug/leak_annotations.h"
 #include "base/logging.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
@@ -52,6 +54,19 @@ void EmptyResponseCallbackBody(Response* /*response*/) {
 }
 
 }  // namespace
+
+struct ObjectProxy::ReplyTask {
+  ResponseOrErrorCallback callback;
+};
+
+struct ObjectProxy::OnPendingCallIsCompleteData {
+  ObjectProxy* const object_proxy;
+
+  // Owns, but using raw pointer.
+  // Please refer DeleteOnPendingCallIsCompleteData for details.
+  ReplyTask* reply_task;
+  const base::TimeTicks start_time;
+};
 
 ObjectProxy::ObjectProxy(Bus* bus,
                          const std::string& service_name,
@@ -137,13 +152,27 @@ void ObjectProxy::CallMethodWithErrorResponse(
 
   const base::TimeTicks start_time = base::TimeTicks::Now();
 
+  // ReplyTask lives on the origin thread.
+  // In regular cases (including D-Bus call error cases), it will be destroyed
+  // in RunResponseOrErrorCallback, which always should run on the origin
+  // thread.
+  // However, there is an edge case. The object is passed to D-Bus thread
+  // once for actual D-Bus call, and during the call the message loop for the
+  // origin thread may stop so that PostTask() for the reply may fail.
+  // In such a case, |reply_task| will be intentionally leaked, rather than
+  // destroying it on D-Bus thread because the bound arguments may be
+  // thread unsafe.
+  ReplyTask* reply_task = new ReplyTask{std::move(callback)};
+  ANNOTATE_LEAKING_OBJECT_PTR(reply_task);
+
   if (!method_call->SetDestination(service_name_) ||
       !method_call->SetPath(object_path_)) {
     // In case of a failure, run the error callback with nullptr.
     base::OnceClosure task = base::BindOnce(
-        &ObjectProxy::RunResponseOrErrorCallback, this, std::move(callback),
-        start_time, nullptr /* response */, nullptr /* error_response */);
-    bus_->GetOriginTaskRunner()->PostTask(FROM_HERE, std::move(task));
+        &ObjectProxy::RunResponseOrErrorCallback, this, reply_task, start_time,
+        nullptr /* response */, nullptr /* error_response */);
+    if (!bus_->GetOriginTaskRunner()->PostTask(FROM_HERE, std::move(task)))
+      delete reply_task;
     return;
   }
 
@@ -160,8 +189,9 @@ void ObjectProxy::CallMethodWithErrorResponse(
   // Wait for the response in the D-Bus thread.
   base::OnceClosure task =
       base::BindOnce(&ObjectProxy::StartAsyncMethodCall, this, timeout_ms,
-                     request_message, std::move(callback), start_time);
-  bus_->GetDBusTaskRunner()->PostTask(FROM_HERE, std::move(task));
+                     request_message, reply_task, start_time);
+  if (!bus_->GetDBusTaskRunner()->PostTask(FROM_HERE, std::move(task)))
+    delete reply_task;
 }
 
 void ObjectProxy::CallMethodWithErrorCallback(MethodCall* method_call,
@@ -251,28 +281,17 @@ ObjectProxy::ResponseCallback ObjectProxy::EmptyResponseCallback() {
   return base::Bind(&EmptyResponseCallbackBody);
 }
 
-ObjectProxy::OnPendingCallIsCompleteData::OnPendingCallIsCompleteData(
-    ObjectProxy* in_object_proxy,
-    ResponseOrErrorCallback in_callback,
-    base::TimeTicks in_start_time)
-    : object_proxy(in_object_proxy),
-      callback(std::move(in_callback)),
-      start_time(in_start_time) {}
-
-ObjectProxy::OnPendingCallIsCompleteData::~OnPendingCallIsCompleteData() =
-    default;
-
 void ObjectProxy::StartAsyncMethodCall(int timeout_ms,
                                        DBusMessage* request_message,
-                                       ResponseOrErrorCallback callback,
+                                       ReplyTask* reply_task,
                                        base::TimeTicks start_time) {
   bus_->AssertOnDBusThread();
 
   if (!bus_->Connect() || !bus_->SetUpAsyncOperations()) {
     // In case of a failure, run the error callback with nullptr.
     base::OnceClosure task = base::BindOnce(
-        &ObjectProxy::RunResponseOrErrorCallback, this, std::move(callback),
-        start_time, nullptr /* response */, nullptr /* error_response */);
+        &ObjectProxy::RunResponseOrErrorCallback, this, reply_task, start_time,
+        nullptr /* response */, nullptr /* error_response */);
     bus_->GetOriginTaskRunner()->PostTask(FROM_HERE, std::move(task));
 
     dbus_message_unref(request_message);
@@ -283,16 +302,13 @@ void ObjectProxy::StartAsyncMethodCall(int timeout_ms,
   bus_->SendWithReply(request_message, &pending_call, timeout_ms);
 
   // Prepare the data we'll be passing to OnPendingCallIsCompleteThunk().
-  // The data will be deleted in OnPendingCallIsCompleteThunk().
   OnPendingCallIsCompleteData* data =
-      new OnPendingCallIsCompleteData(this, std::move(callback), start_time);
+      new OnPendingCallIsCompleteData{this, reply_task, start_time};
 
   // This returns false only when unable to allocate memory.
   const bool success = dbus_pending_call_set_notify(
-      pending_call,
-      &ObjectProxy::OnPendingCallIsCompleteThunk,
-      data,
-      &DeleteVoidPointer<OnPendingCallIsCompleteData>);
+      pending_call, &ObjectProxy::OnPendingCallIsCompleteThunk, data,
+      &ObjectProxy::DeleteOnPendingCallIsCompleteData);
   CHECK(success) << "Unable to allocate memory";
   pending_calls_.insert(pending_call);
 
@@ -301,7 +317,7 @@ void ObjectProxy::StartAsyncMethodCall(int timeout_ms,
 }
 
 void ObjectProxy::OnPendingCallIsComplete(DBusPendingCall* pending_call,
-                                          ResponseOrErrorCallback callback,
+                                          ReplyTask* reply_task,
                                           base::TimeTicks start_time) {
   bus_->AssertOnDBusThread();
 
@@ -317,9 +333,9 @@ void ObjectProxy::OnPendingCallIsComplete(DBusPendingCall* pending_call,
     response = Response::FromRawMessage(response_message);
   }
 
-  base::OnceClosure task = base::BindOnce(
-      &ObjectProxy::RunResponseOrErrorCallback, this, std::move(callback),
-      start_time, response.get(), error_response.get());
+  base::OnceClosure task =
+      base::BindOnce(&ObjectProxy::RunResponseOrErrorCallback, this, reply_task,
+                     start_time, response.get(), error_response.get());
 
   // The message should be deleted on the D-Bus thread for a complicated
   // reason:
@@ -352,11 +368,15 @@ void ObjectProxy::OnPendingCallIsComplete(DBusPendingCall* pending_call,
   dbus_pending_call_unref(pending_call);
 }
 
-void ObjectProxy::RunResponseOrErrorCallback(ResponseOrErrorCallback callback,
+void ObjectProxy::RunResponseOrErrorCallback(ReplyTask* reply_task,
                                              base::TimeTicks start_time,
                                              Response* response,
                                              ErrorResponse* error_response) {
   bus_->AssertOnOriginThread();
+
+  // Take the ownership of callback from |reply_task| and delete it.
+  ResponseOrErrorCallback callback = std::move(reply_task->callback);
+  delete reply_task;
 
   std::move(callback).Run(response, error_response);
 
@@ -375,8 +395,31 @@ void ObjectProxy::OnPendingCallIsCompleteThunk(DBusPendingCall* pending_call,
   OnPendingCallIsCompleteData* data =
       reinterpret_cast<OnPendingCallIsCompleteData*>(user_data);
   ObjectProxy* self = data->object_proxy;
-  self->OnPendingCallIsComplete(pending_call, std::move(data->callback),
-                                data->start_time);
+  ReplyTask* reply_task = data->reply_task;
+  data->reply_task = nullptr;  // Explicitly mark that it is consumed.
+  self->OnPendingCallIsComplete(pending_call, reply_task, data->start_time);
+}
+
+void ObjectProxy::DeleteOnPendingCallIsCompleteData(void* raw_data) {
+  // Take ownership from |raw_data|.
+  std::unique_ptr<OnPendingCallIsCompleteData> data(
+      static_cast<OnPendingCallIsCompleteData*>(raw_data));
+
+  auto bus = data->object_proxy->bus_;
+  bus->AssertOnDBusThread();
+
+  if (!data->reply_task)
+    return;
+
+  // Here is on D-Bus thread, but ReplyTask object must be deleted on the
+  // origin thread. So, try to PostTask() it.
+  // This PostTask() may fail if the message loop for the origin thread is
+  // already stopped. Practically, this could happen on shutdown timing,
+  // because UI thread (= the origin thread) message loop is stopped ealier
+  // than D-Bus thread's. Then |reply_task| will be leaked intentionally.
+  bus->GetOriginTaskRunner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&base::DeletePointer<ReplyTask>, data->reply_task));
 }
 
 bool ObjectProxy::ConnectToNameOwnerChangedSignal() {
