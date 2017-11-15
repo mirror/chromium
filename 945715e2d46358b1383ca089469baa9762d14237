@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "cf95b7d5_5c982f7a",
+        "filename": "components/password_manager/core/browser/export/destination.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-15T15:28:51Z",
+      "side": 1,
+      "message": "I have not though enough about the details on mobile yet.\nI think a warning signal might be if you end up writing //chrome- or //content-dependent code in the controller (which is supposed to be platform-independent) to schedule a Write operation. But perhaps you will only create a TaskRunner with the appropriate traits, which should work for me on mobile as well.\nAs usual, if this won\u0027t work, we can change it later.",
+      "parentUuid": "952f2733_0d97e283",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "945715e2d46358b1383ca089469baa9762d14237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fc55cc3_f8feb9f5",
         "filename": "components/password_manager/core/browser/export/destination.h",
         "patchSetId": 2

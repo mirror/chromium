@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "612792fd_4bd54036",
+        "filename": "components/password_manager/core/browser/export/destination.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-15T15:28:51Z",
+      "side": 1,
+      "message": "Please also comment on the meaning of the return value.",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 14
+      },
+      "revId": "5987ba491268fde2f7280853813ab7742435c5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
