@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "753c77d9_9cb1540a",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-15T08:02:56Z",
+      "side": 1,
+      "message": "current patch lgtm. I suspect it might be easier to understand if WebKit/common was WebKit/public/common, but this is a small nit/personal preference",
+      "parentUuid": "22620740_bb2abb17",
+      "revId": "7e78da3ab068fe3d81c223f491b23b44464ec4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca8cca53_d8e2bce7",
         "filename": "third_party/WebKit/public/platform/web_page_visibility_state.mojom",
         "patchSetId": 3
