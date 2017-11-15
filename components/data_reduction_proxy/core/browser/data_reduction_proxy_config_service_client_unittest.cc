@@ -25,6 +25,7 @@
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_delegate.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_mutable_config_values.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.h"
+#include "components/data_reduction_proxy/core/browser/network_properties_manager.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params_test_utils.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_pref_names.h"
@@ -595,8 +596,9 @@ TEST_F(DataReductionProxyConfigServiceClientTest,
       ProxyServer::CORE));
 
   // Secure check failed.
-  configurator()->Enable(true /* secure_transport_restricted */, false,
-                         http_proxies);
+  NetworkPropertiesManager manager;
+  manager.SetIsSecureProxyDisallowedByCarrier(true);
+  configurator()->Enable(manager, http_proxies);
   VerifyRemoteSuccess(false);
 }
 
@@ -730,8 +732,9 @@ TEST_F(DataReductionProxyConfigServiceClientTest,
       ProxyServer::CORE));
 
   // Secure check failed.
-  configurator()->Enable(true /* secure_transport_restricted */, false,
-                         http_proxies);
+  NetworkPropertiesManager manager;
+  manager.SetIsSecureProxyDisallowedByCarrier(true);
+  configurator()->Enable(manager, http_proxies);
   VerifyRemoteSuccess(false);
 }
 
