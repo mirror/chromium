@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18ff87c2_2fb7e30b",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T19:06:16Z",
+      "side": 1,
+      "message": "auto received_nonce \u003d base::span\u003cuint8_t\u003e(payload).first(8);",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 153,
+        "endChar": 63
+      },
+      "revId": "530aee51e98ab339614148e5279fbcd03e706eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
