@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9e711c3_c93a83f1",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2634,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-15T14:16:26Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right. I tested this a bit and it seems like if RequestCompositorFrameSink() is called on a RWHI with no view then a view will never be added later. Not sure why RequestCompositorFrameSink() is being called.",
+      "revId": "be7626b33e84b495dd516837c352a5c2ac3039cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
