@@ -269,6 +269,21 @@ void LayoutEmbeddedContent::StyleDidChange(StyleDifference diff,
   }
 }
 
+void LayoutEmbeddedContent::UpdateFromStyle() {
+  LayoutBox::UpdateFromStyle();
+
+  // Treat all embedded content as having overflow clip, because in all
+  // cases we want to clip the embedded content to the area it is
+  // replacing.
+  if (!HasOverflowClip()) {
+    SetMayNeedPaintInvalidationSubtree();
+    // The overflow clip paint property depends on whether clip is
+    // present so we need to update paint properties if this changes.
+    SetNeedsPaintPropertyUpdate();
+    SetHasOverflowClip(true);
+  }
+}
+
 void LayoutEmbeddedContent::UpdateLayout() {
   DCHECK(NeedsLayout());
   LayoutAnalyzer::Scope analyzer(*this);
