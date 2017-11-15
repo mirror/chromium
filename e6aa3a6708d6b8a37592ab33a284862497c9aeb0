@@ -105,6 +105,24 @@
       "revId": "e6aa3a6708d6b8a37592ab33a284862497c9aeb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24d27a61_448d202a",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValueType.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-15T00:26:02Z",
+      "side": 1,
+      "message": "Done. Changed to a bool to be clearer.",
+      "parentUuid": "164608f7_ba78910b",
+      "revId": "e6aa3a6708d6b8a37592ab33a284862497c9aeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
