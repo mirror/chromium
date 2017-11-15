@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "522fdc47_bb2973e6",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-15T18:25:17Z",
+      "side": 1,
+      "message": "|native_aspect_ratio|?",
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b18f41f_8a532438",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-15T18:25:17Z",
+      "side": 1,
+      "message": "can you just let it fail so that we can detect it if we ever have such device?",
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9033d3_ecfbf35a",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-15T18:25:17Z",
+      "side": 1,
+      "message": "when can this be false?",
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b2873bc_2d29f94d",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-15T18:25:17Z",
+      "side": 1,
+      "message": "this method itself does nothing to ensure about native mode. How about\n\nHasSameAspectRatioAsNativeMode(DisplaySnapShot*, DisplayMode*)\n\n?",
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa1ccccf_ddd3945e",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-15T18:25:17Z",
+      "side": 1,
+      "message": "it\u0027s not clear to me why you need \"is_first_internal \u0026\u0026 d \u003d\u003d dispays[0]\".\nCan you explain why?",
+      "range": {
+        "startLine": 425,
+        "startChar": 31,
+        "endLine": 425,
+        "endChar": 48
+      },
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66964f33_7e68fb7c",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-15T18:25:17Z",
+      "side": 1,
+      "message": "if (native_preserve_aspect \u0026\u0026 !HasSameAspectRatioAsNative())\n  continue;",
+      "revId": "d55da24ed8045831e610aa31f44fd34d519de1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
