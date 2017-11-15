@@ -27,7 +27,13 @@ class {{exported}}{{cpp_class}} final : public CallbackFunctionBase {
      function returns a return value or throws an exception. #}
   // Performs "invoke".
   // https://heycam.github.io/webidl/#es-invoking-callback-functions
-  bool call({{argument_declarations | join(', ')}});
+  v8::Maybe<{{return_cpp_type}}> Invoke({{argument_declarations | join(', ')}}) WARN_UNUSED_RESULT;
+
+{% if idl_type == 'void' %}
+  // Performs "invoke", and then reports an exception, if any, to the global
+  // error handler such as DevTools' console.
+  void InvokeAndReportException({{argument_declarations | join(', ')}});
+{% endif %}
 
  private:
   explicit {{cpp_class}}(v8::Local<v8::Function> callback_function)
