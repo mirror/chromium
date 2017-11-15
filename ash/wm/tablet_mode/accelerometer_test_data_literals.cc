@@ -6,7 +6,7 @@
 
 namespace ash {
 
-extern const float kAccelerometerLaptopModeTestData[] = {
+const float kAccelerometerLaptopModeTestData[] = {
     -0.166016f,   -0.00488281f,  0.924805f,     -0.770508f,    -0.0488281f,
     -0.510742f,   -0.199219f,    -0.0078125f,   0.953125f,     -0.782227f,
     -0.0244141f,  -0.652344f,    -0.177734f,    -0.0136719f,   0.936523f,
@@ -555,10 +555,10 @@ extern const float kAccelerometerLaptopModeTestData[] = {
     -0.0810547f,  0.956055f,     -0.9375f,      -0.18457f,     -0.275391f,
     0.0703125f,   -0.0986328f,   0.948242f,     -0.928711f,    -0.162109f,
     -0.333008f};
-extern const size_t kAccelerometerLaptopModeTestDataLength =
+const size_t kAccelerometerLaptopModeTestDataLength =
     arraysize(kAccelerometerLaptopModeTestData);
 
-extern const float kAccelerometerFullyOpenTestData[] = {
+const float kAccelerometerFullyOpenTestData[] = {
     0.892578f,    -0.0810547f,  0.0146484f,    0.929688f,     -0.0644531f,
     -0.0234375f,  0.996094f,    -0.0136719f,   0.0185547f,    1.02344f,
     -0.0615234f,  -0.0449219f,  0.978516f,     0.125977f,     0.0400391f,
@@ -993,10 +993,10 @@ extern const float kAccelerometerFullyOpenTestData[] = {
     -0.00683594f, 0.345703f,    0.926758f,     -0.0478516f,   0.269531f,
     0.887695f,    0.0146484f,   0.360352f,     0.927734f,     -0.03125f,
     0.272461f};
-extern const size_t kAccelerometerFullyOpenTestDataLength =
+const size_t kAccelerometerFullyOpenTestDataLength =
     arraysize(kAccelerometerFullyOpenTestData);
 
-extern const float kAccelerometerVerticalHingeTestData[] = {
+const float kAccelerometerVerticalHingeTestData[] = {
     -0.0766145f,  6.02381f,     7.85298f,     -0.268151f,   -8.84897f,
     -1.3216f,     -0.402226f,   5.11401f,     8.77236f,     -1.10133f,
     -10.1706f,    1.24498f,     -1.18752f,    6.40688f,     8.0924f,
@@ -1995,10 +1995,10 @@ extern const float kAccelerometerVerticalHingeTestData[] = {
     -8.6287f,     4.47237f,     0.354342f,    -9.51935f,    0.986411f,
 };
 
-extern const size_t kAccelerometerVerticalHingeTestDataLength =
+const size_t kAccelerometerVerticalHingeTestDataLength =
     arraysize(kAccelerometerVerticalHingeTestData);
 
-extern const float kAccelerometerVerticalHingeUnstableAnglesTestData[] = {
+const float kAccelerometerVerticalHingeUnstableAnglesTestData[] = {
     8.5904f,   -1.36948f,  -3.74453f,   8.72447f,  1.1971f,    4.00311f,
     8.80109f,  -3.08373f,  2.27928f,    8.95431f,  -1.90578f,  -1.10133f,
     8.93516f,  -2.03986f,  0.248997f,   9.05008f,  1.53229f,   -0.708684f,
@@ -2022,7 +2022,7 @@ extern const float kAccelerometerVerticalHingeUnstableAnglesTestData[] = {
     -8.92558f, 0.440533f,  1.26414f,    -8.71489f, -0.153229f, -3.64876f,
 };
 
-extern const size_t kAccelerometerVerticalHingeUnstableAnglesTestDataLength =
+const size_t kAccelerometerVerticalHingeUnstableAnglesTestDataLength =
     arraysize(kAccelerometerVerticalHingeUnstableAnglesTestData);
 
 }  // namespace ash
