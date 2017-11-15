@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "70629249_17a59455",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-15T22:05:12Z",
+      "side": 1,
+      "message": "I was able to verify swap id\u0027s are still synchronized after a gpu service crash using chrome:gpucrash and local trace events.\n\nI can\u0027t think of anything else that would affect the implicit synchronization, but there may be dark corners I am not aware of.",
+      "parentUuid": "f41667f1_495ffd5b",
+      "revId": "bf0a2fbadd169bc3aa9f0b47fb2b78621879392b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6a7c068_ef4e08b6",
         "filename": "ui/gfx/swap_result.h",
         "patchSetId": 7

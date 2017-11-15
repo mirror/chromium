@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7b971e87_bb331381",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-15T22:05:12Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "03f3190d_09352ba7",
+      "revId": "aa0a89fc8e6e2ed2bdf59d1c3e19fdd5f400acec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd314f40_60d72465",
         "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
         "patchSetId": 7
@@ -105,6 +123,30 @@
       "revId": "aa0a89fc8e6e2ed2bdf59d1c3e19fdd5f400acec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbfd2c87_7a2ae2b5",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-15T22:05:12Z",
+      "side": 0,
+      "message": "K. I will keep the snapshot logic as is in this patch.",
+      "parentUuid": "d46897c1_981de987",
+      "range": {
+        "startLine": 211,
+        "startChar": 12,
+        "endLine": 211,
+        "endChar": 51
+      },
+      "revId": "aa0a89fc8e6e2ed2bdf59d1c3e19fdd5f400acec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
