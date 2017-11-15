@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f9a71ba_6b8e03a3",
+        "filename": "chrome/browser/resources/settings/site_settings/protocol_handlers.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T23:40:38Z",
+      "side": 1,
+      "message": "This is already defined in android_apps_browser_proxy.js. You just need to include android_apps_browser_proxy.js in compiled_resources2.js; see settings/android_apps_page/compiled_resources2.gyp for an example.",
+      "revId": "73bd6313f8bd44968f9dd2bbd03559d476cc3bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
