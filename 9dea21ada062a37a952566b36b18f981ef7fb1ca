@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "857de3cb_adc0f055",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-15T15:23:30Z",
+      "side": 1,
+      "message": "Why?  I don\u0027t know the history of this crazy stuff but it seems we want to lay out the contentViewController beneath the SettingsAppBarContainerViewController appBarHeight, regardless of safeArea, no?",
+      "parentUuid": "9f5857c2_1b9a5857",
+      "range": {
+        "startLine": 72,
+        "startChar": 32,
+        "endLine": 72,
+        "endChar": 64
+      },
+      "revId": "9dea21ada062a37a952566b36b18f981ef7fb1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44531b32_d132f4ba",
         "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-15T15:03:03Z",
       "side": 1,
       "message": "Shouldn\u0027t you use safeAreaInsets?",
+      "range": {
+        "startLine": 73,
+        "startChar": 47,
+        "endLine": 73,
+        "endChar": 73
+      },
+      "revId": "9dea21ada062a37a952566b36b18f981ef7fb1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "facd914e_e9f75764",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-15T15:23:30Z",
+      "side": 1,
+      "message": "safeAreaInsets is only iOS11.",
+      "parentUuid": "44531b32_d132f4ba",
       "range": {
         "startLine": 73,
         "startChar": 47,
@@ -77,6 +125,24 @@
       "side": 1,
       "message": "crbug.com/620361 tracks the removal when iOS 9 is dropped. I think nowadays, this is only used with Report an issue.\n\nWhy is setting the color now needed?",
       "parentUuid": "32509216_96cc4b6e",
+      "revId": "9dea21ada062a37a952566b36b18f981ef7fb1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a006775_5f5182da",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-15T15:23:30Z",
+      "side": 1,
+      "message": "Because otherwise you will see black bars for safeAreaLayoutGuide.leading, trailing, bottom.",
+      "parentUuid": "7b234f98_36ff6e7d",
       "revId": "9dea21ada062a37a952566b36b18f981ef7fb1ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
