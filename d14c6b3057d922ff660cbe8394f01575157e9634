@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bff7b26c_402a3813",
+        "filename": "content/browser/accessibility/browser_accessibility_atk_hyperlink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-15T09:42:30Z",
+      "side": 0,
+      "message": "This removal is wrong. The method that this patch provides to replace this functionality works for casting an AtkAction wrapping a BrowserAccessibilityAtk. But this one is for wrapping a BrowserAccessibilityAtkHyperlink. So we need to keep it (renaming it so jumbo build does not break).\n\nI will provide a fix.",
+      "revId": "d14c6b3057d922ff660cbe8394f01575157e9634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
