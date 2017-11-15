@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73cad316_0b56ad5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-11-15T14:39:31Z",
+      "side": 1,
+      "message": "How about \"ChromePermissionDenied\"?\n\nIt is better to pass in a String[] of permission types, rather than single permission type. This is because some permissions (e.g Geolocation), Chrome put both ACCESS_FINE_LOCATION and\nACCESS_COARSE_LOCATION into the String[], but we should only count the request of geolocation once. You can follow the example of recordAndroidRuntimePermissionPromptInWebApkAsync().",
+      "range": {
+        "startLine": 192,
+        "startChar": 69,
+        "endLine": 192,
+        "endChar": 91
+      },
+      "revId": "cc80d316e23bb435543f05b7d11e2980eb963e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29af7916_092e3b46",
+        "filename": "ui/android/java/src/org/chromium/ui/base/ActivityWindowAndroid.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-11-15T14:39:31Z",
+      "side": 1,
+      "message": "We don\u0027t need to record uma for pre-M case, since pre-M doesn\u0027t have run time permissions.\n\nSo you can rewrite the logic here like:\n\nif (activity \u003d\u003d null || isPermissionRevokedByPolicy(permission)) {\n   webapkuma.record...();\n   return false;\n}\n\n..... // cases that return true\n\nwebapkuma.record...();\nreturn false;",
+      "range": {
+        "startLine": 280,
+        "startChar": 16,
+        "endLine": 280,
+        "endChar": 61
+      },
+      "revId": "cc80d316e23bb435543f05b7d11e2980eb963e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
