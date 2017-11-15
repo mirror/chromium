@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # Copyright 2016 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
@@ -10,7 +10,7 @@ Sample usage:
   -a src/xcodebuild/Release-iphoneos/base_unittests.app \
   -o /tmp/out \
   -p iPhone 5s \
-  -v 9.3
+  -b 9b46
 
   Installs base_unittests.app in an iPhone 5s simulator running iOS 9.3,
   runs it, and captures all test data in /tmp/out.
@@ -25,7 +25,9 @@ import traceback
 import test_runner
 
 
-def main(args, test_args):
+def main():
+  args, test_args = parse_args()
+
   summary = {}
   tr = None
 
@@ -40,6 +42,7 @@ def main(args, test_args):
         args.platform,
         args.version,
         args.xcode_version,
+        args.xcode_build,
         args.out_dir,
         env_vars=args.env_var,
         retries=args.retries,
@@ -50,6 +53,7 @@ def main(args, test_args):
       tr = test_runner.DeviceTestRunner(
         args.app,
         args.xcode_version,
+        args.xcode_build,
         args.out_dir,
         env_vars=args.env_var,
         restart=args.restart,
@@ -79,7 +83,7 @@ def main(args, test_args):
         json.dump(tr.test_results, f)
 
 
-if __name__ == '__main__':
+def parse_args():
   parser = argparse.ArgumentParser()
 
   parser.add_argument(
@@ -141,11 +145,16 @@ if __name__ == '__main__':
     metavar='ver',
   )
   parser.add_argument(
+    '-b',
+    '--xcode-build',
+    help='Xcode build ID to install. Overrides --xcode-version.',
+    metavar='build_id',
+  )
+  parser.add_argument(
     '-x',
     '--xcode-version',
     help='Version of Xcode to use.',
     metavar='ver',
-    required=True,
   )
   parser.add_argument(
     '--xctest',
@@ -161,6 +170,10 @@ if __name__ == '__main__':
       parser.error(
         'must specify all or none of -i/--iossim, -p/--platform, -v/--version')
 
+  if not (args.xcode_version or args.xcode_build):
+    parser.error(
+      'must specify at least one of --xcode-build or --xcode-version')
+
   args_json = json.loads(args.args_json)
   args.env_var = args.env_var or []
   args.env_var.extend(args_json.get('env_var', []))
@@ -168,4 +181,8 @@ if __name__ == '__main__':
   args.xctest = args_json.get('xctest', args.xctest)
   test_args.extend(args_json.get('test_args', []))
 
-  sys.exit(main(args, test_args))
+  return args, test_args
+
+
+if __name__ == '__main__':
+  sys.exit(main())
