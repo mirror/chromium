@@ -736,6 +736,10 @@ static NSString* kHtmlWithMultiplePasswordForms =
      "<input id=\"un6'\" type='text' name=\"u6'\">"
      "<input id=\"pw6'\" type='password' name=\"p6'\">"
      "</form>"
+     "<form>"
+     "<input id='un8' type='text'>"
+     "<input id='pw8' type='password'>"
+     "</form>"
      "<iframe name='pf'></iframe>"
      "<script>"
      "  var doc = frames['pf'].document.open();"
@@ -893,6 +897,17 @@ TEST_F(PasswordControllerTest, FillPasswordForm) {
       YES,
       @"un6'=test_user;pw6'=test_password;"
     },
+    // Fields don't have name attributes so id attribete is used.
+    {
+          base_url,
+          base_url,
+          "un8",
+          "test_user",
+          "pw8",
+          "test_password",
+          YES,
+          @"un8=test_user;pw8=test_password;"
+      },
   };
   // clang-format on
 
