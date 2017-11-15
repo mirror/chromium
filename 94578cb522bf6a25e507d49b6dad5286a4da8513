@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bb04e56_00e936c9",
+        "filename": "tools/perf/benchmarks/wasm.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-15T15:16:37Z",
+      "side": 1,
+      "message": "Why not just call this \u0027wasm\u0027?",
+      "revId": "94578cb522bf6a25e507d49b6dad5286a4da8513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71633119_45b2853a",
+        "filename": "tools/perf/benchmarks/wasm.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-15T15:16:37Z",
+      "side": 1,
+      "message": "Why is this disabled on Android \u0026 Windows?",
+      "revId": "94578cb522bf6a25e507d49b6dad5286a4da8513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d55ddb_e19b0277",
+        "filename": "tools/perf/page_sets/wasm_realworld_perf.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-15T15:16:37Z",
+      "side": 1,
+      "message": "nits: name this file \"wasm_realworld_pages.py\"",
+      "revId": "94578cb522bf6a25e507d49b6dad5286a4da8513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
