@@ -21,6 +21,13 @@
 
 namespace content {
 
+namespace {
+// We only expect a couple swap acks outstanding, but there are cases where
+// we will get timestamps for swaps from several frames ago when using
+// platform extensions like eglGetFrameTimestampsANDROID.
+constexpr size_t kMaxSwapLatencyInfosToTrack = 10;
+}  // namespace
+
 GpuBrowserCompositorOutputSurface::GpuBrowserCompositorOutputSurface(
     scoped_refptr<ui::ContextProviderCommandBuffer> context,
     const UpdateVSyncParametersCallback& update_vsync_parameters_callback,
@@ -55,10 +62,26 @@ void GpuBrowserCompositorOutputSurface::SetNeedsVSync(bool needs_vsync) {
 }
 
 void GpuBrowserCompositorOutputSurface::OnGpuSwapBuffersCompleted(
-    const std::vector<ui::LatencyInfo>& latency_info,
-    gfx::SwapResult result,
+    const gfx::SwapResponse& response,
     const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac) {
-  RenderWidgetHostImpl::OnGpuSwapBuffersCompleted(latency_info);
+  auto it = std::find_if(swap_latency_infos_.begin(), swap_latency_infos_.end(),
+                         [&](const SwapLatencyInfo& sli) {
+                           return sli.swap_id == response.swap_id;
+                         });
+
+  if (it != swap_latency_infos_.end()) {
+    for (auto& latency : it->latency_info) {
+      latency.AddLatencyNumberWithTimestamp(
+          ui::INPUT_EVENT_GPU_SWAP_BUFFER_COMPONENT, 0, 0, response.swap_start,
+          1);
+      latency.AddLatencyNumberWithTimestamp(
+          ui::INPUT_EVENT_LATENCY_TERMINATED_FRAME_SWAP_COMPONENT, 0, 0,
+          response.swap_end, 1);
+    }
+    RenderWidgetHostImpl::OnGpuSwapBuffersCompleted(it->latency_info);
+    swap_latency_infos_.erase(it);
+  }
+
   client_->DidReceiveSwapBuffersAck();
 }
 
@@ -113,7 +136,13 @@ void GpuBrowserCompositorOutputSurface::Reshape(
 
 void GpuBrowserCompositorOutputSurface::SwapBuffers(
     viz::OutputSurfaceFrame frame) {
-  GetCommandBufferProxy()->AddLatencyInfo(frame.latency_info);
+  for (auto& latency : frame.latency_info) {
+    if (latency.FindLatency(ui::BROWSER_SNAPSHOT_FRAME_NUMBER_COMPONENT,
+                            nullptr)) {
+      GetCommandBufferProxy()->SetSnapshotRequested();
+      break;
+    }
+  }
 
   gfx::Size surface_size = frame.size;
   if (reflector_) {
@@ -138,6 +167,12 @@ void GpuBrowserCompositorOutputSurface::SwapBuffers(
   } else {
     context_provider_->ContextSupport()->Swap();
   }
+
+  // Don't grow unbounded in case of error.
+  while (swap_latency_infos_.size() >= kMaxSwapLatencyInfosToTrack) {
+    swap_latency_infos_.pop_front();
+  }
+  swap_latency_infos_.emplace_back(swap_id_++, std::move(frame.latency_info));
 }
 
 uint32_t GpuBrowserCompositorOutputSurface::GetFramebufferCopyTextureFormat() {
