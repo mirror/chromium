@@ -41,8 +41,8 @@ class HttpNetworkLayerTest : public PlatformTest {
   }
 
   void ConfigureTestDependencies(std::unique_ptr<ProxyService> proxy_service) {
-    cert_verifier_.reset(new MockCertVerifier);
-    transport_security_state_.reset(new TransportSecurityState);
+    cert_verifier_ = std::make_unique<MockCertVerifier>();
+    transport_security_state_ = std::make_unique<TransportSecurityState>();
     proxy_service_ = std::move(proxy_service);
     HttpNetworkSession::Context session_context;
     session_context.client_socket_factory = &mock_socket_factory_;
@@ -54,9 +54,9 @@ class HttpNetworkLayerTest : public PlatformTest {
     session_context.proxy_service = proxy_service_.get();
     session_context.ssl_config_service = ssl_config_service_.get();
     session_context.http_server_properties = &http_server_properties_;
-    network_session_.reset(
-        new HttpNetworkSession(HttpNetworkSession::Params(), session_context));
-    factory_.reset(new HttpNetworkLayer(network_session_.get()));
+    network_session_ = std::make_unique<HttpNetworkSession>(
+        HttpNetworkSession::Params(), session_context);
+    factory_ = std::make_unique<HttpNetworkLayer>(network_session_.get());
   }
 
   void ExecuteRequestExpectingContentAndHeader(const std::string& method,

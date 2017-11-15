@@ -33,7 +33,7 @@ std::unique_ptr<base::Value> NetLogParameterChannelBindings(
   if (!capture_mode.include_socket_bytes())
     return std::move(dict);
 
-  dict.reset(new base::DictionaryValue());
+  dict = std::make_unique<base::DictionaryValue>();
   dict->SetString("token", base::HexEncode(channel_binding_token.data(),
                                            channel_binding_token.size()));
   return std::move(dict);

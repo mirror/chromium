@@ -402,7 +402,7 @@ int HttpProxyClientSocketWrapper::DoBeginConnect() {
 
 int HttpProxyClientSocketWrapper::DoTransportConnect() {
   next_state_ = STATE_TCP_CONNECT_COMPLETE;
-  transport_socket_handle_.reset(new ClientSocketHandle());
+  transport_socket_handle_ = std::make_unique<ClientSocketHandle>();
   return transport_socket_handle_->Init(
       group_name_, transport_params_, priority_, respect_limits_,
       base::Bind(&HttpProxyClientSocketWrapper::OnIOComplete,
@@ -438,7 +438,7 @@ int HttpProxyClientSocketWrapper::DoSSLConnect() {
     }
   }
   next_state_ = STATE_SSL_CONNECT_COMPLETE;
-  transport_socket_handle_.reset(new ClientSocketHandle());
+  transport_socket_handle_ = std::make_unique<ClientSocketHandle>();
   return transport_socket_handle_->Init(
       group_name_, ssl_params_, priority_, respect_limits_,
       base::Bind(&HttpProxyClientSocketWrapper::OnIOComplete,
@@ -452,8 +452,8 @@ int HttpProxyClientSocketWrapper::DoSSLConnectComplete(int result) {
         transport_socket_handle_->ssl_error_response_info().cert_request_info);
     UMA_HISTOGRAM_MEDIUM_TIMES("Net.HttpProxy.ConnectLatency.Secure.Error",
                                base::TimeTicks::Now() - connect_start_time_);
-    error_response_info_.reset(new HttpResponseInfo(
-        transport_socket_handle_->ssl_error_response_info()));
+    error_response_info_ = std::make_unique<HttpResponseInfo>(
+        transport_socket_handle_->ssl_error_response_info());
     error_response_info_->cert_request_info->is_proxy = true;
     return result;
   }
@@ -521,11 +521,11 @@ int HttpProxyClientSocketWrapper::DoHttpProxyConnect() {
   }
 
   // Add a HttpProxy connection on top of the tcp socket.
-  transport_socket_.reset(new HttpProxyClientSocket(
+  transport_socket_ = std::make_unique<HttpProxyClientSocket>(
       transport_socket_handle_.release(), user_agent_, endpoint_,
       GetDestination().host_port_pair(), http_auth_controller_.get(), tunnel_,
       using_spdy_, negotiated_protocol_, proxy_delegate_,
-      ssl_params_.get() != nullptr));
+      ssl_params_.get() != nullptr);
   return transport_socket_->Connect(base::Bind(
       &HttpProxyClientSocketWrapper::OnIOComplete, base::Unretained(this)));
 }
@@ -576,8 +576,8 @@ int HttpProxyClientSocketWrapper::DoSpdyProxyCreateStreamComplete(int result) {
   base::WeakPtr<SpdyStream> stream = spdy_stream_request_.ReleaseStream();
   DCHECK(stream.get());
   // |transport_socket_| will set itself as |stream|'s delegate.
-  transport_socket_.reset(new SpdyProxyClientSocket(
-      stream, user_agent_, endpoint_, net_log_, http_auth_controller_.get()));
+  transport_socket_ = std::make_unique<SpdyProxyClientSocket>(
+      stream, user_agent_, endpoint_, net_log_, http_auth_controller_.get());
   return transport_socket_->Connect(base::Bind(
       &HttpProxyClientSocketWrapper::OnIOComplete, base::Unretained(this)));
 }

@@ -30,8 +30,8 @@ class HttpAuthHandlerNtlmPortableTest : public PlatformTest {
  public:
   // Test input value defined in [MS-NLMP] Section 4.2.1.
   HttpAuthHandlerNtlmPortableTest() {
-    http_auth_preferences_.reset(new MockAllowHttpAuthPreferences());
-    factory_.reset(new HttpAuthHandlerNTLM::Factory());
+    http_auth_preferences_ = std::make_unique<MockAllowHttpAuthPreferences>();
+    factory_ = std::make_unique<HttpAuthHandlerNTLM::Factory>();
     factory_->set_http_auth_preferences(http_auth_preferences_.get());
     creds_ = AuthCredentials(
         ntlm::test::kNtlmDomain + base::ASCIIToUTF16("\\") + ntlm::test::kUser,

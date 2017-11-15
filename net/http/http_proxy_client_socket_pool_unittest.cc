@@ -203,11 +203,11 @@ class HttpProxyClientSocketPoolTest
                   MockRead* spdy_reads, size_t spdy_reads_count,
                   MockWrite* spdy_writes, size_t spdy_writes_count) {
     if (GetParam() == SPDY) {
-      data_.reset(new SequencedSocketData(spdy_reads, spdy_reads_count,
-                                          spdy_writes, spdy_writes_count));
+      data_ = std::make_unique<SequencedSocketData>(
+          spdy_reads, spdy_reads_count, spdy_writes, spdy_writes_count);
     } else {
-      data_.reset(
-          new SequencedSocketData(reads, reads_count, writes, writes_count));
+      data_ = std::make_unique<SequencedSocketData>(reads, reads_count, writes,
+                                                    writes_count);
     }
 
     data_->set_connect_data(MockConnect(SYNCHRONOUS, OK));
@@ -215,7 +215,7 @@ class HttpProxyClientSocketPoolTest
     socket_factory()->AddSocketDataProvider(data_.get());
 
     if (GetParam() != HTTP) {
-      ssl_data_.reset(new SSLSocketDataProvider(SYNCHRONOUS, OK));
+      ssl_data_ = std::make_unique<SSLSocketDataProvider>(SYNCHRONOUS, OK);
       if (GetParam() == SPDY) {
         InitializeSpdySsl();
       }
@@ -484,7 +484,7 @@ TEST_P(HttpProxyClientSocketPoolTest,
 TEST_P(HttpProxyClientSocketPoolTest, TCPError) {
   if (GetParam() == SPDY)
     return;
-  data_.reset(new SequencedSocketData(NULL, 0, NULL, 0));
+  data_ = std::make_unique<SequencedSocketData>(nullptr, 0, nullptr, 0);
   data_->set_connect_data(MockConnect(ASYNC, ERR_CONNECTION_CLOSED));
 
   socket_factory()->AddSocketDataProvider(data_.get());
@@ -511,12 +511,12 @@ TEST_P(HttpProxyClientSocketPoolTest, TCPError) {
 TEST_P(HttpProxyClientSocketPoolTest, SSLError) {
   if (GetParam() == HTTP)
     return;
-  data_.reset(new SequencedSocketData(NULL, 0, NULL, 0));
+  data_ = std::make_unique<SequencedSocketData>(nullptr, 0, nullptr, 0);
   data_->set_connect_data(MockConnect(ASYNC, OK));
   socket_factory()->AddSocketDataProvider(data_.get());
 
-  ssl_data_.reset(new SSLSocketDataProvider(ASYNC,
-                                            ERR_CERT_AUTHORITY_INVALID));
+  ssl_data_ = std::make_unique<SSLSocketDataProvider>(
+      ASYNC, ERR_CERT_AUTHORITY_INVALID);
   if (GetParam() == SPDY) {
     InitializeSpdySsl();
   }
@@ -543,12 +543,12 @@ TEST_P(HttpProxyClientSocketPoolTest, SSLError) {
 TEST_P(HttpProxyClientSocketPoolTest, SslClientAuth) {
   if (GetParam() == HTTP)
     return;
-  data_.reset(new SequencedSocketData(NULL, 0, NULL, 0));
+  data_ = std::make_unique<SequencedSocketData>(nullptr, 0, nullptr, 0);
   data_->set_connect_data(MockConnect(ASYNC, OK));
   socket_factory()->AddSocketDataProvider(data_.get());
 
-  ssl_data_.reset(new SSLSocketDataProvider(ASYNC,
-                                            ERR_SSL_CLIENT_AUTH_CERT_NEEDED));
+  ssl_data_ = std::make_unique<SSLSocketDataProvider>(
+      ASYNC, ERR_SSL_CLIENT_AUTH_CERT_NEEDED);
   if (GetParam() == SPDY) {
     InitializeSpdySsl();
   }

@@ -17223,9 +17223,9 @@ TEST_F(HttpNetworkTransactionTest, ProxyResolutionFailsSync) {
   proxy_config.set_pac_url(GURL("http://fooproxyurl"));
   proxy_config.set_pac_mandatory(true);
   MockAsyncProxyResolver resolver;
-  session_deps_.proxy_service.reset(new ProxyService(
+  session_deps_.proxy_service = std::make_unique<ProxyService>(
       std::make_unique<ProxyConfigServiceFixed>(proxy_config),
-      std::make_unique<FailingProxyResolverFactory>(), nullptr));
+      std::make_unique<FailingProxyResolverFactory>(), nullptr);
 
   HttpRequestInfo request;
   request.method = "GET";
@@ -17249,9 +17249,9 @@ TEST_F(HttpNetworkTransactionTest, ProxyResolutionFailsAsync) {
   MockAsyncProxyResolverFactory* proxy_resolver_factory =
       new MockAsyncProxyResolverFactory(false);
   MockAsyncProxyResolver resolver;
-  session_deps_.proxy_service.reset(
-      new ProxyService(std::make_unique<ProxyConfigServiceFixed>(proxy_config),
-                       base::WrapUnique(proxy_resolver_factory), nullptr));
+  session_deps_.proxy_service = std::make_unique<ProxyService>(
+      std::make_unique<ProxyConfigServiceFixed>(proxy_config),
+      base::WrapUnique(proxy_resolver_factory), nullptr);
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");

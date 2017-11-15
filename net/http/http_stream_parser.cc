@@ -1051,7 +1051,7 @@ void HttpStreamParser::CalculateResponseBodySize() {
   if (response_body_length_ == -1) {
     // "Transfer-Encoding: chunked" trumps "Content-Length: N"
     if (response_->headers->IsChunkEncoded()) {
-      chunked_decoder_.reset(new HttpChunkedDecoder());
+      chunked_decoder_ = std::make_unique<HttpChunkedDecoder>();
     } else {
       response_body_length_ = response_->headers->GetContentLength();
       // If response_body_length_ is still -1, then we have to wait

@@ -45,7 +45,7 @@ int HttpNetworkLayer::CreateTransaction(
   if (suspended_)
     return ERR_NETWORK_IO_SUSPENDED;
 
-  trans->reset(new HttpNetworkTransaction(priority, GetSession()));
+  *trans = std::make_unique<HttpNetworkTransaction>(priority, GetSession());
   return OK;
 }
 

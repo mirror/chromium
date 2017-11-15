@@ -203,7 +203,7 @@ FailingHttpTransactionFactory::~FailingHttpTransactionFactory() {}
 int FailingHttpTransactionFactory::CreateTransaction(
     RequestPriority priority,
     std::unique_ptr<HttpTransaction>* trans) {
-  trans->reset(new FailingHttpTransaction(error_));
+  *trans = std::make_unique<FailingHttpTransaction>(error_);
   return OK;
 }
 

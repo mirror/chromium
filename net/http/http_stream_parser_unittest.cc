@@ -1220,16 +1220,17 @@ class SimpleGetRunner {
   void SetupParserAndSendRequest() {
     reads_.push_back(MockRead(SYNCHRONOUS, 0, sequence_number_++));  // EOF
 
-    data_.reset(new SequencedSocketData(&reads_.front(), reads_.size(),
-                                        &writes_.front(), writes_.size()));
+    data_ = std::make_unique<SequencedSocketData>(
+        &reads_.front(), reads_.size(), &writes_.front(), writes_.size());
     socket_handle_ = CreateConnectedSocketHandle(data_.get());
 
     request_info_.method = "GET";
     request_info_.url = url_;
     request_info_.load_flags = LOAD_NORMAL;
 
-    parser_.reset(new HttpStreamParser(socket_handle_.get(), &request_info_,
-                                       read_buffer(), NetLogWithSource()));
+    parser_ =
+        std::make_unique<HttpStreamParser>(socket_handle_.get(), &request_info_,
+                                           read_buffer(), NetLogWithSource());
 
     parser_->set_http_09_on_non_default_ports_enabled(
         http_09_on_non_default_ports_enabled_);

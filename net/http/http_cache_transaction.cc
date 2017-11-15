@@ -2258,13 +2258,13 @@ void HttpCache::Transaction::SetRequest(const NetLogWithSource& net_log) {
 
   if (range_found && !(effective_load_flags_ & LOAD_DISABLE_CACHE)) {
     UpdateCacheEntryStatus(CacheEntryStatus::ENTRY_OTHER);
-    partial_.reset(new PartialData);
+    partial_ = std::make_unique<PartialData>();
     if (method_ == "GET" && partial_->Init(request_->extra_headers)) {
       // We will be modifying the actual range requested to the server, so
       // let's remove the header here.
       // Note that custom_request_ is a shallow copy so will keep the same
       // pointer to upload data stream as in the original request.
-      custom_request_.reset(new HttpRequestInfo(*request_));
+      custom_request_ = std::make_unique<HttpRequestInfo>(*request_);
       custom_request_->extra_headers.RemoveHeader(HttpRequestHeaders::kRange);
       request_ = custom_request_.get();
       partial_->SetHeaders(custom_request_->extra_headers);
@@ -2403,10 +2403,10 @@ int HttpCache::Transaction::BeginPartialCacheValidation() {
   if (!range_requested_) {
     // The request is not for a range, but we have stored just ranges.
 
-    partial_.reset(new PartialData());
+    partial_ = std::make_unique<PartialData>();
     partial_->SetHeaders(request_->extra_headers);
     if (!custom_request_.get()) {
-      custom_request_.reset(new HttpRequestInfo(*request_));
+      custom_request_ = std::make_unique<HttpRequestInfo>(*request_);
       request_ = custom_request_.get();
     }
   }
@@ -2594,7 +2594,7 @@ bool HttpCache::Transaction::ConditionalizeRequest() {
 
   if (!partial_) {
     // Need to customize the request, so this forces us to allocate :(
-    custom_request_.reset(new HttpRequestInfo(*request_));
+    custom_request_ = std::make_unique<HttpRequestInfo>(*request_);
     request_ = custom_request_.get();
   }
   DCHECK(custom_request_.get());
@@ -2991,7 +2991,7 @@ void HttpCache::Transaction::ResetPartialState(bool delete_object) {
 
   if (!delete_object) {
     // The simplest way to re-initialize partial_ is to create a new object.
-    partial_.reset(new PartialData());
+    partial_ = std::make_unique<PartialData>();
     if (partial_->Init(request_->extra_headers))
       partial_->SetHeaders(custom_request_->extra_headers);
     else
@@ -3004,7 +3004,8 @@ void HttpCache::Transaction::ResetNetworkTransaction() {
   DCHECK(network_trans_);
   LoadTimingInfo load_timing;
   if (network_trans_->GetLoadTimingInfo(&load_timing))
-    old_network_trans_load_timing_.reset(new LoadTimingInfo(load_timing));
+    old_network_trans_load_timing_ =
+        std::make_unique<LoadTimingInfo>(load_timing);
   total_received_bytes_ += network_trans_->GetTotalReceivedBytes();
   total_sent_bytes_ += network_trans_->GetTotalSentBytes();
   ConnectionAttempts attempts;

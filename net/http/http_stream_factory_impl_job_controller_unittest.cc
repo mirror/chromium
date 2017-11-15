@@ -319,9 +319,9 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, ProxyResolutionFailsSync) {
   ProxyConfig proxy_config;
   proxy_config.set_pac_url(GURL("http://fooproxyurl"));
   proxy_config.set_pac_mandatory(true);
-  session_deps_.proxy_service.reset(new ProxyService(
+  session_deps_.proxy_service = std::make_unique<ProxyService>(
       std::make_unique<ProxyConfigServiceFixed>(proxy_config),
-      std::make_unique<FailingProxyResolverFactory>(), nullptr));
+      std::make_unique<FailingProxyResolverFactory>(), nullptr);
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("http://www.google.com");

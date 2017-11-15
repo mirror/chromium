@@ -163,8 +163,8 @@ class TestDelegateBase : public BidirectionalStream::Delegate {
 
   void Start(std::unique_ptr<BidirectionalStreamRequestInfo> request_info,
              HttpNetworkSession* session) {
-    stream_.reset(new BidirectionalStream(std::move(request_info), session,
-                                          true, this, std::move(timer_)));
+    stream_ = std::make_unique<BidirectionalStream>(
+        std::move(request_info), session, true, this, std::move(timer_));
     if (run_until_completion_)
       loop_->Run();
   }
@@ -173,8 +173,8 @@ class TestDelegateBase : public BidirectionalStream::Delegate {
              HttpNetworkSession* session,
              const CompletionCallback& cb) {
     callback_ = cb;
-    stream_.reset(new BidirectionalStream(std::move(request_info), session,
-                                          true, this, std::move(timer_)));
+    stream_ = std::make_unique<BidirectionalStream>(
+        std::move(request_info), session, true, this, std::move(timer_));
     if (run_until_completion_)
       WaitUntilCompletion();
   }
@@ -266,7 +266,7 @@ class TestDelegateBase : public BidirectionalStream::Delegate {
   // Sets whether the delegate should wait until the completion of the stream.
   void SetRunUntilCompletion(bool run_until_completion) {
     run_until_completion_ = run_until_completion;
-    loop_.reset(new base::RunLoop);
+    loop_ = std::make_unique<base::RunLoop>();
   }
 
  protected:

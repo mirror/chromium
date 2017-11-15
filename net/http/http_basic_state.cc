@@ -35,8 +35,8 @@ int HttpBasicState::Initialize(const HttpRequestInfo* request_info,
   DCHECK(!parser_.get());
   url_ = request_info->url;
   request_method_ = request_info->method;
-  parser_.reset(new HttpStreamParser(
-      connection_.get(), request_info, read_buf_.get(), net_log));
+  parser_ = std::make_unique<HttpStreamParser>(connection_.get(), request_info,
+                                               read_buf_.get(), net_log);
   parser_->set_http_09_on_non_default_ports_enabled(
       http_09_on_non_default_ports_enabled_);
   return OK;

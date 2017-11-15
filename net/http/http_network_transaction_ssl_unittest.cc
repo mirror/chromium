@@ -61,7 +61,7 @@ class HttpNetworkTransactionSSLTest : public testing::Test {
     ssl_config_service_ = new TokenBindingSSLConfigService;
     session_context_.ssl_config_service = ssl_config_service_.get();
 
-    auth_handler_factory_.reset(new HttpAuthHandlerMock::Factory());
+    auth_handler_factory_ = std::make_unique<HttpAuthHandlerMock::Factory>();
     session_context_.http_auth_handler_factory = auth_handler_factory_.get();
 
     proxy_service_ = ProxyService::CreateDirect();

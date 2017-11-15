@@ -233,8 +233,9 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
   http_server_properties_->SetMaxServerConfigsStoredInProperties(
       params.quic_max_server_configs_stored_in_properties);
 
-  memory_pressure_listener_.reset(new base::MemoryPressureListener(base::Bind(
-      &HttpNetworkSession::OnMemoryPressure, base::Unretained(this))));
+  memory_pressure_listener_ =
+      std::make_unique<base::MemoryPressureListener>(base::Bind(
+          &HttpNetworkSession::OnMemoryPressure, base::Unretained(this)));
   base::MemoryCoordinatorClientRegistry::GetInstance()->Register(this);
 }
 
