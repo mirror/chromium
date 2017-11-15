@@ -45,7 +45,8 @@ std::string AutocompleteMatchType::ToString(AutocompleteMatchType::Type type) {
 
 base::string16 AutocompleteMatchType::ToAccessibilityLabel(
     AutocompleteMatchType::Type type,
-    const base::string16& descriptive_text) {
+    const base::string16& match_text,
+    const base::string16& additional_descriptive_text) {
   // Types with a message ID of zero get |text| returned as-is.
   static constexpr int message_ids[] = {
       0,                             // URL_WHAT_YOU_TYPED
@@ -85,6 +86,7 @@ base::string16 AutocompleteMatchType::ToAccessibilityLabel(
   static_assert(arraysize(message_ids) == AutocompleteMatchType::NUM_TYPES,
                 "message_ids must have NUM_TYPES elements");
   if (!message_ids[type])
-    return descriptive_text;
-  return l10n_util::GetStringFUTF16(message_ids[type], descriptive_text);
+    return match_text;
+  return l10n_util::GetStringFUTF16(message_ids[type], match_text,
+                                    additional_descriptive_text);
 }
