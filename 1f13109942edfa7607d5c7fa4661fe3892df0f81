@@ -16,6 +16,41 @@
       "revId": "1f13109942edfa7607d5c7fa4661fe3892df0f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a13550b1_75237466",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T23:51:31Z",
+      "side": 1,
+      "message": "I\u0027d personally prefer to keep this, there are a few checks and logs here that I feel are useful.",
+      "parentUuid": "f1e3d21a_d1348a46",
+      "revId": "1f13109942edfa7607d5c7fa4661fe3892df0f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a5d1a44_e9c0afb8",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-15T23:51:31Z",
+      "side": 1,
+      "message": "nit: size_t perhaps?",
+      "revId": "1f13109942edfa7607d5c7fa4661fe3892df0f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
