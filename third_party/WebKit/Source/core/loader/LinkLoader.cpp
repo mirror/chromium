@@ -401,7 +401,7 @@ static void ModulePreloadIfNeeded(const LinkRelAttribute& rel_attribute,
   if (!document.Loader() || !rel_attribute.IsModulePreload())
     return;
 
-  // TODO(ksakamoto): add UseCounter
+  UseCounter::Count(document, WebFeature::kLinkRelModulePreload);
 
   if (href.IsEmpty()) {
     document.AddConsoleMessage(
