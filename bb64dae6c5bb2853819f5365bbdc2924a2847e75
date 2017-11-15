@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7aaeaf40_8d6c97e8",
+        "filename": "services/video_capture/public/interfaces/device_factory.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-15T17:42:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a7bf0c54_956bfc20",
+      "range": {
+        "startLine": 42,
+        "startChar": 41,
+        "endLine": 42,
+        "endChar": 42
+      },
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7f75013_9eec1174",
         "filename": "services/video_capture/public/interfaces/virtual_device.mojom",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-15T05:29:17Z",
       "side": 1,
       "message": "After reading the implementation, I now realize a limitation of this API. Sorry, I should have realized this earlier when reviewing the interface last time.\n\nThe protocol for frame delivery from the video capture service to (potentially out-of-process) consumers is designed to allow the service to \"pre-share\" several buffers with the consumers and then reusing the same buffers to publish the frames. The reasoning behind this somewhat complicated design is not just to avoid reallocation of memory, but also to allow both producer and consumers to avoid having to do a potentially expensive operation for mapping the shared buffer to memory for each frame.\n\nThe way it is implemented now, the transport of frames from a producer into a virtual device does not support this. Instead, for each frame, the producer is currently expected to call GetFrameBuffer(), map the shared memory, fill it with data, invoke OnFrameReadyInBuffer(), and then unmap the buffer again. I think we need to make the transport protocol here the same as it is between the service and consumers. \n\nThis means the producer reservers one or several buffers, maps them to memory, and holds on to them. When it calls OnFrameReadyInBuffer() it needs to wait for an event that indicates that all consumers are finished consuming it before filling it with a new frame (and in the meantime it can use one of the other buffers).\n\nPlease let me know if that explanation made sense and ping me if you\u0027d like to discuss in more detail.",
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a6a923f_e82fc3a1",
+        "filename": "services/video_capture/public/interfaces/virtual_device.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-15T17:42:19Z",
+      "side": 1,
+      "message": "Thanks for point it out, I think it make sense to not have the producer re-map the buffer each time. Will update.",
+      "parentUuid": "b7f75013_9eec1174",
       "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "64a30a7c_a9ccb2ff",
+        "filename": "services/video_capture/virtual_device_enabled_device_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-15T17:42:19Z",
+      "side": 1,
+      "message": "Yes, will move it there :)",
+      "parentUuid": "dbfced76_32f926b8",
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8c01689_40fd9ee3",
         "filename": "services/video_capture/virtual_device_enabled_device_factory.cc",
         "patchSetId": 4
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "53cae4a7_8e68b90f",
+        "filename": "services/video_capture/virtual_device_enabled_device_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-15T17:42:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e8c01689_40fd9ee3",
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55bc084a_abed27dd",
         "filename": "services/video_capture/virtual_device_enabled_device_factory.h",
         "patchSetId": 4
@@ -87,6 +165,30 @@
       "writtenOn": "2017-11-15T05:29:17Z",
       "side": 1,
       "message": "nitty nit: The prefix \"real_\" here presumes that whatever |factory| was given to the constructor somehow corresponds to \"real\" devices. That may be the case in our current usage, but this class has no business knowing or presuming that.\n\nIf we really want to convey this assumption, we should do it consistently, and also rename |device_factory_| to |real_device_factory_|.",
+      "range": {
+        "startLine": 51,
+        "startChar": 56,
+        "endLine": 51,
+        "endChar": 61
+      },
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f58e86_4ff8f651",
+        "filename": "services/video_capture/virtual_device_enabled_device_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-15T17:42:19Z",
+      "side": 1,
+      "message": "Will remove the \"real\" prefix :)",
+      "parentUuid": "55bc084a_abed27dd",
       "range": {
         "startLine": 51,
         "startChar": 56,
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "105c0a3e_593f78a6",
+        "filename": "services/video_capture/virtual_device_mojo_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-15T17:42:19Z",
+      "side": 1,
+      "message": "Will try.",
+      "parentUuid": "f487e3e1_6064a5b0",
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d8aecf7_852f9db6",
         "filename": "services/video_capture/virtual_device_mojo_adapter.cc",
         "patchSetId": 4
@@ -127,6 +247,24 @@
       "writtenOn": "2017-11-15T05:29:17Z",
       "side": 1,
       "message": "Do we want to emit any log message to |receiver_| here?",
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c01aa0e3_ee4c2aed",
+        "filename": "services/video_capture/virtual_device_mojo_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-15T17:42:19Z",
+      "side": 1,
+      "message": "So for the real device, we invoke OnError when the dropped frames reached a max threshold (currently 150): https://cs.corp.google.com/eureka_internal/chromium/src/media/capture/video/video_capture_device_client.cc?l\u003d196\n\nWith the suggested API update, the producer will keep track of the available buffers, so it will drop the frames without notifying the capture service. We can always add an API for the producer to notify the service of drop frames. However, I think that\u0027s something the producer should handle, probably notifying the app that\u0027s providing the frames.\n\nSo I think this doesn\u0027t apply anymore.",
+      "parentUuid": "1d8aecf7_852f9db6",
       "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -147,6 +285,24 @@
       "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b524af_53b002c8",
+        "filename": "services/video_capture/virtual_device_mojo_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-15T17:42:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7a2cd93b_c7f7b954",
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
