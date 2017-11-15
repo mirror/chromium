@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a774d4b9_95f39434",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-15T05:05:57Z",
+      "side": 1,
+      "message": "The description is misleading. It makes it seem like you are only updating the IDL. Whereas there is also an implementation change",
+      "revId": "e5b3d209cd118129de3886c73abc376484c9c73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
