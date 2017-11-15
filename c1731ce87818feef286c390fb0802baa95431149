@@ -19,6 +19,282 @@
     },
     {
       "key": {
+        "uuid": "99dcb3ad_a1785265",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-15T15:07:41Z",
+      "side": 1,
+      "message": "nit: Could you add a comment similar to the one in external_filesystem_apitest.cc ?\n\ne.g.\n// this is required because this test creates a secondary\n// profile synchronously, so we need to let the policy code\n// know not to expect cached policy.",
+      "range": {
+        "startLine": 106,
+        "startChar": 56,
+        "endLine": 106,
+        "endChar": 78
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37230368_f7e3986c",
+        "filename": "chrome/browser/chromeos/login/users/user_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-15T15:07:41Z",
+      "side": 1,
+      "message": "Why is this needed here? If this is to prevent state from leaking to other test runs, shouldn\u0027t it be done in TearDown()?",
+      "range": {
+        "startLine": 283,
+        "startChar": 2,
+        "endLine": 283,
+        "endChar": 18
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0c5298_35362af9",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-15T15:07:41Z",
+      "side": 1,
+      "message": "nit: Unnecessary - the style guide[1] says that foo.cc may rely on foo.h\u0027s includes, and stack_trace.h is included in user_cloud_policy_manager_chromeos.h\n\n[1] https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes",
+      "range": {
+        "startLine": 14,
+        "startChar": 21,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ae703d_4bb8aba4",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-15T15:07:41Z",
+      "side": 1,
+      "message": "Is it ok that we\u0027re not calling service()-\u003eRefreshPolicy here anymore?",
+      "range": {
+        "startLine": 191,
+        "startChar": 4,
+        "endLine": 191,
+        "endChar": 29
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6977f0c_a374aae5",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-15T15:07:41Z",
+      "side": 1,
+      "message": "Consider adding a comment that this is safe because this class owns wildacrd_login_checker_ (and WildcardLoginChecker would not call the callback after being destroyed).",
+      "range": {
+        "startLine": 207,
+        "startChar": 25,
+        "endLine": 207,
+        "endChar": 35
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2de055c_162a68a2",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-15T15:07:41Z",
+      "side": 1,
+      "message": "What about passing the |user| into UserCloudPolicyManagerChromeOS\u0027s ctor instead? This feels kind of fragile, should we ever expand on the multi-user scenarios.",
+      "range": {
+        "startLine": 399,
+        "startChar": 49,
+        "endLine": 399,
+        "endChar": 62
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68d23a55_ec0ae0f0",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-15T15:07:41Z",
+      "side": 1,
+      "message": "Is the purpose of this to retain pre-existing flags, but DCHECK-fail if there were pre-existing flags? Why would we want to DCHECK-fail here in that case?",
+      "range": {
+        "startLine": 414,
+        "startChar": 0,
+        "endLine": 415,
+        "endChar": 32
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b57fdb_c0eb45ae",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-15T15:07:41Z",
+      "side": 1,
+      "message": "nit: What about StorePolicyRequired? I think it\u0027d be nice if it was obvious that this is about setting the flag for future sessions, not for this particular UserCloudPolicyManagerChromeOS instance\u0027s behavior.",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 24
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e05707_bf7b8018",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-15T15:07:41Z",
+      "side": 1,
+      "message": "Please add a comment that this is \"automatically\" verified on TearDown(), as it seems rather non-obvious.",
+      "range": {
+        "startLine": 353,
+        "startChar": 7,
+        "endLine": 353,
+        "endChar": 28
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0cd365_c62f3892",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-15T15:07:41Z",
+      "side": 1,
+      "message": "Does this buy us anything? (Except for tests), the flag is only evaluated in this function after this test.\nSo if we ever have to e.g. revoke a domain from the \"non-enterprise-user list\", we would have to reset the requires-policy flag for users from that domain.\n\nOr is the point of doing it here better testability of the decision?",
+      "range": {
+        "startLine": 186,
+        "startChar": 30,
+        "endLine": 186,
+        "endChar": 54
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be4b7a9_fcb559a3",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-15T15:07:41Z",
+      "side": 1,
+      "message": "nit: checked",
+      "range": {
+        "startLine": 218,
+        "startChar": 26,
+        "endLine": 218,
+        "endChar": 31
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9ea3a1_c65fb243",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-15T15:07:41Z",
+      "side": 1,
+      "message": "nit: consider adding /* fatal_error_callback */",
+      "range": {
+        "startLine": 361,
+        "startChar": 18,
+        "endLine": 361,
+        "endChar": 26
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1eaaa3a_14903621",
         "filename": "components/user_manager/known_user.cc",
         "patchSetId": 9
