@@ -22,6 +22,30 @@
       "revId": "458f4087e9dae4f651cdf40f639353696710e81e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af26feb8_2351b415",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/autofill_section.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001296
+      },
+      "writtenOn": "2017-11-15T17:16:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee4602dc_824254c4",
+      "range": {
+        "startLine": 195,
+        "startChar": 56,
+        "endLine": 195,
+        "endChar": 57
+      },
+      "revId": "458f4087e9dae4f651cdf40f639353696710e81e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
