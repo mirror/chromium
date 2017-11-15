@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "729a06f7_f2e9f99c",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-15T22:27:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d687680_b30ba6fa",
+      "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e12898c_2013d28f",
         "filename": "chrome/browser/resources/settings/device_page/display.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-15T21:13:00Z",
       "side": 1,
       "message": "this.mirroringDestinationIds.clear();",
+      "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c59a41c_d4e4ef85",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-15T22:27:58Z",
+      "side": 1,
+      "message": "There seems to be no clear() function for this.",
+      "parentUuid": "2e12898c_2013d28f",
       "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fbcc4d2c_8b47ce62",
+        "filename": "chrome/browser/resources/settings/device_page/display_layout.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-15T22:27:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71a02da9_01f565ee",
+      "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d62f9da_b0c0789c",
         "filename": "chrome/browser/resources/settings/device_page/display_layout.js",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d84886_43c6180d",
+        "filename": "chrome/browser/resources/settings/device_page/display_layout.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-15T22:27:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d62f9da_b0c0789c",
+      "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "624bba44_99ef7e4f",
+        "filename": "chrome/browser/resources/settings/device_page/display_layout.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-15T22:27:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67985771_5dedbb13",
+      "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a371594_e27cf2f7",
         "filename": "chrome/browser/resources/settings/device_page/display_layout.js",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe88674_d49bde00",
+        "filename": "chrome/browser/resources/settings/device_page/display_layout.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-15T22:27:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a371594_e27cf2f7",
+      "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
