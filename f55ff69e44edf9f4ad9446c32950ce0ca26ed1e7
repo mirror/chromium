@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b26ceca4_1fc5fb8c",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-15T20:36:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3a3384d5_147bcd08",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1969f74_a1800dca",
         "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef76fcea_22a578be",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-15T20:36:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1969f74_a1800dca",
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "dd4d70bf_d7223ef4",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-15T20:36:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3cef49f_a237fb67",
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6992a514_2f55f468",
         "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
         "patchSetId": 11
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-15T18:53:11Z",
       "side": 1,
       "message": "I wonder if we want to move the syscall list for brokering and the SIGSYS handler into its own file that can be mixed-in to the GPU and network policies...",
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa61d47_36bf7053",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-15T20:36:59Z",
+      "side": 1,
+      "message": "That\u0027s the plan for the follow-up.\n\nHowever, I suspect that I\u0027m going to have to add things like rename and unlink to the calls network needs to broker.  I suppose this wouldn\u0027t be the worst possiblity if GPU got those as well given correct permission checks.",
+      "parentUuid": "6992a514_2f55f468",
       "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "0bfaf8d2_96a590cc",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-15T20:36:59Z",
+      "side": 1,
+      "message": "Stray text from the gpu file from which this is copied. removed.",
+      "parentUuid": "794a57af_6159da20",
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98198484_55b3488a",
         "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
         "patchSetId": 11
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "5a0c7bf7_3556a5ed",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-15T20:36:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98198484_55b3488a",
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8fe7fbc_9ab651b0",
         "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
         "patchSetId": 11
@@ -121,6 +235,30 @@
       "writtenOn": "2017-11-15T18:53:11Z",
       "side": 1,
       "message": "DRI3 is GPU-specific. We probably don\u0027t need this at all for the network broker.",
+      "range": {
+        "startLine": 133,
+        "startChar": 49,
+        "endLine": 133,
+        "endChar": 53
+      },
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb00f9e_8a88f896",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-15T20:36:59Z",
+      "side": 1,
+      "message": "More stray text removed.",
+      "parentUuid": "a8fe7fbc_9ab651b0",
       "range": {
         "startLine": 133,
         "startChar": 49,
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "601efa60_1b0956c7",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-15T20:36:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11f20730_df4160db",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a43bbfc_9745d4c9",
         "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.h",
         "patchSetId": 11
@@ -176,6 +338,30 @@
       "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea4f2b9_2c5879b1",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-15T20:36:59Z",
+      "side": 1,
+      "message": "added TODO",
+      "parentUuid": "3a43bbfc_9745d4c9",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
