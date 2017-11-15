@@ -194,6 +194,8 @@ class MODULES_EXPORT IDBTransaction final
   // Called when a transaction is completed (committed or aborted).
   void Finished();
 
+  void DeactivateTransaction();
+
   enum State {
     kInactive,   // Created or started, but not in an event callback
     kActive,     // Created or started, in creation scope or an event callback
