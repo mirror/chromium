@@ -154,4 +154,15 @@ TEST_F(ReplaceSelectionCommandTest, TextAutosizingDoesntInflateText) {
   EXPECT_EQ(1u, div->CountChildren());
 }
 
+// This is a regression test for https://crbug.com/781282
+TEST_F(ReplaceSelectionCommandTest, TrailingNonVisibleTextCrash) {
+  GetDocument().setDesignMode("on");
+  Selection().SetSelection(SetSelectionTextToBody("<div>^foo|</div>"));
+  // Crash should not occur on executing below command
+  GetDocument().execCommand("InsertHTML", false, "<div>ab</div> ",
+                            ASSERT_NO_EXCEPTION);
+  EXPECT_EQ("<div>ab</div>|<br>",
+            GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));
+}
+
 }  // namespace blink
