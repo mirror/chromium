@@ -107,15 +107,6 @@ bool SVGGeometryElement::isPointInStroke(SVGPointTearOff* point) const {
       ->NodeAtFloatPointInternal(request, point->Target()->Value(), hit_rules);
 }
 
-void SVGGeometryElement::ToClipPath(Path& path) const {
-  path = AsPath();
-  path.Transform(CalculateTransform(SVGElement::kIncludeMotionTransform));
-
-  DCHECK(GetLayoutObject());
-  DCHECK(GetLayoutObject()->Style());
-  path.SetWindRule(GetLayoutObject()->Style()->SvgStyle().ClipRule());
-}
-
 float SVGGeometryElement::getTotalLength() {
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 

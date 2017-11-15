@@ -3676,8 +3676,7 @@ Optional<FloatRect> LayoutObject::LocalClipPathBoundingBox() const {
     ShapeClipPathOperation& shape = ToShapeClipPathOperation(clip_path);
     if (!shape.IsValid())
       return WTF::nullopt;
-    const Path& path = shape.GetPath(reference_box);
-    return path.BoundingRect();
+    return shape.GetPath(reference_box)->BoundingRect();
   }
 
   DCHECK_EQ(clip_path.GetType(), ClipPathOperation::REFERENCE);
