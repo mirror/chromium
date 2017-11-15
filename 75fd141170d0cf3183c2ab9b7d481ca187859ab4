@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f33e6ba5_ec754bf7",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-15T23:25:40Z",
+      "side": 1,
+      "message": "a random code search find an example without static_cast, not sure can help in this case:\nhttps://cs.chromium.org/chromium/src/device/usb/mojo/device_impl.cc?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d115",
+      "parentUuid": "e27d64ae_c206da24",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 41
+      },
+      "revId": "75fd141170d0cf3183c2ab9b7d481ca187859ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74d18126_a1cac65d",
         "filename": "services/device/geolocation/public_ip_address_geolocator.h",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "75fd141170d0cf3183c2ab9b7d481ca187859ab4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dcb489b_9e1079fb",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-15T23:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74d18126_a1cac65d",
+      "revId": "75fd141170d0cf3183c2ab9b7d481ca187859ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "64f9003c_b430b98c",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-15T23:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39229d97_ba71d79d",
+      "range": {
+        "startLine": 28,
+        "startChar": 54,
+        "endLine": 28,
+        "endChar": 59
+      },
+      "revId": "75fd141170d0cf3183c2ab9b7d481ca187859ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67711793_ca57f82c",
         "filename": "services/device/geolocation/public_ip_address_geolocator.h",
         "patchSetId": 4
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "72ec636b_564550db",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-15T23:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67711793_ca57f82c",
+      "range": {
+        "startLine": 32,
+        "startChar": 39,
+        "endLine": 32,
+        "endChar": 44
+      },
+      "revId": "75fd141170d0cf3183c2ab9b7d481ca187859ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa03e37_d6bd7a62",
         "filename": "services/device/geolocation/public_ip_address_geolocator_unittest.cc",
         "patchSetId": 4
@@ -108,6 +198,30 @@
       "revId": "75fd141170d0cf3183c2ab9b7d481ca187859ab4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b2cb7b_69d7872d",
+        "filename": "services/device/geolocation/public_ip_address_geolocator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-15T23:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa03e37_d6bd7a62",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 69
+      },
+      "revId": "75fd141170d0cf3183c2ab9b7d481ca187859ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
