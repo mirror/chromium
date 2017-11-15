@@ -8,6 +8,8 @@ source_set("toolbar") {
     "new_tab_button.h",
     "new_tab_button.mm",
     "omnibox_focuser.h",
+    "toolbar_adapter.h",
+    "toolbar_adapter.mm",
     "toolbar_button_tints.h",
     "toolbar_button_tints.mm",
     "toolbar_controller+protected.h",
@@ -35,6 +37,7 @@ source_set("toolbar") {
   ]
   deps = [
     ":resource_macros",
+    "clean:toolbar",
     "public",
     "public:toolbar_base_feature",
     "resources:collapse",
