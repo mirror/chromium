@@ -16,6 +16,24 @@
       "revId": "8a6fdece9cecba2351773f4e0c8fc45d206ec490",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6923b9f3_8ef78a5a",
+        "filename": "ui/ozone/platform/wayland/wayland_pointer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-15T08:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f89f1ab_25e0724a",
+      "revId": "8a6fdece9cecba2351773f4e0c8fc45d206ec490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
