@@ -46,6 +46,7 @@ class RangeInputType final : public InputType, public InputTypeView {
   static InputType* Create(HTMLInputElement&);
   void Trace(blink::Visitor*) override;
   using InputType::GetElement;
+  bool NeedsShadowSubtree() const override { return true; }
 
  private:
   RangeInputType(HTMLInputElement&);

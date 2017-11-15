@@ -77,6 +77,8 @@ class TextFieldInputType : public InputType,
   bool ShouldHaveSpinButton() const;
   Element* ContainerElement() const;
 
+  bool NeedsShadowSubtree() const override { return true; }
+
  private:
   InputTypeView* CreateView() override;
   ValueMode GetValueMode() const override;

@@ -62,6 +62,8 @@ class CORE_EXPORT FileInputType final : public InputType,
 
   void SetFilesFromPaths(const Vector<String>&) override;
 
+  bool NeedsShadowSubtree() const override { return true; }
+
  private:
   FileInputType(HTMLInputElement&);
   InputTypeView* CreateView() override;

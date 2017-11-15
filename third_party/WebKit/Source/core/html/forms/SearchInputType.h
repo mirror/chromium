@@ -39,6 +39,7 @@ namespace blink {
 class SearchInputType final : public BaseTextInputType {
  public:
   static InputType* Create(HTMLInputElement&);
+  bool NeedsShadowSubtree() const override { return true; }
 
  private:
   SearchInputType(HTMLInputElement&);

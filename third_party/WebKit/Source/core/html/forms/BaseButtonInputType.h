@@ -49,6 +49,7 @@ class BaseButtonInputType : public InputType,
   explicit BaseButtonInputType(HTMLInputElement&);
   void ValueAttributeChanged() override;
   void CreateShadowSubtree() override;
+  bool NeedsShadowSubtree() const override { return true; }
 
  private:
   InputTypeView* CreateView() override;

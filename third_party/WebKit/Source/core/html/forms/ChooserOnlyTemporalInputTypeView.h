@@ -47,6 +47,9 @@ class ChooserOnlyTemporalInputTypeView final
   ~ChooserOnlyTemporalInputTypeView() override;
   void Trace(blink::Visitor*) override;
 
+ protected:
+  bool NeedsShadowSubtree() const override { return true; }
+
  private:
   ChooserOnlyTemporalInputTypeView(HTMLInputElement&, BaseTemporalInputType&);
   void CloseDateTimeChooser();
