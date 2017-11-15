@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ae969eb_2ab4319c",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T15:06:27Z",
+      "side": 1,
+      "message": "I think we should still check that we get net::ERR_BLOCKED_BY_CLIENT as we chose the RFH to display the error page differently in that case. Last time I chatted with Nasko about this particular check he was very particular about that point.",
+      "revId": "cac78077b7afdb1ad54ba7b17ccd35bc3748f1c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fefe18a_6272f662",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T15:06:27Z",
+      "side": 1,
+      "message": "Why don\u0027t we pass the error page content here?",
+      "revId": "cac78077b7afdb1ad54ba7b17ccd35bc3748f1c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
