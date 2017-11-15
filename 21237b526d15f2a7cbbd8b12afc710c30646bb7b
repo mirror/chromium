@@ -94,6 +94,30 @@
       "revId": "21237b526d15f2a7cbbd8b12afc710c30646bb7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f3917c8_3850feac",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-15T14:48:56Z",
+      "side": 1,
+      "message": "but but .. we always provide the size of the actual buffer to mincore? And if it is too small to hold the data, the kernel does not write beyond the provided size.",
+      "parentUuid": "dcf4f282_be2cf4e7",
+      "range": {
+        "startLine": 191,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 41
+      },
+      "revId": "21237b526d15f2a7cbbd8b12afc710c30646bb7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
