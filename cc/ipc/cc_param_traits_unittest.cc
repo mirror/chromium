@@ -16,13 +16,13 @@
 #include "components/viz/common/quads/render_pass_draw_quad.h"
 #include "ipc/ipc_message.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/skia/include/effects/SkBlurImageFilter.h"
 
 #if defined(OS_POSIX)
 #include "base/file_descriptor_posix.h"
 #endif
 
 using viz::CompositorFrame;
+using cc::BlurPaintFilter;
 using cc::FilterOperation;
 using cc::FilterOperations;
 using cc::ResourceProvider;
@@ -293,8 +293,10 @@ TEST_F(CCParamTraitsTest, AllQuads) {
       FilterOperation::CreateGrayscaleFilter(arbitrary_float1));
   arbitrary_filters1.Append(
       FilterOperation::CreateBlurFilter(arbitrary_float2));
-  arbitrary_filters1.Append(cc::FilterOperation::CreateReferenceFilter(
-      SkBlurImageFilter::Make(arbitrary_sigma, arbitrary_sigma, nullptr)));
+  arbitrary_filters1.Append(
+      cc::FilterOperation::CreateReferenceFilter(sk_make_sp<BlurPaintFilter>(
+          arbitrary_sigma, arbitrary_sigma,
+          BlurPaintFilter::TileMode::kClampToBlack_TileMode, nullptr)));
 
   FilterOperations arbitrary_filters2;
   arbitrary_filters2.Append(
