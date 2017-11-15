@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e829157a_9ce5d514",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-15T13:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c2067d6_92b46f9a",
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "609ba128_86e1184f",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 15
@@ -39,6 +57,30 @@
       "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9148fde1_cf4c4d02",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-15T13:27:45Z",
+      "side": 1,
+      "message": "Ack. see below.",
+      "parentUuid": "609ba128_86e1184f",
+      "range": {
+        "startLine": 102,
+        "startChar": 28,
+        "endLine": 102,
+        "endChar": 36
+      },
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "d784aaed_a4e5abbb",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-15T13:27:45Z",
+      "side": 1,
+      "message": "StrongBinding would release PrintJob instance mid-printing which is not something it\u0027s designed to handle (I\u0027m not certain but it looks like we\u0027ll attempt to destroy a thread on itself).",
+      "parentUuid": "0a6f6af5_a3f83b01",
+      "range": {
+        "startLine": 177,
+        "startChar": 8,
+        "endLine": 177,
+        "endChar": 15
+      },
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d870d56d_20db03ed",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 15
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "bae924a8_9c247f00",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-15T13:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d870d56d_20db03ed",
+      "range": {
+        "startLine": 330,
+        "startChar": 41,
+        "endLine": 330,
+        "endChar": 54
+      },
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb94dcb0_cefacded",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.h",
         "patchSetId": 15
@@ -102,6 +192,24 @@
       "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41a75ff2_cb1a8fe6",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-15T13:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb94dcb0_cefacded",
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "5ea45dee_01373240",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-15T13:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96d626bf_91f0490d",
+      "range": {
+        "startLine": 52,
+        "startChar": 55,
+        "endLine": 52,
+        "endChar": 56
+      },
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb26ca60_f3a63d6d",
         "filename": "chrome/browser/printing/print_job_worker.h",
         "patchSetId": 15
@@ -148,6 +280,30 @@
       "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51db1e6d_a55f531c",
+        "filename": "chrome/browser/printing/print_job_worker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-15T13:27:45Z",
+      "side": 1,
+      "message": "I\u0027m changing it to BindOnce in next patchset but the error is essentially the same.\n\n../../chrome/browser/printing/printer_query.cc:96:32: error: no matching function for call to \u0027Bind\u0027\n  worker_-\u003ePostTask(FROM_HERE, base::Bind(\u0026PrintJobWorker::SetSettings,\n                               ^~~~~~~~~~\n../../base/bind.h:241:1: note: candidate template ignored: couldn\u0027t infer template argument \u0027Functor\u0027\nBind(Functor\u0026\u0026 functor, Args\u0026\u0026... args) {\n^\n../../base/bind.h:259:21: note: candidate function template not viable: requires single argument \u0027closure\u0027, but 3 arguments were provided\nCallback\u003cSignature\u003e Bind(Callback\u003cSignature\u003e closure) {\n                    ^\n../../chrome/browser/printing/printer_query.cc:106:32: error: no matching function for call to \u0027Bind\u0027\n  worker_-\u003ePostTask(FROM_HERE, base::Bind(\u0026PrintJobWorker::SetSettings,\n                               ^~~~~~~~~~\n../../base/bind.h:241:1: note: candidate template ignored: couldn\u0027t infer template argument \u0027Functor\u0027\nBind(Functor\u0026\u0026 functor, Args\u0026\u0026... args) {\n^\n../../base/bind.h:259:21: note: candidate function template not viable: requires single argument \u0027closure\u0027, but 3 arguments were provided\nCallback\u003cSignature\u003e Bind(Callback\u003cSignature\u003e closure) {\n                    ^\n2 errors generated.",
+      "parentUuid": "bb26ca60_f3a63d6d",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
