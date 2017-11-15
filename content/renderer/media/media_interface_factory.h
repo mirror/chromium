@@ -11,6 +11,7 @@
 #include "base/single_thread_task_runner.h"
 #include "content/common/content_export.h"
 #include "media/mojo/interfaces/interface_factory.mojom.h"
+#include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 #include "url/gurl.h"
 
 namespace service_manager {
@@ -26,7 +27,7 @@ class CONTENT_EXPORT MediaInterfaceFactory
     : public media::mojom::InterfaceFactory {
  public:
   explicit MediaInterfaceFactory(
-      service_manager::InterfaceProvider* remote_interfaces);
+      service_manager::mojom::InterfaceProvider* remote_interfaces);
   ~MediaInterfaceFactory() final;
 
   // media::mojom::InterfaceFactory implementation.
@@ -41,7 +42,7 @@ class CONTENT_EXPORT MediaInterfaceFactory
   media::mojom::InterfaceFactory* GetMediaInterfaceFactory();
   void OnConnectionError();
 
-  service_manager::InterfaceProvider* remote_interfaces_;
+  service_manager::mojom::InterfaceProvider* remote_interfaces_;
   media::mojom::InterfaceFactoryPtr media_interface_factory_;
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
