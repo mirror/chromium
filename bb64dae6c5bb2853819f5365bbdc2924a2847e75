@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "9164cb8b_aac4d1ee",
+        "filename": "services/video_capture/public/interfaces/virtual_device.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-15T18:47:19Z",
+      "side": 1,
+      "message": "On another thought, I think this is actually similar to how we reserve output buffers for real devices: https://cs.corp.google.com/eureka_internal/chromium/src/media/capture/video/video_capture_device_client.cc?l\u003d355\n\nI think one thing that the client/producer can do is to cache the memory handle for each known buffer, no remap will be needed if the given buffer is already cached (similar to the consumer for caching buffer info). So it is the client/producer\u0027s responsibility to cache the buffer info. With this approach, no API change would be needed.\n\nWhat do you think?",
+      "parentUuid": "9a6a923f_e82fc3a1",
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbfced76_32f926b8",
         "filename": "services/video_capture/virtual_device_enabled_device_factory.cc",
         "patchSetId": 4
