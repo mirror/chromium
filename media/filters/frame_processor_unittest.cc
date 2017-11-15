@@ -1114,6 +1114,54 @@ TEST_P(FrameProcessorTest,
   CheckReadsThenReadStalls(video_.get(), "50 60 40");
 }
 
+// BIG TODO
+TEST_P(FrameProcessorTest, OOOKeyframePts_1) {
+  InSequence s;
+  AddTestTracks(HAS_AUDIO);
+  frame_processor_->SetSequenceMode(use_sequence_mode_);
+
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(1010)));
+  // Note that the following does not contain a DTS continuity, but *does*
+  // contain a PTS discontinuity (keyframe at 0.1s after keyframe at 1s).
+  EXPECT_TRUE(ProcessFrames("0K 1000|10K 100|20K", ""));
+
+  // Force sequence mode to place the next frames where segments mode would put
+  // them, to simplify this test case.
+  if (use_sequence_mode_)
+    SetTimestampOffset(Milliseconds(500));
+
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(510)));
+  // If only signalling discontinuity by DTS, yet there's a PTS *keyframe*
+  // discontinuity (versus prior keyframe) and buffering by PTS, then the
+  // following breaks SBRByPts |keyframe_map_| sanity (when done on top of
+  // similarly non-signalled processing, above). See https://crbug.com/771482.
+  EXPECT_TRUE(ProcessFrames("500|100K", ""));
+
+  // BIG TODO add buffered range and buffer read expectations
+  // BIG TODO EXPECT this: Note that timestampOffset is expected to be 0 after
+  // that last append, regardless of Sequence vs Segments mode.
+}
+
+// BIG TODO
+TEST_P(FrameProcessorTest, OOOKeyframePts_2) {
+  InSequence s;
+  AddTestTracks(HAS_AUDIO);
+  frame_processor_->SetSequenceMode(use_sequence_mode_);
+
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(1010)));
+  EXPECT_TRUE(ProcessFrames("0K 1000|10K", ""));
+
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(1010)));
+  // If only signalling discontinuity by DTS, yet there's a PTS *keyframe*
+  // discontinuity (versus prior keyframe) and buffering by PTS, then the
+  // following breaks SBRByPts |keyframe_map_| sanity (when done on top
+  // of similarly non-signalled processing, above). See
+  // https://crbug.com/771482.
+  EXPECT_TRUE(ProcessFrames("100|20K", ""));
+
+  // BIG TODO add buffered range and buffer read expectations
+}
+
 TEST_P(FrameProcessorTest, AudioNonKeyframeChangedToKeyframe) {
   // Verifies that an audio non-keyframe is changed to a keyframe with a media
   // log warning. An exact overlap append of the preceding keyframe is also done

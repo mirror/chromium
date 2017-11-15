@@ -135,8 +135,8 @@ void SourceBufferRange::UpdateEndTime(
   DCHECK_GE(duration, base::TimeDelta());
 
   if (!highest_frame_) {
-    DVLOG(1) << "Updating range end time from <empty> to " << timestamp << ", "
-             << timestamp + duration;
+    DVLOG(1) << "Updating range end time from <empty> to " << timestamp.InMicroseconds() << "us, "
+             << (timestamp + duration).InMicroseconds() << "us";
     highest_frame_ = new_buffer;
     return;
   }
@@ -144,9 +144,9 @@ void SourceBufferRange::UpdateEndTime(
   if (highest_frame_->timestamp() < timestamp ||
       (highest_frame_->timestamp() == timestamp &&
        highest_frame_->duration() <= duration)) {
-    DVLOG(1) << "Updating range end time from " << highest_frame_->timestamp()
-             << ", " << highest_frame_->timestamp() + highest_frame_->duration()
-             << " to " << timestamp << ", " << timestamp + duration;
+    DVLOG(1) << "Updating range end time from " << highest_frame_->timestamp().InMicroseconds()
+             << "us, " << (highest_frame_->timestamp() + highest_frame_->duration()).InMicroseconds()
+             << "us to " << timestamp.InMicroseconds() << "us, " << (timestamp + duration).InMicroseconds();
     highest_frame_ = new_buffer;
   }
 }
@@ -157,6 +157,10 @@ bool SourceBufferRange::IsNextInPresentationSequence(
   CHECK(!buffers_.empty());
   base::TimeDelta highest_timestamp = highest_frame_->timestamp();
   DCHECK_NE(highest_timestamp, kNoTimestamp);
+  DVLOG(1) << "MDW BIG TODO REMOVE " << __func__ << "timestamp=" << timestamp.InMicroseconds()
+           << ", highest_timestamp=" << highest_timestamp.InMicroseconds()
+           << ", GetFudgeRoom() = " << GetFudgeRoom().InMicroseconds()
+           << ", gap_policy == ALLOW_GAPS? = " << (gap_policy_ == ALLOW_GAPS);
   return (highest_timestamp == timestamp ||
           (highest_timestamp < timestamp &&
            (gap_policy_ == ALLOW_GAPS ||

@@ -66,6 +66,14 @@ bool SourceBufferRangeByPts::CanAppendBuffersToEnd(
   DVLOG(1) << __func__;
   DVLOG(4) << ToStringForDebugging();
 
+  DVLOG(1) << __func__ << "BIG TODO remove; first buffer kf="
+           << buffers.front()->is_key_frame()
+           << ", pts=" << buffers.front()->timestamp().InMicroseconds()
+           << ", dts="
+           << buffers.front()->GetDecodeTimestamp().InMicroseconds()
+           << ", new_buffers_group_start_pts="
+           << new_buffers_group_start_pts.InMicroseconds();
+
   DCHECK(!buffers_.empty());
   if (new_buffers_group_start_pts == kNoTimestamp) {
     return buffers.front()->is_key_frame()
