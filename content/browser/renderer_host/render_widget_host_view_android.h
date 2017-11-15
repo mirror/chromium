@@ -197,6 +197,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   bool OnTouchEvent(const ui::MotionEventAndroid& m) override;
   bool OnMouseEvent(const ui::MotionEventAndroid& m) override;
   bool OnMouseWheelEvent(const ui::MotionEventAndroid& event) override;
+  bool OnGestureEvent(const ui::GestureEventAndroid& event) override;
   void OnPhysicalBackingSizeChanged() override;
 
   // ui::ViewAndroidObserver implementation:
@@ -334,6 +335,10 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void LostFocus();
 
  private:
+  // Used to avoid enabling zooming in / out if resulting zooming will
+  // produce little visible difference.
+  static constexpr float kZoomControlsEpsilon = 0.007f;
+
   void RunAckCallbacks();
 
   void SendReclaimCompositorResources(bool is_swap_ack);
@@ -388,6 +393,11 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
 
   void OnFocusInternal();
   void LostFocusInternal();
+
+  // Check if the pinch gesture with the given scale factor changes the zoom
+  // scale over the minimal threshold. Can be used to avoid, for instance,
+  // zooming in further on already zoomed-in content to almost maximum.
+  bool CanZoom(float delta);
 
   // The model object.
   RenderWidgetHostImpl* host_;
@@ -474,6 +484,9 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
 
   float prev_top_shown_pix_;
   float prev_bottom_shown_pix_;
+  float page_scale_;
+  float min_page_scale_;
+  float max_page_scale_;
 
   base::TimeTicks prev_mousedown_timestamp_;
   gfx::Point prev_mousedown_point_;
