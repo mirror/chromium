@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ea2e145_3148f164",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T08:07:30Z",
+      "side": 1,
+      "message": "Needs a comment.. e.g. describe why SizeToFit(0) doesn\u0027t work.",
+      "revId": "105f2c40c96e1f32612ffa30ff75127cb78fb6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52fce279_8ff1638a",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T08:07:30Z",
+      "side": 1,
+      "message": "Yeah.. this doesn\u0027t look right. I think we can fix this with SizeToFit(0), but it might require tweaking the LayoutManager in a special way, or doing a manual layout. I *think* either of those would be preferred over this approach. But I might be missing something - let\u0027s chat - I know you explained it to me once, but my brain has paged it out :/",
+      "revId": "105f2c40c96e1f32612ffa30ff75127cb78fb6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455b56bc_3f62a174",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T08:07:30Z",
+      "side": 1,
+      "message": "should at least be `protected` I think.",
+      "revId": "105f2c40c96e1f32612ffa30ff75127cb78fb6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
