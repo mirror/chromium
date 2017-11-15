@@ -12,9 +12,9 @@
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
-#include "content/public/common/network_change_manager.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "net/base/network_change_notifier.h"
+#include "services/network/public/interfaces/network_change_manager.mojom.h"
 
 namespace content {
 

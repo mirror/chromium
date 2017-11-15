@@ -11,8 +11,8 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
-#include "content/public/common/network_change_manager.mojom.h"
 #include "net/base/network_change_notifier.h"
+#include "services/network/public/interfaces/network_change_manager.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
