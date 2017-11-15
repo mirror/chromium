@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "a4925486_30462f14",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-15T01:34:24Z",
+      "side": 1,
+      "message": "Sorry, these are explicitly wrong and incomplete. Maybe...\n\nswitch (processor_state_) {\n  case kPending:\n    DCHECK(new_state \u003d\u003d kRunning || new_state \u003d\u003d kError);\n    break;\n  case kRunning:\n    DCHECK(new_state \u003d\u003d kStopped || new_state \u003d\u003d kError);\n    break;\n  case kStopped:\n  case kError:\n    NOTREACHED()\n        \u003c\u003c \"The state is never changed once it reaches kStopped or kError.\";\n    return;\n  }\n  processor_state_ \u003d new_state;\n  DispatchEvent(...);\n}",
+      "parentUuid": "d4c121be_88648f1e",
+      "revId": "eca88fed578ead63d6fef9117d25003561c00dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a2b3964_30722b0a",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 2
