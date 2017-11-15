@@ -24,8 +24,10 @@
 #define FormController_h
 
 #include <memory>
+#include "core/html/forms/HTMLFormControlElementWithState.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
+#include "platform/wtf/DoublyLinkedList.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/ListHashSet.h"
 #include "platform/wtf/Vector.h"
@@ -34,7 +36,6 @@
 namespace blink {
 
 class FormKeyGenerator;
-class HTMLFormControlElementWithState;
 class HTMLFormElement;
 class SavedFormState;
 
@@ -91,9 +92,8 @@ class DocumentState final : public GarbageCollected<DocumentState> {
   Vector<String> ToStateVector();
 
  private:
-  using FormElementListHashSet =
-      HeapListHashSet<Member<HTMLFormControlElementWithState>, 64>;
-  FormElementListHashSet form_controls_;
+  using FormElementList = DoublyLinkedList<HTMLFormControlElementWithState>;
+  FormElementList form_controls_;
 };
 
 class FormController final : public GarbageCollectedFinalized<FormController> {
