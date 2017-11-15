@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "68b1306b_1c0e9f37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-11-15T17:55:21Z",
+      "side": 1,
+      "message": "nit: Hostname in DHCP",
+      "range": {
+        "startLine": 7,
+        "startChar": 31,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0ba242_266c6aa5",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-11-15T17:55:21Z",
+      "side": 1,
+      "message": "// Copyright 2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2aa7550e_56de9d2b",
         "filename": "chrome/browser/chromeos/policy/hostname_handler.cc",
         "patchSetId": 2
@@ -197,6 +243,29 @@
     },
     {
       "key": {
+        "uuid": "ec658f68_4084877b",
+        "filename": "chrome/browser/chromeos/policy/hostname_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-11-15T17:55:21Z",
+      "side": 1,
+      "message": "// Copyright 2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "055feb2f_aef8483e",
         "filename": "chrome/browser/chromeos/settings/device_settings_provider.cc",
         "patchSetId": 2
@@ -208,6 +277,29 @@
       "writtenOn": "2017-11-13T21:52:14Z",
       "side": 1,
       "message": "{}",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094519ea_14fe3120",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-11-15T17:55:21Z",
+      "side": 1,
+      "message": "DeviceHostnameTemplate",
+      "range": {
+        "startLine": 545,
+        "startChar": 16,
+        "endLine": 545,
+        "endChar": 45
+      },
       "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -248,6 +340,52 @@
       "writtenOn": "2017-11-13T21:52:14Z",
       "side": 1,
       "message": "We should probably test all template vars, especially MAC_ADDR (including after a default network change)",
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8bb965_422b4c98",
+        "filename": "chromeos/network/network_state_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-11-15T17:55:21Z",
+      "side": 1,
+      "message": "Looks like copy-pasted from the function above.",
+      "range": {
+        "startLine": 322,
+        "startChar": 33,
+        "endLine": 323,
+        "endChar": 17
+      },
+      "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa3c4e2_f3e0e679",
+        "filename": "chromeos/network/shill_property_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-11-15T17:55:21Z",
+      "side": 1,
+      "message": "Looks like copy-pasted from the function above.",
+      "range": {
+        "startLine": 142,
+        "startChar": 33,
+        "endLine": 143,
+        "endChar": 17
+      },
       "revId": "dac7feda0a474a5c02ad36cc303ca980cf8bb206",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
