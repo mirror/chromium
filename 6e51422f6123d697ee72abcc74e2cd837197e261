@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05e00b33_098688a1",
+        "filename": "chrome/browser/net/default_network_context_params.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-15T00:24:30Z",
+      "side": 1,
+      "message": "Why the additional headers? They don\u0027t appear to be used by this file.",
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d06f56_c5adc42e",
+        "filename": "chrome/browser/net/profile_network_context_service.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-15T00:24:30Z",
+      "side": 1,
+      "message": "DCHECK() that !proxy_config_monitor_ ?",
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10dd3421_04633894",
+        "filename": "chrome/browser/net/proxy_config_monitor.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-15T00:24:30Z",
+      "side": 1,
+      "message": "sign-in",
+      "range": {
+        "startLine": 25,
+        "startChar": 52,
+        "endLine": 25,
+        "endChar": 59
+      },
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51199ab3_8aafae69",
+        "filename": "chrome/browser/net/proxy_config_monitor.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-15T00:24:30Z",
+      "side": 1,
+      "message": "I was just thinking, we could use some more classes relating to proxy...",
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb2042b_6a2f2f89",
+        "filename": "chrome/browser/net/proxy_config_monitor.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-15T00:24:30Z",
+      "side": 1,
+      "message": "wording?",
+      "range": {
+        "startLine": 29,
+        "startChar": 5,
+        "endLine": 29,
+        "endChar": 13
+      },
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df49d437_9d6c6b61",
+        "filename": "chrome/browser/net/proxy_service_factory.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-15T00:24:30Z",
+      "side": 1,
+      "message": "I don\u0027t understand this change.\n\nProxyService::CreateSystemProxyConfigService() expects this parameter to be the io-thread, and expects the calling thread to be the UI thread.\n\nThis in turn is a dependency of other code (notably the ProxyConfigServiceLinux, and apparently ProxyConfigServiceAndroid), which will need to be adjusted.",
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43555d85_62777ecd",
+        "filename": "components/proxy_config/pref_proxy_config_tracker_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-15T00:24:30Z",
+      "side": 1,
+      "message": "it",
+      "range": {
+        "startLine": 284,
+        "startChar": 10,
+        "endLine": 284,
+        "endChar": 13
+      },
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327c283b_f988660c",
+        "filename": "components/proxy_config/pref_proxy_config_tracker_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-15T00:24:30Z",
+      "side": 1,
+      "message": "merge",
+      "range": {
+        "startLine": 286,
+        "startChar": 36,
+        "endLine": 286,
+        "endChar": 42
+      },
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b543ea75_62ae5f75",
+        "filename": "components/proxy_config/pref_proxy_config_tracker_impl.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-15T00:24:30Z",
+      "side": 1,
+      "message": "the name io_task_runner doesn\u0027t seem right anymore, since in practice this is now the UI thread. also typo \"on th ecurrent\"\n\nAlso following this refactor are there any cases where !nullptr is passed in?",
+      "range": {
+        "startLine": 83,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 46
+      },
+      "revId": "6e51422f6123d697ee72abcc74e2cd837197e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
