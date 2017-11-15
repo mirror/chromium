@@ -17,6 +17,7 @@
 #include "build/build_config.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/global_request_id.h"
+#include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/reload_type.h"
 #include "content/public/browser/restore_type.h"
 #include "content/public/browser/session_storage_namespace.h"
@@ -195,12 +196,12 @@ class NavigationController {
     // Indicates whether or not this navigation was initiated via context menu.
     bool started_from_context_menu;
 
+    std::unique_ptr<NavigationUIData> navigation_ui_data;
+
     explicit LoadURLParams(const GURL& url);
     ~LoadURLParams();
 
-    // Allows copying of LoadURLParams struct.
-    LoadURLParams(const LoadURLParams& other);
-    LoadURLParams& operator=(const LoadURLParams& other);
+    DISALLOW_COPY_AND_ASSIGN(LoadURLParams);
   };
 
   // Disables checking for a repost and prompting the user. This is used during

@@ -18,6 +18,8 @@ namespace content {
 class NavigationHandle;
 }
 
+enum class WindowOpenDisposition;
+
 // PlzNavigate
 // Contains data that is passed from the UI thread to the IO thread at the
 // beginning of each navigation. The class is instantiated on the UI thread,
@@ -27,6 +29,11 @@ class ChromeNavigationUIData : public content::NavigationUIData {
  public:
   ChromeNavigationUIData();
   explicit ChromeNavigationUIData(content::NavigationHandle* navigation_handle);
+  ChromeNavigationUIData(content::WebContents* web_contents,
+                         int frame_tree_node_id,
+                         WindowOpenDisposition disposition,
+                         bool is_source_browser_app,
+                         bool had_target_contents);
   ~ChromeNavigationUIData() override;
 
   // Creates a new ChromeNavigationUIData that is a deep copy of the original.
@@ -53,6 +60,9 @@ class ChromeNavigationUIData : public content::NavigationUIData {
     return offline_page_data_.get();
   }
 #endif
+  WindowOpenDisposition window_open_disposition() const { return disposition_; }
+  bool is_source_browser_app() const { return is_source_browser_app_; }
+  bool had_target_contents() const { return had_target_contents_; }
 
  private:
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -65,6 +75,10 @@ class ChromeNavigationUIData : public content::NavigationUIData {
   std::unique_ptr<offline_pages::OfflinePageNavigationUIData>
       offline_page_data_;
 #endif
+
+  WindowOpenDisposition disposition_;
+  bool is_source_browser_app_;
+  bool had_target_contents_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeNavigationUIData);
 };

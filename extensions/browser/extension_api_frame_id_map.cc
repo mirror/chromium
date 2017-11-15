@@ -98,6 +98,14 @@ ExtensionApiFrameIdMap* ExtensionApiFrameIdMap::Get() {
 }
 
 // static
+int ExtensionApiFrameIdMap::UnsafeGetFrameId(content::WebContents* web_contents,
+                                             int frame_tree_node_id) {
+  return ExtensionApiFrameIdMap::GetFrameId(
+      ExtensionApiFrameIdMap::GetRenderFrameHostById(web_contents,
+                                                     frame_tree_node_id));
+}
+
+// static
 int ExtensionApiFrameIdMap::GetFrameId(content::RenderFrameHost* rfh) {
   if (!rfh)
     return kInvalidFrameId;
@@ -112,6 +120,15 @@ int ExtensionApiFrameIdMap::GetFrameId(
   return navigation_handle->IsInMainFrame()
              ? kTopFrameId
              : navigation_handle->GetFrameTreeNodeId();
+}
+
+// static
+int ExtensionApiFrameIdMap::UnsafeGetParentFrameId(
+    content::WebContents* web_contents,
+    int frame_tree_node_id) {
+  return ExtensionApiFrameIdMap::GetParentFrameId(
+      ExtensionApiFrameIdMap::GetRenderFrameHostById(web_contents,
+                                                     frame_tree_node_id));
 }
 
 // static

@@ -85,11 +85,25 @@ class ExtensionApiFrameIdMap {
 
   static ExtensionApiFrameIdMap* Get();
 
+  // Get the extension API frame ID for |web_contents| and |frame_tree_node_id|.
+  //
+  // Unfortunately, extension APIs do not know which process to expect for a
+  // given frame ID, so we must use an unsafe API here that could return a
+  // different RenderFrameHost than the caller may have expected (e.g., one that
+  // changed after a cross-process navigation).
+  static int UnsafeGetFrameId(content::WebContents* web_contents,
+                              int frame_tree_node_id);
+
   // Get the extension API frame ID for |rfh|.
   static int GetFrameId(content::RenderFrameHost* rfh);
 
   // Get the extension API frame ID for |navigation_handle|.
   static int GetFrameId(content::NavigationHandle* navigation_handle);
+
+  // Get the extension API frame ID for the parent of the frame with
+  // |frame_tree_node_id| in |web_contents|.
+  static int UnsafeGetParentFrameId(content::WebContents* web_contents,
+                                    int frame_tree_node_id);
 
   // Get the extension API frame ID for the parent of |rfh|.
   static int GetParentFrameId(content::RenderFrameHost* rfh);
