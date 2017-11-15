@@ -32,6 +32,7 @@
 #include "ash/shell_port.h"
 #include "ash/system/status_area_layout_manager.h"
 #include "ash/system/status_area_widget.h"
+#include "ash/touch/touch_hud_controller.h"
 #include "ash/touch/touch_hud_debug.h"
 #include "ash/touch/touch_hud_projection.h"
 #include "ash/touch/touch_observer_hud.h"
@@ -350,6 +351,18 @@ void RootWindowController::InitializeShelf() {
   shelf_->shelf_widget()->PostCreateShelf();
 }
 
+void RootWindowController::EnableTouchHudProjection() {
+  if (touch_hud_projection_)
+    return;
+  set_touch_hud_projection(new TouchHudProjection(GetRootWindow()));
+}
+
+void RootWindowController::DisableTouchHudProjection() {
+  if (!touch_hud_projection_)
+    return;
+  touch_hud_projection_->Remove();
+}
+
 ShelfLayoutManager* RootWindowController::GetShelfLayoutManager() {
   return shelf_->shelf_layout_manager();
 }
@@ -478,8 +491,6 @@ void RootWindowController::OnWallpaperAnimationFinished(views::Widget* widget) {
 }
 
 void RootWindowController::Shutdown() {
-  Shell::Get()->RemoveShellObserver(this);
-
   touch_exploration_manager_.reset();
 
   ResetRootForNewWindowsIfNecessary();
@@ -569,7 +580,7 @@ void RootWindowController::InitTouchHuds() {
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   if (command_line->HasSwitch(switches::kAshTouchHud))
     set_touch_hud_debug(new TouchHudDebug(GetRootWindow()));
-  if (Shell::Get()->is_touch_hud_projection_enabled())
+  if (Shell::Get()->touch_hud_controller()->IsTouchHudProjectionEnabled())
     EnableTouchHudProjection();
 }
 
@@ -702,8 +713,6 @@ void RootWindowController::Init(RootWindowType root_window_type) {
           ->has_window_dimmer()) {
     GetSystemModalLayoutManager(nullptr)->CreateModalBackground();
   }
-
-  shell->AddShellObserver(this);
 
   root_window_layout_manager_->OnWindowResized();
   if (root_window_type == RootWindowType::PRIMARY) {
@@ -996,18 +1005,6 @@ void RootWindowController::CreateSystemWallpaper(
       new SystemWallpaperController(GetRootWindow(), color));
 }
 
-void RootWindowController::EnableTouchHudProjection() {
-  if (touch_hud_projection_)
-    return;
-  set_touch_hud_projection(new TouchHudProjection(GetRootWindow()));
-}
-
-void RootWindowController::DisableTouchHudProjection() {
-  if (!touch_hud_projection_)
-    return;
-  touch_hud_projection_->Remove();
-}
-
 void RootWindowController::ResetRootForNewWindowsIfNecessary() {
   // Change the target root window before closing child windows. If any child
   // being removed triggers a relayout of the shelf it will try to build a
@@ -1028,13 +1025,6 @@ void RootWindowController::OnMenuClosed() {
   menu_model_adapter_.reset();
   menu_model_.reset();
   shelf_->UpdateVisibilityState();
-}
-
-void RootWindowController::OnTouchHudProjectionToggled(bool enabled) {
-  if (enabled)
-    EnableTouchHudProjection();
-  else
-    DisableTouchHudProjection();
 }
 
 }  // namespace ash
