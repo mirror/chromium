@@ -92320,6 +92320,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="WebApk.Permission.ChromePermissionDenied"
+    enum="WebApkPermissionType">
+  <owner>hanxi@chromium.org</owner>
+  <owner>pkotwicz@chromium.org</owner>
+  <owner>yfriedman@chromium.org</owner>
+  <summary>
+    Records the amount of requests of Android runtime permissions access be
+    deined in WekAPK because Chrome does not have that permission.
+  </summary>
+</histogram>
+
 <histogram name="WebApk.Permission.ChromeWithoutPermission"
     enum="WebApkPermissionType">
   <owner>hanxi@chromium.org</owner>

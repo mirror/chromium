@@ -250,6 +250,8 @@ public class ActivityWindowAndroid
         keyboardVisibilityPossiblyChanged(UiUtils.isKeyboardShowing(getActivity().get(), v));
     }
 
+    protected void logUMAOnRequestPermissionDenied(String[] permissions) {}
+
     private int generateNextRequestCode() {
         int requestCode = REQUEST_CODE_PREFIX + mNextRequestCode;
         mNextRequestCode = (mNextRequestCode + 1) % REQUEST_CODE_RANGE_SIZE;
@@ -275,9 +277,8 @@ public class ActivityWindowAndroid
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return false;
 
             Activity activity = getActivity().get();
-            if (activity == null) return false;
-
-            if (isPermissionRevokedByPolicy(permission)) {
+            if (activity == null || isPermissionRevokedByPolicy(permission)) {
+                logUMAOnRequestPermissionDenied(new String[] {permission});
                 return false;
             }
 
@@ -291,6 +292,7 @@ public class ActivityWindowAndroid
             SharedPreferences prefs = ContextUtils.getAppSharedPreferences();
             if (!prefs.getBoolean(permissionQueriedKey, false)) return true;
 
+            logUMAOnRequestPermissionDenied(new String[] {permission});
             return false;
         }
 
