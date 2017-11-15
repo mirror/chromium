@@ -495,8 +495,6 @@ source_set("blink_headers") {
     "web/WebDateTimeSuggestion.h",
     "web/WebDevToolsAgent.h",
     "web/WebDevToolsAgentClient.h",
-    "web/WebDevToolsFrontend.h",
-    "web/WebDevToolsFrontendClient.h",
     "web/WebDeviceEmulationParams.h",
     "web/WebDocument.h",
     "web/WebDocumentLoader.h",
@@ -939,6 +937,33 @@ mojom("core_mojo_bindings") {
   export_header_blink = "third_party/WebKit/Source/core/CoreExport.h"
 }
 
+mojom("controller_mojo_bindings") {
+  visibility = [ "//content/*" ]
+  visibility_blink = [ "//third_party/WebKit/Source/controller/*" ]
+  sources = [
+    "web/devtools_frontend.mojom",
+  ]
+  public_deps = [
+    "//mojo/common:common_custom_types",
+  ]
+
+  overridden_deps = []
+  component_deps = [ "//third_party/WebKit/common:blink_common" ]
+
+  component_output_prefix = "blink_controller_mojo_bindings"
+
+  # See comment above.
+  export_class_attribute = "CONTENT_EXPORT"
+  export_define = "CONTENT_IMPLEMENTATION=1"
+  export_header = "content/common/content_export.h"
+
+  # Similarly, the blink variant must be linked with the controller component.
+  export_class_attribute_blink = "CONTROLLER_EXPORT"
+  export_define_blink = "BLINK_CONTROLLER_IMPLEMENTATION=1"
+  export_header_blink =
+      "third_party/WebKit/Source/controller/ControllerExport.h"
+}
+
 # Note that this intentionally depends on the generator target of the mojom
 # target instead of the mojom target itself directly. This is to ensure that the
 # dependencies are header-only and don't link against any bindings code.
@@ -948,6 +973,8 @@ group("generate_mojo_bindings") {
     # Blink public API exposes a number of Mojo interfaces; omitting it will
     # cause non-deterministic compile failures for code that uses the regular
     # variant of the generated files.
+    ":controller_mojo_bindings__generator",
+    ":controller_mojo_bindings_blink__generator",
     ":core_mojo_bindings__generator",
     ":core_mojo_bindings_blink__generator",
     ":mojo_bindings__generator",

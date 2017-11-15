@@ -15,6 +15,9 @@ visibility = [ "//third_party/WebKit/*" ]
 component("controller") {
   output_name = "blink_controller"
 
+  public_deps = [
+    "//third_party/WebKit/public:controller_mojo_bindings_blink",
+  ]
   deps = [
     "//skia",
     "//third_party/WebKit/Source/core",
@@ -37,6 +40,8 @@ component("controller") {
     "BlinkInitializer.cpp",
     "BlinkInitializer.h",
     "ControllerExport.h",
+    "DevToolsFrontendImpl.cpp",
+    "DevToolsFrontendImpl.h",
     "OomInterventionImpl.cpp",
     "OomInterventionImpl.h",
   ]
