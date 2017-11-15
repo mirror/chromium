@@ -181,6 +181,24 @@
     },
     {
       "key": {
+        "uuid": "fb02f8b9_a2990a48",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-15T00:49:55Z",
+      "side": 1,
+      "message": "no, i don\u0027t think that the chrome-to-powerd interface should get more complicated/racy either. :-)\n\ntoni, when lock-screen note-taking apps are enabled, can you just show the black layer even earlier, as soon as the screen is turned off after it\u0027s been locked? does that result in the layer being visible immediately when the display is turned on later?\n\nthen, when the screen is turned on, either hide the black layer immediately (if the stylus wasn\u0027t ejected) or launch the app and wait for it to be ready before hiding the black layer (if the stylus was ejected).",
+      "parentUuid": "19ee25cb_c70c5911",
+      "revId": "42a9100e2fa3d0be5ad67c2eeb36c9d89859448c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97b516bc_91ad8bb6",
         "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
         "patchSetId": 5
