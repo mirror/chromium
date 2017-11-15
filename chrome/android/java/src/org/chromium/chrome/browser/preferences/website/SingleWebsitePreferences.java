@@ -45,12 +45,12 @@ import java.util.Set;
 public class SingleWebsitePreferences extends PreferenceFragment
         implements OnPreferenceChangeListener, OnPreferenceClickListener {
     // SingleWebsitePreferences expects either EXTRA_SITE (a Website) or
-    // EXTRA_ORIGIN (a WebsiteAddress) to be present (but not both). If
+    // EXTRA_SITE_ADDRESS (a WebsiteAddress) to be present (but not both). If
     // EXTRA_SITE is present, the fragment will display the permissions in that
-    // Website object. If EXTRA_ORIGIN is present, the fragment will find all
+    // Website object. If EXTRA_SITE_ADDRESS is present, the fragment will find all
     // permissions for that website address and display those.
     public static final String EXTRA_SITE = "org.chromium.chrome.preferences.site";
-    public static final String EXTRA_ORIGIN = "org.chromium.chrome.preferences.origin";
+    public static final String EXTRA_SITE_ADDRESS = "org.chromium.chrome.preferences.site_address";
 
     public static final String EXTRA_WEB_CONTENTS = "org.chromium.chrome.preferences.web_contents";
     public static final String EXTRA_USB_INFO = "org.chromium.chrome.preferences.usb_info";
@@ -109,18 +109,18 @@ public class SingleWebsitePreferences extends PreferenceFragment
     // The website this page is displaying details about.
     private Website mSite;
 
-    // The address of the site we want to display. Used only if EXTRA_ADDRESS is provided.
-    private WebsiteAddress mSiteAddress;
-
     // The number of USB device permissions displayed.
     private int mUsbPermissionCount;
 
     private class SingleWebsitePermissionsPopulator
             implements WebsitePermissionsFetcher.WebsitePermissionsCallback {
         private final WebContents mWebContents;
+        private WebsiteAddress mSiteAddress;
 
-        public SingleWebsitePermissionsPopulator(WebContents webContents) {
+        public SingleWebsitePermissionsPopulator(
+                WebContents webContents, WebsiteAddress siteAddress) {
             mWebContents = webContents;
+            mSiteAddress = siteAddress;
         }
 
         @Override
@@ -150,7 +150,7 @@ public class SingleWebsitePreferences extends PreferenceFragment
         // equivalent of the call below, because this is perfectly fine for non-display purposes.
         String origin =
                 UrlFormatter.formatUrlForSecurityDisplay(URI.create(url), true /* showScheme */);
-        fragmentArgs.putString(SingleWebsitePreferences.EXTRA_ORIGIN, origin);
+        fragmentArgs.putSerializable(EXTRA_SITE_ADDRESS, WebsiteAddress.create(origin));
         return fragmentArgs;
     }
 
@@ -161,7 +161,7 @@ public class SingleWebsitePreferences extends PreferenceFragment
         listView.setDivider(null);
 
         Object extraSite = getArguments().getSerializable(EXTRA_SITE);
-        Object extraOrigin = getArguments().getSerializable(EXTRA_ORIGIN);
+        Object extraOrigin = getArguments().getSerializable(EXTRA_SITE_ADDRESS);
         getArguments().setClassLoader(WebContents.class.getClassLoader());
         Object webContents = getArguments().get(EXTRA_WEB_CONTENTS);
 
@@ -169,10 +169,9 @@ public class SingleWebsitePreferences extends PreferenceFragment
             mSite = (Website) extraSite;
             displaySitePermissions();
         } else if (extraOrigin != null && extraSite == null) {
-            mSiteAddress = WebsiteAddress.create((String) extraOrigin);
             WebsitePermissionsFetcher fetcher;
-            fetcher = new WebsitePermissionsFetcher(
-                new SingleWebsitePermissionsPopulator((WebContents) webContents));
+            fetcher = new WebsitePermissionsFetcher(new SingleWebsitePermissionsPopulator(
+                    (WebContents) webContents, (WebsiteAddress) extraOrigin));
             fetcher.fetchAllPreferences();
         } else {
             assert false : "Exactly one of EXTRA_SITE or EXTRA_SITE_ADDRESS must be provided.";
