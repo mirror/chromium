@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "645ec138_582488dd",
+        "filename": "base/observer_list_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T02:49:41Z",
+      "side": 1,
+      "message": "Nit: Consider just writing out the type to be consistent with the other tests",
+      "revId": "d6da426567050bab674323edb63e1e81d7853308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
