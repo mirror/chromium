@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "b93ac7c9_8512c2b1",
+        "filename": "extensions/browser/api/declarative/declarative_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-15T09:30:59Z",
+      "side": 1,
+      "message": "Huh, that\u0027s interesting. What error do you get when you try to return base::Value(std::move(data64)) from here?",
+      "parentUuid": "441546d3_090306e6",
+      "range": {
+        "startLine": 102,
+        "startChar": 21,
+        "endLine": 102,
+        "endChar": 27
+      },
+      "revId": "5ea747515447c0729ca053e50fb9238e67ce8cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ace9e98_f8bd25f1",
         "filename": "extensions/browser/api/declarative/declarative_api.cc",
         "patchSetId": 1

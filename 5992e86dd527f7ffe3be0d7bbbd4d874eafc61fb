@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f5ab493_ec718a98",
+        "filename": "extensions/browser/api/declarative/declarative_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-11-15T09:30:59Z",
+      "side": 1,
+      "message": "nit: prefer `\u003d default` for this",
+      "range": {
+        "startLine": 139,
+        "startChar": 30,
+        "endLine": 139,
+        "endChar": 33
+      },
+      "revId": "5992e86dd527f7ffe3be0d7bbbd4d874eafc61fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
