@@ -6,16 +6,16 @@
 
 #include <utility>
 
-#include "base/callback.h"
 #include "base/mac/foundation_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
-#include "base/time/time.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/keyed_service/core/service_access_type.h"
+#include "components/password_manager/core/browser/password_manager_test_utils.h"
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/browser/password_store_consumer.h"
+#include "components/password_manager/core/browser/test_password_store.h"
 #include "components/password_manager/core/common/password_manager_features.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/prefs/pref_service.h"
@@ -314,8 +314,8 @@ void SaveExamplePasswordForm() {
 
 // Removes all credentials stored.
 void ClearPasswordStore() {
-  GetPasswordStore()->RemoveLoginsCreatedBetween(base::Time(), base::Time(),
-                                                 base::Closure());
+  static_cast<password_manager::TestPasswordStore*>(GetPasswordStore().get())
+      ->Clear();
   TestStoreConsumer consumer;
   GREYAssert(consumer.GetStoreResults().empty(),
              @"PasswordStore was not cleared.");
@@ -350,6 +350,17 @@ void TapEdit() {
 @end
 
 @implementation PasswordsSettingsTestCase
+
+- (void)setUp {
+  [super setUp];
+
+  // Replace the production PasswordStore with an in-memory test replacement.
+  // This will speed-up background processing.
+  IOSChromePasswordStoreFactory::GetInstance()->SetTestingFactory(
+      chrome_test_util::GetOriginalBrowserState(),
+      &password_manager::BuildPasswordStore<
+          web::BrowserState, password_manager::TestPasswordStore>);
+}
 
 - (void)tearDown {
   // Snackbars triggered by tests stay up for a limited time even if the
