@@ -217,16 +217,16 @@ bool BoxPaintInvalidator::ViewBackgroundShouldFullyInvalidate() const {
     if (document_element) {
       const auto* document_background = document_element->GetLayoutObject();
       if (document_background && document_background->IsBox()) {
-        // TODO(pdr): Change this to use layout overflow instead of size because
-        // the background size actually depends on the layout overflow.
-        LayoutSize old_size = ToLayoutBox(document_background)->PreviousSize();
-        LayoutSize new_size = ToLayoutBox(document_background)->Size();
+        const LayoutRect& old_layout_overflow =
+            ToLayoutBox(document_background)->PreviousLayoutOverflowRect();
+        LayoutRect new_layout_overflow =
+            ToLayoutBox(document_background)->LayoutOverflowRect();
         const auto& layers = box_.StyleRef().BackgroundLayers();
-        if (old_size.Width() != new_size.Width() &&
+        if (old_layout_overflow.Width() != new_layout_overflow.Width() &&
             LayoutBox::MustInvalidateFillLayersPaintOnWidthChange(layers)) {
           return true;
         }
-        if (old_size.Height() != new_size.Height() &&
+        if (old_layout_overflow.Height() != new_layout_overflow.Height() &&
             LayoutBox::MustInvalidateFillLayersPaintOnHeightChange(layers)) {
           return true;
         }
@@ -362,6 +362,14 @@ PaintInvalidationReason BoxPaintInvalidator::InvalidatePaint() {
 
 bool BoxPaintInvalidator::
     NeedsToSavePreviousContentBoxSizeOrLayoutOverflowRect() {
+  // The LayoutView depends on the document element's layout overflow rect (see:
+  // ViewBackgroundShouldFullyInvalidate) and needs to invalidate before the
+  // document element invalidates. There are few document elements so the
+  // previous layout overflow rect is always saved, rather than duplicating the
+  // logic save-if-needed logic for this special case.
+  if (box_.IsDocumentElement())
+    return true;
+
   // Don't save old box geometries if the paint rect is empty because we'll
   // fully invalidate once the paint rect becomes non-empty.
   if (context_.fragment_data->VisualRect().IsEmpty())
