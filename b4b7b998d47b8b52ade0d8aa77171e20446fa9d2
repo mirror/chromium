@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ee9741d_0cc42b0b",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T09:24:25Z",
+      "side": 1,
+      "message": "nit: not sure if PWA is a good term to be used in the code base... just MaybeReportInstalledScripts() is fine?",
+      "revId": "b4b7b998d47b8b52ade0d8aa77171e20446fa9d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4641df52_bcb49eb2",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T09:24:25Z",
+      "side": 1,
+      "message": "Please add a brief comment: \"Report the script stats if this cache storage is for ServiceWorker execution context and it\u0027s in installation phase.\"",
+      "revId": "b4b7b998d47b8b52ade0d8aa77171e20446fa9d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68052d08_4e890098",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T09:24:25Z",
+      "side": 1,
+      "message": "nit: scope -\u003e global_scope",
+      "revId": "b4b7b998d47b8b52ade0d8aa77171e20446fa9d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec27d897_75f94968",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T09:24:25Z",
+      "side": 1,
+      "message": "Can you add a bit of comment?  E.g.\n\nInstalling phase is finished; record the stats for the scripts that are stored in Cache storage during installation.",
+      "revId": "b4b7b998d47b8b52ade0d8aa77171e20446fa9d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0109e36f_bdc689bd",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T09:24:25Z",
+      "side": 1,
+      "message": "nit: We usually don\u0027t use snake_case getter in Blink, just IsInstalling() would be fine",
+      "revId": "b4b7b998d47b8b52ade0d8aa77171e20446fa9d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
