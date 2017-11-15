@@ -29,6 +29,7 @@ extern const base::Feature kChromeHomeDropAllButFirstThumbnail;
 extern const base::Feature kChromeHomePromo;
 extern const base::Feature kChromeHomeOptOutSnackbar;
 extern const base::Feature kChromeHomeSwipeLogic;
+extern const base::Feature kChromeHomeSwipeLogicVelocity;
 extern const base::Feature kChromeMemexFeature;
 extern const base::Feature kContentSuggestionsScrollToLoad;
 extern const base::Feature kContentSuggestionsSettings;
