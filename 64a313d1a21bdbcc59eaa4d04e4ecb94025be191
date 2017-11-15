@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34b7ea4b_830da84c",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/sad_tab_mac_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-15T21:45:24Z",
+      "side": 1,
+      "message": "Not really sure what this using directive gets us.  Maybe it can be removed?",
+      "revId": "64a313d1a21bdbcc59eaa4d04e4ecb94025be191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
