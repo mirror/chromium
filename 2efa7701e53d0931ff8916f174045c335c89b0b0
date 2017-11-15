@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f20b44b1_908f488c",
+        "filename": "headless/public/util/virtual_time_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-11-15T16:01:26Z",
+      "side": 1,
+      "message": "We can replace this with a DCHECK(!entry-\u003eready_to_advance) now, I think.",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 34
+      },
+      "revId": "2efa7701e53d0931ff8916f174045c335c89b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
