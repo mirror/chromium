@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9e73ffb_fae8eb7e",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-15T02:06:44Z",
+      "side": 1,
+      "message": "// https://html.spec.whatwg.org/#link-type-modulepreload",
+      "revId": "ad1c4ab130d6977a89e4959c12aec157a9eccba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff9de4b_a083253c",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-15T02:06:44Z",
+      "side": 1,
+      "message": "Would you add [spec text] (and optionally double-quotes \"\") to spec refs",
+      "revId": "ad1c4ab130d6977a89e4959c12aec157a9eccba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b1de18_5b4aa7f6",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-15T02:06:44Z",
+      "side": 1,
+      "message": "DispatchLinkLoadingErroredAsync",
+      "revId": "ad1c4ab130d6977a89e4959c12aec157a9eccba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
