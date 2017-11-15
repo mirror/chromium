@@ -217,12 +217,6 @@
     min-height: 100%;
 }
 
-.timeline-toolbar-resizer {
-    background-image: url(Images/toolbarResizerVertical.png);
-    background-repeat: no-repeat;
-    background-position: right center, center;
-}
-
 .memory-graph-label {
     position: absolute;
     right: 0;
@@ -253,11 +247,24 @@
     margin-top: -2px;
 }
 
-#memory-graphs-container .memory-counter-selector-swatches {
+#memory-graphs-container .timeline-memory-toolbar {
     flex: 0 0 24px;
     padding: 5px 0;
     background-color: #eee;
     border-bottom: 1px solid #ddd;
+}
+
+#memory-graphs-container .timeline-memory-toolbar::after {
+    content: "";
+    background-image: url(Images/toolbarResizerVertical.png);
+    background-repeat: no-repeat;
+    background-position: right center, center;
+    flex: 20px 0 0;
+    margin: 0 4px;
+}
+
+.memory-counter-selector-swatches {
+    overflow: hidden;
 }
 
 .memory-counter-selector-info {

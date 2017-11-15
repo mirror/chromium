@@ -43,9 +43,12 @@ Timeline.CountersGraph = class extends UI.VBox {
     this._calculator = new Timeline.CountersGraph.Calculator();
 
     // Create selectors
+    this._toobar = new UI.HBox();
+    this._toobar.element.classList.add('timeline-memory-toolbar');
+    this._toobar.show(this.element);
     this._infoWidget = new UI.HBox();
-    this._infoWidget.element.classList.add('memory-counter-selector-swatches', 'timeline-toolbar-resizer');
-    this._infoWidget.show(this.element);
+    this._infoWidget.element.classList.add('memory-counter-selector-swatches');
+    this._infoWidget.show(this._toobar.element);
 
     this._graphsContainer = new UI.VBox();
     this._graphsContainer.show(this.element);
@@ -150,7 +153,7 @@ Timeline.CountersGraph = class extends UI.VBox {
    * @return {?Element}
    */
   resizerElement() {
-    return this._infoWidget.element;
+    return this._toobar.element;
   }
 
   _resize() {
