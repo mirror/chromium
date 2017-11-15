@@ -190,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "fba277ea_9e060463",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T14:59:03Z",
+      "side": 1,
+      "message": "I think we wouldn\u0027t need to provide this forwarding interface that subclasses InterfaceProvider?",
+      "parentUuid": "698fcf57_fe16f6e1",
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f5664f9_4299ca59",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 20
@@ -255,6 +273,24 @@
       "side": 1,
       "message": "Making it an RFO might make sense, TODO LGTM.",
       "parentUuid": "2b22b594_7c6eacbd",
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "890b375c_2e7b79cd",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 3971,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T14:59:03Z",
+      "side": 1,
+      "message": "OK, so the problem is that the renderer binds this interface, but keeps it around without associating it with a frame? So the interface ptr is used by all frames in the same renderer?\n\n(Sorry just trying to understand this issue better)",
+      "parentUuid": "f853d4ef_b790d483",
       "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

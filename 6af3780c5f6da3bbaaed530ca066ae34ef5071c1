@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f59bc20_9a6c03c1",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T14:59:03Z",
+      "side": 1,
+      "message": "Nit: non-same -\u003e cross?",
+      "range": {
+        "startLine": 1358,
+        "startChar": 27,
+        "endLine": 1358,
+        "endChar": 35
+      },
+      "revId": "6af3780c5f6da3bbaaed530ca066ae34ef5071c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5fd676_cefcf4ee",
+        "filename": "content/browser/interface_provider_filtering.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T14:59:03Z",
+      "side": 1,
+      "message": "If we\u0027re adding the scoper for tests, is it possible to get rid of this? Or does it break too many unit tests? It just seems unfortunate to have two layers of testing bypasses.",
+      "revId": "6af3780c5f6da3bbaaed530ca066ae34ef5071c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a710f4bf_7e60e7e3",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T14:59:03Z",
+      "side": 1,
+      "message": "recent",
+      "range": {
+        "startLine": 38,
+        "startChar": 36,
+        "endLine": 38,
+        "endChar": 43
+      },
+      "revId": "6af3780c5f6da3bbaaed530ca066ae34ef5071c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fac8fc2_de62f26d",
+        "filename": "content/test/test_render_frame.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T14:59:03Z",
+      "side": 1,
+      "message": "Nit: const GURL\u0026",
+      "range": {
+        "startLine": 38,
+        "startChar": 42,
+        "endLine": 38,
+        "endChar": 46
+      },
+      "revId": "6af3780c5f6da3bbaaed530ca066ae34ef5071c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ffaf67_b52f3a82",
+        "filename": "third_party/WebKit/public/web/WebWindowObjectInstance.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T14:59:03Z",
+      "side": 1,
+      "message": "Nit: just use this enum everywhere, rather than defining separate values for core.",
+      "revId": "6af3780c5f6da3bbaaed530ca066ae34ef5071c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
