@@ -129,7 +129,8 @@ void SadTabTabHelper::PresentSadTab(const GURL& url_causing_failure) {
        seconds_since_last_failure < repeat_failure_interval_);
 
   [delegate_ sadTabTabHelper:this
-      presentSadTabForRepeatedFailure:repeated_failure];
+      presentSadTabForRepeatedFailure:repeated_failure
+                             webState:web_state_];
 
   last_failed_url_ = url_causing_failure;
   last_failed_timer_ = base::MakeUnique<base::ElapsedTimer>();
