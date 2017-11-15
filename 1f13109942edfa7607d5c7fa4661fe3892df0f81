@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1e3d21a_d1348a46",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-15T23:37:16Z",
+      "side": 1,
+      "message": "Is this still needed? At this point the logic is so small than we might just want to put reset and num_input_buffers-- in the caller itself.",
+      "revId": "1f13109942edfa7607d5c7fa4661fe3892df0f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
