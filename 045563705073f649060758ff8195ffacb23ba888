@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "993246c2_a6265c66",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-15T22:26:42Z",
+      "side": 1,
+      "message": "It is really only for NotSupported scenarios.",
+      "revId": "045563705073f649060758ff8195ffacb23ba888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530bc819_967df797",
+        "filename": "media/blink/webencryptedmediaclient_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-15T22:26:42Z",
+      "side": 1,
+      "message": "internal or user choice?",
+      "range": {
+        "startLine": 158,
+        "startChar": 19,
+        "endLine": 158,
+        "endChar": 27
+      },
+      "revId": "045563705073f649060758ff8195ffacb23ba888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c4a7769_694de271",
+        "filename": "media/blink/webencryptedmediaclient_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-15T22:26:42Z",
+      "side": 1,
+      "message": "a NotSupportedError",
+      "range": {
+        "startLine": 68,
+        "startChar": 59,
+        "endLine": 68,
+        "endChar": 67
+      },
+      "revId": "045563705073f649060758ff8195ffacb23ba888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
