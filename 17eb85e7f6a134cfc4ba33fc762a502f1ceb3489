@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d06107b1_66378e2d",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-11-15T18:34:58Z",
+      "side": 1,
+      "message": "Please also add a comment in color_space.h to let people know where this function can be found.",
+      "revId": "17eb85e7f6a134cfc4ba33fc762a502f1ceb3489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363e0e9d_486e0e2c",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-11-15T18:34:58Z",
+      "side": 1,
+      "message": "Can we DCHECK() that we are in the browser progress here?",
+      "range": {
+        "startLine": 311,
+        "startChar": 39,
+        "endLine": 311,
+        "endChar": 45
+      },
+      "revId": "17eb85e7f6a134cfc4ba33fc762a502f1ceb3489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
