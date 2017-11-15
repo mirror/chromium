@@ -5,6 +5,7 @@
 #include "components/sync/user_events/user_event_service_impl.h"
 
 #include "base/message_loop/message_loop.h"
+#include "base/metrics/field_trial.h"
 #include "base/test/scoped_feature_list.h"
 #include "components/sync/base/model_type.h"
 #include "components/sync/driver/fake_sync_service.h"
@@ -15,11 +16,54 @@
 #include "components/sync/user_events/user_event_sync_bridge.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using base::FieldTrialList;
+using base::test::ScopedFeatureList;
 using sync_pb::UserEventSpecifics;
 
 namespace syncer {
 
 namespace {
+
+const char kTrial[] = "TrialName";
+const char kGroup[] = "GroupName";
+
+std::unique_ptr<UserEventSpecifics> Event() {
+  return std::make_unique<UserEventSpecifics>();
+}
+
+std::unique_ptr<UserEventSpecifics> AsTest(
+    std::unique_ptr<UserEventSpecifics> specifics) {
+  specifics->mutable_test_event();
+  return specifics;
+}
+
+std::unique_ptr<UserEventSpecifics> AsDetection(
+    std::unique_ptr<UserEventSpecifics> specifics) {
+  specifics->mutable_language_detection_event();
+  return specifics;
+}
+
+std::unique_ptr<UserEventSpecifics> AsTrial(
+    std::unique_ptr<UserEventSpecifics> specifics) {
+  specifics->mutable_field_trial_event();
+  return specifics;
+}
+
+std::unique_ptr<UserEventSpecifics> WithNav(
+    std::unique_ptr<UserEventSpecifics> specifics,
+    int64_t navigation_id = 1) {
+  specifics->set_navigation_id(navigation_id);
+  return specifics;
+}
+
+void CreateAndFinalizeTrial(const std::string& trial,
+                            const std::string& group) {
+  // Must actually query for the group to finalize the field trial.
+  EXPECT_EQ(group,
+            FieldTrialList::CreateFieldTrial(trial, group)->group_name());
+  // Notification is posted, which we need the service to pick up.
+  base::RunLoop().RunUntilIdle();
+}
 
 class TestSyncService : public FakeSyncService {
  public:
@@ -53,7 +97,8 @@ class TestGlobalIdMapper : public GlobalIdMapper {
 class UserEventServiceImplTest : public testing::Test {
  protected:
   UserEventServiceImplTest()
-      : sync_service_(true, false, {HISTORY_DELETE_DIRECTIVES}) {}
+      : field_trial_list_(nullptr),
+        sync_service_(true, false, {HISTORY_DELETE_DIRECTIVES}) {}
 
   std::unique_ptr<UserEventSyncBridge> MakeBridge() {
     return std::make_unique<UserEventSyncBridge>(
@@ -66,10 +111,11 @@ class UserEventServiceImplTest : public testing::Test {
   const RecordingModelTypeChangeProcessor& processor() { return *processor_; }
 
  private:
+  base::MessageLoop message_loop_;
+  FieldTrialList field_trial_list_;
   TestSyncService sync_service_;
   RecordingModelTypeChangeProcessor* processor_;
   TestGlobalIdMapper mapper_;
-  base::MessageLoop message_loop_;
 };
 
 TEST_F(UserEventServiceImplTest, MightRecordEventsFeatureEnabled) {
@@ -83,56 +129,132 @@ TEST_F(UserEventServiceImplTest, MightRecordEventsFeatureEnabled) {
 
 TEST_F(UserEventServiceImplTest, MightRecordEventsFeatureDisabled) {
   // Will not record because the default on feature is overridden.
-  base::test::ScopedFeatureList scoped_feature_list;
+  ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(switches::kSyncUserEvents);
   EXPECT_FALSE(UserEventServiceImpl::MightRecordEvents(false, sync_service()));
 }
 
-TEST_F(UserEventServiceImplTest, ShouldNotRecordNoHistory) {
-  TestSyncService no_history_sync_service(true, false, ModelTypeSet());
-  UserEventServiceImpl service(&no_history_sync_service, MakeBridge());
-  service.RecordUserEvent(std::make_unique<UserEventSpecifics>());
-  EXPECT_EQ(0u, processor().put_multimap().size());
+TEST_F(UserEventServiceImplTest, ShouldRecord) {
+  UserEventServiceImpl service(sync_service(), MakeBridge());
+  service.RecordUserEvent(AsTest(Event()));
+  EXPECT_EQ(1u, processor().put_multimap().size());
 }
 
-TEST_F(UserEventServiceImplTest, ShouldNotRecordPassphrase) {
+TEST_F(UserEventServiceImplTest, ShouldRecordNoHistory) {
+  TestSyncService no_history_sync_service(true, false, ModelTypeSet());
+  UserEventServiceImpl service(&no_history_sync_service, MakeBridge());
+
+  // Only record events without navigation ids when history sync is off.
+  service.RecordUserEvent(WithNav(AsTest(Event())));
+  EXPECT_EQ(0u, processor().put_multimap().size());
+  service.RecordUserEvent(AsTest(Event()));
+  EXPECT_EQ(1u, processor().put_multimap().size());
+}
+
+TEST_F(UserEventServiceImplTest, ShouldRecordPassphrase) {
   TestSyncService passphrase_sync_service(true, true,
                                           {HISTORY_DELETE_DIRECTIVES});
   UserEventServiceImpl service(&passphrase_sync_service, MakeBridge());
-  service.RecordUserEvent(std::make_unique<UserEventSpecifics>());
+
+  // Only record events without navigation ids when a passphrase is used.
+  service.RecordUserEvent(WithNav(AsTest(Event())));
   EXPECT_EQ(0u, processor().put_multimap().size());
+  service.RecordUserEvent(AsTest(Event()));
+  EXPECT_EQ(1u, processor().put_multimap().size());
 }
 
-TEST_F(UserEventServiceImplTest, ShouldNotRecordEngineOff) {
+TEST_F(UserEventServiceImplTest, ShouldRecordEngineOff) {
   TestSyncService engine_not_initialized_sync_service(
       false, false, {HISTORY_DELETE_DIRECTIVES});
   UserEventServiceImpl service(&engine_not_initialized_sync_service,
                                MakeBridge());
-  service.RecordUserEvent(std::make_unique<UserEventSpecifics>());
+
+  // Only record events without navigation ids when the engine is off.
+  service.RecordUserEvent(WithNav(AsTest(Event())));
+  EXPECT_EQ(0u, processor().put_multimap().size());
+  service.RecordUserEvent(AsTest(Event()));
+  EXPECT_EQ(1u, processor().put_multimap().size());
+}
+
+TEST_F(UserEventServiceImplTest, ShouldRecordEmpty) {
+  UserEventServiceImpl service(sync_service(), MakeBridge());
+
+  // All untyped events should always be ignored.
+  service.RecordUserEvent(Event());
+  EXPECT_EQ(0u, processor().put_multimap().size());
+  service.RecordUserEvent(WithNav(Event()));
   EXPECT_EQ(0u, processor().put_multimap().size());
 }
 
-TEST_F(UserEventServiceImplTest, ShouldRecord) {
+TEST_F(UserEventServiceImplTest, ShouldRecordHasNavigationId) {
   UserEventServiceImpl service(sync_service(), MakeBridge());
-  service.RecordUserEvent(std::make_unique<UserEventSpecifics>());
+
+  // Verify logic for types that might or might not have a navigation id.
+  service.RecordUserEvent(AsTest(Event()));
   EXPECT_EQ(1u, processor().put_multimap().size());
+  service.RecordUserEvent(WithNav(AsTest(Event())));
+  EXPECT_EQ(2u, processor().put_multimap().size());
+
+  // Verify logic for types that must have a navigation id.
+  service.RecordUserEvent(AsDetection(Event()));
+  EXPECT_EQ(2u, processor().put_multimap().size());
+  service.RecordUserEvent(WithNav(AsDetection(Event())));
+  EXPECT_EQ(3u, processor().put_multimap().size());
+
+  // Verify logic for types that cannot have a navigation id.
+  service.RecordUserEvent(AsTrial(Event()));
+  EXPECT_EQ(4u, processor().put_multimap().size());
+  service.RecordUserEvent(WithNav(AsTrial(Event())));
+  EXPECT_EQ(4u, processor().put_multimap().size());
 }
 
 TEST_F(UserEventServiceImplTest, SessionIdIsDifferent) {
   UserEventServiceImpl service1(sync_service(), MakeBridge());
-  service1.RecordUserEvent(std::make_unique<UserEventSpecifics>());
+  service1.RecordUserEvent(AsTest(Event()));
   ASSERT_EQ(1u, processor().put_multimap().size());
   auto put1 = processor().put_multimap().begin();
   int64_t session_id1 = put1->second->specifics.user_event().session_id();
 
   UserEventServiceImpl service2(sync_service(), MakeBridge());
-  service2.RecordUserEvent(std::make_unique<UserEventSpecifics>());
+  service2.RecordUserEvent(AsTest(Event()));
   // The object processor() points to has changed to be |service2|'s processor.
   ASSERT_EQ(1u, processor().put_multimap().size());
   auto put2 = processor().put_multimap().begin();
   int64_t session_id2 = put2->second->specifics.user_event().session_id();
 
   EXPECT_NE(session_id1, session_id2);
+}
+
+TEST_F(UserEventServiceImplTest, FieldTrialOnRecordUserEvent) {
+  CreateAndFinalizeTrial(kTrial, kGroup);
+  UserEventServiceImpl service(sync_service(), MakeBridge());
+  service.RegisterDependentFieldTrial(UserEventSpecifics::kTestEvent, kTrial);
+  EXPECT_EQ(0u, processor().put_multimap().size());
+
+  service.RecordUserEvent(AsTest(Event()));
+  EXPECT_EQ(2u, processor().put_multimap().size());
+}
+
+TEST_F(UserEventServiceImplTest, FieldTrialOnRegisterDependent) {
+  CreateAndFinalizeTrial(kTrial, kGroup);
+  UserEventServiceImpl service(sync_service(), MakeBridge());
+  service.RecordUserEvent(AsTest(Event()));
+  EXPECT_EQ(1u, processor().put_multimap().size());
+
+  service.RegisterDependentFieldTrial(UserEventSpecifics::kTestEvent, kTrial);
+  EXPECT_EQ(2u, processor().put_multimap().size());
+}
+
+TEST_F(UserEventServiceImplTest, FieldTrialCircularDependency) {
+  CreateAndFinalizeTrial(kTrial, kGroup);
+  UserEventServiceImpl service(sync_service(), MakeBridge());
+  // Make sure that depending on the FieldTrial event does not do anything
+  // unexpected.
+  service.RegisterDependentFieldTrial(UserEventSpecifics::kFieldTrialEvent,
+                                      kTrial);
+  service.RecordUserEvent(AsTrial(Event()));
+  // Two events should result, the original forced one, and then the dependant.
+  EXPECT_EQ(2u, processor().put_multimap().size());
 }
 
 }  // namespace
