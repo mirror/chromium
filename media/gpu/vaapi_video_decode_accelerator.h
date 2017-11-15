@@ -109,11 +109,6 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   // returned. Will also release the mapping.
   void ReturnCurrInputBuffer_Locked();
 
-  // Wait for more surfaces to become available. Return true once they do or
-  // false if an early exit has been requested (due to an initiated
-  // reset/flush/destroy).
-  bool WaitForSurfaces_Locked();
-
   // Continue decoding given input buffers and sleep waiting for input/output
   // as needed. Will exit if a new set of surfaces or reset/flush/destroy
   // is requested.
@@ -153,13 +148,13 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   // Puts contents of |va_surface| into given |picture|, releases the surface
   // and passes the resulting picture to client to output the given
   // |visible_rect| part of it.
-  void OutputPicture(const scoped_refptr<VASurface>& va_surface,
-                     int32_t input_id,
-                     gfx::Rect visible_rect,
-                     VaapiPicture* picture);
+  void OutputPictureTask(const scoped_refptr<VASurface>& va_surface,
+                         int32_t input_id,
+                         gfx::Rect visible_rect,
+                         VaapiPicture* picture);
 
-  // Try to OutputPicture() if we have both a ready surface and picture.
-  void TryOutputSurface();
+  // Try to OutputPictureTask() if we have both a ready surface and picture.
+  void TryOutputSurfaceTask();
 
   // Called when a VASurface is no longer in use by the decoder or is not being
   // synced/waiting to be synced to a picture. Returns it to available surfaces
@@ -242,9 +237,6 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   // VA Surfaces no longer in use that can be passed back to the decoder for
   // reuse, once it requests them.
   std::list<VASurfaceID> available_va_surfaces_;
-  // Signalled when output surfaces are queued onto the available_va_surfaces_
-  // queue.
-  base::ConditionVariable surfaces_available_;
 
   // Pending output requests from the decoder. When it indicates that we should
   // output a surface and we have an available Picture (i.e. texture) ready

@@ -325,7 +325,6 @@ VaapiVideoDecodeAccelerator::VaapiVideoDecodeAccelerator(
     : state_(kUninitialized),
       num_stream_bufs_at_decoder_(0),
       input_ready_(&lock_),
-      surfaces_available_(&lock_),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
       decoder_thread_("VaapiDecoderThread"),
       num_frames_at_client_(0),
@@ -423,12 +422,12 @@ bool VaapiVideoDecodeAccelerator::Initialize(const Config& config,
   return true;
 }
 
-void VaapiVideoDecodeAccelerator::OutputPicture(
+void VaapiVideoDecodeAccelerator::OutputPictureTask(
     const scoped_refptr<VASurface>& va_surface,
     int32_t input_id,
     gfx::Rect visible_rect,
     VaapiPicture* picture) {
-  DCHECK(task_runner_->BelongsToCurrentThread());
+  DCHECK(decoder_thread_task_runner_->BelongsToCurrentThread());
 
   int32_t output_id = picture->picture_buffer_id();
 
@@ -447,19 +446,24 @@ void VaapiVideoDecodeAccelerator::OutputPicture(
   VLOGF(4) << "Notifying output picture id " << output_id << " for input "
            << input_id
            << " is ready. visible rect: " << visible_rect.ToString();
-  if (client_) {
-    // TODO(hubbe): Use the correct color space.  http://crbug.com/647725
-    client_->PictureReady(Picture(output_id, input_id, visible_rect,
-                                  gfx::ColorSpace(), picture->AllowOverlay()));
-  }
+
+  // TODO(hubbe): Use the correct color space.  http://crbug.com/647725
+  task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&Client::PictureReady, client_,
+                 Picture(output_id, input_id, visible_rect, gfx::ColorSpace(),
+                         picture->AllowOverlay())));
 }
 
-void VaapiVideoDecodeAccelerator::TryOutputSurface() {
-  DCHECK(task_runner_->BelongsToCurrentThread());
+void VaapiVideoDecodeAccelerator::TryOutputSurfaceTask() {
+  DCHECK(decoder_thread_task_runner_->BelongsToCurrentThread());
 
   // Handle Destroy() arriving while pictures are queued for output.
-  if (!client_)
-    return;
+  {
+    base::AutoLock auto_lock(lock_);
+    if (state_ == kUninitialized || state_ == kDestroying)
+      return;
+  }
 
   if (pending_output_cbs_.empty() || output_buffers_.empty())
     return;
@@ -473,8 +477,11 @@ void VaapiVideoDecodeAccelerator::TryOutputSurface() {
 
   output_cb.Run(picture);
 
-  if (finish_flush_pending_ && pending_output_cbs_.empty())
-    FinishFlush();
+  if (finish_flush_pending_ && pending_output_cbs_.empty()) {
+    task_runner_->PostTask(FROM_HERE,
+                           base::Bind(&VaapiVideoDecodeAccelerator::FinishFlush,
+                                      base::Unretained(this)));
+  }
 }
 
 void VaapiVideoDecodeAccelerator::QueueInputBuffer(
@@ -590,20 +597,6 @@ void VaapiVideoDecodeAccelerator::ReturnCurrInputBuffer_Locked() {
                  num_stream_bufs_at_decoder_);
 }
 
-// TODO(posciak): refactor the whole class to remove sleeping in wait for
-// surfaces, and reschedule DecodeTask instead.
-bool VaapiVideoDecodeAccelerator::WaitForSurfaces_Locked() {
-  DCHECK(decoder_thread_task_runner_->BelongsToCurrentThread());
-  lock_.AssertAcquired();
-
-  while (available_va_surfaces_.empty() &&
-         (state_ == kDecoding || state_ == kIdle)) {
-    surfaces_available_.Wait();
-  }
-
-  return state_ == kDecoding || state_ == kIdle;
-}
-
 void VaapiVideoDecodeAccelerator::DecodeTask() {
   DCHECK(decoder_thread_task_runner_->BelongsToCurrentThread());
   base::AutoLock auto_lock(lock_);
@@ -652,12 +645,9 @@ void VaapiVideoDecodeAccelerator::DecodeTask() {
         break;
 
       case AcceleratedVideoDecoder::kRanOutOfSurfaces:
-        // No more output buffers in the decoder, try getting more or go to
-        // sleep waiting for them.
-        if (!WaitForSurfaces_Locked())
-          return;
-
-        break;
+        // No more |available_va_surfaces_| for |decoder_| output. Return and
+        // let some of them be returned via |va_surface_release_cb_|.
+        return;
 
       case AcceleratedVideoDecoder::kNeedContextUpdate:
         // This should not happen as we return false from
@@ -768,11 +758,16 @@ void VaapiVideoDecodeAccelerator::Decode(
 
 void VaapiVideoDecodeAccelerator::RecycleVASurfaceID(
     VASurfaceID va_surface_id) {
+  DVLOGF(1) << va_surface_id;
   DCHECK(task_runner_->BelongsToCurrentThread());
   base::AutoLock auto_lock(lock_);
 
   available_va_surfaces_.push_back(va_surface_id);
-  surfaces_available_.Signal();
+
+  input_ready_.Signal();
+  decoder_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&VaapiVideoDecodeAccelerator::DecodeTask,
+                            base::Unretained(this)));
 }
 
 void VaapiVideoDecodeAccelerator::AssignPictureBuffers(
@@ -823,7 +818,6 @@ void VaapiVideoDecodeAccelerator::AssignPictureBuffers(
     }
 
     available_va_surfaces_.push_back(va_surface_ids[i]);
-    surfaces_available_.Signal();
   }
 
   // Resume DecodeTask if it is still in decoding state.
@@ -904,7 +898,10 @@ void VaapiVideoDecodeAccelerator::ReusePictureBuffer(
   TRACE_COUNTER1("Video Decoder", "Textures at client", num_frames_at_client_);
 
   output_buffers_.push(picture_buffer_id);
-  TryOutputSurface();
+
+  decoder_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&VaapiVideoDecodeAccelerator::TryOutputSurfaceTask,
+                            base::Unretained(this)));
 }
 
 void VaapiVideoDecodeAccelerator::FlushTask() {
@@ -952,6 +949,9 @@ void VaapiVideoDecodeAccelerator::FinishFlush() {
   // Still waiting for textures from client to finish outputting all pending
   // frames. Try again later.
   if (!pending_output_cbs_.empty()) {
+
+    // TODO(mcasas): DecodeTask() is going to be stuck waiting for input
+
     finish_flush_pending_ = true;
     return;
   }
@@ -1018,7 +1018,6 @@ void VaapiVideoDecodeAccelerator::Reset() {
                             base::Unretained(this)));
 
   input_ready_.Signal();
-  surfaces_available_.Signal();
 }
 
 void VaapiVideoDecodeAccelerator::FinishReset() {
@@ -1081,7 +1080,6 @@ void VaapiVideoDecodeAccelerator::Cleanup() {
   // as we've just moved to the kDestroying state, and wait for all tasks
   // to finish.
   input_ready_.Signal();
-  surfaces_available_.Signal();
   {
     base::AutoUnlock auto_unlock(lock_);
     decoder_thread_.Stop();
@@ -1115,13 +1113,7 @@ bool VaapiVideoDecodeAccelerator::DecodeSurface(
 
 void VaapiVideoDecodeAccelerator::SurfaceReady(
     const scoped_refptr<VaapiDecodeSurface>& dec_surface) {
-  if (!task_runner_->BelongsToCurrentThread()) {
-    task_runner_->PostTask(
-        FROM_HERE, base::Bind(&VaapiVideoDecodeAccelerator::SurfaceReady,
-                              weak_this_, dec_surface));
-    return;
-  }
-
+  DCHECK(decoder_thread_task_runner_->BelongsToCurrentThread());
   DCHECK(!awaiting_va_surfaces_recycle_);
 
   {
@@ -1132,11 +1124,11 @@ void VaapiVideoDecodeAccelerator::SurfaceReady(
   }
 
   pending_output_cbs_.push(
-      base::Bind(&VaapiVideoDecodeAccelerator::OutputPicture, weak_this_,
-                 dec_surface->va_surface(), dec_surface->bitstream_id(),
-                 dec_surface->visible_rect()));
+      base::Bind(&VaapiVideoDecodeAccelerator::OutputPictureTask,
+                 base::Unretained(this), dec_surface->va_surface(),
+                 dec_surface->bitstream_id(), dec_surface->visible_rect()));
 
-  TryOutputSurface();
+  TryOutputSurfaceTask();
 }
 
 scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>
@@ -1153,10 +1145,7 @@ VaapiVideoDecodeAccelerator::CreateSurface() {
       vaapi_wrapper_->va_surface_format(), va_surface_release_cb_));
   available_va_surfaces_.pop_front();
 
-  scoped_refptr<VaapiDecodeSurface> dec_surface =
-      new VaapiDecodeSurface(curr_input_buffer_->id(), va_surface);
-
-  return dec_surface;
+  return new VaapiDecodeSurface(curr_input_buffer_->id(), va_surface);
 }
 
 VaapiVideoDecodeAccelerator::VaapiH264Accelerator::VaapiH264Accelerator(

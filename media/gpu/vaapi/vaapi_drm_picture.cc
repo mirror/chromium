@@ -141,12 +141,11 @@ bool VaapiDrmPicture::ImportGpuMemoryBufferHandle(
 
 bool VaapiDrmPicture::DownloadFromSurface(
     const scoped_refptr<VASurface>& va_surface) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  // Can be called from any thread because |vaapi_wrapper_| is thread safe.
   return vaapi_wrapper_->BlitSurface(va_surface, va_surface_);
 }
 
 bool VaapiDrmPicture::AllowOverlay() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   return true;
 }
 
