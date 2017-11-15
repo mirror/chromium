@@ -33,6 +33,24 @@
       "revId": "580ad6e2cfbca7a3a77154379b4034ef2fd87cec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51757a29_140fe206",
+        "filename": "media/audio/win/audio_low_latency_output_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-15T10:50:55Z",
+      "side": 1,
+      "message": "It is much simpler indeed! Thanks for the proposal!",
+      "parentUuid": "3c12247c_2b77928a",
+      "revId": "580ad6e2cfbca7a3a77154379b4034ef2fd87cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
