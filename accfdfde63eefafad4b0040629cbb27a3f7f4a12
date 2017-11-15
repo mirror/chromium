@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26f5ba66_f5c2e1e1",
+        "filename": "chrome/browser/clipboard/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T06:22:25Z",
+      "side": 1,
+      "message": "I think you can leave benwells and me out of general OWNERS since we probably won\u0027t know a lot about the implementation. We\u0027ll get pulled in via the below for permissions",
+      "revId": "accfdfde63eefafad4b0040629cbb27a3f7f4a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "773c14b1_fd37c5e7",
+        "filename": "chrome/browser/clipboard/clipboard_read_permission_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T06:22:25Z",
+      "side": 1,
+      "message": "nit: I would have expected git cl format to do this, but I think we should add a newline here",
+      "revId": "accfdfde63eefafad4b0040629cbb27a3f7f4a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de552e98_e1ec8443",
+        "filename": "chrome/browser/clipboard/clipboard_write_permission_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T06:22:25Z",
+      "side": 1,
+      "message": "nit: same here",
+      "revId": "accfdfde63eefafad4b0040629cbb27a3f7f4a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49026e52_63cfeba5",
+        "filename": "chrome/browser/clipboard/clipboard_write_permission_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T06:22:25Z",
+      "side": 1,
+      "message": "We should override GetPermissionStatusInternal to always return ALLOW",
+      "revId": "accfdfde63eefafad4b0040629cbb27a3f7f4a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fdfd0a9_fa057d63",
+        "filename": "chrome/browser/permissions/permission_request.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T06:22:25Z",
+      "side": 1,
+      "message": "This is only needed for permission prompts, so WRITE isn\u0027t needed here",
+      "revId": "accfdfde63eefafad4b0040629cbb27a3f7f4a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c3ff33_791a2144",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-15T06:22:25Z",
+      "side": 1,
+      "message": "This won\u0027t actually store anything. We should make a note of that because in the long run, we should get rid of this. Take a look at CONTENT_SETTINGS_TYPE_MIDI above. We may want to group them together to make that clearer (order doesn\u0027t matter in this enum)",
+      "revId": "accfdfde63eefafad4b0040629cbb27a3f7f4a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
