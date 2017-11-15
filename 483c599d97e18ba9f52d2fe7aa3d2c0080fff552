@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "7802946d_206f3fb9",
+        "filename": "services/network/public/interfaces/cors.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-15T07:36:29Z",
+      "side": 1,
+      "message": "Policy -\u003e policy as it\u0027s not referring to an identifier.\n\nI suggest \"if CORS-preflight fetch should be performed\"\n\nSame about content/public/common/resource_request.h",
+      "parentUuid": "091af5c5_2761e7e8",
+      "revId": "483c599d97e18ba9f52d2fe7aa3d2c0080fff552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c593fe9a_b3a77609",
+        "filename": "third_party/WebKit/public/platform/WebURLRequest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-15T07:36:29Z",
+      "side": 1,
+      "message": "how about GetCORSPreflightPolicy?",
+      "revId": "483c599d97e18ba9f52d2fe7aa3d2c0080fff552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e98fc0ad_dda4f999",
         "filename": "third_party/WebKit/public/web/WebAssociatedURLLoaderOptions.h",
         "patchSetId": 2
