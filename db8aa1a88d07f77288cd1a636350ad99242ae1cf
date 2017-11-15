@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "dfd3009e_0d7150e4",
+        "filename": "third_party/WebKit/Source/bindings/templates/attributes.cpp.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-15T11:06:48Z",
+      "side": 1,
+      "message": "What is this change (prototype_object \u003d\u003e v8::Local\u003cv8::Object\u003e()) for?",
+      "revId": "db8aa1a88d07f77288cd1a636350ad99242ae1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a905969c_9cebafb7",
         "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
         "patchSetId": 12
