@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed61e3c7_14392a28",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all.tentative.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T06:33:23Z",
+      "side": 1,
+      "message": "Same",
+      "parentUuid": "94179169_f5378df6",
+      "revId": "af13bc540265a454d436724e939a4dc44883b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ac415a6_f2242ec9",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_path_and_domain.tentative.html",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-15T00:36:31Z",
       "side": 1,
       "message": "new test? if so, it shouldn\u0027t be in this CL",
+      "revId": "af13bc540265a454d436724e939a4dc44883b436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef023b59_19a7cecf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookie-store/legacy_get_all_path_and_domain.tentative.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T06:33:23Z",
+      "side": 1,
+      "message": "Yes, and I will move it.",
+      "parentUuid": "1ac415a6_f2242ec9",
       "revId": "af13bc540265a454d436724e939a4dc44883b436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
