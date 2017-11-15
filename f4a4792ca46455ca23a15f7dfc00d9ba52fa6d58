@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "8f1469e1_01076b78",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-15T15:31:29Z",
+      "side": 1,
+      "message": "\"While printing, the PrintJobManager instance keeps a reference to the job to be sure it is kept alive.\"[1] so it was designed tohandle this case. in any case, the more we can rely on keeping references to \"this\" on the UI thread, the better.\n\n1: https://cs.chromium.org/chromium/src/chrome/browser/printing/print_job.h?q\u003dPrintJob\u0026sq\u003dpackage:chromium\u0026l\u003d31",
+      "parentUuid": "d784aaed_a4e5abbb",
+      "range": {
+        "startLine": 177,
+        "startChar": 8,
+        "endLine": 177,
+        "endChar": 15
+      },
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d870d56d_20db03ed",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 15
@@ -328,6 +352,30 @@
       "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b767cd9d_1e8c9d41",
+        "filename": "chrome/browser/printing/print_job_worker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-15T15:31:29Z",
+      "side": 1,
+      "message": "nice, thanks!",
+      "parentUuid": "19b26de6_4ddd420e",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
