@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2022b39_c1a50ecf",
+        "filename": "tools/binary_size/libsupersize/linker_map_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-15T15:02:03Z",
+      "side": 1,
+      "message": "nit: Let\u0027s do: raise Exception(\u0027Invalid map file\u0027) here instead.",
+      "revId": "5a8586a9bfd76c7bd6e90f1bb2517397fd6f9777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260aafe4_2077b725",
+        "filename": "tools/binary_size/libsupersize/path_util.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-15T15:02:03Z",
+      "side": 1,
+      "message": "nit: It\u0027s theoretically possible for the output directory to not be two levels deep. I think there\u0027s already some supersize code that assumes it (for path normalization), but let\u0027s not add more if it\u0027s easy to avoid. Do:\n\nos.path.join(SRC_ROOT, \u0027third_party\u0027, ...)",
+      "revId": "5a8586a9bfd76c7bd6e90f1bb2517397fd6f9777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
