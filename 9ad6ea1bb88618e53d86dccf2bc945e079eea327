@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66a510ba_4e54fb06",
+        "filename": "tools/code_coverage/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-15T22:01:19Z",
+      "side": 1,
+      "message": "Thanks for adding that! Let\u0027s also add Abhishek here (inferno@chromium.org).",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 8
+      },
+      "revId": "9ad6ea1bb88618e53d86dccf2bc945e079eea327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1226581_4998108d",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-15T22:01:19Z",
+      "side": 1,
+      "message": "Let\u0027s have a function that helps to understand whether we should pass this argument or not, as discussed in another comment",
+      "range": {
+        "startLine": 227,
+        "startChar": 18,
+        "endLine": 227,
+        "endChar": 58
+      },
+      "revId": "9ad6ea1bb88618e53d86dccf2bc945e079eea327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
