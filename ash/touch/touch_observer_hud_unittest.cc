@@ -8,6 +8,7 @@
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/touch/touch_hud_controller.h"
 #include "ash/touch/touch_hud_debug.h"
 #include "ash/touch/touch_hud_projection.h"
 #include "ash/touch_hud/touch_hud_renderer.h"
@@ -265,11 +266,11 @@ class TouchHudProjectionTest : public TouchHudTestBase {
   ~TouchHudProjectionTest() override {}
 
   void EnableTouchHudProjection() {
-    Shell::Get()->SetTouchHudProjectionEnabled(true);
+    Shell::Get()->touch_hud_controller()->SetTouchHudProjectionEnabled(true);
   }
 
   void DisableTouchHudProjection() {
-    Shell::Get()->SetTouchHudProjectionEnabled(false);
+    Shell::Get()->touch_hud_controller()->SetTouchHudProjectionEnabled(false);
   }
 
   TouchHudProjection* GetInternalTouchHudProjection() {

@@ -97,6 +97,7 @@
 #include "ash/system/tray_caps_lock.h"
 #include "ash/touch/ash_touch_transform_controller.h"
 #include "ash/touch/touch_devices_controller.h"
+#include "ash/touch/touch_hud_controller.h"
 #include "ash/tray_action/tray_action.h"
 #include "ash/utility/screenshot_controller.h"
 #include "ash/virtual_keyboard_controller.h"
@@ -356,6 +357,7 @@ void Shell::RegisterProfilePrefs(PrefRegistrySimple* registry, bool for_test) {
   PaletteWelcomeBubble::RegisterProfilePrefs(registry);
   ShelfController::RegisterProfilePrefs(registry);
   TouchDevicesController::RegisterProfilePrefs(registry);
+  TouchHudController::RegisterProfilePrefs(registry);
   TrayCapsLock::RegisterProfilePrefs(registry, for_test);
 }
 
@@ -457,15 +459,6 @@ bool Shell::HasPrimaryStatusArea() {
 
 SystemTray* Shell::GetPrimarySystemTray() {
   return GetPrimaryRootWindowController()->GetSystemTray();
-}
-
-void Shell::SetTouchHudProjectionEnabled(bool enabled) {
-  if (is_touch_hud_projection_enabled_ == enabled)
-    return;
-
-  is_touch_hud_projection_enabled_ = enabled;
-  for (auto& observer : shell_observers_)
-    observer.OnTouchHudProjectionToggled(enabled);
 }
 
 FirstRunHelper* Shell::CreateFirstRunHelper() {
@@ -618,7 +611,6 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       display_configurator_(new display::DisplayConfigurator()),
       native_cursor_manager_(nullptr),
       simulate_modal_window_open_for_testing_(false),
-      is_touch_hud_projection_enabled_(false),
       weak_factory_(this) {
   // TODO(sky): better refactor cash/mash dependencies. Perhaps put all cash
   // state on ShellPortClassic. http://crbug.com/671246.
@@ -833,11 +825,12 @@ Shell::~Shell() {
 void Shell::Init(const ShellInitParams& init_params) {
   const Config config = shell_port_->GetAshConfig();
 
+  // These controllers call Shell::Get() in their constructors, so they cannot
+  // be in the member initialization list.
   if (switches::IsNightLightEnabled())
     night_light_controller_ = std::make_unique<NightLightController>();
-
   touch_devices_controller_ = std::make_unique<TouchDevicesController>();
-
+  touch_hud_controller_ = std::make_unique<TouchHudController>();
   bluetooth_power_controller_ = std::make_unique<BluetoothPowerController>();
 
   wallpaper_delegate_ = shell_delegate_->CreateWallpaperDelegate();
