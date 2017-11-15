@@ -304,6 +304,30 @@
       "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19b26de6_4ddd420e",
+        "filename": "chrome/browser/printing/print_job_worker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-15T14:05:45Z",
+      "side": 1,
+      "message": "Not in next patchset, in different CL.\nI updated this using explicit overload resolution.",
+      "parentUuid": "51db1e6d_a55f531c",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
