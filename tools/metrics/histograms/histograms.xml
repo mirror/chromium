@@ -76292,6 +76292,49 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="ServiceWorker.InstalledPWAScript.CachedMetadataSize"
+    units="bytes">
+  <owner>horo@chromium.org</owner>
+  <summary>
+    The length of cached metadata of scripts which are stored to the
+    CacheStorage by the installing service worker.
+  </summary>
+</histogram>
+
+<histogram name="ServiceWorker.InstalledPWAScript.CachedMetadataTotalSize"
+    units="bytes">
+  <owner>horo@chromium.org</owner>
+  <summary>
+    The total length of cached metadata of scripts which are stored to the
+    CacheStorage by the installing service worker.
+  </summary>
+</histogram>
+
+<histogram name="ServiceWorker.InstalledPWAScript.Count" units="count">
+  <owner>horo@chromium.org</owner>
+  <summary>
+    The counts of scripts which are stored to the CacheStorage by the installing
+    service worker.
+  </summary>
+</histogram>
+
+<histogram name="ServiceWorker.InstalledPWAScript.ScriptSize" units="bytes">
+  <owner>horo@chromium.org</owner>
+  <summary>
+    The length of scripts which are stored to the CacheStorage by the installing
+    service worker.
+  </summary>
+</histogram>
+
+<histogram name="ServiceWorker.InstalledPWAScript.ScriptTotalSize"
+    units="bytes">
+  <owner>horo@chromium.org</owner>
+  <summary>
+    The total length of scripts which are stored to the CacheStorage by the
+    installing service worker.
+  </summary>
+</histogram>
+
 <histogram name="ServiceWorker.InstallEvent.Time" units="ms">
   <owner>shimazu@chromium.org</owner>
   <summary>
@@ -105879,6 +105922,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
              within the page."/>
   <suffix name="MainFrameDidFinishLoad"
       label="Recorded when DidFinishLoad is called for the main frame."/>
+  <suffix name="ServiceWorkerControlledMainFrameDidFinishLoad"
+      label="Recorded when DidFinishLoad is called for the main frame which
+             is controlled by a service worker."/>
   <suffix name="AfterBackgrounded.5min"
       label="Recorded 5 minutes after backgrounded."/>
   <suffix name="AfterBackgrounded.10min"
@@ -105891,6 +105937,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="MainFrame.PeakDuringLoad"
       label="In the main frame, polled each time CreateURLLoader is called,
              and the maximum value is recorded when DidFinishLoad is called."/>
+  <suffix name="ServiceWorkerControlledMainFrame.PeakDuringLoad"
+      label="In the main frame which is controlled by a service worker,
+             polled each time CreateURLLoader is called, and the maximum
+             value is recorded when DidFinishLoad is called."/>
   <affected-histogram name="Memory.Experimental.Renderer.BlinkGC"/>
   <affected-histogram name="Memory.Experimental.Renderer.Discardable"/>
   <affected-histogram name="Memory.Experimental.Renderer.Malloc"/>
