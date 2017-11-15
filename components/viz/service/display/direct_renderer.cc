@@ -162,9 +162,9 @@ gfx::Rect DirectRenderer::MoveFromDrawToWindowSpace(
   return window_rect;
 }
 
-const TileDrawQuad* DirectRenderer::CanPassBeDrawnDirectly(
-    const RenderPass* pass) {
-  return nullptr;
+base::Optional<std::vector<const TileDrawQuad*>>
+DirectRenderer::CanPassBeDrawnDirectly(const RenderPass* pass) {
+  return base::nullopt;
 }
 
 void DirectRenderer::SetVisible(bool visible) {
@@ -184,10 +184,13 @@ void DirectRenderer::DecideRenderPassAllocationsForFrame(
   base::flat_map<RenderPassId, RenderPassRequirements> render_passes_in_frame;
   for (const auto& pass : render_passes_in_draw_order) {
     if (pass != root_render_pass) {
-      if (const TileDrawQuad* tile_quad = CanPassBeDrawnDirectly(pass.get())) {
+      if (base::Optional<std::vector<const TileDrawQuad*>> tile_quads =
+              CanPassBeDrawnDirectly(pass.get())) {
+        const auto& tile_quads_value = tile_quads.value();
         // If the render pass is drawn directly, it will not be drawn from as
         // a render pass so it's not added to the map.
-        render_pass_bypass_quads_[pass->id] = *tile_quad;
+        for (const auto* quad : tile_quads_value)
+          render_pass_bypass_quads_[pass->id].emplace_back(*quad);
         continue;
       }
     }
