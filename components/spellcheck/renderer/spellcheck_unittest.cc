@@ -54,11 +54,13 @@ class SpellCheckTest : public testing::Test {
   }
 
   void ReinitializeSpellCheck(const std::string& language) {
-    spell_check_.reset(new SpellCheck(nullptr));
+    spell_check_ = std::make_unique<SpellCheck>(nullptr, nullptr);
     InitializeSpellCheck(language);
   }
 
-  void UninitializeSpellCheck() { spell_check_.reset(new SpellCheck(nullptr)); }
+  void UninitializeSpellCheck() {
+    spell_check_ = std::make_unique<SpellCheck>(nullptr, nullptr);
+  }
 
   bool InitializeIfNeeded() {
     return spell_check()->InitializeIfNeeded();
