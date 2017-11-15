@@ -13,26 +13,29 @@
 #import "ios/chrome/browser/ui/side_swipe/side_swipe_toolbar_interacting.h"
 #import "ios/chrome/browser/ui/toolbar/omnibox_focuser.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_snapshot_providing.h"
+#import "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_state_provider.h"
 
 @protocol ActivityServicePositioner;
 @protocol QRScannerResultLoading;
 @class Tab;
 @protocol TabHistoryPositioner;
 @protocol TabHistoryUIUpdater;
+@protocol VoiceSearchControllerDelegate;
+@protocol WebToolbarDelegate;
+@protocol ToolsMenuConfigurationProvider;
+
+@class CommandDispatcher;
 @class TabModel;
 @class ToolbarController;
-@class ToolsMenuConfiguration;
-@class ToolsPopupController;
-@protocol VoiceSearchControllerDelegate;
 @class WebToolbarController;
-@protocol WebToolbarDelegate;
 
 @interface LegacyToolbarCoordinator
     : ChromeCoordinator<BubbleViewAnchorPointProvider,
                         IncognitoViewControllerDelegate,
                         OmniboxFocuser,
                         SideSwipeToolbarInteracting,
-                        ToolbarSnapshotProviding>
+                        ToolbarSnapshotProviding,
+                        ToolsMenuPresentationStateProvider>
 
 @property(nonatomic, weak) TabModel* tabModel;
 @property(nonatomic, strong) UIViewController* toolbarViewController;
@@ -41,6 +44,11 @@
 // of now this is only needed for the ToolbarOwner methods in BVC.
 @property(nonatomic, readonly, strong)
     WebToolbarController* webToolbarController;
+
+- (instancetype)initWithBaseViewController:(UIViewController*)viewController
+            toolsMenuConfigurationProvider:
+                (id<ToolsMenuConfigurationProvider>)configurationProvider
+                                dispatcher:(CommandDispatcher*)dispatcher;
 
 // Returns the different protocols and superclass now implemented by the
 // WebToolbarController to avoid using the toolbar directly.
@@ -72,12 +80,9 @@
 - (BOOL)isOmniboxFirstResponder;
 - (BOOL)showingOmniboxPopup;
 - (void)currentPageLoadStarted;
-- (void)showToolsMenuPopupWithConfiguration:
-    (ToolsMenuConfiguration*)configuration;
-- (ToolsPopupController*)toolsPopupController;
-- (void)dismissToolsMenuPopup;
 - (CGRect)visibleOmniboxFrame;
 - (void)triggerToolsMenuButtonAnimation;
+- (BOOL)isShowingToolsMenu;
 
 @end
 
