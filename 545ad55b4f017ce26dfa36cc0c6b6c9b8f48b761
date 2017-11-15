@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78d771f0_d7004d98",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T17:46:51Z",
+      "side": 1,
+      "message": "This looks like it doesn\u0027t get used.  I was going to say that a WebContents can\u0027t reliably be used here since the underlying activity could have been killed and destroyed this value, but it looks like we don\u0027t need it anyway.",
+      "range": {
+        "startLine": 117,
+        "startChar": 16,
+        "endLine": 117,
+        "endChar": 21
+      },
+      "revId": "545ad55b4f017ce26dfa36cc0c6b6c9b8f48b761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8d29f5_87d4e3f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T17:46:51Z",
+      "side": 1,
+      "message": "final?",
+      "revId": "545ad55b4f017ce26dfa36cc0c6b6c9b8f48b761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1731ad7_11df8175",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-15T17:46:51Z",
+      "side": 1,
+      "message": "Nit, is view retained in android recents?  If you have \"Don\u0027t keep activities\" turned on at the android level, navigate to a single website preference screen, hit android home.  Then hit Android recents, is this item still shown?  If you click on it, does it reopen this page for the website?\n\nIf it automatically goes to a root view, then you can likely ignore this comment.  If it does reopen the same view, then there is an ever so slight chance that someone would have had this page open prior to updating Chrome where the intent extras change.  Then it would fall into the else and I\u0027m not sure how that would be handled.  We might just want to call finish in that condition?",
+      "revId": "545ad55b4f017ce26dfa36cc0c6b6c9b8f48b761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
