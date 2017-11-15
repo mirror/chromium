@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "129b1b60_d11dd9c6",
+        "filename": "base/files/memory_mapped_file_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-15T00:20:21Z",
+      "side": 1,
+      "message": "I also assume that the checks go away in 64-bit builds. If not we can blame Justin (if we care). \n\nBut presumably if we passed in a signed type then IsValueInRangeForNumericType would be handle that, including doing its own check for values \u003c 0 (which are obviously out of range for SIZE_T). I\u0027m not sure that is an important change, and it feels separate anyway.",
+      "parentUuid": "17e47b4a_07d0b09a",
+      "revId": "e282aac78cfbc4a687495bead52b607062422b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7839778f_bfe282b4",
         "filename": "base/process/process_iterator_mac.cc",
         "patchSetId": 8
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c6356e3b_62c0589e",
+        "filename": "base/process/process_iterator_mac.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-15T00:20:21Z",
+      "side": 1,
+      "message": "It\u0027s used on the next line to size the vector to exactly the right size. The variable then falls out of scope.\n\nI decided that reuse was appropriate here because the semantics/usage are identical - they really *are* the same variable.",
+      "parentUuid": "7839778f_bfe282b4",
+      "revId": "e282aac78cfbc4a687495bead52b607062422b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3eae583_981fbd67",
         "filename": "base/threading/sequenced_worker_pool.cc",
         "patchSetId": 8
@@ -82,6 +118,24 @@
       "writtenOn": "2017-11-14T23:38:00Z",
       "side": 1,
       "message": "Similarly, I\u0027m wondering if this should just check the member field directly here.",
+      "revId": "e282aac78cfbc4a687495bead52b607062422b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "915eaebb_32ebceb8",
+        "filename": "base/threading/sequenced_worker_pool.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-15T00:20:21Z",
+      "side": 1,
+      "message": "We can\u0027t because we\u0027ve just moved from sequenced so it is in an indeterminate state.\n\nMy calculation was that the two shutdown_behavior locals were really the same variable and were just accidentally created as different objects, which is why I reused.",
+      "parentUuid": "b3eae583_981fbd67",
       "revId": "e282aac78cfbc4a687495bead52b607062422b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
