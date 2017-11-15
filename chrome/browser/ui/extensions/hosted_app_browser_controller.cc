@@ -64,6 +64,23 @@ bool HostedAppBrowserController::IsForHostedApp(const Browser* browser) {
 
 // static
 bool HostedAppBrowserController::IsForExperimentalHostedAppBrowser(
+    const content::WebContents* web_contents) {
+  const TabHelper* tab_helper =
+      extensions::TabHelper::FromWebContents(web_contents);
+  if (!tab_helper)
+    return false;
+
+  const Extension* extension = tab_helper->extension_app();
+  if (!extension || !extension->is_hosted_app()) {
+    return false;
+  }
+
+  return base::FeatureList::IsEnabled(features::kDesktopPWAWindowing) &&
+         tab_helper->is_app();
+}
+
+// static
+bool HostedAppBrowserController::IsForExperimentalHostedAppBrowser(
     const Browser* browser) {
   return base::FeatureList::IsEnabled(features::kDesktopPWAWindowing) &&
          IsForHostedApp(browser);

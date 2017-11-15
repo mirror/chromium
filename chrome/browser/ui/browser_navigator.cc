@@ -381,8 +381,13 @@ content::WebContents* CreateTargetContents(const chrome::NavigateParams& params,
   // immediately.
   BrowserNavigatorWebContentsAdoption::AttachTabHelpers(target_contents);
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-  extensions::TabHelper::FromWebContents(target_contents)->
-      SetExtensionAppById(params.extension_app_id);
+  std::string extension_app_id = params.extension_app_id;
+  if (extension_app_id.empty() && params.browser->is_app()) {
+    extension_app_id =
+        web_app::GetExtensionIdFromApplicationName(params.browser->app_name());
+  }
+  extensions::TabHelper::FromWebContents(target_contents)
+      ->SetExtensionAppById(extension_app_id);
 #endif
 
   return target_contents;

@@ -13,6 +13,10 @@
 
 class Browser;
 
+namespace content {
+class WebContents;
+}
+
 namespace gfx {
 class ImageSkia;
 }
@@ -24,6 +28,11 @@ class HostedAppBrowserController {
  public:
   // Indicates whether |browser| is a hosted app browser.
   static bool IsForHostedApp(const Browser* browser);
+
+  // Returns whether |web_contents| is in a Browser that uses the experimental
+  // hosted app experience.
+  static bool IsForExperimentalHostedAppBrowser(
+      const content::WebContents* web_contents);
 
   // Returns whether |browser| uses the experimental hosted app experience.
   static bool IsForExperimentalHostedAppBrowser(const Browser* browser);

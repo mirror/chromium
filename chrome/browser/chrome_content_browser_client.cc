@@ -350,6 +350,7 @@
 #include "chrome/browser/extensions/bookmark_app_navigation_throttle.h"
 #include "chrome/browser/extensions/chrome_content_browser_client_extensions_part.h"
 #include "chrome/browser/speech/extension_api/tts_engine_extension_api.h"
+#include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
 #include "chrome/services/media_gallery_util/public/interfaces/constants.mojom.h"
 #include "components/guest_view/browser/guest_view_base.h"
 #include "components/guest_view/browser/guest_view_manager.h"
@@ -2593,6 +2594,13 @@ void ChromeContentBrowserClient::OverrideWebkitPrefs(
     web_prefs->animation_policy = content::IMAGE_ANIMATION_POLICY_NO_ANIMATION;
   else
     web_prefs->animation_policy = content::IMAGE_ANIMATION_POLICY_ALLOWED;
+
+  content::WebContents* contents =
+      content::WebContents::FromRenderViewHost(rvh);
+  if (contents) {
+    web_prefs->strict_mixed_content_checking = extensions::
+        HostedAppBrowserController::IsForExperimentalHostedAppBrowser(contents);
+  }
 #endif
 
   // Make sure we will set the default_encoding with canonical encoding name.
