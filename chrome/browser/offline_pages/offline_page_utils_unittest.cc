@@ -67,6 +67,8 @@ void GetAllRequestsCallback(
   *out_requests = std::move(requests);
 }
 
+void SavePageLaterCallback(AddRequestResult ignored) {}
+
 }  // namespace
 
 class OfflinePageUtilsTest
@@ -214,7 +216,8 @@ void OfflinePageUtilsTest::CreateRequests() {
   params.url = kTestPage3Url;
   params.client_id =
       offline_pages::ClientId(kDownloadNamespace, kTestPage3ClientId);
-  request_coordinator->SavePageLater(params);
+  request_coordinator->SavePageLater(params,
+                                     base::Bind(&SavePageLaterCallback));
   RunUntilIdle();
 }
 

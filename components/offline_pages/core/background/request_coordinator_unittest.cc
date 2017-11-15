@@ -263,6 +263,8 @@ class RequestCoordinatorTest : public testing::Test {
 
   SavePageRequest AddRequest2();
 
+  void SavePageRequestCallback(AddRequestResult ignored) {}
+
   int64_t SavePageLater() {
     RequestCoordinator::SavePageLaterParams params;
     params.url = kUrl1;
@@ -280,7 +282,8 @@ class RequestCoordinatorTest : public testing::Test {
     params.user_requested = kUserRequested;
     params.availability = availability;
     params.request_origin = kRequestOrigin;
-    return coordinator()->SavePageLater(params);
+    return coordinator()->SavePageLater(params,
+                                        base::Bind(&SavePageRequestCallback));
   }
 
   Offliner::RequestStatus last_offlining_status() const {
