@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54f99ea1_55619bcb",
+        "filename": "chrome/browser/signin/chrome_signin_client_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-15T10:36:13Z",
+      "side": 1,
+      "message": "IMHO using a callback for testing if site isolation is enabled has 2 major problems:\n* it will not work if the callback is not set before the first call to GetAccountConsistencyMethod\n* we need to set the callback everywhere in tests.\n\nCould base::FeatureList::IsEnabled(features::kSignInProcessIsolation) be called directly from GetAccountConsistencyMethod? If not, then we need to set this callback really early when starting up the browser (not in the constructor of the factory).\n\nAlso, consider changing the callback with just a boolean (I think the finch experiment group should not change throughout the lifetime of the application).",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "c6c84164740a65f3d50aab57f1ce91b39e8a542e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
