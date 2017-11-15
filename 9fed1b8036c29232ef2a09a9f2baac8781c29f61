@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "341b279f_1180a16f",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-15T23:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "777b3680_ece0082b",
+      "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50e1148f_f1837e79",
         "filename": "base/test/test_suite.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ec29e3_76909346",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-15T23:42:19Z",
+      "side": 1,
+      "message": "I copied the block from base\\win\\process_startup_helper.cc (no comment, unfortunately) and it is *possible* that the disabling of optimizations is not needed here, but it is simpler to comment it than to try to prove that it isn\u0027t necessary.\n\nDone",
+      "parentUuid": "50e1148f_f1837e79",
+      "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "323fb131_d81dcc0f",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-15T23:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3864b453_2fec735f",
+      "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3a4c1c3_f83c0b37",
         "filename": "base/test/test_suite.cc",
         "patchSetId": 2
@@ -67,6 +121,41 @@
       "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4364dadb_e9f5156f",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-15T23:42:19Z",
+      "side": 1,
+      "message": "While double-checking this I realized that the CRT still prints its message so I don\u0027t need to print anything here.",
+      "parentUuid": "d3a4c1c3_f83c0b37",
+      "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c024e25_48a1591e",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-15T23:42:19Z",
+      "side": 1,
+      "message": "Changed to use stderr.",
+      "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "64e3755b_8e64b595",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-15T23:42:19Z",
+      "side": 1,
+      "message": "The CRT prints an abort message, which is why I printed nothing here, but it doesn\u0027t print an EOL character which causes readability issues, so now I print that.",
+      "parentUuid": "733bb900_a45bdaf8",
+      "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23f99c6e_811d395f",
         "filename": "base/test/test_suite.cc",
         "patchSetId": 2
@@ -101,6 +208,24 @@
       "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e02bae_38c70721",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-15T23:42:19Z",
+      "side": 1,
+      "message": "That\u0027s what I get for copying code from two different sources.\n\nDone",
+      "parentUuid": "23f99c6e_811d395f",
+      "revId": "9fed1b8036c29232ef2a09a9f2baac8781c29f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
