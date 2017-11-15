@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82d17b2f_236a3d5a",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-15T01:07:38Z",
+      "side": 1,
+      "message": "Done, but I\u0027ve also updated the method this inherits from.",
+      "parentUuid": "d98a681d_0902191a",
+      "range": {
+        "startLine": 823,
+        "startChar": 54,
+        "endLine": 823,
+        "endChar": 60
+      },
+      "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83dfe1a2_14713512",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b975499f_c7f175a8",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-15T01:07:38Z",
+      "side": 1,
+      "message": "Added a TODO(crbug.com/785077).",
+      "parentUuid": "83dfe1a2_14713512",
+      "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f6ffb1eb_08d54cd9",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-15T01:07:38Z",
+      "side": 1,
+      "message": "I strongly prefer using the enum, since that makes it more natural and concise to check for either kind of interstitial (both of which will happen in the code a bunch). Have done:\n\n- Return InterstitialNavType().\n- Rename to GetInterstitialNavType().\n- made const",
+      "parentUuid": "29c7f5ec_d8a02098",
+      "range": {
+        "startLine": 827,
+        "startChar": 2,
+        "endLine": 827,
+        "endChar": 6
+      },
+      "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6331dd89_3e2093a6",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 3
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "1449fb91_40154231",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-15T01:07:38Z",
+      "side": 1,
+      "message": "https://memegen.googleplex.com/5873063698890752 :-D",
+      "parentUuid": "6331dd89_3e2093a6",
+      "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3be860e6_4efed182",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 3
@@ -96,6 +180,24 @@
       "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35823adb_268305b5",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-15T01:07:38Z",
+      "side": 1,
+      "message": "I\u0027ve renamed them to SSLUITest* to match the rest of the file.",
+      "parentUuid": "3be860e6_4efed182",
+      "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "47ed22b5_0387d634",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-15T01:07:38Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "1b0f8c7c_24affb3d",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "567533c1_e4d30c3d",
         "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
         "patchSetId": 3
@@ -136,6 +262,24 @@
       "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9310a25b_98a9114c",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-15T01:07:38Z",
+      "side": 1,
+      "message": "I strongly considered GetCommittedBlockingPageForTesting(), but it won\u0027t be used much, and it\u0027s more consistent with the rest of the file. 🤷‍♀️",
+      "parentUuid": "567533c1_e4d30c3d",
+      "revId": "4f4ff30acb55ce4bfd94bb8b3aaddbe4d02c5ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
