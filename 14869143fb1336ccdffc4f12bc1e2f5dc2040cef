@@ -16,6 +16,24 @@
       "revId": "14869143fb1336ccdffc4f12bc1e2f5dc2040cef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca3399a_1e457a11",
+        "filename": "ui/gl/generate_bindings.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2855,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-11-15T19:26:16Z",
+      "side": 1,
+      "message": "I spoke with pcc@ and I think the right way to go ahead with this is to include base/compiler_specific.h and use a NO_SANITIZE(\"cfi-icall\") macro here.",
+      "parentUuid": "7493dc92_4bc150ca",
+      "revId": "14869143fb1336ccdffc4f12bc1e2f5dc2040cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
