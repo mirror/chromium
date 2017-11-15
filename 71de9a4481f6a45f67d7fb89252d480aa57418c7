@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71ca0a23_ebfede4b",
+        "filename": "ios/web/public/web_ui_ios_data_source.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T22:16:47Z",
+      "side": 1,
+      "message": "I copied this from URLDataSource which seems to be violating the style guide in that regard. Fixed here and hopefully the other will get cleaned up as we merge these together.",
+      "parentUuid": "2dbdcab2_8ecd0be9",
+      "range": {
+        "startLine": 58,
+        "startChar": 55,
+        "endLine": 58,
+        "endChar": 69
+      },
+      "revId": "71de9a4481f6a45f67d7fb89252d480aa57418c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbe744b1_eebacf14",
         "filename": "ios/web/webui/url_data_manager_ios_backend.mm",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "71de9a4481f6a45f67d7fb89252d480aa57418c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6470cfcc_3897ee16",
+        "filename": "ios/web/webui/url_data_manager_ios_backend.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-15T22:16:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbe744b1_eebacf14",
+      "range": {
+        "startLine": 140,
+        "startChar": 24,
+        "endLine": 140,
+        "endChar": 29
+      },
+      "revId": "71de9a4481f6a45f67d7fb89252d480aa57418c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
