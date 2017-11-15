@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "078bd95e_97694880",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-15T18:15:45Z",
+      "side": 1,
+      "message": "Since |requester| will be removed, I think we need to handle DeviceStopped separately. May be clients can register a callback with MediaStreamManager via MSDH which will be invoked instead of DeviceStopped here and elsewhere. WDYT?",
+      "revId": "27ff6560cc36f8e6279e8247bf47b4d0101a4dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7050b6c_2cc7e01c",
         "filename": "content/renderer/media/media_stream_label_map.cc",
         "patchSetId": 5
