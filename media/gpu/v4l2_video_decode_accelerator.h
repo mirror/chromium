@@ -582,6 +582,12 @@ class MEDIA_GPU_EXPORT V4L2VideoDecodeAccelerator
   // Input format V4L2 fourccs this class supports.
   static const uint32_t supported_input_fourccs_[];
 
+  // The WeakPtrFactory for weak pointers to |this| that are meant to be used
+  // in posting tasks from the |device_poll_thread_| on the
+  // |decoder_thread_.task_runner()|. These pointers are invalidated when
+  // the |device_poll_thread_| restarts, so that any call loops are broken.
+  // See http://crbug.com/781222
+  base::WeakPtrFactory<V4L2VideoDecodeAccelerator> dev_poll_weak_this_factory_;
   // The WeakPtrFactory for |weak_this_|.
   base::WeakPtrFactory<V4L2VideoDecodeAccelerator> weak_this_factory_;
 
