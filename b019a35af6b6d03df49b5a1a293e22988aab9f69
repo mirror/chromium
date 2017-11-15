@@ -45,6 +45,30 @@
       "revId": "b019a35af6b6d03df49b5a1a293e22988aab9f69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031224be_3b6ec345",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-15T16:05:00Z",
+      "side": 1,
+      "message": "Actually, given the existing metrics use the UMA_HISTOGRAM_MEMORY_MB() which has a different max, let\u0027s not change behavior here. However, perhaps you can add UmaHistogramMemoryMB() to histogram_functions.h?",
+      "parentUuid": "076a61e3_0ffd4380",
+      "range": {
+        "startLine": 741,
+        "startChar": 36,
+        "endLine": 741,
+        "endChar": 0
+      },
+      "revId": "b019a35af6b6d03df49b5a1a293e22988aab9f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
