@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f6975e20_bd999542",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1137d6e4_ea521278",
+      "range": {
+        "startLine": 29,
+        "startChar": 40,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "104c9572_f8533b7d",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 20
@@ -45,6 +69,30 @@
       "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003ff3ab_58f7fbd3",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "104c9572_f8533b7d",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 44
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "20a52c21_606b6152",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab78976c_e1725e16",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 42
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3b7f0c8_ac10d6b2",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 20
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "242219a0_e0bdcc7b",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3b7f0c8_ac10d6b2",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 43
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42ddcd96_a164a564",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 20
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-15T21:19:09Z",
       "side": 1,
       "message": "This is never actually set up as a connection error handler on a Mojo pipe.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 74
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a229f6a_8b256064",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Do you mean that it\u0027s not properly connected to the mojo pipe? How would I set that up?",
+      "parentUuid": "42ddcd96_a164a564",
       "range": {
         "startLine": 68,
         "startChar": 0,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "e8f9cc16_c5c930ff",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b9e91e8_011f0a1d",
+      "range": {
+        "startLine": 72,
+        "startChar": 3,
+        "endLine": 72,
+        "endChar": 22
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f45476cb_f9790d4f",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 20
@@ -160,6 +304,30 @@
       "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa646ae_d096888d",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f45476cb_f9790d4f",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 31
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "fcccfa32_57759449",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07c54d95_3f3e28e1",
+      "range": {
+        "startLine": 143,
+        "startChar": 25,
+        "endLine": 143,
+        "endChar": 61
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "938adaa3_6caeb76f",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 20
@@ -197,6 +389,30 @@
       "writtenOn": "2017-11-15T21:19:09Z",
       "side": 1,
       "message": "What happens if MakeCredential() is called again before the device responds?",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 14
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a0e37e_4fb56059",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "An upcoming CL is going to ensure there\u0027s only ever one request in flight.",
+      "parentUuid": "938adaa3_6caeb76f",
       "range": {
         "startLine": 151,
         "startChar": 2,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "ebd9d7db_d9ff22df",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47b6f7de_c27d795f",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b294730_786d7cc0",
         "filename": "content/browser/webauth/authenticator_impl.h",
         "patchSetId": 20
@@ -246,6 +486,24 @@
       "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "992f56d9_92d490cf",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b294730_786d7cc0",
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "acedf994_ed5c847a",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e671fe79_c8d32047",
+      "range": {
+        "startLine": 321,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 1
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "868e09c4_af26a0b6",
         "filename": "content/browser/webauth/authenticator_utils.h",
         "patchSetId": 20
@@ -286,6 +568,24 @@
       "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c86afeb_9228a76e",
+        "filename": "content/browser/webauth/authenticator_utils.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Ack and changed.",
+      "parentUuid": "868e09c4_af26a0b6",
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -306,6 +606,24 @@
     },
     {
       "key": {
+        "uuid": "bd5b2abf_10f3edec",
+        "filename": "content/browser/webauth/ec_public_key.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bf0a18f_9efa16c2",
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb0b1f8a_588d7989",
         "filename": "content/browser/webauth/fido_attestation_statement.cc",
         "patchSetId": 20
@@ -323,6 +641,24 @@
     },
     {
       "key": {
+        "uuid": "f01ac9bc_52308248",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "I\u0027m hesitant to push it to //device/u2f because of the eventual //device/ctap implementation, for which authenticator_impl is currently the common dispatcher. (Although, I was imagining there could eventually be a separate service that is the common dispatcher for the two device protocols, and I could move most of the parsing into there.)\n\nBut I could certainly send the U2F data as a blob back to the renderer and do all of this parsing there. Should I proceed with that?",
+      "parentUuid": "cb0b1f8a_588d7989",
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "713ecdc1_e5ff2ba3",
         "filename": "content/browser/webauth/register_response_data.cc",
         "patchSetId": 20
@@ -334,6 +670,24 @@
       "writtenOn": "2017-11-15T21:19:09Z",
       "side": 1,
       "message": "Since we know JSON is a string is there any benefit to converting it to an std::vector\u003cuint8_t\u003e?",
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87750d4_ffbd1c24",
+        "filename": "content/browser/webauth/register_response_data.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Just to get it in byte form, since that\u0027s the only form of the client data we end up caring about.",
+      "parentUuid": "713ecdc1_e5ff2ba3",
       "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -360,6 +714,30 @@
       "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bedfe3e_2c6df1c1",
+        "filename": "content/browser/webauth/register_response_data.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9340b664_3954eeac",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "e52af129f51bf23556ea07b897aa4577afbfd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

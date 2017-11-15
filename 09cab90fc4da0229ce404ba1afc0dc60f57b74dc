@@ -2340,6 +2340,30 @@
     },
     {
       "key": {
+        "uuid": "cbce71a6_61c6a020",
+        "filename": "content/browser/webauth/register_response_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-15T23:31:11Z",
+      "side": 1,
+      "message": "Oh, I see. Nifty.",
+      "parentUuid": "ae11f1ec_956f8100",
+      "range": {
+        "startLine": 36,
+        "startChar": 64,
+        "endLine": 36,
+        "endChar": 68
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65189986_2c32e5a0",
         "filename": "content/browser/webauth/register_response_data.cc",
         "patchSetId": 14
