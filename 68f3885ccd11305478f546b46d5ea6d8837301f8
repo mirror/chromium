@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21f0133d_dffd8396",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-15T17:44:32Z",
+      "side": 1,
+      "message": "Any chance we could have a virtual method CreateVaapiPicture we can override in one of out mocked classes instead of this callback?",
+      "revId": "68f3885ccd11305478f546b46d5ea6d8837301f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
