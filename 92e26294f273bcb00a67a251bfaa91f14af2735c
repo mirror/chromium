@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d4052fc_57dd8faf",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T01:26:00Z",
+      "side": 1,
+      "message": "not a handle",
+      "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f377ac7e_70060ab1",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T01:26:00Z",
+      "side": 1,
+      "message": "rename |handle| -\u003e |registration_host| or something.",
+      "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e2a557_8178c256",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T01:26:00Z",
+      "side": 1,
+      "message": "what is our story for handle_id now? Will it go away? Or should it just be registration_id?",
+      "range": {
+        "startLine": 482,
+        "startChar": 14,
+        "endLine": 482,
+        "endChar": 23
+      },
+      "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1461d6f2_cffe23af",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T01:26:00Z",
+      "side": 1,
+      "message": "not a handle",
+      "range": {
+        "startLine": 457,
+        "startChar": 42,
+        "endLine": 457,
+        "endChar": 48
+      },
+      "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60273d72_81252350",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T01:26:00Z",
+      "side": 1,
+      "message": "not a handle. I would just remove this `using` it doesn\u0027t clarify anything.",
+      "range": {
+        "startLine": 198,
+        "startChar": 20,
+        "endLine": 198,
+        "endChar": 27
+      },
+      "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16efcc4b_7d18d346",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T01:26:00Z",
+      "side": 1,
+      "message": "not a handle",
+      "range": {
+        "startLine": 200,
+        "startChar": 35,
+        "endLine": 200,
+        "endChar": 45
+      },
+      "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd78192a_7d5b78bb",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T01:26:00Z",
+      "side": 1,
+      "message": "handle",
+      "range": {
+        "startLine": 490,
+        "startChar": 40,
+        "endLine": 490,
+        "endChar": 56
+      },
+      "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
