@@ -9,8 +9,8 @@
     Constructor(BaseAudioContext context, DOMString name, optional AudioWorkletNodeOptions options),
     DependentLifetime,
     Global=(Worklet,AudioWorklet),
-    RaisesException=Constructor,
-    RuntimeEnabled=AudioWorklet
+    OriginTrialEnabled=AudioWorklet,
+    RaisesException=Constructor
 ] interface AudioWorkletNode : AudioNode {
     readonly attribute AudioParamMap parameters;
     // TODO(hongchan): Implement the following.

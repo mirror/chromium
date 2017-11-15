@@ -25,6 +25,7 @@
 
 #include "modules/webaudio/DefaultAudioDestinationNode.h"
 
+#include "core/origin_trials/origin_trials.h"
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
@@ -91,7 +92,8 @@ void DefaultAudioDestinationHandler::StartDestination() {
   DCHECK(!destination_->IsPlaying());
   // Use Experimental AudioWorkletThread only when AudioWorklet is enabled and
   // there is an active AudioWorkletGlobalScope.
-  if (RuntimeEnabledFeatures::AudioWorkletEnabled() &&
+  if ((OriginTrials::audioWorkletEnabled(Context()->GetExecutionContext()) ||
+       RuntimeEnabledFeatures::AudioWorkletEnabled()) &&
       Context()->HasWorkletMessagingProxy()) {
     DCHECK(Context()->WorkletMessagingProxy()->GetWorkletBackingThread());
     destination_->StartWithWorkletThread(

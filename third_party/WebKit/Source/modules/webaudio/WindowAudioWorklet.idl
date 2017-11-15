@@ -6,7 +6,7 @@
 
 [
     ImplementedAs=WindowAudioWorklet,
-    RuntimeEnabled=AudioWorklet
+    OriginTrialEnabled=AudioWorklet
     // TODO(nhiroki): Specify the [SecureContext] attribute when it's supported.
     // (https://crbug.com/782121)
 ] partial interface Window {
