@@ -37,6 +37,41 @@
     },
     {
       "key": {
+        "uuid": "d245f5aa_f4fd74fb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/delete-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T20:50:49Z",
+      "side": 1,
+      "message": "Did you say \"were\" to imply this is no longer happening (after you fixed bugs, perhaps).\n\nAfter our conversation, my understanding was that the ACP APIs return 8.3 names for some of the inputs currently used in tests. If that is correct, please add it to the comment here. I think it\u0027s a more precise version of \"decrease the likelihood of a false negative\".",
+      "parentUuid": "2311f2ab_d4d7b270",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac0ee0c_b3a9a2bd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T20:50:49Z",
+      "side": 1,
+      "message": "How about testCaseName / testCaseLabel, if this is explanatory?\n\n(sorry, I just saw the reply regarding this)",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6b27b8f_64406226",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 66
@@ -72,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "843d6d84_abd70f7f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T20:50:49Z",
+      "side": 1,
+      "message": "nit: baseNameOf doesn\u0027t convey the information that this function takes in a file path.",
+      "parentUuid": "b96122b8_199c2acd",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "849cacfd_e0c4e48c",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 66
@@ -101,6 +154,24 @@
       "side": 1,
       "message": "Done (along with the other normalization steps) as normalizeBaseNamePrefix",
       "parentUuid": "849cacfd_e0c4e48c",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa159c27_cf1ce2d6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T20:50:49Z",
+      "side": 1,
+      "message": "same nit as above",
+      "parentUuid": "610f0722_ac10aa18",
       "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -177,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "8c3eaca0_9be79688",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T20:50:49Z",
+      "side": 1,
+      "message": "I think the test should document what\u0027s the golden value now. Wishes are better left for TODOs. If the test moves to WPT, it will have to be modified anyway, to reflect WPT\u0027s automation API. At that point, the expectations can be updated to reflect the spec that the test would be covering.",
+      "parentUuid": "ec5bcbfa_e401164f",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ec41cf7_fac7c36a",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 66
@@ -212,6 +301,41 @@
     },
     {
       "key": {
+        "uuid": "603d27f8_54936b11",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T20:50:49Z",
+      "side": 1,
+      "message": "If that\u0027s your intent, I think it\u0027s better expressed as a separate assert_equals(fileInput.files[0].name, fileInput.value).",
+      "parentUuid": "949e623f_46e9cb81",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d77b0a_cea07435",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T20:50:49Z",
+      "side": 1,
+      "message": "This is also an opportunity to improve the test by having a single golden instead of two variants.",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "323853a8_dbe58a43",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
         "patchSetId": 66
@@ -241,6 +365,24 @@
       "side": 1,
       "message": "Why? I think we want to remove the script-owned DOM for this test before running the next one to avoid clutter, regardless of whether this one passed.",
       "parentUuid": "323853a8_dbe58a43",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f0a516_4890e378",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 66
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T20:50:49Z",
+      "side": 1,
+      "message": "Modulo other concerns, it\u0027s always better to have the DOM left there, for examination.\n\nIn this case, since you\u0027re having 6+ test cases/file, getting out of the viewport might be a concern. If that applies, you can use add_cleanup for DOM cleanup, since it\u0027s synchronous.",
+      "parentUuid": "ca31a51c_42f1d95d",
       "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -299,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "cc31af29_09bf9028",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T20:50:49Z",
+      "side": 1,
+      "message": "It seems to me that you can have the same check in here.\n\nI don\u0027t understand the last sentence in the comment above -- if ACP is switched to UTF8, doesn\u0027t that mean that the two lines will be identical?",
+      "parentUuid": "be165f8b_5050eda7",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fcd022f_85e9fa61",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
         "patchSetId": 66
@@ -328,6 +488,24 @@
       "side": 1,
       "message": "Can\u0027t, unfortunately - this is \"cgi\" instead of e.g.  \"LayoutTests_\" because it needs to fit in 8 characters for shortname comparison. Originally it was much more descriptive, but the Win32 API leaves few good options",
       "parentUuid": "9fcd022f_85e9fa61",
+      "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617068f4_0a669633",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/write-temp-file.cgi",
+        "patchSetId": 66
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-15T20:50:49Z",
+      "side": 1,
+      "message": "How about different names conditioned on $win32?\n\nThe rest of the world shouldn\u0027t have to suffer because Windows is terrible.",
+      "parentUuid": "ffe74dc6_e13ce5ea",
       "revId": "a513c055b6ce1af56bc80b2d451207cfff2b7f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
