@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>AmbientLight Generic Sensor cross-origin iframe test</title>
+    <script type="text/javascript">
+      function start() {
+        if (typeof AmbientLightSensor === "undefined")
+          pass();
+        else
+          fail();
+      }
+
+      function pass() {
+        document.getElementById('status').innerHTML = 'PASS';
+        document.location = '#pass';
+      }
+
+      function fail() {
+        document.location = '#fail';
+      }
+    </script>
+  </head>
+  <body onLoad="start()">
+    <div id="status">FAIL</div>
+  </body>
+</html>
