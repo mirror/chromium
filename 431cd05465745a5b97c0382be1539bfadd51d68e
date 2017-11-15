@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b541bf6d_e44995cc",
+        "filename": "content/test/data/generic_sensor/ambient_light_sensor_cross_origin_iframe_test.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-15T18:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64440cbe_934e21fd",
+      "revId": "431cd05465745a5b97c0382be1539bfadd51d68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f503a66_d1314bd7",
         "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
         "patchSetId": 16
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Agree, Sensors are allowed only to main frame, not sure how sensor object can be constructed in cross-origin iframe.",
       "parentUuid": "6f503a66_d1314bd7",
+      "revId": "431cd05465745a5b97c0382be1539bfadd51d68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ad13ec_affab1b1",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-15T18:44:33Z",
+      "side": 1,
+      "message": "I removed this function. Thanks!\n\nDone.",
+      "parentUuid": "596f892b_6e8d9e35",
       "revId": "431cd05465745a5b97c0382be1539bfadd51d68e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
