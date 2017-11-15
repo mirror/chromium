@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79056dc3_81a7b226",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-15T15:02:39Z",
+      "side": 1,
+      "message": "Did you mean to delete this before submitting?\n(Also on a few places below.)",
+      "range": {
+        "startLine": 145,
+        "startChar": 6,
+        "endLine": 145,
+        "endChar": 14
+      },
+      "revId": "79846639bf593ff39ab3829a14c01be245a37722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c7a330_23f014a4",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-15T15:02:39Z",
+      "side": 1,
+      "message": "nit: Should this be +4 spaces against line 232, instead of just 2?",
+      "range": {
+        "startLine": 233,
+        "startChar": 8,
+        "endLine": 233,
+        "endChar": 34
+      },
+      "revId": "79846639bf593ff39ab3829a14c01be245a37722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
