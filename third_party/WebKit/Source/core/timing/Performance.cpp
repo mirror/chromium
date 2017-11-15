@@ -175,6 +175,10 @@ void Performance::UpdateLongTaskInstrumentation() {
   }
 }
 
+void Performance::CountWithUserCounter() {
+  UseCounter::Count(GetFrame(), WebFeature::kPerformanceMeasurePassedInObject);
+}
+
 ScriptValue Performance::toJSONForBinding(ScriptState* script_state) const {
   V8ObjectBuilder result(script_state);
   result.Add("timing", timing()->toJSONForBinding(script_state));

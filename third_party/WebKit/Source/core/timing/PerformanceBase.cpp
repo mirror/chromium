@@ -43,6 +43,7 @@
 #include "core/timing/PerformanceObserver.h"
 #include "core/timing/PerformanceResourceTiming.h"
 #include "core/timing/PerformanceUserTiming.h"
+#include "platform/Histogram.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/runtime_enabled_features.h"
@@ -451,6 +452,19 @@ void PerformanceBase::measure(const String& measure_name,
                               const String& start_mark,
                               const String& end_mark,
                               ExceptionState& exception_state) {
+  UMA_HISTOGRAM_ENUMERATION(
+      "Performance.PerformanceMeasurePassedInParameter.StartMark",
+      ToPerformanceMeasurePassedInParameterType(start_mark),
+      kPerformanceMeasurePassedInParameterCount);
+  UMA_HISTOGRAM_ENUMERATION(
+      "Performance.PerformanceMeasurePassedInParameter.EndMark",
+      ToPerformanceMeasurePassedInParameterType(end_mark),
+      kPerformanceMeasurePassedInParameterCount);
+  if (ToPerformanceMeasurePassedInParameterType(start_mark) == kObjectObject ||
+      ToPerformanceMeasurePassedInParameterType(end_mark) == kObjectObject) {
+    CountWithUserCounter();
+  }
+
   if (!user_timing_)
     user_timing_ = UserTiming::Create(*this);
   if (PerformanceEntry* entry = user_timing_->Measure(

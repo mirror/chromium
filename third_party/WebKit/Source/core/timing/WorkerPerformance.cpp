@@ -30,6 +30,7 @@
 
 #include "core/timing/WorkerPerformance.h"
 
+#include "core/frame/UseCounter.h"
 #include "core/timing/MemoryInfo.h"
 #include "core/workers/DedicatedWorkerGlobalScope.h"
 #include "core/workers/WorkerGlobalScope.h"
@@ -53,6 +54,11 @@ void WorkerPerformance::Trace(blink::Visitor* visitor) {
 
 MemoryInfo* WorkerPerformance::memory() {
   return MemoryInfo::Create();
+}
+
+void WorkerPerformance::CountWithUserCounter() {
+  UseCounter::Count(execution_context_,
+                    WebFeature::kPerformanceMeasurePassedInObject);
 }
 
 }  // namespace blink
