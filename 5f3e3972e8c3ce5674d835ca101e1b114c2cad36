@@ -87,6 +87,24 @@
       "revId": "5f3e3972e8c3ce5674d835ca101e1b114c2cad36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "824310a2_9fd2a1cc",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-15T03:57:23Z",
+      "side": 1,
+      "message": "Actually this function now has the same semantics as cc clip mapping (https://cs.chromium.org/chromium/src/cc/trees/clip_node.h?dr\u003dCSs\u0026l\u003d35): in a bottom-up mapping, a clip shrinks a clip rect; a pixel-moving filter expands a clip rect. I hadn\u0027t fully understood the concept until I started to work on this patch.\n\nThe caller can check effect node before calling this function to skip the slow path, but the slow path is needed for completeness (otherwise a caller wants such semantics has no way to get it.)",
+      "parentUuid": "f1332446_e5f29b95",
+      "revId": "5f3e3972e8c3ce5674d835ca101e1b114c2cad36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
