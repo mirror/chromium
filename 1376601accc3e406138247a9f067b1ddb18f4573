@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f23d6d9a_b57af2d0",
+        "filename": "chrome/common/extensions/docs/examples/api/omnibox/newtab_search/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T20:19:29Z",
+      "side": 1,
+      "message": "This is risky because the user might enter something that needs to be escaped.  Given this is just creating a new tab, there\u0027s certainly no security risk, but it would be good to cover our bases anyway (and serve as a good example of escaping!).\n\nlet newUrl \u003d \u0027https://www.google.com/search?q\u003d\u0027 + encodeURIComponent(text);",
+      "range": {
+        "startLine": 8,
+        "startChar": 51,
+        "endLine": 8,
+        "endChar": 59
+      },
+      "revId": "1376601accc3e406138247a9f067b1ddb18f4573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50dddb07_eaa56034",
+        "filename": "chrome/common/extensions/docs/examples/api/omnibox/newtab_search/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T20:19:29Z",
+      "side": 1,
+      "message": "nit: single quotes in js.",
+      "revId": "1376601accc3e406138247a9f067b1ddb18f4573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b52bed0_c105dbad",
+        "filename": "chrome/common/extensions/docs/examples/api/omnibox/newtab_search/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T20:19:29Z",
+      "side": 1,
+      "message": "nit: no space",
+      "range": {
+        "startLine": 3,
+        "startChar": 15,
+        "endLine": 3,
+        "endChar": 16
+      },
+      "revId": "1376601accc3e406138247a9f067b1ddb18f4573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa19052_7265b879",
+        "filename": "chrome/common/extensions/docs/examples/api/omnibox/newtab_search/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T20:19:29Z",
+      "side": 1,
+      "message": "Let\u0027s make this an event page\n\"persistent\": false",
+      "revId": "1376601accc3e406138247a9f067b1ddb18f4573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc17b0b0_cd6a5acf",
+        "filename": "chrome/common/extensions/docs/examples/api/omnibox/newtab_search/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T20:19:29Z",
+      "side": 1,
+      "message": "nit: fix indentation here.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 11
+      },
+      "revId": "1376601accc3e406138247a9f067b1ddb18f4573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
