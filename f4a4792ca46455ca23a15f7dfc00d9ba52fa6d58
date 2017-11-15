@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c2067d6_92b46f9a",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-15T00:01:41Z",
+      "side": 1,
+      "message": "nit: add a newline between the C and C++ headers.",
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609ba128_86e1184f",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-15T00:01:41Z",
+      "side": 1,
+      "message": "You should be able to do\n\n namespace {\n   using PrinterQueryCallback \u003d\n       base::CallbackOnce\u003cvoid(scoped_refptr\u003cprinting::PrinterQuery\u003e)\u003e;\n\n   void OnSetSettingsDoneOnIOThread(\n       PrinterQueryCallback callback,\n       scoped_refptr\u003cprinting::PrinterQuery\u003e query) {\n    content::BrowserThread::PostTask(\n        content::BrowserThread::UI, FROM_HERE,\n        base::BindOnce(std::move(callback), query));\n   }\n\n   void CreateQueryOnIOThread(\n       std::unique_ptr\u003cprinting::PrintSettings\u003e settings,\n       PrinterQueryCallback callback) {\n     auto query \u003d base::MakeRefCounted\u003cprinting::PrinterQuery\u003e(\n         content::ChildProcessHost::kInvalidUniqueID,\n         content::ChildProcessHost::kInvalidUniqueID);\n     query-\u003eSetSettings(\n         std::move(settings),\n         base::BindOnce(\u0026OnSetSettingsDoneOnIOThread,\n                        std::move(callback)));\n   }\n }  // namespace\n\n content::BrowserThread::PostTask(\n   content::BrowserThread::IO, FROM_HERE,\n   base::BindOnce(\u0026CreateQueryOnIOThread, std::move(settings),\n                  base::BindOnce(\u0026ArcPrintRequest::OnSetSettingsDone,\n                                 weak_ptr_factory_.GetWeakPtr()));\n\nI couldn\u0027t figure out how to use base::PostTaskAndReplyWithResult() :( But at least this way you can safely use weak_ptr_factory_ in a way that\u0027s compatible with  the use of StrongBinding. Using base::Unretained(this) would be unsafe to use too due to the StrongBinding being able to self-destruct.",
+      "range": {
+        "startLine": 102,
+        "startChar": 28,
+        "endLine": 102,
+        "endChar": 36
+      },
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6f6af5_a3f83b01",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-15T00:01:41Z",
+      "side": 1,
+      "message": "Can this be a StrongBinding? Then it can also self-destruct when the connection is severed.",
+      "range": {
+        "startLine": 177,
+        "startChar": 8,
+        "endLine": 177,
+        "endChar": 15
+      },
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d870d56d_20db03ed",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-15T00:01:41Z",
+      "side": 1,
+      "message": "nit: weak_ptr_factory_",
+      "range": {
+        "startLine": 330,
+        "startChar": 41,
+        "endLine": 330,
+        "endChar": 54
+      },
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb94dcb0_cefacded",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-15T00:01:41Z",
+      "side": 1,
+      "message": "nit: no newlines between the methods of the same interface, to indicate they are all related.",
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d626bf_91f0490d",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-15T00:01:41Z",
+      "side": 1,
+      "message": "nit: Owned",
+      "range": {
+        "startLine": 52,
+        "startChar": 55,
+        "endLine": 52,
+        "endChar": 56
+      },
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb26ca60_f3a63d6d",
+        "filename": "chrome/browser/printing/print_job_worker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-15T00:01:41Z",
+      "side": 1,
+      "message": "What\u0027s the exact error you see with this?",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
