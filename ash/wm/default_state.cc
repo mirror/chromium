@@ -306,7 +306,18 @@ void DefaultState::HandleWorkspaceEvents(WindowState* window_state,
       }
 
       aura::Window* window = window_state->window();
-      gfx::Rect bounds = window->bounds();
+      gfx::Rect bounds;
+      // When window is added to a workspace, its current window bounds possibly
+      // is not the original-not-changed-by-user bounds, for example a resized
+      // bounds truncated by available workarea. Using |window->bounds()| only
+      // when it is firstly (or bounds has been changed by user and then) added
+      // to a workspace.
+      if (window_state->pre_added_to_workspace_window_bounds()) {
+        bounds = *window_state->pre_added_to_workspace_window_bounds();
+      } else {
+        bounds = window->bounds();
+        window_state->SetPreAddedToWorkspaceWindowBounds(bounds);
+      }
 
       // Don't adjust window bounds if the bounds are empty as this
       // happens when a new views::Widget is created.
