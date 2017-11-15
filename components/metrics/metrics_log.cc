@@ -47,8 +47,8 @@ namespace metrics {
 
 namespace internal {
 // Maximum number of events before truncation.
-extern const int kOmniboxEventLimit = 5000;
-extern const int kUserActionEventLimit = 5000;
+const int kOmniboxEventLimit = 5000;
+const int kUserActionEventLimit = 5000;
 }
 
 namespace {
