@@ -433,6 +433,10 @@ class VIZ_COMMON_EXPORT GLHelper {
       bool vertically_flip_texture,
       bool use_mrt);
 
+  // Returns a ReadbackYUVInterface instance that is lazily created and owned by
+  // this class. |use_mrt| is always true for these instances.
+  ReadbackYUVInterface* GetReadbackPipelineYUV(bool vertically_flip_texture);
+
   // Returns the maximum number of draw buffers available,
   // 0 if GL_EXT_draw_buffers is not available.
   GLint MaxDrawBuffers();
@@ -462,6 +466,8 @@ class VIZ_COMMON_EXPORT GLHelper {
   std::unique_ptr<CopyTextureToImpl> copy_texture_to_impl_;
   std::unique_ptr<GLHelperScaling> scaler_impl_;
   std::unique_ptr<GLHelperReadbackSupport> readback_support_;
+  std::unique_ptr<ReadbackYUVInterface> shared_readback_yuv_flip_;
+  std::unique_ptr<ReadbackYUVInterface> shared_readback_yuv_noflip_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(GLHelper);
@@ -539,6 +545,10 @@ class ReadbackYUVInterface {
   // Returns the currently-set scaler, or null.
   virtual GLHelper::ScalerInterface* scaler() const = 0;
 
+  // Returns true if the converter will vertically-flip the output.
+  virtual bool IsFlippingOutput() const = 0;
+
+  using RestoreContextCallback = base::OnceCallback<void(uint32_t)>;
   // Transforms a RGBA texture into I420 planar form, and then reads it back
   // from the GPU into system memory. See the GLHelper::ScalerInterface::Scale()
   // method comments for the meaning/semantics of |src_texture_size| and
@@ -551,7 +561,8 @@ class ReadbackYUVInterface {
   //   4. Read-back the planar data, copying it into the given output
   //      destination. |paste_location| specifies the where to place the output
   //      pixels: Rect(paste_location.origin(), output_rect.size()).
-  //   5. Run callback with true on success, false on failure (with no output
+  //   5. Run |restore_context_callback| if provided, to restore GL state.
+  //   6. Run |callback| with true on success, false on failure (with no output
   //      modified).
   virtual void ReadbackYUV(const gpu::Mailbox& mailbox,
                            const gpu::SyncToken& sync_token,
@@ -564,7 +575,9 @@ class ReadbackYUVInterface {
                            int v_plane_row_stride_bytes,
                            unsigned char* v_plane_data,
                            const gfx::Point& paste_location,
-                           const base::Callback<void(bool)>& callback) = 0;
+                           const base::Callback<void(bool)>& callback,
+                           RestoreContextCallback restore_context_callback =
+                               RestoreContextCallback()) = 0;
 };
 
 }  // namespace viz
