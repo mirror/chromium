@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b338628f_12755f34",
+        "filename": "chrome/test/mini_installer/registry_verifier.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T09:21:30Z",
+      "side": 1,
+      "message": "self -\u003e RegistryVerifier since this code should always check the class variable and never accidentally an instance variable that hides it.",
+      "range": {
+        "startLine": 32,
+        "startChar": 28,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "dce2a9111c930c4006d996a6c2fd593f58062245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa01984a_5e1cebfc",
+        "filename": "chrome/test/mini_installer/variable_expander.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T09:21:30Z",
+      "side": 1,
+      "message": "nit: either omit \"else\" since there\u0027s a return in the \"if\" clause, or switch to:\n  return \u002732\u0027 if (win32file.GetBinaryType(file_path) \u003d\u003d\n                  win32file.SCS_32BIT_BINARY) else \u002764\u0027",
+      "revId": "dce2a9111c930c4006d996a6c2fd593f58062245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

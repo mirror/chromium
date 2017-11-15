@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "f39cc811_54906899",
+        "filename": "chrome/test/mini_installer/registry_verifier.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-15T09:21:30Z",
+      "side": 1,
+      "message": "agreed. i think they should all work the same way, but no need to go there in this CL.",
+      "parentUuid": "ce3dabfe_785bf664",
+      "revId": "d76c379cce46695c070e1aac7eed64eb5c9a7cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa4f2b6d_d9450efd",
         "filename": "chrome/test/mini_installer/variable_expander.py",
         "patchSetId": 3
