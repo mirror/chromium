@@ -14,8 +14,9 @@ namespace media_router {
 
 MediaSinkServiceBase::MediaSinkServiceBase(
     const OnSinksDiscoveredCallback& callback)
-    : MediaSinkService(callback) {
-  fetch_complete_timeout_secs_ = kFetchCompleteTimeoutSecs;
+    : fetch_complete_timeout_secs_(kFetchCompleteTimeoutSecs),
+      on_sinks_discovered_cb_(callback) {
+  DCHECK(!on_sinks_discovered_cb_.is_null());
 }
 
 MediaSinkServiceBase::~MediaSinkServiceBase() = default;
@@ -26,8 +27,6 @@ void MediaSinkServiceBase::SetTimerForTest(std::unique_ptr<base::Timer> timer) {
 }
 
 void MediaSinkServiceBase::OnFetchCompleted() {
-  DCHECK(!sink_discovery_callback_.is_null());
-
   if (current_sinks_ == mrp_sinks_) {
     DVLOG(2) << "No update to sink list.";
     return;
@@ -61,7 +60,7 @@ void MediaSinkServiceBase::RestartTimer() {
 
 void MediaSinkServiceBase::ForceSinkDiscoveryCallback() {
   DVLOG(2) << "Send sinks to media router, [size]: " << current_sinks_.size();
-  sink_discovery_callback_.Run(std::vector<MediaSinkInternal>(
+  on_sinks_discovered_cb_.Run(std::vector<MediaSinkInternal>(
       current_sinks_.begin(), current_sinks_.end()));
   mrp_sinks_ = current_sinks_;
 }

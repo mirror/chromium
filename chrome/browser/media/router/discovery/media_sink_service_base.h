@@ -15,18 +15,21 @@
 
 namespace media_router {
 
-class MediaSinkServiceBase : public MediaSinkService {
+class MediaSinkServiceBase {
  public:
   explicit MediaSinkServiceBase(const OnSinksDiscoveredCallback& callback);
-  ~MediaSinkServiceBase() override;
+  ~MediaSinkServiceBase();
 
-  void ForceSinkDiscoveryCallback() override;
+  void ForceSinkDiscoveryCallback();
 
  protected:
   void SetTimerForTest(std::unique_ptr<base::Timer> timer);
 
   // Called when |finish_timer_| expires.
   virtual void OnFetchCompleted();
+
+  // Overriden by subclass to report device counts.
+  virtual void RecordDeviceCounts() {}
 
   // Helper function to start |finish_timer_|. Create a new timer if none
   // exists.
@@ -39,12 +42,6 @@ class MediaSinkServiceBase : public MediaSinkService {
   // timer is currently running.
   void RestartTimer();
 
-  // Overriden by subclass to report device counts.
-  virtual void RecordDeviceCounts() {}
-
-  // Time out value for |finish_timer_|
-  int fetch_complete_timeout_secs_;
-
   // Sorted sinks from current round of discovery.
   std::set<MediaSinkInternal> current_sinks_;
 
@@ -53,11 +50,18 @@ class MediaSinkServiceBase : public MediaSinkService {
   FRIEND_TEST_ALL_PREFIXES(MediaSinkServiceBaseTest,
                            TestFetchCompleted_SameSink);
 
+  // Time out value for |finish_timer_|.
+  int fetch_complete_timeout_secs_;
+
+  OnSinksDiscoveredCallback on_sinks_discovered_cb_;
+
   // Sorted sinks sent to Media Router Provider in last FetchCompleted().
   std::set<MediaSinkInternal> mrp_sinks_;
 
   // Timer for finishing fetching.
   std::unique_ptr<base::Timer> finish_timer_;
+
+  // TODO: SequenceChecker?
 };
 
 }  // namespace media_router

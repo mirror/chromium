@@ -19,10 +19,9 @@
 namespace media_router {
 
 MediaRouterDesktop::~MediaRouterDesktop() {
-  if (dial_media_sink_service_proxy_) {
+  if (dial_media_sink_service_proxy_)
     dial_media_sink_service_proxy_->Stop();
-    dial_media_sink_service_proxy_->ClearObserver();
-  }
+
   if (cast_media_sink_service_)
     cast_media_sink_service_->Stop();
 }
@@ -140,13 +139,11 @@ void MediaRouterDesktop::StartDiscovery() {
 
   if (media_router::CastDiscoveryEnabled()) {
     if (!cast_media_sink_service_) {
-      cast_media_sink_service_ = base::MakeRefCounted<CastMediaSinkService>(
+      cast_media_sink_service_ =
+          std::make_unique<CastMediaSinkService>(context());
+      cast_media_sink_service_->Start(
           base::BindRepeating(&MediaRouterDesktop::ProvideSinks,
-                              weak_factory_.GetWeakPtr(), "cast"),
-          context(),
-          content::BrowserThread::GetTaskRunnerForThread(
-              content::BrowserThread::IO));
-      cast_media_sink_service_->Start();
+                              weak_factory_.GetWeakPtr(), "cast"));
     } else {
       cast_media_sink_service_->ForceSinkDiscoveryCallback();
     }
@@ -155,13 +152,16 @@ void MediaRouterDesktop::StartDiscovery() {
   if (media_router::DialLocalDiscoveryEnabled()) {
     if (!dial_media_sink_service_proxy_) {
       dial_media_sink_service_proxy_ =
-          base::MakeRefCounted<DialMediaSinkServiceProxy>(
-              base::BindRepeating(&MediaRouterDesktop::ProvideSinks,
-                                  weak_factory_.GetWeakPtr(), "dial"),
-              context());
-      dial_media_sink_service_proxy_->SetObserver(
-          cast_media_sink_service_.get());
-      dial_media_sink_service_proxy_->Start();
+          std::make_unique<DialMediaSinkServiceProxy>(context());
+
+      OnDialSinkAddedCallback on_dial_sink_added_cb =
+          cast_media_sink_service_
+              ? cast_media_sink_service_->GetOnDialSinkAddedCallback()
+              : OnDialSinkAddedCallback();
+      dial_media_sink_service_proxy_->Start(
+          base::BindRepeating(&MediaRouterDesktop::ProvideSinks,
+                              weak_factory_.GetWeakPtr(), "dial"),
+          on_dial_sink_added_cb);
     } else {
       dial_media_sink_service_proxy_->ForceSinkDiscoveryCallback();
     }

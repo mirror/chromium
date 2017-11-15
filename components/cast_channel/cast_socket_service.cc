@@ -5,6 +5,7 @@
 #include "components/cast_channel/cast_socket_service.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "components/cast_channel/cast_socket.h"
 #include "components/cast_channel/logger.h"
 #include "content/public/browser/browser_thread.h"
@@ -15,8 +16,15 @@ namespace cast_channel {
 
 int CastSocketService::last_channel_id_ = 0;
 
-CastSocketService::CastSocketService() : logger_(new Logger()) {
-  DETACH_FROM_THREAD(thread_checker_);
+CastSocketService::CastSocketService()
+    : logger_(new Logger()),
+      // IO thread's task runner is used because of:
+      // (1) ChromeURLRequestContextGetter::GetURLRequestContext, which is
+      // called by CastMediaSinkServiceImpl, must run on IO thread. (2) Parts of
+      // CastChannel extension API functions runs on IO thread.
+      task_runner_(content::BrowserThread::GetTaskRunnerForThread(
+          content::BrowserThread::IO)) {
+  DETACH_FROM_SEQUENCE(sequence_checker_);
 }
 
 // This is a leaky singleton and the dtor won't be called.
@@ -33,7 +41,7 @@ scoped_refptr<Logger> CastSocketService::GetLogger() {
 }
 
 CastSocket* CastSocketService::AddSocket(std::unique_ptr<CastSocket> socket) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(socket);
   int id = ++last_channel_id_;
   socket->set_id(id);
@@ -44,7 +52,7 @@ CastSocket* CastSocketService::AddSocket(std::unique_ptr<CastSocket> socket) {
 }
 
 std::unique_ptr<CastSocket> CastSocketService::RemoveSocket(int channel_id) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(channel_id > 0);
   auto socket_it = sockets_.find(channel_id);
 
@@ -57,7 +65,7 @@ std::unique_ptr<CastSocket> CastSocketService::RemoveSocket(int channel_id) {
 }
 
 CastSocket* CastSocketService::GetSocket(int channel_id) const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(channel_id > 0);
   const auto& socket_it = sockets_.find(channel_id);
   return socket_it == sockets_.end() ? nullptr : socket_it->second.get();
@@ -65,7 +73,7 @@ CastSocket* CastSocketService::GetSocket(int channel_id) const {
 
 CastSocket* CastSocketService::GetSocket(
     const net::IPEndPoint& ip_endpoint) const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   auto it = std::find_if(
       sockets_.begin(), sockets_.end(),
       [&ip_endpoint](
@@ -77,7 +85,7 @@ CastSocket* CastSocketService::GetSocket(
 
 int CastSocketService::OpenSocket(const CastSocketOpenParams& open_params,
                                   CastSocket::OnOpenCallback open_cb) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   auto* socket = GetSocket(open_params.ip_endpoint);
 
   if (!socket) {
@@ -99,8 +107,8 @@ int CastSocketService::OpenSocket(const CastSocketOpenParams& open_params,
 }
 
 void CastSocketService::AddObserver(CastSocket::Observer* observer) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(observer);
-
   if (observers_.HasObserver(observer))
     return;
 
@@ -110,6 +118,7 @@ void CastSocketService::AddObserver(CastSocket::Observer* observer) {
 }
 
 void CastSocketService::RemoveObserver(CastSocket::Observer* observer) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(observer);
 
   for (auto& socket_it : sockets_)

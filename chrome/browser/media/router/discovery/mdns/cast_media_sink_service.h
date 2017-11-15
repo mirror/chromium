@@ -28,41 +28,29 @@ class CastMediaSinkServiceImpl;
 // A service which can be used to start background discovery and resolution of
 // Cast devices.
 // Public APIs should be invoked on the UI thread.
-class CastMediaSinkService
-    : public MediaSinkService,
-      public DialMediaSinkServiceObserver,
-      public DnsSdRegistry::DnsSdObserver,
-      public base::RefCountedThreadSafe<CastMediaSinkService> {
+class CastMediaSinkService : public DnsSdRegistry::DnsSdObserver {
  public:
-  CastMediaSinkService(
-      const OnSinksDiscoveredCallback& callback,
-      content::BrowserContext* browser_context,
-      const scoped_refptr<base::SequencedTaskRunner>& task_runner);
-
-  // Used by unit tests.
-  CastMediaSinkService(
-      const OnSinksDiscoveredCallback& callback,
-      const scoped_refptr<base::SequencedTaskRunner>& task_runner,
-      std::unique_ptr<CastMediaSinkServiceImpl,
-                      content::BrowserThread::DeleteOnIOThread>
-          cast_media_sink_service_impl);
-
   // mDNS service types.
   static const char kCastServiceType[];
 
-  // MediaSinkService implementation
-  void Start() override;
-  void Stop() override;
-  void ForceSinkDiscoveryCallback() override;
-  void OnUserGesture() override;
+  explicit CastMediaSinkService(content::BrowserContext* browser_context);
+
+  // Used by unit tests.
+  explicit CastMediaSinkService(
+      std::unique_ptr<CastMediaSinkServiceImpl> cast_media_sink_service_impl);
+
+  ~CastMediaSinkService() override;
+
+  OnDialSinkAddedCallback GetOnDialSinkAddedCallback();
+
+  void Start(const OnSinksDiscoveredCallback& sinks_discovered_cb);
+  void Stop();
+  void ForceSinkDiscoveryCallback();
+  void OnUserGesture();
 
   void SetDnsSdRegistryForTest(DnsSdRegistry* registry);
 
- protected:
-  ~CastMediaSinkService() override;
-
  private:
-  friend class base::RefCountedThreadSafe<CastMediaSinkService>;
   friend class CastMediaSinkServiceTest;
 
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceTest, TestRestartAfterStop);
@@ -70,33 +58,25 @@ class CastMediaSinkService
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceTest, TestOnDnsSdEvent);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceTest, TestTimer);
 
-  // Callback passed to CastMediaSinkServiceImpl class to be invoked when timer
-  // expires.
-  void OnSinksDiscoveredOnIOThread(std::vector<MediaSinkInternal> sinks);
+  void OnDialSinkAdded(const MediaSinkInternal& sink);
 
   // DnsSdRegistry::DnsSdObserver implementation
   void OnDnsSdEvent(const std::string& service_type,
                     const DnsSdRegistry::DnsSdServiceList& services) override;
 
-  // DialMediaSinkServiceObserver implementation
-  void OnDialSinkAdded(const MediaSinkInternal& sink) override;
-
   // Raw pointer to DnsSdRegistry instance, which is a global leaky singleton
   // and lives as long as the browser process.
   DnsSdRegistry* dns_sd_registry_ = nullptr;
 
-  // Task runner for the IO thread.
-  scoped_refptr<base::SequencedTaskRunner> task_runner_;
-
-  // Created on the UI thread and destroyed on the IO thread.
-  std::unique_ptr<CastMediaSinkServiceImpl,
-                  content::BrowserThread::DeleteOnIOThread>
-      cast_media_sink_service_impl_;
+  // Created on the UI thread, used and destroyed on its SequencedTaskRunner.
+  std::unique_ptr<CastMediaSinkServiceImpl> cast_media_sink_service_impl_;
 
   // List of cast sinks found in current round of mDNS discovery.
   std::vector<MediaSinkInternal> cast_sinks_;
 
-  content::BrowserContext* browser_context_;
+  content::BrowserContext* browser_context_ = nullptr;
+
+  base::WeakPtrFactory<CastMediaSinkService> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(CastMediaSinkService);
 };

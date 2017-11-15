@@ -59,6 +59,11 @@ class CastSocketService {
   // Remove |observer| from each socket in |sockets_|
   void RemoveObserver(CastSocket::Observer* observer);
 
+  // Gets the TaskRunner for accessing this instance.
+  scoped_refptr<base::SequencedTaskRunner> task_runner() {
+    return task_runner_;
+  }
+
   // Allow test to inject a mock cast socket.
   void SetSocketForTest(std::unique_ptr<CastSocket> socket_for_test);
 
@@ -84,7 +89,10 @@ class CastSocketService {
 
   std::unique_ptr<CastSocket> socket_for_test_;
 
-  THREAD_CHECKER(thread_checker_);
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
+
+  // SequenceChecker for |task_runner_|.
+  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(CastSocketService);
 };

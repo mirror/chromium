@@ -14,6 +14,7 @@
 
 namespace media_router {
 
+// XXX: remove this interface.
 // A service which can be used to start background discovery and resolution of
 // MediaSinks. Often these are remote devices, like Chromecast. In addition, the
 // service is capable of answering MediaSink queries using the sinks that it
@@ -22,11 +23,6 @@ namespace media_router {
 // thread.
 class MediaSinkService {
  public:
-  // Callback to be invoked when this class finishes sink discovering.
-  // Arg 0: Sinks discovered and resolved by the service.
-  using OnSinksDiscoveredCallback =
-      base::Callback<void(std::vector<MediaSinkInternal>)>;
-
   explicit MediaSinkService(
       const OnSinksDiscoveredCallback& sink_discovery_callback);
 
@@ -49,6 +45,7 @@ class MediaSinkService {
   virtual void OnUserGesture() {}
 
  protected:
+  // TODO(imcheng): Get rid of this.
   OnSinksDiscoveredCallback sink_discovery_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaSinkService);

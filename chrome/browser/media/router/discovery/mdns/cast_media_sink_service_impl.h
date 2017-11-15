@@ -32,7 +32,6 @@ namespace media_router {
 class CastMediaSinkServiceImpl
     : public MediaSinkServiceBase,
       public cast_channel::CastSocket::Observer,
-      public base::SupportsWeakPtr<CastMediaSinkServiceImpl>,
       public DiscoveryNetworkMonitor::Observer {
  public:
   using SinkSource = CastDeviceCountMetrics::SinkSource;
@@ -48,17 +47,18 @@ class CastMediaSinkServiceImpl
       const OnSinksDiscoveredCallback& callback,
       cast_channel::CastSocketService* cast_socket_service,
       DiscoveryNetworkMonitor* network_monitor,
-      scoped_refptr<net::URLRequestContextGetter> url_request_context_getter,
-      const scoped_refptr<base::SequencedTaskRunner>& task_runner);
+      scoped_refptr<net::URLRequestContextGetter> url_request_context_getter);
   ~CastMediaSinkServiceImpl() override;
 
+  scoped_refptr<base::SequencedTaskRunner> task_runner() {
+    return task_runner_;
+  }
   void SetTaskRunnerForTest(
       scoped_refptr<base::SequencedTaskRunner> task_runner);
   void SetClockForTest(std::unique_ptr<base::Clock> clock);
 
-  // MediaSinkService implementation
-  void Start() override;
-  void Stop() override;
+  void Start();
+  void Stop();
 
   // MediaSinkServiceBase implementation
   // Called when the discovery loop timer expires.
@@ -66,8 +66,9 @@ class CastMediaSinkServiceImpl
   void RecordDeviceCounts() override;
 
   // Opens cast channels on the IO thread.
-  virtual void OpenChannels(const std::vector<MediaSinkInternal>& cast_sinks,
-                            SinkSource sink_source);
+  void OpenChannelsWithRandomizedDelay(
+      const std::vector<MediaSinkInternal>& cast_sinks,
+      SinkSource sink_source);
 
   void OnDialSinkAdded(const MediaSinkInternal& sink);
 
@@ -129,6 +130,55 @@ class CastMediaSinkServiceImpl
                            TestInitRetryParametersWithDefaultValue);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest,
                            TestOnDialSinkAddedSkipsIfNonCastDevice);
+
+  // Holds Finch field trial parameters controlling Cast channel retry strategy.
+  struct RetryParams {
+    // Initial delay (in ms) once backoff starts.
+    int initial_delay_in_milliseconds;
+
+    // Max retry attempts allowed when opening a Cast socket.
+    int max_retry_attempts;
+
+    // Factor by which the delay will be multiplied on each subsequent failure.
+    // This must be >= 1.0.
+    double multiply_factor;
+
+    RetryParams();
+    ~RetryParams();
+
+    bool Validate();
+
+    static RetryParams GetFromFieldTrialParam();
+  };
+
+  // Holds Finch field trial parameters controlling Cast channel open.
+  struct OpenParams {
+    // Connect timeout value when opening a Cast socket.
+    int connect_timeout_in_seconds;
+
+    // Amount of idle time to wait before pinging the Cast device.
+    int ping_interval_in_seconds;
+
+    // Amount of idle time to wait before disconnecting.
+    int liveness_timeout_in_seconds;
+
+    // Dynamic time out delta for connect timeout and liveness timeout. If
+    // previous channel open operation with opening parameters (liveness
+    // timeout, connect timeout) fails, next channel open will have parameters
+    // (liveness timeout + delta, connect timeout + delta).
+    int dynamic_timeout_delta_in_seconds;
+
+    OpenParams();
+    ~OpenParams();
+
+    bool Validate();
+
+    static OpenParams GetFromFieldTrialParam();
+  };
+
+  // Marked virtual for testing.
+  virtual void OpenChannels(const std::vector<MediaSinkInternal>& cast_sinks,
+                            SinkSource sink_source);
 
   // CastSocket::Observer implementation.
   void OnError(const cast_channel::CastSocket& socket,
@@ -205,50 +255,9 @@ class CastMediaSinkServiceImpl
   // long term solution for restricting dual discovery.
   bool IsProbablyNonCastDevice(const MediaSinkInternal& sink) const;
 
-  // Holds Finch field trial parameters controlling Cast channel retry strategy.
-  struct RetryParams {
-    // Initial delay (in ms) once backoff starts.
-    int initial_delay_in_milliseconds;
-
-    // Max retry attempts allowed when opening a Cast socket.
-    int max_retry_attempts;
-
-    // Factor by which the delay will be multiplied on each subsequent failure.
-    // This must be >= 1.0.
-    double multiply_factor;
-
-    RetryParams();
-    ~RetryParams();
-
-    bool Validate();
-
-    static RetryParams GetFromFieldTrialParam();
-  };
-
-  // Holds Finch field trial parameters controlling Cast channel open.
-  struct OpenParams {
-    // Connect timeout value when opening a Cast socket.
-    int connect_timeout_in_seconds;
-
-    // Amount of idle time to wait before pinging the Cast device.
-    int ping_interval_in_seconds;
-
-    // Amount of idle time to wait before disconnecting.
-    int liveness_timeout_in_seconds;
-
-    // Dynamic time out delta for connect timeout and liveness timeout. If
-    // previous channel open operation with opening parameters (liveness
-    // timeout, connect timeout) fails, next channel open will have parameters
-    // (liveness timeout + delta, connect timeout + delta).
-    int dynamic_timeout_delta_in_seconds;
-
-    OpenParams();
-    ~OpenParams();
-
-    bool Validate();
-
-    static OpenParams GetFromFieldTrialParam();
-  };
+  base::WeakPtr<CastMediaSinkServiceImpl> GetWeakPtr() {
+    return weak_ptr_factory_.GetWeakPtr();
+  }
 
   // Set of IP endpoints pending to be connected to.
   std::set<net::IPEndPoint> pending_for_open_ip_endpoints_;
@@ -303,6 +312,7 @@ class CastMediaSinkServiceImpl
   std::unique_ptr<base::Clock> clock_;
 
   SEQUENCE_CHECKER(sequence_checker_);
+  base::WeakPtrFactory<CastMediaSinkServiceImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(CastMediaSinkServiceImpl);
 };

@@ -128,6 +128,11 @@ class MediaSinkInternal {
   };
 };
 
+// Callback to be invoked when this class finishes sink discovering.
+// Arg 0: Sinks discovered and resolved by the service.
+using OnSinksDiscoveredCallback =
+    base::RepeatingCallback<void(std::vector<MediaSinkInternal>)>;
+
 }  // namespace media_router
 
 #endif  // CHROME_COMMON_MEDIA_ROUTER_DISCOVERY_MEDIA_SINK_INTERNAL_H_

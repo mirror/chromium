@@ -11,32 +11,75 @@ using content::BrowserThread;
 
 namespace media_router {
 
+namespace {
+
+void OnSinksDiscoveredOnSequence(
+    const OnSinksDiscoveredCallback& sink_discovery_cb,
+    std::vector<MediaSinkInternal> sinks) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::BindOnce(sink_discovery_cb, std::move(sinks)));
+}
+
+void OnDialSinkAddedOnSequence(
+    const OnDialSinkAddedCallback& dial_sink_added_cb,
+    const MediaSinkInternal& sink) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
+                                   base::BindOnce(dial_sink_added_cb, sink));
+}
+
+}  // namespace
+
 DialMediaSinkServiceProxy::DialMediaSinkServiceProxy(
-    const MediaSinkService::OnSinksDiscoveredCallback& callback,
-    content::BrowserContext* context)
-    : MediaSinkService(callback), observer_(nullptr) {
+    content::BrowserContext* context) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   auto* profile = Profile::FromBrowserContext(context);
   request_context_ = profile->GetRequestContext();
   DCHECK(request_context_);
 }
 
-DialMediaSinkServiceProxy::~DialMediaSinkServiceProxy() = default;
+DialMediaSinkServiceProxy::~DialMediaSinkServiceProxy() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(!dial_media_sink_service_);
+}
 
-void DialMediaSinkServiceProxy::Start() {
+void DialMediaSinkServiceProxy::Start(
+    const OnSinksDiscoveredCallback& sink_discovery_cb,
+    const OnDialSinkAddedCallback& dial_sink_added_cb) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  content::BrowserThread::PostTask(
-      content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&DialMediaSinkServiceProxy::StartOnIOThread, this));
+  if (dial_media_sink_service_)
+    return;
+
+  OnDialSinkAddedCallback cb_on_sequence =
+      dial_sink_added_cb.is_null()
+          ? OnDialSinkAddedCallback()
+          : base::BindRepeating(&OnDialSinkAddedOnSequence, dial_sink_added_cb);
+
+  dial_media_sink_service_ = std::make_unique<DialMediaSinkServiceImpl>(
+      base::BindRepeating(&OnSinksDiscoveredOnSequence, sink_discovery_cb),
+      cb_on_sequence, request_context_);
+
+  dial_media_sink_service_->task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&DialMediaSinkServiceImpl::Start,
+                     base::Unretained(dial_media_sink_service_.get())));
 }
 
 void DialMediaSinkServiceProxy::Stop() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  content::BrowserThread::PostTask(
-      content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&DialMediaSinkServiceProxy::StopOnIOThread, this));
+  if (!dial_media_sink_service_)
+    return;
+
+  dial_media_sink_service_->task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&DialMediaSinkServiceImpl::Stop,
+                     base::Unretained(dial_media_sink_service_.get())));
+  dial_media_sink_service_->task_runner()->DeleteSoon(
+      FROM_HERE, dial_media_sink_service_.release());
 }
 
 void DialMediaSinkServiceProxy::ForceSinkDiscoveryCallback() {
@@ -44,10 +87,10 @@ void DialMediaSinkServiceProxy::ForceSinkDiscoveryCallback() {
   if (!dial_media_sink_service_)
     return;
 
-  content::BrowserThread::PostTask(
-      content::BrowserThread::IO, FROM_HERE,
+  dial_media_sink_service_->task_runner()->PostTask(
+      FROM_HERE,
       base::BindOnce(&DialMediaSinkServiceImpl::ForceSinkDiscoveryCallback,
-                     dial_media_sink_service_->AsWeakPtr()));
+                     base::Unretained(dial_media_sink_service_.get())));
 }
 
 void DialMediaSinkServiceProxy::OnUserGesture() {
@@ -55,21 +98,10 @@ void DialMediaSinkServiceProxy::OnUserGesture() {
   if (!dial_media_sink_service_)
     return;
 
-  content::BrowserThread::PostTask(
-      content::BrowserThread::IO, FROM_HERE,
+  dial_media_sink_service_->task_runner()->PostTask(
+      FROM_HERE,
       base::BindOnce(&DialMediaSinkServiceImpl::OnUserGesture,
-                     dial_media_sink_service_->AsWeakPtr()));
-}
-
-void DialMediaSinkServiceProxy::SetObserver(
-    DialMediaSinkServiceObserver* observer) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  observer_ = observer;
-}
-
-void DialMediaSinkServiceProxy::ClearObserver() {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  observer_ = nullptr;
+                     base::Unretained(dial_media_sink_service_.get())));
 }
 
 void DialMediaSinkServiceProxy::SetDialMediaSinkServiceForTest(
@@ -77,37 +109,6 @@ void DialMediaSinkServiceProxy::SetDialMediaSinkServiceForTest(
   DCHECK(dial_media_sink_service);
   DCHECK(!dial_media_sink_service_);
   dial_media_sink_service_ = std::move(dial_media_sink_service);
-}
-
-void DialMediaSinkServiceProxy::StartOnIOThread() {
-  if (!dial_media_sink_service_) {
-    // Need to explicitly delete |dial_media_sink_service_| outside dtor to
-    // avoid circular dependency.
-    dial_media_sink_service_ = base::MakeUnique<DialMediaSinkServiceImpl>(
-        base::Bind(&DialMediaSinkServiceProxy::OnSinksDiscoveredOnIOThread,
-                   this),
-        request_context_.get());
-    dial_media_sink_service_->SetObserver(observer_);
-  }
-
-  dial_media_sink_service_->Start();
-}
-
-void DialMediaSinkServiceProxy::StopOnIOThread() {
-  if (!dial_media_sink_service_)
-    return;
-
-  dial_media_sink_service_->Stop();
-  dial_media_sink_service_->ClearObserver();
-  dial_media_sink_service_.reset();
-}
-
-void DialMediaSinkServiceProxy::OnSinksDiscoveredOnIOThread(
-    std::vector<MediaSinkInternal> sinks) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  content::BrowserThread::PostTask(
-      content::BrowserThread::UI, FROM_HERE,
-      base::BindOnce(sink_discovery_callback_, std::move(sinks)));
 }
 
 }  // namespace media_router

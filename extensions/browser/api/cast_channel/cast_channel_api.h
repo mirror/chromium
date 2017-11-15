@@ -11,7 +11,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/threading/thread_checker.h"
+#include "base/sequence_checker.h"
 #include "components/cast_channel/cast_channel_enum.h"
 #include "components/cast_channel/cast_socket.h"
 #include "extensions/browser/api/async_api_function.h"
@@ -62,6 +62,10 @@ class CastChannelAPI : public BrowserContextKeyedAPI,
   // Sends an event to the extension's EventRouter, if it exists.
   void SendEvent(const std::string& extension_id, std::unique_ptr<Event> event);
 
+  cast_channel::CastSocketService* cast_socket_service() {
+    return cast_socket_service_;
+  }
+
  private:
   friend class BrowserContextKeyedAPIFactory<CastChannelAPI>;
   friend class ::CastChannelAPITest;
@@ -76,8 +80,10 @@ class CastChannelAPI : public BrowserContextKeyedAPI,
   class CastMessageHandler : public cast_channel::CastSocket::Observer {
    public:
     CastMessageHandler(const EventDispatchCallback& ui_dispatch_cb,
-                       scoped_refptr<cast_channel::Logger> logger);
+                       cast_channel::CastSocketService* cast_socket_service);
     ~CastMessageHandler() override;
+
+    void Init();
 
     // CastSocket::Observer implementation.
     void OnError(const cast_channel::CastSocket& socket,
@@ -90,10 +96,13 @@ class CastChannelAPI : public BrowserContextKeyedAPI,
     // Should be bound to a weak pointer, to prevent any use-after-free
     // conditions.
     EventDispatchCallback const ui_dispatch_cb_;
+
+    cast_channel::CastSocketService* cast_socket_service_;
+
     // Logger object for reporting error details.
     scoped_refptr<cast_channel::Logger> logger_;
 
-    THREAD_CHECKER(thread_checker_);
+    SEQUENCE_CHECKER(sequence_checker_);
 
     DISALLOW_COPY_AND_ASSIGN(CastMessageHandler);
   };
@@ -111,9 +120,11 @@ class CastChannelAPI : public BrowserContextKeyedAPI,
 
   content::BrowserContext* const browser_context_;
   std::unique_ptr<cast_channel::CastSocket> socket_for_test_;
-  // Created and destroyed on the IO thread.
-  std::unique_ptr<CastMessageHandler, content::BrowserThread::DeleteOnIOThread>
-      observer_;
+  // Created on UI thread, accessed and destroyed on |cast_socket_service_|'s
+  // task runner.
+  std::unique_ptr<CastMessageHandler> observer_;
+
+  cast_channel::CastSocketService* const cast_socket_service_;
 
   DISALLOW_COPY_AND_ASSIGN(CastChannelAPI);
 };
@@ -225,7 +236,6 @@ class CastChannelCloseFunction : public CastChannelAsyncApiFunction {
   void OnClose(int result);
 
   std::unique_ptr<api::cast_channel::Close::Params> params_;
-  CastChannelAPI* api_;
 
   DISALLOW_COPY_AND_ASSIGN(CastChannelCloseFunction);
 };

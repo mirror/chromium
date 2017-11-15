@@ -241,6 +241,7 @@ void DnsSdRegistry::ServicesFlushed(const std::string& service_type) {
 }
 
 void DnsSdRegistry::DispatchApiEvent(const std::string& service_type) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(thread_checker_.CalledOnValidThread());
   VLOG(1) << "DispatchApiEvent: service_type: " << service_type;
   for (auto& observer : observers_) {
