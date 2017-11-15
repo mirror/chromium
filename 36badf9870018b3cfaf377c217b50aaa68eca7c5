@@ -16,6 +16,24 @@
       "revId": "36badf9870018b3cfaf377c217b50aaa68eca7c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57f98e4_0cdab43e",
+        "filename": "components/history/core/browser/visitsegment_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-15T06:05:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c197ff9_d5e646ae",
+      "revId": "36badf9870018b3cfaf377c217b50aaa68eca7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
