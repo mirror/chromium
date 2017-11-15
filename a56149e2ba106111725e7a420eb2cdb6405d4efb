@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cdb053ef_6f080f72",
+        "filename": "ash/public/cpp/ash_switches.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-15T18:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d9d3671_f2add620",
+      "revId": "a56149e2ba106111725e7a420eb2cdb6405d4efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8182f3d_7ffd3810",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "a56149e2ba106111725e7a420eb2cdb6405d4efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ccdf164_50b62d0d",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-15T18:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8182f3d_7ffd3810",
+      "revId": "a56149e2ba106111725e7a420eb2cdb6405d4efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
