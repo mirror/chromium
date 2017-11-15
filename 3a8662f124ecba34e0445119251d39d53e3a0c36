@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "73fde429_cfef9e38",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-15T18:28:49Z",
+      "side": 1,
+      "message": "It seems that the migration did not actually start since IsGaiaIdMigrationStarted seems still returns false ATM.\n\nhttps://cs.chromium.org/chromium/src/chromeos/chromeos_switches.cc?rcl\u003dd1054682ea0b2d1ff303f10a06a5eea374a2b532\u0026l\u003d577-584",
+      "parentUuid": "50bfbe97_097c3683",
+      "range": {
+        "startLine": 672,
+        "startChar": 0,
+        "endLine": 676,
+        "endChar": 60
+      },
+      "revId": "3a8662f124ecba34e0445119251d39d53e3a0c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c0a50b8_5015f37a",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.h",
         "patchSetId": 1
