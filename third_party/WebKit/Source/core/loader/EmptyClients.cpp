@@ -204,6 +204,10 @@ TextCheckerClient& EmptyLocalFrameClient::GetTextCheckerClient() const {
   return client;
 }
 
+Frame* EmptyLocalFrameClient::FindFrame(const AtomicString& name) const {
+  return nullptr;
+}
+
 void EmptyTextCheckerClient::RequestCheckingOfString(TextCheckingRequest*) {}
 
 void EmptyTextCheckerClient::CancelAllPendingRequests() {}
