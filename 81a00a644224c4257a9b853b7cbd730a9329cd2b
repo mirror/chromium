@@ -16,6 +16,24 @@
       "revId": "81a00a644224c4257a9b853b7cbd730a9329cd2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f004860a_ae185c6a",
+        "filename": "ui/keyboard/keyboard_controller_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-11-15T01:49:59Z",
+      "side": 1,
+      "message": "Done. Also added a check that uses FloatingBehavior so that the difference between occluding bounds and visible bounds could be verified.",
+      "parentUuid": "a5c2a1a2_a0ef2bc8",
+      "revId": "81a00a644224c4257a9b853b7cbd730a9329cd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
