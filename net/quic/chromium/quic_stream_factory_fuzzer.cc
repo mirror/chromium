@@ -29,6 +29,10 @@ namespace net {
 
 namespace {
 
+const char kCertData[] = {
+#include "net/data/ssl/certificates/wildcard.inc"
+};
+
 class MockSSLConfigService : public SSLConfigService {
  public:
   MockSSLConfigService() {}
@@ -66,7 +70,8 @@ struct Env {
         std::make_unique<ChannelIDService>(new DefaultChannelIDStore(nullptr));
     cert_transparency_verifier = std::make_unique<MultiLogCTVerifier>();
     verify_details.cert_verify_result.verified_cert =
-        ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
+        X509Certificate::CreateFromBytes(kCertData, arraysize(kCertData));
+    CHECK(verify_details.cert_verify_result.verified_cert);
     verify_details.cert_verify_result.is_issued_by_known_root = true;
   }
 
