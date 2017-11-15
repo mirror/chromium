@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0c61173_4de75627",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-15T22:33:21Z",
+      "side": 1,
+      "message": "Ahh makes sense, will add a static_assert here, and update the message in DoublyLinkedList.",
+      "parentUuid": "58f61e6a_1a8b1014",
+      "revId": "eaa735a8fa47335b1359c1003d12cab657d70f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfce9f6f_8770c4fc",
         "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ad998e24_19a76082",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-15T22:33:21Z",
+      "side": 1,
+      "message": "Used this-\u003ehead_ and this-\u003etail_ instead",
+      "parentUuid": "cfce9f6f_8770c4fc",
+      "revId": "eaa735a8fa47335b1359c1003d12cab657d70f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98477ee5_781a8fd8",
         "filename": "third_party/WebKit/Source/platform/wtf/DoublyLinkedList.h",
         "patchSetId": 12
@@ -50,6 +86,24 @@
       "revId": "eaa735a8fa47335b1359c1003d12cab657d70f20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d98b5f7_859192b2",
+        "filename": "third_party/WebKit/Source/platform/wtf/DoublyLinkedList.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-15T22:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98477ee5_781a8fd8",
+      "revId": "eaa735a8fa47335b1359c1003d12cab657d70f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
