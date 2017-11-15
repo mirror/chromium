@@ -145,6 +145,24 @@
     },
     {
       "key": {
+        "uuid": "a73471bc_0a97f9ec",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-15T00:12:53Z",
+      "side": 1,
+      "message": "It\u0027s not really about synchronizing with the lock screen UI - it\u0027s related to lock screen in sense that it is the lock screen that is shown bellow the app window.\nThe problem is that there is a race between a window shown when stylus is ejected being painted and display turned on (at least on kevin).\nEven when I changed lock screen UI to show a full screen black layout on stylus removal, I was seeing this issue - i.e. original lock screen UI flashing before the black layer is shown over the UI.\n\nThe current approach I\u0027m looking into should minimize dependency between lock screen note and power button code - separating code for requesting display to be forced off  out of power_button_display_controller (display_forced_off_setter), and then have both lock screen note code and power_button_display_controller use this common class to request display to be forced off.\nWDYT about something like that? If this seems acceptable, I\u0027ll probably separate that part into another cl (to reduce the size here).",
+      "parentUuid": "ce262ff7_71274a9b",
+      "revId": "42a9100e2fa3d0be5ad67c2eeb36c9d89859448c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97b516bc_91ad8bb6",
         "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
         "patchSetId": 5
