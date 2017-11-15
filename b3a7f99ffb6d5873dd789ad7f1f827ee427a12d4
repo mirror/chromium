@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cace0a2_76a89e65",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayCore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-15T17:48:03Z",
+      "side": 1,
+      "message": "these two lines should happen in the early return as well?",
+      "revId": "b3a7f99ffb6d5873dd789ad7f1f827ee427a12d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
