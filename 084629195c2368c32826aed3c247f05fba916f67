@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a06d134_d0eb11d9",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellCheckRequester.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-15T11:24:55Z",
+      "side": 1,
+      "message": "I think this is fine. core/ already uses Web types in many places.\n\nIn the end we want to remove public APIs and Web types completely but we can move the needle forward step by step :)",
+      "revId": "084629195c2368c32826aed3c247f05fba916f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a795eebc_9706bf4b",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellCheckRequester.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-15T11:24:55Z",
+      "side": 1,
+      "message": "delete this looks not nice... Can we use unique_ptr?",
+      "revId": "084629195c2368c32826aed3c247f05fba916f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "934fe175_e8d78679",
         "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellCheckRequester.cpp",
         "patchSetId": 5
