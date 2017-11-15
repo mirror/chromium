@@ -53,6 +53,36 @@ TEST_F(UiRendererTest, ReticleStacking) {
     }
   }
 
+  EXPECT_TRUE(saw_target);
+
+  auto controller_elements = scene_->GetVisibleControllerElements();
+  bool saw_reticle = false;
+  for (auto* e : controller_elements) {
+    if (e->name() == kReticle) {
+      saw_reticle = true;
+    }
+  }
+  EXPECT_FALSE(saw_reticle);
+}
+
+TEST_F(UiRendererTest, ReticleStackingAtopForeground) {
+  UiElement* element = scene_->GetUiElementByName(kContentQuad);
+  EXPECT_TRUE(element);
+  element->set_draw_phase(kPhaseOverlayForeground);
+  model_->reticle.target_element_id = element->id();
+  auto unsorted = scene_->GetVisible2dBrowsingOverlayElements();
+  auto sorted = UiRenderer::GetElementsInDrawOrder(unsorted);
+  bool saw_target = false;
+  for (auto* e : sorted) {
+    if (e == element) {
+      saw_target = true;
+    } else if (saw_target) {
+      EXPECT_EQ(kReticle, e->name());
+      break;
+    }
+  }
+  EXPECT_TRUE(saw_target);
+
   auto controller_elements = scene_->GetVisibleControllerElements();
   bool saw_reticle = false;
   for (auto* e : controller_elements) {
