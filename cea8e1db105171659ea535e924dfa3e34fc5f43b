@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4afa454b_32799db1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T23:18:40Z",
+      "side": 1,
+      "message": "I don\u0027t think this is the correct bug. 728141 ?",
+      "revId": "cea8e1db105171659ea535e924dfa3e34fc5f43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f890e9_42856fe3",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_bridge_views.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-15T23:18:40Z",
+      "side": 1,
+      "message": "nit: [[NSApp currentEvent] type]\n\n([NSApplication sharedApplication] tends to only come up during process startup when there\u0027s no guarantee NSApp has been initialized).",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 41
+      },
+      "revId": "cea8e1db105171659ea535e924dfa3e34fc5f43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
