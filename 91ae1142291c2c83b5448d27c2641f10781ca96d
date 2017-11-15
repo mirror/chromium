@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a17bde62_ee17d85b",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T01:58:25Z",
+      "side": 1,
+      "message": "these can be set in the header file instead, then you wouldn\u0027t need to declare a constructor at all",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 27
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b022b20_250f1cf0",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 3
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "8b022b20_250f1cf0",
+      "range": {
+        "startLine": 182,
+        "startChar": 1,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7838470_07ac5796",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T01:58:25Z",
+      "side": 1,
+      "message": "Or just omit the method from the class definition entirely (don\u0027t declare or define it a copy constructor): it\u0027s a trivially copyable class so bytewise copy is fine. http://en.cppreference.com/w/cpp/language/copy_constructor#Trivial_copy_constructor",
+      "parentUuid": "0b2aa6f3_acc6123a",
       "range": {
         "startLine": 182,
         "startChar": 1,
@@ -167,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "ecb6851a_e92501c7",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T01:58:25Z",
+      "side": 1,
+      "message": "Is this field even used anywhere? It corresponds to |displayNameRTL| in language_settings_private.idl, but none of our JS atually uses that field according to codesearch.",
+      "parentUuid": "6106475a_5eb18ac8",
+      "range": {
+        "startLine": 431,
+        "startChar": 13,
+        "endLine": 431,
+        "endChar": 29
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2682f555_6407bffc",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 3
@@ -211,6 +282,75 @@
       "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "875b0cee_452c3cd7",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T01:58:25Z",
+      "side": 1,
+      "message": "just use a struct",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 6
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0220ace4_b5247d1c",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T01:58:25Z",
+      "side": 1,
+      "message": "\u003d false;",
+      "range": {
+        "startLine": 94,
+        "startChar": 23,
+        "endLine": 94,
+        "endChar": 24
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b51cf9_94469e4f",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T01:58:25Z",
+      "side": 1,
+      "message": "\u003d false;",
+      "range": {
+        "startLine": 96,
+        "startChar": 25,
+        "endLine": 96,
+        "endChar": 26
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
