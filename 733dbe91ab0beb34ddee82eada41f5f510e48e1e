@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68a70236_be2576ae",
+        "filename": "media/gpu/vaapi/vaapi_picture_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-15T00:27:17Z",
+      "side": 1,
+      "message": "There\u0027s two ways to do the factory thing: one is to have a\nvirtual base class and several implementations, and another\nis to bundle the different per-platform implementations and\nstuff them into the methods of a fully implemented class.\nLooking at vaapi_picture_factory.cc, I don\u0027t think the current\ncase merits a) (the individual classes would be tiny) so I\nchose path b) instead.",
+      "parentUuid": "802db4db_e93423f3",
+      "range": {
+        "startLine": 29,
+        "startChar": 34,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "733dbe91ab0beb34ddee82eada41f5f510e48e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bf74961_e0401c8c",
         "filename": "media/gpu/vaapi_video_decode_accelerator.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-15T00:00:06Z",
       "side": 1,
       "message": "Shouldn\u0027t this be a pointer of some sort?",
+      "range": {
+        "startLine": 231,
+        "startChar": 2,
+        "endLine": 231,
+        "endChar": 21
+      },
+      "revId": "733dbe91ab0beb34ddee82eada41f5f510e48e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d909192a_c9092fe3",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-15T00:27:17Z",
+      "side": 1,
+      "message": "No, why? It\u0027s a fully owned member. VaapiPictureFactory\nhas no member variables so it\u0027s cheap to construct and\ndoesn\u0027t need any parameters only known after a certain\npoint (e.g. after Initialize()).",
+      "parentUuid": "7bf74961_e0401c8c",
       "range": {
         "startLine": 231,
         "startChar": 2,
