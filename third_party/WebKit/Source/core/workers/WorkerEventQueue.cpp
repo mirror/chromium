@@ -56,6 +56,7 @@ bool WorkerEventQueue::EnqueueEvent(const WebTraceLocation& from_here,
                                     Event* event) {
   if (is_closed_)
     return false;
+  DCHECK(event->target());
   probe::AsyncTaskScheduled(event->target()->GetExecutionContext(),
                             event->type(), event);
   pending_events_.insert(event);
