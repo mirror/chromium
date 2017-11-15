@@ -69,9 +69,10 @@ inline T* DoublyLinkedListNode<T>::Next() const {
   return static_cast<const T*>(this)->next_;
 }
 
-template <typename T>
+template <typename T, typename PointerType = T*>
 class DoublyLinkedList {
   USING_FAST_MALLOC(DoublyLinkedList);
+  WTF_MAKE_NONCOPYABLE(DoublyLinkedList);
 
  public:
   DoublyLinkedList();
@@ -89,81 +90,87 @@ class DoublyLinkedList {
   void Append(T*);
   void Remove(T*);
 
- private:
-  T* head_;
-  T* tail_;
+ protected:
+  PointerType head_;
+  PointerType tail_;
 };
 
-template <typename T>
-inline DoublyLinkedList<T>::DoublyLinkedList() : head_(0), tail_(0) {}
+template <typename T, typename PointerType>
+inline DoublyLinkedList<T, PointerType>::DoublyLinkedList()
+    : head_(nullptr), tail_(nullptr) {
+  static_assert(
+      !WTF::IsTraceable<T>::value || !std::is_same<PointerType, T*>::value,
+      "For doubly linked lists with traceable elements, use "
+      "HeapDoublyLinkedList<> instead of DoublyLinkedList<>");
+}
 
-template <typename T>
-inline bool DoublyLinkedList<T>::IsEmpty() const {
+template <typename T, typename U>
+inline bool DoublyLinkedList<T, U>::IsEmpty() const {
   return !head_;
 }
 
-template <typename T>
-inline size_t DoublyLinkedList<T>::size() const {
+template <typename T, typename U>
+inline size_t DoublyLinkedList<T, U>::size() const {
   size_t size = 0;
   for (T* node = head_; node; node = node->Next())
     ++size;
   return size;
 }
 
-template <typename T>
-inline void DoublyLinkedList<T>::Clear() {
-  head_ = 0;
-  tail_ = 0;
+template <typename T, typename U>
+inline void DoublyLinkedList<T, U>::Clear() {
+  head_ = nullptr;
+  tail_ = nullptr;
 }
 
-template <typename T>
-inline T* DoublyLinkedList<T>::Head() const {
+template <typename T, typename U>
+inline T* DoublyLinkedList<T, U>::Head() const {
   return head_;
 }
 
-template <typename T>
-inline T* DoublyLinkedList<T>::Tail() const {
+template <typename T, typename U>
+inline T* DoublyLinkedList<T, U>::Tail() const {
   return tail_;
 }
 
-template <typename T>
-inline void DoublyLinkedList<T>::Push(T* node) {
+template <typename T, typename U>
+inline void DoublyLinkedList<T, U>::Push(T* node) {
   if (!head_) {
     DCHECK(!tail_);
     head_ = node;
     tail_ = node;
-    node->SetPrev(0);
-    node->SetNext(0);
+    node->SetPrev(nullptr);
+    node->SetNext(nullptr);
     return;
   }
 
   DCHECK(tail_);
   head_->SetPrev(node);
   node->SetNext(head_);
-  node->SetPrev(0);
+  node->SetPrev(nullptr);
   head_ = node;
 }
 
-template <typename T>
-inline void DoublyLinkedList<T>::Append(T* node) {
+template <typename T, typename U>
+inline void DoublyLinkedList<T, U>::Append(T* node) {
   if (!tail_) {
     DCHECK(!head_);
     head_ = node;
     tail_ = node;
-    node->SetPrev(0);
-    node->SetNext(0);
+    node->SetPrev(nullptr);
+    node->SetNext(nullptr);
     return;
   }
 
   DCHECK(head_);
   tail_->SetNext(node);
   node->SetPrev(tail_);
-  node->SetNext(0);
+  node->SetNext(nullptr);
   tail_ = node;
 }
 
-template <typename T>
-inline void DoublyLinkedList<T>::Remove(T* node) {
+template <typename T, typename U>
+inline void DoublyLinkedList<T, U>::Remove(T* node) {
   if (node->Prev()) {
     DCHECK_NE(node, head_);
     node->Prev()->SetNext(node->Next());
@@ -181,8 +188,8 @@ inline void DoublyLinkedList<T>::Remove(T* node) {
   }
 }
 
-template <typename T>
-inline T* DoublyLinkedList<T>::RemoveHead() {
+template <typename T, typename U>
+inline T* DoublyLinkedList<T, U>::RemoveHead() {
   T* node = Head();
   if (node)
     Remove(node);

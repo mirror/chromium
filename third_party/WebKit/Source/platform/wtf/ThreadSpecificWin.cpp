@@ -32,12 +32,6 @@
 
 namespace WTF {
 
-static DoublyLinkedList<PlatformThreadSpecificKey>& DestructorsList() {
-  DEFINE_STATIC_LOCAL(DoublyLinkedList<PlatformThreadSpecificKey>, static_list,
-                      ());
-  return static_list;
-}
-
 static Mutex& DestructorsMutex() {
   DEFINE_STATIC_LOCAL(Mutex, static_mutex, ());
   return static_mutex;
@@ -77,6 +71,12 @@ class PlatformThreadSpecificKey
 long& TlsKeyCount() {
   static long count;
   return count;
+}
+
+static DoublyLinkedList<PlatformThreadSpecificKey>& DestructorsList() {
+  DEFINE_STATIC_LOCAL(DoublyLinkedList<PlatformThreadSpecificKey>, static_list,
+                      ());
+  return static_list;
 }
 
 DWORD* TlsKeys() {
