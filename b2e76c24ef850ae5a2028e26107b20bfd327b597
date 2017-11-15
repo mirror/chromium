@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bab9809_e1656325",
+        "filename": "chrome/browser/ui/aura/accessibility/automation_manager_aura.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-15T01:30:18Z",
+      "side": 1,
+      "message": "In general, if you have a window you can use ::wm::IsActiveWindow(window) from window_util.cc to see if it is active, however...",
+      "revId": "b2e76c24ef850ae5a2028e26107b20bfd327b597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9261a5f_8d13ec93",
+        "filename": "chrome/browser/ui/aura/accessibility/automation_manager_aura.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-15T01:30:18Z",
+      "side": 1,
+      "message": "This makes me nervous. What if the window is destroyed? I don\u0027t know this class at all, so I\u0027m not sure if this is the best approach. Is there some other way to go from the BrowserContext to a Browser/BaseWindow where you can call BaseWindow::IsActive()? Or use BrowserList::GetLastActive()?  Or does this class work with arbitrary aura Windows (like the shelf or system tray) that are not associated with a browser?",
+      "revId": "b2e76c24ef850ae5a2028e26107b20bfd327b597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
