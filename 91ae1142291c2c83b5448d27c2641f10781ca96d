@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f1af8ca9_7fa08b81",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-15T23:00:44Z",
+      "side": 1,
+      "message": "Yeah it was funny: if I had 2 strings instead of 3 it wouldn\u0027t trigger the error.\nI\u0027ve moved the false into the header file.",
+      "parentUuid": "1f001ba4_68c0a420",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 27
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b022b20_250f1cf0",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 3
@@ -616,6 +640,30 @@
       "side": 1,
       "message": "it shouldn\u0027t be necessary in the global namespace though, only if you were already in a named namespace like translate. i think.\n\nBTW, I think we prefer putting using declarations in the anonymous namespace, but I\u0027m not sure why it would matter.",
       "parentUuid": "338c5211_d8026ce3",
+      "range": {
+        "startLine": 25,
+        "startChar": 43,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "91ae1142291c2c83b5448d27c2641f10781ca96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fce74c24_d413b234",
+        "filename": "components/translate/core/browser/translate_prefs_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-15T23:00:44Z",
+      "side": 1,
+      "message": "Yeah, we used to put using inside the anonymous namespace in google3, so I\u0027m happy to do it in Chromium too.",
+      "parentUuid": "4291373d_4185a16f",
       "range": {
         "startLine": 25,
         "startChar": 43,
