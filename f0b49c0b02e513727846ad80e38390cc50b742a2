@@ -22,6 +22,30 @@
       "revId": "f0b49c0b02e513727846ad80e38390cc50b742a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0bf4b20_20c0073a",
+        "filename": "ios/chrome/browser/ui/main_content/main_content_ui_state.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-15T23:03:27Z",
+      "side": 1,
+      "message": "My intention was to ultimately use the pan gesture recognizer to also broadcast the touch location for scroll events, which would be necessary to implement overscroll action animations.  I\u0027ll add a TODO for now and keep the pan gesture recognizer here for DCHECKing purposes, and moving it to the updater object for now.",
+      "parentUuid": "777d490f_65deabb5",
+      "range": {
+        "startLine": 93,
+        "startChar": 35,
+        "endLine": 93,
+        "endChar": 45
+      },
+      "revId": "f0b49c0b02e513727846ad80e38390cc50b742a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
