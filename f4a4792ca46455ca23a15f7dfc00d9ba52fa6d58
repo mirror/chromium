@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "f6bc6224_20cb2989",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-15T21:46:27Z",
+      "side": 1,
+      "message": "I see now. I didn\u0027t count all the references.\nI also renamed the class while I\u0027m at it.",
+      "parentUuid": "8f1469e1_01076b78",
+      "range": {
+        "startLine": 177,
+        "startChar": 8,
+        "endLine": 177,
+        "endChar": 15
+      },
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d870d56d_20db03ed",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 15
@@ -376,6 +400,30 @@
       "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626989d9_d4314aaa",
+        "filename": "chrome/browser/printing/print_job_worker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-15T21:46:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b767cd9d_1e8c9d41",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "f4a4792ca46455ca23a15f7dfc00d9ba52fa6d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
