@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee832bbc_140c8241",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-15T15:20:06Z",
+      "side": 1,
+      "message": "Please create a tracking bug with data about the impact of the using beginBackgroundTaskWithExpirationHandler.",
+      "revId": "8fdd906be50a31e2572bd02b023e7afb4e24cf41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1fef046_8fdfba2e",
+        "filename": "base/ios/scoped_critical_action.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-15T15:20:06Z",
+      "side": 1,
+      "message": "Why mark other tasks as expired? They may just be slower to run. We don\u0027t want to have them not complete (otherwise we would not have used ScopedCriticalAction).",
+      "revId": "8fdd906be50a31e2572bd02b023e7afb4e24cf41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1dc6a5d_7f58e7d6",
+        "filename": "base/ios/scoped_critical_action.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-15T15:20:06Z",
+      "side": 1,
+      "message": "\"const\" does not make any sense for a Objective-C object.",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 7
+      },
+      "revId": "8fdd906be50a31e2572bd02b023e7afb4e24cf41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5f4617_3909c9fd",
+        "filename": "base/ios/scoped_critical_action.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-15T15:20:06Z",
+      "side": 1,
+      "message": "Since this file is not compiled with ARC, ui_application_ will become invalid if UIApplication is destroyed as this class does not call -retain when storing a pointer to an Objective-C object.\n\nA potential fix would be to use scoped_nsobject\u003c\u003e, but this is not thread-safe and will prevent the UIApplication from being de-allocated (as BackgroundTaskTracker is leaked).\n\nA potentially simpler solution is to not keep a pointer to UIApplication and instead use \"[UIApplication sharedApplication]\". Though I\u0027m not sure whether this is thread-safe or not :-/",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 22
+      },
+      "revId": "8fdd906be50a31e2572bd02b023e7afb4e24cf41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
