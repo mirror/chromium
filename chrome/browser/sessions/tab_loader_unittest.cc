@@ -70,3 +70,25 @@ TEST_F(TabLoaderTest, MAYBE_OnMemoryStateChange) {
   loop.RunUntilIdle();
   EXPECT_FALSE(TabLoader::shared_tab_loader_->loading_enabled_);
 }
+
+TEST_F(TabLoaderTest, UsePageAlmostIdleSignal) {
+  std::vector<RestoredTab> restored_tabs;
+  content::WebContents* web_contents1 =
+      test_web_contents_factory_->CreateWebContents(&testing_profile_);
+  restored_tabs.push_back(RestoredTab(web_contents1, true, false, false));
+  content::WebContents* web_contents2 =
+      test_web_contents_factory_->CreateWebContents(&testing_profile_);
+  restored_tabs.push_back(RestoredTab(web_contents2, false, false, false));
+
+  TabLoader::RestoreTabs(restored_tabs, base::TimeTicks());
+  EXPECT_TRUE(TabLoader::shared_tab_loader_->loading_enabled_);
+  EXPECT_EQ(1u, TabLoader::shared_tab_loader_->tabs_loading_.size());
+  EXPECT_EQ(1u, TabLoader::shared_tab_loader_->tabs_to_load_.size());
+
+  // By calling this, TabLoader now considers |web_contents1| is loaded, and
+  // starts to load |web_contents2|.
+  TabLoader::shared_tab_loader_->NotifyPageAlmostIdle(web_contents1);
+  EXPECT_TRUE(TabLoader::shared_tab_loader_->loading_enabled_);
+  EXPECT_EQ(1u, TabLoader::shared_tab_loader_->tabs_loading_.size());
+  EXPECT_EQ(0u, TabLoader::shared_tab_loader_->tabs_to_load_.size());
+}
