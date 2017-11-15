@@ -1,0 +1,214 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1b6b786_9043a937",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-15T06:25:28Z",
+      "side": 1,
+      "message": "nit: no need for static inside anonymous namespace, and use constexpr when possible.",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0495c4a7_154ecdd0",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-15T06:25:28Z",
+      "side": 1,
+      "message": "base::MakeRefCounted.",
+      "range": {
+        "startLine": 261,
+        "startChar": 23,
+        "endLine": 261,
+        "endChar": 27
+      },
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee37aef1_e8237743",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-15T06:25:28Z",
+      "side": 1,
+      "message": "What\u0027s the point of encoding if |network_handler| is invalid?",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9612a2_fc89c389",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-15T06:25:28Z",
+      "side": 1,
+      "message": "sub_request_ \u003d std::make_unique\u003cSubRequest\u003e(...)",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5292b3e_f8a67dc6",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-15T06:25:28Z",
+      "side": 1,
+      "message": "Not sure why this needs to be a CHECK(). If it\u0027s a nullptr, it\u0027s going to crash on the next line anyway.",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6cb986c_ccee2378",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-15T06:25:28Z",
+      "side": 1,
+      "message": "nit: One decl per line.",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc4cead4_bc5119df",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-15T06:25:28Z",
+      "side": 1,
+      "message": "nit: This belongs around line 848.",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc6da6f_d5411837",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-15T06:25:28Z",
+      "side": 1,
+      "message": "nit: Sort the list.",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a051495_8a831911",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-15T06:25:28Z",
+      "side": 1,
+      "message": "Was this suppose to be removed? It got removed from the initializer list.",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfcfde8e_f3a7bb39",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-15T06:25:28Z",
+      "side": 1,
+      "message": "Maybe this could have been combined with the else if?",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54083c61_bdb8dc94",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-15T06:25:28Z",
+      "side": 1,
+      "message": "nit: No need for else if after a return.",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff4bb81_65e8e146",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-15T06:25:28Z",
+      "side": 1,
+      "message": "Not sure what protocol::Maybe is exactly, but this is definitely uninitialized in BuildRequestInfo().",
+      "revId": "7c44d942b61a2f8ea63a0020ea1a4c907c6d98b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
