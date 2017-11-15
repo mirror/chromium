@@ -393,6 +393,11 @@ public class ChromeTabbedActivity
     }
 
     @Override
+    protected boolean shouldStartOnAbortLaunchFailure() {
+        return true;
+    }
+
+    @Override
     protected @LaunchIntentDispatcher.Action int maybeDispatchLaunchIntent(Intent intent) {
         if (getClass().equals(ChromeTabbedActivity.class)
                 && Intent.ACTION_MAIN.equals(intent.getAction())) {
