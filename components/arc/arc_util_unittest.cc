@@ -211,7 +211,7 @@ TEST_F(ArcUtilTest, IsArcAllowedForUser) {
   } const kTestCases[] = {
       {user_manager::USER_TYPE_REGULAR, true},
       {user_manager::USER_TYPE_GUEST, false},
-      {user_manager::USER_TYPE_PUBLIC_ACCOUNT, false},
+      {user_manager::USER_TYPE_PUBLIC_ACCOUNT, true},
       {user_manager::USER_TYPE_SUPERVISED, false},
       {user_manager::USER_TYPE_KIOSK_APP, false},
       {user_manager::USER_TYPE_CHILD, true},

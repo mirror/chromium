@@ -237,7 +237,10 @@ TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_PublicAccount) {
   ScopedLogIn login(GetFakeUserManager(),
                     AccountId::FromUserEmail("public_user@gmail.com"),
                     user_manager::USER_TYPE_PUBLIC_ACCOUNT);
-  EXPECT_FALSE(IsArcAllowedForProfile(profile()));
+  EXPECT_FALSE(chromeos::ProfileHelper::Get()
+                   ->GetUserByProfile(profile())
+                   ->HasGaiaAccount());
+  EXPECT_TRUE(IsArcAllowedForProfile(profile()));
 }
 
 TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_ActiveDirectoryEnabled) {
