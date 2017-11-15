@@ -108,6 +108,7 @@ void NativeProcessLauncherImpl::Core::Launch(
     const GURL& origin,
     const std::string& native_host_name,
     const LaunchedCallback& callback) {
+  LOG(WARNING) << "Launching";
   base::PostTaskWithTraits(FROM_HERE,
                            {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
                            base::BindOnce(&Core::DoLaunchOnThreadPool, this,
@@ -118,6 +119,7 @@ void NativeProcessLauncherImpl::Core::DoLaunchOnThreadPool(
     const GURL& origin,
     const std::string& native_host_name,
     const LaunchedCallback& callback) {
+  LOG(WARNING) << "More launching";
   if (!NativeMessagingHostManifest::IsValidName(native_host_name)) {
     PostErrorResult(callback, RESULT_INVALID_NAME);
     return;
@@ -199,8 +201,10 @@ void NativeProcessLauncherImpl::Core::DoLaunchOnThreadPool(
   base::Process process;
   base::File read_file;
   base::File write_file;
+  LOG(WARNING) << "Super launch";
   if (NativeProcessLauncher::LaunchNativeProcess(
           command_line, &process, &read_file, &write_file)) {
+    LOG(WARNING) << "Posting";
     PostResult(callback, std::move(process), std::move(read_file),
                std::move(write_file));
   } else {
@@ -237,11 +241,13 @@ void NativeProcessLauncherImpl::Core::PostResult(
     base::Process process,
     base::File read_file,
     base::File write_file) {
+  LOG(WARNING) << "Posting result for realz";
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&NativeProcessLauncherImpl::Core::CallCallbackOnIOThread,
                      this, callback, RESULT_SUCCESS, Passed(&process),
                      Passed(&read_file), Passed(&write_file)));
+  LOG(WARNING) << "Posted";
 }
 
 NativeProcessLauncherImpl::NativeProcessLauncherImpl(
