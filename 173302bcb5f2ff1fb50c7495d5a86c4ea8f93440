@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "7fe56586_1f2b90aa",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T02:39:26Z",
+      "side": 1,
+      "message": "+1, probably not necessary to add a bad message here. But changing the Chrome IPC won\u0027t automatically do enum validation for mojo enums (we need to define a validation method using IPC_ENUM_MAX_TRAITS, which means we need to define a kLast, which is usually pointless in Mojo...). Given that, I think it\u0027s fine to leave this and fix in a followup (which I\u0027m assuming will be one of the next few CLs after this).",
+      "parentUuid": "6344c660_fe61f10b",
+      "revId": "173302bcb5f2ff1fb50c7495d5a86c4ea8f93440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb11c4e0_0d90fc14",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 9
@@ -70,6 +88,24 @@
       "writtenOn": "2017-11-15T01:20:27Z",
       "side": 1,
       "message": "I\u0027m not sure it\u0027s ok to erase in the middle of the for loop like this. Do you know?",
+      "revId": "173302bcb5f2ff1fb50c7495d5a86c4ea8f93440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96d4c28_d6777dd4",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T02:39:26Z",
+      "side": 1,
+      "message": "Erasing from a set invalidates the current iterator. So this is unsafe since this is a range-based for loop. The standard idiom in this case is:\n\nfor (auto it \u003d used_features_.begin(); it !\u003d used_features_.end(); ) {\n  if (...)\n    it \u003d used_features_.erase(it);\n  else\n    ++it\n}\n\n(Thanks for catching this)",
+      "parentUuid": "437fa665_361ba852",
       "revId": "173302bcb5f2ff1fb50c7495d5a86c4ea8f93440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
