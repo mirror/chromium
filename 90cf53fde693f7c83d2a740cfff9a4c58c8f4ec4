@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45983225_969552a4",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T06:19:35Z",
+      "side": 1,
+      "message": "Does it need to be same-origin? Named window lookup used to work same or cross origin.",
+      "revId": "90cf53fde693f7c83d2a740cfff9a4c58c8f4ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5295cdec_84eceaec",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T06:19:35Z",
+      "side": 1,
+      "message": "I suspect that this can just DCHECK(webframe_-\u003eClient());",
+      "range": {
+        "startLine": 1136,
+        "startChar": 0,
+        "endLine": 1138,
+        "endChar": 19
+      },
+      "revId": "90cf53fde693f7c83d2a740cfff9a4c58c8f4ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f7d066_56eb092b",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTestHelpers.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T06:19:35Z",
+      "side": 1,
+      "message": "Nit: no \u0027class\u0027 in C++",
+      "range": {
+        "startLine": 358,
+        "startChar": 38,
+        "endLine": 358,
+        "endChar": 43
+      },
+      "revId": "90cf53fde693f7c83d2a740cfff9a4c58c8f4ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82eb3771_f3826e82",
+        "filename": "third_party/WebKit/Source/core/page/Page.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T06:19:35Z",
+      "side": 1,
+      "message": "Nit: remove the selected text, and just begin with \u0027A circular, double-linked...\"\n\n(it could be parsed somewhat confusingly due to the \u0027next\u0027 in the field name below)",
+      "range": {
+        "startLine": 406,
+        "startChar": 5,
+        "endLine": 406,
+        "endChar": 28
+      },
+      "revId": "90cf53fde693f7c83d2a740cfff9a4c58c8f4ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4adeefa_95f0152a",
+        "filename": "third_party/WebKit/public/web/WebView.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T06:19:35Z",
+      "side": 1,
+      "message": "Nit: if we can avoid adding default args, that would be nice (it looks like there\u0027s not too many places that call this directly, so hopefully it won\u0027t be too bad)\n\nAnother (possibly better) alternative is to keep Create() and add CreateWithOpener(), with the former forwarding to the latter.",
+      "revId": "90cf53fde693f7c83d2a740cfff9a4c58c8f4ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
