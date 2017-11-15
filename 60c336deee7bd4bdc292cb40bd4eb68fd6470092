@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1baba3ad_86015fee",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-15T00:05:51Z",
+      "side": 1,
+      "message": "Now that interstitials are fully committed pages, we should be able to execute JavaScript on them. Does it make sense to do \n\nExecuteScript(tab, \"document.getElementById(\u0027proceed\u0027).click()\")\n\nhere? I\u0027d prefer that over sending a command to the delegate. If not possible, consider adding a comment why.",
+      "range": {
+        "startLine": 874,
+        "startChar": 7,
+        "endLine": 874,
+        "endChar": 30
+      },
+      "revId": "60c336deee7bd4bdc292cb40bd4eb68fd6470092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6698d0d_657d566b",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-15T00:05:51Z",
+      "side": 1,
+      "message": "nit: Maybe check the final URL just to be extra sure.",
+      "revId": "60c336deee7bd4bdc292cb40bd4eb68fd6470092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
