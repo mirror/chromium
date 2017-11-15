@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "416bd6d9_0f479a44",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T05:20:20Z",
+      "side": 1,
+      "message": "DLOG? Or remove?",
+      "revId": "ddcafb0b7889ea7c04cb7b999a79203f8e9f7fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade1f371_ca61fa77",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T05:20:20Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "ddcafb0b7889ea7c04cb7b999a79203f8e9f7fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
