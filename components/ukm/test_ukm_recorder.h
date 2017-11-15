@@ -69,6 +69,32 @@ class TestUkmRecorder : public UkmRecorderImpl {
                    const char* event_name,
                    const char* metric_name) const WARN_UNUSED_RESULT;
 
+  // Get all of the entries recorded for entry name.
+  std::vector<const mojom::UkmEntry*> GetEntriesByName(
+      base::StringPiece entry_name) const;
+
+  // Get the data for all entries with given entry name, merged to one entry
+  // for each source id. Intended for singular="true" metrics.
+  std::map<ukm::SourceId, mojom::UkmEntryPtr> GetMergedEntriesByName(
+      base::StringPiece entry_name) const;
+
+  // Check if an entry contains a specific metric.
+  static bool EntryHasMetric(const mojom::UkmEntry* entry,
+                             base::StringPiece metric_name);
+
+  // Check if an entry is associated with a url.
+  void ExpectEntrySourceHasUrl(const mojom::UkmEntry* entry,
+                               const GURL& url) const;
+
+  // Expect the value of a metric from an entry.
+  static const int64_t* GetEntryMetric(const mojom::UkmEntry* entry,
+                                       base::StringPiece metric_name);
+
+  // Expect the value of a metric from an entry.
+  static void ExpectEntryMetric(const mojom::UkmEntry* entry,
+                                base::StringPiece metric_name,
+                                int64_t expected_value);
+
   // Expects that a single metric was recorded with the given |expected_value|,
   // for the given |source| and |event_name|. This is shorthand for calling
   // ExpectMetrics with a single value in the expected values vector.
@@ -123,7 +149,7 @@ class TestUkmRecorder : public UkmRecorderImpl {
 
   // Deprecated.
   static const mojom::UkmMetric* FindMetric(const mojom::UkmEntry* entry,
-                                            const char* metric_name);
+                                            base::StringPiece metric_name);
 
  private:
   ukm::mojom::UkmEntryPtr GetMergedEntryForSourceID(
