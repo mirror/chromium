@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dbdcab2_8ecd0be9",
+        "filename": "ios/web/public/web_ui_ios_data_source.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-15T20:58:07Z",
+      "side": 1,
+      "message": "I think default arguments are banned for virtual methods:\nhttps://google.github.io/styleguide/cppguide.html#Default_Arguments",
+      "range": {
+        "startLine": 58,
+        "startChar": 55,
+        "endLine": 58,
+        "endChar": 69
+      },
+      "revId": "71de9a4481f6a45f67d7fb89252d480aa57418c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe744b1_eebacf14",
+        "filename": "ios/web/webui/url_data_manager_ios_backend.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-15T20:58:07Z",
+      "side": 1,
+      "message": "Do you want to document the ownership? I assume that URLRequestChromeJob will not own this pointer.",
+      "range": {
+        "startLine": 140,
+        "startChar": 24,
+        "endLine": 140,
+        "endChar": 29
+      },
+      "revId": "71de9a4481f6a45f67d7fb89252d480aa57418c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
