@@ -70,6 +70,30 @@
       "revId": "935eb7f1e3a2df00226f7a9bd8267cbf35bda025",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73424a15_a0539cc8",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/BindingManagerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T19:47:39Z",
+      "side": 1,
+      "message": "Agreed, I saw that the first thing it does is check there\u0027s not an existing strong binding.\n\nSo what exactly is this CL supposed to do? It\u0027s not clear to me that it\u0027s actually fixing anything and there are legitimate cases where it could help:\n1. tab A launches tab B which is just a download and closes itself but tab A has a chance to stay important rather than get killed\n2. quick back\u003c-\u003eforward not having to reload the page\n\nIn other words: I\u0027m not sure it was always motivated by lack of importance but maybe it was - are you sure?",
+      "parentUuid": "da82055a_db5a5169",
+      "range": {
+        "startLine": 201,
+        "startChar": 16,
+        "endLine": 201,
+        "endChar": 50
+      },
+      "revId": "935eb7f1e3a2df00226f7a9bd8267cbf35bda025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
