@@ -524,6 +524,24 @@
       "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867e7fe5_d0ecf768",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerClientsInfo.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-15T03:26:29Z",
+      "side": 1,
+      "message": "I think we want to avoid using the Blink variant in public headers. Note that since this is just an enum, we could just uniformly use mojom-shared.h, and it would Just Work (since we\u0027re not typemapping it right now).",
+      "parentUuid": "60e150a2_3c298121",
+      "revId": "73bd9240afd5ee26e4e0d342f10dcbb5816f4c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
