@@ -46,6 +46,12 @@ class MODULES_EXPORT AudioWorkletProcessor : public ScriptWrappable {
 
   const String& Name() const { return name_; }
 
+  // Disables this processor so it does not execute the user-supplied code even
+  // after the associated node is connected to the graph. This also fires an
+  // event to set the associated node to "error" state.
+  void Disable() { is_disabled_ = true; }
+  bool IsDisabled() { return is_disabled_; }
+
   void Trace(blink::Visitor*);
   void TraceWrappers(const ScriptWrappableVisitor*) const;
 
@@ -55,6 +61,10 @@ class MODULES_EXPORT AudioWorkletProcessor : public ScriptWrappable {
   Member<AudioWorkletGlobalScope> global_scope_;
   TraceWrapperV8Reference<v8::Object> instance_;
   const String name_;
+
+  // Becomes |true| when Process() method throws an exception from the the
+  // user-supplied code. It is an irreversible transition.
+  bool is_disabled_ = false;
 };
 
 }  // namespace blink
