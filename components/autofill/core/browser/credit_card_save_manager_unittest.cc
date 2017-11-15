@@ -652,9 +652,11 @@ class CreditCardSaveManagerTest : public testing::Test {
     if (is_https) {
       form->origin = GURL("https://myform.com/form.html");
       form->action = GURL("https://myform.com/submit.html");
+      form->root_origin = GURL("https://myform_root.com/form.html");
     } else {
       form->origin = GURL("http://myform.com/form.html");
       form->action = GURL("http://myform.com/submit.html");
+      form->root_origin = GURL("https://myform_root.com/form.html");
     }
 
     FormFieldData field;
@@ -1196,6 +1198,7 @@ TEST_F(CreditCardSaveManagerTest, UploadCreditCard_MultipleCvcFields) {
   credit_card_form.name = ASCIIToUTF16("MyForm");
   credit_card_form.origin = GURL("https://myform.com/form.html");
   credit_card_form.action = GURL("https://myform.com/submit.html");
+  credit_card_form.root_origin = GURL("https://myform_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
@@ -1256,6 +1259,7 @@ TEST_F(CreditCardSaveManagerTest, UploadCreditCard_NoCvcFieldOnForm) {
   credit_card_form.name = ASCIIToUTF16("MyForm");
   credit_card_form.origin = GURL("https://myform.com/form.html");
   credit_card_form.action = GURL("https://myform.com/submit.html");
+  credit_card_form.root_origin = GURL("https://myform_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
@@ -1311,6 +1315,7 @@ TEST_F(CreditCardSaveManagerTest,
   credit_card_form.name = ASCIIToUTF16("MyForm");
   credit_card_form.origin = GURL("https://myform.com/form.html");
   credit_card_form.action = GURL("https://myform.com/submit.html");
+  credit_card_form.root_origin = GURL("https://myform_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
@@ -1369,6 +1374,7 @@ TEST_F(CreditCardSaveManagerTest,
   credit_card_form.name = ASCIIToUTF16("MyForm");
   credit_card_form.origin = GURL("https://myform.com/form.html");
   credit_card_form.action = GURL("https://myform.com/submit.html");
+  credit_card_form.root_origin = GURL("https://myform_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
@@ -1429,6 +1435,7 @@ TEST_F(CreditCardSaveManagerTest,
   credit_card_form.name = ASCIIToUTF16("MyForm");
   credit_card_form.origin = GURL("https://myform.com/form.html");
   credit_card_form.action = GURL("https://myform.com/submit.html");
+  credit_card_form.root_origin = GURL("https://myform_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
@@ -1496,6 +1503,7 @@ TEST_F(CreditCardSaveManagerTest,
   credit_card_form.name = ASCIIToUTF16("MyForm");
   credit_card_form.origin = GURL("https://myform.com/form.html");
   credit_card_form.action = GURL("https://myform.com/submit.html");
+  credit_card_form.root_origin = GURL("https://myform_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
@@ -1558,6 +1566,7 @@ TEST_F(CreditCardSaveManagerTest,
   credit_card_form.name = ASCIIToUTF16("MyForm");
   credit_card_form.origin = GURL("https://myform.com/form.html");
   credit_card_form.action = GURL("https://myform.com/submit.html");
+  credit_card_form.root_origin = GURL("https://myform_root.com/form.html");
 
   FormFieldData field;
   test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
