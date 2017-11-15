@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "d47179a1_10c79ad7",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-15T07:36:17Z",
+      "side": 1,
+      "message": "generally native is useful when a struct is used in old and new ipc. but this is used in one mojo call now. so why not convert it to a mojo struct?",
+      "revId": "cd0357dfcd9fdc6ef2c5821b463aee469eda8335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58116d0c_baf5d49c",
         "filename": "content/test/test_render_frame_host.h",
         "patchSetId": 8
