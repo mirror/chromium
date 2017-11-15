@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9d1e1d4_8dc7df69",
+        "filename": "testing/buildbot/filters/mus.browser_tests.filter",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-15T17:11:50Z",
+      "side": 1,
+      "message": "I suspect this is because of 780279. I\u0027ll update later.",
+      "range": {
+        "startLine": 25,
+        "startChar": 1,
+        "endLine": 25,
+        "endChar": 55
+      },
+      "revId": "43150fd948bb01777d260a85e8d754ec146a5cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
