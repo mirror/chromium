@@ -445,8 +445,7 @@ IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest, SessionStorageCounting) {
 }
 
 // TODO(crbug.com/776711): This test is flaky on all plattforms.
-IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest,
-                       DISABLED_ServiceWorkerDeletion) {
+IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest, ServiceWorkerDeletion) {
   TestSiteData("ServiceWorker");
 }
 

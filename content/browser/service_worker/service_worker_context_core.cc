@@ -163,6 +163,30 @@ class ClearAllServiceWorkersHelper
   DISALLOW_COPY_AND_ASSIGN(ClearAllServiceWorkersHelper);
 };
 
+class RegistrationDeletionListener
+    : public ServiceWorkerRegistration::Listener {
+ public:
+  // Wait until a |registration| is deleted and call |callback|.
+  static void WaitForDeletion(ServiceWorkerRegistration* registration,
+                              const base::Closure& callback) {
+    registration->AddListener(new RegistrationDeletionListener(callback));
+  }
+
+  virtual ~RegistrationDeletionListener() {}
+
+  void OnRegistrationDeleted(ServiceWorkerRegistration* registration) override {
+    registration->RemoveListener(this);
+    callback_.Run();
+    delete this;
+  }
+
+ private:
+  RegistrationDeletionListener(const base::Closure& callback)
+      : callback_(callback) {}
+
+  base::Closure callback_;
+};
+
 }  // namespace
 
 const base::FilePath::CharType
@@ -487,22 +511,31 @@ void ServiceWorkerContextCore::DidGetAllRegistrationsForUnregisterForOrigin(
     const UnregistrationCallback& result,
     const GURL& origin,
     ServiceWorkerStatusCode status,
-    const std::vector<ServiceWorkerRegistrationInfo>& registrations) {
+    const std::vector<ServiceWorkerRegistrationInfo>& registration_infos) {
   if (status != SERVICE_WORKER_OK) {
     result.Run(status);
     return;
   }
   std::set<GURL> scopes;
-  for (const auto& registration_info : registrations) {
+  std::set<ServiceWorkerRegistration*> registrations;
+  for (const auto& registration_info : registration_infos) {
     if (origin == registration_info.pattern.GetOrigin()) {
       scopes.insert(registration_info.pattern);
+      auto* registration =
+          GetLiveRegistration(registration_info.registration_id);
+      if (registration && !registration->is_uninstalling()) {
+        registrations.insert(registration);
+      }
     }
   }
   bool* overall_success = new bool(true);
   base::Closure barrier = base::BarrierClosure(
-      scopes.size(), base::BindOnce(&SuccessReportingCallback,
-                                    base::Owned(overall_success), result));
-
+      scopes.size() + registrations.size(),
+      base::BindOnce(&SuccessReportingCallback, base::Owned(overall_success),
+                     result));
+  for (auto* registration : registrations) {
+    RegistrationDeletionListener::WaitForDeletion(registration, barrier);
+  }
   for (const GURL& scope : scopes) {
     UnregisterServiceWorker(
         scope, base::Bind(&SuccessCollectorCallback, barrier, overall_success));
