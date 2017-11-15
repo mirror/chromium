@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a3384d5_147bcd08",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T18:53:11Z",
+      "side": 1,
+      "message": "No (c) and 2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1969f74_a1800dca",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T18:53:11Z",
+      "side": 1,
+      "message": "Trim this #include list ?",
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3cef49f_a237fb67",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T18:53:11Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6992a514_2f55f468",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T18:53:11Z",
+      "side": 1,
+      "message": "I wonder if we want to move the syscall list for brokering and the SIGSYS handler into its own file that can be mixed-in to the GPU and network policies...",
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794a57af_6159da20",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T18:53:11Z",
+      "side": 1,
+      "message": "Where\u0027s this? I may not split it out this way, and instead do something similar to SyscallSets and/or the architecture #if\u0027s in the switch statement.",
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98198484_55b3488a",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T18:53:11Z",
+      "side": 1,
+      "message": "Move this to the header comment?",
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8fe7fbc_9ab651b0",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T18:53:11Z",
+      "side": 1,
+      "message": "DRI3 is GPU-specific. We probably don\u0027t need this at all for the network broker.",
+      "range": {
+        "startLine": 133,
+        "startChar": 49,
+        "endLine": 133,
+        "endChar": 53
+      },
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f20730_df4160db",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T18:53:11Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a43bbfc_9745d4c9",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T18:53:11Z",
+      "side": 1,
+      "message": "We may want to revisit this. The network policy is going to eventually allow socket operations that presumably the broker (likely) not need.",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "f55ff69e44edf9f4ad9446c32950ce0ca26ed1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
