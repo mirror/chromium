@@ -41,13 +41,11 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
   metafile.FinishDocument();
 
   PrintHostMsg_DidPrintPage_Params printed_page_params;
-  if (!CopyMetafileDataToSharedMem(metafile,
-                                   &printed_page_params.metafile_data_handle)) {
+  if (!CopyMetafileDataToSharedMem(metafile, &printed_page_params.content)) {
     return false;
   }
 
   printed_page_params.content_area = params.params.printable_area;
-  printed_page_params.data_size = metafile.GetDataSize();
   printed_page_params.document_cookie = params.params.document_cookie;
   printed_page_params.page_size = params.params.page_size;
 
@@ -60,8 +58,9 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
     Send(new PrintHostMsg_DidPrintPage(routing_id(), printed_page_params));
     // Send the rest of the pages with an invalid metafile handle.
     // TODO(erikchen): Fix semantics. See https://crbug.com/640840
-    if (printed_page_params.metafile_data_handle.IsValid())
-      printed_page_params.metafile_data_handle = base::SharedMemoryHandle();
+    if (printed_page_params.content.metafile_data_handle.IsValid())
+      printed_page_params.content.metafile_data_handle =
+          base::SharedMemoryHandle();
   }
   return true;
 }
