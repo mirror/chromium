@@ -2835,6 +2835,69 @@ TEST(HttpCache, SimpleGET_ParallelWritingSuccess) {
   }
 }
 
+// Tests the case when parallel writing succeeds. Tests both idle and waiting
+// transactions.
+TEST(HttpCache, SimpleGET_ParallelWritingSuccessWithNetworkBytes) {
+  MockHttpCache cache;
+
+  MockHttpRequest request(kSimpleGET_Transaction);
+
+  MockTransaction transaction(kSimpleGET_Transaction);
+  transaction.load_flags |= LOAD_ONLY_FROM_CACHE;
+  MockHttpRequest read_request(transaction);
+
+  const int kNumTransactions = 4;
+  std::vector<std::unique_ptr<Context>> context_list;
+
+  for (int i = 0; i < kNumTransactions; ++i) {
+    context_list.push_back(std::make_unique<Context>());
+    auto& c = context_list[i];
+
+    c->result = cache.CreateTransaction(&c->trans);
+    ASSERT_THAT(c->result, IsOk());
+
+    MockHttpRequest* this_request = &request;
+    if (i == 3)
+      this_request = &read_request;
+
+    c->result = c->trans->Start(this_request, c->callback.callback(),
+                                NetLogWithSource());
+  }
+
+  // Allow all requests to move from the Create queue to the active entry.
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_EQ(1, cache.network_layer()->transaction_count());
+  EXPECT_EQ(0, cache.disk_cache()->open_count());
+  EXPECT_EQ(1, cache.disk_cache()->create_count());
+
+  EXPECT_EQ(3, cache.GetCountWriterTransactions(kSimpleGET_Transaction.url));
+  EXPECT_EQ(1, cache.GetCountDoneHeadersQueue(kSimpleGET_Transaction.url));
+
+  // Get the network bytes read by the first transaction.
+  int total_received_bytes = context_list[0]->trans->GetTotalReceivedBytes();
+  EXPECT_GT(total_received_bytes, 0);
+
+  // Complete Read by the 2nd transaction so that the 1st transaction that
+  // created the network transaction is now a reader.
+  ReadAndVerifyTransaction(context_list[1]->trans.get(),
+                           kSimpleGET_Transaction);
+
+  // Remaining transactions should now be readers.
+  EXPECT_EQ(3, cache.GetCountReaders(kSimpleGET_Transaction.url));
+
+  // Verify the network bytes read for the 1st transaction are equal to the
+  // value returned earlier.
+  EXPECT_EQ(total_received_bytes,
+            context_list[0]->trans->GetTotalReceivedBytes());
+  for (int i = 0; i < kNumTransactions; i++) {
+    if (i == 1)
+      continue;
+    auto& c = context_list[i];
+    ReadAndVerifyTransaction(c->trans.get(), kSimpleGET_Transaction);
+  }
+}
+
 // Tests when a writer is destroyed mid-read, all the other writer transactions
 // can continue writing to the entry.
 TEST(HttpCache, SimpleGET_ParallelValidationCancelWriter) {
