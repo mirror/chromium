@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f37d347d_9923887d",
+        "filename": "chrome/browser/browsing_data/browsing_data_cookie_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-15T20:05:51Z",
+      "side": 0,
+      "message": "I\u0027m not clear what duplicated logic is being referred to; are you?  It may be gone.",
+      "range": {
+        "startLine": 104,
+        "startChar": 32,
+        "endLine": 104,
+        "endChar": 35
+      },
+      "revId": "3f049c669d944abd65701ed4b7d613b39a00f32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
