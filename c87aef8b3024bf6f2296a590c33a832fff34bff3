@@ -16,6 +16,24 @@
       "revId": "c87aef8b3024bf6f2296a590c33a832fff34bff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d555281b_51a88b81",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-15T00:23:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e4c0a59_7c6914b7",
+      "revId": "c87aef8b3024bf6f2296a590c33a832fff34bff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
