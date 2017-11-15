@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb08f1e9_b9058087",
+        "filename": "components/viz/common/gl_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-15T21:02:44Z",
+      "side": 1,
+      "message": "I\u0027m not against this approach. However, you might consider just adding a separate static method for vending this info. Meaning, here:\n\n  //static\n  void ReadbackYUVInterface::GetGrGLBackendStateChanges() {\n    return ...or\u0027ed flags...;\n  }\n\nThen, in the calling code, after the ReadbackYUV() call, you could just:\n\n  yuv_reader-\u003eReadbackYUV(...);\n  // ReadbackYUV() made GL context changes that the context provider needs to know about.\n  context_provider-\u003eInvalidateGrContext(ReadbackYUVInterface::GetGrGLBackendStateChanges());",
+      "range": {
+        "startLine": 1141,
+        "startChar": 4,
+        "endLine": 1141,
+        "endChar": 51
+      },
+      "revId": "de203a4b3a33e1a9179b72d936fccc715fa97cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51466048_506f0c6e",
+        "filename": "components/viz/common/gl_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-15T21:02:44Z",
+      "side": 1,
+      "message": "You\u0027ll definitely want to add kProgram_GrGLBackendState since the shader programs were changed. I\u0027m also thinking kRenderTarget_GrGLBackendState is also needed, since it seems that enum represents changes to the GL_FRAMEBUFFER binding.",
+      "range": {
+        "startLine": 1177,
+        "startChar": 13,
+        "endLine": 1178,
+        "endChar": 37
+      },
+      "revId": "de203a4b3a33e1a9179b72d936fccc715fa97cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
