@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b8feb9d5_c82b27a7",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-15T20:25:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf477e42_b450600c",
+      "revId": "967cef8f380086b40fcf3743d63b92100d8890cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fecb8064_2cee88c3",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 9
@@ -47,6 +65,24 @@
       "writtenOn": "2017-11-14T18:28:10Z",
       "side": 1,
       "message": "optional: to be sure we\u0027re filtering all input events that we want to ignore above, do we want to also report the event type, and log it via UMA (so we can see invalidating input event frequencies by event type)?",
+      "revId": "967cef8f380086b40fcf3743d63b92100d8890cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f759d63_7f6a29b0",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2038,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-15T20:25:11Z",
+      "side": 1,
+      "message": "I think it\u0027s a great idea. Let\u0027s do it in a future CL - this is getting bloated.",
+      "parentUuid": "fecb8064_2cee88c3",
       "revId": "967cef8f380086b40fcf3743d63b92100d8890cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "b39fc443_4876c9ad",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-15T20:25:11Z",
+      "side": 1,
+      "message": "While writing a response to your comment, I realized the current code has a bug: If we invalidate TTI on the renderer side and reach quiescence, we report status once on the renderer side as user-interaction-before-interactive, and then later report status again on the browser side as did-not-reach-quiescence. Recording the enums on both side certainly make this harder to reason about. \n\nI do worry that recording input status separately in the renderer will prevent us from answering questions like what percentage of the page loads did not achieve TTI due to invalidating user input despite reaching quiescence - the renderer is not as well equipped to track end of page life as the PLM infrastructure in the browser. Is it reasonable to plumb time of first TTI invalidation due to input to the browser? It will be passed in as part of the InteractiveTiming struct and directly provided by InteractiveDetector so it should not be hard to keep in sync, and it will only be used at the end of page lifecycle to record proper TTI failure status. We won\u0027t have the wrong denominator problem anymore.",
+      "parentUuid": "10cade3e_f37e326e",
+      "revId": "967cef8f380086b40fcf3743d63b92100d8890cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "674ff074_485ed5b8",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 9
@@ -81,6 +135,24 @@
       "writtenOn": "2017-11-14T18:28:10Z",
       "side": 1,
       "message": "our convention for PageLoad metrics recorded in the render process has been to use PageLoad.Internal.Renderer.*. Could we use that convention here and for any other histos recorded in the render process?",
+      "revId": "967cef8f380086b40fcf3743d63b92100d8890cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b581c73a_77c9fc84",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-11-15T20:25:11Z",
+      "side": 1,
+      "message": "Whoops looks like this is actually dead code I forgot to remove. I will remember this convention for other cases.",
+      "parentUuid": "674ff074_485ed5b8",
       "revId": "967cef8f380086b40fcf3743d63b92100d8890cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
