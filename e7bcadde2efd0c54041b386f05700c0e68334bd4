@@ -208,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "503bb887_2b2a0597",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-15T19:25:56Z",
+      "side": 1,
+      "message": "I could swear that at some point in time it was needed (I think we replaced the entire service_manager::InterfaceProvider, not just the service_manager::mojom::InterfaceProvider).\n\nBut it\u0027s no longer the case, so we don\u0027t either this or a forwarding callback.",
+      "parentUuid": "fba277ea_9e060463",
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f5664f9_4299ca59",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 20
@@ -291,6 +309,24 @@
       "side": 1,
       "message": "OK, so the problem is that the renderer binds this interface, but keeps it around without associating it with a frame? So the interface ptr is used by all frames in the same renderer?\n\n(Sorry just trying to understand this issue better)",
       "parentUuid": "f853d4ef_b790d483",
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f8f9dfa_b0bc57cd",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 3971,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-15T19:25:56Z",
+      "side": 1,
+      "message": "No, everything is per-frame here.\n\nInternally, AudioIPCFactory::MaybeRegisterRemoteFactory uses RenderFrameImpl::GetRemoteInterfaces() to retrieve its own RendererAudioOutputStreamFactoryPtr interface that it intends to use for the rest of the frame\u0027s life to retrieve audio output stream interfaces for that frame.\n\nHowever, the corresponding RendererAudioOutputStreamFactoryRequest might never be bound to an implementation in the browser side. This is because the mojom::InterfaceProvider::GetInterface message carrying the request can be at race with a navigation commit, and it can be dropped if we re-bind frame\u0027s InterfaceProvider due to a navigation, before the RendererAudioOutputStreamFactoryRequest is dispatched.\n\nSo the document we just navigated away from will never have had a RendererAudioOutputStreamFactory interface actually bound to an implementation. But that\u0027s fine, the document is going away.\n\nBut for the next document, it would be nice to have a non-dead RendererAudioOutputStreamFactory, so we re-request it for each new document over the new InterfaceProvider.\n\nIf the old RendererAudioOutputStreamFactoryPtr already has pending stream requests, those are dropped, but hopefully those things have document-lifetime as opposed to frame-lifetime.",
+      "parentUuid": "890b375c_2e7b79cd",
       "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

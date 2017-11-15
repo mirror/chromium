@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f33ec4bd_7a8e49ff",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-15T19:25:56Z",
+      "side": 1,
+      "message": "Done in entire CL.",
+      "parentUuid": "0f59bc20_9a6c03c1",
+      "range": {
+        "startLine": 1358,
+        "startChar": 27,
+        "endLine": 1358,
+        "endChar": 35
+      },
+      "revId": "6af3780c5f6da3bbaaed530ca066ae34ef5071c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f5fd676_cefcf4ee",
         "filename": "content/browser/interface_provider_filtering.cc",
         "patchSetId": 25
@@ -39,6 +63,24 @@
       "revId": "6af3780c5f6da3bbaaed530ca066ae34ef5071c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc29475_dffc5023",
+        "filename": "content/browser/interface_provider_filtering.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-15T19:25:56Z",
+      "side": 1,
+      "message": "Agreed, but if memory serves, many unittests will crash.\n\nSo let me do that in a follow-up CL, to avoid making this CL even larger by adding the scoper to those unittests.",
+      "parentUuid": "3f5fd676_cefcf4ee",
+      "revId": "6af3780c5f6da3bbaaed530ca066ae34ef5071c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "df364d6b_f9513af0",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-15T19:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a710f4bf_7e60e7e3",
+      "range": {
+        "startLine": 38,
+        "startChar": 36,
+        "endLine": 38,
+        "endChar": 43
+      },
+      "revId": "6af3780c5f6da3bbaaed530ca066ae34ef5071c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fac8fc2_de62f26d",
         "filename": "content/test/test_render_frame.h",
         "patchSetId": 25
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "1e480331_dbde50ab",
+        "filename": "content/test/test_render_frame.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-15T19:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fac8fc2_de62f26d",
+      "range": {
+        "startLine": 38,
+        "startChar": 42,
+        "endLine": 38,
+        "endChar": 46
+      },
+      "revId": "6af3780c5f6da3bbaaed530ca066ae34ef5071c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4ffaf67_b52f3a82",
         "filename": "third_party/WebKit/public/web/WebWindowObjectInstance.h",
         "patchSetId": 25
@@ -102,6 +192,24 @@
       "revId": "6af3780c5f6da3bbaaed530ca066ae34ef5071c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5890b54d_743f2be1",
+        "filename": "third_party/WebKit/public/web/WebWindowObjectInstance.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-15T19:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4ffaf67_b52f3a82",
+      "revId": "6af3780c5f6da3bbaaed530ca066ae34ef5071c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
