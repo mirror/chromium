@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9defa3ff_4b1b61f5",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-15T17:31:37Z",
+      "side": 1,
+      "message": "Unfortunately I wasn\u0027t able to move this to the logger because we don\u0027t have a browser_context here to allow us to obtain the logger\u0027s factory. Same goes for the CloseResult UMA.\n\nWhat to do?",
+      "range": {
+        "startLine": 441,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 28
+      },
+      "revId": "74a793579200ebbdbf7d520d8459787b65c644ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
