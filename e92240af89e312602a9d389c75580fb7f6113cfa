@@ -104,6 +104,24 @@
       "revId": "e92240af89e312602a9d389c75580fb7f6113cfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faffece3_271f36b6",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-15T23:42:53Z",
+      "side": 1,
+      "message": "It\u0027s not a big deal. The change would just be s/16/8/ but that still may not be worth much; I looked into l10n_util::GetStringUTF8 and it does a conversion. So avoiding the conversions is a larger topic than this CL.",
+      "parentUuid": "48ca259c_67c98949",
+      "revId": "e92240af89e312602a9d389c75580fb7f6113cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

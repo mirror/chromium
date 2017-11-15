@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e1cd44b_6a27d738",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-15T23:42:53Z",
+      "side": 1,
+      "message": "IIUC, MD avoids having colons on lines like\nLoaded from:\nThis could be a separate CL, but if you\u0027d like to change it all-at-once, that string is over here:\nhttps://cs.chromium.org/chromium/src/chrome/app/generated_resources.grd?type\u003dcs\u0026q\u003dIDS_EXTENSIONS_PATH\u0026l\u003d4013",
+      "revId": "f6f928731d8509cda2e4ad3aa907eb35845c61e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
