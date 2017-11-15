@@ -71,7 +71,6 @@ public class ChromeApplication extends ContentApplication {
         UmaUtils.recordMainEntryPointTime();
         TraceEvent.maybeEnableEarlyTracing();
         TraceEvent.begin("ChromeApplication.onCreate");
-
         super.onCreate();
 
         TraceEvent.end("ChromeApplication.onCreate");
