@@ -16,8 +16,7 @@
 #include "base/time/default_tick_clock.h"
 #include "base/time/time.h"
 #include "base/trace_event/memory_dump_provider.h"
-
-struct vpx_codec_frame_buffer;
+#include "media/base/media_export.h"
 
 namespace base {
 class SequencedTaskRunner;
@@ -25,50 +24,30 @@ class SequencedTaskRunner;
 
 namespace media {
 
-// FrameBufferPool is a pool of simple CPU memory, allocated by hand and used by
-// both VP9 and any data consumers. This class needs to be ref-counted to hold
-// on to allocated memory via the memory-release callback of
-// CreateFrameCallback().
-// TODO(dalecurtis): Make this generic so it can be used with AV1.
-class FrameBufferPool : public base::RefCountedThreadSafe<FrameBufferPool>,
-                        public base::trace_event::MemoryDumpProvider {
+// FrameBufferPool is a pool of simple CPU memory. This class needs to be ref-
+// counted since frames created using this memory may live beyond the lifetime
+// of the caller to this class.
+class MEDIA_EXPORT FrameBufferPool
+    : public base::RefCountedThreadSafe<FrameBufferPool>,
+      public base::trace_event::MemoryDumpProvider {
  public:
   FrameBufferPool();
 
-  // Callback that will be called by libvpx when it needs a frame buffer.
-  // Parameters:
-  // |user_priv|  Private data passed to libvpx (pointer to memory pool).
-  // |min_size|   Minimum size needed by libvpx to decompress the next frame.
-  // |fb|         Pointer to the frame buffer to update.
-  // Returns 0 on success. Returns < 0 on failure.
-  static int32_t GetVP9FrameBuffer(void* user_priv,
-                                   size_t min_size,
-                                   vpx_codec_frame_buffer* fb);
+  // Called when a frame buffer allocation is needed. Upon return |fb_priv| will
+  // be set to a private value used to identify the buffer in future calls and a
+  // buffer of at least |min_size| will be returned.
+  uint8_t* GetFrameBuffer(size_t min_size, void** fb_priv);
 
-  // Callback that will be called by libvpx when the frame buffer is no longer
-  // being used by libvpx. Can be called with NULL user data when decode stops
-  // because of an invalid bitstream.
-  // Parameters:
-  // |user_priv|  Private data passed to libvpx (pointer to memory pool).
-  // |fb|         Pointer to the frame buffer that's being released.
-  // Returns 0 on success. Returns < 0 on failure.
-  static int32_t ReleaseVP9FrameBuffer(void* user_priv,
-                                       vpx_codec_frame_buffer* fb);
+  // Called when a frame buffer allocation is no longer needed.
+  void ReleaseFrameBuffer(void* fb_priv);
 
-  // Generates a "no_longer_needed" closure that holds a reference to this pool.
-  base::Closure CreateFrameCallback(void* fb_priv_data);
+  // Allocates (or reuses) room for an alpha plane on a given frame buffer.
+  // |fb_priv| must be a value previously returned by GetFrameBuffer().
+  uint8_t* AllocateAlphaPlaneForFrameBuffer(size_t min_size, void* fb_priv);
 
-  // Reference counted frame buffers used for VP9 decoding.
-  struct VP9FrameBuffer {
-    VP9FrameBuffer();
-    ~VP9FrameBuffer();
-    std::vector<uint8_t> data;
-    std::vector<uint8_t> alpha_data;
-    bool held_by_libvpx = false;
-    // Needs to be a counter since libvpx may vend a framebuffer multiple times.
-    int held_by_frame = 0;
-    base::TimeTicks last_use_time;
-  };
+  // Generates a "no_longer_needed" closure that holds a reference to this pool;
+  // |fb_priv| must be a value previously returned by GetFrameBuffer().
+  base::Closure CreateFrameCallback(void* fb_priv);
 
   size_t get_pool_size_for_testing() const { return frame_buffers_.size(); }
 
@@ -76,32 +55,38 @@ class FrameBufferPool : public base::RefCountedThreadSafe<FrameBufferPool>,
     tick_clock_ = tick_clock;
   }
 
+  // Called when no more GetFrameBuffer() calls are expected. All unused memory
+  // is released at this time. As frames are returned their memory is released.
+  // This should not be called until anything that might call GetFrameBuffer()
+  // has been destroyed.
   void Shutdown();
+
+  enum { kStaleFrameLimitSecs = 10 };
 
  private:
   friend class base::RefCountedThreadSafe<FrameBufferPool>;
   ~FrameBufferPool() override;
 
+  // Internal structure holding memory for decoding.
+  struct FrameBuffer;
+
   // base::MemoryDumpProvider.
   bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
                     base::trace_event::ProcessMemoryDump* pmd) override;
 
-  static bool IsUsed(const VP9FrameBuffer* buf);
+  static bool IsUsed(const FrameBuffer* buf);
 
   // Drop all entries in |frame_buffers_| that report !IsUsed().
   void EraseUnusedResources();
-
-  // Gets the next available frame buffer for use by libvpx.
-  VP9FrameBuffer* GetFreeFrameBuffer(size_t min_size);
 
   // Method that gets called when a VideoFrame that references this pool gets
   // destroyed.
   void OnVideoFrameDestroyed(
       scoped_refptr<base::SequencedTaskRunner> task_runner,
-      VP9FrameBuffer* frame_buffer);
+      FrameBuffer* frame_buffer);
 
-  // Frame buffers to be used by libvpx for VP9 Decoding.
-  std::vector<std::unique_ptr<VP9FrameBuffer>> frame_buffers_;
+  // Allocated frame buffers.
+  std::vector<std::unique_ptr<FrameBuffer>> frame_buffers_;
 
   bool in_shutdown_ = false;
 

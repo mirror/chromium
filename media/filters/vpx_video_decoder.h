@@ -21,7 +21,7 @@ struct vpx_image;
 namespace base {
 class SequencedTaskRunner;
 class TickClock;
-}
+}  // namespace base
 
 namespace media {
 class FrameBufferPool;
