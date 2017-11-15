@@ -16,6 +16,24 @@
       "revId": "1dca3b4af6d0ed8b475d733071f27c8c687bfad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7149ed9_6103e89e",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/request-from-iframe.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-15T00:01:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0da71c7a_402e43ba",
+      "revId": "1dca3b4af6d0ed8b475d733071f27c8c687bfad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
