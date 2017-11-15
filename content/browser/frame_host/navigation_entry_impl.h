@@ -9,6 +9,7 @@
 
 #include <map>
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "base/macros.h"
@@ -252,6 +253,11 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   std::map<std::string, bool> GetSubframeUniqueNames(
       FrameTreeNode* frame_tree_node) const;
 
+  // Removes FrameNavigationEntry associated with |frame_tree_node|.  Caller has
+  // to ensure that |frame_tree_node| has a parent (i.e. it cannot represent the
+  // main frame).
+  void RemoveTreeNode(FrameTreeNode* frame_tree_node);
+
   // Removes any subframe FrameNavigationEntries that match the unique name of
   // |frame_tree_node|, and all of their children. There should be at most one,
   // since collisions are avoided but leave old FrameNavigationEntries in the
@@ -413,12 +419,14 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
     return has_user_gesture_;
   }
 
-  void set_has_user_gesture (bool has_user_gesture) {
+  void set_has_user_gesture(bool has_user_gesture) {
     has_user_gesture_ = has_user_gesture;
   }
 #endif
 
  private:
+  void RemoveTreeNode(NavigationEntryImpl::TreeNode* node);
+
   // WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
   // Session/Tab restore save portions of this class so that it can be recreated
   // later. If you add a new field that needs to be persisted you'll have to
