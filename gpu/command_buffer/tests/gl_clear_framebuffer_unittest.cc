@@ -30,16 +30,8 @@ class GLClearFramebufferTest : public testing::TestWithParam<bool> {
 
  protected:
   void SetUp() override {
-    if (GetParam()) {
-      // Force the glClear() workaround so we can test it here.
-      GpuDriverBugWorkarounds workarounds;
-      workarounds.gl_clear_broken = true;
-      gl_.InitializeWithWorkarounds(GLManager::Options(), workarounds);
-      DCHECK(gl_.workarounds().gl_clear_broken);
-    } else {
-      gl_.Initialize(GLManager::Options());
-      DCHECK(!gl_.workarounds().gl_clear_broken);
-    }
+    GLManager::Options options;
+    gl_.Initialize(options);
   }
 
   bool IsApplicable() {
@@ -171,6 +163,16 @@ TEST_P(GLClearFramebufferTest, ClearColorWithScissor) {
 
 TEST_P(GLClearFramebufferTest, ClearDepthStencil) {
   if (!IsApplicable()) {
+    return;
+  }
+
+  // This is a driver bug on windows Intel. When rendering with viewport size
+  // larger than 1024 and sencil buffer enabled, the output color is incorrect.
+  // See https://crbug.com/782317
+  std::string rendererString(
+      reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
+  if (rendererString.find("Intel") != std::string::npos &&
+      (rendererString.find("Direct3D11 vs_5_0") != std::string::npos)) {
     return;
   }
 
