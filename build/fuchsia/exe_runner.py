@@ -45,6 +45,7 @@ def main():
                       help='Extra file to add to bootfs, '
                            '<bootfs_path>=<local_path>')
   args, child_args = parser.parse_known_args()
+  print args, child_args
 
   runtime_deps = ReadRuntimeDeps(args.runtime_deps_path, args.output_directory)
   for extra_file in args.extra_file:
