@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4ab6ee9_7159b0c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-11-15T11:41:18Z",
+      "side": 1,
+      "message": "Thanks, added/",
+      "parentUuid": "a6b7129b_c16dec7e",
+      "range": {
+        "startLine": 163,
+        "startChar": 10,
+        "endLine": 163,
+        "endChar": 74
+      },
+      "revId": "b90d330181946482d6cee1af88282057ff570845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7acc5787_755c901c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "11943900_5e50f464",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-11-15T11:41:18Z",
+      "side": 1,
+      "message": "Yes, used else.",
+      "parentUuid": "7acc5787_755c901c",
+      "range": {
+        "startLine": 177,
+        "startChar": 16,
+        "endLine": 177,
+        "endChar": 24
+      },
+      "revId": "b90d330181946482d6cee1af88282057ff570845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c673df63_fd71f64b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "b90d330181946482d6cee1af88282057ff570845",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8393851_8487c296",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-11-15T11:41:18Z",
+      "side": 1,
+      "message": "Done, replaced with min().",
+      "parentUuid": "c673df63_fd71f64b",
+      "range": {
+        "startLine": 181,
+        "startChar": 12,
+        "endLine": 185,
+        "endChar": 13
+      },
+      "revId": "b90d330181946482d6cee1af88282057ff570845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
