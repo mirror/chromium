@@ -178,6 +178,7 @@ V4L2VideoDecodeAccelerator::V4L2VideoDecodeAccelerator(
       output_format_fourcc_(0),
       egl_image_format_fourcc_(0),
       egl_image_planes_count_(0),
+      dev_poll_weak_this_factory_(this),
       weak_this_factory_(this) {
   weak_this_ = weak_this_factory_.GetWeakPtr();
 }
@@ -1863,6 +1864,7 @@ bool V4L2VideoDecodeAccelerator::StopDevicePoll() {
     return false;
   }
   device_poll_thread_.Stop();
+  dev_poll_weak_this_factory_.InvalidateWeakPtrs();
   // Clear the interrupt now, to be sure.
   if (!device_->ClearDevicePollInterrupt()) {
     NOTIFY_ERROR(PLATFORM_FAILURE);
@@ -1998,8 +2000,9 @@ void V4L2VideoDecodeAccelerator::DevicePollTask(bool poll_device) {
   // All processing should happen on ServiceDeviceTask(), since we shouldn't
   // touch decoder state from this thread.
   decoder_thread_.task_runner()->PostTask(
-      FROM_HERE, base::Bind(&V4L2VideoDecodeAccelerator::ServiceDeviceTask,
-                            base::Unretained(this), event_pending));
+      FROM_HERE,
+      base::Bind(&V4L2VideoDecodeAccelerator::ServiceDeviceTask,
+                 dev_poll_weak_this_factory_.GetWeakPtr(), event_pending));
 }
 
 void V4L2VideoDecodeAccelerator::NotifyError(Error error) {
