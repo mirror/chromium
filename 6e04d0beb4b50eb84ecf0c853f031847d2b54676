@@ -16,6 +16,24 @@
       "revId": "6e04d0beb4b50eb84ecf0c853f031847d2b54676",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3daef77f_4d5c8f60",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-11-15T19:10:24Z",
+      "side": 1,
+      "message": "This will be required as long at we support the --arc-start-mode\u003donly-start-after-login flag. I don\u0027t know if we have the intention of keeping that. In either case though, I don\u0027t think a TODO is necessary, because if we do end up removing it, it will be obvious to remove this when we remove the function ShouldArcOnlyStartAfterLogin().",
+      "parentUuid": "d5e30938_8aefa875",
+      "revId": "6e04d0beb4b50eb84ecf0c853f031847d2b54676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

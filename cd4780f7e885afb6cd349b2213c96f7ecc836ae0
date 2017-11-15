@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "627609db_e3c09eaa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-11-15T19:10:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e39fc3b_f8232bd0",
+      "revId": "cd4780f7e885afb6cd349b2213c96f7ecc836ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cae35881_534df58c",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "cd4780f7e885afb6cd349b2213c96f7ecc836ae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7081843_d5845fb1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-11-15T19:10:24Z",
+      "side": 1,
+      "message": "This is strange. I already did the test and changed the commit message, but for some reason it\u0027s not here. I must\u0027ve forgotten to upload or something.",
+      "parentUuid": "cae35881_534df58c",
+      "range": {
+        "startLine": 16,
+        "startChar": 51,
+        "endLine": 16,
+        "endChar": 65
+      },
+      "revId": "cd4780f7e885afb6cd349b2213c96f7ecc836ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
