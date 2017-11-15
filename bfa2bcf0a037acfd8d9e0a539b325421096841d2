@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d040afb_16ace609",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/sibling-painting-first-image.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-15T14:51:01Z",
+      "side": 1,
+      "message": "Can we add a comment indicating what we\u0027re testing?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "bfa2bcf0a037acfd8d9e0a539b325421096841d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e05755f_a7e74788",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/sibling-painting-first-image.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-15T14:51:01Z",
+      "side": 1,
+      "message": "Maybe listeningIframe? Or observingIframe?\n\nCan you add a comment indicating the role of this frame?",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "bfa2bcf0a037acfd8d9e0a539b325421096841d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3927dc03_274880e8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/sibling-painting-first-image.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-15T14:51:01Z",
+      "side": 1,
+      "message": "Might as well just write this in html, not js, right?",
+      "range": {
+        "startLine": 8,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 38
+      },
+      "revId": "bfa2bcf0a037acfd8d9e0a539b325421096841d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0725aa69_acd46f79",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/sibling-painting-first-image.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-15T14:51:01Z",
+      "side": 1,
+      "message": "Perhaps paintingIframeHasDispatchedEntries, or something along those lines that\u0027s a bit clearer?",
+      "range": {
+        "startLine": 12,
+        "startChar": 8,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "bfa2bcf0a037acfd8d9e0a539b325421096841d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff9db736_fc3ab351",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/sibling-painting-first-image.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-15T14:51:01Z",
+      "side": 1,
+      "message": "Could we just check the e.origin, instead of keeping track of hasListened?",
+      "range": {
+        "startLine": 13,
+        "startChar": 28,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "bfa2bcf0a037acfd8d9e0a539b325421096841d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938dc562_f1dcc72e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/sibling-painting-first-image.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-15T14:51:01Z",
+      "side": 1,
+      "message": "We already have a reference to this element. (currently iframe)",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 54
+      },
+      "revId": "bfa2bcf0a037acfd8d9e0a539b325421096841d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcfba330_4c7d3bf6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/sibling-painting-first-image.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-15T14:51:01Z",
+      "side": 1,
+      "message": "The key thing we\u0027re looking for here is that we aren\u0027t receiving FCP, right?\nCan you indicate that in a comment?",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 59
+      },
+      "revId": "bfa2bcf0a037acfd8d9e0a539b325421096841d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93b2dbb_9d73a614",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/sibling-painting-first-image.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-15T14:51:01Z",
+      "side": 1,
+      "message": "Can you add a comment indicating the role of this frame?\nAnd perhaps name this paintingIframe?",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "bfa2bcf0a037acfd8d9e0a539b325421096841d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
