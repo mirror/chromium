@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c28ee937_05a54943",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-15T22:44:12Z",
+      "side": 1,
+      "message": "VariationsService is lazy loaded, so it should always be available. I will drop the if statement.",
+      "parentUuid": "127ce241_4733e1b2",
+      "range": {
+        "startLine": 226,
+        "startChar": 27,
+        "endLine": 226,
+        "endChar": 0
+      },
+      "revId": "80ec30e1dca3f093b8cb3341e05038b0419b32f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "374f57f6_60a6e1ef",
         "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-15T22:33:19Z",
       "side": 1,
       "message": "Please document that passing nullptr for the param is acceptable and add appropriate checks to VariationsFieldTrialCreator::SetupFieldTrials() to check that the value is not null.",
+      "range": {
+        "startLine": 228,
+        "startChar": 35,
+        "endLine": 228,
+        "endChar": 42
+      },
+      "revId": "80ec30e1dca3f093b8cb3341e05038b0419b32f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59056c0a_2814ecf2",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-15T22:44:12Z",
+      "side": 1,
+      "message": "Do you mean document on VariationsService::SetupFieldTrials that nullptr is acceptable? If it is acceptable, why add checks to ensure that the value is not null.\n\nBased on what is currently implemented, nullptr is fine, but I suppose that could change in the future. Is it better then to just pass an empty string?",
+      "parentUuid": "374f57f6_60a6e1ef",
       "range": {
         "startLine": 228,
         "startChar": 35,
