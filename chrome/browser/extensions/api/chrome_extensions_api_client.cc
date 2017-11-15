@@ -11,6 +11,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
+#include "chrome/browser/component_updater/cros_component_installer.h"
 #include "chrome/browser/data_use_measurement/data_use_web_contents_observer.h"
 #include "chrome/browser/extensions/api/chrome_device_permissions_prompt.h"
 #include "chrome/browser/extensions/api/declarative_content/chrome_content_rules_registry.h"
@@ -232,6 +233,13 @@ void ChromeExtensionsAPIClient::SaveImageDataToClipboard(
   clipboard_extension_helper_->DecodeAndSaveImageData(
       image_data, type, std::move(additional_items), success_callback,
       error_callback);
+}
+
+void ChromeExtensionsAPIClient::LoadCrOSComponent(
+    const std::string& name,
+    const base::Callback<void(const std::string&)>& load_callback) {
+  component_updater::CrOSComponent::LoadComponent(name,
+                                                  std::move(load_callback));
 }
 #endif
 

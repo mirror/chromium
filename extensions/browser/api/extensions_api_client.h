@@ -169,6 +169,12 @@ class ExtensionsAPIClient {
       AdditionalDataItemList additional_items,
       const base::Closure& success_callback,
       const base::Callback<void(const std::string&)>& error_callback);
+
+  // Provides an interface through which a Chrome OS component from Component
+  // Updater can be loaded and mounted on a device.
+  virtual void LoadCrOSComponent(
+      const std::string& name,
+      const base::Callback<void(const std::string&)>& load_callback);
 #endif
 
   // NOTE: If this interface gains too many methods (perhaps more than 20) it
