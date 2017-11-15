@@ -1,0 +1,440 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "564f938e_11f77f55",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "typo",
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56cf2999_8f8a2acf",
+        "filename": "base/android/proguard/chromium_apk.flags",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "not fully representative of real world perf but sure makes iterating faster",
+      "range": {
+        "startLine": 46,
+        "startChar": 1,
+        "endLine": 46,
+        "endChar": 19
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfffa599_c367775a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "don\u0027t inflate stubs too early",
+      "range": {
+        "startLine": 462,
+        "startChar": 22,
+        "endLine": 462,
+        "endChar": 38
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f69d310_f4f7e8b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "causes a bunch of expensive android work under the hood related to windows - needs more investigation",
+      "range": {
+        "startLine": 841,
+        "startChar": 10,
+        "endLine": 841,
+        "endChar": 31
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813e2774_838b5e85",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "local edits to avoid an activity hop during startup",
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c4e01a_07f6c47e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "expesnive to do early",
+      "range": {
+        "startLine": 837,
+        "startChar": 34,
+        "endLine": 837,
+        "endChar": 54
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc2618cc_a565572a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browserservices/OriginVerifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "unrelated",
+      "range": {
+        "startLine": 167,
+        "startChar": 10,
+        "endLine": 167,
+        "endChar": 21
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e2894f_d22f64d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManagerChromePhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "don\u0027t init overviewmode stuff too eagerly",
+      "range": {
+        "startLine": 37,
+        "startChar": 20,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b64aef_cc15e85b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/overlays/strip/StripLayoutHelperManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "don\u0027t init overview mode layouts too eagerly",
+      "range": {
+        "startLine": 144,
+        "startChar": 10,
+        "endLine": 144,
+        "endChar": 23
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff04a3d3_7bcd0bc0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/scene_layer/ToolbarSceneLayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "breaking dep on toolbarcontainer temporarily",
+      "range": {
+        "startLine": 84,
+        "startChar": 14,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16a1af5_820ee8b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ChromeContextMenuPopulator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "we spent a bunch of unneeded times in hashset/arraylist inits",
+      "range": {
+        "startLine": 81,
+        "startChar": 20,
+        "endLine": 81,
+        "endChar": 21
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca472168_50e1551d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/IPHInfoBarSupport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "this caused a bunch of keyed services to init early on",
+      "range": {
+        "startLine": 73,
+        "startChar": 10,
+        "endLine": 73,
+        "endChar": 18
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22681d5b_15032266",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "expensive",
+      "range": {
+        "startLine": 213,
+        "startChar": 10,
+        "endLine": 213,
+        "endChar": 17
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881ff8c8_3c38f1d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/installedapp/InstalledAppProviderImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "unrelated",
+      "range": {
+        "startLine": 201,
+        "startChar": 22,
+        "endLine": 201,
+        "endChar": 46
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e5e840_cd4ad223",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "unrelated change",
+      "range": {
+        "startLine": 557,
+        "startChar": 30,
+        "endLine": 557,
+        "endChar": 39
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42337d2f_610ee2c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "expensive observers - needs a deeper look",
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e69bc86_77623a68",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "does a bunch of unnecessary init/inflation we should defer",
+      "range": {
+        "startLine": 1750,
+        "startChar": 41,
+        "endLine": 1750,
+        "endChar": 60
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab7003d1_7175be21",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2043,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "Some observers are expensive and we fire this a few times during load which is wasteful",
+      "range": {
+        "startLine": 2043,
+        "startChar": 0,
+        "endLine": 2043,
+        "endChar": 101
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ca929c_661afef8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarControlContainer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "don\u0027t inflate synchronously",
+      "range": {
+        "startLine": 89,
+        "startChar": 22,
+        "endLine": 89,
+        "endChar": 29
+      },
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc2494b_c78e299d",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-15T15:54:34Z",
+      "side": 1,
+      "message": "this is slow because it causes lots of keyed services to load",
+      "revId": "c31c39ad88c5b5ad06467916c36ba48bce6a6e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
