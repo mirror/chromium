@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05405161_c062e907",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-15T05:04:18Z",
+      "side": 1,
+      "message": "Please remove this as part of this patch. Ideally we\u0027d rename the OnWindowFocused on OnSurfaceFocused and move some of the logic in GetEffectiveTarget to the Seat class but that can be saved for a follow up.",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 57
+      },
+      "revId": "9919357d727783a869a3eeb56bc331312631deec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b50f5e_9d697c55",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-15T05:04:18Z",
+      "side": 1,
+      "message": "Let\u0027s have the Seat instances owned by exo::Display instead of using ref-counting. That way we can just use \"Seat* const seat_; here.\n\nAlso please avoid referring to wayland specifics like wl_seat here.",
+      "revId": "9919357d727783a869a3eeb56bc331312631deec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f5857f_142e170d",
+        "filename": "components/exo/seat.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-15T05:04:18Z",
+      "side": 1,
+      "message": "Can you explain here that this class represent a group of input devices such as keyboard, pointer and touch devices and keeps track of input focus?",
+      "revId": "9919357d727783a869a3eeb56bc331312631deec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
