@@ -19,6 +19,7 @@
 #include "gpu/command_buffer/service/mailbox_manager.h"
 #include "gpu/command_buffer/service/mocks.h"
 #include "gpu/command_buffer/service/program_manager.h"
+#include "gpu/command_buffer/service/progress_reporter.h"
 #include "gpu/command_buffer/service/test_helper.h"
 #include "gpu/config/gpu_switches.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -1377,7 +1378,8 @@ TEST_P(GLES2DecoderTest, LoseContextCHROMIUMInvalidArgs1_0) {
   EXPECT_EQ(GL_INVALID_ENUM, GetGLError());
 }
 
-class GLES2DecoderDoCommandsTest : public GLES2DecoderTest {
+class GLES2DecoderDoCommandsTest : public GLES2DecoderTest,
+                                   public ProgressReporter {
  public:
   GLES2DecoderDoCommandsTest() {
     for (int i = 0; i < 3; i++) {
@@ -1389,11 +1391,22 @@ class GLES2DecoderDoCommandsTest : public GLES2DecoderTest {
   void SetExpectationsForNCommands(int num_commands) {
     for (int i = 0; i < num_commands; i++)
       SetupExpectationsForEnableDisable(GL_BLEND, true);
+    expected_progress_reports_ = num_commands;
+    progress_reported_ = 0;
   }
+
+  // ProgressReporter:
+  void ReportProgress() override { ++progress_reported_; }
+
+  // GLES2DecoderTestBase:
+  ProgressReporter* GetProgressReporter() override { return this; }
 
  protected:
   Enable cmds_[3];
   int entries_per_cmd_;
+
+  int progress_reported_ = 0;
+  int expected_progress_reports_ = 0;
 };
 
 TEST_P(GLES3DecoderTest, BeginInvalidTargetQueryFails) {
@@ -1512,6 +1525,7 @@ TEST_P(GLES2DecoderDoCommandsTest, DoCommandsOneOfZero) {
   EXPECT_EQ(
       error::kNoError,
       decoder_->DoCommands(1, &cmds_, entries_per_cmd_ * 0, &num_processed));
+  EXPECT_EQ(progress_reported_, expected_progress_reports_);
   EXPECT_EQ(GL_NO_ERROR, GetGLError());
   EXPECT_EQ(0, num_processed);
 }
@@ -1523,6 +1537,7 @@ TEST_P(GLES2DecoderDoCommandsTest, DoCommandsOneOfOne) {
   EXPECT_EQ(
       error::kNoError,
       decoder_->DoCommands(1, &cmds_, entries_per_cmd_ * 1, &num_processed));
+  EXPECT_EQ(progress_reported_, expected_progress_reports_);
   EXPECT_EQ(GL_NO_ERROR, GetGLError());
   EXPECT_EQ(entries_per_cmd_, num_processed);
 }
@@ -1534,6 +1549,7 @@ TEST_P(GLES2DecoderDoCommandsTest, DoCommandsThreeOfThree) {
   EXPECT_EQ(
       error::kNoError,
       decoder_->DoCommands(3, &cmds_, entries_per_cmd_ * 3, &num_processed));
+  EXPECT_EQ(progress_reported_, expected_progress_reports_);
   EXPECT_EQ(GL_NO_ERROR, GetGLError());
   EXPECT_EQ(entries_per_cmd_ * 3, num_processed);
 }
@@ -1545,6 +1561,7 @@ TEST_P(GLES2DecoderDoCommandsTest, DoCommandsTwoOfThree) {
   EXPECT_EQ(
       error::kNoError,
       decoder_->DoCommands(2, &cmds_, entries_per_cmd_ * 3, &num_processed));
+  EXPECT_EQ(progress_reported_, expected_progress_reports_);
   EXPECT_EQ(GL_NO_ERROR, GetGLError());
   EXPECT_EQ(entries_per_cmd_ * 2, num_processed);
 }
@@ -1557,6 +1574,7 @@ TEST_P(GLES2DecoderDoCommandsTest, DoCommandsZeroCmdSize) {
   EXPECT_EQ(
       error::kInvalidSize,
       decoder_->DoCommands(2, &cmds_, entries_per_cmd_ * 2, &num_processed));
+  EXPECT_EQ(progress_reported_, expected_progress_reports_);
   EXPECT_EQ(GL_NO_ERROR, GetGLError());
   EXPECT_EQ(entries_per_cmd_, num_processed);
 }
@@ -1568,6 +1586,7 @@ TEST_P(GLES2DecoderDoCommandsTest, DoCommandsOutOfBounds) {
   EXPECT_EQ(error::kOutOfBounds,
             decoder_->DoCommands(
                 2, &cmds_, entries_per_cmd_ * 2 - 1, &num_processed));
+  EXPECT_EQ(progress_reported_, expected_progress_reports_);
   EXPECT_EQ(GL_NO_ERROR, GetGLError());
   EXPECT_EQ(entries_per_cmd_, num_processed);
 }
@@ -1580,6 +1599,7 @@ TEST_P(GLES2DecoderDoCommandsTest, DoCommandsBadArgSize) {
   EXPECT_EQ(error::kInvalidArguments,
             decoder_->DoCommands(
                 2, &cmds_, entries_per_cmd_ * 2 + 1, &num_processed));
+  EXPECT_EQ(progress_reported_, expected_progress_reports_);
   EXPECT_EQ(GL_NO_ERROR, GetGLError());
   EXPECT_EQ(entries_per_cmd_ + cmds_[1].header.size, num_processed);
 }

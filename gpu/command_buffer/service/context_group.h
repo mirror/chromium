@@ -85,6 +85,8 @@ class GPU_EXPORT ContextGroup : public base::RefCounted<ContextGroup> {
 
   MemoryTracker* memory_tracker() const { return memory_tracker_.get(); }
 
+  ProgressReporter* progress_reporter() const { return progress_reporter_; }
+
   ShaderTranslatorCache* shader_translator_cache() const {
     return shader_translator_cache_;
   }

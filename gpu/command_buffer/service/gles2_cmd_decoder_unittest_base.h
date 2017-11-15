@@ -513,6 +513,8 @@ class GLES2DecoderTestBase : public ::testing::TestWithParam<bool>,
     return isObject;
   }
 
+  virtual ProgressReporter* GetProgressReporter();
+
  protected:
   static const int kBackBufferWidth = 128;
   static const int kBackBufferHeight = 64;

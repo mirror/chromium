@@ -212,8 +212,8 @@ void GLES2DecoderTestBase::InitDecoderWithWorkarounds(
       gpu_preferences_, false, &mailbox_manager_, memory_tracker_,
       &shader_translator_cache_, &framebuffer_completeness_cache_, feature_info,
       normalized_init.bind_generates_resource, &image_manager_,
-      nullptr /* image_factory */, nullptr /* progress_reporter */,
-      GpuFeatureInfo(), &discardable_manager_));
+      nullptr /* image_factory */, GetProgressReporter(), GpuFeatureInfo(),
+      &discardable_manager_));
   bool use_default_textures = normalized_init.bind_generates_resource;
 
   InSequence sequence;
@@ -2229,6 +2229,10 @@ void GLES2DecoderTestBase::DoLockDiscardableTextureCHROMIUM(GLuint texture_id) {
   cmds::LockDiscardableTextureCHROMIUM cmd;
   cmd.Init(texture_id);
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+}
+
+ProgressReporter* GLES2DecoderTestBase::GetProgressReporter() {
+  return nullptr;
 }
 
 // Include the auto-generated part of this file. We split this because it means
