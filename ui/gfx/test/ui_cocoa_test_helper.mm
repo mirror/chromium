@@ -209,7 +209,12 @@ std::set<NSWindow*> CocoaTest::ApplicationWindows() {
   base::mac::ScopedNSAutoreleasePool pool;
   NSArray *appWindows = [NSApp windows];
   for (NSWindow *window in appWindows) {
-    windows.insert(window);
+    // Once opened, an NSColorPanel can never be closed and so will always
+    // thereafter appear in the [NSApp windows] array. Ignore the NSColorPanel
+    // so that any tests that invoke it don't fail in TearDown for not closing
+    // all windows.
+    if (![window isKindOfClass:[NSColorPanel class]])
+      windows.insert(window);
   }
   return windows;
 }
