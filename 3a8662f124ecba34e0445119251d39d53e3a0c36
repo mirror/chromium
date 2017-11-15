@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "0ded0fef_9ec0b46a",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-15T18:05:50Z",
+      "side": 1,
+      "message": "FYI: Looks like a compile error.",
+      "revId": "3a8662f124ecba34e0445119251d39d53e3a0c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ac92ec_18959f9b",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-15T18:05:50Z",
+      "side": 1,
+      "message": "This was not in the older code, while you introduced a brand new auth_key variable.\nCould you update the comment?",
+      "range": {
+        "startLine": 665,
+        "startChar": 6,
+        "endLine": 665,
+        "endChar": 14
+      },
+      "revId": "3a8662f124ecba34e0445119251d39d53e3a0c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50bfbe97_097c3683",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
         "patchSetId": 1
@@ -19,6 +59,23 @@
         "endLine": 676,
         "endChar": 60
       },
+      "revId": "3a8662f124ecba34e0445119251d39d53e3a0c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c0a50b8_5015f37a",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-15T18:05:50Z",
+      "side": 1,
+      "message": "As commented, maybe CreateAuthorizationRequest() is better name?",
       "revId": "3a8662f124ecba34e0445119251d39d53e3a0c36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
