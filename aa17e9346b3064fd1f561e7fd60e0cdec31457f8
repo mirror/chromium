@@ -106,6 +106,24 @@
       "revId": "aa17e9346b3064fd1f561e7fd60e0cdec31457f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63221ec2_17573eea",
+        "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-15T23:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9aadae8c_da14e3ef",
+      "revId": "aa17e9346b3064fd1f561e7fd60e0cdec31457f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
