@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9e48ebc_7b58c8e8",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-15T22:23:58Z",
+      "side": 1,
+      "message": "This comment is better suited in RuntimeCustomBindings::GetExtensionViews. This method already promises it will return only main frames.",
+      "revId": "5c96008ebbf90f0d085d2167e3bc2b27eede13a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
