@@ -116,50 +116,6 @@ base::AtomicSequenceNumber g_next_resource_provider_tracing_id;
 
 }  // namespace
 
-ResourceProvider::Settings::Settings(
-    viz::ContextProvider* compositor_context_provider,
-    bool delegated_sync_points_required,
-    const viz::ResourceSettings& resource_settings)
-    : yuv_highbit_resource_format(resource_settings.high_bit_for_testing
-                                      ? viz::R16_EXT
-                                      : viz::LUMINANCE_8),
-      use_gpu_memory_buffer_resources(
-          resource_settings.use_gpu_memory_buffer_resources),
-      delegated_sync_points_required(delegated_sync_points_required) {
-  if (!compositor_context_provider) {
-    // Pick an arbitrary limit here similar to what hardware might.
-    max_texture_size = 16 * 1024;
-    best_texture_format = viz::RGBA_8888;
-    return;
-  }
-
-  const auto& caps = compositor_context_provider->ContextCapabilities();
-  use_texture_storage = caps.texture_storage;
-  use_texture_format_bgra = caps.texture_format_bgra8888;
-  use_texture_usage_hint = caps.texture_usage;
-  use_texture_npot = caps.texture_npot;
-  use_sync_query = caps.sync_query;
-  use_texture_storage_image = caps.texture_storage_image;
-
-  if (caps.disable_one_component_textures) {
-    yuv_resource_format = yuv_highbit_resource_format = viz::RGBA_8888;
-  } else {
-    yuv_resource_format = caps.texture_rg ? viz::RED_8 : viz::LUMINANCE_8;
-    if (resource_settings.use_r16_texture && caps.texture_norm16)
-      yuv_highbit_resource_format = viz::R16_EXT;
-    else if (caps.texture_half_float_linear)
-      yuv_highbit_resource_format = viz::LUMINANCE_F16;
-  }
-
-  GLES2Interface* gl = compositor_context_provider->ContextGL();
-  gl->GetIntegerv(GL_MAX_TEXTURE_SIZE, &max_texture_size);
-
-  best_texture_format =
-      viz::PlatformColor::BestSupportedTextureFormat(use_texture_format_bgra);
-  best_render_buffer_format = viz::PlatformColor::BestSupportedTextureFormat(
-      caps.render_buffer_format_bgra8888);
-}
-
 ResourceProvider::ResourceProvider(
     viz::ContextProvider* compositor_context_provider,
     viz::SharedBitmapManager* shared_bitmap_manager,
@@ -753,7 +709,7 @@ void ResourceProvider::ScopedWriteLockGL::LazyAllocate(
     return;
   allocated_ = true;
 
-  const ResourceProvider::Settings& settings = resource_provider_->settings_;
+  const viz::ResourceTextureSettings& settings = resource_provider_->settings_;
 
   gl->BindTexture(target_, texture_id);
 
