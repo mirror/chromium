@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1fa6e17_60b57ec6",
+        "filename": "net/quic/chromium/crypto/proof_verifier_chromium.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-15T00:31:50Z",
+      "side": 1,
+      "message": "This is an unrelated fix that I thought I should do while I\u0027m here; it looks like the old line 388 rotted and was setting ct_policies_applied to true even in rare cases where it wasn\u0027t true (e.g. enforce_policy_checking_ is false).",
+      "range": {
+        "startLine": 394,
+        "startChar": 4,
+        "endLine": 394,
+        "endChar": 65
+      },
+      "revId": "1f3a20e3d16c7c4015871a07455f50df3b809590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
