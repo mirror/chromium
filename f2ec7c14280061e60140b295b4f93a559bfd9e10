@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1712891e_bc462486",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-15T23:04:43Z",
+      "side": 1,
+      "message": "Include the description:\n\nPreviously, the background trigger logic attempted to hop between the IO and UI threads. This caused problems with weak ptr invalidation. In the new logic, the background trigger logic only runs on the UI thread.",
+      "revId": "f2ec7c14280061e60140b295b4f93a559bfd9e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69851e6d_530f10c9",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-15T23:04:43Z",
+      "side": 1,
+      "message": "missing a !",
+      "revId": "f2ec7c14280061e60140b295b4f93a559bfd9e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
