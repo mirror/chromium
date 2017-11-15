@@ -22,6 +22,30 @@
       "revId": "9a12ca6239c38c7210b8959852a2b3a64a86ebcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04d4cc8_de750b17",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-15T13:28:45Z",
+      "side": 1,
+      "message": "I think anonymous namespace method wouldn\u0027t be possible since Transaction is a private class of HttpCache but I can make it a private HttpCache method.",
+      "parentUuid": "9ef40082_b0dc8dc7",
+      "range": {
+        "startLine": 196,
+        "startChar": 1,
+        "endLine": 196,
+        "endChar": 32
+      },
+      "revId": "9a12ca6239c38c7210b8959852a2b3a64a86ebcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
