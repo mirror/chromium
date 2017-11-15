@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08ccf4dc_633e209b",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 7
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-15T09:42:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55d5d20e_5669603e",
+      "range": {
+        "startLine": 617,
+        "startChar": 148,
+        "endLine": 617,
+        "endChar": 152
+      },
+      "revId": "e8eb23c1e4fdf9c486365205ba3988fce38f3b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee0bcf1f_22909a17",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "e8eb23c1e4fdf9c486365205ba3988fce38f3b06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc8389bd_3082ae24",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 7
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-15T09:42:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee0bcf1f_22909a17",
+      "range": {
+        "startLine": 623,
+        "startChar": 54,
+        "endLine": 623,
+        "endChar": 96
+      },
+      "revId": "e8eb23c1e4fdf9c486365205ba3988fce38f3b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3b1b3909_17220ec7",
+        "filename": "chrome/browser/resources/settings/icons.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-15T09:42:13Z",
+      "side": 1,
+      "message": "\"info-outline\" is a standard MD icon. I copied it from another location in Chrome. The other icons are copies as well, so I guessed that we don\u0027t have a central collection of icons in Chrome.",
+      "parentUuid": "df1cc5f7_b4031406",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 205
+      },
+      "revId": "e8eb23c1e4fdf9c486365205ba3988fce38f3b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f766022_ea9f7563",
         "filename": "chrome/test/data/webui/settings/settings_passwords_section_browsertest.js",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "e8eb23c1e4fdf9c486365205ba3988fce38f3b06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91180b1_62d78a70",
+        "filename": "chrome/test/data/webui/settings/settings_passwords_section_browsertest.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-15T09:42:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f766022_ea9f7563",
+      "range": {
+        "startLine": 168,
+        "startChar": 34,
+        "endLine": 168,
+        "endChar": 35
+      },
+      "revId": "e8eb23c1e4fdf9c486365205ba3988fce38f3b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
