@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e023ef4a_42e7cfa8",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-15T04:17:15Z",
+      "side": 1,
+      "message": "oops :)",
+      "revId": "a55dee780408224a729e37e95b0bed46157c2d47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a385c1_18938d16",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-15T04:17:15Z",
+      "side": 1,
+      "message": "oops :)",
+      "revId": "a55dee780408224a729e37e95b0bed46157c2d47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

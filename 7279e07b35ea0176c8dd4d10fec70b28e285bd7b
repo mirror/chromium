@@ -34,6 +34,24 @@
       "revId": "7279e07b35ea0176c8dd4d10fec70b28e285bd7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d167cf38_d1f5497c",
+        "filename": "mojo/edk/embedder/platform_channel_utils_posix.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-15T04:17:15Z",
+      "side": 0,
+      "message": "Yep, sorry, what you\u0027re saying makes sense. I suffered from internal memory corruption. Merging SGTM",
+      "parentUuid": "677e9dd9_76745163",
+      "revId": "7279e07b35ea0176c8dd4d10fec70b28e285bd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
