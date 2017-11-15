@@ -14,6 +14,10 @@
 
 #include "base/android/jni_android.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
+#include "base/sequence_checker.h"
+#include "base/sequenced_task_runner.h"
 #include "components/safe_browsing/android/safe_browsing_api_handler.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "url/gurl.h"
@@ -30,15 +34,24 @@ class SafeBrowsingApiHandlerBridge : public SafeBrowsingApiHandler {
                      const SBThreatTypeSet& threat_types) override;
 
  private:
+  void StartURLCheckAsync(const URLCheckCallbackMeta& callback,
+                          const GURL& url,
+                          const SBThreatTypeSet& threat_types);
+
   // Creates the j_api_handler_ if it hasn't been already.  If the API is not
   // supported, this will return false and j_api_handler_ will remain NULL.
   bool CheckApiIsSupported();
 
   // The Java-side SafeBrowsingApiHandler. Must call CheckApiIsSupported first.
-  base::android::ScopedJavaLocalRef<jobject> j_api_handler_;
+  base::android::ScopedJavaGlobalRef<jobject> j_api_handler_;
 
   // True if we've once tried to create the above object.
   bool checked_api_support_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
+
+  scoped_refptr<base::SequencedTaskRunner> api_task_runner_;
+  base::WeakPtrFactory<SafeBrowsingApiHandlerBridge> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingApiHandlerBridge);
 };
