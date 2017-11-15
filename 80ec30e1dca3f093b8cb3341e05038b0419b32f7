@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "127ce241_4733e1b2",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-15T22:33:19Z",
+      "side": 1,
+      "message": "This if statement should no longer be needed as VariationsService always exists.\n\n(At least, that\u0027s now the case for non-IOS Chrome. Please check on iOS as well - if it\u0027s not the case there, we should make it consistent.)",
+      "range": {
+        "startLine": 226,
+        "startChar": 27,
+        "endLine": 226,
+        "endChar": 0
+      },
+      "revId": "80ec30e1dca3f093b8cb3341e05038b0419b32f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374f57f6_60a6e1ef",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-15T22:33:19Z",
+      "side": 1,
+      "message": "Please document that passing nullptr for the param is acceptable and add appropriate checks to VariationsFieldTrialCreator::SetupFieldTrials() to check that the value is not null.",
+      "range": {
+        "startLine": 228,
+        "startChar": 35,
+        "endLine": 228,
+        "endChar": 42
+      },
+      "revId": "80ec30e1dca3f093b8cb3341e05038b0419b32f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
