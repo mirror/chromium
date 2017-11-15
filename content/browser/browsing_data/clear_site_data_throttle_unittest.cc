@@ -195,6 +195,13 @@ TEST_F(ClearSiteDataThrottleTest, ParseHeaderAndExecuteClearingTask) {
       {"\"cache\", \"cookies\", \"storage\"", true, true, false},
       {"\"cookies\", \"storage\", \"cache\"", true, true, false},
 
+      // Wildcard.
+      // TODO(crbug.com/762417): The "cache" parameter is temporarily disabled.
+      {"\"*\"", true, true, false},
+      {"\"*\", \"storage\"", true, true, false},
+      {"\"cache\", \"*\", \"storage\"", true, true, false},
+      {"\"*\", \"cookies\", \"*\"", true, true, false},
+
       // Different formatting.
       {"\"cookies\"", true, false, false},
 
