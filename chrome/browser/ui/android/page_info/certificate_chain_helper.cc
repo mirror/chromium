@@ -17,7 +17,7 @@ using base::android::JavaParamRef;
 using base::android::ScopedJavaLocalRef;
 using content::WebContents;
 
-static ScopedJavaLocalRef<jobjectArray> GetCertificateChain(
+static ScopedJavaLocalRef<jobjectArray> CertificateChainHelper__GetCertificateChain(
     JNIEnv* env,
     const JavaParamRef<jclass>&,
     const JavaParamRef<jobject>& java_web_contents) {

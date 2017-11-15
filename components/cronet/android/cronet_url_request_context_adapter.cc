@@ -183,7 +183,7 @@ class BasicNetworkDelegate : public net::NetworkDelegateImpl {
 
 // Helper method that takes a Java string that can be null, in which case it
 // will get converted to an empty string.
-std::string ConvertNullableJavaStringToUTF8(JNIEnv* env,
+std::string CronetUrlRequestContext__ConvertNullableJavaStringToUTF8(JNIEnv* env,
                                             const JavaParamRef<jstring>& jstr) {
   std::string str;
   if (!jstr.is_null())
@@ -774,7 +774,7 @@ CronetURLRequestContextAdapter::GetNetLogInfo() const {
 }
 
 // Create a URLRequestContextConfig from the given parameters.
-static jlong CreateRequestContextConfig(
+static jlong CronetUrlRequestContext__CreateRequestContextConfig(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller,
     const JavaParamRef<jstring>& juser_agent,
@@ -809,7 +809,7 @@ static jlong CreateRequestContextConfig(
 }
 
 // Add a QUIC hint to a URLRequestContextConfig.
-static void AddQuicHint(JNIEnv* env,
+static void CronetUrlRequestContext__AddQuicHint(JNIEnv* env,
                         const JavaParamRef<jclass>& jcaller,
                         jlong jurl_request_context_config,
                         const JavaParamRef<jstring>& jhost,
@@ -829,7 +829,7 @@ static void AddQuicHint(JNIEnv* env,
 // |jinclude_subdomains| indicates if pin should be applied to subdomains.
 // |jexpiration_time| is the time that the pin expires, in milliseconds since
 // Jan. 1, 1970, midnight GMT.
-static void AddPkp(JNIEnv* env,
+static void CronetUrlRequestContext__AddPkp(JNIEnv* env,
                    const JavaParamRef<jclass>& jcaller,
                    jlong jurl_request_context_config,
                    const JavaParamRef<jstring>& jhost,
@@ -867,7 +867,7 @@ static void AddPkp(JNIEnv* env,
 
 // Creates RequestContextAdater if config is valid URLRequestContextConfig,
 // returns 0 otherwise.
-static jlong CreateRequestContextAdapter(JNIEnv* env,
+static jlong CronetUrlRequestContext__CreateRequestContextAdapter(JNIEnv* env,
                                          const JavaParamRef<jclass>& jcaller,
                                          jlong jconfig) {
   std::unique_ptr<URLRequestContextConfig> context_config(
@@ -878,7 +878,7 @@ static jlong CreateRequestContextAdapter(JNIEnv* env,
   return reinterpret_cast<jlong>(context_adapter);
 }
 
-static jint SetMinLogLevel(JNIEnv* env,
+static jint CronetUrlRequestContext__SetMinLogLevel(JNIEnv* env,
                            const JavaParamRef<jclass>& jcaller,
                            jint jlog_level) {
   jint old_log_level = static_cast<jint>(logging::GetMinLogLevel());
@@ -887,7 +887,7 @@ static jint SetMinLogLevel(JNIEnv* env,
   return old_log_level;
 }
 
-static ScopedJavaLocalRef<jbyteArray> GetHistogramDeltas(
+static ScopedJavaLocalRef<jbyteArray> CronetUrlRequestContext__GetHistogramDeltas(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller) {
   DCHECK(base::StatisticsRecorder::IsActive());

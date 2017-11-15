@@ -13,14 +13,14 @@ using base::android::JavaParamRef;
 namespace chrome {
 namespace android {
 
-static void SetSearchClient(JNIEnv* env,
+static void RevenueStats__SetSearchClient(JNIEnv* env,
                             const JavaParamRef<jclass>& clazz,
                             const JavaParamRef<jstring>& jclient) {
   SearchTermsDataAndroid::search_client_.Get() =
       base::android::ConvertJavaStringToUTF8(env, jclient);
 }
 
-static void SetRlzParameterValue(JNIEnv* env,
+static void RevenueStats__SetRlzParameterValue(JNIEnv* env,
                                  const JavaParamRef<jclass>& clazz,
                                  const JavaParamRef<jstring>& jrlz) {
   SearchTermsDataAndroid::rlz_parameter_value_.Get() =

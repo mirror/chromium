@@ -24,7 +24,7 @@ using base::android::ScopedJavaLocalRef;
 // ----------------------------------------------------------------------------
 // This method can not move to anonymous namespace as it has been declared as
 // 'static' in system_message_handler_jni.h.
-static void DoRunLoopOnce(JNIEnv* env,
+static void SystemMessageHandler__DoRunLoopOnce(JNIEnv* env,
                           const JavaParamRef<jobject>& obj,
                           jlong native_delegate,
                           jlong native_message_pump,
@@ -110,7 +110,7 @@ static void DoRunLoopOnce(JNIEnv* env,
 // tasks available to be run immediately).
 // See the comments in DoRunLoopOnce for how this differs from the
 // implementation on other platforms.
-static void DoIdleWork(JNIEnv* env,
+static void SystemMessageHandler__DoIdleWork(JNIEnv* env,
                        const JavaParamRef<jobject>& obj,
                        jlong native_delegate,
                        jlong native_message_pump) {

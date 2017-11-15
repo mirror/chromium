@@ -25,7 +25,7 @@ using base::android::ScopedJavaGlobalRef;
 
 namespace {
 
-void AddTabToList(JNIEnv* env,
+void RecentlyClosedBridge__AddTabToList(JNIEnv* env,
                   const sessions::TabRestoreService::Tab& tab,
                   const JavaRef<jobject>& jtabs_list) {
   const sessions::SerializedNavigationEntry& current_navigation =
@@ -36,7 +36,7 @@ void AddTabToList(JNIEnv* env,
       ConvertUTF8ToJavaString(env, current_navigation.virtual_url().spec()));
 }
 
-void AddTabsToList(JNIEnv* env,
+void RecentlyClosedBridge__AddTabsToList(JNIEnv* env,
                    const sessions::TabRestoreService::Entries& entries,
                    const JavaRef<jobject>& jtabs_list,
                    int max_tab_count) {
@@ -45,7 +45,7 @@ void AddTabsToList(JNIEnv* env,
     DCHECK_EQ(entry->type, sessions::TabRestoreService::TAB);
     if (entry->type == sessions::TabRestoreService::TAB) {
       auto& tab = static_cast<const sessions::TabRestoreService::Tab&>(*entry);
-      AddTabToList(env, tab, jtabs_list);
+      RecentlyClosedBridge__AddTabToList(env, tab, jtabs_list);
       if (++added_count == max_tab_count)
         break;
     }
@@ -80,7 +80,7 @@ jboolean RecentlyClosedTabsBridge::GetRecentlyClosedTabs(
   if (!tab_restore_service_)
     return false;
 
-  AddTabsToList(env, tab_restore_service_->entries(), jtabs_list,
+  RecentlyClosedBridge__AddTabsToList(env, tab_restore_service_->entries(), jtabs_list,
                 max_tab_count);
   return true;
 }
@@ -172,7 +172,7 @@ void RecentlyClosedTabsBridge::EnsureTabRestoreService() {
   }
 }
 
-static jlong Init(JNIEnv* env,
+static jlong RecentlyClosedBridge__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& jbridge,
                   const JavaParamRef<jobject>& jprofile) {
   RecentlyClosedTabsBridge* bridge = new RecentlyClosedTabsBridge(

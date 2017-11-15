@@ -66,7 +66,7 @@ using content::WebContents;
 
 namespace {
 
-ScopedJavaLocalRef<jobject> CreateJavaRectF(
+ScopedJavaLocalRef<jobject> TabWebContentsDelegateAndroid__CreateJavaRectF(
     JNIEnv* env,
     const gfx::RectF& rect) {
   return ScopedJavaLocalRef<jobject>(
@@ -77,7 +77,7 @@ ScopedJavaLocalRef<jobject> CreateJavaRectF(
                                                         rect.bottom()));
 }
 
-ScopedJavaLocalRef<jobject> CreateJavaRect(
+ScopedJavaLocalRef<jobject> TabWebContentsDelegateAndroid__CreateJavaRect(
     JNIEnv* env,
     const gfx::Rect& rect) {
   return ScopedJavaLocalRef<jobject>(
@@ -219,7 +219,7 @@ void TabWebContentsDelegateAndroid::OnFindResultAvailable(
   if (obj.is_null())
     return;
 
-  ScopedJavaLocalRef<jobject> selection_rect = CreateJavaRect(
+  ScopedJavaLocalRef<jobject> selection_rect = TabWebContentsDelegateAndroid__CreateJavaRect(
       env, find_result->selection_rect());
 
   // Create the details object.
@@ -245,12 +245,12 @@ void TabWebContentsDelegateAndroid::FindMatchRectsReply(
   // Create the details object.
   ScopedJavaLocalRef<jobject> details_object =
       Java_TabWebContentsDelegateAndroid_createFindMatchRectsDetails(
-          env, version, rects.size(), CreateJavaRectF(env, active_rect));
+          env, version, rects.size(), TabWebContentsDelegateAndroid__CreateJavaRectF(env, active_rect));
 
   // Add the rects
   for (size_t i = 0; i < rects.size(); ++i) {
     Java_TabWebContentsDelegateAndroid_setMatchRectByIndex(
-        env, details_object, i, CreateJavaRectF(env, rects[i]));
+        env, details_object, i, TabWebContentsDelegateAndroid__CreateJavaRectF(env, rects[i]));
   }
 
   Java_TabWebContentsDelegateAndroid_onFindMatchRectsAvailable(env, obj,
@@ -431,7 +431,7 @@ void TabWebContentsDelegateAndroid::OnDidBlockFramebust(
 
 }  // namespace android
 
-void OnRendererUnresponsive(JNIEnv* env,
+void TabWebContentsDelegateAndroid__OnRendererUnresponsive(JNIEnv* env,
                             const JavaParamRef<jclass>& clazz,
                             const JavaParamRef<jobject>& java_web_contents) {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -448,7 +448,7 @@ void OnRendererUnresponsive(JNIEnv* env,
       infobar_service, web_contents->GetMainFrame()->GetProcess());
 }
 
-void OnRendererResponsive(JNIEnv* env,
+void TabWebContentsDelegateAndroid__OnRendererResponsive(JNIEnv* env,
                           const JavaParamRef<jclass>& clazz,
                           const JavaParamRef<jobject>& java_web_contents) {
   content::WebContents* web_contents =
@@ -466,7 +466,7 @@ void OnRendererResponsive(JNIEnv* env,
   infobar_service->RemoveInfoBar(hung_renderer_infobar);
 }
 
-jboolean IsCapturingAudio(JNIEnv* env,
+jboolean TabWebContentsDelegateAndroid__IsCapturingAudio(JNIEnv* env,
                           const JavaParamRef<jclass>& clazz,
                           const JavaParamRef<jobject>& java_web_contents) {
   content::WebContents* web_contents =
@@ -477,7 +477,7 @@ jboolean IsCapturingAudio(JNIEnv* env,
   return indicator->IsCapturingAudio(web_contents);
 }
 
-jboolean IsCapturingVideo(JNIEnv* env,
+jboolean TabWebContentsDelegateAndroid__IsCapturingVideo(JNIEnv* env,
                           const JavaParamRef<jclass>& clazz,
                           const JavaParamRef<jobject>& java_web_contents) {
   content::WebContents* web_contents =
@@ -488,7 +488,7 @@ jboolean IsCapturingVideo(JNIEnv* env,
   return indicator->IsCapturingVideo(web_contents);
 }
 
-jboolean IsCapturingScreen(JNIEnv* env,
+jboolean TabWebContentsDelegateAndroid__IsCapturingScreen(JNIEnv* env,
                            const JavaParamRef<jclass>& clazz,
                            const JavaParamRef<jobject>& java_web_contents) {
   content::WebContents* web_contents =
@@ -499,7 +499,7 @@ jboolean IsCapturingScreen(JNIEnv* env,
   return indicator->IsBeingMirrored(web_contents);
 }
 
-void NotifyStopped(JNIEnv* env,
+void TabWebContentsDelegateAndroid__NotifyStopped(JNIEnv* env,
                    const JavaParamRef<jclass>& clazz,
                    const JavaParamRef<jobject>& java_web_contents) {
   content::WebContents* web_contents =

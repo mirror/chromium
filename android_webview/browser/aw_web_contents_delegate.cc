@@ -259,7 +259,7 @@ bool AwWebContentsDelegate::IsFullscreenForTabOrPending(
   return is_fullscreen_;
 }
 
-static void FilesSelectedInChooser(
+static void AwWebContentsDelegate__FilesSelectedInChooser(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     jint process_id,

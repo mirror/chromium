@@ -11,7 +11,7 @@ using base::android::ScopedJavaLocalRef;
 
 namespace net {
 
-ScopedJavaLocalRef<jstring> GetOrigin(JNIEnv* env,
+ScopedJavaLocalRef<jstring> GURLUtils__GetOrigin(JNIEnv* env,
                                       const JavaParamRef<jclass>& clazz,
                                       const JavaParamRef<jstring>& url) {
   GURL host(base::android::ConvertJavaStringToUTF16(env, url));
@@ -19,7 +19,7 @@ ScopedJavaLocalRef<jstring> GetOrigin(JNIEnv* env,
   return base::android::ConvertUTF8ToJavaString(env, host.GetOrigin().spec());
 }
 
-ScopedJavaLocalRef<jstring> GetScheme(JNIEnv* env,
+ScopedJavaLocalRef<jstring> GURLUtils__GetScheme(JNIEnv* env,
                                       const JavaParamRef<jclass>& clazz,
                                       const JavaParamRef<jstring>& url) {
   GURL host(base::android::ConvertJavaStringToUTF16(env, url));

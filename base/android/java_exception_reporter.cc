@@ -27,7 +27,7 @@ void InitJavaExceptionReporterForChildProcess() {
   Java_JavaExceptionReporter_installHandler(env, crash_after_report);
 }
 
-void ReportJavaException(JNIEnv* env,
+void JavaExceptionReporter__ReportJavaException(JNIEnv* env,
                          const JavaParamRef<jclass>& jcaller,
                          jboolean crash_after_report,
                          const JavaParamRef<jthrowable>& e) {
@@ -42,7 +42,7 @@ void ReportJavaException(JNIEnv* env,
   base::android::BuildInfo::GetInstance()->ClearJavaExceptionInfo();
 }
 
-void ReportJavaStackTrace(JNIEnv* env,
+void JavaExceptionReporter__ReportJavaStackTrace(JNIEnv* env,
                           const JavaParamRef<jclass>& jcaller,
                           const JavaParamRef<jstring>& stackTrace) {
   base::android::BuildInfo::GetInstance()->SetJavaExceptionInfo(

@@ -283,7 +283,7 @@ AwMetricsServiceClient::AwMetricsServiceClient()
 AwMetricsServiceClient::~AwMetricsServiceClient() {}
 
 // static
-void SetHaveMetricsConsent(JNIEnv* env,
+void AwMetricsServiceClient__SetHaveMetricsConsent(JNIEnv* env,
                            const base::android::JavaParamRef<jclass>& jcaller,
                            jboolean consent) {
   g_lazy_instance_.Pointer()->SetHaveMetricsConsent(consent);

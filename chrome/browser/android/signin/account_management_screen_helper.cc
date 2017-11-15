@@ -25,7 +25,7 @@ void AccountManagementScreenHelper::OpenAccountManagementScreen(
       static_cast<int>(service_type));
 }
 
-static void LogEvent(JNIEnv* env,
+static void AccountManagementScreenHelper__LogEvent(JNIEnv* env,
                      const JavaParamRef<jclass>& clazz,
                      jint metric,
                      jint gaiaServiceType) {

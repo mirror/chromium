@@ -44,7 +44,7 @@ namespace {
 // may be -1 if |array| is not a valid Java array), provide a safe wrapper
 // that always returns a valid, non-negative size.
 template <typename JavaArrayType>
-size_t SafeGetArrayLength(JNIEnv* env, JavaArrayType jarray) {
+size_t CronetBidirectionalStream__SafeGetArrayLength(JNIEnv* env, JavaArrayType jarray) {
   DCHECK(jarray);
   jsize length = env->GetArrayLength(jarray);
   DCHECK_GE(length, 0) << "Invalid array length: " << length;
@@ -72,7 +72,7 @@ PendingWriteData::~PendingWriteData() {
   jwrite_buffer_limit_list.Reset();
 }
 
-static jlong CreateBidirectionalStream(
+static jlong CronetBidirectionalStream__CreateBidirectionalStream(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jbidi_stream,
     jlong jurl_request_context_adapter,

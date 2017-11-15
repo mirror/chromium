@@ -123,7 +123,7 @@ class AccountInfoRetriever : public ProfileDownloaderDelegate {
 }  // namespace
 
 // static
-ScopedJavaLocalRef<jstring> GetCachedFullNameForPrimaryAccount(
+ScopedJavaLocalRef<jstring> ProfileDownloader__GetCachedFullNameForPrimaryAccount(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& jprofile) {
@@ -140,7 +140,7 @@ ScopedJavaLocalRef<jstring> GetCachedFullNameForPrimaryAccount(
 }
 
 // static
-ScopedJavaLocalRef<jstring> GetCachedGivenNameForPrimaryAccount(
+ScopedJavaLocalRef<jstring> ProfileDownloader__GetCachedGivenNameForPrimaryAccount(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& jprofile) {
@@ -157,7 +157,7 @@ ScopedJavaLocalRef<jstring> GetCachedGivenNameForPrimaryAccount(
 }
 
 // static
-ScopedJavaLocalRef<jobject> GetCachedAvatarForPrimaryAccount(
+ScopedJavaLocalRef<jobject> ProfileDownloader__GetCachedAvatarForPrimaryAccount(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& jprofile) {
@@ -180,7 +180,7 @@ ScopedJavaLocalRef<jobject> GetCachedAvatarForPrimaryAccount(
 }
 
 // static
-void StartFetchingAccountInfoFor(JNIEnv* env,
+void ProfileDownloader__StartFetchingAccountInfoFor(JNIEnv* env,
                                  const JavaParamRef<jclass>& clazz,
                                  const JavaParamRef<jobject>& jprofile,
                                  const JavaParamRef<jstring>& jemail,

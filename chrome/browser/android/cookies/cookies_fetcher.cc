@@ -129,7 +129,7 @@ static void RestoreToCookieJarInternal(net::URLRequestContextGetter* getter,
       cookie.Priority(), cb);
 }
 
-static void RestoreCookies(JNIEnv* env,
+static void CookiesFetcher__RestoreCookies(JNIEnv* env,
                            const JavaParamRef<jclass>& jcaller,
                            const JavaParamRef<jstring>& name,
                            const JavaParamRef<jstring>& value,
@@ -170,6 +170,6 @@ static void RestoreCookies(JNIEnv* env,
 }
 
 // JNI functions
-static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+static jlong CookiesFetcher__Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   return reinterpret_cast<intptr_t>(new CookiesFetcher(env, obj, 0));
 }

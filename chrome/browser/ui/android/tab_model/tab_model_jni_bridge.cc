@@ -154,7 +154,7 @@ inline static base::TimeDelta GetTimeDelta(jlong ms) {
   return base::TimeDelta::FromMilliseconds(static_cast<int64_t>(ms));
 }
 
-void LogFromCloseMetric(JNIEnv* env,
+void TabModelJniBridge__LogFromCloseMetric(JNIEnv* env,
                         const JavaParamRef<jclass>& jcaller,
                         jlong ms,
                         jboolean perceived) {
@@ -167,7 +167,7 @@ void LogFromCloseMetric(JNIEnv* env,
   }
 }
 
-void LogFromExitMetric(JNIEnv* env,
+void TabModelJniBridge__LogFromExitMetric(JNIEnv* env,
                        const JavaParamRef<jclass>& jcaller,
                        jlong ms,
                        jboolean perceived) {
@@ -180,7 +180,7 @@ void LogFromExitMetric(JNIEnv* env,
   }
 }
 
-void LogFromNewMetric(JNIEnv* env,
+void TabModelJniBridge__LogFromNewMetric(JNIEnv* env,
                       const JavaParamRef<jclass>& jcaller,
                       jlong ms,
                       jboolean perceived) {
@@ -193,7 +193,7 @@ void LogFromNewMetric(JNIEnv* env,
   }
 }
 
-void LogFromUserMetric(JNIEnv* env,
+void TabModelJniBridge__LogFromUserMetric(JNIEnv* env,
                        const JavaParamRef<jclass>& jcaller,
                        jlong ms,
                        jboolean perceived) {
@@ -210,7 +210,7 @@ TabModelJniBridge::~TabModelJniBridge() {
   TabModelList::RemoveTabModel(this);
 }
 
-static jlong Init(JNIEnv* env,
+static jlong TabModelJniBridge__Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   jboolean is_incognito,
                   jboolean is_tabbed_activity) {

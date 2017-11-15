@@ -520,18 +520,18 @@ void CookieManager::SetAcceptFileSchemeCookies(bool accept) {
     accept_file_scheme_cookies_ = accept;
 }
 
-static void SetShouldAcceptCookies(JNIEnv* env,
+static void AwCookieManager__SetShouldAcceptCookies(JNIEnv* env,
                                    const JavaParamRef<jobject>& obj,
                                    jboolean accept) {
   CookieManager::GetInstance()->SetShouldAcceptCookies(accept);
 }
 
-static jboolean GetShouldAcceptCookies(JNIEnv* env,
+static jboolean AwCookieManager__GetShouldAcceptCookies(JNIEnv* env,
                                        const JavaParamRef<jobject>& obj) {
   return CookieManager::GetInstance()->GetShouldAcceptCookies();
 }
 
-static void SetCookie(JNIEnv* env,
+static void AwCookieManager__SetCookie(JNIEnv* env,
                       const JavaParamRef<jobject>& obj,
                       const JavaParamRef<jstring>& url,
                       const JavaParamRef<jstring>& value,
@@ -544,7 +544,7 @@ static void SetCookie(JNIEnv* env,
                                           std::move(callback));
 }
 
-static void SetCookieSync(JNIEnv* env,
+static void AwCookieManager__SetCookieSync(JNIEnv* env,
                           const JavaParamRef<jobject>& obj,
                           const JavaParamRef<jstring>& url,
                           const JavaParamRef<jstring>& value) {
@@ -554,7 +554,7 @@ static void SetCookieSync(JNIEnv* env,
   CookieManager::GetInstance()->SetCookieSync(host, cookie_value);
 }
 
-static ScopedJavaLocalRef<jstring> GetCookie(JNIEnv* env,
+static ScopedJavaLocalRef<jstring> AwCookieManager__GetCookie(JNIEnv* env,
                                              const JavaParamRef<jobject>& obj,
                                              const JavaParamRef<jstring>& url) {
   GURL host(ConvertJavaStringToUTF16(env, url));
@@ -563,7 +563,7 @@ static ScopedJavaLocalRef<jstring> GetCookie(JNIEnv* env,
       env, CookieManager::GetInstance()->GetCookie(host));
 }
 
-static void RemoveSessionCookies(JNIEnv* env,
+static void AwCookieManager__RemoveSessionCookies(JNIEnv* env,
                                  const JavaParamRef<jobject>& obj,
                                  const JavaParamRef<jobject>& java_callback) {
   std::unique_ptr<BoolCookieCallbackHolder> callback(
@@ -571,12 +571,12 @@ static void RemoveSessionCookies(JNIEnv* env,
   CookieManager::GetInstance()->RemoveSessionCookies(std::move(callback));
 }
 
-static void RemoveSessionCookiesSync(JNIEnv* env,
+static void AwCookieManager__RemoveSessionCookiesSync(JNIEnv* env,
                                      const JavaParamRef<jobject>& obj) {
   CookieManager::GetInstance()->RemoveSessionCookiesSync();
 }
 
-static void RemoveAllCookies(JNIEnv* env,
+static void AwCookieManager__RemoveAllCookies(JNIEnv* env,
                              const JavaParamRef<jobject>& obj,
                              const JavaParamRef<jobject>& java_callback) {
   std::unique_ptr<BoolCookieCallbackHolder> callback(
@@ -584,30 +584,30 @@ static void RemoveAllCookies(JNIEnv* env,
   CookieManager::GetInstance()->RemoveAllCookies(std::move(callback));
 }
 
-static void RemoveAllCookiesSync(JNIEnv* env,
+static void AwCookieManager__RemoveAllCookiesSync(JNIEnv* env,
                                  const JavaParamRef<jobject>& obj) {
   CookieManager::GetInstance()->RemoveAllCookiesSync();
 }
 
-static void RemoveExpiredCookies(JNIEnv* env,
+static void AwCookieManager__RemoveExpiredCookies(JNIEnv* env,
                                  const JavaParamRef<jobject>& obj) {
   CookieManager::GetInstance()->RemoveExpiredCookies();
 }
 
-static void FlushCookieStore(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+static void AwCookieManager__FlushCookieStore(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   CookieManager::GetInstance()->FlushCookieStore();
 }
 
-static jboolean HasCookies(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+static jboolean AwCookieManager__HasCookies(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   return CookieManager::GetInstance()->HasCookies();
 }
 
-static jboolean AllowFileSchemeCookies(JNIEnv* env,
+static jboolean AwCookieManager__AllowFileSchemeCookies(JNIEnv* env,
                                        const JavaParamRef<jobject>& obj) {
   return CookieManager::GetInstance()->AllowFileSchemeCookies();
 }
 
-static void SetAcceptFileSchemeCookies(JNIEnv* env,
+static void AwCookieManager__SetAcceptFileSchemeCookies(JNIEnv* env,
                                        const JavaParamRef<jobject>& obj,
                                        jboolean accept) {
   return CookieManager::GetInstance()->SetAcceptFileSchemeCookies(accept);

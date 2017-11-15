@@ -90,7 +90,7 @@ base::LazyInstance<SuspendedProcessWatcher>::DestructorAtExit
 
 }  // namespace
 
-static void SetWebKitSharedTimersSuspended(JNIEnv* env,
+static void ContentViewStatics__SetWebKitSharedTimersSuspended(JNIEnv* env,
                                            const JavaParamRef<jclass>& obj,
                                            jboolean suspend) {
   if (suspend) {

@@ -51,7 +51,7 @@ UserClassifier* GetUserClassifier() {
 
 }  // namespace
 
-static void OnSuggestionTargetVisited(JNIEnv* env,
+static void SuggestionsEventReporterBridge__OnSuggestionTargetVisited(JNIEnv* env,
                                       const JavaParamRef<jclass>& caller,
                                       jint j_category_id,
                                       jlong visit_time_ms) {
@@ -60,7 +60,7 @@ static void OnSuggestionTargetVisited(JNIEnv* env,
       base::TimeDelta::FromMilliseconds(visit_time_ms));
 }
 
-static void OnPageShown(
+static void SuggestionsEventReporterBridge__OnPageShown(
     JNIEnv* env,
     const JavaParamRef<jclass>& caller,
     const JavaParamRef<jintArray>& jcategories,
@@ -88,7 +88,7 @@ static void OnPageShown(
   GetUserClassifier()->OnEvent(UserClassifier::Metric::NTP_OPENED);
 }
 
-static void OnSuggestionShown(JNIEnv* env,
+static void SuggestionsEventReporterBridge__OnSuggestionShown(JNIEnv* env,
                               const JavaParamRef<jclass>& caller,
                               jint global_position,
                               jint j_category_id,
@@ -105,7 +105,7 @@ static void OnSuggestionShown(JNIEnv* env,
   }
 }
 
-static void OnSuggestionOpened(JNIEnv* env,
+static void SuggestionsEventReporterBridge__OnSuggestionOpened(JNIEnv* env,
                                const JavaParamRef<jclass>& caller,
                                jint global_position,
                                jint j_category_id,
@@ -132,7 +132,7 @@ static void OnSuggestionOpened(JNIEnv* env,
       UserClassifier::Metric::SUGGESTIONS_USED);
 }
 
-static void OnSuggestionMenuOpened(JNIEnv* env,
+static void SuggestionsEventReporterBridge__OnSuggestionMenuOpened(JNIEnv* env,
                                    const JavaParamRef<jclass>& caller,
                                    jint global_position,
                                    jint j_category_id,
@@ -145,7 +145,7 @@ static void OnSuggestionMenuOpened(JNIEnv* env,
       score);
 }
 
-static void OnMoreButtonShown(JNIEnv* env,
+static void SuggestionsEventReporterBridge__OnMoreButtonShown(JNIEnv* env,
                               const JavaParamRef<jclass>& caller,
                               jint j_category_id,
                               jint position) {
@@ -153,7 +153,7 @@ static void OnMoreButtonShown(JNIEnv* env,
                                            position);
 }
 
-static void OnMoreButtonClicked(JNIEnv* env,
+static void SuggestionsEventReporterBridge__OnMoreButtonClicked(JNIEnv* env,
                                 const JavaParamRef<jclass>& caller,
                                 jint j_category_id,
                                 jint position) {
@@ -162,7 +162,7 @@ static void OnMoreButtonClicked(JNIEnv* env,
   GetUserClassifier()->OnEvent(UserClassifier::Metric::SUGGESTIONS_USED);
 }
 
-static void OnSurfaceOpened(JNIEnv* env, const JavaParamRef<jclass>& caller) {
+static void SuggestionsEventReporterBridge__OnSurfaceOpened(JNIEnv* env, const JavaParamRef<jclass>& caller) {
   ntp_snippets::RemoteSuggestionsScheduler* scheduler =
       GetRemoteSuggestionsScheduler();
   // Can be null if the feature has been disabled but the scheduler has not been
@@ -174,7 +174,7 @@ static void OnSurfaceOpened(JNIEnv* env, const JavaParamRef<jclass>& caller) {
   scheduler->OnSuggestionsSurfaceOpened();
 }
 
-static void OnColdStart(JNIEnv* env, const JavaParamRef<jclass>& caller) {
+static void SuggestionsEventReporterBridge__OnColdStart(JNIEnv* env, const JavaParamRef<jclass>& caller) {
   ntp_snippets::RemoteSuggestionsScheduler* scheduler =
       GetRemoteSuggestionsScheduler();
   // TODO(fhorschig): Remove guard when https://crbug.com/678556 is resolved.
@@ -184,7 +184,7 @@ static void OnColdStart(JNIEnv* env, const JavaParamRef<jclass>& caller) {
   scheduler->OnBrowserColdStart();
 }
 
-static void OnActivityWarmResumed(JNIEnv* env,
+static void SuggestionsEventReporterBridge__OnActivityWarmResumed(JNIEnv* env,
                                   const JavaParamRef<jclass>& caller) {
   ntp_snippets::RemoteSuggestionsScheduler* scheduler =
       GetRemoteSuggestionsScheduler();

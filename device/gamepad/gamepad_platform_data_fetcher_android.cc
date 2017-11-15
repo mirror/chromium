@@ -59,7 +59,7 @@ void GamepadPlatformDataFetcherAndroid::PauseHint(bool paused) {
   Java_GamepadList_setGamepadAPIActive(env, !paused);
 }
 
-static void SetGamepadData(JNIEnv* env,
+static void GamepadList__SetGamepadData(JNIEnv* env,
                            const JavaParamRef<jobject>& obj,
                            jlong data_fetcher,
                            jint index,

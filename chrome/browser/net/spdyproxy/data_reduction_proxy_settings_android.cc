@@ -276,7 +276,7 @@ void DataReductionProxySettingsAndroid::OnQueryDataUsageComplete(
 }
 
 // Used by generated jni code.
-static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+static jlong DataReductionProxySettings__Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   return reinterpret_cast<intptr_t>(
       new DataReductionProxySettingsAndroid(env, obj));
 }

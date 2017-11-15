@@ -169,7 +169,7 @@ bool DevToolsServer::IsStarted() const {
   return is_started_;
 }
 
-static jlong InitRemoteDebugging(
+static jlong DevToolsServer__InitRemoteDebugging(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
     const JavaParamRef<jstring>& socket_name_prefix) {
@@ -178,19 +178,19 @@ static jlong InitRemoteDebugging(
   return reinterpret_cast<intptr_t>(server);
 }
 
-static void DestroyRemoteDebugging(JNIEnv* env,
+static void DevToolsServer__DestroyRemoteDebugging(JNIEnv* env,
                                    const JavaParamRef<jobject>& obj,
                                    jlong server) {
   delete reinterpret_cast<DevToolsServer*>(server);
 }
 
-static jboolean IsRemoteDebuggingEnabled(JNIEnv* env,
+static jboolean DevToolsServer__IsRemoteDebuggingEnabled(JNIEnv* env,
                                          const JavaParamRef<jobject>& obj,
                                          jlong server) {
   return reinterpret_cast<DevToolsServer*>(server)->IsStarted();
 }
 
-static void SetRemoteDebuggingEnabled(JNIEnv* env,
+static void DevToolsServer__SetRemoteDebuggingEnabled(JNIEnv* env,
                                       const JavaParamRef<jobject>& obj,
                                       jlong server,
                                       jboolean enabled,
