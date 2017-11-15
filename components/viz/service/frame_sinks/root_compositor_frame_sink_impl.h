@@ -10,6 +10,7 @@
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/common/surfaces/local_surface_id.h"
 #include "components/viz/service/display/display_client.h"
+#include "components/viz/service/display_embedder/display_data.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/hit_test/hit_test_aggregator.h"
 #include "components/viz/service/hit_test/hit_test_aggregator_delegate.h"
@@ -19,8 +20,6 @@
 
 namespace viz {
 
-class BeginFrameSource;
-class Display;
 class FrameSinkManagerImpl;
 
 // The viz portion of a root CompositorFrameSink. Holds the Binding/InterfacePtr
@@ -33,19 +32,21 @@ class RootCompositorFrameSinkImpl : public mojom::CompositorFrameSink,
   RootCompositorFrameSinkImpl(
       FrameSinkManagerImpl* frame_sink_manager,
       const FrameSinkId& frame_sink_id,
-      std::unique_ptr<Display> display,
-      std::unique_ptr<BeginFrameSource> begin_frame_source,
+      DisplayData display_data,
       mojom::CompositorFrameSinkAssociatedRequest request,
       mojom::CompositorFrameSinkClientPtr client,
       mojom::DisplayPrivateAssociatedRequest display_private_request);
 
   ~RootCompositorFrameSinkImpl() override;
 
+  CompositorFrameSinkSupport* support() const { return support_.get(); }
+
   // mojom::DisplayPrivate:
   void SetDisplayVisible(bool visible) override;
   void SetDisplayColorSpace(const gfx::ColorSpace& blending_color_space,
                             const gfx::ColorSpace& device_color_space) override;
   void SetOutputIsSecure(bool secure) override;
+  void SetAuthoritativeVSyncInterval(base::TimeDelta interval) override;
 
   // mojom::CompositorFrameSink:
   void SetNeedsBeginFrame(bool needs_begin_frame) override;
@@ -54,8 +55,6 @@ class RootCompositorFrameSinkImpl : public mojom::CompositorFrameSink,
                              mojom::HitTestRegionListPtr hit_test_region_list,
                              uint64_t submit_time) override;
   void DidNotProduceFrame(const BeginFrameAck& begin_frame_ack) override;
-
-  CompositorFrameSinkSupport* support() const { return support_.get(); }
 
   // HitTestAggregatorDelegate:
   void OnAggregatedHitTestRegionListUpdated(
@@ -84,10 +83,8 @@ class RootCompositorFrameSinkImpl : public mojom::CompositorFrameSink,
   // change for the lifetime of RootCompositorFrameSinkImpl.
   const std::unique_ptr<CompositorFrameSinkSupport> support_;
 
-  // RootCompositorFrameSinkImpl holds a Display and its BeginFrameSource if
-  // it was created with a non-null gpu::SurfaceHandle.
-  std::unique_ptr<BeginFrameSource> display_begin_frame_source_;
-  std::unique_ptr<Display> display_;
+  // Holds a Display and its BeginFrameSource.
+  DisplayData data_;
 
   HitTestAggregator hit_test_aggregator_;
 

@@ -15,8 +15,7 @@ namespace viz {
 RootCompositorFrameSinkImpl::RootCompositorFrameSinkImpl(
     FrameSinkManagerImpl* frame_sink_manager,
     const FrameSinkId& frame_sink_id,
-    std::unique_ptr<Display> display,
-    std::unique_ptr<BeginFrameSource> begin_frame_source,
+    DisplayData display_data,
     mojom::CompositorFrameSinkAssociatedRequest request,
     mojom::CompositorFrameSinkClientPtr client,
     mojom::DisplayPrivateAssociatedRequest display_private_request)
@@ -29,37 +28,43 @@ RootCompositorFrameSinkImpl::RootCompositorFrameSinkImpl(
           frame_sink_id,
           true /* is_root */,
           true /* needs_sync_points */)),
-      display_begin_frame_source_(std::move(begin_frame_source)),
-      display_(std::move(display)),
+      data_(std::move(display_data)),
       hit_test_aggregator_(frame_sink_manager->hit_test_manager(), this) {
-  DCHECK(display_begin_frame_source_);
-  DCHECK(display_);
+  // TODO(kylechar): Support having an ExternalBeginFrameSource too.
+  DCHECK(data_.synthetic_begin_frame_source);
+  DCHECK(data_.display);
 
   compositor_frame_sink_binding_.set_connection_error_handler(
       base::Bind(&RootCompositorFrameSinkImpl::OnClientConnectionLost,
                  base::Unretained(this)));
   frame_sink_manager->RegisterBeginFrameSource(
-      display_begin_frame_source_.get(), frame_sink_id);
-  display_->Initialize(this, frame_sink_manager->surface_manager());
+      data_.synthetic_begin_frame_source.get(), frame_sink_id);
+  data_.display->Initialize(this, frame_sink_manager->surface_manager());
 }
 
 RootCompositorFrameSinkImpl::~RootCompositorFrameSinkImpl() {
   support_->frame_sink_manager()->UnregisterBeginFrameSource(
-      display_begin_frame_source_.get());
+      data_.synthetic_begin_frame_source.get());
 }
 
 void RootCompositorFrameSinkImpl::SetDisplayVisible(bool visible) {
-  display_->SetVisible(visible);
+  data_.display->SetVisible(visible);
 }
 
 void RootCompositorFrameSinkImpl::SetDisplayColorSpace(
     const gfx::ColorSpace& blending_color_space,
     const gfx::ColorSpace& device_color_space) {
-  display_->SetColorSpace(blending_color_space, device_color_space);
+  data_.display->SetColorSpace(blending_color_space, device_color_space);
 }
 
 void RootCompositorFrameSinkImpl::SetOutputIsSecure(bool secure) {
-  display_->SetOutputIsSecure(secure);
+  data_.display->SetOutputIsSecure(secure);
+}
+
+void RootCompositorFrameSinkImpl::SetAuthoritativeVSyncInterval(
+    base::TimeDelta interval) {
+  if (data_.synthetic_begin_frame_source)
+    data_.synthetic_begin_frame_source->SetAuthoritativeVSyncInterval(interval);
 }
 
 void RootCompositorFrameSinkImpl::SetNeedsBeginFrame(bool needs_begin_frame) {
@@ -71,10 +76,11 @@ void RootCompositorFrameSinkImpl::SubmitCompositorFrame(
     CompositorFrame frame,
     mojom::HitTestRegionListPtr hit_test_region_list,
     uint64_t submit_time) {
-  // Update |display_| when size or local surface id changes.
+  // Update display when size or local surface id changes.
   if (support_->local_surface_id() != local_surface_id) {
-    display_->Resize(frame.size_in_pixels());
-    display_->SetLocalSurfaceId(local_surface_id, frame.device_scale_factor());
+    data_.display->Resize(frame.size_in_pixels());
+    data_.display->SetLocalSurfaceId(local_surface_id,
+                                     frame.device_scale_factor());
   }
 
   if (!support_->SubmitCompositorFrame(local_surface_id, std::move(frame),
@@ -114,7 +120,7 @@ void RootCompositorFrameSinkImpl::DisplayOutputSurfaceLost() {
 void RootCompositorFrameSinkImpl::DisplayWillDrawAndSwap(
     bool will_draw_and_swap,
     const RenderPassList& render_pass) {
-  hit_test_aggregator_.Aggregate(display_->CurrentSurfaceId());
+  hit_test_aggregator_.Aggregate(data_.display->CurrentSurfaceId());
 }
 
 void RootCompositorFrameSinkImpl::DisplayDidDrawAndSwap() {}
