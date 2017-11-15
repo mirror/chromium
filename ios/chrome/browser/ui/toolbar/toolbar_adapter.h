@@ -14,11 +14,14 @@
 #import "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h"
 #include "ios/public/provider/chrome/browser/voice/voice_search_controller_delegate.h"
 
-@protocol ApplicationCommands;
-@protocol BrowserCommands;
 namespace ios {
 class ChromeBrowserState;
 }
+
+@protocol ApplicationCommands;
+@protocol BrowserCommands;
+@protocol ToolbarCoordinatorDelegate;
+@protocol UrlLoader;
 class WebStateList;
 
 // Temporary Adapter so CleanToolbarCoordinator can work as ToolbarController
@@ -31,6 +34,8 @@ class WebStateList;
                       webStateList:(WebStateList*)webStateList;
 
 - (instancetype)init NS_UNAVAILABLE;
+
+@property(nonatomic, weak) id<UrlLoader> URLLoader;
 
 @end
 

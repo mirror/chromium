@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/toolbar/toolbar_adapter.h"
 
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.h"
+#import "ios/chrome/browser/ui/toolbar/web_toolbar_delegate.h"
 
 @interface ToolbarAdapter ()
 @property(nonatomic, strong) ToolbarCoordinator* cleanToolbarCoordinator;
@@ -15,6 +16,7 @@
 @synthesize cleanToolbarCoordinator = _cleanToolbarCoordinator;
 @synthesize delegate = _delegate;
 @synthesize toolsPopupController = _toolsPopupController;
+@synthesize URLLoader = _URLLoader;
 @synthesize viewController = _viewController;
 
 - (instancetype)initWithDispatcher:
@@ -29,6 +31,18 @@
     _cleanToolbarCoordinator.chromeBrowserState = browserState;
   }
   return self;
+}
+
+#pragma mark - Properties
+
+- (void)setDelegate:(id<WebToolbarDelegate>)delegate {
+  _delegate = delegate;
+  self.cleanToolbarCoordinator.delegate = delegate;
+}
+
+- (void)setURLLoader:(id<UrlLoader>)URLLoader {
+  _URLLoader = URLLoader;
+  self.cleanToolbarCoordinator.URLLoader = URLLoader;
 }
 
 #pragma mark - Abstract WebToolbar
