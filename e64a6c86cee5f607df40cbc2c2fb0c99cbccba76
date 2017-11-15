@@ -22,6 +22,30 @@
       "revId": "e64a6c86cee5f607df40cbc2c2fb0c99cbccba76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e064880_19985b6b",
+        "filename": "build/android/lint/suppressions.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2017-11-15T01:16:24Z",
+      "side": 1,
+      "message": "Per offline discussion, we should merge this to the first line of the issue so that all upstream and downstream test files will not have problem with @VisibleForTesting.",
+      "parentUuid": "e36c1c36_e8ae6831",
+      "range": {
+        "startLine": 361,
+        "startChar": 4,
+        "endLine": 361,
+        "endChar": 117
+      },
+      "revId": "e64a6c86cee5f607df40cbc2c2fb0c99cbccba76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
