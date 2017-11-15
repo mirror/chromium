@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "555aa9a8_db9e090e",
+        "filename": "components/invalidation/impl/android/java/src/org/chromium/components/invalidation/InvalidationClientService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-15T20:15:08Z",
+      "side": 1,
+      "message": "Maybe I\u0027m misreading this, but it seems unnecessary to do as a static init?\nAndroidListener is an IntentService, and if it is loaded as such, I don\u0027t think we necessarily call getRegisteredClass()?",
+      "revId": "cecf20c2ac7cbed1215f53319665c37a790ea903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
