@@ -182,6 +182,7 @@ void TabLoader::LoadNextTab() {
       return;
     }
 
+    stats_collector_->OnLoadNextTab(!force_load_timer_.IsRunning());
     NavigationController* controller = tabs_to_load_.front();
     DCHECK(controller);
     ++started_to_load_count_;

@@ -77174,6 +77174,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="SessionRestore.TabLoadTimeout" units="BooleanTimedOut">
+  <owner>zhenw@chromium.org</owner>
+  <summary>Whether the tab load is timed out during session restore.</summary>
+</histogram>
+
 <histogram name="SessionStorageDatabase.Commit" enum="LevelDBStatus">
   <owner>cmumford@chromium.org</owner>
   <summary>The result of a commit to the sessionStorage database.</summary>
@@ -85817,6 +85822,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     browser starts to open background tabs until the time the browser has
     finished loading those tabs or otherwise decided to stop loading them). The
     metric is not recorded when the session overlaps with session restore.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpening.TabLoadTimeout"
+    units="BooleanTimedOut">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    Whether the tab load is timed out during background tab opening session (the
+    duration of time from when the browser starts to open background tabs until
+    the time the browser has finished loading those tabs or otherwise decided to
+    stop loading them). The metric is not recorded when the session overlaps
+    with session restore.
   </summary>
 </histogram>
 
