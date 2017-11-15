@@ -16,6 +16,24 @@
       "revId": "7c4eb83a9d6a6a3672c865f01af59f750a82861d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e43ae4e_195a0bf1",
+        "filename": "ui/webui/resources/cr_elements/cr_drawer/cr_drawer.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-15T02:02:29Z",
+      "side": 1,
+      "message": "In this case break-word is not necessary.\n\nTrivia: Without display: flex; *either* will work. In the presence of display: flex; the word-break: break-all; will continue to wrap the words, while word-wrap: break-word; will no longer wrap the words. (https://jsfiddle.net/8bdustuf/).",
+      "parentUuid": "7af92558_2b3037c5",
+      "revId": "7c4eb83a9d6a6a3672c865f01af59f750a82861d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
