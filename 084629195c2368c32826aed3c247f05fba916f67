@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "934fe175_e8d78679",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellCheckRequester.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-15T01:40:45Z",
+      "side": 1,
+      "message": "nit: s/TextCheckerClient/WebTextCheckClient/",
+      "range": {
+        "startLine": 233,
+        "startChar": 5,
+        "endLine": 233,
+        "endChar": 22
+      },
+      "revId": "084629195c2368c32826aed3c247f05fba916f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855aed83_f7b09b2b",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-15T01:40:45Z",
+      "side": 1,
+      "message": "This does not follow the current behavior exactly. Could you change it into:\n\nint misspelling_location \u003d -1;\nint misspelling_length \u003d 0;\nif (WebTextCheckClient* text_checker_client \u003d GetTextCheckerClient()) {\n  // SpellCheckWord will write (0, 0) into the output vars, which is what our\n  // caller expects if the word is spelled correctly.\n  text_checker_client-\u003eCheckSpelling(\n      String(characters.data() + word_start, word_length),\n      misspelling_location, misspelling_length, nullptr);\n} else {\n  misspelling_location \u003d 0;\n}\n\nI\u0027m not sure if CheckSpelling() requires the initial location to be -1. Let\u0027s just not change any behavior in this CL for safety.",
+      "range": {
+        "startLine": 716,
+        "startChar": 0,
+        "endLine": 722,
+        "endChar": 5
+      },
+      "revId": "084629195c2368c32826aed3c247f05fba916f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
