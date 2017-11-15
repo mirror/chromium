@@ -78,10 +78,12 @@ class WebRTCPeerConnectionHandler {
   virtual WebRTCErrorType SetConfiguration(const WebRTCConfiguration&) = 0;
 
   // DEPRECATED
-  virtual bool AddICECandidate(const WebRTCICECandidate&) { return false; }
+  virtual bool AddICECandidate(scoped_refptr<WebRTCICECandidate>) {
+    return false;
+  }
 
   virtual bool AddICECandidate(const WebRTCVoidRequest&,
-                               const WebRTCICECandidate&) {
+                               scoped_refptr<WebRTCICECandidate>) {
     return false;
   }
   virtual bool AddStream(const WebMediaStream&, const WebMediaConstraints&) = 0;
