@@ -210,8 +210,8 @@ base::DictionaryValue* CreateOriginDictAndReturnSessionsDict(
 
   // TODO(yucliu): Change to base::Value::SetKey.
   return storage_dict
-      ->SetDictionaryWithoutPathExpansion(origin,
-                                          OriginData(origin_id).ToDictValue())
+      ->SetKey(origin, base::Value::FromUniquePtrValue(
+                           OriginData(origin_id).ToDictValue()))
       ->SetDictionary(kSessions, base::MakeUnique<base::DictionaryValue>());
 }
 

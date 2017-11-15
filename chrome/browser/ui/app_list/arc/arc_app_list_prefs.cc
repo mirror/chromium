@@ -75,12 +75,12 @@ class ScopedArcPrefUpdate : public DictionaryPrefUpdate {
   // DictionaryPrefUpdate overrides:
   base::DictionaryValue* Get() override {
     base::DictionaryValue* dict = DictionaryPrefUpdate::Get();
-    base::DictionaryValue* dict_item = nullptr;
-    if (!dict->GetDictionaryWithoutPathExpansion(id_, &dict_item)) {
-      dict_item = dict->SetDictionaryWithoutPathExpansion(
-          id_, base::MakeUnique<base::DictionaryValue>());
+    base::Value* dict_item =
+        dict->FindPathOfType(id_, base::Value::Type::DICTIONARY);
+    if (!dict_item) {
+      dict_item = dict->SetKey(id_, base::Value(base::Value::Type::DICTIONARY));
     }
-    return dict_item;
+    return static_cast<base::DictionaryValue*>(dict_item);
   }
 
  private:

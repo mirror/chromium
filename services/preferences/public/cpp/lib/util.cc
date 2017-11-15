@@ -70,18 +70,12 @@ std::unique_ptr<base::DictionaryValue> FilterPrefsImpl(
 void SetValue(base::DictionaryValue* dictionary_value,
               const std::vector<base::StringPiece>& path_components,
               std::unique_ptr<base::Value> value) {
-  for (size_t i = 0; i < path_components.size() - 1; ++i) {
-    if (!dictionary_value->GetDictionaryWithoutPathExpansion(
-            path_components[i], &dictionary_value)) {
-      dictionary_value = dictionary_value->SetDictionaryWithoutPathExpansion(
-          path_components[i], base::MakeUnique<base::DictionaryValue>());
-    }
+  if (value) {
+    dictionary_value->SetPath(
+        path_components, base::Value::FromUniquePtrValue(std::move(value)));
+  } else {
+    dictionary_value->RemovePath(path_components);
   }
-  const auto& key = path_components.back();
-  if (value)
-    dictionary_value->SetWithoutPathExpansion(key, std::move(value));
-  else
-    dictionary_value->RemoveWithoutPathExpansion(key, nullptr);
 }
 
 std::unique_ptr<base::DictionaryValue> FilterPrefs(
