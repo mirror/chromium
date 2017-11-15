@@ -16,6 +16,23 @@
       "revId": "dd68560ffc21028ec4cbb66ec07e1713bbb1ab24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a40e3d4_314bdbc0",
+        "filename": "content/network/throttling/throttling_network_interceptor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-15T21:45:15Z",
+      "side": 1,
+      "message": "seems suspicious since we\u0027re forcing tick length to be 1 microsecond.",
+      "revId": "dd68560ffc21028ec4cbb66ec07e1713bbb1ab24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
