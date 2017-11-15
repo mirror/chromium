@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff3bf4a0_e85845d6",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T14:26:27Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s right. IIRC, we can get that before getting an error page, which would commit.",
+      "revId": "b44efc5706eac36dc0fedfc12655b4827ea77ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "936c95de_7a847073",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1625,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T14:26:27Z",
+      "side": 1,
+      "message": "This seems wrong. The case where |navigation_handle_| is non-null is when we get a same-document navigation commit before the cross-document one. However, we do still expect the cross-document navigation to commit in that case.",
+      "revId": "b44efc5706eac36dc0fedfc12655b4827ea77ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46096b9e_b52095b3",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T14:26:27Z",
+      "side": 1,
+      "message": "I would prefer we didn\u0027t add a boolean to DidStopLoading. Instead, let\u0027s split the IPC in two:\nDidStopLoading (remains as is and will indicate the document load stopped)\nDidFailCommit: indicates the RenderFrame failed to commit the navigation it was asked to commit.\nThe new IPC should be added in Mojo version (ie to mojom::FrameHost).",
+      "revId": "b44efc5706eac36dc0fedfc12655b4827ea77ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d2a2f13_085c8b2c",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5533,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T14:26:27Z",
+      "side": 1,
+      "message": "This is a failed commit of an error page so it falls under failed commit.",
+      "revId": "b44efc5706eac36dc0fedfc12655b4827ea77ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7b2956_6f139fc9",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5550,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T14:26:27Z",
+      "side": 1,
+      "message": "Same here. Also, if you do split the IPC in two, you can remove the if (fallback_result \u003d\u003d WebLocalFrame::NoLoadInProgress) clause.",
+      "revId": "b44efc5706eac36dc0fedfc12655b4827ea77ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9e0a39_73be1c6c",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 6541,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-15T14:26:27Z",
+      "side": 1,
+      "message": "If we use a different IPC, we can remove the !frame_-\u003eIsLoading() from the condition above.",
+      "revId": "b44efc5706eac36dc0fedfc12655b4827ea77ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
