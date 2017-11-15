@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3f1c055_a34ff8d3",
+        "filename": "chrome/common/media_router/mojo/media_router_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-15T19:32:44Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure what to do with this one. On the extension side media source is string, and on the browser side MediaSource is a wrapper class around string/MediaSource::Id.\n\nThe TODO comment below says we can make MediaRoute just hold base::Optional\u003cMediaSource::Id\u003e. At that point I don\u0027t think we need the MediaSource class anymore. Should we simply remove the class and use strings?",
+      "range": {
+        "startLine": 393,
+        "startChar": 37,
+        "endLine": 393,
+        "endChar": 49
+      },
+      "revId": "cf1b8fc6975cc05a13e0ee3c77bf472423d5f8e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

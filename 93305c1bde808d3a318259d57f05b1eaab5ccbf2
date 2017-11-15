@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87c4ea87_86b89201",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-15T19:32:44Z",
+      "side": 1,
+      "message": "media_router_bindings.js uses an empty array instead of null, so we can simply make this non-optional.",
+      "revId": "93305c1bde808d3a318259d57f05b1eaab5ccbf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
