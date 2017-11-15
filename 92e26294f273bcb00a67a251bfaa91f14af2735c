@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a0167ad8_9ef1fd00",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-15T03:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d4052fc_57dd8faf",
+      "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f377ac7e_70060ab1",
         "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a7d6e18f_0d76b253",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-15T03:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f377ac7e_70060ab1",
+      "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65e2a557_8178c256",
         "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
         "patchSetId": 1
@@ -47,6 +83,30 @@
       "writtenOn": "2017-11-15T01:26:00Z",
       "side": 1,
       "message": "what is our story for handle_id now? Will it go away? Or should it just be registration_id?",
+      "range": {
+        "startLine": 482,
+        "startChar": 14,
+        "endLine": 482,
+        "endChar": 23
+      },
+      "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50cec744_fead91f2",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-15T03:59:57Z",
+      "side": 1,
+      "message": "After https://chromium-review.googlesource.com/c/chromium/src/+/748907, the handle id is only used by SWDispatcherHost to keep mapping to the remote registration object in the renderer process. \nI plan to only do the class renaming in this CL, later a follow-up CL will move the mapping out of SWDispatcherHost into each SWProviderHost, at that time we can use the registration id as the key of map and then eliminate this handle id completely.",
+      "parentUuid": "65e2a557_8178c256",
       "range": {
         "startLine": 482,
         "startChar": 14,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "15a03670_58c73923",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-15T03:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1461d6f2_cffe23af",
+      "range": {
+        "startLine": 457,
+        "startChar": 42,
+        "endLine": 457,
+        "endChar": 48
+      },
+      "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60273d72_81252350",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
         "patchSetId": 1
@@ -102,6 +186,30 @@
       "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6061bad_fa0191f6",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-15T03:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60273d72_81252350",
+      "range": {
+        "startLine": 198,
+        "startChar": 20,
+        "endLine": 198,
+        "endChar": 27
+      },
+      "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "b01c65b4_bbf8dc6e",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-15T03:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16efcc4b_7d18d346",
+      "range": {
+        "startLine": 200,
+        "startChar": 35,
+        "endLine": 200,
+        "endChar": 45
+      },
+      "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd78192a_7d5b78bb",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 1
@@ -148,6 +280,30 @@
       "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f20b61_7e3159e6",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-15T03:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd78192a_7d5b78bb",
+      "range": {
+        "startLine": 490,
+        "startChar": 40,
+        "endLine": 490,
+        "endChar": 56
+      },
+      "revId": "92e26294f273bcb00a67a251bfaa91f14af2735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
