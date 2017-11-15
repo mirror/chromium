@@ -567,6 +567,30 @@
     },
     {
       "key": {
+        "uuid": "9d6527b2_f7d0cbd6",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittests.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-11-15T15:35:12Z",
+      "side": 1,
+      "message": "EventGenerator didn\u0027t work (view doesn\u0027t receive OnMouseRelease), could you please check for obvious error, while I debug.",
+      "parentUuid": "c0ca10ba_9677ee03",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 55
+      },
+      "revId": "110c6902858a2b43f067320e4c54b20596c28935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6f0047a_0befca62",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_views.cc",
         "patchSetId": 26
