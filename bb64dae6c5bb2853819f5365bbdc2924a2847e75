@@ -236,6 +236,24 @@
     },
     {
       "key": {
+        "uuid": "4a323296_13178290",
+        "filename": "services/video_capture/virtual_device_mojo_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-11-15T18:31:21Z",
+      "side": 1,
+      "message": "I think https://cs.chromium.org/chromium/src/services/video_capture/receiver_mojo_to_media_adapter.cc?dr\u003dCSs\u0026l\u003d11\nand\nhttps://cs.chromium.org/chromium/src/media/capture/video/video_capture_device_client.cc?type\u003dcs\u0026l\u003d41 are different. \n\nScopedAccessPermissionMediaToMojoAdapter is an implementation of video_capture::mojom::ScopedAccessPermission that wraps around media::VideoCaptureDevice::Client::Buffer::ScopedAccessPermission, while ScopedBufferPoolReservation is an implementation of media::VideoCaptureDevice::Client::Buffer::ScopedAccessPermission.\n\nWill see if I should factor ScopedAccessPermissionMediaToMojoAdapter out so that it can be re-used by VirtualDeviceMojoAdapter. This will be depend on the virtual device API update.",
+      "parentUuid": "105c0a3e_593f78a6",
+      "revId": "bb64dae6c5bb2853819f5365bbdc2924a2847e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d8aecf7_852f9db6",
         "filename": "services/video_capture/virtual_device_mojo_adapter.cc",
         "patchSetId": 4
