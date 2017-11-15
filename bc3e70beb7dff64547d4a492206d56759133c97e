@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "29d65e3f_f5d0d826",
+        "filename": "content/browser/gpu/gpu_internals_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1002431
+      },
+      "writtenOn": "2017-11-15T20:04:51Z",
+      "side": 1,
+      "message": "Yeah, best to drop to the one for now. Latest proposal is down to 3 profiles and trying to keep up with a moving target from the chrome side is just going to be painful. \n\n10 bit yuv 4:2:0 is included in the base profile in the latest proposal.",
+      "parentUuid": "add90856_66d72615",
+      "range": {
+        "startLine": 440,
+        "startChar": 0,
+        "endLine": 449,
+        "endChar": 28
+      },
+      "revId": "bc3e70beb7dff64547d4a492206d56759133c97e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9b81b20_e401ad78",
         "filename": "media/filters/aom_video_decoder.cc",
         "patchSetId": 7
