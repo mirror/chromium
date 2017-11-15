@@ -1030,16 +1030,16 @@ AccessibilityExpanded AXNodeObject::IsExpanded() const {
 
 bool AXNodeObject::IsModal() const {
   if (RoleValue() != kDialogRole && RoleValue() != kAlertDialogRole)
-    return false;
+    return true;
 
   bool modal = false;
   if (HasAOMPropertyOrARIAAttribute(AOMBooleanProperty::kModal, modal))
-    return modal;
+    return !modal;
 
   if (GetNode() && IsHTMLDialogElement(*GetNode()))
-    return ToElement(GetNode())->IsInTopLayer();
+    return !ToElement(GetNode())->IsInTopLayer();
 
-  return false;
+  return true;
 }
 
 bool AXNodeObject::IsRequired() const {
