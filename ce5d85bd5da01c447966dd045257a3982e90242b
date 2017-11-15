@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1bc008c7_2bc549ea",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-15T17:43:57Z",
+      "side": 1,
+      "message": "It\u0027s not exactly a circular dependency - the SystemURLRequestContext is just a bag of stuff, much of which depends on other stuff.  Shutdown order does matter of that stuff does matter, though (HostResolver is the second to last thing destroyed, just before NetLog, so that shouldn\u0027t be an issue)\n\nRegardless, not sure what this would look like post-mojo, but could imagine having URLRequestContextBuilderMojo implementing a method to hook up a mojo wrapper for this, resolver circular dependency issues.  Or passing in a HostResolver hook to the mojo CtVerifier service before the NetworkService is created (With Mojo, you can pass around pipes before there\u0027s something on the other side, which does make dependencies a little weird).",
+      "parentUuid": "b58139db_c54dd75f",
+      "range": {
+        "startLine": 826,
+        "startChar": 15,
+        "endLine": 826,
+        "endChar": 26
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4d682bc_ffe36154",
         "filename": "components/certificate_transparency/single_tree_tracker.cc",
         "patchSetId": 5
