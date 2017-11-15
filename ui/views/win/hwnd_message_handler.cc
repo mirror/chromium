@@ -9,6 +9,8 @@
 #include <shellapi.h>
 #include <tchar.h>
 #include <wrl/client.h>
+#include <cmath>
+#include <limits>
 
 #include <utility>
 
@@ -48,7 +50,6 @@
 #include "ui/gfx/icon_util.h"
 #include "ui/gfx/path.h"
 #include "ui/gfx/path_win.h"
-#include "ui/gfx/win/direct_manipulation.h"
 #include "ui/gfx/win/hwnd_util.h"
 #include "ui/gfx/win/rendering_window_manager.h"
 #include "ui/native_theme/native_theme_win.h"
@@ -413,13 +414,6 @@ void HWNDMessageHandler::Init(HWND parent, const gfx::Rect& bounds) {
   DCHECK(delegate_->GetHWNDMessageDelegateInputMethod());
   delegate_->GetHWNDMessageDelegateInputMethod()->AddObserver(this);
 
-  // Direct Manipulation is enabled on Windows 10+. The CreateInstance function
-  // returns NULL if Direct Manipulation is not available.
-  direct_manipulation_helper_ =
-      gfx::win::DirectManipulationHelper::CreateInstance();
-  if (direct_manipulation_helper_)
-    direct_manipulation_helper_->Initialize(hwnd());
-
   // Disable pen flicks (http://crbug.com/506977)
   base::win::DisableFlicks(hwnd());
 }
@@ -603,8 +597,6 @@ void HWNDMessageHandler::Show() {
       ShowWindowWithState(ui::SHOW_STATE_INACTIVE);
     }
   }
-  if (direct_manipulation_helper_)
-    direct_manipulation_helper_->Activate(hwnd());
 }
 
 void HWNDMessageHandler::ShowWindowWithState(ui::WindowShowState show_state) {
@@ -1003,6 +995,7 @@ LRESULT HWNDMessageHandler::HandleMouseMessage(unsigned int message,
   // Don't track forwarded mouse messages. We expect the caller to track the
   // mouse.
   base::WeakPtr<HWNDMessageHandler> ref(weak_factory_.GetWeakPtr());
+  last_mouse_event_l_param_ = l_param;
   LRESULT ret = HandleMouseEventInternal(message, w_param, l_param, false);
   *handled = IsMsgHandled();
   return ret;
@@ -1068,6 +1061,38 @@ void HWNDMessageHandler::HandleParentChanged() {
   // context as we will not receive touch releases if the touch was initiated
   // in the forwarder window.
   touch_ids_.clear();
+}
+
+LRESULT HWNDMessageHandler::HandleDManipMessage(float scale,
+                                                float scroll_x,
+                                                float scroll_y) {
+  unsigned int message = WM_MOUSEWHEEL;
+  WPARAM w_param;
+  // Scroll event if scale 'is' 1.0
+  if (fabs(1.0f - scale) < std::numeric_limits<float>::epsilon()) {
+    // choose the bigger offset.
+    short offset = scroll_y;
+    if (fabs(scroll_x) > fabs(scroll_y)) {
+      message = WM_MOUSEHWHEEL;
+      offset = -scroll_x;
+    }
+    w_param = MAKEWPARAM(0x0000, offset);
+    LOG(ERROR) << offset;
+  } else {
+    short offset = scale > 1 ? 120 : -120;
+    // Add ctrl modifier, and 120 for default delta.
+    w_param = MAKEWPARAM(0x0008, offset);
+  }
+
+  POINT point;
+  point.x = CR_GET_X_LPARAM(last_mouse_event_l_param_);
+  point.y = CR_GET_Y_LPARAM(last_mouse_event_l_param_);
+  ClientToScreen(hwnd(), &point);
+  LPARAM l_param = MAKELPARAM((short)point.x, (short)point.y);
+
+  base::WeakPtr<HWNDMessageHandler> ref(weak_factory_.GetWeakPtr());
+  LRESULT ret = HandleMouseEventInternal(message, w_param, l_param, false);
+  return ret;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1696,6 +1721,7 @@ LRESULT HWNDMessageHandler::OnMouseActivate(UINT message,
 LRESULT HWNDMessageHandler::OnMouseRange(UINT message,
                                          WPARAM w_param,
                                          LPARAM l_param) {
+  last_mouse_event_l_param_ = l_param;
   return HandleMouseEventInternal(message, w_param, l_param, true);
 }
 
@@ -2518,13 +2544,9 @@ void HWNDMessageHandler::OnWindowPosChanged(WINDOWPOS* window_pos) {
     SetDwmFrameExtension(DwmFrameState::ON);
   if (window_pos->flags & SWP_SHOWWINDOW) {
     delegate_->HandleVisibilityChanged(true);
-    if (direct_manipulation_helper_)
-      direct_manipulation_helper_->Activate(hwnd());
     SetDwmFrameExtension(DwmFrameState::ON);
   } else if (window_pos->flags & SWP_HIDEWINDOW) {
     delegate_->HandleVisibilityChanged(false);
-    if (direct_manipulation_helper_)
-      direct_manipulation_helper_->Deactivate(hwnd());
   }
 
   SetMsgHandled(FALSE);
@@ -2676,12 +2698,6 @@ LRESULT HWNDMessageHandler::HandleMouseEventInternal(UINT message,
 
   if (!ref.get())
     return 0;
-
-  if (direct_manipulation_helper_ && track_mouse &&
-      (message == WM_MOUSEWHEEL || message == WM_MOUSEHWHEEL)) {
-    direct_manipulation_helper_->HandleMouseWheel(hwnd(), message, w_param,
-        l_param);
-  }
 
   if (!handled && message == WM_NCLBUTTONDOWN && w_param != HTSYSMENU &&
       w_param != HTCAPTION &&
@@ -2997,9 +3013,6 @@ void HWNDMessageHandler::SetBoundsInternal(const gfx::Rect& bounds_in_pixels,
     delegate_->HandleClientSizeChanged(GetClientAreaBounds().size());
     ResetWindowRegion(false, true);
   }
-
-  if (direct_manipulation_helper_)
-    direct_manipulation_helper_->SetBounds(bounds_in_pixels);
 }
 
 void HWNDMessageHandler::CheckAndHandleBackgroundFullscreenOnMonitor(
