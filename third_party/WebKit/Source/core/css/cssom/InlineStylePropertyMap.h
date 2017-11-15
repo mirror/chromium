@@ -17,29 +17,18 @@ class CORE_EXPORT InlineStylePropertyMap final : public StylePropertyMap {
   explicit InlineStylePropertyMap(Element* owner_element)
       : owner_element_(owner_element) {}
 
-  Vector<String> getProperties() override;
-
-  void set(CSSPropertyID,
-           HeapVector<CSSStyleValueOrString>&,
-           ExceptionState&) override;
-  void append(CSSPropertyID,
-              HeapVector<CSSStyleValueOrString>&,
-              ExceptionState&) override;
-  void remove(CSSPropertyID, ExceptionState&) override;
-
   virtual void Trace(blink::Visitor* visitor) {
     visitor->Trace(owner_element_);
     StylePropertyMap::Trace(visitor);
   }
 
- protected:
-  CSSStyleValueVector GetAllInternal(CSSPropertyID) override;
-  CSSStyleValueVector GetAllInternal(
-      AtomicString custom_property_name) override;
-
-  HeapVector<StylePropertyMapEntry> GetIterationEntries() override;
-
  private:
+  const CSSValue* GetProperty(CSSPropertyID) final;
+  const CSSValue* GetCustomProperty(AtomicString) final;
+  void ForEachProperty(const IterationCallback& callback) final;
+  void SetProperty(CSSPropertyID, const CSSValue*) final;
+  void RemoveProperty(CSSPropertyID) final;
+
   Member<Element> owner_element_;
 };
 

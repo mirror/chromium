@@ -17,43 +17,61 @@ const gInvalidTestCases = [
 
 for (const {property, values, desc} of gInvalidTestCases) {
   test(() => {
-    let styleMap = newDivWithStyle('').attributeStyleMap;
+    let styleMap = newDivWithStyle('').styleMap;
     assert_throws(new TypeError(), () => styleMap.set(property, ...values));
   }, 'Setting a StylePropertyMap with ' + desc + ' throws TypeError');
 }
 
+const gValidTestCases = [
+  {
+    style: '',
+    property: 'width',
+    values: [CSS.px(20)],
+    expected: [CSS.px(20)],
+    desc: 'a valid CSSStyleValue on an empty StylePropertyMap adds the entry'
+  },
+  {
+    style: '',
+    property: 'width',
+    values: ['20px'],
+    expected: [CSS.px(20)],
+    desc: 'a valid String on an empty StylePropertyMap adds the entry'
+  },
+  {
+    style: 'width: 10px',
+    property: 'width',
+    values: [CSS.px(20)],
+    expected: [CSS.px(20)],
+    desc: 'a valid CSSStyleValue on an existing property replaces the entry'
+  },
+  {
+    style: 'width: 10px',
+    property: 'width',
+    values: ['20px'],
+    expected: [CSS.px(20)],
+    desc: 'a valid String on an existing property replaces the entry'
+  },
+  {
+    style: 'transition-duration: 1s, 2s, 3s',
+    property: 'transition-duration',
+    values: [CSS.s(5), '10s'],
+    expected: [CSS.s(5), CSS.s(10)],
+    desc: 'a valid list-valued CSSStyleValue on an existing property replaces the entry'
+  },
+];
+
+for (const {style, property, values, expected, desc} of gValidTestCases) {
+  test(() => {
+    let styleMap = newDivWithStyle(style).styleMap;
+    styleMap.set(property, ...values);
+
+    const result = styleMap.getAll(property);
+    assert_style_value_array_equals(result, expected);
+  }, 'Setting ' + desc);
+}
+
 test(() => {
-  let styleMap = newDivWithStyle().attributeStyleMap;
-
-  styleMap.set('width', CSS.px(10));
-  assert_style_value_array_equals(styleMap.get('width'), CSS.px(10));
-
-  styleMap.set('width', '20px');
-  assert_style_value_array_equals(styleMap.get('width'), CSS.px(20));
-}, 'Setting a property with CSSStyleValue or String updates its value');
-
-test(() => {
-  let styleMap = newDivWithStyle().attributeStyleMap;
-
-  styleMap.set('transition-duration', CSS.s(1), CSS.s(2));
-  assert_style_value_array_equals(styleMap.getAll('transition-duration'), [CSS.s(1), CSS.s(2)]);
-
-  styleMap.set('transition-duration', '3s', '4s');
-  assert_style_value_array_equals(styleMap.getAll('transition-duration'), [CSS.s(3), CSS.s(4)]);
-}, 'Setting a list-valued property with CSSStyleValue or String updates its values');
-
-test(() => {
-  let styleMap = newDivWithStyle().attributeStyleMap;
-
-  styleMap.set('--foo', CSS.px(10));
-  assert_style_value_array_equals(styleMap.get('--foo'), CSS.px(10));
-
-  styleMap.set('--foo', '20px');
-  assert_style_value_array_equals(styleMap.get('--foo'), new CSSUnparsedValue('20px'));
-}, 'Setting a custom property with CSSStyleValue or String updates its value');
-
-test(() => {
-  let styleMap = newDivWithStyle('transition-duration: 5s, 10s').attributeStyleMap;
+  let styleMap = newDivWithStyle('transition-duration: 5s, 10s').styleMap;
 
   styleMap.set('tRaNsItIoN-dUrAtIoN', '1s', CSS.s(2));
   const result = styleMap.getAll('transition-duration');

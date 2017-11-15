@@ -3,9 +3,11 @@ PASS Setting a StylePropertyMap with an unsupported property name throws TypeErr
 PASS Setting a StylePropertyMap with an null property name throws TypeError
 PASS Setting a StylePropertyMap with an invalid CSSStyleValue throws TypeError
 PASS Setting a StylePropertyMap with an invalid String throws TypeError
-PASS Setting a property with CSSStyleValue or String updates its value
-PASS Setting a list-valued property with CSSStyleValue or String updates its values
-FAIL Setting a custom property with CSSStyleValue or String updates its value Failed to execute 'set' on 'StylePropertyMap': Invalid propertyName: --foo
+PASS Setting a valid CSSStyleValue on an empty StylePropertyMap adds the entry
+PASS Setting a valid String on an empty StylePropertyMap adds the entry
+PASS Setting a valid CSSStyleValue on an existing property replaces the entry
+PASS Setting a valid String on an existing property replaces the entry
+PASS Setting a valid list-valued CSSStyleValue on an existing property replaces the entry
 PASS StylePropertyMap.set is case-insensitive
 Harness: the test ran to completion.
 

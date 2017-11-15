@@ -44,6 +44,6 @@ function createReferenceValue(variable, fallback) {
     'var(' + variable + ', ' + fallback + ')' :
     'var(' + variable + ')';
 
-  const unparsedValue = newDivWithStyle('color:' + varExpr).attributeStyleMap.get('color');
+  const unparsedValue = newDivWithStyle('color:' + varExpr).styleMap.get('color');
   return unparsedValue[0];
 }
