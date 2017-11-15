@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "857e8b6a_6f6fbc73",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T19:04:20Z",
+      "side": 1,
+      "message": "Interesting. Does it also happen if you switch the argument order (lhs vs rhs), or maybe explicilty .get() the scoped_nsobject item?",
+      "parentUuid": "7032dde3_fc3d4500",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 13
+      },
+      "revId": "31b6c3f663f5141262febab31ddca6dd4f8dcd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20692194_e5a2ae1d",
         "filename": "ui/gfx/test/ui_cocoa_test_helper.mm",
         "patchSetId": 7
