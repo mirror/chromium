@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5a89fe55_8255940f",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T23:15:03Z",
+      "side": 1,
+      "message": "Done (as showInFolder).",
+      "parentUuid": "330158d8_325d2ed4",
+      "revId": "e92240af89e312602a9d389c75580fb7f6113cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "721fc40c_332dbcb9",
         "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
         "patchSetId": 4
@@ -65,6 +83,24 @@
       "writtenOn": "2017-11-15T23:04:26Z",
       "side": 1,
       "message": "Consider using a utf-8 string here. Since this will be converted back to utf-8. (It\u0027s not a big cpu hit, but seems cleaner to just use utf-8).",
+      "revId": "e92240af89e312602a9d389c75580fb7f6113cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ca259c_67c98949",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T23:15:03Z",
+      "side": 1,
+      "message": "This is copied from https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/extensions/extension_settings_handler.cc?t\u0026l\u003d92-93, which uses the same pattern for many more strings. Should we defer that for a separate CL? (Or maybe if this is trivial, can you link me to an example?).",
+      "parentUuid": "721fc40c_332dbcb9",
       "revId": "e92240af89e312602a9d389c75580fb7f6113cfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
