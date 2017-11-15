@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32183e77_721769e0",
+        "filename": "services/data_decoder/xml_parser_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-15T21:10:57Z",
+      "side": 1,
+      "message": "Should it be an error that this is dropped?\n\nMore generally is there a target goal for what this will handle and what it won\u0027t (assuming the scope of XML is much larger than the scoped of JSON).",
+      "range": {
+        "startLine": 113,
+        "startChar": 14,
+        "endLine": 113,
+        "endChar": 26
+      },
+      "revId": "f4a57d06aca936f6f8db687bca8b5980ef22ff23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
