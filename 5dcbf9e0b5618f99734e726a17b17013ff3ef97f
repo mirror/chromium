@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4d1674f_8acc3e3a",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T20:34:42Z",
+      "side": 1,
+      "message": "Not needed",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 47
+      },
+      "revId": "5dcbf9e0b5618f99734e726a17b17013ff3ef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4096907_11857b20",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T20:34:42Z",
+      "side": 1,
+      "message": "concerned",
+      "range": {
+        "startLine": 144,
+        "startChar": 34,
+        "endLine": 144,
+        "endChar": 42
+      },
+      "revId": "5dcbf9e0b5618f99734e726a17b17013ff3ef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50abcb9_ae902f36",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T20:34:42Z",
+      "side": 1,
+      "message": "Since you expect this to run on a specific SequencedTaskRunner, replace this with:\nDCHECK(api_task_runner_-\u003eRunsTasksInCurrentSequence());",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 53
+      },
+      "revId": "5dcbf9e0b5618f99734e726a17b17013ff3ef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd02c9e_fb8f3862",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T20:34:42Z",
+      "side": 1,
+      "message": "The recommended style is:\n{base::MayBlock(), base::TaskPriority::USER_VISIBLE}\nhttps://cs.chromium.org/chromium/src/base/task_scheduler/task_traits.h?l\u003d141\u0026rcl\u003db6b4d011ef86ab31f6d27dac534318d7e74e080e",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 179,
+        "endChar": 76
+      },
+      "revId": "5dcbf9e0b5618f99734e726a17b17013ff3ef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d7fd07_1e92adec",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T20:34:42Z",
+      "side": 1,
+      "message": "Unfortunately, when the task runs, the WeakPtr will be dereferenced on a different SequencedTaskRunner than the one on which it is created/invalidated, which is not allowed https://cs.chromium.org/chromium/src/base/memory/weak_ptr.h?l\u003d51\u0026rcl\u003d35473d278f2dcefd3d31c5771c88d8e52196ba91\n\nSolution 1:\n\nPost a task that does asynchronous work without accessing |this| and bring back the result on the current sequence. Consider using PostTaskAndReply(WithResult).\n\nSolution 2:\n\nCreate a Helper class with everything that needs to be accessed from |api_task_runner_|. Instantiate this Helper on the IO thread when needed and destroy it asynchronously on |api_task_runner_| when SafeBrowsingApiHandlerBridge is destroyed.\n\nclass SafeBrowsingApiHandlerBridge {\n  ...\n\n  class Helper {\n    // Put everything that needs to be accessed on\n    // |api_task_runner_| here.\n  };\n\n  std::unique_ptr\u003cHelper\u003e helper_;\n};\n\nvoid SafeBrowsingApiHandlerBridge::StartURLCheck(...) {\n  ...\n \n  api_task_runner_-\u003ePostTask(\n      FROM_HERE,\n      base::BindOnce(\u0026Helper::StartURLCheckAsync, base::Unretained(helper_.get)));\n  );\n}\n\nSafeBrowsingApiHandlerBridge::~SafeBrowsingApiHandlerBridge() {\n  // The destruction of |helper_| will be sequenced after any task that\n  // has already been posted to |api_task_runner_|, so the base::Unretained()\n  // in StartURLCheck() is safe.\n  api_task_runner_-\u003eDeleteSoon(helper_.release());\n}",
+      "range": {
+        "startLine": 184,
+        "startChar": 21,
+        "endLine": 184,
+        "endChar": 47
+      },
+      "revId": "5dcbf9e0b5618f99734e726a17b17013ff3ef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8458672c_9d249e95",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T20:34:42Z",
+      "side": 1,
+      "message": "Since you expect this to run on a specific SequencedTaskRunner, replace with:\nDCHECK(api_task_runner_-\u003eRunsTasksInCurrentSequence());",
+      "range": {
+        "startLine": 191,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 53
+      },
+      "revId": "5dcbf9e0b5618f99734e726a17b17013ff3ef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
