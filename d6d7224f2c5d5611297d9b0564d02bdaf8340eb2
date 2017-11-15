@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eb4999e_8826f9ae",
+        "filename": "chrome/browser/net/default_network_context_params.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-15T17:25:03Z",
+      "side": 1,
+      "message": "Nit: add include for CommandLine.",
+      "range": {
+        "startLine": 41,
+        "startChar": 14,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "d6d7224f2c5d5611297d9b0564d02bdaf8340eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e5407a_fda5b3a9",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-15T17:25:03Z",
+      "side": 1,
+      "message": "Typo: handle",
+      "range": {
+        "startLine": 470,
+        "startChar": 46,
+        "endLine": 470,
+        "endChar": 51
+      },
+      "revId": "d6d7224f2c5d5611297d9b0564d02bdaf8340eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34712dca_511ecc21",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-15T17:25:03Z",
+      "side": 1,
+      "message": "Is this used?",
+      "range": {
+        "startLine": 500,
+        "startChar": 22,
+        "endLine": 500,
+        "endChar": 31
+      },
+      "revId": "d6d7224f2c5d5611297d9b0564d02bdaf8340eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "509387c5_a3a8ef44",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-15T17:25:03Z",
+      "side": 1,
+      "message": "Typo: handle (sam in other tests below)",
+      "range": {
+        "startLine": 508,
+        "startChar": 46,
+        "endLine": 508,
+        "endChar": 51
+      },
+      "revId": "d6d7224f2c5d5611297d9b0564d02bdaf8340eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4e1e67_d048562d",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-15T17:25:03Z",
+      "side": 1,
+      "message": "Nit: we should probably do the same for all other similar test classes.",
+      "range": {
+        "startLine": 557,
+        "startChar": 2,
+        "endLine": 557,
+        "endChar": 26
+      },
+      "revId": "d6d7224f2c5d5611297d9b0564d02bdaf8340eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5325296_2498fd75",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-15T17:25:03Z",
+      "side": 1,
+      "message": "Is this used?",
+      "range": {
+        "startLine": 586,
+        "startChar": 22,
+        "endLine": 586,
+        "endChar": 31
+      },
+      "revId": "d6d7224f2c5d5611297d9b0564d02bdaf8340eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
