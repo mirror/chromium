@@ -46,6 +46,30 @@
       "revId": "25f21344234978802b9f0b9d75a1a84a77dab487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e23689f_90d8a95c",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-15T06:25:03Z",
+      "side": 1,
+      "message": "Could we just add this flag to ResourceDispatcherHostDelegate?\nLike on primary user sign in, UserManager can notify ResourceDispatcherHost::Get()-\u003eGetDelegate()-\u003eSetAccountConsistency(true);\n\nThis sounds way more simpler and robust if we compare this to creating preference, moving it to IO thread, etc...",
+      "parentUuid": "de0b1e1e_687b640d",
+      "range": {
+        "startLine": 389,
+        "startChar": 23,
+        "endLine": 389,
+        "endChar": 37
+      },
+      "revId": "25f21344234978802b9f0b9d75a1a84a77dab487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
