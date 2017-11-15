@@ -22,6 +22,30 @@
       "revId": "bb2f0d4bd9ab08cf72fd0e715de8ab69ddf14981",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f722f0_f805a82c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-15T15:13:23Z",
+      "side": 1,
+      "message": "Changed it to DiscardReason.\n\nThe motivation for this change is to allow code that doesn\u0027t depend on TabManager and/or as nothing to do with tabs to use a \"DiscardCondition\".",
+      "parentUuid": "c3c9b45b_fb81a74f",
+      "range": {
+        "startLine": 116,
+        "startChar": 18,
+        "endLine": 116,
+        "endChar": 33
+      },
+      "revId": "bb2f0d4bd9ab08cf72fd0e715de8ab69ddf14981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
