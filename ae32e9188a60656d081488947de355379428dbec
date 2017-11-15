@@ -141,6 +141,30 @@
       "revId": "ae32e9188a60656d081488947de355379428dbec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18abd48f_89715e1e",
+        "filename": "components/infobars/core/infobar_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-15T16:59:04Z",
+      "side": 1,
+      "message": "Okay thanks! Implemented according to your spec and updated FramebustBlockInfobar\u0027s EqualsDelegate. PTAL!",
+      "parentUuid": "b68a0b4c_0db0499f",
+      "range": {
+        "startLine": 82,
+        "startChar": 24,
+        "endLine": 82,
+        "endChar": 40
+      },
+      "revId": "ae32e9188a60656d081488947de355379428dbec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
