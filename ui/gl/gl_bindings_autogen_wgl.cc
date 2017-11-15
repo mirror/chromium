@@ -10,6 +10,7 @@
 
 #include <string>
 
+#include "base/memory/protected_memory.h"
 #include "base/trace_event/trace_event.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
@@ -20,7 +21,10 @@
 
 namespace gl {
 
-DriverWGL g_driver_wgl;  // Exists in .bss
+// Place the driver in protected memory so that it is set
+// read-only after it is initialized, preventing it from
+// being tampered with. See crbug.com/771365 for details.
+PROTECTED_MEMORY_SECTION base::ProtectedMemory<DriverWGL> g_driver_wgl;
 
 void DriverWGL::InitializeStaticBindings() {
   // Ensure struct has been zero-initialized.
@@ -116,216 +120,257 @@ void DriverWGL::ClearBindings() {
   memset(this, 0, sizeof(*this));
 }
 
-BOOL WGLApiBase::wglChoosePixelFormatARBFn(HDC dc,
-                                           const int* int_attrib_list,
-                                           const float* float_attrib_list,
-                                           UINT max_formats,
-                                           int* formats,
-                                           UINT* num_formats) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+WGLApiBase::wglChoosePixelFormatARBFn(HDC dc,
+                                      const int* int_attrib_list,
+                                      const float* float_attrib_list,
+                                      UINT max_formats,
+                                      int* formats,
+                                      UINT* num_formats) {
   return driver_->fn.wglChoosePixelFormatARBFn(dc, int_attrib_list,
                                                float_attrib_list, max_formats,
                                                formats, num_formats);
 }
 
-BOOL WGLApiBase::wglCopyContextFn(HGLRC hglrcSrc, HGLRC hglrcDst, UINT mask) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+WGLApiBase::wglCopyContextFn(HGLRC hglrcSrc, HGLRC hglrcDst, UINT mask) {
   return driver_->fn.wglCopyContextFn(hglrcSrc, hglrcDst, mask);
 }
 
-HGLRC WGLApiBase::wglCreateContextFn(HDC hdc) {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC WGLApiBase::wglCreateContextFn(
+    HDC hdc) {
   return driver_->fn.wglCreateContextFn(hdc);
 }
 
-HGLRC WGLApiBase::wglCreateContextAttribsARBFn(HDC hDC,
-                                               HGLRC hShareContext,
-                                               const int* attribList) {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC
+WGLApiBase::wglCreateContextAttribsARBFn(HDC hDC,
+                                         HGLRC hShareContext,
+                                         const int* attribList) {
   return driver_->fn.wglCreateContextAttribsARBFn(hDC, hShareContext,
                                                   attribList);
 }
 
-HGLRC WGLApiBase::wglCreateLayerContextFn(HDC hdc, int iLayerPlane) {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC
+WGLApiBase::wglCreateLayerContextFn(HDC hdc, int iLayerPlane) {
   return driver_->fn.wglCreateLayerContextFn(hdc, iLayerPlane);
 }
 
-HPBUFFERARB WGLApiBase::wglCreatePbufferARBFn(HDC hDC,
-                                              int iPixelFormat,
-                                              int iWidth,
-                                              int iHeight,
-                                              const int* piAttribList) {
+__attribute__((no_sanitize("cfi-icall"))) HPBUFFERARB
+WGLApiBase::wglCreatePbufferARBFn(HDC hDC,
+                                  int iPixelFormat,
+                                  int iWidth,
+                                  int iHeight,
+                                  const int* piAttribList) {
   return driver_->fn.wglCreatePbufferARBFn(hDC, iPixelFormat, iWidth, iHeight,
                                            piAttribList);
 }
 
-BOOL WGLApiBase::wglDeleteContextFn(HGLRC hglrc) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL WGLApiBase::wglDeleteContextFn(
+    HGLRC hglrc) {
   return driver_->fn.wglDeleteContextFn(hglrc);
 }
 
-BOOL WGLApiBase::wglDestroyPbufferARBFn(HPBUFFERARB hPbuffer) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+WGLApiBase::wglDestroyPbufferARBFn(HPBUFFERARB hPbuffer) {
   return driver_->fn.wglDestroyPbufferARBFn(hPbuffer);
 }
 
-HGLRC WGLApiBase::wglGetCurrentContextFn() {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC
+WGLApiBase::wglGetCurrentContextFn() {
   return driver_->fn.wglGetCurrentContextFn();
 }
 
-HDC WGLApiBase::wglGetCurrentDCFn() {
+__attribute__((no_sanitize("cfi-icall"))) HDC WGLApiBase::wglGetCurrentDCFn() {
   return driver_->fn.wglGetCurrentDCFn();
 }
 
-const char* WGLApiBase::wglGetExtensionsStringARBFn(HDC hDC) {
+__attribute__((no_sanitize("cfi-icall"))) const char*
+WGLApiBase::wglGetExtensionsStringARBFn(HDC hDC) {
   return driver_->fn.wglGetExtensionsStringARBFn(hDC);
 }
 
-const char* WGLApiBase::wglGetExtensionsStringEXTFn() {
+__attribute__((no_sanitize("cfi-icall"))) const char*
+WGLApiBase::wglGetExtensionsStringEXTFn() {
   return driver_->fn.wglGetExtensionsStringEXTFn();
 }
 
-HDC WGLApiBase::wglGetPbufferDCARBFn(HPBUFFERARB hPbuffer) {
+__attribute__((no_sanitize("cfi-icall"))) HDC WGLApiBase::wglGetPbufferDCARBFn(
+    HPBUFFERARB hPbuffer) {
   return driver_->fn.wglGetPbufferDCARBFn(hPbuffer);
 }
 
-BOOL WGLApiBase::wglMakeCurrentFn(HDC hdc, HGLRC hglrc) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL WGLApiBase::wglMakeCurrentFn(
+    HDC hdc,
+    HGLRC hglrc) {
   return driver_->fn.wglMakeCurrentFn(hdc, hglrc);
 }
 
-BOOL WGLApiBase::wglQueryPbufferARBFn(HPBUFFERARB hPbuffer,
-                                      int iAttribute,
-                                      int* piValue) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL WGLApiBase::wglQueryPbufferARBFn(
+    HPBUFFERARB hPbuffer,
+    int iAttribute,
+    int* piValue) {
   return driver_->fn.wglQueryPbufferARBFn(hPbuffer, iAttribute, piValue);
 }
 
-int WGLApiBase::wglReleasePbufferDCARBFn(HPBUFFERARB hPbuffer, HDC hDC) {
+__attribute__((no_sanitize("cfi-icall"))) int
+WGLApiBase::wglReleasePbufferDCARBFn(HPBUFFERARB hPbuffer, HDC hDC) {
   return driver_->fn.wglReleasePbufferDCARBFn(hPbuffer, hDC);
 }
 
-BOOL WGLApiBase::wglShareListsFn(HGLRC hglrc1, HGLRC hglrc2) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL WGLApiBase::wglShareListsFn(
+    HGLRC hglrc1,
+    HGLRC hglrc2) {
   return driver_->fn.wglShareListsFn(hglrc1, hglrc2);
 }
 
-BOOL WGLApiBase::wglSwapIntervalEXTFn(int interval) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL WGLApiBase::wglSwapIntervalEXTFn(
+    int interval) {
   return driver_->fn.wglSwapIntervalEXTFn(interval);
 }
 
-BOOL WGLApiBase::wglSwapLayerBuffersFn(HDC hdc, UINT fuPlanes) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+WGLApiBase::wglSwapLayerBuffersFn(HDC hdc, UINT fuPlanes) {
   return driver_->fn.wglSwapLayerBuffersFn(hdc, fuPlanes);
 }
 
-BOOL TraceWGLApi::wglChoosePixelFormatARBFn(HDC dc,
-                                            const int* int_attrib_list,
-                                            const float* float_attrib_list,
-                                            UINT max_formats,
-                                            int* formats,
-                                            UINT* num_formats) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+TraceWGLApi::wglChoosePixelFormatARBFn(HDC dc,
+                                       const int* int_attrib_list,
+                                       const float* float_attrib_list,
+                                       UINT max_formats,
+                                       int* formats,
+                                       UINT* num_formats) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglChoosePixelFormatARB")
   return wgl_api_->wglChoosePixelFormatARBFn(dc, int_attrib_list,
                                              float_attrib_list, max_formats,
                                              formats, num_formats);
 }
 
-BOOL TraceWGLApi::wglCopyContextFn(HGLRC hglrcSrc, HGLRC hglrcDst, UINT mask) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+TraceWGLApi::wglCopyContextFn(HGLRC hglrcSrc, HGLRC hglrcDst, UINT mask) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglCopyContext")
   return wgl_api_->wglCopyContextFn(hglrcSrc, hglrcDst, mask);
 }
 
-HGLRC TraceWGLApi::wglCreateContextFn(HDC hdc) {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC TraceWGLApi::wglCreateContextFn(
+    HDC hdc) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglCreateContext")
   return wgl_api_->wglCreateContextFn(hdc);
 }
 
-HGLRC TraceWGLApi::wglCreateContextAttribsARBFn(HDC hDC,
-                                                HGLRC hShareContext,
-                                                const int* attribList) {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC
+TraceWGLApi::wglCreateContextAttribsARBFn(HDC hDC,
+                                          HGLRC hShareContext,
+                                          const int* attribList) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglCreateContextAttribsARB")
   return wgl_api_->wglCreateContextAttribsARBFn(hDC, hShareContext, attribList);
 }
 
-HGLRC TraceWGLApi::wglCreateLayerContextFn(HDC hdc, int iLayerPlane) {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC
+TraceWGLApi::wglCreateLayerContextFn(HDC hdc, int iLayerPlane) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglCreateLayerContext")
   return wgl_api_->wglCreateLayerContextFn(hdc, iLayerPlane);
 }
 
-HPBUFFERARB TraceWGLApi::wglCreatePbufferARBFn(HDC hDC,
-                                               int iPixelFormat,
-                                               int iWidth,
-                                               int iHeight,
-                                               const int* piAttribList) {
+__attribute__((no_sanitize("cfi-icall"))) HPBUFFERARB
+TraceWGLApi::wglCreatePbufferARBFn(HDC hDC,
+                                   int iPixelFormat,
+                                   int iWidth,
+                                   int iHeight,
+                                   const int* piAttribList) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglCreatePbufferARB")
   return wgl_api_->wglCreatePbufferARBFn(hDC, iPixelFormat, iWidth, iHeight,
                                          piAttribList);
 }
 
-BOOL TraceWGLApi::wglDeleteContextFn(HGLRC hglrc) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL TraceWGLApi::wglDeleteContextFn(
+    HGLRC hglrc) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglDeleteContext")
   return wgl_api_->wglDeleteContextFn(hglrc);
 }
 
-BOOL TraceWGLApi::wglDestroyPbufferARBFn(HPBUFFERARB hPbuffer) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+TraceWGLApi::wglDestroyPbufferARBFn(HPBUFFERARB hPbuffer) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglDestroyPbufferARB")
   return wgl_api_->wglDestroyPbufferARBFn(hPbuffer);
 }
 
-HGLRC TraceWGLApi::wglGetCurrentContextFn() {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC
+TraceWGLApi::wglGetCurrentContextFn() {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglGetCurrentContext")
   return wgl_api_->wglGetCurrentContextFn();
 }
 
-HDC TraceWGLApi::wglGetCurrentDCFn() {
+__attribute__((no_sanitize("cfi-icall"))) HDC TraceWGLApi::wglGetCurrentDCFn() {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglGetCurrentDC")
   return wgl_api_->wglGetCurrentDCFn();
 }
 
-const char* TraceWGLApi::wglGetExtensionsStringARBFn(HDC hDC) {
+__attribute__((no_sanitize("cfi-icall"))) const char*
+TraceWGLApi::wglGetExtensionsStringARBFn(HDC hDC) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglGetExtensionsStringARB")
   return wgl_api_->wglGetExtensionsStringARBFn(hDC);
 }
 
-const char* TraceWGLApi::wglGetExtensionsStringEXTFn() {
+__attribute__((no_sanitize("cfi-icall"))) const char*
+TraceWGLApi::wglGetExtensionsStringEXTFn() {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglGetExtensionsStringEXT")
   return wgl_api_->wglGetExtensionsStringEXTFn();
 }
 
-HDC TraceWGLApi::wglGetPbufferDCARBFn(HPBUFFERARB hPbuffer) {
+__attribute__((no_sanitize("cfi-icall"))) HDC TraceWGLApi::wglGetPbufferDCARBFn(
+    HPBUFFERARB hPbuffer) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglGetPbufferDCARB")
   return wgl_api_->wglGetPbufferDCARBFn(hPbuffer);
 }
 
-BOOL TraceWGLApi::wglMakeCurrentFn(HDC hdc, HGLRC hglrc) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL TraceWGLApi::wglMakeCurrentFn(
+    HDC hdc,
+    HGLRC hglrc) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglMakeCurrent")
   return wgl_api_->wglMakeCurrentFn(hdc, hglrc);
 }
 
-BOOL TraceWGLApi::wglQueryPbufferARBFn(HPBUFFERARB hPbuffer,
-                                       int iAttribute,
-                                       int* piValue) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+TraceWGLApi::wglQueryPbufferARBFn(HPBUFFERARB hPbuffer,
+                                  int iAttribute,
+                                  int* piValue) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglQueryPbufferARB")
   return wgl_api_->wglQueryPbufferARBFn(hPbuffer, iAttribute, piValue);
 }
 
-int TraceWGLApi::wglReleasePbufferDCARBFn(HPBUFFERARB hPbuffer, HDC hDC) {
+__attribute__((no_sanitize("cfi-icall"))) int
+TraceWGLApi::wglReleasePbufferDCARBFn(HPBUFFERARB hPbuffer, HDC hDC) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglReleasePbufferDCARB")
   return wgl_api_->wglReleasePbufferDCARBFn(hPbuffer, hDC);
 }
 
-BOOL TraceWGLApi::wglShareListsFn(HGLRC hglrc1, HGLRC hglrc2) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL TraceWGLApi::wglShareListsFn(
+    HGLRC hglrc1,
+    HGLRC hglrc2) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglShareLists")
   return wgl_api_->wglShareListsFn(hglrc1, hglrc2);
 }
 
-BOOL TraceWGLApi::wglSwapIntervalEXTFn(int interval) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+TraceWGLApi::wglSwapIntervalEXTFn(int interval) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglSwapIntervalEXT")
   return wgl_api_->wglSwapIntervalEXTFn(interval);
 }
 
-BOOL TraceWGLApi::wglSwapLayerBuffersFn(HDC hdc, UINT fuPlanes) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+TraceWGLApi::wglSwapLayerBuffersFn(HDC hdc, UINT fuPlanes) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::wglSwapLayerBuffers")
   return wgl_api_->wglSwapLayerBuffersFn(hdc, fuPlanes);
 }
 
-BOOL DebugWGLApi::wglChoosePixelFormatARBFn(HDC dc,
-                                            const int* int_attrib_list,
-                                            const float* float_attrib_list,
-                                            UINT max_formats,
-                                            int* formats,
-                                            UINT* num_formats) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+DebugWGLApi::wglChoosePixelFormatARBFn(HDC dc,
+                                       const int* int_attrib_list,
+                                       const float* float_attrib_list,
+                                       UINT max_formats,
+                                       int* formats,
+                                       UINT* num_formats) {
   GL_SERVICE_LOG("wglChoosePixelFormatARB"
                  << "(" << dc << ", "
                  << static_cast<const void*>(int_attrib_list) << ", "
@@ -339,7 +384,8 @@ BOOL DebugWGLApi::wglChoosePixelFormatARBFn(HDC dc,
   return result;
 }
 
-BOOL DebugWGLApi::wglCopyContextFn(HGLRC hglrcSrc, HGLRC hglrcDst, UINT mask) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+DebugWGLApi::wglCopyContextFn(HGLRC hglrcSrc, HGLRC hglrcDst, UINT mask) {
   GL_SERVICE_LOG("wglCopyContext"
                  << "(" << hglrcSrc << ", " << hglrcDst << ", " << mask << ")");
   BOOL result = wgl_api_->wglCopyContextFn(hglrcSrc, hglrcDst, mask);
@@ -347,7 +393,8 @@ BOOL DebugWGLApi::wglCopyContextFn(HGLRC hglrcSrc, HGLRC hglrcDst, UINT mask) {
   return result;
 }
 
-HGLRC DebugWGLApi::wglCreateContextFn(HDC hdc) {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC DebugWGLApi::wglCreateContextFn(
+    HDC hdc) {
   GL_SERVICE_LOG("wglCreateContext"
                  << "(" << hdc << ")");
   HGLRC result = wgl_api_->wglCreateContextFn(hdc);
@@ -355,9 +402,10 @@ HGLRC DebugWGLApi::wglCreateContextFn(HDC hdc) {
   return result;
 }
 
-HGLRC DebugWGLApi::wglCreateContextAttribsARBFn(HDC hDC,
-                                                HGLRC hShareContext,
-                                                const int* attribList) {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC
+DebugWGLApi::wglCreateContextAttribsARBFn(HDC hDC,
+                                          HGLRC hShareContext,
+                                          const int* attribList) {
   GL_SERVICE_LOG("wglCreateContextAttribsARB"
                  << "(" << hDC << ", " << hShareContext << ", "
                  << static_cast<const void*>(attribList) << ")");
@@ -367,7 +415,8 @@ HGLRC DebugWGLApi::wglCreateContextAttribsARBFn(HDC hDC,
   return result;
 }
 
-HGLRC DebugWGLApi::wglCreateLayerContextFn(HDC hdc, int iLayerPlane) {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC
+DebugWGLApi::wglCreateLayerContextFn(HDC hdc, int iLayerPlane) {
   GL_SERVICE_LOG("wglCreateLayerContext"
                  << "(" << hdc << ", " << iLayerPlane << ")");
   HGLRC result = wgl_api_->wglCreateLayerContextFn(hdc, iLayerPlane);
@@ -375,11 +424,12 @@ HGLRC DebugWGLApi::wglCreateLayerContextFn(HDC hdc, int iLayerPlane) {
   return result;
 }
 
-HPBUFFERARB DebugWGLApi::wglCreatePbufferARBFn(HDC hDC,
-                                               int iPixelFormat,
-                                               int iWidth,
-                                               int iHeight,
-                                               const int* piAttribList) {
+__attribute__((no_sanitize("cfi-icall"))) HPBUFFERARB
+DebugWGLApi::wglCreatePbufferARBFn(HDC hDC,
+                                   int iPixelFormat,
+                                   int iWidth,
+                                   int iHeight,
+                                   const int* piAttribList) {
   GL_SERVICE_LOG("wglCreatePbufferARB"
                  << "(" << hDC << ", " << iPixelFormat << ", " << iWidth << ", "
                  << iHeight << ", " << static_cast<const void*>(piAttribList)
@@ -390,7 +440,8 @@ HPBUFFERARB DebugWGLApi::wglCreatePbufferARBFn(HDC hDC,
   return result;
 }
 
-BOOL DebugWGLApi::wglDeleteContextFn(HGLRC hglrc) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL DebugWGLApi::wglDeleteContextFn(
+    HGLRC hglrc) {
   GL_SERVICE_LOG("wglDeleteContext"
                  << "(" << hglrc << ")");
   BOOL result = wgl_api_->wglDeleteContextFn(hglrc);
@@ -398,7 +449,8 @@ BOOL DebugWGLApi::wglDeleteContextFn(HGLRC hglrc) {
   return result;
 }
 
-BOOL DebugWGLApi::wglDestroyPbufferARBFn(HPBUFFERARB hPbuffer) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+DebugWGLApi::wglDestroyPbufferARBFn(HPBUFFERARB hPbuffer) {
   GL_SERVICE_LOG("wglDestroyPbufferARB"
                  << "(" << hPbuffer << ")");
   BOOL result = wgl_api_->wglDestroyPbufferARBFn(hPbuffer);
@@ -406,7 +458,8 @@ BOOL DebugWGLApi::wglDestroyPbufferARBFn(HPBUFFERARB hPbuffer) {
   return result;
 }
 
-HGLRC DebugWGLApi::wglGetCurrentContextFn() {
+__attribute__((no_sanitize("cfi-icall"))) HGLRC
+DebugWGLApi::wglGetCurrentContextFn() {
   GL_SERVICE_LOG("wglGetCurrentContext"
                  << "("
                  << ")");
@@ -415,7 +468,7 @@ HGLRC DebugWGLApi::wglGetCurrentContextFn() {
   return result;
 }
 
-HDC DebugWGLApi::wglGetCurrentDCFn() {
+__attribute__((no_sanitize("cfi-icall"))) HDC DebugWGLApi::wglGetCurrentDCFn() {
   GL_SERVICE_LOG("wglGetCurrentDC"
                  << "("
                  << ")");
@@ -424,7 +477,8 @@ HDC DebugWGLApi::wglGetCurrentDCFn() {
   return result;
 }
 
-const char* DebugWGLApi::wglGetExtensionsStringARBFn(HDC hDC) {
+__attribute__((no_sanitize("cfi-icall"))) const char*
+DebugWGLApi::wglGetExtensionsStringARBFn(HDC hDC) {
   GL_SERVICE_LOG("wglGetExtensionsStringARB"
                  << "(" << hDC << ")");
   const char* result = wgl_api_->wglGetExtensionsStringARBFn(hDC);
@@ -432,7 +486,8 @@ const char* DebugWGLApi::wglGetExtensionsStringARBFn(HDC hDC) {
   return result;
 }
 
-const char* DebugWGLApi::wglGetExtensionsStringEXTFn() {
+__attribute__((no_sanitize("cfi-icall"))) const char*
+DebugWGLApi::wglGetExtensionsStringEXTFn() {
   GL_SERVICE_LOG("wglGetExtensionsStringEXT"
                  << "("
                  << ")");
@@ -441,7 +496,8 @@ const char* DebugWGLApi::wglGetExtensionsStringEXTFn() {
   return result;
 }
 
-HDC DebugWGLApi::wglGetPbufferDCARBFn(HPBUFFERARB hPbuffer) {
+__attribute__((no_sanitize("cfi-icall"))) HDC DebugWGLApi::wglGetPbufferDCARBFn(
+    HPBUFFERARB hPbuffer) {
   GL_SERVICE_LOG("wglGetPbufferDCARB"
                  << "(" << hPbuffer << ")");
   HDC result = wgl_api_->wglGetPbufferDCARBFn(hPbuffer);
@@ -449,7 +505,9 @@ HDC DebugWGLApi::wglGetPbufferDCARBFn(HPBUFFERARB hPbuffer) {
   return result;
 }
 
-BOOL DebugWGLApi::wglMakeCurrentFn(HDC hdc, HGLRC hglrc) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL DebugWGLApi::wglMakeCurrentFn(
+    HDC hdc,
+    HGLRC hglrc) {
   GL_SERVICE_LOG("wglMakeCurrent"
                  << "(" << hdc << ", " << hglrc << ")");
   BOOL result = wgl_api_->wglMakeCurrentFn(hdc, hglrc);
@@ -457,9 +515,10 @@ BOOL DebugWGLApi::wglMakeCurrentFn(HDC hdc, HGLRC hglrc) {
   return result;
 }
 
-BOOL DebugWGLApi::wglQueryPbufferARBFn(HPBUFFERARB hPbuffer,
-                                       int iAttribute,
-                                       int* piValue) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+DebugWGLApi::wglQueryPbufferARBFn(HPBUFFERARB hPbuffer,
+                                  int iAttribute,
+                                  int* piValue) {
   GL_SERVICE_LOG("wglQueryPbufferARB"
                  << "(" << hPbuffer << ", " << iAttribute << ", "
                  << static_cast<const void*>(piValue) << ")");
@@ -468,7 +527,8 @@ BOOL DebugWGLApi::wglQueryPbufferARBFn(HPBUFFERARB hPbuffer,
   return result;
 }
 
-int DebugWGLApi::wglReleasePbufferDCARBFn(HPBUFFERARB hPbuffer, HDC hDC) {
+__attribute__((no_sanitize("cfi-icall"))) int
+DebugWGLApi::wglReleasePbufferDCARBFn(HPBUFFERARB hPbuffer, HDC hDC) {
   GL_SERVICE_LOG("wglReleasePbufferDCARB"
                  << "(" << hPbuffer << ", " << hDC << ")");
   int result = wgl_api_->wglReleasePbufferDCARBFn(hPbuffer, hDC);
@@ -476,7 +536,9 @@ int DebugWGLApi::wglReleasePbufferDCARBFn(HPBUFFERARB hPbuffer, HDC hDC) {
   return result;
 }
 
-BOOL DebugWGLApi::wglShareListsFn(HGLRC hglrc1, HGLRC hglrc2) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL DebugWGLApi::wglShareListsFn(
+    HGLRC hglrc1,
+    HGLRC hglrc2) {
   GL_SERVICE_LOG("wglShareLists"
                  << "(" << hglrc1 << ", " << hglrc2 << ")");
   BOOL result = wgl_api_->wglShareListsFn(hglrc1, hglrc2);
@@ -484,7 +546,8 @@ BOOL DebugWGLApi::wglShareListsFn(HGLRC hglrc1, HGLRC hglrc2) {
   return result;
 }
 
-BOOL DebugWGLApi::wglSwapIntervalEXTFn(int interval) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+DebugWGLApi::wglSwapIntervalEXTFn(int interval) {
   GL_SERVICE_LOG("wglSwapIntervalEXT"
                  << "(" << interval << ")");
   BOOL result = wgl_api_->wglSwapIntervalEXTFn(interval);
@@ -492,7 +555,8 @@ BOOL DebugWGLApi::wglSwapIntervalEXTFn(int interval) {
   return result;
 }
 
-BOOL DebugWGLApi::wglSwapLayerBuffersFn(HDC hdc, UINT fuPlanes) {
+__attribute__((no_sanitize("cfi-icall"))) BOOL
+DebugWGLApi::wglSwapLayerBuffersFn(HDC hdc, UINT fuPlanes) {
   GL_SERVICE_LOG("wglSwapLayerBuffers"
                  << "(" << hdc << ", " << fuPlanes << ")");
   BOOL result = wgl_api_->wglSwapLayerBuffersFn(hdc, fuPlanes);
