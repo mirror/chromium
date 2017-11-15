@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1df6a0ef_4ff1fc3f",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1767,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-15T06:08:54Z",
+      "side": 1,
+      "message": "Thanks for the information. It will be helpful.\nSince there is already one bug as referred by xiaocheng@ crbug.com/699917\ncould you let me know if it is ready for the removal, i will try to work on that part also.\nThanks.",
+      "parentUuid": "71586e9d_aa260691",
+      "revId": "36a361be1c1eeeff60a43d721b364bd99796359f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "232e66e8_ccbd7ceb",
         "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "36a361be1c1eeeff60a43d721b364bd99796359f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b760c5b_893bffc3",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-15T06:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "232e66e8_ccbd7ceb",
+      "revId": "36a361be1c1eeeff60a43d721b364bd99796359f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "36a361be1c1eeeff60a43d721b364bd99796359f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6e8158_3c958c9f",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1884,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-15T06:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbb9438f_15e68310",
+      "range": {
+        "startLine": 1882,
+        "startChar": 0,
+        "endLine": 1884,
+        "endChar": 70
+      },
+      "revId": "36a361be1c1eeeff60a43d721b364bd99796359f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
