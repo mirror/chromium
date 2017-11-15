@@ -16,6 +16,24 @@
       "revId": "3633209e1d0e1e725d48f549512592c76c27276d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12678e7_7e207638",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-15T16:26:04Z",
+      "side": 1,
+      "message": "That\u0027s not actually what this change does. Changed description to be clearer, hopefully.\n\nThis change is just renaming the directory, not moving it into WPT. If you would like it moved into WPT I can do that, too, either in this change or in a separate one.\n\nWhat\u0027s your preference?",
+      "parentUuid": "cfcf15c6_32e693bb",
+      "revId": "3633209e1d0e1e725d48f549512592c76c27276d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
