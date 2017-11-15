@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df8f03d0_2f02ad48",
+        "filename": "ios/web/web_state/favicon_callbacks_inttest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-15T09:54:42Z",
+      "side": 1,
+      "message": "Blocks (in the WaitForCondition) will capture by copy if I try to access directly. So I would need to have a local variable that is a pointer, and store a pointer to the value before each block. And anyone adding a new test will have to do this too otherwise the test won\u0027t compile.\n\nMarking as private and adding an accessor returning a pointer mean that the object will not be captured by copy, so it make the tests simpler to read/write.",
+      "parentUuid": "8befc648_2ce4ea5f",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 20
+      },
+      "revId": "8deeb5b008cf9d8378c74130f96a8357c0888c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "264bf455_f328e54a",
         "filename": "ios/web/web_state/favicon_callbacks_inttest.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "8deeb5b008cf9d8378c74130f96a8357c0888c84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45546cf7_f0ace479",
+        "filename": "ios/web/web_state/favicon_callbacks_inttest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-15T09:54:42Z",
+      "side": 1,
+      "message": "Blocks may create copies of the fixture. DISALLOW_COPY_AND_ASSIGN prevents such copies from occurring. Blocks and C++ objects do not mix well.",
+      "parentUuid": "264bf455_f328e54a",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 26
+      },
+      "revId": "8deeb5b008cf9d8378c74130f96a8357c0888c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
