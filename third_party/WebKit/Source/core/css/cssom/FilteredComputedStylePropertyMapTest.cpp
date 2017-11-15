@@ -109,15 +109,15 @@ TEST_F(FilteredComputedStylePropertyMapTest, CustomPropertyAccessors) {
   EXPECT_FALSE(exception_state.HadException());
 
   map->get("--quix", exception_state);
-  EXPECT_TRUE(exception_state.HadException());
+  EXPECT_FALSE(exception_state.HadException());
   exception_state.ClearException();
 
   map->has("--quix", exception_state);
-  EXPECT_TRUE(exception_state.HadException());
+  EXPECT_FALSE(exception_state.HadException());
   exception_state.ClearException();
 
   map->getAll("--quix", exception_state);
-  EXPECT_TRUE(exception_state.HadException());
+  EXPECT_FALSE(exception_state.HadException());
   exception_state.ClearException();
 }
 
