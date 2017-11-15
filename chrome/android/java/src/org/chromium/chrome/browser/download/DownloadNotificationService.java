@@ -582,10 +582,16 @@ public class DownloadNotificationService extends Service {
      *                            plan on removing the notification in the near future.  We don't
      *                            want to just detach here, because that will put us in a
      *                            potentially bad state where we cannot dismiss the notification.
+     * @return                    Whether the foreground is stopped.
      */
-    private void stopTrackingInProgressDownload(ContentId id, boolean allowStopForeground) {
+    @VisibleForTesting
+    boolean stopTrackingInProgressDownload(ContentId id, boolean allowStopForeground) {
         mDownloadsInProgress.remove(id);
-        if (allowStopForeground && mDownloadsInProgress.size() == 0) stopForegroundInternal(false);
+        if (allowStopForeground && mDownloadsInProgress.size() == 0) {
+            stopForegroundInternal(false);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -879,8 +885,12 @@ public class DownloadNotificationService extends Service {
             notifyDownloadFailed(id, fileName, icon);
             return;
         }
-        // If download is already paused, do nothing.
-        if (entry != null && !entry.isAutoResumable) return;
+        // Download is already paused.
+        if (entry != null && !entry.isAutoResumable) {
+            // Shutdown the service in case it was restarted unnecessarily.
+            stopTrackingInProgressDownload(id, true);
+            return;
+        }
         boolean canDownloadWhileMetered = entry == null ? false : entry.canDownloadWhileMetered;
         // If download is interrupted due to network disconnection, show download pending state.
         if (isAutoResumable) {
