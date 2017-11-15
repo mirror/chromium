@@ -22,6 +22,57 @@
       "revId": "173302bcb5f2ff1fb50c7495d5a86c4ea8f93440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6344c660_fe61f10b",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T01:20:27Z",
+      "side": 1,
+      "message": "I\u0027m a bit hesistant to add this new bad message since SWDH::OnCountFeature should soon change to a Mojo function that takes a WebFeature and Mojo will do the validation for us, so the bad message will just be OBSOLETE.\n\nCould we just OnCountFeature to take a mojom::WebFeature instead, then I think Chrome IPC does the validation automatically?",
+      "revId": "173302bcb5f2ff1fb50c7495d5a86c4ea8f93440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb11c4e0_0d90fc14",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T01:20:27Z",
+      "side": 1,
+      "message": "Hmm I think it may be better to do this loop in ServiceWorkerStorage::GetOrCreateRegistration. Doing it here only makes sense if it\u0027s understood that SetUsedFeatures() is called by ServiceWorkerStorage, in which case we should call it something like SetUsedFeaturesFromStorage() and we might as well just do it at the callsite in storage.\n\nI\u0027m thinking something like:\n\n// Some features may be outside the valid range of features, if the data on disk was written by a later version of Chrome than currently running (crbug.com/758419).\n// TODO(falken): Maybe Chrome should have a generic mechanism to detect profile downgrade and just abort? Or we could just crash here, but that seems extreme and difficult for a user to escape.\nfor (const uint32_t feature : data.used_features) {\n  if (out of range) {\n    data.used_features.erase(feature);\n  }\n}\nversion-\u003eset_used_features(data.used_features);",
+      "revId": "173302bcb5f2ff1fb50c7495d5a86c4ea8f93440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437fa665_361ba852",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T01:20:27Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s ok to erase in the middle of the for loop like this. Do you know?",
+      "revId": "173302bcb5f2ff1fb50c7495d5a86c4ea8f93440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
