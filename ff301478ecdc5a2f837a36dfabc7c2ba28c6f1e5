@@ -16,6 +16,24 @@
       "revId": "ff301478ecdc5a2f837a36dfabc7c2ba28c6f1e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4f4eb3_234f44ed",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-11-15T18:16:12Z",
+      "side": 1,
+      "message": "I agree, we don\u0027t use it for TextDirection either",
+      "parentUuid": "5bb8022e_7b12cad5",
+      "revId": "ff301478ecdc5a2f837a36dfabc7c2ba28c6f1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
