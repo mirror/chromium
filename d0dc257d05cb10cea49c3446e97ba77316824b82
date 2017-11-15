@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f83f3b60_8d281ba7",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-15T21:24:26Z",
+      "side": 1,
+      "message": "JPEG is encoded in 8x8px blocks, but can have any size, which implies that there should be a |visible_rect| different from |coded_size|. Is that happening at a different layer?",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 26
+      },
+      "revId": "d0dc257d05cb10cea49c3446e97ba77316824b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
