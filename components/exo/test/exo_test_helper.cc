@@ -8,8 +8,8 @@
 #include "ash/wm/window_positioner.h"
 #include "ash/wm/window_positioning_utils.h"
 #include "components/exo/buffer.h"
-#include "components/exo/shell_surface.h"
 #include "components/exo/surface.h"
+#include "components/exo/xdg_shell_surface.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "ui/aura/env.h"
 #include "ui/compositor/compositor.h"
@@ -26,9 +26,9 @@ ExoTestWindow::ExoTestWindow(std::unique_ptr<gfx::GpuMemoryBuffer> gpu_buffer,
   surface_.reset(new Surface());
   int container = is_modal ? ash::kShellWindowId_SystemModalContainer
                            : ash::kShellWindowId_DefaultContainer;
-  shell_surface_.reset(new ShellSurface(surface_.get(), nullptr,
-                                        ShellSurface::BoundsMode::SHELL,
-                                        gfx::Point(), true, false, container));
+  shell_surface_.reset(
+      new XdgShellSurface(surface_.get(), ShellSurface::BoundsMode::SHELL,
+                          gfx::Point(), true, false, container));
 
   buffer_.reset(new Buffer(std::move(gpu_buffer)));
   surface_->Attach(buffer_.get());

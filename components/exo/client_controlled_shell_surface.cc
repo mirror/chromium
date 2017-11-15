@@ -1,0 +1,384 @@
+// Copyright 2015 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "components/exo/client_controlled_shell_surface.h"
+
+#include <algorithm>
+
+#include "ash/frame/custom_frame_view_ash.h"
+#include "ash/public/cpp/shelf_types.h"
+#include "ash/public/cpp/shell_window_ids.h"
+#include "ash/public/cpp/window_properties.h"
+#include "ash/public/cpp/window_state_type.h"
+#include "ash/public/interfaces/window_pin_type.mojom.h"
+#include "ash/wm/drag_window_resizer.h"
+#include "ash/wm/window_resizer.h"
+#include "ash/wm/window_state.h"
+#include "ash/wm/window_util.h"
+#include "base/logging.h"
+#include "base/macros.h"
+#include "base/memory/ptr_util.h"
+#include "base/strings/utf_string_conversions.h"
+#include "base/trace_event/trace_event.h"
+#include "base/trace_event/trace_event_argument.h"
+#include "cc/trees/layer_tree_frame_sink.h"
+#include "components/exo/surface.h"
+#include "components/exo/wm_helper.h"
+#include "services/ui/public/interfaces/window_tree_constants.mojom.h"
+#include "ui/aura/client/aura_constants.h"
+#include "ui/aura/client/cursor_client.h"
+#include "ui/aura/window.h"
+#include "ui/aura/window_event_dispatcher.h"
+#include "ui/aura/window_targeter.h"
+#include "ui/aura/window_tree_host.h"
+#include "ui/base/accelerators/accelerator.h"
+#include "ui/base/class_property.h"
+#include "ui/compositor/compositor.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
+#include "ui/gfx/path.h"
+#include "ui/views/widget/widget.h"
+#include "ui/wm/core/coordinate_conversion.h"
+#include "ui/wm/core/shadow.h"
+#include "ui/wm/core/shadow_controller.h"
+#include "ui/wm/core/shadow_types.h"
+#include "ui/wm/core/window_animations.h"
+#include "ui/wm/core/window_util.h"
+
+namespace exo {
+namespace {
+
+// Maximum amount of time to wait for contents that match the display's
+// orientation in tablet mode.
+// TODO(oshima): Looks like android is generating unnecessary frames.
+// Fix it on Android side and reduce the timeout.
+constexpr int kOrientationLockTimeoutMs = 2500;
+
+// Minimal WindowResizer that unlike DefaultWindowResizer does not handle
+// dragging and resizing windows.
+class CustomWindowResizer : public ash::WindowResizer {
+ public:
+  explicit CustomWindowResizer(ash::wm::WindowState* window_state)
+      : WindowResizer(window_state) {}
+
+  // Overridden from ash::WindowResizer:
+  void Drag(const gfx::Point& location, int event_flags) override {}
+  void CompleteDrag() override {}
+  void RevertDrag() override {}
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(CustomWindowResizer);
+};
+
+Orientation SizeToOrientation(const gfx::Size& size) {
+  DCHECK_NE(size.width(), size.height());
+  return size.width() > size.height() ? Orientation::LANDSCAPE
+                                      : Orientation::PORTRAIT;
+}
+
+}  // namespace
+
+////////////////////////////////////////////////////////////////////////////////
+// ShellSurface, public:
+
+ClientControlledShellSurface::ClientControlledShellSurface(Surface* surface,
+                                                           bool can_minimize,
+                                                           int container)
+    : ShellSurface(surface,
+                   BoundsMode::CLIENT,
+                   gfx::Point(),
+                   true,
+                   can_minimize,
+                   container),
+      primary_display_id_(
+          display::Screen::GetScreen()->GetPrimaryDisplay().id()) {
+  WMHelper::GetInstance()->AddDisplayConfigurationObserver(this);
+  display::Screen::GetScreen()->AddObserver(this);
+}
+
+ClientControlledShellSurface::~ClientControlledShellSurface() {
+  WMHelper::GetInstance()->RemoveDisplayConfigurationObserver(this);
+  display::Screen::GetScreen()->RemoveObserver(this);
+}
+
+void ClientControlledShellSurface::SetPinned(ash::mojom::WindowPinType type) {
+  TRACE_EVENT1("exo", "ClientControlledShellSurface::SetPinned", "type",
+               static_cast<int>(type));
+
+  if (!widget_)
+    CreateShellSurfaceWidget(ui::SHOW_STATE_NORMAL);
+
+  // Note: This will ask client to configure its surface even if pinned
+  // state doesn't change.
+  ScopedConfigure scoped_configure(this, true);
+  widget_->GetNativeWindow()->SetProperty(ash::kWindowPinTypeKey, type);
+}
+
+void ClientControlledShellSurface::SetSystemUiVisibility(bool autohide) {
+  TRACE_EVENT1("exo", "ClientControlledShellSurface::SetSystemUiVisibility",
+               "autohide", autohide);
+
+  if (!widget_)
+    CreateShellSurfaceWidget(ui::SHOW_STATE_NORMAL);
+
+  ash::wm::SetAutoHideShelf(widget_->GetNativeWindow(), autohide);
+}
+
+void ClientControlledShellSurface::SetAlwaysOnTop(bool always_on_top) {
+  TRACE_EVENT1("exo", "ClientControlledShellSurface::SetAlwaysOnTop",
+               "always_on_top", always_on_top);
+
+  if (!widget_)
+    CreateShellSurfaceWidget(ui::SHOW_STATE_NORMAL);
+
+  widget_->GetNativeWindow()->SetProperty(aura::client::kAlwaysOnTopKey,
+                                          always_on_top);
+}
+
+void ClientControlledShellSurface::SetSystemModal(bool system_modal) {
+  // System modal container is used by clients to implement client side
+  // managed system modal dialogs using a single ShellSurface instance.
+  // Hit-test region will be non-empty when at least one dialog exists on
+  // the client side. Here we detect the transition between no client side
+  // dialog and at least one dialog so activatable state is properly
+  // updated.
+  if (container_ != ash::kShellWindowId_SystemModalContainer) {
+    LOG(ERROR)
+        << "Only a window in SystemModalContainer can change the modality";
+    return;
+  }
+
+  if (system_modal == system_modal_)
+    return;
+
+  bool non_system_modal_window_was_active =
+      !system_modal_ && widget_ && widget_->IsActive();
+
+  system_modal_ = system_modal;
+
+  if (widget_) {
+    UpdateSystemModal();
+    // Deactivate to give the focus back to normal windows.
+    if (!system_modal_ && !non_system_modal_window_was_active_) {
+      widget_->Deactivate();
+    }
+  }
+
+  non_system_modal_window_was_active_ = non_system_modal_window_was_active;
+}
+
+void ClientControlledShellSurface::UpdateSystemModal() {
+  DCHECK(widget_);
+  DCHECK_EQ(container_, ash::kShellWindowId_SystemModalContainer);
+  widget_->GetNativeWindow()->SetProperty(
+      aura::client::kModalKey,
+      system_modal_ ? ui::MODAL_TYPE_SYSTEM : ui::MODAL_TYPE_NONE);
+}
+
+void ClientControlledShellSurface::Move() {
+  TRACE_EVENT0("exo", "ClientControlledShellSurface::Move");
+
+  if (!widget_)
+    return;
+
+  AttemptToStartDrag(HTCAPTION);
+}
+
+void ClientControlledShellSurface::Resize(int component) {
+  TRACE_EVENT1("exo", "ClientControlledShellSurface::Resize", "component",
+               component);
+}
+
+void ClientControlledShellSurface::SetOrientation(Orientation orientation) {
+  TRACE_EVENT1("exo", "ClientControlledShellSurface::SetOrientation",
+               "orientation",
+               orientation == Orientation::PORTRAIT ? "portrait" : "landscape");
+  pending_orientation_ = orientation;
+}
+
+void ClientControlledShellSurface::SetShadowBounds(const gfx::Rect& bounds) {
+  TRACE_EVENT1("exo", "ClientControlledShellSurface::SetShadowBounds", "bounds",
+               bounds.ToString());
+  auto shadow_bounds =
+      bounds.IsEmpty() ? base::nullopt : base::make_optional(bounds);
+  if (shadow_bounds_ != shadow_bounds) {
+    shadow_bounds_ = shadow_bounds;
+    shadow_bounds_changed_ = true;
+  }
+}
+
+void ClientControlledShellSurface::SetScale(double scale) {
+  TRACE_EVENT1("exo", "ClientControlledShellSurface::SetScale", "scale", scale);
+
+  if (scale <= 0.0) {
+    DLOG(WARNING) << "Surface scale must be greater than 0";
+    return;
+  }
+
+  pending_scale_ = scale;
+}
+
+void ClientControlledShellSurface::SetTopInset(int height) {
+  TRACE_EVENT1("exo", "ClientControlledShellSurface::SetTopInset", "height",
+               height);
+
+  pending_top_inset_height_ = height;
+}
+
+// Overridden from SurfaceDelegate:
+void ClientControlledShellSurface::OnSurfaceCommit() {
+  orientation_ = pending_orientation_;
+  if (expected_orientation_ == orientation_)
+    orientation_compositor_lock_.reset();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// views::WidgetDelegate overrides:
+
+void ClientControlledShellSurface::SaveWindowPlacement(
+    const gfx::Rect& bounds,
+    ui::WindowShowState show_state) {}
+
+bool ClientControlledShellSurface::GetSavedWindowPlacement(
+    const views::Widget* widget,
+    gfx::Rect* bounds,
+    ui::WindowShowState* show_state) const {
+  return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ash::WindowTreeHostManager::Observer overrides:
+
+void ClientControlledShellSurface::OnDisplayConfigurationChanged() {
+  const display::Screen* screen = display::Screen::GetScreen();
+  int64_t primary_display_id = screen->GetPrimaryDisplay().id();
+  if (primary_display_id == primary_display_id_)
+    return;
+
+  display::Display old_primary_display;
+  if (screen->GetDisplayWithDisplayId(primary_display_id_,
+                                      &old_primary_display)) {
+    // Give the client a chance to adjust window positions before switching to
+    // the new coordinate system. Retain the old origin by reverting the origin
+    // delta until the next configure is acknowledged.
+    gfx::Vector2d delta = gfx::Point() - old_primary_display.bounds().origin();
+    origin_offset_ -= delta;
+    pending_origin_offset_accumulator_ += delta;
+
+    if (widget_) {
+      UpdateWidgetBounds();
+      UpdateShadow();
+    }
+
+    Configure();
+  }
+
+  primary_display_id_ = primary_display_id;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// display::DisplayObserver overrides:
+
+void ClientControlledShellSurface::OnDisplayMetricsChanged(
+    const display::Display& new_display,
+    uint32_t changed_metrics) {
+  if (!widget_ || !widget_->IsActive() ||
+      !WMHelper::GetInstance()->IsTabletModeWindowManagerEnabled()) {
+    return;
+  }
+
+  const display::Screen* screen = display::Screen::GetScreen();
+  display::Display current_display =
+      screen->GetDisplayNearestWindow(widget_->GetNativeWindow());
+  if (current_display.id() != new_display.id() ||
+      !(changed_metrics & display::DisplayObserver::DISPLAY_METRIC_ROTATION)) {
+    return;
+  }
+
+  Orientation target_orientation = SizeToOrientation(new_display.size());
+  if (orientation_ == target_orientation)
+    return;
+  expected_orientation_ = target_orientation;
+  EnsureCompositorIsLockedForOrientationChange();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ui::CompositorLockClient overrides:
+
+void ClientControlledShellSurface::CompositorLockTimedOut() {
+  orientation_compositor_lock_.reset();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ShellSurface, private:
+
+void ClientControlledShellSurface::InitializeWindowState(
+    ash::wm::WindowState* window_state) {
+  // Allow the client to request bounds that do not fill the entire work area
+  // when maximized, or the entire display when fullscreen.
+  window_state->set_allow_set_bounds_direct(true);
+  widget_->set_movement_disabled(true);
+  window_state->set_ignore_keyboard_bounds_change(true);
+}
+
+aura::Window* ClientControlledShellSurface::GetDragWindow() {
+  return root_surface() ? root_surface()->window() : nullptr;
+}
+
+void ClientControlledShellSurface::AttemptToStartDrag(int component) {
+  DCHECK(widget_);
+
+  // Cannot start another drag if one is already taking place.
+  if (resizer_)
+    return;
+
+  aura::Window* window = GetDragWindow();
+  if (!window || window->HasCapture())
+    return;
+
+  ash::wm::WindowState* window_state =
+      ash::wm::GetWindowState(widget_->GetNativeWindow());
+  DCHECK(!window_state->drag_details());
+  DCHECK(component == HTCAPTION);
+  window_state->CreateDragDetails(GetMouseLocation(), component,
+                                  wm::WINDOW_MOVE_SOURCE_MOUSE);
+
+  // Chained with a CustomWindowResizer, DragWindowResizer does not handle
+  // dragging. It only renders phantom windows and moves the window to the
+  // target root window when dragging ends.
+  resizer_.reset(ash::DragWindowResizer::Create(
+      new CustomWindowResizer(window_state), window_state));
+
+  WMHelper::GetInstance()->AddPreTargetHandler(this);
+  window->SetCapture();
+
+  // Notify client that resizing state has changed.
+  if (IsResizing())
+    Configure();
+}
+
+void ClientControlledShellSurface::UpdateBackdrop() {
+  aura::Window* window = widget_->GetNativeWindow();
+  // Enable the black backdrop layer behind the window if the window
+  // is in immersive fullscreen, maximized, yet the window can control
+  // the bounds of the window in fullscreen/tablet mode (thus the
+  // background can be visible).
+  bool enable_backdrop =
+      (widget_->IsFullscreen() || widget_->IsMaximized()) &&
+      ash::wm::GetWindowState(window)->allow_set_bounds_direct();
+  if (window->GetProperty(aura::client::kHasBackdrop) != enable_backdrop)
+    window->SetProperty(aura::client::kHasBackdrop, enable_backdrop);
+}
+
+void ClientControlledShellSurface::
+    EnsureCompositorIsLockedForOrientationChange() {
+  if (!orientation_compositor_lock_) {
+    ui::Compositor* compositor =
+        widget_->GetNativeWindow()->layer()->GetCompositor();
+    orientation_compositor_lock_ = compositor->GetCompositorLock(
+        this, base::TimeDelta::FromMilliseconds(kOrientationLockTimeoutMs));
+  }
+}
+
+}  // namespace exo
