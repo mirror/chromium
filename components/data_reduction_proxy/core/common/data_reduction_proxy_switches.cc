@@ -20,7 +20,16 @@ const char kDataReductionProxyExperiment[] = "data-reduction-proxy-experiment";
 
 // The Chrome-Proxy "exp" directive value used by data reduction proxy to
 // receive an alternative back end implementation.
-const char kDataReductionProxyServerAlternative[] = "alternative";
+const char kDataReductionProxyServerAlternative1[] = "alternative1";
+const char kDataReductionProxyServerAlternative2[] = "alternative2";
+const char kDataReductionProxyServerAlternative3[] = "alternative3";
+const char kDataReductionProxyServerAlternative4[] = "alternative4";
+const char kDataReductionProxyServerAlternative5[] = "alternative5";
+const char kDataReductionProxyServerAlternative6[] = "alternative6";
+const char kDataReductionProxyServerAlternative7[] = "alternative7";
+const char kDataReductionProxyServerAlternative8[] = "alternative8";
+const char kDataReductionProxyServerAlternative9[] = "alternative9";
+const char kDataReductionProxyServerAlternative10[] = "alternative10";
 
 // The origin of the data reduction proxy fallback.
 const char kDataReductionProxyFallback[] = "spdy-proxy-auth-fallback";
