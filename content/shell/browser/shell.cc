@@ -536,8 +536,7 @@ gfx::Size Shell::GetShellDefaultSize() {
 }
 
 void Shell::TitleWasSet(NavigationEntry* entry) {
-  if (entry)
-    PlatformSetTitle(entry->GetTitle());
+  PlatformSetTitle(entry->GetTitle());
 }
 
 void Shell::OnDevToolsWebContentsDestroyed() {

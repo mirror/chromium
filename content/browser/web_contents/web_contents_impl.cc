@@ -4409,8 +4409,9 @@ void WebContentsImpl::UpdateTitleForEntry(NavigationEntry* entry,
   // Lastly, set the title for the view.
   view_->SetPageTitle(final_title);
 
-  for (auto& observer : observers_)
-    observer.TitleWasSet(entry);
+  if (entry)
+    for (auto& observer : observers_)
+      observer.TitleWasSet(entry);
 
   // Broadcast notifications when the UI should be updated.
   if (entry == controller_.GetEntryAtOffset(0))
