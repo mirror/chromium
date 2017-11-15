@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10c8d4e6_6bce3ef2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T16:42:06Z",
+      "side": 1,
+      "message": "Please update the CL description too.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "31b6c3f663f5141262febab31ddca6dd4f8dcd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a263f107_0f8f641d",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T16:42:06Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "31b6c3f663f5141262febab31ddca6dd4f8dcd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59618610_142f8e8b",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T16:42:06Z",
+      "side": 1,
+      "message": "Not applicable anymore?",
+      "revId": "31b6c3f663f5141262febab31ddca6dd4f8dcd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d555158_39060ec1",
+        "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T16:42:06Z",
+      "side": 1,
+      "message": "optional: These may want to be EXPECT_EQ for simple pointer equality rather than -[NSObject isEqual:] equality.",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 13
+      },
+      "revId": "31b6c3f663f5141262febab31ddca6dd4f8dcd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20692194_e5a2ae1d",
+        "filename": "ui/gfx/test/ui_cocoa_test_helper.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T16:42:06Z",
+      "side": 1,
+      "message": "Leave a comment here explaining why this is done?",
+      "revId": "31b6c3f663f5141262febab31ddca6dd4f8dcd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

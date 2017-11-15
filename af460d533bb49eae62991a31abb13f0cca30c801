@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "62701c61_e3d8943a",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-15T16:42:06Z",
+      "side": 1,
+      "message": "Yeah, I understand that, but this is now a \"public interface\" so I think it\u0027d be good to A) understand it and B) document it. It looks like Open deals with the static singleton instance |current_color_chooser_|.",
+      "parentUuid": "86810cc7_eb2699dd",
+      "revId": "af460d533bb49eae62991a31abb13f0cca30c801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68556685_250b1cb6",
         "filename": "chrome/browser/ui/cocoa/color_panel_cocoa_unittest.mm",
         "patchSetId": 6
