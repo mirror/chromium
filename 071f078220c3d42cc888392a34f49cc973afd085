@@ -587,6 +587,23 @@
       "revId": "071f078220c3d42cc888392a34f49cc973afd085",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "616d7180_6d62a246",
+        "filename": "content/renderer/media/media_stream_dispatcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-15T17:06:46Z",
+      "side": 1,
+      "message": "I think you should add a test similar this to MediaStreamLabelMap to test the GetNonScreenCaptureDevices() logic.",
+      "revId": "071f078220c3d42cc888392a34f49cc973afd085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
