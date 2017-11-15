@@ -22,6 +22,29 @@
       "revId": "6b22f26ecbf11f0374b90d84d18344d90ddcee4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05b5a790_9bca502b",
+        "filename": "components/cronet/native/generated/cronet.idl_c.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-15T19:58:19Z",
+      "side": 1,
+      "message": "The GetContext on a concrete class is a bit weird.  Hmm.  I\u0027d almost vote for removing Contexts from concrete classes.  Contexts can be avoided and a HashMap from the object to the context can be used.  If the Context is only for testing concrete classes, I might vote for removing them.",
+      "range": {
+        "startLine": 162,
+        "startChar": 75,
+        "endLine": 162,
+        "endChar": 0
+      },
+      "revId": "6b22f26ecbf11f0374b90d84d18344d90ddcee4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

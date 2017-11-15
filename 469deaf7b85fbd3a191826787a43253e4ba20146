@@ -264,6 +264,30 @@
     },
     {
       "key": {
+        "uuid": "fcf5b534_e264355d",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-15T19:58:19Z",
+      "side": 1,
+      "message": "Hmm now that I see it, \"cr_\" kind clashes with the CamelCase we use.  Perhaps we should instead use a \"Cronet\" prefix (and rename CronetEngine to Engine so it gets prefixed to CronetEngine).",
+      "parentUuid": "cc0d294a_85617f1f",
+      "range": {
+        "startLine": 177,
+        "startChar": 40,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79bf3e6c_9662c14b",
         "filename": "components/cronet/native/cronet.idl_c.h",
         "patchSetId": 36
@@ -404,6 +428,30 @@
       "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e39ed06_d2a75437",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-15T19:58:19Z",
+      "side": 1,
+      "message": "Can we rename CreateStub to Create for abstract classes?",
+      "parentUuid": "ea3029ed_4cdbaa47",
+      "range": {
+        "startLine": 202,
+        "startChar": 50,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
