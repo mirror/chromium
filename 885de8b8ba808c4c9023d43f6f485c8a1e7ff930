@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35b0de67_e22265d9",
+        "filename": "components/autofill/core/browser/autofill_wallet_data_type_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001296
+      },
+      "writtenOn": "2017-11-15T17:30:27Z",
+      "side": 1,
+      "message": "Possibly. I think I\u0027ll land this as is and look into this clean-up in a separate CL.",
+      "parentUuid": "3e5bf685_3945e7b8",
+      "revId": "885de8b8ba808c4c9023d43f6f485c8a1e7ff930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae99fbed_136a57b3",
         "filename": "components/autofill/core/browser/webdata/autofill_data_type_controller_unittest.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-10T19:37:51Z",
       "side": 1,
       "message": "would SequenceTaskRunnerHandle work, or is the Thread one required? here and below.",
+      "revId": "885de8b8ba808c4c9023d43f6f485c8a1e7ff930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ea93fa_e0c23901",
+        "filename": "components/autofill/core/browser/webdata/autofill_data_type_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001296
+      },
+      "writtenOn": "2017-11-15T17:30:27Z",
+      "side": 1,
+      "message": "Not without changes to the AutofillWebdataService and AutofillDataTypeController, as both expect SingleThreadTaskRunners. It might be possible to switch the entiresystem over to SequencedTaskRunners, but it should probably happen in a separate CL.",
+      "parentUuid": "ae99fbed_136a57b3",
       "revId": "885de8b8ba808c4c9023d43f6f485c8a1e7ff930",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
