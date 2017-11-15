@@ -41,6 +41,8 @@ struct FormData {
   GURL origin;
   // The action target of the form.
   GURL action;
+  // The URL of root frame containing this form.
+  GURL root_origin;
   // True if this form is a form tag.
   bool is_form_tag;
   // True if the form is made of unowned fields in a non checkout flow.
