@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ee78b6a_3d16a21c",
+        "filename": "chrome/common/extensions/docs/examples/api/omnibox/newtab_search/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-15T21:48:59Z",
+      "side": 1,
+      "message": "nit: maybe also add a comment explaining the encodeURIComponent?  Even something as simple as:\n// Make sure we sanitize user input before passing it off.",
+      "revId": "0637ef6227a297dda4bda5bdd39e65f029f47d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
