@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e84b4e5_56c18f2d",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-15T01:06:33Z",
+      "side": 1,
+      "message": "that should be done only if args.output_file is specified?",
+      "revId": "ec45287adff6a53d0706f3d839da78f5c00ecde5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
