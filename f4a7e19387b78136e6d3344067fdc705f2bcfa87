@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "57aa4f52_a1207440",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-15T20:56:12Z",
+      "side": 1,
+      "message": "This is indeed very close to ShouldFullyInvalidateBackgroundOnLayoutOverflowChange but doesn\u0027t check the layout overflow location. I have updated this to use ShouldFullyInvalidateBackgroundOnLayoutOverflowChange which fixes an existing bug but requires a few rebaselines.\n\nYou can see the bug this fixes at http://output.jsbin.com/mosicu/quiet. I\u0027ve added a layout test for this too.",
+      "parentUuid": "508d594e_07c7b9e9",
+      "revId": "f4a7e19387b78136e6d3344067fdc705f2bcfa87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af90e5c1_6061db46",
         "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
         "patchSetId": 7
@@ -47,6 +65,24 @@
       "writtenOn": "2017-11-15T18:32:16Z",
       "side": 1,
       "message": "Can you just use box_.PreviousLayoutOverflowRect() here?",
+      "revId": "f4a7e19387b78136e6d3344067fdc705f2bcfa87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bfd412e_b65d21bb",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-15T20:56:12Z",
+      "side": 1,
+      "message": "We cannot use the box\u0027s previous overflow rect because it can be different from the background box\u0027s previous overflow rect. For example, when the background box (aka \u003chtml\u003e) has layout overflow size 100x100, the LayoutView will have layout overflow size equal to the window (800x600 in tests).",
+      "parentUuid": "af90e5c1_6061db46",
       "revId": "f4a7e19387b78136e6d3344067fdc705f2bcfa87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
