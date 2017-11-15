@@ -314,4 +314,30 @@ void ServiceWorkerGlobalScope::ExceptionThrown(ErrorEvent* event) {
     debugger->ExceptionThrown(GetThread(), event);
 }
 
+void ServiceWorkerGlobalScope::CountInstalledPWAScript(uint64_t script_size) {
+  ++installed_pwa_script_count_;
+  installed_pwa_script_total_size_ += script_size;
+
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      CustomCountHistogram, pwa_script_size_histogram,
+      ("ServiceWorker.InstalledPWAScript.ScriptSize", 1000, 5000000, 50));
+  pwa_script_size_histogram.Count(script_size);
+}
+
+void ServiceWorkerGlobalScope::SetIsInstalling(bool is_installing) {
+  is_installing_ = is_installing;
+  if (is_installing)
+    return;
+
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      CustomCountHistogram, installed_pwa_script_count_histogram,
+      ("ServiceWorker.InstalledPWAScript.Count", 1, 1000, 50));
+  installed_pwa_script_count_histogram.Count(installed_pwa_script_count_);
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      CustomCountHistogram, installed_pwa_script_total_size_histogram,
+      ("ServiceWorker.InstalledPWAScript.ScriptTotalSize", 1000, 50000000, 50));
+  installed_pwa_script_total_size_histogram.Count(
+      installed_pwa_script_total_size_);
+}
+
 }  // namespace blink
