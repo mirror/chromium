@@ -32,15 +32,16 @@
 #ifndef LocalFrameClientImpl_h
 #define LocalFrameClientImpl_h
 
+#include <memory>
+
 #include "base/memory/scoped_refptr.h"
+
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "platform/ScopedVirtualTimePauser.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
-
-#include <memory>
 
 namespace blink {
 
@@ -251,6 +252,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
       const WebRemoteScrollProperties&) override;
 
   void SetVirtualTimePauser(ScopedVirtualTimePauser) override;
+
+  Frame* FindFrame(const AtomicString& name) const override;
 
  private:
   explicit LocalFrameClientImpl(WebLocalFrameImpl*);

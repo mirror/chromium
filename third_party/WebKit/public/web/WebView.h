@@ -114,7 +114,9 @@ class WebView : protected WebWidget {
   //
   // client may be null, while WebPageVisibilityState defines the initial
   // visibility of the page.
-  BLINK_EXPORT static WebView* Create(WebViewClient*, WebPageVisibilityState);
+  BLINK_EXPORT static WebView* Create(WebViewClient*,
+                                      WebPageVisibilityState,
+                                      WebView* opener);
 
   // Initializes the various client interfaces.
   virtual void SetCredentialManagerClient(WebCredentialManagerClient*) = 0;

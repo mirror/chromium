@@ -4,6 +4,8 @@
 
 #include "extensions/renderer/extension_frame_helper.h"
 
+#include <set>
+
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/timer/elapsed_timer.h"
@@ -18,6 +20,7 @@
 #include "extensions/renderer/console.h"
 #include "extensions/renderer/dispatcher.h"
 #include "extensions/renderer/extension_bindings_system.h"
+#include "extensions/renderer/renderer_extension_registry.h"
 #include "extensions/renderer/renderer_messaging_service.h"
 #include "extensions/renderer/script_context.h"
 #include "extensions/renderer/script_context_set.h"
@@ -92,6 +95,17 @@ enum class PortType {
   NATIVE_APP,
 };
 
+// Returns an extension hosted in the |render_frame| (or nullptr if the frame
+// doesn't host an extension).
+const Extension* GetExtensionFromFrame(content::RenderFrame* render_frame) {
+  DCHECK(render_frame);
+  GURL effective_url = ScriptContext::GetEffectiveDocumentURL(
+      render_frame->GetWebFrame(),
+      render_frame->GetWebFrame()->GetDocument().Url(), true);
+  return extensions::RendererExtensionRegistry::Get()->GetExtensionOrAppByURL(
+      effective_url);
+}
+
 }  // namespace
 
 ExtensionFrameHelper::ExtensionFrameHelper(content::RenderFrame* render_frame,
@@ -143,6 +157,30 @@ content::RenderFrame* ExtensionFrameHelper::GetBackgroundPageFrame(
         return helper->render_frame();
     }
   }
+  return nullptr;
+}
+
+// static
+content::RenderFrame* ExtensionFrameHelper::FindFrame(
+    content::RenderFrame* relative_to_frame,
+    const std::string& name) {
+  // Only pierce browsing instance boundaries if |relative_to_frame| is an
+  // extension.
+  const Extension* extension = GetExtensionFromFrame(relative_to_frame);
+  if (!extension)
+    return nullptr;
+
+  for (const ExtensionFrameHelper* helper : g_frame_helpers.Get()) {
+    // Only pierce browsing instance boundaries if the target frame is from the
+    // same extension (but not when another extension shares the same renderer
+    // process because of reuse trigerred by process limit).
+    if (extension != GetExtensionFromFrame(helper->render_frame()))
+      continue;
+
+    if (helper->render_frame()->GetWebFrame()->AssignedName().Utf8() == name)
+      return helper->render_frame();
+  }
+
   return nullptr;
 }
 
