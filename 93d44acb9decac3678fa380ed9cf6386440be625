@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00240a44_7f89b613",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-15T08:18:25Z",
+      "side": 1,
+      "message": "Given that this comes from the child process I think the common practice is to report BadMessage.  Could BatchOperation maybe return a bool and CacheStorageDispatcherHost do that?",
+      "revId": "93d44acb9decac3678fa380ed9cf6386440be625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
