@@ -26,6 +26,18 @@ static_library("offline_pages_ui_adapter") {
   ]
 }
 
+source_set("download_data") {
+  sources = [
+    "offline_page_download_data.cc",
+    "offline_page_download_data.h",
+  ]
+  deps = [
+    "//base",
+    "//net",
+    "//url",
+  ]
+}
+
 source_set("unit_tests") {
   testonly = true
   sources = [

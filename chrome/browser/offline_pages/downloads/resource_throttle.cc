@@ -7,6 +7,7 @@
 #include "base/logging.h"
 #include "chrome/browser/offline_pages/offline_page_utils.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
+#include "components/offline_pages/core/downloads/offline_page_download_data.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/web_contents.h"
@@ -14,6 +15,7 @@
 namespace {
 void WillStartOfflineRequestOnUIThread(
     const GURL& url,
+    const std::string request_origin,
     const content::ResourceRequestInfo::WebContentsGetter& contents_getter) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   content::WebContents* web_contents = contents_getter.Run();
@@ -21,7 +23,8 @@ void WillStartOfflineRequestOnUIThread(
     return;
   offline_pages::OfflinePageUtils::ScheduleDownload(
       web_contents, offline_pages::kDownloadNamespace, url,
-      offline_pages::OfflinePageUtils::DownloadUIActionFlags::ALL);
+      offline_pages::OfflinePageUtils::DownloadUIActionFlags::ALL,
+      request_origin);
 }
 }  // namespace
 
@@ -47,10 +50,17 @@ void ResourceThrottle::WillProcessResponse(bool* defer) {
         content::ResourceRequestInfo::ForRequest(request_);
     if (!info)
       return;
+
+    OfflinePageDownloadData* download_info =
+        OfflinePageDownloadData::Get(request_);
+    std::string request_origin;
+    if (download_info)
+      request_origin = download_info->request_origin();
+
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
         base::Bind(&WillStartOfflineRequestOnUIThread, request_->url(),
-                   info->GetWebContentsGetterForRequest()));
+                   request_origin, info->GetWebContentsGetterForRequest()));
     Cancel();
   }
 }
