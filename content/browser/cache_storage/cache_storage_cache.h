@@ -143,7 +143,8 @@ class CONTENT_EXPORT CacheStorageCache {
   void BatchDidGetUsageAndQuota(
       const std::vector<CacheStorageBatchOperation>& operations,
       ErrorCallback callback,
-      int64_t space_required,
+      uint64_t space_required,
+      uint64_t side_data_size,
       storage::QuotaStatusCode status_code,
       int64_t usage,
       int64_t quota);
@@ -351,6 +352,8 @@ class CONTENT_EXPORT CacheStorageCache {
   void PutDidWriteHeaders(std::unique_ptr<PutContext> put_context,
                           int expected_bytes,
                           int rv);
+  void PutWriteBlobToCache(std::unique_ptr<PutContext> put_context,
+                           int disk_cache_body_index);
   void PutDidWriteBlobToCache(std::unique_ptr<PutContext> put_context,
                               BlobToDiskCacheIDMap::KeyType blob_to_cache_key,
                               disk_cache::ScopedEntryPtr entry,
