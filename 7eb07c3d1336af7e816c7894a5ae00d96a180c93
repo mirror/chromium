@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d687680_b30ba6fa",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T21:13:00Z",
+      "side": 1,
+      "message": "Since this is a non optional array you should be able to just do:\nunit-\u003emirroring_destination_ids.clear();",
+      "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e12898c_2013d28f",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T21:13:00Z",
+      "side": 1,
+      "message": "this.mirroringDestinationIds.clear();",
+      "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a02da9_01f565ee",
+        "filename": "chrome/browser/resources/settings/device_page/display_layout.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T21:13:00Z",
+      "side": 1,
+      "message": "All dependencies need to be passed here, e.g. displays and visualScale.",
+      "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d62f9da_b0c0789c",
+        "filename": "chrome/browser/resources/settings/device_page/display_layout.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T21:13:00Z",
+      "side": 1,
+      "message": "+ @private\n+ @type {!Array\u003cstring\u003e|undefined}\nrename -\u003e mirroringDestinationIds_",
+      "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67985771_5dedbb13",
+        "filename": "chrome/browser/resources/settings/device_page/display_layout.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T21:13:00Z",
+      "side": 1,
+      "message": "nit: opt_offset || 0",
+      "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a371594_e27cf2f7",
+        "filename": "chrome/browser/resources/settings/device_page/display_layout.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-15T21:13:00Z",
+      "side": 1,
+      "message": "s/could/can/\ns/from each/from each other/",
+      "revId": "7eb07c3d1336af7e816c7894a5ae00d96a180c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
