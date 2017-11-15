@@ -38,6 +38,7 @@ class ContentElement : public UiElement {
 
   void SetTexture(unsigned int texture_id,
                   UiElementRenderer::TextureLocation location);
+  void SetDelegate(ContentInputDelegate* delegate);
 
  private:
   ContentInputDelegate* delegate_ = nullptr;

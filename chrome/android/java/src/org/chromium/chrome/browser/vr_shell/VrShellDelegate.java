@@ -43,6 +43,8 @@ import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ApplicationLifetime;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeAlertDialog;
+import org.chromium.chrome.browser.ChromeDialog;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
@@ -289,6 +291,14 @@ public class VrShellDelegate
         return sInstance.mInVr;
     }
 
+    public static void setDialogView(View view, String s) {
+        if (sInstance == null) return;
+        sInstance.mVrShell.setDialogView(view, s);
+    }
+
+    public static void sendToView(Runnable runnable) {
+        sInstance.mActivity.runOnUiThread(runnable);
+    }
     /**
      * See {@link ChromeActivity#handleBackPressed}
      * Only handles the back press while in VR.
@@ -800,6 +810,11 @@ public class VrShellDelegate
             mVrDaydreamApi.launchVrHomescreen();
             return;
         }
+
+        VrAlertDialog alertDialog = new VrAlertDialog(mNativeVrShellDelegate);
+        VrDialog dialog = new VrDialog(mNativeVrShellDelegate);
+        ChromeAlertDialog.setDialogHandler(alertDialog);
+        ChromeDialog.setDialogHandler(dialog);
         mExitedDueToUnsupportedMode = false;
 
         addVrViews();
@@ -1381,6 +1396,8 @@ public class VrShellDelegate
 
         if (!mInVr) return;
         mInVr = false;
+        ChromeAlertDialog.setDialogHandler(null);
+        ChromeDialog.setDialogHandler(null);
 
         if (mShowingDaydreamDoff) {
             onExitVrResult(true);
