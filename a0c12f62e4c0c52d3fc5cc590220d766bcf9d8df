@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7108760d_b2b8e813",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T08:09:26Z",
+      "side": 1,
+      "message": "I\u0027m a little confused by these problems. Are these bugs in the current code? Or it\u0027s a simplification of the current code?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "a0c12f62e4c0c52d3fc5cc590220d766bcf9d8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56445983_007d1c31",
+        "filename": "content/renderer/service_worker/service_worker_event_callback.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T08:09:26Z",
+      "side": 1,
+      "message": "See \"[chromium-dev] Please avoid std::unordered_map\"... can this use something else?",
+      "revId": "a0c12f62e4c0c52d3fc5cc590220d766bcf9d8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49253714_71363437",
+        "filename": "content/renderer/service_worker/service_worker_event_callback.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T08:09:26Z",
+      "side": 1,
+      "message": "Is this needed to prevent declaration of the default constructor even though other constructors are declared? I haven\u0027t seen this trick often.",
+      "revId": "a0c12f62e4c0c52d3fc5cc590220d766bcf9d8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b587f292_dd8f7281",
+        "filename": "content/renderer/service_worker/service_worker_event_callback.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T08:09:26Z",
+      "side": 1,
+      "message": "Should Time::Now() be evaluated at abortion time rather than creation time?\n\nAnyway, I think I\u0027d rather Abort() just call Run() explicitly if possible... this BindOnce is a bit hard to read. But I guess we can\u0027t store the AbortArgs anywhere?\n\nHow often do you need AbortArgs? it seems it\u0027s only needed for InstallEvent now?  Could we possibly  just special case InstallEvent somehow? The less template abstractions, the easier the code is to read for me.",
+      "revId": "a0c12f62e4c0c52d3fc5cc590220d766bcf9d8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc6b308_b6ffb035",
+        "filename": "content/renderer/service_worker/service_worker_event_callback.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-15T08:09:26Z",
+      "side": 1,
+      "message": "RunWithId sounds like you\u0027d be invoking callback.Run(id). maybe Run(int callback_id)?",
+      "revId": "a0c12f62e4c0c52d3fc5cc590220d766bcf9d8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
