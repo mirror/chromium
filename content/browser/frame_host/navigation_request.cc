@@ -41,6 +41,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/stream_handle.h"
 #include "content/public/common/appcache_info.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
@@ -1132,7 +1133,12 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
       OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
       return;
     }
-    loader_->ProceedWithResponse();
+    if (IsNavigationMojoResponseEnabled()) {
+      DCHECK(url_loader_.is_bound());
+      url_loader_->ProceedWithResponse();
+    } else {
+      loader_->ProceedWithResponse();
+    }
   }
 
   // Abort the request if needed. This includes requests that were blocked by
