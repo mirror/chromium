@@ -90,7 +90,7 @@ class UiElement : public cc::AnimationTarget {
                     const gfx::Vector3dF& head_direction);
 
   // Indicates whether the element should be tested for cursor input.
-  bool IsHitTestable() const;
+  virtual bool IsHitTestable() const;
 
   virtual void Render(UiElementRenderer* renderer,
                       const gfx::Transform& model_view_proj_matrix) const;

@@ -25,6 +25,7 @@
 #include "chrome/browser/vr/elements/linear_layout.h"
 #include "chrome/browser/vr/elements/rect.h"
 #include "chrome/browser/vr/elements/reticle.h"
+#include "chrome/browser/vr/elements/shadow.h"
 #include "chrome/browser/vr/elements/spinner.h"
 #include "chrome/browser/vr/elements/system_indicator.h"
 #include "chrome/browser/vr/elements/text.h"
@@ -307,6 +308,49 @@ void UiSceneManager::CreateContentQuad(ContentInputDelegate* delegate) {
   hit_plane->SetTranslate(0, 0, -kTextureOffset);
   scene_->AddUiElement(k2dBrowsingContentGroup, std::move(hit_plane));
 
+  auto thing = base::MakeUnique<Rect>();
+  thing->set_draw_phase(kPhaseOverlayForeground);
+  thing->SetSize(kContentWidth * 0.25, kContentHeight * 0.25);
+  thing->set_corner_radius(kContentHeight * 0.125);
+  thing->SetTranslate(0, 0, 0.09);
+  thing->SetTransitionedProperties({TRANSFORM});
+  thing->SetColor(SK_ColorGREEN);
+  EventHandlers handlers;
+  handlers.hover_enter =
+      base::Bind([](UiElement* v) { v->SetTranslate(0, 0, 0.15); },
+                 base::Unretained(thing.get()));
+  handlers.hover_leave =
+      base::Bind([](UiElement* v) { v->SetTranslate(0, 0, 0.09); },
+                 base::Unretained(thing.get()));
+  thing->set_event_handlers(handlers);
+
+  auto shadow = base::MakeUnique<Shadow>();
+  shadow->set_draw_phase(kPhaseOverlayForeground);
+  shadow->set_draw_scrim(true);
+  shadow->set_corner_radius(kContentHeight * 0.125);
+  shadow->AddChild(std::move(thing));
+
+  auto thing2 = base::MakeUnique<Rect>();
+  thing2->set_draw_phase(kPhaseOverlayForeground);
+  thing2->SetSize(kContentWidth * 0.1, kContentHeight * 0.1);
+  thing2->set_corner_radius(kContentCornerRadius);
+  thing2->SetTranslate(0, 0, 0);
+  thing2->SetTransitionedProperties({TRANSFORM});
+  thing2->SetColor(SK_ColorBLUE);
+  handlers.hover_enter =
+      base::Bind([](UiElement* v) { v->SetTranslate(0, 0, 0.15); },
+                 base::Unretained(thing2.get()));
+  handlers.hover_leave =
+      base::Bind([](UiElement* v) { v->SetTranslate(0, 0, 0); },
+                 base::Unretained(thing2.get()));
+  thing2->set_event_handlers(handlers);
+
+  auto shadow2 = base::MakeUnique<Shadow>();
+  shadow2->set_draw_phase(kPhaseOverlayForeground);
+  shadow2->SetTranslate(kContentWidth * 0.3, kContentHeight * 0.3, 0);
+  shadow2->set_corner_radius(kContentCornerRadius);
+  shadow2->AddChild(std::move(thing2));
+
   auto main_content = base::MakeUnique<ContentElement>(delegate);
   main_content->set_name(kContentQuad);
   main_content->set_draw_phase(kPhaseForeground);
@@ -314,6 +358,8 @@ void UiSceneManager::CreateContentQuad(ContentInputDelegate* delegate) {
   main_content->set_corner_radius(kContentCornerRadius);
   main_content->SetTransitionedProperties({BOUNDS});
   main_content_ = main_content.get();
+  main_content->AddChild(std::move(shadow2));
+  main_content->AddChild(std::move(shadow));
   scene_->AddUiElement(k2dBrowsingContentGroup, std::move(main_content));
 
   // Limit reticle distance to a sphere based on content distance.
