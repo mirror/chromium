@@ -16,6 +16,24 @@
       "revId": "1b2c9dba5e14686e6f11c9bb1ace30c9a8986f82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52160431_96bdf17d",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-15T09:21:16Z",
+      "side": 1,
+      "message": "Done. Redirecting readers to WebServiceWorkerRegistrationImpl documentation is a good idea :)",
+      "parentUuid": "d4860f81_75fa512b",
+      "revId": "1b2c9dba5e14686e6f11c9bb1ace30c9a8986f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
