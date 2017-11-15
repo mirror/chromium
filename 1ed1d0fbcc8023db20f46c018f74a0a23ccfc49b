@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dab57b7_69bd68c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ZoomController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-15T23:01:29Z",
+      "side": 1,
+      "message": "hmm, this seems a bit bad form. maybe this will leave some things in some bad state, if you don\u0027t send the entire gesture, which is bad\n\nbut I support dropping canZoom entirely. renderer won\u0027t zoom beyond its limits anyway, so why bother checking that information here",
+      "revId": "1ed1d0fbcc8023db20f46c018f74a0a23ccfc49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b10982e_785c5d98",
+        "filename": "ui/events/android/gesture_event_android.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-15T23:01:29Z",
+      "side": 1,
+      "message": "Say this is meant to carry information that match the blink::WebGestureEvent, but can\u0027t use the blink type in view_android tree, since hit testing requires templated things to modify these events.",
+      "revId": "1ed1d0fbcc8023db20f46c018f74a0a23ccfc49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a34459_1a35dbbf",
+        "filename": "ui/events/android/gesture_event_android.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-15T23:01:29Z",
+      "side": 1,
+      "message": "this and below aren\u0027t really TODOs",
+      "revId": "1ed1d0fbcc8023db20f46c018f74a0a23ccfc49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
