@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3c533fb_ba0b39de",
+        "filename": "components/viz/service/display_embedder/gpu_display_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-15T23:48:17Z",
+      "side": 1,
+      "message": "FYI, GpuProcessHost has a \u0027host_id\u0027 which is pretty much this. It\u0027s not passed to the child process, but could be.",
+      "revId": "9ed3a9cd03d4db8a17d742fc038b936ac3578665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
