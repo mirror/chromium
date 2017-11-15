@@ -493,24 +493,6 @@ static bool IsDirectReference(const SVGElement& element) {
          IsSVGTextElement(element);
 }
 
-void SVGUseElement::ToClipPath(Path& path) const {
-  DCHECK(path.IsEmpty());
-
-  const SVGGraphicsElement* element = VisibleTargetGraphicsElementForClipping();
-
-  if (!element)
-    return;
-
-  if (element->IsSVGGeometryElement()) {
-    ToSVGGeometryElement(*element).ToClipPath(path);
-    // FIXME: Avoid manual resolution of x/y here. Its potentially harmful.
-    SVGLengthContext length_context(this);
-    path.Translate(FloatSize(x_->CurrentValue()->Value(length_context),
-                             y_->CurrentValue()->Value(length_context)));
-    path.Transform(CalculateTransform(SVGElement::kIncludeMotionTransform));
-  }
-}
-
 SVGGraphicsElement* SVGUseElement::VisibleTargetGraphicsElementForClipping()
     const {
   Node* n = UseShadowRoot().firstChild();
