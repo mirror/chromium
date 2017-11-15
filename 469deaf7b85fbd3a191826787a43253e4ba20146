@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0dbc6376_6da9a888",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-15T14:57:41Z",
+      "side": 1,
+      "message": "I\u0027d say documenting the API is pretty high priority but I suppose we don\u0027t have to do that in this first CL.  Marking resolved.",
+      "parentUuid": "42f1f5f0_606d0d4f",
+      "range": {
+        "startLine": 165,
+        "startChar": 63,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e935a873_7f34ab67",
         "filename": "components/cronet/native/cronet.idl_c.h",
         "patchSetId": 36
@@ -144,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "800f0091_283955e2",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-15T14:57:41Z",
+      "side": 1,
+      "message": "To clarify, even though Cronet will be providing a concrete implementation, that implementation will still be called via an indirect call in cronet.idl_impl_interface.cc\u0027s implementation of UrlRequest_Read(), correct?",
+      "parentUuid": "65ddc4d7_acb7e6ee",
+      "range": {
+        "startLine": 177,
+        "startChar": 40,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79bf3e6c_9662c14b",
         "filename": "components/cronet/native/cronet.idl_c.h",
         "patchSetId": 36
@@ -179,6 +227,30 @@
       "side": 1,
       "message": "Per other comment the XYZ_Create() method will be used to create instance of interface implemented by Cronet, where as XYZ_CreateStub() will be used to create instance based on methods implemented by consumer.\n\nDoes it make sense?\n\nI\u0027m not very happy about the naming, and open for suggestions.",
       "parentUuid": "79bf3e6c_9662c14b",
+      "range": {
+        "startLine": 202,
+        "startChar": 50,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a7ab972_cd1f0767",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-15T14:57:41Z",
+      "side": 1,
+      "message": "What does UrlRequestCallback_Create() do?  I don\u0027t think Cronet offers/contains a UrlRequestCallback implementation.",
+      "parentUuid": "de096321_6ce568a2",
       "range": {
         "startLine": 202,
         "startChar": 50,
@@ -230,6 +302,53 @@
         "startLine": 323,
         "startChar": 50,
         "endLine": 323,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "216b7d06_a69fcbf4",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-15T14:57:41Z",
+      "side": 1,
+      "message": "I\u0027m a fan of making required parameters into constructor arguments.  Pros:\n1. one less function call required (faster and smaller code)\n2. you can mark the internal copies/references to constant parameters const without needing ugly in-place-new calls\n3. it\u0027s clear to callers what they need to provide\n4. I feel like this is the pattern C++ encourages (combining allocation and construction) and developers will be familiar with.\nI don\u0027t feel strongly though.  Marking resolved.",
+      "parentUuid": "56741139_81cc35cf",
+      "range": {
+        "startLine": 323,
+        "startChar": 50,
+        "endLine": 323,
+        "endChar": 0
+      },
+      "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4705028_f5494315",
+        "filename": "components/cronet/native/cronet.idl_c.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-15T14:57:41Z",
+      "side": 1,
+      "message": "Why is url in Params and not a required arg to InitWithParams?  I think url is required, like the other arguments of InitWithParams(), so it should go here.",
+      "range": {
+        "startLine": 325,
+        "startChar": 58,
+        "endLine": 325,
         "endChar": 0
       },
       "revId": "469deaf7b85fbd3a191826787a43253e4ba20146",
