@@ -20,4 +20,10 @@ void ChromeComponentUpdaterServiceProviderDelegate::LoadComponent(
   component_updater::CrOSComponent::LoadComponent(name, load_callback);
 }
 
+void ChromeComponentUpdaterServiceProviderDelegate::RemoveComponent(
+    const std::string& name,
+    const base::Callback<void(bool)>& remove_callback) {
+  component_updater::CrOSComponent::RemoveComponent(name, remove_callback);
+}
+
 }  // namespace chromeos
