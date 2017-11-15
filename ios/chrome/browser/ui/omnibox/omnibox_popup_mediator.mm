@@ -42,10 +42,8 @@
 
 - (void)updateMatches:(const AutocompleteResult&)result
         withAnimation:(BOOL)animation {
-  AutocompleteResult oldResults;
-  AutocompleteInput emptyInput;
-  oldResults.Swap(&_currentResult);
-  _currentResult.CopyOldMatches(emptyInput, result, nil);
+  _currentResult.Reset();
+  _currentResult.CopyFrom(result_copy);
 
   [self.consumer updateMatches:[self wrappedMatches] withAnimation:animation];
 }
