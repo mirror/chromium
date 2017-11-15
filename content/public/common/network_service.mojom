@@ -4,7 +4,7 @@
 
 module content.mojom;
 
-import "network_change_manager.mojom";
+import "services/network/public/interfaces/network_change_manager.mojom";
 import "mojo/common/file_path.mojom";
 import "mojo/common/time.mojom";
 import "resource_type.mojom";

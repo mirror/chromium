@@ -11,9 +11,9 @@
 #include "build/build_config.h"
 #include "components/signin/core/browser/signin_client.h"
 #include "components/signin/core/browser/signin_error_controller.h"
-#include "content/public/common/network_change_manager.mojom.h"
 #include "google_apis/gaia/gaia_oauth_client.h"
 #include "google_apis/gaia/oauth2_token_service.h"
+#include "services/network/public/interfaces/network_change_manager.mojom.h"
 
 #if !defined(OS_CHROMEOS)
 #include "content/public/common/network_connection_tracker.h"

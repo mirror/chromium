@@ -9,9 +9,9 @@
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_checker.h"
-#include "content/public/common/network_change_manager.mojom.h"
 #include "content/public/network/network_service.h"
 #include "net/base/mock_network_change_notifier.h"
+#include "services/network/public/interfaces/network_change_manager.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
