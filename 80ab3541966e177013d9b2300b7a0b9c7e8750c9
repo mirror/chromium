@@ -1,0 +1,347 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8acce125_496c5d6a",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "here and below: \"for the automatic time zone detection mode which\" (not \"for the one of\")",
+      "range": {
+        "startLine": 1224,
+        "startChar": 86,
+        "endLine": 1224,
+        "endChar": 143
+      },
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9841891_c47f00c0",
+        "filename": "chrome/browser/chromeos/system/timezone_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this comment means or how it relates to the code below.",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 58
+      },
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f404f3ab_74c9a0a9",
+        "filename": "chrome/browser/resources/settings/date_time_page/date_time_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "nit: indent 4 spaces from start of tag",
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "090c92cf_ee5a2ac0",
+        "filename": "chrome/browser/resources/settings/date_time_page/date_time_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "nit: indent 4 spaces from start of function call (add 3 spaces here)",
+      "range": {
+        "startLine": 79,
+        "startChar": 22,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f858b104_3a7bf9b7",
+        "filename": "chrome/browser/resources/settings/date_time_page/date_time_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "why is this an array?",
+      "range": {
+        "startLine": 80,
+        "startChar": 13,
+        "endLine": 80,
+        "endChar": 52
+      },
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fff8e5e0_05d1dadd",
+        "filename": "chrome/browser/resources/settings/date_time_page/date_time_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "capital M",
+      "range": {
+        "startLine": 211,
+        "startChar": 23,
+        "endLine": 211,
+        "endChar": 24
+      },
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7561621_bc9d2bab",
+        "filename": "chrome/browser/resources/settings/date_time_page/date_time_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "don\u0027t commit commented-out code",
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9a1b41_77848d98",
+        "filename": "chrome/browser/resources/settings/date_time_page/date_time_types.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "link rel\u003d\"import\" for cr.html",
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9724cc16_f56ef41a",
+        "filename": "chrome/browser/resources/settings/date_time_page/date_time_types.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9e07a6_269181b0",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_selector.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "remove blank lines",
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd00fcc_884ebb5e",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_selector.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "if this should be private, append an underscore",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 22
+      },
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d733b6_b088baaa",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_selector.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "use js constructs:\n  var activeTimeZone \u003d this.timeZoneList_.find((timeZone) \u003d\u003e\n      timeZone.value \u003d\u003d activeTimeZoneId);\n  if (activeTimeZone)\n    this.activeTimeZoneDisplayName \u003d activeTimeZone.name;",
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67828364_ee0d2eb3",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_selector.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "nit: remove blank line",
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8605ca4_14a3642c",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "nit: remove whitespace (don\u0027t we have a presubmit for this?)",
+      "range": {
+        "startLine": 47,
+        "startChar": 72,
+        "endLine": 47,
+        "endChar": 76
+      },
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5340802b_1ae12357",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_subpage.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "nit: remove blank lines",
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e805614e_21798739",
+        "filename": "chrome/browser/resources/settings/date_time_page/timezone_subpage.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "nit: group public members and private members together (usually public first)",
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3d7dce_e028d101",
+        "filename": "chromeos/settings/cros_settings_names.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-15T22:09:43Z",
+      "side": 1,
+      "message": "please use the same format as literally every other pref name",
+      "range": {
+        "startLine": 254,
+        "startChar": 16,
+        "endLine": 254,
+        "endChar": 56
+      },
+      "revId": "80ab3541966e177013d9b2300b7a0b9c7e8750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
