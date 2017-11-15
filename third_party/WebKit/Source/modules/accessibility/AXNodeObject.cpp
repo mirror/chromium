@@ -38,6 +38,7 @@
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/fullscreen/Fullscreen.h"
 #include "core/html/HTMLAnchorElement.h"
 #include "core/html/HTMLDListElement.h"
 #include "core/html/HTMLDivElement.h"
@@ -1036,8 +1037,15 @@ bool AXNodeObject::IsModal() const {
   if (HasAOMPropertyOrARIAAttribute(AOMBooleanProperty::kModal, modal))
     return modal;
 
-  if (GetNode() && IsHTMLDialogElement(*GetNode()))
-    return ToElement(GetNode())->IsInTopLayer();
+  if (Node* node = GetNode()) {
+    Element& element = ToElement(*node);
+    if (element.IsInTopLayer())
+      return true;
+    // TODO(foolip): This condition will be redundant when fullscreen uses top
+    // layer. https://crbug.com/240576
+    if (Fullscreen::IsFullscreenElement(element))
+      return true;
+  }
 
   return false;
 }
