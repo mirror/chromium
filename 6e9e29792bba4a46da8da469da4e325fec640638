@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49ce0d6b_a06a5ad5",
+        "filename": "chrome/browser/resources/settings/reset_page/reset_profile_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-15T19:47:40Z",
+      "side": 1,
+      "message": "As mentioned in the bug, this change has no effect because every time a reset profile dialog is shown, it is a brand new instance and the boolean is always re-initialized to false. I verified by patching your CL and undoing the C++ change. I  can still make the browser crash. Only the C++ change in this CL is actually relevant to fixing the crash.",
+      "revId": "6e9e29792bba4a46da8da469da4e325fec640638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
