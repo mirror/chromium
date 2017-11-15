@@ -69,6 +69,11 @@ class ExistingUserController
       public UserSessionManagerDelegate,
       public ArcKioskAppManager::ArcKioskAppManagerObserver {
  public:
+  // Filters and reorders |users|.
+  static user_manager::UserList FilterUsersForLogin(
+      const user_manager::UserList& users,
+      bool show_users_on_signin);
+
   // All UI initialization is deferred till Init() call.
   explicit ExistingUserController(LoginDisplayHost* host);
   ~ExistingUserController() override;

@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_CHROMEOS_LOGIN_UI_LOGIN_DISPLAY_HOST_VIEWS_H_
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host.h"
 
 namespace chromeos {
@@ -31,9 +32,9 @@ class LoginDisplayHostViews : public LoginDisplayHost {
   AppLaunchController* GetAppLaunchController() override;
   void StartUserAdding(base::OnceClosure completion_callback) override;
   void CancelUserAdding() override;
-  void StartSignInScreen(const LoginScreenContext& context) override;
+  void OnStartSignInScreen(const LoginScreenContext& context,
+                           const user_manager::UserList& users) override;
   void OnPreferencesChanged() override;
-  void PrewarmAuthentication() override;
   void StartAppLaunch(const std::string& app_id,
                       bool diagnostic_mode,
                       bool is_auto_launch) override;
@@ -43,6 +44,8 @@ class LoginDisplayHostViews : public LoginDisplayHost {
   bool IsVoiceInteractionOobe() override;
 
  private:
+  base::WeakPtrFactory<LoginDisplayHostViews> weak_factory_;
+
   DISALLOW_COPY_AND_ASSIGN(LoginDisplayHostViews);
 };
 

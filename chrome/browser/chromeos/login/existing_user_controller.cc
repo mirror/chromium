@@ -299,6 +299,42 @@ bool IsActiveDirectoryManaged() {
 // static
 ExistingUserController* ExistingUserController::current_controller_ = nullptr;
 
+// static
+user_manager::UserList ExistingUserController::FilterUsersForLogin(
+    const user_manager::UserList& users,
+    bool show_users_on_signin) {
+  user_manager::UserList filtered_users;
+
+  user_manager::UserManager* const user_manager =
+      user_manager::UserManager::Get();
+  for (auto* user : users) {
+    // Skip kiosk apps for login screen user list. Kiosk apps as pods (aka new
+    // kiosk UI) is currently disabled and it gets the apps directly from
+    // KioskAppManager and ArcKioskAppManager.
+    if (user->GetType() == user_manager::USER_TYPE_KIOSK_APP ||
+        user->GetType() == user_manager::USER_TYPE_ARC_KIOSK_APP) {
+      continue;
+    }
+    // TODO(xiyuan): Clean user profile whose email is not in whitelist.
+    const bool meets_supervised_requirements =
+        user->GetType() != user_manager::USER_TYPE_SUPERVISED ||
+        user_manager->AreSupervisedUsersAllowed();
+    const bool meets_whitelist_requirements =
+        !user->HasGaiaAccount() || user_manager->IsGaiaUserAllowed(*user);
+
+    // Public session accounts are always shown on login screen.
+    const bool meets_show_users_requirements =
+        show_users_on_signin ||
+        user->GetType() == user_manager::USER_TYPE_PUBLIC_ACCOUNT;
+    if (meets_supervised_requirements && meets_whitelist_requirements &&
+        meets_show_users_requirements) {
+      filtered_users.push_back(user);
+    }
+  }
+
+  return filtered_users;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // ExistingUserController, public:
 
@@ -357,41 +393,17 @@ void ExistingUserController::Init(const user_manager::UserList& users) {
 
 void ExistingUserController::UpdateLoginDisplay(
     const user_manager::UserList& users) {
+  // TODO(crbug.com/784495): Share user-filtering between views and webui.
   bool show_users_on_signin;
-  user_manager::UserList filtered_users;
-
   cros_settings_->GetBoolean(kAccountsPrefShowUserNamesOnSignIn,
                              &show_users_on_signin);
-  user_manager::UserManager* const user_manager =
-      user_manager::UserManager::Get();
-  for (auto* user : users) {
-    // Skip kiosk apps for login screen user list. Kiosk apps as pods (aka new
-    // kiosk UI) is currently disabled and it gets the apps directly from
-    // KioskAppManager and ArcKioskAppManager.
-    if (user->GetType() == user_manager::USER_TYPE_KIOSK_APP ||
-        user->GetType() == user_manager::USER_TYPE_ARC_KIOSK_APP) {
-      continue;
-    }
-    // TODO(xiyuan): Clean user profile whose email is not in whitelist.
-    const bool meets_supervised_requirements =
-        user->GetType() != user_manager::USER_TYPE_SUPERVISED ||
-        user_manager->AreSupervisedUsersAllowed();
-    const bool meets_whitelist_requirements =
-        !user->HasGaiaAccount() || user_manager->IsGaiaUserAllowed(*user);
 
-    // Public session accounts are always shown on login screen.
-    const bool meets_show_users_requirements =
-        show_users_on_signin ||
-        user->GetType() == user_manager::USER_TYPE_PUBLIC_ACCOUNT;
-    if (meets_supervised_requirements && meets_whitelist_requirements &&
-        meets_show_users_requirements) {
-      filtered_users.push_back(user);
-    }
-  }
+  user_manager::UserList filtered_users =
+      FilterUsersForLogin(users, show_users_on_signin);
 
   // If no user pods are visible, fallback to single new user pod which will
   // have guest session link.
-  bool show_guest = user_manager->IsGuestSessionAllowed();
+  bool show_guest = user_manager::UserManager::Get()->IsGuestSessionAllowed();
   show_users_on_signin |= !filtered_users.empty();
   show_guest &= !filtered_users.empty();
   bool allow_new_user = true;

@@ -40,7 +40,13 @@ LoginScreenClient::~LoginScreenClient() {
 }
 
 // static
+bool LoginScreenClient::HasInstance() {
+  return !!g_instance;
+}
+
+// static
 LoginScreenClient* LoginScreenClient::Get() {
+  DCHECK(g_instance);
   return g_instance;
 }
 
@@ -48,6 +54,8 @@ void LoginScreenClient::AuthenticateUser(const AccountId& account_id,
                                          const std::string& hashed_password,
                                          bool authenticated_by_pin,
                                          AuthenticateUserCallback callback) {
+  LOG(ERROR) << "!! LoginScreenClient::AuthenticateUser delegate_="
+             << delegate_;
   if (delegate_)
     delegate_->HandleAuthenticateUser(
         account_id, hashed_password, authenticated_by_pin, std::move(callback));
@@ -56,6 +64,10 @@ void LoginScreenClient::AuthenticateUser(const AccountId& account_id,
 void LoginScreenClient::ShowLockScreen(
     ash::mojom::LoginScreen::ShowLockScreenCallback on_shown) {
   login_screen_->ShowLockScreen(std::move(on_shown));
+}
+
+void LoginScreenClient::ShowLoginScreen() {
+  login_screen_->ShowLoginScreen();
 }
 
 void LoginScreenClient::AttemptUnlock(const AccountId& account_id) {

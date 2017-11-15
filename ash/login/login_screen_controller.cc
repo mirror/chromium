@@ -61,6 +61,11 @@ void LoginScreenController::ShowLockScreen(ShowLockScreenCallback on_shown) {
   std::move(on_shown).Run(true);
 }
 
+void LoginScreenController::ShowLoginScreen() {
+  // TODO(jdufault): rename ash::LockScreen to ash::LoginScreen.
+  ash::LockScreen::Show();
+}
+
 void LoginScreenController::ShowErrorMessage(int32_t login_attempts,
                                              const std::string& error_text,
                                              const std::string& help_link_text,
