@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "e4e72a7d_f9240621",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-15T01:34:43Z",
+      "side": 1,
+      "message": "tiny nit: SMB",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 18
+      },
+      "revId": "ce74812adc5a958fdadf715ce61c12df370c0d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e31b8c43_bbd0a486",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-15T01:34:43Z",
+      "side": 1,
+      "message": "Should have DISALLOW_COPY_AND_ASSIGN(SmbService) ?",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "ce74812adc5a958fdadf715ce61c12df370c0d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bae703d2_fd3dd532",
         "filename": "chrome/browser/chromeos/smb_client/smb_service_unittest.cc",
         "patchSetId": 4
